@@ -31,6 +31,6 @@
 	"devDependencies": {},
 	"dependencies": {
 		"@eth-optimism/provider": "0.0.1-alpha.14",
-		"ethers": "5.0.26",		
+		"ethers": "5.0.26"
 	}
 }

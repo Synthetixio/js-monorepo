@@ -1,0 +1,45 @@
+{
+	"env": {
+		"es6": true,
+		"node": true
+	},
+	"extends": [
+		"plugin:@typescript-eslint/recommended",
+		"prettier/@typescript-eslint",
+		"plugin:prettier/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module",
+		"project": "./tsconfig.json"
+	},
+	"plugins": ["@typescript-eslint", "prettier", "import"],
+	"rules": {
+		"prettier/prettier": "error",
+		"no-mixed-spaces-and-tabs": ["warn", "smart-tabs"],
+		"comma-dangle": [
+			"error",
+			{
+				"arrays": "always-multiline",
+				"objects": "always-multiline",
+				"imports": "always-multiline",
+				"exports": "always-multiline",
+				"functions": "never"
+			}
+		],
+		"indent": "off",
+		"quotes": ["error", "single"],
+		"import/no-unresolved": ["error", { "commonjs": true }],
+		"no-undef": "error",
+		"prefer-const": "error",
+		"semi": ["error", "always"],
+		"no-console": "error",
+		"@typescript-eslint/ban-ts-comment": "off"
+	},
+	"settings": {
+		"import/resolver": {
+			"typescript": {}
+		}
+	}
+}
