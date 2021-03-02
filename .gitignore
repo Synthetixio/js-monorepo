@@ -1,0 +1,37 @@
+**/node_modules
+
+# build
+**/build
+
+# testing
+/coverage
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env
+
+logs
+*.log
+npm-debug.log*
+.npm
+
+*.tgz
+.nyc_output
+lib-cov
+
+pids
+*.pid
+*.seed
+*.pid.lockpids
+*.pid
+*.seed
+*.pid.lock
+
+.vscode
+
+/build/stats.json
+
