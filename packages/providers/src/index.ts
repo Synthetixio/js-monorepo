@@ -24,6 +24,8 @@ const providers = ({ provider }: ProviderConfig): Providers => {
 	};
 };
 
+console.log('here');
+
 export { defaultProvider };
 export type SynthetixProvider = Providers;
 export default providers;
