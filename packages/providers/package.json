@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/providers",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "Javascript library for handling providers on Layer 1 & Optimism Layer 2",
 	"main": "./build/node/index.js",
 	"browser": "./build/index.js",
@@ -28,7 +28,6 @@
 	"bugs": {
 		"url": "https://github.com/Synthetixio/providers/issues"
 	},
-	"devDependencies": {},
 	"dependencies": {
 		"@eth-optimism/provider": "0.0.1-alpha.14",
 		"ethers": "5.0.26"
