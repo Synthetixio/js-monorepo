@@ -8,7 +8,7 @@ jobs:
     steps:
       - checkout
       - run: npm set unsafe-perm true
-      - run: npm install -g npm@latest
+      - run: sudo npm install -g npm@latest
       - restore_cache:
           keys:
             - 'v1.1-dependencies-{{ checksum "package-lock.json" }}'
