@@ -7,6 +7,7 @@ jobs:
       name: node/default
     steps:
       - checkout
+      - run: npm set unsafe-perm true
       - run: npm install -g npm@latest
       - restore_cache:
           keys:
