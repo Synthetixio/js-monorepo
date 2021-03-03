@@ -3,5 +3,7 @@
 const providers = require('..');
 
 describe('@synthetixio/providers', () => {
-    it('needs tests');
+	it('needs tests', () => {
+		expect(true).toEqual(true);
+	});
 });

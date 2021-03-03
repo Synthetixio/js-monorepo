@@ -4,7 +4,7 @@
 **/build
 
 # testing
-/coverage
+**/coverage
 
 # misc
 .DS_Store

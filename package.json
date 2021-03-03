@@ -7,6 +7,9 @@
 		]
 	},
 	"private": true,
+	"scripts": {
+		"test": "jest --forceExit --coverage --no-cache"
+	},
 	"devDependencies": {
 		"@babel/core": "7.11.0",
 		"@babel/preset-env": "7.11.0",
@@ -23,13 +26,13 @@
 		"eslint-plugin-prettier": "3.1.4",
 		"http-server": "0.12.3",
 		"husky": "4.2.5",
-		"jest": "24.9.0",
 		"lint-staged": "10.2.11",
 		"prettier": "2.0.5",
 		"ts-loader": "8.0.2",
 		"ts-node": "8.10.2",
 		"typescript": "3.9.3",
 		"webpack": "4.44.1",
-		"webpack-cli": "3.3.12"
+		"webpack-cli": "3.3.12",
+		"jest": "26.6.3"
 	}
 }
