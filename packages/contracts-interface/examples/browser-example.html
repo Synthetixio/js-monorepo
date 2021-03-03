@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Example for browser envionments</title>
+	</head>
+
+	<body>
+		<p>If you open the console "command-J" you should see the resutls printed</p>
+
+		<script src="../build/index.js"></script>
+		<script>
+			(async () => {
+				const { synthetix } = window;
+				// this instance exposes props for the given network: synths, sources, targets, users, as well as helper function toBytes32 - as per synthetix: https://github.com/Synthetixio/synthetix/blob/develop/index.js#L199.
+				const snxjs = synthetix({ network: 'mainnet' });
+				console.log('snxjs', snxjs);
+
+				const { formatEther } = snxjs.utils;
+
+				const synths = snxjs.synths.map(({ name }) => name);
+				const fromBlock = 10260987;
+				const blockOptions = fromBlock ? { blockTag: Number(fromBlock) } : {};
+
+				let totalInUSD = 0;
+
+				const unformattedSnxPrice = await snxjs.contracts.ExchangeRates.rateForCurrency(
+					snxjs.toBytes32('SNX'),
+					blockOptions
+				); // note blockOptions must be passed to `ethers.Contract` as the final parameter (and fails if no archive node)
+				const snxPrice = formatEther(unformattedSnxPrice);
+				console.log('snxPrice', snxPrice);
+
+				let results = await Promise.all(
+					synths.map(async (synth) => {
+						const unformattedTotalSupply = await snxjs.contracts[`Synth${synth}`].totalSupply(
+							blockOptions
+						);
+						const totalSupply = formatEther(unformattedTotalSupply);
+
+						const rateForSynth = formatEther(
+							await snxjs.contracts.ExchangeRates.rateForCurrency(
+								snxjs.toBytes32(synth),
+								blockOptions
+							)
+						);
+						const totalSupplyInUSD = rateForSynth * totalSupply;
+						totalInUSD += totalSupplyInUSD;
+						const rateIsFrozen = await snxjs.contracts.ExchangeRates.rateIsFrozen(
+							snxjs.toBytes32(synth),
+							blockOptions
+						);
+
+						return {
+							synth,
+							totalSupply,
+							rateForSynth,
+							totalSupplyInUSD,
+							rateIsFrozen,
+						};
+					})
+				);
+
+				console.log('totalInUSD', totalInUSD);
+				console.log('results', results);
+			})().catch((e) => {
+				console.log('error in browser example:', e);
+			});
+		</script>
+	</body>
+</html>

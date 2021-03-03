@@ -1,0 +1,58 @@
+{
+	"name": "@synthetixio/contracts-interface",
+	"version": "0.0.1",
+	"description": "A library for interacting with Synthetix smart contracts",
+	"main": "./build/node/index.js",
+	"browser": "./build/index.js",
+	"types": "./build/src/index.d.ts",
+	"files": [
+		"build"
+	],
+	"scripts": {
+		"build": "npm run build-browser && npm run build-node",
+		"build-node": "tsc -p tsconfig.node.json",
+		"build-browser": "webpack --mode=production --max-old-space-size=4096",
+		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
+		"examples:browser": "npm run build-browser && http-server -o ./examples/browser-example.html -c-1",
+		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
+		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
+		"test": "jest --forceExit --coverage --no-cache",
+		"tsc": "tsc --noemit"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Synthetixio/js-monorepo"
+	},
+	"author": "Synthetix",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Synthetixio/js-monorepo/issues"
+	},
+	"dependencies": {
+		"ethers": "5.0.26",
+		"web3-utils": "1.2.11",
+		"lodash": "4.17.19",
+		"synthetix": "2.39.3"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"./src/**/*.{js,ts}": [
+			"eslint --fix",
+			"prettier --write"
+		]
+	},
+	"jest": {
+		"coverageThreshold": {
+			"global": {
+				"branches": 70,
+				"functions": 70,
+				"lines": 80,
+				"statements": 80
+			}
+		}
+	}
+}

@@ -2,7 +2,8 @@
 	"name": "js-monorepo",
 	"workspaces": {
 		"packages": [
-			"packages/providers"
+			"packages/providers",
+			"packages/contracts-interface"
 		]
 	},
 	"private": true,
