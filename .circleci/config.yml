@@ -7,6 +7,9 @@ jobs:
       name: node/default
     steps:
       - checkout
+      - run:
+        name: npm-update
+        command: 'npm install -g npm@latest'
       - restore_cache:
           keys:
             - 'v1.1-dependencies-{{ checksum "package-lock.json" }}'
