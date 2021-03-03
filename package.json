@@ -6,7 +6,6 @@
 			"packages/contracts-interface"
 		]
 	},
-	"private": true,
 	"scripts": {
 		"test": "jest --forceExit --coverage --no-cache",
 		"lint": "eslint './packages/**/*/src/**/*.{js,ts,tsx}' && tsc"

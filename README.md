@@ -4,10 +4,10 @@
 
 ## Packages
 
-| Package                                                             | Status                                                                                                        | Description                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| [`@synthetixio/contracts-interface`](/packages/contracts-interface) | [![npm](https://img.shields.io/npm/v/@eth-optimism/ovm.svg)](https://www.npmjs.com/package/@eth-optimism/ovm) | Synthetix Contract Interface        |
-| [`@synthetixio/providers`](/packages/providers)                     | [![npm](https://img.shields.io/npm/v/@eth-optimism/ovm.svg)](https://www.npmjs.com/package/@eth-optimism/ovm) | Synthetix Providers for Layer 1 & 2 |
+| Package                                                             | Status                                                                                                                 | Description                         |
+| ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| [`@synthetixio/contracts-interface`](/packages/contracts-interface) | [![npm](https://badge.fury.io/js/%40synthetixio%2Fproviders.svg)](https://badge.fury.io/js/%40synthetixio%2Fproviders) | Synthetix Contract Interface        |
+| [`@synthetixio/providers`](/packages/providers)                     | [![npm](https://badge.fury.io/js/%40synthetixio%2Fproviders.svg)](https://badge.fury.io/js/%40synthetixio%2Fproviders) | Synthetix Providers for Layer 1 & 2 |
 
 ## Repo Status
 
