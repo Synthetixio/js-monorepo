@@ -2,14 +2,16 @@ import { providers as ethersProviders } from 'ethers';
 import { OptimismProvider } from '@eth-optimism/provider';
 
 import { ERRORS, OVM_RPC_URL } from './constants';
-import { ProviderConfig, Providers, InfuraProviderConfig } from './types';
+import { ProviderConfig, Providers, DefaultProviderConfig } from './types';
 
-const defaultProvider = ({
-	networkId = 1,
-	infuraId,
-}: InfuraProviderConfig): ethersProviders.InfuraProvider => {
+const defaultProviders = ({ networkId = 1, infuraId }: DefaultProviderConfig): Providers => {
 	if (!infuraId) throw new Error(ERRORS.noInfuraId);
-	return new ethersProviders.InfuraProvider(networkId, infuraId);
+	const web3Provider = new ethersProviders.InfuraProvider(networkId, infuraId);
+	const optimismProvider = new OptimismProvider(OVM_RPC_URL, web3Provider);
+	return {
+		L1: web3Provider,
+		L2: optimismProvider,
+	};
 };
 
 const providers = ({ provider }: ProviderConfig): Providers => {
@@ -24,6 +26,6 @@ const providers = ({ provider }: ProviderConfig): Providers => {
 	};
 };
 
-export { defaultProvider };
+export { defaultProviders };
 export type SynthetixProvider = Providers;
 export default providers;
