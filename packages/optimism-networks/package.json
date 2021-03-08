@@ -1,7 +1,7 @@
 {
-	"name": "@synthetixio/providers",
-	"version": "0.0.6",
-	"description": "Javascript library for handling providers on Layer 1 & Optimism Layer 2",
+	"name": "@synthetixio/optimism-networks",
+	"version": "0.0.2",
+	"description": "Javascript library for handling networks on Optimism Layer 2",
 	"main": "./build/node/index.js",
 	"browser": "./build/index.js",
 	"types": "./build/src/index.d.ts",
@@ -27,9 +27,5 @@
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
-	},
-	"dependencies": {
-		"@eth-optimism/provider": "0.0.1-alpha.14",
-		"ethers": "5.0.26"
 	}
 }
