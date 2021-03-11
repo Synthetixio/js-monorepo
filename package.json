@@ -3,7 +3,8 @@
 	"workspaces": {
 		"packages": [
 			"packages/providers",
-			"packages/contracts-interface"
+			"packages/contracts-interface",
+			"packages/transaction-notifier"
 		]
 	},
 	"scripts": {
