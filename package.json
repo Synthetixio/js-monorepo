@@ -8,7 +8,7 @@
 		]
 	},
 	"scripts": {
-		"test": "jest --forceExit --coverage --no-cache",
+		"test": "jest --forceExit --coverage --no-cache --runInBand",
 		"lint": "eslint './packages/**/*/src/**/*.{js,ts,tsx}' && tsc"
 	},
 	"devDependencies": {

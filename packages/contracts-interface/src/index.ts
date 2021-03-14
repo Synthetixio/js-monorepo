@@ -9,6 +9,7 @@ import {
 	getStakingRewards,
 	networks,
 	networkToChainId,
+	getNetworkFromId,
 	getTokens,
 	decode,
 	defaults,
@@ -29,18 +30,13 @@ import {
 } from './types';
 import { ERRORS } from './constants';
 
-const synthetix = ({
-	networkId,
-	network,
-	signer,
-	provider,
-	useOvm = false,
-}: Config): SynthetixJS => {
-	const [currentNetwork, currentNetworkId] = selectNetwork(networkId, network);
+const synthetix = ({ networkId, network, signer, provider }: Config): SynthetixJS => {
+	const [currentNetwork, currentNetworkId, useOvm] = selectNetwork(networkId, network);
 	return {
 		network: {
 			id: currentNetworkId,
 			name: currentNetwork,
+			useOvm,
 		},
 		networks,
 		networkToChainId,
@@ -61,26 +57,28 @@ const synthetix = ({
 	};
 };
 
-const selectNetwork = (networkId?: NetworkId, network?: Network): [Network, NetworkId] => {
+const selectNetwork = (networkId?: NetworkId, network?: Network): [Network, NetworkId, boolean] => {
 	let currentNetwork: Network = Network.Mainnet;
 	let currentNetworkId: NetworkId = NetworkId.Mainnet;
+	let useOvm = false;
 	if (
-		(network && !networks.includes(network)) ||
-		(networkId && !Object.values(networkToChainId).includes(networkId))
+		(network && !networkToChainId[network]) ||
+		(networkId && !getNetworkFromId({ id: networkId }))
 	) {
 		throw new Error(ERRORS.badNetworkArg);
-	} else if (network && networks.includes(network)) {
-		currentNetwork = network;
-		currentNetworkId = networkToChainId[network];
+	} else if (network && networkToChainId[network]) {
+		const networkToId = Number(networkToChainId[network]);
+		const networkFromId = getNetworkFromId({ id: networkToId });
+		currentNetworkId = networkToId;
+		currentNetwork = networkFromId.network;
+		useOvm = networkFromId.useOvm;
 	} else if (networkId) {
-		Object.entries(networkToChainId).forEach(([key, value]) => {
-			if (value === networkId) {
-				currentNetwork = key as Network;
-				currentNetworkId = value as NetworkId;
-			}
-		});
+		const networkFromId = getNetworkFromId({ id: networkId });
+		currentNetworkId = networkId;
+		currentNetwork = networkFromId.network;
+		useOvm = networkFromId.useOvm;
 	}
-	return [currentNetwork, currentNetworkId];
+	return [currentNetwork, currentNetworkId, useOvm];
 };
 
 const getSynthetixContracts = (

@@ -18,7 +18,7 @@ describe('@synthetixio/js tests', () => {
 
 	test('should return different contracts for the OVM', () => {
 		const snxjsGoerli = synthetix({ network: Network.Goerli });
-		const snxjsGoerliOvm = synthetix({ network: Network.Goerli, useOvm: true });
+		const snxjsGoerliOvm = synthetix({ network: Network['Goerli-Ovm'] });
 		const synthetixContractGoerli = snxjsGoerli.contracts['Synthetix'];
 		const synthetixContractGoerliOvm = snxjsGoerliOvm.contracts['Synthetix'];
 		expect(synthetixContractGoerli.address).not.toEqual(synthetixContractGoerliOvm.address);
@@ -46,9 +46,9 @@ describe('@synthetixio/js tests', () => {
 	});
 
 	test('should include the supported networks', () => {
-		expect(snxjs.networkToChainId[Network.Mainnet]).toBe(NetworkId.Mainnet);
-		expect(snxjs.networkToChainId[Network.Kovan]).toBe(NetworkId.Kovan);
-		expect(snxjs.networkToChainId[Network.Rinkeby]).not.toBe(NetworkId.Ropsten);
+		expect(snxjs.networkToChainId[Network.Mainnet]).toBe(NetworkId.Mainnet.toString());
+		expect(snxjs.networkToChainId[Network.Kovan]).toBe(NetworkId.Kovan.toString());
+		expect(snxjs.networkToChainId[Network.Rinkeby]).not.toBe(NetworkId.Ropsten.toString());
 	});
 
 	test('should include the current network', () => {

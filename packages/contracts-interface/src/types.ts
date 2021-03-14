@@ -6,6 +6,9 @@ export enum Network {
 	Rinkeby = 'rinkeby',
 	Goerli = 'goerli',
 	Kovan = 'kovan',
+	'Mainnet-Ovm' = 'mainnet-ovm',
+	'Kovan-Ovm' = 'kovan-ovm',
+	'Goerli-Ovm' = 'goerli-ovm',
 }
 
 export enum NetworkId {
@@ -83,6 +86,7 @@ export type SynthetixJS = {
 	network: {
 		id: NetworkId;
 		name: Network;
+		useOvm: boolean;
 	};
 	sources: { [name: string]: SourceData };
 	targets: TargetsRecord;
