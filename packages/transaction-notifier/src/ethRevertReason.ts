@@ -16,7 +16,7 @@ const getRevertReason = async ({
 
 	try {
 		const tx = await provider.getTransaction(txHash);
-
+		console.log('heeeere', tx);
 		const code = await getCode({ tx, networkId, blockNumber, provider });
 		return decodeMessage(code, networkId);
 	} catch (err) {
@@ -75,6 +75,8 @@ function decodeMessage(code: string, networkId: number) {
 	const strDataStartPos =
 		2 + (fnSelectorByteLength + dataOffsetByteLength + strLengthByteLength) * 2;
 
+	//eslint-disable-next-line
+	console.log('heeeeere', isKovan(networkId), networkId);
 	if (isKovan(networkId)) {
 		const strLengthHex = code.slice(strLengthStartPos).slice(0, strLengthByteLength * 2);
 		const strLengthInt = parseInt(`0x${strLengthHex}`, 16);
@@ -94,10 +96,12 @@ function decodeMessage(code: string, networkId: number) {
 }
 
 async function getCode({ tx, networkId, blockNumber, provider }: GetCodeParams) {
+	console.log('he sdlfkj sf', networkId, isKovan(networkId));
 	if (isKovan(networkId)) {
 		try {
 			return await provider.call(tx, blockNumber);
 		} catch (err) {
+			console.log('EERORRRRRR', err);
 			return JSON.parse(err.responseText).error.data.substr(9);
 		}
 	} else {

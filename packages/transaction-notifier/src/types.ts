@@ -3,36 +3,18 @@ import { ethers } from 'ethers';
 export type TransactionEventCode = 'txSent' | 'txConfirmed' | 'txFailed' | 'txError';
 
 export type TransactionStatusData = {
-	message: string;
+	transactionHash: string;
+	status?: number;
+	blockNumber?: number;
 };
 
-export type TransactionData = {
-	hash: string;
-	asset: string;
-	blockHash: string;
-	blockNumber: number;
-	to: string;
-	from: string;
-	gas: string;
-	gasPrice: string;
-	gasUsed?: string;
-	input: string;
-	nonce: number;
-	v: string;
-	r: string;
-	s: string;
-	transactionIndex: number;
-	value: string;
-	startTime?: number;
-	timePending?: string;
-	watchedAddress?: string;
-	replaceHash?: string;
-	counterparty?: string;
-	direction?: string;
+export type TransactionFailureData = {
+	transactionHash: string;
+	failureReason: string;
 };
 
 export interface EmitterListener {
-	(state: TransactionStatusData): boolean | undefined | void;
+	(state: TransactionStatusData | TransactionFailureData): boolean | undefined | void;
 }
 
 export interface Emitter {
@@ -40,7 +22,10 @@ export interface Emitter {
 		[key: string]: EmitterListener;
 	};
 	on: (eventCode: TransactionEventCode, listener: EmitterListener) => void;
-	emit: (eventCode: TransactionEventCode, data: TransactionStatusData | null) => void;
+	emit: (
+		eventCode: TransactionEventCode,
+		data: TransactionStatusData | TransactionFailureData
+	) => void;
 }
 
 export type RevertReasonParams = {
