@@ -2,7 +2,7 @@ import { OptimismNetwork } from './types';
 
 export const NETWORK_LAYER_MAPPER: Record<number, number> = {
 	1: 10,
-	52: 69,
+	42: 69,
 };
 
 export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
@@ -19,3 +19,5 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 		blockExplorerUrls: ['https://mainnet-l2-explorer.surge.sh'],
 	},
 };
+
+export const MAINNET_OPTIMISM_EXPLORER = 'https://mainnet-l2-explorer.surge.sh';

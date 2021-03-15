@@ -1,4 +1,4 @@
-import { OPTIMISM_NETWORKS, NETWORK_LAYER_MAPPER } from './constants';
+import { OPTIMISM_NETWORKS, NETWORK_LAYER_MAPPER, MAINNET_OPTIMISM_EXPLORER } from './constants';
 import { EthereumProvider, OptimismNetwork } from './types';
 
 const getOptimismNetwork = ({ networkId }: { networkId: number }): OptimismNetwork => {
@@ -20,4 +20,9 @@ const addOptimismNetworkToMetamask = async ({
 	});
 };
 
-export { getOptimismNetwork, addOptimismNetworkToMetamask };
+export {
+	getOptimismNetwork,
+	addOptimismNetworkToMetamask,
+	OPTIMISM_NETWORKS,
+	MAINNET_OPTIMISM_EXPLORER,
+};

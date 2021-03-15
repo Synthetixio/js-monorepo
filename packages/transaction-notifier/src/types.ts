@@ -41,3 +41,9 @@ export type GetCodeParams = {
 	blockNumber: number;
 	provider: ethers.providers.Web3Provider;
 };
+
+export type TransactionNotifierInterface = {
+	hash(transactionHash: string): Emitter;
+	setProvider(provider: ethers.providers.Web3Provider): void;
+	watchTransaction(transactionHash: string, emitter: Emitter): void;
+};
