@@ -2,19 +2,15 @@ import { ethers } from 'ethers';
 
 export type TransactionEventCode = 'txSent' | 'txConfirmed' | 'txFailed' | 'txError';
 
-export type TransactionStatusData = {
+export interface TransactionStatusData {
 	transactionHash: string;
 	status?: number;
 	blockNumber?: number;
-};
-
-export type TransactionFailureData = {
-	transactionHash: string;
-	failureReason: string;
-};
+	failureReason?: string;
+}
 
 export interface EmitterListener {
-	(state: TransactionStatusData | TransactionFailureData): boolean | undefined | void;
+	(state: TransactionStatusData): boolean | undefined | void;
 }
 
 export interface Emitter {
@@ -22,10 +18,7 @@ export interface Emitter {
 		[key: string]: EmitterListener;
 	};
 	on: (eventCode: TransactionEventCode, listener: EmitterListener) => void;
-	emit: (
-		eventCode: TransactionEventCode,
-		data: TransactionStatusData | TransactionFailureData
-	) => void;
+	emit: (eventCode: TransactionEventCode, data: TransactionStatusData) => void;
 }
 
 export type RevertReasonParams = {

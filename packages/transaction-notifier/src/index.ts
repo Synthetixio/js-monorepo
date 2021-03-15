@@ -1,12 +1,7 @@
 import { ethers } from 'ethers';
 
 import { createEmitter } from './eventEmitter';
-import {
-	Emitter,
-	TransactionFailureData as TransactionFailureDataType,
-	TransactionStatusData as TransactionStatusDataType,
-	TransactionNotifierInterface,
-} from './types';
+import { Emitter, TransactionStatusData, TransactionNotifierInterface } from './types';
 import { TRANSACTION_EVENTS_MAP } from './constants';
 import getRevertReason from './ethRevertReason';
 
@@ -64,8 +59,7 @@ class TransactionNotifier implements TransactionNotifierInterface {
 			});
 	}
 }
-export type TransactionNotifierType = TransactionNotifierInterface;
-export type TransactionStatusData = TransactionStatusDataType;
-export type TransactionFailureData = TransactionFailureDataType;
+
 export { TransactionNotifier };
+export type { TransactionStatusData, TransactionNotifierInterface };
 export default TransactionNotifier;
