@@ -5,7 +5,8 @@
 			"packages/providers",
 			"packages/contracts-interface",
 			"packages/optimism-networks",
-			"packages/transaction-notifier"
+			"packages/transaction-notifier",
+			"packages/data"
 		]
 	},
 	"scripts": {
