@@ -1,3 +1,4 @@
-import { exchangesQuery } from './exchanges';
+import { synthExchangesQuery } from './synthExchanges';
+import { synthetixQuery } from './synthetix';
 
-export { exchangesQuery }
+export { synthExchangesQuery, synthetixQuery };
