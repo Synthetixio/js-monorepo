@@ -2,8 +2,10 @@ import { request } from 'graphql-request';
 import subHours from 'date-fns/subHours';
 
 import { l1Endpoints, l2Endpoints } from './constants';
-import { synthExchangesQuery, synthetixQuery } from '../queries';
+import { createSynthExchangesQuery, createSynthetixQuery, createIssuedQuery } from '../queries';
 import { formatParams } from './utils';
+import { IssuedQueryParams, SynthExchangeQueryParams } from './types';
+import { SynthExchange, Synthetix, Issued } from '../generated/graphql';
 
 enum Period {
 	ONE_HOUR = 'ONE_HOUR',
@@ -24,28 +26,31 @@ const PERIOD_IN_HOURS: Record<Period, number> = {
 const calculateTimestampForPeriod = (periodInHours: number): number =>
 	Math.trunc(subHours(new Date().getTime(), periodInHours).getTime() / 1000);
 
-const synthetixData = ({ useOvm }: { useOvm: boolean }): any => ({
-	synthExchanges: async ({
-		maxBlock,
-		max,
-		fromAddress,
-		minTimestamp,
-	}: {
-		maxBlock?: number;
-		max?: number;
-		fromAddress?: string;
-		minTimestamp?: number;
-	}) => {
+const synthetixData = ({ useOvm }: { useOvm: boolean }) => ({
+	synthExchanges: async (params: SynthExchangeQueryParams): Promise<SynthExchange[] | null> => {
+		const formattedParams = formatParams(params);
+		const query = createSynthExchangesQuery(params);
 		const response = await request(
 			useOvm ? l2Endpoints.snx : l1Endpoints.exchanges,
-			synthExchangesQuery,
-			{ maxBlock, max, fromAddress, minTimestamp }
+			query,
+			formattedParams
 		);
 		return response != null ? response.synthExchanges : null;
 	},
-	synthetix: async () => {
-		const response = await request(useOvm ? l2Endpoints.snx : l1Endpoints.snx, synthetixQuery);
+	synthetix: async (): Promise<Synthetix | null> => {
+		const query = createSynthetixQuery();
+		const response = await request(useOvm ? l2Endpoints.snx : l1Endpoints.snx, query);
 		return response != null ? response.synthetixes[0] : null;
+	},
+	issued: async (params: IssuedQueryParams): Promise<Issued | null> => {
+		const formattedParams = formatParams(params);
+		const query = createIssuedQuery(params);
+		const response = await request(
+			useOvm ? l2Endpoints.snx : l1Endpoints.snx,
+			query,
+			formattedParams
+		);
+		return response != null ? response.issueds : null;
 	},
 });
 
