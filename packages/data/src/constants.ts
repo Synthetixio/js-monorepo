@@ -3,7 +3,8 @@ export const l1Endpoints = {
 	depot: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-depot',
 	exchanges: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges',
 	rates: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-rates',
-	binaryOptions: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-binary-options',
+	binaryOptions:
+		'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-binary-options',
 	etherCollateral: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-loans',
 	limitOrders: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-limit-orders',
 	exchanger: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanger',
@@ -11,5 +12,5 @@ export const l1Endpoints = {
 };
 
 export const l2Endpoints = {
-	snx: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-optimism'
+	snx: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-optimism',
 };
