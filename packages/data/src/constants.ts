@@ -12,5 +12,5 @@ export const l1Endpoints = {
 };
 
 export const l2Endpoints = {
-	snx: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-optimism',
+	snx: 'https://api.thegraph.com/subgraphs/name/dvd-schwrtz/test',
 };

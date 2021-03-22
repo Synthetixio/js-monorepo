@@ -10,3 +10,9 @@ export type IssuedQueryParams = {
 	minBlock?: number;
 	max?: number;
 };
+
+export type RateUpdateQueryParams = {
+	synth?: string;
+	minTimestamp?: number;
+	max?: number;
+};
