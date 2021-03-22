@@ -2,10 +2,15 @@ import { request } from 'graphql-request';
 import subHours from 'date-fns/subHours';
 
 import { l1Endpoints, l2Endpoints } from './constants';
-import { createSynthExchangesQuery, createSynthetixQuery, createIssuedQuery } from '../queries';
+import {
+	createSynthExchangesQuery,
+	createSynthetixQuery,
+	createIssuedQuery,
+	createRateUpdatesQuery,
+} from '../queries';
 import { formatParams } from './utils';
-import { IssuedQueryParams, SynthExchangeQueryParams } from './types';
-import { SynthExchange, Synthetix, Issued } from '../generated/graphql';
+import { IssuedQueryParams, RateUpdateQueryParams, SynthExchangeQueryParams } from './types';
+import { SynthExchange, Synthetix, Issued, RateUpdate } from '../generated/graphql';
 
 enum Period {
 	ONE_HOUR = 'ONE_HOUR',
@@ -51,6 +56,16 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }) => ({
 			formattedParams
 		);
 		return response != null ? response.issueds : null;
+	},
+	rateUpdates: async (params: RateUpdateQueryParams): Promise<RateUpdate[] | null> => {
+		const formattedParams = formatParams(params);
+		const query = createRateUpdatesQuery(params);
+		const response = await request(
+			useOvm ? l2Endpoints.snx : l1Endpoints.rates,
+			query,
+			formattedParams
+		);
+		return response != null ? response.rateUpdates : null;
 	},
 });
 
