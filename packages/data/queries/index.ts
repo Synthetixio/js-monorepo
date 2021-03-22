@@ -1,5 +1,4 @@
-import { createSynthExchangesQuery } from './synthExchanges';
-import { createSynthetixQuery } from './synthetix';
-import { createIssuedQuery } from './issued';
-
-export { createSynthExchangesQuery, createSynthetixQuery, createIssuedQuery };
+export { createSynthExchangesQuery } from './synthExchanges';
+export { createSynthetixQuery } from './synthetix';
+export { createIssuedQuery } from './issued';
+export { createRateUpdatesQuery } from './rateUpdates';
