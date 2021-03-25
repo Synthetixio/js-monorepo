@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request';
-import { RateUpdateQueryParams } from '../src/types';
-import { createGQLWhereString } from '../src/utils';
+import { RateUpdateQueryParams } from '../../src/types';
+import { createGQLWhereString } from '../../src/utils';
 
 export const createRateUpdatesQuery = ({ synth, minTimestamp }: RateUpdateQueryParams): string => {
 	const whereString = createGQLWhereString(

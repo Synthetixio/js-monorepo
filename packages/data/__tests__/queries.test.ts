@@ -1,4 +1,6 @@
+import { parseRates } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
+import { ratesMock } from '../__mocks__/rates';
 
 describe('@synthetixio/data tests', () => {
 	const randomLargeSNXStaker = '0x042ed37d32b88ab6b1c2e7b8a400dcdc728050bc';
@@ -53,24 +55,29 @@ describe('@synthetixio/data tests', () => {
 	});
 
 	describe('rate updates query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseRates(ratesMock.response);
+			expect(ratesMock.formatted).toEqual(parsedOutput);
+		});
+
 		test('should return rateUpdates data from l1', async () => {
-			const rateUpdatesInfo = await snxData.rateUpdates({
+			const l1RateUpdatesInfo = await snxData.rateUpdates({
 				max: 5,
 				synth: 'SNX',
 				minTimestamp: oneDayTimestamp,
 			});
-			expect(rateUpdatesInfo[0].synth).toEqual('SNX');
-			expect(rateUpdatesInfo.length).toBeGreaterThan(0);
+			expect(l1RateUpdatesInfo[0].synth).toEqual('SNX');
+			expect(l1RateUpdatesInfo.length).toBeGreaterThan(0);
 		});
 
 		test('should return rateUpdates data from l2', async () => {
-			const rateUpdatesInfo = await snxDataOvm.rateUpdates({
+			const l2RateUpdatesInfo = await snxDataOvm.rateUpdates({
 				max: 5,
 				synth: 'SNX',
 				minTimestamp: oneDayTimestamp,
 			});
-			expect(rateUpdatesInfo[0].synth).toEqual('SNX');
-			expect(rateUpdatesInfo.length).toBeGreaterThan(0);
+			expect(l2RateUpdatesInfo[0].synth).toEqual('SNX');
+			expect(l2RateUpdatesInfo.length).toBeGreaterThan(0);
 		});
 	});
 });

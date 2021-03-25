@@ -7,6 +7,7 @@ import {
 	createSynthetixQuery,
 	createIssuedQuery,
 	createRateUpdatesQuery,
+	parseRates,
 } from '../queries';
 import { formatParams } from './utils';
 import { IssuedQueryParams, RateUpdateQueryParams, SynthExchangeQueryParams } from './types';
@@ -65,7 +66,7 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }) => ({
 			query,
 			formattedParams
 		);
-		return response != null ? response.rateUpdates : null;
+		return response != null ? response.rateUpdates.map(parseRates) : null;
 	},
 });
 
