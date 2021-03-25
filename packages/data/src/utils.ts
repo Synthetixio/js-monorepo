@@ -15,3 +15,5 @@ export const createGQLWhereString = (data: Array<[string, string | null]>): stri
 	}, '');
 	return whereString !== '' ? '{ ' + whereString.slice(0, -1) + ' }' : '{}';
 };
+
+export const formatTimestamp = (ts: number | string): number => Number(ts) * 1000;
