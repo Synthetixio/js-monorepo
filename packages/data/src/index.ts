@@ -13,7 +13,12 @@ import {
 	parseRates,
 } from '../queries';
 import { formatParams } from './utils';
-import { IssuedQueryParams, RateUpdateQueryParams, SynthExchangeQueryParams } from './types';
+import {
+	IssuedQueryParams,
+	RateUpdateQueryParams,
+	SynthetixData,
+	SynthExchangeQueryParams,
+} from './types';
 import { SynthExchange, Synthetix, Issued, RateUpdate } from '../generated/graphql';
 
 enum Period {
@@ -35,7 +40,7 @@ const PERIOD_IN_HOURS: Record<Period, number> = {
 const calculateTimestampForPeriod = (periodInHours: number): number =>
 	Math.trunc(subHours(new Date().getTime(), periodInHours).getTime() / 1000);
 
-const synthetixData = ({ useOvm }: { useOvm: boolean }) => ({
+const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 	synthExchanges: async (params: SynthExchangeQueryParams): Promise<SynthExchange[] | null> => {
 		const formattedParams = formatParams(params);
 		const query = createSynthExchangesQuery(params);
@@ -51,7 +56,7 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }) => ({
 		const response = await request(useOvm ? l2Endpoints.snx : l1Endpoints.snx, query);
 		return response != null ? parseSynthetix(response.synthetixes[0]) : null;
 	},
-	issued: async (params: IssuedQueryParams): Promise<Issued | null> => {
+	issued: async (params: IssuedQueryParams): Promise<Issued[] | null> => {
 		const formattedParams = formatParams(params);
 		const query = createIssuedQuery(params);
 		const response = await request(
