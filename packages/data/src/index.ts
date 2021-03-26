@@ -4,6 +4,7 @@ import subHours from 'date-fns/subHours';
 import { l1Endpoints, l2Endpoints } from './constants';
 import {
 	createSynthExchangesQuery,
+	parseSynthExchanges,
 	createSynthetixQuery,
 	createIssuedQuery,
 	createRateUpdatesQuery,
@@ -41,7 +42,7 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }) => ({
 			query,
 			formattedParams
 		);
-		return response != null ? response.synthExchanges : null;
+		return response != null ? response.synthExchanges.map(parseSynthExchanges) : null;
 	},
 	synthetix: async (): Promise<Synthetix | null> => {
 		const query = createSynthetixQuery();
