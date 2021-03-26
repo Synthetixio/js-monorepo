@@ -8,6 +8,7 @@ import {
 	createSynthetixQuery,
 	parseSynthetix,
 	createIssuedQuery,
+	parseIssued,
 	createRateUpdatesQuery,
 	parseRates,
 } from '../queries';
@@ -58,7 +59,7 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }) => ({
 			query,
 			formattedParams
 		);
-		return response != null ? response.issueds : null;
+		return response != null ? response.issueds.map(parseIssued) : null;
 	},
 	rateUpdates: async (params: RateUpdateQueryParams): Promise<RateUpdate[] | null> => {
 		const formattedParams = formatParams(params);
