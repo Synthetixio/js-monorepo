@@ -58,6 +58,9 @@
 				"lines": 80,
 				"statements": 80
 			}
-		}
+		},
+		"modulePathIgnorePatterns": [
+            "<rootDir>/build"
+        ]
 	}
 }
