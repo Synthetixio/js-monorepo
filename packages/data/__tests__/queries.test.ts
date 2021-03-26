@@ -1,5 +1,6 @@
-import { parseRates, parseSynthetix, parseSynthExchanges } from '../queries';
+import { parseIssued, parseRates, parseSynthetix, parseSynthExchanges } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
+import { issuedMock } from '../__mocks__/issued';
 import { ratesMock } from '../__mocks__/rates';
 import { synthetixMock } from '../__mocks__/synthetix';
 import { synthExchangesMock } from '../__mocks__/synthExchanges';
@@ -54,6 +55,11 @@ describe('@synthetixio/data tests', () => {
 	});
 
 	describe('issued query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseIssued(issuedMock.response);
+			expect(issuedMock.formatted).toEqual(parsedOutput);
+		});
+
 		test('should return issueds data from l1', async () => {
 			const issuedInfo = await snxData.issued({ max: 1, account: randomLargeSNXStaker });
 			expect(issuedInfo[0].account).toEqual(randomLargeSNXStaker);

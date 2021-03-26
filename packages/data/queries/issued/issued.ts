@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request';
-import { IssuedQueryParams } from '../src/types';
-import { createGQLWhereString } from '../src/utils';
+import { IssuedQueryParams } from '../../src/types';
+import { createGQLWhereString } from '../../src/utils';
 
 export const createIssuedQuery = ({ account, minBlock }: IssuedQueryParams): string => {
 	const whereString = createGQLWhereString(
