@@ -6,6 +6,7 @@ import {
 	createSynthExchangesQuery,
 	parseSynthExchanges,
 	createSynthetixQuery,
+	parseSynthetix,
 	createIssuedQuery,
 	createRateUpdatesQuery,
 	parseRates,
@@ -47,7 +48,7 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }) => ({
 	synthetix: async (): Promise<Synthetix | null> => {
 		const query = createSynthetixQuery();
 		const response = await request(useOvm ? l2Endpoints.snx : l1Endpoints.snx, query);
-		return response != null ? response.synthetixes[0] : null;
+		return response != null ? parseSynthetix(response.synthetixes[0]) : null;
 	},
 	issued: async (params: IssuedQueryParams): Promise<Issued | null> => {
 		const formattedParams = formatParams(params);

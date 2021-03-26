@@ -1,6 +1,7 @@
-import { parseRates, parseSynthExchanges } from '../queries';
+import { parseRates, parseSynthetix, parseSynthExchanges } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { ratesMock } from '../__mocks__/rates';
+import { synthetixMock } from '../__mocks__/synthetix';
 import { synthExchangesMock } from '../__mocks__/synthExchanges';
 
 describe('@synthetixio/data tests', () => {
@@ -16,6 +17,11 @@ describe('@synthetixio/data tests', () => {
 	});
 
 	describe('synthetix meta data query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseSynthetix(synthetixMock.response);
+			expect(synthetixMock.formatted).toEqual(parsedOutput);
+		});
+
 		test('should return synthetix meta data from l1', async () => {
 			const synthetixInfo = await snxData.synthetix();
 			expect(synthetixInfo.id).toEqual('1');
