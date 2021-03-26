@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request';
-import { SynthExchangeQueryParams } from '../src/types';
-import { createGQLWhereString } from '../src/utils';
+import { SynthExchangeQueryParams } from '../../src/types';
+import { createGQLWhereString } from '../../src/utils';
 
 export const createSynthExchangesQuery = ({
 	fromAddress,
