@@ -1,6 +1,7 @@
-import { parseRates } from '../queries';
+import { parseRates, parseSynthExchanges } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { ratesMock } from '../__mocks__/rates';
+import { synthExchangesMock } from '../__mocks__/synthExchanges';
 
 describe('@synthetixio/data tests', () => {
 	const randomLargeSNXStaker = '0x042ed37d32b88ab6b1c2e7b8a400dcdc728050bc';
@@ -31,6 +32,11 @@ describe('@synthetixio/data tests', () => {
 	});
 
 	describe('exchanges query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseSynthExchanges(synthExchangesMock.response);
+			expect(synthExchangesMock.formatted).toEqual(parsedOutput);
+		});
+
 		test('should return exchanges from l1', async () => {
 			const exchanges = await snxData.synthExchanges({
 				minTimestamp: oneDayTimestamp,
@@ -38,7 +44,6 @@ describe('@synthetixio/data tests', () => {
 			expect(exchanges.length).toBeGreaterThan(0);
 			expect(Number(exchanges[0].fromAmount)).toBeGreaterThan(0);
 		});
-
 		// TODO add L2 test once we have exchanges to verify
 	});
 
