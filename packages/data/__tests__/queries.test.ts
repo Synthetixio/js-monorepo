@@ -1,8 +1,19 @@
-import { parseIssued, parseRates, parseSynthetix, parseSynthExchanges } from '../queries';
+import {
+	parseIssued,
+	parseRates,
+	parseSynthetix,
+	parseSynthExchanges,
+	parseBurned,
+	parseFeesClaimed,
+	parseSnxPrice,
+} from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
 import { issuedMock } from '../__mocks__/issued';
+import { burnedMock } from '../__mocks__/burned';
+import { snxPriceMock } from '../__mocks__/snxPrice';
 import { ratesMock } from '../__mocks__/rates';
+import { feesClaimedMock } from '../__mocks__/feesClaimed';
 import { synthetixMock } from '../__mocks__/synthetix';
 import { synthExchangesMock } from '../__mocks__/synthExchanges';
 
@@ -11,7 +22,7 @@ describe('@synthetixio/data tests', () => {
 	const randomL2Staker = '0x000ad8f56d3408abe29466189612d1b7b19e4420';
 	let snxData: SynthetixData;
 	let snxDataOvm: SynthetixData;
-	let oneDayTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_DAY']);
+	const oneDayTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_DAY']);
 
 	beforeAll(() => {
 		snxData = synthetixData({ useOvm: false });
@@ -69,6 +80,61 @@ describe('@synthetixio/data tests', () => {
 		test('should return issueds data from l2', async () => {
 			const issuedInfo = await snxDataOvm.issued({ max: 1, account: randomL2Staker });
 			expect(issuedInfo![0].account).toEqual(randomL2Staker);
+		});
+	});
+
+	describe('burned query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseBurned(burnedMock.response);
+			expect(burnedMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should return burneds data from l1', async () => {
+			const burnedInfo = await snxData.burned({ max: 1, account: randomLargeSNXStaker });
+			expect(burnedInfo![0].account).toEqual(randomLargeSNXStaker);
+		});
+
+		test('should return burneds data from l2', async () => {
+			const burnedInfo = await snxDataOvm.burned({ max: 1, account: randomL2Staker });
+			expect(burnedInfo![0].account).toEqual(randomL2Staker);
+		});
+	});
+
+	describe('feesClaimed query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseFeesClaimed(feesClaimedMock.response);
+			expect(feesClaimedMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should return feesClaimeds data from l1', async () => {
+			const feesClaimedInfo = await snxData.feesClaimed({ max: 1, account: randomLargeSNXStaker });
+			expect(feesClaimedInfo![0].account).toEqual(randomLargeSNXStaker);
+		});
+
+		test('should return feesClaimeds data from l2', async () => {
+			const feesClaimedInfo = await snxDataOvm.feesClaimed({ max: 1, account: randomL2Staker });
+			expect(feesClaimedInfo![0].account).toEqual(randomL2Staker);
+		});
+	});
+
+	describe('snxPrices query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseSnxPrice(snxPriceMock.response);
+			expect(snxPriceMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should return snxPrices data from l1', async () => {
+			const snxPricesInfo = await snxData.snxPrices({ max: 5, timeSeries: '1d' });
+			expect(snxPricesInfo!.length).toEqual(5);
+			expect(Number(snxPricesInfo![0].id)).toBeGreaterThan(0);
+			expect(Number(snxPricesInfo![0].averagePrice)).toBeGreaterThan(0);
+		});
+
+		test('should return snxPrices data from l2', async () => {
+			const snxPricesInfo = await snxDataOvm.snxPrices({ max: 5, timeSeries: '1d' });
+			expect(snxPricesInfo!.length).toEqual(5);
+			expect(Number(snxPricesInfo![0].id)).toBeGreaterThan(0);
+			expect(Number(snxPricesInfo![0].averagePrice)).toBeGreaterThan(0);
 		});
 	});
 

@@ -60,7 +60,7 @@
 			}
 		},
 		"modulePathIgnorePatterns": [
-            "<rootDir>/build"
-        ]
+			"<rootDir>/build"
+		]
 	}
 }
