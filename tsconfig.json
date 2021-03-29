@@ -12,6 +12,7 @@
 		"skipLibCheck": true,
 		"isolatedModules": true,
 		"baseUrl": "src",
-		"lib": ["ESNext"]
+		"lib": ["ESNext"],
+		"composite": true
 	}
 }
