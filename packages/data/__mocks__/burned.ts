@@ -1,4 +1,4 @@
-export const issuedMock = {
+export const burnedMock = {
 	response: {
 		account: '0x042ed37d32b88ab6b1c2e7b8a400dcdc728050bc',
 		block: '11975546',
