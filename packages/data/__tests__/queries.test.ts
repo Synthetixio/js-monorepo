@@ -6,16 +6,20 @@ import {
 	parseBurned,
 	parseFeesClaimed,
 	parseSnxPrice,
+	parseDebtSnapshot,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
-import { issuedMock } from '../__mocks__/issued';
-import { burnedMock } from '../__mocks__/burned';
-import { snxPriceMock } from '../__mocks__/snxPrice';
-import { ratesMock } from '../__mocks__/rates';
-import { feesClaimedMock } from '../__mocks__/feesClaimed';
-import { synthetixMock } from '../__mocks__/synthetix';
-import { synthExchangesMock } from '../__mocks__/synthExchanges';
+import {
+	issuedMock,
+	burnedMock,
+	snxPriceMock,
+	ratesMock,
+	feesClaimedMock,
+	synthetixMock,
+	synthExchangesMock,
+	debtSnapshotMock,
+} from '../__mocks__';
 
 describe('@synthetixio/data tests', () => {
 	const randomLargeSNXStaker = '0x042ed37d32b88ab6b1c2e7b8a400dcdc728050bc';
@@ -162,6 +166,33 @@ describe('@synthetixio/data tests', () => {
 			});
 			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l2RateUpdatesInfo!.length).toBeGreaterThan(0);
+		});
+	});
+
+	describe('debtSnapshots query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseDebtSnapshot(debtSnapshotMock.response);
+			expect(debtSnapshotMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should return debtSnapshots data from l1', async () => {
+			const debtSnapshotInfo = await snxData.debtSnapshots({
+				max: 5,
+				account: randomLargeSNXStaker,
+			});
+			expect(debtSnapshotInfo![0].account).toEqual(randomLargeSNXStaker);
+			expect(Number(debtSnapshotInfo![0].collateral)).toBeGreaterThan(0);
+			expect(debtSnapshotInfo!.length).toEqual(5);
+		});
+
+		test('should return debtSnapshots data from l2', async () => {
+			const debtSnapshotInfo = await snxDataOvm.debtSnapshots({
+				max: 5,
+				account: randomL2Staker,
+			});
+			expect(debtSnapshotInfo![0].account).toEqual(randomL2Staker);
+			expect(Number(debtSnapshotInfo![0].collateral)).toBeGreaterThan(0);
+			expect(debtSnapshotInfo!.length).toEqual(5);
 		});
 	});
 });
