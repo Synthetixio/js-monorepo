@@ -17,6 +17,8 @@ import {
 	createFeesClaimedQuery,
 	parseSnxPrice,
 	createSnxPriceQuery,
+	parseDebtSnapshot,
+	createDebtSnapshotQuery,
 } from '../queries';
 import { formatParams } from './utils';
 import {
@@ -27,6 +29,7 @@ import {
 	SynthExchangeQueryParams,
 	FeesClaimedParams,
 	SnxPriceParams,
+	DebtSnapshotParams,
 } from './types';
 import {
 	SynthExchange,
@@ -37,6 +40,7 @@ import {
 	FeesClaimed,
 	DailySnxPrice,
 	FifteenMinuteSnxPrice,
+	DebtSnapshot,
 } from '../generated/graphql';
 
 enum Period {
@@ -127,6 +131,16 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 			formattedParams
 		);
 		return response != null ? response.rateUpdates.map(parseRates) : null;
+	},
+	debtSnapshots: async (params: DebtSnapshotParams): Promise<DebtSnapshot[] | null> => {
+		const formattedParams = formatParams(params);
+		const query = createDebtSnapshotQuery(params);
+		const response = await request(
+			useOvm ? l2Endpoints.snx : l1Endpoints.snx,
+			query,
+			formattedParams
+		);
+		return response != null ? response.debtSnapshots.map(parseDebtSnapshot) : null;
 	},
 });
 

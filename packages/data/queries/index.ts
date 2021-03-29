@@ -5,3 +5,4 @@ export { createBurnedQuery, parseBurned } from './burned';
 export { createRateUpdatesQuery, parseRates } from './rateUpdates';
 export { createFeesClaimedQuery, parseFeesClaimed } from './feesClaimed';
 export { parseSnxPrice, createSnxPriceQuery } from './snxPrice';
+export { parseDebtSnapshot, createDebtSnapshotQuery } from './debtSnapshot';
