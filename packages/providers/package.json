@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/providers",
-	"version": "0.0.10",
+	"version": "0.0.11",
 	"description": "Javascript library for handling providers on Layer 1 & Optimism Layer 2",
 	"main": "./build/node/index.js",
 	"browser": "./build/index.js",
