@@ -16,7 +16,7 @@ export const createDebtSnapshotQuery = ({
 	);
 
 	return gql`
-		query debtSnapshots($max: Int, $account: String) {
+		query debtSnapshots($max: Int, $account: String, $minBlock: Int, $maxBlock: Int) {
 			debtSnapshots(
 				first: $max
 				where: ${whereString}
