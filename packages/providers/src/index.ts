@@ -1,6 +1,7 @@
 import { providers as ethersProviders } from 'ethers';
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
 import { L1_TO_L2_NETWORK_MAPPER, OPTIMISM_NETWORKS } from '@synthetixio/optimism-networks';
-
 import { ERRORS } from './constants';
 import { ProviderConfig, SynthetixProvider, OvmProvider } from './types';
 
