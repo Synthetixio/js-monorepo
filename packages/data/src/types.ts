@@ -8,6 +8,7 @@ import {
 	DailySnxPrice,
 	FifteenMinuteSnxPrice,
 	DebtSnapshot,
+	SnxHolder,
 } from '../generated/graphql';
 
 export type SynthExchangeQueryParams = {
@@ -42,6 +43,15 @@ export type DebtSnapshotParams = {
 	account?: string;
 };
 
+export type SnxHolderParams = {
+	max?: number;
+	maxCollateral?: number;
+	minCollateral?: number;
+	address?: string;
+	minMints?: number;
+	minClaims?: number;
+};
+
 export type RateUpdateQueryParams = {
 	synth?: string;
 	minTimestamp?: number;
@@ -57,4 +67,5 @@ export type SynthetixData = {
 	feesClaimed: (params: FeesClaimedParams) => Promise<FeesClaimed[] | null>;
 	snxPrices: (params: SnxPriceParams) => Promise<DailySnxPrice[] | FifteenMinuteSnxPrice[] | null>;
 	debtSnapshots: (params: DebtSnapshotParams) => Promise<DebtSnapshot[] | null>;
+	snxHolders: (params: SnxHolderParams) => Promise<SnxHolder[] | null>;
 };
