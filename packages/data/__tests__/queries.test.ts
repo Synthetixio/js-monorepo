@@ -147,7 +147,7 @@ describe('@synthetixio/data tests', () => {
 	});
 
 	describe('rate updates query', () => {
-		test.skip('should parse the response correctly', () => {
+		test('should parse the response correctly', () => {
 			const parsedOutput = parseRates(ratesMock.response);
 			expect(ratesMock.formatted).toEqual(parsedOutput);
 		});
@@ -162,10 +162,10 @@ describe('@synthetixio/data tests', () => {
 			expect(l1RateUpdatesInfo!.length).toBeGreaterThan(0);
 		});
 
-		test.skip('should return over 1000 rateUpdates data from l1 with no max input and a long timeframe', async () => {
+		test('should return over 1000 rateUpdates data from l1 with no max input and a long timeframe', async () => {
 			jest.setTimeout(30000);
 			const l1RateUpdatesAnnualInfo = await snxData.rateUpdates({
-				synth: 'sETH',
+				synth: 'SNX',
 				minTimestamp: oneMonthTimestamp,
 			});
 			expect(l1RateUpdatesAnnualInfo![0].synth).toEqual('SNX');
