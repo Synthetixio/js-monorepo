@@ -1,4 +1,5 @@
 import subHours from 'date-fns/subHours';
+import { request } from 'graphql-request';
 
 import { l1Endpoints, l2Endpoints, timeSeriesEntityMap } from './constants';
 import {
@@ -70,49 +71,46 @@ const calculateTimestampForPeriod = (periodInHours: number): number =>
 const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 	synthExchanges: async (params: SynthExchangeQueryParams): Promise<SynthExchange[] | null> => {
 		const formattedParams = formatParams(params);
-		const query = createSynthExchangesQuery(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.exchanges,
-			query,
+			queryMethod: createSynthExchangesQuery,
 			variables: formattedParams,
+			field: 'timestamp',
 		});
 		return response != null ? response.synthExchanges.map(parseSynthExchanges) : null;
 	},
 	synthetix: async (): Promise<Synthetix | null> => {
 		const query = createSynthetixQuery();
-		const response = await requestHelper({
-			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
-			query,
-		});
+		const response = await request(useOvm ? l2Endpoints.snx : l1Endpoints.snx, query);
 		return response != null ? parseSynthetix(response.synthetixes[0]) : null;
 	},
 	feesClaimed: async (params: FeesClaimedParams): Promise<FeesClaimed[] | null> => {
 		const formattedParams = formatParams(params);
-		const query = createFeesClaimedQuery(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
-			query,
+			queryMethod: createFeesClaimedQuery,
 			variables: formattedParams,
+			field: 'timestamp',
 		});
 		return response != null ? response.feesClaimeds.map(parseFeesClaimed) : null;
 	},
 	issued: async (params: IssuedQueryParams): Promise<Issued[] | null> => {
 		const formattedParams = formatParams(params);
-		const query = createIssuedQuery(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
-			query,
+			queryMethod: createIssuedQuery,
 			variables: formattedParams,
+			field: 'timestamp',
 		});
 		return response != null ? response.issueds.map(parseIssued) : null;
 	},
 	burned: async (params: BurnedQueryParams): Promise<Burned[] | null> => {
 		const formattedParams = formatParams(params);
-		const query = createBurnedQuery(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
-			query,
+			queryMethod: createBurnedQuery,
 			variables: formattedParams,
+			field: 'timestamp',
 		});
 		return response != null ? response.burneds.map(parseBurned) : null;
 	},
@@ -120,11 +118,11 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 		params: SnxPriceParams
 	): Promise<DailySnxPrice[] | FifteenMinuteSnxPrice[] | null> => {
 		const formattedParams = formatParams(params);
-		const query = createSnxPriceQuery(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.rates,
-			query,
+			queryMethod: createSnxPriceQuery,
 			variables: formattedParams,
+			field: 'id',
 		});
 		return response != null
 			? response[timeSeriesEntityMap[params.timeSeries]].map(parseSnxPrice)
@@ -132,10 +130,10 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 	},
 	rateUpdates: async (params: RateUpdateQueryParams): Promise<RateUpdate[] | null> => {
 		const formattedParams = formatParams(params);
-		const query = createRateUpdatesQuery(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.rates,
-			query,
+			queryMethod: createRateUpdatesQuery,
+			field: 'timestamp',
 			variables: formattedParams,
 		});
 		console.log('rate updates response', response);
@@ -143,21 +141,21 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 	},
 	debtSnapshots: async (params: DebtSnapshotParams): Promise<DebtSnapshot[] | null> => {
 		const formattedParams = formatParams(params);
-		const query = createDebtSnapshotQuery(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
-			query,
+			queryMethod: createDebtSnapshotQuery,
 			variables: formattedParams,
+			field: 'timestamp',
 		});
 		return response != null ? response.debtSnapshots.map(parseDebtSnapshot) : null;
 	},
 	snxHolders: async (params: SnxHolderParams): Promise<SnxHolder[] | null> => {
 		const formattedParams = formatParams(params);
-		const query = createSnxHolderQuery(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
-			query,
+			queryMethod: createSnxHolderQuery,
 			variables: formattedParams,
+			field: 'collateral',
 		});
 		return response != null ? response.snxholders.map(parseSnxHolder) : null;
 	},
