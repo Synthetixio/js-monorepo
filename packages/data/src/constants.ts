@@ -16,3 +16,5 @@ export const l2Endpoints = {
 };
 
 export const timeSeriesEntityMap = { '1d': 'dailySNXPrices', '15m': 'fifteenMinuteSNXPrices' };
+
+export const GQL_RESPONSE_LIMIT = 999;

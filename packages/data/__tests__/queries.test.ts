@@ -29,6 +29,8 @@ describe('@synthetixio/data tests', () => {
 	let snxData: SynthetixData;
 	let snxDataOvm: SynthetixData;
 	const oneDayTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_DAY']);
+	const oneMonthTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_MONTH']);
+	const oneYearTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_YEAR']);
 
 	beforeAll(() => {
 		snxData = synthetixData({ useOvm: false });
@@ -144,13 +146,13 @@ describe('@synthetixio/data tests', () => {
 		});
 	});
 
-	describe('rate updates query', () => {
-		test('should parse the response correctly', () => {
+	describe.only('rate updates query', () => {
+		test.skip('should parse the response correctly', () => {
 			const parsedOutput = parseRates(ratesMock.response);
 			expect(ratesMock.formatted).toEqual(parsedOutput);
 		});
 
-		test('should return rateUpdates data from l1', async () => {
+		test.skip('should return rateUpdates data from l1', async () => {
 			const l1RateUpdatesInfo = await snxData.rateUpdates({
 				max: 5,
 				synth: 'SNX',
@@ -160,11 +162,20 @@ describe('@synthetixio/data tests', () => {
 			expect(l1RateUpdatesInfo!.length).toBeGreaterThan(0);
 		});
 
-		test('should return rateUpdates data from l2', async () => {
+		test('should return over 1000 rateUpdates data from l1 with no max input and a long timeframe', async () => {
+			const l1RateUpdatesAnnualInfo = await snxData.rateUpdates({
+				synth: 'SNX',
+				minTimestamp: oneYearTimestamp,
+			});
+			expect(l1RateUpdatesAnnualInfo![0].synth).toEqual('SNX');
+			expect(l1RateUpdatesAnnualInfo!.length).toBeGreaterThan(0);
+		});
+
+		test.skip('should return rateUpdates data from l2', async () => {
 			const l2RateUpdatesInfo = await snxDataOvm.rateUpdates({
 				max: 5,
 				synth: 'SNX',
-				minTimestamp: oneDayTimestamp,
+				minTimestamp: oneMonthTimestamp,
 			});
 			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l2RateUpdatesInfo!.length).toBeGreaterThan(0);
