@@ -7,6 +7,7 @@ import {
 	parseFeesClaimed,
 	parseSnxPrice,
 	parseDebtSnapshot,
+	parseSnxHolder,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
@@ -19,6 +20,7 @@ import {
 	synthetixMock,
 	synthExchangesMock,
 	debtSnapshotMock,
+	snxHolderMock,
 } from '../__mocks__';
 
 describe('@synthetixio/data tests', () => {
@@ -193,6 +195,31 @@ describe('@synthetixio/data tests', () => {
 			expect(debtSnapshotInfo![0].account).toEqual(randomL2Staker);
 			expect(Number(debtSnapshotInfo![0].collateral)).toBeGreaterThan(0);
 			expect(debtSnapshotInfo!.length).toEqual(5);
+		});
+	});
+
+	describe('snxHolders query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseSnxHolder(snxHolderMock.response);
+			expect(snxHolderMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should return snxHolders data from l1', async () => {
+			const snxHoldersInfo = await snxData.snxHolders({
+				max: 5,
+			});
+			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
+			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
+			expect(snxHoldersInfo!.length).toEqual(5);
+		});
+
+		test('should return snxHolders data from l2', async () => {
+			const snxHoldersInfo = await snxDataOvm.snxHolders({
+				max: 5,
+			});
+			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
+			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
+			expect(snxHoldersInfo!.length).toEqual(5);
 		});
 	});
 });
