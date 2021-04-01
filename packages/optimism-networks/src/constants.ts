@@ -15,13 +15,21 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 		chainId: '0xA',
 		chainName: 'Optimism Mainnet',
 		rpcUrls: ['https://mainnet.optimism.io'],
-		blockExplorerUrls: ['https://mainnet-l2-explorer.surge.sh'],
+		blockExplorerUrls: ['http://explorer.optimism.io/'],
+		iconUrls: [
+			'https://optimism.io/images/metamask_icon.svg',
+			'https://optimism.io/images/metamask_icon.png',
+		],
 	},
 	69: {
 		chainId: '0x45',
 		chainName: 'Optimism Kovan',
 		rpcUrls: ['https://kovan.optimism.io'],
-		blockExplorerUrls: ['https://kovan-l2-explorer.surge.sh'],
+		blockExplorerUrls: ['http://kovan-explorer.optimism.io/'],
+		iconUrls: [
+			'https://optimism.io/images/metamask_icon.svg',
+			'https://optimism.io/images/metamask_icon.png',
+		],
 	},
 };
 

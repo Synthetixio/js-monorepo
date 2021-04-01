@@ -3,6 +3,7 @@ export type OptimismNetwork = {
 	chainName: string;
 	rpcUrls: string[];
 	blockExplorerUrls: string[];
+	iconUrls: string[];
 };
 
 export enum NetworkId {
