@@ -36,7 +36,7 @@ async function validateInputPostProvider({ blockNumber, provider }: RevertReason
 		const currentBlockNumber = await provider.getBlockNumber();
 		blockNumber = Number(blockNumber);
 
-		if (blockNumber >= currentBlockNumber) {
+		if (blockNumber > currentBlockNumber) {
 			throw new Error('You cannot use a block number that has not yet happened.');
 		}
 

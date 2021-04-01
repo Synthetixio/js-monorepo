@@ -21,7 +21,7 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 		chainId: '0x45',
 		chainName: 'Optimism Kovan',
 		rpcUrls: ['https://kovan.optimism.io'],
-		blockExplorerUrls: ['https://mainnet-l2-explorer.surge.sh'],
+		blockExplorerUrls: ['https://kovan-l2-explorer.surge.sh'],
 	},
 };
 
