@@ -72,10 +72,10 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 	synthExchanges: async (params: SynthExchangeQueryParams): Promise<SynthExchange[] | null> => {
 		const formattedParams = formatParams(params);
 		const response = await requestHelper({
-			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.exchanges,
+			// TODO change from kovan
+			endpoint: useOvm ? l2Endpoints.snxKovanOvm : l1Endpoints.exchanges,
 			queryMethod: createSynthExchangesQuery,
 			variables: formattedParams,
-			field: 'timestamp',
 		});
 		return response != null ? response.synthExchanges.map(parseSynthExchanges) : null;
 	},
@@ -90,7 +90,6 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
 			queryMethod: createFeesClaimedQuery,
 			variables: formattedParams,
-			field: 'timestamp',
 		});
 		return response != null ? response.feesClaimeds.map(parseFeesClaimed) : null;
 	},
@@ -100,7 +99,6 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
 			queryMethod: createIssuedQuery,
 			variables: formattedParams,
-			field: 'timestamp',
 		});
 		return response != null ? response.issueds.map(parseIssued) : null;
 	},
@@ -110,7 +108,6 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
 			queryMethod: createBurnedQuery,
 			variables: formattedParams,
-			field: 'timestamp',
 		});
 		return response != null ? response.burneds.map(parseBurned) : null;
 	},
@@ -122,7 +119,6 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.rates,
 			queryMethod: createSnxPriceQuery,
 			variables: formattedParams,
-			field: 'id',
 		});
 		return response != null
 			? response[timeSeriesEntityMap[params.timeSeries]].map(parseSnxPrice)
@@ -133,10 +129,8 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.rates,
 			queryMethod: createRateUpdatesQuery,
-			field: 'timestamp',
 			variables: formattedParams,
 		});
-		console.log('rate updates response', response);
 		return response != null ? response.rateUpdates.map(parseRates) : null;
 	},
 	debtSnapshots: async (params: DebtSnapshotParams): Promise<DebtSnapshot[] | null> => {
@@ -145,7 +139,6 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
 			queryMethod: createDebtSnapshotQuery,
 			variables: formattedParams,
-			field: 'timestamp',
 		});
 		return response != null ? response.debtSnapshots.map(parseDebtSnapshot) : null;
 	},
@@ -155,7 +148,6 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
 			queryMethod: createSnxHolderQuery,
 			variables: formattedParams,
-			field: 'collateral',
 		});
 		return response != null ? response.snxholders.map(parseSnxHolder) : null;
 	},

@@ -30,7 +30,6 @@ describe('@synthetixio/data tests', () => {
 	let snxDataOvm: SynthetixData;
 	const oneDayTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_DAY']);
 	const oneMonthTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_MONTH']);
-	const oneYearTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_YEAR']);
 
 	beforeAll(() => {
 		snxData = synthetixData({ useOvm: false });
@@ -68,10 +67,24 @@ describe('@synthetixio/data tests', () => {
 			const exchanges = await snxData.synthExchanges({
 				minTimestamp: oneDayTimestamp,
 			});
-			expect(exchanges!.length).toBeGreaterThan(0);
 			expect(Number(exchanges![0].fromAmount)).toBeGreaterThan(0);
 		});
-		// TODO add L2 test once we have exchanges to verify
+
+		test('should return over 1000 exchanges from l1 with no max input and a long timeframe', async () => {
+			jest.setTimeout(30000);
+			const exchanges = await snxData.synthExchanges({
+				minTimestamp: oneMonthTimestamp,
+			});
+			expect(Number(exchanges![0].fromAmount)).toBeGreaterThan(0);
+			expect(exchanges!.length).toBeGreaterThan(1000);
+		});
+
+		test('should return exchagnes from l2', async () => {
+			const exchanges = await snxDataOvm.synthExchanges({
+				minTimestamp: oneMonthTimestamp,
+			});
+			expect(Number(exchanges![0].fromAmount)).toBeGreaterThan(0);
+		});
 	});
 
 	describe('issued query', () => {
@@ -169,7 +182,7 @@ describe('@synthetixio/data tests', () => {
 				minTimestamp: oneMonthTimestamp,
 			});
 			expect(l1RateUpdatesAnnualInfo![0].synth).toEqual('SNX');
-			expect(l1RateUpdatesAnnualInfo!.length).toBeGreaterThan(0);
+			expect(l1RateUpdatesAnnualInfo!.length).toBeGreaterThan(1000);
 		});
 
 		test('should return rateUpdates data from l2', async () => {
