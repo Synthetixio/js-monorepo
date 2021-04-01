@@ -1,9 +1,12 @@
 import { gql } from 'graphql-request';
 
-export const createSynthetixQuery = (): string => gql`
+import { BaseQueryParams } from '../../src/types';
+import { createGQLBlockNumberString } from '../../src/utils';
+
+export const createSynthetixQuery = (params?: BaseQueryParams): string => gql`
 	query synthetixes {
 		synthetixes(
-			first: 1${createGQLBlockNumberString(blockNumber)}
+			first: 1${createGQLBlockNumberString(params?.blockNumber ?? null)}
 		) {
 			id
 			issuers

@@ -5,15 +5,18 @@ import BigNumber from 'bignumber.js';
 
 import { GQL_RESPONSE_LIMIT } from './constants';
 
-export const formatParams = (obj: {
+export const formatParams = (obj?: {
 	[key: string]: string | number | undefined;
 }): { [key: string]: string | number } => {
+	if (obj == null) {
+		return {};
+	}
 	const newObj = { ...obj };
 	Object.keys(newObj).forEach((key) => newObj[key] == undefined && delete newObj[key]);
 	return newObj as { [key: string]: string | number };
 };
 
-export const createGQLBlockNumberString = (blockNumber?: number): string =>
+export const createGQLBlockNumberString = (blockNumber: number | null): string =>
 	blockNumber != null ? `\nblock: { number: ${blockNumber} }\n` : '';
 
 export const createGQLWhereString = (data: Array<[string, string | null]>): string => {

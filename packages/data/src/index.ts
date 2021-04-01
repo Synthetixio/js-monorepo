@@ -34,6 +34,7 @@ import {
 	SnxPriceParams,
 	DebtSnapshotParams,
 	SnxHolderParams,
+	BaseQueryParams,
 } from './types';
 import {
 	SynthExchange,
@@ -70,7 +71,7 @@ const calculateTimestampForPeriod = (periodInHours: number): number =>
 	Math.trunc(subHours(new Date().getTime(), periodInHours).getTime() / 1000);
 
 const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
-	synthExchanges: async (params: SynthExchangeQueryParams): Promise<SynthExchange[] | null> => {
+	synthExchanges: async (params?: SynthExchangeQueryParams): Promise<SynthExchange[] | null> => {
 		const formattedParams = formatParams(params);
 		const response = await requestHelper({
 			// TODO change from kovan
@@ -82,12 +83,12 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 			? response.synthExchanges.map(useOvm ? parseSynthExchangesL2 : parseSynthExchangesL1)
 			: null;
 	},
-	synthetix: async (): Promise<Synthetix | null> => {
-		const query = createSynthetixQuery();
+	synthetix: async (params?: BaseQueryParams): Promise<Synthetix | null> => {
+		const query = createSynthetixQuery(params);
 		const response = await request(useOvm ? l2Endpoints.snx : l1Endpoints.snx, query);
 		return response != null ? parseSynthetix(response.synthetixes[0]) : null;
 	},
-	feesClaimed: async (params: FeesClaimedParams): Promise<FeesClaimed[] | null> => {
+	feesClaimed: async (params?: FeesClaimedParams): Promise<FeesClaimed[] | null> => {
 		const formattedParams = formatParams(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
@@ -96,7 +97,7 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 		});
 		return response != null ? response.feesClaimeds.map(parseFeesClaimed) : null;
 	},
-	issued: async (params: IssuedQueryParams): Promise<Issued[] | null> => {
+	issued: async (params?: IssuedQueryParams): Promise<Issued[] | null> => {
 		const formattedParams = formatParams(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
@@ -105,7 +106,7 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 		});
 		return response != null ? response.issueds.map(parseIssued) : null;
 	},
-	burned: async (params: BurnedQueryParams): Promise<Burned[] | null> => {
+	burned: async (params?: BurnedQueryParams): Promise<Burned[] | null> => {
 		const formattedParams = formatParams(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
@@ -127,7 +128,7 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 			? response[timeSeriesEntityMap[params.timeSeries]].map(parseSnxPrice)
 			: null;
 	},
-	rateUpdates: async (params: RateUpdateQueryParams): Promise<RateUpdate[] | null> => {
+	rateUpdates: async (params?: RateUpdateQueryParams): Promise<RateUpdate[] | null> => {
 		const formattedParams = formatParams(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.rates,
@@ -136,7 +137,7 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 		});
 		return response != null ? response.rateUpdates.map(parseRates) : null;
 	},
-	debtSnapshots: async (params: DebtSnapshotParams): Promise<DebtSnapshot[] | null> => {
+	debtSnapshots: async (params?: DebtSnapshotParams): Promise<DebtSnapshot[] | null> => {
 		const formattedParams = formatParams(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
@@ -145,7 +146,7 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 		});
 		return response != null ? response.debtSnapshots.map(parseDebtSnapshot) : null;
 	},
-	snxHolders: async (params: SnxHolderParams): Promise<SnxHolder[] | null> => {
+	snxHolders: async (params?: SnxHolderParams): Promise<SnxHolder[] | null> => {
 		const formattedParams = formatParams(params);
 		const response = await requestHelper({
 			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
