@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/optimism-networks",
-	"version": "0.0.10",
+	"version": "0.0.11",
 	"description": "Javascript library for handling networks on Optimism Layer 2",
 	"main": "./build/node/index.js",
 	"browser": "./build/index.js",
@@ -30,5 +30,30 @@
 	},
 	"dependencies": {
 		"@eth-optimism/watcher": "^0.0.1-alpha.9"
+	},
+	"devDependencies": {
+		"@babel/core": "7.11.0",
+		"@babel/preset-env": "7.11.0",
+		"@babel/preset-typescript": "7.10.4",
+		"@types/lodash": "4.14.158",
+		"@typescript-eslint/eslint-plugin": "3.8.0",
+		"@typescript-eslint/parser": "3.8.0",
+		"babel-jest": "26.2.2",
+		"babel-loader": "8.1.0",
+		"eslint": "7.6.0",
+		"eslint-config-prettier": "6.11.0",
+		"eslint-import-resolver-typescript": "2.2.0",
+		"eslint-plugin-import": "2.22.0",
+		"eslint-plugin-prettier": "3.1.4",
+		"http-server": "0.12.3",
+		"husky": "4.2.5",
+		"jest": "26.6.3",
+		"lint-staged": "10.2.11",
+		"prettier": "2.0.5",
+		"ts-loader": "8.0.2",
+		"ts-node": "8.10.2",
+		"typescript": "3.9.3",
+		"webpack": "4.44.1",
+		"webpack-cli": "3.3.12"
 	}
 }
