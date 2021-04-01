@@ -1,4 +1,4 @@
-export const synthExchangesMock = {
+export const synthExchangesMockL1 = {
 	response: {
 		account: '0x60d4f28f407121bca015d47cdc9b9b4546b5a9c7',
 		block: '12116438',
@@ -32,5 +32,20 @@ export const synthExchangesMock = {
 		toAmount: '4.628088422134899435',
 		toAmountInUSD: '248435.46253401185222784',
 		toCurrencyKey: 'sBTC',
+	},
+};
+
+export const synthExchangesMockL2 = {
+	response: {
+		...synthExchangesMockL1.response,
+		fromAmountInUSD: '249183.011568718006275302',
+		toAmountInUSD: '248435.462534011852227840',
+		feesInUSD: '747.549034706154047462',
+	},
+	formatted: {
+		...synthExchangesMockL1.formatted,
+		fromAmountInUSD: '249183.01',
+		toAmountInUSD: '248435.46',
+		feesInUSD: '747.55',
 	},
 };

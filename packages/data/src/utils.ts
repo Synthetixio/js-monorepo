@@ -13,6 +13,9 @@ export const formatParams = (obj: {
 	return newObj as { [key: string]: string | number };
 };
 
+export const createGQLBlockNumberString = (blockNumber?: number): string =>
+	blockNumber != null ? `\nblock: { number: ${blockNumber} }\n` : '';
+
 export const createGQLWhereString = (data: Array<[string, string | null]>): string => {
 	const whereString = data.reduce((acc, [key, param]) => {
 		if (param != null) {
@@ -70,6 +73,7 @@ export const getSortedField = (query: string): string => {
 		const tempString = query.substr(beginSortedFieldIndex);
 		return tempString.substr(0, tempString.indexOf('\n'));
 	}
+	// id is the default field to sort with pagination if there is no orderBy field
 	return 'id';
 };
 

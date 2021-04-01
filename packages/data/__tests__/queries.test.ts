@@ -2,7 +2,8 @@ import {
 	parseIssued,
 	parseRates,
 	parseSynthetix,
-	parseSynthExchanges,
+	parseSynthExchangesL1,
+	parseSynthExchangesL2,
 	parseBurned,
 	parseFeesClaimed,
 	parseSnxPrice,
@@ -18,7 +19,8 @@ import {
 	ratesMock,
 	feesClaimedMock,
 	synthetixMock,
-	synthExchangesMock,
+	synthExchangesMockL1,
+	synthExchangesMockL2,
 	debtSnapshotMock,
 	snxHolderMock,
 } from '../__mocks__';
@@ -58,9 +60,12 @@ describe('@synthetixio/data tests', () => {
 	});
 
 	describe('exchanges query', () => {
-		test('should parse the response correctly', () => {
-			const parsedOutput = parseSynthExchanges(synthExchangesMock.response);
-			expect(synthExchangesMock.formatted).toEqual(parsedOutput);
+		test('should parse the response correctly for L1 and L2', () => {
+			const parsedOutputL1 = parseSynthExchangesL1(synthExchangesMockL1.response);
+			expect(synthExchangesMockL1.formatted).toEqual(parsedOutputL1);
+
+			const parsedOutputL2 = parseSynthExchangesL2(synthExchangesMockL2.response);
+			expect(synthExchangesMockL2.formatted).toEqual(parsedOutputL2);
 		});
 
 		test('should return exchanges from l1', async () => {
@@ -113,6 +118,25 @@ describe('@synthetixio/data tests', () => {
 		test('should return burneds data from l1', async () => {
 			const burnedInfo = await snxData.burned({ max: 1, account: randomLargeSNXStaker });
 			expect(burnedInfo![0].account).toEqual(randomLargeSNXStaker);
+		});
+
+		test('should return burneds data from l1 at a specific block', async () => {
+			const burnedInfo = await snxData.burned({
+				max: 1,
+				account: randomLargeSNXStaker,
+				blockNumber: 12147638,
+			});
+			expect(burnedInfo![0].account).toEqual(randomLargeSNXStaker);
+			/**
+			 * taken from prod values which can be queried here: https://thegraph.com/explorer/subgraph/synthetixio-team/synthetix
+			 * using this query
+			 * {
+			 *   burneds(block:{ number:12147638 }, orderBy:timestamp, orderDirection:desc, where: {account:"0x042ed37d32b88ab6b1c2e7b8a400dcdc728050bc"}) {
+			 *     value id source timestamp gasPrice block
+			 *   }
+			 * }
+			 */
+			expect(burnedInfo![0].block).toEqual(12140772);
 		});
 
 		test('should return burneds data from l2', async () => {

@@ -4,7 +4,8 @@ import { request } from 'graphql-request';
 import { l1Endpoints, l2Endpoints, timeSeriesEntityMap } from './constants';
 import {
 	createSynthExchangesQuery,
-	parseSynthExchanges,
+	parseSynthExchangesL1,
+	parseSynthExchangesL2,
 	createSynthetixQuery,
 	parseSynthetix,
 	createIssuedQuery,
@@ -77,7 +78,9 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 			queryMethod: createSynthExchangesQuery,
 			variables: formattedParams,
 		});
-		return response != null ? response.synthExchanges.map(parseSynthExchanges) : null;
+		return response != null
+			? response.synthExchanges.map(useOvm ? parseSynthExchangesL2 : parseSynthExchangesL1)
+			: null;
 	},
 	synthetix: async (): Promise<Synthetix | null> => {
 		const query = createSynthetixQuery();
