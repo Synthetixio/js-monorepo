@@ -2,7 +2,8 @@ import {
 	parseIssued,
 	parseRates,
 	parseSynthetix,
-	parseSynthExchanges,
+	parseSynthExchangesL1,
+	parseSynthExchangesL2,
 	parseBurned,
 	parseFeesClaimed,
 	parseSnxPrice,
@@ -18,7 +19,8 @@ import {
 	ratesMock,
 	feesClaimedMock,
 	synthetixMock,
-	synthExchangesMock,
+	synthExchangesMockL1,
+	synthExchangesMockL2,
 	debtSnapshotMock,
 	snxHolderMock,
 } from '../__mocks__';
@@ -29,6 +31,7 @@ describe('@synthetixio/data tests', () => {
 	let snxData: SynthetixData;
 	let snxDataOvm: SynthetixData;
 	const oneDayTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_DAY']);
+	const oneMonthTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_MONTH']);
 
 	beforeAll(() => {
 		snxData = synthetixData({ useOvm: false });
@@ -57,19 +60,36 @@ describe('@synthetixio/data tests', () => {
 	});
 
 	describe('exchanges query', () => {
-		test('should parse the response correctly', () => {
-			const parsedOutput = parseSynthExchanges(synthExchangesMock.response);
-			expect(synthExchangesMock.formatted).toEqual(parsedOutput);
+		test('should parse the response correctly for L1 and L2', () => {
+			const parsedOutputL1 = parseSynthExchangesL1(synthExchangesMockL1.response);
+			expect(synthExchangesMockL1.formatted).toEqual(parsedOutputL1);
+
+			const parsedOutputL2 = parseSynthExchangesL2(synthExchangesMockL2.response);
+			expect(synthExchangesMockL2.formatted).toEqual(parsedOutputL2);
 		});
 
 		test('should return exchanges from l1', async () => {
 			const exchanges = await snxData.synthExchanges({
 				minTimestamp: oneDayTimestamp,
 			});
-			expect(exchanges!.length).toBeGreaterThan(0);
 			expect(Number(exchanges![0].fromAmount)).toBeGreaterThan(0);
 		});
-		// TODO add L2 test once we have exchanges to verify
+
+		test('should return over 1000 exchanges from l1 with no max input and a long timeframe', async () => {
+			jest.setTimeout(30000);
+			const exchanges = await snxData.synthExchanges({
+				minTimestamp: oneMonthTimestamp,
+			});
+			expect(Number(exchanges![0].fromAmount)).toBeGreaterThan(0);
+			expect(exchanges!.length).toBeGreaterThan(1000);
+		});
+
+		test('should return exchagnes from l2', async () => {
+			const exchanges = await snxDataOvm.synthExchanges({
+				minTimestamp: oneMonthTimestamp,
+			});
+			expect(Number(exchanges![0].fromAmount)).toBeGreaterThan(0);
+		});
 	});
 
 	describe('issued query', () => {
@@ -98,6 +118,25 @@ describe('@synthetixio/data tests', () => {
 		test('should return burneds data from l1', async () => {
 			const burnedInfo = await snxData.burned({ max: 1, account: randomLargeSNXStaker });
 			expect(burnedInfo![0].account).toEqual(randomLargeSNXStaker);
+		});
+
+		test('should return burneds data from l1 at a specific block', async () => {
+			const burnedInfo = await snxData.burned({
+				max: 1,
+				account: randomLargeSNXStaker,
+				blockNumber: 12147638,
+			});
+			expect(burnedInfo![0].account).toEqual(randomLargeSNXStaker);
+			/**
+			 * taken from prod values which can be queried here: https://thegraph.com/explorer/subgraph/synthetixio-team/synthetix
+			 * using this query
+			 * {
+			 *   burneds(block:{ number:12147638 }, orderBy:timestamp, orderDirection:desc, where: {account:"0x042ed37d32b88ab6b1c2e7b8a400dcdc728050bc"}) {
+			 *     value id source timestamp gasPrice block
+			 *   }
+			 * }
+			 */
+			expect(burnedInfo![0].block).toEqual(12140772);
 		});
 
 		test('should return burneds data from l2', async () => {
@@ -160,11 +199,21 @@ describe('@synthetixio/data tests', () => {
 			expect(l1RateUpdatesInfo!.length).toBeGreaterThan(0);
 		});
 
+		test('should return over 1000 rateUpdates data from l1 with no max input and a long timeframe', async () => {
+			jest.setTimeout(30000);
+			const l1RateUpdatesAnnualInfo = await snxData.rateUpdates({
+				synth: 'SNX',
+				minTimestamp: oneMonthTimestamp,
+			});
+			expect(l1RateUpdatesAnnualInfo![0].synth).toEqual('SNX');
+			expect(l1RateUpdatesAnnualInfo!.length).toBeGreaterThan(1000);
+		});
+
 		test('should return rateUpdates data from l2', async () => {
 			const l2RateUpdatesInfo = await snxDataOvm.rateUpdates({
 				max: 5,
 				synth: 'SNX',
-				minTimestamp: oneDayTimestamp,
+				minTimestamp: oneMonthTimestamp,
 			});
 			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l2RateUpdatesInfo!.length).toBeGreaterThan(0);

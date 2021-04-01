@@ -13,6 +13,9 @@ export const l1Endpoints = {
 
 export const l2Endpoints = {
 	snx: 'https://api.thegraph.com/subgraphs/name/dvd-schwrtz/test',
+	snxKovanOvm: 'https://api.thegraph.com/subgraphs/name/dvd-schwrtz/synthetix',
 };
 
 export const timeSeriesEntityMap = { '1d': 'dailySNXPrices', '15m': 'fifteenMinuteSNXPrices' };
+
+export const GQL_RESPONSE_LIMIT = 999;
