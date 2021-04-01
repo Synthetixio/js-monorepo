@@ -35,6 +35,7 @@ import {
 	DebtSnapshotParams,
 	SnxHolderParams,
 	BaseQueryParams,
+	SynthExchangeExpanded,
 } from './types';
 import {
 	SynthExchange,
@@ -71,7 +72,9 @@ const calculateTimestampForPeriod = (periodInHours: number): number =>
 	Math.trunc(subHours(new Date().getTime(), periodInHours).getTime() / 1000);
 
 const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
-	synthExchanges: async (params?: SynthExchangeQueryParams): Promise<SynthExchange[] | null> => {
+	synthExchanges: async (
+		params?: SynthExchangeQueryParams
+	): Promise<SynthExchangeExpanded[] | null> => {
 		const formattedParams = formatParams(params);
 		const response = await requestHelper({
 			// TODO change from kovan
