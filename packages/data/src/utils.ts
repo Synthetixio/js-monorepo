@@ -17,3 +17,15 @@ export const createGQLWhereString = (data: Array<[string, string | null]>): stri
 };
 
 export const formatTimestamp = (ts: number | string): number => Number(ts) * 1000;
+
+export const hexToAscii = (str: string) => {
+	const hex = str.toString();
+	let out = '';
+	for (let n = 2; n < hex.length; n += 2) {
+		const nextPair = hex.substr(n, 2);
+		if (nextPair !== '00') {
+			out += String.fromCharCode(parseInt(nextPair, 16));
+		}
+	}
+	return out;
+};
