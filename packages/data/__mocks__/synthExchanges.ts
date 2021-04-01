@@ -23,7 +23,7 @@ export const synthExchangesMock = {
 		from: '0x0eb59acd1f0b73970e5b2fd095bf373ce569e4a9',
 		fromAmount: '249183.011568718006275302',
 		fromAmountInUSD: '249183.011568718006275302',
-		fromCurrencyKey: '0x7355534400000000000000000000000000000000000000000000000000000000',
+		fromCurrencyKey: 'sUSD',
 		gasPrice: '142100000000',
 		id: '0x5771afba4755d73e1becf5b58640b48b999b01ac267c4d39334916ee90285088-232',
 		network: 'mainnet',
@@ -31,6 +31,6 @@ export const synthExchangesMock = {
 		toAddress: '0x60d4f28f407121bca015d47cdc9b9b4546b5a9c7',
 		toAmount: '4.628088422134899435',
 		toAmountInUSD: '248435.46253401185222784',
-		toCurrencyKey: '0x7342544300000000000000000000000000000000000000000000000000000000',
+		toCurrencyKey: 'sBTC',
 	},
 };
