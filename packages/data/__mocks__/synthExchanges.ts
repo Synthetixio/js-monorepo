@@ -32,6 +32,7 @@ export const synthExchangesMockL1 = {
 		toAmount: '4.628088422134899435',
 		toAmountInUSD: '248435.46253401185222784',
 		toCurrencyKey: 'sBTC',
+		hash: "0x5771afba4755d73e1becf5b58640b48b999b01ac267c4d39334916ee90285088",
 	},
 };
 

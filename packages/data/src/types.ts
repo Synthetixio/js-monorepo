@@ -68,3 +68,7 @@ export type SynthetixData = {
 	debtSnapshots: (params?: DebtSnapshotParams) => Promise<DebtSnapshot[] | null>;
 	snxHolders: (params?: SnxHolderParams) => Promise<SnxHolder[] | null>;
 };
+
+export type SynthExchangeExpanded = SynthExchange & {
+	hash: string;
+};
