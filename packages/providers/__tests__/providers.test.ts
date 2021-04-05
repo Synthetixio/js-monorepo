@@ -1,8 +1,7 @@
-import { getOptimismProvider } from '../src';
+import { ERRORS } from '../src/constants';
 
 describe('@synthetixio/providers', () => {
 	it('needs tests', () => {
-		const response = getOptimismProvider({ layerOneNetworkId: 1 });
-		expect(response.formatter).toBeTruthy();
+		expect(ERRORS.noWeb3Provider).toEqual('Web3 provider missing');
 	});
 });
