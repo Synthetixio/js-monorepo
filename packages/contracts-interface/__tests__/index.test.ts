@@ -1,12 +1,12 @@
 import { ethers } from 'ethers';
 import findIndex from 'lodash/findIndex';
 
-import synthetix from '../src';
+import synthetix, { SynthetixJS } from '../src';
 import { Network, NetworkId } from '../src/types';
 import { ERRORS } from '../src/constants';
 
 describe('@synthetixio/js tests', () => {
-	let snxjs;
+	let snxjs: SynthetixJS;
 
 	beforeAll(() => {
 		snxjs = synthetix({ network: Network.Kovan });
@@ -131,6 +131,7 @@ describe('@synthetixio/js tests', () => {
 
 	test('should throw error with wrong network', () => {
 		try {
+			// @ts-ignore
 			synthetix({ network: 'wrongnetwork' });
 		} catch (e) {
 			expect(e.message).toEqual(ERRORS.badNetworkArg);
