@@ -43,6 +43,8 @@ export const hexToAscii = (str: string): string => {
 	return out;
 };
 
+export const getHashFromId = (id: string) => id.split('-')[0];
+
 const setPaginationMaxVariable = ({
 	variables,
 	numTries,
