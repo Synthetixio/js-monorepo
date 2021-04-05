@@ -9,8 +9,7 @@
 			"packages/data"
 		]
 	},
-	"scripts": {
-		"test": "jest --forceExit --coverage --no-cache --runInBand",
-		"lint": "eslint './packages/**/*/src/**/*.{js,ts,tsx}' && tsc"
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "3.8.0"
 	}
 }
