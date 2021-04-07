@@ -9,6 +9,7 @@ export const l1Endpoints = {
 	limitOrders: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-limit-orders',
 	exchanger: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanger',
 	liquidations: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-liquidations',
+	shorts: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-shorts',
 };
 
 export const l2Endpoints = {

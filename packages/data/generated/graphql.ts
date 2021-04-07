@@ -534,6 +534,18 @@ export type Query = {
   ratesUpdateds: Array<RatesUpdated>;
   rewardEscrowHolder?: Maybe<RewardEscrowHolder>;
   rewardEscrowHolders: Array<RewardEscrowHolder>;
+  short?: Maybe<Short>;
+  shortCollateralChange?: Maybe<ShortCollateralChange>;
+  shortCollateralChanges: Array<ShortCollateralChange>;
+  shortContract?: Maybe<ShortContract>;
+  shortContractUpdate?: Maybe<ShortContractUpdate>;
+  shortContractUpdates: Array<ShortContractUpdate>;
+  shortContracts: Array<ShortContract>;
+  shortLiquidation?: Maybe<ShortLiquidation>;
+  shortLiquidations: Array<ShortLiquidation>;
+  shortLoanChange?: Maybe<ShortLoanChange>;
+  shortLoanChanges: Array<ShortLoanChange>;
+  shorts: Array<Short>;
   snxholder?: Maybe<SnxHolder>;
   snxholders: Array<SnxHolder>;
   synthExchange?: Maybe<SynthExchange>;
@@ -1218,6 +1230,102 @@ export type QueryRewardEscrowHoldersArgs = {
 };
 
 
+export type QueryShortArgs = {
+  id: Scalars['ID'];
+  block?: Maybe<Block_Height>;
+};
+
+
+export type QueryShortCollateralChangeArgs = {
+  id: Scalars['ID'];
+  block?: Maybe<Block_Height>;
+};
+
+
+export type QueryShortCollateralChangesArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortCollateralChange_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortCollateralChange_Filter>;
+  block?: Maybe<Block_Height>;
+};
+
+
+export type QueryShortContractArgs = {
+  id: Scalars['ID'];
+  block?: Maybe<Block_Height>;
+};
+
+
+export type QueryShortContractUpdateArgs = {
+  id: Scalars['ID'];
+  block?: Maybe<Block_Height>;
+};
+
+
+export type QueryShortContractUpdatesArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortContractUpdate_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortContractUpdate_Filter>;
+  block?: Maybe<Block_Height>;
+};
+
+
+export type QueryShortContractsArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortContract_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortContract_Filter>;
+  block?: Maybe<Block_Height>;
+};
+
+
+export type QueryShortLiquidationArgs = {
+  id: Scalars['ID'];
+  block?: Maybe<Block_Height>;
+};
+
+
+export type QueryShortLiquidationsArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortLiquidation_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortLiquidation_Filter>;
+  block?: Maybe<Block_Height>;
+};
+
+
+export type QueryShortLoanChangeArgs = {
+  id: Scalars['ID'];
+  block?: Maybe<Block_Height>;
+};
+
+
+export type QueryShortLoanChangesArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortLoanChange_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortLoanChange_Filter>;
+  block?: Maybe<Block_Height>;
+};
+
+
+export type QueryShortsArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<Short_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<Short_Filter>;
+  block?: Maybe<Block_Height>;
+};
+
+
 export type QuerySnxholderArgs = {
   id: Scalars['ID'];
   block?: Maybe<Block_Height>;
@@ -1613,6 +1721,18 @@ export type Subscription = {
   ratesUpdateds: Array<RatesUpdated>;
   rewardEscrowHolder?: Maybe<RewardEscrowHolder>;
   rewardEscrowHolders: Array<RewardEscrowHolder>;
+  short?: Maybe<Short>;
+  shortCollateralChange?: Maybe<ShortCollateralChange>;
+  shortCollateralChanges: Array<ShortCollateralChange>;
+  shortContract?: Maybe<ShortContract>;
+  shortContractUpdate?: Maybe<ShortContractUpdate>;
+  shortContractUpdates: Array<ShortContractUpdate>;
+  shortContracts: Array<ShortContract>;
+  shortLiquidation?: Maybe<ShortLiquidation>;
+  shortLiquidations: Array<ShortLiquidation>;
+  shortLoanChange?: Maybe<ShortLoanChange>;
+  shortLoanChanges: Array<ShortLoanChange>;
+  shorts: Array<Short>;
   snxholder?: Maybe<SnxHolder>;
   snxholders: Array<SnxHolder>;
   synthExchange?: Maybe<SynthExchange>;
@@ -2293,6 +2413,102 @@ export type SubscriptionRewardEscrowHoldersArgs = {
   orderBy?: Maybe<RewardEscrowHolder_OrderBy>;
   orderDirection?: Maybe<OrderDirection>;
   where?: Maybe<RewardEscrowHolder_Filter>;
+  block?: Maybe<Block_Height>;
+};
+
+
+export type SubscriptionShortArgs = {
+  id: Scalars['ID'];
+  block?: Maybe<Block_Height>;
+};
+
+
+export type SubscriptionShortCollateralChangeArgs = {
+  id: Scalars['ID'];
+  block?: Maybe<Block_Height>;
+};
+
+
+export type SubscriptionShortCollateralChangesArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortCollateralChange_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortCollateralChange_Filter>;
+  block?: Maybe<Block_Height>;
+};
+
+
+export type SubscriptionShortContractArgs = {
+  id: Scalars['ID'];
+  block?: Maybe<Block_Height>;
+};
+
+
+export type SubscriptionShortContractUpdateArgs = {
+  id: Scalars['ID'];
+  block?: Maybe<Block_Height>;
+};
+
+
+export type SubscriptionShortContractUpdatesArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortContractUpdate_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortContractUpdate_Filter>;
+  block?: Maybe<Block_Height>;
+};
+
+
+export type SubscriptionShortContractsArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortContract_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortContract_Filter>;
+  block?: Maybe<Block_Height>;
+};
+
+
+export type SubscriptionShortLiquidationArgs = {
+  id: Scalars['ID'];
+  block?: Maybe<Block_Height>;
+};
+
+
+export type SubscriptionShortLiquidationsArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortLiquidation_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortLiquidation_Filter>;
+  block?: Maybe<Block_Height>;
+};
+
+
+export type SubscriptionShortLoanChangeArgs = {
+  id: Scalars['ID'];
+  block?: Maybe<Block_Height>;
+};
+
+
+export type SubscriptionShortLoanChangesArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortLoanChange_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortLoanChange_Filter>;
+  block?: Maybe<Block_Height>;
+};
+
+
+export type SubscriptionShortsArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<Short_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<Short_Filter>;
   block?: Maybe<Block_Height>;
 };
 
@@ -5395,4 +5611,681 @@ export enum Loan_OrderBy {
   CreatedAt = 'createdAt',
   ClosedAt = 'closedAt',
   HasPartialLiquidations = 'hasPartialLiquidations'
+}
+
+export type Short = {
+  __typename?: 'Short';
+  /**  the short id  */
+  id: Scalars['ID'];
+  /**  contract level info for the short position  */
+  contractData: ShortContract;
+  /**  the transaction hash of the short  */
+  txHash: Scalars['String'];
+  /**  the account that created the short  */
+  account: Scalars['Bytes'];
+  /**  the type of collateral locked - sUSD, ETH, renBTC  */
+  collateralLocked: Scalars['Bytes'];
+  /**  the amount of collateral locked in the short  */
+  collateralLockedAmount: Scalars['BigInt'];
+  /**  the denomination of the loan repayment - sETH, sBTC  */
+  synthBorrowed: Scalars['Bytes'];
+  /**  the amount owed denominated in the loan repayment synth  */
+  synthBorrowedAmount: Scalars['BigInt'];
+  /**  the timestamp the accrued interest was most recently updated  */
+  accruedInterestLastUpdateTimestamp: Scalars['BigInt'];
+  /**  is the short still open?  */
+  isOpen: Scalars['Boolean'];
+  /**  the block the short was created at  */
+  createdAtBlock: Scalars['BigInt'];
+  /**  the timestamp the short was created  */
+  createdAt: Scalars['BigInt'];
+  /**  the timestamp the short was closed  */
+  closedAt?: Maybe<Scalars['BigInt']>;
+  /**  liquidations that have been made on the short  */
+  liquidations?: Maybe<Array<ShortLiquidation>>;
+  /**  collateral deposits and withdrawals that have been made on the short  */
+  collateralChanges?: Maybe<Array<ShortCollateralChange>>;
+  /**  loan changes that have been made on the short - increasing or decreasing the short position  */
+  loanChanges: Array<ShortLoanChange>;
+};
+
+
+export type ShortLiquidationsArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortLiquidation_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortLiquidation_Filter>;
+};
+
+
+export type ShortCollateralChangesArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortCollateralChange_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortCollateralChange_Filter>;
+};
+
+
+export type ShortLoanChangesArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortLoanChange_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortLoanChange_Filter>;
+};
+
+export type ShortCollateralChange = {
+  __typename?: 'ShortCollateralChange';
+  /**  the event tx hash plus event log index  */
+  id: Scalars['ID'];
+  /**  denotes if the event was a deposit (true) or withdrawal (false) */
+  isDeposit: Scalars['Boolean'];
+  /**  the amount of collateral deposited or withdrawn  */
+  amount: Scalars['BigInt'];
+  /**  the total amount of collateral after the deposit or withdrawal is included  */
+  collateralAfter: Scalars['BigInt'];
+  /**  the respective short  */
+  short: Short;
+  /**  the timestamp collateral was deposited or withdrawn  */
+  timestamp: Scalars['BigInt'];
+  /**  the block the collateral was changed  */
+  blockNumber: Scalars['BigInt'];
+};
+
+export type ShortCollateralChange_Filter = {
+  id?: Maybe<Scalars['ID']>;
+  id_not?: Maybe<Scalars['ID']>;
+  id_gt?: Maybe<Scalars['ID']>;
+  id_lt?: Maybe<Scalars['ID']>;
+  id_gte?: Maybe<Scalars['ID']>;
+  id_lte?: Maybe<Scalars['ID']>;
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  isDeposit?: Maybe<Scalars['Boolean']>;
+  isDeposit_not?: Maybe<Scalars['Boolean']>;
+  isDeposit_in?: Maybe<Array<Scalars['Boolean']>>;
+  isDeposit_not_in?: Maybe<Array<Scalars['Boolean']>>;
+  amount?: Maybe<Scalars['BigInt']>;
+  amount_not?: Maybe<Scalars['BigInt']>;
+  amount_gt?: Maybe<Scalars['BigInt']>;
+  amount_lt?: Maybe<Scalars['BigInt']>;
+  amount_gte?: Maybe<Scalars['BigInt']>;
+  amount_lte?: Maybe<Scalars['BigInt']>;
+  amount_in?: Maybe<Array<Scalars['BigInt']>>;
+  amount_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  collateralAfter?: Maybe<Scalars['BigInt']>;
+  collateralAfter_not?: Maybe<Scalars['BigInt']>;
+  collateralAfter_gt?: Maybe<Scalars['BigInt']>;
+  collateralAfter_lt?: Maybe<Scalars['BigInt']>;
+  collateralAfter_gte?: Maybe<Scalars['BigInt']>;
+  collateralAfter_lte?: Maybe<Scalars['BigInt']>;
+  collateralAfter_in?: Maybe<Array<Scalars['BigInt']>>;
+  collateralAfter_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  short?: Maybe<Scalars['String']>;
+  short_not?: Maybe<Scalars['String']>;
+  short_gt?: Maybe<Scalars['String']>;
+  short_lt?: Maybe<Scalars['String']>;
+  short_gte?: Maybe<Scalars['String']>;
+  short_lte?: Maybe<Scalars['String']>;
+  short_in?: Maybe<Array<Scalars['String']>>;
+  short_not_in?: Maybe<Array<Scalars['String']>>;
+  short_contains?: Maybe<Scalars['String']>;
+  short_not_contains?: Maybe<Scalars['String']>;
+  short_starts_with?: Maybe<Scalars['String']>;
+  short_not_starts_with?: Maybe<Scalars['String']>;
+  short_ends_with?: Maybe<Scalars['String']>;
+  short_not_ends_with?: Maybe<Scalars['String']>;
+  timestamp?: Maybe<Scalars['BigInt']>;
+  timestamp_not?: Maybe<Scalars['BigInt']>;
+  timestamp_gt?: Maybe<Scalars['BigInt']>;
+  timestamp_lt?: Maybe<Scalars['BigInt']>;
+  timestamp_gte?: Maybe<Scalars['BigInt']>;
+  timestamp_lte?: Maybe<Scalars['BigInt']>;
+  timestamp_in?: Maybe<Array<Scalars['BigInt']>>;
+  timestamp_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  blockNumber?: Maybe<Scalars['BigInt']>;
+  blockNumber_not?: Maybe<Scalars['BigInt']>;
+  blockNumber_gt?: Maybe<Scalars['BigInt']>;
+  blockNumber_lt?: Maybe<Scalars['BigInt']>;
+  blockNumber_gte?: Maybe<Scalars['BigInt']>;
+  blockNumber_lte?: Maybe<Scalars['BigInt']>;
+  blockNumber_in?: Maybe<Array<Scalars['BigInt']>>;
+  blockNumber_not_in?: Maybe<Array<Scalars['BigInt']>>;
+};
+
+export enum ShortCollateralChange_OrderBy {
+  Id = 'id',
+  IsDeposit = 'isDeposit',
+  Amount = 'amount',
+  CollateralAfter = 'collateralAfter',
+  Short = 'short',
+  Timestamp = 'timestamp',
+  BlockNumber = 'blockNumber'
+}
+
+export type ShortContract = {
+  __typename?: 'ShortContract';
+  /**  the address of the shorting contract  */
+  id: Scalars['ID'];
+  /**  a list of shorts attached to each contract  */
+  shorts?: Maybe<Array<Short>>;
+  /**  a list of changes to contract level data  */
+  contractUpdates?: Maybe<Array<ShortContractUpdate>>;
+  /**  the min c-ratio for borrowers below which they can be liquidated  */
+  minCratio: Scalars['BigInt'];
+  /**  the minimum collateral required to open a position  */
+  minCollateral: Scalars['BigInt'];
+  /**  the fee for issuing a short  */
+  issueFeeRate: Scalars['BigInt'];
+  /**  the max number of loans per account  */
+  maxLoansPerAccount: Scalars['BigInt'];
+  /**  Time in seconds that a user must wait between interacting with a loan. Provides front running and flash loan protection.  */
+  interactionDelay: Scalars['BigInt'];
+  /**  the manager is a contract that ties the shorting contract in with the rest of the Synthetix protocol  */
+  manager: Scalars['Bytes'];
+  /**  a boolean that prevents new loans on the contract when false  */
+  canOpenLoans: Scalars['Boolean'];
+};
+
+
+export type ShortContractShortsArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<Short_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<Short_Filter>;
+};
+
+
+export type ShortContractContractUpdatesArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ShortContractUpdate_OrderBy>;
+  orderDirection?: Maybe<OrderDirection>;
+  where?: Maybe<ShortContractUpdate_Filter>;
+};
+
+export type ShortContractUpdate = {
+  __typename?: 'ShortContractUpdate';
+  /**  the event tx hash plus event log index  */
+  id: Scalars['ID'];
+  /**  the field that was changed  */
+  field: Scalars['String'];
+  /**  the new value of the field in string format  */
+  value: Scalars['String'];
+  /**  the respective short contract  */
+  contractData: ShortContract;
+  /**  the timestamp of the contract update event  */
+  timestamp: Scalars['BigInt'];
+  /**  the block the short contract was udpated at  */
+  blockNumber: Scalars['BigInt'];
+};
+
+export type ShortContractUpdate_Filter = {
+  id?: Maybe<Scalars['ID']>;
+  id_not?: Maybe<Scalars['ID']>;
+  id_gt?: Maybe<Scalars['ID']>;
+  id_lt?: Maybe<Scalars['ID']>;
+  id_gte?: Maybe<Scalars['ID']>;
+  id_lte?: Maybe<Scalars['ID']>;
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  field?: Maybe<Scalars['String']>;
+  field_not?: Maybe<Scalars['String']>;
+  field_gt?: Maybe<Scalars['String']>;
+  field_lt?: Maybe<Scalars['String']>;
+  field_gte?: Maybe<Scalars['String']>;
+  field_lte?: Maybe<Scalars['String']>;
+  field_in?: Maybe<Array<Scalars['String']>>;
+  field_not_in?: Maybe<Array<Scalars['String']>>;
+  field_contains?: Maybe<Scalars['String']>;
+  field_not_contains?: Maybe<Scalars['String']>;
+  field_starts_with?: Maybe<Scalars['String']>;
+  field_not_starts_with?: Maybe<Scalars['String']>;
+  field_ends_with?: Maybe<Scalars['String']>;
+  field_not_ends_with?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+  value_not?: Maybe<Scalars['String']>;
+  value_gt?: Maybe<Scalars['String']>;
+  value_lt?: Maybe<Scalars['String']>;
+  value_gte?: Maybe<Scalars['String']>;
+  value_lte?: Maybe<Scalars['String']>;
+  value_in?: Maybe<Array<Scalars['String']>>;
+  value_not_in?: Maybe<Array<Scalars['String']>>;
+  value_contains?: Maybe<Scalars['String']>;
+  value_not_contains?: Maybe<Scalars['String']>;
+  value_starts_with?: Maybe<Scalars['String']>;
+  value_not_starts_with?: Maybe<Scalars['String']>;
+  value_ends_with?: Maybe<Scalars['String']>;
+  value_not_ends_with?: Maybe<Scalars['String']>;
+  contractData?: Maybe<Scalars['String']>;
+  contractData_not?: Maybe<Scalars['String']>;
+  contractData_gt?: Maybe<Scalars['String']>;
+  contractData_lt?: Maybe<Scalars['String']>;
+  contractData_gte?: Maybe<Scalars['String']>;
+  contractData_lte?: Maybe<Scalars['String']>;
+  contractData_in?: Maybe<Array<Scalars['String']>>;
+  contractData_not_in?: Maybe<Array<Scalars['String']>>;
+  contractData_contains?: Maybe<Scalars['String']>;
+  contractData_not_contains?: Maybe<Scalars['String']>;
+  contractData_starts_with?: Maybe<Scalars['String']>;
+  contractData_not_starts_with?: Maybe<Scalars['String']>;
+  contractData_ends_with?: Maybe<Scalars['String']>;
+  contractData_not_ends_with?: Maybe<Scalars['String']>;
+  timestamp?: Maybe<Scalars['BigInt']>;
+  timestamp_not?: Maybe<Scalars['BigInt']>;
+  timestamp_gt?: Maybe<Scalars['BigInt']>;
+  timestamp_lt?: Maybe<Scalars['BigInt']>;
+  timestamp_gte?: Maybe<Scalars['BigInt']>;
+  timestamp_lte?: Maybe<Scalars['BigInt']>;
+  timestamp_in?: Maybe<Array<Scalars['BigInt']>>;
+  timestamp_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  blockNumber?: Maybe<Scalars['BigInt']>;
+  blockNumber_not?: Maybe<Scalars['BigInt']>;
+  blockNumber_gt?: Maybe<Scalars['BigInt']>;
+  blockNumber_lt?: Maybe<Scalars['BigInt']>;
+  blockNumber_gte?: Maybe<Scalars['BigInt']>;
+  blockNumber_lte?: Maybe<Scalars['BigInt']>;
+  blockNumber_in?: Maybe<Array<Scalars['BigInt']>>;
+  blockNumber_not_in?: Maybe<Array<Scalars['BigInt']>>;
+};
+
+export enum ShortContractUpdate_OrderBy {
+  Id = 'id',
+  Field = 'field',
+  Value = 'value',
+  ContractData = 'contractData',
+  Timestamp = 'timestamp',
+  BlockNumber = 'blockNumber'
+}
+
+export type ShortContract_Filter = {
+  id?: Maybe<Scalars['ID']>;
+  id_not?: Maybe<Scalars['ID']>;
+  id_gt?: Maybe<Scalars['ID']>;
+  id_lt?: Maybe<Scalars['ID']>;
+  id_gte?: Maybe<Scalars['ID']>;
+  id_lte?: Maybe<Scalars['ID']>;
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  minCratio?: Maybe<Scalars['BigInt']>;
+  minCratio_not?: Maybe<Scalars['BigInt']>;
+  minCratio_gt?: Maybe<Scalars['BigInt']>;
+  minCratio_lt?: Maybe<Scalars['BigInt']>;
+  minCratio_gte?: Maybe<Scalars['BigInt']>;
+  minCratio_lte?: Maybe<Scalars['BigInt']>;
+  minCratio_in?: Maybe<Array<Scalars['BigInt']>>;
+  minCratio_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  minCollateral?: Maybe<Scalars['BigInt']>;
+  minCollateral_not?: Maybe<Scalars['BigInt']>;
+  minCollateral_gt?: Maybe<Scalars['BigInt']>;
+  minCollateral_lt?: Maybe<Scalars['BigInt']>;
+  minCollateral_gte?: Maybe<Scalars['BigInt']>;
+  minCollateral_lte?: Maybe<Scalars['BigInt']>;
+  minCollateral_in?: Maybe<Array<Scalars['BigInt']>>;
+  minCollateral_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  issueFeeRate?: Maybe<Scalars['BigInt']>;
+  issueFeeRate_not?: Maybe<Scalars['BigInt']>;
+  issueFeeRate_gt?: Maybe<Scalars['BigInt']>;
+  issueFeeRate_lt?: Maybe<Scalars['BigInt']>;
+  issueFeeRate_gte?: Maybe<Scalars['BigInt']>;
+  issueFeeRate_lte?: Maybe<Scalars['BigInt']>;
+  issueFeeRate_in?: Maybe<Array<Scalars['BigInt']>>;
+  issueFeeRate_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  maxLoansPerAccount?: Maybe<Scalars['BigInt']>;
+  maxLoansPerAccount_not?: Maybe<Scalars['BigInt']>;
+  maxLoansPerAccount_gt?: Maybe<Scalars['BigInt']>;
+  maxLoansPerAccount_lt?: Maybe<Scalars['BigInt']>;
+  maxLoansPerAccount_gte?: Maybe<Scalars['BigInt']>;
+  maxLoansPerAccount_lte?: Maybe<Scalars['BigInt']>;
+  maxLoansPerAccount_in?: Maybe<Array<Scalars['BigInt']>>;
+  maxLoansPerAccount_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  interactionDelay?: Maybe<Scalars['BigInt']>;
+  interactionDelay_not?: Maybe<Scalars['BigInt']>;
+  interactionDelay_gt?: Maybe<Scalars['BigInt']>;
+  interactionDelay_lt?: Maybe<Scalars['BigInt']>;
+  interactionDelay_gte?: Maybe<Scalars['BigInt']>;
+  interactionDelay_lte?: Maybe<Scalars['BigInt']>;
+  interactionDelay_in?: Maybe<Array<Scalars['BigInt']>>;
+  interactionDelay_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  manager?: Maybe<Scalars['Bytes']>;
+  manager_not?: Maybe<Scalars['Bytes']>;
+  manager_in?: Maybe<Array<Scalars['Bytes']>>;
+  manager_not_in?: Maybe<Array<Scalars['Bytes']>>;
+  manager_contains?: Maybe<Scalars['Bytes']>;
+  manager_not_contains?: Maybe<Scalars['Bytes']>;
+  canOpenLoans?: Maybe<Scalars['Boolean']>;
+  canOpenLoans_not?: Maybe<Scalars['Boolean']>;
+  canOpenLoans_in?: Maybe<Array<Scalars['Boolean']>>;
+  canOpenLoans_not_in?: Maybe<Array<Scalars['Boolean']>>;
+};
+
+export enum ShortContract_OrderBy {
+  Id = 'id',
+  Shorts = 'shorts',
+  ContractUpdates = 'contractUpdates',
+  MinCratio = 'minCratio',
+  MinCollateral = 'minCollateral',
+  IssueFeeRate = 'issueFeeRate',
+  MaxLoansPerAccount = 'maxLoansPerAccount',
+  InteractionDelay = 'interactionDelay',
+  Manager = 'manager',
+  CanOpenLoans = 'canOpenLoans'
+}
+
+export type ShortLiquidation = {
+  __typename?: 'ShortLiquidation';
+  /**  the event tx hash plus event log index  */
+  id: Scalars['ID'];
+  /**  the account that liquidated the loan  */
+  liquidator: Scalars['Bytes'];
+  /**  determines if the  */
+  isClosed: Scalars['Boolean'];
+  /**  the amount of the loan that was burned  */
+  liquidatedAmount: Scalars['BigInt'];
+  /**  the amount of the collateral that was taken away from the short owner  */
+  liquidatedCollateral: Scalars['BigInt'];
+  /**  the respective short  */
+  short: Short;
+  /**  the timestamp of the loan liquidation event  */
+  timestamp: Scalars['BigInt'];
+  /**  the block of the liquidation event  */
+  blockNumber: Scalars['BigInt'];
+};
+
+export type ShortLiquidation_Filter = {
+  id?: Maybe<Scalars['ID']>;
+  id_not?: Maybe<Scalars['ID']>;
+  id_gt?: Maybe<Scalars['ID']>;
+  id_lt?: Maybe<Scalars['ID']>;
+  id_gte?: Maybe<Scalars['ID']>;
+  id_lte?: Maybe<Scalars['ID']>;
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  liquidator?: Maybe<Scalars['Bytes']>;
+  liquidator_not?: Maybe<Scalars['Bytes']>;
+  liquidator_in?: Maybe<Array<Scalars['Bytes']>>;
+  liquidator_not_in?: Maybe<Array<Scalars['Bytes']>>;
+  liquidator_contains?: Maybe<Scalars['Bytes']>;
+  liquidator_not_contains?: Maybe<Scalars['Bytes']>;
+  isClosed?: Maybe<Scalars['Boolean']>;
+  isClosed_not?: Maybe<Scalars['Boolean']>;
+  isClosed_in?: Maybe<Array<Scalars['Boolean']>>;
+  isClosed_not_in?: Maybe<Array<Scalars['Boolean']>>;
+  liquidatedAmount?: Maybe<Scalars['BigInt']>;
+  liquidatedAmount_not?: Maybe<Scalars['BigInt']>;
+  liquidatedAmount_gt?: Maybe<Scalars['BigInt']>;
+  liquidatedAmount_lt?: Maybe<Scalars['BigInt']>;
+  liquidatedAmount_gte?: Maybe<Scalars['BigInt']>;
+  liquidatedAmount_lte?: Maybe<Scalars['BigInt']>;
+  liquidatedAmount_in?: Maybe<Array<Scalars['BigInt']>>;
+  liquidatedAmount_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  liquidatedCollateral?: Maybe<Scalars['BigInt']>;
+  liquidatedCollateral_not?: Maybe<Scalars['BigInt']>;
+  liquidatedCollateral_gt?: Maybe<Scalars['BigInt']>;
+  liquidatedCollateral_lt?: Maybe<Scalars['BigInt']>;
+  liquidatedCollateral_gte?: Maybe<Scalars['BigInt']>;
+  liquidatedCollateral_lte?: Maybe<Scalars['BigInt']>;
+  liquidatedCollateral_in?: Maybe<Array<Scalars['BigInt']>>;
+  liquidatedCollateral_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  short?: Maybe<Scalars['String']>;
+  short_not?: Maybe<Scalars['String']>;
+  short_gt?: Maybe<Scalars['String']>;
+  short_lt?: Maybe<Scalars['String']>;
+  short_gte?: Maybe<Scalars['String']>;
+  short_lte?: Maybe<Scalars['String']>;
+  short_in?: Maybe<Array<Scalars['String']>>;
+  short_not_in?: Maybe<Array<Scalars['String']>>;
+  short_contains?: Maybe<Scalars['String']>;
+  short_not_contains?: Maybe<Scalars['String']>;
+  short_starts_with?: Maybe<Scalars['String']>;
+  short_not_starts_with?: Maybe<Scalars['String']>;
+  short_ends_with?: Maybe<Scalars['String']>;
+  short_not_ends_with?: Maybe<Scalars['String']>;
+  timestamp?: Maybe<Scalars['BigInt']>;
+  timestamp_not?: Maybe<Scalars['BigInt']>;
+  timestamp_gt?: Maybe<Scalars['BigInt']>;
+  timestamp_lt?: Maybe<Scalars['BigInt']>;
+  timestamp_gte?: Maybe<Scalars['BigInt']>;
+  timestamp_lte?: Maybe<Scalars['BigInt']>;
+  timestamp_in?: Maybe<Array<Scalars['BigInt']>>;
+  timestamp_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  blockNumber?: Maybe<Scalars['BigInt']>;
+  blockNumber_not?: Maybe<Scalars['BigInt']>;
+  blockNumber_gt?: Maybe<Scalars['BigInt']>;
+  blockNumber_lt?: Maybe<Scalars['BigInt']>;
+  blockNumber_gte?: Maybe<Scalars['BigInt']>;
+  blockNumber_lte?: Maybe<Scalars['BigInt']>;
+  blockNumber_in?: Maybe<Array<Scalars['BigInt']>>;
+  blockNumber_not_in?: Maybe<Array<Scalars['BigInt']>>;
+};
+
+export enum ShortLiquidation_OrderBy {
+  Id = 'id',
+  Liquidator = 'liquidator',
+  IsClosed = 'isClosed',
+  LiquidatedAmount = 'liquidatedAmount',
+  LiquidatedCollateral = 'liquidatedCollateral',
+  Short = 'short',
+  Timestamp = 'timestamp',
+  BlockNumber = 'blockNumber'
+}
+
+export type ShortLoanChange = {
+  __typename?: 'ShortLoanChange';
+  /**  the event tx hash plus event log index  */
+  id: Scalars['ID'];
+  /**  denotes if the event was a repayment (true) or an increase of the loan (false) */
+  isRepayment: Scalars['Boolean'];
+  /**  the amount of loan repaid or increased  */
+  amount: Scalars['BigInt'];
+  /**  the total amount of loan due after the repayment or increase is included  */
+  loanAfter: Scalars['BigInt'];
+  /**  the respective short  */
+  short: Short;
+  /**  the timestamp of the loan repayment or increase  */
+  timestamp: Scalars['BigInt'];
+  /**  the block the short loan was changed  */
+  blockNumber: Scalars['BigInt'];
+};
+
+export type ShortLoanChange_Filter = {
+  id?: Maybe<Scalars['ID']>;
+  id_not?: Maybe<Scalars['ID']>;
+  id_gt?: Maybe<Scalars['ID']>;
+  id_lt?: Maybe<Scalars['ID']>;
+  id_gte?: Maybe<Scalars['ID']>;
+  id_lte?: Maybe<Scalars['ID']>;
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  isRepayment?: Maybe<Scalars['Boolean']>;
+  isRepayment_not?: Maybe<Scalars['Boolean']>;
+  isRepayment_in?: Maybe<Array<Scalars['Boolean']>>;
+  isRepayment_not_in?: Maybe<Array<Scalars['Boolean']>>;
+  amount?: Maybe<Scalars['BigInt']>;
+  amount_not?: Maybe<Scalars['BigInt']>;
+  amount_gt?: Maybe<Scalars['BigInt']>;
+  amount_lt?: Maybe<Scalars['BigInt']>;
+  amount_gte?: Maybe<Scalars['BigInt']>;
+  amount_lte?: Maybe<Scalars['BigInt']>;
+  amount_in?: Maybe<Array<Scalars['BigInt']>>;
+  amount_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  loanAfter?: Maybe<Scalars['BigInt']>;
+  loanAfter_not?: Maybe<Scalars['BigInt']>;
+  loanAfter_gt?: Maybe<Scalars['BigInt']>;
+  loanAfter_lt?: Maybe<Scalars['BigInt']>;
+  loanAfter_gte?: Maybe<Scalars['BigInt']>;
+  loanAfter_lte?: Maybe<Scalars['BigInt']>;
+  loanAfter_in?: Maybe<Array<Scalars['BigInt']>>;
+  loanAfter_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  short?: Maybe<Scalars['String']>;
+  short_not?: Maybe<Scalars['String']>;
+  short_gt?: Maybe<Scalars['String']>;
+  short_lt?: Maybe<Scalars['String']>;
+  short_gte?: Maybe<Scalars['String']>;
+  short_lte?: Maybe<Scalars['String']>;
+  short_in?: Maybe<Array<Scalars['String']>>;
+  short_not_in?: Maybe<Array<Scalars['String']>>;
+  short_contains?: Maybe<Scalars['String']>;
+  short_not_contains?: Maybe<Scalars['String']>;
+  short_starts_with?: Maybe<Scalars['String']>;
+  short_not_starts_with?: Maybe<Scalars['String']>;
+  short_ends_with?: Maybe<Scalars['String']>;
+  short_not_ends_with?: Maybe<Scalars['String']>;
+  timestamp?: Maybe<Scalars['BigInt']>;
+  timestamp_not?: Maybe<Scalars['BigInt']>;
+  timestamp_gt?: Maybe<Scalars['BigInt']>;
+  timestamp_lt?: Maybe<Scalars['BigInt']>;
+  timestamp_gte?: Maybe<Scalars['BigInt']>;
+  timestamp_lte?: Maybe<Scalars['BigInt']>;
+  timestamp_in?: Maybe<Array<Scalars['BigInt']>>;
+  timestamp_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  blockNumber?: Maybe<Scalars['BigInt']>;
+  blockNumber_not?: Maybe<Scalars['BigInt']>;
+  blockNumber_gt?: Maybe<Scalars['BigInt']>;
+  blockNumber_lt?: Maybe<Scalars['BigInt']>;
+  blockNumber_gte?: Maybe<Scalars['BigInt']>;
+  blockNumber_lte?: Maybe<Scalars['BigInt']>;
+  blockNumber_in?: Maybe<Array<Scalars['BigInt']>>;
+  blockNumber_not_in?: Maybe<Array<Scalars['BigInt']>>;
+};
+
+export enum ShortLoanChange_OrderBy {
+  Id = 'id',
+  IsRepayment = 'isRepayment',
+  Amount = 'amount',
+  LoanAfter = 'loanAfter',
+  Short = 'short',
+  Timestamp = 'timestamp',
+  BlockNumber = 'blockNumber'
+}
+
+export type Short_Filter = {
+  id?: Maybe<Scalars['ID']>;
+  id_not?: Maybe<Scalars['ID']>;
+  id_gt?: Maybe<Scalars['ID']>;
+  id_lt?: Maybe<Scalars['ID']>;
+  id_gte?: Maybe<Scalars['ID']>;
+  id_lte?: Maybe<Scalars['ID']>;
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  contractData?: Maybe<Scalars['String']>;
+  contractData_not?: Maybe<Scalars['String']>;
+  contractData_gt?: Maybe<Scalars['String']>;
+  contractData_lt?: Maybe<Scalars['String']>;
+  contractData_gte?: Maybe<Scalars['String']>;
+  contractData_lte?: Maybe<Scalars['String']>;
+  contractData_in?: Maybe<Array<Scalars['String']>>;
+  contractData_not_in?: Maybe<Array<Scalars['String']>>;
+  contractData_contains?: Maybe<Scalars['String']>;
+  contractData_not_contains?: Maybe<Scalars['String']>;
+  contractData_starts_with?: Maybe<Scalars['String']>;
+  contractData_not_starts_with?: Maybe<Scalars['String']>;
+  contractData_ends_with?: Maybe<Scalars['String']>;
+  contractData_not_ends_with?: Maybe<Scalars['String']>;
+  txHash?: Maybe<Scalars['String']>;
+  txHash_not?: Maybe<Scalars['String']>;
+  txHash_gt?: Maybe<Scalars['String']>;
+  txHash_lt?: Maybe<Scalars['String']>;
+  txHash_gte?: Maybe<Scalars['String']>;
+  txHash_lte?: Maybe<Scalars['String']>;
+  txHash_in?: Maybe<Array<Scalars['String']>>;
+  txHash_not_in?: Maybe<Array<Scalars['String']>>;
+  txHash_contains?: Maybe<Scalars['String']>;
+  txHash_not_contains?: Maybe<Scalars['String']>;
+  txHash_starts_with?: Maybe<Scalars['String']>;
+  txHash_not_starts_with?: Maybe<Scalars['String']>;
+  txHash_ends_with?: Maybe<Scalars['String']>;
+  txHash_not_ends_with?: Maybe<Scalars['String']>;
+  account?: Maybe<Scalars['Bytes']>;
+  account_not?: Maybe<Scalars['Bytes']>;
+  account_in?: Maybe<Array<Scalars['Bytes']>>;
+  account_not_in?: Maybe<Array<Scalars['Bytes']>>;
+  account_contains?: Maybe<Scalars['Bytes']>;
+  account_not_contains?: Maybe<Scalars['Bytes']>;
+  collateralLocked?: Maybe<Scalars['Bytes']>;
+  collateralLocked_not?: Maybe<Scalars['Bytes']>;
+  collateralLocked_in?: Maybe<Array<Scalars['Bytes']>>;
+  collateralLocked_not_in?: Maybe<Array<Scalars['Bytes']>>;
+  collateralLocked_contains?: Maybe<Scalars['Bytes']>;
+  collateralLocked_not_contains?: Maybe<Scalars['Bytes']>;
+  collateralLockedAmount?: Maybe<Scalars['BigInt']>;
+  collateralLockedAmount_not?: Maybe<Scalars['BigInt']>;
+  collateralLockedAmount_gt?: Maybe<Scalars['BigInt']>;
+  collateralLockedAmount_lt?: Maybe<Scalars['BigInt']>;
+  collateralLockedAmount_gte?: Maybe<Scalars['BigInt']>;
+  collateralLockedAmount_lte?: Maybe<Scalars['BigInt']>;
+  collateralLockedAmount_in?: Maybe<Array<Scalars['BigInt']>>;
+  collateralLockedAmount_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  synthBorrowed?: Maybe<Scalars['Bytes']>;
+  synthBorrowed_not?: Maybe<Scalars['Bytes']>;
+  synthBorrowed_in?: Maybe<Array<Scalars['Bytes']>>;
+  synthBorrowed_not_in?: Maybe<Array<Scalars['Bytes']>>;
+  synthBorrowed_contains?: Maybe<Scalars['Bytes']>;
+  synthBorrowed_not_contains?: Maybe<Scalars['Bytes']>;
+  synthBorrowedAmount?: Maybe<Scalars['BigInt']>;
+  synthBorrowedAmount_not?: Maybe<Scalars['BigInt']>;
+  synthBorrowedAmount_gt?: Maybe<Scalars['BigInt']>;
+  synthBorrowedAmount_lt?: Maybe<Scalars['BigInt']>;
+  synthBorrowedAmount_gte?: Maybe<Scalars['BigInt']>;
+  synthBorrowedAmount_lte?: Maybe<Scalars['BigInt']>;
+  synthBorrowedAmount_in?: Maybe<Array<Scalars['BigInt']>>;
+  synthBorrowedAmount_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  accruedInterestLastUpdateTimestamp?: Maybe<Scalars['BigInt']>;
+  accruedInterestLastUpdateTimestamp_not?: Maybe<Scalars['BigInt']>;
+  accruedInterestLastUpdateTimestamp_gt?: Maybe<Scalars['BigInt']>;
+  accruedInterestLastUpdateTimestamp_lt?: Maybe<Scalars['BigInt']>;
+  accruedInterestLastUpdateTimestamp_gte?: Maybe<Scalars['BigInt']>;
+  accruedInterestLastUpdateTimestamp_lte?: Maybe<Scalars['BigInt']>;
+  accruedInterestLastUpdateTimestamp_in?: Maybe<Array<Scalars['BigInt']>>;
+  accruedInterestLastUpdateTimestamp_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  isOpen?: Maybe<Scalars['Boolean']>;
+  isOpen_not?: Maybe<Scalars['Boolean']>;
+  isOpen_in?: Maybe<Array<Scalars['Boolean']>>;
+  isOpen_not_in?: Maybe<Array<Scalars['Boolean']>>;
+  createdAtBlock?: Maybe<Scalars['BigInt']>;
+  createdAtBlock_not?: Maybe<Scalars['BigInt']>;
+  createdAtBlock_gt?: Maybe<Scalars['BigInt']>;
+  createdAtBlock_lt?: Maybe<Scalars['BigInt']>;
+  createdAtBlock_gte?: Maybe<Scalars['BigInt']>;
+  createdAtBlock_lte?: Maybe<Scalars['BigInt']>;
+  createdAtBlock_in?: Maybe<Array<Scalars['BigInt']>>;
+  createdAtBlock_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  createdAt?: Maybe<Scalars['BigInt']>;
+  createdAt_not?: Maybe<Scalars['BigInt']>;
+  createdAt_gt?: Maybe<Scalars['BigInt']>;
+  createdAt_lt?: Maybe<Scalars['BigInt']>;
+  createdAt_gte?: Maybe<Scalars['BigInt']>;
+  createdAt_lte?: Maybe<Scalars['BigInt']>;
+  createdAt_in?: Maybe<Array<Scalars['BigInt']>>;
+  createdAt_not_in?: Maybe<Array<Scalars['BigInt']>>;
+  closedAt?: Maybe<Scalars['BigInt']>;
+  closedAt_not?: Maybe<Scalars['BigInt']>;
+  closedAt_gt?: Maybe<Scalars['BigInt']>;
+  closedAt_lt?: Maybe<Scalars['BigInt']>;
+  closedAt_gte?: Maybe<Scalars['BigInt']>;
+  closedAt_lte?: Maybe<Scalars['BigInt']>;
+  closedAt_in?: Maybe<Array<Scalars['BigInt']>>;
+  closedAt_not_in?: Maybe<Array<Scalars['BigInt']>>;
+};
+
+export enum Short_OrderBy {
+  Id = 'id',
+  ContractData = 'contractData',
+  TxHash = 'txHash',
+  Account = 'account',
+  CollateralLocked = 'collateralLocked',
+  CollateralLockedAmount = 'collateralLockedAmount',
+  SynthBorrowed = 'synthBorrowed',
+  SynthBorrowedAmount = 'synthBorrowedAmount',
+  AccruedInterestLastUpdateTimestamp = 'accruedInterestLastUpdateTimestamp',
+  IsOpen = 'isOpen',
+  CreatedAtBlock = 'createdAtBlock',
+  CreatedAt = 'createdAt',
+  ClosedAt = 'closedAt',
+  Liquidations = 'liquidations',
+  CollateralChanges = 'collateralChanges',
+  LoanChanges = 'loanChanges'
 }

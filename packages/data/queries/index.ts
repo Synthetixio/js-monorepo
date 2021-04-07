@@ -11,3 +11,4 @@ export { createFeesClaimedQuery, parseFeesClaimed } from './feesClaimed';
 export { parseSnxPrice, createSnxPriceQuery } from './snxPrice';
 export { parseDebtSnapshot, createDebtSnapshotQuery } from './debtSnapshot';
 export { parseSnxHolder, createSnxHolderQuery } from './snxHolders';
+export { parseShort, createShortsQuery } from './shorts';

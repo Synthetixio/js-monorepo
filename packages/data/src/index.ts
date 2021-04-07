@@ -22,6 +22,8 @@ import {
 	createDebtSnapshotQuery,
 	parseSnxHolder,
 	createSnxHolderQuery,
+	createShortsQuery,
+	parseShort,
 } from '../queries';
 import { formatParams, requestHelper } from './utils';
 import {
@@ -36,9 +38,10 @@ import {
 	SnxHolderParams,
 	BaseQueryParams,
 	SynthExchangeExpanded,
+	ShortQueryParams,
+	FormattedShort,
 } from './types';
 import {
-	SynthExchange,
 	Synthetix,
 	Issued,
 	Burned,
@@ -157,6 +160,16 @@ const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
 			variables: formattedParams,
 		});
 		return response != null ? response.snxholders.map(parseSnxHolder) : null;
+	},
+	shorts: async (params?: ShortQueryParams): Promise<FormattedShort[] | null> => {
+		// NOTE shorts only work for L1 at the moment
+		const formattedParams = formatParams(params);
+		const response = await requestHelper({
+			endpoint: l1Endpoints.shorts,
+			queryMethod: createShortsQuery,
+			variables: formattedParams,
+		});
+		return response != null ? response.shorts.map(parseShort) : null;
 	},
 });
 

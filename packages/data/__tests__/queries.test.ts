@@ -9,6 +9,7 @@ import {
 	parseSnxPrice,
 	parseDebtSnapshot,
 	parseSnxHolder,
+	parseShort,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
@@ -23,11 +24,13 @@ import {
 	synthExchangesMockL2,
 	debtSnapshotMock,
 	snxHolderMock,
+	shortsMock,
 } from '../__mocks__';
 
 describe('@synthetixio/data tests', () => {
 	const randomLargeSNXStaker = '0x042ed37d32b88ab6b1c2e7b8a400dcdc728050bc';
 	const randomL2Staker = '0x000ad8f56d3408abe29466189612d1b7b19e4420';
+	const randomShortAccount = '0x864b81c40d8314d5c4289a14eb92f03b9f43b6bc';
 	let snxData: SynthetixData;
 	let snxDataOvm: SynthetixData;
 	const oneDayTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_DAY']);
@@ -56,6 +59,22 @@ describe('@synthetixio/data tests', () => {
 			expect(synthetixInfoL2!.id).toEqual('1');
 			expect(Number(synthetixInfoL2!.issuers)).toBeGreaterThan(0);
 			expect(Number(synthetixInfoL2!.snxHolders)).toBeGreaterThan(0);
+		});
+	});
+
+	describe('shorts query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseShort(shortsMock.response);
+			expect(shortsMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should return shorts from l1', async () => {
+			const shorts = await snxData.shorts({
+				max: 5,
+				account: randomShortAccount,
+			});
+			expect(shorts![0].account).toEqual(randomShortAccount);
+			expect(shorts![0].collateralLocked).toEqual('sUSD');
 		});
 	});
 
