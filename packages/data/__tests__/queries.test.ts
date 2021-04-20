@@ -1,5 +1,3 @@
-// @ts-ignore
-// eslint-disable-next-line import/no-unresolved
 import { NetworkId } from '@synthetixio/contracts-interface';
 
 import {

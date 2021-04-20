@@ -30,6 +30,7 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
+		"@synthetixio/contracts-interface": "file:../contracts-interface/src/index.ts",
 		"bignumber.js": "9.0.1",
 		"date-fns": "2.19.0",
 		"ethers": "5.0.32",
