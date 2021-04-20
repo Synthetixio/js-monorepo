@@ -1,5 +1,7 @@
 import subHours from 'date-fns/subHours';
 import { request } from 'graphql-request';
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
 import { NetworkId } from '@synthetixio/contracts-interface';
 
 import { l1Endpoints, l2Endpoints, timeSeriesEntityMap } from './constants';
