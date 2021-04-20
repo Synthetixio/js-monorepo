@@ -13,7 +13,8 @@ jobs:
           keys:
             - 'v1.1-dependencies-{{ checksum "package-lock.json" }}'
             - v1.1-dependencies-
-      - run: npm ci --workspaces
+      - run: npm ci
+      - run: cd packages/data && npm ci && cd ../..
       - save_cache:
           paths:
             - node_modules
