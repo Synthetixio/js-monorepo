@@ -1,5 +1,8 @@
 import subHours from 'date-fns/subHours';
 import { request } from 'graphql-request';
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
+import { NetworkId } from '@synthetixio/contracts-interface';
 
 import { l1Endpoints, l2Endpoints, timeSeriesEntityMap } from './constants';
 import {
@@ -22,6 +25,8 @@ import {
 	createDebtSnapshotQuery,
 	parseSnxHolder,
 	createSnxHolderQuery,
+	createShortsQuery,
+	parseShort,
 } from '../queries';
 import { formatParams, requestHelper } from './utils';
 import {
@@ -36,9 +41,10 @@ import {
 	SnxHolderParams,
 	BaseQueryParams,
 	SynthExchangeExpanded,
+	ShortQueryParams,
+	FormattedShort,
 } from './types';
 import {
-	SynthExchange,
 	Synthetix,
 	Issued,
 	Burned,
@@ -68,95 +74,139 @@ const PERIOD_IN_HOURS: Record<Period, number> = {
 	ONE_YEAR: 8760,
 };
 
+const getEndpointForNetwork = (networkId: NetworkId, endpoints: Record<number, string>): string => {
+	if (endpoints[networkId]) {
+		return endpoints[networkId];
+	}
+	throw new Error('unsupported network');
+};
+
 const calculateTimestampForPeriod = (periodInHours: number): number =>
 	Math.trunc(subHours(new Date().getTime(), periodInHours).getTime() / 1000);
 
-const synthetixData = ({ useOvm }: { useOvm: boolean }): SynthetixData => ({
+const DEFAULT_ENDPOINTS = {
+	[NetworkId['Kovan-Ovm']]: l2Endpoints.snxKovan,
+	[NetworkId['Mainnet-Ovm']]: l2Endpoints.snx,
+	[NetworkId.Mainnet]: l1Endpoints.snx,
+};
+
+const getData = async ({
+	params,
+	queryMethod,
+	networkId,
+	endpoints,
+}: {
+	params: any;
+	queryMethod: any;
+	networkId: NetworkId;
+	endpoints?: Record<number, string>;
+}): Promise<any> => {
+	const endpoint = getEndpointForNetwork(
+		networkId,
+		endpoints != null ? { ...DEFAULT_ENDPOINTS, ...endpoints } : DEFAULT_ENDPOINTS
+	);
+	const formattedParams = formatParams(params);
+	return requestHelper({
+		endpoint,
+		queryMethod,
+		variables: formattedParams,
+	});
+};
+
+const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData => ({
 	synthExchanges: async (
 		params?: SynthExchangeQueryParams
 	): Promise<SynthExchangeExpanded[] | null> => {
-		const formattedParams = formatParams(params);
-		const response = await requestHelper({
-			// TODO change from kovan
-			endpoint: useOvm ? l2Endpoints.snxKovanOvm : l1Endpoints.exchanges,
+		const response = await getData({
+			params,
 			queryMethod: createSynthExchangesQuery,
-			variables: formattedParams,
+			networkId,
+			endpoints: { [NetworkId.Mainnet]: l1Endpoints.exchanges },
 		});
 		return response != null
-			? response.synthExchanges.map(useOvm ? parseSynthExchangesL2 : parseSynthExchangesL1)
+			? response.synthExchanges.map(
+					networkId === NetworkId.Mainnet ? parseSynthExchangesL1 : parseSynthExchangesL2
+			  )
 			: null;
 	},
 	synthetix: async (params?: BaseQueryParams): Promise<Synthetix | null> => {
 		const query = createSynthetixQuery(params);
-		const response = await request(useOvm ? l2Endpoints.snx : l1Endpoints.snx, query);
+		const response = await request(
+			networkId === NetworkId.Mainnet ? l1Endpoints.snx : l2Endpoints.snx,
+			query
+		);
 		return response != null ? parseSynthetix(response.synthetixes[0]) : null;
 	},
 	feesClaimed: async (params?: FeesClaimedParams): Promise<FeesClaimed[] | null> => {
-		const formattedParams = formatParams(params);
-		const response = await requestHelper({
-			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
+		const response = await getData({
+			params,
 			queryMethod: createFeesClaimedQuery,
-			variables: formattedParams,
+			networkId,
 		});
 		return response != null ? response.feesClaimeds.map(parseFeesClaimed) : null;
 	},
 	issued: async (params?: IssuedQueryParams): Promise<Issued[] | null> => {
-		const formattedParams = formatParams(params);
-		const response = await requestHelper({
-			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
+		const response = await getData({
+			params,
 			queryMethod: createIssuedQuery,
-			variables: formattedParams,
+			networkId,
 		});
 		return response != null ? response.issueds.map(parseIssued) : null;
 	},
 	burned: async (params?: BurnedQueryParams): Promise<Burned[] | null> => {
-		const formattedParams = formatParams(params);
-		const response = await requestHelper({
-			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
+		const response = await getData({
+			params,
 			queryMethod: createBurnedQuery,
-			variables: formattedParams,
+			networkId,
 		});
 		return response != null ? response.burneds.map(parseBurned) : null;
 	},
 	snxPrices: async (
 		params: SnxPriceParams
 	): Promise<DailySnxPrice[] | FifteenMinuteSnxPrice[] | null> => {
-		const formattedParams = formatParams(params);
-		const response = await requestHelper({
-			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.rates,
+		const response = await getData({
+			params,
 			queryMethod: createSnxPriceQuery,
-			variables: formattedParams,
+			networkId,
+			endpoints: { [NetworkId.Mainnet]: l1Endpoints.rates },
 		});
 		return response != null
 			? response[timeSeriesEntityMap[params.timeSeries]].map(parseSnxPrice)
 			: null;
 	},
 	rateUpdates: async (params?: RateUpdateQueryParams): Promise<RateUpdate[] | null> => {
-		const formattedParams = formatParams(params);
-		const response = await requestHelper({
-			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.rates,
+		const response = await getData({
+			params,
 			queryMethod: createRateUpdatesQuery,
-			variables: formattedParams,
+			networkId,
+			endpoints: { [NetworkId.Mainnet]: l1Endpoints.rates },
 		});
 		return response != null ? response.rateUpdates.map(parseRates) : null;
 	},
 	debtSnapshots: async (params?: DebtSnapshotParams): Promise<DebtSnapshot[] | null> => {
-		const formattedParams = formatParams(params);
-		const response = await requestHelper({
-			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
+		const response = await getData({
+			params,
 			queryMethod: createDebtSnapshotQuery,
-			variables: formattedParams,
+			networkId,
 		});
 		return response != null ? response.debtSnapshots.map(parseDebtSnapshot) : null;
 	},
 	snxHolders: async (params?: SnxHolderParams): Promise<SnxHolder[] | null> => {
-		const formattedParams = formatParams(params);
-		const response = await requestHelper({
-			endpoint: useOvm ? l2Endpoints.snx : l1Endpoints.snx,
+		const response = await getData({
+			params,
 			queryMethod: createSnxHolderQuery,
-			variables: formattedParams,
+			networkId,
 		});
 		return response != null ? response.snxholders.map(parseSnxHolder) : null;
+	},
+	shorts: async (params?: ShortQueryParams): Promise<FormattedShort[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: createShortsQuery,
+			networkId,
+			endpoints: { [NetworkId.Mainnet]: l1Endpoints.shorts },
+		});
+		return response != null ? response.shorts.map(parseShort) : null;
 	},
 });
 

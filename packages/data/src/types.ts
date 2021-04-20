@@ -9,6 +9,10 @@ import {
 	FifteenMinuteSnxPrice,
 	DebtSnapshot,
 	SnxHolder,
+	Short,
+	ShortLoanChange,
+	ShortCollateralChange,
+	ShortLiquidation,
 } from '../generated/graphql';
 
 export type BaseQueryParams = {
@@ -44,6 +48,12 @@ export type DebtSnapshotParams = {
 	account?: string;
 } & BaseQueryParams;
 
+export type ShortQueryParams = {
+	id?: string;
+	isOpen?: boolean;
+	account?: string;
+} & BaseQueryParams;
+
 export type SnxHolderParams = {
 	maxCollateral?: number;
 	minCollateral?: number;
@@ -57,6 +67,21 @@ export type RateUpdateQueryParams = {
 	minTimestamp?: number;
 } & BaseQueryParams;
 
+export type SynthExchangeExpanded = SynthExchange & {
+	hash: string;
+};
+
+/**
+ * Shorts have many relationships between entities although we are not taking advantage
+ * of all of them so we are removing the types we don't use
+ */
+export interface FormattedShort
+	extends Omit<Short, 'contractData' | 'liquidations' | 'collateralChanges' | 'loanChanges'> {
+	loanChanges: Omit<ShortLoanChange, 'short'>[];
+	collateralChanges: Omit<ShortCollateralChange, 'short'>[];
+	liquidations: Omit<ShortLiquidation, 'short'>[];
+}
+
 export type SynthetixData = {
 	synthExchanges: (params?: SynthExchangeQueryParams) => Promise<SynthExchange[] | null>;
 	synthetix: (params?: BaseQueryParams) => Promise<Synthetix | null>;
@@ -67,8 +92,5 @@ export type SynthetixData = {
 	snxPrices: (params: SnxPriceParams) => Promise<DailySnxPrice[] | FifteenMinuteSnxPrice[] | null>;
 	debtSnapshots: (params?: DebtSnapshotParams) => Promise<DebtSnapshot[] | null>;
 	snxHolders: (params?: SnxHolderParams) => Promise<SnxHolder[] | null>;
-};
-
-export type SynthExchangeExpanded = SynthExchange & {
-	hash: string;
+	shorts: (params?: ShortQueryParams) => Promise<FormattedShort[] | null>;
 };
