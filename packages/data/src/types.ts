@@ -92,5 +92,5 @@ export type SynthetixData = {
 	snxPrices: (params: SnxPriceParams) => Promise<DailySnxPrice[] | FifteenMinuteSnxPrice[] | null>;
 	debtSnapshots: (params?: DebtSnapshotParams) => Promise<DebtSnapshot[] | null>;
 	snxHolders: (params?: SnxHolderParams) => Promise<SnxHolder[] | null>;
-	shorts: (params?: SnxHolderParams) => Promise<FormattedShort[] | null>;
+	shorts: (params?: ShortQueryParams) => Promise<FormattedShort[] | null>;
 };
