@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/data",
-	"version": "0.0.12",
+	"version": "0.0.13",
 	"description": "Javascript library for handling queries to Synthetix subgraphs",
 	"main": "./build/node/src/index.js",
 	"browser": "./build/index.js",
@@ -30,7 +30,7 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"@synthetixio/contracts-interface": "file:../contracts-interface/src/index.ts",
+		"@synthetixio/contracts-interface": "2.41.0-1",
 		"bignumber.js": "9.0.1",
 		"date-fns": "2.19.0",
 		"ethers": "5.0.32",
