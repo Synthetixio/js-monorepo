@@ -1,3 +1,5 @@
+import { NetworkId } from '@synthetixio/contracts-interface';
+
 import {
 	parseIssued,
 	parseRates,
@@ -30,15 +32,18 @@ import {
 describe('@synthetixio/data tests', () => {
 	const randomLargeSNXStaker = '0x042ed37d32b88ab6b1c2e7b8a400dcdc728050bc';
 	const randomL2Staker = '0x000ad8f56d3408abe29466189612d1b7b19e4420';
+	const randomL2StakerWithBurns = '0x9f6af0948f09c5c0256fb499c8527c976c003d69';
 	const randomShortAccount = '0x864b81c40d8314d5c4289a14eb92f03b9f43b6bc';
 	let snxData: SynthetixData;
 	let snxDataOvm: SynthetixData;
+	let snxDataKovanOvm: SynthetixData;
 	const oneDayTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_DAY']);
 	const oneMonthTimestamp = calculateTimestampForPeriod(PERIOD_IN_HOURS['ONE_MONTH']);
 
 	beforeAll(() => {
-		snxData = synthetixData({ useOvm: false });
-		snxDataOvm = synthetixData({ useOvm: true });
+		snxData = synthetixData({ networkId: NetworkId.Mainnet });
+		snxDataOvm = synthetixData({ networkId: NetworkId['Mainnet-Ovm'] });
+		snxDataKovanOvm = synthetixData({ networkId: NetworkId['Kovan-Ovm'] });
 	});
 
 	describe('synthetix meta data query', () => {
@@ -103,8 +108,8 @@ describe('@synthetixio/data tests', () => {
 			expect(exchanges!.length).toBeGreaterThan(1000);
 		});
 
-		test('should return exchagnes from l2', async () => {
-			const exchanges = await snxDataOvm.synthExchanges({
+		test('should return exchagnes from kovan l2', async () => {
+			const exchanges = await snxDataKovanOvm.synthExchanges({
 				minTimestamp: oneMonthTimestamp,
 			});
 			expect(Number(exchanges![0].fromAmount)).toBeGreaterThan(0);
@@ -159,8 +164,8 @@ describe('@synthetixio/data tests', () => {
 		});
 
 		test('should return burneds data from l2', async () => {
-			const burnedInfo = await snxDataOvm.burned({ max: 1, account: randomL2Staker });
-			expect(burnedInfo![0].account).toEqual(randomL2Staker);
+			const burnedInfo = await snxDataOvm.burned({ max: 1, account: randomL2StakerWithBurns });
+			expect(burnedInfo![0].account).toEqual(randomL2StakerWithBurns);
 		});
 	});
 
@@ -257,12 +262,12 @@ describe('@synthetixio/data tests', () => {
 
 		test('should return debtSnapshots data from l2', async () => {
 			const debtSnapshotInfo = await snxDataOvm.debtSnapshots({
-				max: 5,
+				max: 2,
 				account: randomL2Staker,
 			});
 			expect(debtSnapshotInfo![0].account).toEqual(randomL2Staker);
 			expect(Number(debtSnapshotInfo![0].collateral)).toBeGreaterThan(0);
-			expect(debtSnapshotInfo!.length).toEqual(5);
+			expect(debtSnapshotInfo!.length).toEqual(2);
 		});
 	});
 

@@ -14,7 +14,7 @@ export const l1Endpoints = {
 
 export const l2Endpoints = {
 	snx: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-ovm',
-	snxKovanOvm: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-kovan-ovm',
+	snxKovan: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-kovan-ovm',
 };
 
 export const timeSeriesEntityMap = { '1d': 'dailySNXPrices', '15m': 'fifteenMinuteSNXPrices' };
