@@ -1,4 +1,3 @@
-import { ethers } from 'ethers';
 import { ShortCollateralChange, ShortLiquidation, ShortLoanChange } from '../../generated/graphql';
 import { formatTimestamp, hexToAscii } from '../../src/utils';
 import { FormattedShort } from '../../src/types';
@@ -24,9 +23,9 @@ export const parseShort = ({
 	account,
 	txHash,
 	collateralLocked: hexToAscii(collateralLocked),
-	collateralLockedAmount: ethers.utils.formatEther(collateralLockedAmount),
+	collateralLockedAmount,
 	synthBorrowed: hexToAscii(synthBorrowed),
-	synthBorrowedAmount: ethers.utils.formatEther(synthBorrowedAmount),
+	synthBorrowedAmount,
 	createdAtBlock: Number(createdAtBlock),
 	createdAt: formatTimestamp(createdAt),
 	closedAt: closedAt != null ? formatTimestamp(closedAt) : null,
@@ -48,8 +47,8 @@ export const parseShortLiquidations = ({
 }: Omit<ShortLiquidation, 'short'>): Omit<ShortLiquidation, 'short'> => ({
 	id,
 	isClosed: Boolean(isClosed),
-	liquidatedAmount: ethers.utils.formatEther(liquidatedAmount),
-	liquidatedCollateral: ethers.utils.formatEther(liquidatedCollateral),
+	liquidatedAmount,
+	liquidatedCollateral,
 	liquidator,
 	timestamp: formatTimestamp(timestamp),
 	blockNumber: Number(blockNumber),
@@ -63,8 +62,8 @@ export const parseShortCollateralChanges = ({
 	timestamp,
 	blockNumber,
 }: Omit<ShortCollateralChange, 'short'>): Omit<ShortCollateralChange, 'short'> => ({
-	amount: ethers.utils.formatEther(amount),
-	collateralAfter: ethers.utils.formatEther(collateralAfter),
+	amount,
+	collateralAfter,
 	id,
 	isDeposit: Boolean(isDeposit),
 	timestamp: formatTimestamp(timestamp),
@@ -79,10 +78,10 @@ export const parseShortLoanChanges = ({
 	timestamp,
 	blockNumber,
 }: Omit<ShortLoanChange, 'short'>): Omit<ShortLoanChange, 'short'> => ({
-	amount: ethers.utils.formatEther(amount),
+	amount,
 	id,
 	isRepayment: Boolean(isRepayment),
-	loanAfter: ethers.utils.formatEther(loanAfter),
+	loanAfter,
 	timestamp: formatTimestamp(timestamp),
 	blockNumber: Number(blockNumber),
 });

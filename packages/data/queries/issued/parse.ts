@@ -17,5 +17,5 @@ export const parseIssued = ({
 	id,
 	source,
 	timestamp: formatTimestamp(timestamp),
-	value: ethers.utils.formatEther(value),
+	value,
 });

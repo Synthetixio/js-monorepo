@@ -1,7 +1,6 @@
 export {
 	createSynthExchangesQuery,
-	parseSynthExchangesL1,
-	parseSynthExchangesL2,
+	parseSynthExchanges,
 } from './synthExchanges';
 export { createSynthetixQuery, parseSynthetix } from './synthetix';
 export { createIssuedQuery, parseIssued } from './issued';

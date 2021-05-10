@@ -16,9 +16,9 @@ export const parseSnxHolder = ({
 }: SnxHolder): SnxHolder => ({
 	block: Number(block),
 	id,
-	collateral: ethers.utils.formatEther(collateral),
-	balanceOf: ethers.utils.formatEther(balanceOf),
-	transferable: ethers.utils.formatEther(transferable),
+	collateral: collateral,
+	balanceOf: balanceOf,
+	transferable: transferable,
 	initialDebtOwnership: ethers.utils.formatEther(initialDebtOwnership),
 	debtEntryAtIndex: ethers.utils.formatEther(debtEntryAtIndex),
 	mints: mints != null ? ethers.utils.formatEther(mints) : null,

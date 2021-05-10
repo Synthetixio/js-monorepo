@@ -14,6 +14,6 @@ export const parseFeesClaimed = ({
 	block: Number(block),
 	id,
 	timestamp: formatTimestamp(timestamp),
-	value: ethers.utils.formatEther(value),
-	rewards: ethers.utils.formatEther(rewards),
+	value: value,
+	rewards: rewards,
 });

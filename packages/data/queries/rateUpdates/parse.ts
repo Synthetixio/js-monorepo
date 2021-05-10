@@ -1,4 +1,3 @@
-import { ethers } from 'ethers';
 import { RateUpdate } from '../../generated/graphql';
 import { formatTimestamp } from '../../src/utils';
 
@@ -13,7 +12,7 @@ export const parseRates = ({
 	block: Number(block),
 	currencyKey,
 	id,
-	rate: ethers.utils.formatEther(rate),
+	rate: rate,
 	synth,
 	timestamp: formatTimestamp(timestamp),
 });
