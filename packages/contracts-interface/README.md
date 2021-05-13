@@ -1,4 +1,4 @@
-# Synthetix JS
+# Contracts Interface to Synthetix
 
 The official JavaScript library for interacting with Synthetix protocol contracts.
 
