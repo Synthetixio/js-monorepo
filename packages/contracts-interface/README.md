@@ -9,8 +9,7 @@ This library can be used in 2 different environments:
 
 #### Installation
 
-```
-
+```javascript
 // For node environments:
 const { synthetix } = require('@synthetixio/contracts-interface');
 
@@ -22,9 +21,7 @@ import { synthetix } from '@synthetixio/contracts-interface';
 // then you can access synthetix on the window object:
 const { synthetix } = window;
 
-
 const snxjs = synthetix({ network: 'mainnet' });
-
 
 // Note for typescript applications:
 import { synthetix, Network } from '@synthetixio/contracts-interface';
@@ -33,7 +30,7 @@ const snxjs = synthetix({ network: Network.Mainnet });
 
 #### Usage
 
-```
+```javascript
 // this instance exposes props for the given network: synths, sources, targets, users, etc... as well as helper function toBytes32 - as per synthetix: https://github.com/Synthetixio/synthetix/blob/develop/index.js#L199.
 const snxjs = synthetix({ network: 'mainnet' });
 
