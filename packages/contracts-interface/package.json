@@ -12,7 +12,7 @@
 		"build": "npm run build-browser && npm run build-node",
 		"build-node": "tsc -p tsconfig.node.json",
 		"build-browser": "webpack --mode=production --max-old-space-size=4096",
-		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
+		"examples:node": "ts-node --project tsconfig.node.json ./examples/signer-example.js",
 		"examples:browser": "npm run build-browser && http-server -o ./examples/browser-example.html -c-1",
 		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
 		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
