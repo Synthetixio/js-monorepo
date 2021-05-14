@@ -31,7 +31,7 @@
 	"dependencies": {
 		"ethers": "5.0.26",
 		"lodash": "4.17.19",
-		"synthetix": "2.45.1",
+		"synthetix": "2.45.2",
 		"web3-utils": "1.2.11"
 	},
 	"devDependencies": {
