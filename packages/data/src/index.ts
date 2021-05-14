@@ -7,8 +7,7 @@ import { NetworkId } from '@synthetixio/contracts-interface';
 import { l1Endpoints, l2Endpoints, timeSeriesEntityMap } from './constants';
 import {
 	createSynthExchangesQuery,
-	parseSynthExchangesL1,
-	parseSynthExchangesL2,
+	parseSynthExchanges,
 	createSynthetixQuery,
 	parseSynthetix,
 	createIssuedQuery,
@@ -124,9 +123,7 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 			endpoints: { [NetworkId.Mainnet]: l1Endpoints.exchanges },
 		});
 		return response != null
-			? response.synthExchanges.map(
-					networkId === NetworkId.Mainnet ? parseSynthExchangesL1 : parseSynthExchangesL2
-			  )
+			? response.synthExchanges.map(parseSynthExchanges)
 			: null;
 	},
 	synthetix: async (params?: BaseQueryParams): Promise<Synthetix | null> => {

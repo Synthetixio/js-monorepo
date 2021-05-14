@@ -3,42 +3,7 @@ import { SynthExchange } from '../../generated/graphql';
 import { SynthExchangeExpanded } from '../../src/types';
 import { formatTimestamp, getHashFromId, hexToAscii } from '../../src/utils';
 
-export const parseSynthExchangesL1 = ({
-	account,
-	block,
-	feesInUSD,
-	from,
-	fromAmount,
-	fromAmountInUSD,
-	fromCurrencyKey,
-	gasPrice,
-	id,
-	network,
-	timestamp,
-	toAddress,
-	toAmount,
-	toAmountInUSD,
-	toCurrencyKey,
-}: SynthExchange): SynthExchangeExpanded => ({
-	account,
-	block: Number(block),
-	feesInUSD: ethers.utils.formatEther(feesInUSD),
-	from,
-	fromAmount: ethers.utils.formatEther(fromAmount),
-	fromAmountInUSD: ethers.utils.formatEther(fromAmountInUSD),
-	fromCurrencyKey: hexToAscii(fromCurrencyKey),
-	gasPrice,
-	id,
-	network,
-	timestamp: formatTimestamp(timestamp),
-	toAddress,
-	toAmount: ethers.utils.formatEther(toAmount),
-	toAmountInUSD: ethers.utils.formatEther(toAmountInUSD),
-	toCurrencyKey: hexToAscii(toCurrencyKey),
-	hash: getHashFromId(id),
-});
-
-export const parseSynthExchangesL2 = ({
+export const parseSynthExchanges = ({
 	account,
 	block,
 	feesInUSD,
@@ -59,7 +24,7 @@ export const parseSynthExchangesL2 = ({
 	block: Number(block),
 	feesInUSD: parseFloat(feesInUSD).toFixed(2),
 	from,
-	fromAmount: ethers.utils.formatEther(fromAmount),
+	fromAmount,
 	fromAmountInUSD: parseFloat(fromAmountInUSD).toFixed(2),
 	fromCurrencyKey: hexToAscii(fromCurrencyKey),
 	gasPrice,
@@ -67,7 +32,7 @@ export const parseSynthExchangesL2 = ({
 	network,
 	timestamp: formatTimestamp(timestamp),
 	toAddress,
-	toAmount: ethers.utils.formatEther(toAmount),
+	toAmount,
 	toAmountInUSD: parseFloat(toAmountInUSD).toFixed(2),
 	toCurrencyKey: hexToAscii(toCurrencyKey),
     hash: getHashFromId(id),

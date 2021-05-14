@@ -1,15 +1,15 @@
 export const snxHolderMock = {
 	response: {
-		balanceOf: '68069683028764',
+		balanceOf: '0.000068069683028764',
 		block: '10108119',
 		claims: null,
-		collateral: '68069683028764',
+		collateral: '0.000068069683028764',
 		debtEntryAtIndex: '1000000000000000000000000000',
 		id: '0x0000000000000000000000000000000000000001',
 		initialDebtOwnership: '0',
 		mints: null,
 		timestamp: '1590049259',
-		transferable: '68069683028764',
+		transferable: '0.000068069683028764',
 	},
 	formatted: {
 		balanceOf: '0.000068069683028764',

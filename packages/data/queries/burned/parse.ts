@@ -17,5 +17,5 @@ export const parseBurned = ({
 	id,
 	source,
 	timestamp: formatTimestamp(timestamp),
-	value: ethers.utils.formatEther(value),
+	value,
 });

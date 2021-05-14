@@ -4,8 +4,7 @@ import {
 	parseIssued,
 	parseRates,
 	parseSynthetix,
-	parseSynthExchangesL1,
-	parseSynthExchangesL2,
+	parseSynthExchanges,
 	parseBurned,
 	parseFeesClaimed,
 	parseSnxPrice,
@@ -22,8 +21,7 @@ import {
 	ratesMock,
 	feesClaimedMock,
 	synthetixMock,
-	synthExchangesMockL1,
-	synthExchangesMockL2,
+	synthExchangesMock,
 	debtSnapshotMock,
 	snxHolderMock,
 	shortsMock,
@@ -84,12 +82,9 @@ describe('@synthetixio/data tests', () => {
 	});
 
 	describe('exchanges query', () => {
-		test('should parse the response correctly for L1 and L2', () => {
-			const parsedOutputL1 = parseSynthExchangesL1(synthExchangesMockL1.response);
-			expect(synthExchangesMockL1.formatted).toEqual(parsedOutputL1);
-
-			const parsedOutputL2 = parseSynthExchangesL2(synthExchangesMockL2.response);
-			expect(synthExchangesMockL2.formatted).toEqual(parsedOutputL2);
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseSynthExchanges(synthExchangesMock.response);
+			expect(synthExchangesMock.formatted).toEqual(parsedOutput);
 		});
 
 		test('should return exchanges from l1', async () => {
