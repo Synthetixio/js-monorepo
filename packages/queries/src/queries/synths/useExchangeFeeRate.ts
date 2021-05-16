@@ -6,7 +6,6 @@ import Wei, { wei } from '@synthetixio/wei';
 import QUERY_KEYS from '../../queryKeys';
 import { CurrencyKey } from '../../currency';
 
-import synthetix from '../../synthetix';
 import { QueryContext } from '../../context';
 
 const useExchangeFeeRate = (

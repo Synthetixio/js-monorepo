@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
 import { ethers } from 'ethers';
 import orderBy from 'lodash/orderBy';
 import Wei, { wei } from '@synthetixio/wei';
@@ -23,7 +23,7 @@ export type Balances = {
 	totalUSDBalance: Wei;
 };
 
-const useSynthsBalancesQuery = (ctx: QueryContext, walletAddress: string, options?: QueryConfig<Balances>) => {
+const useSynthsBalancesQuery = (ctx: QueryContext, walletAddress: string, options?: UseQueryOptions<Balances>) => {
 	return useQuery<Balances>(
 		QUERY_KEYS.WalletBalances.Synths(walletAddress ?? '', ctx.network),
 		async () => {

@@ -3,11 +3,15 @@ import { QueryContext } from './context';
 
 import synthetixData from '@synthetixio/data';
 
-import { readdirSync, statSync } from 'fs';
+//import { readdirSync, statSync } from 'fs';
 
 import SynthetixJs from 'synthetix-js';
+import { UseQueryResult } from 'react-query';
 
-function loadQueries(ctx: QueryContext, p: string) {
+type UseQueryFunction = (qc: QueryContext, ...args: any) => UseQueryResult;
+
+// would like to use this function, but temp disabling for tests
+/*function loadQueries(ctx: QueryContext, p: string): UseQueryFunction[] {
     // dynamically load modules
 
     const queries = [];
@@ -19,11 +23,29 @@ function loadQueries(ctx: QueryContext, p: string) {
         if (s.isDirectory()) {
             queries.push(...loadQueries(ctx, sp));
         }
-        else {
+        else if(f.endsWith('.js')) {
             queries.push(require(sp))
         }
     }
-}
+
+    return queries;
+}*/
+
+import useEthGasPriceQuery from './queries/network/useEthGasPriceQuery';
+import useExchangeRatesQuery from './queries/rates/useExchangeRatesQuery';
+import useHistoricalRatesQuery from './queries/rates/useHistoricalRatesQuery';
+import useHistoricalVolumeQuery from './queries/rates/useHistoricalVolumeQuery';
+import useSynthExchangesSinceQuery from './queries/rates/useSynthExchangesSinceQuery';
+import useSynthMarketCapQuery from './queries/rates/useSynthMarketCapQuery';
+import useExchangeFeeRateQuery from './queries/synths/useExchangeFeeRate';
+import useFeeReclaimPeriodQuery from './queries/synths/useFeeReclaimPeriodQuery';
+import useFrozenSynthsQuery from './queries/synths/useFrozenSynthsQuery';
+import useSynthSuspensionQuery from './queries/synths/useSynthSuspensionQuery';
+import useIsSystemOnMaintenance from './queries/systemStatus/useIsSystemOnMaintenance';
+import useETHBalanceQuery from './queries/walletBalances/useETHBalanceQuery';
+import useSynthsBalancesQuery from './queries/walletBalances/useSynthsBalancesQuery';
+import useTokensBalancesQuery from './queries/walletBalances/useTokensBalancesQuery';
+import { partial } from 'lodash';
 
 export default async function synthetixQueries({ provider }: { provider: ethers.providers.Provider }) {
 
@@ -32,12 +54,28 @@ export default async function synthetixQueries({ provider }: { provider: ethers.
     const ctx: QueryContext = {
         provider,
         network: network.name,
-        snxData: synthetixData(network),
+        snxData: synthetixData({ networkId: network.chainId }),
         snxjs: new SynthetixJs({
             provider,
-            network
+            network: network.chainId
         })
     };
 
-    return loadQueries(ctx, __dirname + '/' + 'queries');
+    //return loadQueries(ctx, __dirname + '/' + 'queries');
+    return [
+        useEthGasPriceQuery,
+        useExchangeRatesQuery,
+        useHistoricalRatesQuery,
+        useHistoricalVolumeQuery,
+        useSynthExchangesSinceQuery,
+        useSynthMarketCapQuery,
+        useExchangeFeeRateQuery,
+        useFeeReclaimPeriodQuery,
+        useFrozenSynthsQuery,
+        useSynthSuspensionQuery,
+        useIsSystemOnMaintenance,
+        useETHBalanceQuery,
+        useSynthsBalancesQuery,
+        useTokensBalancesQuery
+    ].map((f: UseQueryFunction) => partial(f, ctx));
 }

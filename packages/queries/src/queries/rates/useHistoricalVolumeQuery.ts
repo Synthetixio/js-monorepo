@@ -1,4 +1,4 @@
-import { useQuery, QueryConfig } from 'react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
 import Wei, { wei } from '@synthetixio/wei';
 
 import QUERY_KEYS from '../../queryKeys';
@@ -14,7 +14,7 @@ type HistoricalVolume = Record<CurrencyKey, Wei>;
 const useHistoricalVolumeQuery = (
 	ctx: QueryContext,
 	period: Period = Period.ONE_DAY,
-	options?: QueryConfig<HistoricalVolume>
+	options?: UseQueryOptions<HistoricalVolume>
 ) => {
 	const periodInHours = PERIOD_IN_HOURS[period];
 
@@ -27,12 +27,12 @@ const useHistoricalVolumeQuery = (
 
 			return exchanges.reduce((totalVol, { fromCurrencyKey, toCurrencyKey, fromAmountInUSD }) => {
 				if (totalVol[fromCurrencyKey] != null) {
-					totalVol[fromCurrencyKey] = totalVol[fromCurrencyKey].plus(fromAmountInUSD);
+					totalVol[fromCurrencyKey] = totalVol[fromCurrencyKey].add(fromAmountInUSD);
 				} else {
 					totalVol[fromCurrencyKey] = wei(0);
 				}
 				if (totalVol[toCurrencyKey] != null) {
-					totalVol[toCurrencyKey] = totalVol[toCurrencyKey].plus(fromAmountInUSD);
+					totalVol[toCurrencyKey] = totalVol[toCurrencyKey].add(fromAmountInUSD);
 				} else {
 					totalVol[toCurrencyKey] = wei(0);
 				}
