@@ -1,7 +1,7 @@
 {
-	"name": "@synthetixio/data",
-	"version": "0.0.13",
-	"description": "Javascript library for handling queries to Synthetix subgraphs",
+	"name": "@synthetixio/queries",
+	"version": "0.0.12",
+	"description": "react-query for pulling synthetix data in react interfaces",
 	"main": "./build/node/src/index.js",
 	"browser": "./build/index.js",
 	"types": "./build/src/index.d.ts",
@@ -30,13 +30,18 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"@synthetixio/contracts-interface": "2.41.0-1",
+		"@synthetixio/data": "../data",
+		"@synthetixio/wei": "../wei",
+		"axios": "^0.21.1",
 		"bignumber.js": "9.0.1",
 		"date-fns": "2.19.0",
+		"ethcall": "^3.3.0",
 		"ethers": "5.0.32",
 		"graphql": "15.5.0",
 		"graphql-request": "3.4.0",
-		"lodash": "4.17.21"
+		"lodash": "^4.17.21",
+		"react-query": "^3.16.0",
+		"synthetix-js": "^2.45.2"
 	},
 	"devDependencies": {
 		"@babel/plugin-transform-runtime": "7.13.10",
