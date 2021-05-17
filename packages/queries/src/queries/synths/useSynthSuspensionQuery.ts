@@ -1,7 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import { ethers } from 'ethers';
 
-import QUERY_KEYS from '../../queryKeys';
 import { CurrencyKey } from '../../currency';
 import { QueryContext } from '../../context';
 
@@ -51,7 +50,7 @@ const useSynthSuspensionQuery = (
 	options?: UseQueryOptions<SynthSuspended>
 ) => {
 	return useQuery<SynthSuspended>(
-		QUERY_KEYS.Synths.Suspension(currencyKey ?? ''),
+		['synth', 'suspension', ctx.network, currencyKey],
 		async () => {
 			const [
 				isSuspended,

@@ -1,7 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import { ethers } from 'ethers';
 
-import QUERY_KEYS from '../../queryKeys';
 import { CurrencyKey } from '../../currency';
 import { QueryContext } from '../../context';
 
@@ -13,7 +12,7 @@ const useFeeReclaimPeriodQuery = (
 ) => {
 
 	return useQuery<number>(
-		QUERY_KEYS.Synths.FeeReclaimPeriod(currencyKey ?? ''),
+		['synths', 'feeReclaimPeriod', ctx.network, currencyKey],
 		async () => {
 			const maxSecsLeftInWaitingPeriod = (await ctx.snxjs.contracts.Exchanger.maxSecsLeftInWaitingPeriod(
 				walletAddress,

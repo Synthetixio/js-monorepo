@@ -2,8 +2,6 @@ import axios from 'axios';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 
-import QUERY_KEYS from '../../queryKeys';
-
 const ETH_GAS_STATION_API_URL = 'https://ethgasstation.info/json/ethgasAPI.json';
 const GAS_NOW_API_URL = 'https://www.gasnow.org/api/v3/gas/price?utm_source=kwenta';
 
@@ -45,7 +43,7 @@ export const GAS_SPEEDS: GasSpeed[] = ['average', 'fast', 'fastest'];
 
 const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPrices>) => {
 	return useQuery<GasPrices>(
-		QUERY_KEYS.Network.EthGasPrice,
+		['network', 'gasPrice', ctx.network],
 		async () => {
 			try {
 				const result = await axios.get<GasNowResponse>(GAS_NOW_API_URL);

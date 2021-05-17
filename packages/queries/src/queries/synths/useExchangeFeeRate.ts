@@ -3,7 +3,6 @@ import { ethers } from 'ethers';
 
 import Wei, { wei } from '@synthetixio/wei';
 
-import QUERY_KEYS from '../../queryKeys';
 import { CurrencyKey } from '../../currency';
 
 import { QueryContext } from '../../context';
@@ -15,7 +14,7 @@ const useExchangeFeeRate = (
 	options?: UseQueryOptions<Wei>
 ) => {
 	return useQuery<Wei>(
-		QUERY_KEYS.Synths.ExchangeFeeRate(quoteCurrencyKey ?? '', baseCurrencyKey ?? ''),
+		['synths', 'exchangeFeeRate', ctx.network, quoteCurrencyKey, baseCurrencyKey],
 		async () => {
 			const feeRateForExchange = (await ctx.snxjs.contracts.Exchanger.feeRateForExchange(
 				ethers.utils.formatBytes32String(quoteCurrencyKey!),

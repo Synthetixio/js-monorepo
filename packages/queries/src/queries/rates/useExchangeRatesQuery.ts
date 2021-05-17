@@ -1,7 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import { BigNumberish, ethers } from 'ethers';
 
-import QUERY_KEYS from '../../queryKeys';
 import { CRYPTO_CURRENCY_MAP, CurrencyKey, iStandardSynth, synthToAsset } from '../../currency';
 import { QueryContext } from '../../context';
 
@@ -15,7 +14,7 @@ const additionalCurrencies = [CRYPTO_CURRENCY_MAP.SNX].map(ethers.utils.formatBy
 
 const useExchangeRatesQuery = (ctx: QueryContext, options?: UseQueryOptions<Rates>) => {
 	return useQuery<Rates>(
-		QUERY_KEYS.Rates.ExchangeRates,
+		['rates', 'exchangeRates', ctx.network],
 		async () => {
 			const exchangeRates: Rates = {};
 

@@ -1,13 +1,11 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 
-import QUERY_KEYS from '../../queryKeys';
-
 const IS_PROD = !!process.env.NEXT_PUBLIC_IS_PROD;
 
 const useIsSystemOnMaintenance = (ctx: QueryContext, options?: UseQueryOptions<boolean>) => {
 	return useQuery<boolean>(
-		QUERY_KEYS.SystemStatus.IsUpgrading,
+		['systemStatus', 'isOnMaintenance', ctx.network],
 		async () => {
 			const [isSystemUpgrading, isExchangePaused] = (await Promise.all([
 				ctx.snxjs.contracts.SystemStatus.isSystemUpgrading(),

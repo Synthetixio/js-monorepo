@@ -8,7 +8,6 @@ import mapValues from 'lodash/mapValues';
 import keyBy from 'lodash/keyBy';
 import { ethers } from 'ethers';
 
-import QUERY_KEYS from '../../queryKeys';
 import { CRYPTO_CURRENCY_MAP, CurrencyKey } from '../../currency';
 
 import { QueryContext } from '../../context';
@@ -28,7 +27,7 @@ const useTokensBalancesQuery = (ctx: QueryContext, tokens: any[], walletAddress:
 	const tokensMap = keyBy(tokens, 'symbol');
 
 	return useQuery<Balances>(
-		QUERY_KEYS.WalletBalances.Tokens(walletAddress ?? '', ctx.network),
+		['walletBalances', 'tokens', ctx.network, walletAddress],
 		async () => {
 			// @ts-ignore
 			await ethcallProvider.init(provider!);

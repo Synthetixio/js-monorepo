@@ -3,7 +3,6 @@ import { ethers } from 'ethers';
 import orderBy from 'lodash/orderBy';
 import Wei, { wei } from '@synthetixio/wei';
 
-import QUERY_KEYS from '../../queryKeys';
 import { CurrencyKey } from '../../currency';
 import { QueryContext } from '../../context';
 
@@ -25,7 +24,7 @@ export type Balances = {
 
 const useSynthsBalancesQuery = (ctx: QueryContext, walletAddress: string, options?: UseQueryOptions<Balances>) => {
 	return useQuery<Balances>(
-		QUERY_KEYS.WalletBalances.Synths(walletAddress ?? '', ctx.network),
+		['walletBalances', 'synths', ctx.network, walletAddress],
 		async () => {
 			const balancesMap: SynthBalancesMap = {};
 			const [

@@ -3,7 +3,6 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import Wei, { wei } from '@synthetixio/wei';
 
 import { CurrencyKey, synthToContractName } from '../../currency';
-import QUERY_KEYS from '../../queryKeys';
 import { QueryContext } from '../../context';
 
 const useSynthMarketCapQuery = (
@@ -12,7 +11,7 @@ const useSynthMarketCapQuery = (
 	options?: UseQueryOptions<Wei>
 ) => {
 	return useQuery<Wei>(
-		QUERY_KEYS.Rates.MarketCap(currencyKey as string),
+		['rates', 'marketCap', ctx.network, currencyKey],
 		async () => {
 			return wei(await ctx.snxjs.contracts[synthToContractName(currencyKey!)].totalSupply());
 		},

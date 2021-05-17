@@ -8,7 +8,7 @@ import synthetixData from '@synthetixio/data';
 import SynthetixJs from 'synthetix-js';
 import { UseQueryResult } from 'react-query';
 
-type UseQueryFunction = (qc: QueryContext, ...args: any) => UseQueryResult;
+type UseQueryFunction = (ctx: QueryContext, ...args: any) => UseQueryResult;
 
 // would like to use this function, but temp disabling for tests
 /*function loadQueries(ctx: QueryContext, p: string): UseQueryFunction[] {
@@ -45,9 +45,34 @@ import useIsSystemOnMaintenance from './queries/systemStatus/useIsSystemOnMainte
 import useETHBalanceQuery from './queries/walletBalances/useETHBalanceQuery';
 import useSynthsBalancesQuery from './queries/walletBalances/useSynthsBalancesQuery';
 import useTokensBalancesQuery from './queries/walletBalances/useTokensBalancesQuery';
-import { partial } from 'lodash';
+import _ from 'lodash';
 
-export default async function synthetixQueries({ provider }: { provider: ethers.providers.Provider }) {
+const FUNCS = {
+    useEthGasPriceQuery,
+    useExchangeRatesQuery,
+    useHistoricalRatesQuery,
+    useHistoricalVolumeQuery,
+    useSynthExchangesSinceQuery,
+    useSynthMarketCapQuery,
+    useExchangeFeeRateQuery,
+    useFeeReclaimPeriodQuery,
+    useFrozenSynthsQuery,
+    useSynthSuspensionQuery,
+    useIsSystemOnMaintenance,
+    useETHBalanceQuery,
+    useSynthsBalancesQuery,
+    useTokensBalancesQuery
+};
+
+type RawSynthetixQueries = typeof FUNCS;
+
+type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;
+
+export type SynthetixQueries = {
+    [Property in keyof RawSynthetixQueries]: OmitFirstArg<RawSynthetixQueries[Property]>;
+};
+
+export default async function synthetixQueries({ provider }: { provider: ethers.providers.Provider }): Promise<SynthetixQueries> {
 
     const network = await provider.getNetwork();
 
@@ -61,21 +86,11 @@ export default async function synthetixQueries({ provider }: { provider: ethers.
         })
     };
 
-    //return loadQueries(ctx, __dirname + '/' + 'queries');
-    return [
-        useEthGasPriceQuery,
-        useExchangeRatesQuery,
-        useHistoricalRatesQuery,
-        useHistoricalVolumeQuery,
-        useSynthExchangesSinceQuery,
-        useSynthMarketCapQuery,
-        useExchangeFeeRateQuery,
-        useFeeReclaimPeriodQuery,
-        useFrozenSynthsQuery,
-        useSynthSuspensionQuery,
-        useIsSystemOnMaintenance,
-        useETHBalanceQuery,
-        useSynthsBalancesQuery,
-        useTokensBalancesQuery
-    ].map((f: UseQueryFunction) => partial(f, ctx));
+    const modFuncs: {[i: string]: Function } = _.clone(FUNCS);
+
+    for(const f in modFuncs) {
+        modFuncs[f] = _.partial(modFuncs[f] as UseQueryFunction, ctx);
+    }
+
+    return modFuncs as SynthetixQueries;
 }

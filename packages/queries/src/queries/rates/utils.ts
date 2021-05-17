@@ -1,8 +1,9 @@
+import { RateUpdate } from '@synthetixio/data/build/node/generated/graphql';
 import subHours from 'date-fns/subHours';
 
-import { RateUpdates, BaseRateUpdate } from './types';
+import { BaseRateUpdate } from './types';
 
-export const getMinAndMaxRate = (rates: RateUpdates) => {
+export const getMinAndMaxRate = (rates: RateUpdate[]) => {
 	if (rates.length === 0) return [0, 0];
 
 	return rates.reduce(
@@ -17,7 +18,7 @@ export const getMinAndMaxRate = (rates: RateUpdates) => {
 	);
 };
 
-export const calculateRateChange = (rates: RateUpdates) => {
+export const calculateRateChange = (rates: RateUpdate[]) => {
 	if (rates.length < 2) return 0;
 
 	const newPrice = rates[0].rate;

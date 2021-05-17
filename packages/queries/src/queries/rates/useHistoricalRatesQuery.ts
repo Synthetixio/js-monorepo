@@ -1,6 +1,5 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 
-import QUERY_KEYS from '../../queryKeys';
 import { CurrencyKey, Synths, sUSD_EXCHANGE_RATE } from '../../currency';
 import { PERIOD_IN_HOURS, Period } from '../../constants';
 
@@ -22,7 +21,7 @@ const useHistoricalRatesQuery = (
 	const periodInHours = PERIOD_IN_HOURS[period];
 
 	return useQuery<HistoricalRatesUpdates>(
-		QUERY_KEYS.Rates.HistoricalRates(currencyKey as string, period),
+		['rates', 'historicalRates', ctx.network, currencyKey, period],
 		async () => {
 			if (currencyKey === Synths.sUSD) {
 				return {
@@ -32,12 +31,12 @@ const useHistoricalRatesQuery = (
 					change: 0,
 				};
 			} else {
-				const rates = await ctx.snxData.rate.updates({
-					synth: currencyKey,
+				const rates = (await ctx.snxData.rateUpdates({
+					synth: currencyKey as string,
 					// maxTimestamp: Math.trunc(now / 1000),
 					minTimestamp: calculateTimestampForPeriod(periodInHours),
 					max: 6000,
-				});
+				}))!;
 
 				const [low, high] = getMinAndMaxRate(rates);
 				const change = calculateRateChange(rates);

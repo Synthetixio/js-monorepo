@@ -1,6 +1,8 @@
 import { ethers } from "ethers";
 
-import { SynthetixData } from '@synthetixio/data';
+import type { SynthetixData } from '@synthetixio/data/build/node/src/types';
+
+type SynthetixJs = any;
 
 export interface QueryContext {
     network: string;
