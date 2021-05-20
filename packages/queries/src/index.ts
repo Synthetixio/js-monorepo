@@ -1,6 +1,7 @@
 import ethers from 'ethers';
 import { QueryContext } from './context';
 
+import { NetworkId } from '@synthetixio/contracts-interface';
 import synthetixData from '@synthetixio/data';
 
 //import { readdirSync, statSync } from 'fs';
@@ -72,17 +73,15 @@ export type SynthetixQueries = {
     [Property in keyof RawSynthetixQueries]: OmitFirstArg<RawSynthetixQueries[Property]>;
 };
 
-export default async function synthetixQueries({ provider }: { provider: ethers.providers.Provider }): Promise<SynthetixQueries> {
-
-    const network = await provider.getNetwork();
+export default function useSynthetixQueries({ networkId, provider }: { networkId: NetworkId|null, provider: ethers.providers.Provider|null }): SynthetixQueries {
 
     const ctx: QueryContext = {
+        networkId,
         provider,
-        network: network.name,
-        snxData: synthetixData({ networkId: network.chainId }),
-        snxjs: new SynthetixJs({
+        snxData: networkId && synthetixData({ networkId }),
+        snxjs: networkId && new SynthetixJs({
             provider,
-            network: network.chainId
+            networkId
         })
     };
 

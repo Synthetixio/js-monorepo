@@ -9,7 +9,7 @@ export type FrozenSynths = Set<CurrencyKey>;
 
 const useFrozenSynthsQuery = (ctx: QueryContext, options?: UseQueryOptions<FrozenSynths>) => {
 	return useQuery<FrozenSynths>(
-		['synths', 'frozenSynths', ctx.network],
+		['synths', 'frozenSynths', ctx.networkId],
 		async () => {
 			const frozenSynths = await ctx.snxjs.contracts.SynthUtil!.frozenSynths();
 
@@ -18,6 +18,7 @@ const useFrozenSynthsQuery = (ctx: QueryContext, options?: UseQueryOptions<Froze
 			] as CurrencyKey[]);
 		},
 		{
+			enabled: !!ctx.snxjs,
 			...options,
 		}
 	);

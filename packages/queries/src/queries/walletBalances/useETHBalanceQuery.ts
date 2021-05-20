@@ -5,14 +5,14 @@ import { QueryContext } from '../../context';
 
 const useETHBalanceQuery = (ctx: QueryContext, walletAddress: string | null, options?: UseQueryOptions<Wei>) => {
 	return useQuery<Wei>(
-		['walletBalances', 'eth', ctx.network, walletAddress],
+		['walletBalances', 'eth', ctx.networkId, walletAddress],
 		async () => {
-			const balance = await ctx.provider.getBalance(walletAddress!);
+			const balance = await ctx.provider!.getBalance(walletAddress!);
 
 			return wei(balance);
 		},
 		{
-			enabled: !!walletAddress,
+			enabled: !!ctx.provider && !!walletAddress,
 			...options,
 		}
 	);

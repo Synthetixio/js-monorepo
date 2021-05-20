@@ -12,7 +12,7 @@ const useFeeReclaimPeriodQuery = (
 ) => {
 
 	return useQuery<number>(
-		['synths', 'feeReclaimPeriod', ctx.network, currencyKey],
+		['synths', 'feeReclaimPeriod', ctx.networkId, currencyKey],
 		async () => {
 			const maxSecsLeftInWaitingPeriod = (await ctx.snxjs.contracts.Exchanger.maxSecsLeftInWaitingPeriod(
 				walletAddress,
@@ -22,7 +22,7 @@ const useFeeReclaimPeriodQuery = (
 			return Number(maxSecsLeftInWaitingPeriod);
 		},
 		{
-			enabled: currencyKey != null && !!walletAddress,
+			enabled: ctx.snxjs && currencyKey != null && !!walletAddress,
 			...options,
 		}
 	);

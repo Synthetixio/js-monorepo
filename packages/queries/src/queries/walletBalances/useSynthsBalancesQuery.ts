@@ -24,7 +24,7 @@ export type Balances = {
 
 const useSynthsBalancesQuery = (ctx: QueryContext, walletAddress: string, options?: UseQueryOptions<Balances>) => {
 	return useQuery<Balances>(
-		['walletBalances', 'synths', ctx.network, walletAddress],
+		['walletBalances', 'synths', ctx.networkId, walletAddress],
 		async () => {
 			const balancesMap: SynthBalancesMap = {};
 			const [
@@ -66,7 +66,7 @@ const useSynthsBalancesQuery = (ctx: QueryContext, walletAddress: string, option
 			};
 		},
 		{
-			enabled: !!walletAddress,
+			enabled: ctx.snxjs && !!walletAddress,
 			...options,
 		}
 	);

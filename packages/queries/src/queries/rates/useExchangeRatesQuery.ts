@@ -14,7 +14,7 @@ const additionalCurrencies = [CRYPTO_CURRENCY_MAP.SNX].map(ethers.utils.formatBy
 
 const useExchangeRatesQuery = (ctx: QueryContext, options?: UseQueryOptions<Rates>) => {
 	return useQuery<Rates>(
-		['rates', 'exchangeRates', ctx.network],
+		['rates', 'exchangeRates', ctx.networkId],
 		async () => {
 			const exchangeRates: Rates = {};
 
@@ -40,6 +40,7 @@ const useExchangeRatesQuery = (ctx: QueryContext, options?: UseQueryOptions<Rate
 			return exchangeRates;
 		},
 		{
+			enabled: !!ctx.networkId,
 			...options,
 		}
 	);

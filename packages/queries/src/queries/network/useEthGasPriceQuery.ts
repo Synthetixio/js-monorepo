@@ -43,7 +43,7 @@ export const GAS_SPEEDS: GasSpeed[] = ['average', 'fast', 'fastest'];
 
 const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPrices>) => {
 	return useQuery<GasPrices>(
-		['network', 'gasPrice', ctx.network],
+		['network', 'gasPrice', ctx.networkId],
 		async () => {
 			try {
 				const result = await axios.get<GasNowResponse>(GAS_NOW_API_URL);
@@ -67,7 +67,10 @@ const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPri
 				};
 			}
 		},
-		options
+		{
+			enabled: !!ctx.networkId,
+			...options
+		}
 	);
 };
 

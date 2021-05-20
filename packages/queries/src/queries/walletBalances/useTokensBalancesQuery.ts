@@ -27,7 +27,7 @@ const useTokensBalancesQuery = (ctx: QueryContext, tokens: any[], walletAddress:
 	const tokensMap = keyBy(tokens, 'symbol');
 
 	return useQuery<Balances>(
-		['walletBalances', 'tokens', ctx.network, walletAddress],
+		['walletBalances', 'tokens', ctx.networkId, walletAddress],
 		async () => {
 			// @ts-ignore
 			await ethcallProvider.init(provider!);
@@ -58,7 +58,7 @@ const useTokensBalancesQuery = (ctx: QueryContext, tokens: any[], walletAddress:
 			});
 		},
 		{
-			enabled: tokens.length > 0,
+			enabled: !!ctx.provider && tokens.length > 0,
 			...options,
 		}
 	);

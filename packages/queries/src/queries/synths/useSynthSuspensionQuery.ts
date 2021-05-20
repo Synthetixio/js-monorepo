@@ -50,7 +50,7 @@ const useSynthSuspensionQuery = (
 	options?: UseQueryOptions<SynthSuspended>
 ) => {
 	return useQuery<SynthSuspended>(
-		['synth', 'suspension', ctx.network, currencyKey],
+		['synth', 'suspension', ctx.networkId, currencyKey],
 		async () => {
 			const [
 				isSuspended,
@@ -67,7 +67,7 @@ const useSynthSuspensionQuery = (
 			};
 		},
 		{
-			enabled: currencyKey != null,
+			enabled: ctx.snxjs && currencyKey != null,
 			...options,
 		}
 	);

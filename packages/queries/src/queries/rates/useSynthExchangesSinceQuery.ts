@@ -13,13 +13,14 @@ const useSynthExchangesSinceQuery = (
 	const periodInHours = PERIOD_IN_HOURS[period];
 
 	return useQuery(
-		['rates', 'synthExchangesSince', ctx.network, period],
+		['rates', 'synthExchangesSince', ctx.networkId, period],
 		async () => {
-			return (await ctx.snxData.synthExchanges({
+			return (await ctx.snxData!.synthExchanges({
 				minTimestamp: calculateTimestampForPeriod(periodInHours),
 			}))!
 		},	
 		{
+			enabled: !!ctx.snxData,
 			...options,
 		}
 	);

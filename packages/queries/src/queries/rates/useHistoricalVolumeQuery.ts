@@ -17,9 +17,9 @@ const useHistoricalVolumeQuery = (
 	const periodInHours = PERIOD_IN_HOURS[period];
 
 	return useQuery<HistoricalVolume>(
-		['rates', 'historicalVolume', ctx.network, period],
+		['rates', 'historicalVolume', ctx.networkId, period],
 		async () => {
-			const exchanges = (await ctx.snxData.synthExchanges({
+			const exchanges = (await ctx.snxData!.synthExchanges({
 				minTimestamp: calculateTimestampForPeriod(periodInHours),
 			}))!;
 
@@ -37,7 +37,10 @@ const useHistoricalVolumeQuery = (
 				return totalVol;
 			}, {} as HistoricalVolume);
 		},
-		options
+		{
+			enabled: !!ctx.snxData,
+			...options
+		}
 	);
 };
 

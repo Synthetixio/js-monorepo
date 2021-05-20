@@ -5,7 +5,7 @@ const IS_PROD = !!process.env.NEXT_PUBLIC_IS_PROD;
 
 const useIsSystemOnMaintenance = (ctx: QueryContext, options?: UseQueryOptions<boolean>) => {
 	return useQuery<boolean>(
-		['systemStatus', 'isOnMaintenance', ctx.network],
+		['systemStatus', 'isOnMaintenance', ctx.networkId],
 		async () => {
 			const [isSystemUpgrading, isExchangePaused] = (await Promise.all([
 				ctx.snxjs.contracts.SystemStatus.isSystemUpgrading(),
@@ -15,6 +15,7 @@ const useIsSystemOnMaintenance = (ctx: QueryContext, options?: UseQueryOptions<b
 			return isSystemUpgrading || (isExchangePaused && IS_PROD);
 		},
 		{
+			enabled: !!ctx.networkId,
 			...options,
 		}
 	);

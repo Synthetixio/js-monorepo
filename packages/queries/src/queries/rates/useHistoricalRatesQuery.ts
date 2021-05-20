@@ -21,7 +21,7 @@ const useHistoricalRatesQuery = (
 	const periodInHours = PERIOD_IN_HOURS[period];
 
 	return useQuery<HistoricalRatesUpdates>(
-		['rates', 'historicalRates', ctx.network, currencyKey, period],
+		['rates', 'historicalRates', ctx.networkId, currencyKey, period],
 		async () => {
 			if (currencyKey === Synths.sUSD) {
 				return {
@@ -31,7 +31,7 @@ const useHistoricalRatesQuery = (
 					change: 0,
 				};
 			} else {
-				const rates = (await ctx.snxData.rateUpdates({
+				const rates = (await ctx.snxData!.rateUpdates({
 					synth: currencyKey as string,
 					// maxTimestamp: Math.trunc(now / 1000),
 					minTimestamp: calculateTimestampForPeriod(periodInHours),
@@ -50,7 +50,7 @@ const useHistoricalRatesQuery = (
 			}
 		},
 		{
-			enabled: !!currencyKey,
+			enabled: !!ctx.snxData && !!currencyKey,
 			...options,
 		}
 	);

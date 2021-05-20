@@ -30,6 +30,7 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
+		"@synthetixio/contracts-interface": "../contracts-interface",
 		"@synthetixio/data": "../data",
 		"@synthetixio/wei": "../wei",
 		"axios": "^0.21.1",
@@ -40,9 +41,6 @@
 		"graphql": "15.5.0",
 		"graphql-request": "3.4.0",
 		"lodash": "^4.17.21",
-		"react": "^17.0.2",
-		"react-dom": "^17.0.2",
-		"react-query": "^3.16.0",
 		"synthetix-js": "^2.45.2"
 	},
 	"devDependencies": {
@@ -55,7 +53,15 @@
 		"@types/jest": "^26.0.22",
 		"@types/lodash": "^4.14.169",
 		"babel-jest": "26.6.3",
-		"jest": "26.6.3"
+		"jest": "26.6.3",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"react-query": "^3.16.0"
+	},
+	"peerDependencies": {
+		"react": "17.x",
+		"react-dom": "17.x",
+		"react-query": "3.16.x"
 	},
 	"jest": {
 		"transform": {

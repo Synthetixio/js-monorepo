@@ -1,12 +1,13 @@
 import { ethers } from "ethers";
 
 import type { SynthetixData } from '@synthetixio/data/build/node/src/types';
+import { NetworkId } from "@synthetixio/contracts-interface";
 
 type SynthetixJs = any;
 
 export interface QueryContext {
-    network: string;
-    provider: ethers.providers.Provider;
-    snxData: SynthetixData,
-    snxjs: SynthetixJs
+    networkId: NetworkId|null;
+    provider: ethers.providers.Provider|null;
+    snxData: SynthetixData|null,
+    snxjs: SynthetixJs|null
 }

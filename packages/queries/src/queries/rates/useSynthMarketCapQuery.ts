@@ -11,12 +11,12 @@ const useSynthMarketCapQuery = (
 	options?: UseQueryOptions<Wei>
 ) => {
 	return useQuery<Wei>(
-		['rates', 'marketCap', ctx.network, currencyKey],
+		['rates', 'marketCap', ctx.networkId, currencyKey],
 		async () => {
 			return wei(await ctx.snxjs.contracts[synthToContractName(currencyKey!)].totalSupply());
 		},
 		{
-			enabled: currencyKey != null,
+			enabled: !!ctx.snxjs && currencyKey != null,
 			...options,
 		}
 	);

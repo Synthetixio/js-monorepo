@@ -14,7 +14,7 @@ const useExchangeFeeRate = (
 	options?: UseQueryOptions<Wei>
 ) => {
 	return useQuery<Wei>(
-		['synths', 'exchangeFeeRate', ctx.network, quoteCurrencyKey, baseCurrencyKey],
+		['synths', 'exchangeFeeRate', ctx.networkId, quoteCurrencyKey, baseCurrencyKey],
 		async () => {
 			const feeRateForExchange = (await ctx.snxjs.contracts.Exchanger.feeRateForExchange(
 				ethers.utils.formatBytes32String(quoteCurrencyKey!),
@@ -24,7 +24,7 @@ const useExchangeFeeRate = (
 			return wei(feeRateForExchange);
 		},
 		{
-			enabled: quoteCurrencyKey != null && baseCurrencyKey != null,
+			enabled: ctx.snxjs && quoteCurrencyKey != null && baseCurrencyKey != null,
 			...options,
 		}
 	);
