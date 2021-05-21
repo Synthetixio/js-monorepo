@@ -3,8 +3,7 @@ import { BigNumberish, ethers } from 'ethers';
 
 import { CRYPTO_CURRENCY_MAP, CurrencyKey, iStandardSynth, synthToAsset } from '../../currency';
 import { QueryContext } from '../../context';
-
-export type Rates = Record<CurrencyKey, number>;
+import { Rates } from '../../types';
 
 type CurrencyRate = BigNumberish;
 type SynthRatesTuple = [string[], CurrencyRate[]];
@@ -19,8 +18,8 @@ const useExchangeRatesQuery = (ctx: QueryContext, options?: UseQueryOptions<Rate
 			const exchangeRates: Rates = {};
 
 			const [synthsRates, ratesForCurrencies] = (await Promise.all([
-				ctx.snxjs.contracts.SynthUtil.synthsRates(),
-				ctx.snxjs.contracts.ExchangeRates.ratesForCurrencies(additionalCurrencies),
+				ctx.snxjs!.contracts.SynthUtil.synthsRates(),
+				ctx.snxjs!.contracts.ExchangeRates.ratesForCurrencies(additionalCurrencies),
 			])) as [SynthRatesTuple, CurrencyRate[]];
 
 			const synths = [...synthsRates[0], ...additionalCurrencies] as string[];

@@ -9,7 +9,7 @@ import {
 	calculateRateChange,
 	mockHistoricalRates,
 } from './utils';
-import { HistoricalRatesUpdates } from './types';
+import { HistoricalRatesUpdates } from '../../types';
 import { QueryContext } from '../../context';
 
 const useHistoricalRatesQuery = (

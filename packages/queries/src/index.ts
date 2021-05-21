@@ -1,13 +1,14 @@
 import ethers from 'ethers';
 import { QueryContext } from './context';
 
-import { NetworkId } from '@synthetixio/contracts-interface';
+import { synthetix, NetworkId } from '@synthetixio/contracts-interface';
 import synthetixData from '@synthetixio/data';
 
 //import { readdirSync, statSync } from 'fs';
 
-import SynthetixJs from 'synthetix-js';
 import { UseQueryResult } from 'react-query';
+
+export * from './types';
 
 type UseQueryFunction = (ctx: QueryContext, ...args: any) => UseQueryResult;
 
@@ -79,8 +80,7 @@ export default function useSynthetixQueries({ networkId, provider }: { networkId
         networkId,
         provider,
         snxData: networkId && synthetixData({ networkId }),
-        snxjs: networkId && new SynthetixJs({
-            provider,
+        snxjs: networkId && synthetix({
             networkId
         })
     };

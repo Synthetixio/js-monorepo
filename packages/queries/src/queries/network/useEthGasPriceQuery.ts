@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
+import { GasPrices } from '../../types';
 
 const ETH_GAS_STATION_API_URL = 'https://ethgasstation.info/json/ethgasAPI.json';
 const GAS_NOW_API_URL = 'https://www.gasnow.org/api/v3/gas/price?utm_source=kwenta';
@@ -30,16 +31,6 @@ type GasNowResponse = {
 		timestamp: number;
 	};
 };
-
-export type GasPrices = {
-	fastest: number;
-	fast: number;
-	average: number;
-};
-
-export type GasSpeed = keyof GasPrices;
-
-export const GAS_SPEEDS: GasSpeed[] = ['average', 'fast', 'fastest'];
 
 const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPrices>) => {
 	return useQuery<GasPrices>(

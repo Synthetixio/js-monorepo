@@ -4,14 +4,13 @@ import { ethers } from 'ethers';
 
 import { CurrencyKey } from '../../currency';
 import { QueryContext } from '../../context';
-
-export type FrozenSynths = Set<CurrencyKey>;
+import { FrozenSynths } from '../../types';
 
 const useFrozenSynthsQuery = (ctx: QueryContext, options?: UseQueryOptions<FrozenSynths>) => {
 	return useQuery<FrozenSynths>(
 		['synths', 'frozenSynths', ctx.networkId],
 		async () => {
-			const frozenSynths = await ctx.snxjs.contracts.SynthUtil!.frozenSynths();
+			const frozenSynths = await ctx.snxjs!.contracts.SynthUtil!.frozenSynths();
 
 			return new Set<CurrencyKey>([
 				...compact(frozenSynths.map(ethers.utils.parseBytes32String)),

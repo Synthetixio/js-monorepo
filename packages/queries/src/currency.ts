@@ -1,5 +1,5 @@
 import keyBy from 'lodash/keyBy';
-import { Rates } from './queries/rates/useExchangeRatesQuery';
+import { Rates } from './types';
 
 export type CurrencyKey = string;
 

@@ -1,13 +1,11 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import Wei, { wei } from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 
-import { CurrencyKey } from '../../currency';
 import { PERIOD_IN_HOURS, Period } from '../../constants';
 
 import { calculateTimestampForPeriod } from './utils';
 import { QueryContext } from '../../context';
-
-type HistoricalVolume = Record<CurrencyKey, Wei>;
+import { HistoricalVolume } from '../../types';
 
 const useHistoricalVolumeQuery = (
 	ctx: QueryContext,

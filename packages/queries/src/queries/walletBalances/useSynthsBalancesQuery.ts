@@ -5,24 +5,11 @@ import Wei, { wei } from '@synthetixio/wei';
 
 import { CurrencyKey } from '../../currency';
 import { QueryContext } from '../../context';
-
-export type SynthBalance = {
-	currencyKey: CurrencyKey;
-	balance: Wei;
-	usdBalance: Wei;
-};
-
-export type SynthBalancesMap = Record<CurrencyKey, SynthBalance>;
+import { Balances, SynthBalance, SynthBalancesMap } from '../../types';
 
 type SynthBalancesTuple = [CurrencyKey[], number[], number[]];
 
-export type Balances = {
-	balancesMap: SynthBalancesMap;
-	balances: SynthBalance[];
-	totalUSDBalance: Wei;
-};
-
-const useSynthsBalancesQuery = (ctx: QueryContext, walletAddress: string, options?: UseQueryOptions<Balances>) => {
+const useSynthsBalancesQuery = (ctx: QueryContext, walletAddress: string | null, options?: UseQueryOptions<Balances>) => {
 	return useQuery<Balances>(
 		['walletBalances', 'synths', ctx.networkId, walletAddress],
 		async () => {
@@ -31,7 +18,7 @@ const useSynthsBalancesQuery = (ctx: QueryContext, walletAddress: string, option
 				currencyKeys,
 				synthsBalances,
 				synthsUSDBalances,
-			] = (await ctx.snxjs.contracts.SynthUtil!.synthsBalances(
+			] = (await ctx.snxjs!.contracts.SynthUtil!.synthsBalances(
 				walletAddress
 			)) as SynthBalancesTuple;
 
@@ -66,7 +53,7 @@ const useSynthsBalancesQuery = (ctx: QueryContext, walletAddress: string, option
 			};
 		},
 		{
-			enabled: ctx.snxjs && !!walletAddress,
+			enabled: !!ctx.snxjs && !!walletAddress,
 			...options,
 		}
 	);

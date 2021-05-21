@@ -13,7 +13,7 @@ const useSynthMarketCapQuery = (
 	return useQuery<Wei>(
 		['rates', 'marketCap', ctx.networkId, currencyKey],
 		async () => {
-			return wei(await ctx.snxjs.contracts[synthToContractName(currencyKey!)].totalSupply());
+			return wei(await ctx.snxjs!.contracts[synthToContractName(currencyKey!)].totalSupply());
 		},
 		{
 			enabled: !!ctx.snxjs && currencyKey != null,

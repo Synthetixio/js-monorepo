@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 
 import { CurrencyKey } from '../../currency';
 import { QueryContext } from '../../context';
+import { SynthSuspended, SynthSuspensionReason } from '../../types';
 
 /*
 	Suspension Reasons:
@@ -14,12 +15,6 @@ import { QueryContext } from '../../context';
 	65: "Decentralized Circuit Breaker (Phase two)"
 	99999: "Emergency"
 */
-
-export type SynthSuspensionReason =
-	| 'system-upgrade'
-	| 'market-closure'
-	| 'circuit-breaker'
-	| 'emergency';
 
 const getReasonFromCode = (reasonCode: number): SynthSuspensionReason => {
 	switch (reasonCode) {
@@ -38,12 +33,6 @@ const getReasonFromCode = (reasonCode: number): SynthSuspensionReason => {
 	}
 };
 
-export type SynthSuspended = {
-	isSuspended: boolean;
-	reasonCode: number;
-	reason: SynthSuspensionReason | null;
-};
-
 const useSynthSuspensionQuery = (
 	ctx: QueryContext,
 	currencyKey: CurrencyKey | null,
@@ -55,7 +44,7 @@ const useSynthSuspensionQuery = (
 			const [
 				isSuspended,
 				reason,
-			] = (await ctx.snxjs.contracts.SystemStatus.synthExchangeSuspension(
+			] = (await ctx.snxjs!.contracts.SystemStatus.synthExchangeSuspension(
 				ethers.utils.formatBytes32String(currencyKey!)
 			)) as [boolean, ethers.BigNumber];
 
@@ -67,7 +56,7 @@ const useSynthSuspensionQuery = (
 			};
 		},
 		{
-			enabled: ctx.snxjs && currencyKey != null,
+			enabled: !!ctx.snxjs && currencyKey != null,
 			...options,
 		}
 	);
