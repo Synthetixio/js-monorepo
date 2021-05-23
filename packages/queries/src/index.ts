@@ -74,16 +74,29 @@ export type SynthetixQueries = {
     [Property in keyof RawSynthetixQueries]: OmitFirstArg<RawSynthetixQueries[Property]>;
 };
 
+// keep a cache (or else synthetixjs fills up all memory for each instance)
+const cachedQueryContext: {[id: string]: QueryContext} = {};
+
 export default function useSynthetixQueries({ networkId, provider }: { networkId: NetworkId|null, provider: ethers.providers.Provider|null }): SynthetixQueries {
 
-    const ctx: QueryContext = {
+    let ctx: QueryContext = {
         networkId,
         provider,
-        snxData: networkId && synthetixData({ networkId }),
-        snxjs: networkId && synthetix({
-            networkId
-        })
+        snxData: null,
+        snxjs: null
     };
+
+    if(networkId) {
+        if (!cachedQueryContext[networkId?.toString()]) {
+            ctx.snxData = synthetixData({ networkId });
+            ctx.snxjs = synthetix({ networkId });
+
+            cachedQueryContext[networkId?.toString()] = ctx;
+        }
+        else {
+            ctx = cachedQueryContext[networkId?.toString()]
+        }
+    }
 
     const modFuncs: {[i: string]: Function } = _.clone(FUNCS);
 

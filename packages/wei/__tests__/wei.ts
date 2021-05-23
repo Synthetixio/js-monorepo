@@ -4,24 +4,28 @@ import Big from 'big.js'
 
 describe('Wei numeric type', () => {
   describe('Constructor', () => {
+    it('denies null construction', () => {
+      expect(Wei).toThrow();
+    })
+
     it('constructs from a number', () => {
       const a = new Wei(14.3)
       expect(a.toBN()).toEqual(BigNumber.from('14300000000000000000'))
-      const b = new Wei(14, true)
+      const b = new Wei(14, 18, true)
       expect(b.toBN()).toEqual(BigNumber.from('14'))
     })
 
     it('constructs from a number', () => {
       const a = new Wei('14.3')
       expect(a.toBN()).toEqual(BigNumber.from('14300000000000000000'))
-      const b = new Wei('14', true)
+      const b = new Wei('14', 18, true)
       expect(b.toBN()).toEqual(BigNumber.from('14'))
     })
 
     it('constructs from a Big', () => {
       const a = new Wei(new Big('14.3'))
       expect(a.toBN()).toEqual(BigNumber.from('14300000000000000000'))
-      const b = new Wei(new Big('14'), true)
+      const b = new Wei(new Big('14'), 18, true)
       expect(b.toBN()).toEqual(BigNumber.from('14'))
     })
 
@@ -31,7 +35,7 @@ describe('Wei numeric type', () => {
     })
 
     it('copy constructs', () => {
-      const a = new Wei('1', true)
+      const a = new Wei('1', 18, true)
       const b = new Wei(a)
       expect(a != b)
       expect(a.eq(b))
@@ -47,12 +51,14 @@ describe('Wei numeric type', () => {
 
     it('converts to a string', () => {
       expect(v.toString()).toEqual('923.460000000000000000')
+      expect(v.str).toEqual('923.460000000000000000')
       expect(v.toString(2)).toEqual('923.46')
       expect(v.toString(0, true)).toEqual('923460000000000000000')
     })
 
     it('converts to a BN', () => {
       expect(v.toBN()).toEqual(BigNumber.from('923460000000000000000'))
+      expect(v.bn).toEqual(BigNumber.from('923460000000000000000'))
     })
 
     it('converts to a Big', () => {
@@ -63,8 +69,14 @@ describe('Wei numeric type', () => {
     it('converts to a number', () => {
       let t = v.toNumber()
       expect(Math.abs(t - 923.46) < 1e-12) // toNumber as a non-wei value; ${t}
+      t = v.num
+      expect(Math.abs(t - 923.46) < 1e-12) // num as a non-wei value; ${t}
       t = v.toNumber(true)
       expect(Math.abs(t - 923.46 * 1e18) < 1e-12) // toNumber as a wei value; ${t}
+    })
+
+    it('converts sortable', () => {
+      expect(v.toSortable()).toEqual('0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000003078333230663934663934633961336130303030');
     })
   })
 
@@ -72,9 +84,14 @@ describe('Wei numeric type', () => {
     let a: Wei, b: Wei, c: Wei
 
     beforeEach(() => {
-      a = new Wei('932.46')
-      b = new Wei('23.29467')
+      a = new Wei('932.46', 15)
+      b = new Wei('23.29467', 16)
       c = new Wei('-123.325')
+    })
+
+    it('scales', () => {
+      expect(a.scale(15)).toEqual(a);
+      expect(a.scale(18).toBN()).toEqual(BigNumber.from('932460000000000000000'));
     })
 
     it('abs', () => {
@@ -137,17 +154,20 @@ describe('Wei numeric type', () => {
       expect(v.cmp(3) == 1)
       expect(v.cmp(4) == -1)
       expect(v.cmp(3.14159) == 0)
+      expect(v.cmp(v.scale(15)) == 0)
     })
 
     it('eq', () => {
       expect(!v.eq(3.1))
       expect(v.eq(3.14159))
+      expect(v.eq(v.scale(15)))
     })
 
     it('feq', () => {
       expect(!v.feq(4, 1e-2))
       expect(v.feq(4, 1))
-      expect(v.feq(3.14159, 1e-18))
+      expect(v.feq(3.14159, 1e-10))
+      expect(v.feq(v.scale(15), 1e-10))
     })
 
     it('gt', () => {

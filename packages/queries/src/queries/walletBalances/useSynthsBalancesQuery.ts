@@ -7,7 +7,7 @@ import { CurrencyKey } from '../../currency';
 import { QueryContext } from '../../context';
 import { Balances, SynthBalance, SynthBalancesMap } from '../../types';
 
-type SynthBalancesTuple = [CurrencyKey[], number[], number[]];
+type SynthBalancesTuple = [CurrencyKey[], ethers.BigNumber[], ethers.BigNumber[]];
 
 const useSynthsBalancesQuery = (ctx: QueryContext, walletAddress: string | null, options?: UseQueryOptions<Balances>) => {
 	return useQuery<Balances>(

@@ -4,19 +4,8 @@
 import { BigNumber, ethers } from 'ethers';
 import Big from 'big.js';
 
-export const PRECISION = 18;
-Big.DP = PRECISION;
-/**
- * The scale factor. For now this is constant, but we might want to make it variable later on.
- * Note: this should always be a power of 2 as BN uses number arrays and does its calculations in
- * base 2, using another base will lead to translation losses to and from SBN.
- *
- * Wei is a scale factor of `10^18`, so use that for now.
- */
-export const Z = BigNumber.from(10).pow(BigNumber.from(PRECISION));
-/** Z^2 constant */
-export const Z2 = Z.pow(2);
-export const Zb = new Big(10).pow(PRECISION);
+export const WEI_PRECISION = 18;
+Big.DP = WEI_PRECISION;
 
 export type WeiSource = Wei | number | string | BigNumber | Big;
 
@@ -60,23 +49,32 @@ export default class Wei {
 	/** Value */
 	private readonly v: BigNumber;
 
+	/** Decimals (usually WEI_PRECISION) */
+	private readonly p: number;
+
+	get z() {
+		return BigNumber.from(10).pow(BigNumber.from(this.p))
+	}
+
 	/**
 	 * Create a (lazy as possible) clone of the source. For some types this means no memory copy will
 	 * need to happen while for others it will. This should only be used for converting RHS parameters
 	 * which are needed in a known form. Should probably only be used by the `Wei.from` function.
 	 *
 	 * @param n Source material
-	 * @param isWei Whether the number passed in is already in Wei units. Ignored for BigNumber WeiSource
-	 * (if true it is taken as the literal value, otherwise it will be scaled to be in Wei)
+	 * @param p The number of decimal places to scale by. If you are working with Ether or Synth, leave this as default
+	 * @param isWei if false or unspecfiied, automatically scale any value to `p` places. If n is a BigNumber, this is ignored.
 	 */
-	constructor(n: WeiSource, isWei?: boolean);
+	constructor(n: WeiSource, p?: number, isWei?: boolean);
 
-	constructor(n: WeiSource, isWei = false) {
-		if (n === undefined || n === null) throw new Error('Cannot prase undefined/null as a number.');
+	constructor(n: WeiSource, p = 18, isWei = false) {
+		this.p = p;
+
+		if (n === undefined || n === null) throw new Error('Cannot parse undefined/null as a number.');
 		if (Wei.is(n)) {
-			this.v = n.v;
-		} else if(n instanceof BigNumber) {
-                        this.v = n;
+			this.v = n.scale(p).v;
+		} else if((n as BigNumber)._isBigNumber) {
+			this.v = n as BigNumber;
 		} else if (isWei) {
 			// already wei, don't scale again
 			if (n instanceof Big) {
@@ -87,13 +85,27 @@ export default class Wei {
 		} else {
 			// not wei, scale it
   			// TODO: avoid use of Big.js, but this is a really easy way to do the conversion for now
-			this.v = BigNumber.from(new Big(n).mul(Zb).toFixed(0));
+			this.v = BigNumber.from(new Big(n as any).mul(new Big(10).pow(this.p)).toFixed(0));
 		}
 	}
 
 	///////////////////////////
 	// Conversion functions //
 	/////////////////////////
+	
+	/**
+	 * Creates a new version of the Wei object with a new precision
+	 * Note: if p is less than the current p, precision may be lost.
+	 * @param p new decimal places precision
+	 * @returns new Wei value with specified decimal places
+	 */
+	scale(p: number): Wei {
+		if (p == this.p) {
+			return this;
+		}
+
+		return wei(wei(1, p).v.mul(this.v).div(this.z));
+	}
 
 	/**
 	 * Write the value as a string.
@@ -103,7 +115,7 @@ export default class Wei {
 	 * @returns The value as a string
 	 * @memberof Wei
 	 */
-	toString(dp = PRECISION, asWei = false): string {
+	toString(dp = this.p, asWei = false): string {
 		if (asWei) dp = 0;
 		return this.toBig(asWei).toFixed(dp);
 	}
@@ -150,7 +162,7 @@ export default class Wei {
 	 */
 	toBig(asWei = false): Big {
 		const big = new Big(this.v.toString());
-		return asWei ? big : big.div(Zb);
+		return asWei ? big : big.div(new Big(10).pow(this.p));
 	}
 
 	/** The unscaled value as a Big */
@@ -181,39 +193,39 @@ export default class Wei {
 	////////////////////
 
 	neg(): Wei {
-		return new Wei(this.v.mul(-1), true);
+		return new Wei(this.v.mul(-1), this.p, true);
 	}
 
 	abs(): Wei {
-		return new Wei(this.v.abs(), true);
+		return new Wei(this.v.abs(), this.p, true);
 	}
 
 	div(other: WeiSource): Wei {
-		other = parseNum(other);
-		return new Wei(this.v.mul(Z).div(other.v), true);
+		other = parseNum(other, this.p);
+		return new Wei(this.v.mul(this.z).div(other.v), this.p, true);
 	}
 
 	sub(other: WeiSource): Wei {
-		other = parseNum(other);
-		return new Wei(this.v.sub(other.v), true);
+		other = parseNum(other, this.p);
+		return new Wei(this.v.sub(other.v), this.p, true);
 	}
 
 	add(other: WeiSource): Wei {
-		other = parseNum(other);
-		return new Wei(this.v.add(other.v), true);
+		other = parseNum(other, this.p);
+		return new Wei(this.v.add(other.v), this.p, true);
 	}
 
 	mul(other: WeiSource): Wei {
-		other = parseNum(other);
-		return new Wei(this.v.mul(other.v).div(Z), true);
+		other = parseNum(other, this.p);
+		return new Wei(this.v.mul(other.v).div(this.z), this.p, true);
 	}
 
 	pow(p: number): Wei {
-		return new Wei(this.big.pow(p));
+		return new Wei(this.big.pow(p), this.p);
 	}
 
 	inv(): Wei {
-		return new Wei(Z2.div(this.v), true);
+		return new Wei(this.z.pow(2).div(this.v), this.p, true);
 	}
 
 	///////////////////////////
@@ -221,14 +233,14 @@ export default class Wei {
 	/////////////////////////
 
 	cmp(other: WeiSource): number {
-		other = parseNum(other);
+		other = parseNum(other, this.p);
 		if (this.v.gt(other.v)) return 1;
 		else if (this.v.lt(other.v)) return -1;
 		else return 0;
 	}
 
 	eq(other: WeiSource): boolean {
-		other = parseNum(other);
+		other = parseNum(other, this.p);
 		return this.v.eq(other.v);
 	}
 
@@ -241,8 +253,8 @@ export default class Wei {
 	 * @memberof Wei
 	 */
 	feq(other: WeiSource, fuzz: WeiSource): boolean {
-		const o = parseNum(other);
-		const f = parseNum(fuzz);
+		const o = parseNum(other, this.p);
+		const f = parseNum(fuzz, this.p);
 		return this.v.sub(o.v).abs().lt(f.v);
 	}
 
@@ -264,11 +276,11 @@ export default class Wei {
 }
 
 /** convenience function for not writing `new Wei(s)` every time. */
-export function wei(s: WeiSource, isWei = false): Wei {
+export function wei(s: WeiSource, p = WEI_PRECISION, isWei = false): Wei {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	return new Wei(s as any, isWei);
+	return new Wei(s as any, p, isWei);
 }
 
-function parseNum(v: WeiSource | Wei): Wei {
-	return Wei.is(v) ? v : new Wei(v);
+function parseNum(v: WeiSource | Wei, p: number): Wei {
+	return Wei.is(v) ? v.scale(p) : new Wei(v, p);
 }

@@ -13,7 +13,7 @@
     "examples:browser": "npm run build-browser && http-server -o ./examples/browser-example.html -c-1",
     "lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
     "lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
-    "test": "node --experimental-vm-modules ../../node_modules/.bin/jest --forceExit --coverage --no-cache",
+    "test": "node --experimental-vm-modules ../../node_modules/.bin/jest --coverage --no-cache",
     "tsc": "tsc --noemit",
     "codegen": "graphql-codegen --config codegen.yml"
   },
