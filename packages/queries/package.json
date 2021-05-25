@@ -2,7 +2,7 @@
 	"name": "@synthetixio/queries",
 	"version": "0.0.12",
 	"description": "react-query for pulling synthetix data in react interfaces",
-	"source": "src/index.ts",
+	"source": "./src/index.ts",
 	"main": "./build/node/index.js",
 	"browser": "./build/index.js",
 	"types": "./build/node/index.d.ts",
