@@ -1,12 +1,32 @@
 {
   "name": "root",
   "private": true,
-  "devDependencies": {
-    "lerna": "^4.0.0"
-  },
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",
-    "pretest": "eslint packages",
+    "lint": "prettier -c packages",
+    "lint:write": "prettier -w packages",
     "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/core": "7.11.0",
+    "@babel/plugin-transform-runtime": "7.13.10",
+    "@babel/preset-env": "7.13.10",
+    "@babel/preset-typescript": "7.13.0",
+    "@types/jest": "26.0.22",
+    "@types/mocha": "8.2.2",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
+    "babel-jest": "26.2.2",
+    "babel-loader": "8.1.0",
+    "eslint": "^7.26.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.2",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^26.6.3",
+    "lerna": "4.0.0",
+    "prettier": "^2.3.0",
+    "typescript": "^4.2.4",
+    "webpack": "4.44.1",
+    "webpack-cli": "3.3.12"
   }
 }
