@@ -4,6 +4,7 @@
   "description": "Convenient BigNumber library for web3",
   "main": "build/node/wei.js",
   "browser": "./build/index.js",
+  "source": "src/index.ts",
   "types": "./build/node/wei.d.ts",
   "scripts": {
     "build": "npm run build-browser && npm run build-node",
