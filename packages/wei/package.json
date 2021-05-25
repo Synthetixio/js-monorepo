@@ -1,38 +1,38 @@
 {
-  "name": "@synthetixio/wei",
-  "version": "1.0.0",
-  "description": "Convenient BigNumber library for web3",
-  "main": "build/node/wei.js",
-  "browser": "./build/index.js",
-  "source": "src/index.ts",
-  "types": "./build/node/wei.d.ts",
-  "scripts": {
-    "build": "npm run build-browser && npm run build-node",
-    "build-node": "tsc -p tsconfig.node.json",
-    "build-browser": "webpack --mode=production",
-    "examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
-    "examples:browser": "npm run build-browser && http-server -o ./examples/browser-example.html -c-1",
-    "lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
-    "lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
-    "test": "node --experimental-vm-modules ../../node_modules/.bin/jest --coverage --no-cache",
-    "tsc": "tsc --noemit",
-    "codegen": "graphql-codegen --config codegen.yml"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Synthetixio/js-monorepo.git"
-  },
-  "author": "Matthew Conover <git@mconover.dev>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Synthetixio/js-monorepo/issues"
-  },
-  "homepage": "https://github.com/Synthetixio/js-monorepo#readme",
-  "dependencies": {
-    "big.js": "6.1.1",
+	"name": "@synthetixio/wei",
+	"version": "1.0.0",
+	"description": "Convenient BigNumber library for web3",
+	"main": "build/node/wei.js",
+	"browser": "./build/index.js",
+	"source": "src/index.ts",
+	"types": "./build/node/wei.d.ts",
+	"scripts": {
+		"build": "npm run build-browser && npm run build-node",
+		"build-node": "tsc -p tsconfig.node.json",
+		"build-browser": "webpack --mode=production",
+		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
+		"examples:browser": "npm run build-browser && http-server -o ./examples/browser-example.html -c-1",
+		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
+		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
+		"test": "node --experimental-vm-modules ../../node_modules/.bin/jest --coverage --no-cache",
+		"tsc": "tsc --noemit",
+		"codegen": "graphql-codegen --config codegen.yml"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Synthetixio/js-monorepo.git"
+	},
+	"author": "Matthew Conover <git@mconover.dev>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Synthetixio/js-monorepo/issues"
+	},
+	"homepage": "https://github.com/Synthetixio/js-monorepo#readme",
+	"dependencies": {
+		"big.js": "6.1.1",
 		"ethers": "5.0.32"
-  },
-  "devDependencies": {
-    "@types/big.js": "6.0.2"
-  }
+	},
+	"devDependencies": {
+		"@types/big.js": "6.0.2"
+	}
 }

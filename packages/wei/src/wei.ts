@@ -53,7 +53,7 @@ export default class Wei {
 	private readonly p: number;
 
 	get z() {
-		return BigNumber.from(10).pow(BigNumber.from(this.p))
+		return BigNumber.from(10).pow(BigNumber.from(this.p));
 	}
 
 	/**
@@ -73,7 +73,7 @@ export default class Wei {
 		if (n === undefined || n === null) throw new Error('Cannot parse undefined/null as a number.');
 		if (Wei.is(n)) {
 			this.v = n.scale(p).v;
-		} else if((n as BigNumber)._isBigNumber) {
+		} else if ((n as BigNumber)._isBigNumber) {
 			this.v = n as BigNumber;
 		} else if (isWei) {
 			// already wei, don't scale again
@@ -84,7 +84,7 @@ export default class Wei {
 			}
 		} else {
 			// not wei, scale it
-  			// TODO: avoid use of Big.js, but this is a really easy way to do the conversion for now
+			// TODO: avoid use of Big.js, but this is a really easy way to do the conversion for now
 			this.v = BigNumber.from(new Big(n as any).mul(new Big(10).pow(this.p)).toFixed(0));
 		}
 	}
@@ -92,7 +92,7 @@ export default class Wei {
 	///////////////////////////
 	// Conversion functions //
 	/////////////////////////
-	
+
 	/**
 	 * Creates a new version of the Wei object with a new precision
 	 * Note: if p is less than the current p, precision may be lost.

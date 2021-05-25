@@ -3,7 +3,11 @@ import Wei, { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
 
-const useETHBalanceQuery = (ctx: QueryContext, walletAddress: string | null, options?: UseQueryOptions<Wei>) => {
+const useETHBalanceQuery = (
+	ctx: QueryContext,
+	walletAddress: string | null,
+	options?: UseQueryOptions<Wei>
+) => {
 	return useQuery<Wei>(
 		['walletBalances', 'eth', ctx.networkId, walletAddress],
 		async () => {

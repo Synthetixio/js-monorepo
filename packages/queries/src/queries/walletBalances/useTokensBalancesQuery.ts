@@ -15,7 +15,12 @@ import { TokenBalances } from '../../types';
 
 const ethcallProvider = new Provider();
 
-const useTokensBalancesQuery = (ctx: QueryContext, tokens: any[], walletAddress: string | null, options?: UseQueryOptions<TokenBalances>) => {
+const useTokensBalancesQuery = (
+	ctx: QueryContext,
+	tokens: any[],
+	walletAddress: string | null,
+	options?: UseQueryOptions<TokenBalances>
+) => {
 	const symbols = tokens.map((token) => token.symbol);
 	const tokensMap = keyBy(tokens, 'symbol');
 

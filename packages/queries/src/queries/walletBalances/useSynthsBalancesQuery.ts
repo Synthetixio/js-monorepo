@@ -9,18 +9,17 @@ import { Balances, SynthBalance, SynthBalancesMap } from '../../types';
 
 type SynthBalancesTuple = [CurrencyKey[], ethers.BigNumber[], ethers.BigNumber[]];
 
-const useSynthsBalancesQuery = (ctx: QueryContext, walletAddress: string | null, options?: UseQueryOptions<Balances>) => {
+const useSynthsBalancesQuery = (
+	ctx: QueryContext,
+	walletAddress: string | null,
+	options?: UseQueryOptions<Balances>
+) => {
 	return useQuery<Balances>(
 		['walletBalances', 'synths', ctx.networkId, walletAddress],
 		async () => {
 			const balancesMap: SynthBalancesMap = {};
-			const [
-				currencyKeys,
-				synthsBalances,
-				synthsUSDBalances,
-			] = (await ctx.snxjs!.contracts.SynthUtil!.synthsBalances(
-				walletAddress
-			)) as SynthBalancesTuple;
+			const [currencyKeys, synthsBalances, synthsUSDBalances] =
+				(await ctx.snxjs!.contracts.SynthUtil!.synthsBalances(walletAddress)) as SynthBalancesTuple;
 
 			let totalUSDBalance = wei(0);
 

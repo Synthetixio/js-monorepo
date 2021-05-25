@@ -17,8 +17,8 @@ const useSynthExchangesSinceQuery = (
 		async () => {
 			return (await ctx.snxData!.synthExchanges({
 				minTimestamp: calculateTimestampForPeriod(periodInHours),
-			}))!
-		},	
+			}))!;
+		},
 		{
 			enabled: !!ctx.snxData,
 			...options,

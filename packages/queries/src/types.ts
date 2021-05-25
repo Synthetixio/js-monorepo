@@ -1,5 +1,5 @@
-import Wei from "@synthetixio/wei";
-import { CurrencyKey } from "./currency";
+import Wei from '@synthetixio/wei';
+import { CurrencyKey } from './currency';
 
 export type GasPrices = {
 	fastest: number;

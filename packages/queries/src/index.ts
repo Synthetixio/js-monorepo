@@ -50,20 +50,20 @@ import useTokensBalancesQuery from './queries/walletBalances/useTokensBalancesQu
 import _ from 'lodash';
 
 const FUNCS = {
-    useEthGasPriceQuery,
-    useExchangeRatesQuery,
-    useHistoricalRatesQuery,
-    useHistoricalVolumeQuery,
-    useSynthExchangesSinceQuery,
-    useSynthMarketCapQuery,
-    useExchangeFeeRateQuery,
-    useFeeReclaimPeriodQuery,
-    useFrozenSynthsQuery,
-    useSynthSuspensionQuery,
-    useIsSystemOnMaintenance,
-    useETHBalanceQuery,
-    useSynthsBalancesQuery,
-    useTokensBalancesQuery
+	useEthGasPriceQuery,
+	useExchangeRatesQuery,
+	useHistoricalRatesQuery,
+	useHistoricalVolumeQuery,
+	useSynthExchangesSinceQuery,
+	useSynthMarketCapQuery,
+	useExchangeFeeRateQuery,
+	useFeeReclaimPeriodQuery,
+	useFrozenSynthsQuery,
+	useSynthSuspensionQuery,
+	useIsSystemOnMaintenance,
+	useETHBalanceQuery,
+	useSynthsBalancesQuery,
+	useTokensBalancesQuery,
 };
 
 type RawSynthetixQueries = typeof FUNCS;
@@ -71,38 +71,42 @@ type RawSynthetixQueries = typeof FUNCS;
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;
 
 export type SynthetixQueries = {
-    [Property in keyof RawSynthetixQueries]: OmitFirstArg<RawSynthetixQueries[Property]>;
+	[Property in keyof RawSynthetixQueries]: OmitFirstArg<RawSynthetixQueries[Property]>;
 };
 
 // keep a cache (or else synthetixjs fills up all memory for each instance)
-const cachedQueryContext: {[id: string]: QueryContext} = {};
+const cachedQueryContext: { [id: string]: QueryContext } = {};
 
-export default function useSynthetixQueries({ networkId, provider }: { networkId: NetworkId|null, provider: ethers.providers.Provider|null }): SynthetixQueries {
+export default function useSynthetixQueries({
+	networkId,
+	provider,
+}: {
+	networkId: NetworkId | null;
+	provider: ethers.providers.Provider | null;
+}): SynthetixQueries {
+	let ctx: QueryContext = {
+		networkId,
+		provider,
+		snxData: null,
+		snxjs: null,
+	};
 
-    let ctx: QueryContext = {
-        networkId,
-        provider,
-        snxData: null,
-        snxjs: null
-    };
+	if (networkId) {
+		if (!cachedQueryContext[networkId?.toString()]) {
+			ctx.snxData = synthetixData({ networkId });
+			ctx.snxjs = synthetix({ networkId });
 
-    if(networkId) {
-        if (!cachedQueryContext[networkId?.toString()]) {
-            ctx.snxData = synthetixData({ networkId });
-            ctx.snxjs = synthetix({ networkId });
+			cachedQueryContext[networkId?.toString()] = ctx;
+		} else {
+			ctx = cachedQueryContext[networkId?.toString()];
+		}
+	}
 
-            cachedQueryContext[networkId?.toString()] = ctx;
-        }
-        else {
-            ctx = cachedQueryContext[networkId?.toString()]
-        }
-    }
+	const modFuncs: { [i: string]: Function } = _.clone(FUNCS);
 
-    const modFuncs: {[i: string]: Function } = _.clone(FUNCS);
+	for (const f in modFuncs) {
+		modFuncs[f] = _.partial(modFuncs[f] as UseQueryFunction, ctx);
+	}
 
-    for(const f in modFuncs) {
-        modFuncs[f] = _.partial(modFuncs[f] as UseQueryFunction, ctx);
-    }
-
-    return modFuncs as SynthetixQueries;
+	return modFuncs as SynthetixQueries;
 }

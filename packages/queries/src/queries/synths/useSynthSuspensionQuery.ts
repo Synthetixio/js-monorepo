@@ -41,12 +41,10 @@ const useSynthSuspensionQuery = (
 	return useQuery<SynthSuspended>(
 		['synth', 'suspension', ctx.networkId, currencyKey],
 		async () => {
-			const [
-				isSuspended,
-				reason,
-			] = (await ctx.snxjs!.contracts.SystemStatus.synthExchangeSuspension(
-				ethers.utils.formatBytes32String(currencyKey!)
-			)) as [boolean, ethers.BigNumber];
+			const [isSuspended, reason] =
+				(await ctx.snxjs!.contracts.SystemStatus.synthExchangeSuspension(
+					ethers.utils.formatBytes32String(currencyKey!)
+				)) as [boolean, ethers.BigNumber];
 
 			const reasonCode = Number(reason);
 			return {
