@@ -70,5 +70,5 @@ export const parseSynthExchangesL2 = ({
 	toAmount: ethers.utils.formatEther(toAmount),
 	toAmountInUSD: parseFloat(toAmountInUSD).toFixed(2),
 	toCurrencyKey: hexToAscii(toCurrencyKey),
-    hash: getHashFromId(id),
+	hash: getHashFromId(id),
 });

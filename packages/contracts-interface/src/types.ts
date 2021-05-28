@@ -77,11 +77,10 @@ type Feed = {
 export type SynthetixJS = {
 	networks: Array<Network>;
 	networkToChainId: Record<Network, NetworkId>;
-	decode: (config: {
-		network: Network;
-		data: string;
-		target: Target;
-	}) => { method: { name: string; params: Array<any> }; contract: string };
+	decode: (config: { network: Network; data: string; target: Target }) => {
+		method: { name: string; params: Array<any> };
+		contract: string;
+	};
 	defaults: { [key: string]: any };
 	feeds: { [symbol: string]: Feed };
 	tokens: Array<Token>;
