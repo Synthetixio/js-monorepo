@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/queries",
-	"version": "0.0.12",
+	"version": "0.0.1",
 	"description": "react-query for pulling synthetix data in react interfaces",
 	"source": "./src/index.ts",
 	"main": "./build/node/index.js",
@@ -46,9 +46,6 @@
 	},
 	"devDependencies": {
 		"@types/lodash": "4.14.169",
-		"@graphql-codegen/cli": "1.21.3",
-		"@graphql-codegen/introspection": "1.18.1",
-		"@graphql-codegen/typescript": "1.21.1",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
 		"react-query": "3.16.0"

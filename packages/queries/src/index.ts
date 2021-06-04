@@ -4,35 +4,14 @@ import { QueryContext } from './context';
 import { synthetix, NetworkId } from '@synthetixio/contracts-interface';
 import synthetixData from '@synthetixio/data';
 
-//import { readdirSync, statSync } from 'fs';
-
 import { UseQueryResult } from 'react-query';
 
 export * from './types';
 
+// all functions exported by submodules must follow this format
 type UseQueryFunction = (ctx: QueryContext, ...args: any) => UseQueryResult;
 
-// would like to use this function, but temp disabling for tests
-/*function loadQueries(ctx: QueryContext, p: string): UseQueryFunction[] {
-    // dynamically load modules
-
-    const queries = [];
-
-    for(const f of readdirSync(p)) {
-        const sp = p + '/' + f;
-        const s = statSync(sp);
-
-        if (s.isDirectory()) {
-            queries.push(...loadQueries(ctx, sp));
-        }
-        else if(f.endsWith('.js')) {
-            queries.push(require(sp))
-        }
-    }
-
-    return queries;
-}*/
-
+// if there is any way, in the future, to not have to do these imports, that would be great. but typescript probably necessitates it
 import useEthGasPriceQuery from './queries/network/useEthGasPriceQuery';
 import useExchangeRatesQuery from './queries/rates/useExchangeRatesQuery';
 import useHistoricalRatesQuery from './queries/rates/useHistoricalRatesQuery';
@@ -66,10 +45,9 @@ const FUNCS = {
 	useTokensBalancesQuery,
 };
 
+// compute the type of this library so that typescript can do full analysis of arguments and available functions
 type RawSynthetixQueries = typeof FUNCS;
-
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;
-
 export type SynthetixQueries = {
 	[Property in keyof RawSynthetixQueries]: OmitFirstArg<RawSynthetixQueries[Property]>;
 };
@@ -82,19 +60,26 @@ export default function useSynthetixQueries({
 	provider,
 }: {
 	networkId: NetworkId | null;
-	provider: ethers.providers.Provider | null;
+	provider?: ethers.providers.Provider;
 }): SynthetixQueries {
 	let ctx: QueryContext = {
 		networkId,
-		provider,
+		provider: null,
 		snxData: null,
 		snxjs: null,
 	};
 
 	if (networkId) {
+
+		// constructed query contexts are cached by network id since
+		// underlying structures are quite large and easily clog browser memory
 		if (!cachedQueryContext[networkId?.toString()]) {
+			ctx.snxjs = synthetix({ networkId, provider });
+			
+			// snag the resultant provider from snxjs
+			ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
+
 			ctx.snxData = synthetixData({ networkId });
-			ctx.snxjs = synthetix({ networkId });
 
 			cachedQueryContext[networkId?.toString()] = ctx;
 		} else {
