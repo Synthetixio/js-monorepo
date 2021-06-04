@@ -41,8 +41,7 @@
 		"ethers": "5.0.32",
 		"graphql": "15.5.0",
 		"graphql-request": "3.4.0",
-		"lodash": "4.17.19",
-		"synthetix-js": "^2.45.2"
+		"lodash": "4.17.19"
 	},
 	"devDependencies": {
 		"@types/lodash": "4.14.169",
