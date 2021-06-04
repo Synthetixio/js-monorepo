@@ -7,7 +7,7 @@ import {
 	calculateTimestampForPeriod,
 	getMinAndMaxRate,
 	calculateRateChange,
-	mockHistoricalRates,
+	usdHistoricalRates,
 } from './utils';
 import { HistoricalRatesUpdates } from '../../types';
 import { QueryContext } from '../../context';
@@ -25,7 +25,7 @@ const useHistoricalRatesQuery = (
 		async () => {
 			if (currencyKey === Synths.sUSD) {
 				return {
-					rates: mockHistoricalRates(periodInHours, sUSD_EXCHANGE_RATE),
+					rates: usdHistoricalRates(periodInHours, sUSD_EXCHANGE_RATE),
 					low: sUSD_EXCHANGE_RATE,
 					high: sUSD_EXCHANGE_RATE,
 					change: 0,

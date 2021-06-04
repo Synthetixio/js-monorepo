@@ -31,7 +31,7 @@ export const calculateRateChange = (rates: RateUpdate[]) => {
 export const calculateTimestampForPeriod = (periodInHours: number) =>
 	Math.trunc(subHours(new Date().getTime(), periodInHours).getTime() / 1000);
 
-export const mockHistoricalRates = (
+export const usdHistoricalRates = (
 	periodInHours: number,
 	rate = 1,
 	points = 100
