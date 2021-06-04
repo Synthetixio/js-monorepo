@@ -1,6 +1,7 @@
 # Synthetix JS - Monorepo
 
----
+[![main](https://github.com/synthetixio/js-monorepo/actions/workflows/main.yml/badge.svg)](https://github.com/synthetixio/js-monorepo/actions/workflows/main.yml)
+
 
 ## Packages
 
@@ -11,6 +12,33 @@
 | [`@synthetixio/optimism-networks`](/packages/optimism-networks)       | [![npm version](https://badge.fury.io/js/%40synthetixio%2Foptimism-networks.svg)](https://badge.fury.io/js/%40synthetixio%2Foptimism-networks)       | Network utility for Optimism Layer 2 |
 | [`@synthetixio/transaction-notifier`](/packages/transaction-notifier) | [![npm version](https://badge.fury.io/js/%40synthetixio%2Ftransaction-notifier.svg)](https://badge.fury.io/js/%40synthetixio%2Ftransaction-notifier) | Transaction utility for Layer 1 & 2  |
 
-## Repo Status
+## Developer Instructions
 
-[![Synthetixio](https://circleci.com/gh/Synthetixio/js-monorepo.svg?style=svg)](https://github.com/Synthetixio/js-monorepo)
+This repo uses `lerna` to manage multiple packages in the same repo. To prepare the repository for use, run:
+
+```
+npm install
+npm run bootstrap
+```
+
+This will install all npm dependencies, wire dependencies between packages in this repo, and allow for you to build projects.
+
+### Building
+
+If you make a change and want to generate the library JS code, run:
+
+```
+npm run build
+```
+
+This will ensure all projects are fully built in topological order. You are also free to run script NPM commands from individual repositories if necessary or desired.
+
+### Publishing
+
+`lerna` is specially designed to handle package updates. If you want to push a new release for one or more packages in this repo, run:
+
+```
+lerna publish
+```
+
+Lerna will automatically detect changes for  packages, and offer to increment the version number and push an NPM release as appropriate. Any dependant modules will be kept in sync as well.

@@ -36,20 +36,12 @@
 		"web3-utils": "1.2.11"
 	},
 	"devDependencies": {
-		"@types/lodash": "4.14.169",
-		"husky": "4.2.5",
-		"lint-staged": "10.2.11"
+		"@types/lodash": "4.14.169"
 	},
 	"husky": {
 		"hooks": {
 			"pre-commit": "lint-staged"
 		}
-	},
-	"lint-staged": {
-		"./src/**/*.{js,ts}": [
-			"eslint --fix",
-			"prettier --write"
-		]
 	},
 	"jest": {
 		"transform": {

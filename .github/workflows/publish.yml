@@ -2,12 +2,8 @@ name: main
 
 on:
   push:
-    branches:
+    tag:
     - '*'
-  pull_request:
-    branches:
-    - master
-    - dev
 
 jobs:
   lints:
@@ -23,5 +19,5 @@ jobs:
     - run: npm run bootstrap
     - run: npm run lint
     - run: npm run build
-    - run: npm run test-all
+    - run: npm run test
 
