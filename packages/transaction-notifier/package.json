@@ -30,7 +30,7 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"ethers": "5.0.32",
+		"ethers": "5.3.0",
 		"lodash": "4.17.19"
 	},
 	"devDependencies": {
