@@ -22,11 +22,11 @@ const useExchangeRatesQuery = (ctx: QueryContext, options?: UseQueryOptions<Rate
 				ctx.snxjs!.contracts.ExchangeRates.ratesForCurrencies(additionalCurrencies),
 			])) as [SynthRatesTuple, CurrencyRate[]];
 
-			const synths = [...synthsRates[0], ...additionalCurrencies] as string[];
+			const synths = [...synthsRates[0], ...additionalCurrencies] as CurrencyKey[];
 			const rates = [...synthsRates[1], ...ratesForCurrencies] as CurrencyRate[];
 
 			synths.forEach((currencyKeyBytes32: CurrencyKey, idx: number) => {
-				const currencyKey = ethers.utils.parseBytes32String(currencyKeyBytes32);
+				const currencyKey = ethers.utils.parseBytes32String(currencyKeyBytes32) as CurrencyKey;
 				const rate = Number(ethers.utils.formatEther(rates[idx]));
 
 				exchangeRates[currencyKey] = rate;

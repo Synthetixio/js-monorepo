@@ -17,7 +17,7 @@ const useSynthsBalancesQuery = (
 	return useQuery<Balances>(
 		['walletBalances', 'synths', ctx.networkId, walletAddress],
 		async () => {
-			const balancesMap: SynthBalancesMap = {};
+			const balancesMap: Partial<SynthBalancesMap> = {};
 			const [currencyKeys, synthsBalances, synthsUSDBalances] =
 				(await ctx.snxjs!.contracts.SynthUtil!.synthsBalances(walletAddress)) as SynthBalancesTuple;
 
@@ -42,9 +42,9 @@ const useSynthsBalancesQuery = (
 			});
 
 			return {
-				balancesMap,
+				balancesMap: balancesMap as SynthBalancesMap,
 				balances: orderBy(
-					Object.values(balancesMap),
+					Object.values(balancesMap as SynthBalancesMap),
 					(balance: SynthBalance) => balance.usdBalance.toNumber(),
 					'desc'
 				),

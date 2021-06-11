@@ -29,7 +29,7 @@ export type MarketCap = {
 	marketCap: number;
 };
 
-export type Rates = Record<CurrencyKey, number>;
+export type Rates = Record<string, number>;
 
 export type HistoricalVolume = Record<CurrencyKey, Wei>;
 
@@ -60,10 +60,10 @@ export type Balances = {
 	totalUSDBalance: Wei;
 };
 
-export type TokenBalances = Record<
-	CurrencyKey,
+export type TokenBalances = Partial<Record<
+	string,
 	{
 		balance: Wei;
 		token: any;
 	}
->;
+>>;

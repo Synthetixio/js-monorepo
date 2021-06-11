@@ -6,6 +6,7 @@ import { PERIOD_IN_HOURS, Period } from '../../constants';
 import { calculateTimestampForPeriod } from './utils';
 import { QueryContext } from '../../context';
 import { HistoricalVolume } from '../../types';
+import { CurrencyKey } from '../../currency';
 
 const useHistoricalVolumeQuery = (
 	ctx: QueryContext,
@@ -19,18 +20,18 @@ const useHistoricalVolumeQuery = (
 		async () => {
 			const exchanges = (await ctx.snxData!.synthExchanges({
 				minTimestamp: calculateTimestampForPeriod(periodInHours),
-			}))!;
+			}))! as { fromCurrencyKey: CurrencyKey, toCurrencyKey: CurrencyKey, fromAmountInUSD: number}[];
 
 			return exchanges.reduce((totalVol, { fromCurrencyKey, toCurrencyKey, fromAmountInUSD }) => {
 				if (totalVol[fromCurrencyKey] != null) {
 					totalVol[fromCurrencyKey] = totalVol[fromCurrencyKey].add(fromAmountInUSD);
 				} else {
-					totalVol[fromCurrencyKey] = wei(0);
+					totalVol[fromCurrencyKey] = wei(fromAmountInUSD);
 				}
 				if (totalVol[toCurrencyKey] != null) {
 					totalVol[toCurrencyKey] = totalVol[toCurrencyKey].add(fromAmountInUSD);
 				} else {
-					totalVol[toCurrencyKey] = wei(0);
+					totalVol[toCurrencyKey] = wei(toCurrencyKey);
 				}
 				return totalVol;
 			}, {} as HistoricalVolume);

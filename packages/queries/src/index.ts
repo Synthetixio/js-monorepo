@@ -16,12 +16,15 @@ import useEthGasPriceQuery from './queries/network/useEthGasPriceQuery';
 import useExchangeRatesQuery from './queries/rates/useExchangeRatesQuery';
 import useHistoricalRatesQuery from './queries/rates/useHistoricalRatesQuery';
 import useHistoricalVolumeQuery from './queries/rates/useHistoricalVolumeQuery';
+import useSNX24hrPricesQuery from './queries/rates/useSNX24hrPricesQuery';
 import useSynthExchangesSinceQuery from './queries/rates/useSynthExchangesSinceQuery';
 import useSynthMarketCapQuery from './queries/rates/useSynthMarketCapQuery';
 import useExchangeFeeRateQuery from './queries/synths/useExchangeFeeRate';
 import useFeeReclaimPeriodQuery from './queries/synths/useFeeReclaimPeriodQuery';
 import useFrozenSynthsQuery from './queries/synths/useFrozenSynthsQuery';
+import useSynthsTotalSupplyQuery from './queries/synths/useSynthsTotalSupplyQuery';
 import useSynthSuspensionQuery from './queries/synths/useSynthSuspensionQuery';
+import useTotalIssuedSynthsExcludingEtherQuery from './queries/synths/useTotalIssuedSynthsExcludingEtherQuery';
 import useIsSystemOnMaintenance from './queries/systemStatus/useIsSystemOnMaintenance';
 import useETHBalanceQuery from './queries/walletBalances/useETHBalanceQuery';
 import useSynthsBalancesQuery from './queries/walletBalances/useSynthsBalancesQuery';
@@ -33,12 +36,15 @@ const FUNCS = {
 	useExchangeRatesQuery,
 	useHistoricalRatesQuery,
 	useHistoricalVolumeQuery,
+	useSNX24hrPricesQuery,
 	useSynthExchangesSinceQuery,
 	useSynthMarketCapQuery,
 	useExchangeFeeRateQuery,
 	useFeeReclaimPeriodQuery,
 	useFrozenSynthsQuery,
+	useSynthsTotalSupplyQuery,
 	useSynthSuspensionQuery,
+	useTotalIssuedSynthsExcludingEtherQuery,
 	useIsSystemOnMaintenance,
 	useETHBalanceQuery,
 	useSynthsBalancesQuery,
