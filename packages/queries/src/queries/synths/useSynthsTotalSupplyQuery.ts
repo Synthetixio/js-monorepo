@@ -1,4 +1,5 @@
 import Wei, { wei } from '@synthetixio/wei';
+import { ethers } from 'ethers';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 
@@ -25,15 +26,13 @@ const useSynthsTotalSupplyQuery = (ctx: QueryContext, options?: UseQueryOptions<
 				synthTotalSupplies,
 				unformattedEthShorts,
 				unformattedBtcShorts,
-				unformattedBtcPrice,
-				unformattedEthPrice,
+				[unformattedBtcPrice, unformattedEthPrice],
 				unformattedIssuedWETHWrapperSETH,
 			] = await Promise.all([
 				ctx.snxjs!.contracts.SynthUtil.synthsTotalSupplies(),
-				ctx.snxjs!.contracts.CollateralManager.short(ctx.snxjs!.utils.formatBytes32String(Synths.sETH)),
-				ctx.snxjs!.contracts.CollateralManager.short(ctx.snxjs!.utils.formatBytes32String(Synths.sBTC)),
-				ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(ctx.snxjs!.utils.formatBytes32String(Synths.sBTC)),
-				ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(ctx.snxjs!.utils.formatBytes32String(Synths.sETH)),
+				ctx.snxjs!.contracts.CollateralManager.short(ethers.utils.formatBytes32String(Synths.sETH)),
+				ctx.snxjs!.contracts.CollateralManager.short(ethers.utils.formatBytes32String(Synths.sBTC)),
+				ctx.snxjs!.contracts.ExchangeRates.ratesForCurrencies([Synths.sBTC, Synths.sETH].map(ethers.utils.formatBytes32String)),
 				ctx.snxjs!.contracts.EtherWrapper.sETHIssued(),
 			]);
 
@@ -50,7 +49,7 @@ const useSynthsTotalSupplyQuery = (ctx: QueryContext, options?: UseQueryOptions<
 			const supplyData: SynthTotalSupply[] = [];
 			for (let i = 0; i < synthTotalSupplies[0].length; i++) {
 				let value = wei(synthTotalSupplies[2][i]);
-				const name = ctx.snxjs!.utils.parseBytes32String(synthTotalSupplies[0][i]);
+				const name = ethers.utils.parseBytes32String(synthTotalSupplies[0][i]);
 				let totalSupply = wei(synthTotalSupplies[1][i]);
 
 				switch (name) {

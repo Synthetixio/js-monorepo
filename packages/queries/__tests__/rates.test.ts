@@ -17,32 +17,32 @@ describe('@synthetixio/queries rates', () => {
 	test('useExchangeRatesQuery', async () => {
 		const wrapper = getWrapper();
 
-		set(ctx.snxjs as any, 'contracts.SynthUtil.synthsRates', async () => [['sETH', 'sBTC'], [wei(1000).toBN(), wei(10000).toBN()]]);
-		set(ctx.snxjs as any, 'contracts.ExchangeRates.ratesForCurrencies', async () => wei(10).toBN());
+		set(ctx.snxjs as any, 'contracts.SynthUtil.synthsRates', async () => [[ethers.utils.formatBytes32String('sETH'), ethers.utils.formatBytes32String('sBTC')], [wei(1000).toBN(), wei(10000).toBN()]]);
+		set(ctx.snxjs as any, 'contracts.ExchangeRates.ratesForCurrencies', async () => [wei(10).toBN()]);
 
 		const { result, waitFor } = renderHook(() => useExchangeRatesQuery(ctx), { wrapper });
 		await waitFor(() => result.current.isSuccess);
 
-		expect(result.current.data).toEqual({ sETH: 1000, sBTC: 10000, SNX: 10 });
+		expect(result.current.data).toEqual({ ETH: 1000, BTC: 10000, sETH: 1000, sBTC: 10000, SNX: 10 });
 	});
 
 	test('useHistoricalRatesQuery', async () => {
 		const wrapper = getWrapper();
 
 		ctx.snxData!.rateUpdates = async () => [
+			{ id: '3', block: 3, timestamp: 10025, currencyKey: 'sETH', synth: 'sETH', rate: 950},
+			{ id: '2', block: 2, timestamp: 10010, currencyKey: 'sETH', synth: 'sETH', rate: 1050},
 			{ id: '1', block: 1, timestamp: 10000, currencyKey: 'sETH', synth: 'sETH', rate: 1000},
-			{ id: '2', block: 2, timestamp: 20000, currencyKey: 'sETH', synth: 'sETH', rate: 1050},
-			{ id: '3', block: 3, timestamp: 25000, currencyKey: 'sETH', synth: 'sETH', rate: 950},
 		];
 
 		const { result, waitFor } = renderHook(() => useHistoricalRatesQuery(ctx, 'sETH'), { wrapper });
 		await waitFor(() => result.current.isSuccess);
 
-		expect(result.current.data).toEqual({
-			rates: [{ timestamp: 25000, rate: 950}, {timestamp: 20000, rate: 1050}, {timestamp: 10000, rate: 1000}],
+		expect(result.current.data).toMatchObject({
+			rates: [{timestamp: 10000, rate: 1000}, {timestamp: 10010, rate: 1050}, { timestamp: 10025, rate: 950}],
 			low: 950,
 			high: 1050,
-			change: -50
+			change: -0.05
 		});
 	});
 
@@ -89,14 +89,10 @@ describe('@synthetixio/queries rates', () => {
 		const { result, waitFor } = renderHook(() => useHistoricalVolumeQuery(ctx), { wrapper });
 		await waitFor(() => result.current.isSuccess);
 
-		console.log('begin of test');
-
 		expect(mapValues(result.current.data, v => v.toNumber())).toEqual({
-			sUSD: 100,
-			sETH: 1099.5,
-			sBTC: 1000
+			sUSD: 99.5,
+			sETH: 1100,
+			sBTC: 997
 		});
-
-		console.log('end of test');
 	});
 });
