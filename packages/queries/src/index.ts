@@ -76,12 +76,11 @@ export default function useSynthetixQueries({
 	};
 
 	if (networkId) {
-
 		// constructed query contexts are cached by network id since
 		// underlying structures are quite large and easily clog browser memory
 		if (!cachedQueryContext[networkId?.toString()]) {
 			ctx.snxjs = synthetix({ networkId, provider });
-			
+
 			// snag the resultant provider from snxjs
 			ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
 
@@ -93,7 +92,7 @@ export default function useSynthetixQueries({
 		}
 	}
 
-	const modFuncs: { [i: string]: Function } = _.clone(FUNCS);
+	const modFuncs: { [i: string]: any } = _.clone(FUNCS);
 
 	for (const f in modFuncs) {
 		modFuncs[f] = _.partial(modFuncs[f] as UseQueryFunction, ctx);

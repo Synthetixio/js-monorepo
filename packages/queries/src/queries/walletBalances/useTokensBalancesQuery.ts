@@ -28,7 +28,7 @@ const useTokensBalancesQuery = (
 		['walletBalances', 'tokens', ctx.networkId, walletAddress],
 		async () => {
 			// @ts-ignore
-			await ethcallProvider.init(provider!);
+			await ethcallProvider.init(ctx.provider!);
 
 			const calls = [];
 			for (const { address, symbol } of tokens) {

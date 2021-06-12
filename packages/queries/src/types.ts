@@ -60,10 +60,12 @@ export type Balances = {
 	totalUSDBalance: Wei;
 };
 
-export type TokenBalances = Partial<Record<
-	string,
-	{
-		balance: Wei;
-		token: any;
-	}
->>;
+export type TokenBalances = Partial<
+	Record<
+		string,
+		{
+			balance: Wei;
+			token: any;
+		}
+	>
+>;

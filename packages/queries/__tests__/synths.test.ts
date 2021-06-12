@@ -6,23 +6,34 @@ import useSynthsTotalSupplyQuery from '../src/queries/synths/useSynthsTotalSuppl
 import { getFakeQueryContext, getWrapper } from '../testUtils';
 
 describe('@synthetixio/queries synths', () => {
-
 	const ctx = getFakeQueryContext();
-	
-	test('useSynthsTotalSupplyQuery', async () => {
 
+	test('useSynthsTotalSupplyQuery', async () => {
 		const wrapper = getWrapper();
 
 		const fakeBTCValue = wei(10000);
 		const fakeETHValue = wei(1000);
 
 		set(ctx.snxjs as any, 'contracts.SynthUtil.synthsTotalSupplies', async () => [
-			[ethers.utils.formatBytes32String('sETH'), ethers.utils.formatBytes32String('sBTC'), ethers.utils.formatBytes32String('iETH'), ethers.utils.formatBytes32String('iBTC')],
+			[
+				ethers.utils.formatBytes32String('sETH'),
+				ethers.utils.formatBytes32String('sBTC'),
+				ethers.utils.formatBytes32String('iETH'),
+				ethers.utils.formatBytes32String('iBTC'),
+			],
 			[wei(100).toBN(), wei(200).toBN(), wei(0).toBN(), wei(0).toBN()],
-			[wei(100).mul(fakeETHValue).toBN(), wei(200).mul(fakeBTCValue).toBN(), wei(0).toBN(), wei(0).toBN()]
+			[
+				wei(100).mul(fakeETHValue).toBN(),
+				wei(200).mul(fakeBTCValue).toBN(),
+				wei(0).toBN(),
+				wei(0).toBN(),
+			],
 		]);
 		set(ctx.snxjs as any, 'contracts.CollateralManager.short', async () => wei(10).toBN());
-		set(ctx.snxjs as any, 'contracts.ExchangeRates.ratesForCurrencies', async () => [fakeBTCValue.toBN(), fakeETHValue.toBN()]);
+		set(ctx.snxjs as any, 'contracts.ExchangeRates.ratesForCurrencies', async () => [
+			fakeBTCValue.toBN(),
+			fakeETHValue.toBN(),
+		]);
 		set(ctx.snxjs as any, 'contracts.EtherWrapper.sETHIssued', async () => wei(50).toBN());
 
 		const { result, waitFor } = renderHook(() => useSynthsTotalSupplyQuery(ctx), { wrapper });
@@ -56,8 +67,8 @@ describe('@synthetixio/queries synths', () => {
 					totalSupply: wei(50),
 					value: wei(50).mul(fakeETHValue),
 					poolProportion: wei(50).mul(fakeETHValue).div(totalValue),
-				}
-			}
+				},
+			},
 		});
 	});
 });

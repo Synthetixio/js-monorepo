@@ -133,10 +133,10 @@ export enum CryptoCurrency {
 	XMR = 'XMR',
 	XRP = 'XRP',
 	XTZ = 'XTZ',
-	YFI = 'YFI'
+	YFI = 'YFI',
 }
 
-export const CRYPTO_CURRENCY = Object.keys(CryptoCurrency)
+export const CRYPTO_CURRENCY = Object.keys(CryptoCurrency);
 
 export const CRYPTO_CURRENCY_MAP = keyBy(CRYPTO_CURRENCY);
 
@@ -148,7 +148,8 @@ export const isFiatCurrency = (currencyKey: CurrencyKey) => FIAT_SYNTHS.has(curr
 // TODO: replace this with a more robust logic (like checking the asset field)
 export const toInverseSynth = (currencyKey: CurrencyKey) => currencyKey.replace(/^s/i, 'i');
 export const toStandardSynth = (currencyKey: CurrencyKey) => currencyKey.replace(/^i/i, 's');
-export const synthToAsset = (currencyKey: CurrencyKey) => currencyKey.replace(/^(i|s)/i, '') as CurrencyKey;
+export const synthToAsset = (currencyKey: CurrencyKey) =>
+	currencyKey.replace(/^(i|s)/i, '') as CurrencyKey;
 export const assetToSynth = (currencyKey: CurrencyKey) => `s${currencyKey}`;
 export const iStandardSynth = (currencyKey: CurrencyKey) => currencyKey.startsWith('s');
 

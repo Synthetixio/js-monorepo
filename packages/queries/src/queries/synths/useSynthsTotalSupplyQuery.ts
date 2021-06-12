@@ -17,11 +17,13 @@ export type SynthsTotalSupplyData = {
 	totalValue: Wei;
 };
 
-const useSynthsTotalSupplyQuery = (ctx: QueryContext, options?: UseQueryOptions<SynthsTotalSupplyData>) => {
+const useSynthsTotalSupplyQuery = (
+	ctx: QueryContext,
+	options?: UseQueryOptions<SynthsTotalSupplyData>
+) => {
 	return useQuery<SynthsTotalSupplyData>(
 		['synths', 'totalSupply', ctx.networkId],
 		async () => {
-
 			const [
 				synthTotalSupplies,
 				unformattedEthShorts,
@@ -32,7 +34,9 @@ const useSynthsTotalSupplyQuery = (ctx: QueryContext, options?: UseQueryOptions<
 				ctx.snxjs!.contracts.SynthUtil.synthsTotalSupplies(),
 				ctx.snxjs!.contracts.CollateralManager.short(ethers.utils.formatBytes32String(Synths.sETH)),
 				ctx.snxjs!.contracts.CollateralManager.short(ethers.utils.formatBytes32String(Synths.sBTC)),
-				ctx.snxjs!.contracts.ExchangeRates.ratesForCurrencies([Synths.sBTC, Synths.sETH].map(ethers.utils.formatBytes32String)),
+				ctx.snxjs!.contracts.ExchangeRates.ratesForCurrencies(
+					[Synths.sBTC, Synths.sETH].map(ethers.utils.formatBytes32String)
+				),
 				ctx.snxjs!.contracts.EtherWrapper.sETHIssued(),
 			]);
 

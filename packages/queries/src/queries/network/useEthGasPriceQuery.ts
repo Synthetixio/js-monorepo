@@ -46,8 +46,6 @@ const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPri
 					average: Math.round(standard / 1e8 / 10),
 				};
 			} catch (e) {
-				console.log(e);
-
 				const result = await axios.get<EthGasStationResponse>(ETH_GAS_STATION_API_URL);
 				const { average, fast, fastest } = result.data;
 
