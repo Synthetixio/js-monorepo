@@ -1,0 +1,76 @@
+{
+	"name": "@synthetixio/queries",
+	"version": "0.0.1",
+	"description": "react-query for pulling synthetix data in react interfaces",
+	"source": "./src/index.ts",
+	"main": "./build/node/index.js",
+	"browser": "./build/index.js",
+	"types": "./build/node/index.d.ts",
+	"files": [
+		"build"
+	],
+	"scripts": {
+		"build": "npm run build-browser && npm run build-node",
+		"build-node": "tsc -p tsconfig.node.json",
+		"build-browser": "webpack --mode=production --max-old-space-size=4096",
+		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
+		"examples:browser": "npm run build-browser && http-server -o ./examples/browser-example.html -c-1",
+		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
+		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
+		"test": "../../node_modules/.bin/jest --forceExit --coverage --no-cache",
+		"tsc": "tsc --noemit",
+		"codegen": "graphql-codegen --config codegen.yml"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Synthetixio/js-monorepo"
+	},
+	"author": "Synthetix",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Synthetixio/js-monorepo/issues"
+	},
+	"dependencies": {
+		"@synthetixio/contracts-interface": "2.45.2",
+		"@synthetixio/data": "0.0.13",
+		"@synthetixio/wei": "1.0.0",
+		"axios": "0.21.1",
+		"bignumber.js": "9.0.1",
+		"date-fns": "2.19.0",
+		"ethcall": "3.3.0",
+		"ethers": "5.0.32",
+		"graphql": "15.5.0",
+		"graphql-request": "3.4.0",
+		"lodash": "4.17.19"
+	},
+	"devDependencies": {
+		"@testing-library/react-hooks": "^7.0.0",
+		"@types/lodash": "4.14.169",
+		"@types/react": "^17.0.11",
+		"react": "17.0.2",
+		"react-dom": "17.0.2",
+		"react-query": "3.16.0",
+		"react-test-renderer": "^17.0.2"
+	},
+	"peerDependencies": {
+		"react": "17.x",
+		"react-dom": "17.x",
+		"react-query": "3.16.x"
+	},
+	"jest": {
+		"transform": {
+			"^.+\\.ts?$": "babel-jest"
+		},
+		"coverageThreshold": {
+			"global": {
+				"branches": 70,
+				"functions": 70,
+				"lines": 80,
+				"statements": 80
+			}
+		},
+		"modulePathIgnorePatterns": [
+			"<rootDir>/build"
+		]
+	}
+}
