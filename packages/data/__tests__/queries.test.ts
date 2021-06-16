@@ -286,7 +286,7 @@ describe('@synthetixio/data tests', () => {
 			expect(snxHoldersInfo!.length).toEqual(5);
 		});
 
-		test('should return snxHolders data from l2', async () => {
+		test.skip('should return snxHolders data from l2', async () => {
 			const snxHoldersInfo = await snxDataOvm.snxHolders({
 				max: 5,
 			});
