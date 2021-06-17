@@ -59,7 +59,7 @@ describe('@synthetixio/data tests', () => {
 			expect(Number(synthetixInfo!.snxHolders)).toBeGreaterThan(0);
 		});
 
-		test('should return synthetix meta data from l2', async () => {
+		test.skip('should return synthetix meta data from l2', async () => {
 			const synthetixInfoL2 = await snxDataOvm.synthetix();
 			expect(synthetixInfoL2!.id).toEqual('1');
 			expect(Number(synthetixInfoL2!.issuers)).toBeGreaterThan(0);
@@ -108,7 +108,7 @@ describe('@synthetixio/data tests', () => {
 			expect(exchanges!.length).toBeGreaterThan(1000);
 		});
 
-		test('should return exchagnes from kovan l2', async () => {
+		test.skip('should return exchagnes from kovan l2', async () => {
 			const exchanges = await snxDataKovanOvm.synthExchanges({
 				minTimestamp: oneMonthTimestamp,
 			});
@@ -127,7 +127,7 @@ describe('@synthetixio/data tests', () => {
 			expect(issuedInfo![0].account).toEqual(randomLargeSNXStaker);
 		});
 
-		test('should return issueds data from l2', async () => {
+		test.skip('should return issueds data from l2', async () => {
 			const issuedInfo = await snxDataOvm.issued({ max: 1, account: randomL2Staker });
 			expect(issuedInfo![0].account).toEqual(randomL2Staker);
 		});
@@ -163,7 +163,7 @@ describe('@synthetixio/data tests', () => {
 			expect(burnedInfo![0].block).toEqual(12140772);
 		});
 
-		test('should return burneds data from l2', async () => {
+		test.skip('should return burneds data from l2', async () => {
 			const burnedInfo = await snxDataOvm.burned({ max: 1, account: randomL2StakerWithBurns });
 			expect(burnedInfo![0].account).toEqual(randomL2StakerWithBurns);
 		});
@@ -180,7 +180,7 @@ describe('@synthetixio/data tests', () => {
 			expect(feesClaimedInfo![0].account).toEqual(randomLargeSNXStaker);
 		});
 
-		test('should return feesClaimeds data from l2', async () => {
+		test.skip('should return feesClaimeds data from l2', async () => {
 			const feesClaimedInfo = await snxDataOvm.feesClaimed({ max: 1, account: randomL2Staker });
 			expect(feesClaimedInfo![0].account).toEqual(randomL2Staker);
 		});
@@ -199,7 +199,7 @@ describe('@synthetixio/data tests', () => {
 			expect(Number(snxPricesInfo![0].averagePrice)).toBeGreaterThan(0);
 		});
 
-		test('should return snxPrices data from l2', async () => {
+		test.skip('should return snxPrices data from l2', async () => {
 			const snxPricesInfo = await snxDataOvm.snxPrices({ max: 5, timeSeries: '1d' });
 			expect(snxPricesInfo!.length).toEqual(5);
 			expect(Number(snxPricesInfo![0].id)).toBeGreaterThan(0);
@@ -233,7 +233,7 @@ describe('@synthetixio/data tests', () => {
 			expect(l1RateUpdatesAnnualInfo!.length).toBeGreaterThan(1000);
 		});
 
-		test('should return rateUpdates data from l2', async () => {
+		test.skip('should return rateUpdates data from l2', async () => {
 			const l2RateUpdatesInfo = await snxDataOvm.rateUpdates({
 				max: 5,
 				synth: 'SNX',
@@ -260,7 +260,7 @@ describe('@synthetixio/data tests', () => {
 			expect(debtSnapshotInfo!.length).toEqual(5);
 		});
 
-		test('should return debtSnapshots data from l2', async () => {
+		test.skip('should return debtSnapshots data from l2', async () => {
 			const debtSnapshotInfo = await snxDataOvm.debtSnapshots({
 				max: 2,
 				account: randomL2Staker,
@@ -286,7 +286,7 @@ describe('@synthetixio/data tests', () => {
 			expect(snxHoldersInfo!.length).toEqual(5);
 		});
 
-		test('should return snxHolders data from l2', async () => {
+		test.skip('should return snxHolders data from l2', async () => {
 			const snxHoldersInfo = await snxDataOvm.snxHolders({
 				max: 5,
 			});

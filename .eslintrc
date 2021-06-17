@@ -30,7 +30,7 @@
 		],
 		"indent": "off",
 		"quotes": ["error", "single"],
-		"import/no-unresolved": ["error", { "commonjs": true }],
+		"import/no-unresolved": "off", // messed up by lerna hoisting
 		"no-undef": "error",
 		"prefer-const": "error",
 		"semi": ["error", "always"],
