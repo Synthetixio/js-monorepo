@@ -18,7 +18,10 @@ const getRevertReason = async ({
 
 	try {
 		const tx = await provider.getTransaction(txHash);
-		const code = await provider.call(tx, blockNumber);
+		const code = await provider.call(
+			tx as ethers.utils.Deferrable<ethers.providers.TransactionRequest>,
+			blockNumber
+		);
 		return decodeMessage(code);
 	} catch (err) {
 		return 'Unable to decode revert reason';
