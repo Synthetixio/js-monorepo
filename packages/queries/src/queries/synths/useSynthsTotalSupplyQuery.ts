@@ -1,5 +1,5 @@
 import Wei, { wei } from '@synthetixio/wei';
-import { ethers } from 'ethers';
+import BigNumber from 'bignumber.js';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 
@@ -8,6 +8,7 @@ import { Synths } from '../../currency';
 export type SynthTotalSupply = {
 	name: string;
 	value: Wei;
+	skewValue: BigNumber;
 	totalSupply: Wei;
 	poolProportion: Wei;
 };
@@ -24,71 +25,140 @@ const useSynthsTotalSupplyQuery = (
 	return useQuery<SynthsTotalSupplyData>(
 		['synths', 'totalSupply', ctx.networkId],
 		async () => {
+			const {
+				contracts: {
+					SynthUtil,
+					ExchangeRates,
+					CollateralManagerState,
+					EtherWrapper,
+					EtherCollateral,
+					EtherCollateralsUSD,
+				},
+				utils: { formatBytes32String, parseBytes32String, formatEther },
+			} = ctx.snxjs!;
+
+			const [sETHKey, sBTCKey, sUSDKey] = [Synths.sETH, Synths.sBTC, Synths.sUSD].map(
+				formatBytes32String
+			);
+
 			const [
 				synthTotalSupplies,
-				unformattedEthShorts,
-				unformattedBtcShorts,
-				[unformattedBtcPrice, unformattedEthPrice],
-				unformattedIssuedWETHWrapperSETH,
+				unformattedEthPrice,
+				unformattedBtcPrice,
+				[unformattedETHBorrows, unformattedETHShorts],
+				[unformattedBTCBorrows, unformattedBTCShorts],
+				[unformattedSUSDBorrows, unformattedSUSDShorts],
+
+				unformattedWrapprSETH,
+				unformattedWrapprSUSD,
+
+				unformattedOldLoansETH,
+				unformattedOldLoansSUSD,
 			] = await Promise.all([
-				ctx.snxjs!.contracts.SynthUtil.synthsTotalSupplies(),
-				ctx.snxjs!.contracts.CollateralManager.short(ethers.utils.formatBytes32String(Synths.sETH)),
-				ctx.snxjs!.contracts.CollateralManager.short(ethers.utils.formatBytes32String(Synths.sBTC)),
-				ctx.snxjs!.contracts.ExchangeRates.ratesForCurrencies(
-					[Synths.sBTC, Synths.sETH].map(ethers.utils.formatBytes32String)
-				),
-				ctx.snxjs!.contracts.EtherWrapper.sETHIssued(),
+				SynthUtil.synthsTotalSupplies(),
+				ExchangeRates.rateForCurrency(sETHKey),
+				ExchangeRates.rateForCurrency(sBTCKey),
+				CollateralManagerState.totalIssuedSynths(sETHKey),
+				CollateralManagerState.totalIssuedSynths(sBTCKey),
+				CollateralManagerState.totalIssuedSynths(sUSDKey),
+				EtherWrapper.sETHIssued(),
+				EtherWrapper.sUSDIssued(),
+				EtherCollateral.totalIssuedSynths(),
+				EtherCollateralsUSD.totalIssuedSynths(),
 			]);
 
-			const [ethShorts, btcShorts, btcPrice, ethPrice, issuedWETHWrapperSETH] = [
-				unformattedEthShorts,
-				unformattedBtcShorts,
-				unformattedBtcPrice,
-				unformattedEthPrice,
-				unformattedIssuedWETHWrapperSETH,
-			].map((val) => wei(val));
+			const [
+				ethPrice,
+				btcPrice,
 
-			let totalValue = wei(0);
+				ethBorrows,
+				ethShorts,
+
+				btcBorrows,
+				btcShorts,
+
+				susdBorrows,
+				susdShorts,
+
+				wrapprSETH,
+				wrapprSUSD,
+
+				oldLoansETH,
+				oldLoansSUSD,
+			] = [
+				unformattedEthPrice,
+				unformattedBtcPrice,
+
+				unformattedETHShorts,
+				unformattedETHBorrows,
+
+				unformattedBTCShorts,
+				unformattedBTCBorrows,
+
+				unformattedSUSDShorts,
+				unformattedSUSDBorrows,
+
+				unformattedWrapprSETH,
+				unformattedWrapprSUSD,
+
+				unformattedOldLoansETH,
+				unformattedOldLoansSUSD,
+			].map((val) => new BigNumber(formatEther(val)));
+
+			let totalValue = new BigNumber(0);
 
 			const supplyData: SynthTotalSupply[] = [];
 			for (let i = 0; i < synthTotalSupplies[0].length; i++) {
-				let value = wei(synthTotalSupplies[2][i]);
-				const name = ethers.utils.parseBytes32String(synthTotalSupplies[0][i]);
-				let totalSupply = wei(synthTotalSupplies[1][i]);
+				let value = new BigNumber(formatEther(synthTotalSupplies[2][i]));
+				const name = parseBytes32String(synthTotalSupplies[0][i]);
+				let totalSupply = new BigNumber(formatEther(synthTotalSupplies[1][i]));
 
 				switch (name) {
-					case Synths.iETH:
-						value = value.add(ethShorts.mul(ethPrice));
-						break;
+					case Synths.sBTC: {
+						const negativeEntries = btcShorts.plus(btcBorrows);
 
-					case Synths.iBTC:
-						value = value.add(btcShorts.mul(btcPrice));
+						value = totalSupply.minus(negativeEntries).times(btcPrice);
 						break;
+					}
 
-					case Synths.sETH:
-						// we deduct sETH amount issued by EthWrappr
-						// because it's not really part of the debt pool
-						// https://contracts.synthetix.io/EtherWrapper
-						totalSupply = totalSupply.sub(issuedWETHWrapperSETH);
-						value = totalSupply.mul(ethPrice);
+					case Synths.sETH: {
+						const multiCollateralLoansETH = ethShorts.plus(ethBorrows);
+						const negativeEntries = multiCollateralLoansETH.plus(oldLoansETH).plus(wrapprSETH);
+
+						value = totalSupply.minus(negativeEntries).times(ethPrice);
 						break;
+					}
+
+					case Synths.sUSD: {
+						const multiCollateralLoansSUSD = susdShorts.plus(susdBorrows);
+						const negativeEntries = multiCollateralLoansSUSD.plus(oldLoansSUSD).plus(wrapprSUSD);
+
+						value = totalSupply.minus(negativeEntries);
+						break;
+					}
 
 					default:
 				}
+
+				const skewValue = value;
+				value = value.abs();
 
 				supplyData.push({
 					name,
 					totalSupply,
 					value,
-					poolProportion: wei(0), // true value to be computed in next step
+					skewValue,
+					poolProportion: new BigNumber(0), // true value to be computed in next step
 				});
-				totalValue = totalValue.add(value);
+				totalValue = totalValue.plus(value);
 			}
 
 			// Add proportion data to each SynthTotalSupply object
 			const supplyDataWithProportions = supplyData.map((datum) => ({
 				...datum,
-				poolProportion: totalValue.gt(0) ? datum.value.div(totalValue) : wei(0),
+				poolProportion: totalValue.isGreaterThan(0)
+					? datum.value.dividedBy(totalValue)
+					: new BigNumber(0),
 			}));
 
 			const supplyDataMap: { [name: string]: SynthTotalSupply } = {};
