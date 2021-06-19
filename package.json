@@ -6,7 +6,7 @@
 		"lint": "eslint './packages/**/*.{js,ts,tsx}'",
 		"lint:fix": "eslint './packages/**/*.{js,ts,tsx}' --fix",
 		"test-all": "lerna run test",
-		"build": "lerna run build-node",
+		"build": "lerna run build",
 		"publish": "lerna publish"
 	},
 	"devDependencies": {
@@ -29,6 +29,7 @@
 		"lerna": "4.0.0",
 		"lint-staged": "10.2.11",
 		"prettier": "^2.3.0",
+		"ts-loader": "8.0.2",
 		"typescript": "^4.2.4",
 		"webpack": "4.44.1",
 		"webpack-cli": "3.3.12"
