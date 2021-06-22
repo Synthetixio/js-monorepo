@@ -9,6 +9,7 @@ export enum Network {
 	'Mainnet-Ovm' = 'mainnet-ovm',
 	'Kovan-Ovm' = 'kovan-ovm',
 	'Goerli-Ovm' = 'goerli-ovm',
+	'Local-Ovm' = 'local-ovm',
 }
 
 export enum NetworkId {
@@ -19,6 +20,7 @@ export enum NetworkId {
 	Kovan = 42,
 	'Mainnet-Ovm' = 10,
 	'Kovan-Ovm' = 69,
+	'Local-Ovm' = 420,
 }
 
 type ContractInfo = {
