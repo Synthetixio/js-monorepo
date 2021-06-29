@@ -18,12 +18,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-    - run: npm ci
-    - run: npm run bootstrap
-    - run: npm run lint
-    - run: npm run build
-    - run: npm run test-all
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm ci
+      - run: npm run bootstrap
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run test-all
+  update_version:
+    name: Update repository version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: 'echo "payload: ${{ toJson(github.event.client_payload) }}"'
