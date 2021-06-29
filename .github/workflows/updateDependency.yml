@@ -13,26 +13,27 @@ on:
     types: update-dependency
 
 jobs:
-  lints:
-    name: Run Lints
-    runs-on: ubuntu-latest
+  # lints:
+  #   name: Run Lints
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - run: npm ci
-      - run: npm run bootstrap
-      - run: npm run lint
-      - run: npm run build
-      - run: npm run test-all
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '14'
+  #     - run: npm ci
+  #     - run: npm run bootstrap
+  #     - run: npm run lint
+  #     - run: npm run build
+  #     - run: npm run test-all
   update_version:
-    name: Update repository version
+    name: Update contracts-interface
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: 'echo "payload: ${{ toJson(github.event.client_payload) }}"'
+      - run: 'echo "Update @synthetixio/contracts-interface with synthetix@${{ toJson(github.event.client_payload.version) }}"'
+      - run: cd packages/contracts-interface && npm install@${{ toJson(github.event.client_payload.version) }}
