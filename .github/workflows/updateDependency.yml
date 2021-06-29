@@ -35,6 +35,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: 'echo "Update @synthetixio/contracts-interface with synthetix@${{ toJson(github.event.client_payload.version) }}"'
+      - run: 'echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.client_payload.version }}"'
       - run: 'cd packages/contracts-interface && npm install synthetix@${{ github.event.client_payload.version }}'
-      # - run: cd packages/contracts-interface && "npm install synthetix@${{ toJson(github.event.client_payload.version) }}"
+      - run: git commit -am 'synthetix@${{ github.event.client_payload.version }}'
+      - run: git push
