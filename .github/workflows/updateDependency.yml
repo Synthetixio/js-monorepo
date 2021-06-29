@@ -2,7 +2,7 @@ name: Publish Library
 
 on:
   repository_dispatch:
-    types: update-dependency
+    types: update-synthetix
 
 jobs:
   update_version:
@@ -13,19 +13,28 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - name: Update  @synthetixio/contracts-interface
+      # - name: Update  @synthetixio/contracts-interface
+      #   run: |
+      #     echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.client_payload.version }}"
+      #     cd packages/contracts-interface && npm install synthetix@${{ github.event.client_payload.version }} --save-exact
+      # - name: Commit changes
+      #   run: |
+      #     git config --global user.email "team@synthetix.io" && git config --global user.name "Synthetix Team"
+      #     git commit -am 'synthetix@${{ github.event.client_payload.version }}'
+      # - name: Lints and build
+      #   run: |
+      #     npm ci
+      #     npm run bootstrap
+      #     npm run lint
+      #     npm run build
+      #     npm run test-all
+      # - name: Update packages version
+      #   run: lerna version @${{ github.event.client_payload.version }} --yes
+      # - name: Publish packages
+      #   run: lerna publish --yes
+      # - name: Push changes
+      #   run: git push
+      - name: Notify dApps
         run: |
-          echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.client_payload.version }}"
-          cd packages/contracts-interface && npm install synthetix@${{ github.event.client_payload.version }} --save-exact
-      - name: Commit and push changes
-        run: |
-          git config --global user.email "team@synthetix.io" && git config --global user.name "Synthetix Team"
-          git commit -am 'synthetix@${{ github.event.client_payload.version }}'
-          git push
-      - name: Lints and build
-        run: |
-          npm ci
-          npm run bootstrap
-          npm run lint
-          npm run build
-          npm run test-all
+          curl -H "Authorization: token $GITHUB_TOKEN" --request POST --data "{\"event_type\": \"update-dependency\"} https://api.github.com/repos/Synthetixio/staking/dispatches
+          curl -H "Authorization: token $GITHUB_TOKEN" --request POST --data "{\"event_type\": \"update-dependency\"} https://api.github.com/repos/Synthetixio/kwenta/dispatches
