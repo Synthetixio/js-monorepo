@@ -36,4 +36,5 @@ jobs:
         with:
           node-version: '14'
       - run: 'echo "Update @synthetixio/contracts-interface with synthetix@${{ toJson(github.event.client_payload.version) }}"'
-      - run: cd packages/contracts-interface && "npm install synthetix@${{ toJson(github.event.client_payload.version) }}"
+      - run: cd packages/contracts-interface && npm install synthetix@2.45.3-1
+      # - run: cd packages/contracts-interface && "npm install synthetix@${{ toJson(github.event.client_payload.version) }}"
