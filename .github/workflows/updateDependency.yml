@@ -16,9 +16,16 @@ jobs:
       - name: Update  @synthetixio/contracts-interface
         run: |
           echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.client_payload.version }}"
-          cd packages/contracts-interface && npm install synthetix@${{ github.event.client_payload.version }} --save-exact
+          cd packages/contracts-interface && npm install synthetix@${{ github.event.client_payload.version }}
       - name: Commit and push changes
         run: |
           git config --global user.email "team@synthetix.io" && git config --global user.name "Synthetix Team"
           git commit -am 'synthetix@${{ github.event.client_payload.version }}'
           git push
+      - name: Lints and build
+        run: |
+          npm ci
+          npm run bootstrap
+          npm run lint
+          npm run build
+          npm run test-all
