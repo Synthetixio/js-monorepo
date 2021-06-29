@@ -37,5 +37,6 @@ jobs:
           node-version: '14'
       - run: 'echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.client_payload.version }}"'
       - run: 'cd packages/contracts-interface && npm install synthetix@${{ github.event.client_payload.version }}'
+      - run: git config --global user.email "team@synthetix.io" && git config --global user.name "Synthetix Team"
       - run: git commit -am 'synthetix@${{ github.event.client_payload.version }}'
       - run: git push
