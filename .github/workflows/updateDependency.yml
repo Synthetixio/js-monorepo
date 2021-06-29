@@ -36,5 +36,4 @@ jobs:
       #   run: git push
       - name: Notify dApps
         run: |
-          curl -H "Authorization: token ${{ secrets.GH_PACKAGES_READ_ONLY }}" --request POST --data "{\"event_type\": \"update-dependency\"}" https://api.github.com/repos/Synthetixio/staking/dispatches
           curl -H "Authorization: token ${{ secrets.GH_PACKAGES_READ_ONLY }}" --request POST --data "{\"event_type\": \"update-dependency\"}" https://api.github.com/repos/Synthetixio/kwenta/dispatches
