@@ -32,7 +32,7 @@ jobs:
       - name: Update packages version
         run: lerna version ${{ github.event.client_payload.version }} --yes
       - name: Publish packages
-        run: lerna publish --yes
+        run: lerna changed && lerna publish --yes
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Push changes
