@@ -14,25 +14,25 @@ jobs:
         with:
           node-version: '14'
           registry-url: 'https://registry.npmjs.org'
-      - name: Update  @synthetixio/contracts-interface
-        run: |
-          echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.client_payload.version }}"
-          cd packages/contracts-interface && npm install synthetix@${{ github.event.client_payload.version }} --save-exact
-      - name: Commit changes
-        run: |
-          git config --global user.email "team@synthetix.io" && git config --global user.name "Synthetix Team"
-          git commit -am 'synthetix@${{ github.event.client_payload.version }}'
-      - name: Lints and build
-        run: |
-          npm ci
-          npm run bootstrap
-          npm run lint
-          npm run build
-          npm run test-all
-      - name: Update packages version
-        run: lerna version ${{ github.event.client_payload.version }} --yes
+      # - name: Update  @synthetixio/contracts-interface
+      #   run: |
+      #     echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.client_payload.version }}"
+      #     cd packages/contracts-interface && npm install synthetix@${{ github.event.client_payload.version }} --save-exact
+      # - name: Commit changes
+      #   run: |
+      #     git config --global user.email "team@synthetix.io" && git config --global user.name "Synthetix Team"
+      #     git commit -am 'synthetix@${{ github.event.client_payload.version }}'
+      # - name: Lints and build
+      #   run: |
+      #     npm ci
+      #     npm run bootstrap
+      #     npm run lint
+      #     npm run build
+      #     npm run test-all
+      # - name: Update packages version
+      #   run: lerna version ${{ github.event.client_payload.version }} --yes
       - name: Publish packages
-        run: lerna changed && lerna publish --yes
+        run: lerna changed && lerna publish from-package --yes
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Push changes
