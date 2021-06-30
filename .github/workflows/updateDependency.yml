@@ -29,8 +29,8 @@ jobs:
           npm run lint
           npm run build
           npm run test-all
-      - name: Update packages version
-        run: lerna version ${{ github.event.client_payload.version }} --yes
+     # - name: Update packages version
+      #  run: lerna version ${{ github.event.client_payload.version }} --yes
       - name: Publish packages
         run: lerna publish from-package --yes
         env:
