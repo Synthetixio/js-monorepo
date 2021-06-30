@@ -31,13 +31,13 @@ jobs:
       #     npm run test-all
       # - name: Update packages version
       #   run: lerna version ${{ github.event.client_payload.version }} --yes
-      - name: Publish packages
-        run: lerna changed && lerna publish from-package --yes
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Push changes
-        run: git push
-      # - name: Notify dApps
-      #   run: |
-      #     curl -H "Authorization: token ${{ secrets.GH_PACKAGES_READ_ONLY }}" --request POST --data "{\"event_type\": \"update-dependency\"}" https://api.github.com/repos/Synthetixio/kwenta/dispatches
-      #     curl -H "Authorization: token ${{ secrets.GH_PACKAGES_READ_ONLY }}" --request POST --data "{\"event_type\": \"update-dependency\"}" https://api.github.com/repos/Synthetixio/staking/dispatches
+      # - name: Publish packages
+      #   run: lerna changed && lerna publish from-package --yes
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - name: Push changes
+      #   run: git push
+      - name: Notify dApps
+        run: |
+          curl -H "Authorization: token ${{ secrets.GH_PACKAGES_READ_ONLY }}" --request POST --data "{\"event_type\": \"update-dependency\"}" https://api.github.com/repos/Synthetixio/kwenta/dispatches
+          curl -H "Authorization: token ${{ secrets.GH_PACKAGES_READ_ONLY }}" --request POST --data "{\"event_type\": \"update-dependency\"}" https://api.github.com/repos/Synthetixio/staking/dispatches

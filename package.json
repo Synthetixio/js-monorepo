@@ -6,8 +6,7 @@
 		"lint": "eslint './packages/**/*.{js,ts,tsx}'",
 		"lint:fix": "eslint './packages/**/*.{js,ts,tsx}' --fix",
 		"test-all": "lerna run test",
-		"build": "lerna run build",
-		"publish": "lerna publish"
+		"build": "lerna run build"
 	},
 	"devDependencies": {
 		"@babel/core": "7.11.0",
