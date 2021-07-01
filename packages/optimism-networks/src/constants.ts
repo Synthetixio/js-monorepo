@@ -32,17 +32,7 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 			'https://optimism.io/images/metamask_icon.svg',
 			'https://optimism.io/images/metamask_icon.png',
 		],
-	},
-	420: {
-		chainId: '0x1a4',
-		chainName: 'Optimism Local',
-		rpcUrls: ['https://local.optimism.io'],
-		blockExplorerUrls: ['https://local-explorer.optimism.io/'],
-		iconUrls: [
-			'https://optimism.io/images/metamask_icon.svg',
-			'https://optimism.io/images/metamask_icon.png',
-		],
-	},
+	}
 };
 
 export const MAINNET_OPTIMISM_EXPLORER = 'https://mainnet-l2-explorer.surge.sh';
