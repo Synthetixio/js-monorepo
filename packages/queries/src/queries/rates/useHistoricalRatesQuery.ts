@@ -1,6 +1,8 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 
-import { CurrencyKey, Synths, sUSD_EXCHANGE_RATE } from '../../currency';
+
+import { CurrencyKey, Synths } from '@synthetixio/contracts-interface';
+import { sUSD_EXCHANGE_RATE } from '../../currency';
 import { PERIOD_IN_HOURS, Period } from '../../constants';
 
 import {
@@ -35,7 +37,7 @@ const useHistoricalRatesQuery = (
 					synth: currencyKey as string,
 					// maxTimestamp: Math.trunc(now / 1000),
 					minTimestamp: calculateTimestampForPeriod(periodInHours),
-					max: 6000,
+					max: 1000,
 				}))!;
 
 				const [low, high] = getMinAndMaxRate(rates);

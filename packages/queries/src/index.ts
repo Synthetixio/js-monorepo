@@ -78,7 +78,7 @@ export default function useSynthetixQueries({
 	if (networkId) {
 		// constructed query contexts are cached by network id since
 		// underlying structures are quite large and easily clog browser memory
-		if (!cachedQueryContext[networkId?.toString()]) {
+		if (!cachedQueryContext[networkId!.toString()]) {
 			ctx.snxjs = synthetix({ networkId, provider });
 
 			// snag the resultant provider from snxjs
@@ -86,9 +86,9 @@ export default function useSynthetixQueries({
 
 			ctx.snxData = synthetixData({ networkId });
 
-			cachedQueryContext[networkId?.toString()] = ctx;
+			cachedQueryContext[networkId!.toString()] = ctx;
 		} else {
-			ctx = cachedQueryContext[networkId?.toString()];
+			ctx = cachedQueryContext[networkId!.toString()];
 		}
 	}
 

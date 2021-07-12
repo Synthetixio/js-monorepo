@@ -2,8 +2,9 @@ import { useQuery, UseQueryOptions } from 'react-query';
 
 import Wei, { wei } from '@synthetixio/wei';
 
-import { CurrencyKey, synthToContractName } from '../../currency';
+import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { QueryContext } from '../../context';
+import { synthToContractName } from '../../currency';
 
 const useSynthMarketCapQuery = (
 	ctx: QueryContext,
