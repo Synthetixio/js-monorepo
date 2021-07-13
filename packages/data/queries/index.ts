@@ -12,3 +12,4 @@ export { parseSnxPrice, createSnxPriceQuery } from './snxPrice';
 export { parseDebtSnapshot, createDebtSnapshotQuery } from './debtSnapshot';
 export { parseSnxHolder, createSnxHolderQuery } from './snxHolders';
 export { parseShort, createShortsQuery } from './shorts';
+export { parseExchangeEntrySettled, createExchangeEntrySettledQuery } from './exchangeEntrySettled';

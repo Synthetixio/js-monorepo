@@ -13,6 +13,7 @@ import {
 	ShortLoanChange,
 	ShortCollateralChange,
 	ShortLiquidation,
+	ExchangeEntrySettled,
 } from '../generated/graphql';
 
 export type BaseQueryParams = {
@@ -67,6 +68,12 @@ export type RateUpdateQueryParams = {
 	minTimestamp?: number;
 } & BaseQueryParams;
 
+export type ExchangeEntrySettledParams = {
+	from?: string;
+	minExchangeTimestamp?: number;
+	maxExchangeTimestamp?: number;
+} & BaseQueryParams;
+
 export type SynthExchangeExpanded = SynthExchange & {
 	hash: string;
 };
@@ -93,4 +100,7 @@ export type SynthetixData = {
 	debtSnapshots: (params?: DebtSnapshotParams) => Promise<DebtSnapshot[] | null>;
 	snxHolders: (params?: SnxHolderParams) => Promise<SnxHolder[] | null>;
 	shorts: (params?: ShortQueryParams) => Promise<FormattedShort[] | null>;
+	exchangeEntrySettled: (
+		params?: ExchangeEntrySettledParams
+	) => Promise<ExchangeEntrySettled[] | null>;
 };

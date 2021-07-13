@@ -27,6 +27,8 @@ import {
 	createSnxHolderQuery,
 	createShortsQuery,
 	parseShort,
+	createExchangeEntrySettledQuery,
+	parseExchangeEntrySettled,
 } from '../queries';
 import { formatParams, requestHelper } from './utils';
 import {
@@ -43,6 +45,7 @@ import {
 	SynthExchangeExpanded,
 	ShortQueryParams,
 	FormattedShort,
+	ExchangeEntrySettledParams,
 } from './types';
 import {
 	Synthetix,
@@ -54,6 +57,7 @@ import {
 	FifteenMinuteSnxPrice,
 	DebtSnapshot,
 	SnxHolder,
+	ExchangeEntrySettled,
 } from '../generated/graphql';
 
 enum Period {
@@ -207,6 +211,20 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 			endpoints: { [NetworkId.Mainnet]: l1Endpoints.shorts },
 		});
 		return response != null ? response.shorts.map(parseShort) : null;
+	},
+	exchangeEntrySettled: async (
+		params?: ExchangeEntrySettledParams
+	): Promise<ExchangeEntrySettled[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: createExchangeEntrySettledQuery,
+			networkId,
+			endpoints: {
+				[NetworkId.Mainnet]: l1Endpoints.exchanges,
+				[NetworkId.Kovan]: l1Endpoints.exchangesKovan,
+			},
+		});
+		return response != null ? response.exchangeEntrySettled.map(parseExchangeEntrySettled) : null;
 	},
 });
 

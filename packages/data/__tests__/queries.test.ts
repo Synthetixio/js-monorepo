@@ -12,6 +12,7 @@ import {
 	parseDebtSnapshot,
 	parseSnxHolder,
 	parseShort,
+	parseExchangeEntrySettled,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
@@ -27,6 +28,7 @@ import {
 	debtSnapshotMock,
 	snxHolderMock,
 	shortsMock,
+	exchangeEntrySettledMock,
 } from '../__mocks__';
 
 describe('@synthetixio/data tests', () => {
@@ -293,6 +295,13 @@ describe('@synthetixio/data tests', () => {
 			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
 			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
 			expect(snxHoldersInfo!.length).toEqual(5);
+		});
+	});
+
+	describe('exchangeEntrySettled query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseExchangeEntrySettled(exchangeEntrySettledMock.response);
+			expect(exchangeEntrySettledMock.formatted).toEqual(parsedOutput);
 		});
 	});
 });
