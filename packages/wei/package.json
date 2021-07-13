@@ -2,10 +2,10 @@
 	"name": "@synthetixio/wei",
 	"version": "2.46.2",
 	"description": "Convenient BigNumber library for web3",
-	"main": "build/node/wei.js",
+	"main": "build/node/index.js",
 	"browser": "./build/index.js",
 	"source": "./src/index.ts",
-	"types": "./build/node/wei.d.ts",
+	"types": "./build/node/index.d.ts",
 	"scripts": {
 		"build": "npm run build-browser && npm run build-node",
 		"build-node": "../../node_modules/.bin/tsc -p tsconfig.node.json",
