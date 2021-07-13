@@ -20,6 +20,7 @@ export type EthereumProvider = {
 export type OptimismWatcher = {
 	getMessageHashesFromL1Tx: (transactionHash: string) => string[];
 	getMessageHashesFromL2Tx: (transactionHash: string) => string[];
+	getL1TransactionReceipt: (msgHash: string, pollForPending: boolean) => string;
 	getL2TransactionReceipt: (msgHash: string, pollForPending: boolean) => string;
 };
 
