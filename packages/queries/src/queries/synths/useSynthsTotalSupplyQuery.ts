@@ -1,22 +1,9 @@
-import Wei, { wei } from '@synthetixio/wei';
 import BigNumber from 'bignumber.js';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query';
+
 import { QueryContext } from '../../context';
-
 import { Synths } from '../../currency';
-
-export type SynthTotalSupply = {
-	name: string;
-	value: Wei;
-	skewValue: BigNumber;
-	totalSupply: Wei;
-	poolProportion: Wei;
-};
-
-export type SynthsTotalSupplyData = {
-	supplyData: { [name: string]: SynthTotalSupply };
-	totalValue: Wei;
-};
+import { SynthTotalSupply, SynthsTotalSupplyData } from '../../types';
 
 const useSynthsTotalSupplyQuery = (
 	ctx: QueryContext,
@@ -111,7 +98,7 @@ const useSynthsTotalSupplyQuery = (
 			for (let i = 0; i < synthTotalSupplies[0].length; i++) {
 				let value = new BigNumber(formatEther(synthTotalSupplies[2][i]));
 				const name = parseBytes32String(synthTotalSupplies[0][i]);
-				let totalSupply = new BigNumber(formatEther(synthTotalSupplies[1][i]));
+				const totalSupply = new BigNumber(formatEther(synthTotalSupplies[1][i]));
 
 				switch (name) {
 					case Synths.sBTC: {

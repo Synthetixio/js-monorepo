@@ -1,5 +1,6 @@
 import Wei from '@synthetixio/wei';
 import { CurrencyKey } from './currency';
+import BigNumber from 'bignumber.js';
 
 export type GasPrices = {
 	fastest: number;
@@ -69,3 +70,16 @@ export type TokenBalances = Partial<
 		}
 	>
 >;
+
+export type SynthTotalSupply = {
+	name: string;
+	value: Wei;
+	skewValue: BigNumber;
+	totalSupply: Wei;
+	poolProportion: Wei;
+};
+
+export type SynthsTotalSupplyData = {
+	supplyData: { [name: string]: SynthTotalSupply };
+	totalValue: Wei;
+};
