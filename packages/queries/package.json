@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/queries",
-	"version": "2.47.0-ovm.0",
+	"version": "2.47.1-ovm.0",
 	"description": "react-query for pulling synthetix data in react interfaces",
 	"source": "./src/index.ts",
 	"main": "./build/node/index.js",
@@ -31,9 +31,9 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"@synthetixio/contracts-interface": "^2.47.0-ovm.0",
-		"@synthetixio/data": "^2.46.1-ovm.0",
-		"@synthetixio/wei": "^2.46.1",
+		"@synthetixio/contracts-interface": "^2.47.1-ovm.0",
+		"@synthetixio/data": "^2.46.2-ovm.0",
+		"@synthetixio/wei": "^2.46.2-alpha.0",
 		"axios": "0.21.1",
 		"bignumber.js": "9.0.1",
 		"date-fns": "2.19.0",
