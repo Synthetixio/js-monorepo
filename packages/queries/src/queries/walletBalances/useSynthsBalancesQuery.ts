@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 import orderBy from 'lodash/orderBy';
 import Wei, { wei } from '@synthetixio/wei';
 
-import { CurrencyKey } from '../../currency';
+import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { QueryContext } from '../../context';
 import { Balances, SynthBalance, SynthBalancesMap } from '../../types';
 

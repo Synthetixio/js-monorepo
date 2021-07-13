@@ -1,107 +1,11 @@
 import keyBy from 'lodash/keyBy';
 import { Rates } from './types';
 
-// note: this file should be replaced with generator functions which can read from either `synthetix` or snxjs libraries
-// because, ultimately, that is the source of truth for which synths exist.
-
-export enum Synths {
-	iADA = 'iADA',
-	iBCH = 'iBCH',
-	iBNB = 'iBNB',
-	iBTC = 'iBTC',
-	iCEX = 'iCEX',
-	iDASH = 'iDASH',
-	iDEFI = 'iDEFI',
-	iEOS = 'iEOS',
-	iETC = 'iETC',
-	iETH = 'iETH',
-	iLINK = 'iLINK',
-	iLTC = 'iLTC',
-	iOIL = 'iOIL',
-	iTRX = 'iTRX',
-	iXMR = 'iXMR',
-	iXRP = 'iXRP',
-	iXTZ = 'iXTZ',
-	sAAPL = 'sAAPL',
-	sAAVE = 'sAAVE',
-	sADA = 'sADA',
-	sAMZN = 'sAMZN',
-	sAUD = 'sAUD',
-	sBCH = 'sBCH',
-	sBNB = 'sBNB',
-	sBTC = 'sBTC',
-	sCEX = 'sCEX',
-	sCHF = 'sCHF',
-	sCOIN = 'sCOIN',
-	sCOMP = 'sCOMP',
-	sDASH = 'sDASH',
-	sDEFI = 'sDEFI',
-	sDOT = 'sDOT',
-	sEOS = 'sEOS',
-	sETC = 'sETC',
-	sETH = 'sETH',
-	sEUR = 'sEUR',
-	sFB = 'sFB',
-	sFTSE = 'sFTSE',
-	sGBP = 'sGBP',
-	sGOOG = 'sGOOG',
-	sJPY = 'sJPY',
-	sLINK = 'sLINK',
-	sLTC = 'sLTC',
-	sMSFT = 'sMSFT',
-	sNFLX = 'sNFLX',
-	sNIKKEI = 'sNIKKEI',
-	sOIL = 'sOIL',
-	sREN = 'sREN',
-	sTRX = 'sTRX',
-	sTSLA = 'sTSLA',
-	sUNI = 'sUNI',
-	sUSD = 'sUSD',
-	sXAG = 'sXAG',
-	sXAU = 'sXAU',
-	sXMR = 'sXMR',
-	sXRP = 'sXRP',
-	sXTZ = 'sXTZ',
-	sYFI = 'sYFI',
-}
-
-export type CurrencyKey = keyof typeof Synths;
-
-export const FIAT_SYNTHS = new Set([
-	Synths.sEUR,
-	Synths.sJPY,
-	Synths.sUSD,
-	Synths.sAUD,
-	Synths.sGBP,
-	Synths.sCHF,
-]);
+import { CurrencyKey, Synths } from '@synthetixio/contracts-interface';
 
 export const ETH_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 
 export const sUSD_EXCHANGE_RATE = 1;
-
-/*export const CRYPTO_CURRENCY = [
-	'AAVE',
-	'ADA',
-	'BCH',
-	'BNB',
-	'BTC',
-	'COMP',
-	'DASH',
-	'EOS',
-	'ETC',
-	'ETH',
-	'KNC',
-	'LINK',
-	'LTC',
-	'REN',
-	'SNX',
-	'TRX',
-	'UNI',
-	'XMR',
-	'XRP',
-	'XTZ',
-];*/
 
 // compute related type from CRYPTO_CURRENCY
 

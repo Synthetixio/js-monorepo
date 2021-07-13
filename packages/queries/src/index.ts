@@ -30,6 +30,7 @@ import useETHBalanceQuery from './queries/walletBalances/useETHBalanceQuery';
 import useSynthsBalancesQuery from './queries/walletBalances/useSynthsBalancesQuery';
 import useTokensBalancesQuery from './queries/walletBalances/useTokensBalancesQuery';
 import _ from 'lodash';
+import React from 'react';
 
 const FUNCS = {
 	useEthGasPriceQuery,
@@ -61,13 +62,13 @@ export type SynthetixQueries = {
 // keep a cache (or else synthetixjs fills up all memory for each instance)
 const cachedQueryContext: { [id: string]: QueryContext } = {};
 
-export default function useSynthetixQueries({
+export function createQueryContext({
 	networkId,
 	provider,
 }: {
 	networkId: NetworkId | null;
 	provider?: ethers.providers.Provider;
-}): SynthetixQueries {
+}): QueryContext {
 	let ctx: QueryContext = {
 		networkId,
 		provider: null,
@@ -78,7 +79,7 @@ export default function useSynthetixQueries({
 	if (networkId) {
 		// constructed query contexts are cached by network id since
 		// underlying structures are quite large and easily clog browser memory
-		if (!cachedQueryContext[networkId?.toString()]) {
+		if (!cachedQueryContext[networkId!.toString()]) {
 			ctx.snxjs = synthetix({ networkId, provider });
 
 			// snag the resultant provider from snxjs
@@ -86,10 +87,22 @@ export default function useSynthetixQueries({
 
 			ctx.snxData = synthetixData({ networkId });
 
-			cachedQueryContext[networkId?.toString()] = ctx;
+			cachedQueryContext[networkId!.toString()] = ctx;
 		} else {
-			ctx = cachedQueryContext[networkId?.toString()];
+			ctx = cachedQueryContext[networkId!.toString()];
 		}
+	}
+
+	return ctx;
+}
+
+const SynthetixQueryContext = React.createContext<QueryContext|null>(null)
+export const SynthetixQueryContextProvider = SynthetixQueryContext.Provider;
+
+export default function useSynthetixQueries(): SynthetixQueries {
+	const ctx = React.useContext(SynthetixQueryContext)
+	if (!ctx) {
+	  throw new Error('No QueryClient set, use QueryClientProvider to set one')
 	}
 
 	const modFuncs: { [i: string]: any } = _.clone(FUNCS);
