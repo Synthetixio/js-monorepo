@@ -1,14 +1,15 @@
 import { Period, PERIOD_IN_HOURS } from '../../constants';
 import request, { gql } from 'graphql-request';
 import { useQuery, UseQueryOptions } from 'react-query';
-import { Candle } from '../../types';import { QueryContext } from '../../context';
+import { Candle } from '../../types';
+import { QueryContext } from '../../context';
 
 import { calculateTimestampForPeriod } from './utils';
 
 const RATES_ENDPOINT = 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-rates';
 
 const useCandlesticksQuery = (
-    ctx: QueryContext,
+	ctx: QueryContext,
 	currencyKey: string | null,
 	period: Period = Period.ONE_DAY,
 	options?: UseQueryOptions<Array<Candle>>

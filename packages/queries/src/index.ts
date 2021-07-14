@@ -96,13 +96,13 @@ export function createQueryContext({
 	return ctx;
 }
 
-const SynthetixQueryContext = React.createContext<QueryContext|null>(null)
+const SynthetixQueryContext = React.createContext<QueryContext | null>(null);
 export const SynthetixQueryContextProvider = SynthetixQueryContext.Provider;
 
 export default function useSynthetixQueries(): SynthetixQueries {
-	const ctx = React.useContext(SynthetixQueryContext)
+	const ctx = React.useContext(SynthetixQueryContext);
 	if (!ctx) {
-	  throw new Error('No QueryClient set, use QueryClientProvider to set one')
+		throw new Error('No QueryClient set, use QueryClientProvider to set one');
 	}
 
 	const modFuncs: { [i: string]: any } = _.clone(FUNCS);

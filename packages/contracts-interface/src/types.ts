@@ -153,7 +153,7 @@ export enum CurrencyCategory {
 	'crypto' = 'Crypto',
 	'forex' = 'Forex',
 	'equity' = 'Equity',
-	'commodity' = 'Commodity'
+	'commodity' = 'Commodity',
 }
 
 export type Synth = {
