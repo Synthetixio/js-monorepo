@@ -58,26 +58,27 @@ const synthetix = ({ networkId, network, signer, provider }: Config): SynthetixJ
 };
 
 const selectNetwork = (networkId?: NetworkId, network?: Network): [Network, NetworkId, boolean] => {
-	// Validate the passed in network and networkId.
+	let currentNetwork: Network = Network.Mainnet;
+	let currentNetworkId: NetworkId = NetworkId.Mainnet;
+	let useOvm = false;
 	if (
 		(network && !networkToChainId[network]) ||
 		(networkId && !getNetworkFromId({ id: networkId }))
 	) {
 		throw new Error(ERRORS.badNetworkArg);
-	}
-	
-	if (network) {
-		const networkId = networkToChainId(network)
-		const { useOvm } = getNetworkFromId({ id: networkId });
-		return [network, networkId, useOvm]
+	} else if (network && networkToChainId[network]) {
+		const networkToId = Number(networkToChainId[network]);
+		const networkFromId = getNetworkFromId({ id: networkToId });
+		currentNetworkId = networkToId;
+		currentNetwork = networkFromId.network;
+		useOvm = networkFromId.useOvm;
 	} else if (networkId) {
-		const config = getNetworkFromId({ id: networkId });
-		const network = config.name
-		const useOvm = config.useOvm
-		return [network, networkId, useOvm]
+		const networkFromId = getNetworkFromId({ id: networkId });
+		currentNetworkId = networkId;
+		currentNetwork = networkFromId.network;
+		useOvm = networkFromId.useOvm;
 	}
-	
-	return [Network.Mainnet, NetworkId.Mainnet, true]
+	return [currentNetwork, currentNetworkId, useOvm];
 };
 
 const getSynthetixContracts = (
