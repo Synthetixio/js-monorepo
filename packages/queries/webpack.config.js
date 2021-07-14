@@ -30,4 +30,8 @@ module.exports = {
 		extensions: ['.ts', '.js'],
 	},
 	plugins: [],
+	externals: {
+		'react': 'React',
+		'react-dom': 'ReactDOM'
+	}
 };
