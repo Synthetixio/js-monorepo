@@ -40,6 +40,16 @@ export enum CryptoCurrency {
 	YFI = 'YFI',
 }
 
+export const FIAT_SYNTHS: Set<CurrencyKey> = new Set([
+	Synths.sUSD,
+	Synths.sEUR,
+	Synths.sJPY,
+	Synths.sAUD,
+	Synths.sGBP,
+	Synths.sCHF,
+	Synths.sKRW,
+]);
+
 export const CRYPTO_CURRENCY = Object.keys(CryptoCurrency);
 
 export const CRYPTO_CURRENCY_MAP = keyBy(CRYPTO_CURRENCY);
