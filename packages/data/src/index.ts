@@ -30,6 +30,7 @@ import {
 	parseShort,
 	createExchangeEntrySettledQuery,
 	parseExchangeEntrySettled,
+	parseExchangeEntrySettledKovan,
 } from '../queries';
 import { formatParams, requestHelper } from './utils';
 import {
@@ -232,7 +233,11 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 				[NetworkId.Kovan]: l1Endpoints.exchangerKovan,
 			},
 		});
-		return response != null ? response.exchangeEntrySettleds.map(parseExchangeEntrySettled) : null;
+		return response != null
+			? response.exchangeEntrySettleds.map(
+					networkId === NetworkId.Kovan ? parseExchangeEntrySettledKovan : parseExchangeEntrySettled
+			  )
+			: null;
 	},
 });
 

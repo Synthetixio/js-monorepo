@@ -65,7 +65,7 @@ export const parseSynthExchangesL1Kovan = ({
 	gasPrice,
 	id,
 	network,
-	timestamp,
+	timestamp: formatTimestamp(timestamp),
 	toAddress,
 	toAmount,
 	toAmountInUSD,

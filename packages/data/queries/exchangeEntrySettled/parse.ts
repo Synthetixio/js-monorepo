@@ -24,3 +24,27 @@ export const parseExchangeEntrySettled = ({
 	destRoundIdAtPeriodEnd,
 	exchangeTimestamp: Number(exchangeTimestamp),
 });
+
+export const parseExchangeEntrySettledKovan = ({
+	id,
+	from,
+	src,
+	amount,
+	dest,
+	reclaim,
+	rebate,
+	srcRoundIdAtPeriodEnd,
+	destRoundIdAtPeriodEnd,
+	exchangeTimestamp,
+}: ExchangeEntrySettled): ExchangeEntrySettled => ({
+	id,
+	from,
+	src,
+	amount,
+	dest,
+	reclaim,
+	rebate,
+	srcRoundIdAtPeriodEnd,
+	destRoundIdAtPeriodEnd,
+	exchangeTimestamp: Number(exchangeTimestamp),
+});
