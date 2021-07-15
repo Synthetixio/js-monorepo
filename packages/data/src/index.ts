@@ -8,6 +8,7 @@ import { l1Endpoints, l2Endpoints, timeSeriesEntityMap } from './constants';
 import {
 	createSynthExchangesQuery,
 	parseSynthExchangesL1,
+	parseSynthExchangesL1Kovan,
 	parseSynthExchangesL2,
 	createSynthetixQuery,
 	parseSynthetix,
@@ -125,11 +126,18 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 			params,
 			queryMethod: createSynthExchangesQuery,
 			networkId,
-			endpoints: { [NetworkId.Mainnet]: l1Endpoints.exchanges },
+			endpoints: {
+				[NetworkId.Mainnet]: l1Endpoints.exchanges,
+				[NetworkId.Kovan]: l1Endpoints.exchangesKovan,
+			},
 		});
 		return response != null
 			? response.synthExchanges.map(
-					networkId === NetworkId.Mainnet ? parseSynthExchangesL1 : parseSynthExchangesL2
+					networkId === NetworkId.Mainnet
+						? parseSynthExchangesL1
+						: networkId === NetworkId.Kovan
+						? parseSynthExchangesL1Kovan
+						: parseSynthExchangesL2
 			  )
 			: null;
 	},

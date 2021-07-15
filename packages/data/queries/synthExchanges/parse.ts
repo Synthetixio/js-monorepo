@@ -38,6 +38,41 @@ export const parseSynthExchangesL1 = ({
 	hash: getHashFromId(id),
 });
 
+export const parseSynthExchangesL1Kovan = ({
+	account,
+	block,
+	feesInUSD,
+	from,
+	fromAmount,
+	fromAmountInUSD,
+	fromCurrencyKey,
+	gasPrice,
+	id,
+	network,
+	timestamp,
+	toAddress,
+	toAmount,
+	toAmountInUSD,
+	toCurrencyKey,
+}: SynthExchange): SynthExchangeExpanded => ({
+	account,
+	block: Number(block),
+	feesInUSD,
+	from,
+	fromAmount,
+	fromAmountInUSD,
+	fromCurrencyKey: hexToAscii(fromCurrencyKey),
+	gasPrice,
+	id,
+	network,
+	timestamp,
+	toAddress,
+	toAmount,
+	toAmountInUSD,
+	toCurrencyKey: hexToAscii(toCurrencyKey),
+	hash: getHashFromId(id),
+});
+
 export const parseSynthExchangesL2 = ({
 	account,
 	block,

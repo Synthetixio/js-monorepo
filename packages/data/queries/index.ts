@@ -1,6 +1,7 @@
 export {
 	createSynthExchangesQuery,
 	parseSynthExchangesL1,
+	parseSynthExchangesL1Kovan,
 	parseSynthExchangesL2,
 } from './synthExchanges';
 export { createSynthetixQuery, parseSynthetix } from './synthetix';
