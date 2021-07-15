@@ -220,11 +220,11 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 			queryMethod: createExchangeEntrySettledQuery,
 			networkId,
 			endpoints: {
-				[NetworkId.Mainnet]: l1Endpoints.exchanges,
-				[NetworkId.Kovan]: l1Endpoints.exchangesKovan,
+				[NetworkId.Mainnet]: l1Endpoints.exchanger,
+				[NetworkId.Kovan]: l1Endpoints.exchangerKovan,
 			},
 		});
-		return response != null ? response.exchangeEntrySettled.map(parseExchangeEntrySettled) : null;
+		return response != null ? response.exchangeEntrySettleds.map(parseExchangeEntrySettled) : null;
 	},
 });
 

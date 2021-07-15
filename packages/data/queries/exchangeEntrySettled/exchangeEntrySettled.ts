@@ -15,7 +15,7 @@ export const createExchangeEntrySettledQuery = (params?: ExchangeEntrySettledPar
 
 	return gql`
 		query exchangeEntrySettleds($from: String, $minExchangeTimestamp: Int, $maxExchangeTimestamp: Int) {
-			issueds(
+			exchangeEntrySettleds(
 				first: $max${createGQLBlockNumberString(params?.blockNumber ?? null)}
 				where: ${whereString}
 				orderBy: exchangeTimestamp
