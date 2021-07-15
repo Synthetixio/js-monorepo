@@ -59,9 +59,6 @@ export type SynthetixQueries = {
 	[Property in keyof RawSynthetixQueries]: OmitFirstArg<RawSynthetixQueries[Property]>;
 };
 
-// keep a cache (or else synthetixjs fills up all memory for each instance)
-const cachedQueryContext: { [id: string]: QueryContext } = {};
-
 export function createQueryContext({
 	networkId,
 	provider,
@@ -69,7 +66,7 @@ export function createQueryContext({
 	networkId: NetworkId | null;
 	provider?: ethers.providers.Provider;
 }): QueryContext {
-	let ctx: QueryContext = {
+	const ctx: QueryContext = {
 		networkId,
 		provider: null,
 		snxData: null,
@@ -77,20 +74,12 @@ export function createQueryContext({
 	};
 
 	if (networkId) {
-		// constructed query contexts are cached by network id since
-		// underlying structures are quite large and easily clog browser memory
-		if (!cachedQueryContext[networkId!.toString()]) {
-			ctx.snxjs = synthetix({ networkId, provider });
+		ctx.snxjs = synthetix({ networkId, provider });
 
-			// snag the resultant provider from snxjs
-			ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
+		// snag the resultant provider from snxjs
+		ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
 
-			ctx.snxData = synthetixData({ networkId });
-
-			cachedQueryContext[networkId!.toString()] = ctx;
-		} else {
-			ctx = cachedQueryContext[networkId!.toString()];
-		}
+		ctx.snxData = synthetixData({ networkId });
 	}
 
 	return ctx;
