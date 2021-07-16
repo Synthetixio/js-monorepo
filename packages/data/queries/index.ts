@@ -14,7 +14,7 @@ export { parseDebtSnapshot, createDebtSnapshotQuery } from './debtSnapshot';
 export { parseSnxHolder, createSnxHolderQuery } from './snxHolders';
 export { parseShort, createShortsQuery } from './shorts';
 export {
-	parseExchangeEntrySettled,
-	parseExchangeEntrySettledKovan,
-	createExchangeEntrySettledQuery,
-} from './exchangeEntrySettled';
+	parseExchangeEntrySettleds,
+	parseExchangeEntrySettledsKovan,
+	createExchangeEntrySettledsQuery,
+} from './exchangeEntrySettleds';

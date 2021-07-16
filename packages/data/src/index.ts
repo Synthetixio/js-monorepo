@@ -28,9 +28,9 @@ import {
 	createSnxHolderQuery,
 	createShortsQuery,
 	parseShort,
-	createExchangeEntrySettledQuery,
-	parseExchangeEntrySettled,
-	parseExchangeEntrySettledKovan,
+	createExchangeEntrySettledsQuery,
+	parseExchangeEntrySettleds,
+	parseExchangeEntrySettledsKovan,
 } from '../queries';
 import { formatParams, requestHelper } from './utils';
 import {
@@ -47,7 +47,7 @@ import {
 	SynthExchangeExpanded,
 	ShortQueryParams,
 	FormattedShort,
-	ExchangeEntrySettledParams,
+	ExchangeEntrySettledsParams,
 } from './types';
 import {
 	Synthetix,
@@ -221,12 +221,12 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 		});
 		return response != null ? response.shorts.map(parseShort) : null;
 	},
-	exchangeEntrySettled: async (
-		params?: ExchangeEntrySettledParams
+	exchangeEntrySettleds: async (
+		params?: ExchangeEntrySettledsParams
 	): Promise<ExchangeEntrySettled[] | null> => {
 		const response = await getData({
 			params,
-			queryMethod: createExchangeEntrySettledQuery,
+			queryMethod: createExchangeEntrySettledsQuery,
 			networkId,
 			endpoints: {
 				[NetworkId.Mainnet]: l1Endpoints.exchanger,
@@ -235,7 +235,9 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 		});
 		return response != null
 			? response.exchangeEntrySettleds.map(
-					networkId === NetworkId.Kovan ? parseExchangeEntrySettledKovan : parseExchangeEntrySettled
+					networkId === NetworkId.Kovan
+						? parseExchangeEntrySettledsKovan
+						: parseExchangeEntrySettleds
 			  )
 			: null;
 	},

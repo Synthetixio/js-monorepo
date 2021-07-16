@@ -1,8 +1,8 @@
 import { gql } from 'graphql-request';
-import { ExchangeEntrySettledParams } from '../../src/types';
+import { ExchangeEntrySettledsParams } from '../../src/types';
 import { createGQLWhereString, createGQLBlockNumberString } from '../../src/utils';
 
-export const createExchangeEntrySettledQuery = (params?: ExchangeEntrySettledParams): string => {
+export const createExchangeEntrySettledsQuery = (params?: ExchangeEntrySettledsParams): string => {
 	const whereString = createGQLWhereString(
 		Object.entries({
 			from: (params?.from ?? null) != null ? 'from' : null,

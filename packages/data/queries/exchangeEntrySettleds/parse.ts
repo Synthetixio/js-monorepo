@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { ExchangeEntrySettled } from '../../generated/graphql';
 
-export const parseExchangeEntrySettled = ({
+export const parseExchangeEntrySettleds = ({
 	id,
 	from,
 	src,
@@ -25,7 +25,7 @@ export const parseExchangeEntrySettled = ({
 	exchangeTimestamp: Number(exchangeTimestamp),
 });
 
-export const parseExchangeEntrySettledKovan = ({
+export const parseExchangeEntrySettledsKovan = ({
 	id,
 	from,
 	src,

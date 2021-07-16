@@ -1,4 +1,4 @@
-export const exchangeEntrySettledMock = {
+export const exchangeEntrySettledsMock = {
 	response: {
 		amount: '9992880960411389',
 		dest: '0x7355534400000000000000000000000000000000000000000000000000000000',

@@ -68,7 +68,7 @@ export type RateUpdateQueryParams = {
 	minTimestamp?: number;
 } & BaseQueryParams;
 
-export type ExchangeEntrySettledParams = {
+export type ExchangeEntrySettledsParams = {
 	from?: string;
 	minExchangeTimestamp?: number;
 	maxExchangeTimestamp?: number;
@@ -100,7 +100,7 @@ export type SynthetixData = {
 	debtSnapshots: (params?: DebtSnapshotParams) => Promise<DebtSnapshot[] | null>;
 	snxHolders: (params?: SnxHolderParams) => Promise<SnxHolder[] | null>;
 	shorts: (params?: ShortQueryParams) => Promise<FormattedShort[] | null>;
-	exchangeEntrySettled: (
-		params?: ExchangeEntrySettledParams
+	exchangeEntrySettleds: (
+		params?: ExchangeEntrySettledsParams
 	) => Promise<ExchangeEntrySettled[] | null>;
 };
