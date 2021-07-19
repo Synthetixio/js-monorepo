@@ -8,6 +8,7 @@ import { l1Endpoints, l2Endpoints, timeSeriesEntityMap } from './constants';
 import {
 	createSynthExchangesQuery,
 	parseSynthExchangesL1,
+	parseSynthExchangesL1Kovan,
 	parseSynthExchangesL2,
 	createSynthetixQuery,
 	parseSynthetix,
@@ -27,6 +28,9 @@ import {
 	createSnxHolderQuery,
 	createShortsQuery,
 	parseShort,
+	createExchangeEntrySettledsQuery,
+	parseExchangeEntrySettleds,
+	parseExchangeEntrySettledsKovan,
 } from '../queries';
 import { formatParams, requestHelper } from './utils';
 import {
@@ -43,6 +47,7 @@ import {
 	SynthExchangeExpanded,
 	ShortQueryParams,
 	FormattedShort,
+	ExchangeEntrySettledsParams,
 } from './types';
 import {
 	Synthetix,
@@ -54,6 +59,7 @@ import {
 	FifteenMinuteSnxPrice,
 	DebtSnapshot,
 	SnxHolder,
+	ExchangeEntrySettled,
 } from '../generated/graphql';
 
 enum Period {
@@ -121,11 +127,18 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 			params,
 			queryMethod: createSynthExchangesQuery,
 			networkId,
-			endpoints: { [NetworkId.Mainnet]: l1Endpoints.exchanges },
+			endpoints: {
+				[NetworkId.Mainnet]: l1Endpoints.exchanges,
+				[NetworkId.Kovan]: l1Endpoints.exchangesKovan,
+			},
 		});
 		return response != null
 			? response.synthExchanges.map(
-					networkId === NetworkId.Mainnet ? parseSynthExchangesL1 : parseSynthExchangesL2
+					networkId === NetworkId.Mainnet
+						? parseSynthExchangesL1
+						: networkId === NetworkId.Kovan
+						? parseSynthExchangesL1Kovan
+						: parseSynthExchangesL2
 			  )
 			: null;
 	},
@@ -207,6 +220,26 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 			endpoints: { [NetworkId.Mainnet]: l1Endpoints.shorts },
 		});
 		return response != null ? response.shorts.map(parseShort) : null;
+	},
+	exchangeEntrySettleds: async (
+		params?: ExchangeEntrySettledsParams
+	): Promise<ExchangeEntrySettled[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: createExchangeEntrySettledsQuery,
+			networkId,
+			endpoints: {
+				[NetworkId.Mainnet]: l1Endpoints.exchanger,
+				[NetworkId.Kovan]: l1Endpoints.exchangerKovan,
+			},
+		});
+		return response != null
+			? response.exchangeEntrySettleds.map(
+					networkId === NetworkId.Kovan
+						? parseExchangeEntrySettledsKovan
+						: parseExchangeEntrySettleds
+			  )
+			: null;
 	},
 });
 
