@@ -8,4 +8,13 @@ export interface QueryContext {
 	provider: ethers.providers.Provider | null;
 	snxData: SynthetixData | null;
 	snxjs: SynthetixJS | null;
+	updateQueryContext?: ({
+		updateNetworkId,
+		updateProvider,
+		updateSigner,
+	}: {
+		updateNetworkId: NetworkId | null;
+		updateProvider: ethers.providers.Provider | null;
+		updateSigner: ethers.Signer | null;
+	}) => void;
 }

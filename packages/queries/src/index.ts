@@ -62,31 +62,50 @@ export type SynthetixQueries = {
 export function createQueryContext({
 	networkId,
 	provider,
+	signer,
 }: {
 	networkId: NetworkId | null;
-	provider?: ethers.providers.Provider;
+	provider: ethers.providers.Provider | null;
+	signer: ethers.Signer | null;
 }): QueryContext {
 	const ctx: QueryContext = {
 		networkId,
-		provider: null,
+		provider,
 		snxData: null,
 		snxjs: null,
 	};
 
-	if (networkId) {
-		ctx.snxjs = synthetix({ networkId, provider });
+	ctx.snxjs = synthetix({ networkId, provider, signer });
+
+	// snag the resultant provider from snxjs
+	ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
+
+	ctx.snxData = synthetixData({ networkId });
+	ctx.updateQueryContext = ({
+		updateNetworkId,
+		updateProvider,
+		updateSigner,
+	}: {
+		updateNetworkId: NetworkId | null;
+		updateProvider: ethers.providers.Provider | null;
+		updateSigner: ethers.Signer | null;
+	}) => {
+		ctx.snxjs = synthetix({
+			networkId: updateNetworkId,
+			provider: updateProvider,
+			signer: updateSigner,
+		});
 
 		// snag the resultant provider from snxjs
 		ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
 
-		ctx.snxData = synthetixData({ networkId });
-	}
+		ctx.snxData = synthetixData({ networkId: updateNetworkId });
+	};
 
 	return ctx;
 }
 
-const SynthetixQueryContext = React.createContext<QueryContext | null>(null);
-export const SynthetixQueryContextProvider = SynthetixQueryContext.Provider;
+export const SynthetixQueryContext = React.createContext<QueryContext | null>(null);
 
 export default function useSynthetixQueries(): SynthetixQueries {
 	const ctx = React.useContext(SynthetixQueryContext);
