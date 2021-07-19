@@ -55,7 +55,6 @@ class SynthetixQueryWrapper extends Component<
 	SynthetixQueryWrapperState
 > {
 	state: SynthetixQueryWrapperState = {
-		// optional second annotation for better type inference
 		queryContext: createContextObject({
 			networkId: this.props.networkId,
 			provider: this.props.provider,
