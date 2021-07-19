@@ -2,7 +2,7 @@ import { QueryContext } from './context';
 
 import { UseQueryResult } from 'react-query';
 
-import { SynthetixQueryContext } from './QueryWrapper';
+import SynthetixQueryWrapper, { SynthetixQueryContext } from './QueryWrapper';
 
 export * from './types';
 
@@ -56,6 +56,8 @@ type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...arg
 export type SynthetixQueries = {
 	[Property in keyof RawSynthetixQueries]: OmitFirstArg<RawSynthetixQueries[Property]>;
 };
+
+export { SynthetixQueryWrapper };
 
 export default function useSynthetixQueries(): SynthetixQueries {
 	const ctx = useContext(SynthetixQueryContext);

@@ -1,4 +1,4 @@
-import { Component, createContext, ReactChildren } from 'react';
+import React, { Component, createContext, ReactChildren } from 'react';
 import ethers from 'ethers';
 import { QueryContext } from './context';
 
@@ -64,30 +64,30 @@ class SynthetixQueryWrapper extends Component<
 	};
 
 	updateQueryContext({
-		updateNetworkId,
-		updateProvider,
-		updateSigner,
+		networkId,
+		provider,
+		signer,
 	}: {
-		updateNetworkId: NetworkId | undefined;
-		updateProvider: ethers.providers.Provider | undefined;
-		updateSigner: ethers.Signer | undefined;
+		networkId: NetworkId | undefined;
+		provider: ethers.providers.Provider | undefined;
+		signer: ethers.Signer | undefined;
 	}): void {
 		const updatedQueryContext = createContextObject({
-			networkId: updateNetworkId,
-			provider: updateProvider,
-			signer: updateSigner,
+			networkId,
+			provider,
+			signer,
 		});
 		this.setState({ queryContext: updatedQueryContext });
 	}
 
-	contextObject = {
-		queryContext: this.state.queryContext,
-		udpateQueryContext: this.updateQueryContext,
-	};
-
 	render() {
 		return (
-			<SynthetixQueryContext.Provider value={contextObject}>
+			<SynthetixQueryContext.Provider
+				value={{
+					queryContext: this.state.queryContext,
+					updateQueryContext: this.updateQueryContext,
+				}}
+			>
 				{this.props.children}
 			</SynthetixQueryContext.Provider>
 		);
