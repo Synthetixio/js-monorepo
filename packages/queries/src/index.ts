@@ -1,10 +1,8 @@
-import ethers from 'ethers';
 import { QueryContext } from './context';
 
-import { synthetix, NetworkId } from '@synthetixio/contracts-interface';
-import synthetixData from '@synthetixio/data';
-
 import { UseQueryResult } from 'react-query';
+
+import { SynthetixQueryContext } from './QueryWrapper';
 
 export * from './types';
 
@@ -30,7 +28,7 @@ import useETHBalanceQuery from './queries/walletBalances/useETHBalanceQuery';
 import useSynthsBalancesQuery from './queries/walletBalances/useSynthsBalancesQuery';
 import useTokensBalancesQuery from './queries/walletBalances/useTokensBalancesQuery';
 import _ from 'lodash';
-import React from 'react';
+import { useContext } from 'react';
 
 const FUNCS = {
 	useEthGasPriceQuery,
@@ -59,56 +57,8 @@ export type SynthetixQueries = {
 	[Property in keyof RawSynthetixQueries]: OmitFirstArg<RawSynthetixQueries[Property]>;
 };
 
-export function createQueryContext({
-	networkId,
-	provider,
-	signer,
-}: {
-	networkId: NetworkId | null;
-	provider: ethers.providers.Provider | null;
-	signer: ethers.Signer | null;
-}): QueryContext {
-	const ctx: QueryContext = {
-		networkId,
-		provider,
-		snxData: null,
-		snxjs: null,
-	};
-
-	ctx.snxjs = synthetix({ networkId, provider, signer });
-
-	// snag the resultant provider from snxjs
-	ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
-
-	ctx.snxData = synthetixData({ networkId });
-	ctx.updateQueryContext = ({
-		updateNetworkId,
-		updateProvider,
-		updateSigner,
-	}: {
-		updateNetworkId: NetworkId | null;
-		updateProvider: ethers.providers.Provider | null;
-		updateSigner: ethers.Signer | null;
-	}) => {
-		ctx.snxjs = synthetix({
-			networkId: updateNetworkId,
-			provider: updateProvider,
-			signer: updateSigner,
-		});
-
-		// snag the resultant provider from snxjs
-		ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
-
-		ctx.snxData = synthetixData({ networkId: updateNetworkId });
-	};
-
-	return ctx;
-}
-
-export const SynthetixQueryContext = React.createContext<QueryContext | null>(null);
-
 export default function useSynthetixQueries(): SynthetixQueries {
-	const ctx = React.useContext(SynthetixQueryContext);
+	const ctx = useContext(SynthetixQueryContext);
 	if (!ctx) {
 		throw new Error('No QueryClient set, use QueryClientProvider to set one');
 	}
@@ -116,7 +66,7 @@ export default function useSynthetixQueries(): SynthetixQueries {
 	const modFuncs: { [i: string]: any } = _.clone(FUNCS);
 
 	for (const f in modFuncs) {
-		modFuncs[f] = _.partial(modFuncs[f] as UseQueryFunction, ctx);
+		modFuncs[f] = _.partial(modFuncs[f] as UseQueryFunction, ctx.queryContext);
 	}
 
 	return modFuncs as SynthetixQueries;

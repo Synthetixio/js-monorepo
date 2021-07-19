@@ -3,7 +3,8 @@
 	"compilerOptions": {
 		"declaration": true,
 		"module": "commonjs",
-		"declarationDir": "./build"
+		"declarationDir": "./build",
+		"jsx": "react"
 	},
 	"include": ["src"]
 }
