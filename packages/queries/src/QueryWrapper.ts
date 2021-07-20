@@ -1,4 +1,4 @@
-import React, { Component, createContext, ReactChildren } from 'react';
+import { Component, createContext, ReactNode } from 'react';
 import ethers from 'ethers';
 import { QueryContext } from './context';
 
@@ -11,10 +11,12 @@ type QueryContextWithUpdate = {
 		networkId,
 		provider,
 		signer,
+		useOvm,
 	}: {
 		networkId: NetworkId | undefined;
 		provider: ethers.providers.Provider | undefined;
 		signer: ethers.Signer | undefined;
+		useOvm: boolean | undefined;
 	}) => void;
 } | null;
 
@@ -24,12 +26,14 @@ const createContextObject = ({
 	networkId,
 	provider,
 	signer,
+	useOvm,
 }: {
 	networkId: NetworkId | undefined;
 	provider: ethers.providers.Provider | undefined;
 	signer: ethers.Signer | undefined;
+	useOvm: boolean | undefined;
 }): QueryContext => {
-	const snxjs = synthetix({ networkId, provider, signer });
+	const snxjs = synthetix({ networkId, provider, signer, useOvm });
 	return {
 		networkId: snxjs.network.id,
 		provider: snxjs.contracts.Synthetix.provider,
@@ -43,7 +47,8 @@ type SynthetixQueryWrapperProps = {
 	networkId: NetworkId | undefined;
 	provider: ethers.providers.Provider | undefined;
 	signer: ethers.Signer | undefined;
-	children: ReactChildren;
+	useOvm: boolean | undefined;
+	children: ReactNode;
 };
 
 type SynthetixQueryWrapperState = {
@@ -59,6 +64,7 @@ class SynthetixQueryWrapper extends Component<
 			networkId: this.props.networkId,
 			provider: this.props.provider,
 			signer: this.props.signer,
+			useOvm: this.props.useOvm,
 		}),
 	};
 
@@ -66,30 +72,30 @@ class SynthetixQueryWrapper extends Component<
 		networkId,
 		provider,
 		signer,
+		useOvm,
 	}: {
 		networkId: NetworkId | undefined;
 		provider: ethers.providers.Provider | undefined;
 		signer: ethers.Signer | undefined;
+		useOvm: boolean | undefined;
 	}): void {
 		const updatedQueryContext = createContextObject({
 			networkId,
 			provider,
 			signer,
+			useOvm,
 		});
 		this.setState({ queryContext: updatedQueryContext });
 	}
 
-	render() {
-		return (
-			<SynthetixQueryContext.Provider
-				value={{
-					queryContext: this.state.queryContext,
-					updateQueryContext: this.updateQueryContext,
-				}}
-			>
-				{this.props.children}
-			</SynthetixQueryContext.Provider>
-		);
+	render(): ReactNode {
+		return SynthetixQueryContext.Provider({
+			value: {
+				queryContext: this.state.queryContext,
+				updateQueryContext: this.updateQueryContext,
+			},
+			children: this.props.children,
+		});
 	}
 }
 

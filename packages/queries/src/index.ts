@@ -57,7 +57,7 @@ export type SynthetixQueries = {
 	[Property in keyof RawSynthetixQueries]: OmitFirstArg<RawSynthetixQueries[Property]>;
 };
 
-export { SynthetixQueryWrapper };
+export { SynthetixQueryWrapper, SynthetixQueryContext };
 
 export default function useSynthetixQueries(): SynthetixQueries {
 	const ctx = useContext(SynthetixQueryContext);
