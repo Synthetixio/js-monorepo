@@ -32,10 +32,22 @@ type GasNowResponse = {
 	};
 };
 
-const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPrices>) => {
+const useEthGasPriceQuery = (
+	ctx: QueryContext,
+	useOVM?: boolean,
+	options?: UseQueryOptions<GasPrices>
+) => {
 	return useQuery<GasPrices>(
 		['network', 'gasPrice', ctx.networkId],
 		async () => {
+			if (useOVM) {
+				const gasPrice = (await ctx.provider!.getGasPrice()).toNumber() / 1e8 / 10 ?? 0;
+				return {
+					fastest: gasPrice,
+					fast: gasPrice,
+					average: gasPrice,
+				};
+			}
 			try {
 				const result = await axios.get<GasNowResponse>(GAS_NOW_API_URL);
 				const { standard, fast, rapid: fastest } = result.data.data;
