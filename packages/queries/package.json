@@ -21,8 +21,8 @@
 		"test": "../../node_modules/.bin/jest --forceExit --coverage --no-cache",
 		"tsc": "../../node_modules/.bin/tsc --noemit",
 		"codegen": "graphql-codegen --config codegen.yml",
-		"start:test": "webpack-dev-server --config webpack-react-test-app.config.js --mode development",
-		"build:test": "webpack --config webpack-react-test-app.config.js --mode production"
+		"start:test": "webpack-dev-server --config ./react-test-app/webpack-react-test-app.config.js --mode development",
+		"build:test": "webpack --config ./react-test-app/webpack-react-test-app.config.js --mode production"
 	},
 	"repository": {
 		"type": "git",
@@ -52,7 +52,7 @@
 		"@testing-library/react-hooks": "7.0.0",
 		"@types/lodash": "4.14.169",
 		"@types/react": "17.0.11",
-		"html-webpack-plugin": "5.3.2",
+		"html-webpack-plugin": "4.5.2",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
 		"react-query": "3.16.0",
