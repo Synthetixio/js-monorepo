@@ -2,6 +2,8 @@
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 	entry: './react-test-app/src/index.tsx',
@@ -31,5 +33,10 @@ module.exports = {
 		publicPath: 'http://localhost:3000/dist/',
 		hotOnly: true,
 	},
-	plugins: [],
+	plugins: [
+		new HtmlWebPackPlugin({
+			template: './react-test-app/public/index.html',
+			filename: 'index.html',
+		}),
+	],
 };
