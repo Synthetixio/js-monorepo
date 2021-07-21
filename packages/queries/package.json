@@ -20,7 +20,9 @@
 		"lint:fix": "../../node_modules/.bin/eslint --fix './src/**/*.{js,ts,tsx}'",
 		"test": "../../node_modules/.bin/jest --forceExit --coverage --no-cache",
 		"tsc": "../../node_modules/.bin/tsc --noemit",
-		"codegen": "graphql-codegen --config codegen.yml"
+		"codegen": "graphql-codegen --config codegen.yml",
+		"start:test": "webpack-dev-server --config webpack-react-test-app.config.js --mode development",    
+    "build:test": "webpack --config webpack-react-test-app.config.js --mode production"
 	},
 	"repository": {
 		"type": "git",
@@ -32,9 +34,9 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"@synthetixio/contracts-interface": "^2.47.4-ovm.0",
-		"@synthetixio/data": "^2.46.5-ovm.1",
-		"@synthetixio/wei": "^2.46.4",
+		"@synthetixio/contracts-interface": "2.47.4-ovm.0",
+		"@synthetixio/data": "2.46.5-ovm.1",
+		"@synthetixio/wei": "2.46.4",
 		"axios": "0.21.1",
 		"bignumber.js": "9.0.1",
 		"date-fns": "2.19.0",
@@ -45,13 +47,15 @@
 		"lodash": "4.17.19"
 	},
 	"devDependencies": {
-		"@testing-library/react-hooks": "^7.0.0",
+		"@testing-library/react-hooks": "7.0.0",
 		"@types/lodash": "4.14.169",
-		"@types/react": "^17.0.11",
+		"@types/react": "17.0.11",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
 		"react-query": "3.16.0",
-		"react-test-renderer": "^17.0.2"
+		"react-test-renderer": "17.0.2",
+		"@testing-library/react": "12.0.0",
+		"@testing-library/jest-dom": "5.14.1"
 	},
 	"peerDependencies": {
 		"react": "17.x",

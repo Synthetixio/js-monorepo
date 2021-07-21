@@ -50,5 +50,9 @@
 		"hooks": {
 			"pre-commit": "npm run lint"
 		}
+	},
+	"dependencies": {
+		"@babel/preset-react": "7.14.5",
+		"webpack-dev-server": "3.11.2"
 	}
 }

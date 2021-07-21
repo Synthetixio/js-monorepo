@@ -1,38 +1,17 @@
 import { Component, createContext, ReactNode } from 'react';
-import ethers from 'ethers';
 import { QueryContext } from './context';
 
-import { synthetix, NetworkId } from '@synthetixio/contracts-interface';
+import { synthetix, Config } from '@synthetixio/contracts-interface';
 import synthetixData from '@synthetixio/data';
 
 type QueryContextWithUpdate = {
 	queryContext: QueryContext;
-	updateQueryContext: ({
-		networkId,
-		provider,
-		signer,
-		useOvm,
-	}: {
-		networkId: NetworkId | undefined;
-		provider: ethers.providers.Provider | undefined;
-		signer: ethers.Signer | undefined;
-		useOvm: boolean | undefined;
-	}) => void;
+	updateQueryContext: ({ networkId, provider, signer, useOvm }: Config) => void;
 } | null;
 
 export const SynthetixQueryContext = createContext<QueryContextWithUpdate>(null);
 
-const createContextObject = ({
-	networkId,
-	provider,
-	signer,
-	useOvm,
-}: {
-	networkId: NetworkId | undefined;
-	provider: ethers.providers.Provider | undefined;
-	signer: ethers.Signer | undefined;
-	useOvm: boolean | undefined;
-}): QueryContext => {
+const createContextObject = ({ networkId, provider, signer, useOvm }: Config): QueryContext => {
 	const snxjs = synthetix({ networkId, provider, signer, useOvm });
 	return {
 		networkId: snxjs.network.id,
@@ -43,11 +22,7 @@ const createContextObject = ({
 	};
 };
 
-type SynthetixQueryWrapperProps = {
-	networkId: NetworkId | undefined;
-	provider: ethers.providers.Provider | undefined;
-	signer: ethers.Signer | undefined;
-	useOvm: boolean | undefined;
+type SynthetixQueryWrapperProps = Config & {
 	children: ReactNode;
 };
 
@@ -68,17 +43,7 @@ class SynthetixQueryWrapper extends Component<
 		}),
 	};
 
-	updateQueryContext({
-		networkId,
-		provider,
-		signer,
-		useOvm,
-	}: {
-		networkId: NetworkId | undefined;
-		provider: ethers.providers.Provider | undefined;
-		signer: ethers.Signer | undefined;
-		useOvm: boolean | undefined;
-	}): void {
+	updateQueryContext({ networkId, provider, signer, useOvm }: Config): void {
 		const updatedQueryContext = createContextObject({
 			networkId,
 			provider,
