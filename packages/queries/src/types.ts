@@ -79,3 +79,98 @@ export type TokenBalances = Partial<
 		}
 	>
 >;
+
+export type GlobalStakingInfo = {
+	snxPrice: Wei;
+	totalIssuedSynths: Wei;
+	issuanceRatio: Wei;
+	totalSupply: Wei;
+	lockedSupply: Wei;
+	lockedValue: Wei;
+}
+
+export type Token = {
+	address: string;
+	chainId: number;
+	decimals: number;
+	logoURI: string;
+	name: string;
+	symbol: string;
+	tags: string[];
+};
+
+export type TokenListResponse = {
+	keywords: string[];
+	logoURI: string;
+	name: string;
+	tags: any;
+	timestamp: string;
+	tokens: Token[];
+	version: { major: number; minor: number; patch: number };
+};
+
+export type TokenListQueryResponse = {
+	tokens: Token[];
+	tokensMap: Record<string, Token>;
+	symbols: string[];
+};
+
+export type SpaceData = {
+	domain: string;
+	filters: {
+		onlyMembers: boolean;
+		minScore: number;
+	};
+	members: string[];
+	name: string;
+	network: string;
+	skin: string;
+	strategies: SpaceStrategy[];
+	symbol: string;
+};
+
+export type SpaceStrategy = {
+	name: string;
+	params: {
+		address?: string;
+		decimals: number;
+		symbol: string;
+	};
+};
+
+export type Proposal = {
+	id: string;
+	author: string;
+	created: number;
+	space: SpaceData;
+	network: string;
+	strategies: SpaceStrategy;
+	plugins: any;
+	title: string;
+	body: string;
+	choices: string[];
+	start: number;
+	end: number;
+	snapshot: string;
+	state: string;
+};
+
+export type Vote = {
+	id: string;
+	voter: string;
+	created: number;
+	space: SpaceData;
+	proposal: string;
+	choice: any;
+	metadata: any;
+};
+
+export type ProposalResults = {
+	totalBalances: number[];
+	totalScores: any;
+	totalVotes: number[];
+	totalVotesBalances: number;
+	choices: string[];
+	spaceSymbol: string;
+	voteList: any[];
+};

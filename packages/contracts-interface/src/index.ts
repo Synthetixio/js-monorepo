@@ -119,6 +119,6 @@ const getSynthetixContracts = (
 		}, {});
 };
 
-export { synthetix, Network, NetworkId, Synths, CurrencyCategory };
+export { synthetix, Network, NetworkId, Synths, CurrencyCategory, networkToChainId, getNetworkFromId };
 export type { Config, CurrencyKey, Target, TargetsRecord, ContractsMap, SynthetixJS, Synth, Token };
 export default synthetix;

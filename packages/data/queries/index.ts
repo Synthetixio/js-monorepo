@@ -7,6 +7,8 @@ export {
 export { createSynthetixQuery, parseSynthetix } from './synthetix';
 export { createIssuedQuery, parseIssued } from './issued';
 export { createBurnedQuery, parseBurned } from './burned';
+export { createDailyIssuedQuery, parseDailyIssued } from './dailyIssued';
+export { createDailyBurnedQuery, parseDailyBurned } from './dailyBurned';
 export { createRateUpdatesQuery, parseRates } from './rateUpdates';
 export { createFeesClaimedQuery, parseFeesClaimed } from './feesClaimed';
 export { parseSnxPrice, createSnxPriceQuery } from './snxPrice';

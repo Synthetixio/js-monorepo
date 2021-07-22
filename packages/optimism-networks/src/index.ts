@@ -5,7 +5,6 @@ import {
 	OPTIMISM_NETWORKS,
 	L1_TO_L2_NETWORK_MAPPER,
 	L2_TO_L1_NETWORK_MAPPER,
-	MAINNET_OPTIMISM_EXPLORER,
 	MESSENGER_ADDRESSES,
 } from './constants';
 import { EthereumProvider, OptimismNetwork, OptimismWatcher } from './types';
@@ -64,7 +63,6 @@ export {
 	addOptimismNetworkToMetamask,
 	optimismMessengerWatcher,
 	OPTIMISM_NETWORKS,
-	MAINNET_OPTIMISM_EXPLORER,
 	MESSENGER_ADDRESSES,
 	L1_TO_L2_NETWORK_MAPPER,
 	L2_TO_L1_NETWORK_MAPPER,

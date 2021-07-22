@@ -15,25 +15,25 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 		chainId: '0xA',
 		chainName: 'Optimism Mainnet',
 		rpcUrls: ['https://mainnet.optimism.io'],
-		blockExplorerUrls: ['https://explorer.optimism.io/'],
+		blockExplorerUrls: ['https://optimistic.etherscan.io/'],
 		iconUrls: [
 			'https://optimism.io/images/metamask_icon.svg',
 			'https://optimism.io/images/metamask_icon.png',
 		],
+		fraudProofWindow: 604800000
 	},
 	69: {
 		chainId: '0x45',
 		chainName: 'Optimism Kovan',
 		rpcUrls: ['https://kovan.optimism.io'],
-		blockExplorerUrls: ['https://kovan-explorer.optimism.io/'],
+		blockExplorerUrls: ['https://kovan-optimistic.etherscan.io/'],
 		iconUrls: [
 			'https://optimism.io/images/metamask_icon.svg',
 			'https://optimism.io/images/metamask_icon.png',
 		],
+		fraudProofWindow: 0
 	},
 };
-
-export const MAINNET_OPTIMISM_EXPLORER = 'https://mainnet-l2-explorer.surge.sh';
 
 export const MESSENGER_ADDRESSES: Record<LayerTwoNetworkId, MessengerAddress> = {
 	10: {
