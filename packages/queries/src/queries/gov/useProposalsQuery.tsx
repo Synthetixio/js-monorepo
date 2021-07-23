@@ -6,12 +6,16 @@ import { SPACE_KEY } from './constants';
 import { Proposal } from '../../types';
 import { QueryContext } from '../../context';
 
+import CouncilDilution from '../../contracts/CouncilDilution';
+import axios from 'axios';
+import { COUNCIL_NOMINATIONS_URL } from '../../constants';
+
 const useProposalsQuery = (ctx: QueryContext, snapshotEndpoint: string, spaceKey: SPACE_KEY, options?: UseQueryOptions<Proposal[]>) => {
 
 	const contract = new ethers.Contract(
 		CouncilDilution.address,
 		CouncilDilution.abi,
-		provider as any
+		ctx.provider!
 	);
 
 	return useQuery<Proposal[]>(
@@ -53,7 +57,7 @@ const useProposalsQuery = (ctx: QueryContext, snapshotEndpoint: string, spaceKey
 				const hashes = (await contract.getValidProposals(proposalHashes)) as string[];
 				validHashes = hashes.filter((e) => e !== '').map((hash) => hash);
 			} else if (spaceKey === SPACE_KEY.COUNCIL) {
-				const nominationHashes = Object.keys(CouncilNominations);
+				const nominationHashes = Object.keys(await axios.get(COUNCIL_NOMINATIONS_URL));
 				validHashes = proposalHashes
 					.filter((e) => nominationHashes.includes(e))
 					.map((hash) => hash);
@@ -74,7 +78,7 @@ const useProposalsQuery = (ctx: QueryContext, snapshotEndpoint: string, spaceKey
 			return resolvedProposals.filter((e) => e !== null) as Proposal[];
 		},
 		{
-			enabled: spaceKey && isL1,
+			enabled: !!spaceKey,
 			refetchInterval: false,
 			refetchOnWindowFocus: false,
 			refetchOnMount: false,

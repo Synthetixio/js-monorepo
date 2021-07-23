@@ -1,19 +1,9 @@
 import {
-	Issued,
-	RateUpdate,
-	Synthetix,
 	SynthExchange,
-	Burned,
-	FeesClaimed,
-	DailySnxPrice,
-	FifteenMinuteSnxPrice,
-	DebtSnapshot,
-	SnxHolder,
 	Short,
 	ShortLoanChange,
 	ShortCollateralChange,
 	ShortLiquidation,
-	ExchangeEntrySettled,
 } from '../generated/graphql';
 
 export type BaseQueryParams = {
@@ -46,7 +36,7 @@ export type SnxPriceParams = {
 } & BaseQueryParams;
 
 export type BurnedQueryParams = IssuedQueryParams;
-export type DailyBurnedQueryParams = BurnedQueryParams;
+export type DailyBurnedQueryParams = DailyIssuedQueryParams;
 
 export type DebtSnapshotParams = {
 	minBlock?: number;

@@ -28,6 +28,8 @@ import {
 	Synthetix,
 	Issued,
 	Burned,
+	DailyIssued,
+	DailyBurned,
 	RateUpdate,
 	FeesClaimed,
 	DailySnxPrice,
@@ -149,7 +151,7 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 		});
 		return response != null ? response.burneds.map(queries.parseBurned) : null;
 	},
-	dailyIssued: async (params?: DailyIssuedQueryParams): Promise<Issued[] | null> => {
+	dailyIssued: async (params?: DailyIssuedQueryParams): Promise<DailyIssued[] | null> => {
 		const response = await getData({
 			params,
 			queryMethod: queries.createDailyIssuedQuery,
@@ -157,7 +159,7 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 		});
 		return response != null ? response.dailyIssueds.map(queries.parseIssued) : null;
 	},
-	dailyBurned: async (params?: DailyBurnedQueryParams): Promise<Burned[] | null> => {
+	dailyBurned: async (params?: DailyBurnedQueryParams): Promise<DailyBurned[] | null> => {
 		const response = await getData({
 			params,
 			queryMethod: queries.createDailyBurnedQuery,

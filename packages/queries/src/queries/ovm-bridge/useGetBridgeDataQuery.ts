@@ -57,7 +57,7 @@ const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string, optio
 
 			const depositLogs = await ctx.provider!.getLogs({ ...depositFilters, fromBlock: startBlock });
 			const withdrawalLogs = await ctx.provider!.getLogs({ ...withdrawalFilters, fromBlock: startBlock });
-			const events = await Promise.all([
+			const events: DepositHistory = await Promise.all([
 				...depositLogs.map(async (l) => {
 					const block = await ctx.provider!.getBlock(l.blockNumber);
 					const { args } = SynthetixBridgeToOptimism.interface.parseLog(l);
@@ -66,36 +66,32 @@ const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string, optio
 						timestamp,
 						amount: args._amount / 1e18,
 						transactionHash: l.transactionHash,
-					};
+						type: 'deposit',
+						status: 'pending'
+					} as DepositRecord;
 				}),
 				...withdrawalLogs.map(async (l) => {
 					const block = await ctx.provider!.getBlock(l.blockNumber);
 					const { args } = SynthetixBridgeToBase.interface.parseLog(l);
 					const timestamp = Number(block.timestamp * 1000);
+					const msgHashes = await watcher!.getMessageHashesFromL1Tx(l.transactionHash);
+					const receipt = await watcher!.getL2TransactionReceipt(msgHashes[0], false);
+					const readyToRelay = Date.now() - timestamp > OPTIMISM_NETWORKS[ctx.networkId!].fraudProofWindow;
 					return {
 						timestamp,
 						amount: args._amount / 1e18,
 						transactionHash: l.transactionHash,
-					};
+						type: 'withdrawal',
+						status: !!receipt
+							? ('confirmed' as const)
+							: readyToRelay
+							? ('relay' as const)
+							: ('pending' as const),
+					} as DepositRecord;
 				})
 			]);
-			const eventsWithReceipt = await Promise.all(
-				events.map(async (event) => {
-					const msgHashes = await watcher!.getMessageHashesFromL1Tx(event.transactionHash);
-					const receipt = await watcher!.getL2TransactionReceipt(msgHashes[0], false);
-					const readyToRelay = Date.now() - event.timestamp > OPTIMISM_NETWORKS[ctx.networkId!].fraudProofWindow;
-					return {
-						...event,
-						isConfirmed: !!receipt
-						? ('confirmed' as const)
-						: readyToRelay
-						? ('relay' as const)
-						: ('pending' as const),
-					};
-				})
-			);
 
-			return orderBy(eventsWithReceipt, ['timestamp'], ['desc']);
+			return orderBy(events, ['timestamp'], ['desc']);
 		},
 		{
 			enabled: !!ctx.provider && !!watcher,

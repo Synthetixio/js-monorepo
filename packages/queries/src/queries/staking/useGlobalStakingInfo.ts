@@ -1,11 +1,8 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 
-import { getHolders } from './helpers';
 import { QueryContext } from '../../context';
 import Wei, { wei } from '@synthetixio/wei';
 import { GlobalStakingInfo } from '../../types';
-
-
 
 const useGlobalStakingInfo = (ctx: QueryContext, options?: UseQueryOptions<GlobalStakingInfo>) => {
 	return useQuery<GlobalStakingInfo>(
@@ -26,7 +23,7 @@ const useGlobalStakingInfo = (ctx: QueryContext, options?: UseQueryOptions<Globa
 					ctx.snxjs!.toBytes32('sUSD')
 				),
 				ctx.snxjs!.contracts.SystemSettings.issuanceRatio(),
-				getHolders(),
+				ctx.snxData!.snxHolders({ max: 1000 })
 			]);
 
 			const lastDebtLedgerEntry = wei(unformattedLastDebtLedgerEntry, 27);
@@ -44,7 +41,7 @@ const useGlobalStakingInfo = (ctx: QueryContext, options?: UseQueryOptions<Globa
 				collateral: unformattedCollateral,
 				debtEntryAtIndex,
 				initialDebtOwnership,
-			} of holders) {
+			} of (holders || [])) {
 				const collateral = wei(unformattedCollateral);
 
 				let debtBalance = debtEntryAtIndex.gt(0) ? totalIssuedSynths.mul(lastDebtLedgerEntry).div(debtEntryAtIndex).mul(initialDebtOwnership) : wei(0);

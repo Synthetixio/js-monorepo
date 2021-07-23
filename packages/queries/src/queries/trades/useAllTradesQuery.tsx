@@ -1,21 +1,25 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import snxData from 'synthetix-data';
-
-import { HistoricalTrades } from './types';
+import { SynthExchangeExpanded } from '../../../../data/build/node/src/types';
+import { QueryContext } from '../../context';
 
 export const useAllTradesQuery = (
+	ctx: QueryContext,
 	maxBlock = Number.MAX_SAFE_INTEGER,
 	max = 100,
-	options?: UseQueryOptions<HistoricalTrades>
-) =>
-	useQuery<HistoricalTrades>(
-		QUERY_KEYS.Trades.AllTrades,
+	options?: UseQueryOptions<SynthExchangeExpanded[]|null>
+) => {
+	return useQuery<SynthExchangeExpanded[]|null>(
+		['trades', 'allTrades', ctx.networkId],
 		() =>
-			snxData.exchanges.since({
+			ctx.snxData!.synthExchanges({
 				maxBlock,
 				max,
 			}),
-		options
-	);
+		{
+			enabled: ctx.snxData != null,
+			...options
+		}
+	)
+};
 
 export default useAllTradesQuery;

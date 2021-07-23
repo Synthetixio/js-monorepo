@@ -9,6 +9,8 @@ import { SPACE_KEY } from './constants';
 import { QueryContext } from '../../context';
 import { getNetworkFromId } from '@synthetixio/contracts-interface';
 
+import CouncilDilution from '../../contracts/CouncilDilution';
+
 export function getENSForAddresses(addresses: any[]) {
 	return new Promise((resolve, reject) => {
 		snapshot.utils

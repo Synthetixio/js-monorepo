@@ -1,27 +1,24 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import snxData from 'synthetix-data';
-import { useRecoilValue } from 'recoil';
-import { isWalletConnectedState, walletAddressState } from 'store/wallet';
-
-import { HistoricalTrades } from './types';
+import { SynthExchangeExpanded } from '../../../../data/build/node/src/types';
+import { QueryContext } from '../../context';
 
 export const useWalletTradesQuery = (
+	ctx: QueryContext,
+	walletAddress: string,
 	max: number = 100,
-	options?: UseQueryOptions<HistoricalTrades>
+	options?: UseQueryOptions<SynthExchangeExpanded[]|null>
 ) => {
-	const isWalletConnected = useRecoilValue(isWalletConnectedState);
-	const walletAddress = useRecoilValue(walletAddressState);
 
-	return useQuery<HistoricalTrades>(
-		QUERY_KEYS.Trades.WalletTrades(walletAddress || ''),
+	return useQuery<SynthExchangeExpanded[]|null>(
+		['trades', 'walletTrades', ctx.networkId, walletAddress],
 		() =>
-			snxData.exchanges.since({
+			ctx.snxData!.synthExchanges({
 				fromAddress: walletAddress,
 				maxBlock: Number.MAX_SAFE_INTEGER,
 				max,
 			}),
 		{
-			enabled: isWalletConnected,
+			enabled: ctx.snxData != null && !!walletAddress,
 			...options,
 		}
 	);
