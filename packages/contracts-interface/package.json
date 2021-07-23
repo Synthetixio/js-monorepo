@@ -32,7 +32,7 @@
 	"dependencies": {
 		"ethers": "5.4.1",
 		"lodash": "4.17.19",
-		"synthetix": "github:Synthetixio/synthetix#futures-kovan-ovm-frontend",
+		"synthetix": "2.46.0-ovm",
 		"web3-utils": "1.2.11"
 	},
 	"devDependencies": {
