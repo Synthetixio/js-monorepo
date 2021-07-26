@@ -192,9 +192,14 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 			params,
 			queryMethod: createRateUpdatesQuery,
 			networkId,
-			endpoints: { [NetworkId.Mainnet]: l1Endpoints.rates },
+			endpoints: {
+				[NetworkId.Mainnet]: l1Endpoints.rates,
+				[NetworkId['Kovan-Ovm']]: l2Endpoints.snxKovanRates,
+			},
 		});
-		return response != null ? response.rateUpdates.map(parseRates) : null;
+		return response != null
+			? response.rateUpdates.map((rate: RateUpdate) => parseRates(rate, networkId))
+			: null;
 	},
 	debtSnapshots: async (params?: DebtSnapshotParams): Promise<DebtSnapshot[] | null> => {
 		const response = await getData({
