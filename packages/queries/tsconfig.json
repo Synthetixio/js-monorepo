@@ -5,5 +5,5 @@
 		"module": "commonjs",
 		"declarationDir": "./build"
 	},
-	"include": ["src", "../../../staking/queries/1inch"]
+	"include": ["src", "__tests__"]
 }

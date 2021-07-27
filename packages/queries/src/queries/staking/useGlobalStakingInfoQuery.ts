@@ -3,8 +3,9 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 import Wei, { wei } from '@synthetixio/wei';
 import { GlobalStakingInfo } from '../../types';
+import { ethers } from 'ethers';
 
-const useGlobalStakingInfo = (ctx: QueryContext, options?: UseQueryOptions<GlobalStakingInfo>) => {
+const useGlobalStakingInfoQuery = (ctx: QueryContext, options?: UseQueryOptions<GlobalStakingInfo>) => {
 	return useQuery<GlobalStakingInfo>(
 		['staking', 'snxLockedValue', ctx.networkId],
 		async () => {
@@ -16,12 +17,13 @@ const useGlobalStakingInfo = (ctx: QueryContext, options?: UseQueryOptions<Globa
 				unformattedIssuanceRatio,
 				holders,
 			] = await Promise.all([
-				ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(ctx.snxjs!.toBytes32('SNX')),
+				ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(ethers.utils.formatBytes32String('SNX')),
 				ctx.snxjs!.contracts.Synthetix.totalSupply(),
 				ctx.snxjs!.contracts.SynthetixState.lastDebtLedgerEntry(),
 				ctx.snxjs!.contracts.Synthetix.totalIssuedSynthsExcludeEtherCollateral(
-					ctx.snxjs!.toBytes32('sUSD')
+					ethers.utils.formatBytes32String('sUSD')
 				),
+
 				ctx.snxjs!.contracts.SystemSettings.issuanceRatio(),
 				ctx.snxData!.snxHolders({ max: 1000 })
 			]);
@@ -49,8 +51,8 @@ const useGlobalStakingInfo = (ctx: QueryContext, options?: UseQueryOptions<Globa
 
 				const lockedSnx = collateral.mul(Wei.min(wei(1), collateralRatio.div(issuanceRatio)));
 
-				snxTotal.add(collateral);
-				snxLocked.add(lockedSnx);
+				snxTotal = snxTotal.add(collateral);
+				snxLocked = snxLocked.add(lockedSnx);
 			}
 
 			const percentLocked = snxLocked.div(snxTotal);
@@ -72,4 +74,4 @@ const useGlobalStakingInfo = (ctx: QueryContext, options?: UseQueryOptions<Globa
 	);
 };
 
-export default useGlobalStakingInfo;
+export default useGlobalStakingInfoQuery;

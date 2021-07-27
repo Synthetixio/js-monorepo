@@ -1,4 +1,4 @@
-export default {
+export = {
 	address: '0xff4e21298e5dce1398d6fc9857098eae3caf1e72',
 	abi: [
 		{

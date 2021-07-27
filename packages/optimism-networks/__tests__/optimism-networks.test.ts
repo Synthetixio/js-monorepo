@@ -1,17 +1,11 @@
 import { getOptimismNetwork } from '../src';
 
-describe('@synthetixio/networks', () => {
-	it('needs tests', () => {
+describe('@synthetixio/optimism-networks', () => {
+	it('gets network information', () => {
 		const response = {
-			blockExplorerUrls: ['https://explorer.optimism.io/'],
 			chainId: '0xA',
 			chainName: 'Optimism Mainnet',
-			iconUrls: [
-				'https://optimism.io/images/metamask_icon.svg',
-				'https://optimism.io/images/metamask_icon.png',
-			],
-			rpcUrls: ['https://mainnet.optimism.io'],
 		};
-		expect(getOptimismNetwork({ layerOneNetworkId: 1 })).toEqual(response);
+		expect(getOptimismNetwork({ layerOneNetworkId: 1 })).toMatchObject(response);
 	});
 });

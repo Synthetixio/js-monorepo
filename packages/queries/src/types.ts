@@ -115,6 +115,11 @@ export type TokenListQueryResponse = {
 	symbols: string[];
 };
 
+export enum ProposalStates {
+	ACTIVE = 'active',
+	CLOSED = 'closed',
+}
+
 export type SpaceData = {
 	domain: string;
 	filters: {

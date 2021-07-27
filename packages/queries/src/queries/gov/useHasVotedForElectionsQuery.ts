@@ -8,7 +8,7 @@ import { electionAuthor, SPACE_KEY } from './constants';
 import { QueryContext } from '../../context';
 import { getNetworkFromId } from '@synthetixio/contracts-interface';
 
-enum ProposalStates {
+export enum ProposalStates {
 	ACTIVE = 'active',
 	CLOSED = 'closed',
 }
@@ -93,13 +93,13 @@ const useHasVotedForElectionsQuery = (ctx: QueryContext, snapshotEndpoint: strin
 					SPACE_KEY.COUNCIL,
 					space.strategies,
 					space.network,
-					getNetworkFromId(ctx.networkId).name,
-					[getAddress(walletAddress ?? '')],
+					getNetworkFromId({ id: ctx.networkId }).name,
+					[getAddress(walletAddress)],
 					latestSnapshot
 				);
 
 				const totalScore = space.strategies.map(
-					(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress ?? '')]
+					(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress)]
 				);
 
 				const totalWeight = totalScore.reduce((a: number, b: number) => a ?? 0 + b ?? 0);

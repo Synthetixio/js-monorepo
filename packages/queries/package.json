@@ -11,7 +11,7 @@
 		"build"
 	],
 	"scripts": {
-		"build": "npm run build-browser && npm run build-node",
+		"build": "npm run codegen && npm run build-browser && npm run build-node",
 		"build-node": "../../node_modules/.bin/tsc -p tsconfig.node.json",
 		"build-browser": "../../node_modules/.bin/webpack --mode=production --max-old-space-size=4096",
 		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
@@ -20,7 +20,7 @@
 		"lint:fix": "../../node_modules/.bin/eslint --fix './src/**/*.{js,ts,tsx}'",
 		"test": "../../node_modules/.bin/jest --forceExit --coverage --no-cache",
 		"tsc": "../../node_modules/.bin/tsc --noemit",
-		"codegen": "graphql-codegen --config codegen.yml"
+		"codegen": "node ./codegen.js"
 	},
 	"repository": {
 		"type": "git",
@@ -60,21 +60,5 @@
 		"react": "17.x",
 		"react-dom": "17.x",
 		"react-query": "3.16.x"
-	},
-	"jest": {
-		"transform": {
-			"^.+\\.ts?$": "babel-jest"
-		},
-		"coverageThreshold": {
-			"global": {
-				"branches": 50,
-				"functions": 50,
-				"lines": 50,
-				"statements": 50
-			}
-		},
-		"modulePathIgnorePatterns": [
-			"<rootDir>/build"
-		]
 	}
 }

@@ -75,6 +75,7 @@ const useProposalQuery = (
 	walletAddress: string,
 	options?: UseQueryOptions<ProposalResults>
 ) => {
+
 	return useQuery<ProposalResults>(
 		['gov', 'proposal', snapshotEndpoint, spaceKey, hash, walletAddress],
 		async () => {
@@ -153,7 +154,7 @@ const useProposalQuery = (
 					spaceKey,
 					space.strategies,
 					space.network,
-					getNetworkFromId(ctx.networkId).name,
+					getNetworkFromId({ id: ctx.networkId }).name,
 					voterAddresses,
 					block
 				),

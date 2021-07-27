@@ -65,6 +65,7 @@ describe('@synthetixio/queries rates', () => {
 		ctx.snxData!.synthExchanges = async () => [
 			{
 				id: '1',
+				hash: '',
 				block: 1,
 				timestamp: 10000,
 				account: ethers.constants.AddressZero,
@@ -82,6 +83,7 @@ describe('@synthetixio/queries rates', () => {
 			},
 			{
 				id: '2',
+				hash: '',
 				block: 2,
 				timestamp: 10001,
 				account: ethers.constants.AddressZero,
