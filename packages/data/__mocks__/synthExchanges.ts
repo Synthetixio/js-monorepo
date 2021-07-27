@@ -39,12 +39,16 @@ export const synthExchangesMockL1 = {
 export const synthExchangesMockL2 = {
 	response: {
 		...synthExchangesMockL1.response,
+		fromAmount: '249183.011568718006275302',
+		toAmount: '4.628088422134899435',
 		fromAmountInUSD: '249183.011568718006275302',
 		toAmountInUSD: '248435.462534011852227840',
 		feesInUSD: '747.549034706154047462',
 	},
 	formatted: {
 		...synthExchangesMockL1.formatted,
+		fromAmount: '249183.011568718006275302',
+		toAmount: '4.628088422134899435',
 		fromAmountInUSD: '249183.01',
 		toAmountInUSD: '248435.46',
 		feesInUSD: '747.55',
