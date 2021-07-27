@@ -110,7 +110,7 @@ describe('@synthetixio/data tests', () => {
 			expect(exchanges!.length).toBeGreaterThan(1000);
 		});
 
-		test.skip('should return exchagnes from kovan l2', async () => {
+		test('should return exchagnes from kovan l2', async () => {
 			const exchanges = await snxDataKovanOvm.synthExchanges({
 				minTimestamp: oneMonthTimestamp,
 			});

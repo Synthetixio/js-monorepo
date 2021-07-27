@@ -130,6 +130,7 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 			endpoints: {
 				[NetworkId.Mainnet]: l1Endpoints.exchanges,
 				[NetworkId.Kovan]: l1Endpoints.exchangesKovan,
+				[NetworkId['Kovan-Ovm']]: l2Endpoints.snxKovanRates,
 			},
 		});
 		return response != null
