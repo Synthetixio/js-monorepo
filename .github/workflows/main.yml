@@ -16,7 +16,9 @@ jobs:
       - run: npx lerna bootstrap
       - run: npx lerna run build
       - run: npx lerna run test
-      - run: npx lerna publish 0.0.0-$(git rev-parse --short HEAD) --npm-tag dev --skip-git -y
+      - run: npx lerna version 0.0.0-$(git rev-parse --short HEAD)
+      - run: npx lerna bootstrap
+      - run: npx lerna publish --npm-tag dev --skip-git -y
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: echo "npm pushed to 0.0.0-$(git rev-parse --short HEAD)"
