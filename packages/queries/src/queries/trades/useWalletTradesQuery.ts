@@ -4,7 +4,7 @@ import { QueryContext } from '../../context';
 
 export const useWalletTradesQuery = (
 	ctx: QueryContext,
-	walletAddress: string,
+	walletAddress: string|null,
 	max: number = 100,
 	options?: UseQueryOptions<SynthExchangeExpanded[]|null>
 ) => {
@@ -13,7 +13,7 @@ export const useWalletTradesQuery = (
 		['trades', 'walletTrades', ctx.networkId, walletAddress],
 		() =>
 			ctx.snxData!.synthExchanges({
-				fromAddress: walletAddress,
+				fromAddress: walletAddress!,
 				maxBlock: Number.MAX_SAFE_INTEGER,
 				max,
 			}),

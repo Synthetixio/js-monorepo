@@ -71,8 +71,8 @@ const useProposalQuery = (
 	ctx: QueryContext,
 	snapshotEndpoint: string,
 	spaceKey: SPACE_KEY,
-	hash: string,
-	walletAddress: string,
+	hash: string|null,
+	walletAddress: string|null,
 	options?: UseQueryOptions<ProposalResults>
 ) => {
 

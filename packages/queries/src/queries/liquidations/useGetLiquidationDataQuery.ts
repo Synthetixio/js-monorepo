@@ -8,7 +8,7 @@ type LiquidationData = {
 	liquidationDeadlineForAccount: Wei;
 };
 
-const useGetLiquidationDataQuery = (ctx: QueryContext, walletAddress: string, options?: UseQueryOptions<LiquidationData>) => {
+const useGetLiquidationDataQuery = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<LiquidationData>) => {
 	return useQuery<LiquidationData>(
 		['liquidations', 'info', ctx.networkId, walletAddress],
 		async () => {

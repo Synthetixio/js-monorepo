@@ -34,7 +34,7 @@ type VestingEntry = {
 	endTime: Wei;
 };
 
-const useEscrowDataQuery = (ctx: QueryContext, walletAddress: string, options?: UseQueryOptions<EscrowData>) => {
+const useEscrowDataQuery = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<EscrowData>) => {
 	return useQuery<EscrowData>(
 		['escrow', 'stakingRewards', ctx.networkId, walletAddress],
 		async () => {

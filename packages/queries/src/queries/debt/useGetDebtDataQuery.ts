@@ -15,7 +15,7 @@ type WalletDebtData = {
 	totalSupply: Wei;
 };
 
-const useGetDebtDataQuery = (ctx: QueryContext, walletAddress: string, options?: UseQueryOptions<WalletDebtData>) => {
+const useGetDebtDataQuery = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<WalletDebtData>) => {
 
 	return useQuery<WalletDebtData>(
 		['debt', 'data', ctx.networkId, walletAddress],

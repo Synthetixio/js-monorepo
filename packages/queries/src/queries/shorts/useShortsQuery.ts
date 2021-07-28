@@ -4,7 +4,7 @@ import { QueryContext } from '../../context';
 
 import { ShortRewardsData } from './types';
 
-const useSBTCShortsQuery = (ctx: QueryContext, currencyKey: CurrencyKey, walletAddress: string, options?: UseQueryOptions<ShortRewardsData>) => {
+const useSBTCShortsQuery = (ctx: QueryContext, currencyKey: CurrencyKey, walletAddress: string|null, options?: UseQueryOptions<ShortRewardsData>) => {
 
 	return useQuery<ShortRewardsData>(
 		['shorts', 'data', ctx.networkId,  walletAddress],

@@ -8,7 +8,7 @@ type AvailableFees = {
 	stakingRewards: Wei;
 };
 
-const useClaimableRewards = (ctx: QueryContext, walletAddress: string, options?: UseQueryOptions<AvailableFees>) => {
+const useClaimableRewards = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<AvailableFees>) => {
 	return useQuery<AvailableFees>(
 		['staking', 'claimableRewards', ctx.networkId, walletAddress],
 		async () => {

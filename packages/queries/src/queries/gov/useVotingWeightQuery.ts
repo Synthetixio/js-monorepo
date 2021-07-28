@@ -14,7 +14,7 @@ const useVotingWeightQuery = (
 	snapshotEndpoint: string,
 	spaceKey: SPACE_KEY,
 	block: number | null,
-	walletAddress: string,
+	walletAddress: string|null,
 	options?: UseQueryOptions<number[]>
 ) => {
 	return useQuery<number[]>(
@@ -57,7 +57,7 @@ const useVotingWeightQuery = (
 			);
 
 			const totalScore = space.strategies.map(
-				(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress)] ?? 0
+				(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress!)] ?? 0
 			);
 
 			return totalScore;

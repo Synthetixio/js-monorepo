@@ -24,7 +24,7 @@ export type DepositRecord = {
 export type DepositHistory = Array<DepositRecord>;
 
 // NOTE: query context for this query must always be on the L1 side (even if withdrawing)
-const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string, options?: UseQueryOptions<DepositHistory>) => {
+const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<DepositHistory>) => {
 	const [watcher, setWatcher] = useState<OptimismWatcher | null>(null);
 
 	useEffect(() => {

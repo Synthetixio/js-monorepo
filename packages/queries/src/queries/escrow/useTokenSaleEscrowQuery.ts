@@ -20,7 +20,7 @@ type Schedule = Array<
 	| []
 >;
 
-const useTokenSaleEscrowQuery = (ctx: QueryContext, walletAddress: string, options?: UseQueryOptions<TokenSaleEscrow | null>) => {
+const useTokenSaleEscrowQuery = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<TokenSaleEscrow | null>) => {
 	return useQuery<TokenSaleEscrow | null>(
 		['escrow', 'tokenSale', ctx.networkId, walletAddress],
 		async () => {

@@ -17,7 +17,7 @@ type HasVotedResult = {
 	hasVoted: boolean;
 };
 
-const useHasVotedForElectionsQuery = (ctx: QueryContext, snapshotEndpoint: string, walletAddress: string, options?: UseQueryOptions<HasVotedResult>) => {
+const useHasVotedForElectionsQuery = (ctx: QueryContext, snapshotEndpoint: string, walletAddress: string|null, options?: UseQueryOptions<HasVotedResult>) => {
 	return useQuery<HasVotedResult>(
 		['gov','hasVoted', snapshotEndpoint, walletAddress],
 		async () => {
@@ -94,12 +94,12 @@ const useHasVotedForElectionsQuery = (ctx: QueryContext, snapshotEndpoint: strin
 					space.strategies,
 					space.network,
 					getNetworkFromId({ id: ctx.networkId }).name,
-					[getAddress(walletAddress)],
+					[getAddress(walletAddress!)],
 					latestSnapshot
 				);
 
 				const totalScore = space.strategies.map(
-					(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress)]
+					(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress!)]
 				);
 
 				const totalWeight = totalScore.reduce((a: number, b: number) => a ?? 0 + b ?? 0);
