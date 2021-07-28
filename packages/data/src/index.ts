@@ -91,8 +91,6 @@ const calculateTimestampForPeriod = (periodInHours: number): number =>
 	Math.trunc(subHours(new Date().getTime(), periodInHours).getTime() / 1000);
 
 const DEFAULT_ENDPOINTS = {
-	[NetworkId['Kovan-Ovm']]: l2Endpoints.snxKovan,
-	[NetworkId['Mainnet-Ovm']]: l2Endpoints.snx,
 	[NetworkId.Mainnet]: l1Endpoints.snx,
 };
 
@@ -130,7 +128,8 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 			endpoints: {
 				[NetworkId.Mainnet]: l1Endpoints.exchanges,
 				[NetworkId.Kovan]: l1Endpoints.exchangesKovan,
-				[NetworkId['Kovan-Ovm']]: l2Endpoints.snxKovanRates,
+				[NetworkId['Kovan-Ovm']]: l2Endpoints.exchangesKovan,
+				[NetworkId['Mainnet-Ovm']]: l2Endpoints.exchanges,
 			},
 		});
 		return response != null
@@ -145,10 +144,7 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 	},
 	synthetix: async (params?: BaseQueryParams): Promise<Synthetix | null> => {
 		const query = createSynthetixQuery(params);
-		const response = await request(
-			networkId === NetworkId.Mainnet ? l1Endpoints.snx : l2Endpoints.snx,
-			query
-		);
+		const response = await request(l1Endpoints.snx, query);
 		return response != null ? parseSynthetix(response.synthetixes[0]) : null;
 	},
 	feesClaimed: async (params?: FeesClaimedParams): Promise<FeesClaimed[] | null> => {
@@ -195,7 +191,8 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }): SynthetixData =
 			networkId,
 			endpoints: {
 				[NetworkId.Mainnet]: l1Endpoints.rates,
-				[NetworkId['Kovan-Ovm']]: l2Endpoints.snxKovanRates,
+				[NetworkId['Kovan-Ovm']]: l2Endpoints.exchangesKovan,
+				[NetworkId['Mainnet-Ovm']]: l2Endpoints.exchanges,
 			},
 		});
 		return response != null

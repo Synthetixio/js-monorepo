@@ -6,7 +6,7 @@ import { NetworkId } from '@synthetixio/contracts-interface';
 export const parseRates = (rate: RateUpdate, networkId?: number): RateUpdate => {
 	const { block, currencyKey, id, rate: rateValue, synth, timestamp } = rate;
 	const parsedRate =
-		networkId && networkId === NetworkId['Kovan-Ovm']
+		networkId && (networkId === NetworkId['Kovan-Ovm'] || networkId === NetworkId['Mainnet-Ovm'])
 			? rateValue
 			: ethers.utils.formatEther(rateValue);
 
