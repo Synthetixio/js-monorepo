@@ -1,8 +1,9 @@
-import BigNumber from 'bignumber.js';
-import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
+
+import { Synths } from '@synthetixio/contracts-interface';
+import { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
-import { Synths } from '../../currency';
 import { SynthTotalSupply, SynthsTotalSupplyData } from '../../types';
 
 const useSynthsTotalSupplyQuery = (
@@ -90,37 +91,37 @@ const useSynthsTotalSupplyQuery = (
 
 				unformattedOldLoansETH,
 				unformattedOldLoansSUSD,
-			].map((val) => new BigNumber(formatEther(val)));
+			].map((val) => wei(formatEther(val)));
 
-			let totalValue = new BigNumber(0);
+			let totalValue = wei(0);
 
 			const supplyData: SynthTotalSupply[] = [];
 			for (let i = 0; i < synthTotalSupplies[0].length; i++) {
-				let value = new BigNumber(formatEther(synthTotalSupplies[2][i]));
+				let value = wei(formatEther(synthTotalSupplies[2][i]));
 				const name = parseBytes32String(synthTotalSupplies[0][i]);
-				const totalSupply = new BigNumber(formatEther(synthTotalSupplies[1][i]));
+				const totalSupply = wei(formatEther(synthTotalSupplies[1][i]));
 
 				switch (name) {
 					case Synths.sBTC: {
-						const negativeEntries = btcShorts.plus(btcBorrows);
+						const negativeEntries = btcShorts.add(btcBorrows);
 
-						value = totalSupply.minus(negativeEntries).times(btcPrice);
+						value = totalSupply.sub(negativeEntries).mul(btcPrice);
 						break;
 					}
 
 					case Synths.sETH: {
-						const multiCollateralLoansETH = ethShorts.plus(ethBorrows);
-						const negativeEntries = multiCollateralLoansETH.plus(oldLoansETH).plus(wrapprSETH);
+						const multiCollateralLoansETH = ethShorts.add(ethBorrows);
+						const negativeEntries = multiCollateralLoansETH.add(oldLoansETH).add(wrapprSETH);
 
-						value = totalSupply.minus(negativeEntries).times(ethPrice);
+						value = totalSupply.sub(negativeEntries).mul(ethPrice);
 						break;
 					}
 
 					case Synths.sUSD: {
-						const multiCollateralLoansSUSD = susdShorts.plus(susdBorrows);
-						const negativeEntries = multiCollateralLoansSUSD.plus(oldLoansSUSD).plus(wrapprSUSD);
+						const multiCollateralLoansSUSD = susdShorts.add(susdBorrows);
+						const negativeEntries = multiCollateralLoansSUSD.add(oldLoansSUSD).add(wrapprSUSD);
 
-						value = totalSupply.minus(negativeEntries);
+						value = totalSupply.sub(negativeEntries);
 						break;
 					}
 
@@ -135,17 +136,15 @@ const useSynthsTotalSupplyQuery = (
 					totalSupply,
 					value,
 					skewValue,
-					poolProportion: new BigNumber(0), // true value to be computed in next step
+					poolProportion: wei(0), // true value to be computed in next step
 				});
-				totalValue = totalValue.plus(value);
+				totalValue = totalValue.add(value);
 			}
 
 			// Add proportion data to each SynthTotalSupply object
 			const supplyDataWithProportions = supplyData.map((datum) => ({
 				...datum,
-				poolProportion: totalValue.isGreaterThan(0)
-					? datum.value.dividedBy(totalValue)
-					: new BigNumber(0),
+				poolProportion: totalValue.gt(0) ? datum.value.div(totalValue) : wei(0),
 			}));
 
 			const supplyDataMap: { [name: string]: SynthTotalSupply } = {};

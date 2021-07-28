@@ -1,24 +1,24 @@
 {
 	"name": "@synthetixio/optimism-networks",
-	"version": "0.0.16",
+	"version": "2.46.3",
 	"description": "Javascript library for handling networks on Optimism Layer 2",
 	"source": "./src/index.ts",
 	"main": "./build/node/index.js",
 	"browser": "./build/index.js",
-	"types": "./build/src/index.d.ts",
+	"types": "./build/node/index.d.ts",
 	"files": [
 		"build"
 	],
 	"scripts": {
 		"build": "npm run build-browser && npm run build-node",
-		"build-node": "tsc -p tsconfig.node.json",
-		"build-browser": "webpack --mode=production --max-old-space-size=4096",
+		"build-node": "../../node_modules/.bin/tsc -p tsconfig.node.json",
+		"build-browser": "../../node_modules/.bin/webpack --mode=production --max-old-space-size=4096",
 		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
 		"examples:browser": "npm run build-browser && http-server -o ./examples/browser-example.html -c-1",
-		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
-		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
+		"lint": "../../node_modules/.bin/eslint './src/**/*.{js,ts,tsx}' && tsc",
+		"lint:fix": "../../node_modules/.bin/eslint --fix './src/**/*.{js,ts,tsx}'",
 		"test": "node --experimental-vm-modules ../../node_modules/.bin/jest --forceExit --coverage --no-cache",
-		"tsc": "tsc --noemit"
+		"tsc": "../../node_modules/.bin/tsc --noemit"
 	},
 	"repository": {
 		"type": "git",

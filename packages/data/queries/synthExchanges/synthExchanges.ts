@@ -37,7 +37,6 @@ export const createSynthExchangesQuery = (params?: SynthExchangeQueryParams): st
 				timestamp
 				gasPrice
 				block
-				network
 			}
 		}
 	`;

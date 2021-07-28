@@ -8,3 +8,4 @@ export * from './snxPrice';
 export * from './synthetix';
 export * from './snxHolder';
 export * from './shorts';
+export * from './exchangeEntrySettleds';

@@ -1,5 +1,7 @@
 import { ethers } from 'ethers';
 
+import { Synths } from '../generated/mainnet';
+
 export enum Network {
 	Mainnet = 'mainnet',
 	Ropsten = 'ropsten',
@@ -136,10 +138,28 @@ export type Config = {
 	useOvm?: boolean;
 };
 
+export type CurrencyKey = keyof typeof Synths;
+
+export const FIAT_SYNTHS = new Set([
+	Synths.sEUR,
+	Synths.sJPY,
+	Synths.sUSD,
+	Synths.sAUD,
+	Synths.sGBP,
+	Synths.sCHF,
+]);
+
+export enum CurrencyCategory {
+	'crypto' = 'Crypto',
+	'forex' = 'Forex',
+	'equity' = 'Equity',
+	'commodity' = 'Commodity',
+}
+
 export type Synth = {
-	name: string;
+	name: CurrencyKey;
 	asset: string;
-	category: string;
+	category: CurrencyCategory;
 	sign: string;
 	description: string;
 	aggregator?: string;

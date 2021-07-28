@@ -1,6 +1,7 @@
 export {
 	createSynthExchangesQuery,
 	parseSynthExchangesL1,
+	parseSynthExchangesL1Kovan,
 	parseSynthExchangesL2,
 } from './synthExchanges';
 export { createSynthetixQuery, parseSynthetix } from './synthetix';
@@ -12,3 +13,8 @@ export { parseSnxPrice, createSnxPriceQuery } from './snxPrice';
 export { parseDebtSnapshot, createDebtSnapshotQuery } from './debtSnapshot';
 export { parseSnxHolder, createSnxHolderQuery } from './snxHolders';
 export { parseShort, createShortsQuery } from './shorts';
+export {
+	parseExchangeEntrySettleds,
+	parseExchangeEntrySettledsKovan,
+	createExchangeEntrySettledsQuery,
+} from './exchangeEntrySettleds';

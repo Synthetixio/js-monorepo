@@ -4,5 +4,6 @@
 		"declaration": true,
 		"module": "commonjs",
 		"declarationDir": "./build"
-	}
+	},
+	"include": ["src"]
 }
