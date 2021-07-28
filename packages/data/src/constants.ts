@@ -1,5 +1,5 @@
 export const l1Endpoints = {
-	snx: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix',
+	snx: 'https://api.thegraph.com/subgraphs/name/dvd-schwrtz/mainnet-issuance',
 	depot: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-depot',
 	exchanges: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges',
 	exchangesKovan: 'https://api.thegraph.com/subgraphs/name/dvd-schwrtz/exchanges-kovan',

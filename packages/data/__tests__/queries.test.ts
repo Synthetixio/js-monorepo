@@ -15,9 +15,10 @@ import {
 	parseExchangeEntrySettleds,
 	parseDailyIssued,
 	parseDailyBurned,
+	parseSynthBalance,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
-import { SynthetixData } from '../src/types';
+import { SynthetixData } from '../src';
 import {
 	issuedMock,
 	burnedMock,
@@ -31,6 +32,7 @@ import {
 	snxHolderMock,
 	shortsMock,
 	exchangeEntrySettledsMock,
+	synthBalanceMock,
 } from '../__mocks__';
 import { dailyBurnedMock } from '../__mocks__/dailyBurned';
 import { dailyIssuedMock } from '../__mocks__/dailyIssued';
@@ -348,7 +350,7 @@ describe('@synthetixio/data tests', () => {
 			expect(exchangeEntrySettledsMock.formatted).toEqual(parsedOutput);
 		});
 
-		test('should accept fiter options', async () => {
+		test('should accept filter options', async () => {
 			const exchangeEntrySettleds = await snxData.exchangeEntrySettleds({
 				from: '0xe51b3d74b9e8203b5e817e691a5d0d7f00898fbd',
 				minExchangeTimestamp: 1617529672,
@@ -359,6 +361,26 @@ describe('@synthetixio/data tests', () => {
 			expect(exchangeEntrySettled.from).toEqual('0xe51b3d74b9e8203b5e817e691a5d0d7f00898fbd');
 			expect(exchangeEntrySettled.reclaim).toEqual('150.57812586144');
 			expect(exchangeEntrySettled.rebate).toEqual('0.0');
+		});
+	});
+
+	describe('synthBalances query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseSynthBalance(synthBalanceMock.response);
+			expect(synthBalanceMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept filter options', async () => {
+			const synthBalances = await snxData.synthBalances({
+				account: randomLargeSNXStaker,
+				max: 2,
+			});
+			expect(synthBalances.length).toEqual(2);
+			const synthBalance = synthBalances[0]!;
+			expect(synthBalance.account).toEqual(randomLargeSNXStaker);
+			expect(Number(synthBalance.amount)).toBeGreaterThan(0);
+			expect(synthBalance.synth).toEqual('sUSD');
+			expect(Number(synthBalance.timestamp)).toBeGreaterThan(0);
 		});
 	});
 });

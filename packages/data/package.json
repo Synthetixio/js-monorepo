@@ -33,6 +33,7 @@
 	},
 	"dependencies": {
 		"@synthetixio/contracts-interface": "^2.47.0-ovm.4",
+		"@synthetixio/wei": "2.46.4",
 		"bignumber.js": "9.0.1",
 		"date-fns": "2.19.0",
 		"ethers": "5.4.1",

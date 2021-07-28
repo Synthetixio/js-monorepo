@@ -23,6 +23,7 @@ import {
 	ExchangeEntrySettledsParams,
 	DailyIssuedQueryParams,
 	DailyBurnedQueryParams,
+	SynthBalancesQueryParams,
 } from './types';
 import {
 	Synthetix,
@@ -37,6 +38,7 @@ import {
 	DebtSnapshot,
 	SnxHolder,
 	ExchangeEntrySettled,
+	SynthBalance,
 } from '../generated/graphql';
 
 enum Period {
@@ -238,10 +240,18 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			  )
 			: null;
 	},
+	synthBalances: async (params?: SynthBalancesQueryParams): Promise<SynthBalance[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: queries.createSynthBalancesQuery,
+			networkId,
+		});
+		return response != null ? response.synthBalances.map(queries.parseSynthBalance) : null;
+	},
 });
 
 type SynthetixData = ReturnType<typeof synthetixData>;
 
 export { Period, PERIOD_IN_HOURS, calculateTimestampForPeriod };
-export type { SynthetixData };
+export type { SynthetixData, SynthBalance };
 export default synthetixData;

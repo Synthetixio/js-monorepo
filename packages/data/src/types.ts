@@ -50,8 +50,15 @@ export type ShortQueryParams = {
 	account?: string;
 } & BaseQueryParams;
 
+export type SynthBalancesQueryParams = {
+	account?: string;
+	synth?: string;
+	synths?: string[];
+	minTimestamp?: string;
+} & BaseQueryParams;
+
 export type SnxHolderParams = {
-	maxCollateral?: number;
+	id?: string;
 	minCollateral?: number;
 	address?: string;
 	minMints?: number;
@@ -60,6 +67,7 @@ export type SnxHolderParams = {
 
 export type RateUpdateQueryParams = {
 	synth?: string;
+	synths?: string[];
 	minTimestamp?: number;
 } & BaseQueryParams;
 
