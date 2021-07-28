@@ -16,7 +16,7 @@ jobs:
       - run: npx lerna bootstrap
       - run: npx lerna run build
       - run: npx lerna run test
-      - run: npx lerna version 0.0.0-$(git rev-parse --short HEAD) --exact --no-git-tag-version --no-push -y
+      - run: npx lerna version 0.0.0-$(git rev-parse --short HEAD) --exact --no-push -y
       - run: npx lerna publish from-package --npm-tag dev --skip-git -y
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
