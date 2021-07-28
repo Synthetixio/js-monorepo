@@ -4,6 +4,7 @@ import keyBy from 'lodash/keyBy';
 
 import { TokenListQueryResponse, TokenListResponse } from '../../types';
 import { CryptoCurrency, ETH_ADDRESS } from '../../currency';
+import { QueryContext } from '../../context';
 
 const ether = {
 	address: ETH_ADDRESS,
@@ -15,9 +16,9 @@ const ether = {
 	tags: [],
 };
 
-const useTokenListQuery = (tokenListUrl: string, options?: UseQueryOptions<TokenListQueryResponse>) => {
+const useTokenListQuery = (_: QueryContext, tokenListUrl: string, options?: UseQueryOptions<TokenListQueryResponse>) => {
 	return useQuery<TokenListQueryResponse>(
-		['network', 'tokenList', tokenListUrl],
+		['misc', 'tokenList', tokenListUrl],
 		async () => {
 			const response = await axios.get<TokenListResponse>(tokenListUrl);
 
