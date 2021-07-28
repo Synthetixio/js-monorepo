@@ -16,7 +16,7 @@ jobs:
       - run: npx lerna bootstrap
       - run: npx lerna run build
       - run: npx lerna run test
-      - run: npx lerna version 0.0.0-$(git rev-parse --short HEAD)
+      - run: npx lerna version 0.0.0-$(git rev-parse --short HEAD) -y
       - run: npx lerna bootstrap
       - run: npx lerna publish --npm-tag dev --skip-git -y
         env:
