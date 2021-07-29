@@ -1,3 +1,4 @@
+import { ethers } from 'ethers';
 import { useQuery, UseQueryOptions } from 'react-query';
 
 import { Synths } from '@synthetixio/contracts-interface';
@@ -22,8 +23,11 @@ const useSynthsTotalSupplyQuery = (
 					EtherCollateral,
 					EtherCollateralsUSD,
 				},
-				utils: { formatBytes32String, parseBytes32String, formatEther },
 			} = ctx.snxjs!;
+
+			const {
+				utils: { formatBytes32String, parseBytes32String, formatEther },
+			} = ethers;
 
 			const [sETHKey, sBTCKey, sUSDKey] = [Synths.sETH, Synths.sBTC, Synths.sUSD].map(
 				formatBytes32String
@@ -31,8 +35,10 @@ const useSynthsTotalSupplyQuery = (
 
 			const [
 				synthTotalSupplies,
+
 				unformattedEthPrice,
 				unformattedBtcPrice,
+
 				[unformattedETHBorrows, unformattedETHShorts],
 				[unformattedBTCBorrows, unformattedBTCShorts],
 				[unformattedSUSDBorrows, unformattedSUSDShorts],
