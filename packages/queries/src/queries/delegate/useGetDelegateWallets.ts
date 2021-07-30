@@ -5,7 +5,7 @@ import { DelegationWallet } from '../../types';
 import { DELEGATE_GRAPH_ENDPOINT } from './constants';
 import { QueryContext } from '../../context';
 
-const useGetDelegateWallets = (ctx: QueryContext, authorizerAddress: string, options?: UseQueryOptions<[DelegationWallet]>) => {
+const useGetDelegateWallets = (ctx: QueryContext, authorizerAddress: string | null, options?: UseQueryOptions<[DelegationWallet]>) => {
 	return useQuery<[DelegationWallet]>(
 		['delegate', 'delegated', ctx.networkId, authorizerAddress],
 		async () => {
@@ -65,7 +65,7 @@ const useGetDelegateWallets = (ctx: QueryContext, authorizerAddress: string, opt
 				);
 		},
 		{
-			enabled: ctx.networkId != null && authorizerAddress != null,
+			enabled: ctx.networkId != null && !!authorizerAddress,
 			...options,
 			refetchInterval: false,
 			refetchIntervalInBackground: false,

@@ -5,12 +5,12 @@ import { QueryContext } from '../../context';
 
 import { HistoricalStakingTransaction, StakingTransactionType } from '../../types';
 
-const useFeeClaimHistoryQuery = (ctx: QueryContext, walletAddress: string | undefined, options?: UseQueryOptions<HistoricalStakingTransaction[]>) => {
+const useFeeClaimHistoryQuery = (ctx: QueryContext, walletAddress: string | null, options?: UseQueryOptions<HistoricalStakingTransaction[]>) => {
 	return useQuery<HistoricalStakingTransaction[]>(
 		['staking', 'feesClaimed', ctx.networkId, walletAddress],
 		async () => {
 			const feesClaimed: HistoricalStakingTransaction[] = (await ctx.snxData!.feesClaimed({
-				account: walletAddress,
+				account: walletAddress!,
 			}))!.map((e) => ({
 				account: walletAddress!,
 				block: e.block,
@@ -21,7 +21,7 @@ const useFeeClaimHistoryQuery = (ctx: QueryContext, walletAddress: string | unde
 				totalIssuedSUSD: wei(0)
 			}));
 			const burned: HistoricalStakingTransaction[] = (await ctx.snxData!.burned({
-				account: walletAddress,
+				account: walletAddress!,
 			}))!.map((e) => ({
 				account: walletAddress!,
 				block: e.block,
@@ -32,7 +32,7 @@ const useFeeClaimHistoryQuery = (ctx: QueryContext, walletAddress: string | unde
 				totalIssuedSUSD: wei(e.value)
 			}));
 			const issued: HistoricalStakingTransaction[] = (await ctx.snxData!.issued({
-				account: walletAddress,
+				account: walletAddress!,
 			}))!.map((e) => ({
 				account: walletAddress!,
 				block: e.block,
