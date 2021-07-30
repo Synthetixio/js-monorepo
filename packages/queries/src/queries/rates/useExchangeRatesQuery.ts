@@ -5,6 +5,7 @@ import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { CRYPTO_CURRENCY_MAP, iStandardSynth, synthToAsset } from '../../currency';
 import { QueryContext } from '../../context';
 import { Rates } from '../../types';
+import { wei } from '@synthetixio/wei';
 
 type CurrencyRate = BigNumberish;
 type SynthRatesTuple = [string[], CurrencyRate[]];
