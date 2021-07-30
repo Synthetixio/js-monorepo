@@ -1,8 +1,9 @@
 import { orderBy } from 'lodash';
 import { useQuery, UseQueryOptions } from 'react-query';
+import { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 
-import { HistoricalStakingTransaction, StakingTransactionType } from './types';
+import { HistoricalStakingTransaction, StakingTransactionType } from '../../types';
 
 const useFeeClaimHistoryQuery = (ctx: QueryContext, walletAddress: string | undefined, options?: UseQueryOptions<HistoricalStakingTransaction[]>) => {
 	return useQuery<HistoricalStakingTransaction[]>(
@@ -14,10 +15,10 @@ const useFeeClaimHistoryQuery = (ctx: QueryContext, walletAddress: string | unde
 				account: walletAddress!,
 				block: e.block,
 				hash: '',
-				value: e.value,
+				value: wei(e.value),
 				timestamp: e.timestamp,
 				type: StakingTransactionType.FeesClaimed,
-				totalIssuedSUSD: 0
+				totalIssuedSUSD: wei(0)
 			}));
 			const burned: HistoricalStakingTransaction[] = (await ctx.snxData!.burned({
 				account: walletAddress,
@@ -25,10 +26,10 @@ const useFeeClaimHistoryQuery = (ctx: QueryContext, walletAddress: string | unde
 				account: walletAddress!,
 				block: e.block,
 				hash: '',
-				value: e.value,
+				value: wei(e.value),
 				timestamp: e.timestamp,
 				type: StakingTransactionType.Issued,
-				totalIssuedSUSD: e.value
+				totalIssuedSUSD: wei(e.value)
 			}));
 			const issued: HistoricalStakingTransaction[] = (await ctx.snxData!.issued({
 				account: walletAddress,
@@ -36,10 +37,10 @@ const useFeeClaimHistoryQuery = (ctx: QueryContext, walletAddress: string | unde
 				account: walletAddress!,
 				block: e.block,
 				hash: '',
-				value: e.value,
+				value: wei(e.value),
 				timestamp: e.timestamp,
 				type: StakingTransactionType.Burned,
-				totalIssuedSUSD: e.value
+				totalIssuedSUSD: wei(e.value)
 			}));
 
 

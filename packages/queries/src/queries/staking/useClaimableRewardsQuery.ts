@@ -2,14 +2,10 @@ import { UseQueryOptions, useQuery } from 'react-query';
 
 import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
+import { StakingClaimableRewards } from '../../types';
 
-type AvailableFees = {
-	tradingRewards: Wei;
-	stakingRewards: Wei;
-};
-
-const useClaimableRewards = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<AvailableFees>) => {
-	return useQuery<AvailableFees>(
+const useClaimableRewards = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<StakingClaimableRewards>) => {
+	return useQuery<StakingClaimableRewards>(
 		['staking', 'claimableRewards', ctx.networkId, walletAddress],
 		async () => {
 			const {

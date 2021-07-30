@@ -2,7 +2,8 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import { CurrencyKey, Synths } from '@synthetixio/contracts-interface';
 import { QueryContext } from '../../context';
 
-import { ShortRewardsData } from './types';
+import { ShortRewardsData } from '../../types';
+import { wei } from '@synthetixio/wei';
 
 const useSBTCShortsQuery = (ctx: QueryContext, currencyKey: CurrencyKey, walletAddress: string|null, options?: UseQueryOptions<ShortRewardsData>) => {
 
@@ -39,16 +40,16 @@ const useSBTCShortsQuery = (ctx: QueryContext, currencyKey: CurrencyKey, walletA
 			const isPeriodFinished = new Date().getTime() > Number(periodFinish) * 1000;
 			const distribution = isPeriodFinished
 				? 0
-				: Math.trunc(Number(duration) * (rate / 1e18)) / durationInWeeks;
+				: rate.mul(duration).div(durationInWeeks);
 
 			const [openInterest, assetUSDPrice, rewards, staked] = [
 				openInterestBN,
 				assetUSDPriceBN,
 				sBtcSNXRewards,
 				sBtcStaked,
-			].map((data) => Number(ctx.snxjs!.utils.formatEther(data)));
+			].map((data) => wei(data));
 
-			const openInterestUSD = openInterest * assetUSDPrice;
+			const openInterestUSD = openInterest.mul(assetUSDPrice);
 
 			return {
 				openInterestUSD: openInterestUSD,

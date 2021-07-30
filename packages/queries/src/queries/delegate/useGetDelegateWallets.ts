@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import request, { gql } from 'graphql-request';
 
-import { DelegationWallet } from './types';
+import { DelegationWallet } from '../../types';
 import { DELEGATE_GRAPH_ENDPOINT } from './constants';
 import { QueryContext } from '../../context';
 
