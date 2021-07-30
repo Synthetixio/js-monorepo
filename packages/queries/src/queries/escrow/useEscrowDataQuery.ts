@@ -5,7 +5,7 @@ import flatten from 'lodash/flatten';
 import { ethers } from 'ethers';
 import { QueryContext } from '../../context';
 import Wei, { wei } from '@synthetixio/wei';
-import { OPTIMISM_NETWORKS } from '../../../../optimism-networks/build/node';
+import { OPTIMISM_NETWORKS } from '@synthetixio/optimism-networks/build/node';
 import { EscrowData, Schedule } from '../../types';
 
 const VESTING_ENTRIES_PAGINATION = 50;
