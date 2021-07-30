@@ -1,27 +1,22 @@
-name: main
-
+name: Main Workflow
 on:
-  push:
-    branches:
-    - '*'
-  pull_request:
-    branches:
-    - master
-    - dev
+  push: {}
 
 jobs:
-  lints:
-    name: Run Lints
+  build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-    - run: npm ci
-    - run: npm run bootstrap
-    - run: npm run lint
-    - run: npm run build
-    - run: npm run test-all
-
+      - uses: actions/checkout@v2
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npx lerna bootstrap
+      - run: npx lerna run build
+      - run: npx lerna run test
+      - run: npx lerna publish 0.0.0-$(git rev-parse --short HEAD) --npm-tag dev --skip-git -y
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: echo "npm pushed to 0.0.0-$(git rev-parse --short HEAD)"

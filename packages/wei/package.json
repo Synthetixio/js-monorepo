@@ -1,21 +1,21 @@
 {
 	"name": "@synthetixio/wei",
-	"version": "1.0.1",
+	"version": "2.46.4",
 	"description": "Convenient BigNumber library for web3",
-	"main": "build/node/wei.js",
+	"main": "build/node/index.js",
 	"browser": "./build/index.js",
 	"source": "./src/index.ts",
-	"types": "./build/node/wei.d.ts",
+	"types": "./build/node/index.d.ts",
 	"scripts": {
 		"build": "npm run build-browser && npm run build-node",
-		"build-node": "tsc -p tsconfig.node.json",
-		"build-browser": "webpack --mode=production",
+		"build-node": "../../node_modules/.bin/tsc -p tsconfig.node.json",
+		"build-browser": "../../node_modules/.bin/webpack --mode=production",
 		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
 		"examples:browser": "npm run build-browser && http-server -o ./examples/browser-example.html -c-1",
-		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
-		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
+		"lint": "../../node_modules/.bin/eslint './src/**/*.{js,ts,tsx}' && tsc",
+		"lint:fix": "../../node_modules/.bin/eslint --fix './src/**/*.{js,ts,tsx}'",
 		"test": "node --experimental-vm-modules ../../node_modules/.bin/jest --coverage --no-cache",
-		"tsc": "tsc --noemit",
+		"tsc": "../../node_modules/.bin/tsc --noemit",
 		"codegen": "graphql-codegen --config codegen.yml"
 	},
 	"repository": {
@@ -30,7 +30,7 @@
 	"homepage": "https://github.com/Synthetixio/js-monorepo#readme",
 	"dependencies": {
 		"big.js": "6.1.1",
-		"ethers": "5.3.0"
+		"ethers": "5.4.1"
 	},
 	"devDependencies": {
 		"@types/big.js": "6.0.2"

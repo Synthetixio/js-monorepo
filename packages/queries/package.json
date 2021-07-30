@@ -1,9 +1,10 @@
 {
 	"name": "@synthetixio/queries",
-	"version": "0.0.2",
+	"version": "2.47.0-ovm.2",
 	"description": "react-query for pulling synthetix data in react interfaces",
 	"source": "./src/index.ts",
 	"main": "./build/node/index.js",
+	"module": "./build/node/index.js",
 	"browser": "./build/index.js",
 	"types": "./build/node/index.d.ts",
 	"files": [
@@ -11,14 +12,14 @@
 	],
 	"scripts": {
 		"build": "npm run build-browser && npm run build-node",
-		"build-node": "tsc -p tsconfig.node.json",
-		"build-browser": "webpack --mode=production --max-old-space-size=4096",
+		"build-node": "../../node_modules/.bin/tsc -p tsconfig.node.json",
+		"build-browser": "../../node_modules/.bin/webpack --mode=production --max-old-space-size=4096",
 		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
 		"examples:browser": "npm run build-browser && http-server -o ./examples/browser-example.html -c-1",
-		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
-		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
+		"lint": "../../node_modules/.bin/eslint './src/**/*.{js,ts,tsx}' && tsc",
+		"lint:fix": "../../node_modules/.bin/eslint --fix './src/**/*.{js,ts,tsx}'",
 		"test": "../../node_modules/.bin/jest --forceExit --coverage --no-cache",
-		"tsc": "tsc --noemit",
+		"tsc": "../../node_modules/.bin/tsc --noemit",
 		"codegen": "graphql-codegen --config codegen.yml"
 	},
 	"repository": {
@@ -31,14 +32,14 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"@synthetixio/contracts-interface": "^2.45.3",
-		"@synthetixio/data": "^0.0.14",
-		"@synthetixio/wei": "^1.0.1",
+		"@synthetixio/contracts-interface": "^2.47.0-ovm",
+		"@synthetixio/data": "^2.47.0-ovm.2",
+		"@synthetixio/wei": "^2.46.4",
 		"axios": "0.21.1",
 		"bignumber.js": "9.0.1",
 		"date-fns": "2.19.0",
 		"ethcall": "3.3.0",
-		"ethers": "5.3.0",
+		"ethers": "5.4.1",
 		"graphql": "15.5.0",
 		"graphql-request": "3.4.0",
 		"lodash": "4.17.19"

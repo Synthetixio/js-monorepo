@@ -19,6 +19,8 @@ import { ethers } from 'ethers';
 
 import {
 	Config,
+	CurrencyKey,
+	CurrencyCategory,
 	Network,
 	NetworkId,
 	Target,
@@ -28,6 +30,9 @@ import {
 	Synth,
 	Token,
 } from './types';
+
+import { Synths } from '../generated/mainnet';
+
 import { ERRORS } from './constants';
 
 const synthetix = ({ networkId, network, signer, provider }: Config): SynthetixJS => {
@@ -114,6 +119,6 @@ const getSynthetixContracts = (
 		}, {});
 };
 
-export { synthetix, Network, NetworkId };
-export type { Config, Target, TargetsRecord, ContractsMap, SynthetixJS, Synth, Token };
+export { synthetix, Network, NetworkId, Synths, CurrencyCategory };
+export type { Config, CurrencyKey, Target, TargetsRecord, ContractsMap, SynthetixJS, Synth, Token };
 export default synthetix;

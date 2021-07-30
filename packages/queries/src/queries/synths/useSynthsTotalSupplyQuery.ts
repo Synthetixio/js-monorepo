@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 
-import { Synths } from '../../currency';
+import { Synths } from '@synthetixio/contracts-interface';
 
 export type SynthTotalSupply = {
 	name: string;

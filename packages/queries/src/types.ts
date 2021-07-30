@@ -1,5 +1,5 @@
 import Wei from '@synthetixio/wei';
-import { CurrencyKey } from './currency';
+import { CurrencyKey } from '@synthetixio/contracts-interface';
 
 export type GasPrices = {
 	fastest: number;
@@ -14,6 +14,16 @@ export const GAS_SPEEDS: GasSpeed[] = ['average', 'fast', 'fastest'];
 export type BaseRateUpdate = {
 	timestamp: number;
 	rate: number;
+};
+
+export type Candle = {
+	id: string;
+	synth: string;
+	open: BigInt;
+	high: BigInt;
+	low: BigInt;
+	close: BigInt;
+	timestamp: BigInt;
 };
 
 export type BaseRateUpdates = BaseRateUpdate[];

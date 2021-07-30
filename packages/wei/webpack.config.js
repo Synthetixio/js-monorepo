@@ -19,7 +19,7 @@ module.exports = {
 		fs: 'empty',
 		net: 'empty',
 	},
-	entry: './src/index.ts',
+	entry: path.resolve(__dirname, 'src/index.ts'),
 	target: 'web',
 	output: {
 		path: path.resolve(__dirname, 'build'),
@@ -30,8 +30,4 @@ module.exports = {
 		extensions: ['.ts', '.js'],
 	},
 	plugins: [],
-	externals: {
-		'react': 'React',
-		'react-dom': 'ReactDOM'
-	}
 };

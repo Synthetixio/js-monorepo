@@ -12,6 +12,7 @@ import {
 	parseDebtSnapshot,
 	parseSnxHolder,
 	parseShort,
+	parseExchangeEntrySettleds,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
@@ -27,6 +28,7 @@ import {
 	debtSnapshotMock,
 	snxHolderMock,
 	shortsMock,
+	exchangeEntrySettledsMock,
 } from '../__mocks__';
 
 describe('@synthetixio/data tests', () => {
@@ -108,7 +110,7 @@ describe('@synthetixio/data tests', () => {
 			expect(exchanges!.length).toBeGreaterThan(1000);
 		});
 
-		test.skip('should return exchagnes from kovan l2', async () => {
+		test('should return exchagnes from kovan l2', async () => {
 			const exchanges = await snxDataKovanOvm.synthExchanges({
 				minTimestamp: oneMonthTimestamp,
 			});
@@ -242,6 +244,16 @@ describe('@synthetixio/data tests', () => {
 			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l2RateUpdatesInfo!.length).toBeGreaterThan(0);
 		});
+
+		test('should return rateUpdates data from l2 kovan', async () => {
+			const l2RateUpdatesInfo = await snxDataKovanOvm.rateUpdates({
+				max: 5,
+				synth: 'SNX',
+				minTimestamp: oneMonthTimestamp,
+			});
+			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
+			expect(l2RateUpdatesInfo!.length).toBeGreaterThan(0);
+		});
 	});
 
 	describe('debtSnapshots query', () => {
@@ -293,6 +305,26 @@ describe('@synthetixio/data tests', () => {
 			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
 			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
 			expect(snxHoldersInfo!.length).toEqual(5);
+		});
+	});
+
+	describe('exchangeEntrySettleds query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseExchangeEntrySettleds(exchangeEntrySettledsMock.response);
+			expect(exchangeEntrySettledsMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const exchangeEntrySettleds = await snxData.exchangeEntrySettleds({
+				from: '0xe51b3d74b9e8203b5e817e691a5d0d7f00898fbd',
+				minExchangeTimestamp: 1617529672,
+				maxExchangeTimestamp: 1617529672,
+			});
+			expect(exchangeEntrySettleds.length).toEqual(1);
+			const exchangeEntrySettled = exchangeEntrySettleds[0]!;
+			expect(exchangeEntrySettled.from).toEqual('0xe51b3d74b9e8203b5e817e691a5d0d7f00898fbd');
+			expect(exchangeEntrySettled.reclaim).toEqual('150.57812586144');
+			expect(exchangeEntrySettled.rebate).toEqual('0.0');
 		});
 	});
 });
