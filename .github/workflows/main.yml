@@ -16,6 +16,7 @@ jobs:
       - run: npx lerna bootstrap
       - run: npx lerna run build
       - run: npx lerna run test
+      - run: git config --global user.email "you@example.com" && git config --global user.name "Your Name"
       - run: npx lerna version 0.0.0-$(git rev-parse --short HEAD) --exact --no-push -y
       - run: npx lerna publish from-package --npm-tag dev --skip-git -y
         env:
