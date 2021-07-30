@@ -27,11 +27,11 @@ describe('@synthetixio/queries rates', () => {
 		await waitFor(() => result.current.isSuccess);
 
 		expect(result.current.data).toEqual({
-			ETH: 1000,
-			BTC: 10000,
-			sETH: 1000,
-			sBTC: 10000,
-			SNX: 10,
+			ETH: wei(1000),
+			BTC: wei(10000),
+			sETH: wei(1000),
+			sBTC: wei(10000),
+			SNX: wei(10),
 		});
 	});
 
