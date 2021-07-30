@@ -30,10 +30,10 @@ const useExchangeRatesQuery = (ctx: QueryContext, options?: UseQueryOptions<Rate
 				const currencyKey = ethers.utils.parseBytes32String(currencyKeyBytes32) as CurrencyKey;
 				const rate = Number(ethers.utils.formatEther(rates[idx]));
 
-				exchangeRates[currencyKey] = rate;
+				exchangeRates[currencyKey] = wei(rate);
 				// only interested in the standard synths (sETH -> ETH, etc)
 				if (iStandardSynth(currencyKey)) {
-					exchangeRates[synthToAsset(currencyKey)] = rate;
+					exchangeRates[synthToAsset(currencyKey)] = wei(rate);
 				}
 			});
 
