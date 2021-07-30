@@ -6,27 +6,9 @@ import { ethers } from 'ethers';
 import { QueryContext } from '../../context';
 import Wei, { wei } from '@synthetixio/wei';
 import { OPTIMISM_NETWORKS } from '../../../../optimism-networks/build/node';
-
+import { EscrowData, Schedule } from '../../types';
 
 const VESTING_ENTRIES_PAGINATION = 50;
-
-export type EscrowData = {
-	claimableAmount: Wei;
-	schedule: Schedule;
-	totalEscrowed: Wei;
-	totalVested: Wei;
-	totalBalancePendingMigration: Wei;
-	claimableEntryIds?: Wei[];
-	claimableEntryIdsInChunk?: Wei[][];
-};
-
-export type Schedule = Array<
-	| {
-			quantity: Wei;
-			date: Date;
-	  }
-	| []
->;
 
 type VestingEntry = {
 	escrowAmount: Wei;

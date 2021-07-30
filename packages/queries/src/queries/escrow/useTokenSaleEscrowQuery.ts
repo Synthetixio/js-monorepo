@@ -1,24 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import Wei, { wei } from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
-
-export type TokenSaleEscrow = {
-	escrowPeriod: number;
-	totalEscrowed: Wei;
-	releaseIntervalMonths: number;
-	totalPeriod: number;
-	claimableAmount: Wei;
-	schedule: Schedule;
-	totalVested: Wei;
-};
-
-type Schedule = Array<
-	| {
-			quantity: Wei;
-			date: Date;
-	  }
-	| []
->;
+import { TokenSaleEscrow, Schedule } from '../../types';
 
 const useTokenSaleEscrowQuery = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<TokenSaleEscrow | null>) => {
 	return useQuery<TokenSaleEscrow | null>(

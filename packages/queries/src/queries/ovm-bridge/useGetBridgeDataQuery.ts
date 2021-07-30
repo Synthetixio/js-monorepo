@@ -10,18 +10,10 @@ import {
 } from '@synthetixio/optimism-networks';
 import { getOptimismProvider } from '@synthetixio/providers';
 import { QueryContext } from '../../context';
+import { DepositHistory, DepositRecord } from '../../types';
+import { wei } from '@synthetixio/wei';
 
 const NUM_BLOCKS_TO_FETCH = 1000000;
-
-export type DepositRecord = {
-	timestamp: number;
-	amount: number;
-	type: 'deposit' | 'withdrawal';
-	status: 'pending' | 'relay' | 'confirmed';
-	transactionHash: string;
-};
-
-export type DepositHistory = Array<DepositRecord>;
 
 // NOTE: query context for this query must always be on the L1 side (even if withdrawing)
 const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<DepositHistory>) => {
@@ -64,7 +56,7 @@ const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string|null, 
 					const timestamp = Number(block.timestamp * 1000);
 					return {
 						timestamp,
-						amount: args._amount / 1e18,
+						amount: wei(args._amount),
 						transactionHash: l.transactionHash,
 						type: 'deposit',
 						status: 'pending'
@@ -79,7 +71,7 @@ const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string|null, 
 					const readyToRelay = Date.now() - timestamp > OPTIMISM_NETWORKS[ctx.networkId!].fraudProofWindow;
 					return {
 						timestamp,
-						amount: args._amount / 1e18,
+						amount: wei(args._amount),
 						transactionHash: l.transactionHash,
 						type: 'withdrawal',
 						status: !!receipt

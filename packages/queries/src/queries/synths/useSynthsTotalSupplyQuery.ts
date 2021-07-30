@@ -4,18 +4,7 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 
 import { Synths } from '@synthetixio/contracts-interface';
-
-export type SynthTotalSupply = {
-	name: string;
-	value: Wei;
-	totalSupply: Wei;
-	poolProportion: Wei;
-};
-
-export type SynthsTotalSupplyData = {
-	supplyData: { [name: string]: SynthTotalSupply };
-	totalValue: Wei;
-};
+import { SynthsTotalSupplyData, SynthTotalSupply } from '../../types';
 
 const useSynthsTotalSupplyQuery = (
 	ctx: QueryContext,

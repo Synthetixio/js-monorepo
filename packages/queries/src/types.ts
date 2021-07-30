@@ -332,3 +332,53 @@ export type FeePoolData = {
 	rewardsToDistribute: Wei;
 	rewardsClaimed: Wei;
 };
+
+export type SynthTotalSupply = {
+	name: string;
+	value: Wei;
+	totalSupply: Wei;
+	poolProportion: Wei;
+};
+
+export type SynthsTotalSupplyData = {
+	supplyData: { [name: string]: SynthTotalSupply };
+	totalValue: Wei;
+};
+
+export type TokenSaleEscrow = {
+	escrowPeriod: number;
+	totalEscrowed: Wei;
+	releaseIntervalMonths: number;
+	totalPeriod: number;
+	claimableAmount: Wei;
+	schedule: Schedule;
+	totalVested: Wei;
+};
+
+export type EscrowData = {
+	claimableAmount: Wei;
+	schedule: Schedule;
+	totalEscrowed: Wei;
+	totalVested: Wei;
+	totalBalancePendingMigration: Wei;
+	claimableEntryIds?: Wei[];
+	claimableEntryIdsInChunk?: Wei[][];
+};
+
+export type Schedule = Array<
+	| {
+			quantity: Wei;
+			date: Date;
+	  }
+	| []
+>;
+
+export type DepositRecord = {
+	timestamp: number;
+	amount: Wei;
+	type: 'deposit' | 'withdrawal';
+	status: 'pending' | 'relay' | 'confirmed';
+	transactionHash: string;
+};
+
+export type DepositHistory = Array<DepositRecord>;
