@@ -39,7 +39,7 @@ export type MarketCap = {
 	marketCap: number;
 };
 
-export type Rates = Record<string, number>;
+export type Rates = Record<string, Wei>;
 
 export type HistoricalVolume = Record<CurrencyKey, Wei>;
 
