@@ -40,7 +40,7 @@ const useTokensBalancesQuery = (
 				}
 			}
 
-			const data = (await ethcallProvider.all(calls, 0)) as ethers.BigNumber[];
+			const data = (await ethcallProvider.all(calls)) as ethers.BigNumber[];
 
 			const balancesMap = zipObject(symbols, data);
 
