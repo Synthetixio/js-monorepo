@@ -1,19 +1,21 @@
-import { ethers } from 'ethers';
 import { RateUpdate } from '../../generated/graphql';
 import { formatTimestamp } from '../../src/utils';
+import { NetworkId } from '@synthetixio/contracts-interface';
 
-export const parseRates = ({
-	block,
-	currencyKey,
-	id,
-	rate,
-	synth,
-	timestamp,
-}: RateUpdate): RateUpdate => ({
-	block: Number(block),
-	currencyKey,
-	id,
-	rate: ethers.utils.formatEther(rate),
-	synth,
-	timestamp: formatTimestamp(timestamp),
-});
+export const parseRates = (rate: RateUpdate, networkId?: number): RateUpdate => {
+	const { block, currencyKey, id, rate: rateValue, synth, timestamp } = rate;
+	const parsedRate =
+		networkId && networkId === NetworkId['Kovan-Ovm']
+			? rateValue
+			// todo: I have no idea what this code is supposed to do
+			: (rateValue / 1e18).toString();
+
+	return {
+		block: Number(block),
+		currencyKey,
+		id,
+		rate: parsedRate,
+		synth,
+		timestamp: formatTimestamp(timestamp),
+	};
+};

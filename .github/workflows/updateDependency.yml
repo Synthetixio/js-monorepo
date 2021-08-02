@@ -30,7 +30,7 @@ jobs:
           npm run build
           npm run test-all
       - name: Update packages version
-        run: lerna version ${{ github.event.client_payload.version }} --yes
+        run: lerna version ${{ github.event.client_payload.version }} --exact --yes
       - name: Publish packages
         run: lerna publish from-package --yes
         env:
