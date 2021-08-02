@@ -91,4 +91,5 @@ export type SynthTotalSupply = {
 export type SynthsTotalSupplyData = {
 	supplyData: { [name: string]: SynthTotalSupply };
 	totalValue: Wei;
+	rawData: { [name: string]: Wei };
 };

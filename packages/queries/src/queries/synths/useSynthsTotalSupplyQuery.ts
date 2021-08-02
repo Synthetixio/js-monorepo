@@ -161,6 +161,25 @@ const useSynthsTotalSupplyQuery = (
 			return {
 				totalValue,
 				supplyData: supplyDataMap,
+				rawData: {
+					ethPrice,
+					btcPrice,
+
+					ethBorrows,
+					ethShorts,
+
+					btcBorrows,
+					btcShorts,
+
+					susdBorrows,
+					susdShorts,
+
+					wrapprSETH,
+					wrapprSUSD,
+
+					oldLoansETH,
+					oldLoansSUSD,
+				},
 			};
 		},
 		{
