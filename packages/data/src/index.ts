@@ -66,8 +66,6 @@ const calculateTimestampForPeriod = (periodInHours: number): number =>
 	Math.trunc(subHours(new Date().getTime(), periodInHours).getTime() / 1000);
 
 const DEFAULT_ENDPOINTS = {
-	[NetworkId['Kovan-Ovm']]: l2Endpoints.snxKovan,
-	[NetworkId['Mainnet-Ovm']]: l2Endpoints.snx,
 	[NetworkId.Mainnet]: l1Endpoints.snx,
 };
 
@@ -105,6 +103,8 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			endpoints: {
 				[NetworkId.Mainnet]: l1Endpoints.exchanges,
 				[NetworkId.Kovan]: l1Endpoints.exchangesKovan,
+				[NetworkId['Kovan-Ovm']]: l2Endpoints.exchangesKovan,
+				[NetworkId['Mainnet-Ovm']]: l2Endpoints.exchanges,
 			},
 		});
 		return response != null
@@ -118,12 +118,18 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			: null;
 	},
 	synthetix: async (params?: BaseQueryParams): Promise<Synthetix | null> => {
+<<<<<<< HEAD
 		const query = queries.createSynthetixQuery(params);
 		const response = await request(
 			networkId === NetworkId.Mainnet ? l1Endpoints.snx : l2Endpoints.snx,
 			query
 		);
 		return response != null ? queries.parseSynthetix(response.synthetixes[0]) : null;
+=======
+		const query = createSynthetixQuery(params);
+		const response = await request(l1Endpoints.snx, query);
+		return response != null ? parseSynthetix(response.synthetixes[0]) : null;
+>>>>>>> d222a994256c43cf7eeeb9f3f20764bbdda9db8e
 	},
 	feesClaimed: async (params?: FeesClaimedParams): Promise<FeesClaimed[] | null> => {
 		const response = await getData({
@@ -183,9 +189,19 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			params,
 			queryMethod: queries.createRateUpdatesQuery,
 			networkId,
-			endpoints: { [NetworkId.Mainnet]: l1Endpoints.rates },
+			endpoints: {
+				[NetworkId.Mainnet]: l1Endpoints.rates,
+				[NetworkId['Kovan-Ovm']]: l2Endpoints.exchangesKovan,
+				[NetworkId['Mainnet-Ovm']]: l1Endpoints.rates,
+			},
 		});
+<<<<<<< HEAD
 		return response != null ? response.rateUpdates.map(queries.parseRates) : null;
+=======
+		return response != null
+			? response.rateUpdates.map((rate: RateUpdate) => parseRates(rate, networkId))
+			: null;
+>>>>>>> d222a994256c43cf7eeeb9f3f20764bbdda9db8e
 	},
 	debtSnapshots: async (params?: DebtSnapshotParams): Promise<DebtSnapshot[] | null> => {
 		const response = await getData({

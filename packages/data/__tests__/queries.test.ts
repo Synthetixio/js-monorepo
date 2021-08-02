@@ -110,7 +110,7 @@ describe('@synthetixio/data tests', () => {
 			expect(exchanges!.length).toBeGreaterThan(1000);
 		});
 
-		test.skip('should return exchagnes from kovan l2', async () => {
+		test('should return exchagnes from kovan l2', async () => {
 			const exchanges = await snxDataKovanOvm.synthExchanges({
 				minTimestamp: oneMonthTimestamp,
 			});
@@ -237,6 +237,16 @@ describe('@synthetixio/data tests', () => {
 
 		test.skip('should return rateUpdates data from l2', async () => {
 			const l2RateUpdatesInfo = await snxDataOvm.rateUpdates({
+				max: 5,
+				synth: 'SNX',
+				minTimestamp: oneMonthTimestamp,
+			});
+			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
+			expect(l2RateUpdatesInfo!.length).toBeGreaterThan(0);
+		});
+
+		test('should return rateUpdates data from l2 kovan', async () => {
+			const l2RateUpdatesInfo = await snxDataKovanOvm.rateUpdates({
 				max: 5,
 				synth: 'SNX',
 				minTimestamp: oneMonthTimestamp,
