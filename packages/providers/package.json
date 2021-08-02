@@ -4,6 +4,7 @@
 	"description": "Javascript library for handling providers on Layer 1 & Optimism Layer 2",
 	"source": "./src/index.ts",
 	"main": "./build/node/index.js",
+	"module": "./build/node/index.js",
 	"browser": "./build/index.js",
 	"types": "./build/node/index.d.ts",
 	"files": [
