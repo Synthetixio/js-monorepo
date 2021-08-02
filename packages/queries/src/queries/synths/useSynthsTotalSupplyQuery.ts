@@ -112,17 +112,17 @@ const useSynthsTotalSupplyQuery = (
 
 				switch (name) {
 					case Synths.sBTC: {
-						ethNegativeEntries = btcShorts.add(btcBorrows);
+						btcNegativeEntries = btcShorts.add(btcBorrows);
 
-						value = totalSupply.sub(ethNegativeEntries).mul(btcPrice);
+						value = totalSupply.sub(btcNegativeEntries).mul(btcPrice);
 						break;
 					}
 
 					case Synths.sETH: {
 						const multiCollateralLoansETH = ethShorts.add(ethBorrows);
-						btcNegativeEntries = multiCollateralLoansETH.add(oldLoansETH).add(wrapprSETH);
+						ethNegativeEntries = multiCollateralLoansETH.add(oldLoansETH).add(wrapprSETH);
 
-						value = totalSupply.sub(btcNegativeEntries).mul(ethPrice);
+						value = totalSupply.sub(ethNegativeEntries).mul(ethPrice);
 						break;
 					}
 
