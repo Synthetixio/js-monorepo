@@ -132,8 +132,8 @@ describe('@synthetixio/queries synths', () => {
 				btcPrice: wei(10000),
 			},
 			shortData: {
-				ethNegativeEntries: wei(20),
-				btcNegativeEntries: wei(120),
+				ethNegativeEntries: wei(120),
+				btcNegativeEntries: wei(20),
 				usdNegativeEntries: wei(0),
 			},
 			synthTotalSupplies: [
