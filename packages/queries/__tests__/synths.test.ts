@@ -65,6 +65,36 @@ describe('@synthetixio/queries synths', () => {
 		const { result, waitFor } = renderHook(() => useSynthsTotalSupplyQuery(ctx), { wrapper });
 		await waitFor(() => result.current.isSuccess);
 
+		// const d = result.current.data;
+		// console.log(
+		// 	JSON.stringify(
+		// 		{
+		// 			totalValue: d.totalValue.toString(),
+		// 			supplyData: Object.entries(d.supplyData).reduce((r, [k, v]) => {
+		// 				r[k] = {
+		// 					name: v.name,
+		// 					totalSupply: v.totalSupply.toString(),
+		// 					value: v.value.toString(),
+		// 					skewValue: v.value.toString(),
+		// 					poolProportion: v.poolProportion.toString(),
+		// 				};
+		// 				return r;
+		// 			}, {}),
+		// 			priceData: Object.entries(d.priceData).reduce((r, [k, v]) => {
+		// 				r[k] = v.toString();
+		// 				return r;
+		// 			}, {}),
+		// 			shortData: Object.entries(d.shortData).reduce((r, [k, v]) => {
+		// 				r[k] = v.toString();
+		// 				return r;
+		// 			}, {}),
+		// 			synthTotalSupplies: d.synthTotalSupplies.map((a) => a.map((b) => b.toString())),
+		// 		},
+		// 		null,
+		// 		2
+		// 	)
+		// );
+
 		expect(result.current.data).toEqual({
 			totalValue: wei(1820000),
 			supplyData: {
@@ -97,6 +127,35 @@ describe('@synthetixio/queries synths', () => {
 					poolProportion: wei(0),
 				},
 			},
+			priceData: {
+				ethPrice: wei(1000),
+				btcPrice: wei(10000),
+			},
+			shortData: {
+				ethNegativeEntries: wei(20),
+				btcNegativeEntries: wei(120),
+				usdNegativeEntries: wei(0),
+			},
+			synthTotalSupplies: [
+				[
+					'0x7345544800000000000000000000000000000000000000000000000000000000',
+					'0x7342544300000000000000000000000000000000000000000000000000000000',
+					'0x6945544800000000000000000000000000000000000000000000000000000000',
+					'0x6942544300000000000000000000000000000000000000000000000000000000',
+				],
+				[
+					ethers.BigNumber.from('100000000000000000000'),
+					ethers.BigNumber.from('200000000000000000000'),
+					ethers.BigNumber.from('0'),
+					ethers.BigNumber.from('0'),
+				],
+				[
+					ethers.BigNumber.from('100000000000000000000000'),
+					ethers.BigNumber.from('2000000000000000000000000'),
+					ethers.BigNumber.from('0'),
+					ethers.BigNumber.from('0'),
+				],
+			],
 		});
 	});
 });

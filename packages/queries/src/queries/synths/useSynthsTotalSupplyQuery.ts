@@ -100,6 +100,9 @@ const useSynthsTotalSupplyQuery = (
 			].map((val) => wei(formatEther(val)));
 
 			let totalValue = wei(0);
+			let ethNegativeEntries = wei(0);
+			let btcNegativeEntries = wei(0);
+			let usdNegativeEntries = wei(0);
 
 			const supplyData: SynthTotalSupply[] = [];
 			for (let i = 0; i < synthTotalSupplies[0].length; i++) {
@@ -109,25 +112,25 @@ const useSynthsTotalSupplyQuery = (
 
 				switch (name) {
 					case Synths.sBTC: {
-						const negativeEntries = btcShorts.add(btcBorrows);
+						ethNegativeEntries = btcShorts.add(btcBorrows);
 
-						value = totalSupply.sub(negativeEntries).mul(btcPrice);
+						value = totalSupply.sub(ethNegativeEntries).mul(btcPrice);
 						break;
 					}
 
 					case Synths.sETH: {
 						const multiCollateralLoansETH = ethShorts.add(ethBorrows);
-						const negativeEntries = multiCollateralLoansETH.add(oldLoansETH).add(wrapprSETH);
+						btcNegativeEntries = multiCollateralLoansETH.add(oldLoansETH).add(wrapprSETH);
 
-						value = totalSupply.sub(negativeEntries).mul(ethPrice);
+						value = totalSupply.sub(btcNegativeEntries).mul(ethPrice);
 						break;
 					}
 
 					case Synths.sUSD: {
 						const multiCollateralLoansSUSD = susdShorts.add(susdBorrows);
-						const negativeEntries = multiCollateralLoansSUSD.add(oldLoansSUSD).add(wrapprSUSD);
+						usdNegativeEntries = multiCollateralLoansSUSD.add(oldLoansSUSD).add(wrapprSUSD);
 
-						value = totalSupply.sub(negativeEntries);
+						value = totalSupply.sub(usdNegativeEntries);
 						break;
 					}
 
@@ -161,25 +164,30 @@ const useSynthsTotalSupplyQuery = (
 			return {
 				totalValue,
 				supplyData: supplyDataMap,
-				rawData: {
+				priceData: {
 					ethPrice,
 					btcPrice,
-
-					ethBorrows,
-					ethShorts,
-
-					btcBorrows,
-					btcShorts,
-
-					susdBorrows,
-					susdShorts,
-
-					wrapprSETH,
-					wrapprSUSD,
-
-					oldLoansETH,
-					oldLoansSUSD,
 				},
+				shortData: {
+					// ethBorrows,
+					// ethShorts,
+
+					// btcBorrows,
+					// btcShorts,
+
+					// susdBorrows,
+					// susdShorts,
+
+					// wrapprSETH,
+					// wrapprSUSD,
+
+					// oldLoansETH,
+					// oldLoansSUSD,
+					ethNegativeEntries,
+					btcNegativeEntries,
+					usdNegativeEntries,
+				},
+				synthTotalSupplies,
 			};
 		},
 		{
