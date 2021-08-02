@@ -51,5 +51,8 @@
 		"hooks": {
 			"pre-commit": "npm run lint"
 		}
+	},
+	"optionalDependencies": {
+		"fsevents": "^2.3.2"
 	}
 }
