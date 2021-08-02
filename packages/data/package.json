@@ -4,6 +4,7 @@
 	"description": "Javascript library for handling queries to Synthetix subgraphs",
 	"source": "./src/index.ts",
 	"main": "./build/node/src/index.js",
+	"module": "./build/node/src/index.js",
 	"browser": "./build/index.js",
 	"types": "./build/node/src/index.d.ts",
 	"files": [

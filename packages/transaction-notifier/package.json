@@ -4,6 +4,7 @@
 	"description": "Javascript library for handling networks on Optimism Layer 2",
 	"source": "./src/index.ts",
 	"main": "./build/node/index.js",
+	"module": "./build/node/index.js",
 	"browser": "./build/index.js",
 	"types": "./build/src/index.d.ts",
 	"files": [
