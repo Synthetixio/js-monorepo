@@ -8,7 +8,11 @@ type LatestSnapshotResult = {
 	latestSnapshot: string;
 };
 
-const useLatestSnapshotQuery = (_: QueryContext, snapshotEndpoint: string, options?: UseQueryOptions<LatestSnapshotResult>) => {
+const useLatestSnapshotQuery = (
+	_: QueryContext,
+	snapshotEndpoint: string,
+	options?: UseQueryOptions<LatestSnapshotResult>
+) => {
 	return useQuery<LatestSnapshotResult>(
 		['gov', 'latestSnapshot', snapshotEndpoint],
 		async () => {

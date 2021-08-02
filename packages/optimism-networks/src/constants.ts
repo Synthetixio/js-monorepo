@@ -20,7 +20,7 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 			'https://optimism.io/images/metamask_icon.svg',
 			'https://optimism.io/images/metamask_icon.png',
 		],
-		fraudProofWindow: 604800000
+		fraudProofWindow: 604800000,
 	},
 	69: {
 		chainId: '0x45',
@@ -31,7 +31,7 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 			'https://optimism.io/images/metamask_icon.svg',
 			'https://optimism.io/images/metamask_icon.png',
 		],
-		fraudProofWindow: 0
+		fraudProofWindow: 0,
 	},
 };
 

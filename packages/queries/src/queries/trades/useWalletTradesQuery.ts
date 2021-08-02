@@ -4,12 +4,11 @@ import { QueryContext } from '../../context';
 
 export const useWalletTradesQuery = (
 	ctx: QueryContext,
-	walletAddress: string|null,
-	max: number = 100,
-	options?: UseQueryOptions<SynthExchangeExpanded[]|null>
+	walletAddress: string | null,
+	max = 100,
+	options?: UseQueryOptions<SynthExchangeExpanded[] | null>
 ) => {
-
-	return useQuery<SynthExchangeExpanded[]|null>(
+	return useQuery<SynthExchangeExpanded[] | null>(
 		['trades', 'walletTrades', ctx.networkId, walletAddress],
 		() =>
 			ctx.snxData!.synthExchanges({

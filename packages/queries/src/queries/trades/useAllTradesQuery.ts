@@ -6,9 +6,9 @@ export const useAllTradesQuery = (
 	ctx: QueryContext,
 	maxBlock = Number.MAX_SAFE_INTEGER,
 	max = 100,
-	options?: UseQueryOptions<SynthExchangeExpanded[]|null>
+	options?: UseQueryOptions<SynthExchangeExpanded[] | null>
 ) => {
-	return useQuery<SynthExchangeExpanded[]|null>(
+	return useQuery<SynthExchangeExpanded[] | null>(
 		['trades', 'allTrades', ctx.networkId],
 		() =>
 			ctx.snxData!.synthExchanges({
@@ -17,9 +17,9 @@ export const useAllTradesQuery = (
 			}),
 		{
 			enabled: ctx.snxData != null,
-			...options
+			...options,
 		}
-	)
+	);
 };
 
 export default useAllTradesQuery;

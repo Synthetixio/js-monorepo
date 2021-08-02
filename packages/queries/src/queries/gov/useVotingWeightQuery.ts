@@ -14,7 +14,7 @@ const useVotingWeightQuery = (
 	snapshotEndpoint: string,
 	spaceKey: SPACE_KEY,
 	block: number | null,
-	walletAddress: string|null,
+	walletAddress: string | null,
 	options?: UseQueryOptions<number[]>
 ) => {
 	return useQuery<number[]>(

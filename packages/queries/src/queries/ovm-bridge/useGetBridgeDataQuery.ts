@@ -16,7 +16,11 @@ import { wei } from '@synthetixio/wei';
 const NUM_BLOCKS_TO_FETCH = 1000000;
 
 // NOTE: query context for this query must always be on the L1 side (even if withdrawing)
-const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<DepositHistory>) => {
+const useGetDepositsDataQuery = (
+	ctx: QueryContext,
+	walletAddress: string | null,
+	options?: UseQueryOptions<DepositHistory>
+) => {
 	const [watcher, setWatcher] = useState<OptimismWatcher | null>(null);
 
 	useEffect(() => {
@@ -24,7 +28,7 @@ const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string|null, 
 			setWatcher(
 				optimismMessengerWatcher({
 					// @ts-ignore
-					layerOneProvider: provider as providers.Web3Provider,
+					layerOneProvider: ctx.provider as providers.Web3Provider,
 					// @ts-ignore
 					layerTwoProvider: getOptimismProvider({
 						layerOneNetworkId: ctx.networkId,
@@ -48,7 +52,10 @@ const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string|null, 
 			const withdrawalFilters = SynthetixBridgeToBase.filters.DepositInitiated(walletAddress);
 
 			const depositLogs = await ctx.provider!.getLogs({ ...depositFilters, fromBlock: startBlock });
-			const withdrawalLogs = await ctx.provider!.getLogs({ ...withdrawalFilters, fromBlock: startBlock });
+			const withdrawalLogs = await ctx.provider!.getLogs({
+				...withdrawalFilters,
+				fromBlock: startBlock,
+			});
 			const events: DepositHistory = await Promise.all([
 				...depositLogs.map(async (l) => {
 					const block = await ctx.provider!.getBlock(l.blockNumber);
@@ -59,7 +66,7 @@ const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string|null, 
 						amount: wei(args._amount),
 						transactionHash: l.transactionHash,
 						type: 'deposit',
-						status: 'pending'
+						status: 'pending',
 					} as DepositRecord;
 				}),
 				...withdrawalLogs.map(async (l) => {
@@ -68,7 +75,8 @@ const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string|null, 
 					const timestamp = Number(block.timestamp * 1000);
 					const msgHashes = await watcher!.getMessageHashesFromL1Tx(l.transactionHash);
 					const receipt = await watcher!.getL2TransactionReceipt(msgHashes[0], false);
-					const readyToRelay = Date.now() - timestamp > OPTIMISM_NETWORKS[ctx.networkId!].fraudProofWindow;
+					const readyToRelay =
+						Date.now() - timestamp > OPTIMISM_NETWORKS[ctx.networkId!].fraudProofWindow;
 					return {
 						timestamp,
 						amount: wei(args._amount),
@@ -80,7 +88,7 @@ const useGetDepositsDataQuery = (ctx: QueryContext, walletAddress: string|null, 
 							? ('relay' as const)
 							: ('pending' as const),
 					} as DepositRecord;
-				})
+				}),
 			]);
 
 			return orderBy(events, ['timestamp'], ['desc']);

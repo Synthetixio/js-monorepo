@@ -5,10 +5,14 @@ import { QueryContext } from '../../context';
 import { ShortRewardsData } from '../../types';
 import { wei } from '@synthetixio/wei';
 
-const useSBTCShortsQuery = (ctx: QueryContext, currencyKey: CurrencyKey, walletAddress: string|null, options?: UseQueryOptions<ShortRewardsData>) => {
-
+const useSBTCShortsQuery = (
+	ctx: QueryContext,
+	currencyKey: CurrencyKey,
+	walletAddress: string | null,
+	options?: UseQueryOptions<ShortRewardsData>
+) => {
 	return useQuery<ShortRewardsData>(
-		['shorts', 'data', ctx.networkId,  walletAddress],
+		['shorts', 'data', ctx.networkId, walletAddress],
 		async () => {
 			const {
 				contracts: { CollateralManager, ExchangeRates },
@@ -38,9 +42,7 @@ const useSBTCShortsQuery = (ctx: QueryContext, currencyKey: CurrencyKey, walletA
 
 			const durationInWeeks = Number(duration) / 3600 / 24 / 7;
 			const isPeriodFinished = new Date().getTime() > Number(periodFinish) * 1000;
-			const distribution = isPeriodFinished
-				? 0
-				: rate.mul(duration).div(durationInWeeks);
+			const distribution = isPeriodFinished ? 0 : rate.mul(duration).div(durationInWeeks);
 
 			const [openInterest, assetUSDPrice, rewards, staked] = [
 				openInterestBN,

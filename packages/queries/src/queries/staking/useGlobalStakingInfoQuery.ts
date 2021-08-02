@@ -5,7 +5,10 @@ import Wei, { wei } from '@synthetixio/wei';
 import { GlobalStakingInfo } from '../../types';
 import { ethers } from 'ethers';
 
-const useGlobalStakingInfoQuery = (ctx: QueryContext, options?: UseQueryOptions<GlobalStakingInfo>) => {
+const useGlobalStakingInfoQuery = (
+	ctx: QueryContext,
+	options?: UseQueryOptions<GlobalStakingInfo>
+) => {
 	return useQuery<GlobalStakingInfo>(
 		['staking', 'snxLockedValue', ctx.networkId],
 		async () => {
@@ -25,7 +28,7 @@ const useGlobalStakingInfoQuery = (ctx: QueryContext, options?: UseQueryOptions<
 				),
 
 				ctx.snxjs!.contracts.SystemSettings.issuanceRatio(),
-				ctx.snxData!.snxHolders({ max: 1000 })
+				ctx.snxData!.snxHolders({ max: 1000 }),
 			]);
 
 			const lastDebtLedgerEntry = wei(unformattedLastDebtLedgerEntry, 27);
@@ -43,11 +46,18 @@ const useGlobalStakingInfoQuery = (ctx: QueryContext, options?: UseQueryOptions<
 				collateral: unformattedCollateral,
 				debtEntryAtIndex,
 				initialDebtOwnership,
-			} of (holders || [])) {
+			} of holders || []) {
 				const collateral = wei(unformattedCollateral);
 
-				let debtBalance = debtEntryAtIndex.gt(0) ? totalIssuedSynths.mul(lastDebtLedgerEntry).div(debtEntryAtIndex).mul(initialDebtOwnership) : wei(0);
-				let collateralRatio = debtEntryAtIndex.gt(0) ? debtBalance.div(collateral).div(usdToSnxPrice) : wei(0);
+				const debtBalance = debtEntryAtIndex.gt(0)
+					? totalIssuedSynths
+							.mul(lastDebtLedgerEntry)
+							.div(debtEntryAtIndex)
+							.mul(initialDebtOwnership)
+					: wei(0);
+				const collateralRatio = debtEntryAtIndex.gt(0)
+					? debtBalance.div(collateral).div(usdToSnxPrice)
+					: wei(0);
 
 				const lockedSnx = collateral.mul(Wei.min(wei(1), collateralRatio.div(issuanceRatio)));
 
@@ -65,7 +75,7 @@ const useGlobalStakingInfoQuery = (ctx: QueryContext, options?: UseQueryOptions<
 				totalSupply: snxTotal,
 				lockedSupply: snxLocked,
 				lockedValue: totalSupply.mul(percentLocked).mul(usdToSnxPrice),
-			}
+			};
 		},
 		{
 			enabled: ctx.snxData != null && ctx.snxjs != null,

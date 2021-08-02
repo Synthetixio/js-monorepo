@@ -3,8 +3,10 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 import { DailyIssued, DailyBurned } from '@synthetixio/data/generated/graphql';
 
-const useDailyBurnedQuery = (ctx: QueryContext, options?: UseQueryOptions<[DailyIssued[], DailyBurned[]]>) => {
-
+const useDailyBurnedQuery = (
+	ctx: QueryContext,
+	options?: UseQueryOptions<[DailyIssued[], DailyBurned[]]>
+) => {
 	const SECONDS_PER_DAY = 86400;
 	const DAYS_TO_QUERY = 180;
 

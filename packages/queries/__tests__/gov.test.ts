@@ -7,16 +7,18 @@ import { getFakeQueryContext, getWrapper } from '../testUtils';
 import { SPACE_KEY } from '../src/queries/gov/constants';
 
 describe('@synthetixio/queries gov', () => {
-
-  jest.mock('graphql-request');
-  jest.mock('@snapshot-labs/snapshot.js');
+	jest.mock('graphql-request');
+	jest.mock('@snapshot-labs/snapshot.js');
 
 	const ctx = getFakeQueryContext();
 
 	test('useHasVotedForElectionsQuery', async () => {
 		const wrapper = getWrapper();
 
-		const { result, waitFor } = renderHook(() => useHasVotedForElectionsQuery(ctx, '', '0x0000000000000000000000000000000000000000'), { wrapper });
+		const { result, waitFor } = renderHook(
+			() => useHasVotedForElectionsQuery(ctx, '', '0x0000000000000000000000000000000000000000'),
+			{ wrapper }
+		);
 
 		await waitFor(() => result.current.isSuccess);
 
@@ -26,25 +28,48 @@ describe('@synthetixio/queries gov', () => {
 	test('useProposalQuery', async () => {
 		const wrapper = getWrapper();
 
-		const { result, waitFor } = renderHook(() => useProposalQuery(ctx, '', SPACE_KEY.COUNCIL, '0x0', '0x0000000000000000000000000000000000000000'), { wrapper });
+		const { result, waitFor } = renderHook(
+			() =>
+				useProposalQuery(
+					ctx,
+					'',
+					SPACE_KEY.COUNCIL,
+					'0x0',
+					'0x0000000000000000000000000000000000000000'
+				),
+			{ wrapper }
+		);
 
 		await waitFor(() => result.current.isSuccess);
 
-    // TODO: clean this up to make more sense
-		expect(result.current.data?.totalBalances).toEqual([0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0]);
-		expect(result.current.data?.totalVotes).toEqual([0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]);
+		// TODO: clean this up to make more sense
+		expect(result.current.data?.totalBalances).toEqual([
+			0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0,
+		]);
+		expect(result.current.data?.totalVotes).toEqual([
+			0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+		]);
 		expect(result.current.data?.choices).toHaveLength(16);
 		expect(result.current.data?.totalVotesBalances).toEqual(15);
-
 	});
 
 	test('useVotingWeightQuery', async () => {
 		const wrapper = getWrapper();
 
-		const { result, waitFor } = renderHook(() => useVotingWeightQuery(ctx, '', SPACE_KEY.COUNCIL, 1234, '0x0000000000000000000000000000000000000000'), { wrapper });
+		const { result, waitFor } = renderHook(
+			() =>
+				useVotingWeightQuery(
+					ctx,
+					'',
+					SPACE_KEY.COUNCIL,
+					1234,
+					'0x0000000000000000000000000000000000000000'
+				),
+			{ wrapper }
+		);
 
 		await waitFor(() => result.current.isSuccess);
 
-		expect(result.current.data!).toEqual([15,0]);
+		expect(result.current.data!).toEqual([15, 0]);
 	});
 });

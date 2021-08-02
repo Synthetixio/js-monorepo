@@ -87,7 +87,7 @@ export type GlobalStakingInfo = {
 	totalSupply: Wei;
 	lockedSupply: Wei;
 	lockedValue: Wei;
-}
+};
 
 export type Token = {
 	address: string;

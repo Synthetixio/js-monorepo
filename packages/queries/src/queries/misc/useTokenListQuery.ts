@@ -16,7 +16,11 @@ const ether = {
 	tags: [],
 };
 
-const useTokenListQuery = (_: QueryContext, tokenListUrl: string, options?: UseQueryOptions<TokenListQueryResponse>) => {
+const useTokenListQuery = (
+	_: QueryContext,
+	tokenListUrl: string,
+	options?: UseQueryOptions<TokenListQueryResponse>
+) => {
 	return useQuery<TokenListQueryResponse>(
 		['misc', 'tokenList', tokenListUrl],
 		async () => {

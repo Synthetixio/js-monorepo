@@ -3,7 +3,11 @@ import { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { TokenSaleEscrow, Schedule } from '../../types';
 
-const useTokenSaleEscrowQuery = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<TokenSaleEscrow | null>) => {
+const useTokenSaleEscrowQuery = (
+	ctx: QueryContext,
+	walletAddress: string | null,
+	options?: UseQueryOptions<TokenSaleEscrow | null>
+) => {
 	return useQuery<TokenSaleEscrow | null>(
 		['escrow', 'tokenSale', ctx.networkId, walletAddress],
 		async () => {
@@ -21,8 +25,8 @@ const useTokenSaleEscrowQuery = (ctx: QueryContext, walletAddress: string|null, 
 			let totalPeriod = 0;
 			let hasVesting = false;
 			let lastVestTime;
-			let schedule: Schedule = [];
-			let claimableAmount = wei(0);
+			const schedule: Schedule = [];
+			const claimableAmount = wei(0);
 			let totalVested;
 
 			for (let i = 0; i < dataReversed.length - 1; i += 2) {

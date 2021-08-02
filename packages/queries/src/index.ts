@@ -17,8 +17,6 @@ export * from './types';
 // all functions exported by submodules must follow this format
 type UseQueryFunction = (ctx: QueryContext, ...args: any) => UseQueryResult;
 
-
-
 // compute the type of this library so that typescript can do full analysis of arguments and available functions
 type RawSynthetixQueries = typeof FUNCS;
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;

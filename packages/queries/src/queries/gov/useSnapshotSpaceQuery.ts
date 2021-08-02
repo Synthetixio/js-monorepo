@@ -4,7 +4,12 @@ import { SPACE_KEY } from './constants';
 import { SpaceData } from '../../types';
 import { QueryContext } from '../../context';
 
-const useSnapshotSpaceQuery = (_: QueryContext, snapshotEndpoint: string, spaceKey: SPACE_KEY, options?: UseQueryOptions<SpaceData>) => {
+const useSnapshotSpaceQuery = (
+	_: QueryContext,
+	snapshotEndpoint: string,
+	spaceKey: SPACE_KEY,
+	options?: UseQueryOptions<SpaceData>
+) => {
 	return useQuery<SpaceData>(
 		['gov', 'snapshotSpace', snapshotEndpoint, spaceKey],
 		async () => {

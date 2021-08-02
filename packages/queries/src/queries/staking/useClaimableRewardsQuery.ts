@@ -4,7 +4,11 @@ import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { StakingClaimableRewards } from '../../types';
 
-const useClaimableRewards = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<StakingClaimableRewards>) => {
+const useClaimableRewards = (
+	ctx: QueryContext,
+	walletAddress: string | null,
+	options?: UseQueryOptions<StakingClaimableRewards>
+) => {
 	return useQuery<StakingClaimableRewards>(
 		['staking', 'claimableRewards', ctx.networkId, walletAddress],
 		async () => {

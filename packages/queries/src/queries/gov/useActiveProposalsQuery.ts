@@ -5,8 +5,11 @@ import { QueryContext } from '../../context';
 import { SPACE_KEY } from './constants';
 import { Proposal } from '../../types';
 
-const useActiveProposalsQuery = (_: QueryContext, snapshotEndpoint: string, options?: UseQueryOptions<number>) => {
-
+const useActiveProposalsQuery = (
+	_: QueryContext,
+	snapshotEndpoint: string,
+	options?: UseQueryOptions<number>
+) => {
 	return useQuery<number>(
 		['gov', 'activeProposals', snapshotEndpoint],
 		async () => {

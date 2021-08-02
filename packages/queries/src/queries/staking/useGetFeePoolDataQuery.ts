@@ -3,7 +3,11 @@ import { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { FeePoolData } from '../../types';
 
-const useGetFeePoolDataQuery = (ctx: QueryContext, period: string, options?: UseQueryOptions<FeePoolData>) => {
+const useGetFeePoolDataQuery = (
+	ctx: QueryContext,
+	period: string,
+	options?: UseQueryOptions<FeePoolData>
+) => {
 	return useQuery<FeePoolData>(
 		['staking', 'feePool', ctx.networkId],
 		async () => {

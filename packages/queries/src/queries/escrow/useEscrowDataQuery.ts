@@ -16,7 +16,11 @@ type VestingEntry = {
 	endTime: Wei;
 };
 
-const useEscrowDataQuery = (ctx: QueryContext, walletAddress: string|null, options?: UseQueryOptions<EscrowData>) => {
+const useEscrowDataQuery = (
+	ctx: QueryContext,
+	walletAddress: string | null,
+	options?: UseQueryOptions<EscrowData>
+) => {
 	return useQuery<EscrowData>(
 		['escrow', 'stakingRewards', ctx.networkId, walletAddress],
 		async () => {
@@ -24,22 +28,18 @@ const useEscrowDataQuery = (ctx: QueryContext, walletAddress: string|null, optio
 				contracts: { RewardEscrowV2 },
 			} = ctx.snxjs!;
 
-			const [
-				numVestingEntries,
-				totalEscrowed,
-				totalVested,
-				totalBalancePendingMigration,
-			] = await Promise.all([
-				RewardEscrowV2.numVestingEntries(walletAddress),
-				RewardEscrowV2.balanceOf(walletAddress),
-				RewardEscrowV2.totalVestedAccountBalance(walletAddress),
-				OPTIMISM_NETWORKS[ctx.networkId!] != null
-					? ethers.BigNumber.from(0)
-					: RewardEscrowV2.totalBalancePendingMigration(walletAddress),
-			]);
+			const [numVestingEntries, totalEscrowed, totalVested, totalBalancePendingMigration] =
+				await Promise.all([
+					RewardEscrowV2.numVestingEntries(walletAddress),
+					RewardEscrowV2.balanceOf(walletAddress),
+					RewardEscrowV2.totalVestedAccountBalance(walletAddress),
+					OPTIMISM_NETWORKS[ctx.networkId!] != null
+						? ethers.BigNumber.from(0)
+						: RewardEscrowV2.totalBalancePendingMigration(walletAddress),
+				]);
 
-			let vestingEntriesPromise = [];
-			let vestingEntriesIdPromise = [];
+			const vestingEntriesPromise = [];
+			const vestingEntriesIdPromise = [];
 			const totalVestingEntries = Number(numVestingEntries);
 
 			for (let index = 0; index < totalVestingEntries; index += VESTING_ENTRIES_PAGINATION) {
@@ -64,8 +64,8 @@ const useEscrowDataQuery = (ctx: QueryContext, walletAddress: string|null, optio
 				claimableAmount = await RewardEscrowV2.getVestingQuantity(walletAddress, vestingEntriesId);
 			}
 
-			let unorderedSchedule: Schedule = [];
-			let claimableEntryIds: Wei[] = [];
+			const unorderedSchedule: Schedule = [];
+			const claimableEntryIds: Wei[] = [];
 
 			(vestingEntries ?? []).forEach(({ escrowAmount, entryID, endTime }: VestingEntry) => {
 				const quantity = wei(escrowAmount);
@@ -88,7 +88,9 @@ const useEscrowDataQuery = (ctx: QueryContext, walletAddress: string|null, optio
 				formattedTotalEscrowed,
 				formattedTotalVested,
 				formattedTotalBalanceMigration,
-			] = [claimableAmount, totalEscrowed, totalVested, totalBalancePendingMigration].map((data) => wei(data));
+			] = [claimableAmount, totalEscrowed, totalVested, totalBalancePendingMigration].map((data) =>
+				wei(data)
+			);
 
 			return {
 				claimableAmount: formattedClaimableAmount,

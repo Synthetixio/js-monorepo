@@ -10,13 +10,13 @@ import CouncilDilution from '../../contracts/CouncilDilution';
 import axios from 'axios';
 import { COUNCIL_NOMINATIONS_URL } from '../../constants';
 
-const useProposalsQuery = (ctx: QueryContext, snapshotEndpoint: string, spaceKey: SPACE_KEY, options?: UseQueryOptions<Proposal[]>) => {
-
-	const contract = new ethers.Contract(
-		CouncilDilution.address,
-		CouncilDilution.abi,
-		ctx.provider!
-	);
+const useProposalsQuery = (
+	ctx: QueryContext,
+	snapshotEndpoint: string,
+	spaceKey: SPACE_KEY,
+	options?: UseQueryOptions<Proposal[]>
+) => {
+	const contract = new ethers.Contract(CouncilDilution.address, CouncilDilution.abi, ctx.provider!);
 
 	return useQuery<Proposal[]>(
 		['gov', 'proposals', snapshotEndpoint, spaceKey],

@@ -50,11 +50,7 @@ export function getENSForAddresses(addresses: any[]) {
 export async function getProfiles(addresses: any) {
 	let ensNames = [] as any;
 
-	try {
-		[ensNames] = await Promise.all([getENSForAddresses(addresses)]);
-	} catch (e) {
-		console.log(e);
-	}
+	[ensNames] = await Promise.all([getENSForAddresses(addresses)]);
 
 	const profiles = Object.fromEntries(addresses.map((address: any) => [address, {}]));
 
@@ -71,11 +67,10 @@ const useProposalQuery = (
 	ctx: QueryContext,
 	snapshotEndpoint: string,
 	spaceKey: SPACE_KEY,
-	hash: string|null,
-	walletAddress: string|null,
+	hash: string | null,
+	walletAddress: string | null,
 	options?: UseQueryOptions<ProposalResults>
 ) => {
-
 	return useQuery<ProposalResults>(
 		['gov', 'proposal', snapshotEndpoint, spaceKey, hash, walletAddress],
 		async () => {

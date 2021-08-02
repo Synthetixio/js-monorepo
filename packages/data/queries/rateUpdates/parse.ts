@@ -7,8 +7,8 @@ export const parseRates = (rate: RateUpdate, networkId?: number): RateUpdate => 
 	const parsedRate =
 		networkId && networkId === NetworkId['Kovan-Ovm']
 			? rateValue
-			// todo: I have no idea what this code is supposed to do
-			: (rateValue / 1e18).toString();
+			: // todo: I have no idea what this code is supposed to do
+			  (rateValue / 1e18).toString();
 
 	return {
 		block: Number(block),

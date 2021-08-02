@@ -1,9 +1,11 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 
-const useGetDepositsIsActive = (ctx: QueryContext, options?: UseQueryOptions<{ deposit: boolean, withdrawal: boolean }>) => {
-
-	return useQuery<{ deposit: boolean, withdrawal: boolean }>(
+const useGetDepositsIsActive = (
+	ctx: QueryContext,
+	options?: UseQueryOptions<{ deposit: boolean; withdrawal: boolean }>
+) => {
+	return useQuery<{ deposit: boolean; withdrawal: boolean }>(
 		['ovm-bridge', 'depositsActive', ctx.networkId],
 		async () => {
 			const {
@@ -12,7 +14,7 @@ const useGetDepositsIsActive = (ctx: QueryContext, options?: UseQueryOptions<{ d
 
 			return {
 				deposit: await SynthetixBridgeToOptimism.initiationActive(),
-				withdrawal: await SynthetixBridgeToBase.initiationActive()
+				withdrawal: await SynthetixBridgeToBase.initiationActive(),
 			};
 		},
 		{

@@ -5,7 +5,11 @@ import { QueryContext } from '../../context';
 
 import { HistoricalStakingTransaction, StakingTransactionType } from '../../types';
 
-const useFeeClaimHistoryQuery = (ctx: QueryContext, walletAddress: string | null, options?: UseQueryOptions<HistoricalStakingTransaction[]>) => {
+const useFeeClaimHistoryQuery = (
+	ctx: QueryContext,
+	walletAddress: string | null,
+	options?: UseQueryOptions<HistoricalStakingTransaction[]>
+) => {
 	return useQuery<HistoricalStakingTransaction[]>(
 		['staking', 'feesClaimed', ctx.networkId, walletAddress],
 		async () => {
@@ -18,7 +22,7 @@ const useFeeClaimHistoryQuery = (ctx: QueryContext, walletAddress: string | null
 				value: wei(e.value),
 				timestamp: e.timestamp,
 				type: StakingTransactionType.FeesClaimed,
-				totalIssuedSUSD: wei(0)
+				totalIssuedSUSD: wei(0),
 			}));
 			const burned: HistoricalStakingTransaction[] = (await ctx.snxData!.burned({
 				account: walletAddress!,
@@ -29,7 +33,7 @@ const useFeeClaimHistoryQuery = (ctx: QueryContext, walletAddress: string | null
 				value: wei(e.value),
 				timestamp: e.timestamp,
 				type: StakingTransactionType.Issued,
-				totalIssuedSUSD: wei(e.value)
+				totalIssuedSUSD: wei(e.value),
 			}));
 			const issued: HistoricalStakingTransaction[] = (await ctx.snxData!.issued({
 				account: walletAddress!,
@@ -40,10 +44,8 @@ const useFeeClaimHistoryQuery = (ctx: QueryContext, walletAddress: string | null
 				value: wei(e.value),
 				timestamp: e.timestamp,
 				type: StakingTransactionType.Burned,
-				totalIssuedSUSD: wei(e.value)
+				totalIssuedSUSD: wei(e.value),
 			}));
-
-
 
 			return orderBy([...feesClaimed, ...burned, ...issued], ['timestamp'], ['asc']);
 		},
