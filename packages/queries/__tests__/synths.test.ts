@@ -65,36 +65,6 @@ describe('@synthetixio/queries synths', () => {
 		const { result, waitFor } = renderHook(() => useSynthsTotalSupplyQuery(ctx), { wrapper });
 		await waitFor(() => result.current.isSuccess);
 
-		// const d = result.current.data;
-		// console.log(
-		// 	JSON.stringify(
-		// 		{
-		// 			totalValue: d.totalValue.toString(),
-		// 			supplyData: Object.entries(d.supplyData).reduce((r, [k, v]) => {
-		// 				r[k] = {
-		// 					name: v.name,
-		// 					totalSupply: v.totalSupply.toString(),
-		// 					value: v.value.toString(),
-		// 					skewValue: v.value.toString(),
-		// 					poolProportion: v.poolProportion.toString(),
-		// 				};
-		// 				return r;
-		// 			}, {}),
-		// 			priceData: Object.entries(d.priceData).reduce((r, [k, v]) => {
-		// 				r[k] = v.toString();
-		// 				return r;
-		// 			}, {}),
-		// 			shortData: Object.entries(d.shortData).reduce((r, [k, v]) => {
-		// 				r[k] = v.toString();
-		// 				return r;
-		// 			}, {}),
-		// 			synthTotalSupplies: d.synthTotalSupplies.map((a) => a.map((b) => b.toString())),
-		// 		},
-		// 		null,
-		// 		2
-		// 	)
-		// );
-
 		expect(result.current.data).toEqual({
 			totalValue: wei(1820000),
 			supplyData: {
