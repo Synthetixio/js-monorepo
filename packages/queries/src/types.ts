@@ -336,6 +336,7 @@ export type FeePoolData = {
 export type SynthTotalSupply = {
 	name: string;
 	value: Wei;
+	skewValue: Wei;
 	totalSupply: Wei;
 	poolProportion: Wei;
 };
