@@ -13,6 +13,8 @@ import {
 	parseSnxHolder,
 	parseShort,
 	parseExchangeEntrySettleds,
+	parseDailyIssued,
+	parseDailyBurned,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
@@ -30,6 +32,8 @@ import {
 	shortsMock,
 	exchangeEntrySettledsMock,
 } from '../__mocks__';
+import { dailyBurnedMock } from '../__mocks__/dailyBurned';
+import { dailyIssuedMock } from '../__mocks__/dailyIssued';
 
 describe('@synthetixio/data tests', () => {
 	const randomLargeSNXStaker = '0x042ed37d32b88ab6b1c2e7b8a400dcdc728050bc';
@@ -168,6 +172,36 @@ describe('@synthetixio/data tests', () => {
 		test.skip('should return burneds data from l2', async () => {
 			const burnedInfo = await snxDataOvm.burned({ max: 1, account: randomL2StakerWithBurns });
 			expect(burnedInfo![0].account).toEqual(randomL2StakerWithBurns);
+		});
+	});
+
+	describe('dailyIssued query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseDailyIssued(dailyIssuedMock.response);
+			expect(dailyIssuedMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should return issueds data from l1', async () => {
+			await snxData.dailyIssued({ max: 1 });
+		});
+
+		test.skip('should return issueds data from l2', async () => {
+			await snxDataOvm.dailyIssued({ max: 1 });
+		});
+	});
+
+	describe('dailyBurned query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseDailyBurned(dailyBurnedMock.response);
+			expect(dailyBurnedMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should return issueds data from l1', async () => {
+			await snxData.dailyBurned({ max: 1 });
+		});
+
+		test.skip('should return issueds data from l2', async () => {
+			await snxDataOvm.dailyBurned({ max: 1 });
 		});
 	});
 

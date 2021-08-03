@@ -1,19 +1,9 @@
 import {
-	Issued,
-	RateUpdate,
-	Synthetix,
 	SynthExchange,
-	Burned,
-	FeesClaimed,
-	DailySnxPrice,
-	FifteenMinuteSnxPrice,
-	DebtSnapshot,
-	SnxHolder,
 	Short,
 	ShortLoanChange,
 	ShortCollateralChange,
 	ShortLiquidation,
-	ExchangeEntrySettled,
 } from '../generated/graphql';
 
 export type BaseQueryParams = {
@@ -37,11 +27,16 @@ export type IssuedQueryParams = {
 	minBlock?: number;
 } & BaseQueryParams;
 
+export type DailyIssuedQueryParams = {
+	minTimestamp?: number;
+} & BaseQueryParams;
+
 export type SnxPriceParams = {
 	timeSeries: '1d' | '15m';
 } & BaseQueryParams;
 
 export type BurnedQueryParams = IssuedQueryParams;
+export type DailyBurnedQueryParams = DailyIssuedQueryParams;
 
 export type DebtSnapshotParams = {
 	minBlock?: number;
@@ -88,19 +83,3 @@ export interface FormattedShort
 	collateralChanges: Omit<ShortCollateralChange, 'short'>[];
 	liquidations: Omit<ShortLiquidation, 'short'>[];
 }
-
-export type SynthetixData = {
-	synthExchanges: (params?: SynthExchangeQueryParams) => Promise<SynthExchange[] | null>;
-	synthetix: (params?: BaseQueryParams) => Promise<Synthetix | null>;
-	issued: (params?: IssuedQueryParams) => Promise<Issued[] | null>;
-	rateUpdates: (params?: RateUpdateQueryParams) => Promise<RateUpdate[] | null>;
-	burned: (params?: BurnedQueryParams) => Promise<Burned[] | null>;
-	feesClaimed: (params?: FeesClaimedParams) => Promise<FeesClaimed[] | null>;
-	snxPrices: (params: SnxPriceParams) => Promise<DailySnxPrice[] | FifteenMinuteSnxPrice[] | null>;
-	debtSnapshots: (params?: DebtSnapshotParams) => Promise<DebtSnapshot[] | null>;
-	snxHolders: (params?: SnxHolderParams) => Promise<SnxHolder[] | null>;
-	shorts: (params?: ShortQueryParams) => Promise<FormattedShort[] | null>;
-	exchangeEntrySettleds: (
-		params?: ExchangeEntrySettledsParams
-	) => Promise<ExchangeEntrySettled[] | null>;
-};

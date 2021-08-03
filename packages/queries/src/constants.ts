@@ -71,3 +71,5 @@ export const PERIOD_LABELS_MAP: Record<Period, PeriodLabel> = {
 };
 
 export const PERIOD_LABELS = Object.values(PERIOD_LABELS_MAP);
+
+export const COUNCIL_NOMINATIONS_URL = 'https://';

@@ -5,5 +5,5 @@
 		"module": "commonjs",
 		"declarationDir": "./build"
 	},
-	"include": ["src"]
+	"include": ["src", "__tests__"]
 }
