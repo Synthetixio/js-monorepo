@@ -15,6 +15,7 @@ const useSNX24hrPricesQuery = (
 			})) as FifteenMinuteSnxPrice[];
 		},
 		{
+			enabled: ctx.snxData != null,
 			...options,
 		}
 	);
