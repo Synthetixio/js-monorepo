@@ -25,6 +25,7 @@ module.exports = {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'index.js',
 		libraryTarget: 'umd',
+		library: 'snxData',
 	},
 	resolve: {
 		extensions: ['.ts', '.js'],
