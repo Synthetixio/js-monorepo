@@ -188,7 +188,7 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			endpoints: {
 				[NetworkId.Mainnet]: l1Endpoints.rates,
 				[NetworkId['Kovan-Ovm']]: l2Endpoints.exchangesKovan,
-				[NetworkId['Mainnet-Ovm']]: l1Endpoints.rates,
+				[NetworkId['Mainnet-Ovm']]: l2Endpoints.exchanges,
 			},
 		});
 		return response != null ? response.rateUpdates.map(queries.parseRates) : null;

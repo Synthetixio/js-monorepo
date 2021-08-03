@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/queries",
-	"version": "2.47.0-ovm.2",
+	"version": "2.47.0-ovm.3",
 	"description": "react-query for pulling synthetix data in react interfaces",
 	"source": "./src/index.ts",
 	"main": "./build/node/src/index.js",
@@ -36,7 +36,7 @@
 		"@synthetixio/optimism-networks": "2.47.0-ovm.2",
 		"@synthetixio/providers": "2.47.0-ovm.2",
 		"@synthetixio/contracts-interface": "2.47.0-ovm.2",
-		"@synthetixio/data": "2.47.0-ovm.2",
+		"@synthetixio/data": "2.47.0-ovm.3",
 		"@synthetixio/wei": "2.47.0-ovm.2",
 		"axios": "0.21.1",
 		"bignumber.js": "9.0.1",

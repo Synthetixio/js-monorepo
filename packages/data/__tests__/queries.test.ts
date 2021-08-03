@@ -269,7 +269,7 @@ describe('@synthetixio/data tests', () => {
 			expect(l1RateUpdatesAnnualInfo!.length).toBeGreaterThan(1000);
 		});
 
-		test.skip('should return rateUpdates data from l2', async () => {
+		test('should return rateUpdates data from l2', async () => {
 			const l2RateUpdatesInfo = await snxDataOvm.rateUpdates({
 				max: 5,
 				synth: 'SNX',
