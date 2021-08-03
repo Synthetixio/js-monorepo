@@ -15,6 +15,7 @@ export const l1Endpoints = {
 };
 
 export const l2Endpoints = {
+	snx: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-issuance',
 	exchanges: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-exchanges',
 	exchangesKovan: 'https://api.thegraph.com/subgraphs/name/killerbyte/optimism-kovan-exchanges',
 };

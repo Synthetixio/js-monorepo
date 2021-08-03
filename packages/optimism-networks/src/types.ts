@@ -4,6 +4,7 @@ export type OptimismNetwork = {
 	rpcUrls: string[];
 	blockExplorerUrls: string[];
 	iconUrls: string[];
+	fraudProofWindow: number;
 };
 
 export enum NetworkId {

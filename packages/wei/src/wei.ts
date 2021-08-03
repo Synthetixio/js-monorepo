@@ -47,10 +47,10 @@ export default class Wei {
 	}
 
 	/** Value */
-	private readonly v: BigNumber;
+	readonly bn: BigNumber;
 
 	/** Decimals (usually WEI_PRECISION) */
-	private readonly p: number;
+	readonly p: number;
 
 	get z() {
 		return BigNumber.from(10).pow(BigNumber.from(this.p));
@@ -72,20 +72,20 @@ export default class Wei {
 
 		if (n === undefined || n === null) throw new Error('Cannot parse undefined/null as a number.');
 		if (Wei.is(n)) {
-			this.v = n.scale(p).v;
+			this.bn = n.scale(p).bn;
 		} else if ((n as BigNumber)._isBigNumber) {
-			this.v = n as BigNumber;
+			this.bn = n as BigNumber;
 		} else if (isWei) {
 			// already wei, don't scale again
 			if (n instanceof Big) {
-				this.v = BigNumber.from(n.abs().toFixed(0));
+				this.bn = BigNumber.from(n.abs().toFixed(0));
 			} else {
-				this.v = BigNumber.from(n);
+				this.bn = BigNumber.from(n);
 			}
 		} else {
 			// not wei, scale it
 			// TODO: avoid use of Big.js, but this is a really easy way to do the conversion for now
-			this.v = BigNumber.from(new Big(n as any).mul(new Big(10).pow(this.p)).toFixed(0));
+			this.bn = BigNumber.from(new Big(n as any).mul(new Big(10).pow(this.p)).toFixed(0));
 		}
 	}
 
@@ -104,7 +104,7 @@ export default class Wei {
 			return this;
 		}
 
-		return wei(wei(1, p).v.mul(this.v).div(this.z));
+		return wei(wei(1, p).bn.mul(this.bn).div(this.z));
 	}
 
 	/**
@@ -134,7 +134,7 @@ export default class Wei {
 	 */
 	toSortable(): string {
 		// TODO: handle sign?
-		return ethers.utils.hexZeroPad(Buffer.from(this.v.toHexString()), 64);
+		return ethers.utils.hexZeroPad(Buffer.from(this.bn.toHexString()), 64);
 	}
 
 	/**
@@ -145,12 +145,7 @@ export default class Wei {
 	 * @memberof Wei
 	 */
 	toBN(): BigNumber {
-		return BigNumber.from(this.v);
-	}
-
-	/** The scaled value as a BN */
-	get bn(): BigNumber {
-		return this.toBN();
+		return BigNumber.from(this.bn);
 	}
 
 	/**
@@ -161,7 +156,7 @@ export default class Wei {
 	 * @memberof Wei
 	 */
 	toBig(asWei = false): Big {
-		const big = new Big(this.v.toString());
+		const big = new Big(this.bn.toString());
 		return asWei ? big : big.div(new Big(10).pow(this.p));
 	}
 
@@ -193,31 +188,31 @@ export default class Wei {
 	////////////////////
 
 	neg(): Wei {
-		return new Wei(this.v.mul(-1), this.p, true);
+		return new Wei(this.bn.mul(-1), this.p, true);
 	}
 
 	abs(): Wei {
-		return new Wei(this.v.abs(), this.p, true);
+		return new Wei(this.bn.abs(), this.p, true);
 	}
 
 	div(other: WeiSource): Wei {
 		other = parseNum(other, this.p);
-		return new Wei(this.v.mul(this.z).div(other.v), this.p, true);
+		return new Wei(this.bn.mul(this.z).div(other.bn), this.p, true);
 	}
 
 	sub(other: WeiSource): Wei {
 		other = parseNum(other, this.p);
-		return new Wei(this.v.sub(other.v), this.p, true);
+		return new Wei(this.bn.sub(other.bn), this.p, true);
 	}
 
 	add(other: WeiSource): Wei {
 		other = parseNum(other, this.p);
-		return new Wei(this.v.add(other.v), this.p, true);
+		return new Wei(this.bn.add(other.bn), this.p, true);
 	}
 
 	mul(other: WeiSource): Wei {
 		other = parseNum(other, this.p);
-		return new Wei(this.v.mul(other.v).div(this.z), this.p, true);
+		return new Wei(this.bn.mul(other.bn).div(this.z), this.p, true);
 	}
 
 	pow(p: number): Wei {
@@ -225,7 +220,7 @@ export default class Wei {
 	}
 
 	inv(): Wei {
-		return new Wei(this.z.pow(2).div(this.v), this.p, true);
+		return new Wei(this.z.pow(2).div(this.bn), this.p, true);
 	}
 
 	///////////////////////////
@@ -234,14 +229,14 @@ export default class Wei {
 
 	cmp(other: WeiSource): number {
 		other = parseNum(other, this.p);
-		if (this.v.gt(other.v)) return 1;
-		else if (this.v.lt(other.v)) return -1;
+		if (this.bn.gt(other.bn)) return 1;
+		else if (this.bn.lt(other.bn)) return -1;
 		else return 0;
 	}
 
 	eq(other: WeiSource): boolean {
 		other = parseNum(other, this.p);
-		return this.v.eq(other.v);
+		return this.bn.eq(other.bn);
 	}
 
 	/**
@@ -255,7 +250,7 @@ export default class Wei {
 	feq(other: WeiSource, fuzz: WeiSource): boolean {
 		const o = parseNum(other, this.p);
 		const f = parseNum(fuzz, this.p);
-		return this.v.sub(o.v).abs().lt(f.v);
+		return this.bn.sub(o.bn).abs().lt(f.bn);
 	}
 
 	gt(other: WeiSource): boolean {

@@ -42,7 +42,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 
 		const useOvm = true;
 
-		delete ctx.provider.getGasPrice;
+		delete (ctx as any).provider.getGasPrice;
 
 		// eslint-disable-next-line
 		console.error = () => {}; //suppress error
@@ -51,7 +51,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 
 		await waitFor(() => result.current.isError);
 
-		expect(result.current.error.message).toContain(
+		expect(result.current.error?.message).toContain(
 			'Cannot retrieve optimistic gas price from provider'
 		);
 	});
