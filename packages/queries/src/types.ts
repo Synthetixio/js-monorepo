@@ -448,3 +448,10 @@ export type SettlementOwingData = {
 	reclaim: Wei;
 	numEntries: Wei;
 };
+
+export type SynthFeeAndWaitingPeriod = {
+	currencyKey: CurrencyKey;
+	fee: Wei;
+	waitingPeriod: number;
+	noOfTrades: number;
+};

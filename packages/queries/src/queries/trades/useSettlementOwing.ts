@@ -7,8 +7,8 @@ import { SettlementOwingData } from '../../types';
 
 export const useSettlementOwing = (
 	ctx: QueryContext,
-	currencyKey: CurrencyKey | null,
-	walletAddress: string | null,
+	currencyKey: CurrencyKey,
+	walletAddress: string,
 	options?: UseQueryOptions<SettlementOwingData>
 ) => {
 	return useQuery<SettlementOwingData>(
