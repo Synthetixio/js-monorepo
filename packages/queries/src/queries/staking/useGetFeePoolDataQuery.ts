@@ -5,7 +5,7 @@ import { FeePoolData } from '../../types';
 
 const useGetFeePoolDataQuery = (
 	ctx: QueryContext,
-	period: string,
+	period: number,
 	options?: UseQueryOptions<FeePoolData>
 ) => {
 	return useQuery<FeePoolData>(
