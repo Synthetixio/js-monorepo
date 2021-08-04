@@ -442,3 +442,9 @@ export type LiquidationsData = {
 	currentCollateral: number;
 	currentBalanceOf: number;
 };
+
+export type SettlementOwingData = {
+	rebate: Wei;
+	reclaim: Wei;
+	numEntries: Wei;
+};
