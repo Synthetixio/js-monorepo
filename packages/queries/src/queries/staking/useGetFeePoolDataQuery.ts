@@ -1,8 +1,9 @@
 import { useQuery, UseQueryOptions } from 'react-query';
+import isNumber from 'lodash/isNumber';
 import { wei } from '@synthetixio/wei';
+
 import { QueryContext } from '../../context';
 import { FeePoolData } from '../../types';
-import isNumber from 'lodash/isNumber';
 
 const useGetFeePoolDataQuery = (
 	ctx: QueryContext,
