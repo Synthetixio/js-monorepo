@@ -5,7 +5,7 @@ import { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { SettlementOwingData } from '../../types';
 
-export const useSettlementOwing = (
+export const useSettlementOwingQuery = (
 	ctx: QueryContext,
 	currencyKey: CurrencyKey,
 	walletAddress: string,
@@ -27,4 +27,4 @@ export const useSettlementOwing = (
 	);
 };
 
-export default useSettlementOwing;
+export default useSettlementOwingQuery;

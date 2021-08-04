@@ -2,7 +2,7 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 
-export const useTxReclaimFee = (
+export const useTxReclaimFeeQuery = (
 	ctx: QueryContext,
 	timestamp: number,
 	walletAddress: string | null,
@@ -27,4 +27,4 @@ export const useTxReclaimFee = (
 	);
 };
 
-export default useTxReclaimFee;
+export default useTxReclaimFeeQuery;
