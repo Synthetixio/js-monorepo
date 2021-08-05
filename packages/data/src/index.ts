@@ -23,6 +23,8 @@ import {
 	ExchangeEntrySettledsParams,
 	DailyIssuedQueryParams,
 	DailyBurnedQueryParams,
+	BinaryOptionMarketsParams,
+	BinaryOptionTransactionsParams,
 } from './types';
 import {
 	Synthetix,
@@ -37,6 +39,8 @@ import {
 	DebtSnapshot,
 	SnxHolder,
 	ExchangeEntrySettled,
+	OptionTransaction,
+	Market as OptionMarket,
 } from '../generated/graphql';
 
 enum Period {
@@ -236,6 +240,30 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 						? queries.parseExchangeEntrySettledsKovan
 						: queries.parseExchangeEntrySettleds
 			  )
+			: null;
+	},
+	binaryOptionMarkets: async (
+		params?: BinaryOptionMarketsParams
+	): Promise<OptionMarket[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: queries.createBinaryOptionMarketsQuery,
+			networkId,
+			endpoints: { [NetworkId.Mainnet]: l1Endpoints.binaryOptions },
+		});
+		return response != null ? response.markets.map(queries.parseBinaryOptionMarkets) : null;
+	},
+	binaryOptionTransactions: async (
+		params?: BinaryOptionTransactionsParams
+	): Promise<OptionTransaction[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: queries.createBinaryOptionTransactionsQuery,
+			networkId,
+			endpoints: { [NetworkId.Mainnet]: l1Endpoints.binaryOptions },
+		});
+		return response != null
+			? response.optionTransactions.map(queries.parseBinaryOptionTransactions)
 			: null;
 	},
 });

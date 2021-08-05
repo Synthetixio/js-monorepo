@@ -20,3 +20,8 @@ export {
 	parseExchangeEntrySettledsKovan,
 	createExchangeEntrySettledsQuery,
 } from './exchangeEntrySettleds';
+export { createBinaryOptionMarketsQuery, parseBinaryOptionMarkets } from './binaryOptionMarkets';
+export {
+	createBinaryOptionTransactionsQuery,
+	parseBinaryOptionTransactions,
+} from './binaryOptionTransactions';

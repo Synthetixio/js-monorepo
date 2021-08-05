@@ -15,6 +15,8 @@ import {
 	parseExchangeEntrySettleds,
 	parseDailyIssued,
 	parseDailyBurned,
+	parseBinaryOptionMarkets,
+	parseBinaryOptionTransactions,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
@@ -31,6 +33,8 @@ import {
 	snxHolderMock,
 	shortsMock,
 	exchangeEntrySettledsMock,
+	binaryOptionMarketsMock,
+	binaryOptionTransactionsMock,
 } from '../__mocks__';
 import { dailyBurnedMock } from '../__mocks__/dailyBurned';
 import { dailyIssuedMock } from '../__mocks__/dailyIssued';
@@ -359,6 +363,42 @@ describe('@synthetixio/data tests', () => {
 			expect(exchangeEntrySettled.from).toEqual('0xe51b3d74b9e8203b5e817e691a5d0d7f00898fbd');
 			expect(exchangeEntrySettled.reclaim).toEqual('150.57812586144');
 			expect(exchangeEntrySettled.rebate).toEqual('0.0');
+		});
+	});
+
+	describe('optionMarkets query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseBinaryOptionMarkets(binaryOptionMarketsMock.response);
+			expect(binaryOptionMarketsMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const optionMarkets = await snxData.binaryOptionMarkets({
+				creator: '0x13dc08f5ddbcbfdf6ebc04c909c3052a2aa7a111',
+				isOpen: false,
+				minTimestamp: 1593564557,
+				maxTimestamp: 1593564559,
+			});
+			expect(optionMarkets.length).toEqual(1);
+			const optionMarket = optionMarkets[0]!;
+			expect(optionMarket.address).toEqual('0x05d629dfcbb91e93c7045b478660efc62baed009');
+		});
+	});
+
+	describe('optionTransactions query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseBinaryOptionTransactions(binaryOptionTransactionsMock.response);
+			expect(binaryOptionTransactionsMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const optionTransactions = await snxData.binaryOptionTransactions({
+				market: '0x4c7be4d2d4970cbbbf23bf86f7effe58327791b7',
+				account: '0x37480ca37666bc8584f2ed92361bdc71b1f4aade',
+			});
+			expect(optionTransactions.length).toBeGreaterThanOrEqual(1);
+			const optionTransaction = optionTransactions[0]!;
+			expect(optionTransaction.account).toEqual('0x37480ca37666bc8584f2ed92361bdc71b1f4aade');
 		});
 	});
 });
