@@ -23,6 +23,10 @@ import {
 	ExchangeEntrySettledsParams,
 	DailyIssuedQueryParams,
 	DailyBurnedQueryParams,
+	BinaryOptionsMarketsParams,
+	BinaryOptionsTransactionsParams,
+	OptionsMarket,
+	OptionsTransaction,
 } from './types';
 import {
 	Synthetix,
@@ -236,6 +240,30 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 						? queries.parseExchangeEntrySettledsKovan
 						: queries.parseExchangeEntrySettleds
 			  )
+			: null;
+	},
+	binaryOptionsMarkets: async (
+		params?: BinaryOptionsMarketsParams
+	): Promise<OptionsMarket[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: queries.createBinaryOptionsMarketsQuery,
+			networkId,
+			endpoints: { [NetworkId.Mainnet]: l1Endpoints.binaryOptions },
+		});
+		return response != null ? response.markets.map(queries.parseBinaryOptionsMarkets) : null;
+	},
+	binaryOptionsTransactions: async (
+		params?: BinaryOptionsTransactionsParams
+	): Promise<OptionsTransaction[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: queries.createBinaryOptionTransactionsQuery,
+			networkId,
+			endpoints: { [NetworkId.Mainnet]: l1Endpoints.binaryOptions },
+		});
+		return response != null
+			? response.optionTransactions.map(queries.parseBinaryOptionTransactions)
 			: null;
 	},
 });

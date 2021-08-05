@@ -336,6 +336,7 @@ export type FeePoolData = {
 export type SynthTotalSupply = {
 	name: string;
 	value: Wei;
+	skewValue: Wei;
 	totalSupply: Wei;
 	poolProportion: Wei;
 };
@@ -343,6 +344,9 @@ export type SynthTotalSupply = {
 export type SynthsTotalSupplyData = {
 	supplyData: { [name: string]: SynthTotalSupply };
 	totalValue: Wei;
+	priceData: { [name: string]: Wei };
+	shortData: { [name: string]: Wei };
+	synthTotalSupplies: any[][];
 };
 
 export type TokenSaleEscrow = {
@@ -382,3 +386,63 @@ export type DepositRecord = {
 };
 
 export type DepositHistory = Array<DepositRecord>;
+
+export type SNXPriceData = {
+	id: string;
+	averagePrice: number;
+};
+
+export type ActiveStakersData = {
+	id: string;
+	count: number;
+};
+
+export type TradesRequestData = {
+	id: string;
+	trades: number;
+	exchangers: number;
+	exchangeUSDTally: number;
+};
+
+export type AreaChartData = {
+	created: string;
+	value: number;
+};
+
+export type TreeMapData = {
+	value: number;
+	name: string;
+};
+
+export type ChartPeriod = 'D' | 'W' | 'M' | 'Y';
+
+export type TimeSeries = '1d' | '15m';
+
+export type FeePeriod = {
+	feesToDistribute: number;
+	feesClaimed: number;
+	rewardsToDistribute: number;
+	rewardsClaimed: number;
+	startTime: number;
+};
+
+export type LiquidationsData = {
+	deadline: number;
+	account: string;
+	currentRatio: number;
+	currentCollateral: number;
+	currentBalanceOf: number;
+};
+
+export type SettlementOwingData = {
+	rebate: Wei;
+	reclaim: Wei;
+	numEntries: Wei;
+};
+
+export type SynthFeeAndWaitingPeriod = {
+	currencyKey: CurrencyKey;
+	fee: Wei;
+	waitingPeriod: number;
+	noOfTrades: number;
+};

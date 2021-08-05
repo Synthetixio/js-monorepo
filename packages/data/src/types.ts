@@ -69,6 +69,18 @@ export type ExchangeEntrySettledsParams = {
 	maxExchangeTimestamp?: number;
 } & BaseQueryParams;
 
+export type BinaryOptionsMarketsParams = {
+	creator?: string;
+	isOpen?: boolean;
+	minTimestamp?: number;
+	maxTimestamp?: number;
+} & BaseQueryParams;
+
+export type BinaryOptionsTransactionsParams = {
+	market?: string;
+	account?: string;
+} & BaseQueryParams;
+
 export type SynthExchangeExpanded = SynthExchange & {
 	hash: string;
 };
@@ -83,3 +95,31 @@ export interface FormattedShort
 	collateralChanges: Omit<ShortCollateralChange, 'short'>[];
 	liquidations: Omit<ShortLiquidation, 'short'>[];
 }
+
+export type OptionsMarket = {
+	address: string;
+	timestamp: number;
+	creator: string;
+	currencyKey: string;
+	strikePrice: string;
+	biddingEndDate: number;
+	maturityDate: number;
+	expiryDate: number;
+	isOpen: boolean;
+	longPrice: string;
+	shortPrice: string;
+	poolSize: string;
+	result: string | null;
+};
+
+export type OptionsTransaction = {
+	hash: string;
+	timestamp: number;
+	type: string;
+	account: string;
+	currencyKey: string | null;
+	side: string;
+	amount: string;
+	market: string;
+	fee: string | null;
+};

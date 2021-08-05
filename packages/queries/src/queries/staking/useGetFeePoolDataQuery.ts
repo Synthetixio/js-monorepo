@@ -1,15 +1,17 @@
 import { useQuery, UseQueryOptions } from 'react-query';
+import isNumber from 'lodash/isNumber';
 import { wei } from '@synthetixio/wei';
+
 import { QueryContext } from '../../context';
 import { FeePoolData } from '../../types';
 
 const useGetFeePoolDataQuery = (
 	ctx: QueryContext,
-	period: string,
+	period: number,
 	options?: UseQueryOptions<FeePoolData>
 ) => {
 	return useQuery<FeePoolData>(
-		['staking', 'feePool', ctx.networkId],
+		['staking', 'feePool', ctx.networkId, period],
 		async () => {
 			const {
 				contracts: { FeePool },
@@ -26,7 +28,7 @@ const useGetFeePoolDataQuery = (
 			};
 		},
 		{
-			enabled: ctx.snxjs != null && !!period,
+			enabled: ctx.snxjs != null && isNumber(period),
 			...options,
 		}
 	);
