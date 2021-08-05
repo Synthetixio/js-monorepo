@@ -1,9 +1,9 @@
 import { gql } from 'graphql-request';
-import { BinaryOptionTransactionsParams } from '../../src/types';
+import { BinaryOptionsTransactionsParams } from '../../src/types';
 import { createGQLWhereString, createGQLBlockNumberString } from '../../src/utils';
 
 export const createBinaryOptionTransactionsQuery = (
-	params?: BinaryOptionTransactionsParams
+	params?: BinaryOptionsTransactionsParams
 ): string => {
 	const whereString = createGQLWhereString(
 		Object.entries({

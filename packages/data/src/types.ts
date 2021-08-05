@@ -69,14 +69,14 @@ export type ExchangeEntrySettledsParams = {
 	maxExchangeTimestamp?: number;
 } & BaseQueryParams;
 
-export type BinaryOptionMarketsParams = {
+export type BinaryOptionsMarketsParams = {
 	creator?: string;
 	isOpen?: boolean;
 	minTimestamp?: number;
 	maxTimestamp?: number;
 } & BaseQueryParams;
 
-export type BinaryOptionTransactionsParams = {
+export type BinaryOptionsTransactionsParams = {
 	market?: string;
 	account?: string;
 } & BaseQueryParams;
@@ -96,7 +96,7 @@ export interface FormattedShort
 	liquidations: Omit<ShortLiquidation, 'short'>[];
 }
 
-export type FormattedOptionsMarket = {
+export type OptionsMarket = {
 	address: string;
 	timestamp: number;
 	creator: string;
@@ -112,7 +112,7 @@ export type FormattedOptionsMarket = {
 	result: string | null;
 };
 
-export type FormattedOptionsTransaction = {
+export type OptionsTransaction = {
 	hash: string;
 	timestamp: number;
 	type: string;

@@ -1,6 +1,6 @@
 import { OptionTransactionType } from '../generated/graphql';
 
-export const binaryOptionTransactionsMock = {
+export const binaryOptionsTransactionsMock = {
 	response: {
 		account: '0x37480ca37666bc8584f2ed92361bdc71b1f4aade',
 		amount: '225188934499297650451',

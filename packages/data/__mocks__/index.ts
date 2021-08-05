@@ -9,5 +9,5 @@ export * from './synthetix';
 export * from './snxHolder';
 export * from './shorts';
 export * from './exchangeEntrySettleds';
-export * from './binaryOptionMarkets';
-export * from './binaryOptionTransactions';
+export * from './binaryOptionsMarkets';
+export * from './binaryOptionsTransactions';

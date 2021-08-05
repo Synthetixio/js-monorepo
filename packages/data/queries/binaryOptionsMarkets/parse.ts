@@ -1,9 +1,9 @@
 import { ethers } from 'ethers';
-import { Market as OptionMarket } from '../../generated/graphql';
-import { FormattedOptionsMarket } from '../../src/types';
+import { Market as UnformattedOptionMarket } from '../../generated/graphql';
+import { OptionsMarket } from '../../src/types';
 import { formatTimestamp, hexToAscii } from '../../src/utils';
 
-export const parseBinaryOptionMarkets = ({
+export const parseBinaryOptionsMarkets = ({
 	id,
 	timestamp,
 	creator,
@@ -17,7 +17,7 @@ export const parseBinaryOptionMarkets = ({
 	shortPrice,
 	poolSize,
 	result,
-}: OptionMarket): FormattedOptionsMarket => ({
+}: UnformattedOptionMarket): OptionsMarket => ({
 	address: id,
 	timestamp: formatTimestamp(timestamp),
 	creator,

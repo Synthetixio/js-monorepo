@@ -1,4 +1,4 @@
-export const binaryOptionMarketsMock = {
+export const binaryOptionsMarketsMock = {
 	response: {
 		biddingEndDate: '1596150000',
 		creator: '0x13dc08f5ddbcbfdf6ebc04c909c3052a2aa7a111',

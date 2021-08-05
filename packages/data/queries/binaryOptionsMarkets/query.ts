@@ -1,8 +1,8 @@
 import { gql } from 'graphql-request';
-import { BinaryOptionMarketsParams } from '../../src/types';
+import { BinaryOptionsMarketsParams } from '../../src/types';
 import { createGQLWhereString, createGQLBlockNumberString } from '../../src/utils';
 
-export const createBinaryOptionMarketsQuery = (params?: BinaryOptionMarketsParams): string => {
+export const createBinaryOptionsMarketsQuery = (params?: BinaryOptionsMarketsParams): string => {
 	const whereString = createGQLWhereString(
 		Object.entries({
 			creator: (params?.creator ?? null) != null ? 'creator' : null,

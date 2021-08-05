@@ -23,8 +23,10 @@ import {
 	ExchangeEntrySettledsParams,
 	DailyIssuedQueryParams,
 	DailyBurnedQueryParams,
-	BinaryOptionMarketsParams,
-	BinaryOptionTransactionsParams,
+	BinaryOptionsMarketsParams,
+	BinaryOptionsTransactionsParams,
+	OptionsMarket,
+	OptionsTransaction,
 } from './types';
 import {
 	Synthetix,
@@ -39,8 +41,6 @@ import {
 	DebtSnapshot,
 	SnxHolder,
 	ExchangeEntrySettled,
-	OptionTransaction,
-	Market as OptionMarket,
 } from '../generated/graphql';
 
 enum Period {
@@ -242,20 +242,20 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			  )
 			: null;
 	},
-	binaryOptionMarkets: async (
-		params?: BinaryOptionMarketsParams
-	): Promise<OptionMarket[] | null> => {
+	binaryOptionsMarkets: async (
+		params?: BinaryOptionsMarketsParams
+	): Promise<OptionsMarket[] | null> => {
 		const response = await getData({
 			params,
-			queryMethod: queries.createBinaryOptionMarketsQuery,
+			queryMethod: queries.createBinaryOptionsMarketsQuery,
 			networkId,
 			endpoints: { [NetworkId.Mainnet]: l1Endpoints.binaryOptions },
 		});
-		return response != null ? response.markets.map(queries.parseBinaryOptionMarkets) : null;
+		return response != null ? response.markets.map(queries.parseBinaryOptionsMarkets) : null;
 	},
-	binaryOptionTransactions: async (
-		params?: BinaryOptionTransactionsParams
-	): Promise<OptionTransaction[] | null> => {
+	binaryOptionsTransactions: async (
+		params?: BinaryOptionsTransactionsParams
+	): Promise<OptionsTransaction[] | null> => {
 		const response = await getData({
 			params,
 			queryMethod: queries.createBinaryOptionTransactionsQuery,
