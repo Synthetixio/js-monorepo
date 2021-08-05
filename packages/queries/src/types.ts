@@ -426,15 +426,6 @@ export type FeePeriod = {
 	startTime: number;
 };
 
-export type OptionsMarket = {
-	strikePrice: number;
-	maturityDate: number;
-	currencyKey: string;
-	poolSize: string;
-	expiryDate?: string;
-	value?: number;
-};
-
 export type LiquidationsData = {
 	deadline: number;
 	account: string;
