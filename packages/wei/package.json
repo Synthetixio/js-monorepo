@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/wei",
-	"version": "2.47.0-ovm.4",
+	"version": "2.47.0-ovm.5",
 	"description": "Convenient BigNumber library for web3",
 	"main": "build/node/index.js",
 	"browser": "./build/index.js",
