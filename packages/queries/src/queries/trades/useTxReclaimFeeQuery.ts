@@ -18,7 +18,7 @@ export const useTxReclaimFeeQuery = (
 			});
 			const exchangeEntrySettled = exchangeEntrySettleds?.[0];
 			if (!exchangeEntrySettled) return wei(0);
-			return wei(exchangeEntrySettled.rebate.sub(exchangeEntrySettled.reclaim));
+			return wei(exchangeEntrySettled.rebate).sub(wei(exchangeEntrySettled.reclaim));
 		},
 		{
 			enabled: ctx.snxData != null && !!walletAddress,
