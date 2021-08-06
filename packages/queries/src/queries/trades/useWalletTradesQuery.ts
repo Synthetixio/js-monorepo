@@ -13,7 +13,6 @@ export const useWalletTradesQuery = (
 		() =>
 			ctx.snxData!.synthExchanges({
 				fromAddress: walletAddress!,
-				maxBlock: Number.MAX_SAFE_INTEGER,
 				max,
 			}),
 		{
