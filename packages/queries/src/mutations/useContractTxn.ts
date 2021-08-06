@@ -9,12 +9,14 @@ const useContractTxn = (
 	contract: ethers.Contract | null,
 	method: string | null,
 	args: any[] = [],
+	txnOptions: Partial<ethers.providers.TransactionRequest> = {},
 	options: UseMutationOptions<void> = {}
 ) => {
 	if (contract != null && method != null) {
 		return useEVMTxn(ctx, {
 			to: contract.address,
 			data: contract.interface.encodeFunctionData(method, args),
+			...txnOptions
 		});
 	}
 

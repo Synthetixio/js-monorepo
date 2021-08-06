@@ -10,10 +10,11 @@ const useSynthetixTxn = (
 	contract: string,
 	method: string,
 	args: any[] = [],
+	txnOptions: Partial<ethers.providers.TransactionRequest> = {},
 	options: UseMutationOptions<void> = {}
 ) => {
 	if (ctx.snxjs == null) {
-		return useContractTxn(ctx, ctx.snxjs!.contracts[contract], method, args, options);
+		return useContractTxn(ctx, ctx.snxjs!.contracts[contract], method, args, txnOptions, options);
 	}
 
 	return useEVMTxn(ctx, {}, options);
