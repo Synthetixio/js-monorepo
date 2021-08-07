@@ -66,6 +66,10 @@ const useEVMTxn = (
 				if (!txn!.gasLimit) {
 					// add a gas limit with a 10% buffer
 					txn!.gasLimit = (await estimateGas())?.mul(11).div(10);
+
+					if(txn!.gasLimit!.eq(0)) {
+						throw new Error('missing provider/signer for txn');
+					}
 				}
 
 				const txndata = await ctx.signer!.sendTransaction(txn!);

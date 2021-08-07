@@ -13,7 +13,7 @@ const useSynthetixTxn = (
 	txnOptions: Partial<ethers.providers.TransactionRequest> = {},
 	options: UseMutationOptions<void> = {}
 ) => {
-	if (ctx.snxjs == null) {
+	if (ctx.snxjs != null) {
 		return useContractTxn(ctx, ctx.snxjs!.contracts[contract], method, args, txnOptions, options);
 	}
 
