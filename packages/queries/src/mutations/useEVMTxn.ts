@@ -37,7 +37,8 @@ const useEVMTxn = (
 	}
 
 	function handleError(err: any) {
-		const errorMessage = err.data ? hexToASCII(err.data.substr(147).toString()) : err.message;
+		console.error(err);
+		const errorMessage = err.data ? hexToASCII(err.data.toString()) : err.message;
 		setErrorMessage(errorMessage);
 	}
 
@@ -46,7 +47,7 @@ const useEVMTxn = (
 
 		estimateGas()
 			.then((gl) => {
-				if (gl) setGasLimit(wei(gl));
+				if (gl) setGasLimit(wei(gl, 0));
 			})
 			.catch((err) => {
 				handleError(err);
