@@ -1,9 +1,10 @@
 import { useQuery, UseQueryOptions } from 'react-query';
+import { ethers } from 'ethers';
+import Wei, { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
-import Wei, { wei } from '@synthetixio/wei';
 import { GlobalStakingInfo } from '../../types';
-import { ethers } from 'ethers';
+import { GQL_RESPONSE_LIMIT } from '../../constants';
 
 const useGlobalStakingInfoQuery = (
 	ctx: QueryContext,
@@ -27,7 +28,7 @@ const useGlobalStakingInfoQuery = (
 					ethers.utils.formatBytes32String('sUSD')
 				),
 				ctx.snxjs!.contracts.SystemSettings.issuanceRatio(),
-				ctx.snxData!.snxHolders({ max: 1000 }),
+				ctx.snxData!.snxHolders({ max: GQL_RESPONSE_LIMIT - 1 }),
 			]);
 
 			const lastDebtLedgerEntry = wei(unformattedLastDebtLedgerEntry, 27);
