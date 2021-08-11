@@ -46,10 +46,15 @@ const useGlobalStakingInfoQuery = (
 
 			for (const {
 				collateral: unformattedCollateral,
-				debtEntryAtIndex,
-				initialDebtOwnership,
+				debtEntryAtIndex: unformattedDebtEntryAtIndex,
+				initialDebtOwnership: unformattedInitialDebtOwnership,
 			} of holders || []) {
-				const collateral = wei(unformattedCollateral);
+				const [collateral, debtEntryAtIndex, initialDebtOwnership] = [
+					unformattedCollateral,
+					unformattedDebtEntryAtIndex,
+					unformattedInitialDebtOwnership,
+				].map((val) => wei(val));
+
 				const debtBalance = debtEntryAtIndex.gt(0)
 					? totalIssuedSynths
 							.mul(lastDebtLedgerEntry)
