@@ -146,6 +146,7 @@ export const requestHelper = async ({
 };
 
 export const formatEther = (n: any): string => {
+	if (!n) return '0';
 	try {
 		return ethers.utils.formatEther(n).toString();
 	} catch {
