@@ -25,3 +25,12 @@ export {
 	createBinaryOptionTransactionsQuery,
 	parseBinaryOptionTransactions,
 } from './binaryOptionsTransactions';
+export {
+	createDailyTotalActiveStakersQuery,
+	parseDailyTotalActiveStakers,
+} from './dailyTotalActiveStakers';
+export {
+	createExchangeTotalsQuery,
+	parseExchangeTotals,
+	getExchangeTotalsQueryResponseAttr,
+} from './exchangeTotals';

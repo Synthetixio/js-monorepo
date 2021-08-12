@@ -17,6 +17,8 @@ import {
 	parseDailyBurned,
 	parseBinaryOptionsMarkets,
 	parseBinaryOptionTransactions,
+	parseDailyTotalActiveStakers,
+	parseExchangeTotals,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
@@ -35,6 +37,8 @@ import {
 	exchangeEntrySettledsMock,
 	binaryOptionsMarketsMock,
 	binaryOptionsTransactionsMock,
+	exchangeTotalsMock,
+	dailyTotalActiveStakersMock,
 } from '../__mocks__';
 import { dailyBurnedMock } from '../__mocks__/dailyBurned';
 import { dailyIssuedMock } from '../__mocks__/dailyIssued';
@@ -399,6 +403,37 @@ describe('@synthetixio/data tests', () => {
 			expect(optionTransactions.length).toBeGreaterThanOrEqual(1);
 			const optionTransaction = optionTransactions[0]!;
 			expect(optionTransaction.account).toEqual('0x37480ca37666bc8584f2ed92361bdc71b1f4aade');
+		});
+	});
+
+	describe('exchangeTotals query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseExchangeTotals(exchangeTotalsMock.response);
+			expect(exchangeTotalsMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const totals = await snxData.exchangeTotals({
+				timeSeries: '15m',
+				max: 100,
+			});
+			expect(totals.length).toBeGreaterThanOrEqual(1);
+			const total = totals[0]!;
+			expect(total.id).toBeGreaterThanOrEqual(1);
+		});
+	});
+
+	describe('dailyTotalActiveStakers query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseDailyTotalActiveStakers(dailyTotalActiveStakersMock.response);
+			expect(dailyTotalActiveStakersMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const totals = await snxData.dailyTotalActiveStakers({ max: 100 });
+			expect(totals.length).toBeGreaterThanOrEqual(1);
+			const total = totals[0]!;
+			expect(total.id).toBeGreaterThanOrEqual(1);
 		});
 	});
 });

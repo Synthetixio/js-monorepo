@@ -27,6 +27,10 @@ import {
 	BinaryOptionsTransactionsParams,
 	OptionsMarket,
 	OptionsTransaction,
+	DailyTotalActiveStakers,
+	DailyTotalActiveStakersParams,
+	ExchangeTotals,
+	ExchangeTotalsParams,
 } from './types';
 import {
 	Synthetix,
@@ -264,6 +268,37 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 		});
 		return response != null
 			? response.optionTransactions.map(queries.parseBinaryOptionTransactions)
+			: null;
+	},
+	exchangeTotals: async (params?: ExchangeTotalsParams): Promise<ExchangeTotals[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: queries.createExchangeTotalsQuery,
+			networkId,
+			endpoints: {
+				[NetworkId.Mainnet]: l1Endpoints.exchanges,
+				[NetworkId.Kovan]: l1Endpoints.exchangesKovan,
+			},
+		});
+		return response != null
+			? response[queries.getExchangeTotalsQueryResponseAttr(params?.timeSeries!)].map(
+					queries.parseExchangeTotals
+			  )
+			: null;
+	},
+	dailyTotalActiveStakers: async (
+		params?: DailyTotalActiveStakersParams
+	): Promise<DailyTotalActiveStakers[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: queries.createDailyTotalActiveStakersQuery,
+			networkId,
+			endpoints: {
+				[NetworkId.Mainnet]: l1Endpoints.snx,
+			},
+		});
+		return response != null
+			? response.totalDailyActiveStakers.map(queries.parseDailyTotalActiveStakers)
 			: null;
 	},
 });
