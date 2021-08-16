@@ -50,7 +50,7 @@ const useTokensBalancesQuery = (
 				const token = tokensMap[symbol];
 
 				return {
-					balance: wei(balance),
+					balance: wei(balance, token.decimals, true),
 					token,
 				};
 			});
