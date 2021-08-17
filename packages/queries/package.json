@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/queries",
-	"version": "2.47.0-ovm.5",
+	"version": "2.47.0-ovm.6",
 	"description": "react-query for pulling synthetix data in react interfaces",
 	"source": "./src/index.ts",
 	"main": "./build/node/src/index.js",
