@@ -11,13 +11,13 @@ import { ethers } from 'ethers';
 import { CRYPTO_CURRENCY_MAP } from '../../currency';
 
 import { QueryContext } from '../../context';
-import { TokenBalances } from '../../types';
+import { Token, TokenBalances } from '../../types';
 
 const ethcallProvider = new Provider();
 
 const useTokensBalancesQuery = (
 	ctx: QueryContext,
-	tokens: any[],
+	tokens: Token[],
 	walletAddress: string | null,
 	options?: UseQueryOptions<TokenBalances>
 ) => {
@@ -50,7 +50,7 @@ const useTokensBalancesQuery = (
 				const token = tokensMap[symbol];
 
 				return {
-					balance: wei(balance),
+					balance: wei(balance, token.decimals ?? 18),
 					token,
 				};
 			});
