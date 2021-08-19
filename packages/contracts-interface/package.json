@@ -33,7 +33,7 @@
 	"dependencies": {
 		"ethers": "5.4.1",
 		"lodash": "4.17.19",
-		"synthetix": "2.47.0-ovm",
+		"synthetix": "Synthetixio/synthetix#futures-implementation-frontend",
 		"web3-utils": "1.2.11"
 	},
 	"devDependencies": {
