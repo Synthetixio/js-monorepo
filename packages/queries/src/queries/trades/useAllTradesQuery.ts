@@ -4,7 +4,7 @@ import { QueryContext } from '../../context';
 
 export const useAllTradesQuery = (
 	ctx: QueryContext,
-	maxBlock = Number.MAX_SAFE_INTEGER,
+	maxBlock: number,
 	max = 100,
 	options?: UseQueryOptions<SynthExchangeExpanded[] | null>
 ) => {

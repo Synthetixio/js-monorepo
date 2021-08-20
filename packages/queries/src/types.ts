@@ -87,6 +87,10 @@ export type GlobalStakingInfo = {
 	totalSupply: Wei;
 	lockedSupply: Wei;
 	lockedValue: Wei;
+	snxStaked: Wei;
+	snxPercentLocked: Wei;
+	activeCRatio: Wei;
+	lastDebtLedgerEntry: Wei;
 };
 
 export type Token = {

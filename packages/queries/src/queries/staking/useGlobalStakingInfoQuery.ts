@@ -1,9 +1,10 @@
 import { useQuery, UseQueryOptions } from 'react-query';
+import { ethers } from 'ethers';
+import Wei, { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
-import Wei, { wei } from '@synthetixio/wei';
 import { GlobalStakingInfo } from '../../types';
-import { ethers } from 'ethers';
+import { GQL_RESPONSE_LIMIT } from '../../constants';
 
 const useGlobalStakingInfoQuery = (
 	ctx: QueryContext,
@@ -26,9 +27,8 @@ const useGlobalStakingInfoQuery = (
 				ctx.snxjs!.contracts.Synthetix.totalIssuedSynthsExcludeEtherCollateral(
 					ethers.utils.formatBytes32String('sUSD')
 				),
-
 				ctx.snxjs!.contracts.SystemSettings.issuanceRatio(),
-				ctx.snxData!.snxHolders({ max: 1000 }),
+				ctx.snxData!.snxHolders({ max: GQL_RESPONSE_LIMIT - 1 }),
 			]);
 
 			const lastDebtLedgerEntry = wei(unformattedLastDebtLedgerEntry, 27);
@@ -41,13 +41,19 @@ const useGlobalStakingInfoQuery = (
 
 			let snxTotal = wei(0);
 			let snxLocked = wei(0);
+			let stakersTotalDebt = wei(0);
+			let stakersTotalCollateral = wei(0);
 
 			for (const {
 				collateral: unformattedCollateral,
-				debtEntryAtIndex,
-				initialDebtOwnership,
+				debtEntryAtIndex: unformattedDebtEntryAtIndex,
+				initialDebtOwnership: unformattedInitialDebtOwnership,
 			} of holders || []) {
-				const collateral = wei(unformattedCollateral);
+				const [collateral, debtEntryAtIndex, initialDebtOwnership] = [
+					unformattedCollateral,
+					unformattedDebtEntryAtIndex,
+					unformattedInitialDebtOwnership,
+				].map((val) => wei(val));
 
 				const debtBalance = debtEntryAtIndex.gt(0)
 					? totalIssuedSynths
@@ -63,6 +69,8 @@ const useGlobalStakingInfoQuery = (
 
 				snxTotal = snxTotal.add(collateral);
 				snxLocked = snxLocked.add(lockedSnx);
+				stakersTotalDebt = stakersTotalDebt.add(debtBalance);
+				stakersTotalCollateral = stakersTotalCollateral.add(collateral.mul(usdToSnxPrice));
 			}
 
 			const percentLocked = snxLocked.div(snxTotal);
@@ -75,6 +83,13 @@ const useGlobalStakingInfoQuery = (
 				totalSupply: snxTotal,
 				lockedSupply: snxLocked,
 				lockedValue: totalSupply.mul(percentLocked).mul(usdToSnxPrice),
+				snxStaked:
+					usdToSnxPrice && totalIssuedSynths && issuanceRatio
+						? totalIssuedSynths.div(issuanceRatio).div(usdToSnxPrice)
+						: wei(0),
+				snxPercentLocked: snxTotal ? snxLocked.div(snxTotal) : wei(0),
+				activeCRatio: stakersTotalDebt ? stakersTotalCollateral.div(stakersTotalDebt) : wei(0),
+				lastDebtLedgerEntry,
 			};
 		},
 		{

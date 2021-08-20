@@ -85,6 +85,12 @@ export type SynthExchangeExpanded = SynthExchange & {
 	hash: string;
 };
 
+export type DailyTotalActiveStakersParams = {} & BaseQueryParams;
+
+export type ExchangeTotalsParams = {
+	timeSeries: string;
+} & BaseQueryParams;
+
 /**
  * Shorts have many relationships between entities although we are not taking advantage
  * of all of them so we are removing the types we don't use
@@ -122,4 +128,17 @@ export type OptionsTransaction = {
 	amount: string;
 	market: string;
 	fee: string | null;
+};
+
+export type DailyTotalActiveStakers = {
+	id: number;
+	count: number;
+};
+
+export type ExchangeTotals = {
+	id: number;
+	trades: number;
+	exchangers: number;
+	exchangeUSDTally: number;
+	totalFeesGeneratedInUSD: number;
 };
