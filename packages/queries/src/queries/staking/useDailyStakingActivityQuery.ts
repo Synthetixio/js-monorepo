@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 
 import { QueryContext } from '../../context';
-import { DailyIssued, DailyBurned } from '@synthetixio/data/generated/graphql';
+import { DailyIssued, DailyBurned } from '@synthetixio/data/build/data/generated/graphql';
 
 const useDailyBurnedQuery = (
 	ctx: QueryContext,
