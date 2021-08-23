@@ -305,6 +305,6 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 
 type SynthetixData = ReturnType<typeof synthetixData>;
 
-export { Period, PERIOD_IN_HOURS, calculateTimestampForPeriod, l1Endpoints };
+export { Period, PERIOD_IN_HOURS, calculateTimestampForPeriod, l1Endpoints, l2Endpoints };
 export type { SynthetixData };
 export default synthetixData;
