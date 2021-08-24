@@ -108,7 +108,7 @@ const getSynthetixContracts = (
 				target.address = targets[newTarget].address;
 			} else if (target.name === 'FuturesMarketManager') {
 				target.address = targets.ProxyFuturesMarketManager.address;
-			} else if (target.name.match(/^FuturesMarket[a-zA-Z]+$/)) {
+			} else if (target.name.match(/^FuturesMarket[A-Z]+$/)) {
 				const newTarget = `Proxy${target.name}`;
 				target.address = targets[newTarget].address;
 			}
