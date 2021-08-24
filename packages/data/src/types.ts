@@ -56,6 +56,7 @@ export type SnxHolderParams = {
 	address?: string;
 	minMints?: number;
 	minClaims?: number;
+	addresses?: string[];
 } & BaseQueryParams;
 
 export type RateUpdateQueryParams = {
