@@ -306,5 +306,12 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 type SynthetixData = ReturnType<typeof synthetixData>;
 
 export { Period, PERIOD_IN_HOURS, calculateTimestampForPeriod, l1Endpoints, l2Endpoints };
-export type { SynthetixData };
+export type {
+	SynthetixData,
+	SynthExchangeExpanded,
+	ExchangeTotals,
+	OptionsMarket,
+	OptionsTransaction,
+	DailyTotalActiveStakers,
+};
 export default synthetixData;
