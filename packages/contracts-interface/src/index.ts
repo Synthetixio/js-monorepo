@@ -106,11 +106,11 @@ const getSynthetixContracts = (
 			} else if (target.name.match(/Synth(s|i)[a-zA-Z]+$/)) {
 				const newTarget = target.name.replace('Synth', 'Proxy');
 				target.address = targets[newTarget].address;
+			} else if (target.name === 'FuturesMarketManager') {
+				target.address = targets.ProxyFuturesMarketManager.address;
 			} else if (target.name.match(/^FuturesMarket[a-zA-Z]+$/)) {
 				const newTarget = `Proxy${target.name}`;
 				target.address = targets[newTarget].address;
-			} else if (target.name === 'FuturesMarketManager') {
-				target.address = targets.ProxyFuturesMarketManager.address;
 			}
 			return target;
 		})
