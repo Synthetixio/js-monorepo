@@ -1,3 +1,4 @@
+import { NetworkId } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 import { renderHook } from '@testing-library/react-hooks';
 import { ethers } from 'ethers';
@@ -8,11 +9,10 @@ import { getFakeQueryContext, getWrapper } from '../testUtils';
 
 describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 	const ctx = getFakeQueryContext();
+	ctx.networkId = NetworkId['Mainnet-Ovm'];
 
 	test('test ovm gas', async () => {
 		const wrapper = getWrapper();
-
-		const useOvm = true;
 
 		//mock provider
 		set(ctx.provider as ethers.providers.JsonRpcProvider, 'getGasPrice', async () =>
@@ -20,7 +20,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 			Promise.resolve(wei(15000000, undefined, true).toBN())
 		);
 
-		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx, useOvm), { wrapper });
+		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
 
 		await waitFor(() => result.current.isSuccess);
 
@@ -41,14 +41,12 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 			},
 		});
 
-		const useOvm = true;
-
 		delete (ctx as any).provider.getGasPrice;
 
 		// eslint-disable-next-line
 		console.error = () => {}; //suppress error
 
-		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx, useOvm), { wrapper });
+		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
 
 		await waitFor(() => result.current.isError);
 
