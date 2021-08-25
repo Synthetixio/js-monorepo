@@ -42,7 +42,7 @@ const useEthGasPriceQuery = (
 	return useQuery<GasPrices, Error>(
 		['network', 'gasPrice', ctx.networkId],
 		async () => {
-			if (ctx.networkId === NetworkId.MAINNET) {
+			if (ctx.networkId === NetworkId.Mainnet) {
 				try {
 					const result = await axios.get<GasNowResponse>(GAS_NOW_API_URL);
 					const { standard, fast, rapid: fastest } = result.data.data;
