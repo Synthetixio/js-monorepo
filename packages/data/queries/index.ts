@@ -38,3 +38,4 @@ export {
 	createAccountsFlaggedForLiquidationQuery,
 	parseAccountsFlaggedForLiquidation,
 } from './accountsFlaggedForLiquidation';
+export { createSynthHoldersQuery, parseSynthHolders } from './synthHolders';

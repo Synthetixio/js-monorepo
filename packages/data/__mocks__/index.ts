@@ -14,3 +14,6 @@ export * from './binaryOptionsTransactions';
 export * from './exchangeTotals';
 export * from './dailyTotalActiveStakers';
 export * from './accountsFlaggedForLiquidation';
+export * from './dailyBurned';
+export * from './dailyIssued';
+export * from './synthHolders';

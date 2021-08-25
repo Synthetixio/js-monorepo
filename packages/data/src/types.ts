@@ -98,6 +98,11 @@ export type AccountsFlaggedForLiquidationParams = {
 	maxTimestamp?: number;
 } & BaseQueryParams;
 
+export type SynthHolderParams = {
+	id?: string;
+	synth?: string;
+} & BaseQueryParams;
+
 /**
  * Shorts have many relationships between entities although we are not taking advantage
  * of all of them so we are removing the types we don't use
@@ -156,4 +161,10 @@ export type AccountForLiquidation = {
 	collateral: number;
 	collateralRatio: number;
 	liquidatableNonEscrowSNX: number;
+};
+
+export type SynthHolder = {
+	address: string;
+	synth: string;
+	balanceOf: number;
 };

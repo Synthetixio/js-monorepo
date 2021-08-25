@@ -20,6 +20,7 @@ import {
 	parseDailyTotalActiveStakers,
 	parseExchangeTotals,
 	parseAccountsFlaggedForLiquidation,
+	parseSynthHolders,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
@@ -41,9 +42,10 @@ import {
 	exchangeTotalsMock,
 	dailyTotalActiveStakersMock,
 	accountsFlaggedForLiquidationMock,
+	dailyBurnedMock,
+	dailyIssuedMock,
+	synthHoldersMock,
 } from '../__mocks__';
-import { dailyBurnedMock } from '../__mocks__/dailyBurned';
-import { dailyIssuedMock } from '../__mocks__/dailyIssued';
 
 describe('@synthetixio/data tests', () => {
 	const randomLargeSNXStaker = '0x042ed37d32b88ab6b1c2e7b8a400dcdc728050bc';
@@ -452,6 +454,20 @@ describe('@synthetixio/data tests', () => {
 			expect(accounts.length).toBeGreaterThanOrEqual(1);
 			const account = accounts[0]!;
 			expect(account.deadline).toBeGreaterThanOrEqual(1);
+		});
+	});
+
+	describe('synthHolders query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseSynthHolders(synthHoldersMock.response);
+			expect(synthHoldersMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const holders = await snxData.synthHolders({ max: 100 });
+			expect(holders.length).toBeGreaterThanOrEqual(1);
+			const holder = holders[0]!;
+			expect(holder.balanceOf).toBeGreaterThanOrEqual(1);
 		});
 	});
 });

@@ -32,6 +32,7 @@ import {
 	ExchangeTotals,
 	ExchangeTotalsParams,
 	AccountsFlaggedForLiquidationParams,
+	SynthHolderParams,
 } from './types';
 import {
 	Synthetix,
@@ -47,6 +48,7 @@ import {
 	SnxHolder,
 	ExchangeEntrySettled,
 	AccountFlaggedForLiquidation,
+	SynthHolder,
 } from '../generated/graphql';
 
 enum Period {
@@ -317,6 +319,17 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 		return response != null
 			? response.accountFlaggedForLiquidations.map(queries.parseAccountsFlaggedForLiquidation)
 			: null;
+	},
+	synthHolders: async (params?: SynthHolderParams): Promise<SynthHolder[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: queries.createSynthHoldersQuery,
+			networkId,
+			endpoints: {
+				[NetworkId.Mainnet]: l1Endpoints.snx,
+			},
+		});
+		return response != null ? response.synthHolders.map(queries.parseSynthHolders) : null;
 	},
 });
 
