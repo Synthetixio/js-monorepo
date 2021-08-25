@@ -32,7 +32,9 @@ import {
 	ExchangeTotals,
 	ExchangeTotalsParams,
 	AccountsFlaggedForLiquidationParams,
+	AccountFlaggedForLiquidation,
 	SynthHolderParams,
+	SynthHolder,
 } from './types';
 import {
 	Synthetix,
@@ -47,8 +49,6 @@ import {
 	DebtSnapshot,
 	SnxHolder,
 	ExchangeEntrySettled,
-	AccountFlaggedForLiquidation,
-	SynthHolder,
 } from '../generated/graphql';
 
 enum Period {
