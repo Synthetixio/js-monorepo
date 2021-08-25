@@ -345,5 +345,7 @@ export type {
 	DailyTotalActiveStakers,
 	AccountFlaggedForLiquidation,
 	SynthHolder,
+	DailyIssued,
+	DailyBurned,
 };
 export default synthetixData;
