@@ -1,5 +1,6 @@
 import { request } from 'graphql-request';
 import { RequestDocument } from 'graphql-request/dist/types';
+import { ethers } from 'ethers';
 import { sortBy, get } from 'lodash';
 import BigNumber from 'bignumber.js';
 
@@ -141,5 +142,14 @@ export const requestHelper = async ({
 			});
 		}
 		return response;
+	}
+};
+
+export const formatEther = (n: any): string => {
+	if (!n) return '0';
+	try {
+		return ethers.utils.formatEther(n).toString();
+	} catch {
+		return n.toString();
 	}
 };

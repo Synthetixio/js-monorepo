@@ -11,3 +11,5 @@ export * from './shorts';
 export * from './exchangeEntrySettleds';
 export * from './binaryOptionsMarkets';
 export * from './binaryOptionsTransactions';
+export * from './exchangeTotals';
+export * from './dailyTotalActiveStakers';
