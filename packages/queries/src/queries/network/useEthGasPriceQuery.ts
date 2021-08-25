@@ -4,6 +4,8 @@ import { QueryContext } from '../../context';
 import { GasPrices } from '../../types';
 import { formatGwei } from '../../utils';
 
+import { NetworkId } from '@synthetixio/contracts-interface';
+
 const ETH_GAS_STATION_API_URL = 'https://ethgasstation.info/json/ethgasAPI.json';
 const GAS_NOW_API_URL = 'https://www.gasnow.org/api/v3/gas/price?utm_source=kwenta';
 
