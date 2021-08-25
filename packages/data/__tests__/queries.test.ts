@@ -352,6 +352,15 @@ describe('@synthetixio/data tests', () => {
 			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
 			expect(snxHoldersInfo!.length).toEqual(5);
 		});
+
+		test('should accept addresses prop', async () => {
+			const snxHoldersInfo = await snxData.snxHolders({
+				addresses: ['0x49be88f0fcc3a8393a59d3688480d7d253c37d2a'],
+			});
+			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
+			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
+			expect(snxHoldersInfo!.length).toEqual(1);
+		});
 	});
 
 	describe('exchangeEntrySettleds query', () => {
