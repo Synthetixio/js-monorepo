@@ -35,7 +35,6 @@ type GasNowResponse = {
 
 const useEthGasPriceQuery = (
 	ctx: QueryContext,
-	useOVM?: boolean,
 	options?: UseQueryOptions<GasPrices, Error>
 ) => {
 	return useQuery<GasPrices, Error>(
