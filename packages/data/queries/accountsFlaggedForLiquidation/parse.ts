@@ -1,5 +1,5 @@
-import { AccountFlaggedForLiquidation as UnformattedAccountForLiquidation } from '../../generated/graphql';
-import { AccountForLiquidation } from '../../src/types';
+import { AccountFlaggedForLiquidation as UnformattedAccountFlaggedForLiquidation } from '../../generated/graphql';
+import { AccountFlaggedForLiquidation } from '../../src/types';
 import { formatEther, formatTimestamp } from '../../src/utils';
 
 export const parseAccountsFlaggedForLiquidation = ({
@@ -8,7 +8,7 @@ export const parseAccountsFlaggedForLiquidation = ({
 	collateralRatio,
 	liquidatableNonEscrowSNX,
 	collateral,
-}: UnformattedAccountForLiquidation): AccountForLiquidation => ({
+}: UnformattedAccountFlaggedForLiquidation): AccountFlaggedForLiquidation => ({
 	deadline: formatTimestamp(deadline),
 	account,
 	collateral: Number(formatEther(collateral)),

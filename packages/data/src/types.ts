@@ -155,7 +155,7 @@ export type ExchangeTotals = {
 	totalFeesGeneratedInUSD: number;
 };
 
-export type AccountForLiquidation = {
+export type AccountFlaggedForLiquidation = {
 	deadline: number;
 	account: string;
 	collateral: number;

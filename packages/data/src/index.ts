@@ -343,5 +343,7 @@ export type {
 	OptionsMarket,
 	OptionsTransaction,
 	DailyTotalActiveStakers,
+	AccountFlaggedForLiquidation,
+	SynthHolder,
 };
 export default synthetixData;
