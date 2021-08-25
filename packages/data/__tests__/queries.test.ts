@@ -19,6 +19,7 @@ import {
 	parseBinaryOptionTransactions,
 	parseDailyTotalActiveStakers,
 	parseExchangeTotals,
+	parseAccountsFlaggedForLiquidation,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
@@ -39,6 +40,7 @@ import {
 	binaryOptionsTransactionsMock,
 	exchangeTotalsMock,
 	dailyTotalActiveStakersMock,
+	accountsFlaggedForLiquidationMock,
 } from '../__mocks__';
 import { dailyBurnedMock } from '../__mocks__/dailyBurned';
 import { dailyIssuedMock } from '../__mocks__/dailyIssued';
@@ -434,6 +436,22 @@ describe('@synthetixio/data tests', () => {
 			expect(totals.length).toBeGreaterThanOrEqual(1);
 			const total = totals[0]!;
 			expect(total.id).toBeGreaterThanOrEqual(1);
+		});
+	});
+
+	describe('accountsFlaggedForLiquidation query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseAccountsFlaggedForLiquidation(
+				accountsFlaggedForLiquidationMock.response
+			);
+			expect(accountsFlaggedForLiquidationMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const accounts = await snxData.accountsFlaggedForLiquidation({ max: 100 });
+			expect(accounts.length).toBeGreaterThanOrEqual(1);
+			const account = accounts[0]!;
+			expect(account.deadline).toBeGreaterThanOrEqual(1);
 		});
 	});
 });

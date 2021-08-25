@@ -92,6 +92,12 @@ export type ExchangeTotalsParams = {
 	timeSeries: string;
 } & BaseQueryParams;
 
+export type AccountsFlaggedForLiquidationParams = {
+	account?: string;
+	minTimestamp?: number;
+	maxTimestamp?: number;
+} & BaseQueryParams;
+
 /**
  * Shorts have many relationships between entities although we are not taking advantage
  * of all of them so we are removing the types we don't use
@@ -142,4 +148,12 @@ export type ExchangeTotals = {
 	exchangers: number;
 	exchangeUSDTally: number;
 	totalFeesGeneratedInUSD: number;
+};
+
+export type AccountForLiquidation = {
+	deadline: number;
+	account: string;
+	collateral: number;
+	collateralRatio: number;
+	liquidatableNonEscrowSNX: number;
 };

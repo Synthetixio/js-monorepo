@@ -31,6 +31,7 @@ import {
 	DailyTotalActiveStakersParams,
 	ExchangeTotals,
 	ExchangeTotalsParams,
+	AccountsFlaggedForLiquidationParams,
 } from './types';
 import {
 	Synthetix,
@@ -45,6 +46,7 @@ import {
 	DebtSnapshot,
 	SnxHolder,
 	ExchangeEntrySettled,
+	AccountFlaggedForLiquidation,
 } from '../generated/graphql';
 
 enum Period {
@@ -299,6 +301,21 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 		});
 		return response != null
 			? response.totalDailyActiveStakers.map(queries.parseDailyTotalActiveStakers)
+			: null;
+	},
+	accountsFlaggedForLiquidation: async (
+		params?: AccountsFlaggedForLiquidationParams
+	): Promise<AccountFlaggedForLiquidation[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: queries.createAccountsFlaggedForLiquidationQuery,
+			networkId,
+			endpoints: {
+				[NetworkId.Mainnet]: l1Endpoints.liquidations,
+			},
+		});
+		return response != null
+			? response.accountFlaggedForLiquidations.map(queries.parseAccountsFlaggedForLiquidation)
 			: null;
 	},
 });
