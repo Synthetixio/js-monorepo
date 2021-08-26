@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useQuery, UseQueryOptions } from 'react-query';
-import providers from '@ethersproject/providers';
 import orderBy from 'lodash/orderBy';
 import {
 	optimismMessengerWatcher,
@@ -8,7 +7,7 @@ import {
 	OptimismWatcher,
 	OPTIMISM_NETWORKS,
 } from '@synthetixio/optimism-networks';
-import { getOptimismProvider } from '@synthetixio/providers';
+import loadProvider, { getOptimismProvider } from '@synthetixio/providers';
 import { QueryContext } from '../../context';
 import { DepositHistory, DepositRecord } from '../../types';
 import { wei } from '@synthetixio/wei';
@@ -16,26 +15,30 @@ import { wei } from '@synthetixio/wei';
 const NUM_BLOCKS_TO_FETCH = 1000000;
 
 // NOTE: query context for this query must always be on the L1 side (even if withdrawing)
-const useGetDepositsDataQuery = (
+const useGetBridgeDataQuery = (
 	ctx: QueryContext,
 	walletAddress: string | null,
 	options?: UseQueryOptions<DepositHistory>
 ) => {
 	const [watcher, setWatcher] = useState<OptimismWatcher | null>(null);
 
+	const isFromL2 = !!OPTIMISM_NETWORKS[ctx.networkId!];
+
+	const l1provider = isFromL2 ? loadProvider({ networkId: ctx.networkId! }) : ctx.provider;
+	const l2provider = isFromL2 ? ctx.provider : getOptimismProvider({ networkId: ctx.networkId! });
+
 	useEffect(() => {
 		if (ctx.networkId && OPTIMISM_NETWORKS[ctx.networkId] != null && ctx.provider) {
-			setWatcher(
-				optimismMessengerWatcher({
-					// @ts-ignore
-					layerOneProvider: ctx.provider as providers.Web3Provider,
-					// @ts-ignore
-					layerTwoProvider: getOptimismProvider({
-						layerOneNetworkId: ctx.networkId,
-					}) as providers.Web3Provider,
-					layerTwoNetworkId: L1_TO_L2_NETWORK_MAPPER[ctx.networkId],
-				})
-			);
+
+			const watcher = optimismMessengerWatcher({
+				// @ts-ignore
+				layerOneProvider: l1provider,
+				// @ts-ignore
+				layerTwoProvider: l2provider,
+				layerTwoNetworkId: isFromL2 ? ctx.networkId : L1_TO_L2_NETWORK_MAPPER[ctx.networkId],
+			});
+
+			setWatcher(watcher);
 		}
 	}, [ctx.networkId, ctx.provider]);
 
@@ -46,47 +49,46 @@ const useGetDepositsDataQuery = (
 				contracts: { SynthetixBridgeToOptimism, SynthetixBridgeToBase },
 			} = ctx.snxjs!;
 
-			const blockNumber = await ctx.provider!.getBlockNumber();
+			const blockNumber = await l1provider!.getBlockNumber();
 			const startBlock = Math.max(blockNumber - NUM_BLOCKS_TO_FETCH, 0);
-			const depositFilters = SynthetixBridgeToOptimism.filters.DepositInitiated(walletAddress);
-			const withdrawalFilters = SynthetixBridgeToBase.filters.DepositInitiated(walletAddress);
+			const filters = SynthetixBridgeToOptimism ? 
+				SynthetixBridgeToOptimism.filters.DepositInitiated(walletAddress) : 
+				SynthetixBridgeToBase.filters.DepositInitiated(walletAddress);
 
-			const depositLogs = await ctx.provider!.getLogs({ ...depositFilters, fromBlock: startBlock });
-			const withdrawalLogs = await ctx.provider!.getLogs({
-				...withdrawalFilters,
-				fromBlock: startBlock,
-			});
+			const logs = await ctx.provider!.getLogs({ ...filters, fromBlock: startBlock });
+
 			const events: DepositHistory = await Promise.all([
-				...depositLogs.map(async (l) => {
+				...logs.map(async (l) => {
 					const block = await ctx.provider!.getBlock(l.blockNumber);
-					const { args } = SynthetixBridgeToOptimism.interface.parseLog(l);
+					const { args } = (isFromL2 ? SynthetixBridgeToBase : SynthetixBridgeToOptimism).interface.parseLog(l);
 					const timestamp = Number(block.timestamp * 1000);
+
+					if (isFromL2) {
+						const msgHashes = await watcher!.getMessageHashesFromL1Tx(l.transactionHash);
+						const receipt = await watcher!.getL2TransactionReceipt(msgHashes[0], false);
+						const readyToRelay =
+							Date.now() - timestamp > OPTIMISM_NETWORKS[ctx.networkId!].fraudProofWindow;
+
+						return {
+							timestamp,
+							amount: wei(args._amount),
+							transactionHash: l.transactionHash,
+							type: 'withdrawal',
+							status: !!receipt
+								? ('confirmed' as const)
+								: readyToRelay
+								? ('relay' as const)
+								: ('pending' as const),
+						} as DepositRecord;
+
+					}
+
 					return {
 						timestamp,
 						amount: wei(args._amount),
 						transactionHash: l.transactionHash,
 						type: 'deposit',
 						status: 'pending',
-					} as DepositRecord;
-				}),
-				...withdrawalLogs.map(async (l) => {
-					const block = await ctx.provider!.getBlock(l.blockNumber);
-					const { args } = SynthetixBridgeToBase.interface.parseLog(l);
-					const timestamp = Number(block.timestamp * 1000);
-					const msgHashes = await watcher!.getMessageHashesFromL1Tx(l.transactionHash);
-					const receipt = await watcher!.getL2TransactionReceipt(msgHashes[0], false);
-					const readyToRelay =
-						Date.now() - timestamp > OPTIMISM_NETWORKS[ctx.networkId!].fraudProofWindow;
-					return {
-						timestamp,
-						amount: wei(args._amount),
-						transactionHash: l.transactionHash,
-						type: 'withdrawal',
-						status: !!receipt
-							? ('confirmed' as const)
-							: readyToRelay
-							? ('relay' as const)
-							: ('pending' as const),
 					} as DepositRecord;
 				}),
 			]);
@@ -100,4 +102,4 @@ const useGetDepositsDataQuery = (
 	);
 };
 
-export default useGetDepositsDataQuery;
+export default useGetBridgeDataQuery;

@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 
-const useIsActiveQuery = (
+const useIsBridgeActiveQuery = (
 	ctx: QueryContext,
 	options?: UseQueryOptions<{ deposit: boolean; withdrawal: boolean }>
 ) => {
@@ -24,4 +24,4 @@ const useIsActiveQuery = (
 	);
 };
 
-export default useIsActiveQuery;
+export default useIsBridgeActiveQuery;
