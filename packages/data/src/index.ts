@@ -19,7 +19,7 @@ import {
 	BaseQueryParams,
 	SynthExchangeExpanded,
 	ShortQueryParams,
-	FormattedShort,
+	Short,
 	ExchangeEntrySettledsParams,
 	DailyIssuedQueryParams,
 	DailyBurnedQueryParams,
@@ -221,7 +221,7 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 		});
 		return response != null ? response.snxholders.map(queries.parseSnxHolder) : null;
 	},
-	shorts: async (params?: ShortQueryParams): Promise<FormattedShort[] | null> => {
+	shorts: async (params?: ShortQueryParams): Promise<Short[] | null> => {
 		const response = await getData({
 			params,
 			queryMethod: queries.createShortsQuery,
@@ -347,5 +347,6 @@ export type {
 	SynthHolder,
 	DailyIssued,
 	DailyBurned,
+	Short,
 };
 export default synthetixData;
