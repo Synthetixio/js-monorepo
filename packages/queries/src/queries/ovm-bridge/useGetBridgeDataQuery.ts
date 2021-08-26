@@ -22,13 +22,12 @@ const useGetBridgeDataQuery = (
 ) => {
 	const [watcher, setWatcher] = useState<OptimismWatcher | null>(null);
 
-	const isFromL2 = !!OPTIMISM_NETWORKS[ctx.networkId!];
-
-	const l1provider = isFromL2 ? loadProvider({ networkId: ctx.networkId! }) : ctx.provider;
-	const l2provider = isFromL2 ? ctx.provider : getOptimismProvider({ networkId: ctx.networkId! });
-
 	useEffect(() => {
 		if (ctx.networkId && OPTIMISM_NETWORKS[ctx.networkId] != null && ctx.provider) {
+			const isFromL2 = !!OPTIMISM_NETWORKS[ctx.networkId!];
+		
+			const l1provider = isFromL2 ? loadProvider({ networkId: ctx.networkId! }) : ctx.provider;
+			const l2provider = isFromL2 ? ctx.provider : getOptimismProvider({ networkId: ctx.networkId! });
 
 			const watcher = optimismMessengerWatcher({
 				// @ts-ignore
@@ -45,6 +44,11 @@ const useGetBridgeDataQuery = (
 	return useQuery<DepositHistory>(
 		['ovm-bridge', 'depositData', ctx.networkId, walletAddress],
 		async () => {
+			const isFromL2 = !!OPTIMISM_NETWORKS[ctx.networkId!];
+		
+			const l1provider = isFromL2 ? loadProvider({ networkId: ctx.networkId! }) : ctx.provider;
+			const l2provider = isFromL2 ? ctx.provider : getOptimismProvider({ networkId: ctx.networkId! });
+
 			const {
 				contracts: { SynthetixBridgeToOptimism, SynthetixBridgeToBase },
 			} = ctx.snxjs!;
