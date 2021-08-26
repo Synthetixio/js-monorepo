@@ -1,6 +1,6 @@
 import {
 	SynthExchange,
-	Short,
+	Short as UnformatedShort,
 	ShortLoanChange,
 	ShortCollateralChange,
 	ShortLiquidation,
@@ -107,8 +107,11 @@ export type SynthHolderParams = {
  * Shorts have many relationships between entities although we are not taking advantage
  * of all of them so we are removing the types we don't use
  */
-export interface FormattedShort
-	extends Omit<Short, 'contractData' | 'liquidations' | 'collateralChanges' | 'loanChanges'> {
+export interface Short
+	extends Omit<
+		UnformatedShort,
+		'contractData' | 'liquidations' | 'collateralChanges' | 'loanChanges'
+	> {
 	loanChanges: Omit<ShortLoanChange, 'short'>[];
 	collateralChanges: Omit<ShortCollateralChange, 'short'>[];
 	liquidations: Omit<ShortLiquidation, 'short'>[];
