@@ -1,9 +1,8 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 
 import { PERIOD_IN_HOURS, Period } from '../../constants';
-
-import { calculateTimestampForPeriod } from './utils';
 import { QueryContext } from '../../context';
+import { calculateTimestampForPeriod } from './utils';
 
 const useSynthExchangesSinceQuery = (
 	ctx: QueryContext,
