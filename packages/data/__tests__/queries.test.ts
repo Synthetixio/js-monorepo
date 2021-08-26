@@ -267,8 +267,8 @@ describe('@synthetixio/data tests', () => {
 				synth: 'SNX',
 				minTimestamp: oneDayTimestamp,
 			});
-			expect(l1RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l1RateUpdatesInfo!.length).toBeGreaterThan(0);
+			expect(l1RateUpdatesInfo![0].synth).toEqual('SNX');
 		});
 
 		test('should return over 1000 rateUpdates data from l1 with no max input and a long timeframe', async () => {
@@ -277,8 +277,8 @@ describe('@synthetixio/data tests', () => {
 				synth: 'SNX',
 				minTimestamp: oneMonthTimestamp,
 			});
-			expect(l1RateUpdatesAnnualInfo![0].synth).toEqual('SNX');
 			expect(l1RateUpdatesAnnualInfo!.length).toBeGreaterThan(1000);
+			expect(l1RateUpdatesAnnualInfo![0].synth).toEqual('SNX');
 		});
 
 		test('should return rateUpdates data from l2', async () => {
@@ -287,18 +287,19 @@ describe('@synthetixio/data tests', () => {
 				synth: 'SNX',
 				minTimestamp: oneMonthTimestamp,
 			});
-			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l2RateUpdatesInfo!.length).toBeGreaterThan(0);
+			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 		});
 
 		test('should return rateUpdates data from l2 kovan', async () => {
+			const twoMonthTimestamp = calculateTimestampForPeriod(2 * PERIOD_IN_HOURS['ONE_MONTH']);
 			const l2RateUpdatesInfo = await snxDataKovanOvm.rateUpdates({
 				max: 5,
 				synth: 'SNX',
-				minTimestamp: oneMonthTimestamp,
+				minTimestamp: twoMonthTimestamp,
 			});
-			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l2RateUpdatesInfo!.length).toBeGreaterThan(0);
+			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 		});
 	});
 
@@ -313,9 +314,9 @@ describe('@synthetixio/data tests', () => {
 				max: 5,
 				account: randomLargeSNXStaker,
 			});
+			expect(debtSnapshotInfo!.length).toEqual(5);
 			expect(debtSnapshotInfo![0].account).toEqual(randomLargeSNXStaker);
 			expect(Number(debtSnapshotInfo![0].collateral)).toBeGreaterThan(0);
-			expect(debtSnapshotInfo!.length).toEqual(5);
 		});
 
 		test.skip('should return debtSnapshots data from l2', async () => {
@@ -323,9 +324,9 @@ describe('@synthetixio/data tests', () => {
 				max: 2,
 				account: randomL2Staker,
 			});
+			expect(debtSnapshotInfo!.length).toEqual(2);
 			expect(debtSnapshotInfo![0].account).toEqual(randomL2Staker);
 			expect(Number(debtSnapshotInfo![0].collateral)).toBeGreaterThan(0);
-			expect(debtSnapshotInfo!.length).toEqual(2);
 		});
 	});
 
@@ -339,27 +340,27 @@ describe('@synthetixio/data tests', () => {
 			const snxHoldersInfo = await snxData.snxHolders({
 				max: 5,
 			});
+			expect(snxHoldersInfo!.length).toEqual(5);
 			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
 			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
-			expect(snxHoldersInfo!.length).toEqual(5);
 		});
 
 		test.skip('should return snxHolders data from l2', async () => {
 			const snxHoldersInfo = await snxDataOvm.snxHolders({
 				max: 5,
 			});
+			expect(snxHoldersInfo!.length).toEqual(5);
 			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
 			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
-			expect(snxHoldersInfo!.length).toEqual(5);
 		});
 
 		test('should accept addresses prop', async () => {
 			const snxHoldersInfo = await snxData.snxHolders({
 				addresses: ['0x49be88f0fcc3a8393a59d3688480d7d253c37d2a'],
 			});
+			expect(snxHoldersInfo!.length).toEqual(1);
 			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
 			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
-			expect(snxHoldersInfo!.length).toEqual(1);
 		});
 	});
 
