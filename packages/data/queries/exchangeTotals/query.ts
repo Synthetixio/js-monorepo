@@ -5,6 +5,7 @@ import { createGQLBlockNumberString } from '../../src/utils';
 export const ENTITY_MAP: Record<string, string> = {
 	'1d': 'dailyTotals',
 	'15m': 'fifteenMinuteTotals',
+	all: 'totals',
 };
 
 export const createExchangeTotalsQuery = (params: ExchangeTotalsParams): string => {

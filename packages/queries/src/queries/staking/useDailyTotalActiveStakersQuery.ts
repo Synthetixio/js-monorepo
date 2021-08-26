@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { DailyTotalActiveStakers } from '@synthetixio/data/build/node/src/types';
+import { DailyTotalActiveStakers } from '@synthetixio/data';
 import { QueryContext } from '../../context';
 
 export const useDailyTotalActiveStakersQuery = (

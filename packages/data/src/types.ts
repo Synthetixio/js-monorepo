@@ -56,6 +56,7 @@ export type SnxHolderParams = {
 	address?: string;
 	minMints?: number;
 	minClaims?: number;
+	addresses?: string[];
 } & BaseQueryParams;
 
 export type RateUpdateQueryParams = {
@@ -89,6 +90,17 @@ export type DailyTotalActiveStakersParams = {} & BaseQueryParams;
 
 export type ExchangeTotalsParams = {
 	timeSeries: string;
+} & BaseQueryParams;
+
+export type AccountsFlaggedForLiquidationParams = {
+	account?: string;
+	minTimestamp?: number;
+	maxTimestamp?: number;
+} & BaseQueryParams;
+
+export type SynthHolderParams = {
+	id?: string;
+	synth?: string;
 } & BaseQueryParams;
 
 /**
@@ -141,4 +153,18 @@ export type ExchangeTotals = {
 	exchangers: number;
 	exchangeUSDTally: number;
 	totalFeesGeneratedInUSD: number;
+};
+
+export type AccountFlaggedForLiquidation = {
+	deadline: number;
+	account: string;
+	collateral: number;
+	collateralRatio: number;
+	liquidatableNonEscrowSNX: number;
+};
+
+export type SynthHolder = {
+	address: string;
+	synth: string;
+	balanceOf: number;
 };

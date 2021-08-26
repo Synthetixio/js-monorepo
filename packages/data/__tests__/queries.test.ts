@@ -19,6 +19,8 @@ import {
 	parseBinaryOptionTransactions,
 	parseDailyTotalActiveStakers,
 	parseExchangeTotals,
+	parseAccountsFlaggedForLiquidation,
+	parseSynthHolders,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
@@ -39,9 +41,11 @@ import {
 	binaryOptionsTransactionsMock,
 	exchangeTotalsMock,
 	dailyTotalActiveStakersMock,
+	accountsFlaggedForLiquidationMock,
+	dailyBurnedMock,
+	dailyIssuedMock,
+	synthHoldersMock,
 } from '../__mocks__';
-import { dailyBurnedMock } from '../__mocks__/dailyBurned';
-import { dailyIssuedMock } from '../__mocks__/dailyIssued';
 
 describe('@synthetixio/data tests', () => {
 	const randomLargeSNXStaker = '0x042ed37d32b88ab6b1c2e7b8a400dcdc728050bc';
@@ -348,6 +352,15 @@ describe('@synthetixio/data tests', () => {
 			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
 			expect(snxHoldersInfo!.length).toEqual(5);
 		});
+
+		test('should accept addresses prop', async () => {
+			const snxHoldersInfo = await snxData.snxHolders({
+				addresses: ['0x49be88f0fcc3a8393a59d3688480d7d253c37d2a'],
+			});
+			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
+			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
+			expect(snxHoldersInfo!.length).toEqual(1);
+		});
 	});
 
 	describe('exchangeEntrySettleds query', () => {
@@ -434,6 +447,36 @@ describe('@synthetixio/data tests', () => {
 			expect(totals.length).toBeGreaterThanOrEqual(1);
 			const total = totals[0]!;
 			expect(total.id).toBeGreaterThanOrEqual(1);
+		});
+	});
+
+	describe('accountsFlaggedForLiquidation query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseAccountsFlaggedForLiquidation(
+				accountsFlaggedForLiquidationMock.response
+			);
+			expect(accountsFlaggedForLiquidationMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const accounts = await snxData.accountsFlaggedForLiquidation({ max: 100 });
+			expect(accounts.length).toBeGreaterThanOrEqual(1);
+			const account = accounts[0]!;
+			expect(account.deadline).toBeGreaterThanOrEqual(1);
+		});
+	});
+
+	describe('synthHolders query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseSynthHolders(synthHoldersMock.response);
+			expect(synthHoldersMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const holders = await snxData.synthHolders({ max: 100 });
+			expect(holders.length).toBeGreaterThanOrEqual(1);
+			const holder = holders[0]!;
+			expect(holder.balanceOf).toBeGreaterThanOrEqual(1);
 		});
 	});
 });
