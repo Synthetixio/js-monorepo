@@ -27,7 +27,7 @@ const useGetBridgeDataQuery = (
 		if (ctx.networkId && ctx.provider) {
 			const isFromL2 = !!OPTIMISM_NETWORKS[ctx.networkId!];
 		
-			const l1provider = isFromL2 ? loadProvider({ networkId: ctx.networkId!, infuraId }) : ctx.provider;
+			const l1provider = isFromL2 ? loadProvider({ infuraId }) : ctx.provider;
 			const l2provider = isFromL2 ? ctx.provider : getOptimismProvider({ networkId: ctx.networkId! });
 
 			const watcher = optimismMessengerWatcher({
@@ -47,8 +47,7 @@ const useGetBridgeDataQuery = (
 		async () => {
 			const isFromL2 = !!OPTIMISM_NETWORKS[ctx.networkId!];
 		
-			const l1provider = isFromL2 ? loadProvider({ networkId: ctx.networkId!, infuraId }) : ctx.provider;
-			const l2provider = isFromL2 ? ctx.provider : getOptimismProvider({ networkId: ctx.networkId! });
+			const l1provider = isFromL2 ? loadProvider({ infuraId }) : ctx.provider;
 
 			const {
 				contracts: { SynthetixBridgeToOptimism, SynthetixBridgeToBase },
