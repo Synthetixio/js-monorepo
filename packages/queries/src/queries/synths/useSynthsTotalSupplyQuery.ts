@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { useQuery, UseQueryOptions } from 'react-query';
 
-import { Synths } from '@synthetixio/contracts-interface';
+import { NetworkId, Synths } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
@@ -33,6 +33,9 @@ const useSynthsTotalSupplyQuery = (
 				formatBytes32String
 			);
 
+			const isL2 =
+				NetworkId['Mainnet-Ovm'] === ctx.networkId! || NetworkId['Kovan-Ovm'] === ctx.networkId!;
+
 			const [
 				synthTotalSupplies,
 
@@ -52,13 +55,13 @@ const useSynthsTotalSupplyQuery = (
 				SynthUtil.synthsTotalSupplies(),
 				ExchangeRates.rateForCurrency(sETHKey),
 				ExchangeRates.rateForCurrency(sBTCKey),
-				CollateralManagerState.totalIssuedSynths(sETHKey),
-				CollateralManagerState.totalIssuedSynths(sBTCKey),
-				CollateralManagerState.totalIssuedSynths(sUSDKey),
-				EtherWrapper.sETHIssued(),
-				EtherWrapper.sUSDIssued(),
-				EtherCollateral.totalIssuedSynths(),
-				EtherCollateralsUSD.totalIssuedSynths(),
+				isL2 ? Promise.resolve(['0', '0']) : CollateralManagerState.totalIssuedSynths(sETHKey),
+				isL2 ? Promise.resolve(['0', '0']) : CollateralManagerState.totalIssuedSynths(sBTCKey),
+				isL2 ? Promise.resolve(['0', '0']) : CollateralManagerState.totalIssuedSynths(sUSDKey),
+				isL2 ? Promise.resolve('0') : EtherWrapper.sETHIssued(),
+				isL2 ? Promise.resolve('0') : EtherWrapper.sUSDIssued(),
+				isL2 ? Promise.resolve('0') : EtherCollateral.totalIssuedSynths(),
+				isL2 ? Promise.resolve('0') : EtherCollateralsUSD.totalIssuedSynths(),
 			]);
 
 			const [
