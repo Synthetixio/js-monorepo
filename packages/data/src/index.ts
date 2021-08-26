@@ -348,5 +348,6 @@ export type {
 	DailyIssued,
 	DailyBurned,
 	Short,
+	SnxHolder,
 };
 export default synthetixData;
