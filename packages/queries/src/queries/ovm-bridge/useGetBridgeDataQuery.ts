@@ -17,16 +17,17 @@ const NUM_BLOCKS_TO_FETCH = 1000000;
 // NOTE: query context for this query must always be on the L1 side (even if withdrawing)
 const useGetBridgeDataQuery = (
 	ctx: QueryContext,
+	infuraId: string,
 	walletAddress: string | null,
 	options?: UseQueryOptions<DepositHistory>
 ) => {
 	const [watcher, setWatcher] = useState<OptimismWatcher | null>(null);
 
 	useEffect(() => {
-		if (ctx.networkId && OPTIMISM_NETWORKS[ctx.networkId] != null && ctx.provider) {
+		if (ctx.networkId && ctx.provider) {
 			const isFromL2 = !!OPTIMISM_NETWORKS[ctx.networkId!];
 		
-			const l1provider = isFromL2 ? loadProvider({ networkId: ctx.networkId! }) : ctx.provider;
+			const l1provider = isFromL2 ? loadProvider({ networkId: ctx.networkId!, infuraId }) : ctx.provider;
 			const l2provider = isFromL2 ? ctx.provider : getOptimismProvider({ networkId: ctx.networkId! });
 
 			const watcher = optimismMessengerWatcher({
@@ -46,7 +47,7 @@ const useGetBridgeDataQuery = (
 		async () => {
 			const isFromL2 = !!OPTIMISM_NETWORKS[ctx.networkId!];
 		
-			const l1provider = isFromL2 ? loadProvider({ networkId: ctx.networkId! }) : ctx.provider;
+			const l1provider = isFromL2 ? loadProvider({ networkId: ctx.networkId!, infuraId }) : ctx.provider;
 			const l2provider = isFromL2 ? ctx.provider : getOptimismProvider({ networkId: ctx.networkId! });
 
 			const {
