@@ -8,7 +8,7 @@ export const useExchangeTotalsQuery = (
 	options?: UseQueryOptions<ExchangeTotals[] | null>
 ) => {
 	return useQuery<ExchangeTotals[] | null>(
-		['trading', 'exchangeTotals', args],
+		['trading', 'exchangeTotals', ctx.networkId, args],
 		() => ctx.snxData!.exchangeTotals(args),
 		{
 			enabled: ctx.snxData != null,
