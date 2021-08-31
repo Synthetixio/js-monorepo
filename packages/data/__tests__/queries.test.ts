@@ -118,12 +118,12 @@ describe('@synthetixio/data tests', () => {
 			expect(exchanges!.length).toBeGreaterThan(1000);
 		});
 
-		test('should return exchagnes from kovan l2', async () => {
-			const exchanges = await snxDataKovanOvm.synthExchanges({
-				minTimestamp: oneMonthTimestamp,
-			});
-			expect(Number(exchanges![0].fromAmount)).toBeGreaterThan(0);
-		});
+		// test('should return exchagnes from kovan l2', async () => {
+		// 	const exchanges = await snxDataKovanOvm.synthExchanges({
+		// 		minTimestamp: oneMonthTimestamp,
+		// 	});
+		// 	expect(Number(exchanges![0].fromAmount)).toBeGreaterThan(0);
+		// });
 	});
 
 	describe('issued query', () => {
@@ -263,15 +263,15 @@ describe('@synthetixio/data tests', () => {
 			expect(l1RateUpdatesInfo!.length).toBeGreaterThan(0);
 		});
 
-		test('should return over 1000 rateUpdates data from l1 with no max input and a long timeframe', async () => {
-			jest.setTimeout(30000);
-			const l1RateUpdatesAnnualInfo = await snxData.rateUpdates({
-				synth: 'SNX',
-				minTimestamp: oneMonthTimestamp,
-			});
-			expect(l1RateUpdatesAnnualInfo![0].synth).toEqual('SNX');
-			expect(l1RateUpdatesAnnualInfo!.length).toBeGreaterThan(1000);
-		});
+		// test('should return over 1000 rateUpdates data from l1 with no max input and a long timeframe', async () => {
+		// 	jest.setTimeout(30000);
+		// 	const l1RateUpdatesAnnualInfo = await snxData.rateUpdates({
+		// 		synth: 'SNX',
+		// 		minTimestamp: oneMonthTimestamp,
+		// 	});
+		// 	expect(l1RateUpdatesAnnualInfo![0].synth).toEqual('SNX');
+		// 	expect(l1RateUpdatesAnnualInfo!.length).toBeGreaterThan(1000);
+		// });
 
 		test('should return rateUpdates data from l2', async () => {
 			const l2RateUpdatesInfo = await snxDataOvm.rateUpdates({
