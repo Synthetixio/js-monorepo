@@ -9,12 +9,12 @@ const useIsBridgeActiveQuery = (
 		['ovm-bridge', 'depositsActive', ctx.networkId],
 		async () => {
 			return {
-				deposit: ctx.snxjs!.contracts.SynthetixBridgeToOptimism ? 
-					ctx.snxjs!.contracts.SynthetixBridgeToOptimism.initiationActive() :
-					false,
-				withdrawal: ctx.snxjs!.contracts.SynthetixBridgeToBase ?
-					ctx.snxjs!.contracts.SynthetixBridgeToBase.initiationActive() :
-					false,
+				deposit: ctx.snxjs!.contracts.SynthetixBridgeToOptimism
+					? ctx.snxjs!.contracts.SynthetixBridgeToOptimism.initiationActive()
+					: false,
+				withdrawal: ctx.snxjs!.contracts.SynthetixBridgeToBase
+					? ctx.snxjs!.contracts.SynthetixBridgeToBase.initiationActive()
+					: false,
 			};
 		},
 		{

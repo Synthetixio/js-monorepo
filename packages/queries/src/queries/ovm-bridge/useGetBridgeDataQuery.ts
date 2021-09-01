@@ -26,9 +26,11 @@ const useGetBridgeDataQuery = (
 	useEffect(() => {
 		if (ctx.networkId && ctx.provider) {
 			const isFromL2 = !!OPTIMISM_NETWORKS[ctx.networkId!];
-		
+
 			const l1provider = isFromL2 ? loadProvider({ infuraId }) : ctx.provider;
-			const l2provider = isFromL2 ? ctx.provider : getOptimismProvider({ networkId: ctx.networkId! });
+			const l2provider = isFromL2
+				? ctx.provider
+				: getOptimismProvider({ networkId: ctx.networkId! });
 
 			const watcher = optimismMessengerWatcher({
 				// @ts-ignore
@@ -46,7 +48,7 @@ const useGetBridgeDataQuery = (
 		['ovm-bridge', 'depositData', ctx.networkId, walletAddress],
 		async () => {
 			const isFromL2 = !!OPTIMISM_NETWORKS[ctx.networkId!];
-		
+
 			const l1provider = isFromL2 ? loadProvider({ infuraId }) : ctx.provider;
 
 			const {
@@ -55,16 +57,18 @@ const useGetBridgeDataQuery = (
 
 			const blockNumber = await l1provider!.getBlockNumber();
 			const startBlock = Math.max(blockNumber - NUM_BLOCKS_TO_FETCH, 0);
-			const filters = SynthetixBridgeToOptimism ? 
-				SynthetixBridgeToOptimism.filters.DepositInitiated(walletAddress) : 
-				SynthetixBridgeToBase.filters.DepositInitiated(walletAddress);
+			const filters = SynthetixBridgeToOptimism
+				? SynthetixBridgeToOptimism.filters.DepositInitiated(walletAddress)
+				: SynthetixBridgeToBase.filters.DepositInitiated(walletAddress);
 
 			const logs = await ctx.provider!.getLogs({ ...filters, fromBlock: startBlock });
 
 			const events: DepositHistory = await Promise.all([
 				...logs.map(async (l) => {
 					const block = await ctx.provider!.getBlock(l.blockNumber);
-					const { args } = (isFromL2 ? SynthetixBridgeToBase : SynthetixBridgeToOptimism).interface.parseLog(l);
+					const { args } = (
+						isFromL2 ? SynthetixBridgeToBase : SynthetixBridgeToOptimism
+					).interface.parseLog(l);
 					const timestamp = Number(block.timestamp * 1000);
 
 					if (isFromL2) {
@@ -84,7 +88,6 @@ const useGetBridgeDataQuery = (
 								? ('relay' as const)
 								: ('pending' as const),
 						} as DepositRecord;
-
 					}
 
 					return {

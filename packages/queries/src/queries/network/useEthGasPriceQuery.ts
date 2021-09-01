@@ -35,10 +35,7 @@ type GasNowResponse = {
 	};
 };
 
-const useEthGasPriceQuery = (
-	ctx: QueryContext,
-	options?: UseQueryOptions<GasPrices, Error>
-) => {
+const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPrices, Error>) => {
 	return useQuery<GasPrices, Error>(
 		['network', 'gasPrice', ctx.networkId],
 		async () => {
@@ -63,7 +60,7 @@ const useEthGasPriceQuery = (
 					};
 				}
 			}
-				
+
 			try {
 				const gasPrice = formatGwei((await ctx.provider!.getGasPrice()).toNumber());
 				return {

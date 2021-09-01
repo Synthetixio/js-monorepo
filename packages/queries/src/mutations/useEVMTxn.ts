@@ -37,6 +37,7 @@ const useEVMTxn = (
 	}
 
 	function handleError(err: any) {
+		// eslint-disable-next-line
 		console.error(err);
 		const errorMessage = err.data ? hexToASCII(err.data.toString()) : err.message;
 		setErrorMessage(errorMessage);
@@ -68,7 +69,7 @@ const useEVMTxn = (
 					// add a gas limit with a 10% buffer
 					txn!.gasLimit = (await estimateGas())?.mul(11).div(10);
 
-					if(txn!.gasLimit!.eq(0)) {
+					if (txn!.gasLimit!.eq(0)) {
 						throw new Error('missing provider/signer for txn');
 					}
 				}
