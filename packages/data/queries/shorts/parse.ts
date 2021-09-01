@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { ShortCollateralChange, ShortLiquidation, ShortLoanChange } from '../../generated/graphql';
 import { formatTimestamp, hexToAscii } from '../../src/utils';
-import { FormattedShort } from '../../src/types';
+import { Short } from '../../src/types';
 
 export const parseShort = ({
 	id,
@@ -19,7 +19,7 @@ export const parseShort = ({
 	liquidations,
 	loanChanges,
 	accruedInterestLastUpdateTimestamp,
-}: FormattedShort): FormattedShort => ({
+}: Short): Short => ({
 	id,
 	account,
 	txHash,

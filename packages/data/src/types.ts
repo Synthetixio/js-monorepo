@@ -1,6 +1,6 @@
 import {
 	SynthExchange,
-	Short,
+	Short as UnformatedShort,
 	ShortLoanChange,
 	ShortCollateralChange,
 	ShortLiquidation,
@@ -56,6 +56,7 @@ export type SnxHolderParams = {
 	address?: string;
 	minMints?: number;
 	minClaims?: number;
+	addresses?: string[];
 } & BaseQueryParams;
 
 export type RateUpdateQueryParams = {
@@ -91,12 +92,26 @@ export type ExchangeTotalsParams = {
 	timeSeries: string;
 } & BaseQueryParams;
 
+export type AccountsFlaggedForLiquidationParams = {
+	account?: string;
+	minTimestamp?: number;
+	maxTimestamp?: number;
+} & BaseQueryParams;
+
+export type SynthHolderParams = {
+	id?: string;
+	synth?: string;
+} & BaseQueryParams;
+
 /**
  * Shorts have many relationships between entities although we are not taking advantage
  * of all of them so we are removing the types we don't use
  */
-export interface FormattedShort
-	extends Omit<Short, 'contractData' | 'liquidations' | 'collateralChanges' | 'loanChanges'> {
+export interface Short
+	extends Omit<
+		UnformatedShort,
+		'contractData' | 'liquidations' | 'collateralChanges' | 'loanChanges'
+	> {
 	loanChanges: Omit<ShortLoanChange, 'short'>[];
 	collateralChanges: Omit<ShortCollateralChange, 'short'>[];
 	liquidations: Omit<ShortLiquidation, 'short'>[];
@@ -141,4 +156,18 @@ export type ExchangeTotals = {
 	exchangers: number;
 	exchangeUSDTally: number;
 	totalFeesGeneratedInUSD: number;
+};
+
+export type AccountFlaggedForLiquidation = {
+	deadline: number;
+	account: string;
+	collateral: number;
+	collateralRatio: number;
+	liquidatableNonEscrowSNX: number;
+};
+
+export type SynthHolder = {
+	address: string;
+	synth: string;
+	balanceOf: number;
 };

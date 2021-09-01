@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { OptionsTransaction } from '@synthetixio/data/build/node/src/types';
+import { OptionsTransaction } from '@synthetixio/data';
 
 import { QueryContext } from '../../context';
 

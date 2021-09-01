@@ -19,6 +19,8 @@ import {
 	parseBinaryOptionTransactions,
 	parseDailyTotalActiveStakers,
 	parseExchangeTotals,
+	parseAccountsFlaggedForLiquidation,
+	parseSynthHolders,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
@@ -39,9 +41,11 @@ import {
 	binaryOptionsTransactionsMock,
 	exchangeTotalsMock,
 	dailyTotalActiveStakersMock,
+	accountsFlaggedForLiquidationMock,
+	dailyBurnedMock,
+	dailyIssuedMock,
+	synthHoldersMock,
 } from '../__mocks__';
-import { dailyBurnedMock } from '../__mocks__/dailyBurned';
-import { dailyIssuedMock } from '../__mocks__/dailyIssued';
 
 describe('@synthetixio/data tests', () => {
 	const randomLargeSNXStaker = '0x042ed37d32b88ab6b1c2e7b8a400dcdc728050bc';
@@ -263,8 +267,8 @@ describe('@synthetixio/data tests', () => {
 				synth: 'SNX',
 				minTimestamp: oneDayTimestamp,
 			});
-			expect(l1RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l1RateUpdatesInfo!.length).toBeGreaterThan(0);
+			expect(l1RateUpdatesInfo![0].synth).toEqual('SNX');
 		});
 
 		test('should return over 1000 rateUpdates data from l1 with no max input and a long timeframe', async () => {
@@ -273,8 +277,8 @@ describe('@synthetixio/data tests', () => {
 				synth: 'SNX',
 				minTimestamp: oneMonthTimestamp,
 			});
-			expect(l1RateUpdatesAnnualInfo![0].synth).toEqual('SNX');
 			expect(l1RateUpdatesAnnualInfo!.length).toBeGreaterThan(1000);
+			expect(l1RateUpdatesAnnualInfo![0].synth).toEqual('SNX');
 		});
 
 		test('should return rateUpdates data from l2', async () => {
@@ -283,18 +287,19 @@ describe('@synthetixio/data tests', () => {
 				synth: 'SNX',
 				minTimestamp: oneMonthTimestamp,
 			});
-			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l2RateUpdatesInfo!.length).toBeGreaterThan(0);
+			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 		});
 
 		test('should return rateUpdates data from l2 kovan', async () => {
+			const twoMonthTimestamp = calculateTimestampForPeriod(2 * PERIOD_IN_HOURS['ONE_MONTH']);
 			const l2RateUpdatesInfo = await snxDataKovanOvm.rateUpdates({
 				max: 5,
 				synth: 'SNX',
-				minTimestamp: oneMonthTimestamp,
+				minTimestamp: twoMonthTimestamp,
 			});
-			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l2RateUpdatesInfo!.length).toBeGreaterThan(0);
+			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 		});
 	});
 
@@ -309,9 +314,9 @@ describe('@synthetixio/data tests', () => {
 				max: 5,
 				account: randomLargeSNXStaker,
 			});
+			expect(debtSnapshotInfo!.length).toEqual(5);
 			expect(debtSnapshotInfo![0].account).toEqual(randomLargeSNXStaker);
 			expect(Number(debtSnapshotInfo![0].collateral)).toBeGreaterThan(0);
-			expect(debtSnapshotInfo!.length).toEqual(5);
 		});
 
 		test.skip('should return debtSnapshots data from l2', async () => {
@@ -319,9 +324,9 @@ describe('@synthetixio/data tests', () => {
 				max: 2,
 				account: randomL2Staker,
 			});
+			expect(debtSnapshotInfo!.length).toEqual(2);
 			expect(debtSnapshotInfo![0].account).toEqual(randomL2Staker);
 			expect(Number(debtSnapshotInfo![0].collateral)).toBeGreaterThan(0);
-			expect(debtSnapshotInfo!.length).toEqual(2);
 		});
 	});
 
@@ -335,18 +340,27 @@ describe('@synthetixio/data tests', () => {
 			const snxHoldersInfo = await snxData.snxHolders({
 				max: 5,
 			});
+			expect(snxHoldersInfo!.length).toEqual(5);
 			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
 			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
-			expect(snxHoldersInfo!.length).toEqual(5);
 		});
 
 		test.skip('should return snxHolders data from l2', async () => {
 			const snxHoldersInfo = await snxDataOvm.snxHolders({
 				max: 5,
 			});
+			expect(snxHoldersInfo!.length).toEqual(5);
 			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
 			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
-			expect(snxHoldersInfo!.length).toEqual(5);
+		});
+
+		test('should accept addresses prop', async () => {
+			const snxHoldersInfo = await snxData.snxHolders({
+				addresses: ['0x49be88f0fcc3a8393a59d3688480d7d253c37d2a'],
+			});
+			expect(snxHoldersInfo!.length).toEqual(1);
+			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
+			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
 		});
 	});
 
@@ -434,6 +448,36 @@ describe('@synthetixio/data tests', () => {
 			expect(totals.length).toBeGreaterThanOrEqual(1);
 			const total = totals[0]!;
 			expect(total.id).toBeGreaterThanOrEqual(1);
+		});
+	});
+
+	describe('accountsFlaggedForLiquidation query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseAccountsFlaggedForLiquidation(
+				accountsFlaggedForLiquidationMock.response
+			);
+			expect(accountsFlaggedForLiquidationMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const accounts = await snxData.accountsFlaggedForLiquidation({ max: 100 });
+			expect(accounts.length).toBeGreaterThanOrEqual(1);
+			const account = accounts[0]!;
+			expect(account.deadline).toBeGreaterThanOrEqual(1);
+		});
+	});
+
+	describe('synthHolders query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseSynthHolders(synthHoldersMock.response);
+			expect(synthHoldersMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const holders = await snxData.synthHolders({ max: 100 });
+			expect(holders.length).toBeGreaterThanOrEqual(1);
+			const holder = holders[0]!;
+			expect(holder.balanceOf).toBeGreaterThanOrEqual(1);
 		});
 	});
 });

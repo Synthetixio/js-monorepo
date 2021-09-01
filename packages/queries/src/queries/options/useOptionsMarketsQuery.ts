@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { OptionsMarket } from '@synthetixio/data/build/node/src/types';
+import { OptionsMarket } from '@synthetixio/data';
 
 import { QueryContext } from '../../context';
 

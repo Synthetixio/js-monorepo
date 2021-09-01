@@ -15,7 +15,7 @@ export function getWrapper(config?: any) {
 
 // builds an incomplete query context which should generally pass
 // blanket `enabled` sections. just mock the functions/data you need
-export function getFakeQueryContext(): QueryContext {
+export function getFakeQueryContext(networkId: NetworkId = NetworkId.Mainnet): QueryContext {
 	return {
 		networkId: NetworkId.Mainnet,
 		signer: {} as ethers.Signer,

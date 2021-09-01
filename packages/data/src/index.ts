@@ -19,7 +19,7 @@ import {
 	BaseQueryParams,
 	SynthExchangeExpanded,
 	ShortQueryParams,
-	FormattedShort,
+	Short,
 	ExchangeEntrySettledsParams,
 	DailyIssuedQueryParams,
 	DailyBurnedQueryParams,
@@ -31,6 +31,10 @@ import {
 	DailyTotalActiveStakersParams,
 	ExchangeTotals,
 	ExchangeTotalsParams,
+	AccountsFlaggedForLiquidationParams,
+	AccountFlaggedForLiquidation,
+	SynthHolderParams,
+	SynthHolder,
 } from './types';
 import {
 	Synthetix,
@@ -217,7 +221,7 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 		});
 		return response != null ? response.snxholders.map(queries.parseSnxHolder) : null;
 	},
-	shorts: async (params?: ShortQueryParams): Promise<FormattedShort[] | null> => {
+	shorts: async (params?: ShortQueryParams): Promise<Short[] | null> => {
 		const response = await getData({
 			params,
 			queryMethod: queries.createShortsQuery,
@@ -278,6 +282,8 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			endpoints: {
 				[NetworkId.Mainnet]: l1Endpoints.exchanges,
 				[NetworkId.Kovan]: l1Endpoints.exchangesKovan,
+				[NetworkId['Kovan-Ovm']]: l2Endpoints.exchangesKovan,
+				[NetworkId['Mainnet-Ovm']]: l2Endpoints.exchanges,
 			},
 		});
 		return response != null
@@ -301,10 +307,49 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			? response.totalDailyActiveStakers.map(queries.parseDailyTotalActiveStakers)
 			: null;
 	},
+	accountsFlaggedForLiquidation: async (
+		params?: AccountsFlaggedForLiquidationParams
+	): Promise<AccountFlaggedForLiquidation[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: queries.createAccountsFlaggedForLiquidationQuery,
+			networkId,
+			endpoints: {
+				[NetworkId.Mainnet]: l1Endpoints.liquidations,
+			},
+		});
+		return response != null
+			? response.accountFlaggedForLiquidations.map(queries.parseAccountsFlaggedForLiquidation)
+			: null;
+	},
+	synthHolders: async (params?: SynthHolderParams): Promise<SynthHolder[] | null> => {
+		const response = await getData({
+			params,
+			queryMethod: queries.createSynthHoldersQuery,
+			networkId,
+			endpoints: {
+				[NetworkId.Mainnet]: l1Endpoints.snx,
+			},
+		});
+		return response != null ? response.synthHolders.map(queries.parseSynthHolders) : null;
+	},
 });
 
 type SynthetixData = ReturnType<typeof synthetixData>;
 
 export { Period, PERIOD_IN_HOURS, calculateTimestampForPeriod, l1Endpoints, l2Endpoints };
-export type { SynthetixData };
+export type {
+	SynthetixData,
+	SynthExchangeExpanded,
+	ExchangeTotals,
+	OptionsMarket,
+	OptionsTransaction,
+	DailyTotalActiveStakers,
+	AccountFlaggedForLiquidation,
+	SynthHolder,
+	DailyIssued,
+	DailyBurned,
+	Short,
+	SnxHolder,
+};
 export default synthetixData;

@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { ExchangeTotals } from '@synthetixio/data/build/node/src/types';
+import { ExchangeTotals } from '@synthetixio/data';
 import { QueryContext } from '../../context';
 
 export const useExchangeTotalsQuery = (
@@ -8,7 +8,7 @@ export const useExchangeTotalsQuery = (
 	options?: UseQueryOptions<ExchangeTotals[] | null>
 ) => {
 	return useQuery<ExchangeTotals[] | null>(
-		['trading', 'exchangeTotals', args],
+		['trading', 'exchangeTotals', ctx.networkId, args],
 		() => ctx.snxData!.exchangeTotals(args),
 		{
 			enabled: ctx.snxData != null,
