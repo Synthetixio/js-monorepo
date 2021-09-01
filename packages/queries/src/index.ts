@@ -27,21 +27,25 @@ export type SynthetixQueries = {
 export function createQueryContext({
 	networkId,
 	provider,
+	signer,
 }: {
 	networkId: NetworkId | null;
 	provider?: ethers.providers.Provider;
+	signer?: ethers.Signer;
 }): QueryContext {
 	const ctx: QueryContext = {
 		networkId,
 		provider: null,
+		signer: null,
 		snxData: null,
 		snxjs: null,
 	};
 
 	if (networkId) {
-		ctx.snxjs = synthetix({ networkId, provider });
+		ctx.snxjs = synthetix({ networkId, signer, provider });
 
 		// snag the resultant provider from snxjs
+		ctx.signer = ctx.snxjs.contracts.Synthetix.signer;
 		ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
 
 		ctx.snxData = synthetixData({ networkId });

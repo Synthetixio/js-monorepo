@@ -201,7 +201,7 @@ export enum Action {
 	EXCHANGE_FOR_ADDRESS = 'ExchangeForAddress',
 }
 
-export const APPROVE_CONTRACT_METHODS: Map<string, string> = new Map([
+export const DELEGATE_APPROVE_CONTRACT_METHODS: Map<string, string> = new Map([
 	[Action.APPROVE_ALL, 'approveAllDelegatePowers'],
 	[Action.ISSUE_FOR_ADDRESS, 'approveIssueOnBehalf'],
 	[Action.BURN_FOR_ADDRESS, 'approveBurnOnBehalf'],
@@ -209,7 +209,7 @@ export const APPROVE_CONTRACT_METHODS: Map<string, string> = new Map([
 	[Action.EXCHANGE_FOR_ADDRESS, 'approveExchangeOnBehalf'],
 ]);
 
-export const WITHDRAW_CONTRACT_METHODS: Map<string, string> = new Map([
+export const DELEGATE_WITHDRAW_CONTRACT_METHODS: Map<string, string> = new Map([
 	[Action.APPROVE_ALL, 'removeAllDelegatePowers'],
 	[Action.ISSUE_FOR_ADDRESS, 'removeIssueOnBehalf'],
 	[Action.BURN_FOR_ADDRESS, 'removeBurnOnBehalf'],
@@ -217,7 +217,7 @@ export const WITHDRAW_CONTRACT_METHODS: Map<string, string> = new Map([
 	[Action.EXCHANGE_FOR_ADDRESS, 'removeExchangeOnBehalf'],
 ]);
 
-export const GET_IS_APPROVED_CONTRACT_METHODS: Map<string, string> = new Map([
+export const DELEGATE_GET_IS_APPROVED_CONTRACT_METHODS: Map<string, string> = new Map([
 	[Action.APPROVE_ALL, 'approvedAll'],
 	[Action.ISSUE_FOR_ADDRESS, 'canIssueFor'],
 	[Action.BURN_FOR_ADDRESS, 'canBurnFor'],
@@ -225,7 +225,7 @@ export const GET_IS_APPROVED_CONTRACT_METHODS: Map<string, string> = new Map([
 	[Action.EXCHANGE_FOR_ADDRESS, 'canExchangeFor'],
 ]);
 
-export const ENTITY_ATTRS: Map<string, string> = new Map([
+export const DELEGATE_ENTITY_ATTRS: Map<string, string> = new Map([
 	[Action.APPROVE_ALL, 'canAll'],
 	[Action.ISSUE_FOR_ADDRESS, 'canMint'],
 	[Action.BURN_FOR_ADDRESS, 'canBurn'],

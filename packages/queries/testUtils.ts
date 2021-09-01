@@ -17,7 +17,8 @@ export function getWrapper(config?: any) {
 // blanket `enabled` sections. just mock the functions/data you need
 export function getFakeQueryContext(networkId: NetworkId = NetworkId.Mainnet): QueryContext {
 	return {
-		networkId,
+		networkId: NetworkId.Mainnet,
+		signer: {} as ethers.Signer,
 		provider: {} as ethers.providers.Provider,
 		snxData: {} as SynthetixData,
 		snxjs: {} as SynthetixJS,

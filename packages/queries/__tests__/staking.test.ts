@@ -81,28 +81,28 @@ describe('@synthetixio/queries staking', () => {
 
 		expect(result.current.data).toMatchObject([
 			{
-				type: 'feesClaimed',
-				timestamp: '1234',
+				type: 'burned',
+				timestamp: '6789',
+			},
+			{
+				type: 'burned',
+				timestamp: '5678',
+			},
+			{
+				type: 'issued',
+				timestamp: '4567',
+			},
+			{
+				type: 'issued',
+				timestamp: '3456',
 			},
 			{
 				type: 'feesClaimed',
 				timestamp: '2345',
 			},
 			{
-				type: 'burned',
-				timestamp: '3456',
-			},
-			{
-				type: 'burned',
-				timestamp: '4567',
-			},
-			{
-				type: 'issued',
-				timestamp: '5678',
-			},
-			{
-				type: 'issued',
-				timestamp: '6789',
+				type: 'feesClaimed',
+				timestamp: '1234',
 			},
 		]);
 	});

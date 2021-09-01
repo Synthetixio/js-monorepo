@@ -23,6 +23,7 @@ function findQueries(p, requireSoFar) {
 }
 
 findQueries(__dirname + '/src/queries', '../src/queries');
+findQueries(__dirname + '/src/mutations', '../src/mutations');
 
 const out = `
 ${imports.join('\n')}

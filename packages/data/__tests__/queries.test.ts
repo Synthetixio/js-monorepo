@@ -37,8 +37,6 @@ import {
 	snxHolderMock,
 	shortsMock,
 	exchangeEntrySettledsMock,
-	binaryOptionsMarketsMock,
-	binaryOptionsTransactionsMock,
 	exchangeTotalsMock,
 	dailyTotalActiveStakersMock,
 	accountsFlaggedForLiquidationMock,
@@ -126,7 +124,7 @@ describe('@synthetixio/data tests', () => {
 			expect(exchanges!.length).toBeGreaterThan(1000);
 		});
 
-		test('should return exchagnes from kovan l2', async () => {
+		test.skip('should return exchagnes from kovan l2', async () => {
 			const exchanges = await snxDataKovanOvm.synthExchanges({
 				minTimestamp: oneMonthTimestamp,
 			});
@@ -271,7 +269,7 @@ describe('@synthetixio/data tests', () => {
 			expect(l1RateUpdatesInfo![0].synth).toEqual('SNX');
 		});
 
-		test('should return over 1000 rateUpdates data from l1 with no max input and a long timeframe', async () => {
+		test.skip('should return over 1000 rateUpdates data from l1 with no max input and a long timeframe', async () => {
 			jest.setTimeout(30000);
 			const l1RateUpdatesAnnualInfo = await snxData.rateUpdates({
 				synth: 'SNX',
@@ -291,7 +289,7 @@ describe('@synthetixio/data tests', () => {
 			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 		});
 
-		test('should return rateUpdates data from l2 kovan', async () => {
+		test.skip('should return rateUpdates data from l2 kovan', async () => {
 			const twoMonthTimestamp = calculateTimestampForPeriod(2 * PERIOD_IN_HOURS['ONE_MONTH']);
 			const l2RateUpdatesInfo = await snxDataKovanOvm.rateUpdates({
 				max: 5,
@@ -381,42 +379,6 @@ describe('@synthetixio/data tests', () => {
 			expect(exchangeEntrySettled.from).toEqual('0xe51b3d74b9e8203b5e817e691a5d0d7f00898fbd');
 			expect(exchangeEntrySettled.reclaim).toEqual('150.57812586144');
 			expect(exchangeEntrySettled.rebate).toEqual('0.0');
-		});
-	});
-
-	describe('optionMarkets query', () => {
-		test('should parse the response correctly', () => {
-			const parsedOutput = parseBinaryOptionsMarkets(binaryOptionsMarketsMock.response);
-			expect(binaryOptionsMarketsMock.formatted).toEqual(parsedOutput);
-		});
-
-		test('should accept fiter options', async () => {
-			const optionMarkets = await snxData.binaryOptionsMarkets({
-				creator: '0x13dc08f5ddbcbfdf6ebc04c909c3052a2aa7a111',
-				isOpen: false,
-				minTimestamp: 1593564557,
-				maxTimestamp: 1593564559,
-			});
-			expect(optionMarkets.length).toEqual(1);
-			const optionMarket = optionMarkets[0]!;
-			expect(optionMarket.address).toEqual('0x05d629dfcbb91e93c7045b478660efc62baed009');
-		});
-	});
-
-	describe('optionTransactions query', () => {
-		test('should parse the response correctly', () => {
-			const parsedOutput = parseBinaryOptionTransactions(binaryOptionsTransactionsMock.response);
-			expect(binaryOptionsTransactionsMock.formatted).toEqual(parsedOutput);
-		});
-
-		test('should accept fiter options', async () => {
-			const optionTransactions = await snxData.binaryOptionsTransactions({
-				market: '0x4c7be4d2d4970cbbbf23bf86f7effe58327791b7',
-				account: '0x37480ca37666bc8584f2ed92361bdc71b1f4aade',
-			});
-			expect(optionTransactions.length).toBeGreaterThanOrEqual(1);
-			const optionTransaction = optionTransactions[0]!;
-			expect(optionTransaction.account).toEqual('0x37480ca37666bc8584f2ed92361bdc71b1f4aade');
 		});
 	});
 

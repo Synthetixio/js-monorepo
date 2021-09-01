@@ -18,8 +18,9 @@ const useFeeClaimHistoryQuery = (
 			}))!.map((e) => ({
 				account: walletAddress!,
 				block: e.block,
-				hash: '',
+				hash: e.id.split('-')[0],
 				value: wei(e.value),
+				rewards: wei(e.rewards),
 				timestamp: e.timestamp,
 				type: StakingTransactionType.FeesClaimed,
 				totalIssuedSUSD: wei(0),
@@ -29,10 +30,10 @@ const useFeeClaimHistoryQuery = (
 			}))!.map((e) => ({
 				account: walletAddress!,
 				block: e.block,
-				hash: '',
+				hash: e.id.split('-')[0],
 				value: wei(e.value),
 				timestamp: e.timestamp,
-				type: StakingTransactionType.Issued,
+				type: StakingTransactionType.Burned,
 				totalIssuedSUSD: wei(e.value),
 			}));
 			const issued: HistoricalStakingTransaction[] = (await ctx.snxData!.issued({
@@ -40,14 +41,14 @@ const useFeeClaimHistoryQuery = (
 			}))!.map((e) => ({
 				account: walletAddress!,
 				block: e.block,
-				hash: '',
+				hash: e.id.split('-')[0],
 				value: wei(e.value),
 				timestamp: e.timestamp,
-				type: StakingTransactionType.Burned,
+				type: StakingTransactionType.Issued,
 				totalIssuedSUSD: wei(e.value),
 			}));
 
-			return orderBy([...feesClaimed, ...burned, ...issued], ['timestamp'], ['asc']);
+			return orderBy([...feesClaimed, ...burned, ...issued], ['timestamp'], ['desc']);
 		},
 		{
 			enabled: ctx.snxData != null && !!walletAddress,

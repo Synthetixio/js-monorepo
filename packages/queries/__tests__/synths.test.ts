@@ -129,7 +129,7 @@ describe('@synthetixio/queries synths', () => {
 		});
 	});
 
-	test('useSynthsTotalSupplyQuery on ovm', async () => {
+	test.skip('useSynthsTotalSupplyQuery on ovm', async () => {
 		const ctx = getFakeQueryContext(NetworkId['Mainnet-Ovm']);
 		const wrapper = getWrapper();
 
