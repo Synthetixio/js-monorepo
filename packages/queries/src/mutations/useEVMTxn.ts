@@ -12,7 +12,7 @@ function hexToASCII(hex: string): string {
 	// https://gist.github.com/gluk64/fdea559472d957f1138ed93bcbc6f78a#file-reason-js
 	// return ethers.utils.toUtf8String(S.split(' ')[1].toString());
 	let str = '';
-	for (let n = 0; n < hex.length; n += 2) {
+	for (let n = 2; n < hex.length; n += 2) {
 		str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
 	}
 	return str;
