@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/transaction-notifier",
-	"version": "2.47.0-ovm.5",
+	"version": "2.47.0-ovm.12",
 	"description": "Javascript library for handling networks on Optimism Layer 2",
 	"source": "./src/index.ts",
 	"main": "./build/node/index.js",
