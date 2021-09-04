@@ -103,6 +103,7 @@ const useSynthsTotalSupplyQuery = (
 			].map((val) => wei(formatEther(val)));
 
 			let totalValue = wei(0);
+			let totalSkewValue = wei(0);
 			let ethNegativeEntries = wei(0);
 			let btcNegativeEntries = wei(0);
 			let usdNegativeEntries = wei(0);
@@ -149,13 +150,14 @@ const useSynthsTotalSupplyQuery = (
 					skewValue,
 					poolProportion: wei(0), // true value to be computed in next step
 				});
-				totalValue = totalValue.add(skewValue.abs());
+				totalValue = totalValue.add(skewValue);
+				totalSkewValue = totalSkewValue.add(skewValue.abs());
 			}
 
 			// Add proportion data to each SynthTotalSupply object
 			const supplyDataWithProportions = supplyData.map((datum) => ({
 				...datum,
-				poolProportion: totalValue.gt(0) ? datum.skewValue.abs().div(totalValue) : wei(0),
+				poolProportion: totalSkewValue.gt(0) ? datum.skewValue.abs().div(totalSkewValue) : wei(0),
 			}));
 
 			const supplyDataMap: { [name: string]: SynthTotalSupply } = {};
