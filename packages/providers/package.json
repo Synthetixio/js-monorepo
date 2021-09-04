@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/providers",
-	"version": "2.47.0-ovm.5",
+	"version": "2.47.0-ovm.13",
 	"description": "Javascript library for handling providers on Layer 1 & Optimism Layer 2",
 	"source": "./src/index.ts",
 	"main": "./build/node/index.js",
@@ -32,7 +32,7 @@
 	},
 	"dependencies": {
 		"@eth-optimism/provider": "0.0.1-alpha.14",
-		"@synthetixio/optimism-networks": "^2.47.0-ovm.5",
+		"@synthetixio/optimism-networks": "2.47.0-ovm.13",
 		"ethers": "5.4.6"
 	},
 	"devDependencies": {

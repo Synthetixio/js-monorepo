@@ -56,7 +56,7 @@ const useTokensBalancesQuery = (
 			});
 		},
 		{
-			enabled: !!ctx.provider && tokens.length > 0,
+			enabled: !!ctx.provider && tokens.length > 0 && walletAddress != null,
 			...options,
 		}
 	);
