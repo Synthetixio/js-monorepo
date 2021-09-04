@@ -149,13 +149,13 @@ const useSynthsTotalSupplyQuery = (
 					skewValue,
 					poolProportion: wei(0), // true value to be computed in next step
 				});
-				totalValue = totalValue.add(value);
+				totalValue = totalValue.add(skewValue.abs());
 			}
 
 			// Add proportion data to each SynthTotalSupply object
 			const supplyDataWithProportions = supplyData.map((datum) => ({
 				...datum,
-				poolProportion: totalValue.gt(0) ? datum.value.div(totalValue) : wei(0),
+				poolProportion: totalValue.gt(0) ? datum.skewValue.abs().div(totalValue) : wei(0),
 			}));
 
 			const supplyDataMap: { [name: string]: SynthTotalSupply } = {};

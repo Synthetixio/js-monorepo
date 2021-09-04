@@ -71,14 +71,14 @@ describe('@synthetixio/queries synths', () => {
 				sETH: {
 					name: 'sETH',
 					totalSupply: wei(100),
-					value: wei(20000),
+					value: wei(100000),
 					skewValue: wei(-20000),
 					poolProportion: wei('0.010989010989010989'),
 				},
 				sBTC: {
 					name: 'sBTC',
 					totalSupply: wei(200),
-					value: wei(1800000),
+					value: wei(2000000),
 					skewValue: wei(1800000),
 					poolProportion: wei('0.98901098901098901'),
 				},
@@ -129,7 +129,7 @@ describe('@synthetixio/queries synths', () => {
 		});
 	});
 
-	test.skip('useSynthsTotalSupplyQuery on ovm', async () => {
+	test('useSynthsTotalSupplyQuery on ovm', async () => {
 		const ctx = getFakeQueryContext(NetworkId['Mainnet-Ovm']);
 		const wrapper = getWrapper();
 
