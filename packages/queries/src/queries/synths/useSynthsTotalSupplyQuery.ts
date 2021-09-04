@@ -150,7 +150,7 @@ const useSynthsTotalSupplyQuery = (
 					skewValue,
 					poolProportion: wei(0), // true value to be computed in next step
 				});
-				totalValue = totalValue.add(skewValue);
+				totalValue = totalValue.add(value);
 				totalSkewValue = totalSkewValue.add(skewValue.abs());
 			}
 
