@@ -109,15 +109,17 @@ const useSynthsTotalSupplyQuery = (
 
 			const supplyData: SynthTotalSupply[] = [];
 			for (let i = 0; i < synthTotalSupplies[0].length; i++) {
-				let value = wei(formatEther(synthTotalSupplies[2][i]));
+				const value = wei(formatEther(synthTotalSupplies[2][i]));
 				const name = parseBytes32String(synthTotalSupplies[0][i]);
 				const totalSupply = wei(formatEther(synthTotalSupplies[1][i]));
+
+				let skewValue = value;
 
 				switch (name) {
 					case Synths.sBTC: {
 						btcNegativeEntries = btcShorts.add(btcBorrows);
 
-						value = totalSupply.sub(btcNegativeEntries).mul(btcPrice);
+						skewValue = totalSupply.sub(btcNegativeEntries).mul(btcPrice);
 						break;
 					}
 
@@ -125,7 +127,7 @@ const useSynthsTotalSupplyQuery = (
 						const multiCollateralLoansETH = ethShorts.add(ethBorrows);
 						ethNegativeEntries = multiCollateralLoansETH.add(oldLoansETH).add(wrapprSETH);
 
-						value = totalSupply.sub(ethNegativeEntries).mul(ethPrice);
+						skewValue = totalSupply.sub(ethNegativeEntries).mul(ethPrice);
 						break;
 					}
 
@@ -133,15 +135,12 @@ const useSynthsTotalSupplyQuery = (
 						const multiCollateralLoansSUSD = susdShorts.add(susdBorrows);
 						usdNegativeEntries = multiCollateralLoansSUSD.add(oldLoansSUSD).add(wrapprSUSD);
 
-						value = totalSupply.sub(usdNegativeEntries);
+						skewValue = totalSupply.sub(usdNegativeEntries);
 						break;
 					}
 
 					default:
 				}
-
-				const skewValue = value;
-				value = value.abs();
 
 				supplyData.push({
 					name,
