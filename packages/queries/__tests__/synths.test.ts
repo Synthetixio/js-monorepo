@@ -66,7 +66,7 @@ describe('@synthetixio/queries synths', () => {
 		await waitFor(() => result.current.isSuccess);
 
 		expect(result.current.data).toEqual({
-			totalValue: wei(2100000),
+			totalValue: wei(1780000),
 			supplyData: {
 				sETH: {
 					name: 'sETH',
