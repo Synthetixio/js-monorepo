@@ -89,13 +89,11 @@ const useEVMTxn = (
 
 				if (txnresult.status == 1) {
 					setTxnStatus('confirmed');
-				}
-				else {
+				} else {
 					setTxnStatus('failed');
 					setErrorMessage('unknown error');
-					throw new Error(`transaction failed: ${'unknown error'}`)
+					throw new Error(`transaction failed: ${'unknown error'}`);
 				}
-
 			} catch (err) {
 				handleError(err);
 				throw err;
