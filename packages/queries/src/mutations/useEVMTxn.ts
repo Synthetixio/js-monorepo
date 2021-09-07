@@ -4,9 +4,13 @@ import Wei, { wei } from '@synthetixio/wei/build/node/wei';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { QueryContext } from '../context';
-import TransactionNotifier, { TransactionStatusData } from '@synthetixio/transaction-notifier';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
+
+interface UseEVMTxnOptions extends UseMutationOptions<void> {
+	// amount of buffer which should be added to the gasLimit as a portion of the estimated gas limit. ex, 0.15 adds a 15% buffer
+	gasLimitBuffer: number;
+}
 
 function hexToASCII(hex: string): string {
 	// https://gist.github.com/gluk64/fdea559472d957f1138ed93bcbc6f78a#file-reason-js
@@ -21,7 +25,7 @@ function hexToASCII(hex: string): string {
 const useEVMTxn = (
 	ctx: QueryContext,
 	txn: ethers.providers.TransactionRequest | null,
-	options: UseMutationOptions<void> = {}
+	options: UseEVMTxnOptions = { gasLimitBuffer: 0.15 }
 ) => {
 	const [gasLimit, setGasLimit] = useState<Wei | null>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -56,7 +60,7 @@ const useEVMTxn = (
 			});
 	}
 
-	useEffect(refresh, [txn]);
+	useEffect(refresh, [txn?.data, txn?.value, txn?.nonce, txn?.from, txn?.to]);
 
 	return {
 		gasLimit,
@@ -70,7 +74,14 @@ const useEVMTxn = (
 			try {
 				if (!txn!.gasLimit) {
 					// add a gas limit with a 10% buffer
-					txn!.gasLimit = (await estimateGas())?.mul(11).div(10);
+					if (!gasLimit) {
+						const newGasLimit = (await estimateGas())!;
+						txn!.gasLimit = newGasLimit?.mul(Math.floor(options.gasLimitBuffer * 100)).div(100);
+
+						setGasLimit(wei(newGasLimit));
+					} else {
+						txn!.gasLimit = gasLimit.mul(1 + options.gasLimitBuffer).toBN();
+					}
 
 					if (txn!.gasLimit!.eq(0)) {
 						throw new Error('missing provider/signer for txn');
