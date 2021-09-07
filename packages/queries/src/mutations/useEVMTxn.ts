@@ -4,7 +4,8 @@ import Wei, { wei } from '@synthetixio/wei/build/node/wei';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { QueryContext } from '../context';
-import { clone } from 'lodash';
+import clone from 'lodash/clone';
+import omit from 'lodash/omit';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
 
@@ -35,7 +36,9 @@ const useEVMTxn = (
 
 	async function estimateGas() {
 		if (txn != null && ctx.signer != null) {
-			return ctx.signer!.estimateGas(clone(txn!));
+			// remove gas price from the estimate because it will cause unusual error if its below the base
+			// it will be used at the end when the actual transaction is submitted
+			return ctx.signer!.estimateGas(omit(txn!, ['gasPrice']));
 		}
 
 		return null;
@@ -49,7 +52,10 @@ const useEVMTxn = (
 	}
 
 	function refresh() {
-		setTxnStatus('unsent');
+		if (txnStatus === 'confirmed' || txnStatus === 'failed') {
+			setTxnStatus('unsent');
+		}
+
 		setErrorMessage(null);
 
 		estimateGas()
@@ -109,6 +115,7 @@ const useEVMTxn = (
 					throw new Error(`transaction failed: ${'unknown error'}`);
 				}
 			} catch (err) {
+				setTxnStatus('failed');
 				handleError(err);
 				throw err;
 			}
