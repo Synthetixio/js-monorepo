@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { QueryContext } from '../context';
 import TransactionNotifier, { TransactionStatusData } from '@synthetixio/transaction-notifier';
 
-type TransactionStatus = 'unsent' | 'pending' | 'confirmed' | 'failed';
+type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
 
 function hexToASCII(hex: string): string {
 	// https://gist.github.com/gluk64/fdea559472d957f1138ed93bcbc6f78a#file-reason-js
@@ -45,6 +45,7 @@ const useEVMTxn = (
 
 	function refresh() {
 		setTxnStatus('unsent');
+		setErrorMessage(null);
 
 		estimateGas()
 			.then((gl) => {
@@ -64,6 +65,8 @@ const useEVMTxn = (
 		txnStatus,
 		refresh,
 		...useMutation(async () => {
+			setErrorMessage(null);
+
 			try {
 				if (!txn!.gasLimit) {
 					// add a gas limit with a 10% buffer
@@ -74,22 +77,25 @@ const useEVMTxn = (
 					}
 				}
 
+				setTxnStatus('prompting');
+
 				const txndata = await ctx.signer!.sendTransaction(txn!);
 
 				setHash(txndata.hash);
 				setTxnStatus('pending');
 
-				const emitter = new TransactionNotifier(
-					ctx.provider! as ethers.providers.Web3Provider
-				).hash(txndata.hash);
+				// keep the async function going until the transaction has completed
+				const txnresult = await txndata.wait();
 
-				emitter.on('txConfirmed', (_: TransactionStatusData) => {
+				if (txnresult.status == 1) {
 					setTxnStatus('confirmed');
-				});
-				emitter.on('txFailed', ({ failureReason }: TransactionStatusData) => {
+				}
+				else {
 					setTxnStatus('failed');
-					setErrorMessage(failureReason || 'unknown error');
-				});
+					setErrorMessage('unknown error');
+					throw new Error(`transaction failed: ${'unknown error'}`)
+				}
+
 			} catch (err) {
 				handleError(err);
 				throw err;
