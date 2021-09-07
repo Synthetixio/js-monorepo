@@ -4,6 +4,7 @@ import Wei, { wei } from '@synthetixio/wei/build/node/wei';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { QueryContext } from '../context';
+import { clone } from 'lodash';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
 
@@ -34,7 +35,7 @@ const useEVMTxn = (
 
 	async function estimateGas() {
 		if (txn != null && ctx.signer != null) {
-			return ctx.signer!.estimateGas(txn!);
+			return ctx.signer!.estimateGas(clone(txn!));
 		}
 
 		return null;
@@ -71,29 +72,31 @@ const useEVMTxn = (
 		...useMutation(async () => {
 			setErrorMessage(null);
 
+			const execTxn = clone(txn!);
+
 			try {
-				if (!txn!.gasLimit) {
+				if (!execTxn.gasLimit) {
 					// add a gas limit with a 10% buffer
 					if (!gasLimit) {
 						const newGasLimit = (await estimateGas())!;
-						txn!.gasLimit = newGasLimit?.mul(Math.floor(options.gasLimitBuffer * 100)).div(100);
+						execTxn.gasLimit = newGasLimit?.mul(Math.floor(options.gasLimitBuffer * 100)).div(100);
 
 						setGasLimit(wei(newGasLimit));
 					} else {
-						txn!.gasLimit = gasLimit.mul(1 + options.gasLimitBuffer).toBN();
+						execTxn.gasLimit = gasLimit.mul(1 + options.gasLimitBuffer).toBN();
 					}
 
-					if (txn!.gasLimit!.eq(0)) {
+					if (execTxn.gasLimit!.eq(0)) {
 						throw new Error('missing provider/signer for txn');
 					}
 				}
 
 				setTxnStatus('prompting');
 
-				const txndata = await ctx.signer!.sendTransaction(txn!);
+				const txndata = await ctx.signer!.sendTransaction(execTxn!);
 
-				setHash(txndata.hash);
 				setTxnStatus('pending');
+				setHash(txndata.hash);
 
 				// keep the async function going until the transaction has completed
 				const txnresult = await txndata.wait();
