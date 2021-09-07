@@ -1,8 +1,7 @@
 import { ethers } from 'ethers';
-import { UseMutationOptions } from 'react-query';
 
 import { QueryContext } from '../context';
-import useEVMTxn from './useEVMTxn';
+import useEVMTxn, { UseEVMTxnOptions } from './useEVMTxn';
 
 const useContractTxn = (
 	ctx: QueryContext,
@@ -10,7 +9,7 @@ const useContractTxn = (
 	method: string | null,
 	args: any[] = [],
 	txnOptions: Partial<ethers.providers.TransactionRequest> = {},
-	options: UseMutationOptions<void> = {}
+	options?: UseEVMTxnOptions
 ) => {
 	if (contract != null && method != null) {
 		return useEVMTxn(ctx, {

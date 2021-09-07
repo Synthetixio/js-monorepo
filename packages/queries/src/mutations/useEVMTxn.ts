@@ -7,7 +7,7 @@ import { QueryContext } from '../context';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
 
-interface UseEVMTxnOptions extends UseMutationOptions<void> {
+export interface UseEVMTxnOptions extends UseMutationOptions<void> {
 	// amount of buffer which should be added to the gasLimit as a portion of the estimated gas limit. ex, 0.15 adds a 15% buffer
 	gasLimitBuffer: number;
 }

@@ -1,9 +1,8 @@
 import { ethers } from 'ethers';
-import { UseMutationOptions } from 'react-query';
 
 import { QueryContext } from '../context';
 import useContractTxn from './useContractTxn';
-import useEVMTxn from './useEVMTxn';
+import useEVMTxn, { UseEVMTxnOptions } from './useEVMTxn';
 
 const useSynthetixTxn = (
 	ctx: QueryContext,
@@ -11,7 +10,7 @@ const useSynthetixTxn = (
 	method: string,
 	args: any[] = [],
 	txnOptions: Partial<ethers.providers.TransactionRequest> = {},
-	options: UseMutationOptions<void> = {}
+	options: UseEVMTxnOptions
 ) => {
 	if (ctx.snxjs != null) {
 		return useContractTxn(ctx, ctx.snxjs!.contracts[contract], method, args, txnOptions, options);
