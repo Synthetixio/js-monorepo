@@ -12,11 +12,15 @@ const useContractTxn = (
 	options?: UseEVMTxnOptions
 ) => {
 	if (contract != null && method != null) {
-		return useEVMTxn(ctx, {
-			to: contract.address,
-			data: contract.interface.encodeFunctionData(method, args),
-			...txnOptions,
-		}, options);
+		return useEVMTxn(
+			ctx,
+			{
+				to: contract.address,
+				data: contract.interface.encodeFunctionData(method, args),
+				...txnOptions,
+			},
+			options
+		);
 	}
 
 	return useEVMTxn(ctx, null, options);
