@@ -16,7 +16,7 @@ const useContractTxn = (
 			to: contract.address,
 			data: contract.interface.encodeFunctionData(method, args),
 			...txnOptions,
-		});
+		}, options);
 	}
 
 	return useEVMTxn(ctx, null, options);
