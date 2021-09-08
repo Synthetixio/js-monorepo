@@ -33,7 +33,7 @@ const useGetBridgeDataQuery = (
 				const l2provider = isFromL2
 					? ctx.provider
 					: ctx.networkId
-					? getOptimismProvider({ networkId: ctx.networkId!.valueOf() })
+					? getOptimismProvider({ networkId: L1_TO_L2_NETWORK_MAPPER[ctx.networkId.valueOf()] })
 					: null;
 
 				const watcher = optimismMessengerWatcher({
@@ -41,7 +41,9 @@ const useGetBridgeDataQuery = (
 					layerOneProvider: l1provider,
 					// @ts-ignore
 					layerTwoProvider: l2provider,
-					layerTwoNetworkId: isFromL2 ? ctx.networkId : L1_TO_L2_NETWORK_MAPPER[ctx.networkId],
+					layerTwoNetworkId: isFromL2
+						? ctx.networkId
+						: L1_TO_L2_NETWORK_MAPPER[ctx.networkId.valueOf()],
 				});
 
 				setWatcher(watcher);
