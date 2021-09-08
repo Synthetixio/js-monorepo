@@ -25,22 +25,27 @@ const useGetBridgeDataQuery = (
 
 	useEffect(() => {
 		if (ctx.networkId && ctx.provider) {
+			const isFromL1 = !!L1_TO_L2_NETWORK_MAPPER[ctx.networkId?.valueOf()];
 			const isFromL2 = !!OPTIMISM_NETWORKS[ctx.networkId!];
 
-			const l1provider = isFromL2 ? loadProvider({ infuraId }) : ctx.provider;
-			const l2provider = isFromL2
-				? ctx.provider
-				: getOptimismProvider({ networkId: ctx.networkId!.valueOf() });
+			if (isFromL1 || isFromL2) {
+				const l1provider = isFromL2 ? loadProvider({ infuraId }) : ctx.provider;
+				const l2provider = isFromL2
+					? ctx.provider
+					: ctx.networkId
+					? getOptimismProvider({ networkId: ctx.networkId!.valueOf() })
+					: null;
 
-			const watcher = optimismMessengerWatcher({
-				// @ts-ignore
-				layerOneProvider: l1provider,
-				// @ts-ignore
-				layerTwoProvider: l2provider,
-				layerTwoNetworkId: isFromL2 ? ctx.networkId : L1_TO_L2_NETWORK_MAPPER[ctx.networkId],
-			});
+				const watcher = optimismMessengerWatcher({
+					// @ts-ignore
+					layerOneProvider: l1provider,
+					// @ts-ignore
+					layerTwoProvider: l2provider,
+					layerTwoNetworkId: isFromL2 ? ctx.networkId : L1_TO_L2_NETWORK_MAPPER[ctx.networkId],
+				});
 
-			setWatcher(watcher);
+				setWatcher(watcher);
+			}
 		}
 	}, [ctx.networkId, ctx.provider]);
 
