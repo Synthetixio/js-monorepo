@@ -30,7 +30,7 @@ const useGetBridgeDataQuery = (
 			const l1provider = isFromL2 ? loadProvider({ infuraId }) : ctx.provider;
 			const l2provider = isFromL2
 				? ctx.provider
-				: getOptimismProvider({ networkId: ctx.networkId! });
+				: getOptimismProvider({ networkId: ctx.networkId!.valueOf() });
 
 			const watcher = optimismMessengerWatcher({
 				// @ts-ignore
