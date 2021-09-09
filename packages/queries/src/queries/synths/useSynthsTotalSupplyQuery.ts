@@ -103,21 +103,25 @@ const useSynthsTotalSupplyQuery = (
 			].map((val) => wei(formatEther(val)));
 
 			let totalValue = wei(0);
+			let totalSkewValue = wei(0);
+			let totalStakersDebt = wei(0);
 			let ethNegativeEntries = wei(0);
 			let btcNegativeEntries = wei(0);
 			let usdNegativeEntries = wei(0);
 
 			const supplyData: SynthTotalSupply[] = [];
 			for (let i = 0; i < synthTotalSupplies[0].length; i++) {
-				let value = wei(formatEther(synthTotalSupplies[2][i]));
+				const value = wei(formatEther(synthTotalSupplies[2][i]));
 				const name = parseBytes32String(synthTotalSupplies[0][i]);
 				const totalSupply = wei(formatEther(synthTotalSupplies[1][i]));
+
+				let skewValue = value;
 
 				switch (name) {
 					case Synths.sBTC: {
 						btcNegativeEntries = btcShorts.add(btcBorrows);
 
-						value = totalSupply.sub(btcNegativeEntries).mul(btcPrice);
+						skewValue = totalSupply.sub(btcNegativeEntries).mul(btcPrice);
 						break;
 					}
 
@@ -125,7 +129,7 @@ const useSynthsTotalSupplyQuery = (
 						const multiCollateralLoansETH = ethShorts.add(ethBorrows);
 						ethNegativeEntries = multiCollateralLoansETH.add(oldLoansETH).add(wrapprSETH);
 
-						value = totalSupply.sub(ethNegativeEntries).mul(ethPrice);
+						skewValue = totalSupply.sub(ethNegativeEntries).mul(ethPrice);
 						break;
 					}
 
@@ -133,15 +137,12 @@ const useSynthsTotalSupplyQuery = (
 						const multiCollateralLoansSUSD = susdShorts.add(susdBorrows);
 						usdNegativeEntries = multiCollateralLoansSUSD.add(oldLoansSUSD).add(wrapprSUSD);
 
-						value = totalSupply.sub(usdNegativeEntries);
+						skewValue = totalSupply.sub(usdNegativeEntries);
 						break;
 					}
 
 					default:
 				}
-
-				const skewValue = value;
-				value = value.abs();
 
 				supplyData.push({
 					name,
@@ -151,12 +152,14 @@ const useSynthsTotalSupplyQuery = (
 					poolProportion: wei(0), // true value to be computed in next step
 				});
 				totalValue = totalValue.add(value);
+				totalSkewValue = totalSkewValue.add(skewValue.abs());
+				totalStakersDebt = totalStakersDebt.add(skewValue);
 			}
 
 			// Add proportion data to each SynthTotalSupply object
 			const supplyDataWithProportions = supplyData.map((datum) => ({
 				...datum,
-				poolProportion: totalValue.gt(0) ? datum.value.div(totalValue) : wei(0),
+				poolProportion: totalSkewValue.gt(0) ? datum.skewValue.abs().div(totalSkewValue) : wei(0),
 			}));
 
 			const supplyDataMap: { [name: string]: SynthTotalSupply } = {};
@@ -166,6 +169,7 @@ const useSynthsTotalSupplyQuery = (
 
 			return {
 				totalValue,
+				totalStakersDebt,
 				supplyData: supplyDataMap,
 				priceData: {
 					ethPrice,
