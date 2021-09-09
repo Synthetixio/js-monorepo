@@ -104,6 +104,7 @@ const useSynthsTotalSupplyQuery = (
 
 			let totalValue = wei(0);
 			let totalSkewValue = wei(0);
+			let totalStakersDebt = wei(0);
 			let ethNegativeEntries = wei(0);
 			let btcNegativeEntries = wei(0);
 			let usdNegativeEntries = wei(0);
@@ -150,8 +151,9 @@ const useSynthsTotalSupplyQuery = (
 					skewValue,
 					poolProportion: wei(0), // true value to be computed in next step
 				});
-				totalValue = totalValue.add(skewValue);
+				totalValue = totalValue.add(value);
 				totalSkewValue = totalSkewValue.add(skewValue.abs());
+				totalStakersDebt = totalStakersDebt.add(skewValue);
 			}
 
 			// Add proportion data to each SynthTotalSupply object
@@ -167,6 +169,7 @@ const useSynthsTotalSupplyQuery = (
 
 			return {
 				totalValue,
+				totalStakersDebt,
 				supplyData: supplyDataMap,
 				priceData: {
 					ethPrice,
