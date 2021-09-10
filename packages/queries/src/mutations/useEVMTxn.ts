@@ -4,9 +4,15 @@ import Wei, { wei } from '@synthetixio/wei/build/node/wei';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { QueryContext } from '../context';
-import TransactionNotifier, { TransactionStatusData } from '@synthetixio/transaction-notifier';
+import clone from 'lodash/clone';
+import omit from 'lodash/omit';
 
-type TransactionStatus = 'unsent' | 'pending' | 'confirmed' | 'failed';
+type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
+
+export interface UseEVMTxnOptions extends UseMutationOptions<void> {
+	// amount of buffer which should be added to the gasLimit as a portion of the estimated gas limit. ex, 0.15 adds a 15% buffer
+	gasLimitBuffer: number;
+}
 
 function hexToASCII(hex: string): string {
 	// https://gist.github.com/gluk64/fdea559472d957f1138ed93bcbc6f78a#file-reason-js
@@ -21,7 +27,7 @@ function hexToASCII(hex: string): string {
 const useEVMTxn = (
 	ctx: QueryContext,
 	txn: ethers.providers.TransactionRequest | null,
-	options: UseMutationOptions<void> = {}
+	options: UseEVMTxnOptions = { gasLimitBuffer: 0.15 }
 ) => {
 	const [gasLimit, setGasLimit] = useState<Wei | null>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -30,7 +36,9 @@ const useEVMTxn = (
 
 	async function estimateGas() {
 		if (txn != null && ctx.signer != null) {
-			return ctx.signer!.estimateGas(txn!);
+			// remove gas price from the estimate because it will cause unusual error if its below the base
+			// it will be used at the end when the actual transaction is submitted
+			return ctx.signer!.estimateGas(omit(txn!, ['gasPrice']));
 		}
 
 		return null;
@@ -44,7 +52,11 @@ const useEVMTxn = (
 	}
 
 	function refresh() {
-		setTxnStatus('unsent');
+		if (txnStatus === 'confirmed' || txnStatus === 'failed') {
+			setTxnStatus('unsent');
+		}
+
+		setErrorMessage(null);
 
 		estimateGas()
 			.then((gl) => {
@@ -55,7 +67,7 @@ const useEVMTxn = (
 			});
 	}
 
-	useEffect(refresh, [txn]);
+	useEffect(refresh, [txn?.data, txn?.value, txn?.nonce, txn?.from, txn?.to]);
 
 	return {
 		gasLimit,
@@ -64,33 +76,46 @@ const useEVMTxn = (
 		txnStatus,
 		refresh,
 		...useMutation(async () => {
-			try {
-				if (!txn!.gasLimit) {
-					// add a gas limit with a 10% buffer
-					txn!.gasLimit = (await estimateGas())?.mul(11).div(10);
+			setErrorMessage(null);
 
-					if (txn!.gasLimit!.eq(0)) {
+			const execTxn = clone(txn!);
+
+			try {
+				if (!execTxn.gasLimit) {
+					// add a gas limit with a 10% buffer
+					if (!gasLimit) {
+						const newGasLimit = (await estimateGas())!;
+						execTxn.gasLimit = newGasLimit?.mul(Math.floor(options.gasLimitBuffer * 100)).div(100);
+
+						setGasLimit(wei(newGasLimit));
+					} else {
+						execTxn.gasLimit = gasLimit.mul(1 + options.gasLimitBuffer).toBN();
+					}
+
+					if (execTxn.gasLimit!.eq(0)) {
 						throw new Error('missing provider/signer for txn');
 					}
 				}
 
-				const txndata = await ctx.signer!.sendTransaction(txn!);
+				setTxnStatus('prompting');
 
-				setHash(txndata.hash);
+				const txndata = await ctx.signer!.sendTransaction(execTxn!);
+
 				setTxnStatus('pending');
+				setHash(txndata.hash);
 
-				const emitter = new TransactionNotifier(
-					ctx.provider! as ethers.providers.Web3Provider
-				).hash(txndata.hash);
+				// keep the async function going until the transaction has completed
+				const txnresult = await txndata.wait();
 
-				emitter.on('txConfirmed', (_: TransactionStatusData) => {
+				if (txnresult.status == 1) {
 					setTxnStatus('confirmed');
-				});
-				emitter.on('txFailed', ({ failureReason }: TransactionStatusData) => {
+				} else {
 					setTxnStatus('failed');
-					setErrorMessage(failureReason || 'unknown error');
-				});
+					setErrorMessage('unknown error');
+					throw new Error(`transaction failed: ${'unknown error'}`);
+				}
 			} catch (err) {
+				setTxnStatus('failed');
 				handleError(err);
 				throw err;
 			}
