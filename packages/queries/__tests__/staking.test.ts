@@ -115,8 +115,10 @@ describe('@synthetixio/queries staking', () => {
 		set(ctx.snxjs as any, 'contracts.SynthetixState.lastDebtLedgerEntry', async () =>
 			wei(0.5, 27).toBN()
 		);
-		set(ctx.snxjs as any, 'contracts.Synthetix.totalIssuedSynthsExcludeEtherCollateral', async () =>
-			wei(100000).toBN()
+		set(
+			ctx.snxjs as any,
+			'contracts.Synthetix.totalIssuedSynthsExcludeOtherCollateralQuery',
+			async () => wei(100000).toBN()
 		);
 		set(ctx.snxjs as any, 'contracts.SystemSettings.issuanceRatio', async () => wei(5).toBN());
 
