@@ -32,7 +32,7 @@ const useRedeemableDeprecatedSynthsQuery = (
 
 			const getRedeemableSynthBalance = async (proxyAddress: string) => {
 				const balance = await Redeemer.balanceOf(proxyAddress, walletAddress);
-				return wei(balance).div(1e18);
+				return wei(balance);
 			};
 			const balances = await Promise.all(
 				deprecatedProxySynthsAddresses.map(getRedeemableSynthBalance)

@@ -251,7 +251,7 @@ describe('@synthetixio/queries synths', () => {
 				address === '0x0' ? Synths.iAAVE.toString() : Synths.sGOOG.toString()
 		);
 		set(ctx.snxjs as any, 'contracts.SynthRedeemer.balanceOf', async (address: string) =>
-			wei(ethers.utils.parseEther(address === '0x0' ? '2' : '3').toString())
+			wei(address === '0x0' ? '2' : '3')
 		);
 
 		const { result, waitFor } = renderHook(
