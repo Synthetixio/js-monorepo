@@ -42,7 +42,7 @@ const useRedeemableDeprecatedSynthsQuery = (
 
 			const cryptoBalances: DeprecatedSynthBalance[] = balances.map((balance, i) => {
 				const currencyKey = deprecatedSynths[i] as CurrencyKey;
-				let synthPriceRate = wei(1);
+				let synthPriceRate = wei(0);
 				try {
 					synthPriceRate = getExchangeRatesForCurrencies(
 						exchangeRates,
