@@ -251,21 +251,12 @@ describe('@synthetixio/queries synths', () => {
 				address === '0x0' ? Synths.iAAVE.toString() : Synths.sGOOG.toString()
 		);
 		set(ctx.snxjs as any, 'contracts.SynthRedeemer.balanceOf', async (address: string) =>
-			wei(address === '0x0' ? '2' : '3')
+			wei(address === '0x0' ? '20' : '15')
 		);
 
-		const { result, waitFor } = renderHook(
-			() =>
-				useRedeemableDeprecatedSynthsQuery(
-					ctx,
-					'0x',
-					{ [Synths.iAAVE]: wei(10), [Synths.sGOOG]: wei(5), [Synths.sUSD]: wei(1) },
-					Synths.sUSD
-				),
-			{
-				wrapper,
-			}
-		);
+		const { result, waitFor } = renderHook(() => useRedeemableDeprecatedSynthsQuery(ctx, '0x'), {
+			wrapper,
+		});
 		await waitFor(() => result.current.isSuccess);
 
 		expect(result.current.data).toEqual({
@@ -273,13 +264,11 @@ describe('@synthetixio/queries synths', () => {
 				{
 					currencyKey: Synths.iAAVE,
 					proxyAddress: '0x0',
-					balance: wei(2),
 					usdBalance: wei(20),
 				},
 				{
 					currencyKey: Synths.sGOOG,
 					proxyAddress: '0x1',
-					balance: wei(3),
 					usdBalance: wei(15),
 				},
 			],

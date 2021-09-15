@@ -1,18 +1,14 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { ethers } from 'ethers';
 import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
-import { DeprecatedSynthBalance, DeprecatedSynthsBalances, Rates } from '../../types';
-import { getExchangeRatesForCurrencies } from '../../currency';
+import { DeprecatedSynthBalance, DeprecatedSynthsBalances } from '../../types';
 import { getProxySynthSymbol } from '../../utils';
 
 const useRedeemableDeprecatedSynthsQuery = (
 	ctx: QueryContext,
 	walletAddress: string | null,
-	exchangeRates: Rates | null,
-	selectedPriceCurrencyName: CurrencyKey,
 	options?: UseQueryOptions<DeprecatedSynthsBalances>
 ) => {
 	return useQuery<DeprecatedSynthsBalances>(
@@ -40,22 +36,11 @@ const useRedeemableDeprecatedSynthsQuery = (
 
 			let totalUSDBalance = wei(0);
 
-			const cryptoBalances: DeprecatedSynthBalance[] = balances.map((balance, i) => {
+			const cryptoBalances: DeprecatedSynthBalance[] = balances.map((usdBalance, i) => {
 				const currencyKey = deprecatedSynths[i] as CurrencyKey;
-				let synthPriceRate = wei(0);
-				try {
-					synthPriceRate = getExchangeRatesForCurrencies(
-						exchangeRates,
-						currencyKey,
-						selectedPriceCurrencyName
-					);
-				} catch (e) {}
-
-				const usdBalance = balance.mul(wei(synthPriceRate));
 				totalUSDBalance = totalUSDBalance.add(usdBalance);
 				return {
 					currencyKey,
-					balance,
 					usdBalance,
 					proxyAddress: deprecatedProxySynthsAddresses[i],
 				};
@@ -66,8 +51,7 @@ const useRedeemableDeprecatedSynthsQuery = (
 			};
 		},
 		{
-			enabled:
-				!!ctx.networkId! && !!walletAddress && !!exchangeRates && !!selectedPriceCurrencyName,
+			enabled: !!ctx.networkId! && !!walletAddress,
 			...options,
 		}
 	);
