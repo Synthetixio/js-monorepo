@@ -49,9 +49,7 @@ const useRedeemableDeprecatedSynthsQuery = (
 						currencyKey,
 						selectedPriceCurrencyName
 					);
-				} catch (e) {
-					console.warn(e);
-				}
+				} catch (e) {}
 
 				const usdBalance = balance.mul(wei(synthPriceRate));
 				totalUSDBalance = totalUSDBalance.add(usdBalance);
