@@ -2,7 +2,7 @@ import Wei, { wei } from '@synthetixio/wei';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 
-const totalIssuedSynthsExcludeOtherCollateralQuery = (
+const useTotalIssuedSynthsExcludeOtherCollateralQuery = (
 	ctx: QueryContext,
 	currencyKey: string,
 	block?: number | null,
@@ -28,4 +28,4 @@ const totalIssuedSynthsExcludeOtherCollateralQuery = (
 	);
 };
 
-export default totalIssuedSynthsExcludeOtherCollateralQuery;
+export default useTotalIssuedSynthsExcludeOtherCollateralQuery;
