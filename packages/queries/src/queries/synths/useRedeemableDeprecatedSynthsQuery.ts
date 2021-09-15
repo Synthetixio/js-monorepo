@@ -41,8 +41,9 @@ const useRedeemableDeprecatedSynthsQuery = (
 				totalUSDBalance = totalUSDBalance.add(usdBalance);
 				return {
 					currencyKey,
-					usdBalance,
 					proxyAddress: deprecatedProxySynthsAddresses[i],
+					balance: wei(0),
+					usdBalance,
 				};
 			});
 			return {

@@ -427,6 +427,7 @@ export type SynthFeeAndWaitingPeriod = {
 export type DeprecatedSynthBalance = {
 	currencyKey: CurrencyKey;
 	proxyAddress: string;
+	balance: Wei;
 	usdBalance: Wei;
 };
 

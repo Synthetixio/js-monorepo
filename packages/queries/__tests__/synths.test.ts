@@ -264,11 +264,13 @@ describe('@synthetixio/queries synths', () => {
 				{
 					currencyKey: Synths.iAAVE,
 					proxyAddress: '0x0',
+					balance: wei(0),
 					usdBalance: wei(20),
 				},
 				{
 					currencyKey: Synths.sGOOG,
 					proxyAddress: '0x1',
+					balance: wei(0),
 					usdBalance: wei(15),
 				},
 			],
