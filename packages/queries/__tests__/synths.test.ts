@@ -241,11 +241,17 @@ describe('@synthetixio/queries synths', () => {
 
 		set(ctx.snxjs as any, 'contracts.SynthRedeemer.filters.SynthDeprecated', async () => ({}));
 		set(ctx.snxjs as any, 'contracts.SynthRedeemer.queryFilter', async () => [
-			{ args: { synth: '0x' } },
+			{ args: { synth: '0x0' } },
+			{ args: { synth: '0x1' } },
 		]);
-		set(utils, 'getProxySynthSymbol', async () => Synths.iAAVE.toString());
-		set(ctx.snxjs as any, 'contracts.SynthRedeemer.balanceOf', async () =>
-			wei(ethers.utils.parseEther('2').toString())
+		set(
+			utils,
+			'getProxySynthSymbol',
+			async (provider: ethers.providers.Provider, address: string) =>
+				address === '0x0' ? Synths.iAAVE.toString() : Synths.sGOOG.toString()
+		);
+		set(ctx.snxjs as any, 'contracts.SynthRedeemer.balanceOf', async (address: string) =>
+			wei(ethers.utils.parseEther(address === '0x0' ? '2' : '3').toString())
 		);
 
 		const { result, waitFor } = renderHook(
@@ -253,7 +259,7 @@ describe('@synthetixio/queries synths', () => {
 				useRedeemableDeprecatedSynthsQuery(
 					ctx,
 					'0x',
-					{ [Synths.iAAVE]: wei(10), [Synths.sUSD]: wei(1) },
+					{ [Synths.iAAVE]: wei(10), [Synths.sGOOG]: wei(5), [Synths.sUSD]: wei(1) },
 					Synths.sUSD
 				),
 			{
@@ -266,12 +272,18 @@ describe('@synthetixio/queries synths', () => {
 			balances: [
 				{
 					currencyKey: Synths.iAAVE,
-					proxyAddress: '0x',
+					proxyAddress: '0x0',
 					balance: wei(2),
 					usdBalance: wei(20),
 				},
+				{
+					currencyKey: Synths.sGOOG,
+					proxyAddress: '0x1',
+					balance: wei(3),
+					usdBalance: wei(15),
+				},
 			],
-			totalUSDBalance: wei(20),
+			totalUSDBalance: wei(35),
 		});
 	});
 });

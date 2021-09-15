@@ -6,7 +6,7 @@ import { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { DeprecatedSynthBalance, DeprecatedSynthsBalances, Rates } from '../../types';
 import { getExchangeRatesForCurrencies } from '../../currency';
-import * as utils from '../../utils';
+import { getProxySynthSymbol } from '../../utils';
 
 const useRedeemableDeprecatedSynthsQuery = (
 	ctx: QueryContext,
@@ -27,7 +27,7 @@ const useRedeemableDeprecatedSynthsQuery = (
 				(e) => e.args?.synth ?? ''
 			);
 			const deprecatedSynths = await Promise.all(
-				deprecatedProxySynthsAddresses.map((addr) => utils.getProxySynthSymbol(ctx.provider!, addr))
+				deprecatedProxySynthsAddresses.map((addr) => getProxySynthSymbol(ctx.provider!, addr))
 			);
 
 			const getRedeemableSynthBalance = async (proxyAddress: string) => {
