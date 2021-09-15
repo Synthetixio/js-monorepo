@@ -1,4 +1,3 @@
-import { ethers } from 'ethers';
 import { DailySnxPrice, FifteenMinuteSnxPrice } from '../../generated/graphql';
 import { formatEther } from '../../src/utils';
 
