@@ -66,7 +66,8 @@ const useRedeemableDeprecatedSynthsQuery = (
 			};
 		},
 		{
-			enabled: !!ctx.networkId! && !!walletAddress,
+			enabled:
+				!!ctx.networkId! && !!walletAddress && !!exchangeRates && !!selectedPriceCurrencyName,
 			...options,
 		}
 	);
