@@ -191,6 +191,8 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			networkId,
 			endpoints: {
 				[NetworkId.Mainnet]: l1Endpoints.rates,
+				[NetworkId.Kovan]: l1Endpoints.exchangesKovan,
+				[NetworkId['Kovan-Ovm']]: l2Endpoints.exchangesKovan,
 				[NetworkId['Mainnet-Ovm']]: l2Endpoints.exchanges,
 			},
 		});
