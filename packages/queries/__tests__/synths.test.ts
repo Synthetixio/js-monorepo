@@ -4,7 +4,9 @@ import { set } from 'lodash';
 import { ethers } from 'ethers';
 import { NetworkId, Synths } from '@synthetixio/contracts-interface';
 import useSynthsTotalSupplyQuery from '../src/queries/synths/useSynthsTotalSupplyQuery';
+import useRedeemableDeprecatedSynthsQuery from '../src/queries/synths/useRedeemableDeprecatedSynthsQuery';
 import { getFakeQueryContext, getWrapper } from '../testUtils';
+import * as utils from '../src/utils';
 
 describe('@synthetixio/queries synths', () => {
 	const ctx = getFakeQueryContext();
@@ -231,6 +233,45 @@ describe('@synthetixio/queries synths', () => {
 					ethers.BigNumber.from('0'),
 				],
 			],
+		});
+	});
+
+	test('useRedeemableDeprecatedSynthsQuery', async () => {
+		const wrapper = getWrapper();
+
+		set(ctx.snxjs as any, 'contracts.SynthRedeemer.filters.SynthDeprecated', async () => ({}));
+		set(ctx.snxjs as any, 'contracts.SynthRedeemer.queryFilter', async () => [
+			{ args: { synth: '0x' } },
+		]);
+		set(utils, 'getProxySynthSymbol', async () => Synths.iAAVE.toString());
+		set(ctx.snxjs as any, 'contracts.SynthRedeemer.balanceOf', async () =>
+			wei(ethers.utils.parseEther('2').toString())
+		);
+
+		const { result, waitFor } = renderHook(
+			() =>
+				useRedeemableDeprecatedSynthsQuery(
+					ctx,
+					'0x',
+					{ [Synths.iAAVE]: wei(10), [Synths.sUSD]: wei(1) },
+					Synths.sUSD
+				),
+			{
+				wrapper,
+			}
+		);
+		await waitFor(() => result.current.isSuccess);
+
+		expect(result.current.data).toEqual({
+			balances: [
+				{
+					currencyKey: Synths.iAAVE,
+					proxyAddress: '0x',
+					balance: wei(2),
+					usdBalance: wei(20),
+				},
+			],
+			totalUSDBalance: wei(20),
 		});
 	});
 });
