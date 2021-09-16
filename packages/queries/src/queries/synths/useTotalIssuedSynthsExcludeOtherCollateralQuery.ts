@@ -2,24 +2,24 @@ import Wei, { wei } from '@synthetixio/wei';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 
-const useTotalIssuedSynthsExcludingEtherQuery = (
+const useTotalIssuedSynthsExcludeOtherCollateralQuery = (
 	ctx: QueryContext,
 	currencyKey: string,
 	block?: number | null,
 	options?: UseQueryOptions<Wei>
 ) => {
 	return useQuery<Wei>(
-		['synth', 'totalIssuedExcludingEther', ctx.networkId, currencyKey],
+		['synth', 'totalIssuedSynthsExcludeOtherCollateral', ctx.networkId, currencyKey],
 		async () => {
-			const totalIssuedSynthsExclEther =
-				await ctx.snxjs!.contracts.Synthetix.totalIssuedSynthsExcludeEtherCollateral(
+			const totalIssuedSynthsExcludeOtherCollateral =
+				await ctx.snxjs!.contracts.Synthetix.totalIssuedSynthsExcludeOtherCollateral(
 					ctx.snxjs!.utils.formatBytes32String(currencyKey),
 					{
 						blockTag: block ? block : 'latest',
 					}
 				);
 
-			return wei(totalIssuedSynthsExclEther);
+			return wei(totalIssuedSynthsExcludeOtherCollateral);
 		},
 		{
 			enabled: !!ctx.snxjs,
@@ -28,4 +28,4 @@ const useTotalIssuedSynthsExcludingEtherQuery = (
 	);
 };
 
-export default useTotalIssuedSynthsExcludingEtherQuery;
+export default useTotalIssuedSynthsExcludeOtherCollateralQuery;
