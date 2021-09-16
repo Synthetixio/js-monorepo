@@ -423,3 +423,15 @@ export type SynthFeeAndWaitingPeriod = {
 	waitingPeriod: number;
 	noOfTrades: number;
 };
+
+export type DeprecatedSynthBalance = {
+	currencyKey: CurrencyKey;
+	proxyAddress: string;
+	balance: Wei;
+	usdBalance: Wei;
+};
+
+export type DeprecatedSynthsBalances = {
+	balances: DeprecatedSynthBalance[];
+	totalUSDBalance: Wei;
+};
