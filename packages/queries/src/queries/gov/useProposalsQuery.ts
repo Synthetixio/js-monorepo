@@ -2,13 +2,10 @@ import { useQuery, UseQueryOptions } from 'react-query';
 
 import { ethers } from 'ethers';
 import request, { gql } from 'graphql-request';
-import { SPACE_KEY } from './constants';
+import { councilNominationsJson, SPACE_KEY } from './constants';
 import { Proposal } from '../../types';
 import { QueryContext } from '../../context';
-
 import CouncilDilution from '../../contracts/CouncilDilution';
-import axios from 'axios';
-import { COUNCIL_NOMINATIONS_URL } from '../../constants';
 
 const useProposalsQuery = (
 	ctx: QueryContext,
@@ -57,7 +54,7 @@ const useProposalsQuery = (
 				const hashes = (await contract.getValidProposals(proposalHashes)) as string[];
 				validHashes = hashes.filter((e) => e !== '').map((hash) => hash);
 			} else if (spaceKey === SPACE_KEY.COUNCIL) {
-				const nominationHashes = Object.keys(await axios.get(COUNCIL_NOMINATIONS_URL));
+				const nominationHashes = Object.keys(councilNominationsJson);
 				validHashes = proposalHashes
 					.filter((e) => nominationHashes.includes(e))
 					.map((hash) => hash);
