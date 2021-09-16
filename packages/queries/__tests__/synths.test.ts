@@ -55,33 +55,27 @@ describe('@synthetixio/queries synths', () => {
 		);
 		set(ctx.snxjs as any, 'contracts.EtherWrapper.sETHIssued', async () => wei(50).toBN());
 		set(ctx.snxjs as any, 'contracts.EtherWrapper.sUSDIssued', async () => wei(50).toBN());
-		set(ctx.snxjs as any, 'contracts.EtherCollateral.totalIssuedSynths', async () =>
-			wei(50).toBN()
-		);
-		set(ctx.snxjs as any, 'contracts.EtherCollateralsUSD.totalIssuedSynths', async () =>
-			wei(50).toBN()
-		);
 
 		const { result, waitFor } = renderHook(() => useSynthsTotalSupplyQuery(ctx), { wrapper });
 		await waitFor(() => result.current.isSuccess);
 
 		expect(result.current.data).toEqual({
 			totalValue: wei(2100000),
-			totalStakersDebt: wei(1780000),
+			totalStakersDebt: wei(1830000),
 			supplyData: {
 				sETH: {
 					name: 'sETH',
 					totalSupply: wei(100),
 					value: wei(100000),
-					skewValue: wei(-20000),
-					poolProportion: wei('0.010989010989010989'),
+					skewValue: wei(30000),
+					poolProportion: wei('0.016393442622950819'),
 				},
 				sBTC: {
 					name: 'sBTC',
 					totalSupply: wei(200),
 					value: wei(2000000),
 					skewValue: wei(1800000),
-					poolProportion: wei('0.98901098901098901'),
+					poolProportion: wei('0.983606557377049180'),
 				},
 				iETH: {
 					name: 'iETH',
@@ -103,7 +97,7 @@ describe('@synthetixio/queries synths', () => {
 				btcPrice: wei(10000),
 			},
 			shortData: {
-				ethNegativeEntries: wei(120),
+				ethNegativeEntries: wei(70),
 				btcNegativeEntries: wei(20),
 				usdNegativeEntries: wei(0),
 			},

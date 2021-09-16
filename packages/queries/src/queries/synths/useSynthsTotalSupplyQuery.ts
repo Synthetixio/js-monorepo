@@ -15,14 +15,7 @@ const useSynthsTotalSupplyQuery = (
 		['synths', 'totalSupply', ctx.networkId],
 		async () => {
 			const {
-				contracts: {
-					SynthUtil,
-					ExchangeRates,
-					CollateralManagerState,
-					EtherWrapper,
-					EtherCollateral,
-					EtherCollateralsUSD,
-				},
+				contracts: { SynthUtil, ExchangeRates, CollateralManagerState, EtherWrapper },
 			} = ctx.snxjs!;
 
 			const {
@@ -48,9 +41,6 @@ const useSynthsTotalSupplyQuery = (
 
 				unformattedWrapprSETH,
 				unformattedWrapprSUSD,
-
-				unformattedOldLoansETH,
-				unformattedOldLoansSUSD,
 			] = await Promise.all([
 				SynthUtil.synthsTotalSupplies(),
 				ExchangeRates.rateForCurrency(sETHKey),
@@ -60,8 +50,6 @@ const useSynthsTotalSupplyQuery = (
 				isL2 ? Promise.resolve(['0', '0']) : CollateralManagerState.totalIssuedSynths(sUSDKey),
 				isL2 ? Promise.resolve('0') : EtherWrapper.sETHIssued(),
 				isL2 ? Promise.resolve('0') : EtherWrapper.sUSDIssued(),
-				isL2 ? Promise.resolve('0') : EtherCollateral.totalIssuedSynths(),
-				isL2 ? Promise.resolve('0') : EtherCollateralsUSD.totalIssuedSynths(),
 			]);
 
 			const [
@@ -79,9 +67,6 @@ const useSynthsTotalSupplyQuery = (
 
 				wrapprSETH,
 				wrapprSUSD,
-
-				oldLoansETH,
-				oldLoansSUSD,
 			] = [
 				unformattedEthPrice,
 				unformattedBtcPrice,
@@ -97,9 +82,6 @@ const useSynthsTotalSupplyQuery = (
 
 				unformattedWrapprSETH,
 				unformattedWrapprSUSD,
-
-				unformattedOldLoansETH,
-				unformattedOldLoansSUSD,
 			].map((val) => wei(formatEther(val)));
 
 			let totalValue = wei(0);
@@ -127,7 +109,7 @@ const useSynthsTotalSupplyQuery = (
 
 					case Synths.sETH: {
 						const multiCollateralLoansETH = ethShorts.add(ethBorrows);
-						ethNegativeEntries = multiCollateralLoansETH.add(oldLoansETH).add(wrapprSETH);
+						ethNegativeEntries = multiCollateralLoansETH.add(wrapprSETH);
 
 						skewValue = totalSupply.sub(ethNegativeEntries).mul(ethPrice);
 						break;
@@ -135,7 +117,7 @@ const useSynthsTotalSupplyQuery = (
 
 					case Synths.sUSD: {
 						const multiCollateralLoansSUSD = susdShorts.add(susdBorrows);
-						usdNegativeEntries = multiCollateralLoansSUSD.add(oldLoansSUSD).add(wrapprSUSD);
+						usdNegativeEntries = multiCollateralLoansSUSD.add(wrapprSUSD);
 
 						skewValue = totalSupply.sub(usdNegativeEntries);
 						break;
