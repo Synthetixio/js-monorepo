@@ -35,17 +35,22 @@ const useRedeemableDeprecatedSynthsQuery = (
 			);
 
 			let totalUSDBalance = wei(0);
+			const cryptoBalances: DeprecatedSynthBalance[] = [];
 
-			const cryptoBalances: DeprecatedSynthBalance[] = balances.map((usdBalance, i) => {
-				const currencyKey = deprecatedSynths[i] as CurrencyKey;
-				totalUSDBalance = totalUSDBalance.add(usdBalance);
-				return {
-					currencyKey,
-					proxyAddress: deprecatedProxySynthsAddresses[i],
-					balance: wei(0),
-					usdBalance,
-				};
-			});
+			for (let i = 0; i < balances.length; i++) {
+				const usdBalance = balances[i];
+				if (usdBalance.gt(0)) {
+					const currencyKey = deprecatedSynths[i] as CurrencyKey;
+					totalUSDBalance = totalUSDBalance.add(usdBalance);
+					cryptoBalances.push({
+						currencyKey,
+						proxyAddress: deprecatedProxySynthsAddresses[i],
+						balance: wei(0),
+						usdBalance,
+					});
+				}
+			}
+
 			return {
 				balances: cryptoBalances,
 				totalUSDBalance,
