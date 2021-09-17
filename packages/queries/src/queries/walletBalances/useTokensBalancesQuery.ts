@@ -28,9 +28,9 @@ const useTokensBalancesQuery = (
 			const calls = [];
 			for (const { address, symbol } of tokens) {
 				if (symbol === CRYPTO_CURRENCY_MAP.ETH) {
-					calls.push(ctx.provider?.getBalance(walletAddress!));
+					calls.push(ctx.provider!.getBalance(walletAddress!));
 				} else {
-					const tokenContract = new ethers.Contract(address, erc20Abi);
+					const tokenContract = new ethers.Contract(address, erc20Abi, ctx.provider!);
 					calls.push(tokenContract.balanceOf(walletAddress));
 				}
 			}
