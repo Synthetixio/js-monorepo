@@ -1,3 +1,4 @@
+import { NetworkId } from '@synthetixio/contracts-interface';
 import Wei, { wei } from '@synthetixio/wei';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
@@ -11,13 +12,13 @@ const useTotalIssuedSynthsExcludeOtherCollateralQuery = (
 	return useQuery<Wei>(
 		['synth', 'totalIssuedSynthsExcludeOtherCollateral', ctx.networkId, currencyKey],
 		async () => {
-			const totalIssuedSynthsExcludeOtherCollateral =
-				await ctx.snxjs!.contracts.Synthetix.totalIssuedSynthsExcludeOtherCollateral(
-					ctx.snxjs!.utils.formatBytes32String(currencyKey),
-					{
-						blockTag: block ? block : 'latest',
-					}
-				);
+			const totalIssuedSynthsExcludeOtherCollateral = await ctx.snxjs!.contracts.Synthetix[
+				ctx.snxjs!.contracts.Synthetix.totalIssuedSynthsExcludeOtherCollateral
+					? 'totalIssuedSynthsExcludeOtherCollateral'
+					: 'totalIssuedSynths'
+			](ctx.snxjs!.utils.formatBytes32String(currencyKey), {
+				blockTag: block ? block : 'latest',
+			});
 
 			return wei(totalIssuedSynthsExcludeOtherCollateral);
 		},
