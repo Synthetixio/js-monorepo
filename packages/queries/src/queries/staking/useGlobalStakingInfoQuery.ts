@@ -24,9 +24,11 @@ const useGlobalStakingInfoQuery = (
 				ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(ethers.utils.formatBytes32String('SNX')),
 				ctx.snxjs!.contracts.Synthetix.totalSupply(),
 				ctx.snxjs!.contracts.SynthetixState.lastDebtLedgerEntry(),
-				ctx.snxjs!.contracts.Synthetix.totalIssuedSynthsExcludeOtherCollateral(
-					ethers.utils.formatBytes32String('sUSD')
-				),
+				ctx.snxjs!.contracts.Synthetix[
+					ctx.snxjs!.contracts.Synthetix.totalIssuedSynthsExcludeOtherCollateral
+						? 'totalIssuedSynthsExcludeOtherCollateral'
+						: 'totalIssuedSynths'
+				](ethers.utils.formatBytes32String('sUSD')),
 				ctx.snxjs!.contracts.SystemSettings.issuanceRatio(),
 				ctx.snxData!.snxHolders({ max: GQL_RESPONSE_LIMIT - 1 }),
 			]);

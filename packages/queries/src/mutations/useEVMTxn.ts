@@ -12,6 +12,8 @@ type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'fai
 export interface UseEVMTxnOptions extends UseMutationOptions<void> {
 	// amount of buffer which should be added to the gasLimit as a portion of the estimated gas limit. ex, 0.15 adds a 15% buffer
 	gasLimitBuffer: number;
+	// whether or not the transaction should attempt to estimate gas or execute at all
+	enabled: boolean;
 }
 
 function hexToASCII(hex: string): string {
@@ -27,7 +29,7 @@ function hexToASCII(hex: string): string {
 const useEVMTxn = (
 	ctx: QueryContext,
 	txn: ethers.providers.TransactionRequest | null,
-	options: UseEVMTxnOptions = { gasLimitBuffer: 0.15 }
+	options: UseEVMTxnOptions = { gasLimitBuffer: 0.15, enabled: true }
 ) => {
 	const [gasLimit, setGasLimit] = useState<Wei | null>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -35,7 +37,7 @@ const useEVMTxn = (
 	const [txnStatus, setTxnStatus] = useState<TransactionStatus>('unsent');
 
 	async function estimateGas() {
-		if (txn != null && ctx.signer != null) {
+		if (txn != null && ctx.signer != null && options.enabled) {
 			// remove gas price from the estimate because it will cause unusual error if its below the base
 			// it will be used at the end when the actual transaction is submitted
 			return ctx.signer!.estimateGas(omit(txn!, ['gasPrice']));
@@ -76,6 +78,10 @@ const useEVMTxn = (
 		txnStatus,
 		refresh,
 		...useMutation(async () => {
+			if (!options.enabled) {
+				return;
+			}
+
 			setErrorMessage(null);
 
 			const execTxn = clone(txn!);

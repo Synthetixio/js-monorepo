@@ -5,5 +5,5 @@ type SnxPriceSansCount = Omit<DailySnxPrice, 'count'> | Omit<FifteenMinuteSnxPri
 
 export const parseSnxPrice = ({ id, averagePrice }: SnxPriceSansCount): SnxPriceSansCount => ({
 	id,
-	averagePrice: formatEther(averagePrice),
+	averagePrice,
 });
