@@ -21,12 +21,13 @@ const useActiveProposalsQuery = (
 						$ambassadorKey: String
 						$grantKey: String
 						$proposalKey: String
+						$treasuryKey: String
 					) {
 						proposals(
 							first: 100
 							skip: 0
 							where: {
-								space_in: [$councilKey, $ambassadorKey, $grantKey, $proposalKey]
+								space_in: [$councilKey, $ambassadorKey, $grantKey, $proposalKey, $treasuryKey]
 								state: "active"
 							}
 						) {
@@ -43,6 +44,7 @@ const useActiveProposalsQuery = (
 					ambassadorKey: SPACE_KEY.AMBASSADOR,
 					grantKey: SPACE_KEY.GRANTS,
 					proposalKey: SPACE_KEY.PROPOSAL,
+					treasuryKey: SPACE_KEY.TREASURY,
 				}
 			);
 
