@@ -54,14 +54,15 @@ const useEVMTxn = (
 	}
 
 	function refresh() {
-		if (!options.enabled) {
-			return;
-		}
 		if (txnStatus === 'confirmed' || txnStatus === 'failed') {
 			setTxnStatus('unsent');
 		}
 
 		setErrorMessage(null);
+
+		if (!options.enabled) {
+			return;
+		}
 
 		estimateGas()
 			.then((gl) => {
