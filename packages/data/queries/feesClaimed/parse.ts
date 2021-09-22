@@ -1,6 +1,5 @@
-import { ethers } from 'ethers';
 import { FeesClaimed } from '../../generated/graphql';
-import { formatTimestamp } from '../../src/utils';
+import { formatTimestamp, formatEther } from '../../src/utils';
 
 export const parseFeesClaimed = ({
 	account,
@@ -14,6 +13,6 @@ export const parseFeesClaimed = ({
 	block: Number(block),
 	id,
 	timestamp: formatTimestamp(timestamp),
-	value: ethers.utils.formatEther(value),
-	rewards: ethers.utils.formatEther(rewards),
+	value: formatEther(value),
+	rewards: formatEther(rewards),
 });

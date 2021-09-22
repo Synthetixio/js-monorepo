@@ -1,6 +1,5 @@
-import { ethers } from 'ethers';
 import { Issued } from '../../generated/graphql';
-import { formatTimestamp } from '../../src/utils';
+import { formatTimestamp, formatEther } from '../../src/utils';
 
 export const parseIssued = ({
 	account,
@@ -17,5 +16,5 @@ export const parseIssued = ({
 	id,
 	source,
 	timestamp: formatTimestamp(timestamp),
-	value: ethers.utils.formatEther(value),
+	value: formatEther(value),
 });

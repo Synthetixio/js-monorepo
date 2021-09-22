@@ -15,8 +15,6 @@ import {
 	parseExchangeEntrySettleds,
 	parseDailyIssued,
 	parseDailyBurned,
-	parseBinaryOptionsMarkets,
-	parseBinaryOptionTransactions,
 	parseDailyTotalActiveStakers,
 	parseExchangeTotals,
 	parseAccountsFlaggedForLiquidation,
