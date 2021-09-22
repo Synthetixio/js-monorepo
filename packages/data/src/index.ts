@@ -190,7 +190,7 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			queryMethod: queries.createSnxPriceQuery,
 			networkId,
 			endpoints: {
-				[NetworkId.Mainnet]: l1Endpoints.rates,
+				[NetworkId.Mainnet]: l1Endpoints.exchanges,
 				[NetworkId.Kovan]: l1Endpoints.exchangesKovan,
 				[NetworkId['Kovan-Ovm']]: l2Endpoints.exchangesKovan,
 				[NetworkId['Mainnet-Ovm']]: l2Endpoints.exchanges,
@@ -206,7 +206,7 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			queryMethod: queries.createRateUpdatesQuery,
 			networkId,
 			endpoints: {
-				[NetworkId.Mainnet]: l1Endpoints.rates,
+				[NetworkId.Mainnet]: l1Endpoints.exchanges,
 				[NetworkId.Kovan]: l1Endpoints.exchangesKovan,
 				[NetworkId['Kovan-Ovm']]: l2Endpoints.exchangesKovan,
 				[NetworkId['Mainnet-Ovm']]: l2Endpoints.exchanges,
