@@ -81,8 +81,9 @@ const useGetBridgeDataQuery = (
 					if (isFromL2) {
 						const msgHashes = await watcher!.getMessageHashesFromL1Tx(l.transactionHash);
 						const receipt = await watcher!.getL2TransactionReceipt(msgHashes[0], false);
+						const fraudProofWindow = OPTIMISM_NETWORKS[ctx.networkId!]?.fraudProofWindow;
 						const readyToRelay =
-							Date.now() - timestamp > OPTIMISM_NETWORKS[ctx.networkId!].fraudProofWindow;
+							fraudProofWindow !== undefined ? Date.now() - timestamp > fraudProofWindow : false;
 
 						return {
 							timestamp,
