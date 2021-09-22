@@ -20,11 +20,6 @@ export {
 	parseExchangeEntrySettledsKovan,
 	createExchangeEntrySettledsQuery,
 } from './exchangeEntrySettleds';
-export { createBinaryOptionsMarketsQuery, parseBinaryOptionsMarkets } from './binaryOptionsMarkets';
-export {
-	createBinaryOptionTransactionsQuery,
-	parseBinaryOptionTransactions,
-} from './binaryOptionsTransactions';
 export {
 	createDailyTotalActiveStakersQuery,
 	parseDailyTotalActiveStakers,

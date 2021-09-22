@@ -70,18 +70,6 @@ export type ExchangeEntrySettledsParams = {
 	maxExchangeTimestamp?: number;
 } & BaseQueryParams;
 
-export type BinaryOptionsMarketsParams = {
-	creator?: string;
-	isOpen?: boolean;
-	minTimestamp?: number;
-	maxTimestamp?: number;
-} & BaseQueryParams;
-
-export type BinaryOptionsTransactionsParams = {
-	market?: string;
-	account?: string;
-} & BaseQueryParams;
-
 export type SynthExchangeExpanded = SynthExchange & {
 	hash: string;
 };
@@ -131,18 +119,6 @@ export type OptionsMarket = {
 	shortPrice: string;
 	poolSize: string;
 	result: string | null;
-};
-
-export type OptionsTransaction = {
-	hash: string;
-	timestamp: number;
-	type: string;
-	account: string;
-	currencyKey: string | null;
-	side: string;
-	amount: string;
-	market: string;
-	fee: string | null;
 };
 
 export type DailyTotalActiveStakers = {
