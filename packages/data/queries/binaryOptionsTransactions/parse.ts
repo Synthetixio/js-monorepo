@@ -1,7 +1,6 @@
-import { ethers } from 'ethers';
 import { OptionTransaction as UnformattedOptionTransaction } from '../../generated/graphql';
 import { OptionsTransaction } from '../../src/types';
-import { formatTimestamp, getHashFromId, hexToAscii } from '../../src/utils';
+import { formatTimestamp, getHashFromId, hexToAscii, formatEther } from '../../src/utils';
 
 export const parseBinaryOptionTransactions = ({
 	id,
@@ -20,7 +19,7 @@ export const parseBinaryOptionTransactions = ({
 	account,
 	currencyKey: currencyKey ? hexToAscii(currencyKey) : null,
 	side: side === 0 ? 'long' : 'short',
-	amount: ethers.utils.formatEther(amount),
+	amount: formatEther(amount),
 	market,
-	fee: fee ? ethers.utils.formatEther(fee) : null,
+	fee: fee ? formatEther(fee) : null,
 });

@@ -1,7 +1,6 @@
-import { ethers } from 'ethers';
 import { Market as UnformattedOptionMarket } from '../../generated/graphql';
 import { OptionsMarket } from '../../src/types';
-import { formatTimestamp, hexToAscii } from '../../src/utils';
+import { formatTimestamp, hexToAscii, formatEther } from '../../src/utils';
 
 export const parseBinaryOptionsMarkets = ({
 	id,
@@ -22,13 +21,13 @@ export const parseBinaryOptionsMarkets = ({
 	timestamp: formatTimestamp(timestamp),
 	creator,
 	currencyKey: hexToAscii(currencyKey),
-	strikePrice: ethers.utils.formatEther(strikePrice),
+	strikePrice: formatEther(strikePrice),
 	biddingEndDate: formatTimestamp(biddingEndDate),
 	maturityDate: formatTimestamp(maturityDate),
 	expiryDate: formatTimestamp(expiryDate),
 	isOpen,
-	longPrice: ethers.utils.formatEther(longPrice),
-	shortPrice: ethers.utils.formatEther(shortPrice),
-	poolSize: ethers.utils.formatEther(poolSize),
+	longPrice: formatEther(longPrice),
+	shortPrice: formatEther(shortPrice),
+	poolSize: formatEther(poolSize),
 	result: result !== null ? (result === 0 ? 'long' : 'short') : null,
 });

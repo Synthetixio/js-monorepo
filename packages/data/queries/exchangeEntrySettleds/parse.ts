@@ -1,5 +1,5 @@
-import { ethers } from 'ethers';
 import { ExchangeEntrySettled } from '../../generated/graphql';
+import { formatEther } from '../../src/utils';
 
 export const parseExchangeEntrySettleds = ({
 	id,
@@ -16,10 +16,10 @@ export const parseExchangeEntrySettleds = ({
 	id,
 	from,
 	src,
-	amount: ethers.utils.formatEther(amount),
+	amount: formatEther(amount),
 	dest,
-	reclaim: ethers.utils.formatEther(reclaim),
-	rebate: ethers.utils.formatEther(rebate),
+	reclaim: formatEther(reclaim),
+	rebate: formatEther(rebate),
 	srcRoundIdAtPeriodEnd,
 	destRoundIdAtPeriodEnd,
 	exchangeTimestamp: Number(exchangeTimestamp),

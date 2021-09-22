@@ -1,7 +1,6 @@
-import { ethers } from 'ethers';
 import { SynthExchange } from '../../generated/graphql';
 import { SynthExchangeExpanded } from '../../src/types';
-import { formatTimestamp, getHashFromId, hexToAscii } from '../../src/utils';
+import { formatTimestamp, getHashFromId, hexToAscii, formatEther } from '../../src/utils';
 
 export const parseSynthExchangesL1 = ({
 	account,
@@ -22,18 +21,18 @@ export const parseSynthExchangesL1 = ({
 }: SynthExchange): SynthExchangeExpanded => ({
 	account,
 	block: Number(block),
-	feesInUSD: ethers.utils.formatEther(feesInUSD),
+	feesInUSD: formatEther(feesInUSD),
 	from,
-	fromAmount: ethers.utils.formatEther(fromAmount),
-	fromAmountInUSD: ethers.utils.formatEther(fromAmountInUSD),
+	fromAmount: formatEther(fromAmount),
+	fromAmountInUSD: formatEther(fromAmountInUSD),
 	fromCurrencyKey: hexToAscii(fromCurrencyKey),
 	gasPrice,
 	id,
 	network,
 	timestamp: formatTimestamp(timestamp),
 	toAddress,
-	toAmount: ethers.utils.formatEther(toAmount),
-	toAmountInUSD: ethers.utils.formatEther(toAmountInUSD),
+	toAmount: formatEther(toAmount),
+	toAmountInUSD: formatEther(toAmountInUSD),
 	toCurrencyKey: hexToAscii(toCurrencyKey),
 	hash: getHashFromId(id),
 });
