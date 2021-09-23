@@ -33,13 +33,14 @@ const useHasVotedForElectionsQuery = (
 						$councilKey: String
 						$ambassadorKey: String
 						$grantKey: String
+						$treasuryKey: String
 						$state: String
 						$author: String
 					) {
 						proposals(
-							first: 3
+							first: 4
 							where: {
-								space_in: [$councilKey, $ambassadorKey, $grantKey]
+								space_in: [$councilKey, $ambassadorKey, $grantKey, $treasuryKey]
 								author: $author
 								state: $state
 							}
@@ -55,17 +56,18 @@ const useHasVotedForElectionsQuery = (
 					councilKey: SPACE_KEY.COUNCIL,
 					ambassadorKey: SPACE_KEY.AMBASSADOR,
 					grantKey: SPACE_KEY.GRANTS,
+					treasuryKey: SPACE_KEY.TREASURY,
 					state: ProposalStates.ACTIVE,
 					author: electionAuthor,
 				}
 			);
 
 			// @notice Three DAO elections not currently active
-			if (proposals.length < 3 || !proposals[0]) {
+			if (proposals.length < 4 || !proposals[0]) {
 				return { hasVoted: true };
 			}
 
-			const latestSnapshot = proposals[0].snapshot;
+			const latestSnapshot = parseInt(proposals[0].snapshot);
 
 			const { space }: { space: SpaceData } = await request(
 				snapshotEndpoint,
@@ -132,7 +134,7 @@ const useHasVotedForElectionsQuery = (
 					userAddress: walletAddress,
 				}
 			);
-			if (votes.length === 3) {
+			if (votes.length === 4) {
 				return { hasVoted: true };
 			} else {
 				return { hasVoted: false };
