@@ -67,7 +67,7 @@ const useHasVotedForElectionsQuery = (
 				return { hasVoted: true };
 			}
 
-			const latestSnapshot = proposals[0].snapshot;
+			const latestSnapshot = parseInt(proposals[0].snapshot);
 
 			const { space }: { space: SpaceData } = await request(
 				snapshotEndpoint,
