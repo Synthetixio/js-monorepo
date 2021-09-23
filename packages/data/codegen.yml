@@ -1,13 +1,11 @@
 overwrite: true
 schema:
   [
-    'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-binary-options',
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-loans',
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-liquidations',
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-depot',
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanger',
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges',
-    'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-rates',
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-shorts',
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix',
   ]

@@ -1,8 +1,8 @@
-import { ethers } from 'ethers';
 import { DailyIssued } from '../../generated/graphql';
+import { formatEther } from '../../src/utils';
 
 export const parseDailyIssued = ({ id, value, totalDebt }: DailyIssued): DailyIssued => ({
 	id,
-	value: ethers.utils.formatEther(value),
-	totalDebt: ethers.utils.formatEther(totalDebt),
+	value: formatEther(value),
+	totalDebt: formatEther(totalDebt),
 });
