@@ -60,17 +60,15 @@ const useEVMTxn = (
 
 		setErrorMessage(null);
 
-		if (!options.enabled) {
-			return;
+		if (options.enabled) {
+			estimateGas()
+				.then((gl) => {
+					if (gl) setGasLimit(wei(gl, 0));
+				})
+				.catch((err) => {
+					handleError(err);
+				});
 		}
-
-		estimateGas()
-			.then((gl) => {
-				if (gl) setGasLimit(wei(gl, 0));
-			})
-			.catch((err) => {
-				handleError(err);
-			});
 	}
 
 	useEffect(refresh, [txn?.data, txn?.value, txn?.nonce, txn?.from, txn?.to]);
