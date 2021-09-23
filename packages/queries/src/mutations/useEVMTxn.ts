@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { QueryContext } from '../context';
 import clone from 'lodash/clone';
 import omit from 'lodash/omit';
+import { isString } from 'lodash';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
 
@@ -49,7 +50,8 @@ const useEVMTxn = (
 	function handleError(err: any) {
 		// eslint-disable-next-line
 		console.error(err);
-		const errorMessage = err.data ? hexToASCII(err.data.toString()) : err.message;
+		const errorMessage =
+			err.data && isString(err.data) ? hexToASCII(err.data) : err.data?.message ?? err.message;
 		setErrorMessage(errorMessage);
 	}
 
