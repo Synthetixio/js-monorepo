@@ -11,7 +11,7 @@ const useContractTxn = (
 	txnOptions: Partial<ethers.providers.TransactionRequest> = {},
 	options?: UseEVMTxnOptions
 ) => {
-	if (contract != null && method != null && options?.enabled) {
+	if (contract != null && method != null && (!options || options.enabled)) {
 		return useEVMTxn(
 			ctx,
 			{
