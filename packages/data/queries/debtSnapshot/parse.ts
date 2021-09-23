@@ -1,6 +1,5 @@
-import { ethers } from 'ethers';
 import { DebtSnapshot } from '../../generated/graphql';
-import { formatTimestamp } from '../../src/utils';
+import { formatTimestamp, formatEther } from '../../src/utils';
 
 export const parseDebtSnapshot = ({
 	account,
@@ -15,7 +14,7 @@ export const parseDebtSnapshot = ({
 	block: Number(block),
 	id,
 	timestamp: formatTimestamp(timestamp),
-	collateral: ethers.utils.formatEther(collateral),
-	debtBalanceOf: ethers.utils.formatEther(debtBalanceOf),
-	balanceOf: ethers.utils.formatEther(balanceOf),
+	collateral: formatEther(collateral),
+	debtBalanceOf: formatEther(debtBalanceOf),
+	balanceOf: formatEther(balanceOf),
 });
