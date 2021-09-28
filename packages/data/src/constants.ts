@@ -23,6 +23,4 @@ export const l2Endpoints = {
 	shortsKovan: 'https://api.thegraph.com/subgraphs/name/killerbyte/optimism-kovan-shorts',
 };
 
-export const timeSeriesEntityMap = { '1d': 'dailySNXPrices', '15m': 'fifteenMinuteSNXPrices' };
-
 export const GQL_RESPONSE_LIMIT = 999;

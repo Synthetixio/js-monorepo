@@ -12,7 +12,7 @@ export const createDailyBurnedQuery = (params?: DailyBurnedQueryParams): string 
 			) {
         id
         value
-		totalDebt
+				totalDebt
 			}
 		}
 	`;
