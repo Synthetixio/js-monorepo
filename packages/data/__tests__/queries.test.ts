@@ -352,7 +352,7 @@ describe('@synthetixio/data tests', () => {
 
 		test('should accept addresses prop', async () => {
 			const snxHoldersInfo = await snxData.snxHolders({
-				addresses: ['0x49be88f0fcc3a8393a59d3688480d7d253c37d2a'],
+				addresses: ['0x99f4176ee457afedffcb1839c7ab7a030a5e4a92'],
 			});
 			expect(snxHoldersInfo!.length).toEqual(1);
 			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
