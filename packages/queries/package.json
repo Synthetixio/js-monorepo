@@ -34,7 +34,7 @@
 	"dependencies": {
 		"@snapshot-labs/snapshot.js": "^0.1.11",
 		"@synthetixio/contracts-interface": "^2.50.3",
-		"@synthetixio/data": "0.0.0-a1a9cd3",
+		"@synthetixio/data": "^2.50.3",
 		"@synthetixio/optimism-networks": "2.50.0-ovm-alpha",
 		"@synthetixio/providers": "2.50.0-ovm-alpha",
 		"@synthetixio/transaction-notifier": "2.50.0-ovm-alpha",

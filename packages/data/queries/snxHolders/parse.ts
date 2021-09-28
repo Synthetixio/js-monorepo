@@ -19,7 +19,7 @@ export const parseSnxHolder = ({
 	balanceOf: Number(balanceOf),
 	transferable: Number(transferable),
 	initialDebtOwnership: Number(initialDebtOwnership),
-	debtEntryAtIndex,
+	debtEntryAtIndex: debtEntryAtIndex ?? null,
 	mints: mints != null ? Number(mints) : null,
 	claims: claims != null ? Number(claims) : null,
 	timestamp: formatTimestamp(timestamp),

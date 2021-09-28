@@ -55,7 +55,7 @@ const useGlobalStakingInfoQuery = (
 					unformattedCollateral,
 					unformattedDebtEntryAtIndex,
 					unformattedInitialDebtOwnership,
-				].map((val) => wei(val));
+				].map((val) => (!val ? wei(0) : wei(val)));
 
 				const debtBalance = debtEntryAtIndex.gt(0)
 					? totalIssuedSynths
