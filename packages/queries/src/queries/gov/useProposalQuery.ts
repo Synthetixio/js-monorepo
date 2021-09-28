@@ -7,6 +7,7 @@ import { SpaceData, Vote, SpaceStrategy, Proposal, ProposalResults } from '../..
 import request, { gql } from 'graphql-request';
 import { SPACE_KEY } from './constants';
 import { QueryContext } from '../../context';
+import { getNetworkFromId } from '@synthetixio/contracts-interface';
 
 import CouncilDilution from '../../contracts/CouncilDilution';
 
@@ -148,7 +149,7 @@ const useProposalQuery = (
 					spaceKey,
 					space.strategies,
 					space.network,
-					snapshot.utils.getProvider(space.network),
+					getNetworkFromId({ id: ctx.networkId }).name,
 					voterAddresses,
 					block
 				),

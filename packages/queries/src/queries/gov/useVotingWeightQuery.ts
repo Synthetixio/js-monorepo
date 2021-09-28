@@ -51,7 +51,7 @@ const useVotingWeightQuery = (
 				SPACE_KEY.COUNCIL,
 				space.strategies,
 				space.network,
-				snapshot.utils.getProvider(space.network),
+				getNetworkFromId({ id: ctx.networkId }).name,
 				[getAddress(walletAddress ?? '')],
 				block!
 			);

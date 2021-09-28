@@ -6,6 +6,7 @@ import { Proposal, SpaceData, SpaceStrategy } from '../../types';
 import { getAddress } from 'ethers/lib/utils';
 import { electionAuthor, SPACE_KEY } from './constants';
 import { QueryContext } from '../../context';
+import { getNetworkFromId } from '@synthetixio/contracts-interface';
 
 export enum ProposalStates {
 	ACTIVE = 'active',
@@ -98,7 +99,7 @@ const useHasVotedForElectionsQuery = (
 				SPACE_KEY.COUNCIL,
 				space.strategies,
 				space.network,
-				snapshot.utils.getProvider(space.network),
+				getNetworkFromId({ id: ctx.networkId }).name,
 				[getAddress(walletAddress!)],
 				latestSnapshot
 			);
