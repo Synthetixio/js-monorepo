@@ -107,7 +107,7 @@ const useHasVotedForElectionsQuery = (
 				(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress!)]
 			);
 
-			const totalWeight = totalScore.reduce((a: number, b: number) => a ?? 0 + b ?? 0);
+			const totalWeight = totalScore.reduce((a: number, b: number) => a + b);
 
 			//@notice user has no voting weight
 			if (totalWeight === 0) {
