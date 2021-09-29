@@ -22,7 +22,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: resolve version
         run: |
-          # there are 3 possible values we will find version number
           export theversion="bump"
           if [ -n "${{ github.event.inputs.monorepo_version }}" ]; then export theversion="${{ github.event.inputs.monorepo_version }}"; fi
           echo "Resolved version $theversion"
@@ -33,7 +32,7 @@ jobs:
           echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.inputs.synthetix_version }}"
           cd packages/contracts-interface && npm install synthetix@${{ github.event.inputs.synthetix_version }} --save-exact
           git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
-          git commit -am "synthetix@${{ env.new_version }}"
+          git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}"
       - name: Lints and build
         run: |
           npm ci
