@@ -23,7 +23,10 @@ jobs:
 
       # publish
       - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
-      - run: npx lerna version 0.0.0-$(git rev-parse --short HEAD) --exact --no-push -y
-      - run: npx lerna publish from-package --npm-tag dev --skip-git -y
+      - run: git fetch origin ${{ github.head_ref }}
+      - run: echo $(git rev-parse --short origin/${{ github.head_ref }})
+      #- run: npx lerna version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --exact --no-push -y
+      - run: npx lerna exec npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
+      - run: npx lerna exec npm publish -- --tag dev
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
