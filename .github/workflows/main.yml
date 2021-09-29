@@ -1,6 +1,9 @@
 name: Main Workflow
 on:
-  push: {}
+  pull_request:
+    branches:
+    - main
+    - master
 
 jobs:
   build:
@@ -17,9 +20,10 @@ jobs:
       - run: npm run lint
       - run: npx lerna run build
       - run: npx lerna run test
-      - run: git config --global user.email "you@example.com" && git config --global user.name "Your Name"
+
+      # publish
+      - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
       - run: npx lerna version 0.0.0-$(git rev-parse --short HEAD) --exact --no-push -y
       - run: npx lerna publish from-package --npm-tag dev --skip-git -y
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: echo "npm pushed to 0.0.0-$(git rev-parse --short HEAD)"
