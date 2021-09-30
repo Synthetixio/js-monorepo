@@ -63,9 +63,10 @@ const useGlobalStakingInfoQuery = (
 							.div(debtEntryAtIndex)
 							.mul(initialDebtOwnership)
 					: wei(0);
-				const collateralRatio = debtEntryAtIndex.gt(0)
-					? debtBalance.div(collateral).div(usdToSnxPrice)
-					: wei(0);
+				const collateralRatio =
+					collateral.gt(0) && usdToSnxPrice.gt(0)
+						? debtBalance.div(collateral).div(usdToSnxPrice)
+						: wei(0);
 
 				const lockedSnx = collateral.mul(Wei.min(wei(1), collateralRatio.div(issuanceRatio)));
 
