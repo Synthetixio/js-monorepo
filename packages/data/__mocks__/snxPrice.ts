@@ -5,6 +5,6 @@ export const snxPriceMock = {
 	},
 	formatted: {
 		id: '18712',
-		averagePrice: '16.48',
+		averagePrice: 16.48,
 	},
 };

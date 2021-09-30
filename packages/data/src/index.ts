@@ -4,7 +4,7 @@ import { request } from 'graphql-request';
 // eslint-disable-next-line import/no-unresolved
 import { NetworkId } from '@synthetixio/contracts-interface';
 
-import { l1Endpoints, l2Endpoints, timeSeriesEntityMap } from './constants';
+import { l1Endpoints, l2Endpoints } from './constants';
 import * as queries from '../queries';
 import { formatParams, requestHelper } from './utils';
 import {
@@ -120,15 +120,7 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 				[NetworkId['Mainnet-Ovm']]: l2Endpoints.exchanges,
 			},
 		});
-		return response != null
-			? response.synthExchanges.map(
-					networkId === NetworkId.Mainnet
-						? queries.parseSynthExchangesL1
-						: networkId === NetworkId.Kovan
-						? queries.parseSynthExchangesL1Kovan
-						: queries.parseSynthExchangesL2
-			  )
-			: null;
+		return response != null ? response.synthExchanges.map(queries.parseSynthExchanges) : null;
 	},
 	synthetix: async (params?: BaseQueryParams): Promise<Synthetix | null> => {
 		const query = queries.createSynthetixQuery(params);
@@ -193,7 +185,9 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			},
 		});
 		return response != null
-			? response[timeSeriesEntityMap[params.timeSeries]].map(queries.parseSnxPrice)
+			? response[queries.getSNXPricesQueryResponseAttr(params.timeSeries)].map(
+					queries.parseSnxPrice
+			  )
 			: null;
 	},
 	rateUpdates: async (params?: RateUpdateQueryParams): Promise<RateUpdate[] | null> => {
@@ -253,14 +247,10 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			},
 		});
 		return response != null
-			? response.exchangeEntrySettleds.map(
-					networkId === NetworkId.Kovan
-						? queries.parseExchangeEntrySettledsKovan
-						: queries.parseExchangeEntrySettleds
-			  )
+			? response.exchangeEntrySettleds.map(queries.parseExchangeEntrySettleds)
 			: null;
 	},
-	exchangeTotals: async (params?: ExchangeTotalsParams): Promise<ExchangeTotals[] | null> => {
+	exchangeTotals: async (params: ExchangeTotalsParams): Promise<ExchangeTotals[] | null> => {
 		const response = await getData({
 			params,
 			queryMethod: queries.createExchangeTotalsQuery,
@@ -274,7 +264,7 @@ const synthetixData = ({ networkId }: { networkId: NetworkId }) => ({
 			},
 		});
 		return response != null
-			? response[queries.getExchangeTotalsQueryResponseAttr(params?.timeSeries ?? '')].map(
+			? response[queries.getExchangeTotalsQueryResponseAttr(params.timeSeries)].map(
 					queries.parseExchangeTotals
 			  )
 			: null;
