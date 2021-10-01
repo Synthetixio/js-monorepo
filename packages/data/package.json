@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/data",
-	"version": "2.50.2",
+	"version": "2.51.0",
 	"description": "Javascript library for handling queries to Synthetix subgraphs",
 	"source": "./src/index.ts",
 	"main": "./build/node/src/index.js",
