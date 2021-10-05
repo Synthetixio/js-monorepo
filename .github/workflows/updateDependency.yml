@@ -50,6 +50,6 @@ jobs:
         run: git push
       - name: Notify dApps
         run: |
-          echo "resolved_version=$(git tag | tail -1)" >> $GITHUB_ENV
+          export resolved_version=$(git tag | tail -1 | cut -c 2-)
           curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.resolved_version }}\"}}" https://api.github.com/repos/Synthetixio/staking/dispatches
           curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.resolved_version }}\"}}" https://api.github.com/repos/Kwenta/kwenta/dispatches
