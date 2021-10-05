@@ -32,7 +32,7 @@ jobs:
           echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.inputs.synthetix_version }}"
           cd packages/contracts-interface && npm install synthetix@${{ github.event.inputs.synthetix_version }} --save-exact
           git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
-          git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}"
+          git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty
       - name: Lints and build
         run: |
           npm ci
