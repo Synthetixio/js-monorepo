@@ -7,7 +7,7 @@ on:
         description: 'Upstream `synthetix` repo version (leave empty if no update)'
         required: false
       monorepo_version:
-        description: 'New Monorepo Version (ex. 2.50.0-alpha) (leave empty to "bump")'
+        description: 'New Monorepo Version (ex. 2.50.0-alpha) (leave empty to "patch")'
         required: false
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: resolve version
         run: |
-          export theversion="bump"
+          export theversion="patch"
           if [ -n "${{ github.event.inputs.monorepo_version }}" ]; then export theversion="${{ github.event.inputs.monorepo_version }}"; fi
           echo "Resolved version $theversion"
           echo "new_version=$theversion" >> $GITHUB_ENV
