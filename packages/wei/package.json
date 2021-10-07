@@ -1,9 +1,10 @@
 {
 	"name": "@synthetixio/wei",
-	"version": "2.46.4",
+	"version": "2.50.3-ovm-alpha",
 	"description": "Convenient BigNumber library for web3",
 	"main": "build/node/index.js",
 	"browser": "./build/index.js",
+	"module": "./build/node/index.js",
 	"source": "./src/index.ts",
 	"types": "./build/node/index.d.ts",
 	"scripts": {
@@ -30,7 +31,7 @@
 	"homepage": "https://github.com/Synthetixio/js-monorepo#readme",
 	"dependencies": {
 		"big.js": "6.1.1",
-		"ethers": "5.4.1"
+		"ethers": "5.4.6"
 	},
 	"devDependencies": {
 		"@types/big.js": "6.0.2"

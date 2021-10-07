@@ -4,6 +4,8 @@ import { QueryContext } from '../../context';
 import { GasPrices } from '../../types';
 import { formatGwei } from '../../utils';
 
+import { NetworkId } from '@synthetixio/contracts-interface';
+
 const ETH_GAS_STATION_API_URL = 'https://ethgasstation.info/json/ethgasAPI.json';
 const GAS_NOW_API_URL = 'https://www.gasnow.org/api/v3/gas/price?utm_source=kwenta';
 
@@ -33,44 +35,41 @@ type GasNowResponse = {
 	};
 };
 
-const useEthGasPriceQuery = (
-	ctx: QueryContext,
-	useOVM?: boolean,
-	options?: UseQueryOptions<GasPrices, Error>
-) => {
+const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPrices, Error>) => {
 	return useQuery<GasPrices, Error>(
 		['network', 'gasPrice', ctx.networkId],
 		async () => {
-			if (useOVM) {
+			if (ctx.networkId === NetworkId.Mainnet) {
 				try {
-					const gasPrice = formatGwei((await ctx.provider!.getGasPrice()).toNumber());
+					const result = await axios.get<GasNowResponse>(GAS_NOW_API_URL);
+					const { standard, fast, rapid: fastest } = result.data.data;
+
 					return {
-						fastest: gasPrice,
-						fast: gasPrice,
-						average: gasPrice,
+						fastest: Math.round(formatGwei(fastest)),
+						fast: Math.round(formatGwei(fast)),
+						average: Math.round(formatGwei(standard)),
 					};
 				} catch (e) {
-					throw new Error('Cannot retrieve optimistic gas price from provider. ' + e);
+					const result = await axios.get<EthGasStationResponse>(ETH_GAS_STATION_API_URL);
+					const { average, fast, fastest } = result.data;
+
+					return {
+						fastest: Math.round(fastest / 10),
+						fast: Math.round(fast / 10),
+						average: Math.round(average / 10),
+					};
 				}
 			}
-			try {
-				const result = await axios.get<GasNowResponse>(GAS_NOW_API_URL);
-				const { standard, fast, rapid: fastest } = result.data.data;
 
+			try {
+				const gasPrice = formatGwei((await ctx.provider!.getGasPrice()).toNumber());
 				return {
-					fastest: Math.round(formatGwei(fastest)),
-					fast: Math.round(formatGwei(fast)),
-					average: Math.round(formatGwei(standard)),
+					fastest: gasPrice,
+					fast: gasPrice,
+					average: gasPrice,
 				};
 			} catch (e) {
-				const result = await axios.get<EthGasStationResponse>(ETH_GAS_STATION_API_URL);
-				const { average, fast, fastest } = result.data;
-
-				return {
-					fastest: Math.round(fastest / 10),
-					fast: Math.round(fast / 10),
-					average: Math.round(average / 10),
-				};
+				throw new Error('Cannot retrieve optimistic gas price from provider. ' + e);
 			}
 		},
 		{

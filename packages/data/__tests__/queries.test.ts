@@ -4,8 +4,7 @@ import {
 	parseIssued,
 	parseRates,
 	parseSynthetix,
-	parseSynthExchangesL1,
-	parseSynthExchangesL2,
+	parseSynthExchanges,
 	parseBurned,
 	parseFeesClaimed,
 	parseSnxPrice,
@@ -13,6 +12,12 @@ import {
 	parseSnxHolder,
 	parseShort,
 	parseExchangeEntrySettleds,
+	parseDailyIssued,
+	parseDailyBurned,
+	parseDailyTotalActiveStakers,
+	parseExchangeTotals,
+	parseAccountsFlaggedForLiquidation,
+	parseSynthHolders,
 } from '../queries';
 import synthetixData, { calculateTimestampForPeriod, PERIOD_IN_HOURS } from '../src';
 import { SynthetixData } from '../src/types';
@@ -23,12 +28,17 @@ import {
 	ratesMock,
 	feesClaimedMock,
 	synthetixMock,
-	synthExchangesMockL1,
-	synthExchangesMockL2,
+	synthExchangesMock,
 	debtSnapshotMock,
 	snxHolderMock,
 	shortsMock,
 	exchangeEntrySettledsMock,
+	exchangeTotalsMock,
+	dailyTotalActiveStakersMock,
+	accountsFlaggedForLiquidationMock,
+	dailyBurnedMock,
+	dailyIssuedMock,
+	synthHoldersMock,
 } from '../__mocks__';
 
 describe('@synthetixio/data tests', () => {
@@ -86,12 +96,9 @@ describe('@synthetixio/data tests', () => {
 	});
 
 	describe('exchanges query', () => {
-		test('should parse the response correctly for L1 and L2', () => {
-			const parsedOutputL1 = parseSynthExchangesL1(synthExchangesMockL1.response);
-			expect(synthExchangesMockL1.formatted).toEqual(parsedOutputL1);
-
-			const parsedOutputL2 = parseSynthExchangesL2(synthExchangesMockL2.response);
-			expect(synthExchangesMockL2.formatted).toEqual(parsedOutputL2);
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseSynthExchanges(synthExchangesMock.response);
+			expect(synthExchangesMock.formatted).toEqual(parsedOutput);
 		});
 
 		test('should return exchanges from l1', async () => {
@@ -110,7 +117,7 @@ describe('@synthetixio/data tests', () => {
 			expect(exchanges!.length).toBeGreaterThan(1000);
 		});
 
-		test('should return exchagnes from kovan l2', async () => {
+		test.skip('should return exchagnes from kovan l2', async () => {
 			const exchanges = await snxDataKovanOvm.synthExchanges({
 				minTimestamp: oneMonthTimestamp,
 			});
@@ -171,6 +178,36 @@ describe('@synthetixio/data tests', () => {
 		});
 	});
 
+	describe('dailyIssued query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseDailyIssued(dailyIssuedMock.response);
+			expect(dailyIssuedMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should return issueds data from l1', async () => {
+			await snxData.dailyIssued({ max: 1 });
+		});
+
+		test.skip('should return issueds data from l2', async () => {
+			await snxDataOvm.dailyIssued({ max: 1 });
+		});
+	});
+
+	describe('dailyBurned query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseDailyBurned(dailyBurnedMock.response);
+			expect(dailyBurnedMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should return issueds data from l1', async () => {
+			await snxData.dailyBurned({ max: 1 });
+		});
+
+		test.skip('should return issueds data from l2', async () => {
+			await snxDataOvm.dailyBurned({ max: 1 });
+		});
+	});
+
 	describe('feesClaimed query', () => {
 		test('should parse the response correctly', () => {
 			const parsedOutput = parseFeesClaimed(feesClaimedMock.response);
@@ -221,38 +258,39 @@ describe('@synthetixio/data tests', () => {
 				synth: 'SNX',
 				minTimestamp: oneDayTimestamp,
 			});
-			expect(l1RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l1RateUpdatesInfo!.length).toBeGreaterThan(0);
+			expect(l1RateUpdatesInfo![0].synth).toEqual('SNX');
 		});
 
-		test('should return over 1000 rateUpdates data from l1 with no max input and a long timeframe', async () => {
+		test.skip('should return over 1000 rateUpdates data from l1 with no max input and a long timeframe', async () => {
 			jest.setTimeout(30000);
 			const l1RateUpdatesAnnualInfo = await snxData.rateUpdates({
 				synth: 'SNX',
 				minTimestamp: oneMonthTimestamp,
 			});
-			expect(l1RateUpdatesAnnualInfo![0].synth).toEqual('SNX');
 			expect(l1RateUpdatesAnnualInfo!.length).toBeGreaterThan(1000);
+			expect(l1RateUpdatesAnnualInfo![0].synth).toEqual('SNX');
 		});
 
-		test.skip('should return rateUpdates data from l2', async () => {
+		test('should return rateUpdates data from l2', async () => {
 			const l2RateUpdatesInfo = await snxDataOvm.rateUpdates({
 				max: 5,
 				synth: 'SNX',
 				minTimestamp: oneMonthTimestamp,
 			});
-			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l2RateUpdatesInfo!.length).toBeGreaterThan(0);
+			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 		});
 
-		test('should return rateUpdates data from l2 kovan', async () => {
+		test.skip('should return rateUpdates data from l2 kovan', async () => {
+			const twoMonthTimestamp = calculateTimestampForPeriod(2 * PERIOD_IN_HOURS['ONE_MONTH']);
 			const l2RateUpdatesInfo = await snxDataKovanOvm.rateUpdates({
 				max: 5,
 				synth: 'SNX',
-				minTimestamp: oneMonthTimestamp,
+				minTimestamp: twoMonthTimestamp,
 			});
-			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 			expect(l2RateUpdatesInfo!.length).toBeGreaterThan(0);
+			expect(l2RateUpdatesInfo![0].synth).toEqual('SNX');
 		});
 	});
 
@@ -267,9 +305,9 @@ describe('@synthetixio/data tests', () => {
 				max: 5,
 				account: randomLargeSNXStaker,
 			});
+			expect(debtSnapshotInfo!.length).toEqual(5);
 			expect(debtSnapshotInfo![0].account).toEqual(randomLargeSNXStaker);
 			expect(Number(debtSnapshotInfo![0].collateral)).toBeGreaterThan(0);
-			expect(debtSnapshotInfo!.length).toEqual(5);
 		});
 
 		test.skip('should return debtSnapshots data from l2', async () => {
@@ -277,9 +315,9 @@ describe('@synthetixio/data tests', () => {
 				max: 2,
 				account: randomL2Staker,
 			});
+			expect(debtSnapshotInfo!.length).toEqual(2);
 			expect(debtSnapshotInfo![0].account).toEqual(randomL2Staker);
 			expect(Number(debtSnapshotInfo![0].collateral)).toBeGreaterThan(0);
-			expect(debtSnapshotInfo!.length).toEqual(2);
 		});
 	});
 
@@ -293,18 +331,27 @@ describe('@synthetixio/data tests', () => {
 			const snxHoldersInfo = await snxData.snxHolders({
 				max: 5,
 			});
+			expect(snxHoldersInfo!.length).toEqual(5);
 			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
 			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
-			expect(snxHoldersInfo!.length).toEqual(5);
 		});
 
 		test.skip('should return snxHolders data from l2', async () => {
 			const snxHoldersInfo = await snxDataOvm.snxHolders({
 				max: 5,
 			});
+			expect(snxHoldersInfo!.length).toEqual(5);
 			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
 			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
-			expect(snxHoldersInfo!.length).toEqual(5);
+		});
+
+		test('should accept addresses prop', async () => {
+			const snxHoldersInfo = await snxData.snxHolders({
+				addresses: ['0x99f4176ee457afedffcb1839c7ab7a030a5e4a92'],
+			});
+			expect(snxHoldersInfo!.length).toEqual(1);
+			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
+			expect(Number(snxHoldersInfo![0].balanceOf)).toBeGreaterThan(0);
 		});
 	});
 
@@ -323,8 +370,69 @@ describe('@synthetixio/data tests', () => {
 			expect(exchangeEntrySettleds.length).toEqual(1);
 			const exchangeEntrySettled = exchangeEntrySettleds[0]!;
 			expect(exchangeEntrySettled.from).toEqual('0xe51b3d74b9e8203b5e817e691a5d0d7f00898fbd');
-			expect(exchangeEntrySettled.reclaim).toEqual('150.57812586144');
-			expect(exchangeEntrySettled.rebate).toEqual('0.0');
+			expect(exchangeEntrySettled.reclaim).toEqual(150.57812586144);
+			expect(exchangeEntrySettled.rebate).toEqual(0);
+		});
+	});
+
+	describe('exchangeTotals query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseExchangeTotals(exchangeTotalsMock.response);
+			expect(exchangeTotalsMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const totals = await snxData.exchangeTotals({
+				timeSeries: '15m',
+				max: 100,
+			});
+			expect(totals.length).toBeGreaterThanOrEqual(1);
+			const total = totals[0]!;
+			expect(total.id).toBeGreaterThanOrEqual(1);
+		});
+	});
+
+	describe('dailyTotalActiveStakers query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseDailyTotalActiveStakers(dailyTotalActiveStakersMock.response);
+			expect(dailyTotalActiveStakersMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const totals = await snxData.dailyTotalActiveStakers({ max: 100 });
+			expect(totals.length).toBeGreaterThanOrEqual(1);
+			const total = totals[0]!;
+			expect(total.id).toBeGreaterThanOrEqual(1);
+		});
+	});
+
+	describe('accountsFlaggedForLiquidation query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseAccountsFlaggedForLiquidation(
+				accountsFlaggedForLiquidationMock.response
+			);
+			expect(accountsFlaggedForLiquidationMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const accounts = await snxData.accountsFlaggedForLiquidation({ max: 100 });
+			expect(accounts.length).toBeGreaterThanOrEqual(1);
+			const account = accounts[0]!;
+			expect(account.deadline).toBeGreaterThanOrEqual(1);
+		});
+	});
+
+	describe('synthHolders query', () => {
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseSynthHolders(synthHoldersMock.response);
+			expect(synthHoldersMock.formatted).toEqual(parsedOutput);
+		});
+
+		test('should accept fiter options', async () => {
+			const holders = await snxData.synthHolders({ max: 100 });
+			expect(holders.length).toBeGreaterThanOrEqual(1);
+			const holder = holders[0]!;
+			expect(holder.balanceOf).toBeGreaterThanOrEqual(1);
 		});
 	});
 });

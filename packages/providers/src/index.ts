@@ -12,13 +12,15 @@ const loadProvider = ({ networkId = 1, infuraId, provider }: ProviderConfig): Sy
 };
 
 const getOptimismProvider = ({
-	layerOneNetworkId,
+	networkId,
 }: {
-	layerOneNetworkId: number;
+	networkId: number;
 }): ethersProviders.StaticJsonRpcProvider => {
-	if (!layerOneNetworkId) throw new Error(ERRORS.noNetworkId);
-	if (!L1_TO_L2_NETWORK_MAPPER[layerOneNetworkId]) throw new Error(ERRORS.wrongNetworkId);
-	const ovmNetworkId = L1_TO_L2_NETWORK_MAPPER[layerOneNetworkId];
+	if (!networkId) throw new Error(ERRORS.noNetworkId);
+
+	const ovmNetworkId = L1_TO_L2_NETWORK_MAPPER[networkId] || networkId;
+	if (!OPTIMISM_NETWORKS[networkId]) throw new Error(ERRORS.wrongNetworkId);
+
 	return new ethersProviders.StaticJsonRpcProvider(OPTIMISM_NETWORKS[ovmNetworkId].rpcUrls[0]);
 };
 

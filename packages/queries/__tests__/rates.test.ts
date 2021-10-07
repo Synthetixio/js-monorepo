@@ -27,11 +27,11 @@ describe('@synthetixio/queries rates', () => {
 		await waitFor(() => result.current.isSuccess);
 
 		expect(result.current.data).toEqual({
-			ETH: 1000,
-			BTC: 10000,
-			sETH: 1000,
-			sBTC: 10000,
-			SNX: 10,
+			ETH: wei(1000),
+			BTC: wei(10000),
+			sETH: wei(1000),
+			sBTC: wei(10000),
+			SNX: wei(10),
 		});
 	});
 
@@ -65,15 +65,18 @@ describe('@synthetixio/queries rates', () => {
 		ctx.snxData!.synthExchanges = async () => [
 			{
 				id: '1',
+				hash: '',
 				block: 1,
 				timestamp: 10000,
 				account: ethers.constants.AddressZero,
 				toAddress: ethers.constants.AddressZero,
 				from: ethers.constants.AddressZero,
 				fromCurrencyKey: 'sETH',
+				fromSynth: 'sETH',
 				fromAmount: 10,
 				fromAmountInUSD: 1000,
 				toCurrencyKey: 'sBTC',
+				toSynth: 'sBTC',
 				toAmount: 0.997,
 				toAmountInUSD: 997,
 				feesInUSD: 3,
@@ -82,15 +85,18 @@ describe('@synthetixio/queries rates', () => {
 			},
 			{
 				id: '2',
+				hash: '',
 				block: 2,
 				timestamp: 10001,
 				account: ethers.constants.AddressZero,
 				toAddress: ethers.constants.AddressZero,
 				from: ethers.constants.AddressZero,
 				fromCurrencyKey: 'sETH',
+				fromSynth: 'sETH',
 				fromAmount: 100,
 				fromAmountInUSD: 100,
 				toCurrencyKey: 'sUSD',
+				toSynth: 'sBTC',
 				toAmount: 0.995,
 				toAmountInUSD: 99.5,
 				feesInUSD: 0.5,

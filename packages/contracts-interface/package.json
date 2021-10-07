@@ -1,9 +1,10 @@
 {
 	"name": "@synthetixio/contracts-interface",
-	"version": "2.47.0-ovm",
+	"version": "2.50.3-ovm-alpha",
 	"description": "A library for interacting with Synthetix smart contracts",
 	"source": "./src/index.ts",
 	"main": "./build/node/src/index.js",
+	"module": "./build/node/src/index.js",
 	"browser": "./build/index.js",
 	"types": "./build/node/src/index.d.ts",
 	"files": [
@@ -31,9 +32,9 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"ethers": "5.4.1",
+		"ethers": "5.4.6",
 		"lodash": "4.17.19",
-		"synthetix": "2.47.0-ovm",
+		"synthetix": "2.50.3-ovm-alpha",
 		"web3-utils": "1.2.11"
 	},
 	"devDependencies": {

@@ -1,4 +1,3 @@
-import { ethers } from 'ethers';
 import { SnxHolder } from '../../generated/graphql';
 import { formatTimestamp } from '../../src/utils';
 
@@ -16,12 +15,12 @@ export const parseSnxHolder = ({
 }: SnxHolder): SnxHolder => ({
 	block: Number(block),
 	id,
-	collateral: ethers.utils.formatEther(collateral),
-	balanceOf: ethers.utils.formatEther(balanceOf),
-	transferable: ethers.utils.formatEther(transferable),
-	initialDebtOwnership: ethers.utils.formatEther(initialDebtOwnership),
-	debtEntryAtIndex: ethers.utils.formatEther(debtEntryAtIndex),
-	mints: mints != null ? ethers.utils.formatEther(mints) : null,
-	claims: claims != null ? ethers.utils.formatEther(claims) : null,
+	collateral: Number(collateral),
+	balanceOf: Number(balanceOf),
+	transferable: Number(transferable),
+	initialDebtOwnership: Number(initialDebtOwnership),
+	debtEntryAtIndex: debtEntryAtIndex ?? null,
+	mints: mints != null ? Number(mints) : null,
+	claims: claims != null ? Number(claims) : null,
 	timestamp: formatTimestamp(timestamp),
 });

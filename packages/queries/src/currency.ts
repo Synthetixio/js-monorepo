@@ -2,6 +2,7 @@ import keyBy from 'lodash/keyBy';
 import { Rates } from './types';
 
 import { CurrencyKey, Synths } from '@synthetixio/contracts-interface';
+import { wei } from '@synthetixio/wei';
 
 export const ETH_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 
@@ -73,7 +74,7 @@ export const getExchangeRatesForCurrencies = (
 	rates: Rates | null,
 	base: CurrencyKey | null,
 	quote: CurrencyKey | null
-) => (rates == null || base == null || quote == null ? 0 : rates[base]! * (1 / rates[quote]!));
+) => (rates == null || base == null || quote == null ? wei(0) : rates[base]!.div(rates[quote]!));
 
 export const getCurrencyKeyURLPath = (currencyKey: CurrencyKey) =>
 	`https:///www.synthetix.io/assets/synths/svg/${currencyKey}.svg`;

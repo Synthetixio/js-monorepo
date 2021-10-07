@@ -1,17 +1,17 @@
 {
 	"name": "@synthetixio/queries",
-	"version": "2.47.0-ovm.2",
+	"version": "2.50.3-ovm-alpha",
 	"description": "react-query for pulling synthetix data in react interfaces",
 	"source": "./src/index.ts",
-	"main": "./build/node/index.js",
-	"module": "./build/node/index.js",
+	"main": "./build/node/src/index.js",
+	"module": "./build/node/src/index.js",
 	"browser": "./build/index.js",
-	"types": "./build/node/index.d.ts",
+	"types": "./build/node/src/index.d.ts",
 	"files": [
 		"build"
 	],
 	"scripts": {
-		"build": "npm run build-browser && npm run build-node",
+		"build": "npm run codegen && npm run build-node",
 		"build-node": "../../node_modules/.bin/tsc -p tsconfig.node.json",
 		"build-browser": "../../node_modules/.bin/webpack --mode=production --max-old-space-size=4096",
 		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
@@ -20,7 +20,7 @@
 		"lint:fix": "../../node_modules/.bin/eslint --fix './src/**/*.{js,ts,tsx}'",
 		"test": "../../node_modules/.bin/jest --forceExit --coverage --no-cache",
 		"tsc": "../../node_modules/.bin/tsc --noemit",
-		"codegen": "graphql-codegen --config codegen.yml"
+		"codegen": "node ./codegen.js"
 	},
 	"repository": {
 		"type": "git",
@@ -32,14 +32,18 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"@synthetixio/contracts-interface": "^2.47.0-ovm",
-		"@synthetixio/data": "^2.47.0-ovm.2",
-		"@synthetixio/wei": "^2.46.4",
+		"@snapshot-labs/snapshot.js": "^0.1.11",
+		"@synthetixio/contracts-interface": "2.50.3-ovm-alpha",
+		"@synthetixio/data": "2.50.3-ovm-alpha",
+		"@synthetixio/optimism-networks": "2.50.3-ovm-alpha",
+		"@synthetixio/providers": "2.50.3-ovm-alpha",
+		"@synthetixio/transaction-notifier": "2.50.3-ovm-alpha",
+		"@synthetixio/wei": "2.50.3-ovm-alpha",
 		"axios": "0.21.1",
 		"bignumber.js": "9.0.1",
 		"date-fns": "2.19.0",
 		"ethcall": "3.3.0",
-		"ethers": "5.4.1",
+		"ethers": "5.4.6",
 		"graphql": "15.5.0",
 		"graphql-request": "3.4.0",
 		"lodash": "4.17.19"
@@ -57,21 +61,5 @@
 		"react": "17.x",
 		"react-dom": "17.x",
 		"react-query": "3.16.x"
-	},
-	"jest": {
-		"transform": {
-			"^.+\\.ts?$": "babel-jest"
-		},
-		"coverageThreshold": {
-			"global": {
-				"branches": 50,
-				"functions": 50,
-				"lines": 50,
-				"statements": 50
-			}
-		},
-		"modulePathIgnorePatterns": [
-			"<rootDir>/build"
-		]
 	}
 }

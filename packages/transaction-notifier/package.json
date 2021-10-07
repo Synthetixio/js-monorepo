@@ -1,11 +1,12 @@
 {
 	"name": "@synthetixio/transaction-notifier",
-	"version": "2.46.3",
+	"version": "2.50.3-ovm-alpha",
 	"description": "Javascript library for handling networks on Optimism Layer 2",
 	"source": "./src/index.ts",
 	"main": "./build/node/index.js",
+	"module": "./build/node/index.js",
 	"browser": "./build/index.js",
-	"types": "./build/src/index.d.ts",
+	"types": "./build/node/index.d.ts",
 	"files": [
 		"build"
 	],
@@ -30,7 +31,7 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"ethers": "5.4.1",
+		"ethers": "5.4.6",
 		"lodash": "4.17.19"
 	},
 	"devDependencies": {

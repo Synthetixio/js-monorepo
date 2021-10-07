@@ -1,19 +1,9 @@
 import {
-	Issued,
-	RateUpdate,
-	Synthetix,
 	SynthExchange,
-	Burned,
-	FeesClaimed,
-	DailySnxPrice,
-	FifteenMinuteSnxPrice,
-	DebtSnapshot,
-	SnxHolder,
-	Short,
+	Short as UnformatedShort,
 	ShortLoanChange,
 	ShortCollateralChange,
 	ShortLiquidation,
-	ExchangeEntrySettled,
 } from '../generated/graphql';
 
 export type BaseQueryParams = {
@@ -37,11 +27,16 @@ export type IssuedQueryParams = {
 	minBlock?: number;
 } & BaseQueryParams;
 
+export type DailyIssuedQueryParams = {
+	minTimestamp?: number;
+} & BaseQueryParams;
+
 export type SnxPriceParams = {
 	timeSeries: '1d' | '15m';
 } & BaseQueryParams;
 
 export type BurnedQueryParams = IssuedQueryParams;
+export type DailyBurnedQueryParams = DailyIssuedQueryParams;
 
 export type DebtSnapshotParams = {
 	minBlock?: number;
@@ -61,6 +56,7 @@ export type SnxHolderParams = {
 	address?: string;
 	minMints?: number;
 	minClaims?: number;
+	addresses?: string[];
 } & BaseQueryParams;
 
 export type RateUpdateQueryParams = {
@@ -78,29 +74,76 @@ export type SynthExchangeExpanded = SynthExchange & {
 	hash: string;
 };
 
+export type DailyTotalActiveStakersParams = BaseQueryParams;
+
+export type ExchangeTotalsParams = {
+	timeSeries: string;
+} & BaseQueryParams;
+
+export type AccountsFlaggedForLiquidationParams = {
+	account?: string;
+	minTimestamp?: number;
+	maxTimestamp?: number;
+} & BaseQueryParams;
+
+export type SynthHolderParams = {
+	id?: string;
+	synth?: string;
+} & BaseQueryParams;
+
 /**
  * Shorts have many relationships between entities although we are not taking advantage
  * of all of them so we are removing the types we don't use
  */
-export interface FormattedShort
-	extends Omit<Short, 'contractData' | 'liquidations' | 'collateralChanges' | 'loanChanges'> {
+export interface Short
+	extends Omit<
+		UnformatedShort,
+		'contractData' | 'liquidations' | 'collateralChanges' | 'loanChanges'
+	> {
 	loanChanges: Omit<ShortLoanChange, 'short'>[];
 	collateralChanges: Omit<ShortCollateralChange, 'short'>[];
 	liquidations: Omit<ShortLiquidation, 'short'>[];
 }
 
-export type SynthetixData = {
-	synthExchanges: (params?: SynthExchangeQueryParams) => Promise<SynthExchange[] | null>;
-	synthetix: (params?: BaseQueryParams) => Promise<Synthetix | null>;
-	issued: (params?: IssuedQueryParams) => Promise<Issued[] | null>;
-	rateUpdates: (params?: RateUpdateQueryParams) => Promise<RateUpdate[] | null>;
-	burned: (params?: BurnedQueryParams) => Promise<Burned[] | null>;
-	feesClaimed: (params?: FeesClaimedParams) => Promise<FeesClaimed[] | null>;
-	snxPrices: (params: SnxPriceParams) => Promise<DailySnxPrice[] | FifteenMinuteSnxPrice[] | null>;
-	debtSnapshots: (params?: DebtSnapshotParams) => Promise<DebtSnapshot[] | null>;
-	snxHolders: (params?: SnxHolderParams) => Promise<SnxHolder[] | null>;
-	shorts: (params?: ShortQueryParams) => Promise<FormattedShort[] | null>;
-	exchangeEntrySettleds: (
-		params?: ExchangeEntrySettledsParams
-	) => Promise<ExchangeEntrySettled[] | null>;
+export type OptionsMarket = {
+	address: string;
+	timestamp: number;
+	creator: string;
+	currencyKey: string;
+	strikePrice: string;
+	biddingEndDate: number;
+	maturityDate: number;
+	expiryDate: number;
+	isOpen: boolean;
+	longPrice: string;
+	shortPrice: string;
+	poolSize: string;
+	result: string | null;
+};
+
+export type DailyTotalActiveStakers = {
+	id: number;
+	count: number;
+};
+
+export type ExchangeTotals = {
+	id: number;
+	trades: number;
+	exchangers: number;
+	exchangeUSDTally: number;
+	totalFeesGeneratedInUSD: number;
+};
+
+export type AccountFlaggedForLiquidation = {
+	deadline: number;
+	account: string;
+	collateral: number;
+	collateralRatio: number;
+	liquidatableNonEscrowSNX: number;
+};
+
+export type SynthHolder = {
+	address: string;
+	synth: string;
+	balanceOf: number;
 };
