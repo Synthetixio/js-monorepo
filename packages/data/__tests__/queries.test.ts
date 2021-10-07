@@ -4,8 +4,7 @@ import {
 	parseIssued,
 	parseRates,
 	parseSynthetix,
-	parseSynthExchangesL1,
-	parseSynthExchangesL2,
+	parseSynthExchanges,
 	parseBurned,
 	parseFeesClaimed,
 	parseSnxPrice,
@@ -15,8 +14,6 @@ import {
 	parseExchangeEntrySettleds,
 	parseDailyIssued,
 	parseDailyBurned,
-	parseBinaryOptionsMarkets,
-	parseBinaryOptionTransactions,
 	parseDailyTotalActiveStakers,
 	parseExchangeTotals,
 	parseAccountsFlaggedForLiquidation,
@@ -31,8 +28,7 @@ import {
 	ratesMock,
 	feesClaimedMock,
 	synthetixMock,
-	synthExchangesMockL1,
-	synthExchangesMockL2,
+	synthExchangesMock,
 	debtSnapshotMock,
 	snxHolderMock,
 	shortsMock,
@@ -100,12 +96,9 @@ describe('@synthetixio/data tests', () => {
 	});
 
 	describe('exchanges query', () => {
-		test('should parse the response correctly for L1 and L2', () => {
-			const parsedOutputL1 = parseSynthExchangesL1(synthExchangesMockL1.response);
-			expect(synthExchangesMockL1.formatted).toEqual(parsedOutputL1);
-
-			const parsedOutputL2 = parseSynthExchangesL2(synthExchangesMockL2.response);
-			expect(synthExchangesMockL2.formatted).toEqual(parsedOutputL2);
+		test('should parse the response correctly', () => {
+			const parsedOutput = parseSynthExchanges(synthExchangesMock.response);
+			expect(synthExchangesMock.formatted).toEqual(parsedOutput);
 		});
 
 		test('should return exchanges from l1', async () => {
@@ -354,7 +347,7 @@ describe('@synthetixio/data tests', () => {
 
 		test('should accept addresses prop', async () => {
 			const snxHoldersInfo = await snxData.snxHolders({
-				addresses: ['0x49be88f0fcc3a8393a59d3688480d7d253c37d2a'],
+				addresses: ['0x99f4176ee457afedffcb1839c7ab7a030a5e4a92'],
 			});
 			expect(snxHoldersInfo!.length).toEqual(1);
 			expect(Number(snxHoldersInfo![0].collateral)).toBeGreaterThan(0);
@@ -377,8 +370,8 @@ describe('@synthetixio/data tests', () => {
 			expect(exchangeEntrySettleds.length).toEqual(1);
 			const exchangeEntrySettled = exchangeEntrySettleds[0]!;
 			expect(exchangeEntrySettled.from).toEqual('0xe51b3d74b9e8203b5e817e691a5d0d7f00898fbd');
-			expect(exchangeEntrySettled.reclaim).toEqual('150.57812586144');
-			expect(exchangeEntrySettled.rebate).toEqual('0.0');
+			expect(exchangeEntrySettled.reclaim).toEqual(150.57812586144);
+			expect(exchangeEntrySettled.rebate).toEqual(0);
 		});
 	});
 

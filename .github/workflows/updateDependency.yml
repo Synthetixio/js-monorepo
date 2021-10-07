@@ -1,8 +1,14 @@
 name: Publish Library
 
 on:
-  repository_dispatch:
-    types: update-synthetix
+  workflow_dispatch:
+    inputs:
+      synthetix_version:
+        description: 'Upstream `synthetix` repo version (leave empty if no update)'
+        required: false
+      monorepo_version:
+        description: 'New Monorepo Version (ex. 2.50.0-alpha) (leave empty to "patch")'
+        required: false
 
 jobs:
   update_version:
@@ -14,14 +20,19 @@ jobs:
         with:
           node-version: '14'
           registry-url: 'https://registry.npmjs.org'
+      - name: resolve version
+        run: |
+          export theversion="patch"
+          if [ -n "${{ github.event.inputs.monorepo_version }}" ]; then export theversion="${{ github.event.inputs.monorepo_version }}"; fi
+          echo "Resolved version $theversion"
+          echo "new_version=$theversion" >> $GITHUB_ENV
       - name: Update  @synthetixio/contracts-interface
+        if: github.event.inputs.synthetix_version
         run: |
-          echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.client_payload.version }}"
-          cd packages/contracts-interface && npm install synthetix@${{ github.event.client_payload.version }} --save-exact
-      - name: Commit changes
-        run: |
-          git config --global user.email "team@synthetix.io" && git config --global user.name "Synthetix Team"
-          git commit -am 'synthetix@${{ github.event.client_payload.version }}'
+          echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.inputs.synthetix_version }}"
+          cd packages/contracts-interface && npm install synthetix@${{ github.event.inputs.synthetix_version }} --save-exact
+          git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
+          git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}"
       - name: Lints and build
         run: |
           npm ci
@@ -30,7 +41,7 @@ jobs:
           npm run build
           npm run test-all
       - name: Update packages version
-        run: lerna version ${{ github.event.client_payload.version }} --exact --yes
+        run: lerna version ${{ env.new_version }} --exact --yes
       - name: Publish packages
         run: lerna publish from-package --yes
         env:
@@ -39,5 +50,7 @@ jobs:
         run: git push
       - name: Notify dApps
         run: |
-          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ github.event.client_payload.version }}\"}}" https://api.github.com/repos/Synthetixio/staking/dispatches
-          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ github.event.client_payload.version }}\"}}" https://api.github.com/repos/Synthetixio/kwenta/dispatches
+          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.new_version }}\"}}" https://api.github.com/repos/Synthetixio/staking/dispatches
+          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.new_version }}\"}}" https://api.github.com/repos/Kwenta/kwenta/dispatches
+          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.new_version }}\"}}" https://api.github.com/repos/Kwenta/kwenta-api/dispatches
+

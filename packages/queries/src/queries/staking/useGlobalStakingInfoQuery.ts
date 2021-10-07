@@ -24,9 +24,11 @@ const useGlobalStakingInfoQuery = (
 				ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(ethers.utils.formatBytes32String('SNX')),
 				ctx.snxjs!.contracts.Synthetix.totalSupply(),
 				ctx.snxjs!.contracts.SynthetixState.lastDebtLedgerEntry(),
-				ctx.snxjs!.contracts.Synthetix.totalIssuedSynthsExcludeEtherCollateral(
-					ethers.utils.formatBytes32String('sUSD')
-				),
+				ctx.snxjs!.contracts.Synthetix[
+					ctx.snxjs!.contracts.Synthetix.totalIssuedSynthsExcludeOtherCollateral
+						? 'totalIssuedSynthsExcludeOtherCollateral'
+						: 'totalIssuedSynths'
+				](ethers.utils.formatBytes32String('sUSD')),
 				ctx.snxjs!.contracts.SystemSettings.issuanceRatio(),
 				ctx.snxData!.snxHolders({ max: GQL_RESPONSE_LIMIT - 1 }),
 			]);
@@ -53,7 +55,7 @@ const useGlobalStakingInfoQuery = (
 					unformattedCollateral,
 					unformattedDebtEntryAtIndex,
 					unformattedInitialDebtOwnership,
-				].map((val) => wei(val));
+				].map((val) => (!val ? wei(0) : wei(val)));
 
 				const debtBalance = debtEntryAtIndex.gt(0)
 					? totalIssuedSynths
@@ -61,9 +63,10 @@ const useGlobalStakingInfoQuery = (
 							.div(debtEntryAtIndex)
 							.mul(initialDebtOwnership)
 					: wei(0);
-				const collateralRatio = debtEntryAtIndex.gt(0)
-					? debtBalance.div(collateral).div(usdToSnxPrice)
-					: wei(0);
+				const collateralRatio =
+					collateral.gt(0) && usdToSnxPrice.gt(0)
+						? debtBalance.div(collateral).div(usdToSnxPrice)
+						: wei(0);
 
 				const lockedSnx = collateral.mul(Wei.min(wei(1), collateralRatio.div(issuanceRatio)));
 
@@ -73,7 +76,7 @@ const useGlobalStakingInfoQuery = (
 				stakersTotalCollateral = stakersTotalCollateral.add(collateral.mul(usdToSnxPrice));
 			}
 
-			const percentLocked = snxLocked.div(snxTotal);
+			const percentLocked = snxTotal.gt(0) ? snxLocked.div(snxTotal) : wei(0);
 			const totalSupply = wei(unformattedSnxTotalSupply);
 
 			return {
@@ -84,11 +87,13 @@ const useGlobalStakingInfoQuery = (
 				lockedSupply: snxLocked,
 				lockedValue: totalSupply.mul(percentLocked).mul(usdToSnxPrice),
 				snxStaked:
-					usdToSnxPrice && totalIssuedSynths && issuanceRatio
+					usdToSnxPrice.gt(0) && totalIssuedSynths.gt(0) && issuanceRatio.gt(0)
 						? totalIssuedSynths.div(issuanceRatio).div(usdToSnxPrice)
 						: wei(0),
-				snxPercentLocked: snxTotal ? snxLocked.div(snxTotal) : wei(0),
-				activeCRatio: stakersTotalDebt ? stakersTotalCollateral.div(stakersTotalDebt) : wei(0),
+				snxPercentLocked: snxTotal.gt(0) ? snxLocked.div(snxTotal) : wei(0),
+				activeCRatio: stakersTotalDebt.gt(0)
+					? stakersTotalCollateral.div(stakersTotalDebt)
+					: wei(0),
 				lastDebtLedgerEntry,
 			};
 		},

@@ -1,6 +1,5 @@
-import { Provider, Contract } from 'ethcall';
 import { useQuery, UseQueryOptions } from 'react-query';
-import Wei, { wei } from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 import erc20Abi from '../../abis/ERC20.json';
 import zipObject from 'lodash/zipObject';
 import omitBy from 'lodash/omitBy';
@@ -12,8 +11,6 @@ import { CRYPTO_CURRENCY_MAP } from '../../currency';
 
 import { QueryContext } from '../../context';
 import { Token, TokenBalances } from '../../types';
-
-const ethcallProvider = new Provider();
 
 const useTokensBalancesQuery = (
 	ctx: QueryContext,
@@ -28,19 +25,17 @@ const useTokensBalancesQuery = (
 		['walletBalances', 'tokens', ctx.networkId, walletAddress],
 		async () => {
 			// @ts-ignore
-			await ethcallProvider.init(ctx.provider!);
-
 			const calls = [];
 			for (const { address, symbol } of tokens) {
 				if (symbol === CRYPTO_CURRENCY_MAP.ETH) {
-					calls.push(ethcallProvider.getEthBalance(walletAddress!));
+					calls.push(ctx.provider!.getBalance(walletAddress!));
 				} else {
-					const tokenContract = new Contract(address, erc20Abi);
+					const tokenContract = new ethers.Contract(address, erc20Abi, ctx.provider!);
 					calls.push(tokenContract.balanceOf(walletAddress));
 				}
 			}
 
-			const data = (await ethcallProvider.all(calls)) as ethers.BigNumber[];
+			const data = (await Promise.all(calls)) as ethers.BigNumber[];
 
 			const balancesMap = zipObject(symbols, data);
 
@@ -56,7 +51,7 @@ const useTokensBalancesQuery = (
 			});
 		},
 		{
-			enabled: !!ctx.provider && tokens.length > 0 && walletAddress != null,
+			enabled: !!ctx.provider && tokens.length > 0 && !!walletAddress,
 			...options,
 		}
 	);

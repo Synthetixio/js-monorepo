@@ -1,5 +1,5 @@
 import { SnxHolder } from '../../generated/graphql';
-import { formatTimestamp, formatEther } from '../../src/utils';
+import { formatTimestamp } from '../../src/utils';
 
 export const parseSnxHolder = ({
 	id,
@@ -15,12 +15,12 @@ export const parseSnxHolder = ({
 }: SnxHolder): SnxHolder => ({
 	block: Number(block),
 	id,
-	collateral: formatEther(collateral),
-	balanceOf: formatEther(balanceOf),
-	transferable: formatEther(transferable),
-	initialDebtOwnership: formatEther(initialDebtOwnership),
-	debtEntryAtIndex: formatEther(debtEntryAtIndex),
-	mints: mints != null ? formatEther(mints) : null,
-	claims: claims != null ? formatEther(claims) : null,
+	collateral: Number(collateral),
+	balanceOf: Number(balanceOf),
+	transferable: Number(transferable),
+	initialDebtOwnership: Number(initialDebtOwnership),
+	debtEntryAtIndex: debtEntryAtIndex ?? null,
+	mints: mints != null ? Number(mints) : null,
+	claims: claims != null ? Number(claims) : null,
 	timestamp: formatTimestamp(timestamp),
 });

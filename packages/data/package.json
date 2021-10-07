@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/data",
-	"version": "2.47.0-ovm.13",
+	"version": "2.50.3-ovm-alpha",
 	"description": "Javascript library for handling queries to Synthetix subgraphs",
 	"source": "./src/index.ts",
 	"main": "./build/node/src/index.js",
@@ -32,7 +32,7 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"@synthetixio/contracts-interface": "2.47.0-ovm.13",
+		"@synthetixio/contracts-interface": "2.50.3-ovm-alpha",
 		"bignumber.js": "9.0.1",
 		"date-fns": "2.19.0",
 		"ethers": "5.4.6",
