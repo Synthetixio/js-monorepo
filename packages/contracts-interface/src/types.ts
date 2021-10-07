@@ -24,7 +24,7 @@ export enum NetworkId {
 	'Mainnet-Ovm' = 10,
 	'Kovan-Ovm' = 69,
 	'Local-Ovm' = 420,
-	'Local' = 31337
+	'Local' = 31337,
 }
 
 type ContractInfo = {

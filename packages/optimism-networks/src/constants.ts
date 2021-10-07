@@ -9,7 +9,7 @@ export const L1_TO_L2_NETWORK_MAPPER: NetworkMapper = {
 export const L2_TO_L1_NETWORK_MAPPER: NetworkMapper = {
 	10: 1,
 	69: 42,
-	420: 31337
+	420: 31337,
 };
 
 export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
@@ -32,7 +32,7 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 			'https://optimism.io/images/metamask_icon.svg',
 			'https://optimism.io/images/metamask_icon.png',
 		],
-	}
+	},
 };
 
 export const MAINNET_OPTIMISM_EXPLORER = 'https://mainnet-l2-explorer.surge.sh';
