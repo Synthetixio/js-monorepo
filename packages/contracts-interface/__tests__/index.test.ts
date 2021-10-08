@@ -27,10 +27,10 @@ describe('@synthetixio/js tests', () => {
 	test('should have the right mapping with the contracts', () => {
 		const synthetixContract = snxjs.contracts['Synthetix'];
 		const sUSDContract = snxjs.contracts['SynthsUSD'];
-		const sXAGContract = snxjs.contracts['SynthsXAG'];
+		const sETHContract = snxjs.contracts['SynthsETH'];
 		expect(synthetixContract.address).toEqual(snxjs.targets.ProxyERC20.address);
 		expect(sUSDContract.address).toEqual(snxjs.targets.ProxyERC20sUSD.address);
-		expect(sXAGContract.address).toEqual(snxjs.targets.ProxysXAG.address);
+		expect(sETHContract.address).toEqual(snxjs.targets.ProxysETH.address);
 	});
 
 	test('should have the right mapping with the contracts for the OVM', () => {

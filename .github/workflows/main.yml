@@ -1,6 +1,9 @@
 name: Main Workflow
 on:
-  push: {}
+  pull_request:
+    branches:
+    - main
+    - master
 
 jobs:
   build:
@@ -17,9 +20,13 @@ jobs:
       - run: npm run lint
       - run: npx lerna run build
       - run: npx lerna run test
-      - run: git config --global user.email "you@example.com" && git config --global user.name "Your Name"
-      - run: npx lerna version 0.0.0-$(git rev-parse --short HEAD) --exact --no-push -y
-      - run: npx lerna publish from-package --npm-tag dev --skip-git -y
+
+      # publish
+      - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
+      - run: git fetch origin ${{ github.head_ref }}
+      - run: echo $(git rev-parse --short origin/${{ github.head_ref }})
+      #- run: npx lerna version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --exact --no-push -y
+      - run: npx lerna exec npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
+      - run: npx lerna exec npm publish -- --tag dev
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: echo "npm pushed to 0.0.0-$(git rev-parse --short HEAD)"
