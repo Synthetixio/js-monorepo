@@ -3,11 +3,13 @@ import { OptimismNetwork, NetworkMapper, LayerTwoNetworkId, MessengerAddress } f
 export const L1_TO_L2_NETWORK_MAPPER: NetworkMapper = {
 	1: 10,
 	42: 69,
+	31337: 420,
 };
 
 export const L2_TO_L1_NETWORK_MAPPER: NetworkMapper = {
 	10: 1,
 	69: 42,
+	420: 31337,
 };
 
 export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
