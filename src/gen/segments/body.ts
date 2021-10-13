@@ -8,20 +8,19 @@ import { mapType } from "../util";
 export function heading() {
 return `
 import Wei, { WeiSource, wei } from '@synthetixio/wei';
-import fetch from 'codegen-graph-ts/lib/fetch';
-import generateGql from 'codegen-graph-ts/lib/gql';
+import { fetch, generateGql } from 'codegen-graph-ts';
 
 
 export type SingleQueryOptions = {
     id: string,
-    block: { 'number': number }|{ hash: string },
+    block?: { 'number': number }|{ hash: string },
 };
 
 export type MultiQueryOptions<T> = {
-    where: T,
-    block: { 'number': number }|{ hash: string },
-    orderBy: string,
-    orderDirection: 'asc'|'desc' 
+    where?: T,
+    block?: { 'number': number }|{ hash: string },
+    orderBy?: string,
+    orderDirection?: 'asc'|'desc' 
 };
 `;
 }
@@ -92,7 +91,7 @@ export function types(type: Type) {
 
 lines.push(`export type ${type.name}Filter = {`);
 for (const field of type.inputFields) {
-    lines.push(`\t${field.name}: ${mapType(field.type.name, 'Filter')}`);
+    lines.push(`\t${field.name}?: ${mapType(field.type.name, 'Filter')}`);
 }
 lines.push('};');
 lines.push('\n');
