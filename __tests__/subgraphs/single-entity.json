@@ -1,0 +1,119 @@
+{
+    "types": [
+      {
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "name": "ID"
+            }
+          },
+          {
+            "name": "fee",
+            "type": {
+              "name": "BigDecimal"
+            }
+          }
+        ],
+        "inputFields": [
+          {
+            "name": "id",
+            "type": {
+              "name": "ID"
+            }
+          },
+          {
+            "name": "id_not",
+            "type": {
+              "name": "ID"
+            }
+          },
+          {
+            "name": "id_gt",
+            "type": {
+              "name": "ID"
+            }
+          },
+          {
+            "name": "id_lt",
+            "type": {
+              "name": "ID"
+            }
+          },
+          {
+            "name": "id_gte",
+            "type": {
+              "name": "ID"
+            }
+          },
+          {
+            "name": "id_lte",
+            "type": {
+              "name": "ID"
+            }
+          },
+          {
+            "name": "id_in",
+            "type": {
+              "name": "String[]"
+            }
+          },
+          {
+            "name": "id_not_in",
+            "type": {
+              "name": "String[]"
+            }
+          },
+          {
+            "name": "fee",
+            "type": {
+              "name": "BigDecimal"
+            }
+          },
+          {
+            "name": "fee_not",
+            "type": {
+              "name": "BigDecimal"
+            }
+          },
+          {
+            "name": "fee_gt",
+            "type": {
+              "name": "BigDecimal"
+            }
+          },
+          {
+            "name": "fee_lt",
+            "type": {
+              "name": "BigDecimal"
+            }
+          },
+          {
+            "name": "fee_gte",
+            "type": {
+              "name": "BigDecimal"
+            }
+          },
+          {
+            "name": "fee_lte",
+            "type": {
+              "name": "BigDecimal"
+            }
+          },
+          {
+            "name": "fee_in",
+            "type": {
+              "name": "String[]"
+            }
+          },
+          {
+            "name": "fee_not_in",
+            "type": {
+              "name": "String[]"
+            }
+          }
+        ],
+        "name": "ExchangeFee"
+      }
+    ]
+}

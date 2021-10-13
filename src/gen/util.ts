@@ -1,6 +1,6 @@
 
 
-export function mapType(graphType: string) {
+export function mapType(graphType: string, destType: string) {
     switch (graphType) {
         case 'ID':
         case 'Bytes':
@@ -8,7 +8,7 @@ export function mapType(graphType: string) {
             return 'string';
         case 'BigInt':
         case 'BigDecimal':
-            return 'Wei';
+            return destType === 'Filter' ? 'WeiSource' : 'Wei';
         case 'Int':
             return 'number';
         case 'Boolean':
