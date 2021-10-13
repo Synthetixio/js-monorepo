@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/contracts-interface",
-	"version": "2.50.4-ovm",
+	"version": "2.50.5",
 	"description": "A library for interacting with Synthetix smart contracts",
 	"source": "./src/index.ts",
 	"main": "./build/node/src/index.js",
