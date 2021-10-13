@@ -64,11 +64,14 @@ if (require.main === module) {
     const program = new Command();
 
     program
-        .command('pull')
+        .command('pull <url>')
         .description('retrieves the graphql schema associated with the given subgraph url')
-        .requiredOption('-u, --url <location>', 'subgraph to extract schema from')
         .action(async (options) => {
-            console.log(JSON.stringify(await pull(options as PullOptions)));
+            try {
+                console.log(JSON.stringify(await pull({ url: options } as PullOptions)));
+            } catch(err) {
+                console.error('failed to pull:', err);
+            }
         });
     
     
@@ -76,37 +79,40 @@ if (require.main === module) {
         .description('generate the typescript code to fetch from a subgraph')
         .option('-u, --url <location>', 'subgraph to extract schema from')
         .option('-s, --schema <path to .json>', 'location of a schema previously downloded with pull')
+        .option('-m, --method <name>', `which top level generator to use. options: ${Object.keys(methods).join(', ')}`, 'plain')
         .option('-o, --out <file>', 'file to export the generated typescript files')
         .action(async (options) => {
-    
-            if (options.file && options.url) {
-                throw new Error('only one of file or url should be specified');
-            }
+            try {
+                if (options.file && options.url) {
+                    throw new Error('only one of file or url should be specified');
+                }
+            
+                let schema: Schema;
+                if (options.url) {
+                    schema = await pull(options);
+                }
+                else if (options.file) {
+                    schema = JSON.parse(fs.readFileSync(options.file).toString());
+                }
+                else {
+                    throw new Error('supply either a file or url');
+                }
         
-            let schema: Schema;
-            if (options.url) {
-                schema = await pull(options);
-            }
-            else if (options.file) {
-                schema = JSON.parse(fs.readFileSync(options.file).toString());
-            }
-            else {
-                throw new Error('supply either a file or url');
-            }
+                const res = gen({
+                    schema,
+                    ...options
+                });
     
-            const res = gen({
-                schema,
-                ...options
-            });
-
-            if (options.o) {
-                fs.writeFileSync(options.o, res);
-                console.log('wrote file: ', options.o)
+                if (options.out) {
+                    fs.writeFileSync(options.out, res);
+                    console.log('wrote file:', options.out)
+                }
+                else {
+                    console.log(res);
+                }
+            } catch(err) {
+                console.error('failed to gen:', err);
             }
-            else {
-                console.log(res);
-            }
-
         });
     
     program.parse(process.argv);

@@ -39,6 +39,7 @@ function injectParse(t: Type) {
                 break;
             case 'BigInt':
                 out.push(`['${f.name}']: wei(obj['${f.name}'], 0),`);
+                break;
             default:
                 out.push(`['${f.name}']: obj['${f.name}'],`)
         }
@@ -65,8 +66,7 @@ return `async function<K extends keyof ${t.name}Result>(url: string, options: Mu
 ${injectParse(t)}
         return formattedObj;
     });
-}
-`;
+}`;
 }
 
 /**
@@ -84,8 +84,7 @@ return `async function<K extends keyof ${t.name}Result>(url: string, options: Si
     const obj = (r[Object.keys(r)[0]] as any);
 ${injectParse(t)}
         return formattedObj;
-}
-`;
+}`;
 }
 
 export function types(type: Type) {
@@ -104,7 +103,7 @@ for (const field of type.fields) {
 }
 lines.push(`};`);
 
-lines.push(`export type ${type.name}Args<K extends keyof ExchangeFeeResult> = { [Property in keyof Pick<ExchangeFeeResult, K>]: (true|{[str: string]: any}) };`);
+lines.push(`export type ${type.name}Args<K extends keyof ${type.name}Result> = { [Property in keyof Pick<${type.name}Result, K>]: (true|{[str: string]: any}) };`);
 
 lines.push('');
 
