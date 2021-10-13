@@ -1,6 +1,6 @@
 {
   "name": "codegen-graph-ts",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Generate typescript request library for any subgraph based on its entity definition",
   "main": "build/src/index.js",
   "types": "src/index.ts",
