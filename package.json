@@ -20,7 +20,9 @@
     "@synthetixio/wei": "^2.47.0-ovm.5",
     "commander": "^8.1.0",
     "graphql": "^15.5.1",
-    "graphql-request": "^3.5.0"
+    "graphql-request": "^3.5.0",
+    "node-fetch": "^2.6.1",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",
@@ -28,11 +30,9 @@
     "@types/lodash": "^4.14.172",
     "@types/node-fetch": "^2.5.12",
     "jest": "^27.0.6",
-    "lodash": "^4.17.21",
-    "node-fetch": "^2.6.1",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.4"
   },
   "bin": "build/src/gen/index.js"
 }
