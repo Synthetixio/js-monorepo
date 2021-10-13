@@ -16,6 +16,6 @@ describe('plain', () => {
 
         const diag = getDiagnosticsForText(__dirname, codeOut).map(d => _.pick(d, 'messageText', 'start', 'length'));
 
-        expect(diag).toHaveLength(2); // 2 includes errors
+        expect(diag).toHaveLength(1); // 2 includes errors
     });
 });

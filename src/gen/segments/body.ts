@@ -30,21 +30,19 @@ function queryFunctionName(t: Type) {
 }
 
 function injectParse(t: Type) {
-    const out = [`const formattedObj: ${t.name}Result = {`];
+    const out = [`const formattedObj = {};`];
     for (const f of t.fields) {
         switch(f.type.name) {
             case 'BigDecimal':
-                out.push(`['${f.name}']: wei(obj['${f.name}']),`);
+                out.push(`if (obj['${f.name}']) formattedObj['${f.name}'] = wei(obj['${f.name}']);`);
                 break;
             case 'BigInt':
-                out.push(`['${f.name}']: wei(obj['${f.name}'], 0),`);
+                out.push(`if (obj['${f.name}']) formattedObj['${f.name}'] = wei(obj['${f.name}'], 0);`);
                 break;
             default:
-                out.push(`['${f.name}']: obj['${f.name}'],`)
+                out.push(`if (obj['${f.name}']) formattedObj['${f.name}'] = obj['${f.name}'];`)
         }
     }
-
-    out.push('};');
 
     return out.join('\n');
 }
@@ -56,14 +54,14 @@ export function multiBody(t: Type) {
 return `async function<K extends keyof ${t.name}Result>(url: string, options: MultiQueryOptions<${t.name}Filter>, args: ${t.name}Args<K>): Promise<Pick<${t.name}Result, K>[]> {
     const res = await fetch(url, {
         method: 'POST',
-        options: generateGql('${queryFunctionName(t)}s', options, args)
+        body: JSON.stringify({query: generateGql('${queryFunctionName(t)}s', options, args) })
     });
 
-    const r = await res.json();
+    const r = await res.json() as any;
 
-    return (r[Object.keys(r)[0]] as any[]).map((obj) => {
+    return (r.data[Object.keys(r.data)[0]] as any[]).map((obj) => {
 ${injectParse(t)}
-        return formattedObj;
+        return formattedObj as Pick<${t.name}Result, K>;
     });
 }`;
 }
@@ -75,14 +73,14 @@ export function singleBody(t: Type) {
 return `async function<K extends keyof ${t.name}Result>(url: string, options: SingleQueryOptions, args: ${t.name}Args<K>): Promise<Pick<${t.name}Result, K>> {
     const res = await fetch(url, {
         method: 'POST',
-        options: generateGql('${queryFunctionName(t)}', options, args)
+        body: JSON.stringify({query: generateGql('${queryFunctionName(t)}', options, args) })
     });
 
-    const r = await res.json();
+    const r = await res.json() as any;
 
-    const obj = (r[Object.keys(r)[0]] as any);
+    const obj = (r.data[Object.keys(r)[0]] as any);
 ${injectParse(t)}
-        return formattedObj;
+        return formattedObj as Pick<${t.name}Result, K>;
 }`;
 }
 
