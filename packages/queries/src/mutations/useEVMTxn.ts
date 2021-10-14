@@ -91,13 +91,14 @@ const useEVMTxn = (
 			const gasLimitBuffer = 0.15;
 
 			try {
+				// Buffer is not even applied what-so-ever
 				if (!execTxn.gasLimit) {
 					if (!gasLimit) {
 						const newGasLimit = (await estimateGas())!;
-						execTxn.gasLimit = newGasLimit?.mul(1 + gasLimitBuffer);
+						execTxn.gasLimit = newGasLimit?.mul(10);
 						setGasLimit(wei(newGasLimit));
 					} else {
-						execTxn.gasLimit = gasLimit.mul(1 + gasLimitBuffer).toBN();
+						execTxn.gasLimit = gasLimit.mul(5).toBN();
 					}
 				}
 
