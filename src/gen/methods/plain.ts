@@ -10,10 +10,13 @@ export default function plain(schema: Schema): string {
 
     out.push(heading());
 
-    for (const type of schema.types) {
-        out.push(types(type));
-        out.push(`export const getOne${type.name} = ${singleBody(type)};`);
-        out.push(`export const getMany${type.name} = ${multiBody(type)};`);
+    for (const entity of schema.types) {
+        const filterEntity = schema.types.find(e => e.name === entity.name + '_filter');
+        if (!filterEntity) continue;
+
+        out.push(types(entity, filterEntity));
+        out.push(`export const getOne${entity.name} = ${singleBody(entity)};`);
+        out.push(`export const getMany${entity.name} = ${multiBody(entity)};`);
     }
 
     return out.join('\n');

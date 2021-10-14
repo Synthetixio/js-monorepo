@@ -1,37 +1,20 @@
+export interface Type {
+    name: string|null
+    kind: string
+    ofType: Type|null
+}
 
 export type Field = {
     name: string
-    type: {
-        name: string
-    }
+    type: Type
 }
 
-export type Type = {
+export type Entity = {
     name: string
-    fields: Field[]
-    inputFields: Field[]
+    fields: Field[]|null
+    inputFields: Field[]|null
 }
 
 export type Schema = {
-    types: Type[]
-}
-
-export type RawField = Field & {
-    type: {
-        name: string | null,
-        kind: string,
-        ofType?: {
-            name: string
-        }
-    }
-}
-
-export type RawType = {
-    name: string
-    fields: RawField[]
-    inputFields: RawField[]
-}
-
-export type RawSchema = {
-    types: RawType[]
+    types: Entity[]
 }

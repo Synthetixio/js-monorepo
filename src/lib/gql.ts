@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import Wei from '@synthetixio/wei';
 
 export interface GqlArgs {
     [key: string]: true|GqlArgs
@@ -8,7 +7,19 @@ export interface GqlArgs {
 export type GqlOptions = {[arg: string]: any};
 
 function formatGqlOptions(options: GqlOptions): string {
-    return _.map(options, (v, k) => `${k}:${_.isPlainObject(v) ? `{${formatGqlOptions(v)}}` : (parseFloat(v.toString()) ? v : `"${v}"`)}` ).join(',');
+
+    return _.map(options, (v, k) => {
+        let valueString: string;
+        if (_.isPlainObject(v)) {
+            valueString = `{${formatGqlOptions(v)}}`;
+        } else if (_.isNil(v)) {
+            valueString = 'null';
+        } else if (_.isNaN(parseFloat(v.toString()))) {
+            valueString = `"${v}"`;
+        } else valueString = v;
+        
+        return `${k}:${valueString}`;
+    }).join(',');
 }
 
 function formatGqlArgs(args: GqlArgs): string {

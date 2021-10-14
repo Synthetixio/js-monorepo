@@ -1,17 +1,54 @@
+import { Type } from "./types";
 
+export function convertType(t: Type): { name: string, arrayInfo?: { areItemsNullable: boolean }, isNullable: boolean } {
+    switch (t.kind) {
+        case 'NON_NULL':
+            return { ...convertType(t.ofType!), isNullable: false };
+        case 'LIST':
+            const innerType = convertType(t.ofType!);
+            return { ...innerType, arrayInfo: { areItemsNullable: innerType.isNullable }, isNullable: false }
+        default:
+            return { name: t.name || 'unknown', isNullable: true };
+    }
+}
 
-export function mapType(graphType: string, destType: string) {
-    switch (graphType) {
+export function mapType(graphType: Type, destType: string) {
+    const convertedType = convertType(graphType);
+    
+    let baseType;
+    let nestedStructure = false;
+
+    switch (convertedType.name) {
         case 'ID':
         case 'Bytes':
         case 'String':
-            return 'string';
+            baseType = 'string';
+            break;
         case 'BigInt':
         case 'BigDecimal':
-            return destType === 'Filter' ? 'WeiSource' : 'Wei';
+            baseType = destType === 'Filter' ? 'WeiSource' : 'Wei';
+            break;
         case 'Int':
-            return 'number';
+            baseType = 'number';
+            break;
         case 'Boolean':
-            return 'boolean';
+            baseType = 'boolean';
+            break;
+        default:
+            // TODO: Improve to not be partial but `Pick`
+            baseType = destType === 'Result' ? `Partial<${convertedType.name}Result>` : `${convertedType.name}${destType}`;
+            nestedStructure = true;
     }
+
+    let tsTypeName = baseType;
+
+    if (convertedType.arrayInfo) {
+        tsTypeName = convertedType.arrayInfo.areItemsNullable ? `(${tsTypeName}|null)[]` : `${tsTypeName}[]`;
+    }
+
+    if (convertedType.isNullable) {
+        tsTypeName += '|null';
+    }
+
+    return { tsTypeName, baseType, nestedStructure };
 }

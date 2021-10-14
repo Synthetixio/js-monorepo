@@ -1,5 +1,5 @@
-import { Type } from "../types";
-import { mapType } from "../util";
+import { Entity } from "../types";
+import { convertType, mapType } from "../util";
 
 /**
  * Required imports and primitive types required for other functions
@@ -27,14 +27,15 @@ const MAX_PAGE = 1000;
 `;
 }
 
-function queryFunctionName(t: Type) {
-    return t.name.replace(/^./, t.name[0].toLowerCase());
+function queryFunctionName(e: Entity) {
+    return e.name.replace(/^./, e.name[0].toLowerCase());
 }
 
-function injectParse(t: Type) {
+function injectParse(e: Entity) {
     const out = [`const formattedObj: any = {};`];
-    for (const f of t.fields) {
-        switch(f.type.name) {
+    for (const f of e.fields!) {
+        const t = convertType(f.type);
+        switch(t.name) {
             case 'BigDecimal':
                 out.push(`if (obj['${f.name}']) formattedObj['${f.name}'] = wei(obj['${f.name}']);`);
                 break;
@@ -52,10 +53,10 @@ function injectParse(t: Type) {
 /**
  * Generates an async function body for fetching and parsing query options
  */
-export function multiBody(t: Type) {
-return `async function<K extends keyof ${t.name}Result>(url: string, options: MultiQueryOptions<${t.name}Filter>, args: ${t.name}Args<K>): Promise<Pick<${t.name}Result, K>[]> {
+export function multiBody(e: Entity) {
+return `async function<K extends keyof ${e.name}Result>(url: string, options: MultiQueryOptions<${e.name}Filter>, args: ${e.name}Args<K>): Promise<Pick<${e.name}Result, K>[]> {
 
-    const paginatedOptions: Partial<MultiQueryOptions<${t.name}Filter>> = { ...options };
+    const paginatedOptions: Partial<MultiQueryOptions<${e.name}Filter>> = { ...options };
 
     let paginationKey = '';
     let paginationValue = '';
@@ -71,14 +72,14 @@ return `async function<K extends keyof ${t.name}Result>(url: string, options: Mu
         paginatedOptions.where =  { ...options.where };
     }
 
-    let results: Pick<${t.name}Result, K>[] = [];
+    let results: Pick<${e.name}Result, K>[] = [];
 
     do {
         if (paginationValue) paginatedOptions.where![paginationKey] = paginationValue;
 
         const res = await fetch(url, {
             method: 'POST',
-            body: JSON.stringify({query: generateGql('${queryFunctionName(t)}s', paginatedOptions, args) })
+            body: JSON.stringify({query: generateGql('${queryFunctionName(e)}s', paginatedOptions, args) })
         });
 
         const r = await res.json() as any;
@@ -86,8 +87,8 @@ return `async function<K extends keyof ${t.name}Result>(url: string, options: Mu
         const rawResults = r.data[Object.keys(r.data)[0]] as any[];
 
         const newResults = rawResults.map((obj) => {
-            ${injectParse(t)}
-                return formattedObj as Pick<${t.name}Result, K>;
+            ${injectParse(e)}
+                return formattedObj as Pick<${e.name}Result, K>;
         });
 
         results = results.concat(newResults);
@@ -104,38 +105,44 @@ return `async function<K extends keyof ${t.name}Result>(url: string, options: Mu
 /**
  * Generates an async function body for fetching and parsing query options
  */
-export function singleBody(t: Type) {
-return `async function<K extends keyof ${t.name}Result>(url: string, options: SingleQueryOptions, args: ${t.name}Args<K>): Promise<Pick<${t.name}Result, K>> {
+export function singleBody(e: Entity) {
+return `async function<K extends keyof ${e.name}Result>(url: string, options: SingleQueryOptions, args: ${e.name}Args<K>): Promise<Pick<${e.name}Result, K>> {
     const res = await fetch(url, {
         method: 'POST',
-        body: JSON.stringify({query: generateGql('${queryFunctionName(t)}', options, args) })
+        body: JSON.stringify({query: generateGql('${queryFunctionName(e)}', options, args) })
     });
 
     const r = await res.json() as any;
 
     const obj = (r.data[Object.keys(r)[0]] as any);
-${injectParse(t)}
-        return formattedObj as Pick<${t.name}Result, K>;
+${injectParse(e)}
+        return formattedObj as Pick<${e.name}Result, K>;
 }`;
 }
 
-export function types(type: Type) {
+export function types(entity: Entity, filterEntity: Entity) {
     const lines: string[] = [];
-
-lines.push(`export type ${type.name}Filter = {`);
-for (const field of type.inputFields) {
-    lines.push(`\t${field.name}?: ${mapType(field.type.name, 'Filter')}`);
+lines.push(`export type ${entity.name}Filter = {`);
+for (const field of filterEntity.inputFields!) {
+    lines.push(`\t${field.name}?: ${mapType(field.type, 'Filter').tsTypeName}`);
 }
 lines.push('};');
 lines.push('\n');
 
-lines.push(`export type ${type.name}Result = {`);
-for (const field of type.fields) {
-    lines.push(`\t${field.name}: ${mapType(field.type.name, 'Result')}`);
+lines.push(`export type ${entity.name}Result = {`);
+for (const field of entity.fields!) {
+    lines.push(`\t${field.name}: ${mapType(field.type, 'Result').tsTypeName}`);
 }
 lines.push(`};`);
 
-lines.push(`export type ${type.name}Args<K extends keyof ${type.name}Result> = { [Property in keyof Pick<${type.name}Result, K>]: (true|{[str: string]: any}) };`);
+lines.push(`export type ${entity.name}Fields = {`);
+for (const field of entity.fields!) {
+    const mappedType = mapType(field.type, 'Fields');
+    lines.push(`\t${field.name}: ${mappedType.nestedStructure ? mappedType.baseType : true}`);
+}
+lines.push(`};`);
+
+lines.push(`export type ${entity.name}Args<K extends keyof ${entity.name}Result> = { [Property in keyof Pick<${entity.name}Fields, K>]: ${entity.name}Fields[Property] };`);
 
 lines.push('');
 

@@ -9,14 +9,37 @@ export const INTROSPECTION_QUERY = gql`query IntrospectionQuery {
                 type {
                     name
                     kind
+                    ofType {
+                        name
+                        kind
+                        ofType {
+                            name
+                            kind
+                            ofType {
+                                name
+                                kind
+                            }
+                        }
+                    }
                 }
             }
             fields {
                 name
                 type {
-                    kind
-                    ofType { name }
                     name
+                    kind
+                    ofType {
+                        name
+                        kind
+                        ofType {
+                            name
+                            kind
+                            ofType {
+                                name
+                                kind
+                            }
+                        }
+                    }
                 }
             }
         }

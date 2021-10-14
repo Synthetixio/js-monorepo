@@ -6,8 +6,7 @@ import fs from 'fs';
 
 import fetch from 'node-fetch';
 import { INTROSPECTION_QUERY } from './constants';
-import { RawSchema, Schema } from './types';
-
+import { Schema } from './types';
 import methods from './methods';
 
 interface PullOptions {
@@ -26,29 +25,9 @@ export async function pull(options: PullOptions): Promise<Schema> {
         body: JSON.stringify({query: INTROSPECTION_QUERY })
     });
 
-    const rawSchema = (await res.json()).data.__schema as RawSchema;
+    const rawSchema = (await res.json()).data.__schema as Schema;
 
-    const newTypes = rawSchema.types
-        .filter(t => !t.name.startsWith('_') && !t.name.endsWith('_filter') && !t.name.endsWith('_orderBy') && 
-            t.name !== 'ID' &&
-            t.name !== 'BigDecimal' &&
-            t.name !== 'BigInt' &&
-            t.name !== 'Block_height' &&
-            t.name !== 'Boolean' &&
-            t.name !== 'Bytes' &&
-            t.name !== 'Int' &&
-            t.name !== 'OrderDirection' &&
-            t.name !== 'Query' &&
-            t.name !== 'String')
-        .map(t => ({
-            ...t,
-            fields: t.fields.map(f => ({ name: f.name, type: { name: f.type.name || f.type.ofType?.name || '' }})),
-            inputFields: rawSchema.types.find(rt => rt.name === t.name + '_filter')?.inputFields?.map(f => ({name: f.name, type: { name: f.type.name || 'String[]' }})) || []
-        }));
-
-    return {
-        types: newTypes
-    };
+    return rawSchema;
 }
 
 export function gen({ schema, method }: GenOptions): string {

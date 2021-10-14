@@ -11,16 +11,19 @@ export default function reactquery(schema: Schema): string {
     out.push(`import { useQuery, UseQueryOptions } from 'react-query';`);
     out.push(heading());
 
-    for (const type of schema.types) {
-        out.push(types(type));
+    for (const entity of schema.types) {
+        const filterEntity = schema.types.find(e => e.name === entity.name + '_filter');
+        if (!filterEntity) continue;
 
-        out.push(`export const useGetOne${type.name} = <K extends keyof ${type.name}Result>(url: string, options?: SingleQueryOptions, args?: ${type.name}Args<K>, queryOptions: UseQueryOptions<Pick<${type.name}Result, K>> = {}) => {
-            const func = ${singleBody(type)};
+        out.push(types(entity, filterEntity));
+
+        out.push(`export const useGetOne${entity.name} = <K extends keyof ${entity.name}Result>(url: string, options?: SingleQueryOptions, args?: ${entity.name}Args<K>, queryOptions: UseQueryOptions<Pick<${entity.name}Result, K>> = {}) => {
+            const func = ${singleBody(entity)};
 
             const enabled = options && args;
 
             return useQuery(
-                ['codegen-graphql', enabled ? generateGql('${type.name}', options, args) : null],
+                ['codegen-graphql', enabled ? generateGql('${entity.name}', options, args) : null],
                 async () => func(url, options!, args!),
                 {
                     ...queryOptions,
@@ -29,14 +32,13 @@ export default function reactquery(schema: Schema): string {
             );
         }`);
         
-        
-        out.push(`export const useGetGetMany${type.name} = <K extends keyof ${type.name}Result>(url: string, options?: MultiQueryOptions<${type.name}Filter>, args?: ${type.name}Args<K>, queryOptions: UseQueryOptions<Pick<${type.name}Result, K>[]> = {}) => {
-            const func = ${multiBody(type)};
+        out.push(`export const useGetGetMany${entity.name} = <K extends keyof ${entity.name}Result>(url: string, options?: MultiQueryOptions<${entity.name}Filter>, args?: ${entity.name}Args<K>, queryOptions: UseQueryOptions<Pick<${entity.name}Result, K>[]> = {}) => {
+            const func = ${multiBody(entity)};
 
             const enabled = options && args;
 
             return useQuery(
-                ['codegen-graphql', enabled ? generateGql('${type.name}s', options, args) : null],
+                ['codegen-graphql', enabled ? generateGql('${entity.name}s', options, args) : null],
                 async () => func(url, options!, args!),
                 {
                     ...queryOptions,
