@@ -12,7 +12,7 @@ type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'fai
 
 export interface UseEVMTxnOptions extends UseMutationOptions<void> {
 	// amount of buffer which should be added to the gasLimit as a portion of the estimated gas limit. ex, 0.15 adds a 15% buffer
-	// gasLimitBuffer?: number;
+	gasLimitBuffer?: number;
 	// whether or not the transaction should attempt to estimate gas or execute at all
 	enabled: boolean;
 }
@@ -30,7 +30,7 @@ function hexToASCII(hex: string): string {
 const useEVMTxn = (
 	ctx: QueryContext,
 	txn: ethers.providers.TransactionRequest | null,
-	options: UseEVMTxnOptions = { enabled: true }
+	options: UseEVMTxnOptions = { gasLimitBuffer: 0.15, enabled: true }
 ) => {
 	const [gasLimit, setGasLimit] = useState<Wei | null>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -94,10 +94,20 @@ const useEVMTxn = (
 				if (!execTxn.gasLimit) {
 					if (!gasLimit) {
 						const newGasLimit = (await estimateGas())!;
-						execTxn.gasLimit = newGasLimit;
+
+						if (options.gasLimitBuffer) {
+							execTxn.gasLimit = newGasLimit?.mul(1 + options.gasLimitBuffer);
+						} else {
+							execTxn.gasLimit = newGasLimit;
+						}
+
 						setGasLimit(wei(newGasLimit));
 					} else {
-						execTxn.gasLimit = gasLimit.toBN();
+						if (options.gasLimitBuffer) {
+							execTxn.gasLimit = gasLimit.mul(1 + options.gasLimitBuffer).toBN();
+						} else {
+							execTxn.gasLimit = gasLimit.toBN();
+						}
 					}
 				}
 
