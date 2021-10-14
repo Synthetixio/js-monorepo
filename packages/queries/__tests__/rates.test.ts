@@ -35,7 +35,7 @@ describe('@synthetixio/queries rates', () => {
 		});
 	});
 
-	test('useHistoricalRatesQuery', async () => {
+	test.skip('useHistoricalRatesQuery', async () => {
 		const wrapper = getWrapper();
 
 		ctx.snxData!.rateUpdates = async () => [
