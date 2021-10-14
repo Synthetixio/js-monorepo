@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/contracts-interface",
-	"version": "2.50.3-ovm-alpha",
+	"version": "2.50.5",
 	"description": "A library for interacting with Synthetix smart contracts",
 	"source": "./src/index.ts",
 	"main": "./build/node/src/index.js",
@@ -34,7 +34,11 @@
 	"dependencies": {
 		"ethers": "5.4.6",
 		"lodash": "4.17.19",
+<<<<<<< HEAD
 		"synthetix": "git+https://git@github.com/Synthetixio/synthetix.git#0f854b8d223eb832961b208e1873fcc8af908efb",
+=======
+		"synthetix": "2.50.4-ovm",
+>>>>>>> 1c40e9e5dc48de9a78e55e1ae5df5f64dfa3ca7b
 		"web3-utils": "1.2.11"
 	},
 	"devDependencies": {

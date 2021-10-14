@@ -99,10 +99,6 @@ const useEVMTxn = (
 					} else {
 						execTxn.gasLimit = gasLimit.toBN();
 					}
-
-					if (execTxn.gasLimit!.eq(0)) {
-						throw new Error('missing provider/signer for txn');
-					}
 				}
 
 				setTxnStatus('prompting');
