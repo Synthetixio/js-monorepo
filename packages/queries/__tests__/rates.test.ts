@@ -39,9 +39,9 @@ describe('@synthetixio/queries rates', () => {
 		const wrapper = getWrapper();
 
 		ctx.snxData!.rateUpdates = async () => [
-			{ id: '3', block: 3, timestamp: 10025, currencyKey: 'sETH', synth: 'sETH', rate: 950 },
-			{ id: '2', block: 2, timestamp: 10010, currencyKey: 'sETH', synth: 'sETH', rate: 1050 },
 			{ id: '1', block: 1, timestamp: 10000, currencyKey: 'sETH', synth: 'sETH', rate: 1000 },
+			{ id: '2', block: 2, timestamp: 10010, currencyKey: 'sETH', synth: 'sETH', rate: 1050 },
+			{ id: '3', block: 3, timestamp: 10025, currencyKey: 'sETH', synth: 'sETH', rate: 950 },
 		];
 
 		const { result, waitFor } = renderHook(() => useHistoricalRatesQuery(ctx, 'sETH'), { wrapper });
