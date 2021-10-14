@@ -10,18 +10,20 @@ return `
 import Wei, { WeiSource, wei } from '@synthetixio/wei';
 import { fetch, generateGql } from 'codegen-graph-ts';
 
-
 export type SingleQueryOptions = {
     id: string,
     block?: { 'number': number }|{ hash: string },
 };
 
 export type MultiQueryOptions<T> = {
+    first?: number,
     where?: T,
     block?: { 'number': number }|{ hash: string },
     orderBy?: string,
     orderDirection?: 'asc'|'desc' 
 };
+
+const MAX_PAGE = 1000;
 `;
 }
 
@@ -30,7 +32,7 @@ function queryFunctionName(t: Type) {
 }
 
 function injectParse(t: Type) {
-    const out = [`const formattedObj = {};`];
+    const out = [`const formattedObj: any = {};`];
     for (const f of t.fields) {
         switch(f.type.name) {
             case 'BigDecimal':
@@ -52,17 +54,50 @@ function injectParse(t: Type) {
  */
 export function multiBody(t: Type) {
 return `async function<K extends keyof ${t.name}Result>(url: string, options: MultiQueryOptions<${t.name}Filter>, args: ${t.name}Args<K>): Promise<Pick<${t.name}Result, K>[]> {
-    const res = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify({query: generateGql('${queryFunctionName(t)}s', options, args) })
-    });
 
-    const r = await res.json() as any;
+    const paginatedOptions: Partial<MultiQueryOptions<${t.name}Filter>> = { ...options };
 
-    return (r.data[Object.keys(r.data)[0]] as any[]).map((obj) => {
-${injectParse(t)}
-        return formattedObj as Pick<${t.name}Result, K>;
-    });
+    let paginationKey = '';
+    let paginationValue = '';
+
+    if (options.first && options.first > MAX_PAGE) {
+        paginatedOptions.first = MAX_PAGE;
+
+        paginatedOptions.orderBy = options.orderBy || 'id';
+        paginatedOptions.orderDirection = options.orderDirection || 'asc';
+
+        paginationKey = paginatedOptions.orderBy + (paginatedOptions.orderDirection === 'asc' ? '_gt' : '_lt');
+
+        paginatedOptions.where =  { ...options.where };
+    }
+
+    let results: Pick<${t.name}Result, K>[] = [];
+
+    do {
+        if (paginationValue) paginatedOptions.where![paginationKey] = paginationValue;
+
+        const res = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({query: generateGql('${queryFunctionName(t)}s', paginatedOptions, args) })
+        });
+
+        const r = await res.json() as any;
+
+        const rawResults = r.data[Object.keys(r.data)[0]] as any[];
+
+        const newResults = rawResults.map((obj) => {
+            ${injectParse(t)}
+                return formattedObj as Pick<${t.name}Result, K>;
+        });
+
+        results = results.concat(newResults);
+        
+        if (paginationKey) {
+            paginationValue = rawResults[rawResults.length - 1][paginatedOptions.orderBy!];
+        }
+    } while (paginationKey && (options.first && results.length < options.first));
+
+    return results;
 }`;
 }
 

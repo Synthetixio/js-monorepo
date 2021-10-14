@@ -1,9 +1,6 @@
 import { heading, multiBody, singleBody, types } from "../segments/body";
 import { Schema } from "../types";
 
-import fs from 'fs';
-import path from 'path';
-
 /**
  * Writes a single file which contains types and async functions for every queryable entity.
  */
