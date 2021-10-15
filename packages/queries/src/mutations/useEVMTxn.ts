@@ -74,7 +74,7 @@ const useEVMTxn = (
 							.toString()
 					);
 					/* eslint-enable no-console */
-					if (gl) setGasLimit(wei(gl?.mul(1 + GAS_LIMIT_BUFFER)));
+					if (gl) setGasLimit(wei(gl).mul(wei(1 + GAS_LIMIT_BUFFER)));
 				})
 				.catch((err) => {
 					handleError(err);
@@ -103,10 +103,11 @@ const useEVMTxn = (
 				if (!execTxn.gasLimit) {
 					if (!gasLimit) {
 						const newGasLimit = (await estimateGas())!;
-						execTxn.gasLimit = newGasLimit?.mul(1 + GAS_LIMIT_BUFFER);
-						setGasLimit(wei(newGasLimit));
+						const bufferedGasLimit = wei(newGasLimit ?? 0).mul(wei(1 + GAS_LIMIT_BUFFER));
+						execTxn.gasLimit = bufferedGasLimit.toBN();
+						setGasLimit(bufferedGasLimit);
 					} else {
-						execTxn.gasLimit = gasLimit.mul(1 + GAS_LIMIT_BUFFER).toBN();
+						execTxn.gasLimit = gasLimit.toBN();
 					}
 				}
 
