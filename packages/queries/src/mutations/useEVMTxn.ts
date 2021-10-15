@@ -66,7 +66,7 @@ const useEVMTxn = (
 			estimateGas()
 				.then((gl) => {
 					/* eslint-disable no-console */
-					console.log('gas estimate', gl?.toString(), gl);
+					// console.log('gas estimate', gl?.toString(), gl);
 					console.log(
 						'test',
 						wei(gl?.toString() ?? 0)
