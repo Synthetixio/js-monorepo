@@ -65,8 +65,8 @@ const useEVMTxn = (
 			estimateGas()
 				.then((gl) => {
 					/* eslint-disable no-console */
-					console.log('gas estimate', gl?.toString(), gl);
-					console.log('test', wei(gl?.toString() ?? 0).mul(wei(1 + options.gasLimitBuffer)));
+					console.log('gas estimate', gl?.toString(), gl, options.gasLimitBuffer);
+					console.log('test', wei(gl?.toString() ?? 0));
 					/* eslint-enable no-console */
 					if (gl) setGasLimit(wei(gl?.mul(1 + options.gasLimitBuffer)));
 				})
