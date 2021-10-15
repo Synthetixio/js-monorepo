@@ -11,6 +11,7 @@ import { isString } from 'lodash';
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
 
 export interface UseEVMTxnOptions extends UseMutationOptions<void> {
+	gasLimitBuffer: number;
 	// whether or not the transaction should attempt to estimate gas or execute at all
 	enabled: boolean;
 }
@@ -28,7 +29,7 @@ function hexToASCII(hex: string): string {
 const useEVMTxn = (
 	ctx: QueryContext,
 	txn: ethers.providers.TransactionRequest | null,
-	options: UseEVMTxnOptions = { enabled: true }
+	options: UseEVMTxnOptions = { gasLimitBuffer: 0.15, enabled: true }
 ) => {
 	const [gasLimit, setGasLimit] = useState<Wei | null>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -63,7 +64,7 @@ const useEVMTxn = (
 		if (options.enabled) {
 			estimateGas()
 				.then((gl) => {
-					if (gl) setGasLimit(wei(gl, 0));
+					if (gl) setGasLimit(wei(gl));
 				})
 				.catch((err) => {
 					handleError(err);
@@ -88,17 +89,14 @@ const useEVMTxn = (
 
 			const execTxn = clone(txn!);
 
-			const gasLimitBuffer = 0.15;
-
 			try {
-				// Buffer is not even applied what-so-ever
 				if (!execTxn.gasLimit) {
 					if (!gasLimit) {
 						const newGasLimit = (await estimateGas())!;
-						execTxn.gasLimit = newGasLimit?.mul(10);
+						execTxn.gasLimit = newGasLimit?.mul(1 + options.gasLimitBuffer);
 						setGasLimit(wei(newGasLimit));
 					} else {
-						execTxn.gasLimit = gasLimit.mul(5).toBN();
+						execTxn.gasLimit = gasLimit.mul(1 + options.gasLimitBuffer).toBN();
 					}
 				}
 
