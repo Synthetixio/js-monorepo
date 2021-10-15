@@ -2,8 +2,9 @@ name: Main Workflow
 on:
   pull_request:
     branches:
-    - main
-    - master
+      - main
+      - master
+      - fix/gas-estimate
 
 jobs:
   build:
