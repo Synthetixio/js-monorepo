@@ -22,7 +22,7 @@ const useTokensBalancesQuery = (
 	const tokensMap = keyBy(tokens, 'symbol');
 
 	return useQuery<TokenBalances>(
-		['walletBalances', 'tokens', ctx.networkId, walletAddress],
+		['walletBalances', 'tokens', ctx.networkId, walletAddress, tokens.join()],
 		async () => {
 			// @ts-ignore
 			const calls = [];
