@@ -59,6 +59,7 @@
 		"watchpack-chokidar2": "^2.0.1"
 	},
 	"dependencies": {
-		"bootstrap": "^5.1.0"
+		"bootstrap": "^5.1.0",
+		"synthetix": "git+https://git@github.com/Synthetixio/synthetix.git#kovan-ovm-futures-fe-3000-j"
 	}
 }
