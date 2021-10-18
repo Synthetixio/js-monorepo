@@ -75,7 +75,7 @@ export type TokenBalances = Partial<
 		string,
 		{
 			balance: Wei;
-			token: any;
+			token: Token;
 		}
 	>
 >;
