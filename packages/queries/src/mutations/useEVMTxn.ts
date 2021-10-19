@@ -68,6 +68,7 @@ const useEVMTxn = (
 			estimateGas()
 				.then((gl) => {
 					if (gl) setGasLimit(wei(gl));
+					console.log('REFRESH', gl?.toString());
 				})
 				.catch((err) => {
 					handleError(err);
@@ -96,6 +97,7 @@ const useEVMTxn = (
 				if (!execTxn.gasLimit && !OPTIMISM_NETWORKS[ctx.networkId!]) {
 					if (!gasLimit) {
 						const newGasLimit = (await estimateGas())!;
+						console.log('EXECUTE L1 NO GAS LIMIT', newGasLimit.toString());
 						execTxn.gasLimit = newGasLimit?.mul(
 							1 + (options?.gasLimitBuffer || DEFAULT_GAS_BUFFER)
 						);
@@ -104,8 +106,11 @@ const useEVMTxn = (
 						execTxn.gasLimit = gasLimit
 							.mul(1 + (options?.gasLimitBuffer || DEFAULT_GAS_BUFFER))
 							.toBN();
+						console.log('EXECUTE L1 WITH GAS LIMIT', gasLimit.toString());
 					}
 				}
+
+				console.log('EXECUTING', ctx.networkId, gasLimit?.toString(), execTxn.gasLimit);
 
 				setTxnStatus('prompting');
 
