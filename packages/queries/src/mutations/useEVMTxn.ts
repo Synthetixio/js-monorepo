@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { UseMutationOptions, useMutation } from 'react-query';
 
 import Wei, { wei } from '@synthetixio/wei/build/node/wei';
