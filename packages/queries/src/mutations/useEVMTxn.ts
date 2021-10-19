@@ -93,7 +93,7 @@ const useEVMTxn = (
 			const execTxn = clone(txn!);
 
 			try {
-				if (!execTxn.gasLimit && !!OPTIMISM_NETWORKS[ctx.networkId!]) {
+				if (!execTxn.gasLimit && !OPTIMISM_NETWORKS[ctx.networkId!]) {
 					if (!gasLimit) {
 						const newGasLimit = (await estimateGas())!;
 						execTxn.gasLimit = newGasLimit?.mul(
