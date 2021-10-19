@@ -10,11 +10,12 @@ import { isString } from 'lodash';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
 
+const DEFAULT_GAS_BUFFER = 0.15;
+
 export interface UseEVMTxnOptions extends UseMutationOptions<void> {
-	// amount of buffer which should be added to the gasLimit as a portion of the estimated gas limit. ex, 0.15 adds a 15% buffer
-	// gasLimitBuffer?: number;
+	gasLimitBuffer?: number;
 	// whether or not the transaction should attempt to estimate gas or execute at all
-	enabled: boolean;
+	enabled?: boolean;
 }
 
 function hexToASCII(hex: string): string {
@@ -30,7 +31,7 @@ function hexToASCII(hex: string): string {
 const useEVMTxn = (
 	ctx: QueryContext,
 	txn: ethers.providers.TransactionRequest | null,
-	options: UseEVMTxnOptions = { enabled: true }
+	options?: UseEVMTxnOptions
 ) => {
 	const [gasLimit, setGasLimit] = useState<Wei | null>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -38,7 +39,7 @@ const useEVMTxn = (
 	const [txnStatus, setTxnStatus] = useState<TransactionStatus>('unsent');
 
 	async function estimateGas() {
-		if (txn != null && ctx.signer != null && options.enabled) {
+		if (txn != null && ctx.signer != null && (!options || options.enabled)) {
 			// remove gas price from the estimate because it will cause unusual error if its below the base
 			// it will be used at the end when the actual transaction is submitted
 			return ctx.signer!.estimateGas(omit(txn!, ['gasPrice']));
@@ -62,10 +63,10 @@ const useEVMTxn = (
 
 		setErrorMessage(null);
 
-		if (options.enabled) {
+		if (!options || options.enabled) {
 			estimateGas()
 				.then((gl) => {
-					if (gl) setGasLimit(wei(gl, 0));
+					if (gl) setGasLimit(wei(gl));
 				})
 				.catch((err) => {
 					handleError(err);
@@ -82,7 +83,7 @@ const useEVMTxn = (
 		txnStatus,
 		refresh,
 		...useMutation(async () => {
-			if (!options.enabled) {
+			if (options && !options.enabled) {
 				return;
 			}
 
@@ -94,14 +95,14 @@ const useEVMTxn = (
 				if (!execTxn.gasLimit) {
 					if (!gasLimit) {
 						const newGasLimit = (await estimateGas())!;
-						execTxn.gasLimit = newGasLimit;
+						execTxn.gasLimit = newGasLimit?.mul(
+							1 + (options?.gasLimitBuffer || DEFAULT_GAS_BUFFER)
+						);
 						setGasLimit(wei(newGasLimit));
 					} else {
-						execTxn.gasLimit = gasLimit.toBN();
-					}
-
-					if (execTxn.gasLimit!.eq(0)) {
-						throw new Error('missing provider/signer for txn');
+						execTxn.gasLimit = gasLimit
+							.mul(1 + (options?.gasLimitBuffer || DEFAULT_GAS_BUFFER))
+							.toBN();
 					}
 				}
 

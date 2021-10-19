@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/contracts-interface",
-	"version": "2.51.1",
+	"version": "2.51.0-alpha",
 	"description": "A library for interacting with Synthetix smart contracts",
 	"source": "./src/index.ts",
 	"main": "./build/node/src/index.js",
@@ -19,6 +19,7 @@
 		"lint": "../../node_modules/.bin/eslint './src/**/*.{js,ts,tsx}' && tsc",
 		"lint:fix": "../../node_modules/.bin/eslint --fix './src/**/*.{js,ts,tsx}'",
 		"test": "node --experimental-vm-modules ../../node_modules/.bin/jest --forceExit --coverage --no-cache",
+		"watch": "npm run build-node && chokidar 'src/**/*.ts' -c 'npm run build-node'",
 		"tsc": "../../node_modules/.bin/tsc --noemit"
 	},
 	"repository": {
@@ -33,11 +34,14 @@
 	"dependencies": {
 		"ethers": "5.4.6",
 		"lodash": "4.17.19",
-		"synthetix": "2.50.2-ovm-alpha",
+		"synthetix": "2.51.0-alpha",
 		"web3-utils": "1.2.11"
 	},
 	"devDependencies": {
-		"@types/lodash": "4.14.169"
+		"@types/lodash": "4.14.169",
+		"chokidar": "^3.5.2",
+		"chokidar-cli": "^2.1.0",
+		"npm-watch": "^0.10.0"
 	},
 	"husky": {
 		"hooks": {

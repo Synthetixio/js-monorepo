@@ -108,13 +108,13 @@ describe('@synthetixio/data tests', () => {
 			expect(Number(exchanges![0].fromAmount)).toBeGreaterThan(0);
 		});
 
-		test('should return over 1000 exchanges from l1 with no max input and a long timeframe', async () => {
+		test('should return over 100 exchanges from l1 with no max input and a long timeframe', async () => {
 			jest.setTimeout(30000);
 			const exchanges = await snxData.synthExchanges({
 				minTimestamp: oneMonthTimestamp,
 			});
 			expect(Number(exchanges![0].fromAmount)).toBeGreaterThan(0);
-			expect(exchanges!.length).toBeGreaterThan(1000);
+			expect(exchanges!.length).toBeGreaterThan(100);
 		});
 
 		test.skip('should return exchagnes from kovan l2', async () => {
