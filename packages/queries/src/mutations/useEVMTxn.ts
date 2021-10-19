@@ -7,6 +7,7 @@ import { QueryContext } from '../context';
 import clone from 'lodash/clone';
 import omit from 'lodash/omit';
 import { isString } from 'lodash';
+import { OPTIMISM_NETWORKS } from '@synthetixio/optimism-networks';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
 
@@ -92,7 +93,7 @@ const useEVMTxn = (
 			const execTxn = clone(txn!);
 
 			try {
-				if (!execTxn.gasLimit) {
+				if (!execTxn.gasLimit && !OPTIMISM_NETWORKS[ctx.networkId!]) {
 					if (!gasLimit) {
 						const newGasLimit = (await estimateGas())!;
 						execTxn.gasLimit = newGasLimit?.mul(
