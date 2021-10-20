@@ -74,8 +74,9 @@ const useEVMTxn = (
 				});
 		}
 	}
-
-	useEffect(refresh, [txn?.to]);
+	const transactionValueAsString = txn?.value ? txn.value.toString() : undefined;
+	const nonceAsString = txn?.nonce ? txn.nonce.toString() : undefined;
+	useEffect(refresh, [txn?.data, transactionValueAsString, nonceAsString, txn?.from, txn?.to]);
 
 	return {
 		gasLimit,
