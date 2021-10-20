@@ -12,7 +12,7 @@ function findQueries(p, requireSoFar) {
 	for (const f of fs.readdirSync(p)) {
 		if (fs.statSync(`${p}/${f}`).isDirectory()) {
 			findQueries(`${p}/${f}`, `${requireSoFar}/${f}`);
-		} else if (f.startsWith('use')) {
+		} else if (f.startsWith('use') && !f.endsWith('.test.ts')) {
 			// remove extension
 			const name = f.slice(0, f.length - 3);
 
