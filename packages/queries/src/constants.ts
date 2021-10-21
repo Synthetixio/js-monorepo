@@ -1,4 +1,4 @@
-import { SubgraphEndpoints } from "./context";
+import { SubgraphEndpoints } from './context';
 
 export const timeSeriesEntityMap = { '1d': 'dailySNXPrices', '15m': 'fifteenMinuteSNXPrices' };
 

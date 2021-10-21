@@ -6,7 +6,7 @@ export interface SubgraphEndpoints {
 	exchanges: string;
 	exchanger: string;
 	issuance: string;
-};
+}
 
 export interface QueryContext {
 	networkId: NetworkId | null;
@@ -14,4 +14,4 @@ export interface QueryContext {
 	signer: ethers.Signer | null;
 	snxjs: SynthetixJS | null;
 	subgraphEndpoints: SubgraphEndpoints;
-};
+}
