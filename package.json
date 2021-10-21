@@ -3,7 +3,6 @@
   "version": "0.0.12",
   "description": "Generate typescript request library for any subgraph based on its entity definition",
   "main": "build/src/index.js",
-  "types": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
