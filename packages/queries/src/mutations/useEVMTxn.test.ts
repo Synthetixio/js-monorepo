@@ -5,7 +5,7 @@ import { getWrapper } from '../../testUtils';
 import useEVMTxn from './useEVMTxn';
 
 describe('useEVMTxn', () => {
-	test('Does not call estimateGas when tnx is null', async () => {
+	test('Does not call estimateGas when txn is null', async () => {
 		const estimateGasMock = jest.fn().mockResolvedValue(10);
 		const sendTransactionMock = jest.fn();
 
