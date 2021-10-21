@@ -75,7 +75,7 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Mu
     let results: Pick<${e.name}Result, K>[] = [];
 
     do {
-        if (paginationValue) paginatedOptions.where![paginationKey] = paginationValue as any;
+        if (paginationKey && paginationValue) paginatedOptions.where![paginationKey] = paginationValue as any;
 
         const res = await fetch(url, {
             method: 'POST',
