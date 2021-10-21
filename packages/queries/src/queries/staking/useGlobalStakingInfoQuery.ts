@@ -4,12 +4,18 @@ import Wei, { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
 import { GlobalStakingInfo } from '../../types';
-import { GQL_RESPONSE_LIMIT } from '../../constants';
+import { useGetManySNXHolder } from 'generated/issuanceSubgraphQueries';
 
 const useGlobalStakingInfoQuery = (
 	ctx: QueryContext,
 	options?: UseQueryOptions<GlobalStakingInfo>
 ) => {
+	const snxHoldersQuery = useGetManySNXHolder(ctx.subgraphEndpoints.issuance, {
+		first: 1000,
+		orderBy: 'collateral',
+		orderDirection: 'desc',
+	});
+
 	return useQuery<GlobalStakingInfo>(
 		['staking', 'snxLockedValue', ctx.networkId],
 		async () => {
@@ -19,7 +25,6 @@ const useGlobalStakingInfoQuery = (
 				unformattedLastDebtLedgerEntry,
 				unformattedTotalIssuedSynths,
 				unformattedIssuanceRatio,
-				holders,
 			] = await Promise.all([
 				ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(ethers.utils.formatBytes32String('SNX')),
 				ctx.snxjs!.contracts.Synthetix.totalSupply(),
@@ -30,7 +35,6 @@ const useGlobalStakingInfoQuery = (
 						: 'totalIssuedSynths'
 				](ethers.utils.formatBytes32String('sUSD')),
 				ctx.snxjs!.contracts.SystemSettings.issuanceRatio(),
-				ctx.snxData!.snxHolders({ max: GQL_RESPONSE_LIMIT - 1 }),
 			]);
 
 			const lastDebtLedgerEntry = wei(unformattedLastDebtLedgerEntry, 27);
@@ -50,7 +54,7 @@ const useGlobalStakingInfoQuery = (
 				collateral: unformattedCollateral,
 				debtEntryAtIndex: unformattedDebtEntryAtIndex,
 				initialDebtOwnership: unformattedInitialDebtOwnership,
-			} of holders || []) {
+			} of snxHoldersQuery.data || []) {
 				const [collateral, debtEntryAtIndex, initialDebtOwnership] = [
 					unformattedCollateral,
 					unformattedDebtEntryAtIndex,
@@ -98,7 +102,7 @@ const useGlobalStakingInfoQuery = (
 			};
 		},
 		{
-			enabled: ctx.snxData != null && ctx.snxjs != null,
+			enabled: ctx.snxjs != null,
 			...options,
 		}
 	);

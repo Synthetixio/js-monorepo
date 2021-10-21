@@ -1,3 +1,5 @@
+import { SubgraphEndpoints } from "./context";
+
 export const timeSeriesEntityMap = { '1d': 'dailySNXPrices', '15m': 'fifteenMinuteSNXPrices' };
 
 export const GQL_RESPONSE_LIMIT = 999;
@@ -55,3 +57,23 @@ export const PERIOD_LABELS_MAP: Record<Period, PeriodLabel> = {
 export const PERIOD_LABELS = Object.values(PERIOD_LABELS_MAP);
 
 export const COUNCIL_NOMINATIONS_URL = 'https://';
+
+export const DEFAULT_SUBGRAPH_ENDPOINTS: { [networkId: number]: SubgraphEndpoints } = {
+	1: {
+		exchanges: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges',
+		exchanger: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanger',
+		issuance: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix',
+	},
+
+	10: {
+		exchanges: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-exchanges',
+		exchanger: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-exchanger',
+		issuance: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-issuance',
+	},
+
+	42: {
+		exchanges: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/kovan-exchanges',
+		exchanger: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/kovan-exchanger',
+		issuance: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/kovan-issuance',
+	},
+};

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require('fs');
 
+const cgt = require('codegen-graph-ts');
+
 try {
 	fs.mkdirSync(__dirname + '/generated/');
 } catch {}
@@ -34,3 +36,12 @@ ${funcsDef.join('\n')}
 `;
 
 fs.writeFileSync('generated/queryFuncs.ts', out);
+
+for (const f of fs.readdirSync('subgraphs')) {
+	const text = cgt.gen({
+		schema: JSON.parse(fs.readFileSync('subgraphs/' + f)),
+		method: 'reactquery',
+	});
+
+	fs.writeFileSync(`generated/${f.substr(0, f.length - 5)}SubgraphQueries.ts`, text);
+}

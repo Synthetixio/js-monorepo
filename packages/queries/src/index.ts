@@ -2,17 +2,24 @@ import clone from 'lodash/clone';
 import partial from 'lodash/partial';
 
 import ethers from 'ethers';
-import { QueryContext } from './context';
+import { QueryContext, SubgraphEndpoints } from './context';
 
 import { synthetix, NetworkId } from '@synthetixio/contracts-interface';
-import synthetixData from '@synthetixio/data';
 
 import { UseQueryResult } from 'react-query';
+
+export * as exchanges from '../generated/exchangesSubgraphQueries';
+export * as exchanger from '../generated/exchangerSubgraphQueries';
+export * as issuance from '../generated/issuanceSubgraphQueries';
 
 import FUNCS from '../generated/queryFuncs';
 import React from 'react';
 
+import { DEFAULT_SUBGRAPH_ENDPOINTS } from './constants';
+
 export * from './types';
+
+type SynthetixQueryContextContent = { context: QueryContext; queries: SynthetixQueries };
 
 // all functions exported by submodules must follow this format
 type UseQueryFunction = (ctx: QueryContext, ...args: any) => UseQueryResult;
@@ -28,17 +35,19 @@ export function createQueryContext({
 	networkId,
 	provider,
 	signer,
+	subgraphEndpoints,
 }: {
 	networkId: NetworkId | null;
 	provider?: ethers.providers.Provider;
 	signer?: ethers.Signer;
-}): QueryContext {
+	subgraphEndpoints: SubgraphEndpoints;
+}): SynthetixQueryContextContent {
 	const ctx: QueryContext = {
 		networkId,
 		provider: null,
 		signer: null,
-		snxData: null,
 		snxjs: null,
+		subgraphEndpoints: subgraphEndpoints || DEFAULT_SUBGRAPH_ENDPOINTS[1],
 	};
 
 	if (networkId) {
@@ -48,13 +57,23 @@ export function createQueryContext({
 		ctx.signer = ctx.snxjs.contracts.Synthetix.signer;
 		ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
 
-		ctx.snxData = synthetixData({ networkId });
+		if (!subgraphEndpoints) {
+			ctx.subgraphEndpoints = DEFAULT_SUBGRAPH_ENDPOINTS[networkId];
+		}
 	}
 
-	return ctx;
+	const modFuncs: { [i: string]: unknown } = clone(FUNCS);
+
+	for (const f in modFuncs) {
+		modFuncs[f] = partial(modFuncs[f] as UseQueryFunction, ctx);
+	}
+
+	const allFuncs = modFuncs as SynthetixQueries;
+
+	return { context: ctx, queries: allFuncs };
 }
 
-const SynthetixQueryContext = React.createContext<QueryContext | null>(null);
+export const SynthetixQueryContext = React.createContext<SynthetixQueryContextContent | null>(null);
 export const SynthetixQueryContextProvider = SynthetixQueryContext.Provider;
 
 export default function useSynthetixQueries(): SynthetixQueries {
@@ -63,11 +82,5 @@ export default function useSynthetixQueries(): SynthetixQueries {
 		throw new Error('No QueryClient set, use QueryClientProvider to set one');
 	}
 
-	const modFuncs: { [i: string]: any } = clone(FUNCS);
-
-	for (const f in modFuncs) {
-		modFuncs[f] = partial(modFuncs[f] as UseQueryFunction, ctx);
-	}
-
-	return modFuncs as SynthetixQueries;
+	return ctx.queries;
 }
