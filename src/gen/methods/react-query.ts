@@ -27,12 +27,12 @@ export default function reactquery(schema: Schema): string {
                 async () => func(url, options!, args!),
                 {
                     ...queryOptions,
-                    enabled: !!options && !!args
+                    enabled: !!options && !!args,
                 }
             );
         }`);
         
-        out.push(`export const useGetGetMany${entity.name} = <K extends keyof ${entity.name}Result>(url: string, options?: MultiQueryOptions<${entity.name}Filter>, args?: ${entity.name}Args<K>, queryOptions: UseQueryOptions<Pick<${entity.name}Result, K>[]> = {}) => {
+        out.push(`export const useGetMany${entity.name} = <K extends keyof ${entity.name}Result>(url: string, options?: MultiQueryOptions<${entity.name}Filter>, args?: ${entity.name}Args<K>, queryOptions: UseQueryOptions<Pick<${entity.name}Result, K>[]> = {}) => {
             const func = ${multiBody(entity)};
 
             const enabled = options && args;
@@ -42,7 +42,7 @@ export default function reactquery(schema: Schema): string {
                 async () => func(url, options!, args!),
                 {
                     ...queryOptions,
-                    enabled: !!options && !!args
+                    enabled: !!options && !!args,
                 }
             );
         }`);

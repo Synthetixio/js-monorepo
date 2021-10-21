@@ -58,7 +58,7 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Mu
 
     const paginatedOptions: Partial<MultiQueryOptions<${e.name}Filter>> = { ...options };
 
-    let paginationKey = '';
+    let paginationKey: keyof ${e.name}Filter|null = null;
     let paginationValue = '';
 
     if (options.first && options.first > MAX_PAGE) {
@@ -67,7 +67,7 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Mu
         paginatedOptions.orderBy = options.orderBy || 'id';
         paginatedOptions.orderDirection = options.orderDirection || 'asc';
 
-        paginationKey = paginatedOptions.orderBy + (paginatedOptions.orderDirection === 'asc' ? '_gt' : '_lt');
+        paginationKey = paginatedOptions.orderBy + (paginatedOptions.orderDirection === 'asc' ? '_gt' : '_lt') as keyof ${e.name}Filter;
 
         paginatedOptions.where =  { ...options.where };
     }
@@ -75,7 +75,7 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Mu
     let results: Pick<${e.name}Result, K>[] = [];
 
     do {
-        if (paginationValue) paginatedOptions.where![paginationKey] = paginationValue;
+        if (paginationValue) paginatedOptions.where![paginationKey] = paginationValue as any;
 
         const res = await fetch(url, {
             method: 'POST',
