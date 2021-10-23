@@ -8,7 +8,8 @@ import { convertType, mapType } from "../util";
 export function heading() {
 return `
 import Wei, { WeiSource, wei } from '@synthetixio/wei';
-import { fetch, generateGql } from 'codegen-graph-ts';
+import fetch from 'codegen-graph-ts/build/src/lib/fetch';
+import generateGql from 'codegen-graph-ts/build/src/lib/gql';
 
 export type SingleQueryOptions = {
     id: string,

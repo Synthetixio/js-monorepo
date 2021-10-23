@@ -17,7 +17,7 @@ export default function reactquery(schema: Schema): string {
 
         out.push(types(entity, filterEntity));
 
-        out.push(`export const useGetOne${entity.name} = <K extends keyof ${entity.name}Result>(url: string, options?: SingleQueryOptions, args?: ${entity.name}Args<K>, queryOptions: UseQueryOptions<Pick<${entity.name}Result, K>> = {}) => {
+        out.push(`export const useGet${entity.name}ById = <K extends keyof ${entity.name}Result>(url: string, options?: SingleQueryOptions, args?: ${entity.name}Args<K>, queryOptions: UseQueryOptions<Pick<${entity.name}Result, K>> = {}) => {
             const func = ${singleBody(entity)};
 
             const enabled = options && args;
@@ -32,7 +32,7 @@ export default function reactquery(schema: Schema): string {
             );
         }`);
         
-        out.push(`export const useGetMany${entity.name} = <K extends keyof ${entity.name}Result>(url: string, options?: MultiQueryOptions<${entity.name}Filter>, args?: ${entity.name}Args<K>, queryOptions: UseQueryOptions<Pick<${entity.name}Result, K>[]> = {}) => {
+        out.push(`export const useGet${entity.name}s = <K extends keyof ${entity.name}Result>(url: string, options?: MultiQueryOptions<${entity.name}Filter>, args?: ${entity.name}Args<K>, queryOptions: UseQueryOptions<Pick<${entity.name}Result, K>[]> = {}) => {
             const func = ${multiBody(entity)};
 
             const enabled = options && args;

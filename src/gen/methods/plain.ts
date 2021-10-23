@@ -15,8 +15,8 @@ export default function plain(schema: Schema): string {
         if (!filterEntity) continue;
 
         out.push(types(entity, filterEntity));
-        out.push(`export const getOne${entity.name} = ${singleBody(entity)};`);
-        out.push(`export const getMany${entity.name} = ${multiBody(entity)};`);
+        out.push(`export const get${entity.name}ById = ${singleBody(entity)};`);
+        out.push(`export const get${entity.name}s = ${multiBody(entity)};`);
     }
 
     return out.join('\n');
