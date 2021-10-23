@@ -12,7 +12,7 @@ Features:
 
 ## Usage
 
-1. Enter your project's directory, and run `npm i --save codegen-graph-ts`
+1. Enter your project's directory, and run `npm i --save codegen-graph-ts` (note that retention of this dependency is required for the generated code to function)
 2. Download your subgraph's manifest. Find your subgraph's API url, and then run: `npx codegen-graph-ts pull <url> > manifest.json`
 3. Generate your subgraph from the downloaded manifest: `npx codegen-graph-ts gen -s manifest.json -o subgraph.ts`
 4. You now have a typescript file, `subgraph.ts` which can be used to query data. For example, the below code snippet can be used to download top 1500 user balances in a hypothetical subgraph, and print them out:

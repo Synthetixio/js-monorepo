@@ -70,16 +70,17 @@ if (require.main === module) {
                 if (options.url) {
                     schema = await pull(options);
                 }
-                else if (options.file) {
-                    schema = JSON.parse(fs.readFileSync(options.file).toString());
+                else if (options.schema) {
+                    schema = JSON.parse(fs.readFileSync(options.schema).toString());
+                    console.log('theschema', schema);
                 }
                 else {
                     throw new Error('supply either a file or url');
                 }
         
                 const res = gen({
+                    ...options,
                     schema,
-                    ...options
                 });
     
                 if (options.out) {
