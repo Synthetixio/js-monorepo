@@ -72,7 +72,6 @@ if (require.main === module) {
                 }
                 else if (options.schema) {
                     schema = JSON.parse(fs.readFileSync(options.schema).toString());
-                    console.log('theschema', schema);
                 }
                 else {
                     throw new Error('supply either a file or url');
