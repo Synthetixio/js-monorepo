@@ -2,7 +2,6 @@
 
 [![main](https://github.com/synthetixio/js-monorepo/actions/workflows/main.yml/badge.svg)](https://github.com/synthetixio/js-monorepo/actions/workflows/main.yml)
 
-
 ## Packages
 
 | Package                                                               | Status                                                                                                                                               | Description                          |
@@ -35,10 +34,22 @@ This will ensure all projects are fully built in topological order. You are also
 
 ### Publishing
 
+We have a GitHub workflow for publishing releases.
+To publish:
+
+1. Go here https://github.com/Synthetixio/js-monorepo/actions/workflows/updateDependency.yml
+2. Click Run Workflow
+
+#### Testing release
+
+When you open a PR a dev package will be published automatically when CI passes. The version will be `0.0.0-<git short sha>`
+
+#### Manual
+
 `lerna` is specially designed to handle package updates. If you want to push a new release for one or more packages in this repo, run:
 
 ```
 lerna publish
 ```
 
-Lerna will automatically detect changes for  packages, and offer to increment the version number and push an NPM release as appropriate. Any dependant modules will be kept in sync as well.
+Lerna will automatically detect changes for packages, and offer to increment the version number and push an NPM release as appropriate. Any dependant modules will be kept in sync as well.
