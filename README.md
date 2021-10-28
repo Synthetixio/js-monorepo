@@ -54,8 +54,7 @@ fs.writeFileSync(`subgraphQuery.ts`, text);
 
 Currently supported generation methods are `plain` (raw async/await) and `reactquery` (react hooks which query subgraph--suitable for direct usage in frontend code)
 
-TBC
-
 ## Examples
 
-* [`codegen-demo`]() -- purpose built demo to showcase the functionality of this library
+* [`codegen-graph-demo`](https://github.com/dbeal-eth/codegen-graph-demo) -- purpose built demo to showcase the functionality of this library
+* [`@synthetixio/queries`](https://github.com/Synthetixio/js-monorepo/tree/master/packages/queries) -- generates codegen as part of its CI and delivers robust client-side integration of subgraphs through `react-query`

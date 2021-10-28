@@ -4,7 +4,7 @@
   "description": "Generate typescript request library for any subgraph based on its entity definition",
   "main": "build/src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
     "@types/jest": "^27.0.1",
     "@types/lodash": "^4.14.172",
     "@types/node-fetch": "^2.5.12",
-    "codegen-graph-ts": "^0.0.7",
+    "codegen-graph-ts": "^0.0.17",
     "eval": "^0.1.6",
     "jest": "^27.0.6",
     "react-dom": "^17.0.2",

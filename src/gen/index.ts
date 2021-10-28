@@ -18,7 +18,7 @@ interface GenOptions extends PullOptions {
     method: string
     outdir: string
     schema: Schema
-    js: boolean
+    js?: boolean
 }
 
 export async function pull(options: PullOptions): Promise<Schema> {

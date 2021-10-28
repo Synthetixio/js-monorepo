@@ -85,6 +85,10 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Mu
 
         const r = await res.json() as any;
 
+        if (r.errors && r.errors.length) {
+            throw new Error(r.errors[0].message);
+        }
+
         const rawResults = r.data[Object.keys(r.data)[0]] as any[];
 
         const newResults = rawResults.map((obj) => {
@@ -114,6 +118,10 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Si
     });
 
     const r = await res.json() as any;
+
+    if (r.errors && r.errors.length) {
+        throw new Error(r.errors[0].message);
+    }
 
     const obj = (r.data[Object.keys(r)[0]] as any);
 ${injectParse(e)}
