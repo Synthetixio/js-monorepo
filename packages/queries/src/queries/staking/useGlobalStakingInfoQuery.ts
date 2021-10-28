@@ -4,7 +4,7 @@ import Wei, { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
 import { GlobalStakingInfo } from '../../types';
-import { useGetSNXHolders } from 'generated/issuanceSubgraphQueries';
+import { useGetSNXHolders } from '../../../generated/issuanceSubgraphQueries';
 
 const useGlobalStakingInfoQuery = (
 	ctx: QueryContext,
