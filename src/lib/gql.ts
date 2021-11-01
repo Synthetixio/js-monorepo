@@ -14,7 +14,7 @@ function formatGqlOptions(options: GqlOptions): string {
             valueString = `{${formatGqlOptions(v)}}`;
         } else if (_.isNil(v)) {
             valueString = 'null';
-        } else if (_.isNaN(parseFloat(v.toString()))) {
+        } else if (v[1] == 'x' || _.isNaN(parseFloat(v.toString()))) {
             valueString = `"${v}"`;
         } else valueString = v;
         

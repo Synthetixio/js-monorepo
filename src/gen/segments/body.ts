@@ -16,11 +16,11 @@ export type SingleQueryOptions = {
     block?: { 'number': number }|{ hash: string },
 };
 
-export type MultiQueryOptions<T> = {
+export type MultiQueryOptions<T, R> = {
     first?: number,
     where?: T,
     block?: { 'number': number }|{ hash: string },
-    orderBy?: string,
+    orderBy?: keyof R,
     orderDirection?: 'asc'|'desc' 
 };
 
@@ -55,9 +55,9 @@ function injectParse(e: Entity) {
  * Generates an async function body for fetching and parsing query options
  */
 export function multiBody(e: Entity) {
-return `async function<K extends keyof ${e.name}Result>(url: string, options: MultiQueryOptions<${e.name}Filter>, args: ${e.name}Args<K>): Promise<Pick<${e.name}Result, K>[]> {
+return `async function<K extends keyof ${e.name}Result>(url: string, options: MultiQueryOptions<${e.name}Filter, ${e.name}Result>, args: ${e.name}Args<K>): Promise<Pick<${e.name}Result, K>[]> {
 
-    const paginatedOptions: Partial<MultiQueryOptions<${e.name}Filter>> = { ...options };
+    const paginatedOptions: Partial<MultiQueryOptions<${e.name}Filter, ${e.name}Result>> = { ...options };
 
     let paginationKey: keyof ${e.name}Filter|null = null;
     let paginationValue = '';
@@ -102,7 +102,7 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Mu
         }
     } while (paginationKey && (options.first && results.length < options.first));
 
-    return results;
+    return options.first ? results.slice(0, options.first) : results;
 }`;
 }
 
@@ -121,9 +121,9 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Si
         throw new Error(r.errors[0].message);
     }
 
-    const obj = (r.data[Object.keys(r)[0]] as any);
+    const obj = (r.data[Object.keys(r.data)[0]] as any);
 ${injectParse(e)}
-        return formattedObj as Pick<${e.name}Result, K>;
+    return formattedObj as Pick<${e.name}Result, K>;
 }`;
 }
 

@@ -14,13 +14,17 @@ describe.only('generateGql', () => {
         expect(generateGql('foo', { first: 50, where: { name: 'boo' }, orderBy: 'name', orderDirection: 'desc' }, { bar: true })).toEqual(`{foo(first:50,where:{name:"boo"},orderBy:"name",orderDirection:"desc"){bar}}`);
     });
 
-    it('nulls are parsed correctly', () => {
+    it('nulls are written correctly', () => {
         expect(generateGql('foo', { first: 50, something: null }, { bar: true })).toEqual(`{foo(first:50,something:null){bar}}`);
     });
 
-    it('floats are parsed correctly', () => {
+    it('floats are written correctly', () => {
         expect(generateGql('foo', { first: 50, something: 2.34 }, { bar: true })).toEqual(`{foo(first:50,something:2.34){bar}}`);
     });
+
+    it('hex strings are quoted correctly', () => {
+        expect(generateGql('foo', { where: {addr: '0x12341234123412341234'} }, { bar: true})).toEqual('{foo(where:{addr:"0x12341234123412341234"}){bar}}')
+    })
 
     it('parses BigNumber and Wei in options', () => {
         expect(generateGql('foo', { first: wei(50) }, { bar: true })).toEqual(`{foo(first:50.000000000000000000){bar}}`);

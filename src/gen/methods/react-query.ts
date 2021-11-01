@@ -32,7 +32,7 @@ export default function reactquery(schema: Schema): string {
             );
         }`);
         
-        out.push(`export const useGet${entity.name}s = <K extends keyof ${entity.name}Result>(url: string, options?: MultiQueryOptions<${entity.name}Filter>, args?: ${entity.name}Args<K>, queryOptions: UseQueryOptions<Pick<${entity.name}Result, K>[]> = {}) => {
+        out.push(`export const useGet${entity.name}s = <K extends keyof ${entity.name}Result>(url: string, options?: MultiQueryOptions<${entity.name}Filter, ${entity.name}Result>, args?: ${entity.name}Args<K>, queryOptions: UseQueryOptions<Pick<${entity.name}Result, K>[]> = {}) => {
             const func = ${multiBody(entity)};
 
             const enabled = options && args;

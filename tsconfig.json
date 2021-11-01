@@ -15,5 +15,5 @@
 		"baseUrl": "src",
 		"lib": ["ESNext"]
 	},
-	"exclude": ["__tests__**", "build/**"]
+	"exclude": ["__tests__**", "build/**", "generated/**"]
 }
