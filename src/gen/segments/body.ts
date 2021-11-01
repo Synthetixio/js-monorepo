@@ -96,6 +96,10 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Mu
         });
 
         results = results.concat(newResults);
+
+        if (newResults.length < 1000) {
+            break;
+        }
         
         if (paginationKey) {
             paginationValue = rawResults[rawResults.length - 1][paginatedOptions.orderBy!];
