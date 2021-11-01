@@ -1,11 +1,11 @@
 import { gen, pull } from './gen';
 
 import generateGql from "./lib/gql";
-import fetch from './lib/fetch';
+import axios from './lib/axios';
 
 export {
     generateGql,
-    fetch,
+    axios,
     gen,
     pull
 };

@@ -8,7 +8,7 @@ import { convertType, mapType } from "../util";
 export function heading() {
 return `
 import Wei, { WeiSource, wei } from '@synthetixio/wei';
-import fetch from 'codegen-graph-ts/build/src/lib/fetch';
+import axios from 'codegen-graph-ts/build/src/lib/axios';
 import generateGql from 'codegen-graph-ts/build/src/lib/gql';
 
 export type SingleQueryOptions = {
@@ -78,12 +78,11 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Mu
     do {
         if (paginationKey && paginationValue) paginatedOptions.where![paginationKey] = paginationValue as any;
 
-        const res = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify({query: generateGql('${queryFunctionName(e)}s', paginatedOptions, args) })
+        const res = await axios.post(url, {
+            query: generateGql('${queryFunctionName(e)}s', paginatedOptions, args)
         });
 
-        const r = await res.json() as any;
+        const r = res.data as any;
 
         if (r.errors && r.errors.length) {
             throw new Error(r.errors[0].message);
@@ -112,12 +111,11 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Mu
  */
 export function singleBody(e: Entity) {
 return `async function<K extends keyof ${e.name}Result>(url: string, options: SingleQueryOptions, args: ${e.name}Args<K>): Promise<Pick<${e.name}Result, K>> {
-    const res = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify({query: generateGql('${queryFunctionName(e)}', options, args) })
+    const res = await axios.post(url, {
+        query: generateGql('${queryFunctionName(e)}', options, args)
     });
 
-    const r = await res.json() as any;
+    const r = res.data as any;
 
     if (r.errors && r.errors.length) {
         throw new Error(r.errors[0].message);
