@@ -1,9 +1,12 @@
 import { NetworkId } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 import { renderHook } from '@testing-library/react-hooks';
-import { ethers } from 'ethers';
+import axios from 'axios';
+import { ethers, BigNumber } from 'ethers';
 import { set } from 'lodash';
-import useEthGasPriceQuery from '../src/queries/network/useEthGasPriceQuery';
+import useEthGasPriceQuery, {
+	ETH_GAS_STATION_API_URL,
+} from '../src/queries/network/useEthGasPriceQuery';
 import { getFakeQueryContext, getWrapper } from '../testUtils';
 
 describe('@synthetixio/queries network useEthGasPriceQuery', () => {
@@ -15,8 +18,11 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 
 		//mock provider
 		set(ctx.provider as ethers.providers.JsonRpcProvider, 'getGasPrice', async () =>
-			// set to 0.015 gwei
 			Promise.resolve(wei(15000000, undefined, true).toBN())
+		);
+
+		set(ctx.provider as ethers.providers.JsonRpcProvider, 'getBlock', async () =>
+			Promise.resolve(null)
 		);
 
 		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
@@ -52,5 +58,51 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 		expect(result.current.error?.message).toContain(
 			'Cannot retrieve optimistic gas price from provider'
 		);
+	});
+
+	test('should query eth gas station if networkID Mainnet is provided', async () => {
+		jest.spyOn(axios, 'get');
+
+		const wrapper = getWrapper({
+			defaultOptions: {
+				queries: {
+					// ✅ turns retries off
+					retry: false,
+				},
+			},
+		});
+
+		ctx.networkId = NetworkId.Mainnet;
+
+		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
+
+		await waitFor(() => result.current.isSuccess);
+
+		expect(axios.get).toBeCalledWith(ETH_GAS_STATION_API_URL);
+	});
+
+	test('should use the provided provider for not Mainnet network ', async () => {
+		const newCTX = getFakeQueryContext(NetworkId['Mainnet-Ovm']);
+		set(
+			newCTX.provider!,
+			'getBlock',
+			async (blockNumber: string | number) =>
+				Promise.resolve({ baseFeePerGas: BigNumber.from(1500000000) }) as any
+		);
+
+		const wrapper = getWrapper({
+			defaultOptions: {
+				queries: {
+					// ✅ turns retries off
+					retry: false,
+				},
+			},
+		});
+
+		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(newCTX), { wrapper });
+
+		await waitFor(() => result.current.isSuccess);
+		expect(typeof result.current.data!.average).toBe('number');
+		expect(result.current.data!.average).toBe(3200000000);
 	});
 });
