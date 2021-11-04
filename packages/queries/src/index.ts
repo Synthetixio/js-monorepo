@@ -31,7 +31,7 @@ type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...arg
 
 type Queries<T> = {
 	[Property in keyof T]: OmitFirstArg<T[Property]>;
-}
+};
 
 export type SynthetixQueries = {
 	exchanges: Queries<typeof exchanges>;
@@ -78,17 +78,26 @@ export function createQueryContext({
 
 	modFuncs.exchanges = {};
 	for (const f in exchanges) {
-		(modFuncs.exchanges as any)[f] = partial(modFuncs[f] as UseSubgraphFunction, ctx.subgraphEndpoints.exchanges);
+		(modFuncs.exchanges as any)[f] = partial(
+			modFuncs[f] as UseSubgraphFunction,
+			ctx.subgraphEndpoints.exchanges
+		);
 	}
 
 	modFuncs.exchanger = {};
 	for (const f in exchanger) {
-		(modFuncs.exchanger as any)[f] = partial(modFuncs[f] as UseSubgraphFunction, ctx.subgraphEndpoints.exchanger);
+		(modFuncs.exchanger as any)[f] = partial(
+			modFuncs[f] as UseSubgraphFunction,
+			ctx.subgraphEndpoints.exchanger
+		);
 	}
 
 	modFuncs.issuance = {};
 	for (const f in issuance) {
-		(modFuncs.issuance as any)[f] = partial(modFuncs[f] as UseSubgraphFunction, ctx.subgraphEndpoints.issuance);
+		(modFuncs.issuance as any)[f] = partial(
+			modFuncs[f] as UseSubgraphFunction,
+			ctx.subgraphEndpoints.issuance
+		);
 	}
 
 	const allFuncs = modFuncs as SynthetixQueries;
