@@ -93,7 +93,7 @@ export function createQueryContext({
 	modFuncs.exchanges = {};
 	for (const f in exchanges) {
 		(modFuncs.exchanges as any)[f] = partial(
-			modFuncs[f] as UseSubgraphFunction,
+			(exchanges as any)[f] as UseSubgraphFunction,
 			ctx.subgraphEndpoints.exchanges
 		);
 	}
@@ -101,7 +101,7 @@ export function createQueryContext({
 	modFuncs.exchanger = {};
 	for (const f in exchanger) {
 		(modFuncs.exchanger as any)[f] = partial(
-			modFuncs[f] as UseSubgraphFunction,
+			(exchanger as any)[f] as UseSubgraphFunction,
 			ctx.subgraphEndpoints.exchanger
 		);
 	}
@@ -109,7 +109,7 @@ export function createQueryContext({
 	modFuncs.issuance = {};
 	for (const f in issuance) {
 		(modFuncs.issuance as any)[f] = partial(
-			modFuncs[f] as UseSubgraphFunction,
+			(issuance as any)[f] as UseSubgraphFunction,
 			ctx.subgraphEndpoints.issuance
 		);
 	}
