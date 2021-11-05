@@ -29,14 +29,28 @@ type UseSubgraphFunction = (subgraphUrl: string, ...args: any) => UseQueryResult
 type RawSynthetixQueries = typeof FUNCS;
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;
 
+type SubgraphQueryFunction<F> = F extends (
+	u: string,
+	o: exchanges.MultiQueryOptions<infer A, infer B>,
+	args: infer C
+) => infer R
+	? (options: exchanges.MultiQueryOptions<A, B>, args: Partial<C>) => R
+	: F extends (u: string, o: exchanges.SingleQueryOptions, args: infer A) => infer P
+	? (options: exchanges.SingleQueryOptions, args: Partial<A>) => P
+	: never;
+
+type SubgraphQueries<T> = {
+	[Property in keyof T]: SubgraphQueryFunction<T[Property]>;
+};
+
 type Queries<T> = {
 	[Property in keyof T]: OmitFirstArg<T[Property]>;
 };
 
 export type SynthetixQueries = {
-	exchanges: Queries<typeof exchanges>;
-	exchanger: Queries<typeof exchanger>;
-	issuance: Queries<typeof issuance>;
+	exchanges: SubgraphQueries<typeof exchanges>;
+	exchanger: SubgraphQueries<typeof exchanger>;
+	issuance: SubgraphQueries<typeof issuance>;
 } & Queries<RawSynthetixQueries>;
 
 export function createQueryContext({
@@ -48,7 +62,7 @@ export function createQueryContext({
 	networkId: NetworkId | null;
 	provider?: ethers.providers.Provider;
 	signer?: ethers.Signer;
-	subgraphEndpoints: SubgraphEndpoints;
+	subgraphEndpoints?: SubgraphEndpoints;
 }): SynthetixQueryContextContent {
 	const ctx: QueryContext = {
 		networkId,
