@@ -8,7 +8,7 @@ import { NetworkId } from '@synthetixio/contracts-interface';
 import Wei, { wei } from '@synthetixio/wei';
 
 export const ETH_GAS_STATION_API_URL = 'https://ethgasstation.info/json/ethgasAPI.json';
-const MULTIPLIER = new Wei(2).toBN();
+const MULTIPLIER = new Wei(2, 1).toBN();
 
 type EthGasStationResponse = {
 	average: number;
@@ -49,18 +49,9 @@ const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPri
 				// if block has baseFeePerGas then networks supports EIP1559
 				if (block?.baseFeePerGas) {
 					return {
-						fastest: block.baseFeePerGas
-							.mul(MULTIPLIER)
-							.add(wei(600000000, undefined, true).toBN())
-							.toNumber(),
-						fast: block.baseFeePerGas
-							.mul(MULTIPLIER)
-							.add(wei(400000000, undefined, true).toBN())
-							.toNumber(),
-						average: block.baseFeePerGas
-							.mul(MULTIPLIER)
-							.add(wei(200000000, undefined, true).toBN())
-							.toNumber(),
+						fastest: block.baseFeePerGas.mul(MULTIPLIER).add(wei(6, 9).toBN()).toNumber(),
+						fast: block.baseFeePerGas.mul(MULTIPLIER).add(wei(4, 9).toBN()).toNumber(),
+						average: block.baseFeePerGas.mul(MULTIPLIER).add(wei(2, 9).toBN()).toNumber(),
 					};
 				}
 
