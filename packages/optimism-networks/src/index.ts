@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import type { MetaMaskInpageProvider } from '@metamask/providers';
 import { Watcher } from '@eth-optimism/watcher';
 
 import {
@@ -25,11 +25,12 @@ const getOptimismNetwork = ({
 const addOptimismNetworkToMetamask = async ({
 	ethereum,
 }: {
-	ethereum: EthereumProvider;
-}): Promise<null> => {
+	ethereum: MetaMaskInpageProvider;
+}): Promise<void> => {
 	if (!ethereum || !ethereum.isMetaMask) throw new Error('Metamask is not installed');
 	const optimismNetworkConfig = getOptimismNetwork({ layerOneNetworkId: Number(ethereum.chainId) });
-	return await ethereum.request({
+
+	await ethereum.request({
 		method: 'wallet_addEthereumChain',
 		params: [optimismNetworkConfig],
 	});
