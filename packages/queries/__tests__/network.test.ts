@@ -83,11 +83,8 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 
 	test('should use the provided provider for not Mainnet network ', async () => {
 		const newCTX = getFakeQueryContext(NetworkId['Mainnet-Ovm']);
-		set(
-			newCTX.provider!,
-			'getBlock',
-			async (blockNumber: string | number) =>
-				Promise.resolve({ baseFeePerGas: BigNumber.from(1500000000) }) as any
+		set(newCTX.provider as ethers.providers.JsonRpcProvider, 'getBlock', async () =>
+			Promise.resolve({ baseFeePerGas: BigNumber.from(1500000000) })
 		);
 
 		const wrapper = getWrapper({

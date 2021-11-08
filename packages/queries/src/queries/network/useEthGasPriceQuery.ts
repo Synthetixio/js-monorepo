@@ -3,13 +3,12 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 import { GasPrices } from '../../types';
 import { formatGwei } from '../../utils';
-import { BigNumber } from 'ethers';
 
 import { NetworkId } from '@synthetixio/contracts-interface';
-import { wei } from '@synthetixio/wei';
+import Wei, { wei } from '@synthetixio/wei';
 
 export const ETH_GAS_STATION_API_URL = 'https://ethgasstation.info/json/ethgasAPI.json';
-const MULTIPLIER = BigNumber.from(2);
+const MULTIPLIER = new Wei(2).toBN();
 
 type EthGasStationResponse = {
 	average: number;
