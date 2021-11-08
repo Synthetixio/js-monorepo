@@ -8,9 +8,9 @@ import { synthetix, NetworkId } from '@synthetixio/contracts-interface';
 
 import { UseQueryResult } from 'react-query';
 
-export * as exchanges from '../generated/exchangesSubgraphQueries';
-export * as exchanger from '../generated/exchangerSubgraphQueries';
-export * as issuance from '../generated/issuanceSubgraphQueries';
+import * as exchanges from '../generated/exchangesSubgraphQueries';
+import * as exchanger from '../generated/exchangerSubgraphQueries';
+import * as issuance from '../generated/issuanceSubgraphQueries';
 
 import FUNCS from '../generated/queryFuncs';
 import React from 'react';
@@ -23,13 +23,35 @@ type SynthetixQueryContextContent = { context: QueryContext; queries: SynthetixQ
 
 // all functions exported by submodules must follow this format
 type UseQueryFunction = (ctx: QueryContext, ...args: any) => UseQueryResult;
+type UseSubgraphFunction = (subgraphUrl: string, ...args: any) => UseQueryResult;
 
 // compute the type of this library so that typescript can do full analysis of arguments and available functions
 type RawSynthetixQueries = typeof FUNCS;
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;
-export type SynthetixQueries = {
-	[Property in keyof RawSynthetixQueries]: OmitFirstArg<RawSynthetixQueries[Property]>;
+
+type SubgraphQueryFunction<F> = F extends (
+	u: string,
+	o: exchanges.MultiQueryOptions<infer A, infer B>,
+	args: infer C
+) => infer R
+	? (options: exchanges.MultiQueryOptions<A, B>, args: Partial<C>) => R
+	: F extends (u: string, o: exchanges.SingleQueryOptions, args: infer A) => infer P
+	? (options: exchanges.SingleQueryOptions, args: Partial<A>) => P
+	: never;
+
+type SubgraphQueries<T> = {
+	[Property in keyof T]: SubgraphQueryFunction<T[Property]>;
 };
+
+type Queries<T> = {
+	[Property in keyof T]: OmitFirstArg<T[Property]>;
+};
+
+export type SynthetixQueries = {
+	exchanges: SubgraphQueries<typeof exchanges>;
+	exchanger: SubgraphQueries<typeof exchanger>;
+	issuance: SubgraphQueries<typeof issuance>;
+} & Queries<RawSynthetixQueries>;
 
 export function createQueryContext({
 	networkId,
@@ -40,7 +62,7 @@ export function createQueryContext({
 	networkId: NetworkId | null;
 	provider?: ethers.providers.Provider;
 	signer?: ethers.Signer;
-	subgraphEndpoints: SubgraphEndpoints;
+	subgraphEndpoints?: SubgraphEndpoints;
 }): SynthetixQueryContextContent {
 	const ctx: QueryContext = {
 		networkId,
@@ -66,6 +88,30 @@ export function createQueryContext({
 
 	for (const f in modFuncs) {
 		modFuncs[f] = partial(modFuncs[f] as UseQueryFunction, ctx);
+	}
+
+	modFuncs.exchanges = {};
+	for (const f in exchanges) {
+		(modFuncs.exchanges as any)[f] = partial(
+			(exchanges as any)[f] as UseSubgraphFunction,
+			ctx.subgraphEndpoints.exchanges
+		);
+	}
+
+	modFuncs.exchanger = {};
+	for (const f in exchanger) {
+		(modFuncs.exchanger as any)[f] = partial(
+			(exchanger as any)[f] as UseSubgraphFunction,
+			ctx.subgraphEndpoints.exchanger
+		);
+	}
+
+	modFuncs.issuance = {};
+	for (const f in issuance) {
+		(modFuncs.issuance as any)[f] = partial(
+			(issuance as any)[f] as UseSubgraphFunction,
+			ctx.subgraphEndpoints.issuance
+		);
 	}
 
 	const allFuncs = modFuncs as SynthetixQueries;
