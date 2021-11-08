@@ -6,6 +6,7 @@ import {
 	L1_TO_L2_NETWORK_MAPPER,
 	L2_TO_L1_NETWORK_MAPPER,
 	MESSENGER_ADDRESSES,
+	DEFAULT_MAINNET_NETWORK,
 } from './constants';
 import { EthereumProvider, OptimismNetwork, OptimismWatcher } from './types';
 
@@ -15,9 +16,10 @@ const getOptimismNetwork = ({
 	layerOneNetworkId: number;
 }): OptimismNetwork => {
 	if (!layerOneNetworkId) throw new Error('NetworkId required');
-	if (!L1_TO_L2_NETWORK_MAPPER[layerOneNetworkId])
-		throw new Error('Network not supported on Layer 2');
-	return OPTIMISM_NETWORKS[L1_TO_L2_NETWORK_MAPPER[layerOneNetworkId]];
+	// If user is on a unsupported network, just add optimism mainnet.
+	const optimismNetwork =
+		L1_TO_L2_NETWORK_MAPPER[layerOneNetworkId] || L1_TO_L2_NETWORK_MAPPER[DEFAULT_MAINNET_NETWORK];
+	return OPTIMISM_NETWORKS[optimismNetwork];
 };
 
 const addOptimismNetworkToMetamask = async ({

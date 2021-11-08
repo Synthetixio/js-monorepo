@@ -1,5 +1,6 @@
 import { OptimismNetwork, NetworkMapper, LayerTwoNetworkId, MessengerAddress } from './types';
 
+export const DEFAULT_MAINNET_NETWORK = 1;
 export const L1_TO_L2_NETWORK_MAPPER: NetworkMapper = {
 	1: 10,
 	42: 69,
