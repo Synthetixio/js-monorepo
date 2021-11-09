@@ -100,6 +100,6 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 
 		await waitFor(() => result.current.isSuccess);
 		expect(typeof result.current.data!.average).toBe('number');
-		expect(result.current.data!.average).toBe(3200000000);
+		expect(result.current.data!.average).toBe(32000000000);
 	});
 });

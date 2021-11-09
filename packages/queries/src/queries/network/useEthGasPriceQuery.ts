@@ -5,10 +5,10 @@ import { GasPrices } from '../../types';
 import { formatGwei } from '../../utils';
 
 import { NetworkId } from '@synthetixio/contracts-interface';
-import Wei, { wei } from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 
 export const ETH_GAS_STATION_API_URL = 'https://ethgasstation.info/json/ethgasAPI.json';
-const MULTIPLIER = new Wei(2, 1).toBN();
+const MULTIPLIER = wei(2, 1).toBN();
 
 type EthGasStationResponse = {
 	average: number;
