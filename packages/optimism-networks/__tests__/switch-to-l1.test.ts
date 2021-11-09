@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { switchToL1 } from '../src';
 
 describe('switchToL1', () => {
