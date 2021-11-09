@@ -1,4 +1,5 @@
-import { ethers } from 'ethers';
+import type { MetaMaskInpageProvider } from '@metamask/providers';
+import { ethers, BigNumber } from 'ethers';
 import { Watcher } from '@eth-optimism/watcher';
 
 import {
@@ -6,8 +7,11 @@ import {
 	L1_TO_L2_NETWORK_MAPPER,
 	L2_TO_L1_NETWORK_MAPPER,
 	MESSENGER_ADDRESSES,
+	DEFAULT_MAINNET_NETWORK,
+	DEFAULT_LAYER2_NETWORK,
+	METAMASK_MISSING_NETWORK_ERROR_CODE,
 } from './constants';
-import { EthereumProvider, OptimismNetwork, OptimismWatcher } from './types';
+import { OptimismNetwork, OptimismWatcher } from './types';
 
 const getOptimismNetwork = ({
 	layerOneNetworkId,
@@ -15,22 +19,55 @@ const getOptimismNetwork = ({
 	layerOneNetworkId: number;
 }): OptimismNetwork => {
 	if (!layerOneNetworkId) throw new Error('NetworkId required');
-	if (!L1_TO_L2_NETWORK_MAPPER[layerOneNetworkId])
-		throw new Error('Network not supported on Layer 2');
-	return OPTIMISM_NETWORKS[L1_TO_L2_NETWORK_MAPPER[layerOneNetworkId]];
+	// If user is on a unsupported network, just add optimism mainnet.
+	const optimismNetwork =
+		L1_TO_L2_NETWORK_MAPPER[layerOneNetworkId] || L1_TO_L2_NETWORK_MAPPER[DEFAULT_MAINNET_NETWORK];
+	return OPTIMISM_NETWORKS[optimismNetwork];
 };
 
 const addOptimismNetworkToMetamask = async ({
 	ethereum,
 }: {
-	ethereum: EthereumProvider;
-}): Promise<null> => {
+	ethereum: MetaMaskInpageProvider;
+}): Promise<void> => {
 	if (!ethereum || !ethereum.isMetaMask) throw new Error('Metamask is not installed');
 	const optimismNetworkConfig = getOptimismNetwork({ layerOneNetworkId: Number(ethereum.chainId) });
-	return await ethereum.request({
+
+	await ethereum.request({
 		method: 'wallet_addEthereumChain',
 		params: [optimismNetworkConfig],
 	});
+};
+const switchToL1 = async ({ ethereum }: { ethereum: MetaMaskInpageProvider }): Promise<void> => {
+	if (!ethereum || !ethereum.isMetaMask) throw new Error('Metamask is not installed');
+	const networkId =
+		L2_TO_L1_NETWORK_MAPPER[Number(ethereum.chainId)] ||
+		L2_TO_L1_NETWORK_MAPPER[DEFAULT_LAYER2_NETWORK];
+	const formattedChainId = ethers.utils.hexStripZeros(BigNumber.from(networkId).toHexString());
+	await ethereum.request({
+		method: 'wallet_switchEthereumChain',
+		params: [{ chainId: formattedChainId }],
+	});
+};
+const switchToL2 = async ({ ethereum }: { ethereum: MetaMaskInpageProvider }): Promise<void> => {
+	if (!ethereum || !ethereum.isMetaMask) throw new Error('Metamask is not installed');
+	try {
+		const networkId =
+			L1_TO_L2_NETWORK_MAPPER[Number(ethereum.chainId)] ||
+			L1_TO_L2_NETWORK_MAPPER[DEFAULT_MAINNET_NETWORK];
+
+		const formattedChainId = ethers.utils.hexStripZeros(BigNumber.from(networkId).toHexString());
+		await ethereum.request({
+			method: 'wallet_switchEthereumChain',
+			params: [{ chainId: formattedChainId }],
+		});
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} catch (e: any) {
+		if (e?.code === METAMASK_MISSING_NETWORK_ERROR_CODE) {
+			addOptimismNetworkToMetamask({ ethereum });
+			return;
+		}
+	}
 };
 
 const optimismMessengerWatcher = ({
@@ -66,4 +103,6 @@ export {
 	MESSENGER_ADDRESSES,
 	L1_TO_L2_NETWORK_MAPPER,
 	L2_TO_L1_NETWORK_MAPPER,
+	switchToL1,
+	switchToL2,
 };

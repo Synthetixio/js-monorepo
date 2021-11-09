@@ -12,12 +12,6 @@ export enum NetworkId {
 	Kovan = 69,
 }
 
-export type EthereumProvider = {
-	isMetaMask: boolean;
-	chainId: string;
-	request: ({ method, params }: { method: string; params: OptimismNetwork[] }) => Promise<null>;
-};
-
 export type OptimismWatcher = {
 	getMessageHashesFromL1Tx: (transactionHash: string) => string[];
 	getMessageHashesFromL2Tx: (transactionHash: string) => string[];

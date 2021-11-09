@@ -1,5 +1,9 @@
 import { OptimismNetwork, NetworkMapper, LayerTwoNetworkId, MessengerAddress } from './types';
 
+export const METAMASK_MISSING_NETWORK_ERROR_CODE = 4902;
+
+export const DEFAULT_MAINNET_NETWORK = 1;
+export const DEFAULT_LAYER2_NETWORK = 10;
 export const L1_TO_L2_NETWORK_MAPPER: NetworkMapper = {
 	1: 10,
 	42: 69,
