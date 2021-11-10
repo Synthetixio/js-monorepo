@@ -35,6 +35,7 @@ const useEVMTxn = (
 	options?: UseEVMTxnOptions
 ) => {
 	const [gasLimit, setGasLimit] = useState<Wei | null>(null);
+	const [serializedTxn, setSerializedTxn] = useState<string | null>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [hash, setHash] = useState<string | null>(null);
 	const [txnStatus, setTxnStatus] = useState<TransactionStatus>('unsent');
@@ -62,6 +63,10 @@ const useEVMTxn = (
 			setTxnStatus('unsent');
 		}
 
+		if (txnStatus === 'unsent') {
+			setSerializedTxn(ethers.utils.serializeTransaction(txn as ethers.UnsignedTransaction));
+		}
+
 		setErrorMessage(null);
 
 		if (!options || options.enabled) {
@@ -79,6 +84,7 @@ const useEVMTxn = (
 	useEffect(refresh, [txn?.data, transactionValueAsString, nonceAsString, txn?.from, txn?.to]);
 
 	return {
+		serializedTxn,
 		gasLimit,
 		errorMessage,
 		hash,
