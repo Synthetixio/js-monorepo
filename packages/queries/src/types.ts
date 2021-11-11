@@ -1,10 +1,19 @@
 import Wei from '@synthetixio/wei';
 import { CurrencyKey } from '@synthetixio/contracts-interface';
 
+export type GasPrice = {
+	maxPriorityFeePerGas: Wei;
+	maxFeePerGas: Wei;
+};
+
+export type LegacyGasPrice = {
+	gasPrice: Wei;
+};
+
 export type GasPrices = {
-	fastest: number;
-	fast: number;
-	average: number;
+	fastest: GasPrice | LegacyGasPrice;
+	fast: GasPrice | LegacyGasPrice;
+	average: GasPrice | LegacyGasPrice;
 };
 
 export type GasSpeed = keyof GasPrices;

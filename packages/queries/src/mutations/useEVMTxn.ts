@@ -8,6 +8,8 @@ import clone from 'lodash/clone';
 import omit from 'lodash/omit';
 import { isString } from 'lodash';
 import { OPTIMISM_NETWORKS } from '@synthetixio/optimism-networks';
+import { getContractFactory, predeploys } from '@eth-optimism/contracts';
+import { NetworkId } from '@synthetixio/contracts-interface';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
 
@@ -35,12 +37,28 @@ const useEVMTxn = (
 	options?: UseEVMTxnOptions
 ) => {
 	const [gasLimit, setGasLimit] = useState<Wei | null>(null);
-	const [serializedTxn, setSerializedTxn] = useState<string | null>(null);
+	const [optimismLayerOneFee, setOptimismLayerOneFee] = useState<Wei | null>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [hash, setHash] = useState<string | null>(null);
 	const [txnStatus, setTxnStatus] = useState<TransactionStatus>('unsent');
 
-	async function estimateGas() {
+	const getOptimismLayerOneFees = async () => {
+		if (!txn) return null;
+		if (ctx.networkId !== NetworkId['Mainnet-Ovm'] && ctx.networkId !== NetworkId['Kovan-Ovm'])
+			return null;
+		try {
+			const OVM_GasPriceOracle = getContractFactory('OVM_GasPriceOracle').attach(
+				predeploys.OVM_GasPriceOracle
+			);
+			const serializedTxn = ethers.utils.serializeTransaction(txn as ethers.UnsignedTransaction);
+			return wei(await OVM_GasPriceOracle.getL1Fee(serializedTxn));
+		} catch (e) {
+			console.log(e);
+			return null;
+		}
+	};
+
+	const estimateGas = async () => {
 		if (txn != null && ctx.signer != null && (!options || options.enabled)) {
 			// remove gas price from the estimate because it will cause unusual error if its below the base
 			// it will be used at the end when the actual transaction is submitted
@@ -48,7 +66,7 @@ const useEVMTxn = (
 		}
 
 		return null;
-	}
+	};
 
 	function handleError(err: any) {
 		// eslint-disable-next-line
@@ -58,34 +76,32 @@ const useEVMTxn = (
 		setErrorMessage(errorMessage);
 	}
 
-	function refresh() {
+	const refresh = async () => {
 		if (txnStatus === 'confirmed' || txnStatus === 'failed') {
 			setTxnStatus('unsent');
 		}
 
-		if (txnStatus === 'unsent') {
-			setSerializedTxn(ethers.utils.serializeTransaction(txn as ethers.UnsignedTransaction));
-		}
-
+		setOptimismLayerOneFee(await getOptimismLayerOneFees());
 		setErrorMessage(null);
 
 		if (!options || options.enabled) {
-			estimateGas()
-				.then((gl) => {
-					if (gl) setGasLimit(wei(gl));
-				})
-				.catch((err) => {
-					handleError(err);
-				});
+			try {
+				const gl = await estimateGas();
+				if (gl) setGasLimit(wei(gl));
+			} catch (e) {
+				handleError(e);
+			}
 		}
-	}
+	};
 	const transactionValueAsString = txn?.value ? txn.value.toString() : undefined;
 	const nonceAsString = txn?.nonce ? txn.nonce.toString() : undefined;
-	useEffect(refresh, [txn?.data, transactionValueAsString, nonceAsString, txn?.from, txn?.to]);
+	useEffect(() => {
+		refresh();
+	}, [txn?.data, transactionValueAsString, nonceAsString, txn?.from, txn?.to]);
 
 	return {
-		serializedTxn,
 		gasLimit,
+		optimismLayerOneFee,
 		errorMessage,
 		hash,
 		txnStatus,
