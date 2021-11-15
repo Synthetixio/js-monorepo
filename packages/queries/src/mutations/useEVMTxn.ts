@@ -53,7 +53,6 @@ const useEVMTxn = (
 			const serializedTxn = ethers.utils.serializeTransaction(txn as ethers.UnsignedTransaction);
 			return wei(await OVM_GasPriceOracle.getL1Fee(serializedTxn));
 		} catch (e) {
-			console.log(e);
 			return null;
 		}
 	};
@@ -69,8 +68,6 @@ const useEVMTxn = (
 	};
 
 	function handleError(err: any) {
-		// eslint-disable-next-line
-		console.error(err);
 		const errorMessage =
 			err.data && isString(err.data) ? hexToASCII(err.data) : err.data?.message ?? err.message;
 		setErrorMessage(errorMessage);

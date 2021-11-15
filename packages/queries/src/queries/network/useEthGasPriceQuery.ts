@@ -50,8 +50,7 @@ const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPri
 					return getGasPriceFromProvider(ctx.provider!);
 				}
 			} catch (e) {
-				console.log(`Could not fetch and compute network fee. ${e}`);
-				throw new Error(`Could not fetch and compute network fee`);
+				throw new Error(`Could not fetch and compute network fee. ${e}`);
 			}
 		},
 		{
