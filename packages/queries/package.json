@@ -32,7 +32,7 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"@eth-optimism/contracts": "0.4.14",
+		"@eth-optimism/contracts": "0.5.1",
 		"@snapshot-labs/snapshot.js": "^0.1.11",
 		"@synthetixio/contracts-interface": "2.52.2",
 		"@synthetixio/optimism-networks": "2.52.2",
