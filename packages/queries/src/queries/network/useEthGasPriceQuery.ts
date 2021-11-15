@@ -10,20 +10,24 @@ import { ethers } from 'ethers';
 
 const MULTIPLIER = wei(2);
 
-const computeGasFee = (baseFeePerGas: Wei, maxPriorityFeePerGas: Wei) => {
+export const computeGasFee = (baseFeePerGas: ethers.BigNumber, maxPriorityFeePerGas: number) => {
 	return {
-		maxPriorityFeePerGas: maxPriorityFeePerGas,
-		maxFeePerGas: baseFeePerGas.mul(MULTIPLIER).add(maxPriorityFeePerGas),
+		maxPriorityFeePerGas: wei(baseFeePerGas, 9).toBN(),
+		maxFeePerGas: wei(baseFeePerGas, 9).mul(MULTIPLIER).add(wei(maxPriorityFeePerGas, 9)).toBN(),
 	};
 };
 
 const getGasPriceFromProvider = async (provider: ethers.providers.Provider) => {
-	const gasPrice = wei(await provider.getGasPrice());
-	return {
-		fastest: { gasPrice },
-		fast: { gasPrice },
-		average: { gasPrice },
-	};
+	try {
+		const gasPrice = await provider.getGasPrice();
+		return {
+			fastest: { gasPrice },
+			fast: { gasPrice },
+			average: { gasPrice },
+		};
+	} catch (e) {
+		throw new Error('Could not retrieve gas price from provider');
+	}
 };
 
 const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPrices, Error>) => {
@@ -36,9 +40,9 @@ const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPri
 					const block = await ctx?.provider?.getBlock('latest');
 					if (block?.baseFeePerGas) {
 						return {
-							fastest: computeGasFee(wei(block.baseFeePerGas), wei(6, 9)),
-							fast: computeGasFee(wei(block.baseFeePerGas), wei(4, 9)),
-							average: computeGasFee(wei(block.baseFeePerGas), wei(2, 9)),
+							fastest: computeGasFee(block.baseFeePerGas, 6),
+							fast: computeGasFee(block.baseFeePerGas, 4),
+							average: computeGasFee(block.baseFeePerGas, 2),
 						};
 					} else return getGasPriceFromProvider(ctx.provider!);
 					// If not (Testnet or Optimism network), we get the Gas Price through the provider
@@ -46,7 +50,8 @@ const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPri
 					return getGasPriceFromProvider(ctx.provider!);
 				}
 			} catch (e) {
-				throw new Error(`Could not fetch and compute network fee. ${e}`);
+				console.log(`Could not fetch and compute network fee. ${e}`);
+				throw new Error(`Could not fetch and compute network fee`);
 			}
 		},
 		{

@@ -1,13 +1,14 @@
 import Wei from '@synthetixio/wei';
 import { CurrencyKey } from '@synthetixio/contracts-interface';
+import { BigNumber } from 'ethers';
 
 export type GasPrice = {
-	maxPriorityFeePerGas: Wei;
-	maxFeePerGas: Wei;
+	maxPriorityFeePerGas: BigNumber;
+	maxFeePerGas: BigNumber;
 };
 
 export type LegacyGasPrice = {
-	gasPrice: Wei;
+	gasPrice: BigNumber;
 };
 
 export type GasPrices = {
