@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/wei",
-	"version": "2.52.2",
+	"version": "2.53.0-alpha",
 	"description": "Convenient BigNumber library for web3",
 	"main": "build/node/index.js",
 	"browser": "./build/index.js",
