@@ -10,13 +10,22 @@ import { isString } from 'lodash';
 import { OPTIMISM_NETWORKS } from '@synthetixio/optimism-networks';
 import { getContractFactory, predeploys } from '@eth-optimism/contracts';
 import { NetworkId } from '@synthetixio/contracts-interface';
+import useEthGasPrice from '../queries/network/useEthGasPriceQuery';
+import { GasSpeed, GasPrice } from '../types';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
+type TransactionFees = Record<GasSpeed, Wei>;
+
+const getKeyValue =
+	<T extends object, U extends keyof T>(obj: T) =>
+	(key: U) =>
+		obj[key];
 
 const DEFAULT_GAS_BUFFER = 0.15;
 
 export interface UseEVMTxnOptions extends UseMutationOptions<void> {
 	gasLimitBuffer?: number;
+	transactionSpeed?: GasSpeed;
 	// whether or not the transaction should attempt to estimate gas or execute at all
 	enabled?: boolean;
 }
@@ -37,10 +46,14 @@ const useEVMTxn = (
 	options?: UseEVMTxnOptions
 ) => {
 	const [gasLimit, setGasLimit] = useState<Wei | null>(null);
+	const [transactionFees, setTransactionFees] = useState<TransactionFees | null | {}>(null);
 	const [optimismLayerOneFee, setOptimismLayerOneFee] = useState<Wei | null>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [hash, setHash] = useState<string | null>(null);
 	const [txnStatus, setTxnStatus] = useState<TransactionStatus>('unsent');
+
+	const useEthGasPriceQuery = useEthGasPrice(ctx);
+	const gasPrices = useEthGasPriceQuery?.data ?? null;
 
 	const getOptimismLayerOneFees = async () => {
 		if (!txn) return null;
@@ -96,9 +109,22 @@ const useEVMTxn = (
 		refresh();
 	}, [txn?.data, transactionValueAsString, nonceAsString, txn?.from, txn?.to]);
 
+	useEffect(() => {
+		if (!gasPrices || !gasLimit) return;
+		let prices: TransactionFees | {} = {};
+		Object.keys(gasPrices).forEach((key) => {
+			const speed = getKeyValue(gasPrices)(key as GasSpeed) as GasPrice;
+			const gasPrice = speed.maxFeePerGas || speed.gasPrice;
+			const priceInWei = wei(gasPrice ?? 0).mul(gasLimit);
+			prices = { ...prices, [key]: priceInWei };
+		});
+		setTransactionFees(prices);
+	}, [gasPrices, gasLimit, optimismLayerOneFee]);
+
 	return {
 		gasLimit,
 		optimismLayerOneFee,
+		transactionFees,
 		errorMessage,
 		hash,
 		txnStatus,

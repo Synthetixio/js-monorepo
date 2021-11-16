@@ -3,18 +3,15 @@ import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { BigNumber } from 'ethers';
 
 export type GasPrice = {
-	maxPriorityFeePerGas: BigNumber;
-	maxFeePerGas: BigNumber;
-};
-
-export type LegacyGasPrice = {
-	gasPrice: BigNumber;
+	maxPriorityFeePerGas?: BigNumber;
+	maxFeePerGas?: BigNumber;
+	gasPrice?: BigNumber;
 };
 
 export type GasPrices = {
-	fastest: GasPrice | LegacyGasPrice;
-	fast: GasPrice | LegacyGasPrice;
-	average: GasPrice | LegacyGasPrice;
+	fastest: GasPrice;
+	fast: GasPrice;
+	average: GasPrice;
 };
 
 export type GasSpeed = keyof GasPrices;
