@@ -17,7 +17,7 @@ type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'fai
 type TransactionFees = Record<GasSpeed, Wei>;
 
 const getKeyValue =
-	<T extends object, U extends keyof T>(obj: T) =>
+	<T extends Record<string, unknown>, U extends keyof T>(obj: T) =>
 	(key: U) =>
 		obj[key];
 
@@ -46,7 +46,9 @@ const useEVMTxn = (
 	options?: UseEVMTxnOptions
 ) => {
 	const [gasLimit, setGasLimit] = useState<Wei | null>(null);
-	const [transactionFees, setTransactionFees] = useState<TransactionFees | null | {}>(null);
+	const [transactionFees, setTransactionFees] = useState<TransactionFees | Record<string, unknown>>(
+		{}
+	);
 	const [optimismLayerOneFee, setOptimismLayerOneFee] = useState<Wei | null>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [hash, setHash] = useState<string | null>(null);
@@ -111,7 +113,7 @@ const useEVMTxn = (
 
 	useEffect(() => {
 		if (!gasPrices || !gasLimit) return;
-		let prices: TransactionFees | {} = {};
+		let prices: TransactionFees | Record<string, unknown> = {};
 		Object.keys(gasPrices).forEach((key) => {
 			const speed = getKeyValue(gasPrices)(key as GasSpeed) as GasPrice;
 			const gasPrice = speed.maxFeePerGas || speed.gasPrice;
