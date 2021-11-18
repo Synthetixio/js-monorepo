@@ -8,10 +8,10 @@ import clone from 'lodash/clone';
 import omit from 'lodash/omit';
 import { isString } from 'lodash';
 import { OPTIMISM_NETWORKS } from '@synthetixio/optimism-networks';
-import { getContractFactory, predeploys } from '@eth-optimism/contracts';
 import { NetworkId } from '@synthetixio/contracts-interface';
 import useEthGasPrice from '../queries/network/useEthGasPriceQuery';
 import { GasSpeed, GasPrice } from '../types';
+import optimismOracleContract from '../contracts/OptimismGasPriceOracle';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
 type TransactionFees = Record<GasSpeed, Wei>;
@@ -62,11 +62,13 @@ const useEVMTxn = (
 		if (ctx.networkId !== NetworkId['Mainnet-Ovm'] && ctx.networkId !== NetworkId['Kovan-Ovm'])
 			return null;
 		try {
-			const OVM_GasPriceOracle = getContractFactory('OVM_GasPriceOracle').attach(
-				predeploys.OVM_GasPriceOracle
+			const OptimismGasPriceOracleContract = new ethers.Contract(
+				optimismOracleContract.address,
+				optimismOracleContract.abi,
+				ctx.provider!
 			);
 			const serializedTxn = ethers.utils.serializeTransaction(txn as ethers.UnsignedTransaction);
-			return wei(await OVM_GasPriceOracle.getL1Fee(serializedTxn));
+			return wei(await OptimismGasPriceOracleContract.getL1Fee(serializedTxn));
 		} catch (e) {
 			return null;
 		}
