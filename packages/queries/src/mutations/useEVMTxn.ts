@@ -45,7 +45,7 @@ const useEVMTxn = (
 	txn: ethers.providers.TransactionRequest | null,
 	options?: UseEVMTxnOptions
 ) => {
-	const [gasLimit, setGasLimit] = useState<Wei | null>(null);
+	const [gasLimit, setGasLimit] = useState<ethers.BigNumber | null>(null);
 	const [transactionFees, setTransactionFees] = useState<TransactionFees | Record<string, unknown>>(
 		{}
 	);
@@ -101,7 +101,7 @@ const useEVMTxn = (
 		if (!options || options.enabled) {
 			try {
 				const gl = await estimateGas();
-				if (gl) setGasLimit(wei(gl));
+				if (gl) setGasLimit(gl);
 			} catch (e) {
 				handleError(e);
 			}
@@ -119,7 +119,7 @@ const useEVMTxn = (
 		Object.keys(gasPrices).forEach((key) => {
 			const speed = getKeyValue(gasPrices)(key as GasSpeed) as GasPrice;
 			const gasPrice = speed.maxFeePerGas || speed.gasPrice;
-			const priceInWei = wei(gasPrice ?? 0).mul(gasLimit);
+			const priceInWei = gasPrice ? gasPrice.mul(gasLimit) : ethers.BigNumber.from(0);
 			prices = { ...prices, [key]: priceInWei };
 		});
 		setTransactionFees(prices);
@@ -149,11 +149,9 @@ const useEVMTxn = (
 						execTxn.gasLimit = newGasLimit?.mul(
 							1 + (options?.gasLimitBuffer || DEFAULT_GAS_BUFFER)
 						);
-						setGasLimit(wei(newGasLimit));
+						setGasLimit(newGasLimit);
 					} else {
-						execTxn.gasLimit = gasLimit
-							.mul(1 + (options?.gasLimitBuffer || DEFAULT_GAS_BUFFER))
-							.toBN();
+						execTxn.gasLimit = gasLimit.mul(1 + (options?.gasLimitBuffer || DEFAULT_GAS_BUFFER));
 					}
 				}
 
