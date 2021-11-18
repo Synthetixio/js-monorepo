@@ -66,7 +66,7 @@ export const DEFAULT_SUBGRAPH_ENDPOINTS: { [networkId: number]: SubgraphEndpoint
 	},
 
 	10: {
-		exchanges: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-exchanges',
+		exchanges: 'https://api.thegraph.com/subgraphs/name/dbeal-eth/optimism-exchanges2',
 		exchanger: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-exchanger',
 		issuance: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-issuance',
 	},
