@@ -120,7 +120,7 @@ const useEVMTxn = (
 			const speed = getKeyValue(gasPrices)(key as GasSpeed) as GasPrice;
 			const gasPrice = speed.maxFeePerGas || speed.gasPrice;
 			const priceInWei = gasPrice ? gasPrice.mul(gasLimit) : ethers.BigNumber.from(0);
-			prices = { ...prices, [key]: priceInWei };
+			prices = { ...prices, [key]: { price: priceInWei, gwei: gasPrice } };
 		});
 		setTransactionFees(prices);
 	}, [gasPrices, gasLimit, optimismLayerOneFee]);
