@@ -221,18 +221,13 @@ describe('Wei numeric type', () => {
 
 	describe('serialization', () => {
 		it('JSON.stringify', () => {
-			expect(JSON.stringify(new Wei(100))).toEqual(
-				JSON.stringify({
-					p: 18,
-					value: '100000000000000000000',
-				})
-			);
+			expect(JSON.stringify(new Wei(100))).toMatch(/"100.000000000000000000"/);
 		});
 
 		it('serialize and deserialize as new wei', () => {
 			const wei = new Wei(100);
 			const deserialized = JSON.parse(JSON.stringify(wei));
-			const deserializedWei = new Wei(deserialized.value, deserialized.p, true);
+			const deserializedWei = new Wei(deserialized);
 			expect(deserializedWei).toEqual(wei);
 		});
 	});

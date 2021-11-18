@@ -270,10 +270,7 @@ export default class Wei {
 	}
 
 	toJSON() {
-		return {
-			p: this.p,
-			value: this.toString(0, true),
-		};
+		return this.toString();
 	}
 }
 
