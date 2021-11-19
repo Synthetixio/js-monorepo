@@ -3,9 +3,7 @@ import { ethers } from 'ethers';
 import { SynthetixJS, NetworkId } from '@synthetixio/contracts-interface';
 
 export interface SubgraphEndpoints {
-	exchanges: string;
-	exchanger: string;
-	issuance: string;
+	main: string;
 }
 
 export interface QueryContext {

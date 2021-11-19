@@ -4,13 +4,13 @@ import Wei, { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
 import { GlobalStakingInfo } from '../../types';
-import { useGetSNXHolders } from '../../../generated/issuanceSubgraphQueries';
+import { useGetSNXHolders } from '../../../generated/mainSubgraphQueries';
 
 const useGlobalStakingInfoQuery = (
 	ctx: QueryContext,
 	options?: UseQueryOptions<GlobalStakingInfo>
 ) => {
-	const snxHoldersQuery = useGetSNXHolders(ctx.subgraphEndpoints.issuance, {
+	const snxHoldersQuery = useGetSNXHolders(ctx.subgraphEndpoints.main, {
 		first: 1000,
 		orderBy: 'collateral',
 		orderDirection: 'desc',

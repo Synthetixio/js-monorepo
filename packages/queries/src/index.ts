@@ -8,9 +8,7 @@ import { synthetix, NetworkId } from '@synthetixio/contracts-interface';
 
 import { UseQueryResult } from 'react-query';
 
-import * as exchanges from '../generated/exchangesSubgraphQueries';
-import * as exchanger from '../generated/exchangerSubgraphQueries';
-import * as issuance from '../generated/issuanceSubgraphQueries';
+import * as main from '../generated/mainSubgraphQueries';
 
 import FUNCS from '../generated/queryFuncs';
 import React from 'react';
@@ -31,12 +29,12 @@ type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...arg
 
 type SubgraphQueryFunction<F> = F extends (
 	u: string,
-	o: exchanges.MultiQueryOptions<infer A, infer B>,
+	o: main.MultiQueryOptions<infer A, infer B>,
 	args: infer C
 ) => infer R
-	? (options: exchanges.MultiQueryOptions<A, B>, args: Partial<C>) => R
-	: F extends (u: string, o: exchanges.SingleQueryOptions, args: infer A) => infer P
-	? (options: exchanges.SingleQueryOptions, args: Partial<A>) => P
+	? (options: main.MultiQueryOptions<A, B>, args: Partial<C>) => R
+	: F extends (u: string, o: main.SingleQueryOptions, args: infer A) => infer P
+	? (options: main.SingleQueryOptions, args: Partial<A>) => P
 	: never;
 
 type SubgraphQueries<T> = {
@@ -48,9 +46,7 @@ type Queries<T> = {
 };
 
 export type SynthetixQueries = {
-	exchanges: SubgraphQueries<typeof exchanges>;
-	exchanger: SubgraphQueries<typeof exchanger>;
-	issuance: SubgraphQueries<typeof issuance>;
+	main: SubgraphQueries<typeof main>;
 } & Queries<RawSynthetixQueries>;
 
 export function createQueryContext({
@@ -90,27 +86,11 @@ export function createQueryContext({
 		modFuncs[f] = partial(modFuncs[f] as UseQueryFunction, ctx);
 	}
 
-	modFuncs.exchanges = {};
-	for (const f in exchanges) {
-		(modFuncs.exchanges as any)[f] = partial(
-			(exchanges as any)[f] as UseSubgraphFunction,
-			ctx.subgraphEndpoints.exchanges
-		);
-	}
-
-	modFuncs.exchanger = {};
-	for (const f in exchanger) {
-		(modFuncs.exchanger as any)[f] = partial(
-			(exchanger as any)[f] as UseSubgraphFunction,
-			ctx.subgraphEndpoints.exchanger
-		);
-	}
-
-	modFuncs.issuance = {};
-	for (const f in issuance) {
-		(modFuncs.issuance as any)[f] = partial(
-			(issuance as any)[f] as UseSubgraphFunction,
-			ctx.subgraphEndpoints.issuance
+	modFuncs.subgraph = {};
+	for (const f in main) {
+		(modFuncs.subgraph as any)[f] = partial(
+			(main as any)[f] as UseSubgraphFunction,
+			ctx.subgraphEndpoints.main
 		);
 	}
 
