@@ -11,6 +11,7 @@ import { UseQueryResult } from 'react-query';
 import * as exchanges from '../generated/exchangesSubgraphQueries';
 import * as exchanger from '../generated/exchangerSubgraphQueries';
 import * as issuance from '../generated/issuanceSubgraphQueries';
+import * as main from '../generated/mainSubgraphQueries';
 
 import FUNCS from '../generated/queryFuncs';
 import React from 'react';
@@ -51,6 +52,7 @@ export type SynthetixQueries = {
 	exchanges: SubgraphQueries<typeof exchanges>;
 	exchanger: SubgraphQueries<typeof exchanger>;
 	issuance: SubgraphQueries<typeof issuance>;
+	main: SubgraphQueries<typeof main>;
 } & Queries<RawSynthetixQueries>;
 
 export function createQueryContext({
@@ -111,6 +113,14 @@ export function createQueryContext({
 		(modFuncs.issuance as any)[f] = partial(
 			(issuance as any)[f] as UseSubgraphFunction,
 			ctx.subgraphEndpoints.issuance
+		);
+	}
+
+	modFuncs.main = {};
+	for (const f in main) {
+		(modFuncs.main as any)[f] = partial(
+			(main as any)[f] as UseSubgraphFunction,
+			ctx.subgraphEndpoints.main
 		);
 	}
 
