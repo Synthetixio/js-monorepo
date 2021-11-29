@@ -7,7 +7,6 @@ import { QueryContext } from '../context';
 import clone from 'lodash/clone';
 import omit from 'lodash/omit';
 import { isString } from 'lodash';
-import { OPTIMISM_NETWORKS } from '@synthetixio/optimism-networks';
 import { NetworkId } from '@synthetixio/contracts-interface';
 import { GasSpeed, GasPrice } from '../types';
 import optimismOracleContract from '../contracts/OptimismGasPriceOracle';
