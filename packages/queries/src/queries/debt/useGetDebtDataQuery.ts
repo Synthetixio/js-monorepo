@@ -13,6 +13,7 @@ type WalletDebtData = {
 	issuableSynths: Wei;
 	balance: Wei;
 	totalSupply: Wei;
+	targetThreshold: Wei;
 };
 
 const useGetDebtDataQuery = (
