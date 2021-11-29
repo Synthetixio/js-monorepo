@@ -268,6 +268,10 @@ export default class Wei {
 	lte(other: WeiSource): boolean {
 		return this.cmp(other) <= 0;
 	}
+
+	toJSON() {
+		return this.toString();
+	}
 }
 
 /** convenience function for not writing `new Wei(s)` every time. */

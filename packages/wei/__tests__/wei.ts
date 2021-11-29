@@ -218,4 +218,17 @@ describe('Wei numeric type', () => {
 			expect(Wei.avg(wei(5), wei(2), wei(8)).eq(5));
 		});
 	});
+
+	describe('serialization', () => {
+		it('JSON.stringify', () => {
+			expect(JSON.stringify(new Wei(100))).toMatch(/"100.000000000000000000"/);
+		});
+
+		it('serialize and deserialize as new wei', () => {
+			const wei = new Wei(100);
+			const deserialized = JSON.parse(JSON.stringify(wei));
+			const deserializedWei = new Wei(deserialized);
+			expect(deserializedWei).toEqual(wei);
+		});
+	});
 });
