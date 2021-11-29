@@ -9,7 +9,6 @@ import omit from 'lodash/omit';
 import { isString } from 'lodash';
 import { OPTIMISM_NETWORKS } from '@synthetixio/optimism-networks';
 import { NetworkId } from '@synthetixio/contracts-interface';
-import useEthGasPrice from '../queries/network/useEthGasPriceQuery';
 import { GasSpeed, GasPrice } from '../types';
 import optimismOracleContract from '../contracts/OptimismGasPriceOracle';
 
@@ -25,7 +24,6 @@ const DEFAULT_GAS_BUFFER = 0.15;
 
 export interface UseEVMTxnOptions extends UseMutationOptions<void> {
 	gasLimitBuffer?: number;
-	transactionSpeed?: GasSpeed;
 	// whether or not the transaction should attempt to estimate gas or execute at all
 	enabled?: boolean;
 }
@@ -53,9 +51,6 @@ const useEVMTxn = (
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [hash, setHash] = useState<string | null>(null);
 	const [txnStatus, setTxnStatus] = useState<TransactionStatus>('unsent');
-
-	const useEthGasPriceQuery = useEthGasPrice(ctx);
-	const gasPrices = useEthGasPriceQuery?.data ?? null;
 
 	const getOptimismLayerOneFees = async () => {
 		if (!txn) return null;
@@ -113,18 +108,6 @@ const useEVMTxn = (
 		refresh();
 	}, [txn?.data, transactionValueAsString, nonceAsString, txn?.from, txn?.to]);
 
-	useEffect(() => {
-		if (!gasPrices || !gasLimit) return;
-		let prices: TransactionFees | Record<string, unknown> = {};
-		Object.keys(gasPrices).forEach((key) => {
-			const speed = getKeyValue(gasPrices)(key as GasSpeed) as GasPrice;
-			const gasPrice = speed.maxFeePerGas || speed.gasPrice;
-			const priceInWei = gasPrice ? gasPrice.mul(gasLimit) : ethers.BigNumber.from(0);
-			prices = { ...prices, [key]: { price: priceInWei, gwei: gasPrice } };
-		});
-		setTransactionFees(prices);
-	}, [gasPrices, gasLimit, optimismLayerOneFee]);
-
 	return {
 		gasLimit,
 		optimismLayerOneFee,
@@ -143,7 +126,7 @@ const useEVMTxn = (
 			const execTxn = clone(txn!);
 
 			try {
-				if (!execTxn.gasLimit && !OPTIMISM_NETWORKS[ctx.networkId!]) {
+				if (!execTxn.gasLimit) {
 					if (!gasLimit) {
 						const newGasLimit = (await estimateGas())!;
 						execTxn.gasLimit = newGasLimit?.mul(
