@@ -43,9 +43,6 @@ const useEVMTxn = (
 	options?: UseEVMTxnOptions
 ) => {
 	const [gasLimit, setGasLimit] = useState<ethers.BigNumber | null>(null);
-	const [transactionFees, setTransactionFees] = useState<TransactionFees | Record<string, unknown>>(
-		{}
-	);
 	const [optimismLayerOneFee, setOptimismLayerOneFee] = useState<Wei | null>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [hash, setHash] = useState<string | null>(null);
@@ -110,7 +107,6 @@ const useEVMTxn = (
 	return {
 		gasLimit,
 		optimismLayerOneFee,
-		transactionFees,
 		errorMessage,
 		hash,
 		txnStatus,
