@@ -71,10 +71,11 @@ const useGetDebtTimeseries = (
 									debtState.totalIssuedSynths.toNumber()) *
 									debtStateAsOfDebtSnapshot.debtRatio.toNumber()) /
 								debtState.debtRatio.toNumber(),
-							debtAmount:
-								wei((currentDebtSnapshot.debtBalanceOf.toNumber() *
+							debtAmount: wei(
+								(currentDebtSnapshot.debtBalanceOf.toNumber() *
 									debtStateAsOfDebtSnapshot.debtRatio.toNumber()) /
-								debtState.debtRatio.toNumber()),
+									debtState.debtRatio.toNumber()
+							),
 						});
 					}
 				});
