@@ -8,7 +8,7 @@ import { times, findIndex } from 'lodash';
 type WalletDebtTimeseriesData = {
 	timestamp: Wei;
 	debtPercentage: number;
-	debtAmount: number;
+	debtAmount: Wei;
 }[];
 
 const useGetDebtTimeseries = (
@@ -72,9 +72,9 @@ const useGetDebtTimeseries = (
 									debtStateAsOfDebtSnapshot.debtRatio.toNumber()) /
 								debtState.debtRatio.toNumber(),
 							debtAmount:
-								(currentDebtSnapshot.debtBalanceOf.toNumber() *
+								wei((currentDebtSnapshot.debtBalanceOf.toNumber() *
 									debtStateAsOfDebtSnapshot.debtRatio.toNumber()) /
-								debtState.debtRatio.toNumber(),
+								debtState.debtRatio.toNumber()),
 						});
 					}
 				});
