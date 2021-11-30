@@ -27,7 +27,7 @@ jobs:
       - run: echo $(git rev-parse --short origin/${{ github.head_ref }})
       #- run: npx lerna version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --exact --no-push -y
       - run: npx lerna exec npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-      - run: npm lerna boostrap
+      - run: npx lerna boostrap
       - run: npx lerna exec npm publish -- --tag dev
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
