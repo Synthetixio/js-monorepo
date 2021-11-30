@@ -2,8 +2,8 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import Wei from '@synthetixio/wei';
 import { wei } from '@synthetixio/wei/build/node/wei';
 import { QueryContext } from '../../context';
+import { getDebtStates, getDebtSnapshots } from '../../../generated/mainSubgraphFunctions';
 import { times, findIndex } from 'lodash';
-import { request, gql } from 'graphql-request';
 
 type WalletDebtTimeseriesData = {
 	timestamp: Wei;
@@ -19,35 +19,21 @@ const useGetDebtTimeseries = (
 	return useQuery<WalletDebtTimeseriesData>(
 		['debt', 'data', ctx.networkId, walletAddress],
 		async () => {
-			const debtStates = (
-				await request(
-					ctx.subgraphEndpoints.main,
-					gql`
-						{
-							debtStates(first: 100000, orderBy: "timestamp", orderDirection: "asc") {
-								timestamp
-								debtRatio
-								totalIssuedSynths
-							}
-						}
-					`
-				)
-			).data;
-
-			const debtSnapshots = (
-				await request(
-					ctx.subgraphEndpoints.main,
-					gql`
-			{
-			  debtSnapshots(first: 100000, orderBy: "timestamp", orderDirection: "asc", where: { account: "${walletAddress}" }) {
-				timestamp
-				debtBalanceOf
-			  }
-			}
-			`
-				)
-			).data;
-
+			const debtStates = await getDebtStates(
+				ctx.subgraphEndpoints.main,
+				{ first: 100000, orderBy: 'timestamp', orderDirection: 'asc' },
+				{ timestamp: true, debtRatio: true, totalIssuedSynths: true }
+			);
+			const debtSnapshots = await getDebtSnapshots(
+				ctx.subgraphEndpoints.main,
+				{
+					first: 100000,
+					orderBy: 'timestamp',
+					orderDirection: 'asc',
+					where: { account: walletAddress },
+				},
+				{ timestamp: true, account: true, debtBalanceOf: true }
+			);
 			const timeseries: WalletDebtTimeseriesData = [];
 
 			if (debtStates && debtSnapshots) {
@@ -55,7 +41,7 @@ const useGetDebtTimeseries = (
 					let currentDebtSnapshotIndex = 0;
 					let debtStateAsOfDebtSnapshotIndex = findIndex(
 						debtStates,
-						(ds: any) => ds.timestamp < debtSnapshots[currentDebtSnapshotIndex].timestamp
+						(ds) => ds.timestamp < debtSnapshots[currentDebtSnapshotIndex].timestamp
 					);
 
 					for (const debtState of debtStates.slice(debtStateAsOfDebtSnapshotIndex)) {
@@ -66,7 +52,7 @@ const useGetDebtTimeseries = (
 							currentDebtSnapshotIndex++;
 							debtStateAsOfDebtSnapshotIndex = findIndex(
 								debtStates,
-								(ds: any) => ds.timestamp < debtSnapshots[currentDebtSnapshotIndex].timestamp
+								(ds) => ds.timestamp < debtSnapshots[currentDebtSnapshotIndex].timestamp
 							);
 						}
 
