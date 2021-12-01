@@ -3,7 +3,7 @@ import Wei from '@synthetixio/wei';
 import { wei } from '@synthetixio/wei/build/node/wei';
 import { QueryContext } from '../../context';
 import { getDebtStates, getDebtSnapshots } from '../../../generated/mainSubgraphFunctions';
-import { times, findIndex } from 'lodash';
+import { times, findIndex, sortBy } from 'lodash';
 
 type WalletDebtTimeseriesData = {
 	timestamp: number;
@@ -19,21 +19,21 @@ const useGetDebtTimeseries = (
 	return useQuery<WalletDebtTimeseriesData>(
 		['debt', 'data', ctx.networkId, walletAddress],
 		async () => {
-			const debtStates = await getDebtStates(
-				ctx.subgraphEndpoints.main,
-				{ first: 100000, orderBy: 'timestamp', orderDirection: 'asc' },
+			const debtStates = (await getDebtStates(
+				ctx.subgraphEndpoints.subgraph,
+				{ first: 50000, orderBy: 'timestamp', orderDirection: 'desc' },
 				{ timestamp: true, debtRatio: true, totalIssuedSynths: true }
-			);
-			const debtSnapshots = await getDebtSnapshots(
-				ctx.subgraphEndpoints.main,
+			)).reverse();
+			const debtSnapshots = (await getDebtSnapshots(
+				ctx.subgraphEndpoints.subgraph,
 				{
-					first: 100000,
+					first: 1000,
 					orderBy: 'timestamp',
-					orderDirection: 'asc',
+					orderDirection: 'desc',
 					where: { account: walletAddress },
 				},
 				{ timestamp: true, account: true, debtBalanceOf: true }
-			);
+			)).reverse();
 			const timeseries: WalletDebtTimeseriesData = [];
 
 			if (debtStates && debtSnapshots) {
@@ -77,11 +77,7 @@ const useGetDebtTimeseries = (
 				});
 			}
 
-			return timeseries
-				.filter((d) => d.timestamp > 0)
-				.sort(function (a, b) {
-					return a.timestamp - b.timestamp;
-				});
+			return sortBy(timeseries.filter((d) => d.timestamp > 0), 'timestamp')
 		},
 		{
 			enabled: ctx.networkId != null && walletAddress != null,

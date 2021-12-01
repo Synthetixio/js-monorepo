@@ -6,7 +6,7 @@ export interface SubgraphEndpoints {
 	exchanges: string;
 	exchanger: string;
 	issuance: string;
-	main: string;
+	subgraph: string;
 }
 
 export interface QueryContext {
