@@ -19,21 +19,25 @@ const useGetDebtTimeseries = (
 	return useQuery<WalletDebtTimeseriesData>(
 		['debt', 'data', ctx.networkId, walletAddress],
 		async () => {
-			const debtStates = (await getDebtStates(
-				ctx.subgraphEndpoints.subgraph,
-				{ first: 50000, orderBy: 'timestamp', orderDirection: 'desc' },
-				{ timestamp: true, debtRatio: true, totalIssuedSynths: true }
-			)).reverse();
-			const debtSnapshots = (await getDebtSnapshots(
-				ctx.subgraphEndpoints.subgraph,
-				{
-					first: 1000,
-					orderBy: 'timestamp',
-					orderDirection: 'desc',
-					where: { account: walletAddress },
-				},
-				{ timestamp: true, account: true, debtBalanceOf: true }
-			)).reverse();
+			const debtStates = (
+				await getDebtStates(
+					ctx.subgraphEndpoints.subgraph,
+					{ first: 50000, orderBy: 'timestamp', orderDirection: 'desc' },
+					{ timestamp: true, debtRatio: true, totalIssuedSynths: true }
+				)
+			).reverse();
+			const debtSnapshots = (
+				await getDebtSnapshots(
+					ctx.subgraphEndpoints.subgraph,
+					{
+						first: 1000,
+						orderBy: 'timestamp',
+						orderDirection: 'desc',
+						where: { account: walletAddress },
+					},
+					{ timestamp: true, account: true, debtBalanceOf: true }
+				)
+			).reverse();
 			const timeseries: WalletDebtTimeseriesData = [];
 
 			if (debtStates && debtSnapshots) {
@@ -77,7 +81,10 @@ const useGetDebtTimeseries = (
 				});
 			}
 
-			return sortBy(timeseries.filter((d) => d.timestamp > 0), 'timestamp')
+			return sortBy(
+				timeseries.filter((d) => d.timestamp > 0),
+				'timestamp'
+			);
 		},
 		{
 			enabled: ctx.networkId != null && walletAddress != null,
