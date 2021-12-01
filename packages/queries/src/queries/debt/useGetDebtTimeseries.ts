@@ -6,7 +6,7 @@ import { getDebtStates, getDebtSnapshots } from '../../../generated/mainSubgraph
 import { times, findIndex } from 'lodash';
 
 type WalletDebtTimeseriesData = {
-	timestamp: Wei;
+	timestamp: number;
 	debtPercentage: number;
 	debtAmount: Wei;
 }[];
@@ -61,7 +61,7 @@ const useGetDebtTimeseries = (
 						const debtStateAsOfDebtSnapshot = debtStates[debtStateAsOfDebtSnapshotIndex];
 
 						timeseries.push({
-							timestamp: wei(debtState.timestamp),
+							timestamp: debtState.timestamp.toNumber(),
 							debtPercentage:
 								((currentDebtSnapshot.debtBalanceOf.toNumber() /
 									debtState.totalIssuedSynths.toNumber()) *
@@ -77,7 +77,11 @@ const useGetDebtTimeseries = (
 				});
 			}
 
-			return timeseries;
+			return timeseries
+				.filter((d) => d.timestamp > 0)
+				.sort(function (a, b) {
+					return a.timestamp - b.timestamp;
+				});
 		},
 		{
 			enabled: ctx.networkId != null && walletAddress != null,
