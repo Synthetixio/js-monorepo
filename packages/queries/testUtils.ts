@@ -17,7 +17,7 @@ export function getWrapper(config?: any) {
 export function getFakeQueryContext(networkId: NetworkId = NetworkId.Mainnet): QueryContext {
 	return {
 		networkId,
-		subgraphEndpoints: { exchanger: '', issuance: '', exchanges: '', main: '' },
+		subgraphEndpoints: { exchanger: '', issuance: '', exchanges: '', subgraph: '' },
 		signer: {} as ethers.Signer,
 		provider: {} as ethers.providers.Provider,
 		snxjs: {} as SynthetixJS,
