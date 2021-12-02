@@ -124,12 +124,14 @@ const useEVMTxn = (
 				if (!execTxn.gasLimit) {
 					if (!gasLimit) {
 						const newGasLimit = (await estimateGas())!;
-						execTxn.gasLimit = newGasLimit?.mul(
-							1 + (options?.gasLimitBuffer || DEFAULT_GAS_BUFFER)
-						);
+						execTxn.gasLimit = wei(newGasLimit ?? 0, 9)
+							.mul(1 + (options?.gasLimitBuffer || DEFAULT_GAS_BUFFER))
+							.toBN();
 						setGasLimit(newGasLimit);
 					} else {
-						execTxn.gasLimit = gasLimit.mul(1 + (options?.gasLimitBuffer || DEFAULT_GAS_BUFFER));
+						execTxn.gasLimit = wei(gasLimit, 9)
+							.mul(1 + (options?.gasLimitBuffer || DEFAULT_GAS_BUFFER))
+							.toBN();
 					}
 				}
 
