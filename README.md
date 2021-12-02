@@ -9,7 +9,7 @@ Use `codegen-graph-ts` to generate a TypeScript (or Javascript) library which ca
 
 ## Usage
 
-Replace the URL below with the *Queries (HTTP)* endpoint from The Graph. Then run the code snippet below to create a `subgraph.ts` file. Note that you’ll need to keep the npm dependency in your project for the generated file to function. To generate JavaScript functions, rather than Typescript, add the `--js` flag to the last command below. 
+Replace the URL below with the *Queries (HTTP)* endpoint from The Graph. Then run the code snippet to create a `subgraph.ts` file. Note that you’ll need to keep the npm dependency in your project for the generated file to function. To generate JavaScript functions, rather than Typescript, add the `--js` flag to the last command. 
 
 ```
 npm i --save codegen-graph-ts
