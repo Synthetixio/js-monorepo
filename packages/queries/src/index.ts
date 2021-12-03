@@ -6,7 +6,7 @@ import { QueryContext, SubgraphEndpoints } from './context';
 
 import { synthetix, NetworkId } from '@synthetixio/contracts-interface';
 
-import { UseQueryResult } from 'react-query';
+import { UseQueryOptions, UseQueryResult } from 'react-query';
 
 import * as exchanges from '../generated/exchangesSubgraphQueries';
 import * as exchanger from '../generated/exchangerSubgraphQueries';
@@ -32,12 +32,16 @@ type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...arg
 
 type SubgraphQueryFunction<F> = F extends (
 	u: string,
-	o: exchanges.MultiQueryOptions<infer A, infer B>,
+	o: subgraph.MultiQueryOptions<infer A, infer B>,
 	args: infer C
 ) => infer R
-	? (options: exchanges.MultiQueryOptions<A, B>, args: Partial<C>) => R
-	: F extends (u: string, o: exchanges.SingleQueryOptions, args: infer A) => infer P
-	? (options: exchanges.SingleQueryOptions, args: Partial<A>) => P
+	? (
+			options: subgraph.MultiQueryOptions<A, B>,
+			args: Partial<C>,
+			queryOptions?: UseQueryOptions<R>
+	  ) => R
+	: F extends (u: string, o: subgraph.SingleQueryOptions, args: infer A) => infer P
+	? (options: subgraph.SingleQueryOptions, args: Partial<A>, queryOptions?: UseQueryOptions<P>) => P
 	: never;
 
 type SubgraphQueries<T> = {

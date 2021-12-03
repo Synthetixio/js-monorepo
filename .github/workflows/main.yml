@@ -25,8 +25,10 @@ jobs:
       - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
       - run: git fetch origin ${{ github.head_ref }}
       - run: echo $(git rev-parse --short origin/${{ github.head_ref }})
-      #- run: npx lerna version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --exact --no-push -y
+      # Remove the next line and uncomment the two below to fix dev build issues from inter-package version mismatch issues.
       - run: npx lerna exec npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
+      # - run: git checkout -b temp
+      # - run: npx lerna version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --exact --no-push -y
       - run: npx lerna exec npm publish -- --tag dev
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
