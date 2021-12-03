@@ -33,8 +33,7 @@ type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...arg
 type SubgraphQueryFunction<F> = F extends (
 	u: string,
 	o: subgraph.MultiQueryOptions<infer A, infer B>,
-	args: infer C,
-	queryOptions: UseQueryOptions<infer R>
+	args: infer C
 ) => infer R
 	? (
 			options: subgraph.MultiQueryOptions<A, B>,
@@ -44,8 +43,7 @@ type SubgraphQueryFunction<F> = F extends (
 	: F extends (
 			u: string,
 			o: subgraph.SingleQueryOptions,
-			args: infer A,
-			queryOptions?: UseQueryOptions<infer P>
+			args: infer A
 	  ) => infer P
 	? (options: subgraph.SingleQueryOptions, args: Partial<A>) => P
 	: never;
