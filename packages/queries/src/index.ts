@@ -34,19 +34,14 @@ type SubgraphQueryFunction<F> = F extends (
 	u: string,
 	o: subgraph.MultiQueryOptions<infer A, infer B>,
 	args: infer C,
-	queryOptions: UseQueryOptions
+	queryOptions: UseQueryOptions<Pick<infer Result, infer K>[]>
 ) => infer R
 	? (
 			options: subgraph.MultiQueryOptions<A, B>,
 			args: Partial<C>,
-			queryOptions: UseQueryOptions
+			queryOptions?: UseQueryOptions<Pick<Result, K>[]>
 	  ) => R
-	: F extends (
-			u: string,
-			o: subgraph.SingleQueryOptions,
-			args: infer A,
-			queryOptions: UseQueryOptions
-	  ) => infer P
+	: F extends (u: string, o: subgraph.SingleQueryOptions, args: infer A) => infer P
 	? (options: subgraph.SingleQueryOptions, args: Partial<A>) => P
 	: never;
 
