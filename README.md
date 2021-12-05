@@ -5,11 +5,11 @@ Use `codegen-graph-ts` to generate a TypeScript (or Javascript) library which ca
 
 * Generated functions provide full type checking and support for all options provided by the underlying GraphQL API.
 * Pagination is handled automatically, so you can easily retrieve more than 1,000 records per call.
-* Create standard await/async function or [react-query](https://react-query.tanstack.com/) functions using the `--method reactquery` option.
+* Create standard await/async functions or [react-query](https://react-query.tanstack.com/) hooks.
 
 ## Usage
 
-Replace the URL below with the *Queries (HTTP)* endpoint from The Graph. Then run the code snippet to create a `subgraph.ts` file. Note that you’ll need to keep the npm dependency in your project for the generated file to function. To generate JavaScript functions, rather than Typescript, add the `--js` flag to the last command. 
+Replace the URL below with the *Queries (HTTP)* endpoint from The Graph. Then run the code snippet to create a `subgraph.ts` file. Note that you’ll need to keep the npm dependency in your project for the generated file to function. To generate JavaScript functions, rather than Typescript, add the `--js` flag to the last command. Add the `--method reactquery` option to generate [react-query](https://react-query.tanstack.com/) hooks instead of standard async/await functions.
 
 ```
 npm i --save codegen-graph-ts
@@ -43,7 +43,7 @@ const func = async () => {
 
     console.log('Top Balances');
     for (const entry of topBalances) {
-        console.log(`${entry.id}: ${entry.balanceOf.toLocaleString()}`);
+        console.log(`${entry.id}: ${entry.balanceOf.toString(2)}`);
     }
 };
 
@@ -61,6 +61,7 @@ const cgt = require('codegen-graph-ts');
 
 const text = cgt.gen({
     schema: JSON.parse(fs.readFileSync('manifest.json')),
+    method: 'plain' // Alternatively, set to 'react-query'
 });
 
 fs.writeFileSync(`subgraphQuery.ts`, text);
