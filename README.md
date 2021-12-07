@@ -24,8 +24,7 @@ The code snippet below could be used to display the top 1,500 user balances from
 ```
 import { getManyUserBalance } from './subgraph';
 
-const 
-SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/example-team/example-subgraph';
+const SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/example-team/example-subgraph';
 
 const func = async () => {
     const topBalances = await getManyUserBalance(
