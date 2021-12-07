@@ -67,7 +67,11 @@ export function createQueryContext({
 	subgraphEndpoints,
 }: {
 	networkId: NetworkId | null;
-	provider?: ethers.providers.Provider;
+	provider?:
+		| ethers.providers.Web3Provider
+		| ethers.providers.Provider
+		| ethers.providers.JsonRpcProvider
+		| ethers.providers.InfuraProvider;
 	signer?: ethers.Signer;
 	subgraphEndpoints?: SubgraphEndpoints;
 }): SynthetixQueryContextContent {
