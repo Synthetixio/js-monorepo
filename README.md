@@ -34,22 +34,27 @@ This will ensure all projects are fully built in topological order. You are also
 
 ### Publishing
 
-We have a GitHub workflow for publishing releases.
-To publish:
+Any PR will be automatically released with the dev tag on NPM through this action:
 
-1. Go here https://github.com/Synthetixio/js-monorepo/actions/workflows/updateDependency.yml
-2. Click Run Workflow
+https://github.com/Synthetixio/js-monorepo/actions/workflows/main.yml
 
-#### Testing release
+---
 
-When you open a PR a dev package will be published automatically when CI passes. The version will be `0.0.0-<git short sha>`
+Now if your PR has been merged and you wanna do an official release, you can use the second action
 
-#### Manual
+https://github.com/Synthetixio/js-monorepo/actions/workflows/updateDependency.yml
 
-`lerna` is specially designed to handle package updates. If you want to push a new release for one or more packages in this repo, run:
+- Click Run Workflow
 
-```
-lerna publish
-```
+Ignore the first field, but you gotta fill the second one, when asking for a release version
 
-Lerna will automatically detect changes for packages, and offer to increment the version number and push an NPM release as appropriate. Any dependant modules will be kept in sync as well.
+### Versioning
+
+Our rule is to never do minor or major releases as it is the core team who actually decides it
+so to tag your stuff you gotta just add -x at the end.
+
+#### Examples:
+
+1.0.1 would become 1.0.1-1
+1.0.2.ovm-alpha => 1.0.2.ovm-alpha-1
+1.1.3-1 => 1.1.3-2 (no double dash, you just increment it)
