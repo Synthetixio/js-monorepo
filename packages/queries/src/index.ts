@@ -33,8 +33,7 @@ type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...arg
 type SubgraphQueryFunction<F> = F extends (
 	u: string,
 	o: exchanges.MultiQueryOptions<infer A, infer B>,
-	args: infer C,
-	queryOptions: UseQueryOptions
+	args: infer C
 ) => infer R
 	? (
 			options: subgraph.MultiQueryOptions<A, B>,
@@ -67,11 +66,7 @@ export function createQueryContext({
 	subgraphEndpoints,
 }: {
 	networkId: NetworkId | null;
-	provider?:
-		| ethers.providers.Web3Provider
-		| ethers.providers.Provider
-		| ethers.providers.JsonRpcProvider
-		| ethers.providers.InfuraProvider;
+	provider?: ethers.providers.Provider;
 	signer?: ethers.Signer;
 	subgraphEndpoints?: SubgraphEndpoints;
 }): SynthetixQueryContextContent {
