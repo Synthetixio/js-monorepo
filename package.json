@@ -59,7 +59,6 @@
 		"watchpack-chokidar2": "^2.0.1"
 	},
 	"dependencies": {
-		"bootstrap": "^5.1.0",
-		"ethers": "^5.5.2"
+		"bootstrap": "^5.1.0"
 	}
 }
