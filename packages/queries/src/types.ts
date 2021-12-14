@@ -172,6 +172,8 @@ export type Vote = {
 	proposal: string;
 	choice: any;
 	metadata: any;
+	vp: number;
+	vp_by_strategy: number[];
 };
 
 export type ProposalResults = {

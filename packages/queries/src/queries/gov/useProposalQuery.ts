@@ -134,6 +134,8 @@ const useProposalQuery = (
 							id
 							voter
 							choice
+							vp
+							vp_by_strategy
 						}
 					}
 				`,
@@ -142,26 +144,22 @@ const useProposalQuery = (
 
 			const voterAddresses = votes.map((e: Vote) => ethers.utils.getAddress(e.voter));
 
-			const block = parseInt(proposal.snapshot);
+			// const block = parseInt(proposal.snapshot);
 
-			const [scores, profiles] = await Promise.all([
-				snapshot.utils.getScores(
-					spaceKey,
-					space.strategies,
-					space.network,
-					getNetworkFromId({ id: ctx.networkId }).name,
-					voterAddresses,
-					block
-				),
-				/* Get scores and ENS/3Box profiles */
-				getProfiles(voterAddresses),
-			]);
+			// const [scores, profiles] = await Promise.all([
+			// 	snapshot.utils.getScores(
+			// 		spaceKey,
+			// 		space.strategies,
+			// 		space.network,
+			// 		getNetworkFromId({ id: ctx.networkId }).name,
+			// 		voterAddresses,
+			// 		block
+			// 	),
+			// 	/* Get scores and ENS/3Box profiles */
+			// 	getProfiles(voterAddresses),
+			// ]);
 
 			interface MappedVotes extends Vote {
-				profile: {
-					ens: string;
-					address: string;
-				};
 				scores: number[];
 				balance: number;
 			}
@@ -172,15 +170,14 @@ const useProposalQuery = (
 				mappedVotes
 					.map((vote) => {
 						vote.scores = space.strategies.map(
-							(_: SpaceStrategy, key: number) => scores[key][getAddress(vote.voter)] || 0
+							(_: SpaceStrategy, key: number) => vote.vp_by_strategy[key] || 0
 						);
-						vote.balance = vote.scores.reduce((a: number, b: number) => a + b, 0);
-						vote.profile = profiles[getAddress(vote.voter)];
+						vote.balance = vote.vp;
 						return vote;
 					})
 					.filter((vote) => vote.balance > 0)
 					.sort((a, b) => b.balance - a.balance),
-				(a) => getAddress(a.voter)
+				(a: Vote) => getAddress(a.voter)
 			);
 
 			/* Apply dilution penalties for SIP/SCCP pages */
