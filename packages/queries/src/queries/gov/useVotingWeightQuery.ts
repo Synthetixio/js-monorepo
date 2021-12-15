@@ -61,7 +61,7 @@ const useVotingWeightQuery = (
 							votes(
 								orderBy: "vp"
 								orderDirection: desc
-								where: { proposal: $proposal, vp_gt: 0, voter: userAddress }
+								where: { proposal: $proposal, vp_gt: 0, voter: $userAddress }
 							) {
 								id
 								voter
@@ -71,7 +71,7 @@ const useVotingWeightQuery = (
 							}
 						}
 					`,
-					{ proposal: latestProposal.id, userAddress: walletAddress }
+					{ proposal: latestProposal.id, userAddress: walletAddress ?? '' }
 				);
 
 				if (votes.length === 0) {
