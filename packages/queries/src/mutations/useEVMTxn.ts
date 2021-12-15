@@ -44,19 +44,19 @@ const useEVMTxn = (
 
 	const getOptimismLayerOneFees = async () => {
 		if (!txn || !ctx.provider) return null;
-		if (ctx.networkId !== NetworkId['Mainnet-Ovm'] && ctx.networkId !== NetworkId['Kovan-Ovm'])
-			return null;
-		try {
-			const OptimismGasPriceOracleContract = new ethers.Contract(
-				optimismOracleContract.address,
-				optimismOracleContract.abi,
-				ctx.provider
-			);
-			const serializedTxn = ethers.utils.serializeTransaction(txn as ethers.UnsignedTransaction);
-			return wei(await OptimismGasPriceOracleContract.getL1Fee(serializedTxn));
-		} catch (e) {
+		const isNotOvm =
+			ctx.networkId !== NetworkId['Mainnet-Ovm'] && ctx.networkId !== NetworkId['Kovan-Ovm'];
+		if (isNotOvm) {
 			return null;
 		}
+
+		const OptimismGasPriceOracleContract = new ethers.Contract(
+			optimismOracleContract.address,
+			optimismOracleContract.abi,
+			ctx.provider
+		);
+		const serializedTxn = ethers.utils.serializeTransaction(txn as ethers.UnsignedTransaction);
+		return wei(await OptimismGasPriceOracleContract.getL1Fee(serializedTxn));
 	};
 
 	const estimateGas = async () => {
@@ -79,17 +79,16 @@ const useEVMTxn = (
 		if (txnStatus === 'confirmed' || txnStatus === 'failed') {
 			setTxnStatus('unsent');
 		}
+		try {
+			if (!options || options.enabled) {
+				setErrorMessage(null);
+				setOptimismLayerOneFee(await getOptimismLayerOneFees());
 
-		setOptimismLayerOneFee(await getOptimismLayerOneFees());
-		setErrorMessage(null);
-
-		if (!options || options.enabled) {
-			try {
 				const gl = await estimateGas();
 				if (gl) setGasLimit(gl);
-			} catch (e) {
-				handleError(e);
 			}
+		} catch (e) {
+			handleError(e);
 		}
 	};
 	const transactionValueAsString = txn?.value ? txn.value.toString() : undefined;
