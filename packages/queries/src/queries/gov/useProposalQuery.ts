@@ -103,13 +103,41 @@ const useProposalQuery = (
 
 			let mappedVotes = votes as MappedVotes[];
 
-			mappedVotes.map((vote) => {
-				vote.scores = space.strategies.map(
-					(_: SpaceStrategy, key: number) => vote.vp_by_strategy[key] || 0
+			if (proposal.state === 'closed') {
+				mappedVotes.map((vote) => {
+					vote.scores = space.strategies.map(
+						(_: SpaceStrategy, key: number) => vote.vp_by_strategy[key] || 0
+					);
+					vote.balance = vote.vp;
+					return vote;
+				});
+			} else {
+				const block = parseInt(proposal.snapshot);
+
+				const [scores] = await Promise.all([
+					snapshot.utils.getScores(
+						spaceKey,
+						space.strategies,
+						space.network,
+						voterAddresses,
+						block
+					),
+				]);
+
+				mappedVotes = uniqBy(
+					mappedVotes
+						.map((vote) => {
+							vote.scores = space.strategies.map(
+								(_: SpaceStrategy, key: number) => scores[key][getAddress(vote.voter)] || 0
+							);
+							vote.balance = vote.scores.reduce((a: number, b: number) => a + b, 0);
+							return vote;
+						})
+						.filter((vote) => vote.balance > 0)
+						.sort((a, b) => b.balance - a.balance),
+					(a) => getAddress(a.voter)
 				);
-				vote.balance = vote.vp;
-				return vote;
-			});
+			}
 
 			/* Apply dilution penalties for SIP/SCCP pages */
 			if (spaceKey === SPACE_KEY.PROPOSAL) {
