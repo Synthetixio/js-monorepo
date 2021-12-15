@@ -1,11 +1,11 @@
 {
 	"name": "@synthetixio/queries",
-	"version": "2.53.0-alpha2",
+	"version": "2.56.0-alpha",
 	"description": "react-query for pulling synthetix data in react interfaces",
 	"source": "./src/index.ts",
 	"main": "./build/node/src/index.js",
 	"module": "./build/node/src/index.js",
-	"browser": "./build/index.js",
+	"browser": "./build/node/src/index.js",
 	"types": "./build/node/src/index.d.ts",
 	"files": [
 		"build"
@@ -33,11 +33,11 @@
 	},
 	"dependencies": {
 		"@snapshot-labs/snapshot.js": "^0.1.11",
-		"@synthetixio/contracts-interface": "2.53.0-alpha2",
-		"@synthetixio/optimism-networks": "2.53.0-alpha2",
-		"@synthetixio/providers": "2.53.0-alpha2",
-		"@synthetixio/transaction-notifier": "2.53.0-alpha2",
-		"@synthetixio/wei": "2.53.0-alpha2",
+		"@synthetixio/contracts-interface": "2.56.0-alpha",
+		"@synthetixio/optimism-networks": "2.55.0",
+		"@synthetixio/providers": "2.55.0",
+		"@synthetixio/transaction-notifier": "2.55.0",
+		"@synthetixio/wei": "2.55.0",
 		"axios": "0.21.1",
 		"bignumber.js": "9.0.1",
 		"codegen-graph-ts": "0.1.2",
