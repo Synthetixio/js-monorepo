@@ -71,6 +71,15 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 		expect(result.current.error?.message).toContain('Could not retrieve gas price from provider');
 	});
 
+	test('computeGasFee works', () => {
+		const baseFeePerGas = wei(10, 9).toBN();
+		const maxPriorityFeePerGas = 2;
+		const result = computeGasFee(baseFeePerGas, maxPriorityFeePerGas);
+		expect(result.maxPriorityFeePerGas.toString()).toEqual('2000000000'); // 2e9
+		// expects multiplier to be set to 2
+		expect(result.maxFeePerGas.toString()).toEqual('22000000000'); // 10e9 * 2 + 2e9)
+	});
+
 	test('Should use EIP1559 logic if network is Mainnet', async () => {
 		const ctx = getFakeQueryContext();
 		ctx.networkId = NetworkId['Mainnet'];

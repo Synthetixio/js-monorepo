@@ -10,7 +10,7 @@ const MULTIPLIER = wei(2);
 
 export const computeGasFee = (baseFeePerGas: ethers.BigNumber, maxPriorityFeePerGas: number) => {
 	return {
-		maxPriorityFeePerGas: wei(baseFeePerGas, 9).toBN(),
+		maxPriorityFeePerGas: wei(maxPriorityFeePerGas, 9).toBN(),
 		maxFeePerGas: wei(baseFeePerGas, 9).mul(MULTIPLIER).add(wei(maxPriorityFeePerGas, 9)).toBN(),
 	};
 };
