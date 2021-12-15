@@ -7,8 +7,6 @@ import { SPACE_KEY } from './constants';
 import { SpaceData, SpaceStrategy } from '../../types';
 import { QueryContext } from '../../context';
 
-import { getNetworkFromId } from '@synthetixio/contracts-interface';
-
 const useVotingWeightQuery = (
 	ctx: QueryContext,
 	snapshotEndpoint: string,
@@ -51,7 +49,6 @@ const useVotingWeightQuery = (
 				SPACE_KEY.COUNCIL,
 				space.strategies,
 				space.network,
-				getNetworkFromId({ id: ctx.networkId }).name,
 				[getAddress(walletAddress ?? '')],
 				block!
 			);
