@@ -44,13 +44,13 @@ describe('@synthetixio/queries gov', () => {
 
 		// TODO: clean this up to make more sense
 		expect(result.current.data?.totalBalances).toEqual([
-			0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 10, 0, 10, 10, 0, 0, 0, 0, 0, 0,
 		]);
 		expect(result.current.data?.totalVotes).toEqual([
-			0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0,
 		]);
 		expect(result.current.data?.choices).toHaveLength(16);
-		expect(result.current.data?.totalVotesBalances).toEqual(15);
+		expect(result.current.data?.totalVotesBalances).toEqual(30);
 	});
 
 	test('useVotingWeightQuery', async () => {

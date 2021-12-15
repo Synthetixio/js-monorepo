@@ -10,58 +10,6 @@ import { QueryContext } from '../../context';
 
 import CouncilDilution from '../../contracts/CouncilDilution';
 
-export function getENSForAddresses(addresses: any[]) {
-	return new Promise((resolve, reject) => {
-		snapshot.utils
-			.subgraphRequest('https://api.thegraph.com/subgraphs/name/ensdomains/ens', {
-				accounts: {
-					__args: {
-						first: 1000,
-						where: {
-							id_in: addresses.map((addresses: string) => addresses.toLowerCase()),
-						},
-					},
-					id: true,
-					domains: {
-						__args: {
-							first: 2,
-						},
-						name: true,
-						labelName: true,
-					},
-				},
-			})
-			.then(({ accounts }: { accounts: any }) => {
-				const ensNames = {} as any;
-				accounts.forEach((profile: any) => {
-					ensNames[ethers.utils.getAddress(profile.id)] = profile.domains[0]
-						? profile.domains[0].name
-						: null;
-				});
-				resolve(ensNames);
-			})
-			.catch((error: any) => {
-				reject(error);
-			});
-	});
-}
-
-export async function getProfiles(addresses: any) {
-	let ensNames = [] as any;
-
-	[ensNames] = await Promise.all([getENSForAddresses(addresses)]);
-
-	const profiles = Object.fromEntries(addresses.map((address: any) => [address, {}]));
-
-	return Object.fromEntries(
-		Object.entries(profiles).map(([address, profile]) => {
-			profile.ens = ensNames[ethers.utils.getAddress(address)] || '';
-			profile.address = ethers.utils.getAddress(address);
-			return [address, profile];
-		})
-	);
-}
-
 const useProposalQuery = (
 	ctx: QueryContext,
 	snapshotEndpoint: string,
@@ -129,10 +77,17 @@ const useProposalQuery = (
 				snapshotEndpoint,
 				gql`
 					query Votes($proposal: String) {
-						votes(first: 1000, where: { proposal: $proposal }) {
+						votes(
+							first: 1000
+							orderBy: "vp"
+							orderDirection: "desc"
+							where: { proposal: $proposal, vp_gt: 0 }
+						) {
 							id
 							voter
 							choice
+							vp
+							vp_by_strategy
 						}
 					}
 				`,
@@ -141,39 +96,20 @@ const useProposalQuery = (
 
 			const voterAddresses = votes.map((e: Vote) => ethers.utils.getAddress(e.voter));
 
-			const block = parseInt(proposal.snapshot);
-
-			const [scores, profiles] = await Promise.all([
-				snapshot.utils.getScores(spaceKey, space.strategies, space.network, voterAddresses, block),
-				/* Get scores and ENS/3Box profiles */
-				getProfiles(voterAddresses),
-			]);
-
 			interface MappedVotes extends Vote {
-				profile: {
-					ens: string;
-					address: string;
-				};
 				scores: number[];
 				balance: number;
 			}
 
 			let mappedVotes = votes as MappedVotes[];
 
-			mappedVotes = uniqBy(
-				mappedVotes
-					.map((vote) => {
-						vote.scores = space.strategies.map(
-							(_: SpaceStrategy, key: number) => scores[key][getAddress(vote.voter)] || 0
-						);
-						vote.balance = vote.scores.reduce((a: number, b: number) => a + b, 0);
-						vote.profile = profiles[getAddress(vote.voter)];
-						return vote;
-					})
-					.filter((vote) => vote.balance > 0)
-					.sort((a, b) => b.balance - a.balance),
-				(a) => getAddress(a.voter)
-			);
+			mappedVotes.map((vote) => {
+				vote.scores = space.strategies.map(
+					(_: SpaceStrategy, key: number) => vote.vp_by_strategy[key] || 0
+				);
+				vote.balance = vote.vp;
+				return vote;
+			});
 
 			/* Apply dilution penalties for SIP/SCCP pages */
 			if (spaceKey === SPACE_KEY.PROPOSAL) {

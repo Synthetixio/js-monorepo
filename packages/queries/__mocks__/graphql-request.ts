@@ -80,16 +80,22 @@ export default async function request(_: string, req: string) {
 					id: 'QmdVrJthnYvoS9JtZC3vGJeaQ1JqNHASCM5EVfLQvypA9L',
 					voter: '0x1a207bEefC754735871CEEb4C506686F044B1c41',
 					choice: 10,
+					vp: 10,
+					vp_by_strategy: [5, 5],
 				},
 				{
 					id: 'QmSKPcoRi9fVtPR2Q8yz1sKEQLcW3NDq5NUfsiHZmnKrtN',
 					voter: '0x0000000000000000000000000000000000000000',
 					choice: 9,
+					vp: 10,
+					vp_by_strategy: [5, 5],
 				},
 				{
 					id: 'QmV9iSwy2BdaUBxJBQFtpMYxBmqgWhXWJVtEVfV4Qypd9B',
 					voter: '0xC0506F0b197899f168E751218f91E975DAdd9b37',
 					choice: 7,
+					vp: 10,
+					vp_by_strategy: [5, 5],
 				},
 			],
 		};
@@ -99,7 +105,7 @@ export default async function request(_: string, req: string) {
 				id: 'QmdVCTNvAZTJeDMb8AwU6eBp32nmV6ymsNZ2zMkJM9d93u',
 				title: 'Spartan Council Election 23/06/21',
 				/* eslint-disable */
-				body: '#### What is the Spartan Council Election?\n\n[SIP-93](https://sips.synthetix.io/sips/sip-93) explains the process and motives behind the Spartan Council. You can also read about it in the [blog post](https://blog.synthetix.io/the-spartan-council-election/). \n\n[SIP-104](https://sips.synthetix.io/sips/sip-104) explains the transition from liquid democracy to voter dilution which applies to this Spartan Council epoch. You can also read about it in the [blog post](https://blog.synthetix.io/spartan-council-updates-voting-live-for-next-epoch-integration-into-staking-dapp/)\n\nThe current council epoch is 3 months, successful Spartan Council members are paid a monthly stipend by the Synthetix Treasury.\n\n#### How are votes weighted?\nTo vote in the election, SNX holders will need to have staked within the last fee period snapshot before the start of the Election Period. \n\nEach staking wallet will be able to vote for one nominee, and a wallet\'s vote weighting takes their staking debt at the relevant snapshot and multiplies it quadratically, as outlined in [SIP-90](https://sips.synthetix.io/sips/sip-90).\n\n#### How to vote?\nChoose an option below.\n\nTo help match the wallet address with the nominee identity visit the spreadsheet [here](https://docs.google.com/spreadsheets/d/1nbAUAioVvxlhtBzUI0dwmedGC2R3AZL-mDws7BzvZDQ/edit?usp=sharing)\n',
+				body: "#### What is the Spartan Council Election?\n\n[SIP-93](https://sips.synthetix.io/sips/sip-93) explains the process and motives behind the Spartan Council. You can also read about it in the [blog post](https://blog.synthetix.io/the-spartan-council-election/). \n\n[SIP-104](https://sips.synthetix.io/sips/sip-104) explains the transition from liquid democracy to voter dilution which applies to this Spartan Council epoch. You can also read about it in the [blog post](https://blog.synthetix.io/spartan-council-updates-voting-live-for-next-epoch-integration-into-staking-dapp/)\n\nThe current council epoch is 3 months, successful Spartan Council members are paid a monthly stipend by the Synthetix Treasury.\n\n#### How are votes weighted?\nTo vote in the election, SNX holders will need to have staked within the last fee period snapshot before the start of the Election Period. \n\nEach staking wallet will be able to vote for one nominee, and a wallet's vote weighting takes their staking debt at the relevant snapshot and multiplies it quadratically, as outlined in [SIP-90](https://sips.synthetix.io/sips/sip-90).\n\n#### How to vote?\nChoose an option below.\n\nTo help match the wallet address with the nominee identity visit the spreadsheet [here](https://docs.google.com/spreadsheets/d/1nbAUAioVvxlhtBzUI0dwmedGC2R3AZL-mDws7BzvZDQ/edit?usp=sharing)\n",
 				choices: [
 					'0x9cFc4cfB2aa99bedc98d52E2DCc0Eb',
 					'0x0bc3668d2AaFa53eD5E5134bA13ec7',
