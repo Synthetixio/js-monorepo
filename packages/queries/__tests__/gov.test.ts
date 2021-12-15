@@ -62,7 +62,6 @@ describe('@synthetixio/queries gov', () => {
 					ctx,
 					'',
 					SPACE_KEY.COUNCIL,
-					1234,
 					'0x0000000000000000000000000000000000000000'
 				),
 			{ wrapper }

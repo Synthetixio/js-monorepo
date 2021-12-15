@@ -2,7 +2,7 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import snapshot from '@snapshot-labs/snapshot.js';
 
 import request, { gql } from 'graphql-request';
-import { Proposal, SpaceData, SpaceStrategy } from '../../types';
+import { Proposal, SpaceData, SpaceStrategy, Vote } from '../../types';
 import { getAddress } from 'ethers/lib/utils';
 import { electionAuthor, SPACE_KEY } from './constants';
 import { QueryContext } from '../../context';
@@ -94,17 +94,51 @@ const useHasVotedForElectionsQuery = (
 				{ spaceKey: SPACE_KEY.COUNCIL }
 			);
 
-			const scores = await snapshot.utils.getScores(
-				SPACE_KEY.COUNCIL,
-				space.strategies,
-				space.network,
-				[getAddress(walletAddress!)],
-				latestSnapshot
-			);
+			let totalScore: number[];
 
-			const totalScore = space.strategies.map(
-				(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress!)]
-			);
+			const latestProposal = proposals[0];
+
+			if (latestProposal.state === 'closed') {
+				const { votes }: { votes: Vote[] } = await request(
+					snapshotEndpoint,
+					gql`
+						query Votes($proposal: String, $walletAddress: String) {
+							votes(
+								orderBy: "vp"
+								orderDirection: desc
+								where: { proposal: $proposal, vp_gt: 0, voter: walletAddress }
+							) {
+								id
+								voter
+								choice
+								vp
+								vp_by_strategy
+							}
+						}
+					`,
+					{ proposal: latestProposal.id, walletAddress: walletAddress }
+				);
+
+				if (votes.length === 0) {
+					return {
+						hasVoted: true,
+					};
+				} else {
+					totalScore = votes[0].vp_by_strategy;
+				}
+			} else {
+				const scores = await snapshot.utils.getScores(
+					SPACE_KEY.COUNCIL,
+					latestProposal.space.strategies,
+					latestProposal.space.network,
+					[getAddress(walletAddress ?? '')],
+					latestProposal.snapshot!
+				);
+
+				totalScore = latestProposal.space.strategies.map(
+					(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress!)] ?? 0
+				);
+			}
 
 			const totalWeight = totalScore.reduce((a: number, b: number) => a + b);
 
