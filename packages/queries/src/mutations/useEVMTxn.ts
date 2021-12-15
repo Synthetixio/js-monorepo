@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { UseMutationOptions, useMutation } from 'react-query';
 
 import Wei, { wei } from '@synthetixio/wei/build/node/wei';
@@ -49,14 +50,14 @@ const useEVMTxn = (
 	const [txnStatus, setTxnStatus] = useState<TransactionStatus>('unsent');
 
 	const getOptimismLayerOneFees = async () => {
-		if (!txn) return null;
+		if (!txn || !ctx.provider) return null;
 		if (ctx.networkId !== NetworkId['Mainnet-Ovm'] && ctx.networkId !== NetworkId['Kovan-Ovm'])
 			return null;
 		try {
 			const OptimismGasPriceOracleContract = new ethers.Contract(
 				optimismOracleContract.address,
 				optimismOracleContract.abi,
-				ctx.provider!
+				ctx.provider
 			);
 			const serializedTxn = ethers.utils.serializeTransaction(txn as ethers.UnsignedTransaction);
 			return wei(await OptimismGasPriceOracleContract.getL1Fee(serializedTxn));
@@ -112,18 +113,18 @@ const useEVMTxn = (
 		txnStatus,
 		refresh,
 		...useMutation(async () => {
-			if (options && !options.enabled) {
+			if ((options && !options.enabled) || !txn || !ctx.signer) {
 				return;
 			}
 
 			setErrorMessage(null);
 
-			const execTxn = clone(txn!);
+			const execTxn = clone(txn);
 
 			try {
 				if (!execTxn.gasLimit) {
 					if (!gasLimit) {
-						const newGasLimit = (await estimateGas())!;
+						const newGasLimit = await estimateGas();
 						execTxn.gasLimit = wei(newGasLimit ?? 0, 9)
 							.mul(1 + (options?.gasLimitBuffer || DEFAULT_GAS_BUFFER))
 							.toBN();
@@ -137,15 +138,15 @@ const useEVMTxn = (
 
 				setTxnStatus('prompting');
 
-				const txndata = await ctx.signer!.sendTransaction(execTxn!);
+				const txnData = await ctx.signer.sendTransaction(execTxn);
 
 				setTxnStatus('pending');
-				setHash(txndata.hash);
+				setHash(txnData.hash);
 
 				// keep the async function going until the transaction has completed
-				const txnresult = await txndata.wait();
+				const txnResult = await txnData.wait();
 
-				if (txnresult.status == 1) {
+				if (txnResult.status == 1) {
 					setTxnStatus('confirmed');
 				} else {
 					setTxnStatus('failed');
