@@ -45,6 +45,7 @@ const useProposalQuery = (
 							space {
 								id
 								name
+								symbol
 							}
 						}
 					}
