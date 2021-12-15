@@ -37,7 +37,10 @@ const useProposalQuery = (
 							snapshot
 							state
 							author
-							strategies
+							strategies {
+								name
+								params
+							}
 							network
 							space {
 								id

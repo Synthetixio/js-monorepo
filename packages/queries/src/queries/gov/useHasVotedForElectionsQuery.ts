@@ -48,7 +48,10 @@ const useHasVotedForElectionsQuery = (
 						) {
 							id
 							snapshot
-							strategies
+							strategies {
+								name
+								params
+							}
 							network
 						}
 					}
