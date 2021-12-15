@@ -102,11 +102,11 @@ const useHasVotedForElectionsQuery = (
 				const { votes }: { votes: Vote[] } = await request(
 					snapshotEndpoint,
 					gql`
-						query Votes($proposal: String, $walletAddress: String) {
+						query Votes($proposal: String, $userAddress: String) {
 							votes(
 								orderBy: "vp"
 								orderDirection: desc
-								where: { proposal: $proposal, vp_gt: 0, voter: $walletAddress }
+								where: { proposal: $proposal, vp_gt: 0, voter: $userAddress }
 							) {
 								id
 								voter
@@ -116,7 +116,7 @@ const useHasVotedForElectionsQuery = (
 							}
 						}
 					`,
-					{ proposal: latestProposal.id, walletAddress: walletAddress }
+					{ proposal: latestProposal.id, userAddress: walletAddress ?? '' }
 				);
 
 				if (votes.length === 0) {
@@ -163,7 +163,7 @@ const useHasVotedForElectionsQuery = (
 				`,
 				{
 					electionHashes: electionHashes,
-					userAddress: walletAddress,
+					userAddress: walletAddress ?? '',
 				}
 			);
 
