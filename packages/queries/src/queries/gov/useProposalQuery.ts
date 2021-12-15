@@ -80,7 +80,7 @@ const useProposalQuery = (
 						votes(
 							first: 1000
 							orderBy: "vp"
-							orderDirection: "desc"
+							orderDirection: desc
 							where: { proposal: $proposal, vp_gt: 0 }
 						) {
 							id
