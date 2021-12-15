@@ -33,11 +33,10 @@ const useVotingWeightQuery = (
 							id
 							ipfs
 							state
+							network
 							strategies {
 								name
 								params
-							}
-							network
 							}
 						}
 					}
