@@ -9,16 +9,9 @@ import clone from 'lodash/clone';
 import omit from 'lodash/omit';
 import { isString } from 'lodash';
 import { NetworkId } from '@synthetixio/contracts-interface';
-import { GasSpeed, GasPrice } from '../types';
 import optimismOracleContract from '../contracts/OptimismGasPriceOracle';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
-type TransactionFees = Record<GasSpeed, Wei>;
-
-const getKeyValue =
-	<T extends Record<string, unknown>, U extends keyof T>(obj: T) =>
-	(key: U) =>
-		obj[key];
 
 const DEFAULT_GAS_BUFFER = 0.15;
 

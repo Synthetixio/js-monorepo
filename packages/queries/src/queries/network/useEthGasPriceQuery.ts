@@ -1,9 +1,7 @@
-import axios from 'axios';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 import { GasPrices } from '../../types';
-import { formatGwei } from '../../utils';
-import Wei, { wei } from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 
 import { NetworkId } from '@synthetixio/contracts-interface';
 import { ethers } from 'ethers';
@@ -44,7 +42,9 @@ const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPri
 							fast: computeGasFee(block.baseFeePerGas, 4),
 							average: computeGasFee(block.baseFeePerGas, 2),
 						};
-					} else return getGasPriceFromProvider(ctx.provider!);
+					} else {
+						return getGasPriceFromProvider(ctx.provider!);
+					}
 					// If not (Testnet or Optimism network), we get the Gas Price through the provider
 				} else {
 					return getGasPriceFromProvider(ctx.provider!);
