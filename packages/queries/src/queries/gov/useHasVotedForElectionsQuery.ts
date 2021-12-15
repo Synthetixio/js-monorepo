@@ -2,7 +2,7 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import snapshot from '@snapshot-labs/snapshot.js';
 
 import request, { gql } from 'graphql-request';
-import { Proposal, SpaceData, SpaceStrategy, Vote } from '../../types';
+import { Proposal, SpaceStrategy, Vote } from '../../types';
 import { getAddress } from 'ethers/lib/utils';
 import { electionAuthor, SPACE_KEY } from './constants';
 import { QueryContext } from '../../context';
@@ -48,6 +48,8 @@ const useHasVotedForElectionsQuery = (
 						) {
 							id
 							snapshot
+							strategies
+							network
 						}
 					}
 				`,
@@ -65,34 +67,6 @@ const useHasVotedForElectionsQuery = (
 			if (proposals.length < 4 || !proposals[0]) {
 				return { hasVoted: true };
 			}
-
-			const latestSnapshot = parseInt(proposals[0].snapshot);
-
-			const { space }: { space: SpaceData } = await request(
-				snapshotEndpoint,
-				gql`
-					query Space($spaceKey: String) {
-						space(id: $spaceKey) {
-							domain
-							about
-							members
-							name
-							network
-							skin
-							symbol
-							strategies {
-								name
-								params
-							}
-							filters {
-								minScore
-								onlyMembers
-							}
-						}
-					}
-				`,
-				{ spaceKey: SPACE_KEY.COUNCIL }
-			);
 
 			let totalScore: number[];
 
@@ -129,13 +103,13 @@ const useHasVotedForElectionsQuery = (
 			} else {
 				const scores = await snapshot.utils.getScores(
 					SPACE_KEY.COUNCIL,
-					latestProposal.space.strategies,
-					latestProposal.space.network,
+					latestProposal.strategies,
+					latestProposal.network,
 					[getAddress(walletAddress ?? '')],
 					latestProposal.snapshot!
 				);
 
-				totalScore = latestProposal.space.strategies.map(
+				totalScore = latestProposal.strategies.map(
 					(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress!)] ?? 0
 				);
 			}

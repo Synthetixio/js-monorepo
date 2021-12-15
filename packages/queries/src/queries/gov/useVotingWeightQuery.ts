@@ -33,12 +33,8 @@ const useVotingWeightQuery = (
 							id
 							ipfs
 							state
-							space {
-								strategies {
-									name
-									params
-								}
-								network
+							strategies
+							network
 							}
 						}
 					}
@@ -82,13 +78,13 @@ const useVotingWeightQuery = (
 			} else {
 				const scores = await snapshot.utils.getScores(
 					SPACE_KEY.COUNCIL,
-					latestProposal.space.strategies,
-					latestProposal.space.network,
+					latestProposal.strategies,
+					latestProposal.network,
 					[getAddress(walletAddress ?? '')],
 					latestProposal.snapshot!
 				);
 
-				totalScore = latestProposal.space.strategies.map(
+				totalScore = latestProposal.strategies.map(
 					(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress!)] ?? 0
 				);
 			}
