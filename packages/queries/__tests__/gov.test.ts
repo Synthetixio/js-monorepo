@@ -12,18 +12,18 @@ describe('@synthetixio/queries gov', () => {
 
 	const ctx = getFakeQueryContext();
 
-	// test('useHasVotedForElectionsQuery', async () => {
-	// 	const wrapper = getWrapper();
+	test('useHasVotedForElectionsQuery', async () => {
+		const wrapper = getWrapper();
 
-	// 	const { result, waitFor } = renderHook(
-	// 		() => useHasVotedForElectionsQuery(ctx, '', '0x0000000000000000000000000000000000000000'),
-	// 		{ wrapper }
-	// 	);
+		const { result, waitFor } = renderHook(
+			() => useHasVotedForElectionsQuery(ctx, '', '0x0000000000000000000000000000000000000000'),
+			{ wrapper }
+		);
 
-	// 	await waitFor(() => result.current.isSuccess);
+		await waitFor(() => result.current.isSuccess);
 
-	// 	expect(result.current.data?.hasVoted).toEqual(true);
-	// });
+		expect(result.current.data?.hasVoted).toEqual(true);
+	});
 
 	test('useProposalQuery', async () => {
 		const wrapper = getWrapper();
