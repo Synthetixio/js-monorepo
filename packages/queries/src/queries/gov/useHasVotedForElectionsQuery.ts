@@ -106,7 +106,7 @@ const useHasVotedForElectionsQuery = (
 							votes(
 								orderBy: "vp"
 								orderDirection: desc
-								where: { proposal: $proposal, vp_gt: 0, voter: walletAddress }
+								where: { proposal: $proposal, vp_gt: 0, voter: $walletAddress }
 							) {
 								id
 								voter
