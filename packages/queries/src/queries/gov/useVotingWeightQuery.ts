@@ -3,67 +3,97 @@ import snapshot from '@snapshot-labs/snapshot.js';
 
 import { ethers } from 'ethers';
 import request, { gql } from 'graphql-request';
-import { SPACE_KEY } from './constants';
-import { SpaceData, SpaceStrategy } from '../../types';
+import { electionAuthor, SPACE_KEY } from './constants';
+import { Proposal, SpaceStrategy, Vote } from '../../types';
 import { QueryContext } from '../../context';
-
-import { getNetworkFromId } from '@synthetixio/contracts-interface';
 
 const useVotingWeightQuery = (
 	ctx: QueryContext,
 	snapshotEndpoint: string,
 	spaceKey: SPACE_KEY,
-	block: number | null,
 	walletAddress: string | null,
 	options?: UseQueryOptions<number[]>
 ) => {
 	return useQuery<number[]>(
-		['gov', 'votingWeight', snapshotEndpoint, spaceKey, block, walletAddress],
+		['gov', 'votingWeight', snapshotEndpoint, spaceKey, walletAddress],
 		async () => {
 			const { getAddress } = ethers.utils;
-			const { space }: { space: SpaceData } = await request(
+
+			const { proposals }: { proposals: Proposal[] } = await request(
 				snapshotEndpoint,
 				gql`
-					query Space($spaceKey: String) {
-						space(id: $spaceKey) {
-							domain
-							about
-							members
-							name
+					query LatestSnapshot($councilKey: String, $author: String) {
+						proposals(
+							first: 1
+							where: { space: $councilKey, author: $author }
+							orderBy: "created"
+							orderDirection: desc
+						) {
+							snapshot
+							id
+							ipfs
+							state
 							network
-							skin
-							symbol
 							strategies {
 								name
 								params
 							}
-							filters {
-								minScore
-								onlyMembers
-							}
 						}
 					}
 				`,
-				{ spaceKey: spaceKey }
+				{
+					councilKey: SPACE_KEY.COUNCIL,
+					author: electionAuthor,
+				}
 			);
 
-			const scores = await snapshot.utils.getScores(
-				SPACE_KEY.COUNCIL,
-				space.strategies,
-				space.network,
-				getNetworkFromId({ id: ctx.networkId }).name,
-				[getAddress(walletAddress ?? '')],
-				block!
-			);
+			let totalScore: number[];
 
-			const totalScore = space.strategies.map(
-				(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress!)] ?? 0
-			);
+			const latestProposal = proposals[0];
+
+			if (latestProposal.state === 'closed') {
+				const { votes }: { votes: Vote[] } = await request(
+					snapshotEndpoint,
+					gql`
+						query Votes($proposal: String, $userAddress: String) {
+							votes(
+								orderBy: "vp"
+								orderDirection: desc
+								where: { proposal: $proposal, vp_gt: 0, voter: $userAddress }
+							) {
+								id
+								voter
+								choice
+								vp
+								vp_by_strategy
+							}
+						}
+					`,
+					{ proposal: latestProposal.id, userAddress: walletAddress ?? '' }
+				);
+				if (votes.length === 0) {
+					return [0, 0];
+				} else {
+					totalScore = votes[0].vp_by_strategy;
+				}
+			} else {
+				const scores = await snapshot.utils.getScores(
+					SPACE_KEY.COUNCIL,
+					latestProposal.strategies,
+					latestProposal.network,
+					[getAddress(walletAddress ?? '')],
+					Number(latestProposal.snapshot!)
+				);
+
+				totalScore = latestProposal.strategies.map(
+					(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress!)] ?? 0
+				);
+			}
 
 			return totalScore;
 		},
 		{
-			enabled: ctx.provider != null && !!spaceKey && block != null && !!walletAddress,
+			enabled: ctx.provider != null && !!spaceKey && !!walletAddress,
 			refetchInterval: false,
 			refetchOnWindowFocus: false,
 			refetchOnMount: false,

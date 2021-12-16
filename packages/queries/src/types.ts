@@ -156,11 +156,12 @@ export type SpaceStrategy = {
 
 export type Proposal = {
 	id: string;
+	ipfs: string;
 	author: string;
 	created: number;
 	space: SpaceData;
 	network: string;
-	strategies: SpaceStrategy;
+	strategies: SpaceStrategy[];
 	plugins: any;
 	title: string;
 	body: string;
@@ -179,6 +180,8 @@ export type Vote = {
 	proposal: string;
 	choice: any;
 	metadata: any;
+	vp: number;
+	vp_by_strategy: number[];
 };
 
 export type ProposalResults = {

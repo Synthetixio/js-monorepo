@@ -2,11 +2,10 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import snapshot from '@snapshot-labs/snapshot.js';
 
 import request, { gql } from 'graphql-request';
-import { Proposal, SpaceData, SpaceStrategy } from '../../types';
+import { Proposal, SpaceStrategy, Vote } from '../../types';
 import { getAddress } from 'ethers/lib/utils';
 import { electionAuthor, SPACE_KEY } from './constants';
 import { QueryContext } from '../../context';
-import { getNetworkFromId } from '@synthetixio/contracts-interface';
 
 export enum ProposalStates {
 	ACTIVE = 'active',
@@ -49,6 +48,11 @@ const useHasVotedForElectionsQuery = (
 						) {
 							id
 							snapshot
+							strategies {
+								name
+								params
+							}
+							network
 						}
 					}
 				`,
@@ -67,46 +71,51 @@ const useHasVotedForElectionsQuery = (
 				return { hasVoted: true };
 			}
 
-			const latestSnapshot = parseInt(proposals[0].snapshot);
+			let totalScore: number[];
 
-			const { space }: { space: SpaceData } = await request(
-				snapshotEndpoint,
-				gql`
-					query Space($spaceKey: String) {
-						space(id: $spaceKey) {
-							domain
-							about
-							members
-							name
-							network
-							skin
-							symbol
-							strategies {
-								name
-								params
-							}
-							filters {
-								minScore
-								onlyMembers
+			const latestProposal = proposals[0];
+
+			if (latestProposal.state === 'closed') {
+				const { votes }: { votes: Vote[] } = await request(
+					snapshotEndpoint,
+					gql`
+						query Votes($proposal: String, $userAddress: String) {
+							votes(
+								orderBy: "vp"
+								orderDirection: desc
+								where: { proposal: $proposal, vp_gt: 0, voter: $userAddress }
+							) {
+								id
+								voter
+								choice
+								vp
+								vp_by_strategy
 							}
 						}
-					}
-				`,
-				{ spaceKey: SPACE_KEY.COUNCIL }
-			);
+					`,
+					{ proposal: latestProposal.id, userAddress: walletAddress ?? '' }
+				);
 
-			const scores = await snapshot.utils.getScores(
-				SPACE_KEY.COUNCIL,
-				space.strategies,
-				space.network,
-				getNetworkFromId({ id: ctx.networkId }).name,
-				[getAddress(walletAddress!)],
-				latestSnapshot
-			);
+				if (votes.length === 0) {
+					return {
+						hasVoted: true,
+					};
+				} else {
+					totalScore = votes[0].vp_by_strategy;
+				}
+			} else {
+				const scores = await snapshot.utils.getScores(
+					SPACE_KEY.COUNCIL,
+					latestProposal.strategies,
+					latestProposal.network,
+					[getAddress(walletAddress ?? '')],
+					Number(latestProposal.snapshot!)
+				);
 
-			const totalScore = space.strategies.map(
-				(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress!)]
-			);
+				totalScore = latestProposal.strategies.map(
+					(_: SpaceStrategy, key: number) => scores[key][getAddress(walletAddress!)] ?? 0
+				);
+			}
 
 			const totalWeight = totalScore.reduce((a: number, b: number) => a + b);
 
@@ -131,7 +140,7 @@ const useHasVotedForElectionsQuery = (
 				`,
 				{
 					electionHashes: electionHashes,
-					userAddress: walletAddress,
+					userAddress: walletAddress ?? '',
 				}
 			);
 

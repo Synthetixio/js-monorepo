@@ -23,7 +23,7 @@ const useProposalsQuery = (
 				gql`
 					query ProposalsForSpace($spaceKey: String) {
 						proposals(
-							first: 10
+							first: 20
 							where: { space: $spaceKey }
 							orderBy: "created"
 							orderDirection: desc
