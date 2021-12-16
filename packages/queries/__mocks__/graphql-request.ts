@@ -9,14 +9,77 @@ export default async function request(_: string, req: string) {
 				{
 					id: 'QmdXdj2Nm4A4Wq6eJu74gX7PUHYwQBZJiY12fpGekwDyew',
 					snapshot: '12643795',
+					strategies: [
+						{
+							name: 'synthetix',
+							params: {
+								symbol: 'WD',
+							},
+						},
+						{
+							name: 'delegation',
+							params: {
+								symbol: 'WD (delegated)',
+								strategies: [
+									{
+										name: 'synthetix',
+										params: {},
+									},
+								],
+							},
+						},
+					],
+					network: '1',
 				},
 				{
 					id: 'QmXfikHsA5DjBwL5W4944wNiVbNBP4cVYckdpAYTQPRcY1',
 					snapshot: '12643795',
+					strategies: [
+						{
+							name: 'synthetix',
+							params: {
+								symbol: 'WD',
+							},
+						},
+						{
+							name: 'delegation',
+							params: {
+								symbol: 'WD (delegated)',
+								strategies: [
+									{
+										name: 'synthetix',
+										params: {},
+									},
+								],
+							},
+						},
+					],
+					network: '1',
 				},
 				{
 					id: 'QmdVCTNvAZTJeDMb8AwU6eBp32nmV6ymsNZ2zMkJM9d93u',
 					snapshot: '12643795',
+					strategies: [
+						{
+							name: 'synthetix',
+							params: {
+								symbol: 'WD',
+							},
+						},
+						{
+							name: 'delegation',
+							params: {
+								symbol: 'WD (delegated)',
+								strategies: [
+									{
+										name: 'synthetix',
+										params: {},
+									},
+								],
+							},
+						},
+					],
+					network: '1',
 				},
 			],
 		};
@@ -133,6 +196,27 @@ export default async function request(_: string, req: string) {
 					id: 'spartancouncil.eth',
 					name: 'Synthetix Spartan Council',
 				},
+				strategies: [
+					{
+						name: 'synthetix',
+						params: {
+							symbol: 'WD',
+						},
+					},
+					{
+						name: 'delegation',
+						params: {
+							symbol: 'WD (delegated)',
+							strategies: [
+								{
+									name: 'synthetix',
+									params: {},
+								},
+							],
+						},
+					},
+				],
+				network: '1',
 			},
 		};
 	} else return null;

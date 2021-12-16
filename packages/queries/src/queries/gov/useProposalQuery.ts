@@ -3,7 +3,7 @@ import snapshot from '@snapshot-labs/snapshot.js';
 
 import { ethers } from 'ethers';
 import { uniqBy } from 'lodash';
-import { SpaceData, Vote, SpaceStrategy, Proposal, ProposalResults } from '../../types';
+import { Vote, SpaceStrategy, Proposal, ProposalResults } from '../../types';
 import request, { gql } from 'graphql-request';
 import { SPACE_KEY } from './constants';
 import { QueryContext } from '../../context';
@@ -37,40 +37,20 @@ const useProposalQuery = (
 							snapshot
 							state
 							author
+							strategies {
+								name
+								params
+							}
+							network
 							space {
 								id
 								name
+								symbol
 							}
 						}
 					}
 				`,
 				{ id: hash }
-			);
-
-			const { space }: { space: SpaceData } = await request(
-				snapshotEndpoint,
-				gql`
-					query Space($spaceKey: String) {
-						space(id: $spaceKey) {
-							domain
-							about
-							members
-							name
-							network
-							skin
-							symbol
-							strategies {
-								name
-								params
-							}
-							filters {
-								minScore
-								onlyMembers
-							}
-						}
-					}
-				`,
-				{ spaceKey: spaceKey }
 			);
 
 			const { votes }: { votes: Vote[] } = await request(
@@ -105,7 +85,7 @@ const useProposalQuery = (
 
 			if (proposal.state === 'closed') {
 				mappedVotes.map((vote) => {
-					vote.scores = space.strategies.map(
+					vote.scores = proposal.strategies.map(
 						(_: SpaceStrategy, key: number) => vote.vp_by_strategy[key] || 0
 					);
 					vote.balance = vote.vp;
@@ -117,8 +97,8 @@ const useProposalQuery = (
 				const [scores] = await Promise.all([
 					snapshot.utils.getScores(
 						spaceKey,
-						space.strategies,
-						space.network,
+						proposal.strategies,
+						proposal.network,
 						voterAddresses,
 						block
 					),
@@ -127,7 +107,7 @@ const useProposalQuery = (
 				mappedVotes = uniqBy(
 					mappedVotes
 						.map((vote) => {
-							vote.scores = space.strategies.map(
+							vote.scores = proposal.strategies.map(
 								(_: SpaceStrategy, key: number) => scores[key][getAddress(vote.voter)] || 0
 							);
 							vote.balance = vote.scores.reduce((a: number, b: number) => a + b, 0);
@@ -135,7 +115,7 @@ const useProposalQuery = (
 						})
 						.filter((vote) => vote.balance > 0)
 						.sort((a, b) => b.balance - a.balance),
-					(a) => getAddress(a.voter)
+					(a: Vote) => getAddress(a.voter)
 				);
 			}
 
@@ -186,7 +166,7 @@ const useProposalQuery = (
 					mappedVotes.filter((vote) => vote.choice === i + 1).reduce((a, b) => a + b.balance, 0)
 				),
 				totalScores: proposal.choices.map((_: string, i: number) =>
-					space.strategies.map((_, sI) =>
+					proposal.strategies.map((_, sI) =>
 						mappedVotes
 							.filter((vote) => vote.choice === i + 1)
 							.reduce((a, b) => a + b.scores[sI], 0)
@@ -194,7 +174,7 @@ const useProposalQuery = (
 				),
 				totalVotesBalances: mappedVotes.reduce((a, b) => a + b.balance, 0),
 				choices: proposal.choices,
-				spaceSymbol: space.symbol,
+				spaceSymbol: proposal.space.symbol,
 				voteList: voteList,
 			};
 
