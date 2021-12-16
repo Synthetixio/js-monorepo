@@ -109,7 +109,7 @@ const useHasVotedForElectionsQuery = (
 					latestProposal.strategies,
 					latestProposal.network,
 					[getAddress(walletAddress ?? '')],
-					latestProposal.snapshot!
+					Number(latestProposal.snapshot!)
 				);
 
 				totalScore = latestProposal.strategies.map(

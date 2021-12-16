@@ -71,7 +71,6 @@ const useVotingWeightQuery = (
 					`,
 					{ proposal: latestProposal.id, userAddress: walletAddress ?? '' }
 				);
-
 				if (votes.length === 0) {
 					return [0, 0];
 				} else {
@@ -83,7 +82,7 @@ const useVotingWeightQuery = (
 					latestProposal.strategies,
 					latestProposal.network,
 					[getAddress(walletAddress ?? '')],
-					latestProposal.snapshot!
+					Number(latestProposal.snapshot!)
 				);
 
 				totalScore = latestProposal.strategies.map(
