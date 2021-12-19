@@ -3,6 +3,7 @@ import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { BigNumber } from 'ethers';
 
 export type GasPrice = {
+	baseFeePerGas?: BigNumber; // Note that this is used for estimating price and should not be included in the transaction
 	maxPriorityFeePerGas?: BigNumber;
 	maxFeePerGas?: BigNumber;
 	gasPrice?: BigNumber;
