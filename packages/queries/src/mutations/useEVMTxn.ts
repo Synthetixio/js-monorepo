@@ -55,7 +55,11 @@ const useEVMTxn = (
 			optimismOracleContract.abi,
 			ctx.provider
 		);
-		const serializedTxn = ethers.utils.serializeTransaction(txn as ethers.UnsignedTransaction);
+		// If user initialized the transaction on mainnet and then switched to optimism we need to manually remove EIP1559 fields
+		const cleanedTxn = omit(txn, ['maxPriorityFeePerGas', 'maxFeePerGas']);
+		const serializedTxn = ethers.utils.serializeTransaction(
+			cleanedTxn as ethers.UnsignedTransaction
+		);
 		return wei(await OptimismGasPriceOracleContract.getL1Fee(serializedTxn));
 	};
 
