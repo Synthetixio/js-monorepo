@@ -97,7 +97,7 @@ const useEVMTxn = (
 	const nonceAsString = txn?.nonce ? txn.nonce.toString() : undefined;
 	useEffect(() => {
 		refresh();
-	}, [txn?.data, transactionValueAsString, nonceAsString, txn?.from, txn?.to]);
+	}, [txn?.data, transactionValueAsString, nonceAsString, txn?.from, txn?.to, ctx.networkId]);
 
 	return {
 		gasLimit,
