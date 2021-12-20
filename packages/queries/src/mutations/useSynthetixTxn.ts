@@ -13,7 +13,7 @@ const useSynthetixTxn = (
 	options?: UseEVMTxnOptions
 ) => {
 	if (ctx.snxjs != null) {
-		return useContractTxn(ctx, ctx.snxjs!.contracts[contract], method, args, txnOptions, options);
+		return useContractTxn(ctx, ctx.snxjs.contracts[contract], method, args, txnOptions, options);
 	}
 
 	return useEVMTxn(ctx, {}, options);
