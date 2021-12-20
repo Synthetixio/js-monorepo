@@ -63,7 +63,9 @@ const useEVMTxn = (
 		if (txn != null && ctx.signer != null && (!options || options.enabled)) {
 			// remove gas price from the estimate because it will cause unusual error if its below the base
 			// it will be used at the end when the actual transaction is submitted
-			return ctx.signer.estimateGas(omit(txn, ['gasPrice']));
+			return ctx.signer.estimateGas(
+				omit(txn, ['gasPrice', 'maxPriorityFeePerGas', 'maxFeePerGas'])
+			);
 		}
 
 		return null;
