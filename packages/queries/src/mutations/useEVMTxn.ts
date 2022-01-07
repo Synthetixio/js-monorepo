@@ -13,7 +13,7 @@ import optimismOracleContract from '../contracts/OptimismGasPriceOracle';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
 
-const DEFAULT_GAS_BUFFER = 0.15;
+const DEFAULT_GAS_BUFFER = 0.2;
 
 export interface UseEVMTxnOptions extends UseMutationOptions<void> {
 	gasLimitBuffer?: number;
