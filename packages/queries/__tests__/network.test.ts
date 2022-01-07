@@ -1,22 +1,21 @@
 import { NetworkId } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 import { renderHook } from '@testing-library/react-hooks';
-import { ethers } from 'ethers';
+import { ethers, BigNumber } from 'ethers';
 import { set } from 'lodash';
-import useEthGasPriceQuery from '../src/queries/network/useEthGasPriceQuery';
+import useEthGasPriceQuery, { computeGasFee } from '../src/queries/network/useEthGasPriceQuery';
 import { getFakeQueryContext, getWrapper } from '../testUtils';
 
 describe('@synthetixio/queries network useEthGasPriceQuery', () => {
-	const ctx = getFakeQueryContext();
-	ctx.networkId = NetworkId['Mainnet-Ovm'];
-
-	test('test ovm gas', async () => {
+	test('Should query getGasPrice from provider if network is Optimism', async () => {
+		const ctx = getFakeQueryContext();
+		ctx.networkId = NetworkId['Mainnet-Ovm'];
 		const wrapper = getWrapper();
-
+		// set to 0.015 gwei
+		const defaultGasPrice = wei(0.015, 9).toBN();
 		//mock provider
 		set(ctx.provider as ethers.providers.JsonRpcProvider, 'getGasPrice', async () =>
-			// set to 0.015 gwei
-			Promise.resolve(wei(15000000, undefined, true).toBN())
+			Promise.resolve(defaultGasPrice)
 		);
 
 		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
@@ -24,13 +23,37 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 		await waitFor(() => result.current.isSuccess);
 
 		expect(result.current.data).toEqual({
-			fastest: 0.015,
-			fast: 0.015,
-			average: 0.015,
+			fastest: { gasPrice: defaultGasPrice },
+			fast: { gasPrice: defaultGasPrice },
+			average: { gasPrice: defaultGasPrice },
 		});
 	});
 
-	test('test ovm gas error', async () => {
+	test('Should query getGasPrice from provider if network is Kovan', async () => {
+		const ctx = getFakeQueryContext();
+		ctx.networkId = NetworkId['Kovan'];
+		const wrapper = getWrapper();
+		// set to 0.015 gwei
+		const defaultGasPrice = wei(0.015, 9).toBN();
+		//mock provider
+		set(ctx.provider as ethers.providers.JsonRpcProvider, 'getGasPrice', async () =>
+			Promise.resolve(defaultGasPrice)
+		);
+
+		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
+
+		await waitFor(() => result.current.isSuccess);
+
+		expect(result.current.data).toEqual({
+			fastest: { gasPrice: defaultGasPrice },
+			fast: { gasPrice: defaultGasPrice },
+			average: { gasPrice: defaultGasPrice },
+		});
+	});
+
+	test('Should throw an error if getGasPrice fails', async () => {
+		const ctx = getFakeQueryContext();
+		ctx.networkId = NetworkId['Mainnet-Ovm'];
 		const wrapper = getWrapper({
 			defaultOptions: {
 				queries: {
@@ -41,16 +64,43 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 		});
 
 		delete (ctx as any).provider.getGasPrice;
-
 		// eslint-disable-next-line
 		console.error = () => {}; //suppress error
+		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
+		await waitFor(() => result.current.isError);
+		expect(result.current.error?.message).toContain('Could not retrieve gas price from provider');
+	});
+
+	test('computeGasFee works', () => {
+		const baseFeePerGas = wei(10, 9).toBN();
+		const maxPriorityFeePerGas = 2;
+		const result = computeGasFee(baseFeePerGas, maxPriorityFeePerGas);
+		expect(result.maxPriorityFeePerGas.toString()).toEqual('2000000000'); // 2e9
+		// expects multiplier to be set to 2
+		expect(result.maxFeePerGas.toString()).toEqual('22000000000'); // 10e9 * 2 + 2e9)
+	});
+
+	test('Should use EIP1559 logic if network is Mainnet', async () => {
+		const ctx = getFakeQueryContext();
+		ctx.networkId = NetworkId['Mainnet'];
+		const wrapper = getWrapper();
+		// set to 100 gwei
+		const defaultBaseFeePerGas = wei(100, 9).toBN();
+		//mock provider
+		set(ctx.provider as ethers.providers.JsonRpcProvider, 'getBlock', async () =>
+			Promise.resolve({ baseFeePerGas: defaultBaseFeePerGas })
+		);
 
 		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
 
-		await waitFor(() => result.current.isError);
+		await waitFor(() => result.current.isSuccess);
 
-		expect(result.current.error?.message).toContain(
-			'Cannot retrieve optimistic gas price from provider'
-		);
+		const block = await ctx.provider?.getBlock('latest');
+
+		expect(result.current.data).toEqual({
+			fastest: computeGasFee(block?.baseFeePerGas ?? BigNumber.from(0), 6),
+			fast: computeGasFee(block?.baseFeePerGas ?? BigNumber.from(0), 4),
+			average: computeGasFee(block?.baseFeePerGas ?? BigNumber.from(0), 2),
+		});
 	});
 });

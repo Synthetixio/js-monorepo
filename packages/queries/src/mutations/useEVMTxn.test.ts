@@ -64,7 +64,7 @@ describe('useEVMTxn', () => {
 			from: '1',
 			to: '2',
 		});
-		expect(hookResult.result.current.gasLimit?.toString(0)).toBe('10');
+		expect(hookResult.result.current.gasLimit?.toString()).toBe('10');
 
 		// This asserts a infinity rerender bug we had due to not calling toString on txn.value,
 		// without calling toString we will end up in a infinity loop and this will fail

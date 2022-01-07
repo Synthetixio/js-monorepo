@@ -1,75 +1,57 @@
-import axios from 'axios';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 import { GasPrices } from '../../types';
-import { formatGwei } from '../../utils';
+import { wei } from '@synthetixio/wei';
 
 import { NetworkId } from '@synthetixio/contracts-interface';
+import { ethers } from 'ethers';
 
-const ETH_GAS_STATION_API_URL = 'https://ethgasstation.info/json/ethgasAPI.json';
-const GAS_NOW_API_URL = 'https://www.gasnow.org/api/v3/gas/price?utm_source=kwenta';
+const MULTIPLIER = wei(2);
 
-type EthGasStationResponse = {
-	average: number;
-	avgWait: number;
-	blockNum: number;
-	block_time: number;
-	fast: number;
-	fastWait: number;
-	fastest: number;
-	fastestWait: number;
-	gasPriceRange: Record<number, number>;
-	safeLow: number;
-	safeLowWait: number;
-	speed: number;
+export const computeGasFee = (baseFeePerGas: ethers.BigNumber, maxPriorityFeePerGas: number) => {
+	return {
+		maxPriorityFeePerGas: wei(maxPriorityFeePerGas, 9).toBN(),
+		maxFeePerGas: wei(baseFeePerGas, 9).mul(MULTIPLIER).add(wei(maxPriorityFeePerGas, 9)).toBN(),
+		baseFeePerGas: baseFeePerGas,
+	};
 };
 
-type GasNowResponse = {
-	code: number;
-	data: {
-		rapid: number;
-		fast: number;
-		standard: number;
-		slow: number;
-		timestamp: number;
-	};
+const getGasPriceFromProvider = async (provider: ethers.providers.Provider) => {
+	try {
+		const gasPrice = await provider.getGasPrice();
+		return {
+			fastest: { gasPrice },
+			fast: { gasPrice },
+			average: { gasPrice },
+		};
+	} catch (e) {
+		throw new Error('Could not retrieve gas price from provider');
+	}
 };
 
 const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPrices, Error>) => {
 	return useQuery<GasPrices, Error>(
 		['network', 'gasPrice', ctx.networkId],
 		async () => {
-			if (ctx.networkId === NetworkId.Mainnet) {
-				try {
-					const result = await axios.get<GasNowResponse>(GAS_NOW_API_URL);
-					const { standard, fast, rapid: fastest } = result.data.data;
-
-					return {
-						fastest: Math.round(formatGwei(fastest)),
-						fast: Math.round(formatGwei(fast)),
-						average: Math.round(formatGwei(standard)),
-					};
-				} catch (e) {
-					const result = await axios.get<EthGasStationResponse>(ETH_GAS_STATION_API_URL);
-					const { average, fast, fastest } = result.data;
-
-					return {
-						fastest: Math.round(fastest / 10),
-						fast: Math.round(fast / 10),
-						average: Math.round(average / 10),
-					};
-				}
-			}
-
 			try {
-				const gasPrice = formatGwei((await ctx.provider!.getGasPrice()).toNumber());
-				return {
-					fastest: gasPrice,
-					fast: gasPrice,
-					average: gasPrice,
-				};
+				// If network is Mainnet then we use EIP1559
+				if (ctx.networkId === NetworkId.Mainnet) {
+					const block = await ctx?.provider?.getBlock('latest');
+					if (block?.baseFeePerGas) {
+						return {
+							fastest: computeGasFee(block.baseFeePerGas, 6),
+							fast: computeGasFee(block.baseFeePerGas, 4),
+							average: computeGasFee(block.baseFeePerGas, 2),
+						};
+					} else {
+						return getGasPriceFromProvider(ctx.provider!);
+					}
+					// If not (Testnet or Optimism network), we get the Gas Price through the provider
+				} else {
+					return getGasPriceFromProvider(ctx.provider!);
+				}
 			} catch (e) {
-				throw new Error('Cannot retrieve optimistic gas price from provider. ' + e);
+				throw new Error(`Could not fetch and compute network fee. ${e}`);
 			}
 		},
 		{

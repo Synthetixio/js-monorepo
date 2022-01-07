@@ -1,10 +1,18 @@
 import Wei from '@synthetixio/wei';
 import { CurrencyKey } from '@synthetixio/contracts-interface';
+import { BigNumber } from 'ethers';
+
+export type GasPrice = {
+	baseFeePerGas?: BigNumber; // Note that this is used for estimating price and should not be included in the transaction
+	maxPriorityFeePerGas?: BigNumber;
+	maxFeePerGas?: BigNumber;
+	gasPrice?: BigNumber;
+};
 
 export type GasPrices = {
-	fastest: number;
-	fast: number;
-	average: number;
+	fastest: GasPrice;
+	fast: GasPrice;
+	average: GasPrice;
 };
 
 export type GasSpeed = keyof GasPrices;
