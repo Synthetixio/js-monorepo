@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { UseMutationOptions, useMutation } from 'react-query';
-
 import Wei, { wei } from '@synthetixio/wei/build/node/wei';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
