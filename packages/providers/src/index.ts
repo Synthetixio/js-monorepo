@@ -49,6 +49,6 @@ const getCorrespondingNetwork = (networkId: NetworkId, isOVM: boolean) => {
 	}
 };
 
-export { loadProvider, getOptimismProvider, handleSwitchChain };
-export type { ProviderConfig, SynthetixProvider, OvmProvider, NetworkId };
+export { loadProvider, getOptimismProvider, handleSwitchChain, NetworkId };
+export type { ProviderConfig, SynthetixProvider, OvmProvider };
 export default loadProvider;
