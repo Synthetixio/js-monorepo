@@ -1,4 +1,4 @@
-import { utils, providers as ethersProviders, BigNumber, providers } from 'ethers';
+import { utils, providers as ethersProviders, BigNumber } from 'ethers';
 
 import {
 	L1_TO_L2_NETWORK_MAPPER,
@@ -7,8 +7,11 @@ import {
 	// @ts-ignore
 	// eslint-disable-next-line import/no-unresolved
 } from '@synthetixio/optimism-networks';
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
+import { NetworkId } from '@synthetixio/contracts-inferface';
 import { ERRORS } from './constants';
-import { ProviderConfig, SynthetixProvider, OvmProvider, NetworkId } from './types';
+import { ProviderConfig, SynthetixProvider, OvmProvider } from './types';
 
 const loadProvider = ({ networkId = 1, infuraId, provider }: ProviderConfig): SynthetixProvider => {
 	if (!provider && !infuraId) throw new Error(ERRORS.noWeb3Provider);
@@ -30,25 +33,20 @@ const getOptimismProvider = ({
 };
 
 const handleSwitchChain = async (
-	provider: providers.Web3Provider,
-	network: Record<'id', number>,
+	provider: ethersProviders.Web3Provider | ethersProviders.Provider,
+	network: NetworkId,
 	isOVM: boolean
-) => {
+): Promise<null | undefined> => {
 	if (!provider || !network?.id) return;
-	const web3Provider = provider as providers.Web3Provider;
+	const web3Provider = provider as ethersProviders.Web3Provider;
 	if (!web3Provider.provider || !web3Provider.provider.request) return;
-	const newNetworkId = getCorrespondingNetwork(network?.id, isOVM);
+	const newNetworkId = getCorrespondingNetwork(network, isOVM);
 	const formattedChainId = utils.hexStripZeros(BigNumber.from(newNetworkId).toHexString());
-	try {
-		return web3Provider.provider.request({
-			method: 'wallet_switchEthereumChain',
-			params: [{ chainId: formattedChainId }],
-		});
-	} catch (error: any) {
-		// This error code indicates that the chain has not been added to MetaMask.
-		if ('code' in error && error.code === 4902) throw new Error(ERRORS.networkNotAdded);
-		else throw new Error(error);
-	}
+	// If request was successful, null is returned
+	return web3Provider.provider.request({
+		method: 'wallet_switchEthereumChain',
+		params: [{ chainId: formattedChainId }],
+	});
 };
 
 const getCorrespondingNetwork = (networkId: NetworkId, isOVM: boolean) => {
