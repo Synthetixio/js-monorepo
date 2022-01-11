@@ -13,3 +13,10 @@ type L1Provider = ethers.providers.Web3Provider | ethers.providers.InfuraProvide
 type L2Provider = OvmProvider;
 
 export type SynthetixProvider = L1Provider | L2Provider;
+
+export enum NetworkId {
+	Mainnet = 1,
+	Kovan = 42,
+	'Mainnet-ovm' = 10,
+	'Optimism-Kovan' = 69,
+}

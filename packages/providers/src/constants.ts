@@ -3,4 +3,5 @@ export const ERRORS = {
 	noInfuraId: 'Infura ID missing',
 	noNetworkId: 'Network ID missing',
 	wrongNetworkId: 'Network ID not supported',
+	networkNotAdded: 'Network is not added',
 };
