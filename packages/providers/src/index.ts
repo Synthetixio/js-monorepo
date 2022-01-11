@@ -33,13 +33,11 @@ const getOptimismProvider = ({
 };
 
 const handleSwitchChain = async (
-	provider: ethersProviders.Web3Provider | ethersProviders.Provider,
+	web3Provider: ethersProviders.Web3Provider,
 	network: NetworkId,
 	isOVM: boolean
 ): Promise<null | undefined> => {
-	if (!provider || !network?.id) return;
-	const web3Provider = provider as ethersProviders.Web3Provider;
-	if (!web3Provider.provider || !web3Provider.provider.request) return;
+	if (!web3Provider.provider?.request) return;
 	const newNetworkId = getCorrespondingNetwork(network, isOVM);
 	const formattedChainId = utils.hexStripZeros(BigNumber.from(newNetworkId).toHexString());
 	// If request was successful, null is returned
