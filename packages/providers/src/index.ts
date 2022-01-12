@@ -27,6 +27,13 @@ const getOptimismProvider = ({
 	return new ethersProviders.StaticJsonRpcProvider(OPTIMISM_NETWORKS[ovmNetworkId].rpcUrls[0]);
 };
 
+/**
+ * @dev if the new network is not added already, for instance in meta mask, this will throw an error. Call `wallet_addEthereumChain`
+ * @param web3Provider
+ * @param network
+ * @param isOVM
+ * @returns null or undefined
+ */
 const handleSwitchChain = async (
 	web3Provider: ethersProviders.Web3Provider,
 	network: NetworkId,
