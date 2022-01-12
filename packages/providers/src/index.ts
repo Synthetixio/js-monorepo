@@ -5,7 +5,8 @@ import {
 	OPTIMISM_NETWORKS,
 } from '@synthetixio/optimism-networks';
 import { ERRORS } from './constants';
-import { ProviderConfig, SynthetixProvider, OvmProvider, NetworkId } from './types';
+import { ProviderConfig, SynthetixProvider, OvmProvider } from './types';
+import { NetworkId } from '@synthetixio/contracts-interface';
 
 const loadProvider = ({ networkId = 1, infuraId, provider }: ProviderConfig): SynthetixProvider => {
 	if (!provider && !infuraId) throw new Error(ERRORS.noWeb3Provider);
