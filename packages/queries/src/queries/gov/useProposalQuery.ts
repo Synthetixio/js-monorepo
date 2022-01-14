@@ -10,7 +10,6 @@ import { QueryContext } from '../../context';
 
 import CouncilDilution from '../../contracts/CouncilDilution';
 import { getOVMProvider } from './utils';
-import { subgraphRequest } from '@snapshot-labs/snapshot.js/dist/utils';
 
 const useProposalQuery = (
 	_: QueryContext,
@@ -79,7 +78,7 @@ const useProposalQuery = (
 				])
 			);
 
-			let votes = await subgraphRequest(snapshotEndpoint, params);
+			let votes = await snapshot.utils.subgraphRequest(snapshotEndpoint, params);
 			votes = votes._1.concat(votes._2).concat(votes._3).concat(votes._3);
 
 			// const { votes }: { votes: Vote[] } = await request(
