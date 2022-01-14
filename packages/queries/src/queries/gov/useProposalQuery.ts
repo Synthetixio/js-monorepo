@@ -9,9 +9,10 @@ import { SPACE_KEY } from './constants';
 import { QueryContext } from '../../context';
 
 import CouncilDilution from '../../contracts/CouncilDilution';
+import { getOVMProvider } from './utils';
 
 const useProposalQuery = (
-	ctx: QueryContext,
+	_: QueryContext,
 	snapshotEndpoint: string,
 	spaceKey: SPACE_KEY,
 	hash: string | null,
@@ -124,7 +125,7 @@ const useProposalQuery = (
 				const contract = new ethers.Contract(
 					CouncilDilution.address,
 					CouncilDilution.abi,
-					ctx.provider as any
+					getOVMProvider()
 				);
 				mappedVotes = await Promise.all(
 					mappedVotes.map(async (vote) => {
@@ -181,7 +182,7 @@ const useProposalQuery = (
 			return results;
 		},
 		{
-			enabled: !!walletAddress && !!hash && ctx.provider != null && !!spaceKey,
+			enabled: !!hash && !!spaceKey,
 			refetchInterval: false,
 			refetchOnWindowFocus: false,
 			refetchOnMount: false,
