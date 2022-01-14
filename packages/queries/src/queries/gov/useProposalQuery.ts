@@ -10,6 +10,7 @@ import { QueryContext } from '../../context';
 
 import CouncilDilution from '../../contracts/CouncilDilution';
 import { getOVMProvider } from './utils';
+import { subgraphRequest } from '@snapshot-labs/snapshot.js/dist/utils';
 
 const useProposalQuery = (
 	_: QueryContext,
@@ -54,26 +55,53 @@ const useProposalQuery = (
 				{ id: hash }
 			);
 
-			const { votes }: { votes: Vote[] } = await request(
-				snapshotEndpoint,
-				gql`
-					query Votes($proposal: String) {
-						votes(
-							first: 1000
-							orderBy: "vp"
-							orderDirection: desc
-							where: { proposal: $proposal, vp_gt: 0 }
-						) {
-							id
-							voter
-							choice
-							vp
-							vp_by_strategy
-						}
-					}
-				`,
-				{ proposal: proposal.id }
+			const pages = ['_1', '_2', '_3', '_4'];
+			const params = Object.fromEntries(
+				pages.map((q, i) => [
+					q,
+					{
+						__aliasFor: 'votes',
+						__args: {
+							where: {
+								vp_gt: 0,
+								proposal: proposal.id,
+							},
+							first: 1000,
+							skip: i * 1000,
+							orderBy: 'vp',
+						},
+						id: true,
+						voter: true,
+						choice: true,
+						vp: true,
+						vp_by_strategy: true,
+					},
+				])
 			);
+
+			let votes = await subgraphRequest(snapshotEndpoint, params);
+			votes = votes._1.concat(votes._2).concat(votes._3).concat(votes._3);
+
+			// const { votes }: { votes: Vote[] } = await request(
+			// 	snapshotEndpoint,
+			// 	gql`
+			// 		query Votes($proposal: String) {
+			// 			votes(
+			// 				first: 1000
+			// 				orderBy: "vp"
+			// 				orderDirection: desc
+			// 				where: { proposal: $proposal, vp_gt: 0 }
+			// 			) {
+			// 				id
+			// 				voter
+			// 				choice
+			// 				vp
+			// 				vp_by_strategy
+			// 			}
+			// 		}
+			// 	`,
+			// 	{ proposal: proposal.id }
+			// );
 
 			const voterAddresses = votes.map((e: Vote) => ethers.utils.getAddress(e.voter));
 
