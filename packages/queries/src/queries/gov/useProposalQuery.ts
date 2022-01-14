@@ -210,7 +210,7 @@ const useProposalQuery = (
 			return results;
 		},
 		{
-			enabled: !!hash && !!spaceKey,
+			enabled: !!hash && !!spaceKey && !!snapshotEndpoint,
 			refetchInterval: false,
 			refetchOnWindowFocus: false,
 			refetchOnMount: false,
