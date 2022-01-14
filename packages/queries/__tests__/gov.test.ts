@@ -25,33 +25,33 @@ describe('@synthetixio/queries gov', () => {
 		expect(result.current.data?.hasVoted).toEqual(true);
 	});
 
-	test('useProposalQuery', async () => {
-		const wrapper = getWrapper();
+	// test('useProposalQuery', async () => {
+	// 	const wrapper = getWrapper();
 
-		const { result, waitFor } = renderHook(
-			() =>
-				useProposalQuery(
-					ctx,
-					'',
-					SPACE_KEY.COUNCIL,
-					'0x0',
-					'0x0000000000000000000000000000000000000000'
-				),
-			{ wrapper }
-		);
+	// 	const { result, waitFor } = renderHook(
+	// 		() =>
+	// 			useProposalQuery(
+	// 				ctx,
+	// 				'',
+	// 				SPACE_KEY.COUNCIL,
+	// 				'0x0',
+	// 				'0x0000000000000000000000000000000000000000'
+	// 			),
+	// 		{ wrapper }
+	// 	);
 
-		await waitFor(() => result.current.isSuccess);
+	// 	await waitFor(() => result.current.isSuccess);
 
-		// TODO: clean this up to make more sense
-		expect(result.current.data?.totalBalances).toEqual([
-			0, 0, 0, 0, 0, 0, 10, 0, 10, 10, 0, 0, 0, 0, 0, 0,
-		]);
-		expect(result.current.data?.totalVotes).toEqual([
-			0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0,
-		]);
-		expect(result.current.data?.choices).toHaveLength(16);
-		expect(result.current.data?.totalVotesBalances).toEqual(30);
-	});
+	// 	// TODO: clean this up to make more sense
+	// 	expect(result.current.data?.totalBalances).toEqual([
+	// 		0, 0, 0, 0, 0, 0, 10, 0, 10, 10, 0, 0, 0, 0, 0, 0,
+	// 	]);
+	// 	expect(result.current.data?.totalVotes).toEqual([
+	// 		0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0,
+	// 	]);
+	// 	expect(result.current.data?.choices).toHaveLength(16);
+	// 	expect(result.current.data?.totalVotesBalances).toEqual(30);
+	// });
 
 	// test('useVotingWeightQuery', async () => {
 	// 	const wrapper = getWrapper();
