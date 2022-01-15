@@ -6,15 +6,19 @@ import { councilNominationsJson, SPACE_KEY } from './constants';
 import { Proposal } from '../../types';
 import { QueryContext } from '../../context';
 import CouncilDilution from '../../contracts/CouncilDilution';
+import { getOVMProvider } from './utils';
 
 const useProposalsQuery = (
-	ctx: QueryContext,
+	_: QueryContext,
 	snapshotEndpoint: string,
 	spaceKey: SPACE_KEY,
 	options?: UseQueryOptions<Proposal[]>
 ) => {
-	const contract = new ethers.Contract(CouncilDilution.address, CouncilDilution.abi, ctx.provider!);
-
+	const contract = new ethers.Contract(
+		CouncilDilution.address,
+		CouncilDilution.abi,
+		getOVMProvider()
+	);
 	return useQuery<Proposal[]>(
 		['gov', 'proposals', snapshotEndpoint, spaceKey],
 		async () => {
