@@ -20,6 +20,7 @@ import { DEFAULT_SUBGRAPH_ENDPOINTS } from './constants';
 
 export * from './types';
 
+// context
 type SynthetixQueryContextContent = { context: QueryContext; queries: SynthetixQueries };
 
 // all functions exported by submodules must follow this format
