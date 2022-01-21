@@ -1,7 +1,7 @@
 import clone from 'lodash/clone';
 import partial from 'lodash/partial';
 
-import ethers from 'ethers';
+import ethers from '@synthetixio/contracts-interface/node_modules/ethers';
 import { QueryContext, SubgraphEndpoints } from './context';
 
 import { synthetix, NetworkId } from '@synthetixio/contracts-interface';
