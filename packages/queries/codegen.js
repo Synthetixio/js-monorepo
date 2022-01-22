@@ -30,7 +30,7 @@ findQueries(__dirname + '/src/mutations', '../src/mutations');
 const out = `
 ${imports.join('\n')}
 
-export default {
+export {
 ${funcsDef.join('\n')}
 };
 `;

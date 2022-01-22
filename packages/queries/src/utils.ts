@@ -1,5 +1,4 @@
 import { ethers } from 'ethers';
-import { Provider } from 'react';
 
 export const formatGwei = (wei: number) => wei / 1e8 / 10;
 
