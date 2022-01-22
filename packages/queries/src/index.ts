@@ -13,7 +13,7 @@ import * as exchanger from '../generated/exchangerSubgraphQueries';
 import * as issuance from '../generated/issuanceSubgraphQueries';
 import * as subgraph from '../generated/mainSubgraphQueries';
 
-import FUNCS from '../generated/queryFuncs';
+import * as FUNCS from '../generated/queryFuncs';
 import React from 'react';
 
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from './constants';
