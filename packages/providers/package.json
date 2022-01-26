@@ -34,7 +34,7 @@
 		"@eth-optimism/provider": "0.0.1-alpha.14",
 		"@synthetixio/contracts-interface": "2.57.1",
 		"@synthetixio/optimism-networks": "2.57.1",
-		"ethers": "5.4.6"
+		"ethers": "5.5.3"
 	},
 	"devDependencies": {
 		"@types/lodash": "4.14.169",
