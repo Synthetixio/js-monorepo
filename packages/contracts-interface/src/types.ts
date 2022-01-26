@@ -2,30 +2,33 @@ import { ethers } from 'ethers';
 
 import { Synths } from '../generated/mainnet';
 
-export enum Network {
-	Mainnet = 'mainnet',
-	Ropsten = 'ropsten',
-	Rinkeby = 'rinkeby',
-	Goerli = 'goerli',
-	Kovan = 'kovan',
-	Local = 'local',
-	'Mainnet-Ovm' = 'mainnet-ovm',
-	'Kovan-Ovm' = 'kovan-ovm',
-	'Goerli-Ovm' = 'goerli-ovm',
-	'Local-Ovm' = 'local-ovm',
-}
+export const NetworkIdByName = {
+	mainnet: 1,
+	ropsten: 3,
+	rinkeby: 4,
+	goerli: 5,
+	kovan: 42,
+	'mainnet-ovm': 10,
+	'kovan-ovm': 69,
+	'local-ovm': 420,
+	local: 31337,
+} as const;
 
-export enum NetworkId {
-	Mainnet = 1,
-	Ropsten = 3,
-	Rinkeby = 4,
-	Goerli = 5,
-	Kovan = 42,
-	'Mainnet-Ovm' = 10,
-	'Kovan-Ovm' = 69,
-	'Local-Ovm' = 420,
-	'Local' = 31337,
-}
+export const NetworkNameById = {
+	1: 'mainnet',
+	3: 'ropsten',
+	4: 'rinkeby',
+	5: 'goerli',
+	42: 'kovan',
+	10: 'mainnet-ovm',
+	69: 'kovan-ovm',
+	420: 'local-ovm',
+	31337: 'local',
+} as const;
+
+export type NetworkParamType = typeof NetworkIdByName;
+export type NetworkName = keyof typeof NetworkIdByName;
+export type NetworkId = typeof NetworkIdByName[keyof typeof NetworkIdByName];
 
 type ContractInfo = {
 	address: string;
@@ -81,9 +84,9 @@ type Feed = {
 };
 
 export type SynthetixJS = {
-	networks: Array<Network>;
-	networkToChainId: Record<Network, NetworkId>;
-	decode: (config: { network: Network; data: string; target: Target }) => {
+	networks: Array<NetworkName>;
+	networkToChainId: Record<NetworkName, NetworkId>;
+	decode: (config: { network: NetworkName; data: string; target: Target }) => {
 		method: { name: string; params: Array<any> };
 		contract: string;
 	};
@@ -92,7 +95,7 @@ export type SynthetixJS = {
 	tokens: Array<Token>;
 	network: {
 		id: NetworkId;
-		name: Network;
+		name: NetworkName;
 		useOvm: boolean;
 	};
 	sources: { [name: string]: SourceData };
@@ -119,7 +122,7 @@ export type Target = {
 	link: string;
 	timestamp: string;
 	txn: string;
-	network: Network;
+	network: NetworkName;
 };
 
 export type TargetsRecord = Record<string, Target>;
@@ -136,7 +139,7 @@ export type ContractsMap = {
 
 export type Config = {
 	networkId?: NetworkId;
-	network?: Network;
+	network?: NetworkName;
 	signer?: ethers.Signer;
 	provider?: ethers.providers.Provider;
 	useOvm?: boolean;

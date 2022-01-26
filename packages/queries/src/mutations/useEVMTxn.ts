@@ -8,7 +8,7 @@ import { QueryContext } from '../context';
 import clone from 'lodash/clone';
 import omit from 'lodash/omit';
 import { isString } from 'lodash';
-import { NetworkId } from '@synthetixio/contracts-interface';
+import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import optimismOracleContract from '../contracts/OptimismGasPriceOracle';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
@@ -45,7 +45,8 @@ const useEVMTxn = (
 	const getOptimismLayerOneFees = async () => {
 		if (!txn || !ctx.provider) return null;
 		const isNotOvm =
-			ctx.networkId !== NetworkId['Mainnet-Ovm'] && ctx.networkId !== NetworkId['Kovan-Ovm'];
+			ctx.networkId !== NetworkIdByName['mainnet-ovm'] &&
+			ctx.networkId !== NetworkIdByName['kovan-ovm'];
 		if (isNotOvm) {
 			return null;
 		}

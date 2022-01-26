@@ -3,7 +3,7 @@ import { QueryContext } from '../../context';
 import { GasPrices } from '../../types';
 import { wei } from '@synthetixio/wei';
 
-import { NetworkId } from '@synthetixio/contracts-interface';
+import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import { ethers } from 'ethers';
 
 const MULTIPLIER = wei(2);
@@ -35,7 +35,7 @@ const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPri
 		async () => {
 			try {
 				// If network is Mainnet then we use EIP1559
-				if (ctx.networkId === NetworkId.Mainnet) {
+				if (ctx.networkId === NetworkIdByName.mainnet) {
 					const block = await ctx?.provider?.getBlock('latest');
 					if (block?.baseFeePerGas) {
 						return {
