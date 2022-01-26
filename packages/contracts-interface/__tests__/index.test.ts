@@ -2,14 +2,14 @@ import { ethers } from 'ethers';
 import findIndex from 'lodash/findIndex';
 
 import synthetix, { SynthetixJS } from '../src';
-import { Network, NetworkId } from '../src/types';
+import { NetworkNameById, NetworkIdByName } from '../src/types';
 import { ERRORS } from '../src/constants';
 
 describe('@synthetixio/js tests', () => {
 	let snxjs: SynthetixJS;
 
 	beforeAll(() => {
-		snxjs = synthetix({ network: Network.Kovan });
+		snxjs = synthetix({ network: NetworkNameById[42] });
 	});
 
 	test('should return contracts', () => {
@@ -17,8 +17,8 @@ describe('@synthetixio/js tests', () => {
 	});
 
 	test('should return different contracts for the OVM', () => {
-		const snxjsGoerli = synthetix({ network: Network.Goerli });
-		const snxjsGoerliOvm = synthetix({ network: Network['Goerli-Ovm'] });
+		const snxjsGoerli = synthetix({ network: NetworkNameById[5] });
+		const snxjsGoerliOvm = synthetix({ network: NetworkNameById[42] });
 		const synthetixContractGoerli = snxjsGoerli.contracts['Synthetix'];
 		const synthetixContractGoerliOvm = snxjsGoerliOvm.contracts['Synthetix'];
 		expect(synthetixContractGoerli.address).not.toEqual(synthetixContractGoerliOvm.address);
@@ -34,7 +34,7 @@ describe('@synthetixio/js tests', () => {
 	});
 
 	test('should have the right mapping with the contracts for the OVM', () => {
-		const snxjsGoerliOvm = synthetix({ network: Network.Goerli, useOvm: true });
+		const snxjsGoerliOvm = synthetix({ network: NetworkNameById[5], useOvm: true });
 		const synthetixContractGoerliOvm = snxjsGoerliOvm.contracts['Synthetix'];
 		const sUSDContractGoerliOvm = snxjsGoerliOvm.contracts['SynthsUSD'];
 		expect(synthetixContractGoerliOvm.address).toEqual(snxjsGoerliOvm.targets.ProxyERC20.address);
@@ -46,14 +46,14 @@ describe('@synthetixio/js tests', () => {
 	});
 
 	test('should include the supported networks', () => {
-		expect(snxjs.networkToChainId[Network.Mainnet]).toBe(NetworkId.Mainnet.toString());
-		expect(snxjs.networkToChainId[Network.Kovan]).toBe(NetworkId.Kovan.toString());
-		expect(snxjs.networkToChainId[Network.Rinkeby]).not.toBe(NetworkId.Ropsten.toString());
+		expect(snxjs.networkToChainId[NetworkNameById[1]]).toBe(NetworkIdByName.mainnet.toString());
+		expect(snxjs.networkToChainId[NetworkNameById[42]]).toBe(NetworkIdByName.kovan.toString());
+		expect(snxjs.networkToChainId[NetworkNameById[4]]).not.toBe(NetworkIdByName.rinkeby.toString());
 	});
 
 	test('should include the current network', () => {
-		expect(snxjs.network.name).toBe(Network.Kovan);
-		expect(snxjs.network.id).toBe(NetworkId.Kovan);
+		expect(snxjs.network.name).toBe(NetworkNameById[42]);
+		expect(snxjs.network.id).toBe(NetworkIdByName.kovan.toString());
 	});
 
 	test('should return users', () => {
@@ -92,7 +92,7 @@ describe('@synthetixio/js tests', () => {
 	});
 
 	test('should have a list of staking rewards', () => {
-		const mainnetSnxjs = synthetix({ network: Network.Mainnet });
+		const mainnetSnxjs = synthetix({ network: NetworkNameById[1] });
 		expect(mainnetSnxjs.stakingRewards[0].name).toBeTruthy();
 	});
 

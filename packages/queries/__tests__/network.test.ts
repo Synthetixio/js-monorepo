@@ -1,4 +1,4 @@
-import { NetworkId } from '@synthetixio/contracts-interface';
+import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 import { renderHook } from '@testing-library/react-hooks';
 import { ethers, BigNumber } from 'ethers';
@@ -9,7 +9,7 @@ import { getFakeQueryContext, getWrapper } from '../testUtils';
 describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 	test('Should query getGasPrice from provider if network is Optimism', async () => {
 		const ctx = getFakeQueryContext();
-		ctx.networkId = NetworkId['Mainnet-Ovm'];
+		ctx.networkId = NetworkIdByName['mainnet-ovm'];
 		const wrapper = getWrapper();
 		// set to 0.015 gwei
 		const defaultGasPrice = wei(0.015, 9).toBN();
@@ -31,7 +31,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 
 	test('Should query getGasPrice from provider if network is Kovan', async () => {
 		const ctx = getFakeQueryContext();
-		ctx.networkId = NetworkId['Kovan'];
+		ctx.networkId = NetworkIdByName.kovan;
 		const wrapper = getWrapper();
 		// set to 0.015 gwei
 		const defaultGasPrice = wei(0.015, 9).toBN();
@@ -53,7 +53,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 
 	test('Should throw an error if getGasPrice fails', async () => {
 		const ctx = getFakeQueryContext();
-		ctx.networkId = NetworkId['Mainnet-Ovm'];
+		ctx.networkId = NetworkIdByName['mainnet-ovm'];
 		const wrapper = getWrapper({
 			defaultOptions: {
 				queries: {
@@ -82,7 +82,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 
 	test('Should use EIP1559 logic if network is Mainnet', async () => {
 		const ctx = getFakeQueryContext();
-		ctx.networkId = NetworkId['Mainnet'];
+		ctx.networkId = NetworkIdByName.mainnet;
 		const wrapper = getWrapper();
 		// set to 100 gwei
 		const defaultBaseFeePerGas = wei(100, 9).toBN();
