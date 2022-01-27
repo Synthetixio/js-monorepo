@@ -30,7 +30,7 @@ export const NetworkNameById = {
 	10: 'mainnet-ovm',
 	69: 'kovan-ovm',
 	31337: 'mainnet-fork',
-	'goerli-ovm': '-1',
+	'-1': 'goerli-ovm',
 } as const;
 
 export type NetworkIdByNameType = typeof NetworkIdByName;
