@@ -140,7 +140,8 @@ declare module 'synthetix' {
 		'mainnet-fork': '31337',
 		'goerli-ovm': '-1',
 	} as const;
-	export function getSynths(arg: { network: NetworkName; useOvm?: boolean }): any; // Not contract interface will generate enums for this and return the correct type to consumers
+	// eslint-disable-next-line
+	export function getSynths(arg: { network: NetworkName; useOvm?: boolean }): any; // Note contract interface will generate enums for this and return the correct type to consumers
 	export function getFeeds(arg: { network: NetworkName; useOvm?: boolean }): FeedRecord;
 	export function getTokens(arg: { network: NetworkName; useOvm?: boolean }): Token[];
 	export function getUsers(arg: { network: NetworkName; useOvm?: boolean }): User[];
