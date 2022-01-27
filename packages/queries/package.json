@@ -33,9 +33,9 @@
 	},
 	"dependencies": {
 		"@snapshot-labs/snapshot.js": "0.3.22",
-		"@synthetixio/contracts-interface": "2.57.1",
+		"@synthetixio/contracts-interface": "2.57.2",
 		"@synthetixio/optimism-networks": "2.57.1",
-		"@synthetixio/providers": "2.57.1",
+		"@synthetixio/providers": "2.57.2",
 		"@synthetixio/transaction-notifier": "2.57.1",
 		"@synthetixio/wei": "2.57.1",
 		"axios": "0.21.1",
