@@ -87,6 +87,7 @@ describe('@synthetixio/js tests', () => {
 	});
 
 	test('should not include invalid synths data', () => {
+		// @ts-ignore
 		const invalidSynthIndex = findIndex(snxjs.synths, ({ name }) => name === 'mETH1234');
 		expect(invalidSynthIndex).toBe(-1);
 	});
@@ -134,6 +135,7 @@ describe('@synthetixio/js tests', () => {
 			// @ts-ignore
 			synthetix({ network: 'wrongnetwork' });
 		} catch (e) {
+			// @ts-ignore
 			expect(e.message).toEqual(ERRORS.badNetworkArg);
 		}
 	});
