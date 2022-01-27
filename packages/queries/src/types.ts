@@ -1,5 +1,5 @@
 import Wei from '@synthetixio/wei';
-import { CurrencyKey } from '@synthetixio/contracts-interface';
+import { CurrencyKey, NetworkId, NetworkName } from '@synthetixio/contracts-interface';
 import { BigNumber } from 'ethers';
 
 export type GasPrice = {
@@ -103,7 +103,7 @@ export type GlobalStakingInfo = {
 
 export type Token = {
 	address: string;
-	chainId: number;
+	chainId: NetworkId;
 	decimals: number;
 	logoURI: string;
 	name: string;
@@ -140,7 +140,7 @@ export type SpaceData = {
 	};
 	members: string[];
 	name: string;
-	network: string;
+	network: NetworkName;
 	skin: string;
 	strategies: SpaceStrategy[];
 	symbol: string;
@@ -161,7 +161,7 @@ export type Proposal = {
 	author: string;
 	created: number;
 	space: SpaceData;
-	network: string;
+	network: NetworkName;
 	strategies: SpaceStrategy[];
 	plugins: any;
 	title: string;
