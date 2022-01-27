@@ -48,7 +48,6 @@ describe('@synthetixio/js tests', () => {
 	test('should include the supported networks', () => {
 		expect(snxjs.networkToChainId[NetworkNameById[1]]).toBe(NetworkIdByName.mainnet.toString());
 		expect(snxjs.networkToChainId[NetworkNameById[42]]).toBe(NetworkIdByName.kovan.toString());
-		expect(snxjs.networkToChainId[NetworkNameById[4]]).not.toBe(NetworkIdByName.rinkeby.toString());
 	});
 
 	test('should include the current network', () => {
