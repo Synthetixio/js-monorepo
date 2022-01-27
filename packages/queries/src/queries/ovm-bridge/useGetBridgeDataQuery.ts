@@ -42,7 +42,7 @@ const useGetBridgeDataQuery = (
 					// @ts-ignore
 					layerTwoProvider: l2provider,
 					layerTwoNetworkId: isFromL2
-						? parseInt(ctx.networkId)
+						? Number(ctx.networkId)
 						: L1_TO_L2_NETWORK_MAPPER[ctx.networkId],
 				});
 
