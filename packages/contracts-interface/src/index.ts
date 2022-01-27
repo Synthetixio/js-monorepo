@@ -14,6 +14,9 @@ import {
 	decode,
 	defaults,
 	getFeeds,
+	Token,
+	TargetsRecord,
+	Target,
 } from 'synthetix';
 import { ethers } from 'ethers';
 
@@ -22,13 +25,10 @@ import {
 	CurrencyKey,
 	CurrencyCategory,
 	NetworkId,
-	Target,
-	TargetsRecord,
-	NetworkParamType,
+	NetworkIdByNameType,
 	ContractsMap,
 	SynthetixJS,
 	Synth,
-	Token,
 	NetworkName,
 	NetworkIdByName,
 	NetworkNameById,
@@ -79,18 +79,15 @@ const selectNetwork = (
 		throw new Error(ERRORS.badNetworkArg);
 	} else if (network && networkToChainId[network]) {
 		const networkToId = NetworkIdByName[network];
-		const networkFromId = getNetworkFromId({ id: networkToId }) as {
-			useOvm?: boolean;
-			network: NetworkName;
-		};
-		currentNetworkId = networkToChainId[network] as NetworkId;
+		const networkFromId = getNetworkFromId({ id: networkToId });
+		currentNetworkId = networkToChainId[network];
 		currentNetworkName = networkFromId.network;
 		useOvm = !!networkFromId.useOvm;
 	} else if (networkId) {
 		const networkFromId = getNetworkFromId({ id: networkId });
 		currentNetworkId = networkId;
 		currentNetworkName = networkFromId.network;
-		useOvm = networkFromId.useOvm;
+		useOvm = Boolean(networkFromId.useOvm);
 	} else {
 		currentNetworkId = NetworkIdByName.mainnet;
 		currentNetworkName = NetworkNameById[1];
@@ -105,10 +102,10 @@ const getSynthetixContracts = (
 	useOvm?: boolean
 ): ContractsMap => {
 	const sources = getSource({ network, useOvm });
-	const targets: TargetsRecord = getTarget({ network, useOvm });
+	const targets = getTarget({ network, useOvm });
 
 	return Object.values(targets)
-		.map((target: Target) => {
+		.map((target) => {
 			if (target.name === 'Synthetix') {
 				target.address = targets.ProxyERC20.address;
 			} else if (target.name === 'SynthsUSD') {
@@ -121,7 +118,7 @@ const getSynthetixContracts = (
 			}
 			return target;
 		})
-		.reduce((acc: ContractsMap, { name, source, address }: Target) => {
+		.reduce((acc: ContractsMap, { name, source, address }) => {
 			acc[name] = new ethers.Contract(
 				address,
 				sources[source].abi,
@@ -151,6 +148,6 @@ export type {
 	Token,
 	NetworkName,
 	NetworkId,
-	NetworkParamType,
+	NetworkIdByNameType,
 };
 export default synthetix;

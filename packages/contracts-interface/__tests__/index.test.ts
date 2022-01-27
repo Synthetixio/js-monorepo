@@ -48,7 +48,6 @@ describe('@synthetixio/js tests', () => {
 	test('should include the supported networks', () => {
 		expect(snxjs.networkToChainId[NetworkNameById[1]]).toBe(NetworkIdByName.mainnet.toString());
 		expect(snxjs.networkToChainId[NetworkNameById[42]]).toBe(NetworkIdByName.kovan.toString());
-		expect(snxjs.networkToChainId[NetworkNameById[4]]).not.toBe(NetworkIdByName.rinkeby.toString());
 	});
 
 	test('should include the current network', () => {
@@ -87,6 +86,7 @@ describe('@synthetixio/js tests', () => {
 	});
 
 	test('should not include invalid synths data', () => {
+		// @ts-ignore
 		const invalidSynthIndex = findIndex(snxjs.synths, ({ name }) => name === 'mETH1234');
 		expect(invalidSynthIndex).toBe(-1);
 	});
@@ -134,6 +134,7 @@ describe('@synthetixio/js tests', () => {
 			// @ts-ignore
 			synthetix({ network: 'wrongnetwork' });
 		} catch (e) {
+			// @ts-ignore
 			expect(e.message).toEqual(ERRORS.badNetworkArg);
 		}
 	});
