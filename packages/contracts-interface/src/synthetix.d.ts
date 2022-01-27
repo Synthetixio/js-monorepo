@@ -95,32 +95,32 @@ declare module 'synthetix' {
 		: TargetsRecord;
 
 	export const chainIdMapping = {
-		'1': {
+		1: {
 			useOvm: false,
 			fork: false,
 			network: 'mainnet',
 		},
-		'5': {
+		5: {
 			useOvm: false,
 			fork: false,
 			network: 'goerli',
 		},
-		'10': {
+		10: {
 			useOvm: true,
 			fork: false,
 			network: 'mainnet',
 		},
-		'42': {
+		42: {
 			useOvm: false,
 			fork: false,
 			network: 'kovan',
 		},
-		'69': {
+		69: {
 			useOvm: true,
 			fork: false,
 			network: 'kovan',
 		},
-		'31337': {
+		31337: {
 			useOvm: false,
 			fork: true,
 			network: 'mainnet',
@@ -132,12 +132,12 @@ declare module 'synthetix' {
 		},
 	} as const;
 	export const networkToChainId = {
-		mainnet: '1',
-		goerli: '5',
-		'mainnet-ovm': '10',
-		kovan: '42',
-		'kovan-ovm': '69',
-		'mainnet-fork': '31337',
+		mainnet: 1,
+		goerli: 5,
+		'mainnet-ovm': 10,
+		kovan: 42,
+		'kovan-ovm': 69,
+		'mainnet-fork': 31337,
 		'goerli-ovm': '-1',
 	} as const;
 	// eslint-disable-next-line

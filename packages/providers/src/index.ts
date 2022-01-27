@@ -48,9 +48,9 @@ const handleSwitchChain = async (
 
 const getCorrespondingNetwork = (isOVM: boolean) => {
 	if (isOVM) {
-		return L2_TO_L1_NETWORK_MAPPER[Number(NetworkIdByName['mainnet-ovm'])];
+		return L2_TO_L1_NETWORK_MAPPER[NetworkIdByName['mainnet-ovm']];
 	} else {
-		return L1_TO_L2_NETWORK_MAPPER[Number(NetworkIdByName.mainnet)];
+		return L1_TO_L2_NETWORK_MAPPER[NetworkIdByName.mainnet];
 	}
 };
 

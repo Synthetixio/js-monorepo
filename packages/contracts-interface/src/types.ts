@@ -14,19 +14,23 @@ import {
 import { Synths } from '../generated/mainnet';
 
 export const NetworkIdByName = {
-	mainnet: '1',
-	goerli: '5',
-	kovan: '42',
-	'mainnet-ovm': '10',
-	'kovan-ovm': '69',
+	mainnet: 1,
+	goerli: 5,
+	'mainnet-ovm': 10,
+	kovan: 42,
+	'kovan-ovm': 69,
+	'mainnet-fork': 31337,
+	'goerli-ovm': '-1',
 } as const;
 
 export const NetworkNameById = {
-	'1': 'mainnet',
-	'5': 'goerli',
-	'42': 'kovan',
-	'10': 'mainnet-ovm',
-	'69': 'kovan-ovm',
+	1: 'mainnet',
+	5: 'goerli',
+	42: 'kovan',
+	10: 'mainnet-ovm',
+	69: 'kovan-ovm',
+	31337: 'mainnet-fork',
+	'goerli-ovm': '-1',
 } as const;
 
 export type NetworkIdByNameType = typeof NetworkIdByName;
