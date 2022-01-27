@@ -2,19 +2,20 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import axios from 'axios';
 import keyBy from 'lodash/keyBy';
 
-import { TokenListQueryResponse, TokenListResponse } from '../../types';
+import { Token, TokenListQueryResponse, TokenListResponse } from '../../types';
 import { CryptoCurrency, ETH_ADDRESS } from '../../currency';
 import { QueryContext } from '../../context';
+import { NetworkIdByName } from '@synthetixio/contracts-interface';
 
 const ether = {
 	address: ETH_ADDRESS,
-	chainId: 1,
+	chainId: NetworkIdByName.mainnet,
 	decimals: 18,
 	logoURI: '',
 	name: 'Ethereum',
 	symbol: CryptoCurrency.ETH,
 	tags: [],
-};
+} as Token;
 
 const useTokenListQuery = (
 	_: QueryContext,
@@ -25,7 +26,6 @@ const useTokenListQuery = (
 		['misc', 'tokenList', tokenListUrl],
 		async () => {
 			const response = await axios.get<TokenListResponse>(tokenListUrl);
-
 			const tokens = [ether, ...response.data.tokens];
 
 			return {
