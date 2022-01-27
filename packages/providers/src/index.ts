@@ -30,22 +30,20 @@ const getOptimismProvider = ({
 /**
  * @dev if the new network is not added already, for instance in meta mask, this will throw an error. Call `wallet_addEthereumChain`
  * @param web3Provider
- * @param network
  * @param isOVM
- * @returns null or undefined
  */
 const handleSwitchChain = async (
 	web3Provider: ethersProviders.Web3Provider,
 	isOVM: boolean
-): Promise<null | undefined> => {
-	if (!web3Provider.provider?.request) return;
+): Promise<boolean> => {
+	if (!web3Provider.provider?.request) return false;
 	const newNetworkId = getCorrespondingNetwork(isOVM);
 	const formattedChainId = utils.hexStripZeros(BigNumber.from(newNetworkId).toHexString());
-	// If request was successful, null is returned
-	return web3Provider.provider.request({
+	const success = await web3Provider.provider.request({
 		method: 'wallet_switchEthereumChain',
 		params: [{ chainId: formattedChainId }],
 	});
+	return success === null ? true : false;
 };
 
 const getCorrespondingNetwork = (isOVM: boolean) => {
