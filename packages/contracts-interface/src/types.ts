@@ -1,101 +1,54 @@
 import { ethers } from 'ethers';
+import {
+	FeedRecord,
+	SourceRecord,
+	StakingReward,
+	Target,
+	TargetsRecord,
+	Token,
+	User,
+	Version,
+	networkToChainId,
+} from 'synthetix';
 
 import { Synths } from '../generated/mainnet';
 
-export enum Network {
-	Mainnet = 'mainnet',
-	Ropsten = 'ropsten',
-	Rinkeby = 'rinkeby',
-	Goerli = 'goerli',
-	Kovan = 'kovan',
-	Local = 'local',
-	'Mainnet-Ovm' = 'mainnet-ovm',
-	'Kovan-Ovm' = 'kovan-ovm',
-	'Goerli-Ovm' = 'goerli-ovm',
-	'Local-Ovm' = 'local-ovm',
-}
+export const NetworkIdByName = {
+	mainnet: '1',
+	goerli: '5',
+	kovan: '42',
+	'mainnet-ovm': '10',
+	'kovan-ovm': '69',
+} as const;
 
-export enum NetworkId {
-	Mainnet = 1,
-	Ropsten = 3,
-	Rinkeby = 4,
-	Goerli = 5,
-	Kovan = 42,
-	'Mainnet-Ovm' = 10,
-	'Kovan-Ovm' = 69,
-	'Local-Ovm' = 420,
-	'Local' = 31337,
-}
+export const NetworkNameById = {
+	'1': 'mainnet',
+	'5': 'goerli',
+	'42': 'kovan',
+	'10': 'mainnet-ovm',
+	'69': 'kovan-ovm',
+} as const;
 
-type ContractInfo = {
-	address: string;
-	replaced_in: string;
-	status: string;
-};
-
-type Version = {
-	commit: string;
-	contracts: { [name: string]: ContractInfo };
-	date: string;
-	fulltag: string;
-	network: string;
-	release: string;
-	tag: string;
-};
-
-type StakingReward = {
-	name: string;
-	rewardsToken: string;
-	stakingToken: string;
-};
-
-export type Token = {
-	address: string;
-	asset?: string;
-	decimals: number;
-	feed?: string;
-	index?: Array<{
-		asset: string;
-		category: string;
-		description: string;
-		sign: string;
-		units: number;
-		weight: number;
-	}>;
-	inverted?: {
-		entryPoint: number;
-		lowerLimit: number;
-		upperLimit: number;
-	};
-	name: string;
-	symbol: string;
-};
-
-type Feed = {
-	asset: string;
-	category: string;
-	description?: string;
-	exchange?: string;
-	feed?: string;
-	sign: string;
-};
+export type NetworkIdByNameType = typeof NetworkIdByName;
+export type NetworkName = keyof typeof NetworkIdByName;
+export type NetworkId = typeof NetworkIdByName[keyof typeof NetworkIdByName];
 
 export type SynthetixJS = {
-	networks: Array<Network>;
-	networkToChainId: Record<Network, NetworkId>;
-	decode: (config: { network: Network; data: string; target: Target }) => {
+	networks: Array<NetworkName>;
+	networkToChainId: typeof networkToChainId;
+	decode: (config: { network: NetworkName; data: string; target: Target }) => {
 		method: { name: string; params: Array<any> };
 		contract: string;
 	};
 	defaults: { [key: string]: any };
-	feeds: { [symbol: string]: Feed };
+	feeds: FeedRecord;
 	tokens: Array<Token>;
 	network: {
 		id: NetworkId;
-		name: Network;
+		name: NetworkName;
 		useOvm: boolean;
 	};
-	sources: { [name: string]: SourceData };
+	sources: SourceRecord;
 	targets: TargetsRecord;
 	synths: Synth[];
 	versions: { [version: string]: Version };
@@ -107,36 +60,13 @@ export type SynthetixJS = {
 	contracts: ContractsMap;
 };
 
-export type SourceData = {
-	bytecode: string;
-	abi: ethers.ContractInterface;
-};
-
-export type Target = {
-	name: string;
-	source: string;
-	address: string;
-	link: string;
-	timestamp: string;
-	txn: string;
-	network: Network;
-};
-
-export type TargetsRecord = Record<string, Target>;
-
-export interface ContractDefinition {
-	name: string;
-	abi: ethers.ContractInterface;
-	address: string;
-}
-
 export type ContractsMap = {
 	[name: string]: ethers.Contract;
 };
 
 export type Config = {
 	networkId?: NetworkId;
-	network?: Network;
+	network?: NetworkName;
 	signer?: ethers.Signer;
 	provider?: ethers.providers.Provider;
 	useOvm?: boolean;
@@ -168,9 +98,4 @@ export type Synth = {
 	description: string;
 	aggregator?: string;
 	subclass?: string;
-};
-
-export type User = {
-	name: string;
-	address: string;
 };

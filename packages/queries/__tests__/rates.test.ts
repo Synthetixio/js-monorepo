@@ -3,7 +3,7 @@ import { getFakeQueryContext, getWrapper } from '../testUtils';
 
 import { renderHook } from '@testing-library/react-hooks';
 
-import { set, mapValues } from 'lodash';
+import { set } from 'lodash';
 import { wei } from '@synthetixio/wei';
 import { ethers } from 'ethers';
 

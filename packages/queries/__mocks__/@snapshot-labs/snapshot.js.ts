@@ -1,4 +1,4 @@
-export = {
+const mock = {
 	utils: {
 		getScores: () => [
 			{ '0x0000000000000000000000000000000000000000': 15 },
@@ -8,3 +8,5 @@ export = {
 		subgraphRequest: async () => ({ accounts: [] }),
 	},
 };
+
+export default mock;

@@ -14,6 +14,9 @@ import {
 	decode,
 	defaults,
 	getFeeds,
+	Token,
+	TargetsRecord,
+	Target,
 } from 'synthetix';
 import { ethers } from 'ethers';
 
@@ -21,14 +24,14 @@ import {
 	Config,
 	CurrencyKey,
 	CurrencyCategory,
-	Network,
 	NetworkId,
-	Target,
-	TargetsRecord,
+	NetworkIdByNameType,
 	ContractsMap,
 	SynthetixJS,
 	Synth,
-	Token,
+	NetworkName,
+	NetworkIdByName,
+	NetworkNameById,
 } from './types';
 
 import { Synths } from '../generated/mainnet';
@@ -62,9 +65,12 @@ const synthetix = ({ networkId, network, signer, provider }: Config): SynthetixJ
 	};
 };
 
-const selectNetwork = (networkId?: NetworkId, network?: Network): [Network, NetworkId, boolean] => {
-	let currentNetwork: Network = Network.Mainnet;
-	let currentNetworkId: NetworkId = NetworkId.Mainnet;
+const selectNetwork = (
+	networkId?: NetworkId,
+	network?: NetworkName
+): [NetworkName, NetworkId, boolean] => {
+	let currentNetworkId: NetworkId;
+	let currentNetworkName: NetworkName;
 	let useOvm = false;
 	if (
 		(network && !networkToChainId[network]) ||
@@ -72,31 +78,34 @@ const selectNetwork = (networkId?: NetworkId, network?: Network): [Network, Netw
 	) {
 		throw new Error(ERRORS.badNetworkArg);
 	} else if (network && networkToChainId[network]) {
-		const networkToId = Number(networkToChainId[network]);
+		const networkToId = NetworkIdByName[network];
 		const networkFromId = getNetworkFromId({ id: networkToId });
-		currentNetworkId = networkToId;
-		currentNetwork = networkFromId.network;
-		useOvm = networkFromId.useOvm;
+		currentNetworkId = networkToChainId[network];
+		currentNetworkName = networkFromId.network;
+		useOvm = !!networkFromId.useOvm;
 	} else if (networkId) {
 		const networkFromId = getNetworkFromId({ id: networkId });
 		currentNetworkId = networkId;
-		currentNetwork = networkFromId.network;
-		useOvm = networkFromId.useOvm;
+		currentNetworkName = networkFromId.network;
+		useOvm = Boolean(networkFromId.useOvm);
+	} else {
+		currentNetworkId = NetworkIdByName.mainnet;
+		currentNetworkName = NetworkNameById[1];
 	}
-	return [currentNetwork, currentNetworkId, useOvm];
+	return [currentNetworkName, currentNetworkId, useOvm];
 };
 
 const getSynthetixContracts = (
-	network: Network,
+	network: NetworkName,
 	signer?: ethers.Signer,
 	provider?: ethers.providers.Provider,
 	useOvm?: boolean
 ): ContractsMap => {
 	const sources = getSource({ network, useOvm });
-	const targets: TargetsRecord = getTarget({ network, useOvm });
+	const targets = getTarget({ network, useOvm });
 
 	return Object.values(targets)
-		.map((target: Target) => {
+		.map((target) => {
 			if (target.name === 'Synthetix') {
 				target.address = targets.ProxyERC20.address;
 			} else if (target.name === 'SynthsUSD') {
@@ -109,7 +118,7 @@ const getSynthetixContracts = (
 			}
 			return target;
 		})
-		.reduce((acc: ContractsMap, { name, source, address }: Target) => {
+		.reduce((acc: ContractsMap, { name, source, address }) => {
 			acc[name] = new ethers.Contract(
 				address,
 				sources[source].abi,
@@ -121,12 +130,24 @@ const getSynthetixContracts = (
 
 export {
 	synthetix,
-	Network,
-	NetworkId,
+	NetworkNameById,
+	NetworkIdByName,
 	Synths,
 	CurrencyCategory,
 	networkToChainId,
 	getNetworkFromId,
 };
-export type { Config, CurrencyKey, Target, TargetsRecord, ContractsMap, SynthetixJS, Synth, Token };
+export type {
+	Config,
+	CurrencyKey,
+	Target,
+	TargetsRecord,
+	ContractsMap,
+	SynthetixJS,
+	Synth,
+	Token,
+	NetworkName,
+	NetworkId,
+	NetworkIdByNameType,
+};
 export default synthetix;

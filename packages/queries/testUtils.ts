@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { QueryContext } from './src/context';
 
-import { NetworkId, SynthetixJS } from '@synthetixio/contracts-interface';
+import { NetworkIdByName, SynthetixJS, NetworkId } from '@synthetixio/contracts-interface';
 import { ethers } from 'ethers';
 
 // simple query client wrapper which allows for testing of a
@@ -14,7 +14,7 @@ export function getWrapper(config?: any) {
 
 // builds an incomplete query context which should generally pass
 // blanket `enabled` sections. just mock the functions/data you need
-export function getFakeQueryContext(networkId: NetworkId = NetworkId.Mainnet): QueryContext {
+export function getFakeQueryContext(networkId: NetworkId = NetworkIdByName.mainnet): QueryContext {
 	return {
 		networkId,
 		subgraphEndpoints: { exchanger: '', issuance: '', exchanges: '', subgraph: '' },

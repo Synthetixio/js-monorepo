@@ -6,7 +6,7 @@ import {
 } from '@synthetixio/optimism-networks';
 import { ERRORS } from './constants';
 import { ProviderConfig, SynthetixProvider, OvmProvider } from './types';
-import { NetworkId } from '@synthetixio/contracts-interface';
+import { NetworkIdByName } from '@synthetixio/contracts-interface';
 
 const loadProvider = ({ networkId = 1, infuraId, provider }: ProviderConfig): SynthetixProvider => {
 	if (!provider && !infuraId) throw new Error(ERRORS.noWeb3Provider);
@@ -36,11 +36,10 @@ const getOptimismProvider = ({
  */
 const handleSwitchChain = async (
 	web3Provider: ethersProviders.Web3Provider,
-	network: NetworkId,
 	isOVM: boolean
 ): Promise<null | undefined> => {
 	if (!web3Provider.provider?.request) return;
-	const newNetworkId = getCorrespondingNetwork(network, isOVM);
+	const newNetworkId = getCorrespondingNetwork(isOVM);
 	const formattedChainId = utils.hexStripZeros(BigNumber.from(newNetworkId).toHexString());
 	// If request was successful, null is returned
 	return web3Provider.provider.request({
@@ -49,14 +48,14 @@ const handleSwitchChain = async (
 	});
 };
 
-const getCorrespondingNetwork = (networkId: NetworkId, isOVM: boolean) => {
+const getCorrespondingNetwork = (isOVM: boolean) => {
 	if (isOVM) {
-		return L2_TO_L1_NETWORK_MAPPER[networkId] || L2_TO_L1_NETWORK_MAPPER[NetworkId['Mainnet-Ovm']];
+		return L2_TO_L1_NETWORK_MAPPER[NetworkIdByName['mainnet-ovm']];
 	} else {
-		return L1_TO_L2_NETWORK_MAPPER[networkId] || L1_TO_L2_NETWORK_MAPPER[NetworkId.Mainnet];
+		return L1_TO_L2_NETWORK_MAPPER[NetworkIdByName.mainnet];
 	}
 };
 
-export { loadProvider, getOptimismProvider, handleSwitchChain, NetworkId };
+export { loadProvider, getOptimismProvider, handleSwitchChain };
 export type { ProviderConfig, SynthetixProvider, OvmProvider };
 export default loadProvider;

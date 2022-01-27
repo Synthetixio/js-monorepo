@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { useQuery, UseQueryOptions } from 'react-query';
 
-import { NetworkId, Synths } from '@synthetixio/contracts-interface';
+import { NetworkIdByName, Synths } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
@@ -27,7 +27,8 @@ const useSynthsTotalSupplyQuery = (
 			);
 
 			const isL2 =
-				NetworkId['Mainnet-Ovm'] === ctx.networkId! || NetworkId['Kovan-Ovm'] === ctx.networkId!;
+				NetworkIdByName['mainnet-ovm'] === ctx.networkId! ||
+				NetworkIdByName['kovan-ovm'] === ctx.networkId!;
 
 			const [
 				synthTotalSupplies,
