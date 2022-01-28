@@ -7,7 +7,7 @@ import { CryptoCurrency, ETH_ADDRESS } from '../../currency';
 import { QueryContext } from '../../context';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 
-const ether = {
+const ether: Token = {
 	address: ETH_ADDRESS,
 	chainId: NetworkIdByName.mainnet,
 	decimals: 18,
@@ -15,7 +15,7 @@ const ether = {
 	name: 'Ethereum',
 	symbol: CryptoCurrency.ETH,
 	tags: [],
-} as Token;
+};
 
 const useTokenListQuery = (
 	_: QueryContext,
