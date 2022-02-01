@@ -18,9 +18,9 @@ const useGlobalStakingInfoQuery = (
 			orderDirection: 'desc',
 		},
 		{
+			initialDebtOwnership: true,
 			collateral: true,
 			debtEntryAtIndex: true,
-			initialDebtOwnership: true,
 		}
 	);
 
