@@ -10,11 +10,19 @@ const useGlobalStakingInfoQuery = (
 	ctx: QueryContext,
 	options?: UseQueryOptions<GlobalStakingInfo>
 ) => {
-	const snxHoldersQuery = useGetSNXHolders(ctx.subgraphEndpoints.subgraph, {
-		first: 1000,
-		orderBy: 'collateral',
-		orderDirection: 'desc',
-	});
+	const snxHoldersQuery = useGetSNXHolders(
+		ctx.subgraphEndpoints.subgraph,
+		{
+			first: 1000,
+			orderBy: 'collateral',
+			orderDirection: 'desc',
+		},
+		{
+			collateral: true,
+			debtEntryAtIndex: true,
+			initialDebtOwnership: true,
+		}
+	);
 
 	return useQuery<GlobalStakingInfo>(
 		['staking', 'snxLockedValue', ctx.networkId],
