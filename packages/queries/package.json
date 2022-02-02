@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/queries",
-	"version": "2.58.0-alpha",
+	"version": "2.58.0",
 	"description": "react-query for pulling synthetix data in react interfaces",
 	"source": "./src/index.ts",
 	"main": "./build/node/src/index.js",
@@ -33,9 +33,9 @@
 	},
 	"dependencies": {
 		"@snapshot-labs/snapshot.js": "0.3.22",
-		"@synthetixio/contracts-interface": "2.58.0-alpha",
+		"@synthetixio/contracts-interface": "2.58.0",
 		"@synthetixio/optimism-networks": "2.57.3",
-		"@synthetixio/providers": "2.58.0-alpha",
+		"@synthetixio/providers": "2.58.0",
 		"@synthetixio/transaction-notifier": "2.57.3",
 		"@synthetixio/wei": "2.57.3",
 		"axios": "0.21.1",
