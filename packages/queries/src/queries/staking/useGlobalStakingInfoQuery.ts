@@ -68,7 +68,7 @@ const useGlobalStakingInfoQuery = (
 					unformattedDebtEntryAtIndex,
 					unformattedInitialDebtOwnership,
 				].map((val) => (!val ? wei(0) : wei(val)));
-				debugger;
+
 				const debtBalance = debtEntryAtIndex.gt(0)
 					? totalIssuedSynths
 							.mul(lastDebtLedgerEntry)
