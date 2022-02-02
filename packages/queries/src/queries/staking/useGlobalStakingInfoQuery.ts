@@ -45,7 +45,7 @@ const useGlobalStakingInfoQuery = (
 				ctx.snxjs!.contracts.SystemSettings.issuanceRatio(),
 			]);
 
-			const lastDebtLedgerEntry = wei(unformattedLastDebtLedgerEntry, 27);
+			const lastDebtLedgerEntry = wei(unformattedLastDebtLedgerEntry);
 
 			const [totalIssuedSynths, issuanceRatio, usdToSnxPrice] = [
 				unformattedTotalIssuedSynths,
