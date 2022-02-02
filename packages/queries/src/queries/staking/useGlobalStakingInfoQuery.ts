@@ -4,7 +4,7 @@ import Wei, { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
 import { GlobalStakingInfo } from '../../types';
-import { useGetSNXHolders } from '../../../generated/issuanceSubgraphQueries';
+import { useGetSNXHolders } from '../../../generated/mainSubgraphQueries';
 
 const useGlobalStakingInfoQuery = (
 	ctx: QueryContext,
@@ -68,7 +68,7 @@ const useGlobalStakingInfoQuery = (
 					unformattedDebtEntryAtIndex,
 					unformattedInitialDebtOwnership,
 				].map((val) => (!val ? wei(0) : wei(val)));
-
+				debugger;
 				const debtBalance = debtEntryAtIndex.gt(0)
 					? totalIssuedSynths
 							.mul(lastDebtLedgerEntry)
