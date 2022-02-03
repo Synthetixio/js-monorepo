@@ -29,7 +29,6 @@
     "@types/commander": "^2.12.2",
     "@types/jest": "^27.0.1",
     "@types/lodash": "^4.14.172",
-    "@types/node-fetch": "^2.5.12",
     "codegen-graph-ts": ".",
     "eval": "^0.1.6",
     "jest": "^27.0.6",

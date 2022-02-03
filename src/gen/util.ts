@@ -1,4 +1,4 @@
-import { Type } from "./types";
+import { Entity, Type } from "./types";
 
 export function convertType(t: Type): { name: string, arrayInfo?: { areItemsNullable: boolean }, isNullable: boolean } {
     switch (t.kind) {
@@ -51,4 +51,14 @@ export function mapType(graphType: Type, destType: string) {
     }
 
     return { tsTypeName, baseType, nestedStructure };
+}
+
+export function queryFunctionName(e: Entity) {
+    let n = e.name;
+
+    for(let i = 0;i < n.length;i++) {
+        if (n[i] !== n[i].toUpperCase()) {
+            return n.substring(0, i).toLowerCase() + n.substring(i);
+        }
+    }
 }

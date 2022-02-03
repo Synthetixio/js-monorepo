@@ -1,5 +1,5 @@
 import { Entity } from "../types";
-import { convertType, mapType } from "../util";
+import { convertType, mapType, queryFunctionName } from "../util";
 
 /**
  * Required imports and primitive types required for other functions
@@ -26,10 +26,6 @@ export type MultiQueryOptions<T, R> = {
 
 const MAX_PAGE = 1000;
 `;
-}
-
-function queryFunctionName(e: Entity) {
-    return e.name.replace(/^./, e.name[0].toLowerCase());
 }
 
 function injectParse(e: Entity) {

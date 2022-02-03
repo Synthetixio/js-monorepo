@@ -4,11 +4,12 @@ import { Command } from 'commander';
 
 import fs from 'fs';
 
-import fetch from 'node-fetch';
 import { INTROSPECTION_QUERY } from './constants';
 import { Schema } from './types';
 import methods from './methods';
 import ts from 'typescript';
+
+import axios from 'axios';
 
 interface PullOptions {
     url?: string
@@ -22,12 +23,12 @@ interface GenOptions extends PullOptions {
 }
 
 export async function pull(options: PullOptions): Promise<Schema> {
-    const res = await fetch(options.url!, {
+    const res = await axios(options.url!, {
         method: 'POST',
-        body: JSON.stringify({query: INTROSPECTION_QUERY })
+        data: JSON.stringify({query: INTROSPECTION_QUERY })
     });
 
-    const rawSchema = (await res.json()).data.__schema as Schema;
+    const rawSchema = res.data.data.__schema as Schema;
 
     return rawSchema;
 }
