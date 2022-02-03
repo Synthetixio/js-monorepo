@@ -6,6 +6,9 @@ import { QueryContext } from '../../context';
 import { GlobalStakingInfo } from '../../types';
 import { useGetSNXHolders } from '../../../generated/mainSubgraphQueries';
 
+/**
+ * @deprecated Use useLockedSnxQuery instead
+ */
 const useGlobalStakingInfoQuery = (
 	ctx: QueryContext,
 	options?: UseQueryOptions<GlobalStakingInfo>
@@ -45,7 +48,7 @@ const useGlobalStakingInfoQuery = (
 				ctx.snxjs!.contracts.SystemSettings.issuanceRatio(),
 			]);
 
-			const lastDebtLedgerEntry = wei(unformattedLastDebtLedgerEntry);
+			const lastDebtLedgerEntry = wei(unformattedLastDebtLedgerEntry, 27);
 
 			const [totalIssuedSynths, issuanceRatio, usdToSnxPrice] = [
 				unformattedTotalIssuedSynths,
