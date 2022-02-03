@@ -1,8 +1,8 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { useGetSNXHolders } from 'generated/issuanceSubgraphQueries';
 import { QueryContext } from 'src/context';
 import Wei, { wei } from '@synthetixio/wei';
 import { ethers } from 'ethers';
+import { useGetSNXHolders } from '../../../generated/mainSubgraphQueries';
 
 type LockedSnx = {
 	lockedSupply: Wei;
