@@ -4,17 +4,28 @@ import Wei, { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
 import { GlobalStakingInfo } from '../../types';
-import { useGetSNXHolders } from '../../../generated/issuanceSubgraphQueries';
+import { useGetSNXHolders } from '../../../generated/mainSubgraphQueries';
 
+/**
+ * @deprecated Use useLockedSnxQuery instead
+ */
 const useGlobalStakingInfoQuery = (
 	ctx: QueryContext,
 	options?: UseQueryOptions<GlobalStakingInfo>
 ) => {
-	const snxHoldersQuery = useGetSNXHolders(ctx.subgraphEndpoints.issuance, {
-		first: 1000,
-		orderBy: 'collateral',
-		orderDirection: 'desc',
-	});
+	const snxHoldersQuery = useGetSNXHolders(
+		ctx.subgraphEndpoints.subgraph,
+		{
+			first: 1000,
+			orderBy: 'collateral',
+			orderDirection: 'desc',
+		},
+		{
+			initialDebtOwnership: true,
+			collateral: true,
+			debtEntryAtIndex: true,
+		}
+	);
 
 	return useQuery<GlobalStakingInfo>(
 		['staking', 'snxLockedValue', ctx.networkId],
