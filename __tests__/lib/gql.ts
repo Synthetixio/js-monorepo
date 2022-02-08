@@ -7,7 +7,7 @@ describe.only('generateGql', () => {
     });
 
     it('generates with basic options', () => {
-        expect(generateGql('foo', { first: 50, orderBy: 'name', orderDirection: 'desc' }, { bar: true })).toEqual(`{foo(first:50,orderBy:"name",orderDirection:"desc"){bar}}`);
+        expect(generateGql('foo', { first: 50, orderBy: 'name', orderDirection: 'desc', where: { isOpen: true }}, { bar: true })).toEqual(`{foo(first:50,orderBy:"name",orderDirection:"desc",where:{isOpen:true}){bar}}`);
     });
 
     it('generates with nested options', () => {
