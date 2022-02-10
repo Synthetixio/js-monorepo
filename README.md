@@ -1,3 +1,3 @@
 # Synthetix-ui
 
-Reuseable react component
+reuseable react components
