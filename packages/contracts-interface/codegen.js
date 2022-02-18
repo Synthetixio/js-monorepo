@@ -9,6 +9,7 @@ for (const network of ['mainnet', 'mainnet-ovm', 'kovan', 'kovan-ovm']) {
 	const synths = require(`synthetix/publish/deployed/${network}/synths.json`);
 
 	const genTs = ['export enum Synths {'];
+
 	for (const synth of synths) {
 		if (!synth.name) continue;
 
@@ -16,6 +17,6 @@ for (const network of ['mainnet', 'mainnet-ovm', 'kovan', 'kovan-ovm']) {
 	}
 
 	genTs.push('}');
-	console.log(network);
+
 	fs.writeFileSync(__dirname + `/generated/${network}.ts`, genTs.join('\n'));
 }
