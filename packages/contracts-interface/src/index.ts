@@ -34,7 +34,8 @@ import {
 	NetworkNameById,
 } from './types';
 
-import { Synths } from '../generated/mainnet';
+import { Synths as MainnetSynths } from '../generated/mainnet';
+import { Synths as OptimismSynths } from '../generated/mainnet-ovm';
 
 import { ERRORS } from './constants';
 
@@ -127,6 +128,8 @@ const getSynthetixContracts = (
 			return acc;
 		}, {});
 };
+
+const Synths = { ...MainnetSynths, ...OptimismSynths };
 
 export {
 	synthetix,
