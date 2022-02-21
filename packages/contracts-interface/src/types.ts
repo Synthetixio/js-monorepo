@@ -12,6 +12,7 @@ import {
 } from 'synthetix';
 
 import { Synths } from '../generated/mainnet';
+import { Synths as OptimismSynths } from '../generated/mainnet-ovm';
 
 export const NetworkIdByName = {
 	mainnet: 1,
@@ -74,7 +75,7 @@ export type Config = {
 	useOvm?: boolean;
 };
 
-export type CurrencyKey = keyof typeof Synths;
+export type CurrencyKey = keyof typeof Synths | keyof typeof OptimismSynths;
 
 export const FIAT_SYNTHS = new Set([
 	Synths.sEUR,
