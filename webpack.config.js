@@ -1,9 +1,13 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
   entry: './src/index.ts',
   devtool: 'inline-source-map',
+  externalsPresets: { node: true }, // in order to ignore built-in modules like path, fs, etc.
+  externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
+  plugins: [new CleanWebpackPlugin()],
   module: {
     rules: [
       {
@@ -31,14 +35,14 @@ module.exports = {
         ],
       },
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
+        test: /\.(js|jsx|tsx|ts)$/,
         exclude: /node_modules/,
+        loader: 'ts-loader',
       },
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['*', '.js', '.jsx', '.tsx', '.ts'],
   },
   output: {
     filename: 'bundle.js',

@@ -20,14 +20,9 @@ const Icon = ({ size, source }: IconProps) => {
         return '1rem';
     }
   };
+  const determinedSize = determineSize(size);
   // TODO @MF can we do a svg as source?
-  return (
-    <img
-      width={determineSize(size)}
-      height={determineSize(size)}
-      src={source}
-    />
-  );
+  return <img width={determinedSize} height={determinedSize} src={source} />;
 };
 
 export default Icon;
