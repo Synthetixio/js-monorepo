@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { QueryContext } from './src/context';
 

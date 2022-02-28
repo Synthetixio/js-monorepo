@@ -3,5 +3,5 @@
 module.exports = codegenGraphTs;
 
 function codegenGraphTs() {
-    // TODO
+	// TODO
 }

@@ -1,7 +1,7 @@
-import plain from "./plain";
+import plain from './plain';
 import reactquery from './react-query';
 
 export default {
-    plain,
-    reactquery
+	plain,
+	reactquery,
 };
