@@ -37,7 +37,9 @@ const Button: FC<ButtonProps> = ({
     min-height: ${theme.rem};
     text-align: center;
     border: 0;
-    background: ${variant === 'secondary' ? secondaryBackgroundColor : 'none'};
+    background: ${variant === 'secondary' && !disabled
+      ? secondaryBackgroundColor
+      : 'none'};
     border-radius: 4px;
     cursor: pointer;
     padding: ${determinePadding(size)};
@@ -50,9 +52,11 @@ const Button: FC<ButtonProps> = ({
     font-family: ${fonts.interBold};
     line-height: 17px;
     font-weight: bold;
+    ${variant === 'tertiary' && 'color: whitey'};
     ${disabled && `color: ${colors.disabled}`};
     ${variant === 'secondary' &&
-    `background-image: ${colors.gradients.lightBlue} background-size: 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; -moz-background-clip: text; -moz-text-fill-color: transparent;`}// TODO @MF font family not registered
+    !disabled &&
+    `background-image: ${colors.gradients.lightBlue} background-size: 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; -moz-background-clip: text; -moz-text-fill-color: transparent;`}
   `;
 
   return (
