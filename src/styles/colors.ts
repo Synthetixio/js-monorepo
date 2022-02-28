@@ -1,54 +1,51 @@
 export default {
-  rem: '12px',
-  colors: {
-    backgroundColor: '#0B0B22',
-    black: '#000000',
-    white: '#FFFFFF',
-    grey: '#828295',
-    lightBlue: {
-      primary: '#00D1FF',
-      dark: {
-        darker20: '#00a7cc;',
-        darker40: '#007d99;',
-        darker60: '#005366;',
-        darker80: '#002a33;',
-      },
-      light: {
-        lighter20: '#33daff;',
-        lighter40: '#66e3ff;',
-        lighter60: '#99ecff;',
-        lighter80: '#ccf6ff;',
-      },
+  backgroundColor: '#0B0B22',
+  black: '#000000',
+  white: '#FFFFFF',
+  grey: '#828295',
+  lightBlue: {
+    primary: '#00D1FF',
+    dark: {
+      darker20: '#00a7cc;',
+      darker40: '#007d99;',
+      darker60: '#005366;',
+      darker80: '#002a33;',
     },
-    darkBlue: {
-      primary: '#402FC8',
-      dark: {
-        darker20: '#3627a5;',
-        darker40: '#281d7c;',
-        darker60: '#1b1353;',
-        darker80: '#0d0a29;',
-      },
-      light: {
-        lighter20: '#695ad8;',
-        lighter40: '#8e83e2;',
-        lighter60: '#b4acec;',
-        lighter80: '#d9d6f5;',
-      },
+    light: {
+      lighter20: '#33daff;',
+      lighter40: '#66e3ff;',
+      lighter60: '#99ecff;',
+      lighter80: '#ccf6ff;',
     },
-    pink: {
-      primary: '#ED1EFF',
-      dark: {
-        darker20: '#bb00cc;',
-        darker40: '#8c0099;',
-        darker60: '#5e0066;',
-        darker80: '#2f0033;',
-      },
-      light: {
-        lighter20: '#ee33ff;',
-        lighter40: '#f266ff;',
-        lighter60: '#f799ff;',
-        lighter80: '#fbccff;',
-      },
+  },
+  darkBlue: {
+    primary: '#402FC8',
+    dark: {
+      darker20: '#3627a5;',
+      darker40: '#281d7c;',
+      darker60: '#1b1353;',
+      darker80: '#0d0a29;',
+    },
+    light: {
+      lighter20: '#695ad8;',
+      lighter40: '#8e83e2;',
+      lighter60: '#b4acec;',
+      lighter80: '#d9d6f5;',
+    },
+  },
+  pink: {
+    primary: '#ED1EFF',
+    dark: {
+      darker20: '#bb00cc;',
+      darker40: '#8c0099;',
+      darker60: '#5e0066;',
+      darker80: '#2f0033;',
+    },
+    light: {
+      lighter20: '#ee33ff;',
+      lighter40: '#f266ff;',
+      lighter60: '#f799ff;',
+      lighter80: '#fbccff;',
     },
   },
   gradients: {

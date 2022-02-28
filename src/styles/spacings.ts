@@ -1,5 +1,5 @@
 export default {
-  padding: {
+  margin: {
     tiniest: '0.33rem',
     tiny: '0.66rem',
     small: '1rem',
