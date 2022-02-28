@@ -16,5 +16,5 @@ Primary.args = {
   variant: 'primary',
   type: 'button',
   size: 'large',
-  fullWidth: true,
+  secondaryBackgroundColor: 'white',
 };

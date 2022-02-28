@@ -10,43 +10,53 @@ interface ButtonProps {
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
   size?: 'large' | 'medium' | 'small';
   variant?: 'primary' | 'secondary' | 'tertiary';
-  fullWidth?: boolean;
+  secondaryBackgroundColor?: string;
 }
 
 const Button: FC<ButtonProps> = ({
   type,
   text,
   size,
-  fullWidth,
   variant,
+  secondaryBackgroundColor,
   ...rest
 }) => {
+  const StyledButtonBorder = styled.div`
+    display: flex;
+    justify-content: center;
+    border-radius: 4px;
+    padding: 4px;
+    background: ${determineVariant(variant)};
+  `;
+
   const StyledButton = styled.button`
     outline: 0;
-    width: ${fullWidth ? '100%' : 'auto'};
     min-height: ${theme.rem};
-    height: ${determineHeight(size)};
-    padding: ${determinePadding(size)};
     text-align: center;
-    background: ${determineVariant(variant)};
-    border: 0px;
+    border: 0;
+    background: ${variant === 'secondary' ? secondaryBackgroundColor : 'none'};
     border-radius: 4px;
     cursor: pointer;
+    padding: ${determinePadding(size)};
+    height: ${determineHeight(size)};
+    width: 100%;
   `;
 
   const StyledButtonText = styled.span`
     font-size: ${determineFontSize(size)};
-    opacity: ${variant === 'secondary' ? '0;' : '1;'};
     font-family: ${fonts.interBold};
     line-height: 17px;
     font-weight: bold;
-    // TODO @MF font family not registered
+    ${variant === 'secondary' &&
+    `background-image: ${colors.gradients.lightBlue} background-size: 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; -moz-background-clip: text; -moz-text-fill-color: transparent;`}// TODO @MF font family not registered
   `;
 
   return (
-    <StyledButton type={type} {...rest}>
-      <StyledButtonText>{text}</StyledButtonText>
-    </StyledButton>
+    <StyledButtonBorder>
+      <StyledButton type={type} {...rest}>
+        <StyledButtonText>{text}</StyledButtonText>
+      </StyledButton>
+    </StyledButtonBorder>
   );
 };
 
@@ -89,10 +99,6 @@ const determineFontSize = (size: ButtonProps['size']) => {
 
 const determineVariant = (variant: ButtonProps['variant']) => {
   switch (variant) {
-    case 'primary':
-      return `${colors.gradients.lightBlue}`;
-    case 'secondary':
-      return 'none';
     case 'tertiary':
       return `${colors.darkBlue.primary}`;
     default:
