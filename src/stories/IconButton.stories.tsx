@@ -15,6 +15,9 @@ export const Primary = Template.bind({});
 
 Primary.args = {
   active: true,
+  rounded: false,
+  size: 'medium',
+  text: 'test',
   icon: (
     <svg
       width="18"
