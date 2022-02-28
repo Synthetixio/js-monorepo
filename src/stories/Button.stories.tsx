@@ -17,4 +17,5 @@ Primary.args = {
   type: 'button',
   size: 'large',
   secondaryBackgroundColor: 'white',
+  disabled: false,
 };

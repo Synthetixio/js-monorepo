@@ -11,6 +11,7 @@ interface ButtonProps {
   size?: 'large' | 'medium' | 'small';
   variant?: 'primary' | 'secondary' | 'tertiary';
   secondaryBackgroundColor?: string;
+  disabled?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -19,6 +20,7 @@ const Button: FC<ButtonProps> = ({
   size,
   variant,
   secondaryBackgroundColor,
+  disabled,
   ...rest
 }) => {
   const StyledButtonBorder = styled.div`
@@ -26,7 +28,8 @@ const Button: FC<ButtonProps> = ({
     justify-content: center;
     border-radius: 4px;
     padding: 4px;
-    background: ${determineVariant(variant)};
+    background: ${determineVariant(variant, disabled)};
+    ${disabled && `border: 2px solid ${colors.disabled}`};
   `;
 
   const StyledButton = styled.button`
@@ -47,13 +50,14 @@ const Button: FC<ButtonProps> = ({
     font-family: ${fonts.interBold};
     line-height: 17px;
     font-weight: bold;
+    ${disabled && `color: ${colors.disabled}`};
     ${variant === 'secondary' &&
     `background-image: ${colors.gradients.lightBlue} background-size: 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; -moz-background-clip: text; -moz-text-fill-color: transparent;`}// TODO @MF font family not registered
   `;
 
   return (
     <StyledButtonBorder>
-      <StyledButton type={type} {...rest}>
+      <StyledButton type={type} {...rest} disabled={disabled}>
         <StyledButtonText>{text}</StyledButtonText>
       </StyledButton>
     </StyledButtonBorder>
@@ -97,7 +101,11 @@ const determineFontSize = (size: ButtonProps['size']) => {
   }
 };
 
-const determineVariant = (variant: ButtonProps['variant']) => {
+const determineVariant = (
+  variant: ButtonProps['variant'],
+  disabled: boolean
+) => {
+  if (disabled) return 'rgba(86, 86, 99, 0.6);';
   switch (variant) {
     case 'tertiary':
       return `${colors.darkBlue.primary}`;

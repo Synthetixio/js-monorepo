@@ -3,6 +3,7 @@ export default {
   black: '#000000',
   white: '#FFFFFF',
   grey: '#828295',
+  disabled: '#565663',
   lightBlue: {
     primary: '#00D1FF',
     dark: {
