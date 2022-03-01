@@ -1,3 +1,3 @@
 export * from './Button';
 export * from './ExternalLink';
-export * from './Icon';
+export * from './IconButton';
