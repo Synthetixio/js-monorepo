@@ -20,7 +20,8 @@
 		"lint:fix": "../../node_modules/.bin/eslint --fix './src/**/*.{js,ts,tsx}'",
 		"test": "../../node_modules/.bin/jest --forceExit --coverage --no-cache",
 		"tsc": "../../node_modules/.bin/tsc --noemit",
-		"codegen": "node ./codegen.js"
+		"codegen": "node ./codegen.js",
+		"postinstall": "patch-package"
 	},
 	"repository": {
 		"type": "git",
@@ -40,7 +41,7 @@
 		"@synthetixio/wei": "2.61.2",
 		"axios": "0.21.1",
 		"bignumber.js": "9.0.1",
-		"codegen-graph-ts": "0.1.2",
+		"codegen-graph-ts": "0.1.4",
 		"date-fns": "2.19.0",
 		"ethcall": "3.3.0",
 		"ethers": "5.5.3",
@@ -52,6 +53,7 @@
 		"@testing-library/react-hooks": "^7.0.0",
 		"@types/lodash": "4.14.169",
 		"@types/react": "^17.0.11",
+		"patch-package": "^6.4.7",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
 		"react-query": "3.16.0",
