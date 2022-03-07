@@ -8,7 +8,11 @@ interface ExternalLinkProps {
   text: string;
 }
 
-export const ExternalLink = ({ link, text, ...rest }: ExternalLinkProps) => {
+export default function ExternalLink({
+  link,
+  text,
+  ...rest
+}: ExternalLinkProps) {
   const StyledWrapper = styled.div`
     display: flex;
     justify-content: center;
@@ -33,4 +37,4 @@ export const ExternalLink = ({ link, text, ...rest }: ExternalLinkProps) => {
       <ArrowLinkOffIcon active={true} />
     </StyledWrapper>
   );
-};
+}
