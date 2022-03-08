@@ -6,15 +6,15 @@ import { useGetSNXHolders } from '../../../generated/mainSubgraphQueries';
 import synthetix, { NetworkIdByName, NetworkNameById } from '@synthetixio/contracts-interface';
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from '../../constants';
 
-interface LockedSnx {
+interface SNXData {
 	lockedSupply: Wei;
 	lockedValue: Wei;
 	totalSNXSupply: Wei;
 }
-const useLockedSnxQueryL1 = (
+const useSNXData = (
 	ctx: QueryContext,
 	L1Provider?: providers.BaseProvider,
-	options?: UseQueryOptions<LockedSnx>
+	options?: UseQueryOptions<SNXData>
 ) => {
 	const snxHoldersQueryL1 = useGetSNXHolders(
 		DEFAULT_SUBGRAPH_ENDPOINTS[1].subgraph,
@@ -69,7 +69,7 @@ const useLockedSnxQueryL1 = (
 		networkId: NetworkIdByName['mainnet'],
 		provider: L1Provider || ctx.provider!,
 	});
-	return useQuery<LockedSnx>(
+	return useQuery<SNXData>(
 		[
 			'staking',
 			'snxLockedValue',
@@ -110,4 +110,4 @@ const useLockedSnxQueryL1 = (
 		}
 	);
 };
-export default useLockedSnxQueryL1;
+export default useSNXData;
