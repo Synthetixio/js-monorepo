@@ -10,7 +10,6 @@ interface LockedSnx {
 	lockedSupply: Wei;
 	lockedValue: Wei;
 	totalSNXSupply: Wei;
-	totalNotTransferableSNX: Wei;
 }
 const useLockedSnxQueryL1 = (
 	ctx: QueryContext,
@@ -20,7 +19,7 @@ const useLockedSnxQueryL1 = (
 	const snxHoldersQueryL1 = useGetSNXHolders(
 		DEFAULT_SUBGRAPH_ENDPOINTS[1].subgraph,
 		{
-			first: 1000,
+			first: 8000,
 			orderBy: 'collateral',
 			orderDirection: 'desc',
 			where: { initialDebtOwnership_not: '0' },
@@ -38,7 +37,7 @@ const useLockedSnxQueryL1 = (
 	const snxHoldersQueryL2 = useGetSNXHolders(
 		DEFAULT_SUBGRAPH_ENDPOINTS[10].subgraph,
 		{
-			first: 1000,
+			first: 8000,
 			orderBy: 'collateral',
 			orderDirection: 'desc',
 			where: { initialDebtOwnership_not: '0' },
@@ -83,17 +82,8 @@ const useLockedSnxQueryL1 = (
 			const snxPrice = await ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(
 				ethers.utils.formatBytes32String('SNX')
 			);
-			const rewardEscrowV2AddressL1 = snxJSL1.contracts.RewardEscrowV2.address;
-			const escrowBridgeToL2Address = snxJSL1.contracts.SynthetixBridgeEscrow.address;
 
 			const totalSNXSupply = wei(await snxJSL1.contracts.Synthetix.totalSupply());
-			const escrowedSNXL1 = wei(
-				await snxJSL1.contracts.Synthetix.balanceOf(rewardEscrowV2AddressL1)
-			);
-			const escrowedSNXInBridge = wei(
-				await snxJSL1.contracts.Synthetix.balanceOf(escrowBridgeToL2Address)
-			);
-			const totalNotTransferableSNX = totalSNXSupply.add(escrowedSNXL1).sub(escrowedSNXInBridge);
 
 			if (
 				snxHoldersQueryL1.isSuccess &&
@@ -106,14 +96,12 @@ const useLockedSnxQueryL1 = (
 					totalSNXSupply,
 					lockedSupply,
 					lockedValue: lockedSupply.mul(snxPrice),
-					totalNotTransferableSNX,
 				};
 			}
 			return {
 				totalSNXSupply: wei(0),
 				lockedSupply: wei(0),
 				lockedValue: wei(0),
-				totalNotTransferableSNX: wei(0),
 			};
 		},
 		{
