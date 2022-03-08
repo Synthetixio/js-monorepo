@@ -2,8 +2,8 @@ name: Main Workflow
 on:
   pull_request:
     branches:
-    - main
-    - master
+      - main
+      - master
 
 jobs:
   build:
@@ -17,6 +17,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npx lerna bootstrap
+      - run: npm --prefix ./packages/queries run patch-package
       - run: npm run lint
       - run: npx lerna run build
       - run: npx lerna run test
