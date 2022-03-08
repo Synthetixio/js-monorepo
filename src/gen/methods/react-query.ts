@@ -32,7 +32,7 @@ export default function reactquery(schema: Schema): string {
             return useQuery(
                 ['codegen-graphql', enabled ? generateGql('${
                   entity.name
-                }', options, args) : null, queryOptions.queryKeys.toString()],
+                }', options, args) : null, queryOptions?.queryKey?.toString()],
                 async () => func(url, options!, args!),
                 {
                     ...queryOptions,
@@ -57,7 +57,7 @@ export default function reactquery(schema: Schema): string {
             return useQuery(
                 ['codegen-graphql', enabled ? generateGql('${
                   entity.name
-                }s', options, args) : null, queryOptions.queryKeys.toString()],
+                }s', options, args) : null, queryOptions?.queryKey?.toString()],
                 async () => func(url, options!, args!),
                 {
                     ...queryOptions,
