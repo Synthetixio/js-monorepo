@@ -3,7 +3,7 @@
 	"private": true,
 	"scripts": {
 		"bootstrap": "lerna bootstrap --hoist",
-		"lint": "eslint './packages/**/*.{js,ts,tsx}'",
+		"lint": "eslint './packages/**/*.{js,ts,tsx}' --quiet",
 		"lint:fix": "eslint './packages/**/*.{js,ts,tsx}' --fix",
 		"test-all": "lerna run test",
 		"build": "lerna run build",
