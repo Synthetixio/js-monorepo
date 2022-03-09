@@ -43,7 +43,7 @@ jobs:
           npm run test-all
       - name: Update packages version
         run: |
-          npm --prefix ./packages/queries run patch-package
+          npm run patch-package
           lerna version ${{ env.new_version }} --exact --yes
           echo "resolved_version=$(jq -r .version < lerna.json)" >> $GITHUB_ENV
       - name: Publish packages
