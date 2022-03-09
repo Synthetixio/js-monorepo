@@ -5,7 +5,8 @@
   "main": "build/src/index.js",
   "scripts": {
     "test-codegen": "mkdir -p generated && ts-node src/gen/index.ts gen -s __tests__/subgraphs/sample.json -o generated/exchanges.ts",
-    "test": "npm run test-codegen && jest"
+    "test": "npm run test-codegen && jest",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
