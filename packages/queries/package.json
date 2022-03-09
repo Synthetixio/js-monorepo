@@ -21,7 +21,7 @@
 		"test": "../../node_modules/.bin/jest --forceExit --coverage --no-cache",
 		"tsc": "../../node_modules/.bin/tsc --noemit",
 		"codegen": "node ./codegen.js",
-		"postinstall": "patch-package"
+		"patch-package": "npx patch-package"
 	},
 	"repository": {
 		"type": "git",
@@ -47,8 +47,8 @@
 		"ethers": "5.5.3",
 		"graphql": "15.5.0",
 		"graphql-request": "3.4.0",
-		"lodash": "4.17.19",
-		"patch-package": "^6.4.7"
+		"patch-package": "^6.4.7",
+		"lodash": "4.17.19"
 	},
 	"devDependencies": {
 		"@testing-library/react-hooks": "^7.0.0",
