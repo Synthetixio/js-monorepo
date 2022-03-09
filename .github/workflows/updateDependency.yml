@@ -39,6 +39,8 @@ jobs:
           npm ci
           npm run bootstrap
           npm run lint
+          ls ./packages/queries
+          ls ./packages/queries/node_modules
           npm --prefix ./packages/queries run patch-package
           npm run build
           npm run test-all
