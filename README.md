@@ -69,6 +69,8 @@ fs.writeFileSync(`subgraphQuery.ts`, text);
 
 If you want to publish some changes to this repo all you have to do is increase the version number in package.json. Please follow [semver](https://semver.org/)
 
+Testing publish workflow
+
 ## Examples
 
 - [`codegen-graph-demo`](https://github.com/dbeal-eth/codegen-graph-demo) - A simple demo that showcases the functionality of this library.
