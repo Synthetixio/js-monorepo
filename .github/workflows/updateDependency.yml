@@ -38,8 +38,8 @@ jobs:
         run: |
           npm ci
           npm run bootstrap
-          npm --prefix ./packages/queries run patch-package
           npm run lint
+          npm --prefix ./packages/queries run patch-package
           npm run build
           npm run test-all
       - name: Update packages version
