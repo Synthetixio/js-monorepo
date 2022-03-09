@@ -77,8 +77,13 @@ const useEVMTxn = (
 	};
 
 	function handleError(err: any) {
-		const errorMessage =
+		let errorMessage =
 			err.data && isString(err.data) ? hexToASCII(err.data) : err.data?.message ?? err.message;
+		const isFrameWalletError = errorMessage.includes('(error={"message":');
+		if (isFrameWalletError) {
+			// Frame wallet throws a weird error, we try to parse the message and if it fails we just show the ugly full message
+			errorMessage = errorMessage.match(/"message":"([^"]+)"/)?.[1] || errorMessage;
+		}
 		setErrorMessage(errorMessage);
 	}
 
