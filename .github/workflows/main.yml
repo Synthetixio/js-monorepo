@@ -16,6 +16,7 @@ jobs:
       - name: Read package.json
         uses: tyankatsu0105/read-package-version-actions@v1
         id: package-version
+      - run: npm ci
       - run: npm run test
       - run: npm run build
       # publish
