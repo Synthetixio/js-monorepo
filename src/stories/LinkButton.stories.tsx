@@ -1,23 +1,22 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import IconButton from '../components/IconButton';
+import LinkButton from '../components/LinkButton';
 
 export default {
-  title: 'Icon Button',
-  component: IconButton,
-} as ComponentMeta<typeof IconButton>;
+  title: 'Link Button',
+  component: LinkButton,
+} as ComponentMeta<typeof LinkButton>;
 
-const Template: ComponentStory<typeof IconButton> = (args) => (
-  <IconButton {...args} />
+const Template: ComponentStory<typeof LinkButton> = (args) => (
+  <LinkButton {...args} />
 );
 
 export const Primary = Template.bind({});
 
 Primary.args = {
-  active: true,
-  rounded: false,
-  size: 'medium',
-  text: 'test',
+  text: 'HELP',
+  isExternal: true,
+  link: 'https://google.com',
   icon: (
     <svg
       width="18"

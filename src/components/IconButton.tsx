@@ -10,19 +10,19 @@ interface IconButtonProps {
   text?: string;
 }
 
-export const IconButton = ({
+export default function IconButton({
   icon,
   active,
   rounded,
   size,
   text,
   ...rest
-}: IconButtonProps) => {
+}: IconButtonProps) {
   const StyledWrapper = styled.div`
     display: inline-block;
     border: 1px solid rgba(130, 130, 149, 0.3);
     padding: 1px;
-    border-radius: ${rounded ? '50%' : '4px'};
+    border-radius: ${rounded ? '30px' : '4px'};
   `;
 
   const StyledButton = styled.button`
@@ -33,7 +33,7 @@ export const IconButton = ({
     background-color: transparent;
     padding: ${spacings.margin[size === 'large' ? 'medium' : 'small']};
     border: 0;
-    border-radius: ${rounded ? '50%' : '4px'};
+    border-radius: ${rounded ? '30px' : '4px'};
     cursor: pointer;
     ${active &&
     'background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(311.52deg, #3d464c -36.37%, #131619 62.81%)'};
@@ -45,6 +45,7 @@ export const IconButton = ({
     font-weight: 600;
     line-height: 20px;
     margin-left: 5px;
+    font-size: 1.16rem;
   `;
 
   return (
@@ -54,4 +55,4 @@ export const IconButton = ({
       </StyledButton>
     </StyledWrapper>
   );
-};
+}
