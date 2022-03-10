@@ -39,6 +39,9 @@ export default function LinkButton({
     cursor: pointer;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
       linear-gradient(311.52deg, #3d464c -36.37%, #131619 62.81%);
+    :active {
+      text-decoration: none;
+    }
   `;
 
   const StyledButtonText = styled.span`
