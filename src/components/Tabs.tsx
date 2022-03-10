@@ -5,16 +5,30 @@ import colors from '../styles/colors';
 interface TabsProps {
   titles: string[];
   onClick: (index: number) => void;
+  size?: 'medium' | 'small';
   activeIndex?: number;
+  justifyContent:
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'space-evenly'
+    | 'space-around';
 }
 
-export default function Tabs({ titles, onClick, activeIndex }: TabsProps) {
+export default function Tabs({
+  titles,
+  onClick,
+  activeIndex,
+  justifyContent,
+  size = 'medium',
+}: TabsProps) {
   return (
-    <StyledTabsWrapper>
+    <StyledTabsWrapper justifyContent={justifyContent}>
       {titles.map((title, index) => (
         <StyledTab
           onClick={() => onClick(index)}
           active={activeIndex === index}
+          size={size}
         >
           {title}
         </StyledTab>
@@ -23,14 +37,19 @@ export default function Tabs({ titles, onClick, activeIndex }: TabsProps) {
   );
 }
 
-const StyledTabsWrapper = styled.ul`
+const StyledTabsWrapper = styled.ul<{
+  justifyContent?: TabsProps['justifyContent'];
+}>`
   width: 100%;
   display: flex;
+  justify-content: ${({ justifyContent }) =>
+    justifyContent ? justifyContent : 'space-evenly'};
+  padding: 5px;
 `;
 
-const StyledTab = styled.li<{ active?: boolean }>`
+const StyledTab = styled.li<{ active?: boolean; size: TabsProps['size'] }>`
   list-style-type: none;
-  padding: 8px 18px;
+  padding: ${({ size }) => (size === 'medium' ? '8px 18px' : '2px 8px')};
   border-radius: 100px;
   background-color: ${({ active }) => active && colors.lightBlue.primary};
   color: ${({ active }) => (active ? 'black' : colors.lightBlue.primary)};
@@ -38,6 +57,11 @@ const StyledTab = styled.li<{ active?: boolean }>`
   font-family: Inter;
   font-style: normal;
   font-weight: bold;
-  font-size: 1.16rem;
+  font-size: ${({ size }) => (size === 'medium' ? '1.16rem' : '1rem')};
   line-height: 20px;
+  border: 1px solid transparent;
+  :hover {
+    border: 1px solid ${colors.lightBlue.primary};
+    transition: border-color 200ms linear;
+  }
 `;
