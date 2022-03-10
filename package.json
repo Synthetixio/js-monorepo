@@ -1,6 +1,6 @@
 {
   "name": "maxibon-codegen-graph-ts",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Generate typescript request library for any subgraph based on its entity definition",
   "main": "build/src/index.js",
   "scripts": {
