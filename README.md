@@ -1,15 +1,14 @@
-Codegen Graph TS
-====
+# Codegen Graph TS
 
 Use `codegen-graph-ts` to generate a TypeScript (or Javascript) library which can be used to query a subgraph on [The Graph](https://thegraph.com).
 
-* Generated functions provide full type checking and support for all options provided by the underlying GraphQL API.
-* Pagination is handled automatically, so you can easily retrieve more than 1,000 records per call.
-* Create standard await/async functions or [react-query](https://react-query.tanstack.com/) hooks.
+- Generated functions provide full type checking and support for all options provided by the underlying GraphQL API.
+- Pagination is handled automatically, so you can easily retrieve more than 1,000 records per call.
+- Create standard await/async functions or [react-query](https://react-query.tanstack.com/) hooks.
 
 ## Usage
 
-Replace the URL below with the *Queries (HTTP)* endpoint from The Graph. Then run the code snippet to create a `subgraph.ts` file. Note that you’ll need to keep the npm dependency in your project for the generated file to function. To generate JavaScript functions, rather than Typescript, add the `--js` flag to the last command. Add the `--method reactquery` option to generate [react-query](https://react-query.tanstack.com/) hooks instead of standard async/await functions.
+Replace the URL below with the _Queries (HTTP)_ endpoint from The Graph. Then run the code snippet to create a `subgraph.ts` file. Note that you’ll need to keep the npm dependency in your project for the generated file to function. To generate JavaScript functions, rather than Typescript, add the `--js` flag to the last command. Add the `--method reactquery` option to generate [react-query](https://react-query.tanstack.com/) hooks instead of standard async/await functions.
 
 ```
 npm i --save codegen-graph-ts
@@ -66,7 +65,13 @@ const text = cgt.gen({
 fs.writeFileSync(`subgraphQuery.ts`, text);
 ```
 
+## Publish new version
+
+If you want to publish some changes to this repo all you have to do is increase the version number in package.json. Please follow [semver](https://semver.org/)
+
+Testing publish workflow
+
 ## Examples
 
-* [`codegen-graph-demo`](https://github.com/dbeal-eth/codegen-graph-demo) - A simple demo that showcases the functionality of this library.
-* [`@synthetixio/queries`](https://github.com/Synthetixio/js-monorepo/tree/master/packages/queries) - A library which uses `codegen-graph-ts` in its CI and delivers robust client-side integration of subgraphs with `react-query`.
+- [`codegen-graph-demo`](https://github.com/dbeal-eth/codegen-graph-demo) - A simple demo that showcases the functionality of this library.
+- [`@synthetixio/queries`](https://github.com/Synthetixio/js-monorepo/tree/master/packages/queries) - A library which uses `codegen-graph-ts` in its CI and delivers robust client-side integration of subgraphs with `react-query`.

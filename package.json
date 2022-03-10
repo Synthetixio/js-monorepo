@@ -5,7 +5,8 @@
   "main": "build/src/index.js",
   "scripts": {
     "test-codegen": "mkdir -p generated && ts-node src/gen/index.ts gen -s __tests__/subgraphs/sample.json -o generated/exchanges.ts",
-    "test": "npm run test-codegen && jest"
+    "test": "npm run test-codegen && jest",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "@types/commander": "^2.12.2",
     "@types/jest": "^27.0.1",
     "@types/lodash": "^4.14.172",
+    "@types/node-fetch": "2.6.1",
     "codegen-graph-ts": ".",
     "eval": "^0.1.6",
     "jest": "^27.0.6",
