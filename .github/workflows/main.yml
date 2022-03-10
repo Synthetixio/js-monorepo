@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -24,5 +26,6 @@ jobs:
         run: echo "Publishing version ${{ steps.package-version.outputs.version }}"
       - uses: JS-DevTools/npm-publish@v1
         with:
-          token: ${{ secrets.NPM_TOKEN }}
-          check-version: true 
+          token: $NPM_TOKEN
+          check-version: true
+        
