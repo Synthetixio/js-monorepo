@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/queries",
-	"version": "2.63.1-alpha",
+	"version": "2.63.1",
 	"description": "react-query for pulling synthetix data in react interfaces",
 	"source": "./src/index.ts",
 	"main": "./build/node/src/index.js",
@@ -20,8 +20,7 @@
 		"lint:fix": "../../node_modules/.bin/eslint --fix './src/**/*.{js,ts,tsx}'",
 		"test": "../../node_modules/.bin/jest --forceExit --coverage --no-cache",
 		"tsc": "../../node_modules/.bin/tsc --noemit",
-		"codegen": "node ./codegen.js",
-		"patch-package": "npx patch-package"
+		"codegen": "node ./codegen.js"
 	},
 	"repository": {
 		"type": "git",
@@ -35,20 +34,19 @@
 	"dependencies": {
 		"@snapshot-labs/snapshot.js": "0.3.22",
 		"@synthetixio/contracts-interface": "0.0.0-392c2ad",
-		"@synthetixio/optimism-networks": "2.61.2",
-		"@synthetixio/providers": "2.63.1-alpha",
-		"@synthetixio/transaction-notifier": "2.61.2",
-		"@synthetixio/wei": "2.61.2",
+		"@synthetixio/optimism-networks": "2.63.1",
+		"@synthetixio/providers": "2.63.1",
+		"@synthetixio/transaction-notifier": "2.63.1",
+		"@synthetixio/wei": "2.63.1",
 		"axios": "0.21.1",
 		"bignumber.js": "9.0.1",
-		"codegen-graph-ts": "0.1.4",
 		"date-fns": "2.19.0",
 		"ethcall": "3.3.0",
 		"ethers": "5.5.3",
 		"graphql": "15.5.0",
 		"graphql-request": "3.4.0",
-		"patch-package": "^6.4.7",
-		"lodash": "4.17.19"
+		"lodash": "4.17.19",
+		"maxibon-codegen-graph-ts": "0.1.8"
 	},
 	"devDependencies": {
 		"@testing-library/react-hooks": "^7.0.0",
