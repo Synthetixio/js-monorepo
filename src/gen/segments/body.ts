@@ -1,15 +1,16 @@
 import { Entity } from "../types";
 import { convertType, mapType, queryFunctionName } from "../util";
+import packageJSON from "../../../package.json";
 
 /**
  * Required imports and primitive types required for other functions
  * @returns Text to be injected for the heading
  */
 export function heading() {
-return `
+  return `
 import Wei, { WeiSource, wei } from '@synthetixio/wei';
-import axios from 'codegen-graph-ts/build/src/lib/axios';
-import generateGql from 'codegen-graph-ts/build/src/lib/gql';
+import axios from '${packageJSON.name}/build/src/lib/axios';
+import generateGql from '${packageJSON.name}/build/src/lib/gql';
 
 export type SingleQueryOptions = {
     id: string,
@@ -29,31 +30,43 @@ const MAX_PAGE = 1000;
 }
 
 function injectParse(e: Entity) {
-    const out = [`const formattedObj: any = {};`];
-    for (const f of e.fields!) {
-        const t = convertType(f.type);
-        switch(t.name) {
-            case 'BigDecimal':
-                out.push(`if (obj['${f.name}']) formattedObj['${f.name}'] = wei(obj['${f.name}']);`);
-                break;
-            case 'BigInt':
-                out.push(`if (obj['${f.name}']) formattedObj['${f.name}'] = wei(obj['${f.name}'], 0);`);
-                break;
-            default:
-                out.push(`if (obj['${f.name}']) formattedObj['${f.name}'] = obj['${f.name}'];`)
-        }
+  const out = [`const formattedObj: any = {};`];
+  for (const f of e.fields!) {
+    const t = convertType(f.type);
+    switch (t.name) {
+      case "BigDecimal":
+        out.push(
+          `if (obj['${f.name}']) formattedObj['${f.name}'] = wei(obj['${f.name}']);`
+        );
+        break;
+      case "BigInt":
+        out.push(
+          `if (obj['${f.name}']) formattedObj['${f.name}'] = wei(obj['${f.name}'], 0);`
+        );
+        break;
+      default:
+        out.push(
+          `if (obj['${f.name}']) formattedObj['${f.name}'] = obj['${f.name}'];`
+        );
     }
+  }
 
-    return out.join('\n');
+  return out.join("\n");
 }
 
 /**
  * Generates an async function body for fetching and parsing query options
  */
 export function multiBody(e: Entity) {
-return `async function<K extends keyof ${e.name}Result>(url: string, options: MultiQueryOptions<${e.name}Filter, ${e.name}Result>, args: ${e.name}Args<K>): Promise<Pick<${e.name}Result, K>[]> {
+  return `async function<K extends keyof ${
+    e.name
+  }Result>(url: string, options: MultiQueryOptions<${e.name}Filter, ${
+    e.name
+  }Result>, args: ${e.name}Args<K>): Promise<Pick<${e.name}Result, K>[]> {
 
-    const paginatedOptions: Partial<MultiQueryOptions<${e.name}Filter, ${e.name}Result>> = { ...options };
+    const paginatedOptions: Partial<MultiQueryOptions<${e.name}Filter, ${
+    e.name
+  }Result>> = { ...options };
 
     let paginationKey: keyof ${e.name}Filter|null = null;
     let paginationValue = '';
@@ -64,7 +77,9 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Mu
         paginatedOptions.orderBy = options.orderBy || 'id';
         paginatedOptions.orderDirection = options.orderDirection || 'asc';
 
-        paginationKey = paginatedOptions.orderBy + (paginatedOptions.orderDirection === 'asc' ? '_gt' : '_lt') as keyof ${e.name}Filter;
+        paginationKey = paginatedOptions.orderBy + (paginatedOptions.orderDirection === 'asc' ? '_gt' : '_lt') as keyof ${
+          e.name
+        }Filter;
 
         paginatedOptions.where =  { ...options.where };
     }
@@ -75,7 +90,9 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Mu
         if (paginationKey && paginationValue) paginatedOptions.where![paginationKey] = paginationValue as any;
 
         const res = await axios.post(url, {
-            query: generateGql('${queryFunctionName(e)}s', paginatedOptions, args)
+            query: generateGql('${queryFunctionName(
+              e
+            )}s', paginatedOptions, args)
         });
 
         const r = res.data as any;
@@ -110,7 +127,11 @@ return `async function<K extends keyof ${e.name}Result>(url: string, options: Mu
  * Generates an async function body for fetching and parsing query options
  */
 export function singleBody(e: Entity) {
-return `async function<K extends keyof ${e.name}Result>(url: string, options: SingleQueryOptions, args: ${e.name}Args<K>): Promise<Pick<${e.name}Result, K>> {
+  return `async function<K extends keyof ${
+    e.name
+  }Result>(url: string, options: SingleQueryOptions, args: ${
+    e.name
+  }Args<K>): Promise<Pick<${e.name}Result, K>> {
     const res = await axios.post(url, {
         query: generateGql('${queryFunctionName(e)}', options, args)
     });
@@ -128,30 +149,36 @@ ${injectParse(e)}
 }
 
 export function types(entity: Entity, filterEntity: Entity) {
-    const lines: string[] = [];
-lines.push(`export type ${entity.name}Filter = {`);
-for (const field of filterEntity.inputFields!) {
-    lines.push(`\t${field.name}?: ${mapType(field.type, 'Filter').tsTypeName}`);
-}
-lines.push('};');
-lines.push('\n');
+  const lines: string[] = [];
+  lines.push(`export type ${entity.name}Filter = {`);
+  for (const field of filterEntity.inputFields!) {
+    lines.push(`\t${field.name}?: ${mapType(field.type, "Filter").tsTypeName}`);
+  }
+  lines.push("};");
+  lines.push("\n");
 
-lines.push(`export type ${entity.name}Result = {`);
-for (const field of entity.fields!) {
-    lines.push(`\t${field.name}: ${mapType(field.type, 'Result').tsTypeName}`);
-}
-lines.push(`};`);
+  lines.push(`export type ${entity.name}Result = {`);
+  for (const field of entity.fields!) {
+    lines.push(`\t${field.name}: ${mapType(field.type, "Result").tsTypeName}`);
+  }
+  lines.push(`};`);
 
-lines.push(`export type ${entity.name}Fields = {`);
-for (const field of entity.fields!) {
-    const mappedType = mapType(field.type, 'Fields');
-    lines.push(`\t${field.name}: ${mappedType.nestedStructure ? mappedType.baseType : true}`);
-}
-lines.push(`};`);
+  lines.push(`export type ${entity.name}Fields = {`);
+  for (const field of entity.fields!) {
+    const mappedType = mapType(field.type, "Fields");
+    lines.push(
+      `\t${field.name}: ${
+        mappedType.nestedStructure ? mappedType.baseType : true
+      }`
+    );
+  }
+  lines.push(`};`);
 
-lines.push(`export type ${entity.name}Args<K extends keyof ${entity.name}Result> = { [Property in keyof Pick<${entity.name}Fields, K>]: ${entity.name}Fields[Property] };`);
+  lines.push(
+    `export type ${entity.name}Args<K extends keyof ${entity.name}Result> = { [Property in keyof Pick<${entity.name}Fields, K>]: ${entity.name}Fields[Property] };`
+  );
 
-lines.push('');
+  lines.push("");
 
-    return lines.join('\n');
+  return lines.join("\n");
 }
