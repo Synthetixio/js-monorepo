@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
+import spacings from '../styles/spacings';
 
 interface TabsProps {
   titles: string[];
@@ -13,6 +14,7 @@ interface TabsProps {
     | 'center'
     | 'space-evenly'
     | 'space-around';
+  icon?: JSX.Element;
 }
 
 export default function Tabs({
@@ -21,6 +23,7 @@ export default function Tabs({
   activeIndex,
   justifyContent,
   size = 'medium',
+  icon,
 }: TabsProps) {
   return (
     <StyledTabsWrapper justifyContent={justifyContent}>
@@ -31,6 +34,7 @@ export default function Tabs({
           size={size}
         >
           {title}
+          {icon && <StyledIconWrapper>{icon}</StyledIconWrapper>}
         </StyledTab>
       ))}
     </StyledTabsWrapper>
@@ -48,6 +52,9 @@ const StyledTabsWrapper = styled.ul<{
 `;
 
 const StyledTab = styled.li<{ active?: boolean; size: TabsProps['size'] }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   list-style-type: none;
   padding: ${({ size }) => (size === 'medium' ? '8px 18px' : '2px 8px')};
   border-radius: 100px;
@@ -64,4 +71,11 @@ const StyledTab = styled.li<{ active?: boolean; size: TabsProps['size'] }>`
     border: 1px solid ${colors.lightBlue.primary};
     transition: border-color 200ms linear;
   }
+`;
+
+const StyledIconWrapper = styled.span`
+  margin-left: ${spacings.margin.tiny};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
