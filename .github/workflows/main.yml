@@ -14,7 +14,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-          registry-url: 'https://registry.npmjs.org'
       - name: Read package.json
         uses: tyankatsu0105/read-package-version-actions@v1
         id: package-version
@@ -28,4 +27,6 @@ jobs:
         with:
           token: $NPM_TOKEN
           check-version: true
+          access: public
+          registry: https://registry.npmjs.org/
         

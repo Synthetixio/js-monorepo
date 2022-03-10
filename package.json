@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KillerByte/codegen-graph-ts.git"
+    "url": "https://github.com/Synthetixio/codegen-graph-ts"
   },
   "author": "Daniel Beal <daniel@synthetix.io>",
   "license": "GPL-3.0",
