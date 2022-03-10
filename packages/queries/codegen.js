@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require('fs');
 
-const cgt = require('codegen-graph-ts');
+const cgt = require('maxibon-codegen-graph-ts');
 
 try {
 	fs.mkdirSync(__dirname + '/generated/');
