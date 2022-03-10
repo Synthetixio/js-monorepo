@@ -7,22 +7,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: '16'
       - name: Read package.json
         uses: tyankatsu0105/read-package-version-actions@v1
         id: package-version
       - run: npm ci
-      - run: npm run test
       - run: npm run build
+      - run: npm run test
       # publish
       - name: Show version number
         run: echo "Publishing version ${{ steps.package-version.outputs.version }}"
-      - run: npm version ${{ steps.package-version.outputs.version }}
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: $NPM_TOKEN
+          check-version: true
+          access: public
+          registry: https://registry.npmjs.org/
+        
