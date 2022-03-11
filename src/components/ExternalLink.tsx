@@ -13,24 +13,6 @@ export default function ExternalLink({
   text,
   ...rest
 }: ExternalLinkProps) {
-  const StyledWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `;
-  const StyledExternalLink = styled.a.attrs({
-    target: '_blank',
-    rel: 'noreferrer noopener',
-  })`
-    text-decoration: none;
-    color: ${colors.lightBlue.primary};
-    font-family: Inter;
-
-    :hover {
-      color: ${colors.lightBlue.dark.darker20};
-    }
-  `;
-
   return (
     <StyledWrapper {...rest}>
       <StyledExternalLink href={link}>{text}</StyledExternalLink>
@@ -38,3 +20,21 @@ export default function ExternalLink({
     </StyledWrapper>
   );
 }
+
+const StyledWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const StyledExternalLink = styled.a.attrs({
+  target: '_blank',
+  rel: 'noreferrer noopener',
+})`
+  text-decoration: none;
+  color: ${colors.lightBlue.primary};
+  font-family: Inter;
+
+  :hover {
+    color: ${colors.lightBlue.dark.darker20};
+  }
+`;
