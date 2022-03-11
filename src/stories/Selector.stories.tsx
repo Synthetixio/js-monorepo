@@ -13,8 +13,13 @@ const Template: ComponentStory<typeof Selector> = (args) => (
 );
 
 export const Primary = Template.bind({});
+export const WithoutIcon = Template.bind({});
 
 Primary.args = {
   text: 'ACTION',
   icon: <CloseIcon />,
+};
+
+WithoutIcon.args = {
+  text: 'ACTION',
 };

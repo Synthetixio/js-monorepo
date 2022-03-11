@@ -11,29 +11,43 @@ interface SelectorProps {
 
 export default function Selector({ text, icon, onClick }: SelectorProps) {
   return (
-    <SelectorWrapper onClick={onClick}>
-      <SelectorText>{text}</SelectorText> {icon}
+    <SelectorWrapper onClick={onClick} hasIcon={!!icon}>
+      <SelectorText hasIcon={!!icon}>{text}</SelectorText> {icon}
     </SelectorWrapper>
   );
 }
 
-const SelectorWrapper = styled.button`
+const SelectorWrapper = styled.button<{ hasIcon: boolean }>`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: ${({ hasIcon }) => (hasIcon ? 'space-between' : 'center')};
   align-items: center;
   padding: 6px 8px;
   background-color: ${colors.backgroundColor};
   border: 0;
   outline: 0;
+  cursor: pointer;
+
+  :hover {
+    background-color: ${colors.black};
+    transition: background-color 500ms ease-in;
+  }
+  :active {
+    background-color: ${colors.black};
+    transition: background-color 500ms ease-in;
+  }
 `;
 
-const SelectorText = styled.span`
+const SelectorText = styled.span<{ hasIcon: boolean }>`
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 1rem;
   line-height: 140%;
   color: ${colors.lightBlue.primary};
-  margin-right: ${spacings.margin.big};
+  ${({ hasIcon }) => {
+    return hasIcon
+      ? `margin-right: ${spacings.margin.big};`
+      : `margin: 0 ${spacings.margin.biggest};`;
+  }}
 `;
