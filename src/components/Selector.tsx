@@ -29,12 +29,12 @@ const SelectorWrapper = styled.button<{ hasIcon: boolean }>`
   cursor: pointer;
 
   :hover {
-    background-color: ${colors.black};
-    transition: background-color 500ms ease-in;
+    background-color: #13133a;
+    transition: background-color 200ms ease-in;
   }
   :active {
-    background-color: ${colors.black};
-    transition: background-color 500ms ease-in;
+    background-color: #13133a;
+    transition: background-color 200ms ease-in;
   }
 `;
 
