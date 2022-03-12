@@ -23,46 +23,19 @@ const Button: FC<ButtonProps> = ({
   disabled,
   ...rest
 }) => {
-  const StyledButtonBorder = styled.div`
-    display: flex;
-    justify-content: center;
-    border-radius: 4px;
-    padding: 4px;
-    background: ${determineVariant(variant, disabled)};
-    ${disabled && `border: 2px solid ${colors.disabled}`};
-  `;
-
-  const StyledButton = styled.button`
-    outline: 0;
-    min-height: ${theme.rem};
-    text-align: center;
-    border: 0;
-    background: ${variant === 'secondary' && !disabled
-      ? secondaryBackgroundColor
-      : 'none'};
-    border-radius: 4px;
-    cursor: pointer;
-    padding: ${determinePadding(size)};
-    height: ${determineHeight(size)};
-    width: 100%;
-  `;
-
-  const StyledButtonText = styled.span`
-    font-size: ${determineFontSize(size)};
-    font-family: ${fonts.interBold};
-    line-height: 17px;
-    font-weight: bold;
-    ${variant === 'tertiary' && 'color: whitey'};
-    ${disabled && `color: ${colors.disabled}`};
-    ${variant === 'secondary' &&
-    !disabled &&
-    `background-image: ${colors.gradients.lightBlue} background-size: 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; -moz-background-clip: text; -moz-text-fill-color: transparent;`}
-  `;
-
   return (
-    <StyledButtonBorder>
-      <StyledButton type={type} {...rest} disabled={disabled}>
-        <StyledButtonText>{text}</StyledButtonText>
+    <StyledButtonBorder disabled={disabled} variant={variant}>
+      <StyledButton
+        type={type}
+        {...rest}
+        disabled={disabled}
+        variant={variant}
+        secondaryBackgroundColor={secondaryBackgroundColor}
+        size={size}
+      >
+        <StyledButtonText variant={variant} disabled={disabled} size={size}>
+          {text}
+        </StyledButtonText>
       </StyledButton>
     </StyledButtonBorder>
   );
@@ -117,3 +90,51 @@ const determineVariant = (
       return `${colors.gradients.lightBlue}`;
   }
 };
+
+const StyledButtonBorder = styled.div<{
+  disabled?: ButtonProps['disabled'];
+  variant?: ButtonProps['variant'];
+}>`
+  display: flex;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 4px;
+  background: ${({ variant, disabled }) => determineVariant(variant, disabled)};
+  ${({ disabled }) => disabled && `border: 2px solid ${colors.disabled}`};
+`;
+
+const StyledButton = styled.button<{
+  disabled?: ButtonProps['disabled'];
+  variant?: ButtonProps['variant'];
+  secondaryBackgroundColor?: ButtonProps['secondaryBackgroundColor'];
+  size?: ButtonProps['size'];
+}>`
+  outline: 0;
+  min-height: ${theme.rem};
+  text-align: center;
+  border: 0;
+  background: ${({ variant, disabled, secondaryBackgroundColor }) =>
+    variant === 'secondary' && !disabled ? secondaryBackgroundColor : 'none'};
+  border-radius: 4px;
+  cursor: pointer;
+  padding: ${({ size }) => determinePadding(size)};
+  height: ${({ size }) => determineHeight(size)};
+  width: 100%;
+`;
+
+const StyledButtonText = styled.span<{
+  disabled?: ButtonProps['disabled'];
+  variant?: ButtonProps['variant'];
+  size?: ButtonProps['size'];
+}>`
+  font-size: ${({ size }) => determineFontSize(size)};
+  font-family: ${fonts.interBold};
+  line-height: 17px;
+  font-weight: bold;
+  ${({ variant }) => variant === 'tertiary' && 'color: whitey'};
+  ${({ disabled }) => disabled && `color: ${colors.disabled}`};
+  ${({ variant, disabled }) =>
+    variant === 'secondary' &&
+    !disabled &&
+    `background-image: ${colors.gradients.lightBlue} background-size: 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; -moz-background-clip: text; -moz-text-fill-color: transparent;`}
+`;
