@@ -6,3 +6,4 @@ export * from './Tabs';
 export * from './LinkButton';
 export * from './Selector';
 export * from './Dropdown';
+export * from './Card';
