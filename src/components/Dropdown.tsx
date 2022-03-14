@@ -4,6 +4,7 @@ import colors from '../styles/colors';
 
 interface DropdownProps {
   elements: JSX.Element[];
+  parent: JSX.Element;
 }
 
 export default function Dropdown({ elements }: DropdownProps) {
@@ -23,6 +24,7 @@ const StyledUnorderedList = styled.ul`
   flex-direction: column;
   width: 100%;
   background-color: ${colors.backgroundColor};
+  padding: 0;
 `;
 
 const StyledListElement = styled.li<{ isEven: boolean }>`
