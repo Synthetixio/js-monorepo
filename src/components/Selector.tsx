@@ -27,6 +27,7 @@ const SelectorWrapper = styled.button<{ hasIcon: boolean }>`
   border: 0;
   outline: 0;
   cursor: pointer;
+  min-height: 38px;
 
   :hover {
     background-color: #13133a;

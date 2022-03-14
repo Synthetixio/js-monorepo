@@ -55,6 +55,6 @@ export default {
     purple: 'linear-gradient(73.6deg, #8E2DE2 2.11%, #4B01E0 90.45%);',
     orange: 'linear-gradient(73.6deg, #FF8060 2.11%, #FEB27A 90.45%);',
     pink: 'linear-gradient(73.6deg, #8E2DE2 2.11%, #ED1EFF 90.45%);',
-    rainbow: 'linear-gradient(180deg, #ED1EFF 0%, #00D1FF 100%);',
+    rainbow: 'linear-gradient(90deg, #ED1EFF 0%, #00D1FF 100%);',
   },
 };
