@@ -2,7 +2,12 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import Wei from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { providers, utils } from 'ethers';
-import { useGetShorts, useGetSynths, useGetWrappers } from 'generated/mainSubgraphQueries';
+import {
+	useGetLoans,
+	useGetShorts,
+	useGetSynths,
+	useGetWrappers,
+} from 'generated/mainSubgraphQueries';
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from '../../constants';
 
 type DebtOnL1 = {
@@ -46,11 +51,17 @@ const useGetDebtL1 = (
 			collateralLockedAmount: true,
 		},
 		{
-			queryKey: ['L2', 'shorts'],
+			queryKey: ['L1', 'shorts'],
 		}
 	);
 
-	// TODO @MF add loans
+	const longs = useGetLoans(
+		DEFAULT_SUBGRAPH_ENDPOINTS[1].subgraph,
+		{ where: { isOpen: true } },
+		{ collateralMinted: true, amount: true, collateralAmount: true, currency: true },
+		{ queryKey: ['L2', 'loans'] }
+	);
+
 	const wrapperData = wrappersQuery.isSuccess && wrappersQuery.data;
 	const synthsData = synths.isSuccess && synths.data;
 	const shortsData =

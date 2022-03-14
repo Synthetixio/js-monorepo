@@ -4,7 +4,12 @@ import Wei from '@synthetixio/wei';
 import { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { providers, utils } from 'ethers';
-import { useGetShorts, useGetSynths, useGetWrappers } from 'generated/mainSubgraphQueries';
+import {
+	useGetLoans,
+	useGetShorts,
+	useGetSynths,
+	useGetWrappers,
+} from 'generated/mainSubgraphQueries';
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from '../../constants';
 
 type DebtOnL2 = {
@@ -54,6 +59,20 @@ const useGetDebtL2 = (
 		},
 		{
 			queryKey: ['L2', 'shorts'],
+		}
+	);
+
+	const loans = useGetLoans(
+		DEFAULT_SUBGRAPH_ENDPOINTS[10].subgraph,
+		{ where: { isOpen: true } },
+		{
+			collateralMinted: true,
+			amount: true,
+			collateralAmount: true,
+			currency: true,
+		},
+		{
+			queryKey: ['L1', 'loans'],
 		}
 	);
 
