@@ -59,7 +59,7 @@ const useGetDebtL1 = (
 		DEFAULT_SUBGRAPH_ENDPOINTS[1].subgraph,
 		{ where: { isOpen: true } },
 		{ collateralMinted: true, amount: true, collateralAmount: true, currency: true },
-		{ queryKey: ['L2', 'loans'] }
+		{ queryKey: ['L1', 'loans'] }
 	);
 
 	const wrapperData = wrappersQuery.isSuccess && wrappersQuery.data;

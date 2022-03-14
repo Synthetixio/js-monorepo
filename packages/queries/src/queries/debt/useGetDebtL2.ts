@@ -21,12 +21,13 @@ const useGetDebtL2 = (
 	L2Provider: providers.BaseProvider,
 	options?: UseQueryOptions<DebtOnL2>
 ) => {
-	const wrappersQuery = useGetWrappers(
+	const wrappers = useGetWrappers(
 		DEFAULT_SUBGRAPH_ENDPOINTS[10].subgraph,
 		{
 			where: {
 				maxAmount_gt: 0,
 			},
+			first: 1000,
 		},
 		{
 			currencyKey: true,
@@ -38,7 +39,7 @@ const useGetDebtL2 = (
 	);
 	const synths = useGetSynths(
 		DEFAULT_SUBGRAPH_ENDPOINTS[10].subgraph,
-		{},
+		{ first: 1000 },
 		{
 			totalSupply: true,
 			symbol: true,
@@ -50,7 +51,12 @@ const useGetDebtL2 = (
 	);
 	const shorts = useGetShorts(
 		DEFAULT_SUBGRAPH_ENDPOINTS[10].subgraph,
-		{ where: { isOpen: true } },
+		{
+			where: { isOpen: true },
+			first: 1000,
+			orderBy: 'synthBorrowedAmount',
+			orderDirection: 'desc',
+		},
 		{
 			synthBorrowed: true,
 			synthBorrowedAmount: true,
@@ -64,7 +70,7 @@ const useGetDebtL2 = (
 
 	const loans = useGetLoans(
 		DEFAULT_SUBGRAPH_ENDPOINTS[10].subgraph,
-		{ where: { isOpen: true } },
+		{ where: { isOpen: true }, first: 1000, orderDirection: 'desc', orderBy: 'amount' },
 		{
 			collateralMinted: true,
 			amount: true,
@@ -72,12 +78,11 @@ const useGetDebtL2 = (
 			currency: true,
 		},
 		{
-			queryKey: ['L1', 'loans'],
+			queryKey: ['L2', 'loans'],
 		}
 	);
 
-	// TODO @MF add loans
-	const wrapperData = wrappersQuery.isSuccess && wrappersQuery.data;
+	const wrapperData = wrappers.isSuccess && wrappers.data;
 	const synthsData = synths.isSuccess && synths.data;
 	const shortsData =
 		shorts.isSuccess &&
@@ -88,6 +93,7 @@ const useGetDebtL2 = (
 				collateralLocked: utils.formatBytes32String(short.collateralLocked),
 			};
 		});
+	const loansData = loans.isSuccess && loans.data;
 	return useQuery<DebtOnL2>(
 		['debt', 'data', 'L2', ctx.networkId],
 		async () => {
