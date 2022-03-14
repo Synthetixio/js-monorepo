@@ -35,4 +35,7 @@ const StyledListElement = styled.li<{ isEven: boolean }>`
   :hover {
     background-color: ${colors.black};
   }
+  :active {
+    background-color: ${colors.black};
+  }
 `;
