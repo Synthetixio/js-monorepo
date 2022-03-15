@@ -1,7 +1,5 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import Wei from '@synthetixio/wei';
-
-import { wei } from '@synthetixio/wei';
+import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { providers, utils } from 'ethers';
 import {
@@ -32,6 +30,7 @@ const useGetDebtL2 = (
 		{
 			currencyKey: true,
 			amount: true,
+			maxAmount: true,
 		},
 		{
 			queryKey: ['L2', 'wrappers'],
@@ -86,21 +85,68 @@ const useGetDebtL2 = (
 	const synthsData = synths.isSuccess && synths.data;
 	const shortsData =
 		shorts.isSuccess &&
-		shorts.data.map((short) => {
-			return {
-				...short,
-				synthBorrowed: utils.formatBytes32String(short.synthBorrowed),
-				collateralLocked: utils.formatBytes32String(short.collateralLocked),
-			};
-		});
-	const loansData = loans.isSuccess && loans.data;
+		shorts.data
+			.map((short) => {
+				return {
+					...short,
+					synthBorrowed: utils.formatBytes32String(short.synthBorrowed),
+					collateralLocked: utils.formatBytes32String(short.collateralLocked),
+				};
+			})
+			.reduce((acc, short) => {
+				acc[short.synthBorrowed] = acc[short.synthBorrowed].add(short.synthBorrowedAmount);
+				return acc;
+			}, {} as Record<string, Wei>);
+	const loansData =
+		loans.isSuccess &&
+		loans.data.reduce((acc, loan) => {
+			acc[loan.currency] = acc[loan.currency].add(loan.amount);
+			return acc;
+		}, {} as Record<string, Wei>);
 	return useQuery<DebtOnL2>(
 		['debt', 'data', 'L2', ctx.networkId],
-		async () => {
-			return;
+		() => {
+			const synthDataWithSkew =
+				wrapperData &&
+				synthsData &&
+				synthsData.map((synth) => {
+					for (const wrapper of wrapperData) {
+						if (synth.symbol === wrapper.currencyKey) {
+							return {
+								...synth,
+								hasNegativeSkew: wei(wrapper.amount).sub(synth.totalSupply).gt(0),
+								totalSupply: synth.totalSupply.sub(wrapper.amount),
+							};
+						}
+						return { ...synth, hasNegativeSkew: false };
+					}
+					return {
+						...synth,
+						hasNegativeSkew: false,
+					};
+				});
+
+			const synthDataWithShorts =
+				synthDataWithSkew &&
+				synthDataWithSkew.length &&
+				shortsData &&
+				synthDataWithSkew.map((synth) => ({
+					...synth,
+					totalSupply: synth.totalSupply.sub(shortsData[synth.symbol] as Wei),
+				}));
+
+			const synthDataWithLoans =
+				synthDataWithShorts &&
+				synthDataWithShorts.length &&
+				loansData &&
+				synthDataWithShorts.map((synth) => ({
+					...synth,
+					totalSupply: synth.totalSupply?.sub(loansData[synth.symbol] as Wei),
+				}));
+			return { debt: wei(2) };
 		},
 		{
-			enabled: ctx.networkId != null && L2Provider,
+			enabled: ctx.networkId === 10 && !!L2Provider,
 			...options,
 		}
 	);
