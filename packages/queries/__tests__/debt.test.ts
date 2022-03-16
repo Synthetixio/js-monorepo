@@ -1,37 +1,19 @@
 import { getFakeQueryContext, getWrapper } from '../testUtils';
-import axios from 'maxibon-codegen-graph-ts/build/src/lib/axios';
 import { renderHook } from '@testing-library/react-hooks';
-import { ethers } from 'ethers';
 import useGetDebtL2 from '../src/queries/debt/useGetDebtL2';
-jest.mock('maxibon-codegen-graph-ts/build/src/lib/axios');
+
+jest.setTimeout(20000);
 
 describe('@synthetixio/queries debt', () => {
-	const ctx = getFakeQueryContext();
-	test('useGetDentL2', async () => {
+	it('useGetDentL2', async () => {
+		const ctx = getFakeQueryContext();
 		const wrapper = getWrapper();
-
-		const wrappers = {
-			data: {
-				wrappers: [
-					{
-						currencyKey: 'sETH',
-						amount: '3101.776052990376142972',
-					},
-					{
-						currencyKey: 'sUSD',
-						amount: '42891822.43653211319133719',
-					},
-				],
-			},
-		};
-		(axios.post as any).mockImplementation(() => {
-			return Promise.resolve(wrappers);
-		});
-		const { result, waitFor } = renderHook(() => useGetDebtL2(ctx, ethers.getDefaultProvider()), {
+		ctx.networkId = 10;
+		const { result, waitFor } = renderHook(() => useGetDebtL2(ctx), {
 			wrapper,
 		});
-		await waitFor(() => result.current.isSuccess);
+		await waitFor(() => !!result.current.data?.length, { timeout: 20000 });
 
-		expect(true).toEqual(true);
+		expect(result.current.data![0].totalSupply.gt(1)).toEqual(true);
 	});
 });
