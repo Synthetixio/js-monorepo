@@ -13,7 +13,10 @@ describe('@synthetixio/queries debt', () => {
 			wrapper,
 		});
 		await waitFor(() => !!result.current.data?.length, { timeout: 20000 });
-
+		// uncomment for current state of debt on L2
+		/* result.current.data?.forEach((synth) =>
+			console.log(synth.symbol, synth.totalSupply.toString())
+		); */
 		expect(result.current.data![0].totalSupply.gt(1)).toEqual(true);
 	});
 });

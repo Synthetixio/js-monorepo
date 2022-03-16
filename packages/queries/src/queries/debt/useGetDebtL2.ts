@@ -18,14 +18,11 @@ interface DebtOnL2 {
 }
 
 interface DebtData {
-	wrapperData: {
-		currencyKey: string;
-		amount: Wei;
-		maxAmount: Wei;
-	}[];
+	wrapperData: Record<string, Wei>;
 	synthsData: {
 		totalSupply: Wei;
 		symbol: string;
+		hasNegativeSkew?: boolean;
 	}[];
 	shortsData: Record<string, Wei>;
 	loansData: Record<string, Wei>;
@@ -97,7 +94,12 @@ const useGetDebtL2 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL2[]>) 
 
 	useEffect(() => {
 		if (wrappers.isSuccess && synths.isSuccess && loans.isSuccess && shorts.isSuccess) {
-			const wrapperData = wrappers.isSuccess && wrappers.data;
+			const wrapperData =
+				wrappers.isSuccess &&
+				wrappers.data.reduce((acc, wrapper) => {
+					acc[wrapper.currencyKey] = (acc[wrapper.currencyKey] || wei(0)).add(wrapper.amount);
+					return acc;
+				}, {} as DebtData['wrapperData']);
 			const synthsData = synths.isSuccess && synths.data;
 			const shortsData =
 				shorts.isSuccess &&
@@ -135,19 +137,11 @@ const useGetDebtL2 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL2[]>) 
 		['debt', 'data', 'L2', ctx.networkId],
 		() => {
 			const synthDataWithSkew = debtData!.synthsData.map((synth) => {
-				for (const wrapper of debtData!.wrapperData) {
-					if (synth.symbol === wrapper.currencyKey) {
-						return {
-							...synth,
-							hasNegativeSkew: wei(wrapper.amount).sub(synth.totalSupply).gt(0),
-							totalSupply: synth.totalSupply.sub(wrapper.amount),
-						};
-					}
-					return { ...synth, hasNegativeSkew: false };
-				}
+				if (!(synth.symbol in debtData!.wrapperData)) return { ...synth, hasNegativeSkew: false };
 				return {
 					...synth,
-					hasNegativeSkew: false,
+					totalSupply: synth.totalSupply.sub(debtData!.wrapperData[synth.symbol]),
+					hasNegativeSkew: wei(debtData!.wrapperData[synth.symbol]).sub(synth.totalSupply).gt(0),
 				};
 			});
 
