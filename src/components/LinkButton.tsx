@@ -19,8 +19,8 @@ export default function LinkButton({
     <StyledWrapper>
       <StyledButtonLinks
         href={link}
-        target={isExternalLink && '_blank'}
-        rel={isExternalLink && 'noreferrer noopener'}
+        target={!!isExternalLink ? '_blank' : undefined}
+        rel={isExternalLink ? 'noreferrer noopener' : undefined}
       >
         <StyledButtonText>{text}</StyledButtonText>
         {icon}

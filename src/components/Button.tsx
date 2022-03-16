@@ -80,7 +80,7 @@ const determineFontSize = (size: ButtonProps['size']) => {
 
 const determineVariant = (
   variant: ButtonProps['variant'],
-  disabled: boolean
+  disabled?: boolean
 ) => {
   if (disabled) return 'rgba(86, 86, 99, 0.6);';
   switch (variant) {
@@ -92,7 +92,7 @@ const determineVariant = (
 };
 
 const StyledButtonBorder = styled.div<{
-  disabled?: ButtonProps['disabled'];
+  disabled: ButtonProps['disabled'];
   variant?: ButtonProps['variant'];
 }>`
   display: flex;
