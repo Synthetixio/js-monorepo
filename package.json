@@ -17,7 +17,8 @@
 		"build:cjs": "tsc --module commonjs --outDir dist/cjs",
 		"storybook": "start-storybook -p 6006 -c .storybook watch-css -s ./src",
 		"build-storybook": "build-storybook",
-		"commit": "cz"
+		"commit": "cz",
+		"push": "yarn build && yalc push"
 	},
 	"release": {
 		"branches": [
