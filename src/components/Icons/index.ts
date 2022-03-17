@@ -36,3 +36,4 @@ export { default as ThreeDotsMenuIcon } from './ThreeDotsMenuIcon';
 export { default as TickIcon } from './TickIcon';
 export { default as TrashIcon } from './TrashIcon';
 export { default as WalletIcon } from './WalletIcon';
+export { default as SNXIcon } from './SNXIcon';

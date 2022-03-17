@@ -38,6 +38,7 @@ import {
 	TickIcon,
 	TrashIcon,
 	WalletIcon,
+	SNXIcon,
 } from '../components/Icons';
 
 export default {
@@ -119,6 +120,10 @@ const Template: ComponentStory<typeof ArrowLinkOffIcon> = (args) => (
 		<TrashIcon {...args} />
 		<span style={{ color: 'white' }}>{WalletIcon.name}</span>
 		<WalletIcon {...args} />
+		<span style={{ color: 'white' }}>{SettingsIcon.name}</span>
+		<SettingsIcon {...args} />
+		<span style={{ color: 'white' }}>{SNXIcon.name}</span>
+		<SNXIcon />
 	</div>
 );
 
