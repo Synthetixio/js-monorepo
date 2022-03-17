@@ -3,37 +3,31 @@ import colors from '../../styles/colors';
 import { SVGIconProps } from './types';
 
 export default function GridIcon({ active }: SVGIconProps) {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M5.5 12.5H19.5"
-        stroke={active ? colors.lightBlue.primary : 'white'}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M12.5 5.5V19.5"
-        stroke={active ? colors.lightBlue.primary : 'white'}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M18.5 19.5H6.5C5.948 19.5 5.5 19.052 5.5 18.5V6.5C5.5 5.948 5.948 5.5 6.5 5.5H18.5C19.052 5.5 19.5 5.948 19.5 6.5V18.5C19.5 19.052 19.052 19.5 18.5 19.5Z"
-        stroke={active ? colors.lightBlue.primary : 'white'}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
-  );
+	return (
+		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path
+				d="M5.5 12.5H19.5"
+				stroke={active ? colors.lightBlue.primary : 'white'}
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M12.5 5.5V19.5"
+				stroke={active ? colors.lightBlue.primary : 'white'}
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				fill-rule="evenodd"
+				clip-rule="evenodd"
+				d="M18.5 19.5H6.5C5.948 19.5 5.5 19.052 5.5 18.5V6.5C5.5 5.948 5.948 5.5 6.5 5.5H18.5C19.052 5.5 19.5 5.948 19.5 6.5V18.5C19.5 19.052 19.052 19.5 18.5 19.5Z"
+				stroke={active ? colors.lightBlue.primary : 'white'}
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
 }
