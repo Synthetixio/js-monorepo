@@ -20,11 +20,6 @@
 		"commit": "cz",
 		"push": "yarn build && yalc push"
 	},
-	"release": {
-		"branches": [
-			"main"
-		]
-	},
 	"devDependencies": {
 		"@commitlint/cli": "16.2.3",
 		"@commitlint/config-conventional": "16.2.1",
