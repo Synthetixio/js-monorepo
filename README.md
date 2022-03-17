@@ -1,5 +1,9 @@
 # Synthetix-ui
 
+### Release
+
+Realing is done with the help of semantic-release. More to docs to come...
+
 reuseable react components
 
 ### Local Development
