@@ -6,6 +6,7 @@ export type OvmProvider = typeof OptimismProvider;
 export type ProviderConfig = {
 	networkId?: ethers.providers.Networkish;
 	infuraId?: string;
+	infuraSecret?: string;
 	provider?: ethers.providers.ExternalProvider;
 };
 

@@ -8,10 +8,19 @@ import { ERRORS } from './constants';
 import { ProviderConfig, SynthetixProvider, OvmProvider } from './types';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 
-const loadProvider = ({ networkId = 1, infuraId, provider }: ProviderConfig): SynthetixProvider => {
+const loadProvider = ({
+	networkId = 1,
+	infuraId,
+	provider,
+	infuraSecret,
+}: ProviderConfig): SynthetixProvider => {
 	if (!provider && !infuraId) throw new Error(ERRORS.noWeb3Provider);
 	if (provider) return new ethersProviders.Web3Provider(provider);
-	if (infuraId) return new ethersProviders.InfuraProvider(networkId, infuraId);
+	if (infuraId)
+		return new ethersProviders.InfuraProvider(networkId, {
+			projectId: infuraId,
+			projectSecret: infuraSecret,
+		});
 };
 
 const getOptimismProvider = ({
