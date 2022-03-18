@@ -12,7 +12,6 @@ Install globally yalc
 
 ```bash
     npm|yarn install|add yalc -g
-
 ```
 
 Once you make some changes in the library run
