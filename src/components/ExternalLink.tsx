@@ -4,37 +4,45 @@ import colors from '../styles/colors';
 import ArrowLinkOffIcon from './Icons/ArrowLinkOffIcon';
 
 interface ExternalLinkProps {
-  link: string;
-  text: string;
+	link: string;
+	text: string;
+	withoutIcon?: boolean;
+	customColor?: { textColor?: string; hoverColor?: string };
 }
 
 export default function ExternalLink({
-  link,
-  text,
-  ...rest
+	link,
+	text,
+	withoutIcon = false,
+	customColor = {},
+	...rest
 }: ExternalLinkProps) {
-  return (
-    <StyledWrapper {...rest}>
-      <StyledExternalLink href={link}>{text}</StyledExternalLink>
-      <ArrowLinkOffIcon active={true} />
-    </StyledWrapper>
-  );
+	return (
+		<StyledWrapper {...rest}>
+			<StyledExternalLink href={link} customColor={customColor}>
+				{text}
+			</StyledExternalLink>
+			{!withoutIcon && <ArrowLinkOffIcon active={true} />}
+		</StyledWrapper>
+	);
 }
 
 const StyledWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 const StyledExternalLink = styled.a.attrs({
-  target: '_blank',
-  rel: 'noreferrer noopener',
-})`
-  text-decoration: none;
-  color: ${colors.lightBlue.primary};
-  font-family: Inter;
+	target: '_blank',
+	rel: 'noreferrer noopener',
+})<{ customColor?: ExternalLinkProps['customColor'] }>`
+	text-decoration: none;
+	color: ${({ customColor }) =>
+		customColor?.textColor ? customColor.textColor : colors.lightBlue.primary};
+	font-family: Inter;
 
-  :hover {
-    color: ${colors.lightBlue.dark.darker20};
-  }
+	:hover {
+		color: ${({ customColor }) =>
+			customColor?.hoverColor ? customColor.hoverColor : colors.lightBlue.dark.darker20};
+	}
 `;

@@ -39,6 +39,9 @@ import {
 	TrashIcon,
 	WalletIcon,
 	SNXIcon,
+	GitHubIcon,
+	TwitterIcon,
+	DiscordIcon,
 } from '../components/Icons';
 
 export default {
@@ -124,6 +127,12 @@ const Template: ComponentStory<typeof ArrowLinkOffIcon> = (args) => (
 		<SettingsIcon {...args} />
 		<span style={{ color: 'white' }}>{SNXIcon.name}</span>
 		<SNXIcon />
+		<span style={{ color: 'white' }}>{GitHubIcon.name}</span>
+		<GitHubIcon fill={'white'} />
+		<span style={{ color: 'white' }}>{TwitterIcon.name}</span>
+		<TwitterIcon fill={'white'} />
+		<span style={{ color: 'white' }}>{DiscordIcon.name}</span>
+		<DiscordIcon fill={'white'} />
 	</div>
 );
 
