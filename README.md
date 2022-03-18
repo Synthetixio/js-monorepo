@@ -18,7 +18,7 @@ Install globally yalc
 Once you make some changes in the library run
 
 ```bash
-yalc push
+yarn yalc-publish
 ```
 
 Now your changes are in your local registry.
