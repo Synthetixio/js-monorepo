@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { ButtonHTMLAttributes, FC } from 'react';
-import { theme } from '..';
+import { theme } from '../styles';
 import { rem } from '../constants';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
