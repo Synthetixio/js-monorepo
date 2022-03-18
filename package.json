@@ -17,29 +17,42 @@
 		"build:cjs": "tsc --module commonjs --outDir dist/cjs",
 		"storybook": "start-storybook -p 6006 -c .storybook watch-css -s ./src",
 		"build-storybook": "build-storybook",
-		"push": "yarn build && yalc push --update"
-	},
-	"release": {
-		"branches": [
-			"main"
-		]
+		"commit": "cz",
+		"yalc-publish": "yarn build && yalc push --update"
 	},
 	"devDependencies": {
-		"@storybook/addon-actions": "^6.4.18",
-		"@storybook/addon-essentials": "^6.4.18",
-		"@storybook/addon-links": "^6.4.18",
-		"@storybook/react": "^6.4.18",
-		"@types/react": "^17.0.39",
-		"@types/styled-components": "^5.1.22",
-		"html-webpack-plugin": "^5.5.0",
-		"react": "^17.0.2",
-		"react-dom": "^17.0.2",
-		"styled-components": "^5.3.3",
-		"typescript": "^4.5.5",
-		"yalc": "^1.0.0-pre.53"
+		"@commitlint/cli": "16.2.3",
+		"@commitlint/config-conventional": "16.2.1",
+		"@storybook/addon-actions": "6.4.18",
+		"@storybook/addon-essentials": "6.4.18",
+		"@storybook/addon-links": "6.4.18",
+		"@storybook/react": "6.4.18",
+		"@types/react": "17.0.39",
+		"@types/styled-components": "5.1.22",
+		"commitizen": "4.2.4",
+		"cz-conventional-changelog": "3.3.0",
+		"html-webpack-plugin": "5.5.0",
+		"husky": "7.0.4",
+		"react": "17.0.2",
+		"react-dom": "17.0.2",
+		"semantic-release": "19.0.2",
+		"typescript": "4.5.5",
+		"yalc": "1.0.0-pre.53"
 	},
 	"peerDependencies": {
-		"react": "^17.0.2",
-		"react-dom": "^17.0.2"
+		"react": "17.0.2",
+		"react-dom": "17.0.2",
+		"styled-components": "5.3.3"
+	},
+	"resolutions": {
+		"libnpmaccess": "6.0.1"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }
