@@ -1,3 +1,7 @@
 export interface SVGIconProps {
-  active?: boolean;
+	active?: boolean;
+}
+
+export interface SVGSocialIconProps {
+	fill?: string;
 }

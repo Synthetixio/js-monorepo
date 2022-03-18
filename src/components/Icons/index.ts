@@ -37,3 +37,6 @@ export { default as TickIcon } from './TickIcon';
 export { default as TrashIcon } from './TrashIcon';
 export { default as WalletIcon } from './WalletIcon';
 export { default as SNXIcon } from './SNXIcon';
+export { default as GitHubIcon } from './GitHubIcon';
+export { default as TwitterIcon } from './TwitterIcon';
+export { default as DiscordIcon } from './DiscordIcon';
