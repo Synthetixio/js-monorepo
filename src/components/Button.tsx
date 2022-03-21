@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { ButtonHTMLAttributes, FC } from 'react';
+import React, { ButtonHTMLAttributes, FC, MouseEvent } from 'react';
 import { theme } from '../styles';
 import { rem } from '../constants';
 import colors from '../styles/colors';
@@ -12,6 +12,7 @@ interface ButtonProps {
 	variant?: 'primary' | 'secondary' | 'tertiary';
 	secondaryBackgroundColor?: string;
 	disabled?: boolean;
+	onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -21,6 +22,7 @@ const Button: FC<ButtonProps> = ({
 	variant,
 	secondaryBackgroundColor,
 	disabled,
+	onClick,
 	...rest
 }) => {
 	return (
@@ -31,6 +33,7 @@ const Button: FC<ButtonProps> = ({
 				variant={variant}
 				secondaryBackgroundColor={secondaryBackgroundColor}
 				size={size}
+				onClick={onClick}
 			>
 				<StyledButtonText variant={variant} disabled={disabled} size={size}>
 					{text}

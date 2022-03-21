@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import styled from 'styled-components';
 import spacings from '../styles/spacings';
 
@@ -8,6 +8,7 @@ interface IconButtonProps {
 	rounded?: boolean;
 	size?: keyof typeof spacings.margin;
 	text?: string;
+	onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function IconButton({
@@ -16,11 +17,12 @@ export default function IconButton({
 	rounded = false,
 	size = 'small',
 	text,
+	onClick,
 	...rest
 }: IconButtonProps) {
 	return (
 		<StyledWrapper rounded={rounded} {...rest}>
-			<StyledButton rounded={rounded} size={size} active={active}>
+			<StyledButton rounded={rounded} size={size} active={active} onClick={onClick}>
 				{icon} {text && <StyledText>{text}</StyledText>}
 			</StyledButton>
 		</StyledWrapper>
