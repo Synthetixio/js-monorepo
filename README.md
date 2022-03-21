@@ -2,7 +2,7 @@
 
 ### Release
 
-Realing is done with the help of semantic-release. More to docs to come...
+Releasing is done with the help of semantic-release. More to docs to come...
 
 reuseable react components
 

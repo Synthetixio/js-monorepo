@@ -18,24 +18,28 @@
 		"storybook": "start-storybook -p 6006 -c .storybook watch-css -s ./src",
 		"build-storybook": "build-storybook",
 		"commit": "cz",
+		"deploy-storybook": "yarn build-storybook && mkdir -p ./storybook-static/styles/fonts && cp ./src/styles/fonts/* ./storybook-static/styles/fonts/ && gh-pages -d storybook-static",
 		"yalc-publish": "yarn build && yalc push --update"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "16.2.3",
 		"@commitlint/config-conventional": "16.2.1",
-		"@storybook/addon-actions": "6.4.18",
-		"@storybook/addon-essentials": "6.4.18",
-		"@storybook/addon-links": "6.4.18",
-		"@storybook/react": "6.4.18",
+		"@storybook/addon-actions": "6.4.19",
+		"@storybook/addon-essentials": "6.4.19",
+		"@storybook/addon-links": "6.4.19",
+		"@storybook/react": "6.4.19",
 		"@types/react": "17.0.39",
 		"@types/styled-components": "5.1.22",
 		"commitizen": "4.2.4",
 		"cz-conventional-changelog": "3.3.0",
+		"gh-pages": "^3.2.3",
 		"html-webpack-plugin": "5.5.0",
 		"husky": "7.0.4",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
 		"semantic-release": "19.0.2",
+		"storybook-addon-designs": "^6.2.1",
+		"styled-components": "^5.3.3",
 		"typescript": "4.5.5",
 		"yalc": "1.0.0-pre.53"
 	},
@@ -54,5 +58,6 @@
 	},
 	"publishConfig": {
 		"access": "public"
-	}
+	},
+	"homepage": "https://synthetixio.github.io/ui"
 }
