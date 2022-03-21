@@ -39,7 +39,7 @@
 		"react-dom": "17.0.2",
 		"semantic-release": "19.0.2",
 		"storybook-addon-designs": "^6.2.1",
-		"styled-components": "^5.3.3",
+		"styled-components": "5.3.3",
 		"typescript": "4.5.5",
 		"yalc": "1.0.0-pre.53"
 	},
@@ -49,7 +49,8 @@
 		"styled-components": "5.3.3"
 	},
 	"resolutions": {
-		"libnpmaccess": "6.0.1"
+		"libnpmaccess": "6.0.1",
+		"@types/react": "17.0.39"
 	},
 	"config": {
 		"commitizen": {
