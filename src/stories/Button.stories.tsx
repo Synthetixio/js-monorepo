@@ -9,7 +9,7 @@ export default {
 	decorators: [withDesign],
 } as ComponentMeta<typeof Button>;
 
-export let Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+export const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
 Template.args = {
 	text: 'I am a Button',

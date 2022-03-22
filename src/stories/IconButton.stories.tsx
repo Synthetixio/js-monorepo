@@ -1,17 +1,17 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import IconButton from '../components/IconButton';
+import { withDesign } from 'storybook-addon-designs';
 
 export default {
 	title: 'Icon Button',
 	component: IconButton,
+	decorators: [withDesign],
 } as ComponentMeta<typeof IconButton>;
 
-const Template: ComponentStory<typeof IconButton> = (args) => <IconButton {...args} />;
+export const Template: ComponentStory<typeof IconButton> = (args) => <IconButton {...args} />;
 
-export const Primary = Template.bind({});
-
-Primary.args = {
+Template.args = {
 	active: true,
 	rounded: false,
 	size: 'medium',
@@ -32,4 +32,11 @@ Primary.args = {
 			/>
 		</svg>
 	),
+};
+
+Template.parameters = {
+	design: {
+		type: 'figma',
+		url: 'https://www.figma.com/file/zeCepPb3Bo6Fd92FdcolUT/v1.0?node-id=918%3A31255',
+	},
 };

@@ -2,24 +2,36 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Selector from '../components/Selector';
 import CloseIcon from '../components/Icons/CloseIcon';
+import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Selector',
-  component: Selector,
+	title: 'Selector',
+	component: Selector,
+	decorators: [withDesign],
 } as ComponentMeta<typeof Selector>;
 
-const Template: ComponentStory<typeof Selector> = (args) => (
-  <Selector {...args} />
-);
+export const Template: ComponentStory<typeof Selector> = (args) => <Selector {...args} />;
+export const WithoutIcon: ComponentStory<typeof Selector> = (args) => <Selector {...args} />;
 
-export const Primary = Template.bind({});
-export const WithoutIcon = Template.bind({});
-
-Primary.args = {
-  text: 'ACTION',
-  icon: <CloseIcon />,
+Template.args = {
+	text: 'ACTION',
+	icon: <CloseIcon />,
 };
 
 WithoutIcon.args = {
-  text: 'ACTION',
+	text: 'ACTION',
+};
+
+Template.parameters = {
+	design: {
+		type: 'figma',
+		url: 'https://www.figma.com/file/zeCepPb3Bo6Fd92FdcolUT/v1.0?node-id=466%3A21724',
+	},
+};
+
+WithoutIcon.parameters = {
+	design: {
+		type: 'figma',
+		url: 'https://www.figma.com/file/zeCepPb3Bo6Fd92FdcolUT/v1.0?node-id=436%3A20722',
+	},
 };
