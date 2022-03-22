@@ -43,13 +43,15 @@ import {
 	TwitterIcon,
 	DiscordIcon,
 } from '../components/Icons';
+import { withDesign } from 'storybook-addon-designs';
 
 export default {
 	title: 'Icons',
 	component: ArrowLinkOffIcon,
+	decorators: [withDesign],
 } as ComponentMeta<typeof ArrowLinkOffIcon>;
 
-const Template: ComponentStory<typeof ArrowLinkOffIcon> = (args) => (
+export const Template: ComponentStory<typeof ArrowLinkOffIcon> = (args) => (
 	<div style={{ display: 'flex', flexDirection: 'column' }}>
 		<span style={{ color: 'white' }}>{ArrowLinkOffIcon.name}</span>
 		<ArrowLinkOffIcon {...args} />
@@ -135,7 +137,9 @@ const Template: ComponentStory<typeof ArrowLinkOffIcon> = (args) => (
 		<DiscordIcon fill={'white'} />
 	</div>
 );
-
-export const Primary = Template.bind({});
-
-Primary.args = {};
+Template.parameters = {
+	design: {
+		type: 'figma',
+		url: 'https://www.figma.com/file/zeCepPb3Bo6Fd92FdcolUT/v1.0?node-id=308%3A23842',
+	},
+};

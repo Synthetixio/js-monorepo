@@ -3,17 +3,20 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import ExternalLink from '../components/ExternalLink';
 
 export default {
-  title: 'External Link',
-  component: ExternalLink,
+	title: 'External Link',
+	component: ExternalLink,
 } as ComponentMeta<typeof ExternalLink>;
 
-const Template: ComponentStory<typeof ExternalLink> = (args) => (
-  <ExternalLink {...args} />
-);
+export const Template: ComponentStory<typeof ExternalLink> = (args) => <ExternalLink {...args} />;
 
-export const Primary = Template.bind({});
+Template.args = {
+	link: '#',
+	text: 'External Link',
+};
 
-Primary.args = {
-  link: '#',
-  text: 'External Link',
+Template.parameters = {
+	design: {
+		type: 'figma',
+		url: 'https://www.figma.com/file/zeCepPb3Bo6Fd92FdcolUT/v1.0?node-id=905%3A25554',
+	},
 };

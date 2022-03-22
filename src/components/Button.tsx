@@ -23,6 +23,7 @@ const Button: FC<ButtonProps> = ({
 	secondaryBackgroundColor,
 	disabled,
 	onClick,
+	children,
 	...rest
 }) => {
 	return (
@@ -35,6 +36,7 @@ const Button: FC<ButtonProps> = ({
 				size={size}
 				onClick={onClick}
 			>
+				{children}
 				<StyledButtonText variant={variant} disabled={disabled} size={size}>
 					{text}
 				</StyledButtonText>

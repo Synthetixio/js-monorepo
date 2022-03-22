@@ -2,26 +2,40 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Tabs from '../components/Tabs';
 import CloseIcon from '../components/Icons/CloseIcon';
+import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Tabs',
-  component: Tabs,
+	title: 'Tabs',
+	component: Tabs,
+	decorators: [withDesign],
 } as ComponentMeta<typeof Tabs>;
 
-const Template: ComponentStory<typeof Tabs> = (args) => <Tabs {...args} />;
+export const Template: ComponentStory<typeof Tabs> = (args) => <Tabs {...args} />;
+export const WithoutIcon: ComponentStory<typeof Tabs> = (args) => <Tabs {...args} />;
 
-export const Primary = Template.bind({});
-export const WithoutIcon = Template.bind({});
-
-Primary.args = {
-  titles: ['first', 'second', 'third'],
-  onClick: () => {},
-  activeIndex: 0,
-  icon: <CloseIcon />,
+Template.args = {
+	titles: ['first', 'second', 'third'],
+	onClick: () => {},
+	activeIndex: 0,
+	icon: <CloseIcon />,
 };
 
 WithoutIcon.args = {
-  titles: ['first', 'second', 'third'],
-  onClick: () => {},
-  activeIndex: 0,
+	titles: ['first', 'second', 'third'],
+	onClick: () => {},
+	activeIndex: 0,
+};
+
+WithoutIcon.parameters = {
+	design: {
+		type: 'figma',
+		url: 'https://www.figma.com/file/zeCepPb3Bo6Fd92FdcolUT/v1.0?node-id=920%3A18414',
+	},
+};
+
+Template.parameters = {
+	design: {
+		type: 'figma',
+		url: 'https://www.figma.com/file/zeCepPb3Bo6Fd92FdcolUT/v1.0?node-id=920%3A18422',
+	},
 };

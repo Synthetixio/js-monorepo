@@ -1,19 +1,19 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import LinkButton from '../components/LinkButton';
+import { withDesign } from 'storybook-addon-designs';
 
 export default {
 	title: 'Link Button',
 	component: LinkButton,
+	decorators: [withDesign],
 } as ComponentMeta<typeof LinkButton>;
 
-const Template: ComponentStory<typeof LinkButton> = (args) => <LinkButton {...args} />;
+export const Template: ComponentStory<typeof LinkButton> = (args) => <LinkButton {...args} />;
 
-export const Primary = Template.bind({});
-
-Primary.args = {
+Template.args = {
 	text: 'HELP',
-	isExternal: true,
+	isExternalLink: true,
 	link: 'https://google.com',
 	icon: (
 		<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,4 +31,11 @@ Primary.args = {
 			/>
 		</svg>
 	),
+};
+
+Template.parameters = {
+	design: {
+		type: 'figma',
+		url: 'https://www.figma.com/file/zeCepPb3Bo6Fd92FdcolUT/v1.0?node-id=720%3A16405',
+	},
 };
