@@ -25,7 +25,6 @@ export default function Carousel({
 	carouselItems,
 	...rest
 }: CarouselProps) {
-	if (carouselItems.length < 5) throw new Error('Needs at least 5 carouselItems');
 	const styledCarouselItemsWrapperRef = useRef<HTMLDivElement>(null);
 	const [refWidth, setRefWidth] = useState(0);
 	const [updatedCarouselItems] = useState(
@@ -38,7 +37,7 @@ export default function Carousel({
 	);
 	const startingIndex = () => {
 		if ((carouselItems.length & 2) === 0) {
-			return carouselItems.length / 2;
+			return Math.ceil(carouselItems.length / 2);
 		} else {
 			return Math.ceil(carouselItems.length / 2);
 		}
@@ -71,11 +70,19 @@ export default function Carousel({
 			const ref = styledCarouselItemsWrapperRef.current!;
 			setRefWidth((_) => {
 				const initState = document
-					.getElementById(CHILDREN_ID_PREFIX.concat('0'))!
+					.getElementById(CHILDREN_ID_PREFIX.concat(activeIndex.toString()))!
 					.getBoundingClientRect().width;
+				const calculatedOffset = updatedCarouselItems
+					.slice(0, activeIndex - 1)
+					.reduce((acc, _, index) => {
+						return (
+							acc +
+							document.getElementById(CHILDREN_ID_PREFIX.concat(index.toString()))!.clientWidth
+						);
+					}, 0);
 				ref.scroll({
 					behavior: 'smooth',
-					left: ref.scrollWidth / 2 - ref.clientWidth / 2 - initState / 2,
+					left: calculatedOffset - ref.clientWidth / 2 + initState / 2,
 				});
 				return initState;
 			});
@@ -163,22 +170,18 @@ const StyledCarouselItemsWrapper = styled.div<{ activeIndex: number; maxLength: 
 	scroll-snap-type: x mandatory;
 	width: 100%;
 	// hide every child by default
-	div {
+	> div {
 		opacity: 0;
 	}
 	// only highlight the two neighbors left and right
 	div:nth-child(${({ activeIndex }) => activeIndex}) {
-		width: 100%;
-		height: 100%;
 		opacity: 1;
-		border: 1px red solid;
 	}
 	${({ activeIndex }) =>
 		activeIndex - 1 > 0 &&
 		`
 		div:nth-child(${activeIndex - 1}) {
 		transform: scale(0.9);
-		border: 1px solid green;
 		opacity: 0.7
 	}`};
 	${({ activeIndex, maxLength }) =>
@@ -186,7 +189,6 @@ const StyledCarouselItemsWrapper = styled.div<{ activeIndex: number; maxLength: 
 		`
 		div:nth-child(${activeIndex + 1}) {
 		transform: scale(0.9);
-		border: 1px solid blue;
 		opacity: 0.7
 	}`};
 	${({ activeIndex }) =>
@@ -194,7 +196,6 @@ const StyledCarouselItemsWrapper = styled.div<{ activeIndex: number; maxLength: 
 		`
 		div:nth-child(${activeIndex - 2}) {
 		transform: scale(0.8);
-		border: 1px solid green;
 		opacity: 0.5
 	}`};
 	${({ activeIndex, maxLength }) =>
@@ -202,7 +203,6 @@ const StyledCarouselItemsWrapper = styled.div<{ activeIndex: number; maxLength: 
 		`
 		div:nth-child(${activeIndex + 2}) {
 		transform: scale(0.8);
-		border: 1px solid blue;
 		opacity: 0.5
 	}`};
 `;

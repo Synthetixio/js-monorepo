@@ -16,7 +16,7 @@ Template.args = {
 			style={{ minHeight: '100px', minWidth: '500px', color: 'white', textAlign: 'center' }}
 			key={1}
 		>
-			<span>nestsed</span>1
+			<div>NESTED</div>112
 		</div>,
 		<div
 			key={2}
@@ -42,12 +42,14 @@ Template.args = {
 		>
 			5
 		</div>,
+
 		<div
 			key={6}
 			style={{ minHeight: '100px', minWidth: '500px', color: 'white', textAlign: 'center' }}
 		>
 			6
 		</div>,
+
 		<div
 			key={7}
 			style={{ minHeight: '100px', minWidth: '500px', color: 'white', textAlign: 'center' }}
