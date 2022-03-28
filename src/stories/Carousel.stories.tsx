@@ -15,10 +15,10 @@ Template.args = {
 		<div
 			style={{
 				minHeight: '100px',
-				minWidth: '394px',
+				minWidth: '500px',
 				color: 'white',
 				textAlign: 'center',
-				border: '1px red solid',
+				border: '1px solid red',
 			}}
 			key={1}
 		>
@@ -28,10 +28,10 @@ Template.args = {
 			key={2}
 			style={{
 				minHeight: '100px',
-				minWidth: '394px',
+				minWidth: '500px',
 				color: 'white',
 				textAlign: 'center',
-				border: '1px red solid',
+				border: '1px solid red',
 			}}
 		>
 			2
@@ -40,10 +40,10 @@ Template.args = {
 			key={3}
 			style={{
 				minHeight: '100px',
-				minWidth: '394px',
+				minWidth: '500px',
 				color: 'white',
 				textAlign: 'center',
-				border: '1px red solid',
+				border: '1px solid red',
 			}}
 		>
 			3
@@ -52,10 +52,10 @@ Template.args = {
 			key={4}
 			style={{
 				minHeight: '100px',
-				minWidth: '394px',
+				minWidth: '500px',
 				color: 'white',
 				textAlign: 'center',
-				border: '1px red solid',
+				border: '1px solid red',
 			}}
 		>
 			4
@@ -64,10 +64,10 @@ Template.args = {
 			key={5}
 			style={{
 				minHeight: '100px',
-				minWidth: '394px',
+				minWidth: '500px',
 				color: 'white',
 				textAlign: 'center',
-				border: '1px red solid',
+				border: '1px solid red',
 			}}
 		>
 			5
@@ -77,10 +77,10 @@ Template.args = {
 			key={6}
 			style={{
 				minHeight: '100px',
-				minWidth: '394px',
+				minWidth: '500px',
 				color: 'white',
 				textAlign: 'center',
-				border: '1px red solid',
+				border: '1px solid red',
 			}}
 		>
 			6
@@ -90,10 +90,10 @@ Template.args = {
 			key={7}
 			style={{
 				minHeight: '100px',
-				minWidth: '394px',
+				minWidth: '500px',
 				color: 'white',
 				textAlign: 'center',
-				border: '1px red solid',
+				border: '1px solid red',
 			}}
 		>
 			7
@@ -102,10 +102,10 @@ Template.args = {
 			key={9}
 			style={{
 				minHeight: '100px',
-				minWidth: '394px',
+				minWidth: '500px',
 				color: 'white',
 				textAlign: 'center',
-				border: '1px red solid',
+				border: '1px solid red',
 			}}
 		>
 			8
@@ -114,10 +114,10 @@ Template.args = {
 			key={10}
 			style={{
 				minHeight: '100px',
-				minWidth: '394px',
+				minWidth: '500px',
 				color: 'white',
 				textAlign: 'center',
-				border: '1px red solid',
+				border: '1px solid red',
 			}}
 		>
 			9
@@ -126,10 +126,10 @@ Template.args = {
 			key={10}
 			style={{
 				minHeight: '100px',
-				minWidth: '394px',
+				minWidth: '500px',
 				color: 'white',
 				textAlign: 'center',
-				border: '1px red solid',
+				border: '1px solid red',
 			}}
 		>
 			10

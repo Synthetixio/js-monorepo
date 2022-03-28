@@ -16,7 +16,8 @@
 		"strictNullChecks": true,
 		"suppressImplicitAnyIndexErrors": true,
 		"allowSyntheticDefaultImports": true,
-		"strict": true
+		"strict": true,
+		"sourceMap": true
 	},
 	"include": ["src"],
 	"exclude": ["node_modules", "dist", "node_modules", "src/**/*.test.tsx", "src/**/*.stories.tsx"]
