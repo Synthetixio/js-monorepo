@@ -73,7 +73,7 @@ export default function Carousel({
 					.getElementById(CHILDREN_ID_PREFIX.concat(activeIndex.toString()))!
 					.getBoundingClientRect().width;
 				const calculatedOffset = updatedCarouselItems
-					.slice(0, activeIndex - 1)
+					.slice(0, activeIndex)
 					.reduce((acc, _, index) => {
 						return (
 							acc +
@@ -82,7 +82,7 @@ export default function Carousel({
 					}, 0);
 				ref.scroll({
 					behavior: 'smooth',
-					left: calculatedOffset - ref.clientWidth / 2 + initState / 2,
+					left: calculatedOffset - ref.clientWidth / 2 - initState / 2,
 				});
 				return initState;
 			});
@@ -102,14 +102,14 @@ export default function Carousel({
 				left: 0,
 			});
 		}
-		const calculatedOffset = updatedCarouselItems.slice(0, newIndex - 1).reduce((acc, _, index) => {
+		const calculatedOffset = updatedCarouselItems.slice(0, newIndex).reduce((acc, _, index) => {
 			return (
 				acc + document.getElementById(CHILDREN_ID_PREFIX.concat(index.toString()))!.clientWidth
 			);
 		}, 0);
 		ref.scroll({
 			behavior: 'smooth',
-			left: calculatedOffset - ref.clientWidth / 2 + refWidth / 2,
+			left: calculatedOffset - ref.clientWidth / 2 - refWidth / 2,
 		});
 	};
 
