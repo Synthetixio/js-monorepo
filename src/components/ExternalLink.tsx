@@ -20,7 +20,7 @@ export default function ExternalLink({
 	return (
 		<StyledWrapper {...rest}>
 			<StyledExternalLink href={link} customColor={customColor}>
-				{text}
+				<div className="darker-20">{text}</div>
 			</StyledExternalLink>
 			{!withoutIcon && <ArrowLinkOffIcon active={true} />}
 		</StyledWrapper>
@@ -38,11 +38,11 @@ const StyledExternalLink = styled.a.attrs({
 })<{ customColor?: ExternalLinkProps['customColor'] }>`
 	text-decoration: none;
 	color: ${({ customColor }) =>
-		customColor?.textColor ? customColor.textColor : colors.lightBlue.primary};
+		customColor?.textColor ? customColor.textColor : colors.lightBlue};
 	font-family: Inter;
 
 	:hover {
-		color: ${({ customColor }) =>
-			customColor?.hoverColor ? customColor.hoverColor : colors.lightBlue.dark.darker20};
+		${({ customColor }) =>
+			customColor?.hoverColor ? `color: ${customColor.hoverColor}` : 'filter: brightness(80%)'};
 	}
 `;

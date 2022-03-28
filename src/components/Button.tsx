@@ -86,7 +86,7 @@ const determineVariant = (variant: ButtonProps['variant'], disabled?: boolean) =
 	if (disabled) return 'rgba(86, 86, 99, 0.6);';
 	switch (variant) {
 		case 'tertiary':
-			return `${colors.darkBlue.primary}`;
+			return `${colors.darkBlue}`;
 		default:
 			return `${colors.gradients.lightBlue}`;
 	}
@@ -100,6 +100,9 @@ const StyledButtonBorder = styled.div<{
 	justify-content: center;
 	border-radius: 4px;
 	padding: 2px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	background: ${({ variant, disabled }) => determineVariant(variant, disabled)};
 	${({ disabled }) => disabled && `border: 2px solid ${colors.disabled}`};
 `;

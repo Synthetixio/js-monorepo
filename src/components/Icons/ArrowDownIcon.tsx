@@ -7,14 +7,14 @@ export default function ArrowDownIcon({ active }: SVGIconProps) {
 		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M16.8354 13.1641L12.8354 17.1641L8.83545 13.1641"
-				stroke={active ? colors.lightBlue.primary : 'white'}
+				stroke={active ? colors.lightBlue : 'white'}
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
 			/>
 			<path
 				d="M12.8354 17.1641L12.8354 6.83496"
-				stroke={active ? colors.lightBlue.primary : 'white'}
+				stroke={active ? colors.lightBlue : 'white'}
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
