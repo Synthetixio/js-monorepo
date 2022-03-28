@@ -52,8 +52,8 @@ const StyledTab = styled.li<{ active?: boolean; size: TabsProps['size'] }>`
 	list-style-type: none;
 	padding: ${({ size }) => (size === 'medium' ? '8px 18px' : '2px 8px')};
 	border-radius: 100px;
-	background-color: ${({ active }) => active && colors.lightBlue.primary};
-	color: ${({ active }) => (active ? 'black' : colors.lightBlue.primary)};
+	background-color: ${({ active }) => active && colors.lightBlue};
+	color: ${({ active }) => (active ? 'black' : colors.lightBlue)};
 	cursor: pointer;
 	font-family: Inter;
 	font-style: normal;
@@ -62,7 +62,7 @@ const StyledTab = styled.li<{ active?: boolean; size: TabsProps['size'] }>`
 	line-height: 20px;
 	border: 1px solid transparent;
 	:hover {
-		border: 1px solid ${colors.lightBlue.primary};
+		border: 1px solid ${colors.lightBlue};
 		transition: border-color 200ms linear;
 	}
 `;

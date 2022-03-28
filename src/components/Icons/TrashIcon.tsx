@@ -10,14 +10,14 @@ export default function TrashIcon({ active }: SVGIconProps) {
 				y="5.5"
 				width="15"
 				height="3"
-				stroke={active ? colors.lightBlue.primary : 'white'}
+				stroke={active ? colors.lightBlue : 'white'}
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
 			/>
 			<path
 				d="M17.5 10.5V18.5H6.5V10.5"
-				stroke={active ? colors.lightBlue.primary : 'white'}
+				stroke={active ? colors.lightBlue : 'white'}
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
@@ -27,7 +27,7 @@ export default function TrashIcon({ active }: SVGIconProps) {
 				y="11.5"
 				width="5"
 				height="3"
-				stroke={active ? colors.lightBlue.primary : 'white'}
+				stroke={active ? colors.lightBlue : 'white'}
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"

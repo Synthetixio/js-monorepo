@@ -231,7 +231,7 @@ const StyledDotsWrapper = styled.div`
 
 const StyledDot = styled.div<{ active?: boolean }>`
 	border-radius: 50%;
-	background-color: ${({ active }) => (active ? colors.lightBlue.primary : colors.grey)};
+	background-color: ${({ active }) => (active ? colors.lightBlue : colors.grey)};
 	width: 8px;
 	height: 8px;
 	margin-right: ${spacings.margin.medium};

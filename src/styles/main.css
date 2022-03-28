@@ -28,6 +28,38 @@ input::-webkit-inner-spin-button {
 	-webkit-appearance: none;
 }
 
+.darker-20 {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.darker-40 {
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.darker-60 {
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.darker-80 {
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.lighter-20 {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.lighter-20 {
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+.lighter-20 {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+.lighter-20 {
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
 @font-face {
 	font-family: 'Inter';
 	font-style: normal;

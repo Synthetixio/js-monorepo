@@ -1,5 +1,6 @@
 import React, { MouseEvent } from 'react';
 import styled from 'styled-components';
+import colors from '../styles/colors';
 import spacings from '../styles/spacings';
 
 interface IconButtonProps {
@@ -56,7 +57,7 @@ const StyledButton = styled.button<{
 `;
 
 const StyledText = styled.span`
-	color: white;
+	color: ${colors.white};
 	font-family: Inter;
 	font-weight: 600;
 	line-height: 20px;

@@ -30,11 +30,11 @@ const SelectorWrapper = styled.button<{ hasIcon: boolean }>`
 	min-height: 38px;
 
 	:hover {
-		background-color: #13133a;
+		background-color: ${colors.backgroundColor.concat(colors.hoverOpacity)};
 		transition: background-color 200ms ease-in;
 	}
 	:active {
-		background-color: #13133a;
+		background-color: ${colors.backgroundColor.concat(colors.hoverOpacity)};
 		transition: background-color 200ms ease-in;
 	}
 `;
@@ -45,7 +45,7 @@ const SelectorText = styled.span<{ hasIcon: boolean }>`
 	font-weight: 400;
 	font-size: 1rem;
 	line-height: 140%;
-	color: ${colors.lightBlue.primary};
+	color: ${colors.lightBlue};
 	${({ hasIcon }) => {
 		return hasIcon
 			? `margin-right: ${spacings.margin.big};`
