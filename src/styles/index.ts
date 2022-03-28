@@ -3,6 +3,7 @@ import fonts from './fonts';
 import { device } from './breakpoints';
 import { rem } from '../constants';
 import spacings from './spacings';
+import './main.css';
 
 const theme = {
 	rem: rem.toString().concat('px'),

@@ -70,15 +70,6 @@ input::-webkit-inner-spin-button {
 }
 
 @font-face {
-	font-family: 'Inter Semi Bold';
-	font-style: normal;
-	font-weight: 600;
-	font-display: swap;
-	src: local('Inter Semi Bold'), url('./fonts/Inter-SemiBold.woff2') format('woff2'),
-		url('./fonts/Inter-SemiBold.woff') format('woff');
-}
-
-@font-face {
 	font-family: 'Inter Bold';
 	font-style: normal;
 	font-weight: 700;
@@ -90,50 +81,10 @@ input::-webkit-inner-spin-button {
 /* GT America */
 
 @font-face {
-	font-family: 'GT America Mono';
-	font-style: normal;
-	font-display: swap;
-	font-weight: 700;
-	src: local('GT America Mono'), url('./fonts/GT-America-Mono-Bold.woff') format('woff'),
-		url('./fonts/GT-America-Mono-Bold.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'GT America Condensed-Medium';
-	font-style: normal;
-	font-display: swap;
-	font-weight: 500;
-	src: local('GT America Condensed-Medium'),
-		url('./fonts/GT-America-Condensed-Medium.woff2') format('woff2'),
-		url('./fonts/GT-America-Condensed-Medium.woff') format('woff');
-}
-
-@font-face {
-	font-family: 'GT America Condensed-Bold';
-	font-display: swap;
-	font-style: normal;
-	font-weight: 700;
-	font-stretch: condensed;
-	src: local('GT America Condensed-Bold'),
-		url('./fonts/GT-America-Condensed-Bold.woff2') format('woff2'),
-		url('./fonts/GT-America-Condensed-Bold.woff') format('woff');
-}
-
-@font-face {
-	font-family: 'GT America Extended Bold';
-	font-style: normal;
-	font-display: swap;
-	font-weight: 700;
-	src: local('GT America Extended Bold'),
-		url('./fonts/GT-America-Extended-Bold.woff2') format('woff2'),
-		url('./fonts/GT-America-Extended-Bold.woff') format('woff');
-}
-
-@font-face {
 	font-family: 'GT America';
 	font-style: normal;
 	font-display: swap;
 	font-weight: 400;
-	src: local('GT America'), url('../assets/fonts/GT-America-Regular.woff2') format('woff2'),
-		url('../assets/fonts/GT-America-Regular.woff') format('woff');
+	src: local('GT America'), url('./fonts/GT-America-Regular.woff2') format('woff2'),
+		url('./fonts/GT-America-Regular.woff') format('woff');
 }
