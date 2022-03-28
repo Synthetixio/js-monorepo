@@ -11,11 +11,6 @@ module.exports = {
 				exclude: /node_modules/,
 			},
 			{
-				test: /\.css$/i,
-				use: ['style-loader', 'css-loader'],
-				sideEffects: true,
-			},
-			{
 				test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
 				use: [
 					{
@@ -27,13 +22,23 @@ module.exports = {
 					},
 				],
 			},
+			{
+				test: /\.css/i,
+				use: {
+					loader: 'file-loader',
+					options: {
+						name: '[name].[ext]',
+						outputPath: 'styles/',
+					},
+				},
+			},
 		],
 	},
 	resolve: {
-		extensions: ['.tsx', '.ts', '.js', 'css'],
+		extensions: ['.tsx', '.ts', '.js', '.css', '.woff', '.woff2'],
 	},
 	output: {
-		filename: 'bundle.js',
 		path: path.resolve(__dirname, 'dist'),
+		filename: '[name].js',
 	},
 };
