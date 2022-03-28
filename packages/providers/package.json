@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/providers",
-	"version": "2.64.3",
+	"version": "2.65.0-alpha",
 	"description": "Javascript library for handling providers on Layer 1 & Optimism Layer 2",
 	"source": "./src/index.ts",
 	"main": "./build/node/index.js",
@@ -32,7 +32,7 @@
 	},
 	"dependencies": {
 		"@eth-optimism/provider": "0.0.1-alpha.14",
-		"@synthetixio/contracts-interface": "2.64.3",
+		"@synthetixio/contracts-interface": "2.65.0-alpha",
 		"@synthetixio/optimism-networks": "2.64.3",
 		"ethers": "5.5.3"
 	},
