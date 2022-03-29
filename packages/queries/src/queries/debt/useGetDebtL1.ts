@@ -101,14 +101,14 @@ const useGetDebtL1 = (
 			const synthsData = synthsQuery
 				.map((synth, index) => {
 					if (synthsQuery[index + 1]?.symbol && synth.symbol === synthsQuery[index + 1].symbol) {
-						if (alreadyAccumulatedIndexes.includes(index)) {
-							return null;
-						}
 						alreadyAccumulatedIndexes.push(index + 1);
 						return {
 							...synth,
 							totalSupply: synth.totalSupply.add(synthsQuery[index + 1].totalSupply),
 						};
+					}
+					if (alreadyAccumulatedIndexes.includes(index)) {
+						return null;
 					}
 					return synth;
 				})
