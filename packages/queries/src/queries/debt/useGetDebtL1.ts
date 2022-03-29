@@ -100,7 +100,7 @@ const useGetDebtL1 = (
 			let alreadyAccumulatedIndexes: number[] = [];
 			const synthsData = synthsQuery
 				.map((synth, index) => {
-					if (synth.symbol === synthsQuery[index + 1].symbol) {
+					if (synthsQuery[index + 1]?.symbol && synth.symbol === synthsQuery[index + 1].symbol) {
 						if (alreadyAccumulatedIndexes.includes(index + 1)) {
 							return null;
 						}
