@@ -12,9 +12,12 @@ describe('@synthetixio/queries debt', () => {
 		const ctx = getFakeQueryContext();
 		const wrapper = getWrapper();
 		ctx.networkId = 10;
-		const { result, waitFor } = renderHook(() => useGetDebtL2(ctx), {
-			wrapper,
-		});
+		const { result, waitFor } = renderHook(
+			() => useGetDebtL2(ctx, providers.getDefaultProvider()),
+			{
+				wrapper,
+			}
+		);
 		await waitFor(() => !!result.current.data?.length, { timeout: 20000 });
 		// uncomment for current state of debt on L2
 		/* result.current.data?.forEach((synth) =>
@@ -28,9 +31,12 @@ describe('@synthetixio/queries debt', () => {
 		const wrapper = getWrapper();
 		ctx.networkId = 1;
 
-		const { result, waitFor } = renderHook(() => useGetDebtL1(ctx), {
-			wrapper,
-		});
+		const { result, waitFor } = renderHook(
+			() => useGetDebtL1(ctx, providers.getDefaultProvider()),
+			{
+				wrapper,
+			}
+		);
 		await waitFor(() => !!result.current.data?.length, { timeout: 20000 });
 
 		// uncomment for current state of debt on L1
