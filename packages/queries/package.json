@@ -38,15 +38,15 @@
 		"@synthetixio/providers": "2.66.0-alpha",
 		"@synthetixio/transaction-notifier": "2.65.2",
 		"@synthetixio/wei": "2.65.2",
-		"axios": "0.21.1",
+		"axios": "^0.21.4",
 		"bignumber.js": "9.0.1",
 		"date-fns": "2.19.0",
 		"ethcall": "3.3.0",
 		"ethers": "5.5.3",
 		"graphql": "15.5.0",
 		"graphql-request": "3.4.0",
-		"lodash": "4.17.19",
-		"maxibon-codegen-graph-ts": "0.1.8"
+		"lodash": "^4.17.21",
+		"maxibon-codegen-graph-ts": "0.2.0"
 	},
 	"devDependencies": {
 		"@testing-library/react-hooks": "^7.0.0",
