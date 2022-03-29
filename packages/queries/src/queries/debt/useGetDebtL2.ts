@@ -141,14 +141,14 @@ const useGetDebtL2 = (
 	}, [wrappers.isSuccess, synths.isSuccess, loans.isSuccess, shorts.isSuccess]);
 
 	return useQuery<DebtOnL2[]>(
-		['debt', 'data', 'L2', ctx.networkId],
+		['debt', 'data', 'L2'],
 		async () => {
 			const synthDataWithSkew = debtData!.synthsData.map((synth) => {
 				if (!(synth.symbol in debtData!.wrapperData)) return { ...synth, hasNegativeSkew: false };
 				return {
 					...synth,
 					totalSupply: synth.totalSupply.sub(debtData!.wrapperData[synth.symbol]),
-					hasNegativeSkew: wei(debtData!.wrapperData[synth.symbol]).sub(synth.totalSupply).gt(0),
+					hasNegativeSkew: wei(synth.totalSupply).sub(debtData!.wrapperData[synth.symbol]).gt(0),
 				};
 			});
 
@@ -183,7 +183,6 @@ const useGetDebtL2 = (
 		},
 		{
 			enabled:
-				ctx.networkId === 10 &&
 				!!debtData?.loansData &&
 				!!debtData?.shortsData &&
 				!!debtData?.synthsData &&

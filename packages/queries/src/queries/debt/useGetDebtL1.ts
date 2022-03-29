@@ -3,6 +3,7 @@ import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { BigNumber, providers, utils } from 'ethers';
 import {
+	SynthResult,
 	useGetLoans,
 	useGetShorts,
 	useGetSynths,
@@ -46,7 +47,12 @@ const useGetDebtL1 = (
 	);
 	const synths = useGetSynths(
 		DEFAULT_SUBGRAPH_ENDPOINTS[1].subgraph,
-		{ first: 1000, where: { symbol_not_in: ['SNX', 'HAV'] } },
+		{
+			first: 1000,
+			where: { symbol_not_in: ['SNX', 'HAV'] },
+			orderBy: 'symbol',
+			orderDirection: 'desc',
+		},
 		{
 			totalSupply: true,
 			symbol: true,
@@ -91,20 +97,23 @@ const useGetDebtL1 = (
 					return acc;
 				}, {} as DebtData['wrapperData']);
 			const synthsQuery = synths.isSuccess && synths.data;
-			const synthsData = [synthsQuery[0]];
-			for (let i = 0; i < synthsQuery.length; i++) {
-				if (i !== 0) {
-					const doubledSynth = synthsData.filter((s) => s.symbol === synthsQuery[i].symbol);
-					if (doubledSynth.length) {
-						const summedUpSynthsVal = doubledSynth.reduce((acc, curr) => {
-							return acc.add(curr.totalSupply);
-						}, wei(0));
-						synthsData.push({ ...synthsQuery[i], totalSupply: summedUpSynthsVal });
-					} else {
-						synthsData.push(synthsQuery[i]);
+			let alreadyAccumulatedIndexes: number[] = [];
+			const synthsData = synthsQuery
+				.map((synth, index) => {
+					if (synth.symbol === synthsQuery[index + 1].symbol) {
+						if (alreadyAccumulatedIndexes.includes(index + 1)) {
+							return null;
+						}
+						alreadyAccumulatedIndexes.push(index + 1);
+						return {
+							...synth,
+							totalSupply: synth.totalSupply.add(synthsQuery[index + 1].totalSupply),
+						};
 					}
-				}
-			}
+					return synth;
+				})
+				.filter((synth) => !!synth);
+			alreadyAccumulatedIndexes = [];
 			const shortsData =
 				shorts.isSuccess &&
 				shorts.data
@@ -144,7 +153,7 @@ const useGetDebtL1 = (
 				return {
 					...synth,
 					totalSupply: synth.totalSupply.sub(debtData!.wrapperData[synth.symbol]),
-					hasNegativeSkew: wei(debtData!.wrapperData[synth.symbol]).sub(synth.totalSupply).gt(0),
+					hasNegativeSkew: wei(synth.totalSupply).sub(debtData!.wrapperData[synth.symbol]).gt(0),
 				};
 			});
 
