@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
-import { BigNumber, utils } from 'ethers';
+import { BigNumber, providers, utils } from 'ethers';
 import {
 	useGetLoans,
 	useGetShorts,
@@ -11,6 +11,8 @@ import {
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from '../../constants';
 import { useEffect, useState } from 'react';
 import { DebtData } from './useGetDebtL2';
+import synthetix from '@synthetixio/contracts-interface';
+import { NetworkIdByName } from '@synthetixio/contracts-interface';
 
 interface DebtOnL1 {
 	hasNegativeSkew: boolean;
@@ -19,8 +21,13 @@ interface DebtOnL1 {
 	inUSD: string;
 }
 
-const useGetDebtL1 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL1[]>) => {
+const useGetDebtL1 = (
+	ctx: QueryContext,
+	L1Provider: providers.BaseProvider,
+	options?: UseQueryOptions<DebtOnL1[]>
+) => {
 	const [debtData, setDebtData] = useState<DebtData | null>(null);
+	const snxjs = synthetix({ networkId: NetworkIdByName.mainnet, provider: L1Provider });
 	const wrappers = useGetWrappers(
 		DEFAULT_SUBGRAPH_ENDPOINTS[1].subgraph,
 		{
@@ -93,6 +100,8 @@ const useGetDebtL1 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL1[]>) 
 							return acc.add(curr.totalSupply);
 						}, wei(0));
 						synthsData.push({ ...synthsQuery[i], totalSupply: summedUpSynthsVal });
+					} else {
+						synthsData.push(synthsQuery[i]);
 					}
 				}
 			}
@@ -128,7 +137,7 @@ const useGetDebtL1 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL1[]>) 
 		}
 	}, [wrappers.isSuccess, synths.isSuccess, loans.isSuccess, shorts.isSuccess]);
 	return useQuery<DebtOnL1[]>(
-		['debt', 'data', 'L1', ctx.networkId],
+		['debt', 'data', 'L1'],
 		async () => {
 			const synthDataWithSkew = debtData!.synthsData.map((synth) => {
 				if (!(synth.symbol in debtData!.wrapperData)) return { ...synth, hasNegativeSkew: false };
@@ -159,10 +168,7 @@ const useGetDebtL1 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL1[]>) 
 			});
 
 			const promises = synthDataWithLoans.map((synth) => {
-				if (ctx.snxjs)
-					return ctx!.snxjs.contracts.ExchangeRates.rateForCurrency(
-						ctx.snxjs.toBytes32(synth.symbol)
-					);
+				return snxjs.contracts.ExchangeRates.rateForCurrency(snxjs.toBytes32(synth.symbol));
 			});
 
 			const rates: BigNumber[] = await Promise.all(promises);
@@ -173,7 +179,6 @@ const useGetDebtL1 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL1[]>) 
 		},
 		{
 			enabled:
-				ctx.networkId === 1 &&
 				!!debtData?.loansData &&
 				!!debtData?.shortsData &&
 				!!debtData?.synthsData &&
