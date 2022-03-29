@@ -112,7 +112,11 @@ const useGetDebtL1 = (
 					}
 					return synth;
 				})
-				.filter((synth) => !!synth);
+				.filter((synth) => !!synth) as {
+				totalSupply: Wei;
+				symbol: string;
+				hasNegativeSkew?: boolean;
+			}[];
 			alreadyAccumulatedIndexes = [];
 			const shortsData =
 				shorts.isSuccess &&
