@@ -15,7 +15,7 @@ export enum SPACE_KEY {
 
 //@notice - need to add the latest nominations ipfs hash and their names to parse addresses to names
 export const councilNominationsJson = {
-	QmNV4nQo73vUroPSy8Mn3a9xASy9oMwQuHRkpU3ZVsmoAM: [
+	QmWjR4Bv6zb5aTShq2e2qNTtFAfGXzUxaxT38Ue1UCk2D8: [
 		{
 			discord: 'GammaHamma',
 			address: '0xbE324815Aa3646C7a647ecb3B49B87900A446cDD',
