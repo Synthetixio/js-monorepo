@@ -1,48 +1,49 @@
-import { gql } from 'graphql-request';
+import { gql } from "graphql-request";
 
-export const INTROSPECTION_QUERY = gql`query IntrospectionQuery {
+export const INTROSPECTION_QUERY = gql`
+  query IntrospectionQuery {
     __schema {
-        types {
+      types {
+        name
+        inputFields {
+          name
+          type {
             name
-            inputFields {
+            kind
+            ofType {
+              name
+              kind
+              ofType {
                 name
-                type {
-                    name
-                    kind
-                    ofType {
-                        name
-                        kind
-                        ofType {
-                            name
-                            kind
-                            ofType {
-                                name
-                                kind
-                            }
-                        }
-                    }
+                kind
+                ofType {
+                  name
+                  kind
                 }
+              }
             }
-            fields {
-                name
-                type {
-                    name
-                    kind
-                    ofType {
-                        name
-                        kind
-                        ofType {
-                            name
-                            kind
-                            ofType {
-                                name
-                                kind
-                            }
-                        }
-                    }
-                }
-            }
+          }
         }
+        fields {
+          name
+          type {
+            name
+            kind
+            ofType {
+              name
+              kind
+              ofType {
+                name
+                kind
+                ofType {
+                  name
+                  kind
+                }
+              }
+            }
+          }
+        }
+      }
     }
-}
+  }
 `;
