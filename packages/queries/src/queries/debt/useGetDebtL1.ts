@@ -85,6 +85,7 @@ const useGetDebtL1 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL1[]>) 
 				}, {} as DebtData['wrapperData']);
 			const synthsQuery = synths.isSuccess && synths.data;
 			const synthsData = synthsQuery.map((synth) => {
+				// TODO @MF remove doubled synth or add them up?
 				const doubledSynth = synthsQuery.filter((s) => s.symbol === synth.symbol);
 				if (doubledSynth.length >= 2) {
 					const sortedSynths = doubledSynth.sort((a, b) => {
