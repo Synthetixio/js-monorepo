@@ -22,6 +22,7 @@ describe('@synthetixio/queries debt', () => {
 		); */
 		expect(result.current.data![0].totalSupply.gt(1)).toEqual(true);
 	});
+
 	it.skip('useGetDentL1', async () => {
 		const ctx = getFakeQueryContext();
 		const wrapper = getWrapper();

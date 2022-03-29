@@ -83,7 +83,18 @@ const useGetDebtL1 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL1[]>) 
 					acc[wrapper.currencyKey] = (acc[wrapper.currencyKey] || wei(0)).add(wrapper.amount);
 					return acc;
 				}, {} as DebtData['wrapperData']);
-			const synthsData = synths.isSuccess && synths.data;
+			const synthsQuery = synths.isSuccess && synths.data;
+			const synthsData = synthsQuery.map((synth) => {
+				const doubledSynth = synthsQuery.filter((s) => s.symbol === synth.symbol);
+				if (doubledSynth.length >= 2) {
+					const sortedSynths = doubledSynth.sort((a, b) => {
+						if (a.totalSupply.gt(b.totalSupply)) return -1;
+						return 1;
+					});
+					return sortedSynths[0];
+				}
+				return synth;
+			});
 			const shortsData =
 				shorts.isSuccess &&
 				shorts.data
