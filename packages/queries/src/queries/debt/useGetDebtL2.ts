@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
-import { utils } from 'ethers';
+import { BigNumber, utils } from 'ethers';
 import {
 	useGetLoans,
 	useGetShorts,
@@ -15,9 +15,10 @@ interface DebtOnL2 {
 	hasNegativeSkew: boolean;
 	totalSupply: Wei;
 	symbol: string;
+	inUSD: string;
 }
 
-interface DebtData {
+export interface DebtData {
 	wrapperData: Record<string, Wei>;
 	synthsData: {
 		totalSupply: Wei;
@@ -135,7 +136,7 @@ const useGetDebtL2 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL2[]>) 
 
 	return useQuery<DebtOnL2[]>(
 		['debt', 'data', 'L2', ctx.networkId],
-		() => {
+		async () => {
 			const synthDataWithSkew = debtData!.synthsData.map((synth) => {
 				if (!(synth.symbol in debtData!.wrapperData)) return { ...synth, hasNegativeSkew: false };
 				return {
@@ -147,10 +148,13 @@ const useGetDebtL2 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL2[]>) 
 
 			const synthDataWithShorts = synthDataWithSkew.map((synth) => {
 				if (synth.symbol === 'sUSD') return synth;
-				return {
-					...synth,
-					totalSupply: synth.totalSupply.sub(debtData!.shortsData[synth.symbol] as Wei),
-				};
+				if (debtData?.shortsData && synth.symbol in debtData.shortsData) {
+					return {
+						...synth,
+						totalSupply: synth.totalSupply.sub(debtData.shortsData[synth.symbol] as Wei),
+					};
+				}
+				return synth;
 			});
 
 			const synthDataWithLoans = synthDataWithShorts.map((synth) => {
@@ -161,7 +165,18 @@ const useGetDebtL2 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL2[]>) 
 				};
 			});
 
-			return synthDataWithLoans;
+			const promises = synthDataWithLoans.map((synth) => {
+				if (ctx.snxjs)
+					return ctx!.snxjs.contracts.ExchangeRates.rateForCurrency(
+						ctx.snxjs.toBytes32(synth.symbol)
+					);
+			});
+
+			const rates: BigNumber[] = await Promise.all(promises);
+			return synthDataWithLoans.map((synth, index) => ({
+				...synth,
+				inUSD: synth.totalSupply.mul(rates[index]).toString(),
+			}));
 		},
 		{
 			enabled:
