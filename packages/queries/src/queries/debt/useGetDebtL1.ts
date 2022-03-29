@@ -84,18 +84,18 @@ const useGetDebtL1 = (ctx: QueryContext, options?: UseQueryOptions<DebtOnL1[]>) 
 					return acc;
 				}, {} as DebtData['wrapperData']);
 			const synthsQuery = synths.isSuccess && synths.data;
-			const synthsData = synthsQuery.map((synth) => {
-				// TODO @MF remove doubled synth or add them up?
-				const doubledSynth = synthsQuery.filter((s) => s.symbol === synth.symbol);
-				if (doubledSynth.length >= 2) {
-					const sortedSynths = doubledSynth.sort((a, b) => {
-						if (a.totalSupply.gt(b.totalSupply)) return -1;
-						return 1;
-					});
-					return sortedSynths[0];
+			const synthsData = [synthsQuery[0]];
+			for (let i = 0; i < synthsQuery.length; i++) {
+				if (i !== 0) {
+					const doubledSynth = synthsData.filter((s) => s.symbol === synthsQuery[i].symbol);
+					if (doubledSynth.length) {
+						const summedUpSynthsVal = doubledSynth.reduce((acc, curr) => {
+							return acc.add(curr.totalSupply);
+						}, wei(0));
+						synthsData.push({ ...synthsQuery[i], totalSupply: summedUpSynthsVal });
+					}
 				}
-				return synth;
-			});
+			}
 			const shortsData =
 				shorts.isSuccess &&
 				shorts.data
