@@ -3,7 +3,6 @@ import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { BigNumber, providers, utils } from 'ethers';
 import {
-	SynthResult,
 	useGetLoans,
 	useGetShorts,
 	useGetSynths,
@@ -11,21 +10,14 @@ import {
 } from '../../../generated/mainSubgraphQueries';
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from '../../constants';
 import { useEffect, useState } from 'react';
-import { DebtData } from './useGetDebtL2';
+import { Debt, DebtData } from './useGetDebtL2';
 import synthetix from '@synthetixio/contracts-interface';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 
-interface DebtOnL1 {
-	hasNegativeSkew: boolean;
-	totalSupply: Wei;
-	symbol: string;
-	inUSD: string;
-}
-
 const useGetDebtL1 = (
-	ctx: QueryContext,
+	_: QueryContext,
 	L1Provider: providers.BaseProvider,
-	options?: UseQueryOptions<DebtOnL1[]>
+	options?: UseQueryOptions<Debt[]>
 ) => {
 	const [debtData, setDebtData] = useState<DebtData | null>(null);
 	const snxjs = synthetix({ networkId: NetworkIdByName.mainnet, provider: L1Provider });
@@ -93,6 +85,8 @@ const useGetDebtL1 = (
 			const wrapperData =
 				wrappers.isSuccess &&
 				wrappers.data.reduce((acc, wrapper) => {
+					// Graph returns ETH instead of sETH like on L2
+					if (wrapper.currencyKey === 'ETH') wrapper.currencyKey = 'sETH';
 					acc[wrapper.currencyKey] = (acc[wrapper.currencyKey] || wei(0)).add(wrapper.amount);
 					return acc;
 				}, {} as DebtData['wrapperData']);
@@ -115,7 +109,6 @@ const useGetDebtL1 = (
 				.filter((synth) => !!synth) as {
 				totalSupply: Wei;
 				symbol: string;
-				hasNegativeSkew?: boolean;
 			}[];
 			alreadyAccumulatedIndexes = [];
 			const shortsData =
@@ -149,15 +142,15 @@ const useGetDebtL1 = (
 			setDebtData({ wrapperData, synthsData, shortsData, loansData });
 		}
 	}, [wrappers.isSuccess, synths.isSuccess, loans.isSuccess, shorts.isSuccess]);
-	return useQuery<DebtOnL1[]>(
+	return useQuery<Debt[]>(
 		['debt', 'data', 'L1'],
 		async () => {
 			const synthDataWithSkew = debtData!.synthsData.map((synth) => {
-				if (!(synth.symbol in debtData!.wrapperData)) return { ...synth, hasNegativeSkew: false };
+				if (!(synth.symbol in debtData!.wrapperData)) return { ...synth };
+				if (synth.symbol === 'sUSD') return { ...synth };
 				return {
 					...synth,
 					totalSupply: synth.totalSupply.sub(debtData!.wrapperData[synth.symbol]),
-					hasNegativeSkew: wei(synth.totalSupply).sub(debtData!.wrapperData[synth.symbol]).gt(0),
 				};
 			});
 
@@ -187,7 +180,7 @@ const useGetDebtL1 = (
 			const rates: BigNumber[] = await Promise.all(promises);
 			return synthDataWithLoans.map((synth, index) => ({
 				...synth,
-				inUSD: synth.totalSupply.mul(rates[index]).toString(),
+				inUSD: synth.totalSupply.mul(rates[index]),
 			}));
 		},
 		{
