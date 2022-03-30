@@ -12,11 +12,10 @@ import { DEFAULT_SUBGRAPH_ENDPOINTS } from '../../constants';
 import { useEffect, useState } from 'react';
 import synthetix, { NetworkIdByName } from '@synthetixio/contracts-interface';
 
-interface DebtOnL2 {
-	hasNegativeSkew: boolean;
+export interface Debt {
 	totalSupply: Wei;
 	symbol: string;
-	inUSD: string;
+	inUSD: Wei;
 }
 
 export interface DebtData {
@@ -24,16 +23,15 @@ export interface DebtData {
 	synthsData: {
 		totalSupply: Wei;
 		symbol: string;
-		hasNegativeSkew?: boolean;
 	}[];
 	shortsData: Record<string, Wei>;
 	loansData: Record<string, Wei>;
 }
 
 const useGetDebtL2 = (
-	ctx: QueryContext,
+	_: QueryContext,
 	L2Provider: providers.BaseProvider,
-	options?: UseQueryOptions<DebtOnL2[]>
+	options?: UseQueryOptions<Debt[]>
 ) => {
 	const [debtData, setDebtData] = useState<DebtData | null>(null);
 	const snxjs = synthetix({ networkId: NetworkIdByName['mainnet-ovm'], provider: L2Provider });
@@ -140,15 +138,15 @@ const useGetDebtL2 = (
 		}
 	}, [wrappers.isSuccess, synths.isSuccess, loans.isSuccess, shorts.isSuccess]);
 
-	return useQuery<DebtOnL2[]>(
+	return useQuery<Debt[]>(
 		['debt', 'data', 'L2'],
 		async () => {
 			const synthDataWithSkew = debtData!.synthsData.map((synth) => {
-				if (!(synth.symbol in debtData!.wrapperData)) return { ...synth, hasNegativeSkew: false };
+				if (!(synth.symbol in debtData!.wrapperData)) return { ...synth };
+				if (synth.symbol === 'sUSD') return { ...synth };
 				return {
 					...synth,
 					totalSupply: synth.totalSupply.sub(debtData!.wrapperData[synth.symbol]),
-					hasNegativeSkew: wei(synth.totalSupply).sub(debtData!.wrapperData[synth.symbol]).gt(0),
 				};
 			});
 
@@ -178,7 +176,7 @@ const useGetDebtL2 = (
 			const rates: BigNumber[] = await Promise.all(promises);
 			return synthDataWithLoans.map((synth, index) => ({
 				...synth,
-				inUSD: synth.totalSupply.mul(rates[index]).toString(),
+				inUSD: synth.totalSupply.mul(rates[index]),
 			}));
 		},
 		{
