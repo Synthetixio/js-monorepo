@@ -25,15 +25,15 @@ const useGetDebtDataQuery = (
 		['debt', 'data', ctx.networkId, walletAddress],
 		async () => {
 			const {
-				contracts: { SystemSettings, Synthetix, SynthetixDebtShare },
+				contracts: { SystemSettings, Synthetix },
 				utils,
 			} = ctx.snxjs!;
-
+			const sUSDBytes = utils.formatBytes32String('sUSD');
 			const result = await Promise.all([
 				SystemSettings.issuanceRatio(),
 				Synthetix.collateralisationRatio(walletAddress),
 				Synthetix.transferableSynthetix(walletAddress),
-				SynthetixDebtShare.balanceOf(walletAddress),
+				Synthetix.debtBalanceOf(walletAddress, sUSDBytes),
 				Synthetix.collateral(walletAddress),
 				Synthetix.maxIssuableSynths(walletAddress),
 				Synthetix.balanceOf(walletAddress),
