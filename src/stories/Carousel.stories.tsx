@@ -109,7 +109,7 @@ Template.args = {
 			}}
 		>
 			8
-		</div> /* 
+		</div>,
 		<div
 			key={10}
 			style={{
@@ -122,6 +122,7 @@ Template.args = {
 		>
 			9
 		</div>,
+
 		<div
 			key={10}
 			style={{
@@ -133,6 +134,7 @@ Template.args = {
 			}}
 		>
 			10
-		</div>, */,
+		</div>,
+		,
 	],
 };
