@@ -52,7 +52,7 @@ export default function Carousel({
 		}
 		if (ltr) {
 			setActiveIndex((state) => {
-				if (state >= carouselItems.length) return state;
+				if (state >= carouselItems.length - 1) return state;
 				scroll(state + 1);
 				return state + 1;
 			});
@@ -70,20 +70,19 @@ export default function Carousel({
 			const ref = styledCarouselItemsWrapperRef.current!;
 			setRefWidth((_) => {
 				const initState = document
-					.getElementById(CHILDREN_ID_PREFIX.concat(activeIndex.toString()))!
+					.getElementById(CHILDREN_ID_PREFIX.concat((activeIndex - 1).toString()))!
 					.getBoundingClientRect().width;
-				const calculatedOffset = updatedCarouselItems
-					.slice(0, activeIndex)
-					.reduce((acc, _, index) => {
-						return (
-							acc +
-							document.getElementById(CHILDREN_ID_PREFIX.concat(index.toString()))!.clientWidth
-						);
-					}, 0);
-				ref.scroll({
-					behavior: 'smooth',
-					left: calculatedOffset - ref.clientWidth / 2 - initState / 2,
-				});
+				if (carouselItems.length % 2 === 0) {
+					ref.scroll({
+						behavior: 'smooth',
+						left: ref.scrollWidth / 2 - ref.clientWidth / 2,
+					});
+				} else {
+					ref.scroll({
+						behavior: 'smooth',
+						left: ref.scrollWidth / 2 - ref.clientWidth / 2 + initState / 2,
+					});
+				}
 				return initState;
 			});
 		}
@@ -102,14 +101,9 @@ export default function Carousel({
 				left: 0,
 			});
 		}
-		const calculatedOffset = updatedCarouselItems.slice(0, newIndex).reduce((acc, _, index) => {
-			return (
-				acc + document.getElementById(CHILDREN_ID_PREFIX.concat(index.toString()))!.clientWidth
-			);
-		}, 0);
 		ref.scroll({
 			behavior: 'smooth',
-			left: calculatedOffset - ref.clientWidth / 2 - refWidth / 2,
+			left: refWidth * newIndex - ref.clientWidth / 2 - refWidth / 2,
 		});
 	};
 
