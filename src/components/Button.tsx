@@ -132,7 +132,7 @@ const StyledButtonText = styled.span<{
 	size?: ButtonProps['size'];
 }>`
 	font-size: ${({ size }) => determineFontSize(size)};
-	font-family: ${fonts.interBold};
+	font-family: ${fonts.body};
 	line-height: 17px;
 	font-weight: bold;
 	${({ variant }) => variant === 'tertiary' && 'color: whitey'};
