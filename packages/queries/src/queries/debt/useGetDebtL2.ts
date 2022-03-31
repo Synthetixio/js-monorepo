@@ -87,9 +87,7 @@ const useGetDebtL2 = (
 		DEFAULT_SUBGRAPH_ENDPOINTS[10].subgraph,
 		{ where: { isOpen: true }, first: 1000, orderDirection: 'desc', orderBy: 'amount' },
 		{
-			collateralMinted: true,
 			amount: true,
-			collateralAmount: true,
 			currency: true,
 		},
 		{

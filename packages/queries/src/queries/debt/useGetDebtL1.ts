@@ -76,7 +76,7 @@ const useGetDebtL1 = (
 		// TODO @DEV update once L1 subgraph is synced
 		'https://api.thegraph.com/subgraphs/name/noahlitvin/mainnet-loans',
 		{ where: { isOpen: true }, first: 1000, orderDirection: 'desc', orderBy: 'amount' },
-		{ collateralMinted: true, amount: true, collateralAmount: true, currency: true },
+		{ amount: true, currency: true },
 		{ queryKey: ['L1', 'loans'] }
 	);
 
