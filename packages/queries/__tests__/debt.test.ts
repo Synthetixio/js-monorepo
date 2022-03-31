@@ -7,7 +7,7 @@ import { providers } from 'ethers';
 jest.setTimeout(20000);
 
 describe('@synthetixio/queries debt', () => {
-	it('useGetDebtL2', async () => {
+	it.skip('useGetDebtL2', async () => {
 		const ctx = getFakeQueryContext();
 		const wrapper = getWrapper();
 		const { result, waitFor } = renderHook(
@@ -24,7 +24,7 @@ describe('@synthetixio/queries debt', () => {
 		expect(result.current.data![0].totalSupply.gt(1)).toEqual(true);
 	});
 
-	it('useGetDebtL1', async () => {
+	it.skip('useGetDebtL1', async () => {
 		const ctx = getFakeQueryContext();
 		const wrapper = getWrapper();
 		const { result, waitFor } = renderHook(
