@@ -1,7 +1,8 @@
-import styled from 'styled-components';
 import React, { ButtonHTMLAttributes, FC, MouseEvent } from 'react';
-import { theme } from '../styles';
+import styled from 'styled-components';
+
 import { rem } from '../constants';
+import { theme } from '../styles';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
