@@ -29,4 +29,6 @@ export default {
 		font-family: Inter;
 		font-size: 1rem;
 	`,
+	regular: `Inter`,
+	interBold: `Inter Bold`,
 };
