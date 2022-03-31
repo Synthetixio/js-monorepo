@@ -2,7 +2,6 @@ import { getFakeQueryContext, getWrapper } from '../testUtils';
 import { renderHook } from '@testing-library/react-hooks';
 import useGetDebtL2 from '../src/queries/debt/useGetDebtL2';
 import { useGetDebtL1 } from '../generated/queryFuncs';
-import synthetix from '@synthetixio/contracts-interface';
 import { providers } from 'ethers';
 
 jest.setTimeout(20000);
