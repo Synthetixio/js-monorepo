@@ -143,7 +143,6 @@ const useGetDebtL2 = (
 		async () => {
 			const synthDataWithSkew = debtData!.synthsData.map((synth) => {
 				if (!(synth.symbol in debtData!.wrapperData)) return { ...synth };
-				if (synth.symbol === 'sUSD') return { ...synth };
 				return {
 					...synth,
 					totalSupply: synth.totalSupply.sub(debtData!.wrapperData[synth.symbol]),
