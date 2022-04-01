@@ -15,37 +15,41 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm i
-      - run: npm run lint
-      - run: npm run build
-      - run: npm run test
 
       # publish
       - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
       - run: git fetch origin ${{ github.head_ref }}
       - run: echo $(git rev-parse --short origin/${{ github.head_ref }})
-      - run: cd contracts-interface
-      - run: npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-      - run: npm publish --tag dev
-      - run: cd ../
-      - run: cd optimism-networks
-      - run: npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-      - run: npm publish --tag dev
-      - run: cd ../
-      - run: cd providers
-      - run: npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-      - run: npm publish --tag dev
-      - run: cd ../
-      - run: cd queries
-      - run: npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-      - run: npm publish --tag dev
-      - run: cd ../
-      - run: cd transaction-notifier
-      - run: npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-      - run: npm publish --tag dev
-      - run: cd ../
-      - run: cd wei
-      - run: npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-      - run: npm publish --tag dev
+      - name: publish contracts-interface
+      - run: |
+          ls -la
+          npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
+          npm publish --tag dev
+        working-directory: ./contracts-interface
+      - name: publish optimism-networks
+        working-directory: ./optimism-networks
+      - run: |
+          npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
+          npm publish --tag dev
+      - name: publish providers
+        working-directory: ./providers
+      - run: |
+          npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
+          npm publish --tag dev
+      - name: publish queries
+        working-directory: ./queries
+      - run: |
+          npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
+          npm publish --tag dev
+      - name: publish transaction-notifier
+        working-directory: ./transaction-notifier
+      - run: |
+          npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
+          npm publish --tag dev
+      - name: publish wei
+        working-directory: ./wei
+      - run: |
+          npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
+          npm publish --tag dev
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
