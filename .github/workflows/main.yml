@@ -16,7 +16,7 @@ jobs:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm i
-      - run: npm run build -w contracts-interface
+      - run: npm run build
       - run: npm run lint
       - run: npm run test
 
@@ -24,29 +24,39 @@ jobs:
       - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
       - run: git fetch origin ${{ github.head_ref }}
       - run: echo $(git rev-parse --short origin/${{ github.head_ref }})
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: |
           npm -w contracts-interface version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
           npm -w contracts-interface publish -- --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: |
           npm -w optimism-networks version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
           npm -w optimism-networks publish --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: |
           npm -w providers version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
           npm -w providers publish --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: |
           npm -w queries version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
           npm -w queries publish --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: |
           npm -w transaction-notifier version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
           npm -w transaction-notifier publish --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: |
           npm -w wei version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
           npm -w wei publish --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
