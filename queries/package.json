@@ -11,7 +11,7 @@
 		"build"
 	],
 	"scripts": {
-		"build": "npm run codegen && npm run build-node",
+		"build": "npm run codegen && npm run build-node && npm run build-browser",
 		"build-node": "tsc -p tsconfig.node.json",
 		"build-browser": "webpack --mode=production",
 		"codegen": "node ./codegen.js",

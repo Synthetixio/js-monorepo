@@ -3,7 +3,7 @@
 	"private": true,
 	"version": "3.0.0",
 	"scripts": {
-		"build": "&& npm run build -w wei && npm run build -w contracts-interface && npm run build -w optimism-networks && npm run build -w providers && npm run build -w queries && npm run build -w transaction-notifier",
+		"build": "npm run build -w wei && npm run build -w contracts-interface && npm run build -w optimism-networks && npm run build -w providers && npm run build -w queries && npm run build -w transaction-notifier",
 		"test": "npm run test -w contracts-interface && npm run test -w optimism-networks && npm run test -w providers && npm run test -w queries && npm run test -w transaction-notifier && npm run test -w wei",
 		"lint": "eslint './**/*.{js,ts,tsx}' --quiet",
 		"lint:fix": "eslint './**/*.{js,ts,tsx}' --fix"
@@ -45,6 +45,7 @@
 		"husky": "^7.0.4",
 		"jest": "^27.5.1",
 		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
 		"ts-loader": "^9.2.8",
 		"typescript": "^4.6.3",
 		"webpack-cli": "^4.9.2"
