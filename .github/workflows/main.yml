@@ -27,7 +27,7 @@ jobs:
 
       - run: |
           npm -w contracts-interface version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-          npm -w contracts-interface publish --tag dev
+          npm -w contracts-interface publish -- --tag dev
 
       - run: |
           npm -w optimism-networks version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
