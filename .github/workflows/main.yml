@@ -17,7 +17,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm i
       - run: npm run build
-      - run: npm run lint
+      - run: npm run lint:fix
       - run: npm run test
 
       # publish
@@ -27,7 +27,7 @@ jobs:
 
       - run: |
           npm -w contracts-interface version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-          npm -w contracts-interface publish -- --tag dev
+          npm -w contracts-interface publish --tag dev
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
