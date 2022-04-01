@@ -23,8 +23,8 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 		rpcUrls: ['https://mainnet.optimism.io'],
 		blockExplorerUrls: ['https://optimistic.etherscan.io'],
 		iconUrls: [
-			'https://optimism.io/images/metamask_icon.svg',
-			'https://optimism.io/images/metamask_icon.png',
+			'https://de.wikipedia.org/wiki/MetaMask#/media/Datei:MetaMask_Fox.svg',
+			'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/800px-MetaMask_Fox.svg.png',
 		],
 	},
 	69: {
@@ -33,8 +33,8 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 		rpcUrls: ['https://kovan.optimism.io'],
 		blockExplorerUrls: ['https://kovan-optimistic.etherscan.io'],
 		iconUrls: [
-			'https://optimism.io/images/metamask_icon.svg',
-			'https://optimism.io/images/metamask_icon.png',
+			'https://de.wikipedia.org/wiki/MetaMask#/media/Datei:MetaMask_Fox.svg',
+			'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/800px-MetaMask_Fox.svg.png',
 		],
 	},
 };
