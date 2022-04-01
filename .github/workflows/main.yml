@@ -21,11 +21,11 @@ jobs:
       - run: git fetch origin ${{ github.head_ref }}
       - run: echo $(git rev-parse --short origin/${{ github.head_ref }})
       - name: publish contracts-interface
+        working-directory: ./contracts-interface
       - run: |
           ls -la
           npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
           npm publish --tag dev
-        working-directory: ./contracts-interface
       - name: publish optimism-networks
         working-directory: ./optimism-networks
       - run: |
