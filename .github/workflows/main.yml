@@ -15,11 +15,10 @@ jobs:
         with:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm ci
-      - run: npx lerna bootstrap
+      - run: npm i
       - run: npm run lint
-      - run: npx lerna run build
-      - run: npx lerna run test
+      - run: npm run build
+      - run: npm run test
 
       # publish
       - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
