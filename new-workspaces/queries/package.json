@@ -1,11 +1,20 @@
 {
-  "name": "queries",
-  "version": "3.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+	"name": "@synthetixio/queries",
+	"version": "3.0.0",
+	"description": "react-query for pulling synthetix data in react interfaces",
+	"source": "./src/index.ts",
+	"main": "./build/node/src/index.js",
+	"module": "./build/node/src/index.js",
+	"browser": "./build/node/src/index.js",
+	"types": "./build/node/src/index.d.ts",
+	"files": [
+		"build"
+	],
+	"scripts": {
+		"build": "npm run codegen && npm run build-node",
+		"build-node": "tsc -p tsconfig.node.json",
+		"build-browser": "webpack --mode=production --max-old-space-size=4096",
+		"codegen": "node ./codegen.js"
+	},
+	"license": "MIT"
 }
