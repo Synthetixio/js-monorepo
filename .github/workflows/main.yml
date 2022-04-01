@@ -24,6 +24,8 @@ jobs:
       - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
       - run: git fetch origin ${{ github.head_ref }}
       - run: echo $(git rev-parse --short origin/${{ github.head_ref }})
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: |
           npm -w contracts-interface version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
@@ -48,5 +50,3 @@ jobs:
       - run: |
           npm -w wei version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
           npm -w wei publish --tag dev
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
