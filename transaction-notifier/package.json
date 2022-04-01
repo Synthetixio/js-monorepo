@@ -13,7 +13,8 @@
 	"scripts": {
 		"build": "npm run build-browser && npm run build-node",
 		"build-node": "tsc -p tsconfig.node.json",
-		"build-browser": "webpack --mode=production"
+		"build-browser": "webpack --mode=production",
+		"test": "echo 'implement me'"
 	},
 	"license": "MIT",
 	"dependencies": {

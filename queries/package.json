@@ -14,7 +14,8 @@
 		"build": "npm run codegen && npm run build-node",
 		"build-node": "tsc -p tsconfig.node.json",
 		"build-browser": "webpack --mode=production",
-		"codegen": "node ./codegen.js"
+		"codegen": "node ./codegen.js",
+		"test": "echo 'implement me'"
 	},
 	"license": "MIT"
 }
