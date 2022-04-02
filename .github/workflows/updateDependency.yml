@@ -3,9 +3,10 @@ name: Publish Library
 on:
   workflow_dispatch:
     inputs:
-      synthetix_version:
-        description: 'Upstream `synthetix` repo version (leave empty if no update)'
-        required: false
+      # Since we want to decouple the js-monorepo version from synthetix, we shouldn't allow this
+      #      synthetix_version:
+      #       description: 'Upstream `synthetix` repo version (leave empty if no update)'
+      #      required: false
       monorepo_version:
         description: 'New Monorepo Version (ex. 2.50.0-alpha) (leave empty to "patch")'
         required: false
@@ -28,12 +29,13 @@ jobs:
           echo "new_version=$theversion" >> $GITHUB_ENV
       - name: config git identity
         run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
-      - name: Update  @synthetixio/contracts-interface
-        if: github.event.inputs.synthetix_version
-        run: |
-          echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.inputs.synthetix_version }}"
-          cd packages/contracts-interface && npm install synthetix@${{ github.event.inputs.synthetix_version }} --save-exact
-          git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty
+      # Since we want to decouple the js-monorepo version from synthetix, we shouldn't allow this
+      # - name: Update  @synthetixio/contracts-interface
+      #  if: github.event.inputs.synthetix_version
+      # run: |
+      #  echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.inputs.synthetix_version }}"
+      # cd packages/contracts-interface && npm install synthetix@${{ github.event.inputs.synthetix_version }} --save-exact
+      #git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty
       - name: Lints and build
         run: |
           npm i
@@ -42,6 +44,12 @@ jobs:
           npm run build
       - name: Update packages version
         run: |
+          npm -w contracts-interface version ${{ env.new_version }}
+          npm -w optimism-networks version ${{ env.new_version }}
+          npm -w providers version ${{ env.new_version }}
+          npm -w queries version ${{ env.new_version }}
+          npm -w transaction-notifier version ${{ env.new_version }}
+          npm -w weio version ${{ env.new_version }}
           lerna version ${{ env.new_version }} --exact --yes
           echo "resolved_version=$(jq -r .version < lerna.json)" >> $GITHUB_ENV
       - name: Publish packages
