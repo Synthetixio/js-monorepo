@@ -8,7 +8,7 @@ on:
       #       description: 'Upstream `synthetix` repo version (leave empty if no update)'
       #      required: false
       monorepo_version:
-        description: 'New Monorepo Version (ex. 2.50.0-alpha) (leave empty to "patch")'
+        description: 'New Monorepo Version (ex. 3.0.0-alpha) (leave empty to "patch")'
         required: false
 
 jobs:
@@ -49,13 +49,33 @@ jobs:
           npm -w providers version ${{ env.new_version }}
           npm -w queries version ${{ env.new_version }}
           npm -w transaction-notifier version ${{ env.new_version }}
-          npm -w weio version ${{ env.new_version }}
-          lerna version ${{ env.new_version }} --exact --yes
-          echo "resolved_version=$(jq -r .version < lerna.json)" >> $GITHUB_ENV
+          npm -w wei version ${{ env.new_version }}
+
       - name: Publish packages
-        run: lerna publish from-package --yes
+      - run: pm -w contracts-interface publish --tag latest
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: npm -w optimism-networks publish --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: npm -w providers publish --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: npm -w queries publish --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: npm -w transaction-notifier publish --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: npm -w wei publish --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Push changes
         run: git push
       - name: Notify dApps
