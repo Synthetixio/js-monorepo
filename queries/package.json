@@ -17,5 +17,8 @@
 		"codegen": "node ./codegen.js",
 		"test": "echo 'implement me'"
 	},
-	"license": "MIT"
+	"license": "MIT",
+	"dependencies": {
+		"maxibon-codegen-graph-ts": "^0.2.0"
+	}
 }
