@@ -17,4 +17,4 @@ export default {
 		rainbow: 'linear-gradient(90deg, #ED1EFF 0%, #00D1FF 100%);',
 	},
 	hoverOpacity: '9f',
-};
+} as const;

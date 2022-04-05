@@ -1,10 +1,11 @@
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
+import { Colors } from '../types';
 
 interface CardProps {
 	withBorderGradient?: boolean;
-	withBackgroundGradientColor?: keyof typeof colors;
+	withBackgroundGradientColor?: Colors;
 }
 
 export default function Card({
@@ -38,7 +39,7 @@ const StyledGradientWrapper = styled.div`
 	border-radius: 4px;
 `;
 
-const StyledBackgroundGradientWrapper = styled.div<{ color: keyof typeof colors }>`
+const StyledBackgroundGradientWrapper = styled.div<{ color: Colors }>`
 	width: 100%;
 	height: 100%;
 	border-radius: 5px;
