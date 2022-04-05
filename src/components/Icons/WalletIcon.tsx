@@ -21,7 +21,7 @@ export default function WalletIcon({ active }: SVGIconProps) {
 			/>
 			<path
 				fillRule="evenodd"
-				clip-rule="evenodd"
+				clipRule="evenodd"
 				d="M7.74766 3H16.3911C19.2892 3 21.6388 5.34951 21.6388 8.24766V15.4247C21.6388 18.3229 19.2892 20.6724 16.3911 20.6724H7.74766C4.84951 20.6724 2.5 18.3229 2.5 15.4247V8.24766C2.5 5.34951 4.84951 3 7.74766 3Z"
 				stroke={active ? colors.lightBlue : 'white'}
 				strokeWidth="1.5"
