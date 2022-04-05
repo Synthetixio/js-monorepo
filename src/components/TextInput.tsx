@@ -52,14 +52,14 @@ const StyledLabel = styled.label`
 	display: inline-block;
 	padding-bottom: 6px;
 	line-height: 1;
-	font-size: ${rem}px;
+	font-size: 1rem;
 	color: ${colors.grey};
 	cursor: pointer;
 `;
 
 const sizes = {
 	medium: {
-		padding: '13px 23px 13.5px',
+		padding: '13px 23px',
 		borderSize: '2px',
 	},
 	small: {
@@ -77,8 +77,8 @@ const StyledTextInput = styled.input.attrs(() => ({
 	border: ${({ inputSize }) => sizes[inputSize].borderSize} solid ${colors.grey}4C;
 	border-radius: 4px;
 	color: ${colors.white};
-	font-size: ${rem * 1.17}px;
-	line-height: ${rem * 2}px;
+	font-size: 1.17rem;
+	line-height: 2rem;
 	outline: none;
 	background-color: ${colors.backgroundColor};
 
