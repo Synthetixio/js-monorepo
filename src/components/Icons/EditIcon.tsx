@@ -14,7 +14,7 @@ export default function EditIcon({ active }: SVGIconProps) {
 			/>
 			<path
 				fillRule="evenodd"
-				clip-rule="evenodd"
+				clipRule="evenodd"
 				d="M9.5 18.5L4.5 19.5L5.5 14.5L15.5 4.5L19.5 8.5L9.5 18.5V18.5Z"
 				stroke={active ? colors.lightBlue : 'white'}
 				strokeWidth="2"

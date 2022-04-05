@@ -1,7 +1,5 @@
 import React, { FormEventHandler } from 'react';
 import styled from 'styled-components';
-
-import { rem } from '../constants';
 import colors from '../styles/colors';
 
 interface TextInputProps {

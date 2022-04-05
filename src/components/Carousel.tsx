@@ -7,8 +7,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from './Icons';
 
 interface CarouselProps {
 	/**
-	 * @dev the first html node must be a div element because of the css selectors.
-	 * @warn minimum of 5 elements are required!
+	 * @dev the first html node must be a DIV element because of the css selectors from the StyledCarouselItemsWrapper.2
 	 */
 	carouselItems: ReactElement[];
 	maxWidth?: string;
