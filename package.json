@@ -23,12 +23,12 @@
 	},
 	"homepage": "https://github.com/Synthetixio/js-monorepo#readme",
 	"workspaces": [
-		"./contracts-interface",
-		"./providers",
-		"./queries",
-		"./optimism-networks",
-		"./transaction-notifier",
-		"./wei"
+		"contracts-interface",
+		"providers",
+		"queries",
+		"optimism-networks",
+		"transaction-notifier",
+		"wei"
 	],
 	"devDependencies": {
 		"@testing-library/react-hooks": "^7.0.2",
