@@ -1,11 +1,12 @@
 import React, { cloneElement, ReactElement, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+
 import colors from '../styles/colors';
 import spacings from '../styles/spacings';
 import IconButton from './IconButton';
 import { ArrowLeftIcon, ArrowRightIcon } from './Icons';
 
-interface CarouselProps {
+interface FadedCarouselProps {
 	/**
 	 * @dev the first html node must be a DIV element because of the css selectors from the StyledCarouselItemsWrapper.2
 	 */
@@ -17,13 +18,13 @@ interface CarouselProps {
 
 const CHILDREN_ID_PREFIX = 'carousel-child-';
 
-export default function Carousel({
+export default function FadedCarousel({
 	maxWidth,
 	withArrows = true,
 	withDots = true,
 	carouselItems,
 	...rest
-}: CarouselProps) {
+}: FadedCarouselProps) {
 	const styledCarouselItemsWrapperRef = useRef<HTMLDivElement>(null);
 	const [refWidth, setRefWidth] = useState(0);
 	const [updatedCarouselItems] = useState(
@@ -34,75 +35,58 @@ export default function Carousel({
 			})
 		)
 	);
-	const startingIndex = () => {
-		if ((carouselItems.length & 2) === 0) {
-			return Math.ceil(carouselItems.length / 2);
-		} else {
-			return Math.ceil(carouselItems.length / 2);
-		}
-	};
-	const [activeIndex, setActiveIndex] = useState<number>(startingIndex());
 
-	const handleClick = (ltr: boolean, newIndex?: number) => {
-		if (newIndex) {
-			scroll(newIndex);
-			setActiveIndex(newIndex);
-			return;
-		}
-		if (ltr) {
-			setActiveIndex((state) => {
-				if (state >= carouselItems.length - 1) return state;
-				scroll(state + 1);
-				return state + 1;
-			});
-		} else {
-			setActiveIndex((state) => {
-				if (state <= 1) return state;
-				scroll(activeIndex - 1);
-				return activeIndex - 1;
-			});
-		}
+	const startingIndex = carouselItems.length < 3 ? 0 : Math.ceil(carouselItems.length / 2);
+	const [activeIndex, setActiveIndex] = useState<number>(startingIndex);
+
+	const handleNext = () => {
+		setActiveIndex((state) => {
+			if (state >= carouselItems.length) return state;
+			scroll(state + 1);
+			return state + 1;
+		});
+	};
+
+	const handlePrev = () => {
+		setActiveIndex((state) => {
+			if (state <= 1) return state;
+			scroll(state - 1);
+			return state - 1;
+		});
+	};
+
+	const handleClick = (index: number) => {
+		scroll(index);
+		setActiveIndex(index);
 	};
 
 	useEffect(() => {
-		if (styledCarouselItemsWrapperRef) {
-			const ref = styledCarouselItemsWrapperRef.current!;
-			setRefWidth((_) => {
-				const initState = document
-					.getElementById(CHILDREN_ID_PREFIX.concat((activeIndex - 1).toString()))!
-					.getBoundingClientRect().width;
-				if (carouselItems.length % 2 === 0) {
-					ref.scroll({
-						behavior: 'smooth',
-						left: ref.scrollWidth / 2 - ref.clientWidth / 2,
-					});
-				} else {
-					ref.scroll({
-						behavior: 'smooth',
-						left: ref.scrollWidth / 2 - ref.clientWidth / 2 + initState / 2,
-					});
-				}
-				return initState;
-			});
-		}
-	}, [styledCarouselItemsWrapperRef]);
+		setRefWidth((_) => {
+			return document
+				.getElementById(CHILDREN_ID_PREFIX.concat((activeIndex - 1).toString()))!
+				.getBoundingClientRect().width;
+		});
+	}, []);
+
+	useEffect(() => {
+		if (!refWidth || !styledCarouselItemsWrapperRef) return;
+
+		const ref = styledCarouselItemsWrapperRef.current!;
+		const left =
+			carouselItems.length % 2 === 0
+				? ref.scrollWidth / 2 - ref.clientWidth / 2 - refWidth / 2
+				: ref.scrollWidth / 2 - ref.clientWidth / 2;
+
+		ref.scroll(left, 0);
+	}, [refWidth, styledCarouselItemsWrapperRef]);
 
 	const scroll = (newIndex: number) => {
 		const ref = styledCarouselItemsWrapperRef.current!;
-		if (newIndex === carouselItems.length || newIndex === carouselItems.length - 1)
-			return ref.scroll({
-				behavior: 'smooth',
-				left: ref.scrollWidth - ref.clientWidth,
-			});
-		if (newIndex === 1 || newIndex === 2) {
-			return ref.scroll({
-				behavior: 'smooth',
-				left: 0,
-			});
-		}
+		const left = refWidth * newIndex - ref.clientWidth / 2 - refWidth / 2;
+
 		ref.scroll({
 			behavior: 'smooth',
-			left: refWidth * newIndex - ref.clientWidth / 2 - refWidth / 2,
+			left,
 		});
 	};
 
@@ -113,14 +97,14 @@ export default function Carousel({
 					<StyledLeftArrow
 						icon={<ArrowLeftIcon />}
 						rounded={true}
-						onClick={() => handleClick(false)}
+						onClick={handlePrev}
 						size="tiniest"
 						active={true}
 					/>
 					<StyledRightArrow
 						icon={<ArrowRightIcon />}
 						rounded={true}
-						onClick={() => handleClick(true)}
+						onClick={handleNext}
 						size="tiniest"
 						active={true}
 					/>
@@ -135,11 +119,11 @@ export default function Carousel({
 			</StyledCarouselItemsWrapper>
 			{withDots && (
 				<StyledDotsWrapper>
-					{carouselItems.map((_, index) => (
+					{carouselItems.map((item, index) => (
 						<StyledDot
 							active={index + 1 === activeIndex}
-							onClick={() => handleClick(false, index + 1)}
-							key={index.toString().concat(_.type.toString())}
+							onClick={() => handleClick(index + 1)}
+							key={index.toString().concat(item.type.toString())}
 						/>
 					))}
 				</StyledDotsWrapper>
@@ -148,7 +132,7 @@ export default function Carousel({
 	);
 }
 
-const StyledCarouselWrapper = styled.section<{ maxWidth?: CarouselProps['maxWidth'] }>`
+const StyledCarouselWrapper = styled.section<{ maxWidth?: FadedCarouselProps['maxWidth'] }>`
 	max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '100vw')};
 	width: 100%;
 	display: flex;

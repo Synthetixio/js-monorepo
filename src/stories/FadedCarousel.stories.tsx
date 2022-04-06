@@ -1,13 +1,15 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Carousel } from '../components';
+
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import { FadedCarousel } from '../components';
 
 export default {
-	title: 'Carousel',
-	component: Carousel,
-} as ComponentMeta<typeof Carousel>;
+	title: 'FadedCarousel',
+	component: FadedCarousel,
+} as ComponentMeta<typeof FadedCarousel>;
 
-export const Template: ComponentStory<typeof Carousel> = (args) => <Carousel {...args} />;
+export const Template: ComponentStory<typeof FadedCarousel> = (args) => <FadedCarousel {...args} />;
 
 Template.args = {
 	withArrows: true,
@@ -72,7 +74,6 @@ Template.args = {
 		>
 			5
 		</div>,
-
 		<div
 			key={6}
 			style={{
@@ -85,7 +86,6 @@ Template.args = {
 		>
 			6
 		</div>,
-
 		<div
 			key={7}
 			style={{
@@ -122,7 +122,6 @@ Template.args = {
 		>
 			9
 		</div>,
-
 		<div
 			key={10}
 			style={{
@@ -135,6 +134,5 @@ Template.args = {
 		>
 			10
 		</div>,
-		,
 	],
 };
