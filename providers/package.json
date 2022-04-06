@@ -18,9 +18,9 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"@metamask/providers": "^8.1.1",
-		"@synthetixio/contracts-interface": "file:./contracts-interface",
-		"@synthetixio/optimism-networks": "file:./optimism-networks",
-		"ethers": "^5.6.2"
+		"@metamask/providers": "8.1.1",
+		"@synthetixio/contracts-interface": "file:../contracts-interface",
+		"@synthetixio/optimism-networks": "file:../optimism-networks",
+		"ethers": "5.6.2"
 	}
 }
