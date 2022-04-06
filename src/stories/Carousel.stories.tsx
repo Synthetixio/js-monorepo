@@ -1,5 +1,7 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { Carousel } from '../components';
 
 export default {
@@ -72,7 +74,6 @@ Template.args = {
 		>
 			5
 		</div>,
-
 		<div
 			key={6}
 			style={{
@@ -85,7 +86,6 @@ Template.args = {
 		>
 			6
 		</div>,
-
 		<div
 			key={7}
 			style={{
@@ -122,7 +122,6 @@ Template.args = {
 		>
 			9
 		</div>,
-
 		<div
 			key={10}
 			style={{
@@ -135,6 +134,12 @@ Template.args = {
 		>
 			10
 		</div>,
-		,
 	],
+};
+
+export const WithFade: ComponentStory<typeof Carousel> = (args) => <Carousel {...args} />;
+
+WithFade.args = {
+	...Template.args,
+	withFade: true,
 };
