@@ -5,7 +5,7 @@
 	"scripts": {
 		"build": "npm run build -w wei && npm run build -w contracts-interface && npm run build -w optimism-networks && npm run build -w providers && npm run build -w queries && npm run build -w transaction-notifier",
 		"test": "npm run test -w contracts-interface && npm run test -w optimism-networks && npm run test -w providers && npm run test -w queries && npm run test -w transaction-notifier && npm run test -w wei",
-		"lint": "eslint './**/*.{js,ts,tsx}' --quiet",
+		"lint": "eslint './**/*.{js,ts,tsx}'",
 		"lint:fix": "eslint './**/*.{js,ts,tsx}' --fix",
 		"debug:ci": "act pull_request"
 	},
