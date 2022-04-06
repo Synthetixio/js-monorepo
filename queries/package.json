@@ -27,6 +27,10 @@
 		"maxibon-codegen-graph-ts": "0.2.0",
 		"react-query": "3.16.x"
 	},
+	"devDependencies": {
+		"@synthetixio/contracts-interface": "file:../contracts-interface",
+		"@synthetixio/wei": "file:../wei"
+	},
 	"peerDependencies": {
 		"@synthetixio/contracts-interface": "file:../contracts-interface",
 		"@synthetixio/wei": "file:../wei"
