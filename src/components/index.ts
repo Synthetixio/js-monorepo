@@ -7,5 +7,5 @@ export { default as LinkButton } from './LinkButton';
 export { default as Selector } from './Selector';
 export { default as Dropdown } from './Dropdown';
 export { default as Card } from './Card';
-export { default as FadedCarousel } from './FadedCarousel';
+export { default as Carousel } from './Carousel';
 export { default as TextInput } from './TextInput';

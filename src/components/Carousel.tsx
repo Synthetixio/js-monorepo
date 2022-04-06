@@ -6,7 +6,7 @@ import spacings from '../styles/spacings';
 import IconButton from './IconButton';
 import { ArrowLeftIcon, ArrowRightIcon } from './Icons';
 
-interface FadedCarouselProps {
+interface CarouselProps {
 	/**
 	 * @dev the first html node must be a DIV element because of the css selectors from the StyledCarouselItemsWrapper.2
 	 */
@@ -14,17 +14,19 @@ interface FadedCarouselProps {
 	maxWidth?: string;
 	withArrows?: boolean;
 	withDots?: boolean;
+	withFade?: boolean;
 }
 
 const CHILDREN_ID_PREFIX = 'carousel-child-';
 
-export default function FadedCarousel({
+export default function Carousel({
 	maxWidth,
 	withArrows = true,
 	withDots = true,
+	withFade = false,
 	carouselItems,
 	...rest
-}: FadedCarouselProps) {
+}: CarouselProps) {
 	const styledCarouselItemsWrapperRef = useRef<HTMLDivElement>(null);
 	const [refWidth, setRefWidth] = useState(0);
 	const [updatedCarouselItems] = useState(
@@ -90,6 +92,8 @@ export default function FadedCarousel({
 		});
 	};
 
+	const Wrapper = withFade ? StyledCarouselItemsWrapperFaded : StyledCarouselItemsWrapper;
+
 	return (
 		<StyledCarouselWrapper maxWidth={maxWidth} {...rest}>
 			{withArrows && (
@@ -110,13 +114,13 @@ export default function FadedCarousel({
 					/>
 				</>
 			)}
-			<StyledCarouselItemsWrapper
+			<Wrapper
 				activeIndex={activeIndex!}
 				maxLength={carouselItems.length}
 				ref={styledCarouselItemsWrapperRef}
 			>
 				{updatedCarouselItems}
-			</StyledCarouselItemsWrapper>
+			</Wrapper>
 			{withDots && (
 				<StyledDotsWrapper>
 					{carouselItems.map((item, index) => (
@@ -132,7 +136,7 @@ export default function FadedCarousel({
 	);
 }
 
-const StyledCarouselWrapper = styled.section<{ maxWidth?: FadedCarouselProps['maxWidth'] }>`
+const StyledCarouselWrapper = styled.section<{ maxWidth?: CarouselProps['maxWidth'] }>`
 	max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '100vw')};
 	width: 100%;
 	display: flex;
@@ -146,6 +150,9 @@ const StyledCarouselItemsWrapper = styled.div<{ activeIndex: number; maxLength: 
 	overflow: hidden;
 	scroll-snap-type: x mandatory;
 	width: 100%;
+`;
+
+const StyledCarouselItemsWrapperFaded = styled(StyledCarouselItemsWrapper)`
 	// hide every child by default
 	> div {
 		opacity: 0;
