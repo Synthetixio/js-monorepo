@@ -20,8 +20,8 @@
 	"license": "MIT",
 	"dependencies": {
 		"@snapshot-labs/snapshot.js": "^0.3.59",
-		"@synthetixio/contracts-interface": "file:../contracts-interface",
-		"@synthetixio/wei": "file:../wei",
+		"@synthetixio/contracts-interface": "file:contracts-interface",
+		"@synthetixio/wei": "file:wei",
 		"date-fns": "2.28.0",
 		"ethers": "5.6.2",
 		"graphql-request": "4.2.0",
