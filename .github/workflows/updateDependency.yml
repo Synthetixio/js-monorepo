@@ -3,16 +3,13 @@ name: Publish Library
 on:
   workflow_dispatch:
     inputs:
-      # Since we want to decouple the js-monorepo version from synthetix, we shouldn't allow this
-      #      synthetix_version:
-      #       description: 'Upstream `synthetix` repo version (leave empty if no update)'
-      #      required: false
       monorepo_version:
         description: 'New Monorepo Version (ex. 3.0.0-alpha) (leave empty to "patch")'
         required: false
 
 jobs:
   update_version:
+    name: Update synthetix in contracts-interface
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -28,13 +25,6 @@ jobs:
           echo "new_version=$theversion" >> $GITHUB_ENV
       - name: config git identity
         run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
-      # Since we want to decouple the js-monorepo version from synthetix, we shouldn't allow this
-      # - name: Update  @synthetixio/contracts-interface
-      #  if: github.event.inputs.synthetix_version
-      # run: |
-      #  echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.inputs.synthetix_version }}"
-      # cd packages/contracts-interface && npm install synthetix@${{ github.event.inputs.synthetix_version }} --save-exact
-      # git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty
       - name: Lints and build
         run: |
           npm i
@@ -50,7 +40,6 @@ jobs:
           npm -w transaction-notifier version ${{ env.new_version }}
           npm -w wei version ${{ env.new_version }}
 
-      - name: Publish packages
       - run: pm -w contracts-interface publish --tag latest
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
