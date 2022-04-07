@@ -1,0 +1,24 @@
+{
+	"name": "@synthetixio/contracts-interface",
+	"version": "3.0.0",
+	"description": "synthetix contracts",
+	"source": "./src/index.ts",
+	"main": "./build/node/src/index.js",
+	"module": "./build/node/src/index.js",
+	"browser": "./build/node/src/index.js",
+	"types": "./build/node/src/index.d.ts",
+	"files": [
+		"build"
+	],
+	"scripts": {
+		"build": "node ./synth-gen.js && yarn run build-browser && yarn run build-node",
+		"build-node": "tsc -p ./tsconfig.node.json",
+		"build-browser": "webpack --mode=production",
+		"test": "echo 'implement me'"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"ethers": "5.6.2",
+		"synthetix": "2.66.0"
+	}
+}
