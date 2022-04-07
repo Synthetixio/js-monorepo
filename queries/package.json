@@ -11,7 +11,7 @@
 		"build"
 	],
 	"scripts": {
-		"build": "npm run codegen && npm run build-node && npm run build-browser",
+		"build": "yarn run codegen && yarn run build-node && yarn run build-browser",
 		"build-node": "tsc -p tsconfig.node.json",
 		"build-browser": "webpack --mode=production",
 		"codegen": "node ./codegen.js",
@@ -25,14 +25,8 @@
 		"graphql-request": "4.2.0",
 		"lodash": "4.17.21",
 		"maxibon-codegen-graph-ts": "0.2.0",
-		"react-query": "3.16.x"
-	},
-	"devDependencies": {
-		"@synthetixio/contracts-interface": "file:../contracts-interface",
-		"@synthetixio/wei": "file:../wei"
-	},
-	"peerDependencies": {
-		"@synthetixio/contracts-interface": "file:../contracts-interface",
-		"@synthetixio/wei": "file:../wei"
+		"react-query": "3.16.x",
+		"@synthetixio/contracts-interface": "3.0.0",
+		"@synthetixio/wei": "3.0.0"
 	}
 }

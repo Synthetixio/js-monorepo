@@ -15,10 +15,11 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm i
-      - run: npm run build
-      - run: npm run lint:fix
-      - run: npm run test
+      - run: npm i -g yarn
+      - run: yarn install
+      - run: yarn run build
+      - run: yarn run lint:fix
+      - run: yarn run test
 
       # publish
       - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"

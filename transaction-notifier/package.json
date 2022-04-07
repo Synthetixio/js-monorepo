@@ -11,7 +11,7 @@
 		"build"
 	],
 	"scripts": {
-		"build": "npm run build-browser && npm run build-node",
+		"build": "yarn run build-browser && yarn run build-node",
 		"build-node": "tsc -p tsconfig.node.json",
 		"build-browser": "webpack --mode=production",
 		"test": "echo 'implement me'"

@@ -27,10 +27,11 @@ jobs:
         run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
       - name: Lints and build
         run: |
-          npm i
-          npm run lint:fix
-          npm run test
-          npm run build
+          npm i -g yarn
+          yarn install
+          yarn run lint:fix
+          yarn run test
+          yarn run build
       - name: Update packages version
         run: |
           npm -w contracts-interface version ${{ env.new_version }}
