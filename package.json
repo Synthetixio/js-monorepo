@@ -42,6 +42,7 @@
 		"ts-loader": "^9.2.8",
 		"typescript": "4.5.5",
 		"webpack": "^5.70.0",
+		"webpack-auto-export": "^0.1.0",
 		"webpack-cli": "^4.9.2",
 		"yalc": "1.0.0-pre.53"
 	},
