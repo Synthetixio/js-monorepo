@@ -1,7 +1,6 @@
-import styled from 'styled-components';
 import React, { ButtonHTMLAttributes, FC, MouseEvent } from 'react';
+import styled from 'styled-components';
 import { theme } from '../styles';
-import { rem } from '../constants';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
@@ -63,22 +62,13 @@ const determineHeight = (size: ButtonProps['size']) => {
 const determinePadding = (size: ButtonProps['size']) => {
 	switch (size) {
 		case 'large':
-			return '16px 100px';
+			return '16px 10px';
 		case 'medium':
 			return '11.5px 16px';
 		case 'small':
 			return '6.5px 10px';
 		default:
 			return '11.5px 16px';
-	}
-};
-
-const determineFontSize = (size: ButtonProps['size']) => {
-	switch (size) {
-		case 'small':
-			return '1rem;';
-		default:
-			return `${rem * 1.17}px`;
 	}
 };
 
@@ -131,7 +121,7 @@ const StyledButtonText = styled.span<{
 	variant?: ButtonProps['variant'];
 	size?: ButtonProps['size'];
 }>`
-	font-size: ${({ size }) => determineFontSize(size)};
+	font-size: 1rem;
 	font-family: ${fonts.interBold};
 	line-height: 17px;
 	font-weight: bold;

@@ -8,4 +8,5 @@ export { default as Selector } from './Selector';
 export { default as Dropdown } from './Dropdown';
 export { default as Card } from './Card';
 export { default as Carousel } from './Carousel';
-export { default as Banner } from './Banner';
+export { default as TextInput } from './TextInput';
+export { default as Accordion } from './Accordion';

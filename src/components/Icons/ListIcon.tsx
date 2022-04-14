@@ -28,7 +28,7 @@ export default function ListIcon({ active }: SVGIconProps) {
 			/>
 			<path
 				fillRule="evenodd"
-				clip-rule="evenodd"
+				clipRule="evenodd"
 				d="M15.8872 3C15.8872 3 8.38121 3.00391 8.36947 3.00391C5.67094 3.02053 4 4.79609 4 7.5044V16.4956C4 19.2176 5.68365 21 8.40565 21C8.40565 21 15.9107 20.9971 15.9234 20.9971C18.6219 20.9804 20.2939 19.2039 20.2939 16.4956V7.5044C20.2939 4.7824 18.6092 3 15.8872 3Z"
 				stroke={active ? colors.lightBlue : 'white'}
 				strokeWidth="1.5"
