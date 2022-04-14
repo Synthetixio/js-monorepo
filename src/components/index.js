@@ -1,4 +1,4 @@
-export * from './Banner';
+export * from './Accordion';
 export * from './Button';
 export * from './Card';
 export * from './Carousel';
@@ -9,3 +9,4 @@ export * from './Icons';
 export * from './LinkButton';
 export * from './Selector';
 export * from './Tabs';
+export * from './TextInput';

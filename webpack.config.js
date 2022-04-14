@@ -46,8 +46,4 @@ module.exports = {
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js', '.css', '.woff', '.woff2'],
 	},
-	output: {
-		path: path.resolve(__dirname, 'dist'),
-		filename: 'index.js',
-	},
 };
