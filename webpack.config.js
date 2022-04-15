@@ -1,17 +1,10 @@
 const path = require('path');
-const AutoExport = require('webpack-auto-export');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
 	entry: './src/index.ts',
 	mode: 'production',
-	plugins: [
-		new AutoExport({
-			extension: '.js', // define extension of generated index file
-			exportType: 'named', // the default way to export. values can be: 'named' | 'default' | 'detect'
-			baseDir: './src', // base directory to observe the changes
-			paths: ['components'],
-		}),
-	],
+	plugins: [new CleanWebpackPlugin()],
 	module: {
 		rules: [
 			{
@@ -25,7 +18,7 @@ module.exports = {
 					{
 						loader: 'file-loader',
 						options: {
-							name: '[name].[ext]',
+							name: '[name].[contentHash].[ext]',
 							outputPath: 'fonts/',
 						},
 					},
@@ -36,12 +29,16 @@ module.exports = {
 				use: {
 					loader: 'file-loader',
 					options: {
-						name: '[name].[ext]',
+						name: '[name].[contentHash].[ext]',
 						outputPath: 'styles/',
 					},
 				},
 			},
 		],
+	},
+	output: {
+		filename: 'index.[contenthash].js',
+		path: path.resolve(__dirname, 'dist'),
 	},
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js', '.css', '.woff', '.woff2'],
