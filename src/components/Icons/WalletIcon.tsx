@@ -2,9 +2,16 @@ import React from 'react';
 import colors from '../../styles/colors';
 import { SVGIconProps } from './types';
 
-export default function WalletIcon({ active }: SVGIconProps) {
+export default function WalletIcon({ active, onClick }: SVGIconProps) {
 	return (
-		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<svg
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+			onClick={onClick}
+		>
 			<path
 				d="M21.6389 14.3962H17.5906C16.1042 14.3953 14.8993 13.1914 14.8984 11.7049C14.8984 10.2185 16.1042 9.01458 17.5906 9.01367H21.6389"
 				stroke={active ? colors.lightBlue : 'white'}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { SVGSocialIconProps } from './types';
 
-export default function DiscordIcon({ fill, ...rest }: SVGSocialIconProps) {
+export default function DiscordIcon({ fill, onClick }: SVGSocialIconProps) {
 	return (
 		<svg
 			width="22"
@@ -9,7 +9,7 @@ export default function DiscordIcon({ fill, ...rest }: SVGSocialIconProps) {
 			viewBox="0 0 22 25"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
-			{...rest}
+			onClick={onClick}
 		>
 			<path
 				d="M8.72467 10.4883C8.0081 10.4883 7.44238 11.1133 7.44238 11.8758C7.44238 12.6383 8.02067 13.2633 8.72467 13.2633C9.44124 13.2633 10.007 12.6383 10.007 11.8758C10.0195 11.1133 9.44124 10.4883 8.72467 10.4883ZM13.3132 10.4883C12.5967 10.4883 12.031 11.1133 12.031 11.8758C12.031 12.6383 12.6092 13.2633 13.3132 13.2633C14.0298 13.2633 14.5955 12.6383 14.5955 11.8758C14.5955 11.1133 14.0298 10.4883 13.3132 10.4883Z"

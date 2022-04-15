@@ -1,7 +1,7 @@
 import React from 'react';
 import { SVGSocialIconProps } from './types';
 
-export default function GitHub({ fill, ...rest }: SVGSocialIconProps) {
+export default function GitHub({ fill, onClick }: SVGSocialIconProps) {
 	return (
 		<svg
 			width="24"
@@ -9,7 +9,7 @@ export default function GitHub({ fill, ...rest }: SVGSocialIconProps) {
 			viewBox="0 0 24 24"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
-			{...rest}
+			onClick={onClick}
 		>
 			<g clipPath="url(#clip0_916_1832)">
 				<path

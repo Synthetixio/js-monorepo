@@ -1,46 +1,40 @@
-import React, { MouseEvent } from 'react';
+import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
-import colors from '../styles/colors';
 import spacings from '../styles/spacings';
 
-interface IconButtonProps {
-	icon: JSX.Element;
-	active?: boolean;
+interface IconWrapperProps {
 	rounded?: boolean;
 	size?: keyof typeof spacings.margin;
-	text?: string;
-	onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+	active?: boolean;
 }
 
-export default function IconButton({
-	icon,
+export default function IconWrapper({
+	rounded,
+	size,
+	children,
 	active,
-	rounded = false,
-	size = 'small',
-	text,
-	onClick,
 	...rest
-}: IconButtonProps) {
+}: PropsWithChildren<IconWrapperProps>) {
 	return (
 		<StyledWrapper rounded={rounded} {...rest}>
-			<StyledButton rounded={rounded} size={size} active={active} onClick={onClick}>
-				{icon} {text && <StyledText>{text}</StyledText>}
-			</StyledButton>
+			<StyledGradient rounded={rounded} size={size} active={active}>
+				{children}
+			</StyledGradient>
 		</StyledWrapper>
 	);
 }
 
-const StyledWrapper = styled.div<{ rounded?: IconButtonProps['rounded'] }>`
+const StyledWrapper = styled.div<{ rounded?: IconWrapperProps['rounded'] }>`
 	display: inline-block;
 	border: 1px solid rgba(130, 130, 149, 0.3);
 	padding: 1px;
 	border-radius: ${({ rounded }) => (rounded ? '30px' : '4px')};
 `;
 
-const StyledButton = styled.button<{
-	rounded?: IconButtonProps['rounded'];
-	size?: IconButtonProps['size'];
-	active?: IconButtonProps['active'];
+const StyledGradient = styled.div<{
+	rounded?: IconWrapperProps['rounded'];
+	size?: IconWrapperProps['size'];
+	active?: IconWrapperProps['active'];
 }>`
 	display: flex;
 	justify-content: center;
@@ -53,14 +47,5 @@ const StyledButton = styled.button<{
 	cursor: pointer;
 	${({ active }) =>
 		active &&
-		'background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(311.52deg, #3d464c -36.37%, #131619 62.81%)'};
-`;
-
-const StyledText = styled.span`
-	color: ${colors.white};
-	font-family: Inter;
-	font-weight: 600;
-	line-height: 20px;
-	margin-left: 5px;
-	font-size: 1.16rem;
+		`background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(311.52deg, #3d464c -36.37%, #131619 62.81%);`}
 `;
