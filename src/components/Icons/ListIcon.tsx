@@ -2,9 +2,16 @@ import React from 'react';
 import colors from '../../styles/colors';
 import { SVGIconProps } from './types';
 
-export default function ListIcon({ active }: SVGIconProps) {
+export default function ListIcon({ active, onClick }: SVGIconProps) {
 	return (
-		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<svg
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+			onClick={onClick}
+		>
 			<path
 				d="M15.6993 16.1734H8.64014"
 				stroke={active ? colors.lightBlue : 'white'}

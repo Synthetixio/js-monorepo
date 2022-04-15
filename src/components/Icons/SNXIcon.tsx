@@ -1,5 +1,5 @@
 import React, { SVGProps } from 'react';
-export default function SNXIcon({ ...rest }: SVGProps<SVGSVGElement>) {
+export default function SNXIcon({ onClick }: SVGProps<SVGSVGElement>) {
 	return (
 		<svg
 			width="22"
@@ -7,7 +7,7 @@ export default function SNXIcon({ ...rest }: SVGProps<SVGSVGElement>) {
 			viewBox="0 0 22 15"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
-			{...rest}
+			onClick={onClick}
 		>
 			<g clipPath="url(#clip0_835_32327)">
 				<path

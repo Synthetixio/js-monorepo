@@ -98,20 +98,12 @@ export default function Carousel({
 		<StyledCarouselWrapper maxWidth={maxWidth} {...rest}>
 			{withArrows && (
 				<>
-					<StyledLeftArrow
-						icon={<ArrowLeftIcon />}
-						rounded={true}
-						onClick={handlePrev}
-						size="tiniest"
-						active={true}
-					/>
-					<StyledRightArrow
-						icon={<ArrowRightIcon />}
-						rounded={true}
-						onClick={handleNext}
-						size="tiniest"
-						active={true}
-					/>
+					<StyledLeftArrow rounded={true} size="tiniest" active={true}>
+						<ArrowLeftIcon onClick={handlePrev} />
+					</StyledLeftArrow>
+					<StyledRightArrow rounded={true} size="tiniest" active={true}>
+						<ArrowRightIcon onClick={handleNext} />
+					</StyledRightArrow>
 				</>
 			)}
 			<Wrapper

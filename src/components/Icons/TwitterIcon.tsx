@@ -1,7 +1,7 @@
 import React from 'react';
 import { SVGSocialIconProps } from './types';
 
-export default function TwitterIcon({ fill, ...rest }: SVGSocialIconProps) {
+export default function TwitterIcon({ fill, onClick }: SVGSocialIconProps) {
 	return (
 		<svg
 			width="24"
@@ -9,7 +9,7 @@ export default function TwitterIcon({ fill, ...rest }: SVGSocialIconProps) {
 			viewBox="0 0 24 20"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
-			{...rest}
+			onClick={onClick}
 		>
 			<g clipPath="url(#clip0_916_1830)">
 				<path
