@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Selector from '../components/Selector';
-import CloseIcon from '../components/Icons/CloseIcon';
+import Selector from '../src/components/Selector';
+import CloseIcon from '../src/components/Icons/CloseIcon';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {

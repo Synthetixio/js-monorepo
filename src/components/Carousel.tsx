@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import colors from '../styles/colors';
 import spacings from '../styles/spacings';
 import IconButton from './IconButton';
-import { ArrowLeftIcon, ArrowRightIcon } from './Icons';
+import ArrowLeftIcon from './Icons/ArrowLeftIcon';
+import ArrowRightIcon from './Icons/ArrowRightIcon';
 
 interface CarouselProps {
 	/**
