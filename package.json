@@ -5,12 +5,16 @@
 	"repository": "https://github.com/Synthetixio/ui",
 	"license": "MIT",
 	"private": false,
-	"types": "./dist/types",
+	"main": "./dist/cjs/index.js",
+	"module": "./dist/esm/index.js",
+	"types": "./dist/esm/index.d.ts",
 	"files": [
 		"/dist"
 	],
 	"scripts": {
-		"build": "npx webpack",
+		"build": "rm -rf dist && yarn build:esm && yarn build:cjs",
+		"build:esm": "tsc",
+		"build:cjs": "tsc --module commonjs --outDir dist/cjs",
 		"storybook": "start-storybook -p 6006 -c .storybook watch-css -s ./src",
 		"build-storybook": "build-storybook",
 		"commit": "cz",
@@ -24,11 +28,10 @@
 		"@storybook/addon-essentials": "6.4.19",
 		"@storybook/addon-links": "6.4.19",
 		"@storybook/react": "6.4.19",
+		"@tsconfig/recommended": "^1.0.1",
 		"@types/react": "17.0.39",
 		"@types/styled-components": "5.1.22",
-		"clean-webpack-plugin": "^4.0.0",
 		"commitizen": "4.2.4",
-		"css-loader": "^6.7.1",
 		"cz-conventional-changelog": "3.3.0",
 		"file-loader": "^6.2.0",
 		"gh-pages": "^3.2.3",
@@ -38,10 +41,7 @@
 		"semantic-release": "19.0.2",
 		"storybook-addon-designs": "^6.2.1",
 		"styled-components": "5.3.3",
-		"ts-loader": "^9.2.8",
 		"typescript": "4.5.5",
-		"webpack": "^5.70.0",
-		"webpack-cli": "^4.9.2",
 		"yalc": "1.0.0-pre.53"
 	},
 	"peerDependencies": {
