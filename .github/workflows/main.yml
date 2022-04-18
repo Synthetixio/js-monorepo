@@ -6,7 +6,7 @@ on:
 
 jobs:
   audit:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
     runs-on: ubuntu-latest
 
     container:
