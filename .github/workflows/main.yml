@@ -83,7 +83,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      GH_HEAD_REF: ${{ github.head_ref }})
 
     container:
       image: ghcr.io/synthetixio/docker-node/alpine:16.14
@@ -118,29 +117,28 @@ jobs:
 
       # publish
       - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
-      - run: git fetch origin ${{ github.head_ref }}
-      - run: echo $(git rev-parse --short origin/$GH_HEAD_REF
+      - run: echo $(git rev-parse --short HEAD)
 
       - run: |
-          yarn workspace @synthetixio/contracts-interface version 0.0.0-$(git rev-parse --short origin/$GH_HEAD_REF --new-version
+          yarn workspace @synthetixio/contracts-interface version 0.0.0-$(git rev-parse --short HEAD) --new-version
           yarn workspace @synthetixio/contracts-interface publish --tag dev
 
       - run: |
-          yarn workspace @synthetixio/optimism-networks version 0.0.0-$(git rev-parse --short origin/$GH_HEAD_REF --new-version
+          yarn workspace @synthetixio/optimism-networks version 0.0.0-$(git rev-parse --short HEAD) --new-version
           yarn workspace @synthetixio/optimism-networks publish --tag dev
 
       - run: |
-          yarn workspace @synthetixio/providers version 0.0.0-$(git rev-parse --short origin/$GH_HEAD_REF --new-version
+          yarn workspace @synthetixio/providers version 0.0.0-$(git rev-parse --short HEAD) --new-version
           yarn workspace @synthetixio/providers publish --tag dev
 
       - run: |
-          yarn workspace @synthetixio/queries version 0.0.0-$(git rev-parse --short origin/$GH_HEAD_REF --new-version
+          yarn workspace @synthetixio/queries version 0.0.0-$(git rev-parse --short HEAD) --new-version
           yarn workspace @synthetixio/queries publish --tag dev
 
       - run: |
-          yarn workspace @synthetixio/transaction-notifier version 0.0.0-$(git rev-parse --short origin/$GH_HEAD_REF --new-version
+          yarn workspace @synthetixio/transaction-notifier version 0.0.0-$(git rev-parse --short HEAD) --new-version
           yarn workspace @synthetixio/transaction-notifier publish --tag dev
 
       - run: |
-          yarn workspace @synthetixio/wei version 0.0.0-$(git rev-parse --short origin/$GH_HEAD_REF --new-version
+          yarn workspace @synthetixio/wei version 0.0.0-$(git rev-parse --short HEAD) --new-version
           yarn workspace @synthetixio/wei publish --tag dev
