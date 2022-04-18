@@ -7,6 +7,7 @@
 		"test": "yarn workspaces run test",
 		"lint": "eslint './**/*.{js,ts,tsx}'",
 		"lint:fix": "eslint './**/*.{js,ts,tsx}' --fix",
+		"lint:sarif": "node tests/lint.js . --ext js,.ts,.tsx",
 		"debug:ci": "act pull_request"
 	},
 	"repository": {
