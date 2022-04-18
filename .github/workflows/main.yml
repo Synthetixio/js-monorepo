@@ -115,25 +115,25 @@ jobs:
       - run: echo $(git rev-parse --short origin/${{ github.head_ref }})
 
       - run: |
-          yarn workspace contracts-interface version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
-          yarn workspace contracts-interface publish --tag dev
+          yarn workspace @synthetixio/contracts-interface version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
+          yarn workspace @synthetixio/contracts-interface publish --tag dev
 
       - run: |
-          yarn workspace optimism-networks version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
-          yarn workspace optimism-networks publish --tag dev
+          yarn workspace @synthetixio/optimism-networks version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
+          yarn workspace @synthetixio/optimism-networks publish --tag dev
 
       - run: |
-          yarn workspace providers version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
-          yarn workspace providers publish --tag dev
+          yarn workspace @synthetixio/providers version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
+          yarn workspace @synthetixio/providers publish --tag dev
 
       - run: |
-          yarn workspace queries version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
-          yarn workspace queries publish --tag dev
+          yarn workspace @synthetixio/queries version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
+          yarn workspace @synthetixio/queries publish --tag dev
 
       - run: |
-          yarn workspace transaction-notifier version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
-          yarn workspace transaction-notifier publish --tag dev
+          yarn workspace @synthetixio/transaction-notifier version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
+          yarn workspace @synthetixio/transaction-notifier publish --tag dev
 
       - run: |
-          yarn workspace wei version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
-          yarn workspace wei publish --tag dev
+          yarn workspace @synthetixio/wei version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
+          yarn workspace @synthetixio/wei publish --tag dev
