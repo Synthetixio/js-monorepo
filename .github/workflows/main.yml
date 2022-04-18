@@ -59,7 +59,7 @@ jobs:
         run: yarn install --prefer-offline --no-audit
 
       - name: Lint
-        run: yarn run lint
+        run: yarn run lint:sarif
 
       - name: Upload lint results
         uses: github/codeql-action/upload-sarif@81bfc289f5947eca8a3358341c874cb4f4697b64 # pin@codeql-bundle-20220322
