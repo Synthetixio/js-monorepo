@@ -31,6 +31,7 @@
 		"queries"
 	],
 	"devDependencies": {
+		"@microsoft/eslint-formatter-sarif": "2.1.7",
 		"@testing-library/react-hooks": "^7.0.2",
 		"@types/babel__generator": "^7.6.4",
 		"@types/babel__template": "^7.4.1",
