@@ -6,20 +6,111 @@ on:
       - master
 
 jobs:
-  build:
+  audit:
+    # run only on pull requests
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+
+    container:
+      image: ghcr.io/synthetixio/docker-sec-tools/alpine:16.14
+      credentials:
+        username: synthetixio
+        password: ${{ secrets.GH_PACKAGES_READ_ONLY }}
+
     steps:
-      - uses: actions/checkout@v2
-      # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v2
+      - name: Checkout
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # pin@v2
+
+      - name: Audit dependencies
+        run: audit-ci --critical --package-manager yarn
+
+      - name: Lockfile lint
+        run: lockfile-lint -p yarn.lock --type yarn --allowed-hosts yarn --validate-https
+
+  lint:
+    needs: audit
+    # run only on audit success or audit skipped
+    if: always() && (needs.audit.result == 'success' || needs.audit.result == 'skipped')
+    runs-on: ubuntu-latest
+
+    container:
+      image: ghcr.io/synthetixio/docker-node/alpine:16.14
+      credentials:
+        username: synthetixio
+        password: ${{ secrets.GH_PACKAGES_READ_ONLY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # pin@v2
+
+      - name: Set yarn cache directory
+        run: yarn config set cache-folder .yarn-cache
+        continue-on-error: true
+
+      - name: Cache node modules
+        uses: actions/cache@136d96b4aee02b1f0de3ba493b1d47135042d9c0 # pin@v3
         with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm i -g yarn
-      - run: yarn install
-      - run: yarn run build
-      - run: yarn run lint:fix
-      - run: yarn run test
+          path: |
+            .yarn-cache
+            node_modules
+          key: ${{ runner.os }}-alpine-cache-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-alpine-cache-
+        continue-on-error: true
+
+      - name: Install dependencies
+        run: yarn install --prefer-offline --no-audit
+
+      - name: Lint
+        run: yarn run lint
+
+      - name: Upload lint results
+        uses: github/codeql-action/upload-sarif@81bfc289f5947eca8a3358341c874cb4f4697b64 # pin@codeql-bundle-20220322
+        with:
+          sarif_file: lint-results.sarif
+        continue-on-error: true
+
+      - name: Unit tests
+        run: yarn test
+
+  build:
+    needs: lint
+    # run only on lint success or lint skipped
+    if: always() && (needs.lint.result == 'success' || needs.lint.result == 'skipped')
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    container:
+      image: ghcr.io/synthetixio/docker-node/alpine:16.14
+      credentials:
+        username: synthetixio
+        password: ${{ secrets.GH_PACKAGES_READ_ONLY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # pin@v2
+
+      - name: Set yarn cache directory
+        run: yarn config set cache-folder .yarn-cache
+        continue-on-error: true
+
+      - name: Cache node modules
+        uses: actions/cache@136d96b4aee02b1f0de3ba493b1d47135042d9c0 # pin@v3
+        with:
+          path: |
+            .yarn-cache
+            node_modules
+          key: ${{ runner.os }}-alpine-cache-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-alpine-cache-
+        continue-on-error: true
+
+      - name: Install dependencies
+        run: yarn install --prefer-offline --no-audit
+
+      - name: Build
+        run: yarn build
 
       # publish
       - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
@@ -27,37 +118,25 @@ jobs:
       - run: echo $(git rev-parse --short origin/${{ github.head_ref }})
 
       - run: |
-          npm -w contracts-interface version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-          npm -w contracts-interface publish --tag dev
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          yarn workspace contracts-interface version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
+          yarn workspace contracts-interface publish --tag dev
 
       - run: |
-          npm -w optimism-networks version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-          npm -w optimism-networks publish --tag dev
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          yarn workspace optimism-networks version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
+          yarn workspace optimism-networks publish --tag dev
 
       - run: |
-          npm -w providers version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-          npm -w providers publish --tag dev
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          yarn workspace providers version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
+          yarn workspace providers publish --tag dev
 
       - run: |
-          npm -w queries version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-          npm -w queries publish --tag dev
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          yarn workspace queries version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
+          yarn workspace queries publish --tag dev
 
       - run: |
-          npm -w transaction-notifier version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-          npm -w transaction-notifier publish --tag dev
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          yarn workspace transaction-notifier version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
+          yarn workspace transaction-notifier publish --tag dev
 
       - run: |
-          npm -w wei version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-          npm -w wei publish --tag dev
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          yarn workspace wei version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --new-version
+          yarn workspace wei publish --tag dev
