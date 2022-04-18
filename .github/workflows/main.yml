@@ -29,6 +29,8 @@ jobs:
     # run only on audit success or audit skipped
     if: (needs.audit.result == 'success' || needs.audit.result == 'skipped')
     runs-on: ubuntu-latest
+    env:
+      YARN_CACHE_FOLDER: ${{ github.workspace }}/.yarn-cache
 
     container:
       image: ghcr.io/synthetixio/docker-node/alpine:16.14
@@ -83,6 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      YARN_CACHE_FOLDER: ${{ github.workspace }}/.yarn-cache
 
     container:
       image: ghcr.io/synthetixio/docker-node/alpine:16.14
@@ -93,10 +96,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # pin@v2
-
-      - name: Set yarn cache directory
-        run: yarn config set cache-folder ${{ github.workspace }}/.yarn-cache
-        continue-on-error: true
 
       - name: Cache node modules
         uses: actions/cache@136d96b4aee02b1f0de3ba493b1d47135042d9c0 # pin@v3
