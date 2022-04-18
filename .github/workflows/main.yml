@@ -1,11 +1,11 @@
 name: Main Workflow
 on:
+  push:
   pull_request:
     branches: [main, master]
 
 jobs:
   audit:
-    if: github.event_name == 'pull_request' || github.event_name == 'push'
     runs-on: ubuntu-latest
 
     container:
@@ -27,7 +27,7 @@ jobs:
   lint:
     needs: audit
     # run only on audit success or audit skipped
-    if: github.event_name == 'pull_request' && (needs.audit.result == 'success' || needs.audit.result == 'skipped')
+    if: (needs.audit.result == 'success' || needs.audit.result == 'skipped')
     runs-on: ubuntu-latest
 
     container:
@@ -73,7 +73,7 @@ jobs:
   build:
     needs: lint
     # run only on lint success or lint skipped
-    if: github.event_name == 'pull_request' && (needs.lint.result == 'success' || needs.lint.result == 'skipped')
+    if: (needs.lint.result == 'success' || needs.lint.result == 'skipped')
     runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
