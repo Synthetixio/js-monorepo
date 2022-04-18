@@ -58,6 +58,12 @@ jobs:
       - name: Install dependencies
         run: yarn install --prefer-offline --no-audit
 
+      - name: Generating schemas for subgraphs
+        run: |
+          ./pull-subgraphs.sh
+          node codegen.js
+        working-directory: ./queries
+
       - name: Lint
         run: yarn run lint:sarif
 
