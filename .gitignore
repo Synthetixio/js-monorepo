@@ -36,3 +36,5 @@ pids
 /build/stats.json
 
 generated
+
+lint-results.sarif
