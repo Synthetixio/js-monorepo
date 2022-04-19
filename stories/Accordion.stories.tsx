@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { withDesign } from 'storybook-addon-designs';
-import { Accordion } from '../components';
+import Accordion from '../src/components/Accordion';
 
 export default {
 	title: 'Accordion',

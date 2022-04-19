@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Dropdown from '../components/Dropdown';
-import BinIcon from '../components/Icons/BinIcon';
+import Dropdown from '../src/components/Dropdown';
+import BinIcon from '../src/components/Icons/BinIcon';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {

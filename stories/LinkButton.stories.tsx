@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import LinkButton from '../components/LinkButton';
+import LinkButton from '../src/components/LinkButton';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {

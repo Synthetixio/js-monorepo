@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Tabs from '../components/Tabs';
-import CloseIcon from '../components/Icons/CloseIcon';
+import Tabs from '../src/components/Tabs';
+import CloseIcon from '../src/components/Icons/CloseIcon';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
