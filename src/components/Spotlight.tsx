@@ -2,9 +2,9 @@ import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 
-export default function Spotlight({ children }: PropsWithChildren<{}>) {
+export default function Spotlight({ children, ...rest }: PropsWithChildren<{}>) {
 	return (
-		<StyledPinkSpotlight>
+		<StyledPinkSpotlight {...rest}>
 			<StyledLightBlueSpotlight>{children}</StyledLightBlueSpotlight>
 		</StyledPinkSpotlight>
 	);
