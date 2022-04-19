@@ -42,7 +42,7 @@ import {
 	GitHubIcon,
 	TwitterIcon,
 	DiscordIcon,
-} from '../components/Icons';
+} from '../src';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {

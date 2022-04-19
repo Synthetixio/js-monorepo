@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import ExternalLink from '../components/ExternalLink';
+import ExternalLink from '../src/components/ExternalLink';
 
 export default {
 	title: 'External Link',

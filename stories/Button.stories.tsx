@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Button from '../components/Button';
+import Button from '../src/components/Button';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
