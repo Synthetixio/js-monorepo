@@ -16,6 +16,7 @@ const StyledPinkSpotlight = styled.div`
 		${colors.pink}${colors.hoverOpacity} 1%,
 		transparent 50%
 	);
+	max-width: 100%;
 `;
 
 const StyledLightBlueSpotlight = styled.div`
