@@ -9,7 +9,7 @@ interface TabsProps {
 	size?: 'medium' | 'small';
 	activeIndex?: number;
 	justifyContent: 'flex-start' | 'flex-end' | 'center' | 'space-evenly' | 'space-around';
-	icon?: JSX.Element;
+	icons?: JSX.Element[];
 }
 
 export default function Tabs({
@@ -18,14 +18,14 @@ export default function Tabs({
 	activeIndex,
 	justifyContent,
 	size = 'medium',
-	icon,
+	icons,
 }: TabsProps) {
 	return (
 		<StyledTabsWrapper justifyContent={justifyContent}>
 			{titles.map((title, index) => (
 				<StyledTab onClick={() => onClick(index)} active={activeIndex === index} size={size}>
 					{title}
-					{icon && <StyledIconWrapper>{icon}</StyledIconWrapper>}
+					{icons && <StyledIconWrapper>{icons[index] ? icons[index] : icons[0]}</StyledIconWrapper>}
 				</StyledTab>
 			))}
 		</StyledTabsWrapper>

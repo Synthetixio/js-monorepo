@@ -34,6 +34,7 @@ export default function Button({
 				secondaryBackgroundColor={secondaryBackgroundColor}
 				size={size}
 				onClick={onClick}
+				hasChildren={!!children}
 			>
 				{children}
 				{text && (
@@ -104,6 +105,7 @@ const StyledButton = styled.button<{
 	variant?: ButtonProps['variant'];
 	secondaryBackgroundColor?: ButtonProps['secondaryBackgroundColor'];
 	size?: ButtonProps['size'];
+	hasChildren: boolean;
 }>`
 	outline: 0;
 	min-height: ${theme.rem};
@@ -116,7 +118,7 @@ const StyledButton = styled.button<{
 	border-radius: 4px;
 	cursor: pointer;
 	padding: ${({ size }) => determinePadding(size)};
-	height: ${({ size }) => determineHeight(size)};
+	height: ${({ size, hasChildren }) => (hasChildren ? '100%' : determineHeight(size))};
 	width: 100%;
 `;
 
