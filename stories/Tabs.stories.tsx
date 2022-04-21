@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Tabs from '../src/components/Tabs';
 import CloseIcon from '../src/components/Icons/CloseIcon';
+import BinIcon from '../src/components/Icons/BinIcon';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
@@ -17,7 +18,7 @@ Template.args = {
 	titles: ['first', 'second', 'third'],
 	onClick: () => {},
 	activeIndex: 0,
-	icon: <CloseIcon />,
+	icons: [<CloseIcon />, <BinIcon />],
 };
 
 WithoutIcon.args = {

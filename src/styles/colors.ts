@@ -8,6 +8,7 @@ export default {
 	lightBlue: '#00D1FF',
 	darkBlue: '#402FC8',
 	pink: '#ED1EFF',
+	green: '#31D8A4',
 	gradients: {
 		darkBlue: 'linear-gradient(180deg, #08021E 0%, #1F0777 146.21%);',
 		lightBlue: 'linear-gradient(73.6deg, #85FFC4 2.11%, #5CC6FF 90.45%);',

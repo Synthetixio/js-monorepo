@@ -1,6 +1,13 @@
-import React, { cloneElement, ReactElement, useEffect, useRef, useState } from 'react';
+import React, {
+	cloneElement,
+	createRef,
+	ReactElement,
+	RefObject,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import styled from 'styled-components';
-
 import colors from '../styles/colors';
 import spacings from '../styles/spacings';
 import IconButton from './IconButton';
@@ -9,7 +16,7 @@ import ArrowRightIcon from './Icons/ArrowRightIcon';
 
 interface CarouselProps {
 	/**
-	 * @dev the first html node must be a DIV element because of the css selectors from the StyledCarouselItemsWrapper.2
+	 * @dev the first html node must be a DIV element because of the css selectors from the StyledCarouselItemsWrapper
 	 */
 	carouselItems: ReactElement[];
 	maxWidth?: string;
@@ -29,14 +36,18 @@ export default function Carousel({
 	...rest
 }: CarouselProps) {
 	const styledCarouselItemsWrapperRef = useRef<HTMLDivElement>(null);
+	const refs: RefObject<HTMLDivElement>[] = [];
 	const [refWidth, setRefWidth] = useState(0);
 	const [updatedCarouselItems] = useState(
-		carouselItems.map((child, index) =>
-			cloneElement(child, {
+		carouselItems.map((child, index) => {
+			const ref = createRef<HTMLDivElement>();
+			refs.push(ref);
+			return cloneElement(child, {
 				id: CHILDREN_ID_PREFIX.concat(index.toString()),
 				key: CHILDREN_ID_PREFIX.concat(index.toString()),
-			})
-		)
+				ref: ref,
+			});
+		})
 	);
 
 	const startingIndex = carouselItems.length < 3 ? 0 : Math.ceil(carouselItems.length / 2);
@@ -65,9 +76,7 @@ export default function Carousel({
 
 	useEffect(() => {
 		setRefWidth((_) => {
-			return document
-				.getElementById(CHILDREN_ID_PREFIX.concat((activeIndex - 1).toString()))!
-				.getBoundingClientRect().width;
+			return refs[activeIndex - 1].current!.getBoundingClientRect().width;
 		});
 	}, []);
 

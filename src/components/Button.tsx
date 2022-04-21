@@ -1,30 +1,30 @@
-import React, { ButtonHTMLAttributes, FC, MouseEvent } from 'react';
+import React, { ButtonHTMLAttributes, MouseEvent, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import theme from '../styles/theme';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
 interface ButtonProps {
-	text: string;
+	text?: string;
 	type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 	size?: 'large' | 'medium' | 'small';
-	variant?: 'primary' | 'secondary' | 'tertiary';
+	variant?: 'primary' | 'secondary' | 'tertiary' | 'gradient';
 	secondaryBackgroundColor?: string;
 	disabled?: boolean;
 	onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Button: FC<ButtonProps> = ({
+export default function Button({
 	type,
-	text,
 	size,
 	variant,
 	secondaryBackgroundColor,
 	disabled,
 	onClick,
 	children,
+	text,
 	...rest
-}) => {
+}: PropsWithChildren<ButtonProps>) {
 	return (
 		<StyledButtonBorder disabled={disabled} variant={variant} {...rest}>
 			<StyledButton
@@ -34,17 +34,18 @@ const Button: FC<ButtonProps> = ({
 				secondaryBackgroundColor={secondaryBackgroundColor}
 				size={size}
 				onClick={onClick}
+				hasChildren={!!children}
 			>
 				{children}
-				<StyledButtonText variant={variant} disabled={disabled} size={size}>
-					{text}
-				</StyledButtonText>
+				{text && (
+					<StyledButtonText variant={variant} disabled={disabled} size={size}>
+						{text}
+					</StyledButtonText>
+				)}
 			</StyledButton>
 		</StyledButtonBorder>
 	);
-};
-
-export default Button;
+}
 
 const determineHeight = (size: ButtonProps['size']) => {
 	switch (size) {
@@ -76,9 +77,11 @@ const determineVariant = (variant: ButtonProps['variant'], disabled?: boolean) =
 	if (disabled) return 'rgba(86, 86, 99, 0.6);';
 	switch (variant) {
 		case 'tertiary':
-			return `${colors.darkBlue}`;
+			return colors.darkBlue;
+		case 'gradient':
+			return colors.gradients.rainbow;
 		default:
-			return `${colors.gradients.lightBlue}`;
+			return colors.gradients.lightBlue;
 	}
 };
 
@@ -102,17 +105,20 @@ const StyledButton = styled.button<{
 	variant?: ButtonProps['variant'];
 	secondaryBackgroundColor?: ButtonProps['secondaryBackgroundColor'];
 	size?: ButtonProps['size'];
+	hasChildren: boolean;
 }>`
 	outline: 0;
 	min-height: ${theme.rem};
 	text-align: center;
 	border: 0;
 	background: ${({ variant, disabled, secondaryBackgroundColor }) =>
-		variant === 'secondary' && !disabled ? secondaryBackgroundColor : 'none'};
+		(variant === 'secondary' || variant === 'gradient') && !disabled
+			? secondaryBackgroundColor
+			: 'none'};
 	border-radius: 4px;
 	cursor: pointer;
 	padding: ${({ size }) => determinePadding(size)};
-	height: ${({ size }) => determineHeight(size)};
+	height: ${({ size, hasChildren }) => (hasChildren ? '100%' : determineHeight(size))};
 	width: 100%;
 `;
 
@@ -125,7 +131,7 @@ const StyledButtonText = styled.span<{
 	font-family: ${fonts.interBold};
 	line-height: 17px;
 	font-weight: bold;
-	${({ variant }) => variant === 'tertiary' && 'color: whitey'};
+	${({ variant }) => variant === 'tertiary' && 'color: white'};
 	${({ disabled }) => disabled && `color: ${colors.disabled}`};
 	${({ variant, disabled }) =>
 		variant === 'secondary' &&

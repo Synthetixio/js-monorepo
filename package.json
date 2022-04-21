@@ -18,7 +18,7 @@
 		"storybook": "start-storybook -p 6006 -c .storybook watch-css -s ./src",
 		"build-storybook": "build-storybook",
 		"commit": "cz",
-		"deploy-storybook": "yarn build-storybook && mkdir -p ./storybook-static/styles/fonts && cp ./src/styles/fonts/* ./storybook-static/styles/fonts/ && gh-pages -d storybook-static",
+		"deploy-storybook": "yarn build-storybook && mkdir -p ./storybook-static/fonts && cp ./src/fonts/* ./storybook-static/fonts/ && gh-pages -d storybook-static",
 		"yalc-publish": "yarn build && yalc push --update",
 		"permission": "chmod u+r+x build.sh"
 	},
@@ -29,7 +29,6 @@
 		"@storybook/addon-essentials": "6.4.19",
 		"@storybook/addon-links": "6.4.19",
 		"@storybook/react": "6.4.19",
-		"@tsconfig/recommended": "^1.0.1",
 		"@types/react": "17.0.39",
 		"@types/styled-components": "5.1.22",
 		"commitizen": "4.2.4",
