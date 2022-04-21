@@ -4,42 +4,50 @@ import colors from '../styles/colors';
 import { Colors } from '../types';
 
 interface CardProps {
-	withBorderGradient?: boolean;
-	withBackgroundGradientColor?: Colors;
+	withBorderColor?: { color: Colors; withGlow: boolean };
+	withBackgroundColor?: Colors;
 }
 
 export default function Card({
-	withBorderGradient,
-	withBackgroundGradientColor,
+	withBorderColor,
+	withBackgroundColor,
 	children,
+	...rest
 }: PropsWithChildren<CardProps>) {
-	if (withBorderGradient) {
+	if (withBorderColor) {
 		return (
-			<StyledGradientWrapper>
+			<StyledGradientWrapper
+				withBorderColor={withBorderColor.color}
+				withGlow={!!withBorderColor.withGlow}
+				{...rest}
+			>
 				<StyledCard>{children}</StyledCard>
 			</StyledGradientWrapper>
 		);
 	}
-	if (withBackgroundGradientColor) {
+	if (withBackgroundColor) {
 		return (
-			<StyledBackgroundGradientWrapper color={withBackgroundGradientColor}>
-				<StyledCard className="darker-40">{children}</StyledCard>
-			</StyledBackgroundGradientWrapper>
+			<StyledBackgroundWrapper color={withBackgroundColor} {...rest}>
+				<StyledCard className="darker-40" isWithBackground={!!withBackgroundColor}>
+					{children}
+				</StyledCard>
+			</StyledBackgroundWrapper>
 		);
 	}
 	return <StyledCard>{children}</StyledCard>;
 }
 
-const StyledGradientWrapper = styled.div`
+const StyledGradientWrapper = styled.div<{ withBorderColor?: Colors; withGlow: boolean }>`
 	width: 100%;
 	height: 100%;
 	border-radius: 5px;
-	background: ${colors.gradients.rainbow};
+	background: ${({ withBorderColor }) => withBorderColor};
+	box-shadow: ${({ withBorderColor, withGlow }) => withGlow && `0 0 10px ${withBorderColor}`};
 	padding: 2px;
 	border-radius: 4px;
 `;
 
-const StyledBackgroundGradientWrapper = styled.div<{ color: Colors }>`
+const StyledBackgroundWrapper = styled.div<{ color: Colors }>`
 	width: 100%;
 	height: 100%;
 	border-radius: 5px;
@@ -48,9 +56,9 @@ const StyledBackgroundGradientWrapper = styled.div<{ color: Colors }>`
 	border-radius: 4px;
 `;
 
-const StyledCard = styled.div`
+const StyledCard = styled.div<{ isWithBackground?: boolean }>`
 	width: 100%;
 	height: 100%;
-	background-color: ${colors.backgroundColor};
+	background-color: ${({ isWithBackground }) => !isWithBackground && colors.backgroundColor};
 	border-radius: 4px;
 `;

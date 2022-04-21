@@ -16,6 +16,7 @@ interface CarouselProps {
 	withDots?: boolean;
 	withFade?: boolean;
 	widthOfItems: number;
+	startIndex?: number;
 }
 
 export default function Carousel({
@@ -25,10 +26,15 @@ export default function Carousel({
 	withFade = false,
 	carouselItems,
 	widthOfItems,
+	startIndex,
 	...rest
 }: CarouselProps) {
 	const styledCarouselItemsWrapperRef = useRef<HTMLDivElement>(null);
-	const startingIndex = carouselItems.length < 3 ? 0 : Math.ceil(carouselItems.length / 2);
+	const startingIndex = startIndex
+		? startIndex
+		: carouselItems.length < 3
+		? 0
+		: Math.ceil(carouselItems.length / 2);
 	const [activeIndex, setActiveIndex] = useState<number>(startingIndex);
 
 	const handleNext = () => {
