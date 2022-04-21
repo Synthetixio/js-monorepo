@@ -1,12 +1,4 @@
-import React, {
-	cloneElement,
-	createRef,
-	ReactElement,
-	RefObject,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 import spacings from '../styles/spacings';
@@ -23,9 +15,8 @@ interface CarouselProps {
 	withArrows?: boolean;
 	withDots?: boolean;
 	withFade?: boolean;
+	widthOfItems: number;
 }
-
-const CHILDREN_ID_PREFIX = 'carousel-child-';
 
 export default function Carousel({
 	maxWidth,
@@ -33,23 +24,10 @@ export default function Carousel({
 	withDots = true,
 	withFade = false,
 	carouselItems,
+	widthOfItems,
 	...rest
 }: CarouselProps) {
 	const styledCarouselItemsWrapperRef = useRef<HTMLDivElement>(null);
-	const refs: RefObject<HTMLDivElement>[] = [];
-	const [refWidth, setRefWidth] = useState(0);
-	const [updatedCarouselItems] = useState(
-		carouselItems.map((child, index) => {
-			const ref = createRef<HTMLDivElement>();
-			refs.push(ref);
-			return cloneElement(child, {
-				id: CHILDREN_ID_PREFIX.concat(index.toString()),
-				key: CHILDREN_ID_PREFIX.concat(index.toString()),
-				ref: ref,
-			});
-		})
-	);
-
 	const startingIndex = carouselItems.length < 3 ? 0 : Math.ceil(carouselItems.length / 2);
 	const [activeIndex, setActiveIndex] = useState<number>(startingIndex);
 
@@ -75,26 +53,20 @@ export default function Carousel({
 	};
 
 	useEffect(() => {
-		setRefWidth((_) => {
-			return refs[activeIndex - 1].current!.getBoundingClientRect().width;
-		});
-	}, []);
-
-	useEffect(() => {
-		if (!refWidth || !styledCarouselItemsWrapperRef) return;
+		if (!widthOfItems || !styledCarouselItemsWrapperRef) return;
 
 		const ref = styledCarouselItemsWrapperRef.current!;
 		const left =
 			carouselItems.length % 2 === 0
-				? ref.scrollWidth / 2 - ref.clientWidth / 2 - refWidth / 2
+				? ref.scrollWidth / 2 - ref.clientWidth / 2 - widthOfItems / 2
 				: ref.scrollWidth / 2 - ref.clientWidth / 2;
 
 		ref.scroll(left, 0);
-	}, [refWidth, styledCarouselItemsWrapperRef]);
+	}, [widthOfItems, styledCarouselItemsWrapperRef]);
 
 	const scroll = (newIndex: number) => {
 		const ref = styledCarouselItemsWrapperRef.current!;
-		const left = refWidth * newIndex - ref.clientWidth / 2 - refWidth / 2;
+		const left = widthOfItems * newIndex - ref.clientWidth / 2 - widthOfItems / 2;
 
 		ref.scroll({
 			behavior: 'smooth',
@@ -121,7 +93,7 @@ export default function Carousel({
 				maxLength={carouselItems.length}
 				ref={styledCarouselItemsWrapperRef}
 			>
-				{updatedCarouselItems}
+				{carouselItems}
 			</Wrapper>
 			{withDots && (
 				<StyledDotsWrapper>
