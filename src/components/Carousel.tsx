@@ -62,10 +62,11 @@ export default function Carousel({
 		if (!widthOfItems || !styledCarouselItemsWrapperRef) return;
 
 		const ref = styledCarouselItemsWrapperRef.current!;
-		const left =
-			carouselItems.length % 2 === 0
-				? ref.scrollWidth / 2 - ref.clientWidth / 2 - widthOfItems / 2
-				: ref.scrollWidth / 2 - ref.clientWidth / 2;
+		const left = startIndex
+			? 0
+			: carouselItems.length % 2 === 0
+			? ref.scrollWidth / 2 - ref.clientWidth / 2 - widthOfItems / 2
+			: ref.scrollWidth / 2 - ref.clientWidth / 2;
 
 		ref.scroll(left, 0);
 	}, [widthOfItems, styledCarouselItemsWrapperRef]);
@@ -175,7 +176,7 @@ const StyledLeftArrow = styled(IconButton)`
 	position: absolute;
 	top: 50%;
 	transform: translate(0, -50%);
-	left: 0;
+	left: -38px;
 	z-index: 1;
 `;
 
@@ -183,7 +184,7 @@ const StyledRightArrow = styled(IconButton)`
 	position: absolute;
 	top: 50%;
 	transform: translate(0, -50%);
-	right: 0;
+	right: -38px;
 	z-index: 1;
 `;
 

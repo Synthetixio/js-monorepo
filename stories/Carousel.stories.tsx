@@ -7,7 +7,11 @@ export default {
 	component: Carousel,
 } as ComponentMeta<typeof Carousel>;
 
-export const Template: ComponentStory<typeof Carousel> = (args) => <Carousel {...args} />;
+export const Template: ComponentStory<typeof Carousel> = (args) => (
+	<div style={{ margin: 25 }}>
+		<Carousel {...args} />;
+	</div>
+);
 
 Template.args = {
 	withArrows: true,
