@@ -134,39 +134,31 @@ const StyledCarouselItemsWrapper = styled.div<{ activeIndex: number; maxLength: 
 `;
 
 const StyledCarouselItemsWrapperFaded = styled(StyledCarouselItemsWrapper)`
-	// hide every child by default
-	> div {
-		opacity: 0;
-	}
-	// only highlight the two neighbors left and right
-	div:nth-child(${({ activeIndex }) => activeIndex}) {
-		opacity: 1;
-	}
 	${({ activeIndex }) =>
 		activeIndex - 1 > 0 &&
 		`
-		div:nth-child(${activeIndex - 1}) {
+		> *:nth-child(${activeIndex - 1}) {
 		transform: scale(0.9);
 		opacity: 0.7
 	}`};
 	${({ activeIndex, maxLength }) =>
 		activeIndex + 1 <= maxLength &&
 		`
-		div:nth-child(${activeIndex + 1}) {
+		> *:nth-child(${activeIndex + 1}) {
 		transform: scale(0.9);
 		opacity: 0.7
 	}`};
 	${({ activeIndex }) =>
 		activeIndex - 1 > 0 &&
 		`
-		div:nth-child(${activeIndex - 2}) {
+		> *:nth-child(${activeIndex - 2}) {
 		transform: scale(0.8);
 		opacity: 0.5
 	}`};
 	${({ activeIndex, maxLength }) =>
 		activeIndex + 1 < maxLength &&
 		`
-		div:nth-child(${activeIndex + 2}) {
+		> *:nth-child(${activeIndex + 2}) {
 		transform: scale(0.8);
 		opacity: 0.5
 	}`};
