@@ -11,6 +11,7 @@ export const Template: ComponentStory<typeof Carousel> = (args) => <Carousel {..
 
 Template.args = {
 	withArrows: true,
+	widthOfItems: 500,
 	carouselItems: [
 		<div
 			style={{
