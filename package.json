@@ -29,7 +29,6 @@
 		"@storybook/addon-essentials": "6.4.19",
 		"@storybook/addon-links": "6.4.19",
 		"@storybook/react": "6.4.19",
-		"@tsconfig/recommended": "^1.0.1",
 		"@types/react": "17.0.39",
 		"@types/styled-components": "5.1.22",
 		"commitizen": "4.2.4",

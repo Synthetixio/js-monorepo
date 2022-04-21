@@ -23,9 +23,16 @@ export default function Tabs({
 	return (
 		<StyledTabsWrapper justifyContent={justifyContent}>
 			{titles.map((title, index) => (
-				<StyledTab onClick={() => onClick(index)} active={activeIndex === index} size={size}>
+				<StyledTab
+					key={title.concat(index.toString())}
+					onClick={() => onClick(index)}
+					active={activeIndex === index}
+					size={size}
+				>
 					{title}
-					{icons && <StyledIconWrapper>{icons[index] ? icons[index] : icons[0]}</StyledIconWrapper>}
+					{!!icons && (
+						<StyledIconWrapper>{icons[index] ? icons[index] : icons[0]}</StyledIconWrapper>
+					)}
 				</StyledTab>
 			))}
 		</StyledTabsWrapper>
