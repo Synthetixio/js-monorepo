@@ -7,9 +7,6 @@ import ArrowLeftIcon from './Icons/ArrowLeftIcon';
 import ArrowRightIcon from './Icons/ArrowRightIcon';
 
 interface CarouselProps {
-	/**
-	 * @dev the first html node must be a DIV element because of the css selectors from the StyledCarouselItemsWrapper
-	 */
 	carouselItems: ReactElement[];
 	maxWidth?: string;
 	withArrows?: boolean;
@@ -62,10 +59,11 @@ export default function Carousel({
 		if (!widthOfItems || !styledCarouselItemsWrapperRef) return;
 
 		const ref = styledCarouselItemsWrapperRef.current!;
-		const left =
-			carouselItems.length % 2 === 0
-				? ref.scrollWidth / 2 - ref.clientWidth / 2 - widthOfItems / 2
-				: ref.scrollWidth / 2 - ref.clientWidth / 2;
+		const left = startIndex
+			? 0
+			: carouselItems.length % 2 === 0
+			? ref.scrollWidth / 2 - ref.clientWidth / 2 - widthOfItems / 2
+			: ref.scrollWidth / 2 - ref.clientWidth / 2;
 
 		ref.scroll(left, 0);
 	}, [widthOfItems, styledCarouselItemsWrapperRef]);
@@ -133,39 +131,31 @@ const StyledCarouselItemsWrapper = styled.div<{ activeIndex: number; maxLength: 
 `;
 
 const StyledCarouselItemsWrapperFaded = styled(StyledCarouselItemsWrapper)`
-	// hide every child by default
-	> div {
-		opacity: 0;
-	}
-	// only highlight the two neighbors left and right
-	div:nth-child(${({ activeIndex }) => activeIndex}) {
-		opacity: 1;
-	}
 	${({ activeIndex }) =>
 		activeIndex - 1 > 0 &&
 		`
-		div:nth-child(${activeIndex - 1}) {
+		> *:nth-child(${activeIndex - 1}) {
 		transform: scale(0.9);
 		opacity: 0.7
 	}`};
 	${({ activeIndex, maxLength }) =>
 		activeIndex + 1 <= maxLength &&
 		`
-		div:nth-child(${activeIndex + 1}) {
+		> *:nth-child(${activeIndex + 1}) {
 		transform: scale(0.9);
 		opacity: 0.7
 	}`};
 	${({ activeIndex }) =>
 		activeIndex - 1 > 0 &&
 		`
-		div:nth-child(${activeIndex - 2}) {
+		> *:nth-child(${activeIndex - 2}) {
 		transform: scale(0.8);
 		opacity: 0.5
 	}`};
 	${({ activeIndex, maxLength }) =>
 		activeIndex + 1 < maxLength &&
 		`
-		div:nth-child(${activeIndex + 2}) {
+		> *:nth-child(${activeIndex + 2}) {
 		transform: scale(0.8);
 		opacity: 0.5
 	}`};
@@ -175,7 +165,7 @@ const StyledLeftArrow = styled(IconButton)`
 	position: absolute;
 	top: 50%;
 	transform: translate(0, -50%);
-	left: 0;
+	left: -38px;
 	z-index: 1;
 `;
 
@@ -183,7 +173,7 @@ const StyledRightArrow = styled(IconButton)`
 	position: absolute;
 	top: 50%;
 	transform: translate(0, -50%);
-	right: 0;
+	right: -38px;
 	z-index: 1;
 `;
 
