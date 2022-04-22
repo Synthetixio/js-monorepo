@@ -7,9 +7,6 @@ import ArrowLeftIcon from './Icons/ArrowLeftIcon';
 import ArrowRightIcon from './Icons/ArrowRightIcon';
 
 interface CarouselProps {
-	/**
-	 * @dev the first html node must be a DIV element because of the css selectors from the StyledCarouselItemsWrapper
-	 */
 	carouselItems: ReactElement[];
 	maxWidth?: string;
 	withArrows?: boolean;
