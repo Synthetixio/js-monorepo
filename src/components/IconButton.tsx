@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import spacings from '../styles/spacings';
+import theme from '../styles/theme';
 
 interface IconWrapperProps {
 	rounded?: boolean;
@@ -16,7 +17,7 @@ export default function IconWrapper({
 	...rest
 }: PropsWithChildren<IconWrapperProps>) {
 	return (
-		<StyledWrapper rounded={rounded} {...rest}>
+		<StyledWrapper rounded={rounded} active={active} {...rest}>
 			<StyledGradient rounded={rounded} size={size} active={active}>
 				{children}
 			</StyledGradient>
@@ -24,11 +25,16 @@ export default function IconWrapper({
 	);
 }
 
-const StyledWrapper = styled.div<{ rounded?: IconWrapperProps['rounded'] }>`
+const StyledWrapper = styled.div<{
+	rounded?: IconWrapperProps['rounded'];
+	active?: IconWrapperProps['active'];
+}>`
 	display: inline-block;
-	border: 1px solid rgba(130, 130, 149, 0.3);
-	padding: 1px;
+	padding: 2px;
 	border-radius: ${({ rounded }) => (rounded ? '30px' : '4px')};
+	${({ active }) =>
+		active &&
+		`background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(311.52deg, #3d464c -36.37%, #131619 62.81%);`}
 `;
 
 const StyledGradient = styled.div<{
@@ -40,9 +46,9 @@ const StyledGradient = styled.div<{
 	justify-content: center;
 	align-items: center;
 	outline: 0;
-	background-color: transparent;
+	background-color: ${theme.colors.black};
 	padding: ${({ size }) => size && spacings.margin[size]};
-	border: 0;
+	border: 1px solid ${theme.colors.black};
 	border-radius: ${({ rounded }) => (rounded ? '30px' : '4px')};
 	cursor: pointer;
 	${({ active }) =>

@@ -131,6 +131,12 @@ const StyledCarouselItemsWrapper = styled.div<{ activeIndex: number; maxLength: 
 `;
 
 const StyledCarouselItemsWrapperFaded = styled(StyledCarouselItemsWrapper)`
+	> * {
+		opacity: 0;
+	}
+	> *:nth-child(${({ activeIndex }) => activeIndex}) {
+		opacity: 1;
+	}
 	${({ activeIndex }) =>
 		activeIndex - 1 > 0 &&
 		`

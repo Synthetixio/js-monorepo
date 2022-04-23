@@ -1,33 +1,57 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
+import theme from '../styles/theme';
 
 interface AccordionProps {
 	isOpen?: boolean;
 	headerChildren: React.ReactNode;
+	gradient?: keyof typeof colors.gradients;
 }
 
 export default function Accordion({
 	children,
 	isOpen,
+	gradient,
 	headerChildren,
+	...rest
 }: PropsWithChildren<AccordionProps>) {
 	const [open, setOpen] = useState(isOpen);
 	useEffect(() => {
 		setOpen(isOpen);
 	}, [isOpen]);
-	return (
-		<StyledAccordionWrapper>
-			<AccordionHeader onClick={() => setOpen(!open)}>{headerChildren}</AccordionHeader>
-			{open && <AccordionContent visible={open}>{children}</AccordionContent>}
-		</StyledAccordionWrapper>
-	);
+	if (gradient) {
+		return (
+			<StyledAccordionWrappers gradient={gradient} {...rest}>
+				<StyledAccordionWrapper>
+					<AccordionHeader onClick={() => setOpen(!open)}>{headerChildren}</AccordionHeader>
+					{open && <AccordionContent visible={open}>{children}</AccordionContent>}
+				</StyledAccordionWrapper>
+			</StyledAccordionWrappers>
+		);
+	} else {
+		return (
+			<StyledAccordionWrapper {...rest}>
+				<AccordionHeader onClick={() => setOpen(!open)}>{headerChildren}</AccordionHeader>
+				{open && <AccordionContent visible={open}>{children}</AccordionContent>}
+			</StyledAccordionWrapper>
+		);
+	}
 }
+
+const StyledAccordionWrappers = styled.div<{ gradient: keyof typeof colors.gradients }>`
+	background: ${({ gradient }) => theme.colors.gradients[gradient]};
+	padding: 2px;
+	border-radius: 5px;
+	width: 100%;
+	height: 100%;
+`;
 
 const StyledAccordionWrapper = styled.div`
 	width: 100%;
 	height: 100%;
 	background-color: ${colors.backgroundColor};
+	border-radius: 5px;
 `;
 
 const AccordionHeader = styled.div`
