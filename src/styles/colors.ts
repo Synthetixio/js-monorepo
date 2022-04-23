@@ -16,6 +16,7 @@ export default {
 		orange: 'linear-gradient(73.6deg, #FF8060 2.11%, #FEB27A 90.45%);',
 		pink: 'linear-gradient(73.6deg, #8E2DE2 2.11%, #ED1EFF 90.45%);',
 		rainbow: 'linear-gradient(90deg, #ED1EFF 0%, #00D1FF 100%);',
+		grey: 'linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(311.52deg, #3D464C -36.37%, #131619 62.81%);',
 	},
 	hoverOpacity: '9f',
 } as const;
