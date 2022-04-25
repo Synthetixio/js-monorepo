@@ -9,11 +9,20 @@ export default {
 	decorators: [withDesign],
 } as ComponentMeta<typeof Card>;
 
-export const Template: ComponentStory<typeof Card> = (args) => <Card {...args} />;
+export const Template: ComponentStory<typeof Card> = (args) => (
+	<div style={{ display: 'flex', justifyContent: 'center' }}>
+		<Card {...args} />
+		<Card {...args} />
+		<Card {...args} />
+	</div>
+);
 
 Template.args = {
 	children: [
-		<div style={{ color: 'white' }}>test</div>,
+		<div style={{ color: 'white' }}>
+			{' '}
+			<div style={{ color: 'white' }}>hello</div>,<div style={{ color: 'white' }}>world</div>,
+		</div>,
 		<div style={{ color: 'white' }}>hello</div>,
 		<div style={{ color: 'white' }}>world</div>,
 	],

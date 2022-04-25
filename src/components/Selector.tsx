@@ -47,8 +47,6 @@ const SelectorText = styled.span<{ hasIcon: boolean }>`
 	line-height: 140%;
 	color: ${colors.lightBlue};
 	${({ hasIcon }) => {
-		return hasIcon
-			? `margin-right: ${spacings.margin.big};`
-			: `margin: 0 ${spacings.margin.biggest};`;
+		return hasIcon ? `margin-right: ${spacings.big};` : `margin: 0 ${spacings.biggest};`;
 	}}
 `;

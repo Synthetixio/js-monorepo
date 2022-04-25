@@ -58,3 +58,5 @@ export { default as TextInput } from './components/TextInput';
 export { default as Accordion } from './components/Accordion';
 export { default as Spotlight } from './components/Spotlight';
 export { default as SpotlightButton } from './components/SpotlightButton';
+export { default as Modal } from './components/Modal';
+export { default as Flex } from './components/Flex';

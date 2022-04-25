@@ -10,6 +10,12 @@ export default {
 } as ComponentMeta<typeof Accordion>;
 
 export const Template: ComponentStory<typeof Accordion> = (args) => <Accordion {...args} />;
+export const WithoutGradient: ComponentStory<typeof Accordion> = (args) => <Accordion {...args} />;
+
+WithoutGradient.args = {
+	headerChildren: <div style={{ color: 'white' }}>Test</div>,
+	children: <div style={{ color: 'white' }}>Some nice content</div>,
+};
 
 Template.args = {
 	headerChildren: <div style={{ color: 'white' }}>Test</div>,

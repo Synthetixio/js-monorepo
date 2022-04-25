@@ -8,7 +8,7 @@ interface LinkButtonProps {
 	icon: JSX.Element;
 	isExternalLink?: boolean;
 	link: string;
-	size?: keyof typeof spacings.margin;
+	size?: keyof typeof spacings;
 }
 
 export default function LinkButton({
@@ -41,14 +41,14 @@ const StyledWrapper = styled.div`
 	background: ${colors.gradients.grey};
 `;
 
-const StyledButtonLinks = styled.a<{ size?: keyof typeof spacings.margin }>`
+const StyledButtonLinks = styled.a<{ size?: keyof typeof spacings }>`
 	text-decoration: none;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	outline: 0;
 	background-color: transparent;
-	padding: ${({ size }) => (size ? spacings.margin[size] : '10px')};
+	padding: ${({ size }) => (size ? spacings[size] : '10px')};
 	border: 1px solid ${colors.black};
 	border-radius: 30px;
 	cursor: pointer;
@@ -61,5 +61,5 @@ const StyledButtonText = styled.span`
 	font-weight: 500;
 	font-size: 1rem;
 	color: ${colors.white};
-	margin-right: ${spacings.margin.tiny};
+	margin-right: ${spacings.tiny};
 `;

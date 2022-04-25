@@ -40,7 +40,6 @@ export default function Card({
 const StyledGradientWrapper = styled.div<{ withBorderColor?: Colors; withGlow: boolean }>`
 	width: 100%;
 	height: 100%;
-	border-radius: 5px;
 	background: ${({ withBorderColor }) => withBorderColor};
 	box-shadow: ${({ withBorderColor, withGlow }) => withGlow && `0 0 10px ${withBorderColor}`};
 	padding: 2px;

@@ -75,7 +75,7 @@ const StyledTab = styled.li<{ active?: boolean; size: TabsProps['size'] }>`
 `;
 
 const StyledIconWrapper = styled.span`
-	margin-left: ${spacings.margin.tiny};
+	margin-left: ${spacings.tiny};
 	display: flex;
 	justify-content: center;
 	align-items: center;

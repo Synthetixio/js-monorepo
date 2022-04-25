@@ -36,7 +36,7 @@ const StyledText = styled.span<{ active: SpotlightButtonProps['active'] }>`
 	font-style: normal;
 	font-weight: 400;
 	font-size: 1.16rem;
-	margin-bottom: ${spacings.margin.tiny};
+	margin-bottom: ${spacings.tiny};
 	color: ${({ active }) => (active ? 'white' : colors.grey)};
 `;
 
