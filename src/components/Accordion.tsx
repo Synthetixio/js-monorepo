@@ -1,7 +1,6 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
-import theme from '../styles/theme';
 
 interface AccordionProps {
 	isOpen?: boolean;
@@ -39,8 +38,8 @@ export default function Accordion({
 	}
 }
 
-const StyledAccordionWrappers = styled.div<{ gradient: keyof typeof colors.gradients }>`
-	background: ${({ gradient }) => theme.colors.gradients[gradient]};
+const StyledAccordionWrappers = styled.div<{ gradient?: keyof typeof colors.gradients }>`
+	background: ${({ gradient }) => gradient && colors.gradients[gradient]};
 	padding: 2px;
 	border-radius: 5px;
 	width: 100%;
