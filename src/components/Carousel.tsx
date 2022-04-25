@@ -10,16 +10,20 @@ interface CarouselProps {
 	carouselItems: ReactElement[];
 	maxWidth?: string;
 	withArrows?: boolean;
-	withDots?: boolean;
+	arrowsPosition?: 'outside' | 'half' | 'inside';
+	withDots?: 'primary' | 'secondary';
+	dotsPosition?: 'outside' | 'inside';
 	withFade?: boolean;
 	widthOfItems: number;
 	startIndex?: number;
 }
-
+// TODO @MF make slider one per frame and make it endless? See design jade
 export default function Carousel({
 	maxWidth,
 	withArrows = true,
-	withDots = true,
+	arrowsPosition,
+	dotsPosition,
+	withDots,
 	withFade = false,
 	carouselItems,
 	widthOfItems,
@@ -84,11 +88,23 @@ export default function Carousel({
 		<StyledCarouselWrapper maxWidth={maxWidth} {...rest}>
 			{withArrows && (
 				<>
-					<StyledLeftArrow rounded={true} size="tiniest" active={true}>
-						<ArrowLeftIcon onClick={handlePrev} />
+					<StyledLeftArrow
+						rounded={true}
+						size="tiniest"
+						active={true}
+						onClick={handlePrev}
+						position={arrowsPosition}
+					>
+						<ArrowLeftIcon active={true} />
 					</StyledLeftArrow>
-					<StyledRightArrow rounded={true} size="tiniest" active={true}>
-						<ArrowRightIcon onClick={handleNext} />
+					<StyledRightArrow
+						rounded={true}
+						size="tiniest"
+						active={true}
+						onClick={handleNext}
+						position={arrowsPosition}
+					>
+						<ArrowRightIcon active={true} />
 					</StyledRightArrow>
 				</>
 			)}
@@ -100,7 +116,7 @@ export default function Carousel({
 				{carouselItems}
 			</Wrapper>
 			{withDots && (
-				<StyledDotsWrapper>
+				<StyledDotsWrapper dotsStyle={withDots} dotsPosition={dotsPosition}>
 					{carouselItems.map((item, index) => (
 						<StyledDot
 							active={index + 1 === activeIndex}
@@ -167,26 +183,60 @@ const StyledCarouselItemsWrapperFaded = styled(StyledCarouselItemsWrapper)`
 	}`};
 `;
 
-const StyledLeftArrow = styled(IconButton)`
+const StyledLeftArrow = styled(IconButton)<{ position?: CarouselProps['arrowsPosition'] }>`
 	position: absolute;
 	top: 50%;
-	transform: translate(0, -50%);
+	transform: ${({ position }) => {
+		switch (position) {
+			case 'outside':
+				return 'translate(0%, -50%)';
+			case 'half':
+				return 'translate(50%, -50%)';
+			case 'inside':
+				return 'translate(100%, -50%)';
+			default:
+				return 'translate(0%, -50%)';
+		}
+	}};
 	left: -38px;
 	z-index: 1;
 `;
 
-const StyledRightArrow = styled(IconButton)`
+const StyledRightArrow = styled(IconButton)<{ position?: CarouselProps['arrowsPosition'] }>`
 	position: absolute;
 	top: 50%;
-	transform: translate(0, -50%);
+	transform: ${({ position }) => {
+		switch (position) {
+			case 'outside':
+				return 'translate(0%, -50%)';
+			case 'half':
+				return 'translate(-50%, -50%)';
+			case 'inside':
+				return 'translate(-100%, -50%)';
+			default:
+				return 'translate(0%, -50%)';
+		}
+	}};
 	right: -38px;
 	z-index: 1;
 `;
 
-const StyledDotsWrapper = styled.div`
+const StyledDotsWrapper = styled.div<{
+	dotsStyle: CarouselProps['withDots'];
+	dotsPosition: CarouselProps['dotsPosition'];
+}>`
+	position: absolute;
+	bottom: ${({ dotsPosition }) => (dotsPosition === 'outside' ? '-20px' : '12px')};
+	right: 50%;
+	transform: translate(50%, 0);
 	display: flex;
 	justify-content: center;
-	margin-top: ${spacings.margin.medium};
+	margin-top: ${spacings.margin.tiniest};
+	${({ dotsStyle }) =>
+		dotsStyle === 'primary'
+			? `background-color: ${colors.black}; padding: ${spacings.margin.tiniest}`
+			: 'background-color: transparent'};
+	border-radius: 20px;
 `;
 
 const StyledDot = styled.div<{ active?: boolean }>`

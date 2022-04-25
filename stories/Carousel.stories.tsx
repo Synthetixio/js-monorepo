@@ -169,3 +169,68 @@ WithFade.args = {
 	...Template.args,
 	withFade: true,
 };
+
+export const Single: ComponentStory<typeof Carousel> = (args) => (
+	<div style={{ display: 'flex', justifyContent: 'center' }}>
+		<Carousel {...args} />
+	</div>
+);
+
+Single.args = {
+	...Template.args,
+	maxWidth: '500px',
+	carouselItems: [
+		<div
+			id="1"
+			style={{
+				minHeight: '100px',
+				minWidth: '500px',
+				color: 'white',
+				textAlign: 'center',
+				border: '1px solid red',
+			}}
+			key={100}
+		>
+			<div>NESTED</div>112
+		</div>,
+		<div
+			id="2"
+			key={402}
+			style={{
+				minHeight: '100px',
+				minWidth: '500px',
+				color: 'white',
+				textAlign: 'center',
+				border: '1px solid red',
+			}}
+		>
+			2
+		</div>,
+		<div
+			id="2"
+			key={20}
+			style={{
+				minHeight: '100px',
+				minWidth: '500px',
+				color: 'white',
+				textAlign: 'center',
+				border: '1px solid red',
+			}}
+		>
+			2
+		</div>,
+		<div
+			id="3"
+			key={30}
+			style={{
+				minHeight: '100px',
+				minWidth: '500px',
+				color: 'white',
+				textAlign: 'center',
+				border: '1px solid red',
+			}}
+		>
+			3
+		</div>,
+	],
+};

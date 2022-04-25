@@ -45,12 +45,14 @@ const StyledAccordionWrappers = styled.div<{ gradient: keyof typeof colors.gradi
 	border-radius: 5px;
 	width: 100%;
 	height: 100%;
+	box-shadow: 0px 14px 14px rgba(0, 0, 0, 0.25);
 `;
 
 const StyledAccordionWrapper = styled.div`
 	width: 100%;
 	height: 100%;
 	background-color: ${colors.backgroundColor};
+	box-shadow: 0px 14px 14px rgba(0, 0, 0, 0.25);
 	border-radius: 5px;
 `;
 
