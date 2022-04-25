@@ -9,6 +9,7 @@ interface ButtonProps {
 	type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 	size?: 'large' | 'medium' | 'small';
 	variant?: 'primary' | 'secondary' | 'tertiary' | 'gradient';
+	gradientColor?: keyof typeof colors.gradients;
 	secondaryBackgroundColor?: string;
 	disabled?: boolean;
 	onClick: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -23,6 +24,7 @@ export default function Button({
 	onClick,
 	children,
 	text,
+	gradientColor,
 	...rest
 }: PropsWithChildren<ButtonProps>) {
 	return (
@@ -73,13 +75,17 @@ const determinePadding = (size: ButtonProps['size']) => {
 	}
 };
 
-const determineVariant = (variant: ButtonProps['variant'], disabled?: boolean) => {
+const determineVariant = (
+	variant: ButtonProps['variant'],
+	disabled: boolean,
+	gradientColor: ButtonProps['gradientColor']
+) => {
 	if (disabled) return 'rgba(86, 86, 99, 0.6);';
 	switch (variant) {
 		case 'tertiary':
 			return colors.darkBlue;
 		case 'gradient':
-			return colors.gradients.rainbow;
+			return colors.gradients[gradientColor ? gradientColor : 'rainbow'];
 		default:
 			return colors.gradients.lightBlue;
 	}
@@ -88,6 +94,7 @@ const determineVariant = (variant: ButtonProps['variant'], disabled?: boolean) =
 const StyledButtonBorder = styled.div<{
 	disabled: ButtonProps['disabled'];
 	variant?: ButtonProps['variant'];
+	gradientColor?: ButtonProps['gradientColor'];
 }>`
 	display: flex;
 	justify-content: center;
@@ -96,7 +103,8 @@ const StyledButtonBorder = styled.div<{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: ${({ variant, disabled }) => determineVariant(variant, disabled)};
+	background: ${({ variant, disabled, gradientColor }) =>
+		determineVariant(variant, !!disabled, gradientColor)};
 	${({ disabled }) => disabled && `border: 2px solid ${colors.disabled}`};
 `;
 

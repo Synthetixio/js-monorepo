@@ -1,11 +1,13 @@
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
+import colors from '../styles/colors';
 import spacings from '../styles/spacings';
 
-interface IconWrapperProps {
+interface IconButton {
 	rounded?: boolean;
 	size?: keyof typeof spacings.margin;
 	active?: boolean;
+	onClick: () => void;
 }
 
 export default function IconWrapper({
@@ -13,10 +15,11 @@ export default function IconWrapper({
 	size,
 	children,
 	active,
+	onClick,
 	...rest
-}: PropsWithChildren<IconWrapperProps>) {
+}: PropsWithChildren<IconButton>) {
 	return (
-		<StyledWrapper rounded={rounded} {...rest}>
+		<StyledWrapper rounded={rounded} active={active} onClick={onClick} {...rest}>
 			<StyledGradient rounded={rounded} size={size} active={active}>
 				{children}
 			</StyledGradient>
@@ -24,28 +27,31 @@ export default function IconWrapper({
 	);
 }
 
-const StyledWrapper = styled.div<{ rounded?: IconWrapperProps['rounded'] }>`
+const StyledWrapper = styled.button<{
+	rounded?: IconButton['rounded'];
+	active?: IconButton['active'];
+}>`
 	display: inline-block;
-	border: 1px solid rgba(130, 130, 149, 0.3);
-	padding: 1px;
+	padding: 2px;
+	outline: 0;
+	border: 0;
 	border-radius: ${({ rounded }) => (rounded ? '30px' : '4px')};
+	${({ active }) => active && `background: ${colors.gradients.grey}`}
 `;
 
 const StyledGradient = styled.div<{
-	rounded?: IconWrapperProps['rounded'];
-	size?: IconWrapperProps['size'];
-	active?: IconWrapperProps['active'];
+	rounded?: IconButton['rounded'];
+	size?: IconButton['size'];
+	active?: IconButton['active'];
 }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	outline: 0;
-	background-color: transparent;
-	padding: ${({ size }) => size && spacings.margin[size]};
-	border: 0;
+	background-color: ${colors.black};
+	padding: ${({ size }) => (size ? spacings.margin[size] : '10px')};
+	border: 1px solid ${colors.black};
 	border-radius: ${({ rounded }) => (rounded ? '30px' : '4px')};
 	cursor: pointer;
-	${({ active }) =>
-		active &&
-		`background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(311.52deg, #3d464c -36.37%, #131619 62.81%);`}
+	${({ active }) => active && `background: ${colors.gradients.grey}`}
 `;

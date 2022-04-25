@@ -8,15 +8,24 @@ interface LinkButtonProps {
 	icon: JSX.Element;
 	isExternalLink?: boolean;
 	link: string;
+	size?: keyof typeof spacings.margin;
 }
 
-export default function LinkButton({ text, icon, isExternalLink, link }: LinkButtonProps) {
+export default function LinkButton({
+	text,
+	icon,
+	isExternalLink,
+	link,
+	size,
+	...rest
+}: LinkButtonProps) {
 	return (
-		<StyledWrapper>
+		<StyledWrapper {...rest}>
 			<StyledButtonLinks
 				href={link}
 				target={!!isExternalLink ? '_blank' : undefined}
 				rel={isExternalLink ? 'noreferrer noopener' : undefined}
+				size={size}
 			>
 				<StyledButtonText>{text}</StyledButtonText>
 				{icon}
@@ -27,26 +36,23 @@ export default function LinkButton({ text, icon, isExternalLink, link }: LinkBut
 
 const StyledWrapper = styled.div`
 	display: inline-block;
-	border: 1px solid rgba(130, 130, 149, 0.3);
-	padding: 1px;
+	padding: 2px;
 	border-radius: 30px;
+	background: ${colors.gradients.grey};
 `;
 
-const StyledButtonLinks = styled.a`
+const StyledButtonLinks = styled.a<{ size?: keyof typeof spacings.margin }>`
+	text-decoration: none;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	outline: 0;
 	background-color: transparent;
-	padding: ${spacings.margin.tiny} ${spacings.margin.medium};
-	border: 0;
+	padding: ${({ size }) => (size ? spacings.margin[size] : '10px')};
+	border: 1px solid ${colors.black};
 	border-radius: 30px;
 	cursor: pointer;
-	background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-		linear-gradient(311.52deg, #3d464c -36.37%, #131619 62.81%);
-	:active {
-		text-decoration: none;
-	}
+	background: ${colors.gradients.grey};
 `;
 
 const StyledButtonText = styled.span`
@@ -54,7 +60,6 @@ const StyledButtonText = styled.span`
 	font-style: normal;
 	font-weight: 500;
 	font-size: 1rem;
-	line-height: 15px;
 	color: ${colors.white};
 	margin-right: ${spacings.margin.tiny};
 `;
