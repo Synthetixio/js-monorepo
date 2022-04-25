@@ -5,7 +5,7 @@ import spacings from '../styles/spacings';
 
 interface IconButton {
 	rounded?: boolean;
-	size?: keyof typeof spacings.margin;
+	size?: keyof typeof spacings;
 	active?: boolean;
 	onClick: () => void;
 }
@@ -49,7 +49,7 @@ const StyledGradient = styled.div<{
 	align-items: center;
 	outline: 0;
 	background-color: ${colors.black};
-	padding: ${({ size }) => (size ? spacings.margin[size] : '10px')};
+	padding: ${({ size }) => (size ? spacings[size] : '10px')};
 	border: 1px solid ${colors.black};
 	border-radius: ${({ rounded }) => (rounded ? '30px' : '4px')};
 	cursor: pointer;

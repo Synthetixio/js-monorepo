@@ -231,10 +231,10 @@ const StyledDotsWrapper = styled.div<{
 	transform: translate(50%, 0);
 	display: flex;
 	justify-content: center;
-	margin-top: ${spacings.margin.tiniest};
+	margin-top: ${spacings.tiniest};
 	${({ dotsStyle }) =>
 		dotsStyle === 'primary'
-			? `background-color: ${colors.black}; padding: ${spacings.margin.tiniest}`
+			? `background-color: ${colors.black}; padding: ${spacings.tiniest}`
 			: 'background-color: transparent'};
 	border-radius: 20px;
 `;
@@ -244,7 +244,7 @@ const StyledDot = styled.div<{ active?: boolean }>`
 	background-color: ${({ active }) => (active ? colors.lightBlue : colors.grey)};
 	width: 8px;
 	height: 8px;
-	margin-right: ${spacings.margin.medium};
+	margin-right: ${spacings.medium};
 	cursor: pointer;
 	:last-of-type {
 		margin-right: 0px;
