@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { IconButton } from '..';
 import colors from '../styles/colors';
 import ArrowDropdownDownIcon from './Icons/ArrowDropdownDownIcon';
 import ArrowDropdownUpIcon from './Icons/ArrowDropdownUpIcon';
@@ -29,9 +30,13 @@ export default function Accordion({
 						{headerChildren}
 						<StyledIconWrapper>
 							{isOpen ? (
-								<ArrowDropdownUpIcon active={true} />
+								<IconButton rounded onClick={() => setOpen(!open)} size="tiniest">
+									<ArrowDropdownUpIcon active={true} />
+								</IconButton>
 							) : (
-								<ArrowDropdownDownIcon active={true} />
+								<IconButton rounded onClick={() => setOpen(!open)} size="tiniest">
+									<ArrowDropdownDownIcon active={true} />
+								</IconButton>
 							)}
 						</StyledIconWrapper>
 					</AccordionHeader>
@@ -46,9 +51,13 @@ export default function Accordion({
 					{headerChildren}
 					<StyledIconWrapper>
 						{isOpen ? (
-							<ArrowDropdownUpIcon active={true} />
+							<IconButton rounded onClick={() => setOpen(!open)} size="tiniest">
+								<ArrowDropdownUpIcon active={true} />
+							</IconButton>
 						) : (
-							<ArrowDropdownDownIcon active={true} />
+							<IconButton rounded onClick={() => setOpen(!open)} size="tiniest">
+								<ArrowDropdownDownIcon active={true} />
+							</IconButton>
 						)}
 					</StyledIconWrapper>
 				</AccordionHeader>
@@ -77,10 +86,10 @@ const StyledAccordionWrapper = styled.div`
 `;
 
 const AccordionHeader = styled.div`
-	display: flex;
 	cursor: pointer;
 	width: 100%;
 	height: 100%;
+	position: relative;
 `;
 
 const AccordionContent = styled.div<{ visible: boolean }>`
@@ -100,4 +109,8 @@ const AccordionContent = styled.div<{ visible: boolean }>`
 
 const StyledIconWrapper = styled.div`
 	margin-left: auto;
+	position: absolute;
+	right: 0px;
+	top: 50%;
+	transform: translate(0, -50%);
 `;
