@@ -11,7 +11,7 @@ interface AccordionProps {
 export default function Accordion({
 	children,
 	isOpen,
-	gradient,
+	gradient = 'grey',
 	headerChildren,
 	...rest
 }: PropsWithChildren<AccordionProps>) {
@@ -19,6 +19,7 @@ export default function Accordion({
 	useEffect(() => {
 		setOpen(isOpen);
 	}, [isOpen]);
+	// TODO @MF add icon button with arrow as default, always blue aka active
 	if (gradient) {
 		return (
 			<StyledAccordionWrappers gradient={gradient} {...rest}>

@@ -8,7 +8,7 @@ interface ButtonProps {
 	text?: string;
 	type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 	size?: 'large' | 'medium' | 'small';
-	variant?: 'primary' | 'secondary' | 'tertiary' | 'gradient';
+	variant?: 'primary' | 'secondary' | 'tertiary';
 	gradientColor?: keyof typeof colors.gradients;
 	secondaryBackgroundColor?: string;
 	disabled?: boolean;
@@ -27,6 +27,8 @@ export default function Button({
 	gradientColor,
 	...rest
 }: PropsWithChildren<ButtonProps>) {
+	// TODO @MF create button cards component => 1 px border
+	// TODO @MF flip warpper and button so everyhitng is clickable
 	return (
 		<StyledButtonBorder disabled={disabled} variant={variant} {...rest}>
 			<StyledButton
@@ -75,17 +77,11 @@ const determinePadding = (size: ButtonProps['size']) => {
 	}
 };
 
-const determineVariant = (
-	variant: ButtonProps['variant'],
-	disabled: boolean,
-	gradientColor: ButtonProps['gradientColor']
-) => {
+const determineVariant = (variant: ButtonProps['variant'], disabled: boolean) => {
 	if (disabled) return 'rgba(86, 86, 99, 0.6);';
 	switch (variant) {
 		case 'tertiary':
 			return colors.darkBlue;
-		case 'gradient':
-			return colors.gradients[gradientColor ? gradientColor : 'rainbow'];
 		default:
 			return colors.gradients.lightBlue;
 	}
@@ -99,12 +95,11 @@ const StyledButtonBorder = styled.div<{
 	display: flex;
 	justify-content: center;
 	border-radius: 4px;
-	padding: 1px;
+	padding: 2px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: ${({ variant, disabled, gradientColor }) =>
-		determineVariant(variant, !!disabled, gradientColor)};
+	background: ${({ variant, disabled }) => determineVariant(variant, !!disabled)};
 	${({ disabled }) => disabled && `border: 2px solid ${colors.disabled}`};
 `;
 
@@ -120,10 +115,8 @@ const StyledButton = styled.button<{
 	text-align: center;
 	border: 0;
 	background: ${({ variant, disabled, secondaryBackgroundColor }) =>
-		(variant === 'secondary' || variant === 'gradient') && !disabled
-			? secondaryBackgroundColor
-			: 'none'};
-	border-radius: 4px;
+		variant === 'secondary' && !disabled ? secondaryBackgroundColor : 'none'};
+	border-radius: 2.5px;
 	cursor: pointer;
 	padding: ${({ size }) => determinePadding(size)};
 	height: ${({ size, hasChildren }) => (hasChildren ? '100%' : determineHeight(size))};
