@@ -27,8 +27,6 @@ export default function Button({
 	gradientColor,
 	...rest
 }: PropsWithChildren<ButtonProps>) {
-	// TODO @MF create button cards component => 1 px border
-	// TODO @MF flip warpper and button so everyhitng is clickable
 	return (
 		<StyledButtonBorder disabled={disabled} variant={variant} {...rest}>
 			<StyledButton

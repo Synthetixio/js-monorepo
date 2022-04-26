@@ -1,6 +1,8 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
+import ArrowDropdownDownIcon from './Icons/ArrowDropdownDownIcon';
+import ArrowDropdownUpIcon from './Icons/ArrowDropdownUpIcon';
 
 interface AccordionProps {
 	isOpen?: boolean;
@@ -19,12 +21,20 @@ export default function Accordion({
 	useEffect(() => {
 		setOpen(isOpen);
 	}, [isOpen]);
-	// TODO @MF add icon button with arrow as default, always blue aka active
 	if (gradient) {
 		return (
 			<StyledAccordionWrappers gradient={gradient} {...rest}>
 				<StyledAccordionWrapper>
-					<AccordionHeader onClick={() => setOpen(!open)}>{headerChildren}</AccordionHeader>
+					<AccordionHeader onClick={() => setOpen(!open)}>
+						{headerChildren}
+						<StyledIconWrapper>
+							{isOpen ? (
+								<ArrowDropdownUpIcon active={true} />
+							) : (
+								<ArrowDropdownDownIcon active={true} />
+							)}
+						</StyledIconWrapper>
+					</AccordionHeader>
 					{open && <AccordionContent visible={open}>{children}</AccordionContent>}
 				</StyledAccordionWrapper>
 			</StyledAccordionWrappers>
@@ -32,7 +42,16 @@ export default function Accordion({
 	} else {
 		return (
 			<StyledAccordionWrapper {...rest}>
-				<AccordionHeader onClick={() => setOpen(!open)}>{headerChildren}</AccordionHeader>
+				<AccordionHeader onClick={() => setOpen(!open)}>
+					{headerChildren}
+					<StyledIconWrapper>
+						{isOpen ? (
+							<ArrowDropdownUpIcon active={true} />
+						) : (
+							<ArrowDropdownDownIcon active={true} />
+						)}
+					</StyledIconWrapper>
+				</AccordionHeader>
 				{open && <AccordionContent visible={open}>{children}</AccordionContent>}
 			</StyledAccordionWrapper>
 		);
@@ -58,6 +77,7 @@ const StyledAccordionWrapper = styled.div`
 `;
 
 const AccordionHeader = styled.div`
+	display: flex;
 	cursor: pointer;
 	width: 100%;
 	height: 100%;
@@ -76,4 +96,8 @@ const AccordionContent = styled.div<{ visible: boolean }>`
 			opacity: 1;
 		}
 	}
+`;
+
+const StyledIconWrapper = styled.div`
+	margin-left: auto;
 `;
