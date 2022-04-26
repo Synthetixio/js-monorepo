@@ -36,7 +36,7 @@ const StyledWrapper = styled.button<{
 	outline: 0;
 	border: 0;
 	border-radius: ${({ rounded }) => (rounded ? '30px' : '4px')};
-	background-color: ${({ active }) => (active ? `${colors.gradients.grey}` : 'transparent')};
+	background: ${({ active }) => (active ? `${colors.gradients.grey}` : 'transparent')};
 `;
 
 const StyledGradient = styled.div<{

@@ -42,7 +42,7 @@ const StyledGradientWrapper = styled.div<{ withBorderColor?: Colors; withGlow: b
 	height: 100%;
 	background: ${({ withBorderColor }) => withBorderColor};
 	box-shadow: ${({ withBorderColor, withGlow }) => withGlow && `0 0 10px ${withBorderColor}`};
-	padding: 2px;
+	padding: 1px;
 	border-radius: 4px;
 `;
 
@@ -51,7 +51,7 @@ const StyledBackgroundWrapper = styled.div<{ color: Colors }>`
 	height: 100%;
 	border-radius: 5px;
 	background: ${({ color }) => colors[color]};
-	padding: 2px;
+	padding: 1px;
 	border-radius: 4px;
 `;
 

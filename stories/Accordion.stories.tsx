@@ -20,7 +20,6 @@ WithoutGradient.args = {
 Template.args = {
 	headerChildren: <div style={{ color: 'white' }}>Test</div>,
 	children: <div style={{ color: 'white' }}>Some nice content</div>,
-	gradient: 'rainbow',
 };
 
 Template.parameters = {

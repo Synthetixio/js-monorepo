@@ -36,9 +36,10 @@ export default function LinkButton({
 
 const StyledWrapper = styled.div`
 	display: inline-block;
-	padding: 2px;
+	padding: 1.5px;
 	border-radius: 30px;
 	background: ${colors.gradients.grey};
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);
 `;
 
 const StyledButtonLinks = styled.a<{ size?: keyof typeof spacings }>`
