@@ -40,7 +40,7 @@ export default function Accordion({
 
 const StyledAccordionWrappers = styled.div<{ gradient?: keyof typeof colors.gradients }>`
 	background: ${({ gradient }) => gradient && colors.gradients[gradient]};
-	padding: 2px;
+	padding: 1px;
 	border-radius: 5px;
 	width: 100%;
 	height: 100%;
@@ -53,6 +53,7 @@ const StyledAccordionWrapper = styled.div`
 	background-color: ${colors.backgroundColor};
 	box-shadow: 0px 14px 14px rgba(0, 0, 0, 0.25);
 	border-radius: 5px;
+	padding: 20px 24px;
 `;
 
 const AccordionHeader = styled.div`

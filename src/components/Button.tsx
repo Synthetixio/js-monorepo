@@ -99,7 +99,7 @@ const StyledButtonBorder = styled.div<{
 	display: flex;
 	justify-content: center;
 	border-radius: 4px;
-	padding: 2px;
+	padding: 1px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
