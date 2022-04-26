@@ -30,11 +30,11 @@ export default function Accordion({
 						{headerChildren}
 						<StyledIconWrapper>
 							{isOpen ? (
-								<IconButton rounded onClick={() => setOpen(!open)} size="tiniest">
+								<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
 									<ArrowDropdownUpIcon active={true} />
 								</IconButton>
 							) : (
-								<IconButton rounded onClick={() => setOpen(!open)} size="tiniest">
+								<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
 									<ArrowDropdownDownIcon active={true} />
 								</IconButton>
 							)}
@@ -51,11 +51,11 @@ export default function Accordion({
 					{headerChildren}
 					<StyledIconWrapper>
 						{isOpen ? (
-							<IconButton rounded onClick={() => setOpen(!open)} size="tiniest">
+							<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
 								<ArrowDropdownUpIcon active={true} />
 							</IconButton>
 						) : (
-							<IconButton rounded onClick={() => setOpen(!open)} size="tiniest">
+							<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
 								<ArrowDropdownDownIcon active={true} />
 							</IconButton>
 						)}
