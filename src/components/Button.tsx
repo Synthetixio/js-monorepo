@@ -1,8 +1,9 @@
 import React, { ButtonHTMLAttributes, MouseEvent, PropsWithChildren } from 'react';
 import styled from 'styled-components';
-import theme from '../styles/theme';
+
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import theme from '../styles/theme';
 
 interface ButtonProps {
 	text?: string;
@@ -135,5 +136,5 @@ const StyledButtonText = styled.span<{
 	${({ variant, disabled }) =>
 		variant === 'secondary' &&
 		!disabled &&
-		`background-image: ${colors.gradients.lightBlue} background-size: 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; -moz-background-clip: text; -moz-text-fill-color: transparent;`}
+		`background-image: ${colors.gradients.lightBlue}; background-size: 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; -moz-background-clip: text; -moz-text-fill-color: transparent;`}
 `;

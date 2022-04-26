@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
+
 import colors from '../styles/colors';
 import spacings from '../styles/spacings';
 
@@ -53,5 +54,5 @@ const StyledGradient = styled.div<{
 	border: 1px solid ${colors.black};
 	border-radius: ${({ rounded }) => (rounded ? '30px' : '4px')};
 	cursor: pointer;
-	${({ active }) => active && `background: ${colors.gradients.grey}`}
+	${({ active }) => active && `background: ${colors.gradients.grey};`}
 `;
