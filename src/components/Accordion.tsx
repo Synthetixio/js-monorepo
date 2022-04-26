@@ -29,7 +29,7 @@ export default function Accordion({
 					<AccordionHeader onClick={() => setOpen(!open)}>
 						{headerChildren}
 						<StyledIconWrapper>
-							{isOpen ? (
+							{open ? (
 								<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
 									<ArrowDropdownUpIcon active={true} />
 								</IconButton>
@@ -50,7 +50,7 @@ export default function Accordion({
 				<AccordionHeader onClick={() => setOpen(!open)}>
 					{headerChildren}
 					<StyledIconWrapper>
-						{isOpen ? (
+						{open ? (
 							<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
 								<ArrowDropdownUpIcon active={true} />
 							</IconButton>
