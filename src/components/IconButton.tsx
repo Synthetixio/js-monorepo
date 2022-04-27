@@ -1,9 +1,9 @@
-import React, { PropsWithChildren } from 'react';
+import React, { HTMLAttributes, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 import spacings from '../styles/spacings';
 
-interface IconButton {
+interface IconButton extends HTMLAttributes<HTMLButtonElement> {
 	rounded?: boolean;
 	size?: keyof typeof spacings;
 	active?: boolean;

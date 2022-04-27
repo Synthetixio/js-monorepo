@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 
-interface DropdownProps {
+interface DropdownProps extends HTMLAttributes<HTMLUListElement> {
 	elements: JSX.Element[];
 	noBackground?: boolean;
 }

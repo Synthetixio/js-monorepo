@@ -1,11 +1,11 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import React, { HTMLAttributes, PropsWithChildren, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IconButton } from '..';
 import colors from '../styles/colors';
 import ArrowDropdownDownIcon from './Icons/ArrowDropdownDownIcon';
 import ArrowDropdownUpIcon from './Icons/ArrowDropdownUpIcon';
 
-interface AccordionProps {
+interface AccordionProps extends HTMLAttributes<HTMLDivElement> {
 	isOpen?: boolean;
 	headerChildren: React.ReactNode;
 	gradient?: keyof typeof colors.gradients;

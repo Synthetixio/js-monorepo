@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 import ArrowLinkOffIcon from './Icons/ArrowLinkOffIcon';
 
-interface ExternalLinkProps {
+interface ExternalLinkProps extends HTMLAttributes<HTMLDivElement> {
 	link: string;
 	text: string;
 	withoutIcon?: boolean;

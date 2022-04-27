@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { HTMLAttributes, ReactElement, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 import spacings from '../styles/spacings';
@@ -6,7 +6,7 @@ import IconButton from './IconButton';
 import ArrowLeftIcon from './Icons/ArrowLeftIcon';
 import ArrowRightIcon from './Icons/ArrowRightIcon';
 
-interface CarouselProps {
+interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
 	carouselItems: ReactElement[];
 	maxWidth?: string;
 	withArrows?: boolean;

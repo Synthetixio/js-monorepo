@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 import spacings from '../styles/spacings';
 
-interface LinkButtonProps {
+interface LinkButtonProps extends HTMLAttributes<HTMLDivElement> {
 	text: string;
 	icon: JSX.Element;
 	isExternalLink?: boolean;

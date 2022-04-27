@@ -1,7 +1,7 @@
-import React, { PropsWithChildren } from 'react';
+import React, { HTMLAttributes, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
-interface FlexProps {
+interface FlexProps extends HTMLAttributes<HTMLDivElement> {
 	direction?: 'column';
 	justifyContent?:
 		| 'flex-start'

@@ -1,9 +1,9 @@
-import React, { MouseEvent } from 'react';
+import React, { HTMLAttributes, MouseEvent } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 import spacings from '../styles/spacings';
 
-interface SelectorProps {
+interface SelectorProps extends HTMLAttributes<HTMLButtonElement> {
 	text: string;
 	icon?: JSX.Element;
 	onClick: (e: MouseEvent<HTMLButtonElement>) => void;
