@@ -5,7 +5,7 @@ import spacings from '../styles/spacings';
 
 interface TabsProps extends HTMLAttributes<HTMLUListElement> {
 	titles: string[];
-	onClick: (index: number) => void;
+	clicked: (index?: number) => void;
 	size?: 'medium' | 'small';
 	activeIndex?: number;
 	justifyContent: 'flex-start' | 'flex-end' | 'center' | 'space-evenly' | 'space-around';
@@ -14,18 +14,19 @@ interface TabsProps extends HTMLAttributes<HTMLUListElement> {
 
 export default function Tabs({
 	titles,
-	onClick,
+	clicked,
 	activeIndex,
 	justifyContent,
 	size = 'medium',
 	icons,
+	...rest
 }: TabsProps) {
 	return (
-		<StyledTabsWrapper justifyContent={justifyContent}>
+		<StyledTabsWrapper justifyContent={justifyContent} {...rest}>
 			{titles.map((title, index) => (
 				<StyledTab
 					key={title.concat(index.toString())}
-					onClick={() => onClick(index)}
+					onClick={() => clicked(index)}
 					active={activeIndex === index}
 					size={size}
 				>
