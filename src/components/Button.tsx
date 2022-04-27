@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, HTMLAttributes, MouseEvent, PropsWithChildren } from 'react';
+import React, { ButtonHTMLAttributes, MouseEvent, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import theme from '../styles/theme';
 import colors from '../styles/colors';
