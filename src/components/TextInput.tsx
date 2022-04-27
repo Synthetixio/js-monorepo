@@ -1,8 +1,8 @@
-import React, { FormEventHandler } from 'react';
+import React, { FormEventHandler, HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 
-interface TextInputProps {
+interface TextInputProps extends HTMLAttributes<HTMLDivElement> {
 	id: string;
 	disabled?: boolean;
 	label?: string;

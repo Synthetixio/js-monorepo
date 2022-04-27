@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 import spacings from '../styles/spacings';
 
-interface SpotlightButtonProps {
+interface SpotlightButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	text: string;
 	active: boolean;
 	onClick: () => void;

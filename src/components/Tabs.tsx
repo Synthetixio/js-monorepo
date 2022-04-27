@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 import spacings from '../styles/spacings';
 
-interface TabsProps {
+interface TabsProps extends HTMLAttributes<HTMLUListElement> {
 	titles: string[];
 	onClick: (index: number) => void;
 	size?: 'medium' | 'small';

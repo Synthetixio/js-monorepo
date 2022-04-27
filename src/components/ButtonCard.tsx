@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 import Flex from './Flex';
 import ArrowLeftIcon from './Icons/ArrowLeftIcon';
 import ArrowRightIcon from './Icons/ArrowRightIcon';
 
-interface ButtonCardsProps {
+interface ButtonCardsProps extends HTMLAttributes<HTMLButtonElement> {
 	onClick?: () => void;
 	arrowDirection: 'left' | 'right';
 	headline: string;
