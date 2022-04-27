@@ -1,0 +1,17 @@
+.ui-fade-enter {
+  opacity: 0;
+  transform: scale(0.95);
+}
+.ui-fade-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 200ms, transform 200ms;
+}
+.ui-fade-exit {
+  opacity: 1;
+}
+.ui-fade-exit-active {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 200ms, transform 200ms;
+}

@@ -1,65 +1,104 @@
 {
-	"name": "@synthetixio/ui",
-	"version": "1.0.0",
-	"description": "component library",
-	"repository": "https://github.com/Synthetixio/ui",
-	"license": "MIT",
-	"private": false,
-	"main": "./dist/cjs/index.js",
-	"module": "./dist/esm/index.js",
-	"types": "./dist/esm/index.d.ts",
-	"files": [
-		"/dist"
-	],
-	"scripts": {
-		"build": "rm -rf dist && yarn build:esm && yarn build:cjs && ./build.sh",
-		"build:esm": "tsc",
-		"build:cjs": "tsc --module commonjs --outDir dist/cjs",
-		"storybook": "start-storybook -p 6006 -c .storybook watch-css -s ./src",
-		"build-storybook": "rm -rf storybook-static && build-storybook",
-		"commit": "cz",
-		"deploy-storybook": "yarn build-storybook && mkdir -p ./storybook-static/fonts && cp ./src/fonts/* ./storybook-static/fonts/ && gh-pages -d storybook-static",
-		"yalc-publish": "yarn build && yalc push --update",
-		"permission": "chmod u+r+x build.sh"
-	},
-	"devDependencies": {
-		"@commitlint/cli": "16.2.3",
-		"@commitlint/config-conventional": "16.2.1",
-		"@storybook/addon-actions": "6.4.22",
-		"@storybook/addon-essentials": "6.4.22",
-		"@storybook/addon-links": "6.4.22",
-		"@storybook/react": "6.4.22",
-		"@types/react": "17.0.39",
-		"@types/styled-components": "5.1.22",
-		"commitizen": "4.2.4",
-		"cz-conventional-changelog": "3.3.0",
-		"file-loader": "^6.2.0",
-		"gh-pages": "^3.2.3",
-		"husky": "7.0.4",
-		"react": "17.0.2",
-		"react-dom": "17.0.2",
-		"semantic-release": "19.0.2",
-		"storybook-addon-designs": "^6.2.1",
-		"styled-components": "5.3.3",
-		"typescript": "4.5.5",
-		"yalc": "1.0.0-pre.53"
-	},
-	"peerDependencies": {
-		"react": "17.0.2",
-		"react-dom": "17.0.2",
-		"styled-components": "5.3.3"
-	},
-	"resolutions": {
-		"libnpmaccess": "6.0.1",
-		"@types/react": "17.0.39"
-	},
-	"config": {
-		"commitizen": {
-			"path": "./node_modules/cz-conventional-changelog"
-		}
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"homepage": "https://synthetixio.github.io/ui"
+  "name": "@synthetixio/ui",
+  "version": "1.0.0",
+  "description": "component library",
+  "repository": "https://github.com/Synthetixio/ui",
+  "license": "MIT",
+  "private": false,
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/components/index.d.ts",
+  "source": "src/components/index.ts",
+  "scripts": {
+    "build": "yarn build:package",
+    "build:css": "sass ./src/styles/_default.scss ./dist/default.css",
+    "build:package": "yarn clean && yarn build:css && cross-env NODE_ENV=production BABEL_ENV=production rollup -c",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public",
+    "commit": "cz",
+    "clean": "rimraf dist",
+    "deploy-storybook": "yarn build-storybook && mkdir -p ./storybook-static/fonts && cp ./src/fonts/* ./storybook-static/fonts/ && gh-pages -d storybook-static",
+    "yalc-publish": "yarn build && yalc push --update",
+    "permission": "chmod u+r+x build.sh"
+  },
+  "dependencies": {
+    "clsx": "^1.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-react": "^7.16.5",
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-typescript": "^8.3.0",
+    "@storybook/addon-actions": "^6.5.0-alpha.3",
+    "@storybook/addon-essentials": "^6.5.0-alpha.3",
+    "@storybook/addon-links": "^6.5.0-alpha.3",
+    "@storybook/builder-webpack5": "^6.5.0-alpha.3",
+    "@storybook/manager-webpack5": "^6.5.0-alpha.3",
+    "@storybook/node-logger": "^6.5.0-alpha.3",
+    "@storybook/preset-create-react-app": "^4.0.0",
+    "@storybook/react": "^6.5.0-alpha.3",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.13",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
+    "autoprefixer": "10.4.0",
+    "cross-env": "^7.0.3",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.2",
+    "postcss": "^8.4.5",
+    "prettier": "^2.5.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-scripts": "5.0.0",
+    "rollup": "^2.61.1",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-generate-declarations": "^1.1.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "sass": "^1.45.0",
+    "tailwindcss": "^3.0.3",
+    "typescript": "^4.5.4",
+    "web-vitals": "^2.1.2",
+    "webpack": "5",
+    "yalc": "1.0.0-pre.53"
+  },
+  "optionalDependencies": {
+    "babel-loader": "8.2.3"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "resolutions": {
+    "libnpmaccess": "6.0.1",
+    "@types/react": "17.0.39"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://synthetixio.github.io/ui"
 }

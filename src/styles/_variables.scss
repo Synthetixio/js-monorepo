@@ -1,0 +1,79 @@
+html:not(.ui-dark) {
+  --color-yellow-700: #f9a602;
+  --color-yellow-600: #fcc419;
+  --color-yellow-500: #fdd047;
+  --color-yellow-400: #fddc75;
+  --color-yellow-300: #fee7a3;
+  --color-yellow-200: #feedba;
+  --color-yellow-100: #fff9e8;
+
+  --color-black-700: #000000;
+  --color-black-600: #141414;
+  --color-black-500: #212529;
+  --color-black-400: #2d2d2d;
+  --color-black-300: #868e96;
+  --color-black-200: #adb5bd;
+  --color-black-100: #dee2e6;
+
+  --color-red-700: #a71930;
+  --color-red-600: #c11534;
+  --color-red-500: #db283e;
+  --color-red-400: #ff5758;
+  --color-red-300: #fd6f66;
+  --color-red-200: #ffaaa5;
+  --color-red-100: #ffe5e3;
+
+  --color-green-700: #148b20;
+  --color-green-600: #42a732;
+  --color-green-500: #59b738;
+  --color-green-400: #59b738;
+  --color-green-300: #69db7c;
+  --color-green-200: #d3f9d8;
+  --color-green-100: #ebfbee;
+}
+
+html.ui-dark {
+  --color-yellow-700: #f9a602;
+  --color-yellow-600: #fcc419;
+  --color-yellow-500: #fdd047;
+  --color-yellow-400: #fddc75;
+  --color-yellow-300: #fee7a3;
+  --color-yellow-200: #feedba;
+  --color-yellow-100: #fff9e8;
+
+  --color-black-700: #000000;
+  --color-black-600: #141414;
+  --color-black-500: #212529;
+  --color-black-400: #2d2d2d;
+  --color-black-300: #868e96;
+  --color-black-200: #adb5bd;
+  --color-black-100: #dee2e6;
+
+  --color-red-700: #a71930;
+  --color-red-600: #c11534;
+  --color-red-500: #db283e;
+  --color-red-400: #ff5758;
+  --color-red-300: #fd6f66;
+  --color-red-200: #ffaaa5;
+  --color-red-100: #ffe5e3;
+
+  --color-green-700: #148b20;
+  --color-green-600: #42a732;
+  --color-green-500: #59b738;
+  --color-green-400: #59b738;
+  --color-green-300: #69db7c;
+  --color-green-200: #d3f9d8;
+  --color-green-100: #ebfbee;
+}
+
+$break-points: (
+  "sm": 640px,
+  "md": 768px,
+  "lg": 1024px,
+  "xl": 1280px,
+  "2xl": 1536px
+);
+
+$font-family: "Manrope", system-ui, -apple-system,
+  /* Firefox supports this but not yet `system-ui` */ "Segoe UI", Roboto, Helvetica, Arial,
+  sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
