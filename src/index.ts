@@ -51,6 +51,7 @@ export { default as IconButton } from './components/IconButton';
 export { default as Tabs } from './components/Tabs';
 export { default as LinkButton } from './components/LinkButton';
 export { default as Selector } from './components/Selector';
+export { default as Checkbox } from './components/Checkbox';
 export { default as Dropdown } from './components/Dropdown';
 export { default as Card } from './components/Card';
 export { default as Carousel } from './components/Carousel';
