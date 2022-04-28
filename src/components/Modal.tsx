@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface ModalProps {
 	open: boolean;
-	modalContent: JSX.Element;
+	modalContent?: JSX.Element;
 }
 
 export default function Modal({
@@ -14,7 +14,9 @@ export default function Modal({
 }: PropsWithChildren<ModalProps>) {
 	return (
 		<StyledModalWrapper {...rest}>
-			{open && <StyledModalContentWrapper>{modalContent}</StyledModalContentWrapper>}
+			{open && modalContent && (
+				<StyledModalContentWrapper>{modalContent}</StyledModalContentWrapper>
+			)}
 			{children}
 		</StyledModalWrapper>
 	);
