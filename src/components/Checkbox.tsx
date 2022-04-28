@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import colors from '../styles/colors';
+import { Colors } from '../types';
 
 interface CheckboxProps {
 	id: string;
@@ -10,6 +10,7 @@ interface CheckboxProps {
 	name?: string;
 	checked?: boolean;
 	onChange: (checked: boolean) => unknown;
+	color?: Colors;
 }
 
 export default function Checkbox({
@@ -19,6 +20,7 @@ export default function Checkbox({
 	name,
 	checked,
 	onChange,
+	color,
 	...rest
 }: CheckboxProps) {
 	return (
@@ -31,7 +33,7 @@ export default function Checkbox({
 				onChange={() => onChange(!checked)}
 			/>
 			<StyledLabel htmlFor={id}>
-				<StyledCheckbox checked={checked} disabled={disabled} />
+				<StyledCheckbox checked={checked} disabled={disabled} color={color} />
 				{label && <StyledLabelText disabled={disabled}>{label}</StyledLabelText>}
 			</StyledLabel>
 		</StyledContainer>
@@ -68,7 +70,7 @@ const StyledLabelText = styled.span<{ disabled?: boolean }>`
 	color: ${(attrs) => (attrs.disabled ? colors.disabled : colors.white)};
 `;
 
-const StyledCheckbox = styled.div<{ checked?: boolean; disabled?: boolean }>`
+const StyledCheckbox = styled.div<{ checked?: boolean; disabled?: boolean; color?: Colors }>`
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
@@ -77,7 +79,8 @@ const StyledCheckbox = styled.div<{ checked?: boolean; disabled?: boolean }>`
 	width: 2.2rem;
 	height: 2.2rem;
 	border-radius: 50%;
-	background-image: ${colors.gradients.pink};
+	${({ color }) =>
+		color ? `background-color: ${colors.lightBlue}` : `background-image: ${colors.gradients.pink}`};
 
 	${(attrs) => attrs.disabled && `filter: grayscale(100%);`}
 
@@ -100,8 +103,11 @@ const StyledCheckbox = styled.div<{ checked?: boolean; disabled?: boolean }>`
 		border-radius: 50%;
 		width: 46%;
 		height: 46%;
-		background-image: ${colors.gradients.pink};
+		${({ color }) =>
+			color
+				? `background-color: ${colors.lightBlue}`
+				: `background-image: ${colors.gradients.pink}`};
 		opacity: ${(attrs) => (attrs.checked ? '1' : '0')};
-		transition: opacity 80ms ease-in-out;
+		transition: opacity 100ms ease-in-out;
 	}
 `;
