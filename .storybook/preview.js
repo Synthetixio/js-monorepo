@@ -20,5 +20,10 @@ export const parameters = {
         value: "#141414"
       }
     ]
+  },
+  darkMode: {
+    stylePreview: true,
+    darkClass: "ui-dark",
+    classTarget: "html"
   }
 };
