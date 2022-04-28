@@ -3,21 +3,32 @@ import styled from 'styled-components';
 
 interface ModalProps {
 	open: boolean;
+	modalContent: JSX.Element;
 }
 
-export default function Modal({ open, children, ...rest }: PropsWithChildren<ModalProps>) {
+export default function Modal({
+	open,
+	modalContent,
+	children,
+	...rest
+}: PropsWithChildren<ModalProps>) {
 	return (
-		<StyledModalWrapper open={open} {...rest}>
+		<StyledModalWrapper {...rest}>
+			{open && <StyledModalContentWrapper>{modalContent}</StyledModalContentWrapper>}
 			{children}
 		</StyledModalWrapper>
 	);
 }
 
-const StyledModalWrapper = styled.div<{ open: ModalProps['open'] }>`
-	display: ${({ open }) => (open ? 'block' : 'none')};
-	position: fixed;
+const StyledModalWrapper = styled.div`
+	position: relative;
+`;
+
+const StyledModalContentWrapper = styled.div`
+	position: absolute;
+	z-index: 999;
 	top: 10px;
 	left: 10px;
-	width: 100%;
-	height: 100%;
+	width: calc(99% - 10px);
+	height: calc(99% - 10px);
 `;

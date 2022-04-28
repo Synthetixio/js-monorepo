@@ -53,6 +53,7 @@ const StyledGradient = styled.div<{
 	padding: ${({ size }) => (size ? spacings[size] : '10px')};
 	border: 1px solid ${colors.black};
 	border-radius: ${({ rounded }) => (rounded ? '30px' : '4px')};
+	color: ${colors.white};
 	cursor: pointer;
 	${({ active }) => active && `background: ${colors.gradients.grey};`}
 `;
