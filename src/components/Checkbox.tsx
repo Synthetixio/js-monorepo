@@ -19,9 +19,10 @@ export default function Checkbox({
 	name,
 	checked,
 	onChange,
+	...rest
 }: CheckboxProps) {
 	return (
-		<StyledContainer>
+		<StyledContainer {...rest}>
 			<HiddenCheckbox
 				id={id}
 				name={name}
@@ -64,7 +65,6 @@ const StyledLabelText = styled.span<{ disabled?: boolean }>`
 	font-family: 'Inter Bold';
 	font-size: 1.2rem;
 	line-height: 2.2rem;
-	${colors.white};
 	color: ${(attrs) => (attrs.disabled ? colors.disabled : colors.white)};
 `;
 
