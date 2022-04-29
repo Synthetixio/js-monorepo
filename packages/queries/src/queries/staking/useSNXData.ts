@@ -11,6 +11,8 @@ interface SNXData {
 	lockedValue: Wei;
 	totalSNXSupply: Wei;
 }
+const ONE_HOUR_MS = 1000 * 60 * 60;
+
 const useSNXData = (
 	ctx: QueryContext,
 	L1Provider?: providers.BaseProvider,
@@ -31,6 +33,11 @@ const useSNXData = (
 		},
 		{
 			queryKey: ['L1', 'SNXHoldersL1'],
+			staleTime: ONE_HOUR_MS,
+			cacheTime: ONE_HOUR_MS,
+			refetchOnMount: false,
+			refetchOnWindowFocus: false,
+			refetchOnReconnect: false,
 		}
 	);
 
@@ -49,6 +56,11 @@ const useSNXData = (
 		},
 		{
 			queryKey: ['L2', 'SNXHoldersL2'],
+			staleTime: ONE_HOUR_MS,
+			cacheTime: ONE_HOUR_MS,
+			refetchOnMount: false,
+			refetchOnWindowFocus: false,
+			refetchOnReconnect: false,
 		}
 	);
 
