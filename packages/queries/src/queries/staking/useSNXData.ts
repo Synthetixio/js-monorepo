@@ -91,12 +91,13 @@ const useSNXData = (
 		],
 		async () => {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			const snxPrice = await ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(
+			const snxPriceP = ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(
 				ethers.utils.formatBytes32String('SNX')
 			);
 
-			const totalSNXSupply = wei(await snxJSL1.contracts.Synthetix.totalSupply());
+			const totalSNXSupplyP = snxJSL1.contracts.Synthetix.totalSupply();
 
+			const [snxPrice, totalSNXSupply] = await Promise.all([snxPriceP, totalSNXSupplyP]);
 			if (
 				snxHoldersQueryL1.isSuccess &&
 				snxHoldersQueryL1.data.length > 100 &&
@@ -105,7 +106,7 @@ const useSNXData = (
 			) {
 				const lockedSupply = lockedSupplyL1.add(lockedSupplyL2);
 				return {
-					totalSNXSupply,
+					totalSNXSupply: wei(totalSNXSupply),
 					lockedSupply,
 					lockedValue: lockedSupply.mul(snxPrice),
 				};
