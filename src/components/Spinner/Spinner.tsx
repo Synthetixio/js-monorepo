@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 export interface SpinnerProps {
-  variant?: "default" | "success" | "danger";
+  variant?: "default" | "success" | "danger" | "custom";
   className?: string;
 }
 
