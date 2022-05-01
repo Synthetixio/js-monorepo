@@ -1,4 +1,5 @@
 export { default as theme } from './styles/theme';
+export { Colors } from './types';
 
 // Icons
 export { default as ArrowLinkOffIcon } from './components/Icons/ArrowLinkOffIcon';
@@ -62,3 +63,4 @@ export { default as SpotlightButton } from './components/SpotlightButton';
 export { default as Modal } from './components/Modal';
 export { default as Flex } from './components/Flex';
 export { default as ButtonCard } from './components/ButtonCard';
+export { default as NavBar } from './components/NavBar';

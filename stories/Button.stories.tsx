@@ -9,14 +9,17 @@ export default {
 	decorators: [withDesign],
 } as ComponentMeta<typeof Button>;
 
-export const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+export const Template: ComponentStory<typeof Button> = (args) => (
+	<div style={{ backgroundColor: 'red', padding: '10px' }}>
+		<Button {...args} />
+	</div>
+);
 
 Template.args = {
 	text: 'I am a Button',
 	variant: 'primary',
 	type: 'button',
 	size: 'large',
-	secondaryBackgroundColor: 'white',
 	disabled: false,
 };
 
