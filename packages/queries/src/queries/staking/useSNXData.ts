@@ -11,6 +11,8 @@ interface SNXData {
 	lockedValue: Wei;
 	totalSNXSupply: Wei;
 }
+const ONE_HOUR_MS = 1000 * 60 * 60;
+
 const useSNXData = (
 	ctx: QueryContext,
 	L1Provider?: providers.BaseProvider,
@@ -31,6 +33,11 @@ const useSNXData = (
 		},
 		{
 			queryKey: ['L1', 'SNXHoldersL1'],
+			staleTime: ONE_HOUR_MS,
+			cacheTime: ONE_HOUR_MS,
+			refetchOnMount: false,
+			refetchOnWindowFocus: false,
+			refetchOnReconnect: false,
 		}
 	);
 
@@ -49,6 +56,11 @@ const useSNXData = (
 		},
 		{
 			queryKey: ['L2', 'SNXHoldersL2'],
+			staleTime: ONE_HOUR_MS,
+			cacheTime: ONE_HOUR_MS,
+			refetchOnMount: false,
+			refetchOnWindowFocus: false,
+			refetchOnReconnect: false,
 		}
 	);
 
@@ -79,12 +91,13 @@ const useSNXData = (
 		],
 		async () => {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			const snxPrice = await ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(
+			const snxPriceP = ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(
 				ethers.utils.formatBytes32String('SNX')
 			);
 
-			const totalSNXSupply = wei(await snxJSL1.contracts.Synthetix.totalSupply());
+			const totalSNXSupplyP = snxJSL1.contracts.Synthetix.totalSupply();
 
+			const [snxPrice, totalSNXSupply] = await Promise.all([snxPriceP, totalSNXSupplyP]);
 			if (
 				snxHoldersQueryL1.isSuccess &&
 				snxHoldersQueryL1.data.length > 100 &&
@@ -93,7 +106,7 @@ const useSNXData = (
 			) {
 				const lockedSupply = lockedSupplyL1.add(lockedSupplyL2);
 				return {
-					totalSNXSupply,
+					totalSNXSupply: wei(totalSNXSupply),
 					lockedSupply,
 					lockedValue: lockedSupply.mul(snxPrice),
 				};
