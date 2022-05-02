@@ -54,7 +54,7 @@ const determineVariant = (variant: ButtonProps['variant'], disabled: boolean) =>
 	if (disabled) return 'rgba(86, 86, 99, 0.6);';
 	switch (variant) {
 		case 'tertiary':
-			return colors.darkBlue;
+			return colors.purple;
 		case 'secondary':
 			return 'none';
 		case 'quaternary':
