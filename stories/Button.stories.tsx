@@ -30,11 +30,7 @@ Template.parameters = {
 	},
 };
 
-export const Quaternary: ComponentStory<typeof Button> = (args) => (
-	<div style={{ backgroundColor: 'red', padding: '10px' }}>
-		<Button {...args} />
-	</div>
-);
+export const Quaternary: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
 Quaternary.args = {
 	children: (
