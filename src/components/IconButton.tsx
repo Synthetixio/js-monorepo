@@ -35,7 +35,7 @@ const StyledWrapper = styled.button<{
 	display: inline-block;
 	padding: 2px;
 	outline: 0;
-	border: 0;
+	border: 1px solid rgba(130, 130, 149, 0.3);
 	border-radius: ${({ rounded }) => (rounded ? '30px' : '4px')};
 	background: ${({ active }) => (active ? `${colors.gradients.grey}` : 'transparent')};
 `;

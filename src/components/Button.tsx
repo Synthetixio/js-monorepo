@@ -1,14 +1,13 @@
-import React, { ButtonHTMLAttributes, MouseEvent } from 'react';
+import React, { ButtonHTMLAttributes, MouseEvent, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import theme from '../styles/theme';
 
 interface ButtonProps {
-	text?: string;
 	type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 	size?: 'large' | 'medium' | 'small';
-	variant?: 'primary' | 'secondary' | 'tertiary';
+	variant?: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
 	disabled?: boolean;
 	onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
@@ -19,9 +18,9 @@ export default function Button({
 	variant,
 	disabled,
 	onClick,
-	text,
+	children,
 	...rest
-}: ButtonProps) {
+}: PropsWithChildren<ButtonProps>) {
 	return (
 		<StyledButton
 			type={type}
@@ -31,9 +30,9 @@ export default function Button({
 			onClick={onClick}
 			{...rest}
 		>
-			<StyledButtonText variant={variant} disabled={disabled} size={size}>
-				{text}
-			</StyledButtonText>
+			<StyledChildren variant={variant} disabled={disabled} size={size}>
+				{children}
+			</StyledChildren>
 		</StyledButton>
 	);
 }
@@ -58,6 +57,8 @@ const determineVariant = (variant: ButtonProps['variant'], disabled: boolean) =>
 			return colors.darkBlue;
 		case 'secondary':
 			return 'none';
+		case 'quaternary':
+			return 'none';
 		default:
 			return colors.gradients.lightBlue;
 	}
@@ -72,7 +73,8 @@ const StyledButton = styled.button<{
 	min-height: ${theme.rem};
 	height: ${({ size }) => determineHeight(size)};
 	outline: 0;
-	border: 0;
+	border: ${({ variant }) =>
+		variant === 'quaternary' ? '1px solid rgba(130, 130, 149, 0.3)' : '0'};
 	text-align: center;
 	background: ${({ variant, disabled }) => determineVariant(variant, !!disabled)};
 	cursor: pointer;
@@ -116,7 +118,7 @@ const StyledButton = styled.button<{
 	}}
 `;
 
-const StyledButtonText = styled.span<{
+const StyledChildren = styled.span<{
 	disabled?: ButtonProps['disabled'];
 	variant?: ButtonProps['variant'];
 	size?: ButtonProps['size'];
@@ -125,7 +127,7 @@ const StyledButtonText = styled.span<{
 	font-family: ${fonts.interBold};
 	line-height: 17px;
 	font-weight: bold;
-	${({ variant }) => variant === 'tertiary' && 'color: white'};
+	${({ variant }) => (variant === 'tertiary' || variant === 'quaternary') && 'color: white'};
 	${({ disabled }) => disabled && `color: ${colors.disabled}`};
 	${({ variant, disabled }) =>
 		variant === 'secondary' &&
