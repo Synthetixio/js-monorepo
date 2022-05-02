@@ -49,7 +49,7 @@ const StyledGradient = styled.div<{
 	justify-content: center;
 	align-items: center;
 	outline: 0;
-	background-color: ${colors.black};
+	background-color: 'transparent';
 	padding: ${({ size }) => (size ? spacings[size] : '10px')};
 	border: 1px solid ${colors.black};
 	border-radius: ${({ rounded }) => (rounded ? '30px' : '4px')};

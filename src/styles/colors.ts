@@ -6,7 +6,7 @@ export default {
 	disabled: '#565663',
 	orange: '#FC8738',
 	lightBlue: '#00D1FF',
-	darkBlue: '#402FC8',
+	purple: '#402FC8',
 	pink: '#ED1EFF',
 	green: '#31D8A4',
 	gradients: {
