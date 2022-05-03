@@ -89,6 +89,7 @@ html {
   --color-navy-light-4: #{lighten($navy, 40%)};
 
   --color-disabled: "#565663";
+  --color-disabled-2: "#3E434B";
 }
 
 .ui-gradient-primary {
@@ -115,6 +116,9 @@ html {
 .ui-gradient-gray-2 {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
     linear-gradient(311.52deg, #3d464c -36.37%, #131619 62.81%);
+}
+.ui-text-fill-transparent {
+  -webkit-text-fill-color: transparent;
 }
 
 $break-points: (

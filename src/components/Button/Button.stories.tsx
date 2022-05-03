@@ -16,5 +16,6 @@ Primary.args = {
   loading: false,
   disabled: false,
   variant: "default",
-  children: "Button"
+  children: "Button",
+  size: "lg"
 };

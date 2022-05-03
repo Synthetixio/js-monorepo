@@ -84,7 +84,8 @@ module.exports = {
         "navy-light-3": "var(--color-navy-light-3)",
         "navy-light-4": "var(--color-navy-light-4)",
 
-        disabled: "var(--color-disabled)"
+        disabled: "var(--color-disabled)",
+        "disabled-2": "var(--color-disabled-2)"
       },
       borderRadius: {
         "2lg": "0.625rem"
@@ -94,9 +95,9 @@ module.exports = {
         padding: "1rem"
       },
       minWidth: {
-        "button-sm": "6.25rem",
-        "button-md": "10rem",
-        "button-lg": "13.125rem"
+        "button-sm": "3.31rem",
+        "button-md": "5.5rem",
+        "button-lg": "13rem"
       }
     }
   },

@@ -7,7 +7,7 @@ export type ButtonSize = "sm" | "md" | "lg";
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
   loading?: boolean;
-  variant?: "default" | "success" | "danger" | "custom";
+  variant?: "default" | "outline" | "secondary" | "custom";
   mobileSize?: ButtonSize;
   spinnerClassName?: string;
 }
@@ -26,18 +26,20 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button
       className={clsx(
-        `ui-flex ui-items-center ui-justify-center ui-text-white ui-text-sm ui-font-bold ui-leading-5 ui-h-12 ui-px-2 ui-rounded-2lg
-         disabled:ui-opacity-50 disabled:ui-cursor-not-allowed dark:ui-border dark:ui-border-solid ui-transition ui-ease-out ui-group
-         disabled:ui-text-white disabled:ui-bg-disabled`,
+        `ui-border ui-flex ui-items-center ui-justify-center ui-font-bold ui-leading-5 ui-px-2 ui-rounded
+         disabled:ui-bg-opacity-65 ui-transition ui-ease-out ui-group
+         disabled:ui-cursor-not-allowed disabled:ui-text-disabled disabled:ui-bg-disabled disabled:ui-border-disabled-2`,
         {
-          "hover:ui-brightness-105": !disabled && !loading,
-          "ui-gradient-primary": variant === "default",
-          "lg:ui-h-14 lg:ui-min-w-button-lg": size === "lg",
-          "lg:ui-min-w-button-md": size === "md",
-          "lg:ui-min-w-button-sm": size === "sm",
-          "ui-h-14 ui-min-w-button-lg": mobileSize === "lg",
-          "ui-min-w-button-md": mobileSize === "md",
-          "ui-min-w-button-sm": mobileSize === "sm"
+          "hover:ui-brightness-110 ui-border-transparent": !disabled && !loading,
+          "ui-text-black ui-gradient-primary": variant === "default" && !disabled && !loading,
+          "ui-text-white ui-bg-navy": variant === "secondary",
+          "ui-gradient-primary ui-bg-clip-text ui-text-fill-transparent": variant === "outline",
+          "lg:ui-h-12 lg:ui-min-w-button-lg lg:ui-text-sm": size === "lg",
+          "lg:ui-h-10 lg:ui-min-w-button-md lg:ui-text-sm": size === "md",
+          "lg:ui-h-7 lg:ui-min-w-button-sm lg:ui-text-xs": size === "sm",
+          "ui-h-12 ui-min-w-button-lg ui-text-sm": mobileSize === "lg",
+          "ui-h-10 ui-min-w-button-md ui-text-sm": mobileSize === "md",
+          "ui-h-7 ui-min-w-button-sm ui-text-xs": mobileSize === "sm"
         },
         className
       )}
@@ -45,7 +47,7 @@ export const Button: React.FC<ButtonProps> = ({
       {...props}
     >
       <div className="ui-flex ui-justify-center ui-items-center ui-h-full">
-        {loading && <Spinner className={clsx("ui-mr-2", spinnerClassName)} variant={variant} />}
+        {loading && <Spinner className={clsx("ui-mr-2", spinnerClassName)} variant="default" />}
         {children}
       </div>
     </button>
