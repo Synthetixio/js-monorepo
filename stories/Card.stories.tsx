@@ -15,26 +15,9 @@ export const Template: ComponentStory<typeof Card> = (args) => (
 	</div>
 );
 
-export const WithBorderColor: ComponentStory<typeof Card> = (args) => (
-	<div style={{ display: 'flex', justifyContent: 'center' }}>
-		<Card {...args} />
-	</div>
-);
-
 Template.args = {
-	withBorderColor: { gradient: 'rainbow', withGlow: true },
 	children: [
-		<div style={{ color: 'white' }}>
-			<div style={{ color: 'white' }}>hello</div>,<div style={{ color: 'white' }}>world</div>,
-		</div>,
-		,
-	],
-};
-
-WithBorderColor.args = {
-	withBackgroundColor: 'lightBlue',
-	children: [
-		<div style={{ color: 'white' }}>
+		<div style={{ color: 'white', background: 'rgba(0,0,0,0.5)' }}>
 			<div style={{ color: 'white' }}>hello</div>,<div style={{ color: 'white' }}>world</div>,
 		</div>,
 		,

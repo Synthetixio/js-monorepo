@@ -44,27 +44,26 @@ export default function Accordion({
 				</StyledAccordionWrapper>
 			</StyledAccordionWrappers>
 		);
-	} else {
-		return (
-			<StyledAccordionWrapper {...rest}>
-				<AccordionHeader onClick={() => setOpen(!open)}>
-					{headerChildren}
-					<StyledIconWrapper>
-						{open ? (
-							<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
-								<ArrowDropdownUpIcon active={true} />
-							</IconButton>
-						) : (
-							<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
-								<ArrowDropdownDownIcon active={true} />
-							</IconButton>
-						)}
-					</StyledIconWrapper>
-				</AccordionHeader>
-				{open && <AccordionContent visible={open}>{children}</AccordionContent>}
-			</StyledAccordionWrapper>
-		);
 	}
+	return (
+		<StyledAccordionWrapper {...rest}>
+			<AccordionHeader onClick={() => setOpen(!open)}>
+				{headerChildren}
+				<StyledIconWrapper>
+					{open ? (
+						<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
+							<ArrowDropdownUpIcon active={true} />
+						</IconButton>
+					) : (
+						<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
+							<ArrowDropdownDownIcon active={true} />
+						</IconButton>
+					)}
+				</StyledIconWrapper>
+			</AccordionHeader>
+			{open && <AccordionContent visible={open}>{children}</AccordionContent>}
+		</StyledAccordionWrapper>
+	);
 }
 
 const StyledAccordionWrappers = styled.div<{ gradient?: keyof typeof colors.gradients }>`
