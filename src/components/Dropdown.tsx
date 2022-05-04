@@ -1,17 +1,18 @@
 import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
+import { Colors } from '../types';
 
 interface DropdownProps extends HTMLAttributes<HTMLUListElement> {
 	elements: JSX.Element[];
-	noBackground?: boolean;
+	color: Colors;
 }
 
-export default function Dropdown({ elements, noBackground, ...rest }: DropdownProps) {
+export default function Dropdown({ elements, color, ...rest }: DropdownProps) {
 	return (
-		<StyledUnorderedList noBackground={noBackground} {...rest}>
-			{elements.map((element, index) => (
-				<StyledListElement isEven={index % 2 === 0} key={index} noBackground={noBackground}>
+		<StyledUnorderedList color={color} {...rest}>
+			{elements.map((element) => (
+				<StyledListElement className="darker-60" key={element.key}>
 					{element}
 				</StyledListElement>
 			))}
@@ -20,29 +21,38 @@ export default function Dropdown({ elements, noBackground, ...rest }: DropdownPr
 }
 
 const StyledUnorderedList = styled.ul<{
-	noBackground?: DropdownProps['noBackground'];
+	color: DropdownProps['color'];
 }>`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	background-color: ${({ noBackground }) => !noBackground && colors.backgroundColor};
+	border: 1px solid ${({ color }) => colors[color]};
+	background-color: ${({ color }) => colors[color]};
 	padding: 0;
 	border-radius: 8px;
 `;
 
-const StyledListElement = styled.li<{
-	isEven: boolean;
-	noBackground?: DropdownProps['noBackground'];
-}>`
+const StyledListElement = styled.li<{}>`
 	width: 100%;
 	list-style-type: none;
-	background-color: ${({ isEven, noBackground }) => isEven && !noBackground && 'rgba(0,0,0,0.2)'};
 	border-radius: 8px;
 	cursor: pointer;
+	:not(:first-child):not(:last-child) {
+		border-radius: 0px;
+	}
+	:first-child {
+		border-bottom-left-radius: 0px;
+		border-bottom-right-radius: 0px;
+	}
+	:last-child {
+		border-top-left-radius: 0px;
+		border-top-right-radius: 0px;
+	}
+
 	:hover {
-		background-color: ${colors.black};
+		background-color: transparent;
 	}
 	:active {
-		background-color: ${colors.black};
+		background-color: transparent;
 	}
 `;
