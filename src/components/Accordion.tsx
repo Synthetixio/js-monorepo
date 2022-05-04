@@ -96,6 +96,7 @@ const AccordionContent = styled.div<{ visible: boolean }>`
 	width: 100%;
 	height: 100%;
 	animation: fade-in 300ms;
+	padding-top: 20px;
 
 	@keyframes fade-in {
 		0% {
