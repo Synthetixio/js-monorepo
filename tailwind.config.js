@@ -111,7 +111,9 @@ module.exports = {
         "red-100": "var(--color-red-100)",
 
         disabled: "var(--color-disabled)",
-        "disabled-2": "var(--color-disabled-2)"
+        "disabled-2": "var(--color-disabled-2)",
+
+        primary: "var(--color-primary)"
       },
       borderRadius: {
         "2lg": "0.625rem"

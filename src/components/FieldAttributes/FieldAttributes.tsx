@@ -27,7 +27,7 @@ export const FieldAttributes: React.FC<FieldAttributesProps> = ({
     <div className={clsx("ui-flex ui-flex-col ui-w-full ui-relative ui-mb-5", className)}>
       {label && (
         <label
-          className="ui-cursor-pointer ui-tg-caption ui-ml-5 ui-mb-3 ui-text-black-600 dark:ui-text-white"
+          className="textfield-label ui-cursor-pointer ui-tg-caption ui-ml-5 ui-mb-3 ui-text-black-600 dark:ui-text-white"
           htmlFor={id}
         >
           {onLabelClick ? <button onClick={onLabelClick}>{label}</button> : label}
