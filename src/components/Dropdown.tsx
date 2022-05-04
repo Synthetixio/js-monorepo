@@ -7,9 +7,9 @@ interface DropdownProps extends HTMLAttributes<HTMLUListElement> {
 	noBackground?: boolean;
 }
 
-export default function Dropdown({ elements, noBackground }: DropdownProps) {
+export default function Dropdown({ elements, noBackground, ...rest }: DropdownProps) {
 	return (
-		<StyledUnorderedList noBackground={noBackground}>
+		<StyledUnorderedList noBackground={noBackground} {...rest}>
 			{elements.map((element, index) => (
 				<StyledListElement isEven={index % 2 === 0} key={index} noBackground={noBackground}>
 					{element}

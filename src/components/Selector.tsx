@@ -9,9 +9,9 @@ interface SelectorProps extends HTMLAttributes<HTMLButtonElement> {
 	onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function Selector({ text, icon, onClick }: SelectorProps) {
+export default function Selector({ text, icon, onClick, ...rest }: SelectorProps) {
 	return (
-		<SelectorWrapper onClick={onClick} hasIcon={!!icon}>
+		<SelectorWrapper onClick={onClick} hasIcon={!!icon} {...rest}>
 			<SelectorText hasIcon={!!icon}>{text}</SelectorText> {icon}
 		</SelectorWrapper>
 	);
