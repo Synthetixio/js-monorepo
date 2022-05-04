@@ -88,6 +88,34 @@ html {
   --color-navy-light-3: #{lighten($navy, 30%)};
   --color-navy-light-4: #{lighten($navy, 40%)};
 
+  --color-black-700: #000000;
+  --color-black-600: #141414;
+  --color-black-500: #212529;
+  --color-black-400: #2d2d2d;
+  --color-black-300: #868e96;
+  --color-black-200: #adb5bd;
+  --color-black-100: #304b66;
+
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-650: #404650;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  --color-red-700: #a71930;
+  --color-red-600: #c11534;
+  --color-red-500: #db283e;
+  --color-red-400: #ff5758;
+  --color-red-300: #fd6f66;
+  --color-red-200: #ffaaa5;
+  --color-red-100: #ffe5e3;
+
   --color-disabled: "#565663";
   --color-disabled-2: "#3E434B";
 }
