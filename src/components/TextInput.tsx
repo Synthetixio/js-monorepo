@@ -23,9 +23,10 @@ export default function TextInput({
 	size = 'medium',
 	value,
 	name,
+	...rest
 }: TextInputProps) {
 	return (
-		<StyledInputWrapper>
+		<StyledInputWrapper {...rest}>
 			<StyledTextInput
 				id={id}
 				disabled={disabled}

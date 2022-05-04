@@ -2,9 +2,9 @@ import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 
-export default function NavBar({ children }: PropsWithChildren<{}>) {
+export default function NavBar({ children, ...rest }: PropsWithChildren<{}>) {
 	return (
-		<StyledNavBar>
+		<StyledNavBar {...rest}>
 			<StyledSynthetixLogo>
 				<svg
 					width="166"
