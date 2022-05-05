@@ -22,57 +22,37 @@ export default function Accordion({
 	useEffect(() => {
 		setOpen(isOpen);
 	}, [isOpen]);
-	if (gradient) {
-		return (
-			<StyledAccordionWrappers gradient={gradient} {...rest}>
-				<StyledAccordionWrapper>
-					<AccordionHeader onClick={() => setOpen(!open)}>
-						{headerChildren}
-						<StyledIconWrapper>
-							{open ? (
-								<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
-									<ArrowDropdownUpIcon active={true} />
-								</IconButton>
-							) : (
-								<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
-									<ArrowDropdownDownIcon active={true} />
-								</IconButton>
-							)}
-						</StyledIconWrapper>
-					</AccordionHeader>
-					{open && <AccordionContent visible={open}>{children}</AccordionContent>}
-				</StyledAccordionWrapper>
-			</StyledAccordionWrappers>
-		);
-	}
 	return (
-		<StyledAccordionWrapper {...rest}>
-			<AccordionHeader onClick={() => setOpen(!open)}>
-				{headerChildren}
-				<StyledIconWrapper>
-					{open ? (
-						<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
-							<ArrowDropdownUpIcon active={true} />
-						</IconButton>
-					) : (
-						<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
-							<ArrowDropdownDownIcon active={true} />
-						</IconButton>
-					)}
-				</StyledIconWrapper>
-			</AccordionHeader>
-			{open && <AccordionContent visible={open}>{children}</AccordionContent>}
-		</StyledAccordionWrapper>
+		<StyledGradientWrapper onClick={() => setOpen(!open)} gradient={gradient} {...rest}>
+			<StyledAccordionWrapper>
+				<AccordionHeader>
+					{headerChildren}
+					<StyledIconWrapper>
+						{open ? (
+							<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
+								<ArrowDropdownUpIcon active={true} />
+							</IconButton>
+						) : (
+							<IconButton rounded onClick={() => setOpen(!open)} size="tiniest" active={true}>
+								<ArrowDropdownDownIcon active={true} />
+							</IconButton>
+						)}
+					</StyledIconWrapper>
+				</AccordionHeader>
+				{open && <AccordionContent visible={open}>{children}</AccordionContent>}
+			</StyledAccordionWrapper>
+		</StyledGradientWrapper>
 	);
 }
 
-const StyledAccordionWrappers = styled.div<{ gradient?: keyof typeof colors.gradients }>`
+const StyledGradientWrapper = styled.div<{ gradient?: keyof typeof colors.gradients }>`
 	background: ${({ gradient }) => gradient && colors.gradients[gradient]};
 	padding: 1px;
 	border-radius: 5px;
 	width: 100%;
 	height: 100%;
 	box-shadow: 0px 14px 14px rgba(0, 0, 0, 0.25);
+	cursor: pointer;
 `;
 
 const StyledAccordionWrapper = styled.div`
@@ -85,7 +65,6 @@ const StyledAccordionWrapper = styled.div`
 `;
 
 const AccordionHeader = styled.div`
-	cursor: pointer;
 	width: 100%;
 	height: 100%;
 	position: relative;
