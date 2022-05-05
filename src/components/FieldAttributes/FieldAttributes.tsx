@@ -14,8 +14,7 @@ export const FieldAttributes: React.FC<FieldAttributesProps> = ({
   label,
   error,
   className,
-  children,
-  onLabelClick
+  children
 }) => {
   const [id, setId] = useState<string | undefined>(undefined);
 
@@ -25,19 +24,19 @@ export const FieldAttributes: React.FC<FieldAttributesProps> = ({
 
   return (
     <div className={clsx("ui-flex ui-flex-col ui-w-full ui-relative ui-mb-5", className)}>
+      {id ? isValidElement(children) && cloneElement(children, { id }) : children}
+
       {label && (
         <label
-          className="textfield-label ui-cursor-pointer ui-tg-caption ui-ml-5 ui-mb-3 ui-text-black-600 dark:ui-text-white"
+          className="ui-transition ui-select-none ui-order-1 ui-cursor-pointer ui-tg-caption ui-mb-1.5 ui-text-black-600 dark:ui-text-white"
           htmlFor={id}
         >
-          {onLabelClick ? <button onClick={onLabelClick}>{label}</button> : label}
+          {label}
         </label>
       )}
 
-      {label ? isValidElement(children) && cloneElement(children, { id }) : children}
-
       {error && (
-        <small className="tg-caption-sm ui-text-red-400 ui-ml-5 ui-mt-0.5 ui-absolute ui-top-full">
+        <small className="tg-caption-sm ui-text-red-400 ui-ml-2 ui-mt-0.5 ui-absolute ui-top-full">
           {error}
         </small>
       )}

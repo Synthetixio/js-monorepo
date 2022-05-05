@@ -112,8 +112,10 @@ module.exports = {
 
         disabled: "var(--color-disabled)",
         "disabled-2": "var(--color-disabled-2)",
+        overlay: "var(--color-overlay-bg)",
 
-        primary: "var(--color-primary)"
+        primary: "var(--color-primary)",
+        "dark-blue": "var(--color-dark-blue)"
       },
       borderRadius: {
         "2lg": "0.625rem"
@@ -126,6 +128,11 @@ module.exports = {
         "button-sm": "3.31rem",
         "button-md": "5.5rem",
         "button-lg": "13rem"
+      },
+      zIndex: {
+        99: "99",
+        100: "100",
+        999: "999"
       }
     }
   },

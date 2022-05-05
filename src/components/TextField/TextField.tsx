@@ -34,14 +34,15 @@ export const TextField: React.FC<TextFieldProps> = ({
 }) => {
   const hasError = !!error;
   const classes = clsx(
-    `textfield-input ui-border ui-border-solid ui-bg-gray-50 ui-border-gray-300 ui-text-gray-900 dark:ui-bg-gray-700 dark:ui-border-gray-600 dark:ui-placeholder-gray-400 dark:ui-text-white ui-outline-none ui-rounded ui-px-5 ui-w-full ui-text-sm`,
+    "ui-order-2 ui-border ui-border-solid ui-border-gray-300 ui-text-gray-900 dark:ui-border-gray-600 dark:ui-placeholder-gray-400 dark:ui-text-white ui-outline-none ui-rounded ui-w-full ui-text-sm ui-transition disabled:ui-bg-disabled disabled:ui-text-disabled-2",
     {
-      "ui-py-3": multiline,
-      "ui-h-14": !multiline && inputSize === "md",
-      "ui-h-10": !multiline && inputSize === "sm",
+      "ui-p-3": multiline,
+      "ui-h-14 ui-px-6": !multiline && inputSize === "md",
+      "ui-h-10 ui-px-3": !multiline && inputSize === "sm",
       "ui-cursor-not-allowed": props.disabled,
-      "ui-border-black-200 dark:ui-border-black-400 focus:ui-border-primary focus:dark:ui-border-primary":
-        !hasError,
+      "focus:ui-border-primary focus:dark:ui-border-primary active:dark:ui-border-primary ui-bg-gray-50 dark:ui-bg-dark-blue":
+        !props.disabled,
+      "ui-border-black-200 dark:ui-border-black-400": !hasError,
       "ui-border-red-400 dark:ui-border-red-400 focus:ui-border-red-400 ui-text-red-400 dark:ui-text-red-400":
         hasError
     },
@@ -50,7 +51,9 @@ export const TextField: React.FC<TextFieldProps> = ({
 
   return (
     <FieldAttributes
-      className={wrapperClassName}
+      className={clsx("ui-textfield-wrapper", wrapperClassName, {
+        "ui-opacity-50": props.disabled
+      })}
       error={error}
       label={label}
       onLabelClick={onLabelClick}

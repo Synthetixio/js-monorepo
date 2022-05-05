@@ -26,14 +26,17 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button
       className={clsx(
-        `ui-border ui-flex ui-items-center ui-justify-center ui-font-bold ui-leading-5 ui-px-2 ui-rounded
+        `ui-relative ui-flex ui-items-center ui-justify-center ui-font-bold ui-leading-5 ui-px-2 ui-rounded
          disabled:ui-bg-opacity-65 ui-transition ui-ease-out ui-group
-         disabled:ui-cursor-not-allowed disabled:ui-text-disabled disabled:ui-bg-disabled disabled:ui-border-disabled-2`,
+         disabled:ui-cursor-not-allowed`,
         {
-          "hover:ui-brightness-110 ui-border-transparent": !disabled && !loading,
-          "ui-text-black ui-gradient-primary": variant === "default" && !disabled && !loading,
+          "ui-text-disabled ui-border ui-border-disabled ui-bg-disabled-2": disabled,
+          "hover:ui-brightness-110": !disabled,
+          "ui-text-black ui-gradient-primary ui-border ui-border-gray-900":
+            variant === "default" && !disabled,
           "ui-text-white ui-bg-navy": variant === "secondary",
-          "ui-gradient-primary ui-bg-clip-text ui-text-fill-transparent": variant === "outline",
+          "ui-gradient-primary ui-bg-clip-text ui-text-fill-transparent ui-button-outline":
+            variant === "outline" && !disabled,
           "lg:ui-h-12 lg:ui-min-w-button-lg lg:ui-text-sm": size === "lg",
           "lg:ui-h-10 lg:ui-min-w-button-md lg:ui-text-sm": size === "md",
           "lg:ui-h-7 lg:ui-min-w-button-sm lg:ui-text-xs": size === "sm",

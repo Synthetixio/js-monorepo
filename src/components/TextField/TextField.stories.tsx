@@ -15,5 +15,6 @@ export const Primary = Template.bind({});
 Primary.args = {
   placeholder: "Placeholder",
   label: "Label",
-  error: ""
+  error: "",
+  disabled: false
 };

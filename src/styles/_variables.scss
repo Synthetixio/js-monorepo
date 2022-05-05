@@ -102,7 +102,7 @@ html {
   --color-gray-300: #d1d5db;
   --color-gray-400: #9ca3af;
   --color-gray-500: #6b7280;
-  --color-gray-650: #404650;
+  --color-gray-650: #828295;
   --color-gray-600: #4b5563;
   --color-gray-700: #374151;
   --color-gray-800: #1f2937;
@@ -116,10 +116,12 @@ html {
   --color-red-200: #ffaaa5;
   --color-red-100: #ffe5e3;
 
-  --color-disabled: "#565663";
-  --color-disabled-2: "#3E434B";
+  --color-disabled: #565663;
+  --color-disabled-2: #3e434b;
+  --color-overlay-bg: rgba(80, 85, 104, 0.3);
 
   --color-primary: #00d1ff;
+  --color-dark-blue: #0b0b22;
 }
 
 .ui-gradient-primary {
