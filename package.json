@@ -26,10 +26,10 @@
 	"workspaces": [
 		"contracts-interface",
 		"optimism-networks",
+		"wei",
 		"providers",
-		"queries",
 		"transaction-notifier",
-		"wei"
+		"queries"
 	],
 	"devDependencies": {
 		"@microsoft/eslint-formatter-sarif": "2.1.7",
