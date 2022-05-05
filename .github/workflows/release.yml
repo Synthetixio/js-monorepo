@@ -22,8 +22,8 @@ jobs:
         run: yarn
       - name: Build
         run: yarn build
-      - name: Storybook Release
-        run: yarn deploy-storybook
+      - name: Deploy Storybook 🚀
+        uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
