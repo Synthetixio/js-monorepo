@@ -1,5 +1,5 @@
-import { heading, multiBody, singleBody, types } from "../segments/body";
-import { Schema } from "../types";
+import { heading, multiBody, singleBody, types } from '../segments/body';
+import { Schema } from '../types';
 
 /**
  * Writes a single file which contains `useQuery` hooks for calling any subgraph query
@@ -12,7 +12,7 @@ export default function reactquery(schema: Schema): string {
 
   for (const entity of schema.types) {
     const filterEntity = schema.types.find(
-      (e) => e.name === entity.name + "_filter"
+      (e) => e.name === entity.name + '_filter'
     );
     if (!filterEntity) continue;
 
@@ -67,5 +67,5 @@ export default function reactquery(schema: Schema): string {
         }`);
   }
 
-  return out.join("\n");
+  return out.join('\n');
 }

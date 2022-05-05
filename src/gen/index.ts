@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
-import { Command } from "commander";
+import { Command } from 'commander';
 
-import fs from "fs";
+import fs from 'fs';
 
-import { INTROSPECTION_QUERY } from "./constants";
-import { Schema } from "./types";
-import methods from "./methods";
-import ts from "typescript";
+import { INTROSPECTION_QUERY } from './constants';
+import { Schema } from './types';
+import methods from './methods';
+import ts from 'typescript';
 
-import axios from "axios";
+import axios from 'axios';
 
 interface PullOptions {
   url?: string;
@@ -24,7 +24,7 @@ interface GenOptions extends PullOptions {
 
 export async function pull(options: PullOptions): Promise<Schema> {
   const res = await axios(options.url!, {
-    method: "POST",
+    method: 'POST',
     data: JSON.stringify({ query: INTROSPECTION_QUERY }),
   });
 
@@ -38,7 +38,7 @@ export function gen({ schema, method, js }: GenOptions): string {
     throw new Error(
       `method "${method}" not supported. please try one of: ${Object.keys(
         methods
-      ).join(", ")}`
+      ).join(', ')}`
     );
   }
 
@@ -53,7 +53,7 @@ export function gen({ schema, method, js }: GenOptions): string {
 
 function prettifyTypescript(rawTs: string) {
   const sourceFile = ts.createSourceFile(
-    "subgraph.ts",
+    'subgraph.ts',
     rawTs,
     ts.ScriptTarget.Latest
   );
@@ -64,7 +64,7 @@ function prettifyTypescript(rawTs: string) {
 
 function printResultDiagnosticInfo(res: string) {
   const sourceFile = ts.createSourceFile(
-    "subgraph.ts",
+    'subgraph.ts',
     res,
     ts.ScriptTarget.Latest
   );
@@ -73,7 +73,7 @@ function printResultDiagnosticInfo(res: string) {
 
   //console.log(printer.printNode(ts.EmitHint.SourceFile, sourceFile, sourceFile));
 
-  console.log("generated subgraph queries:");
+  console.log('generated subgraph queries:');
   ts.forEachChild(sourceFile, (node) => {
     if (ts.isVariableStatement(node)) {
       const varNode = node.declarationList.declarations[0];
@@ -99,42 +99,42 @@ if (require.main === module) {
   const program = new Command();
 
   program
-    .command("pull <url>")
+    .command('pull <url>')
     .description(
-      "retrieves the graphql schema associated with the given subgraph url"
+      'retrieves the graphql schema associated with the given subgraph url'
     )
     .action(async (options) => {
       try {
-        console.error("schema pull successful!");
+        console.error('schema pull successful!');
         console.log(
           JSON.stringify(await pull({ url: options } as PullOptions))
         );
       } catch (err) {
-        console.error("failed to pull:", err);
+        console.error('failed to pull:', err);
       }
     });
 
   program
-    .command("gen")
-    .description("generate the typescript code to fetch from a subgraph")
-    .option("-u, --url <location>", "subgraph to extract schema from")
+    .command('gen')
+    .description('generate the typescript code to fetch from a subgraph')
+    .option('-u, --url <location>', 'subgraph to extract schema from')
     .option(
-      "-s, --schema <path to .json>",
-      "location of a schema previously downloded with pull"
+      '-s, --schema <path to .json>',
+      'location of a schema previously downloded with pull'
     )
     .option(
-      "-m, --method <name>",
+      '-m, --method <name>',
       `which top level generator to use. options: ${Object.keys(methods).join(
-        ", "
+        ', '
       )}`,
-      "plain"
+      'plain'
     )
-    .option("-o, --out <file>", "file to export the generated typescript files")
-    .option("--js", "output as plain javascript (instead of typescript)")
+    .option('-o, --out <file>', 'file to export the generated typescript files')
+    .option('--js', 'output as plain javascript (instead of typescript)')
     .action(async (options) => {
       try {
         if (options.file && options.url) {
-          throw new Error("only one of file or url should be specified");
+          throw new Error('only one of file or url should be specified');
         }
 
         let schema: Schema;
@@ -143,7 +143,7 @@ if (require.main === module) {
         } else if (options.schema) {
           schema = JSON.parse(fs.readFileSync(options.schema).toString());
         } else {
-          throw new Error("supply either a file or url");
+          throw new Error('supply either a file or url');
         }
 
         const res = gen({
@@ -156,12 +156,12 @@ if (require.main === module) {
 
           printResultDiagnosticInfo(res);
 
-          console.log("wrote file:", options.out);
+          console.log('wrote file:', options.out);
         } else {
           console.log(res);
         }
       } catch (err) {
-        console.error("failed to gen:", err);
+        console.error('failed to gen:', err);
       }
     });
 

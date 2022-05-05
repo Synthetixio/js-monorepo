@@ -1,6 +1,6 @@
-import { Entity } from "../types";
-import { convertType, mapType, queryFunctionName } from "../util";
-import packageJSON from "../../../package.json";
+import { Entity } from '../types';
+import { convertType, mapType, queryFunctionName } from '../util';
+import packageJSON from '../../../package.json';
 
 /**
  * Required imports and primitive types required for other functions
@@ -34,12 +34,12 @@ function injectParse(e: Entity) {
   for (const f of e.fields!) {
     const t = convertType(f.type);
     switch (t.name) {
-      case "BigDecimal":
+      case 'BigDecimal':
         out.push(
           `if (obj['${f.name}']) formattedObj['${f.name}'] = wei(obj['${f.name}']);`
         );
         break;
-      case "BigInt":
+      case 'BigInt':
         out.push(
           `if (obj['${f.name}']) formattedObj['${f.name}'] = wei(obj['${f.name}'], 0);`
         );
@@ -51,7 +51,7 @@ function injectParse(e: Entity) {
     }
   }
 
-  return out.join("\n");
+  return out.join('\n');
 }
 
 /**
@@ -152,20 +152,24 @@ export function types(entity: Entity, filterEntity: Entity) {
   const lines: string[] = [];
   lines.push(`export type ${entity.name}Filter = {`);
   for (const field of filterEntity.inputFields!) {
-    lines.push(`\t${field.name}?: ${mapType(field.type, "Filter").tsTypeName}`);
+    if (field.name !== '_change_block') {
+      lines.push(
+        `\t${field.name}?: ${mapType(field.type, 'Filter').tsTypeName}`
+      );
+    }
   }
-  lines.push("};");
-  lines.push("\n");
+  lines.push('};');
+  lines.push('\n');
 
   lines.push(`export type ${entity.name}Result = {`);
   for (const field of entity.fields!) {
-    lines.push(`\t${field.name}: ${mapType(field.type, "Result").tsTypeName}`);
+    lines.push(`\t${field.name}: ${mapType(field.type, 'Result').tsTypeName}`);
   }
   lines.push(`};`);
 
   lines.push(`export type ${entity.name}Fields = {`);
   for (const field of entity.fields!) {
-    const mappedType = mapType(field.type, "Fields");
+    const mappedType = mapType(field.type, 'Fields');
     lines.push(
       `\t${field.name}: ${
         mappedType.nestedStructure ? mappedType.baseType : true
@@ -178,7 +182,7 @@ export function types(entity: Entity, filterEntity: Entity) {
     `export type ${entity.name}Args<K extends keyof ${entity.name}Result> = { [Property in keyof Pick<${entity.name}Fields, K>]: ${entity.name}Fields[Property] };`
   );
 
-  lines.push("");
+  lines.push('');
 
-  return lines.join("\n");
+  return lines.join('\n');
 }
