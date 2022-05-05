@@ -18,6 +18,8 @@ jobs:
           node-version: '16'
       - name: Install dependencies
         run: yarn
+      - name: build storybook
+        run: yarn build-storybook
       - name: Deploy Storybook 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
