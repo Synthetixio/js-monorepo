@@ -27,6 +27,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn semantic-release
-        - name : storybook release
-        env: GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: storybook release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn deploy-storybook -- --ci
