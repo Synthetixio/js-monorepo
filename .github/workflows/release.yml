@@ -27,7 +27,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages # The branch the action should deploy to.
-          folder: storybook-static # The folder that the build-storybook script generates files.
+          folder: ./storybook-static # The folder that the build-storybook script generates files.
           clean: true # Automatically remove deleted files from the deploy branch
       - name: Release
         env:
