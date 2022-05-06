@@ -127,17 +127,17 @@ jobs:
           yarn workspace @synthetixio/optimism-networks publish --tag dev
 
       - run: |
-          yarn workspace @synthetixio/providers version 0.0.0-$(git rev-parse --short HEAD) --new-version
-          yarn workspace @synthetixio/providers publish --tag dev
+          yarn workspace @synthetixio/wei version 0.0.0-$(git rev-parse --short HEAD) --new-version
+          yarn workspace @synthetixio/wei publish --tag dev
 
       - run: |
-          yarn workspace @synthetixio/queries version 0.0.0-$(git rev-parse --short HEAD) --new-version
-          yarn workspace @synthetixio/queries publish --tag dev
+          yarn workspace @synthetixio/providers version 0.0.0-$(git rev-parse --short HEAD) --new-version
+          yarn workspace @synthetixio/providers publish --tag dev
 
       - run: |
           yarn workspace @synthetixio/transaction-notifier version 0.0.0-$(git rev-parse --short HEAD) --new-version
           yarn workspace @synthetixio/transaction-notifier publish --tag dev
 
       - run: |
-          yarn workspace @synthetixio/wei version 0.0.0-$(git rev-parse --short HEAD) --new-version
-          yarn workspace @synthetixio/wei publish --tag dev
+          yarn workspace @synthetixio/queries version 0.0.0-$(git rev-parse --short HEAD) --new-version
+          yarn workspace @synthetixio/queries publish --tag dev
