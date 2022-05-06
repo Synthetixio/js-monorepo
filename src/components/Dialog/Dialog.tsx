@@ -33,14 +33,16 @@ export const Dialog: React.FC<Props> = ({
   const nodeRef = useRef(null);
 
   return (
-    // <CSSTransition
-    //   unmountOnExit
-    //   classNames="dialog"
-    //   in={open}
-    //   nodeRef={nodeRef}
-    //   timeout={{ enter: 500, exit: 300 }}
-    // >
-    open ? (
+    // TODO: update the transition package
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    <CSSTransition
+      unmountOnExit
+      classNames="ui-dialog"
+      in={open}
+      nodeRef={nodeRef}
+      timeout={{ enter: 500, exit: 300 }}
+    >
       <div
         ref={nodeRef}
         className="ui-overflow-y-auto ui-bg-overlay ui-overflow-x-hidden ui-fixed ui-right-0 ui-left-0 ui-top-0 ui-z-999 ui-flex ui-justify-center ui-items-center ui-h-screen ui-w-screen ui-max-h-screen"
@@ -64,7 +66,6 @@ export const Dialog: React.FC<Props> = ({
           <div className={clsx(className, "ui-px-5 ui-text-center")}>{children}</div>
         </Card>
       </div>
-    ) : null
-    // </CSSTransition>
+    </CSSTransition>
   );
 };

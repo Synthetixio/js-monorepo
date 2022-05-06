@@ -1,17 +1,14 @@
-.ui-fade-enter {
-  opacity: 0;
-  transform: scale(0.95);
+.ui-dialog-enter {
+  opacity: 0.01;
 }
-.ui-fade-enter-active {
+.ui-dialog-enter.ui-dialog-enter-active {
   opacity: 1;
-  transform: translateX(0);
-  transition: opacity 200ms, transform 200ms;
+  transition: opacity 120ms ease-in;
 }
-.ui-fade-exit {
+.ui-dialog-exit {
   opacity: 1;
 }
-.ui-fade-exit-active {
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 200ms, transform 200ms;
+.ui-dialog-exit.ui-dialog-exit-active {
+  opacity: 0.01;
+  transition: opacity 120ms ease-in;
 }
