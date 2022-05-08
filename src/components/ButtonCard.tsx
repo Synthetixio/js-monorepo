@@ -56,6 +56,7 @@ const StyledWrapper = styled(Flex)`
 	border-radius: 4px;
 	padding: 24px;
 	width: 100%;
+	height: 100%;
 	position: relative;
 `;
 
