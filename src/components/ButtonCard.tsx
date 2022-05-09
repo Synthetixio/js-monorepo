@@ -1,6 +1,7 @@
 import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
+import spacings from '../styles/spacings';
 import Flex from './Flex';
 import ArrowLeftIcon from './Icons/ArrowLeftIcon';
 import ArrowRightIcon from './Icons/ArrowRightIcon';
@@ -10,6 +11,8 @@ interface ButtonCardsProps extends HTMLAttributes<HTMLButtonElement> {
 	arrowDirection: 'left' | 'right';
 	headline: string;
 	subline?: string;
+	icon?: JSX.Element;
+	sublineFirst?: boolean;
 }
 
 export default function ButtonCards({
@@ -17,6 +20,8 @@ export default function ButtonCards({
 	onClick,
 	headline,
 	subline,
+	icon,
+	sublineFirst,
 	...rest
 }: ButtonCardsProps) {
 	return (
@@ -26,11 +31,26 @@ export default function ButtonCards({
 				alignItems={arrowDirection === 'left' ? 'flex-end' : 'flex-start'}
 				justifyContent="center"
 			>
-				<StyledSubline direction={arrowDirection}>{subline}</StyledSubline>
-				<StyledHeadline direction={arrowDirection}>{headline}</StyledHeadline>
+				{sublineFirst ? (
+					<>
+						<StyledSubline direction={arrowDirection}>{subline}</StyledSubline>
+						<StyledHeadline direction={arrowDirection}>{headline}</StyledHeadline>
+					</>
+				) : (
+					<>
+						<StyledHeadline direction={arrowDirection}>{headline}</StyledHeadline>
+						<StyledSubline direction={arrowDirection}>{subline}</StyledSubline>
+					</>
+				)}
 				<StyledArrowWrapperIcon direction={arrowDirection}>
 					{arrowDirection === 'left' ? (
-						<ArrowLeftIcon active={true} />
+						icon ? (
+							icon
+						) : (
+							<ArrowLeftIcon active={true} />
+						)
+					) : icon ? (
+						icon
 					) : (
 						<ArrowRightIcon active={true} />
 					)}
@@ -56,6 +76,7 @@ const StyledWrapper = styled(Flex)`
 	border-radius: 4px;
 	padding: 24px;
 	width: 100%;
+	height: 100%;
 	position: relative;
 `;
 
@@ -65,7 +86,7 @@ const StyledHeadline = styled.h3<{ direction: ButtonCardsProps['arrowDirection']
 	color: ${colors.white};
 	text-align: ${({ direction }) => (direction === 'left' ? 'right' : 'left')};
 	width: 100%;
-	margin: 0;
+	margin: ${spacings.tiniest};
 `;
 
 const StyledSubline = styled.span<{ direction: ButtonCardsProps['arrowDirection'] }>`
