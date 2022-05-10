@@ -26,6 +26,20 @@ export const Template: ComponentStory<typeof TextInput> = (args) => (
 		label="TextArea Label"
 		placeholder="Some placeholder..."
 		value="Lorem ipsum"
+		icon={
+			<div
+				style={{
+					position: 'absolute',
+					top: '20px',
+					right: 1,
+					color: 'white',
+					zIndex: 10,
+					cursor: 'pointer',
+				}}
+			>
+				CLICK ME
+			</div>
+		}
 	/>
 );
 
