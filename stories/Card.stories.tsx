@@ -17,11 +17,13 @@ export const Template: ComponentStory<typeof Card> = (args) => (
 
 Template.args = {
 	children: [
-		<div style={{ color: 'white', background: 'rgba(0,0,0,0.5)' }}>
+		<div style={{ color: 'white', padding: 20, background: 'rgba(0,0,0,0.6)' }}>
 			<div style={{ color: 'white' }}>hello</div>,<div style={{ color: 'white' }}>world</div>,
 		</div>,
 		,
 	],
+	gradient: undefined,
+	color: undefined,
 };
 
 Template.parameters = {
