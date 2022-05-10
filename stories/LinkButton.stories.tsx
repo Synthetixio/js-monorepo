@@ -9,7 +9,11 @@ export default {
 	decorators: [withDesign],
 } as ComponentMeta<typeof LinkButton>;
 
-export const Template: ComponentStory<typeof LinkButton> = (args) => <LinkButton {...args} />;
+export const Template: ComponentStory<typeof LinkButton> = (args) => (
+	<div style={{ padding: 20, backgroundColor: 'red' }}>
+		<LinkButton {...args} />
+	</div>
+);
 
 Template.args = {
 	text: 'HELP',

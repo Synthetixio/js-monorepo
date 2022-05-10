@@ -13,6 +13,7 @@ interface TextInputProps extends HTMLAttributes<HTMLDivElement> {
 	value: string;
 	onInput: FormEventHandler<HTMLInputElement>;
 	icon?: JSX.Element;
+	autocomplete?: string;
 }
 
 export default function TextInput({
@@ -25,6 +26,7 @@ export default function TextInput({
 	value,
 	name,
 	icon,
+	autocomplete = 'off',
 	...rest
 }: TextInputProps) {
 	return (
@@ -37,6 +39,7 @@ export default function TextInput({
 				inputSize={size}
 				value={value}
 				name={name}
+				autoComplete={autocomplete}
 			/>
 			{label && <StyledLabel htmlFor={id}>{label}</StyledLabel>}
 			{icon && icon}
