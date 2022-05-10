@@ -57,10 +57,11 @@ const StyledButtonLinks = styled.a<{ size?: keyof typeof spacings }>`
 `;
 
 const StyledButtonText = styled.span`
-	font-family: Inter;
+	font-family: 'Inter';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 1rem;
 	color: ${colors.white};
 	margin-right: ${spacings.tiny};
+	margin-left: ${spacings.tiniest};
 `;
