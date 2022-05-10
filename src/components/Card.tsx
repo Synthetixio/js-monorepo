@@ -29,6 +29,8 @@ const StyledCard = styled.div<CardProps>`
 	background: ${({ gradient }) => (gradient ? colors.gradients[gradient] : colors.backgroundColor)};
 	box-shadow: ${({ withGlow, color }) => withGlow && color && `0 0 10px ${colors[color]}`};
 	${({ color }) => color && `border: 2px solid ${colors[color]};`};
-	padding: 2px;
 	border-radius: 4px;
+	:first-child {
+		background-color: ${({ color }) => color && colors[color]};
+	}
 `;
