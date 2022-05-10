@@ -11,7 +11,8 @@ interface TextInputProps extends HTMLAttributes<HTMLDivElement> {
 	placeholder?: string;
 	size?: 'medium' | 'small';
 	value: string;
-	onInput: FormEventHandler;
+	onInput: FormEventHandler<HTMLInputElement>;
+	icon?: JSX.Element;
 }
 
 export default function TextInput({
@@ -23,6 +24,7 @@ export default function TextInput({
 	size = 'medium',
 	value,
 	name,
+	icon,
 	...rest
 }: TextInputProps) {
 	return (
@@ -37,6 +39,7 @@ export default function TextInput({
 				name={name}
 			/>
 			{label && <StyledLabel htmlFor={id}>{label}</StyledLabel>}
+			{icon && icon}
 		</StyledInputWrapper>
 	);
 }
