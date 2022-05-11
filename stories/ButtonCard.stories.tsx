@@ -13,4 +13,5 @@ Template.args = {
 	headline: 'test headline',
 	subline: 'cheeky subline',
 	arrowDirection: 'left',
+	sublineFirst: true,
 };
