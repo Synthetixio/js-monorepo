@@ -30,7 +30,5 @@ const StyledCard = styled.div<CardProps>`
 	box-shadow: ${({ withGlow, color }) => withGlow && color && `0 0 10px ${colors[color]}`};
 	${({ color }) => color && `border: 2px solid ${colors[color]};`};
 	border-radius: 4px;
-	:first-child {
-		background-color: ${({ color }) => color && colors[color]};
-	}
+	background-color: ${({ color }) => color && colors[color]};
 `;
