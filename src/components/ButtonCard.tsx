@@ -29,7 +29,7 @@ export default function ButtonCards({
 			<StyledWrapper
 				direction="column"
 				alignItems={arrowDirection === 'left' ? 'flex-end' : 'flex-start'}
-				justifyContent="center"
+				justifyContent="flex-start"
 			>
 				{sublineFirst ? (
 					<>
@@ -74,7 +74,7 @@ const StyledButton = styled.button`
 const StyledWrapper = styled(Flex)`
 	background-color: ${colors.backgroundColor};
 	border-radius: 4px;
-	padding: 24px;
+	padding: 16px;
 	width: 100%;
 	height: 100%;
 	position: relative;
@@ -86,7 +86,7 @@ const StyledHeadline = styled.h3<{ direction: ButtonCardsProps['arrowDirection']
 	color: ${colors.white};
 	text-align: ${({ direction }) => (direction === 'left' ? 'right' : 'left')};
 	width: 100%;
-	margin: ${spacings.tiniest};
+	margin: ${spacings.tiniest} 0;
 `;
 
 const StyledSubline = styled.span<{ direction: ButtonCardsProps['arrowDirection'] }>`
@@ -99,7 +99,6 @@ const StyledSubline = styled.span<{ direction: ButtonCardsProps['arrowDirection'
 
 const StyledArrowWrapperIcon = styled.div<{ direction: ButtonCardsProps['arrowDirection'] }>`
 	position: absolute;
-	top: 50%;
-	transform: translate(0, -50%);
+	top: 20px;
 	${({ direction }) => `${direction}: 30px`}
 `;
