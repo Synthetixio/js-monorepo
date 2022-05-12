@@ -5,7 +5,7 @@ import colors from '../styles/colors';
 export default function Spotlight({ children, ...rest }: PropsWithChildren<{}>) {
 	return (
 		<StyledPinkSpotlight {...rest}>
-			<StyledLightBlueSpotlight>{children}</StyledLightBlueSpotlight>
+			<StyledLightBlueSpotlight {...rest}>{children}</StyledLightBlueSpotlight>
 		</StyledPinkSpotlight>
 	);
 }
