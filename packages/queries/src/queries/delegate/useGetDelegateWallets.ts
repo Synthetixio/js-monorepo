@@ -9,11 +9,15 @@ const useGetDelegateWallets = (
 	authorizerAddress: string,
 	options?: UseQueryOptions<[DelegationWallet]>
 ) => {
-	const getDelegatedWalletsQuery = useGetDelegatedWallets(ctx.subgraphEndpoints.subgraph, {
-		first: 100,
-		where: { authoriser: authorizerAddress },
-		...options,
-	});
+	const getDelegatedWalletsQuery = useGetDelegatedWallets(
+		ctx.subgraphEndpoints.subgraph,
+		{
+			first: 100,
+			where: { authoriser: authorizerAddress },
+			...options,
+		},
+		{ canMint: true, canBurn: true, canClaim: true, canExchange: true, delegate: true }
+	);
 	return useQuery([getDelegatedWalletsQuery.isFetching], async () => {
 		if (!getDelegatedWalletsQuery.data) return undefined;
 		return getDelegatedWalletsQuery.data

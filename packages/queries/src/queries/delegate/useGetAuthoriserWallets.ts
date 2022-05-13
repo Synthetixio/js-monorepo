@@ -8,17 +8,22 @@ const useGetAuthoriserWallets = (
 	delegationWallet: string,
 	options?: UseQueryOptions<[DelegationWallet]>
 ) => {
-	const getDelegatedWalletsQuery = useGetDelegatedWallets(ctx.subgraphEndpoints.subgraph, {
-		first: 100,
-		where: { delegate: delegationWallet },
-		...options,
-	});
+	const getDelegatedWalletsQuery = useGetDelegatedWallets(
+		ctx.subgraphEndpoints.subgraph,
+		{
+			first: 100,
+			where: { delegate: delegationWallet },
+			...options,
+		},
+		{ canMint: true, canBurn: true, canClaim: true, canExchange: true, authoriser: true }
+	);
 	return useQuery([getDelegatedWalletsQuery.isFetching], async () => {
 		if (!getDelegatedWalletsQuery.data) return undefined;
 		return getDelegatedWalletsQuery.data
 			.filter(({ canMint, canBurn, canClaim }) => canMint || canBurn || canClaim)
-			.map(({ authoriser, canMint, canBurn, canClaim }) => ({
+			.map(({ authoriser, canMint, canBurn, canClaim, canExchange }) => ({
 				address: authoriser,
+				canAll: canMint && canBurn && canClaim && canExchange,
 				canMint,
 				canBurn,
 				canClaim,
