@@ -34,7 +34,7 @@ export const TextField: React.FC<TextFieldProps> = ({
 }) => {
   const hasError = !!error;
   const classes = clsx(
-    "ui-order-2 ui-border ui-border-solid ui-border-gray-300 ui-text-gray-900 dark:ui-border-gray-600 dark:ui-placeholder-gray-400 dark:ui-text-white ui-outline-none ui-rounded ui-w-full ui-text-sm ui-transition disabled:ui-bg-disabled disabled:ui-text-disabled-2",
+    "ui-order-2 ui-border ui-border-solid ui-border-gray-300 dark:ui-border-gray-600 ui-text-gray-900 dark:ui-placeholder-gray-400 dark:ui-text-white ui-outline-none ui-rounded ui-w-full ui-text-sm ui-transition disabled:ui-bg-disabled disabled:ui-text-disabled-2",
     {
       "ui-p-3": multiline,
       "ui-h-14 ui-px-6": !multiline && inputSize === "md",

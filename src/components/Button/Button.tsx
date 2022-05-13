@@ -4,10 +4,12 @@ import { ButtonHTMLAttributes } from "react";
 
 export type ButtonSize = "sm" | "md" | "lg";
 
+export type ButtonVariant = "default" | "outline" | "secondary" | "purple" | "custom";
+
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
   loading?: boolean;
-  variant?: "default" | "outline" | "secondary" | "custom";
+  variant?: ButtonVariant;
   mobileSize?: ButtonSize;
   spinnerClassName?: string;
 }
@@ -34,7 +36,8 @@ export const Button: React.FC<ButtonProps> = ({
           "hover:ui-brightness-110": !disabled,
           "ui-text-black ui-gradient-primary ui-border ui-border-gray-900":
             variant === "default" && !disabled,
-          "ui-text-white ui-bg-navy": variant === "secondary",
+          "ui-text-white ui-bg-navy": variant === "secondary" && !disabled,
+          "ui-text-white ui-bg-purple": variant === "purple" && !disabled,
           "ui-gradient-primary ui-bg-clip-text ui-text-fill-transparent ui-button-outline":
             variant === "outline" && !disabled,
           "lg:ui-h-12 lg:ui-min-w-button-lg lg:ui-text-sm": size === "lg",
@@ -50,7 +53,12 @@ export const Button: React.FC<ButtonProps> = ({
       {...props}
     >
       <div className="ui-flex ui-justify-center ui-items-center ui-h-full">
-        {loading && <Spinner className={clsx("ui-mr-2", spinnerClassName)} variant="default" />}
+        {loading && (
+          <Spinner
+            className={clsx("ui-mr-2", { "ui-opacity-75": disabled }, spinnerClassName)}
+            variant={variant}
+          />
+        )}
         {children}
       </div>
     </button>

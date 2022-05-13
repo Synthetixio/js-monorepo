@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { FieldAttributes, FieldAttributesProps } from "components/FieldAttributes/FieldAttributes";
+import { ArrowDropdownDownIcon } from "components/Icons/ArrowDropdownDownIcon";
 import { useOnClickOutside } from "hooks/useOnClickOutside";
 import { ReactElement, useMemo, useRef, useState } from "react";
 import { Option } from "types/option";
@@ -16,6 +17,7 @@ export interface SelectProps<T = Option> {
   onChange?: (option: T) => void;
   labelMapper?: (option: T) => React.ReactNode;
   valueMapper?: (option: T) => string | number;
+  size?: "sm" | "md" | "lg";
 }
 
 export const Select = <T,>({
@@ -26,6 +28,7 @@ export const Select = <T,>({
   placeholder,
   fieldAttributesProps,
   onChange,
+  size = "md",
   labelMapper = (option: T) => (option as unknown as Option).label,
   valueMapper = (option: T) => (option as unknown as Option).value,
   ...props
@@ -61,14 +64,17 @@ export const Select = <T,>({
       <div
         ref={ref}
         className={clsx(
-          `ui-border ui-border-solid ui-rounded-2lg ui-h-14 ui-px-5 ui-w-full ui-relative
+          `ui-border ui-border-solid ui-rounded ui-px-5 ui-w-full ui-relative
          ui-bg-white dark:ui-bg-dark-blue dark:ui-text-white ui-text-sm ui-flex ui-items-center
          ui-justify-between ui-select-none`,
           {
             "ui-cursor-not-allowed": disabled,
             "ui-border-black-200 dark:ui-border-black-400": !hasError || isOpen,
             "ui-border-red-400 ui-text-red-400 dark:ui-text-red-400": hasError && !isOpen,
-            "ui-rounded-bl-none ui-rounded-br-none": isOpen
+            "ui-rounded-bl-none ui-rounded-br-none": isOpen,
+            "ui-h-14": size === "lg",
+            "ui-h-12": size === "md",
+            "ui-h-8": size === "sm"
           },
           className
         )}
@@ -79,17 +85,16 @@ export const Select = <T,>({
         {...props}
       >
         {value ? label : <span className="ui-text-black-300">{placeholder}</span>}
-        <span
+
+        <ArrowDropdownDownIcon
           className={clsx("ui-transition-transform ui-text-black-200 dark:ui-text-white", {
             "ui-transform ui-rotate-180 ": isOpen
           })}
-        >
-          *
-        </span>
+        />
         {isOpen && (
           <div
             className={`ui-absolute ui-w-full ui--left-px ui-top-full ui-border ui-border-solid
-          ui-border-black-200 dark:ui-border-black-400 ui-box-content ui-rounded-bl-2lg ui-rounded-br-2lg
+          ui-border-black-200 dark:ui-border-black-400 ui-box-content ui-rounded-bl ui-rounded-br
           ui-bg-white dark:ui-bg-dark-blue ui-z-10`}
           >
             <ul className={clsx("ui-max-h-56 ui-overflow-auto", classes.scroll)}>
@@ -98,13 +103,13 @@ export const Select = <T,>({
                   key={valueMapper(option)}
                   className={clsx(
                     `dark:even:ui-bg-navy-dark-1 ui-border-b ui-border-solid ui-border-black-200 dark:ui-border-0
-                   last:ui-border-b-0 hover:ui-bg-black-100 dark:hover:ui-bg-navy
-                   last:ui-rounded-bl-2lg`,
-                    { "last:ui-rounded-br-2lg": !hasOptionsScroll }
+                   last:ui-border-b-0 hover:ui-bg-gray-100 dark:hover:ui-bg-navy
+                   last:ui-rounded-bl`,
+                    { "last:ui-rounded-br": !hasOptionsScroll }
                   )}
                 >
                   <div
-                    className="ui-py-4 ui-px-5"
+                    className="ui-py-3 ui-px-5"
                     role="button"
                     tabIndex={index}
                     onClick={() => handleSelect(option)}
