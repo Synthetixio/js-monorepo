@@ -17,13 +17,13 @@ const useGetLiquidationDataQuery = (
 		['liquidations', 'info', ctx.networkId, walletAddress],
 		async () => {
 			const {
-				contracts: { Liquidations },
+				contracts: { Liquidator },
 			} = ctx.snxjs!;
 			const [liquidationRatio, liquidationDelay, liquidationDeadlineForAccount] = await Promise.all(
 				[
-					Liquidations.liquidationRatio(),
-					Liquidations.liquidationDelay(),
-					Liquidations.getLiquidationDeadlineForAccount(walletAddress),
+					Liquidator.liquidationRatio(),
+					Liquidator.liquidationDelay(),
+					Liquidator.getLiquidationDeadlineForAccount(walletAddress),
 				]
 			);
 			return {
