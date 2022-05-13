@@ -1,10 +1,11 @@
 import clsx from "clsx";
 import { Card } from "components/Card/Card";
+import CloseIcon from "components/Icons/CloseIcon";
 import { useOnClickOutside } from "hooks/useOnClickOutside";
 import React, { useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
-export interface Props {
+export interface DialogProps {
   className?: string;
   wrapperClass?: string;
   open: boolean;
@@ -14,7 +15,7 @@ export interface Props {
   hideCloseIcon?: boolean;
 }
 
-export const Dialog: React.FC<Props> = ({
+export const Dialog: React.FC<DialogProps> = ({
   className,
   wrapperClass,
   open,
@@ -56,12 +57,10 @@ export const Dialog: React.FC<Props> = ({
           defaultClass="md:ui-rounded-lg ui-p-4 sm:ui-p-6"
         >
           {!hideCloseIcon && (
-            <button
+            <CloseIcon
               className="ui-absolute ui-top-4 ui-right-4 ui-text-xl ui-cursor-pointer"
               onClick={onClose}
-            >
-              x
-            </button>
+            />
           )}
           <div className={clsx(className, "ui-px-5 ui-text-center")}>{children}</div>
         </Card>

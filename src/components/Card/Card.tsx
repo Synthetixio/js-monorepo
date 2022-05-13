@@ -1,23 +1,26 @@
 import clsx from "clsx";
 import { forwardRef, ReactNode } from "react";
 
-export interface Props {
+export type CardVariant =
+  | "default"
+  | "gray"
+  | "standard"
+  | "primary"
+  | "blue"
+  | "purple"
+  | "orange"
+  | "pink"
+  | "dark-blue"
+  | "rainbow";
+
+export interface CardProps {
   className?: string;
   defaultClass?: string;
   children?: ReactNode;
-  variant?:
-    | "default"
-    | "gray"
-    | "standard"
-    | "primary"
-    | "blue"
-    | "purple"
-    | "orange"
-    | "pink"
-    | "rainbow";
+  variant?: CardVariant;
 }
 
-const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, Props> = (
+const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
   {
     className = "",
     defaultClass = "ui-rounded ui-my-2 ui-p-4 sm:ui-p-6",
@@ -38,6 +41,7 @@ const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, Props> = (
         "ui-gradient-orange ui-text-white": variant === "orange",
         "ui-gradient-pink ui-text-white": variant === "pink",
         "ui-gradient-rainbow ui-text-white": variant === "rainbow",
+        "ui-bg-dark-blue ui-text-white": variant === "dark-blue",
         "ui-border dark:ui-border-black ui-bg-white ui-border-gray-200 dark:ui-bg-gray-800 dark:ui-text-white":
           variant === "standard"
       })}

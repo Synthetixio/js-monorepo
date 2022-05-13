@@ -1,101 +1,94 @@
 {
-	"root": true,
-	"parser": "@typescript-eslint/parser",
-	"parserOptions": {
-		"ecmaVersion": 2020,
-		"sourceType": "module",
-		"ecmaFeatures": {
-			"jsx": true
-		}
-	},
-	"settings": {
-		"react": {
-			"version": "detect"
-		}
-	},
-	"env": {
-		"amd": true,
-		"jest": true,
-		"node": true,
-		"browser": true
-	},
-	"plugins": ["simple-import-sort"],
-	"extends": [
-		"eslint:recommended",
-		"plugin:@typescript-eslint/eslint-recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:react/recommended",
-		"plugin:jsx-a11y/recommended",
-		"plugin:react-hooks/recommended",
-		"plugin:prettier/recommended"
-	],
-	"overrides": [
-		{
-			"files": ["**/*.stories.*"],
-			"rules": {
-				"import/no-anonymous-default-export": "off"
-			}
-		}
-	],
-	"rules": {
-		"prettier/prettier": ["error", {}, { "usePrettierrc": true }],
-		// https://github.com/lydell/eslint-plugin-simple-import-sort
-		"simple-import-sort/imports": "error",
-		"simple-import-sort/exports": "error",
-		// https://eslint.org/docs/rules/
-		"no-var": "error",
-		"no-console": "warn",
-		"prefer-const": "error",
-		"no-else-return": "error",
-		"no-floating-decimal": "error",
-		"eqeqeq": ["error", "smart"],
-		"comma-dangle": ["error", "never"],
-		"curly": ["error", "multi-or-nest", "consistent"],
-		"no-empty": [
-			"error",
-			{
-				"allowEmptyCatch": true
-			}
-		],
-		// https://github.com/yannickcr/eslint-plugin-react
-		"react/prop-types": "off",
-		"react/display-name": "off",
-		"react/jsx-pascal-case": "error",
-		"react/react-in-jsx-scope": "off",
-		"react/self-closing-comp": "error",
-		"react/jsx-no-useless-fragment": "error",
-		"react/void-dom-elements-no-children": "error",
-		"react/jsx-fragments": ["error", "syntax"],
-		"react/jsx-boolean-value": ["error", "never"],
-		"react/jsx-curly-brace-presence": ["error", "never"],
-		"react/jsx-sort-props": [
-			"error",
-			{
-				"callbacksLast": true,
-				"shorthandFirst": true,
-				"shorthandLast": false,
-				"ignoreCase": true,
-				"noSortAlphabetically": false,
-				"reservedFirst": true
-			}
-		],
-		"react/function-component-definition": [
-			2,
-			{
-				"namedComponents": "arrow-function",
-				"unnamedComponents": "arrow-function"
-			}
-		],
-		// https://github.com/typescript-eslint/typescript-eslint
-		"@typescript-eslint/explicit-module-boundary-types": "off",
-		// https://github.com/jsx-eslint/eslint-plugin-jsx-a11y
-		"jsx-a11y/anchor-is-valid": [
-			"error",
-			{
-				"components": ["Link"],
-				"specialLink": ["hrefLeft", "hrefRight"],
-				"aspects": ["invalidHref", "preferButton"]
-			}
-		]
-	}
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "env": {
+    "amd": true,
+    "jest": true,
+    "node": true,
+    "browser": true
+  },
+  "plugins": ["simple-import-sort"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.stories.*"],
+      "rules": {
+        "import/no-anonymous-default-export": "off"
+      }
+    }
+  ],
+  "rules": {
+    "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
+    // https://github.com/lydell/eslint-plugin-simple-import-sort
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    // https://eslint.org/docs/rules/
+    "no-var": "error",
+    "no-console": "warn",
+    "prefer-const": "error",
+    "no-else-return": "error",
+    "no-floating-decimal": "error",
+    "eqeqeq": ["error", "smart"],
+    "comma-dangle": ["error", "never"],
+    "curly": ["error", "multi-or-nest", "consistent"],
+    "no-empty": [
+      "error",
+      {
+        "allowEmptyCatch": true
+      }
+    ],
+    // https://github.com/yannickcr/eslint-plugin-react
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "react/jsx-pascal-case": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/self-closing-comp": "error",
+    "react/jsx-no-useless-fragment": "error",
+    "react/void-dom-elements-no-children": "error",
+    "react/jsx-fragments": ["error", "syntax"],
+    "react/jsx-boolean-value": ["error", "never"],
+    "react/jsx-curly-brace-presence": ["error", "never"],
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "callbacksLast": true,
+        "shorthandFirst": true,
+        "shorthandLast": false,
+        "ignoreCase": true,
+        "noSortAlphabetically": false,
+        "reservedFirst": true
+      }
+    ],
+    // https://github.com/typescript-eslint/typescript-eslint
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
+      }
+    ]
+  }
 }

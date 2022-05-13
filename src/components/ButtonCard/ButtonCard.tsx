@@ -1,19 +1,21 @@
 import clsx from "clsx";
 
-export interface Props {
+export interface ButtonCardProps {
   className?: string;
   onClick?: () => void;
   direction?: "left" | "right";
   headline: string;
   subline?: string;
+  sublineFirst?: boolean;
 }
 
-export const ButtonCard: React.FC<Props> = ({
+export const ButtonCard: React.FC<ButtonCardProps> = ({
   direction = "right",
   headline,
   subline,
   onClick,
-  className
+  className,
+  sublineFirst
 }) => {
   return (
     <button
@@ -24,22 +26,27 @@ export const ButtonCard: React.FC<Props> = ({
       onClick={onClick}
     >
       <div className="ui-bg-dark-blue ui-relative ui-rounded ui-p-6">
-        <h4
-          className={clsx("ui-tg-main ui-text-gray-650 ui-w-full", {
-            "ui-text-left": direction === "left",
-            "ui-text-right": direction === "right"
-          })}
-        >
-          {subline}
-        </h4>
-        <h3
-          className={clsx("ui-tg-title-h5 ui-text-white ui-w-full", {
-            "ui-text-left": direction === "left",
-            "ui-text-right": direction === "right"
-          })}
-        >
-          {headline}
-        </h3>
+        <div className="ui-flex ui-flex-col">
+          <h4
+            className={clsx("ui-tg-main ui-text-gray-650 ui-w-full", {
+              "ui-text-left": direction === "left",
+              "ui-text-right": direction === "right",
+              "ui-order-2": !sublineFirst
+            })}
+          >
+            {subline}
+          </h4>
+          <h3
+            className={clsx("ui-tg-title-h5 ui-text-white ui-w-full", {
+              "ui-text-left": direction === "left",
+              "ui-text-right": direction === "right",
+              "ui-order-1": !sublineFirst
+            })}
+          >
+            {headline}
+          </h3>
+        </div>
+
         <div
           className={clsx("ui-absolute ui-top-1/2 ui--translate-y-1/2", {
             "ui-left-8": direction === "right",
