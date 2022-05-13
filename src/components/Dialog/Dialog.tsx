@@ -5,7 +5,7 @@ import { useOnClickOutside } from "hooks/useOnClickOutside";
 import React, { useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
-export interface Props {
+export interface DialogProps {
   className?: string;
   wrapperClass?: string;
   open: boolean;
@@ -15,7 +15,7 @@ export interface Props {
   hideCloseIcon?: boolean;
 }
 
-export const Dialog: React.FC<Props> = ({
+export const Dialog: React.FC<DialogProps> = ({
   className,
   wrapperClass,
   open,

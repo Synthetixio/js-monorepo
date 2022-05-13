@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-export interface Props {
+export interface ButtonCardProps {
   className?: string;
   onClick?: () => void;
   direction?: "left" | "right";
@@ -9,7 +9,7 @@ export interface Props {
   sublineFirst?: boolean;
 }
 
-export const ButtonCard: React.FC<Props> = ({
+export const ButtonCard: React.FC<ButtonCardProps> = ({
   direction = "right",
   headline,
   subline,

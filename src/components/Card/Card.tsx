@@ -13,14 +13,14 @@ export type CardVariant =
   | "dark-blue"
   | "rainbow";
 
-export interface Props {
+export interface CardProps {
   className?: string;
   defaultClass?: string;
   children?: ReactNode;
   variant?: CardVariant;
 }
 
-const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, Props> = (
+const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
   {
     className = "",
     defaultClass = "ui-rounded ui-my-2 ui-p-4 sm:ui-p-6",

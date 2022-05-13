@@ -1,14 +1,19 @@
 import clsx from "clsx";
 import { ArrowLinkOffIcon } from "components/Icons/ArrowLinkOffIcon";
 
-export interface Props {
+export interface ExternalLinkProps {
   className?: string;
   link: string;
   text: string;
   withoutIcon?: boolean;
 }
 
-export const ExternalLink: React.FC<Props> = ({ className, link, text, withoutIcon }) => {
+export const ExternalLink: React.FC<ExternalLinkProps> = ({
+  className,
+  link,
+  text,
+  withoutIcon
+}) => {
   return (
     <a
       className={clsx(

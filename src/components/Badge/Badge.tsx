@@ -11,7 +11,7 @@ export type BadgeVariant =
   | "purple"
   | "pink";
 
-export interface Props {
+export interface BadgeProps {
   variant?: BadgeVariant;
   className?: string;
   defaultClass?: string;
@@ -29,7 +29,7 @@ const badgeColors = {
   pink: "bg-pink-100 text-pink-800 text-xs dark:bg-pink-200 dark:text-pink-900"
 };
 
-export const Badge: React.FC<Props> = ({
+export const Badge: React.FC<BadgeProps> = ({
   className,
   defaultClass = "text-xs font-semibold px-2.5 py-0.5 rounded",
   variant = "default",
