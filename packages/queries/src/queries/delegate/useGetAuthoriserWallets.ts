@@ -23,10 +23,11 @@ const useGetAuthoriserWallets = (
 			.filter(({ canMint, canBurn, canClaim }) => canMint || canBurn || canClaim)
 			.map(({ authoriser, canMint, canBurn, canClaim, canExchange }) => ({
 				address: authoriser,
-				canAll: canMint && canBurn && canClaim && canExchange,
-				canMint,
-				canBurn,
-				canClaim,
+				canAll: Boolean(canMint && canBurn && canClaim && canExchange),
+				canMint: Boolean(canMint),
+				canBurn: Boolean(canBurn),
+				canClaim: Boolean(canClaim),
+				canExchange: Boolean(canExchange),
 			}));
 	});
 };

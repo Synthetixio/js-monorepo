@@ -27,11 +27,11 @@ const useGetDelegateWallets = (
 			)
 			.map(({ delegate, canMint, canBurn, canClaim, canExchange }) => ({
 				address: delegate,
-				canAll: canMint && canBurn && canClaim && canExchange,
-				canMint,
-				canBurn,
-				canClaim,
-				canExchange,
+				canAll: Boolean(canMint && canBurn && canClaim && canExchange),
+				canMint: Boolean(canMint),
+				canBurn: Boolean(canBurn),
+				canClaim: Boolean(canClaim),
+				canExchange: Boolean(canExchange),
 			}));
 	});
 };
