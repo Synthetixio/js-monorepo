@@ -47,6 +47,7 @@ export const Accordion: React.FC<AccordionProps> = ({
           />
         )}
       </div>
+      {/*  TODO: update the transition package */}
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
       {/* @ts-ignore */}
       <CSSTransition
