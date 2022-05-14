@@ -1,73 +1,34 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import request, { gql } from 'graphql-request';
-
 import { DelegationWallet } from '../../types';
-import { DELEGATE_GRAPH_ENDPOINT } from './constants';
 import { QueryContext } from '../../context';
+import { useGetDelegatedWallets } from '../../../generated/mainSubgraphQueries';
 
 const useGetAuthoriserWallets = (
 	ctx: QueryContext,
-	delegationWallet: string | null,
+	delegationWallet: string,
 	options?: UseQueryOptions<[DelegationWallet]>
 ) => {
-	return useQuery<[DelegationWallet]>(
-		['delegate', 'authorizers', ctx.networkId, delegationWallet],
-		async () => {
-			const { delegatedWallets } = await request(
-				DELEGATE_GRAPH_ENDPOINT,
-				gql`
-					query getAuthoriserWallets($delegate: String) {
-						delegatedWallets(first: 100, where: { delegate: $delegate }) {
-							authoriser
-							canMint
-							canBurn
-							canClaim
-						}
-					}
-				`,
-				{
-					delegate: delegationWallet,
-				}
-			);
-
-			return delegatedWallets
-				.filter(
-					({
-						canMint,
-						canBurn,
-						canClaim,
-					}: {
-						canMint: boolean;
-						canBurn: boolean;
-						canClaim: boolean;
-					}) => canMint || canBurn || canClaim
-				)
-				.map(
-					({
-						authoriser,
-						canMint,
-						canBurn,
-						canClaim,
-					}: {
-						authoriser: string;
-						canMint: boolean;
-						canBurn: boolean;
-						canClaim: boolean;
-					}) => ({
-						address: authoriser,
-						canMint,
-						canBurn,
-						canClaim,
-					})
-				);
-		},
+	const getDelegatedWalletsQuery = useGetDelegatedWallets(
+		ctx.subgraphEndpoints.subgraph,
 		{
-			enabled: ctx.networkId != null && !!delegationWallet,
+			first: 100,
+			where: { delegate: delegationWallet },
 			...options,
-			refetchInterval: false,
-			refetchIntervalInBackground: false,
-		}
+		},
+		{ canMint: true, canBurn: true, canClaim: true, canExchange: true, authoriser: true }
 	);
+	return useQuery([getDelegatedWalletsQuery.isFetching], async () => {
+		if (!getDelegatedWalletsQuery.data) return undefined;
+		return getDelegatedWalletsQuery.data
+			.filter(({ canMint, canBurn, canClaim }) => canMint || canBurn || canClaim)
+			.map(({ authoriser, canMint, canBurn, canClaim, canExchange }) => ({
+				address: authoriser,
+				canAll: Boolean(canMint && canBurn && canClaim && canExchange),
+				canMint: Boolean(canMint),
+				canBurn: Boolean(canBurn),
+				canClaim: Boolean(canClaim),
+				canExchange: Boolean(canExchange),
+			}));
+	});
 };
-
 export default useGetAuthoriserWallets;
