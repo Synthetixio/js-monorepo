@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from 'react-query';
+import { UseQueryOptions } from 'react-query';
 import { DelegationWallet } from '../../types';
 import { QueryContext } from '../../context';
 import { useGetDelegatedWallets } from '../../../generated/mainSubgraphQueries';
@@ -17,9 +17,11 @@ const useGetAuthoriserWallets = (
 		},
 		{ canMint: true, canBurn: true, canClaim: true, canExchange: true, authoriser: true }
 	);
-	return useQuery([getDelegatedWalletsQuery.isFetching], async () => {
-		if (!getDelegatedWalletsQuery.data) return undefined;
-		return getDelegatedWalletsQuery.data
+	if (!getDelegatedWalletsQuery.data) return undefined;
+
+	return {
+		...getDelegatedWalletsQuery,
+		data: getDelegatedWalletsQuery.data
 			.filter(({ canMint, canBurn, canClaim }) => canMint || canBurn || canClaim)
 			.map(({ authoriser, canMint, canBurn, canClaim, canExchange }) => ({
 				address: authoriser,
@@ -28,7 +30,7 @@ const useGetAuthoriserWallets = (
 				canBurn: Boolean(canBurn),
 				canClaim: Boolean(canClaim),
 				canExchange: Boolean(canExchange),
-			}));
-	});
+			})),
+	};
 };
 export default useGetAuthoriserWallets;
