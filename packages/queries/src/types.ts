@@ -279,8 +279,8 @@ export type DelegationWallet = {
 	canMint: boolean;
 	canBurn: boolean;
 	canClaim: boolean;
-	canAll?: boolean;
-	canExchange?: boolean;
+	canAll: boolean;
+	canExchange: boolean;
 };
 
 export type StakingClaimableRewards = {
