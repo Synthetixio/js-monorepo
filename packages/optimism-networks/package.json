@@ -1,6 +1,6 @@
 {
 	"name": "@synthetixio/optimism-networks",
-	"version": "2.69.0",
+	"version": "2.69.0-1",
 	"description": "Javascript library for handling networks on Optimism Layer 2",
 	"source": "./src/index.ts",
 	"main": "./build/node/index.js",
