@@ -1,11 +1,13 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import Wei from '@synthetixio/wei';
+import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 
 type LiquidationData = {
 	liquidationRatio: Wei;
 	liquidationDelay: Wei;
 	liquidationDeadlineForAccount: Wei;
+	liquidationPenalty: Wei;
+	selfLiquidationPenalty: Wei;
 };
 
 const useGetLiquidationDataQuery = (
@@ -19,17 +21,25 @@ const useGetLiquidationDataQuery = (
 			const {
 				contracts: { Liquidator },
 			} = ctx.snxjs!;
-			const [liquidationRatio, liquidationDelay, liquidationDeadlineForAccount] = await Promise.all(
-				[
-					Liquidator.liquidationRatio(),
-					Liquidator.liquidationDelay(),
-					Liquidator.getLiquidationDeadlineForAccount(walletAddress),
-				]
-			);
+			const [
+				liquidationRatio,
+				liquidationDelay,
+				liquidationDeadlineForAccount,
+				liquidationPenalty,
+				selfLiquidationPenalty,
+			] = await Promise.all([
+				Liquidator.liquidationRatio(),
+				Liquidator.liquidationDelay(),
+				Liquidator.getLiquidationDeadlineForAccount(walletAddress),
+				Liquidator.liquidationPenalty(),
+				Liquidator.selfLiquidationPenalty(),
+			]).then((results) => results.map((x) => wei(x)));
 			return {
 				liquidationRatio,
 				liquidationDelay,
 				liquidationDeadlineForAccount,
+				liquidationPenalty,
+				selfLiquidationPenalty,
 			};
 		},
 		{
