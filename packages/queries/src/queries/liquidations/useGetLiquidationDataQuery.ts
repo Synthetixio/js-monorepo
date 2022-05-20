@@ -6,6 +6,8 @@ type LiquidationData = {
 	liquidationRatio: Wei;
 	liquidationDelay: Wei;
 	liquidationDeadlineForAccount: Wei;
+	liquidationPenalty: Wei;
+	selfLiquidationPenalty: Wei;
 };
 
 const useGetLiquidationDataQuery = (
