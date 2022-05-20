@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import Wei from '@synthetixio/wei';
+import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 
 type LiquidationData = {
@@ -31,6 +31,7 @@ const useGetLiquidationDataQuery = (
 				Liquidator.getLiquidationDeadlineForAccount(walletAddress),
 				Liquidator.liquidationPenalty(),
 				Liquidator.selfLiquidationPenalty(),
+			]).then((results) => results.map((x) => wei(x)));
 			return {
 				liquidationRatio,
 				liquidationDelay,
