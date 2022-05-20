@@ -1,6 +1,7 @@
 import clsx from "clsx";
+import { ButtonHTMLAttributes } from "react";
 
-export interface ButtonCardProps {
+export interface ButtonCardProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   onClick?: () => void;
   direction?: "left" | "right";
@@ -15,7 +16,8 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({
   subline,
   onClick,
   className,
-  sublineFirst
+  sublineFirst,
+  ...rest
 }) => {
   return (
     <button
@@ -24,6 +26,7 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({
         "ui-gradient-rainbow ui-rounded ui-w-full ui-cursor-pointer ui-p-[1px]"
       )}
       onClick={onClick}
+      {...rest}
     >
       <div className="ui-bg-dark-blue ui-relative ui-rounded ui-p-6">
         <div className="ui-flex ui-flex-col">

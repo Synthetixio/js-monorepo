@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 
 export type BadgeVariant =
   | "default"
@@ -11,7 +11,7 @@ export type BadgeVariant =
   | "purple"
   | "pink";
 
-export interface BadgeProps {
+export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
   className?: string;
   defaultClass?: string;
@@ -33,7 +33,12 @@ export const Badge: React.FC<BadgeProps> = ({
   className,
   defaultClass = "text-xs font-semibold px-2.5 py-0.5 rounded",
   variant = "default",
-  children
+  children,
+  ...props
 }) => {
-  return <span className={clsx(className, defaultClass, badgeColors[variant])}>{children}</span>;
+  return (
+    <span {...props} className={clsx(className, defaultClass, badgeColors[variant])}>
+      {children}
+    </span>
+  );
 };

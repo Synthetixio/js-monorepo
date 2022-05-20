@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { forwardRef, ReactNode } from "react";
+import { forwardRef, HTMLAttributes, ReactNode } from "react";
 
 export type CardVariant =
   | "default"
@@ -13,7 +13,7 @@ export type CardVariant =
   | "dark-blue"
   | "rainbow";
 
-export interface CardProps {
+export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   defaultClass?: string;
   children?: ReactNode;
@@ -25,7 +25,8 @@ const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
     className = "",
     defaultClass = "ui-rounded ui-my-2 ui-p-4 sm:ui-p-6",
     children,
-    variant = "default"
+    variant = "default",
+    ...props
   },
   ref
 ) => {
@@ -45,6 +46,7 @@ const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
         "ui-border dark:ui-border-black ui-bg-white ui-border-gray-200 dark:ui-bg-gray-800 dark:ui-text-white":
           variant === "standard"
       })}
+      {...props}
     >
       {children}
     </div>
