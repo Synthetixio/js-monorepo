@@ -1,0 +1,11 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.format": true
+  },
+  "eslint.enable": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": ["json", { "language": "typescript", "autoFix": true }]
+}
