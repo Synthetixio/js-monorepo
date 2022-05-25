@@ -14,18 +14,22 @@ export type CardVariant =
   | 'rainbow';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
+  rounded?: string;
   className?: string;
-  defaultClass?: string;
+  wrapperClassName?: string;
   children?: ReactNode;
   variant?: CardVariant;
+  showBorder?: boolean;
 }
 
 const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
   {
     className = '',
-    defaultClass = 'ui-rounded ui-my-2 ui-p-4 sm:ui-p-6',
+    wrapperClassName = 'ui-my-2',
     children,
     variant = 'default',
+    rounded = 'ui-rounded',
+    showBorder = false,
     ...props
   },
   ref
@@ -33,7 +37,7 @@ const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
   return (
     <div
       ref={ref}
-      className={clsx('ui-shadow-md', className, defaultClass, {
+      className={clsx('ui-shadow-md ui-p-[1px]', rounded, wrapperClassName, {
         'ui-gradient-gray-2 ui-text-white': variant === 'default',
         'ui-gradient-gray-1 ui-text-white': variant === 'gray',
         'ui-gradient-primary': variant === 'primary',
@@ -48,7 +52,13 @@ const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
       })}
       {...props}
     >
-      {children}
+      <div
+        className={clsx('ui-h-full ui-w-full ui-p-4 sm:ui-p-5', rounded, className, {
+          'ui-border-2 ui-border-black': variant === 'default' && showBorder
+        })}
+      >
+        {children}
+      </div>
     </div>
   );
 };
