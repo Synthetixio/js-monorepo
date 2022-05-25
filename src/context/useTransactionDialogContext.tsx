@@ -1,7 +1,7 @@
-import { Dialog, Spinner } from "components";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { providers } from "ethers";
 import { TransactionNotifier } from "@synthetixio/transaction-notifier";
+import { Dialog, Spinner } from "components";
+import { providers } from "ethers";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 type TxState = "signing" | "mining" | "failed" | "confirmed" | "error";
 
@@ -43,20 +43,20 @@ const Svg = ({ txState }: Record<"txState", TxState>) => {
       />
       <defs>
         <filter
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+          height="94"
           id="filter0_d_1447_13624"
+          width="94"
           x="0"
           y="0"
-          width="94"
-          height="94"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
+            result="hardAlpha"
             type="matrix"
             values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
           />
           <feOffset />
           <feGaussianBlur stdDeviation="7.5" />
@@ -64,11 +64,11 @@ const Svg = ({ txState }: Record<"txState", TxState>) => {
             type="matrix"
             values="0 0 0 0 1 0 0 0 0 0.843137 0 0 0 0 0.360784 0 0 0 0.6 0"
           />
-          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1447_13624" />
+          <feBlend in2="BackgroundImageFix" mode="normal" result="effect1_dropShadow_1447_13624" />
           <feBlend
-            mode="normal"
             in="SourceGraphic"
             in2="effect1_dropShadow_1447_13624"
+            mode="normal"
             result="shape"
           />
         </filter>
@@ -113,7 +113,7 @@ const TransactionDialogContextProvider: React.FC<{
         setTxHash
       }}
     >
-      <Dialog open={visible} onClose={() => setVisible(false)} disableClose>
+      <Dialog disableClose open={visible} onClose={() => setVisible(false)}>
         <div className="ui-flex ui-flex-col ui-items-center">
           <Svg txState={state} />
           <h4 className="ui-tg-title-h4">Transaction Pending</h4>

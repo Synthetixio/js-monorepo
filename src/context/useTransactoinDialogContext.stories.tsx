@@ -1,10 +1,9 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { providers } from "ethers";
 
 import TransactionDialogContextProvider, {
   useTransactionModalContext
 } from "./useTransactionDialogContext";
-
-import { providers } from "ethers";
 
 export default {
   title: "Transaction Dialog",
