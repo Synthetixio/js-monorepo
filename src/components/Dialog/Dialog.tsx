@@ -50,11 +50,12 @@ export const Dialog: React.FC<DialogProps> = ({
       >
         <Card
           ref={ref}
-          className={clsx(
+          showBorder
+          rounded="ui-rounded-2xl"
+          wrapperClassName={clsx(
             wrapperClass,
             "ui-overflow-y-auto ui-relative ui-w-full ui-max-w-md ui-h-full ui-max-h-full md:ui-h-auto"
           )}
-          defaultClass="md:ui-rounded-lg ui-p-4 sm:ui-p-6"
         >
           {!hideCloseIcon && (
             <CloseIcon
