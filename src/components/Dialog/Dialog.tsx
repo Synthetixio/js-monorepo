@@ -1,9 +1,9 @@
-import clsx from "clsx";
-import { Card } from "components/Card/Card";
-import CloseIcon from "components/Icons/CloseIcon";
-import { useOnClickOutside } from "hooks/useOnClickOutside";
-import React, { useEffect, useRef } from "react";
-import { CSSTransition } from "react-transition-group";
+import clsx from 'clsx';
+import { Card } from 'components/Card/Card';
+import CloseIcon from 'components/Icons/CloseIcon';
+import { useOnClickOutside } from 'hooks/useOnClickOutside';
+import React, { useEffect, useRef } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 export interface DialogProps {
   className?: string;
@@ -28,8 +28,8 @@ export const Dialog: React.FC<DialogProps> = ({
   useOnClickOutside(ref, () => !disableClose && onClose?.());
 
   useEffect(() => {
-    if (open) document.documentElement.classList.add("stop-scrolling");
-    else document.documentElement.classList.remove("stop-scrolling");
+    if (open) document.documentElement.classList.add('stop-scrolling');
+    else document.documentElement.classList.remove('stop-scrolling');
   }, [open]);
   const nodeRef = useRef(null);
 
@@ -52,7 +52,7 @@ export const Dialog: React.FC<DialogProps> = ({
           ref={ref}
           className={clsx(
             wrapperClass,
-            "ui-overflow-y-auto ui-relative ui-w-full ui-max-w-md ui-h-full ui-max-h-full md:ui-h-auto"
+            'ui-overflow-y-auto ui-relative ui-w-full ui-max-w-md ui-h-full ui-max-h-full md:ui-h-auto'
           )}
           defaultClass="md:ui-rounded-lg ui-p-4 sm:ui-p-6"
         >
@@ -62,7 +62,7 @@ export const Dialog: React.FC<DialogProps> = ({
               onClick={onClose}
             />
           )}
-          <div className={clsx(className, "ui-px-5 ui-text-center")}>{children}</div>
+          <div className={clsx(className, 'ui-px-5 ui-text-center')}>{children}</div>
         </Card>
       </div>
     </CSSTransition>

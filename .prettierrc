@@ -5,7 +5,7 @@
   "endOfLine": "auto",
   "quoteProps": "as-needed",
   "printWidth": 100,
-  "singleQuote": false,
+  "singleQuote": true,
   "arrowParens": "always",
   "trailingComma": "none",
   "bracketSpacing": true,

@@ -1,9 +1,9 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { Spinner } from "./Spinner";
+import { Spinner } from './Spinner';
 
 export default {
-  title: "Spinner",
+  title: 'Spinner',
   component: Spinner,
   decorators: [(Story) => <Story />]
 } as ComponentMeta<typeof Spinner>;
@@ -13,5 +13,5 @@ const Template: ComponentStory<typeof Spinner> = (args) => <Spinner {...args} />
 export const Primary = Template.bind({});
 
 Primary.args = {
-  variant: "default"
+  variant: 'default'
 };

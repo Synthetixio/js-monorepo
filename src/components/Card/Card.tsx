@@ -1,17 +1,17 @@
-import clsx from "clsx";
-import { forwardRef, HTMLAttributes, ReactNode } from "react";
+import clsx from 'clsx';
+import { forwardRef, HTMLAttributes, ReactNode } from 'react';
 
 export type CardVariant =
-  | "default"
-  | "gray"
-  | "standard"
-  | "primary"
-  | "blue"
-  | "purple"
-  | "orange"
-  | "pink"
-  | "dark-blue"
-  | "rainbow";
+  | 'default'
+  | 'gray'
+  | 'standard'
+  | 'primary'
+  | 'blue'
+  | 'purple'
+  | 'orange'
+  | 'pink'
+  | 'dark-blue'
+  | 'rainbow';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -22,10 +22,10 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 
 const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
   {
-    className = "",
-    defaultClass = "ui-rounded ui-my-2 ui-p-4 sm:ui-p-6",
+    className = '',
+    defaultClass = 'ui-rounded ui-my-2 ui-p-4 sm:ui-p-6',
     children,
-    variant = "default",
+    variant = 'default',
     ...props
   },
   ref
@@ -33,18 +33,18 @@ const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
   return (
     <div
       ref={ref}
-      className={clsx("ui-shadow-md", className, defaultClass, {
-        "ui-gradient-gray-2 ui-text-white": variant === "default",
-        "ui-gradient-gray-1 ui-text-white": variant === "gray",
-        "ui-gradient-primary": variant === "primary",
-        "ui-gradient-blue ui-text-white": variant === "blue",
-        "ui-gradient-purple ui-text-white": variant === "purple",
-        "ui-gradient-orange ui-text-white": variant === "orange",
-        "ui-gradient-pink ui-text-white": variant === "pink",
-        "ui-gradient-rainbow ui-text-white": variant === "rainbow",
-        "ui-bg-dark-blue ui-text-white": variant === "dark-blue",
-        "ui-border dark:ui-border-black ui-bg-white ui-border-gray-200 dark:ui-bg-gray-800 dark:ui-text-white":
-          variant === "standard"
+      className={clsx('ui-shadow-md', className, defaultClass, {
+        'ui-gradient-gray-2 ui-text-white': variant === 'default',
+        'ui-gradient-gray-1 ui-text-white': variant === 'gray',
+        'ui-gradient-primary': variant === 'primary',
+        'ui-gradient-blue ui-text-white': variant === 'blue',
+        'ui-gradient-purple ui-text-white': variant === 'purple',
+        'ui-gradient-orange ui-text-white': variant === 'orange',
+        'ui-gradient-pink ui-text-white': variant === 'pink',
+        'ui-gradient-rainbow ui-text-white': variant === 'rainbow',
+        'ui-bg-dark-blue ui-text-white': variant === 'dark-blue',
+        'ui-border dark:ui-border-black ui-bg-white ui-border-gray-200 dark:ui-bg-gray-800 dark:ui-text-white':
+          variant === 'standard'
       })}
       {...props}
     >

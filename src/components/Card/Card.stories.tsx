@@ -1,9 +1,9 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { Card } from "./Card";
+import { Card } from './Card';
 
 export default {
-  title: "Card",
+  title: 'Card',
   component: Card,
   decorators: [(Story) => <Story />]
 } as ComponentMeta<typeof Card>;

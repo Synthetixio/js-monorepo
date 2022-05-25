@@ -1,9 +1,9 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { Button } from "./Button";
+import { Button } from './Button';
 
 export default {
-  title: "Button",
+  title: 'Button',
   component: Button,
   decorators: [(Story) => <Story />]
 } as ComponentMeta<typeof Button>;
@@ -15,7 +15,7 @@ export const Primary = Template.bind({});
 Primary.args = {
   loading: false,
   disabled: false,
-  variant: "default",
-  children: "Button",
-  size: "lg"
+  variant: 'default',
+  children: 'Button',
+  size: 'lg'
 };

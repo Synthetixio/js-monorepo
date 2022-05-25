@@ -1,9 +1,9 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { ButtonCard } from "./ButtonCard";
+import { ButtonCard } from './ButtonCard';
 
 export default {
-  title: "ButtonCard",
+  title: 'ButtonCard',
   component: ButtonCard,
   decorators: [(Story) => <Story />]
 } as ComponentMeta<typeof ButtonCard>;
@@ -13,6 +13,6 @@ const Template: ComponentStory<typeof ButtonCard> = (args) => <ButtonCard {...ar
 export const Primary = Template.bind({});
 
 Primary.args = {
-  subline: "subline",
-  headline: "headline"
+  subline: 'subline',
+  headline: 'headline'
 };

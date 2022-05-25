@@ -1,4 +1,4 @@
-import { SVGIconProps } from "./types";
+import { SVGIconProps } from './types';
 
 export const ArrowDropdownDownIcon = ({ onClick, className }: SVGIconProps) => (
   <svg
