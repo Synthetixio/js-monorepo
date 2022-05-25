@@ -40,8 +40,8 @@
   "rules": {
     "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
     // https://github.com/lydell/eslint-plugin-simple-import-sort
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
+    "simple-import-sort/imports": "off",
+    "simple-import-sort/exports": "off",
     // https://eslint.org/docs/rules/
     "no-var": "error",
     "no-console": "warn",
@@ -68,7 +68,8 @@
     "react/jsx-fragments": ["error", "syntax"],
     "react/jsx-boolean-value": ["error", "never"],
     "react/jsx-curly-brace-presence": ["error", "never"],
-    "react/jsx-sort-props": [
+    /* Super annoying when importing an SVG from Figma, throws millions of errors */
+    /*     "react/jsx-sort-props": [
       "error",
       {
         "callbacksLast": true,
@@ -78,7 +79,7 @@
         "noSortAlphabetically": false,
         "reservedFirst": true
       }
-    ],
+    ], */
     // https://github.com/typescript-eslint/typescript-eslint
     "@typescript-eslint/explicit-module-boundary-types": "off",
     // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y
