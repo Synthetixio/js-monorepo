@@ -27,6 +27,7 @@ const TransactionDialogContext = createContext<unknown>(null);
 export const useTransactionModalContext = () => {
   return useContext(TransactionDialogContext) as TransactionDialogContextType;
 };
+
 const TransactionDialogContextProvider: React.FC<{
   provider: providers.Web3Provider;
   children: React.ReactNode;
@@ -48,45 +49,26 @@ const TransactionDialogContextProvider: React.FC<{
     }
   }, [txHash, provider]);
 
-  const renderText = () => {
-    switch (state) {
-      case 'confirmed':
-        return (
-          <>
-            <h4 className="ui-tg-title-h4">Transaction Confirmed</h4>
-            <span className="ui-tg-caption ui-text-center ui-text-gray-500">
-              You can now proceed with the dApp.
-            </span>
-          </>
-        );
-      case 'error':
-      case 'failed':
-        return (
-          <>
-            <h4 className="ui-tg-title-h4">Transaction Failed</h4>
-            <span className="ui-tg-caption ui-text-center ui-text-gray-500">
-              While processing your transaction an error occurred.
-            </span>
-          </>
-        );
-      case 'signing':
-        return (
-          <>
-            <h4 className="ui-tg-title-h4">Transaction Signing</h4>
-            <span className="ui-tg-caption ui-text-center ui-text-gray-500">
-              Follow the prompts of your wallet provider to authorize the transaction.
-            </span>
-          </>
-        );
-      default:
-        return (
-          <>
-            <h4 className="ui-tg-title-h4">Transaction Pending</h4>
-            <span className="ui-tg-caption ui-text-center ui-text-gray-500">
-              Waiting for transaction to be included into the next block.
-            </span>
-          </>
-        );
+  const stateText: Record<TxState, Record<string, string>> = {
+    confirmed: {
+      tile: 'Transaction Confirmed',
+      subline: 'You can now proceed with the dApp.'
+    },
+    error: {
+      tile: 'Transaction Failed',
+      subline: 'While processing your transaction an error occurred.'
+    },
+    failed: {
+      tile: 'Transaction Failed',
+      subline: 'While processing your transaction an error occurred.'
+    },
+    signing: {
+      tile: 'Transaction Signing',
+      subline: 'Follow the prompts of your wallet provider and sign the transaction.'
+    },
+    mining: {
+      tile: 'Transaction Pending',
+      subline: 'Waiting for transaction to be included into the next block.'
     }
   };
 
@@ -103,9 +85,12 @@ const TransactionDialogContextProvider: React.FC<{
       <Dialog disableClose open={visible} onClose={() => setVisible(false)}>
         <div className="ui-flex ui-flex-col ui-items-center">
           <TxStateSvg txState={state} />
-          {renderText()}
+          <h4 className="ui-tg-title-h4">{stateText[state].tile}</h4>
+          <span className="ui-tg-caption ui-text-center ui-text-gray-500">
+            {stateText[state].subline}
+          </span>
           {content && (
-            <div className="ui-bg-black ui-rounded ui-w-[314px] ui-h-[73px] ui-my-6">{content}</div>
+            <div className="ui-bg-black ui-rounded ui-w-[314px] ui-py-6 ui-my-6">{content}</div>
           )}
           {state === 'mining' && <Spinner className="ui-mr-2" variant="secondary" />}
         </div>
