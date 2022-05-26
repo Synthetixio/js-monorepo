@@ -1,5 +1,8 @@
 {
 	"name": "root",
+  "workspaces": [
+    "packages/*"
+  ],
 	"private": true,
 	"scripts": {
 		"bootstrap": "lerna bootstrap --hoist",
@@ -26,7 +29,6 @@
 		"eslint-plugin-prettier": "^3.4.0",
 		"husky": "4.2.5",
 		"jest": "^27.0.6",
-		"lerna": "4.0.0",
 		"lint-staged": "10.2.11",
 		"prettier": "^2.3.0",
 		"ts-jest": "^27.0.4",
