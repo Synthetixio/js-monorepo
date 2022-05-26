@@ -4,25 +4,30 @@ import { ArrowLinkOffIcon } from 'components/Icons/ArrowLinkOffIcon';
 export interface ExternalLinkProps {
   className?: string;
   link: string;
-  text: string;
+  text: React.ReactNode;
   withoutIcon?: boolean;
+  border?: boolean;
 }
 
 export const ExternalLink: React.FC<ExternalLinkProps> = ({
   className,
   link,
   text,
-  withoutIcon
+  withoutIcon,
+  border
 }) => {
   return (
     <a
       className={clsx(
         className,
-        'ui-inline-flex ui-items-center ui-text-primary hover:ui-brightness-110 ui-transition ui-ease-out'
+        'ui-py-2 ui-px-2 ui-rounded ui-inline-flex ui-items-center ui-text-primary hover:ui-brightness-110 ui-transition ui-ease-out',
+        {
+          'ui-border ui-border-primary': border
+        }
       )}
       href={link}
-      rel="noreferrer noopener"
-      target="_blank"
+      rel='noreferrer noopener'
+      target='_blank'
     >
       {text}
       {!withoutIcon && <ArrowLinkOffIcon />}
