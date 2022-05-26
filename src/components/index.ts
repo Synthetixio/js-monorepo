@@ -1,9 +1,9 @@
 import '../styles/_build.scss';
 
 import TransactionDialogContextProvider, {
+  TxState,
   useTransactionModalContext
 } from 'context/useTransactionDialogContext';
-import { TxState } from 'context/useTransactionDialogContext';
 
 import { Accordion, AccordionProps } from './Accordion/Accordion';
 import { Badge, BadgeProps } from './Badge/Badge';
