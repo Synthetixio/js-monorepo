@@ -12,6 +12,7 @@ import { ButtonCard, ButtonCardProps } from './ButtonCard/ButtonCard';
 import { Card, CardProps } from './Card/Card';
 import { Checkbox, CheckboxProps } from './Checkbox/Checkbox';
 import { Dialog, DialogProps } from './Dialog/Dialog';
+import { Dropdown, DropdownProps } from './Dropdown/Dropdown';
 import { ExternalLink, ExternalLinkProps } from './ExternalLink/ExternalLink';
 import { FieldAttributesProps } from './FieldAttributes/FieldAttributes';
 import { IconButton, IconButtonProps } from './IconButton/IconButton';
@@ -31,6 +32,7 @@ export {
   Card,
   Checkbox,
   Dialog,
+  Dropdown,
   ExternalLink,
   IconButton,
   Radio,
@@ -51,6 +53,7 @@ export type {
   CardProps,
   CheckboxProps,
   DialogProps,
+  DropdownProps,
   ExternalLinkProps,
   FieldAttributesProps,
   IconButtonProps,

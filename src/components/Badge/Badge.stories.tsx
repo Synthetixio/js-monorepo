@@ -13,6 +13,6 @@ const Template: ComponentStory<typeof Badge> = (args) => <Badge {...args} />;
 export const Primary = Template.bind({});
 
 Primary.args = {
-  variant: 'default',
+  variant: 'success',
   children: 'Badge'
 };

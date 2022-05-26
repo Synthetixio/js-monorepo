@@ -85,16 +85,16 @@ const TransactionDialogContextProvider: React.FC<{
       }}
     >
       <Dialog disableClose open={visible} onClose={() => setVisible(false)}>
-        <div className="ui-flex ui-flex-col ui-items-center">
+        <div className='ui-flex ui-flex-col ui-items-center'>
           <TxStateSvg txState={state} />
-          <h4 className="ui-tg-title-h4">{stateText[state].tile}</h4>
-          <span className="ui-tg-caption ui-text-center ui-text-gray-500">
+          <h4 className='ui-tg-title-h4'>{stateText[state].tile}</h4>
+          <span className='ui-tg-caption ui-text-center ui-text-gray-500'>
             {stateText[state].subline}
           </span>
           {content && (
-            <div className="ui-bg-black ui-rounded ui-w-[314px] ui-py-6 ui-my-6">{content}</div>
+            <div className='ui-bg-black ui-rounded ui-w-[314px] ui-py-6 ui-my-6'>{content}</div>
           )}
-          {state === 'mining' && <Spinner className="ui-mr-2" variant="secondary" />}
+          {state === 'mining' && <Spinner className='ui-mr-2' variant='secondary' />}
         </div>
       </Dialog>
       {children}

@@ -123,12 +123,14 @@ html {
   --color-primary: #00d1ff;
   --color-dark-blue: #0b0b22;
 }
-
 .ui-gradient-primary {
   background: linear-gradient(73.6deg, #85ffc4 2.11%, #5cc6ff 90.45%);
 }
 .ui-gradient-blue {
   background: linear-gradient(180deg, #08021e 0%, #1f0777 146.21%);
+}
+.ui-gradient-dark-blue {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), #402fc8;
 }
 .ui-gradient-purple {
   background: linear-gradient(73.6deg, #8e2de2 2.11%, #4b01e0 90.45%);
@@ -154,13 +156,13 @@ html {
 }
 
 $break-points: (
-  "sm": 640px,
-  "md": 768px,
-  "lg": 1024px,
-  "xl": 1280px,
-  "2xl": 1536px
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+  '2xl': 1536px
 );
 
-$font-family: "Manrope", system-ui, -apple-system,
-  /* Firefox supports this but not yet `system-ui` */ "Segoe UI", Roboto, Helvetica, Arial,
-  sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+$font-family: 'Manrope', system-ui, -apple-system,
+  /* Firefox supports this but not yet `system-ui` */ 'Segoe UI', Roboto, Helvetica, Arial,
+  sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
