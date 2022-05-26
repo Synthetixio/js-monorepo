@@ -1,11 +1,11 @@
-import clsx from "clsx";
-import { ButtonHTMLAttributes } from "react";
+import clsx from 'clsx';
+import { ButtonHTMLAttributes } from 'react';
 
 export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isActive?: boolean;
   rounded?: boolean;
   children: React.ReactNode;
-  size?: "sm" | "md" | "lg";
+  size?: 'sm' | 'md' | 'lg';
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({
@@ -13,7 +13,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
   children,
   className,
   rounded,
-  size = "md",
+  size = 'md',
   ...props
 }) => {
   return (
@@ -24,12 +24,12 @@ export const IconButton: React.FC<IconButtonProps> = ({
         ui-text-white ui-transition-colors ui-ease-out`,
         className,
         {
-          "ui-bg-primary": isActive,
-          "ui-rounded-full": rounded,
-          "ui-rounded": !rounded,
-          "ui-w-14 ui-h-14": size === "md",
-          "ui-w-10 ui-h-10": size === "sm",
-          "ui-w-16 ui-h-16": size === "lg"
+          'ui-bg-primary': isActive,
+          'ui-rounded-full': rounded,
+          'ui-rounded': !rounded,
+          'ui-w-14 ui-h-14': size === 'md',
+          'ui-w-10 ui-h-10': size === 'sm',
+          'ui-w-16 ui-h-16': size === 'lg'
         }
       )}
     >

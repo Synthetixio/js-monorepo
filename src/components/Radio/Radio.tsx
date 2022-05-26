@@ -1,7 +1,7 @@
-import clsx from "clsx";
-import { InputHTMLAttributes } from "react";
+import clsx from 'clsx';
+import { InputHTMLAttributes } from 'react';
 
-import classes from "./Radio.module.scss";
+import classes from './Radio.module.scss';
 
 export interface RadioProps extends InputHTMLAttributes<HTMLInputElement> {
   label: React.ReactNode;
@@ -13,8 +13,8 @@ export interface RadioProps extends InputHTMLAttributes<HTMLInputElement> {
 export const Radio: React.FC<RadioProps> = ({ className, label, onChange, disabled, ...props }) => {
   return (
     <div
-      className={clsx(className, "ui-flex ui-items-center ui-mr-4 ui-mb-4", classes.wrapper, {
-        "ui-opacity-50": disabled
+      className={clsx(className, 'ui-flex ui-items-center ui-mr-4 ui-mb-4', classes.wrapper, {
+        'ui-opacity-50': disabled
       })}
     >
       <input
@@ -26,9 +26,9 @@ export const Radio: React.FC<RadioProps> = ({ className, label, onChange, disabl
       />
       <label
         className={clsx(
-          "ui-flex ui-items-center ui-cursor-pointer dark:ui-text-white ui-select-none",
+          'ui-flex ui-items-center ui-cursor-pointer dark:ui-text-white ui-select-none',
           {
-            "ui-cursor-not-allowed": disabled
+            'ui-cursor-not-allowed': disabled
           }
         )}
         htmlFor={props.id}

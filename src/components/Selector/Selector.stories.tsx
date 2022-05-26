@@ -1,10 +1,10 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import CloseIcon from "components/Icons/CloseIcon";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import CloseIcon from 'components/Icons/CloseIcon';
 
-import { Selector } from "./Selector";
+import { Selector } from './Selector';
 
 export default {
-  title: "Selector",
+  title: 'Selector',
   component: Selector,
   decorators: [(Story) => <Story />]
 } as ComponentMeta<typeof Selector>;

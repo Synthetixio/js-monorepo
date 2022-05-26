@@ -1,9 +1,9 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { Dialog } from "./Dialog";
+import { Dialog } from './Dialog';
 
 export default {
-  title: "Dialog",
+  title: 'Dialog',
   component: Dialog,
   decorators: [(Story) => <Story />]
 } as ComponentMeta<typeof Dialog>;
@@ -14,5 +14,5 @@ export const Primary = Template.bind({});
 
 Primary.args = {
   open: false,
-  children: "test"
+  children: 'test'
 };

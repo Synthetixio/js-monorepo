@@ -22,10 +22,10 @@
     "commit": "cz",
     "clean": "rimraf dist",
     "deploy-storybook": "yarn build-storybook && mkdir -p ./storybook-static/fonts && cp ./src/fonts/* ./storybook-static/fonts/ && gh-pages -d storybook-static",
-    "yalc-publish": "yarn build && yalc push --update",
-    "permission": "chmod u+r+x build.sh"
+    "yalc-publish": "yarn build && yalc push --update"
   },
   "dependencies": {
+    "@synthetixio/transaction-notifier": "^2.70.1",
     "clsx": "^1.1.1",
     "lodash": "^4.17.21",
     "react-transition-group": "^4.4.2"
@@ -67,6 +67,7 @@
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "ethers": "^5.6.7",
     "gh-pages": "^3.2.3",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.2",

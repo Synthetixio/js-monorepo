@@ -1,9 +1,9 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { Radio } from "./Radio";
+import { Radio } from './Radio';
 
 export default {
-  title: "Radio",
+  title: 'Radio',
   component: Radio,
   decorators: [(Story) => <Story />]
 } as ComponentMeta<typeof Radio>;
@@ -18,7 +18,7 @@ const Template: ComponentStory<typeof Radio> = (args) => (
 export const Primary = Template.bind({});
 
 Primary.args = {
-  label: "Radio",
-  name: "form",
+  label: 'Radio',
+  name: 'form',
   disabled: false
 };

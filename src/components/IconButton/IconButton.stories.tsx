@@ -1,10 +1,10 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import CloseIcon from "components/Icons/CloseIcon";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import CloseIcon from 'components/Icons/CloseIcon';
 
-import { IconButton } from "./IconButton";
+import { IconButton } from './IconButton';
 
 export default {
-  title: "IconButton",
+  title: 'IconButton',
   component: IconButton,
   decorators: [(Story) => <Story />]
 } as ComponentMeta<typeof IconButton>;

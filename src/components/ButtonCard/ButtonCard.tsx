@@ -1,17 +1,17 @@
-import clsx from "clsx";
-import { ButtonHTMLAttributes } from "react";
+import clsx from 'clsx';
+import { ButtonHTMLAttributes } from 'react';
 
 export interface ButtonCardProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   onClick?: () => void;
-  direction?: "left" | "right";
+  direction?: 'left' | 'right';
   headline: string;
   subline?: string;
   sublineFirst?: boolean;
 }
 
 export const ButtonCard: React.FC<ButtonCardProps> = ({
-  direction = "right",
+  direction = 'right',
   headline,
   subline,
   onClick,
@@ -23,7 +23,7 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({
     <button
       className={clsx(
         className,
-        "ui-gradient-rainbow ui-rounded ui-w-full ui-cursor-pointer ui-p-[1px]"
+        'ui-gradient-rainbow ui-rounded ui-w-full ui-cursor-pointer ui-p-[1px]'
       )}
       onClick={onClick}
       {...rest}
@@ -31,19 +31,19 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({
       <div className="ui-bg-dark-blue ui-relative ui-rounded ui-p-6">
         <div className="ui-flex ui-flex-col">
           <h4
-            className={clsx("ui-tg-main ui-text-gray-650 ui-w-full", {
-              "ui-text-left": direction === "left",
-              "ui-text-right": direction === "right",
-              "ui-order-2": !sublineFirst
+            className={clsx('ui-tg-main ui-text-gray-650 ui-w-full', {
+              'ui-text-left': direction === 'left',
+              'ui-text-right': direction === 'right',
+              'ui-order-2': !sublineFirst
             })}
           >
             {subline}
           </h4>
           <h3
-            className={clsx("ui-tg-title-h5 ui-text-white ui-w-full", {
-              "ui-text-left": direction === "left",
-              "ui-text-right": direction === "right",
-              "ui-order-1": !sublineFirst
+            className={clsx('ui-tg-title-h5 ui-text-white ui-w-full', {
+              'ui-text-left': direction === 'left',
+              'ui-text-right': direction === 'right',
+              'ui-order-1': !sublineFirst
             })}
           >
             {headline}
@@ -51,9 +51,9 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({
         </div>
 
         <div
-          className={clsx("ui-absolute ui-top-1/2 ui--translate-y-1/2", {
-            "ui-left-8": direction === "right",
-            "ui-right-8 ui-rotate-180": direction === "left"
+          className={clsx('ui-absolute ui-top-1/2 ui--translate-y-1/2', {
+            'ui-left-8': direction === 'right',
+            'ui-right-8 ui-rotate-180': direction === 'left'
           })}
         >
           <svg

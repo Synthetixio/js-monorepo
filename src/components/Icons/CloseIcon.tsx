@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { SVGIconProps } from "./types";
+import { SVGIconProps } from './types';
 
 export default function CloseIcon({ onClick, className }: SVGIconProps) {
   return (

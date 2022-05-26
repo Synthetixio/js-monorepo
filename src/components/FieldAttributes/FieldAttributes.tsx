@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import uniqueId from "lodash/uniqueId";
-import { cloneElement, isValidElement, useEffect, useState } from "react";
+import clsx from 'clsx';
+import uniqueId from 'lodash/uniqueId';
+import { cloneElement, isValidElement, useEffect, useState } from 'react';
 
 export interface FieldAttributesProps {
   label?: React.ReactNode;
@@ -19,11 +19,11 @@ export const FieldAttributes: React.FC<FieldAttributesProps> = ({
   const [id, setId] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    setId(uniqueId("id-"));
+    setId(uniqueId('id-'));
   }, []);
 
   return (
-    <div className={clsx("ui-flex ui-flex-col ui-w-full ui-relative ui-mb-5", className)}>
+    <div className={clsx('ui-flex ui-flex-col ui-w-full ui-relative ui-mb-5', className)}>
       {id ? isValidElement(children) && cloneElement(children, { id }) : children}
 
       {label && (

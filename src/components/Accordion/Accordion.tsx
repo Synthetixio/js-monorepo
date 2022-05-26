@@ -1,8 +1,8 @@
-import clsx from "clsx";
-import { Card, CardVariant } from "components/Card/Card";
-import { ArrowDropdownDownIcon } from "components/Icons/ArrowDropdownDownIcon";
-import { useRef, useState } from "react";
-import { CSSTransition } from "react-transition-group";
+import clsx from 'clsx';
+import { Card, CardVariant } from 'components/Card/Card';
+import { ArrowDropdownDownIcon } from 'components/Icons/ArrowDropdownDownIcon';
+import { useRef, useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 export interface AccordionProps {
   flat?: boolean;
@@ -27,8 +27,8 @@ export const Accordion: React.FC<AccordionProps> = ({
   return (
     <Card className={className} variant={variant}>
       <div
-        className={clsx("ui-flex ui-justify-between ui-items-center ui-select-none", {
-          "ui-cursor-default": flat
+        className={clsx('ui-flex ui-justify-between ui-items-center ui-select-none', {
+          'ui-cursor-default': flat
         })}
         role="button"
         tabIndex={0}
@@ -39,9 +39,9 @@ export const Accordion: React.FC<AccordionProps> = ({
         {!flat && (
           <ArrowDropdownDownIcon
             className={clsx(
-              "ui-transition-transform ui-text-black-600 dark:ui-text-white ui-text-base",
+              'ui-transition-transform ui-text-black-600 dark:ui-text-white ui-text-base',
               {
-                "ui-transform ui-rotate-180 ": isActive
+                'ui-transform ui-rotate-180 ': isActive
               }
             )}
           />

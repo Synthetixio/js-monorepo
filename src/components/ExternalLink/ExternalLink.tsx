@@ -1,5 +1,5 @@
-import clsx from "clsx";
-import { ArrowLinkOffIcon } from "components/Icons/ArrowLinkOffIcon";
+import clsx from 'clsx';
+import { ArrowLinkOffIcon } from 'components/Icons/ArrowLinkOffIcon';
 
 export interface ExternalLinkProps {
   className?: string;
@@ -18,7 +18,7 @@ export const ExternalLink: React.FC<ExternalLinkProps> = ({
     <a
       className={clsx(
         className,
-        "ui-inline-flex ui-items-center ui-text-primary hover:ui-brightness-110 ui-transition ui-ease-out"
+        'ui-inline-flex ui-items-center ui-text-primary hover:ui-brightness-110 ui-transition ui-ease-out'
       )}
       href={link}
       rel="noreferrer noopener"

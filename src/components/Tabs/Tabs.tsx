@@ -1,7 +1,7 @@
-import clsx from "clsx";
-import React, { useCallback, useMemo, useState } from "react";
+import clsx from 'clsx';
+import React, { useCallback, useMemo, useState } from 'react';
 
-import { Tab } from "../Tab/Tab";
+import { Tab } from '../Tab/Tab';
 
 export interface ITabItem {
   id: string;
@@ -57,7 +57,7 @@ export const Tabs: React.FC<TabsProps> = ({
           />
         ))}
       </div>
-      <div className={clsx(contentClassName, "dark:ui-text-white")}>{content}</div>
+      <div className={clsx(contentClassName, 'dark:ui-text-white')}>{content}</div>
     </div>
   );
 };
