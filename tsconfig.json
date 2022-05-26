@@ -20,5 +20,5 @@
     "noEmit": false
   },
   "include": ["src", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/*.stories.tsx"]
 }

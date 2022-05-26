@@ -20,6 +20,7 @@ interface TransactionDialogContextType {
   setContent: Dispatch<SetStateAction<ReactNode | undefined>>;
   state: TxState;
   setVisible: Dispatch<SetStateAction<boolean>>;
+  setState: Dispatch<SetStateAction<TxState>>;
 }
 
 const TransactionDialogContext = createContext<unknown>(null);
@@ -79,7 +80,8 @@ const TransactionDialogContextProvider: React.FC<{
         setVisible,
         state,
         setContent,
-        setTxHash
+        setTxHash,
+        setState
       }}
     >
       <Dialog disableClose open={visible} onClose={() => setVisible(false)}>
