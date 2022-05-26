@@ -39,19 +39,19 @@ export const Dialog: React.FC<DialogProps> = ({
     // @ts-ignore
     <CSSTransition
       unmountOnExit
-      classNames="ui-dialog"
+      classNames='ui-dialog'
       in={open}
       nodeRef={nodeRef}
       timeout={{ enter: 500, exit: 300 }}
     >
       <div
         ref={nodeRef}
-        className="ui-overflow-y-auto ui-bg-overlay ui-overflow-x-hidden ui-fixed ui-right-0 ui-left-0 ui-top-0 ui-z-999 ui-flex ui-justify-center ui-items-center ui-h-screen ui-w-screen ui-max-h-screen"
+        className='ui-overflow-y-auto ui-bg-overlay ui-overflow-x-hidden ui-fixed ui-right-0 ui-left-0 ui-top-0 ui-z-999 ui-flex ui-justify-center ui-items-center ui-h-screen ui-w-screen ui-max-h-screen'
       >
         <Card
           ref={ref}
           showBorder
-          rounded="ui-rounded-2xl"
+          rounded='ui-rounded-2xl'
           wrapperClassName={clsx(
             wrapperClass,
             'ui-overflow-y-auto ui-relative ui-w-full ui-max-w-md ui-h-full ui-max-h-full md:ui-h-auto'
@@ -59,7 +59,7 @@ export const Dialog: React.FC<DialogProps> = ({
         >
           {!hideCloseIcon && (
             <CloseIcon
-              className="ui-absolute ui-top-4 ui-right-4 ui-text-xl ui-cursor-pointer"
+              className='ui-absolute ui-top-4 ui-right-4 ui-text-xl ui-cursor-pointer'
               onClick={onClose}
             />
           )}

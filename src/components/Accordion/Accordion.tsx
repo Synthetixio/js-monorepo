@@ -30,12 +30,12 @@ export const Accordion: React.FC<AccordionProps> = ({
         className={clsx('ui-flex ui-justify-between ui-items-center ui-select-none', {
           'ui-cursor-default': flat
         })}
-        role="button"
+        role='button'
         tabIndex={0}
         onClick={toggleIsActive}
         onKeyDown={toggleIsActive}
       >
-        <h3 className="ui-tg-body">{title}</h3>
+        <h3 className='ui-tg-body'>{title}</h3>
         {!flat && (
           <ArrowDropdownDownIcon
             className={clsx(
@@ -52,7 +52,7 @@ export const Accordion: React.FC<AccordionProps> = ({
       {/* @ts-ignore */}
       <CSSTransition
         unmountOnExit
-        classNames="ui-accordion"
+        classNames='ui-accordion'
         in={isActive || flat}
         nodeRef={nodeRef}
         timeout={300}
