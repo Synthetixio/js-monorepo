@@ -37,10 +37,9 @@ jobs:
       - name: Lints and build
         run: |
           npm ci
-          npm run bootstrap
           npm run lint
           npm run build
-          npm run test-all
+          npm run test
       - name: Update packages version
         run: |
           npm --workspaces version ${{ env.new_version }}

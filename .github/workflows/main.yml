@@ -18,7 +18,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run build
-      - run: npm run test-all
+      - run: npm run test
 
       # publish
       - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
