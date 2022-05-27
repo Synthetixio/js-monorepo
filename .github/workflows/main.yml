@@ -64,7 +64,7 @@ jobs:
         run: |
           ./pull-subgraphs.sh
           node codegen.js
-        working-directory: ./queries
+        working-directory: ./packages/queries
 
       - name: Lint
         run: yarn run lint:sarif
