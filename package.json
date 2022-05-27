@@ -24,7 +24,7 @@
 	},
 	"homepage": "https://github.com/Synthetixio/js-monorepo#readme",
 	"workspaces": [
-		"**/*"
+		"packages/*"
 	],
 	"devDependencies": {
 		"@microsoft/eslint-formatter-sarif": "2.1.7",

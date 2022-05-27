@@ -3,6 +3,6 @@ coverage
 node_modules
 .vscode
 webpack.config.js
-queries/subgraphs
-queries/generated
+packages/queries/subgraphs
+packages/queries/generated
 tests
