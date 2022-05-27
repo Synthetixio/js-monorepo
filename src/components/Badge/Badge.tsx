@@ -11,22 +11,23 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const badgeColors = {
-  success: 'bg-green-light-3 text-green text-xs'
+  success: 'ui-border ui-border-green ui-bg-green ui-text-green ui-text-xs'
 };
 
 export const Badge: React.FC<BadgeProps> = ({
   className,
-  defaultClass = 'text-xs font-semibold px-2.5 py-0.5 rounded',
+  defaultClass = 'ui-text-xs ui-font-semibold ui-px-2.5 ui-py-0.5',
   variant = 'sucess',
   children,
   ...props
 }) => {
   return (
     <span
-      {...props}
-      className={clsx(className, defaultClass, badgeColors[variant as BadgeVariant])}
+      className={clsx(className, 'ui-rounded ui-inline-flex', badgeColors[variant as BadgeVariant])}
     >
-      {children}
+      <span {...props} className={clsx(defaultClass, 'ui-darker-40 ui-rounded')}>
+        {children}
+      </span>
     </span>
   );
 };

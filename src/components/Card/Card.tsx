@@ -38,7 +38,7 @@ const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
   return (
     <div
       ref={ref}
-      className={clsx('ui-shadow-md ui-p-[1px] ui-border', rounded, wrapperClassName, {
+      className={clsx('ui-shadow-md ui-p-[1px]', rounded, wrapperClassName, {
         'ui-gradient-gray-2 ui-text-white': variant === 'default',
         'ui-gradient-gray-1 ui-text-white': variant === 'gray',
         'ui-gradient-primary': variant === 'primary',
@@ -48,7 +48,7 @@ const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
         'ui-gradient-pink ui-text-white': variant === 'pink',
         'ui-gradient-rainbow ui-text-white': variant === 'rainbow',
         'ui-bg-dark-blue ui-text-white': variant === 'dark-blue',
-        'ui-gradient-dark-blue ui-text-white ui-border-navy': variant === 'dark-blue-2',
+        'ui-gradient-dark-blue ui-text-white ui-border ui-border-navy': variant === 'dark-blue-2',
         'ui-border dark:ui-border-black ui-bg-white ui-border-gray-200 dark:ui-bg-gray-800 dark:ui-text-white':
           variant === 'standard'
       })}
