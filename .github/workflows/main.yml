@@ -1,34 +1,143 @@
 name: Main Workflow
 on:
+  push:
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [main, master]
 
 jobs:
-  build:
+  audit:
     runs-on: ubuntu-latest
+
+    container:
+      image: ghcr.io/synthetixio/docker-sec-tools/alpine:16.14
+      credentials:
+        username: synthetixio
+        password: ${{ secrets.GH_PACKAGES_READ_ONLY }}
+
     steps:
-      - uses: actions/checkout@v2
-      # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v2
+      - name: Checkout
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # pin@v2
+
+      - name: Audit dependencies
+        run: audit-ci --critical --package-manager yarn
+
+      - name: Lockfile lint
+        run: lockfile-lint -p yarn.lock --type yarn --allowed-hosts yarn --validate-https
+
+  lint:
+    needs: audit
+    # run only on audit success or audit skipped
+    if: (needs.audit.result == 'success' || needs.audit.result == 'skipped')
+    runs-on: ubuntu-latest
+    env:
+      YARN_CACHE_FOLDER: ${{ github.workspace }}/.yarn-cache
+
+    container:
+      image: ghcr.io/synthetixio/docker-node/alpine:16.14
+      credentials:
+        username: synthetixio
+        password: ${{ secrets.GH_PACKAGES_READ_ONLY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # pin@v2
+
+      - name: Set yarn cache directory
+        run: yarn config set cache-folder ${{ github.workspace }}/.yarn-cache
+        continue-on-error: true
+
+      - name: Cache node modules
+        uses: actions/cache@136d96b4aee02b1f0de3ba493b1d47135042d9c0 # pin@v3
         with:
-          node-version: '14.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm ci
-      - run: npx lerna bootstrap
-      - run: npm run lint
-      - run: npx lerna run build
-      - run: npx lerna run test
+          path: |
+            .yarn-cache
+            node_modules
+          key: ${{ runner.os }}-alpine-cache-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-alpine-cache-
+        continue-on-error: true
+
+      - name: Install dependencies
+        run: yarn install --prefer-offline --no-audit
+
+      - name: Generating schemas for subgraphs
+        run: |
+          ./pull-subgraphs.sh
+          node codegen.js
+        working-directory: ./queries
+
+      - name: Lint
+        run: yarn run lint:sarif
+
+      - name: Upload lint results
+        uses: github/codeql-action/upload-sarif@81bfc289f5947eca8a3358341c874cb4f4697b64 # pin@codeql-bundle-20220322
+        with:
+          sarif_file: lint-results.sarif
+        continue-on-error: true
+
+      - name: Unit tests
+        run: yarn test
+
+  build:
+    needs: lint
+    # run only on lint success or lint skipped
+    if: (needs.lint.result == 'success' || needs.lint.result == 'skipped')
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      YARN_CACHE_FOLDER: ${{ github.workspace }}/.yarn-cache
+
+    container:
+      image: ghcr.io/synthetixio/docker-node/alpine:16.14
+      credentials:
+        username: synthetixio
+        password: ${{ secrets.GH_PACKAGES_READ_ONLY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # pin@v2
+
+      - name: Cache node modules
+        uses: actions/cache@136d96b4aee02b1f0de3ba493b1d47135042d9c0 # pin@v3
+        with:
+          path: |
+            .yarn-cache
+            node_modules
+          key: ${{ runner.os }}-alpine-cache-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-alpine-cache-
+        continue-on-error: true
+
+      - name: Install dependencies
+        run: yarn install --prefer-offline --no-audit
+
+      - name: Build
+        run: yarn build
 
       # publish
       - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
-      - run: git fetch origin ${{ github.head_ref }}
-      - run: echo $(git rev-parse --short origin/${{ github.head_ref }})
-      # Remove the next line and uncomment the two below to fix dev build issues from inter-package version mismatch issues.
-      - run: npx lerna exec npm version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
-      # - run: git checkout -b temp
-      # - run: npx lerna version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }}) --exact --no-push -y
-      - run: npx lerna exec npm publish -- --tag dev
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: echo $(git rev-parse --short HEAD)
+
+      - run: |
+          yarn workspace @synthetixio/contracts-interface version 0.0.0-$(git rev-parse --short HEAD) --new-version
+          yarn workspace @synthetixio/contracts-interface publish --tag dev
+
+      - run: |
+          yarn workspace @synthetixio/optimism-networks version 0.0.0-$(git rev-parse --short HEAD) --new-version
+          yarn workspace @synthetixio/optimism-networks publish --tag dev
+
+      - run: |
+          yarn workspace @synthetixio/wei version 0.0.0-$(git rev-parse --short HEAD) --new-version
+          yarn workspace @synthetixio/wei publish --tag dev
+
+      - run: |
+          yarn workspace @synthetixio/providers version 0.0.0-$(git rev-parse --short HEAD) --new-version
+          yarn workspace @synthetixio/providers publish --tag dev
+
+      - run: |
+          yarn workspace @synthetixio/transaction-notifier version 0.0.0-$(git rev-parse --short HEAD) --new-version
+          yarn workspace @synthetixio/transaction-notifier publish --tag dev
+
+      - run: |
+          yarn workspace @synthetixio/queries version 0.0.0-$(git rev-parse --short HEAD) --new-version
+          yarn workspace @synthetixio/queries publish --tag dev

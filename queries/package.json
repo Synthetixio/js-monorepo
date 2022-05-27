@@ -1,0 +1,32 @@
+{
+	"name": "@synthetixio/queries",
+	"version": "3.0.0",
+	"description": "react-query for pulling synthetix data in react interfaces",
+	"source": "./src/index.ts",
+	"main": "./build/node/src/index.js",
+	"module": "./build/node/src/index.js",
+	"browser": "./build/node/src/index.js",
+	"types": "./build/node/src/index.d.ts",
+	"files": [
+		"build"
+	],
+	"scripts": {
+		"build": "yarn run codegen && yarn run build-node && yarn run build-browser",
+		"build-node": "tsc -p tsconfig.node.json",
+		"build-browser": "webpack --mode=production",
+		"codegen": "node ./codegen.js",
+		"test": "echo 'implement me'"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"@snapshot-labs/snapshot.js": "^0.3.59",
+		"@synthetixio/contracts-interface": "3.0.0",
+		"@synthetixio/wei": "3.0.0",
+		"date-fns": "2.28.0",
+		"ethers": "5.6.2",
+		"graphql-request": "4.2.0",
+		"lodash": "4.17.21",
+		"maxibon-codegen-graph-ts": "0.2.1",
+		"react-query": "3.16.x"
+	}
+}
