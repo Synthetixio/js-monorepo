@@ -1,16 +1,15 @@
 {
 	"name": "root",
-  "workspaces": [
-    "packages/*"
-  ],
+	"workspaces": [
+		"packages/*"
+	],
 	"private": true,
 	"scripts": {
-		"bootstrap": "lerna bootstrap --hoist",
 		"lint": "eslint './packages/**/*.{js,ts,tsx}' --quiet",
 		"lint:fix": "eslint './packages/**/*.{js,ts,tsx}' --fix",
-		"test-all": "lerna run test",
-		"build": "lerna run build",
-		"publish": "lerna publish"
+		"test-all": "npm --workspaces --if-present run test",
+		"build": "npm --workspaces --if-present run build",
+		"publish": "npm --workspaces publish"
 	},
 	"devDependencies": {
 		"@babel/core": "7.11.0",

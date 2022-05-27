@@ -14,11 +14,10 @@
 
 ## Developer Instructions
 
-This repo uses `lerna` to manage multiple packages in the same repo. To prepare the repository for use, run:
+This repo uses npm workspaces to manage multiple packages in the same repo. To prepare the repository for use, run:
 
 ```
 npm install
-npm run bootstrap
 ```
 
 This will install all npm dependencies, wire dependencies between packages in this repo, and allow for you to build projects.
@@ -47,10 +46,10 @@ When you open a PR a dev package will be published automatically when CI passes.
 
 #### Manual
 
-`lerna` is specially designed to handle package updates. If you want to push a new release for one or more packages in this repo, run:
+NPM workspaces are specially designed to handle package updates. If you want to push a new release for one or more packages in this repo, run:
 
 ```
-lerna publish
+npm --workspaces publish
 ```
 
-Lerna will automatically detect changes for packages, and offer to increment the version number and push an NPM release as appropriate. Any dependant modules will be kept in sync as well.
+NPM will automatically detect changes for packages, and offer to increment the version number and push an NPM release as appropriate. Any dependant modules will be kept in sync as well.

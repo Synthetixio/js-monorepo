@@ -43,17 +43,16 @@ jobs:
           npm run test-all
       - name: Update packages version
         run: |
-          lerna version ${{ env.new_version }} --exact --yes
-          echo "resolved_version=$(jq -r .version < lerna.json)" >> $GITHUB_ENV
+          npm --workspaces version ${{ env.new_version }}
       - name: Publish packages
-        run: lerna publish from-package --yes
+        run: npm --workspaces publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Push changes
         run: git push
       - name: Notify dApps
         run: |
-          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"dev\", \"inputs\": {\"monorepo_version\": \"${{ env.resolved_version }}\"}}" https://api.github.com/repos/Synthetixio/staking/actions/workflows/updateDependency.yml/dispatches
-          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"develop\", \"inputs\": {\"monorepo_version\": \"${{ env.resolved_version }}\"}}" https://api.github.com/repos/Synthetixio/futures-keepers/actions/workflows/updateDependency.yml/dispatches
-          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.resolved_version }}\"}}" https://api.github.com/repos/Kwenta/kwenta/dispatches
-          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.resolved_version }}\"}}" https://api.github.com/repos/Kwenta/kwenta-api/dispatches
+          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"dev\", \"inputs\": {\"monorepo_version\": \"${{ env.new_version }}\"}}" https://api.github.com/repos/Synthetixio/staking/actions/workflows/updateDependency.yml/dispatches
+          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"develop\", \"inputs\": {\"monorepo_version\": \"${{ env.new_version }}\"}}" https://api.github.com/repos/Synthetixio/futures-keepers/actions/workflows/updateDependency.yml/dispatches
+          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.new_version }}\"}}" https://api.github.com/repos/Kwenta/kwenta/dispatches
+          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.new_version }}\"}}" https://api.github.com/repos/Kwenta/kwenta-api/dispatches

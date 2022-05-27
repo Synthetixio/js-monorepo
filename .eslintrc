@@ -27,7 +27,6 @@
 		],
 		"indent": "off",
 		"quotes": ["error", "single"],
-		"import/no-unresolved": "off", // messed up by lerna hoisting
 		"no-undef": "error",
 		"prefer-const": "error",
 		"semi": ["error", "always"],
