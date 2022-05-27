@@ -155,6 +155,19 @@ html {
   -webkit-text-fill-color: transparent;
 }
 
+.ui-darker-20 {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.ui-darker-40 {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.ui-darker-60 {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.ui-darker-80 {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 $break-points: (
   'sm': 640px,
   'md': 768px,
