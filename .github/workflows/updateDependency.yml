@@ -40,8 +40,6 @@ jobs:
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
           git reset --hard
 
-#      - run: sleep 1h
-
       - name: Update @synthetixio/contracts-interface
         if: github.event.inputs.synthetix_version
         run: |
@@ -66,22 +64,22 @@ jobs:
           git tag -a "v${{ env.NEW_VERSION }}" -m "v${{ env.NEW_VERSION }}"
 
       - name: Publish packages
-        run: npm --workspaces publish --dry-run
+        run: npm --workspaces publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push changes
         run: |
-          echo git push
-          echo git push origin "refs/tags/v${{ env.NEW_VERSION }}"
+          git push
+          git push origin "refs/tags/v${{ env.NEW_VERSION }}"
 
       - name: Notify dApps
         run: |
-          echo curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"dev\", \"inputs\": {\"monorepo_version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Synthetixio/staking/actions/workflows/updateDependency.yml/dispatches
-          echo curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"develop\", \"inputs\": {\"monorepo_version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Synthetixio/futures-keepers/actions/workflows/updateDependency.yml/dispatches
-          echo curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Kwenta/kwenta/dispatches
-          echo curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Kwenta/kwenta-api/dispatches
+          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"dev\", \"inputs\": {\"monorepo_version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Synthetixio/staking/actions/workflows/updateDependency.yml/dispatches
+          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"develop\", \"inputs\": {\"monorepo_version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Synthetixio/futures-keepers/actions/workflows/updateDependency.yml/dispatches
+          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Kwenta/kwenta/dispatches
+          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Kwenta/kwenta-api/dispatches
 
-      - name: cat logs
+      - name: Show full NPM logs on failure
         if: ${{ failure() }}
         run: cat /root/.npm/_logs/*
