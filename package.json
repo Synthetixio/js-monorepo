@@ -1,7 +1,13 @@
 {
 	"name": "root",
 	"workspaces": [
-		"packages/*"
+		"packages/contracts-interface",
+		"packages/optimism-networks",
+		"packages/transaction-notifier",
+		"packages/wei",
+		"packages/providers",
+		"packages/queries",
+		"**/*"
 	],
 	"private": true,
 	"scripts": {
