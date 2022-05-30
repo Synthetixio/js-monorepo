@@ -20,38 +20,68 @@ jobs:
         with:
           node-version: 16
           registry-url: 'https://registry.npmjs.org'
-      - name: resolve version
+
+      - name: Config git identity
         run: |
-          export theversion="patch"
-          if [ -n "${{ github.event.inputs.monorepo_version }}" ]; then export theversion="${{ github.event.inputs.monorepo_version }}"; fi
-          echo "Resolved version $theversion"
-          echo "new_version=$theversion" >> $GITHUB_ENV
-      - name: config git identity
-        run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
-      - name: Update  @synthetixio/contracts-interface
+          git config --global user.email "ci@cc.snxdao.io"
+          git config --global user.name "Synthetix CI"
+
+      - name: Resolve version
+        run: |
+          if [ -n "${{ github.event.inputs.monorepo_version }}" ]; then
+            export VERSION_CANDIDATE="${{ github.event.inputs.monorepo_version }}"
+          else
+            export VERSION_CANDIDATE="patch"
+          fi
+          git reset --hard
+          npm version "$VERSION_CANDIDATE" --git-tag-version=false
+          export NEW_VERSION="$(jq -r .version < package.json)"
+          echo "NEW_VERSION=$NEW_VERSION" 
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          git reset --hard
+
+#      - run: sleep 1h
+
+      - name: Update @synthetixio/contracts-interface
         if: github.event.inputs.synthetix_version
         run: |
           echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.inputs.synthetix_version }}"
-          cd packages/contracts-interface && npm install synthetix@${{ github.event.inputs.synthetix_version }} --save-exact
-          git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty
+          npm --workspace @synthetixio/contracts-interface install synthetix@${{ github.event.inputs.synthetix_version }} --save-exact
+          git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty --no-verify
+
       - name: Lints and build
         run: |
           npm ci
           npm run lint
           npm run build
           npm run test
+
       - name: Update packages version
         run: |
-          npm --workspaces version ${{ env.new_version }}
+          npm --workspaces version ${{ env.NEW_VERSION }} --include-workspace-root
+
+      - name: Create git tag and commit changes
+        run: |
+          git commit -am "v${{ env.NEW_VERSION }}" --allow-empty --no-verify
+          git tag -a "v${{ env.NEW_VERSION }}" -m "v${{ env.NEW_VERSION }}"
+
       - name: Publish packages
-        run: npm --workspaces publish
+        run: npm --workspaces publish --dry-run
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Push changes
-        run: git push
+        run: |
+          echo git push
+          echo git push origin "refs/tags/v${{ env.NEW_VERSION }}"
+
       - name: Notify dApps
         run: |
-          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"dev\", \"inputs\": {\"monorepo_version\": \"${{ env.new_version }}\"}}" https://api.github.com/repos/Synthetixio/staking/actions/workflows/updateDependency.yml/dispatches
-          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"develop\", \"inputs\": {\"monorepo_version\": \"${{ env.new_version }}\"}}" https://api.github.com/repos/Synthetixio/futures-keepers/actions/workflows/updateDependency.yml/dispatches
-          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.new_version }}\"}}" https://api.github.com/repos/Kwenta/kwenta/dispatches
-          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.new_version }}\"}}" https://api.github.com/repos/Kwenta/kwenta-api/dispatches
+          echo curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"dev\", \"inputs\": {\"monorepo_version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Synthetixio/staking/actions/workflows/updateDependency.yml/dispatches
+          echo curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"develop\", \"inputs\": {\"monorepo_version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Synthetixio/futures-keepers/actions/workflows/updateDependency.yml/dispatches
+          echo curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Kwenta/kwenta/dispatches
+          echo curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Kwenta/kwenta-api/dispatches
+
+      - name: cat logs
+        if: ${{ failure() }}
+        run: cat /root/.npm/_logs/*
