@@ -1,5 +1,6 @@
 {
 	"name": "root",
+	"version": "2.71.0",
 	"workspaces": [
 		"packages/contracts-interface",
 		"packages/optimism-networks",
