@@ -32,13 +32,7 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"ethers": "5.5.3",
-		"lodash": "4.17.19"
-	},
-	"devDependencies": {
-		"@types/lodash": "4.14.169",
-		"husky": "4.2.5",
-		"lint-staged": "10.2.11"
+		"ethers": "5.5.3"
 	},
 	"jest": {
 		"transform": {
