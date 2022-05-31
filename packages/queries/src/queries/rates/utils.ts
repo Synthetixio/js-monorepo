@@ -1,7 +1,7 @@
 import Wei, { wei } from '@synthetixio/wei';
 import subHours from 'date-fns/subHours';
 import { ethers } from 'ethers';
-import { RateUpdateResult } from 'generated/exchangesSubgraphQueries';
+import { RateUpdateResult } from '../../../generated/exchangesSubgraphQueries';
 
 import { BaseRateUpdate } from '../../types';
 
