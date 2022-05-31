@@ -1,13 +1,22 @@
 {
 	"name": "root",
+	"version": "2.71.0",
+	"workspaces": [
+		"packages/contracts-interface",
+		"packages/optimism-networks",
+		"packages/transaction-notifier",
+		"packages/wei",
+		"packages/providers",
+		"packages/queries",
+		"**/*"
+	],
 	"private": true,
 	"scripts": {
-		"bootstrap": "lerna bootstrap --hoist",
 		"lint": "eslint './packages/**/*.{js,ts,tsx}' --quiet",
 		"lint:fix": "eslint './packages/**/*.{js,ts,tsx}' --fix",
-		"test-all": "lerna run test",
-		"build": "lerna run build",
-		"publish": "lerna publish"
+		"test": "npm --workspaces --if-present run test",
+		"build": "npm --workspaces --if-present run build",
+		"publish": "npm --workspaces publish"
 	},
 	"devDependencies": {
 		"@babel/core": "7.11.0",
@@ -26,7 +35,6 @@
 		"eslint-plugin-prettier": "^3.4.0",
 		"husky": "4.2.5",
 		"jest": "^27.0.6",
-		"lerna": "4.0.0",
 		"lint-staged": "10.2.11",
 		"prettier": "^2.3.0",
 		"ts-jest": "^27.0.4",
