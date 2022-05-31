@@ -8,7 +8,8 @@
 	"browser": "./build/node/src/index.js",
 	"types": "./build/node/src/index.d.ts",
 	"files": [
-		"build"
+		"build",
+		"src"
 	],
 	"scripts": {
 		"build": "node ./codegen.js && npm run build-browser && npm run build-node",
