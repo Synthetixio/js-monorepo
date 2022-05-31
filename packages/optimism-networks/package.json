@@ -33,12 +33,8 @@
 	},
 	"dependencies": {
 		"@eth-optimism/watcher": "^0.0.1-alpha.9",
-		"@metamask/providers": "8.1.1"
-	},
-	"devDependencies": {
-		"@types/lodash": "4.14.169",
-		"husky": "4.2.5",
-		"lint-staged": "10.2.11"
+		"@metamask/providers": "8.1.1",
+		"ethers": "5.5.3"
 	},
 	"jest": {
 		"transform": {
