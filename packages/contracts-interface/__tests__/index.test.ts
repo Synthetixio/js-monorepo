@@ -1,5 +1,4 @@
 import { ethers } from 'ethers';
-import findIndex from 'lodash/findIndex';
 
 import synthetix, { SynthetixJS } from '../src';
 import { NetworkNameById, NetworkIdByName } from '../src/types';
@@ -81,13 +80,13 @@ describe('@synthetixio/js tests', () => {
 	});
 
 	test('should get the right synths data', () => {
-		const validSynthIndex = findIndex(snxjs.synths, ({ name }) => name === 'sETH');
+		const validSynthIndex = snxjs.synths.findIndex(({ name }) => name === 'sETH');
 		expect(validSynthIndex).not.toBe(-1);
 	});
 
 	test('should not include invalid synths data', () => {
 		// @ts-ignore
-		const invalidSynthIndex = findIndex(snxjs.synths, ({ name }) => name === 'mETH1234');
+		const invalidSynthIndex = snxjs.synths.findIndex(({ name }) => name === 'mETH1234');
 		expect(invalidSynthIndex).toBe(-1);
 	});
 
