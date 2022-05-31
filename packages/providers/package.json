@@ -38,9 +38,13 @@
 		"ethers": "5.5.3"
 	},
 	"jest": {
-		"transform": {
-			"^.+\\.ts?$": "babel-jest"
-		},
+		"testMatch": [
+			"<rootDir>/**/*.test.{js,jsx,ts,tsx}"
+		],
+		"collectCoverageFrom": [
+			"<rootDir>/src/**/*.{js,jsx,ts,tsx}",
+			"!<rootDir>/src/**/*.d.{js,jsx,ts,tsx}"
+		],
 		"coverageThreshold": {
 			"global": {
 				"branches": 0,
@@ -48,9 +52,6 @@
 				"lines": 0,
 				"statements": 0
 			}
-		},
-		"modulePathIgnorePatterns": [
-			"<rootDir>/build"
-		]
+		}
 	}
 }

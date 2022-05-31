@@ -59,5 +59,22 @@
 		"react": "17.x",
 		"react-dom": "17.x",
 		"react-query": "3.16.x"
+	},
+	"jest": {
+		"testMatch": [
+			"<rootDir>/**/*.test.{js,jsx,ts,tsx}"
+		],
+		"collectCoverageFrom": [
+			"<rootDir>/src/**/*.{js,jsx,ts,tsx}",
+			"!<rootDir>/src/**/*.d.{js,jsx,ts,tsx}"
+		],
+		"coverageThreshold": {
+			"global": {
+				"branches": 0,
+				"functions": 0,
+				"lines": 0,
+				"statements": 0
+			}
+		}
 	}
 }

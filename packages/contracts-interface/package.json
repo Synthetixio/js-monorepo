@@ -40,9 +40,13 @@
 		"chokidar-cli": "^2.1.0"
 	},
 	"jest": {
-		"transform": {
-			"^.+\\.ts?$": "babel-jest"
-		},
+		"testMatch": [
+			"<rootDir>/**/*.test.{js,jsx,ts,tsx}"
+		],
+		"collectCoverageFrom": [
+			"<rootDir>/src/**/*.{js,jsx,ts,tsx}",
+			"!<rootDir>/src/**/*.d.{js,jsx,ts,tsx}"
+		],
 		"coverageThreshold": {
 			"global": {
 				"branches": 70,
@@ -50,9 +54,6 @@
 				"lines": 80,
 				"statements": 80
 			}
-		},
-		"modulePathIgnorePatterns": [
-			"<rootDir>/build"
-		]
+		}
 	}
 }
