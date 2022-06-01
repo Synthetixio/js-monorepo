@@ -1,5 +1,5 @@
 .wrapper {
-  input[type="radio"]:not(:disabled) {
+  input[type='radio']:not(:disabled) {
     & + label span {
       transition: background-color 0.2s, transform 0.2s;
     }

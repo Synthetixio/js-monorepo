@@ -20,8 +20,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
     <button
       {...props}
       className={clsx(
-        `ui-border ui-border-solid ui-border-gray-300 dark:ui-border-gray-600 ui-flex ui-justify-center ui-items-center
-        ui-text-white ui-transition-colors ui-ease-out`,
+        `ui-text-white ui-transition-colors ui-ease-out ui-bg-gray ui-p-[1px]`,
         className,
         {
           'ui-bg-primary': isActive,
@@ -33,7 +32,17 @@ export const IconButton: React.FC<IconButtonProps> = ({
         }
       )}
     >
-      {children}
+      <div
+        className={clsx(
+          'ui-border ui-border-solid ui-border-black ui-bg-gray ui-w-full ui-h-full ui-flex ui-justify-center ui-items-center',
+          {
+            'ui-rounded-full': rounded,
+            'ui-rounded': !rounded
+          }
+        )}
+      >
+        {children}
+      </div>
     </button>
   );
 };

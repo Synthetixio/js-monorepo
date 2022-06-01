@@ -28,8 +28,8 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({
       onClick={onClick}
       {...rest}
     >
-      <div className="ui-bg-dark-blue ui-relative ui-rounded ui-p-6">
-        <div className="ui-flex ui-flex-col">
+      <div className='ui-bg-dark-blue ui-relative ui-rounded ui-p-6'>
+        <div className='ui-flex ui-flex-col'>
           <h4
             className={clsx('ui-tg-main ui-text-gray-650 ui-w-full', {
               'ui-text-left': direction === 'left',
@@ -57,25 +57,25 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({
           })}
         >
           <svg
-            fill="none"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
+            fill='none'
+            height='24'
+            viewBox='0 0 24 24'
+            width='24'
+            xmlns='http://www.w3.org/2000/svg'
           >
             <path
-              d="M11 16L7 12L11 8"
-              stroke="#00D1FF"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
+              d='M11 16L7 12L11 8'
+              stroke='#00D1FF'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
             />
             <path
-              d="M7 12H17.3291"
-              stroke="#00D1FF"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
+              d='M7 12H17.3291'
+              stroke='#00D1FF'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
             />
           </svg>
         </div>

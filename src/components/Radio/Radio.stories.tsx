@@ -10,8 +10,8 @@ export default {
 
 const Template: ComponentStory<typeof Radio> = (args) => (
   <div>
-    <Radio id="radio1" {...args} />
-    <Radio id="radio2" {...args} />
+    <Radio id='radio1' {...args} />
+    <Radio id='radio2' {...args} />
   </div>
 );
 

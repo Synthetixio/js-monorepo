@@ -18,9 +18,9 @@ export const Radio: React.FC<RadioProps> = ({ className, label, onChange, disabl
       })}
     >
       <input
-        className="ui-hidden"
+        className='ui-hidden'
         disabled={disabled}
-        type="radio"
+        type='radio'
         onChange={onChange}
         {...props}
       />
@@ -33,8 +33,8 @@ export const Radio: React.FC<RadioProps> = ({ className, label, onChange, disabl
         )}
         htmlFor={props.id}
       >
-        <div className="ui-flex ui-items-center ui-justify-center ui-relative ui-w-5 ui-h-5 ui-inline-block ui-mr-2 ui-rounded-full ui-border ui-border-grey ui-flex-no-shrink">
-          <span className="ui-w-3 ui-h-3 ui-absolute ui-rounded-full" />
+        <div className='ui-flex ui-items-center ui-justify-center ui-relative ui-w-5 ui-h-5 ui-inline-block ui-mr-2 ui-rounded-full ui-border ui-border-grey ui-flex-no-shrink'>
+          <span className='ui-w-3 ui-h-3 ui-absolute ui-rounded-full' />
         </div>
         {label}
       </label>

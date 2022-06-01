@@ -16,7 +16,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   ...props
 }) => {
   return (
-    <div className="ui-checkbox ui-flex">
+    <div className='ui-checkbox ui-flex'>
       <label className={clsx('ui-inline-flex ui-flex-row ui-items-center', className)}>
         <div
           className={clsx(
@@ -24,21 +24,21 @@ export const Checkbox: React.FC<CheckboxProps> = ({
           )}
         >
           <input
-            className="ui-absolute ui-opacity-0 ui-cursor-pointer ui-w-full ui-h-full"
-            type="checkbox"
+            className='ui-absolute ui-opacity-0 ui-cursor-pointer ui-w-full ui-h-full'
+            type='checkbox'
             {...props}
             checked={checked}
             onChange={onChange}
           />
           <svg
-            className="ui-hidden ui-w-3.5 ui-h-3.5 ui-text-primary ui-pointer-events-none ui-fill-current"
-            viewBox="0 0 20 20"
+            className='ui-hidden ui-w-3.5 ui-h-3.5 ui-text-primary ui-pointer-events-none ui-fill-current'
+            viewBox='0 0 20 20'
           >
-            <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
+            <path d='M0 11l2-2 5 5L18 3l2 2L7 18z' />
           </svg>
         </div>
         {label && (
-          <span className="ui-select-none ui-text-black-600 dark:ui-text-white ui-cursor-pointer">
+          <span className='ui-select-none ui-text-black-600 dark:ui-text-white ui-cursor-pointer'>
             {label}
           </span>
         )}

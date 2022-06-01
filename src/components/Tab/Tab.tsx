@@ -21,7 +21,7 @@ export const Tab: React.FC<TabProps> = ({ text, active, onClick, disabled, class
       },
       className
     )}
-    type="button"
+    type='button'
     onClick={onClick}
   >
     {text}

@@ -28,7 +28,7 @@ export const FieldAttributes: React.FC<FieldAttributesProps> = ({
 
       {label && (
         <label
-          className="ui-transition ui-select-none ui-order-1 ui-cursor-pointer ui-tg-caption ui-mb-1.5 ui-text-black-600 dark:ui-text-white"
+          className='ui-transition ui-select-none ui-order-1 ui-cursor-pointer ui-tg-caption ui-mb-1.5 ui-text-black-600 dark:ui-text-white'
           htmlFor={id}
         >
           {label}
@@ -36,7 +36,7 @@ export const FieldAttributes: React.FC<FieldAttributesProps> = ({
       )}
 
       {error && (
-        <small className="tg-caption-sm ui-text-red-400 ui-ml-2 ui-mt-0.5 ui-absolute ui-top-full">
+        <small className='tg-caption-sm ui-text-red-400 ui-ml-2 ui-mt-0.5 ui-absolute ui-top-full'>
           {error}
         </small>
       )}

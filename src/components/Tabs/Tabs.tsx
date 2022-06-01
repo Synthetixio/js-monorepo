@@ -45,12 +45,12 @@ export const Tabs: React.FC<TabsProps> = ({
 
   return (
     <div className={className}>
-      <div className="ui-flex ui-items-center ui-flex-nowrap ui-overflow-auto">
+      <div className='ui-flex ui-items-center ui-flex-nowrap ui-overflow-auto'>
         {items.map((item) => (
           <Tab
             key={item.id}
             active={item.id === activeTab}
-            className="ui-mx-2"
+            className='ui-mx-2'
             disabled={item.disabled}
             text={item.label}
             onClick={() => selectTab(item)}

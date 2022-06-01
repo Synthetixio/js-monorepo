@@ -78,13 +78,13 @@ export const Select = <T,>({
           },
           className
         )}
-        role="button"
+        role='button'
         tabIndex={0}
         onClick={toggleIsOpen}
         onKeyDown={toggleIsOpen}
         {...props}
       >
-        {value ? label : <span className="ui-text-black-300">{placeholder}</span>}
+        {value ? label : <span className='ui-text-black-300'>{placeholder}</span>}
 
         <ArrowDropdownDownIcon
           className={clsx('ui-transition-transform ui-text-black-200 dark:ui-text-white', {
@@ -109,8 +109,8 @@ export const Select = <T,>({
                   )}
                 >
                   <div
-                    className="ui-py-3 ui-px-5"
-                    role="button"
+                    className='ui-py-3 ui-px-5'
+                    role='button'
                     tabIndex={index}
                     onClick={() => handleSelect(option)}
                     onKeyDown={() => handleSelect(option)}

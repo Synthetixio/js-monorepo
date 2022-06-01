@@ -52,7 +52,7 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled || loading}
       {...props}
     >
-      <div className="ui-flex ui-justify-center ui-items-center ui-h-full">
+      <div className='ui-flex ui-justify-center ui-items-center ui-h-full'>
         {loading && (
           <Spinner
             className={clsx('ui-mr-2', { 'ui-opacity-75': disabled }, spinnerClassName)}

@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import CloseIcon from 'components/Icons/CloseIcon';
 
+import CloseIcon from '../Icons/CloseIcon';
 import { IconButton } from './IconButton';
 
 export default {
