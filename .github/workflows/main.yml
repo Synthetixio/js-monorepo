@@ -21,10 +21,19 @@ jobs:
       - run: npm run test
 
       # publish
-      - run: git config --global user.email "ci@cc.snxdao.io" && git config --global user.name "Synthetix CI"
-      - run: git fetch origin ${{ github.head_ref }}
-      - run: echo $(git rev-parse --short origin/${{ github.head_ref }})
-      - run: npm --workspaces version 0.0.0-$(git rev-parse --short origin/${{ github.head_ref }})
+      - name: Populate DEV_VERSION
+        run: |
+          GIT_SHA_FULL="${{ github.sha }}"
+          GIT_SHA="${GIT_SHA_FULL:0:8}"
+          if [ "${{ github.run_attempt }}" == "1" ]; then
+            export DEV_VERSION="0.0.0-$GIT_SHA"
+          else
+            export DEV_VERSION="0.0.0-$GIT_SHA.${{ github.run_attempt }}"
+          fi
+          echo "DEV_VERSION=$DEV_VERSION" >> $GITHUB_ENV
+          echo "DEV_VERSION=$DEV_VERSION"
+
+      - run: npm --workspaces version "$DEV_VERSION"
       - run: npm --workspaces publish --tag dev
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
