@@ -12,8 +12,8 @@
 	],
 	"private": true,
 	"scripts": {
-		"lint": "eslint './packages/**/*.{js,ts,tsx}' --quiet",
-		"lint:fix": "eslint './packages/**/*.{js,ts,tsx}' --fix",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
 		"test": "npm --workspaces --if-present run test",
 		"build": "npm --workspaces --if-present run build",
 		"publish": "npm --workspaces publish"
@@ -29,6 +29,7 @@
 		"@typescript-eslint/parser": "^4.25.0",
 		"babel-jest": "^27.0.6",
 		"babel-loader": "8.1.0",
+		"depcheck": "^1.4.3",
 		"eslint": "^7.26.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-import": "^2.23.2",
@@ -37,29 +38,21 @@
 		"jest": "^27.0.6",
 		"lint-staged": "10.2.11",
 		"prettier": "^2.3.0",
-		"ts-jest": "^27.0.4",
 		"ts-loader": "8.0.2",
 		"typescript": "4.4.2",
 		"webpack": "4.44.1",
 		"webpack-cli": "3.3.12"
 	},
-	"jest": {
-		"transform": {
-			"^.+\\.ts?$": "babel-jest"
-		},
-		"coverageThreshold": {
-			"global": {
-				"branches": 70,
-				"functions": 70,
-				"lines": 80,
-				"statements": 80
-			}
-		}
-	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "npm run lint"
+			"pre-commit": "lint-staged"
 		}
+	},
+	"lint-staged": {
+		"**/*.{js,ts,tsx}": [
+			"prettier --check",
+			"eslint"
+		]
 	},
 	"optionalDependencies": {
 		"chokidar": "^3.5.2",

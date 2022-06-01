@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { QueryContext } from 'src/context';
+import { QueryContext } from '../../context';
 import Wei, { wei } from '@synthetixio/wei';
 import { ethers, providers } from 'ethers';
 import { useGetSNXHolders } from '../../../generated/mainSubgraphQueries';

@@ -37,15 +37,14 @@
 		"@synthetixio/optimism-networks": "2.70.1",
 		"ethers": "5.5.3"
 	},
-	"devDependencies": {
-		"@types/lodash": "4.14.169",
-		"husky": "4.2.5",
-		"lint-staged": "10.2.11"
-	},
 	"jest": {
-		"transform": {
-			"^.+\\.ts?$": "babel-jest"
-		},
+		"testMatch": [
+			"<rootDir>/**/*.test.{js,jsx,ts,tsx}"
+		],
+		"collectCoverageFrom": [
+			"<rootDir>/src/**/*.{js,jsx,ts,tsx}",
+			"!<rootDir>/src/**/*.d.{js,jsx,ts,tsx}"
+		],
 		"coverageThreshold": {
 			"global": {
 				"branches": 0,
@@ -53,9 +52,6 @@
 				"lines": 0,
 				"statements": 0
 			}
-		},
-		"modulePathIgnorePatterns": [
-			"<rootDir>/build"
-		]
+		}
 	}
 }
