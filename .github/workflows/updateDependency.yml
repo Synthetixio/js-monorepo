@@ -56,7 +56,7 @@ jobs:
 
       - name: Update packages version
         run: |
-          npm --workspaces version ${{ env.NEW_VERSION }} --include-workspace-root
+          npm --workspaces version ${{ env.NEW_VERSION }} --include-workspace-root --git-tag-version=false
 
       - name: Create git tag and commit changes
         run: |
