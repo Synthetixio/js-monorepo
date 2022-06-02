@@ -1,5 +1,8 @@
 {
 	"name": "@synthetixio/contracts-interface",
+	"publishConfig": {
+		"access": "public"
+	},
 	"version": "2.71.0-1",
 	"description": "A library for interacting with Synthetix smart contracts",
 	"source": "./src/index.ts",

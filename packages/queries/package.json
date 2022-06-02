@@ -1,5 +1,8 @@
 {
 	"name": "@synthetixio/queries",
+	"publishConfig": {
+		"access": "public"
+	},
 	"version": "2.71.0-1",
 	"description": "react-query for pulling synthetix data in react interfaces",
 	"source": "./src/index.ts",

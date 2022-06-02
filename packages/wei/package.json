@@ -1,5 +1,8 @@
 {
 	"name": "@synthetixio/wei",
+	"publishConfig": {
+		"access": "public"
+	},
 	"version": "2.71.0-1",
 	"description": "Convenient BigNumber library for web3",
 	"source": "./src/index.ts",
