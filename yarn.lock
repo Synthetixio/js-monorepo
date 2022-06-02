@@ -2587,19 +2587,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@synthetixio/contracts-interface@npm:2.71.0":
-  version: 2.71.0
-  resolution: "@synthetixio/contracts-interface@npm:2.71.0"
-  dependencies:
-    ethers: 5.5.3
-    lodash: 4.17.19
-    synthetix: 2.71.0
-    web3-utils: 1.2.11
-  checksum: 30230ccfc0cfc48c3b840eb78746acdde73f8bb57ecebfe9e947b8d829b2620fce7b91163460c974f5b6ce442a567607a33d70bf916a7193552afdc5ca9706cb
-  languageName: node
-  linkType: hard
-
-"@synthetixio/contracts-interface@workspace:packages/contracts-interface":
+"@synthetixio/contracts-interface@workspace:*, @synthetixio/contracts-interface@workspace:packages/contracts-interface":
   version: 0.0.0-use.local
   resolution: "@synthetixio/contracts-interface@workspace:packages/contracts-interface"
   dependencies:
@@ -2609,17 +2597,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/optimism-networks@npm:2.70.1":
-  version: 2.70.1
-  resolution: "@synthetixio/optimism-networks@npm:2.70.1"
-  dependencies:
-    "@eth-optimism/watcher": ^0.0.1-alpha.9
-    "@metamask/providers": 8.1.1
-  checksum: 6308f8ff2b284627f388407dfd36d0a582fbd61cffa90193e56f4c08a0eadedcdec34d61b04522a5262b766f9847246cbca001b7ccaf60de874d1ca632c9413e
-  languageName: node
-  linkType: hard
-
-"@synthetixio/optimism-networks@workspace:packages/optimism-networks":
+"@synthetixio/optimism-networks@workspace:*, @synthetixio/optimism-networks@workspace:packages/optimism-networks":
   version: 0.0.0-use.local
   resolution: "@synthetixio/optimism-networks@workspace:packages/optimism-networks"
   dependencies:
@@ -2629,25 +2607,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/providers@npm:2.71.0":
-  version: 2.71.0
-  resolution: "@synthetixio/providers@npm:2.71.0"
-  dependencies:
-    "@eth-optimism/provider": 0.0.1-alpha.14
-    "@synthetixio/contracts-interface": 2.71.0
-    "@synthetixio/optimism-networks": 2.70.1
-    ethers: 5.5.3
-  checksum: ab9a72096405d23317857d98e39d8a5f7201a5878926fbcc39d44e14033fc36d19dbd714116b06119ca8591d2cd45c5f99a9cd116fc25a3f7d2a1eee36e516f9
-  languageName: node
-  linkType: hard
-
-"@synthetixio/providers@workspace:packages/providers":
+"@synthetixio/providers@workspace:*, @synthetixio/providers@workspace:packages/providers":
   version: 0.0.0-use.local
   resolution: "@synthetixio/providers@workspace:packages/providers"
   dependencies:
     "@eth-optimism/provider": 0.0.1-alpha.14
-    "@synthetixio/contracts-interface": 2.71.0
-    "@synthetixio/optimism-networks": 2.70.1
+    "@synthetixio/contracts-interface": "workspace:*"
+    "@synthetixio/optimism-networks": "workspace:*"
     ethers: 5.5.3
   languageName: unknown
   linkType: soft
@@ -2657,10 +2623,10 @@ __metadata:
   resolution: "@synthetixio/queries@workspace:packages/queries"
   dependencies:
     "@snapshot-labs/snapshot.js": 0.3.22
-    "@synthetixio/contracts-interface": 2.71.0
-    "@synthetixio/optimism-networks": 2.70.1
-    "@synthetixio/providers": 2.71.0
-    "@synthetixio/wei": 2.70.1
+    "@synthetixio/contracts-interface": "workspace:*"
+    "@synthetixio/optimism-networks": "workspace:*"
+    "@synthetixio/providers": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@testing-library/react-hooks": ^7.0.0
     "@types/lodash": 4.14.169
     "@types/react": ^17.0.11
@@ -2690,7 +2656,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/wei@npm:2.70.1, @synthetixio/wei@npm:^2.47.0-ovm.5":
+"@synthetixio/wei@npm:^2.47.0-ovm.5":
   version: 2.70.1
   resolution: "@synthetixio/wei@npm:2.70.1"
   dependencies:
@@ -2700,7 +2666,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@synthetixio/wei@workspace:packages/wei":
+"@synthetixio/wei@workspace:*, @synthetixio/wei@workspace:packages/wei":
   version: 0.0.0-use.local
   resolution: "@synthetixio/wei@workspace:packages/wei"
   dependencies:
@@ -6155,17 +6121,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eth-lib@npm:0.2.8":
-  version: 0.2.8
-  resolution: "eth-lib@npm:0.2.8"
-  dependencies:
-    bn.js: ^4.11.6
-    elliptic: ^6.4.0
-    xhr-request-promise: ^0.1.2
-  checksum: be7efb0b08a78e20d12d2892363ecbbc557a367573ac82fc26a549a77a1b13c7747e6eadbb88026634828fcf9278884b555035787b575b1cab5e6958faad0fad
-  languageName: node
-  linkType: hard
-
 "eth-rpc-errors@npm:^4.0.2":
   version: 4.0.3
   resolution: "eth-rpc-errors@npm:4.0.3"
@@ -9133,13 +9088,6 @@ __metadata:
   version: 4.4.2
   resolution: "lodash.truncate@npm:4.4.2"
   checksum: b463d8a382cfb5f0e71c504dcb6f807a7bd379ff1ea216669aa42c52fc28c54e404bfbd96791aa09e6df0de2c1d7b8f1b7f4b1a61f324d38fe98bc535aeee4f5
-  languageName: node
-  linkType: hard
-
-"lodash@npm:4.17.19":
-  version: 4.17.19
-  resolution: "lodash@npm:4.17.19"
-  checksum: a5cc77099fae9f0052003e8242b06d7572be7c88cbe5152ddf5a3d97bc795cfaf73f10befeb6e23efac84fae94e2255d398cb371349cb3f878c9792a0213cacd
   languageName: node
   linkType: hard
 
@@ -12860,22 +12808,6 @@ __metadata:
     "@ethersproject/abi": 5.0.7
     web3-utils: 1.7.3
   checksum: 878ace128ce24f8deca93e4656950b4e582a2dd2aac8d2d718ddf611429266a4b6e25b0afe5000a19ef3876cc786fa165c9be7752d60f49dd4659462a0bd2e79
-  languageName: node
-  linkType: hard
-
-"web3-utils@npm:1.2.11":
-  version: 1.2.11
-  resolution: "web3-utils@npm:1.2.11"
-  dependencies:
-    bn.js: ^4.11.9
-    eth-lib: 0.2.8
-    ethereum-bloom-filters: ^1.0.6
-    ethjs-unit: 0.1.6
-    number-to-bn: 1.7.0
-    randombytes: ^2.1.0
-    underscore: 1.9.1
-    utf8: 3.0.0
-  checksum: 1e43235963d5176e447b20b201a66fabccbe7bd4ef8bbb2edfa5ea80a41e8202a8e8f3db128b2a1662855a627a52d100e3207b81a739b937b5b3b4f9114c008f
   languageName: node
   linkType: hard
 
