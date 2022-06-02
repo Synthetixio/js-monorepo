@@ -58,5 +58,6 @@
 		"chokidar": "^3.5.2",
 		"fsevents": "^2.3.2",
 		"watchpack-chokidar2": "^2.0.1"
-	}
+	},
+	"packageManager": "yarn@3.2.1"
 }
