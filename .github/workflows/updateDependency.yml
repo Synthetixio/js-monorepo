@@ -49,10 +49,10 @@ jobs:
 
       - name: Lints and build
         run: |
-          npm ci
-          npm run lint
-          npm run build
-          npm run test
+          yarn install --immutable
+          yarn lint
+          yarn build
+          yarn test
 
       - name: Update packages version
         run: |
