@@ -2593,7 +2593,7 @@ __metadata:
   dependencies:
     chokidar-cli: ^2.1.0
     ethers: 5.5.3
-    synthetix: 2.71.0
+    synthetix: v2.71.1-alpha
   languageName: unknown
   linkType: soft
 
@@ -12093,9 +12093,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synthetix@npm:2.71.0":
-  version: 2.71.0
-  resolution: "synthetix@npm:2.71.0"
+"synthetix@npm:v2.71.1-alpha":
+  version: 2.71.1-alpha
+  resolution: "synthetix@npm:2.71.1-alpha"
   dependencies:
     abi-decoder: 2.3.0
     commander: 8.1.0
@@ -12107,7 +12107,7 @@ __metadata:
     web3-utils: 1.2.2
   bin:
     snx: bin.js
-  checksum: 2fa5c2330c1a4b605a1c51c1de42095cb96149809a004dbc4f3ee1083ec17bb7cfa412802e61bafd640ca11395248c9c389c6e9dc5bd9a81432e45156bf29dee
+  checksum: 0b0de0cdb23d11c951625c5f87fc83509126f290518dabe7a839ebbcafc281505f756e77b27ebd80b46a7ea26b611fb4ee5c931092ed8505d4777924a714c8c4
   languageName: node
   linkType: hard
 
