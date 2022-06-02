@@ -9,11 +9,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
+
+      - run: yarn npm whoami
+        env:
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - run: yarn install --immutable
       - run: yarn lint
       - run: yarn build
@@ -32,7 +41,9 @@ jobs:
           echo "DEV_VERSION=$DEV_VERSION" >> $GITHUB_ENV
           echo "DEV_VERSION=$DEV_VERSION"
 
-#      - run: npm --workspaces version "$DEV_VERSION"
-#      - run: npm --workspaces publish --tag dev
-#        env:
-#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: yarn workspaces foreach version --deferred "$DEV_VERSION"
+      - run: yarn version apply --all
+
+      - run: yarn workspaces foreach --no-private npm publish --tag dev
+        env:
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
