@@ -15,11 +15,21 @@ jobs:
     name: Update synthetix in contracts-interface
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
+
+      - run: yarn npm whoami
+        env:
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: yarn install --immutable
 
       - name: Config git identity
         run: |
@@ -34,29 +44,24 @@ jobs:
             export VERSION_CANDIDATE="patch"
           fi
           git reset --hard
-          npm version "$VERSION_CANDIDATE" --git-tag-version=false
+          yarn version "$VERSION_CANDIDATE"
           export NEW_VERSION="$(jq -r .version < package.json)"
           echo "NEW_VERSION=$NEW_VERSION" 
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
           git reset --hard
 
-      - name: Update @synthetixio/contracts-interface
+      - name: Update to the new synthetix version (if present)
         if: github.event.inputs.synthetix_version
         run: |
-          echo "Update @synthetixio/contracts-interface with synthetix@${{ github.event.inputs.synthetix_version }}"
-          npm --workspace @synthetixio/contracts-interface install synthetix@${{ github.event.inputs.synthetix_version }} --save-exact
+          yarn up synthetix@${{ github.event.inputs.synthetix_version }}
           git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty --no-verify
 
-      - name: Lints and build
-        run: |
-          npm ci
-          npm run lint
-          npm run build
-          npm run test
+      - run: yarn lint
+      - run: yarn build
+      - run: yarn test
 
-      - name: Update packages version
-        run: |
-          npm --workspaces version ${{ env.NEW_VERSION }} --include-workspace-root --git-tag-version=false
+      - run: yarn workspaces foreach version --deferred ${{ env.NEW_VERSION }}
+      - run: yarn version apply --all
 
       - name: Create git tag and commit changes
         run: |
@@ -64,9 +69,9 @@ jobs:
           git tag -a "v${{ env.NEW_VERSION }}" -m "v${{ env.NEW_VERSION }}"
 
       - name: Publish packages
-        run: npm --workspaces publish
+        run: yarn workspaces foreach --no-private npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push changes
         run: |
@@ -79,7 +84,3 @@ jobs:
           curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"develop\", \"inputs\": {\"monorepo_version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Synthetixio/futures-keepers/actions/workflows/updateDependency.yml/dispatches
           curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Kwenta/kwenta/dispatches
           curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"event_type\": \"update-dependency\", \"client_payload\": {\"version\": \"${{ env.NEW_VERSION }}\"}}" https://api.github.com/repos/Kwenta/kwenta-api/dispatches
-
-      - name: Show full NPM logs on failure
-        if: ${{ failure() }}
-        run: cat /root/.npm/_logs/*

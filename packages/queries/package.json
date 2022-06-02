@@ -1,5 +1,8 @@
 {
 	"name": "@synthetixio/queries",
+	"publishConfig": {
+		"access": "public"
+	},
 	"version": "2.71.0-1",
 	"description": "react-query for pulling synthetix data in react interfaces",
 	"source": "./src/index.ts",
@@ -12,11 +15,11 @@
 		"src"
 	],
 	"scripts": {
-		"build": "npm run codegen && npm run build-node",
+		"build": "yarn codegen && yarn build-node",
 		"build-node": "tsc -p tsconfig.node.json",
 		"build-browser": "webpack --mode=production --max-old-space-size=4096",
 		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
-		"examples:browser": "npm run build-browser && http-server -o ./examples/browser-example.html -c-1",
+		"examples:browser": "yarn build-browser && http-server -o ./examples/browser-example.html -c-1",
 		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
 		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
 		"test": "jest --forceExit --coverage --no-cache",
@@ -34,10 +37,10 @@
 	},
 	"dependencies": {
 		"@snapshot-labs/snapshot.js": "0.3.22",
-		"@synthetixio/contracts-interface": "2.71.0",
-		"@synthetixio/optimism-networks": "2.70.1",
-		"@synthetixio/providers": "2.71.0",
-		"@synthetixio/wei": "2.70.1",
+		"@synthetixio/contracts-interface": "workspace:*",
+		"@synthetixio/optimism-networks": "workspace:*",
+		"@synthetixio/providers": "workspace:*",
+		"@synthetixio/wei": "workspace:*",
 		"axios": "^0.21.4",
 		"date-fns": "2.19.0",
 		"ethers": "5.5.3",

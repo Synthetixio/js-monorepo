@@ -11,7 +11,7 @@
    ```sh
    docker exec -it act-Main-Workflow-build bash
    ```
-5. Inside running container update `$PATH` env to access node and npm
+5. Inside running container update `$PATH` env to access node and yarn
    ```sh
    export PATH="$PATH:/opt/hostedtoolcache/node/16.15.0/x64/bin/"
 

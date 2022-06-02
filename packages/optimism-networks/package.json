@@ -1,5 +1,8 @@
 {
 	"name": "@synthetixio/optimism-networks",
+	"publishConfig": {
+		"access": "public"
+	},
 	"version": "2.71.0-1",
 	"description": "Javascript library for handling networks on Optimism Layer 2",
 	"source": "./src/index.ts",
@@ -12,11 +15,11 @@
 		"src"
 	],
 	"scripts": {
-		"build": "npm run build-browser && npm run build-node",
+		"build": "yarn build-browser && yarn build-node",
 		"build-node": "tsc -p tsconfig.node.json",
 		"build-browser": "webpack --mode=production --max-old-space-size=4096",
 		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
-		"examples:browser": "npm run build-browser && http-server -o ./examples/browser-example.html -c-1",
+		"examples:browser": "yarn build-browser && http-server -o ./examples/browser-example.html -c-1",
 		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
 		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
 		"test": "jest --forceExit --coverage --no-cache",

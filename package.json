@@ -14,9 +14,9 @@
 	"scripts": {
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
-		"test": "npm --workspaces --if-present run test",
-		"build": "npm --workspaces --if-present run build",
-		"publish": "npm --workspaces publish"
+		"test": "yarn workspaces foreach --topological run test",
+		"build": "yarn workspaces foreach --topological run build",
+		"publish": "yarn workspaces foreach --topological publish"
 	},
 	"devDependencies": {
 		"@babel/core": "7.11.0",
@@ -58,5 +58,6 @@
 		"chokidar": "^3.5.2",
 		"fsevents": "^2.3.2",
 		"watchpack-chokidar2": "^2.0.1"
-	}
+	},
+	"packageManager": "yarn@3.2.1"
 }

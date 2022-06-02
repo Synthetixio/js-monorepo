@@ -14,23 +14,23 @@
 
 ## Developer Instructions
 
-This repo uses npm workspaces to manage multiple packages in the same repo. To prepare the repository for use, run:
+This repo uses Yarn workspaces to manage multiple packages in the same repo. To prepare the repository for use, run:
 
 ```
-npm install
+yarn install
 ```
 
-This will install all npm dependencies, wire dependencies between packages in this repo, and allow for you to build projects.
+This will install all dependencies, wire dependencies between packages in this repo, and allow for you to build projects.
 
 ### Building
 
 If you make a change and want to generate the library JS code, run:
 
 ```
-npm run build
+yarn build
 ```
 
-This will ensure all projects are fully built in topological order. You are also free to run script NPM commands from individual repositories if necessary or desired.
+This will ensure all projects are fully built in topological order. You are also free to run script commands from individual repositories if necessary or desired.
 
 ### Publishing
 
@@ -46,10 +46,10 @@ When you open a PR a dev package will be published automatically when CI passes.
 
 #### Manual
 
-NPM workspaces are specially designed to handle package updates. If you want to push a new release for one or more packages in this repo, run:
+Yarn workspaces are specially designed to handle package updates. If you want to push a new release for one or more packages in this repo, run:
 
 ```
-npm --workspaces publish
+yarn workspaces foreach publish
 ```
 
-NPM will automatically detect changes for packages, and offer to increment the version number and push an NPM release as appropriate. Any dependant modules will be kept in sync as well.
+Yarn will automatically detect changes for packages, and offer to increment the version number and push a release as appropriate. Any dependant modules will be kept in sync as well.
