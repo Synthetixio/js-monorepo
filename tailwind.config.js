@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   prefix: 'ui-',
   darkMode: 'class',
@@ -145,5 +147,9 @@ module.exports = {
       }
     }
   },
-  plugins: []
+  plugins: [
+    plugin(({ addVariant }) => {
+      addVariant('ui-every-child', '> *');
+    })
+  ]
 };

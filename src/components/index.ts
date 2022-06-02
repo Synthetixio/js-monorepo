@@ -10,6 +10,7 @@ import { Badge, BadgeProps } from './Badge/Badge';
 import { Button, ButtonProps } from './Button/Button';
 import { ButtonCard, ButtonCardProps } from './ButtonCard/ButtonCard';
 import { Card, CardProps } from './Card/Card';
+import { Carousel } from './Carousel/Carousel';
 import { Checkbox, CheckboxProps } from './Checkbox/Checkbox';
 import { Dialog, DialogProps } from './Dialog/Dialog';
 import { Dropdown, DropdownProps } from './Dropdown/Dropdown';
@@ -30,6 +31,7 @@ export {
   Button,
   ButtonCard,
   Card,
+  Carousel,
   Checkbox,
   Dialog,
   Dropdown,
