@@ -110,7 +110,7 @@ async function run() {
 		}
 		if (isFix) {
 			console.log(`...FIXING ${fgYellow}${location}/package.json${fgReset}`);
-			await fs.writeFile(`${location}/package.json`, JSON.stringify(packageJson, null, 2));
+			await fs.writeFile(`${location}/package.json`, JSON.stringify(packageJson, null, '\t'));
 		}
 	}, Promise.resolve());
 

@@ -88,7 +88,7 @@ async function run() {
 				packageJson.devDependencies[name] = unique[name];
 			}
 			console.log(`...FIXING ${fgYellow}${location}/package.json${fgReset}`);
-			fs.writeFileSync(`${ROOT}/${location}/package.json`, JSON.stringify(packageJson, null, 2));
+			fs.writeFileSync(`${ROOT}/${location}/package.json`, JSON.stringify(packageJson, null, '\t'));
 		}
 	});
 
