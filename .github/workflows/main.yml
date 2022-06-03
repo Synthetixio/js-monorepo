@@ -24,6 +24,11 @@ jobs:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: yarn install --immutable
+
+      - run: yarn deps
+      - run: yarn deps:mismatched
+      - run: yarn deps:circular
+
       - run: yarn lint
       - run: yarn build
       - run: yarn test

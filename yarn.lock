@@ -5429,7 +5429,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deps@workspace:tools/deps":
+"deps@workspace:*, deps@workspace:tools/deps":
   version: 0.0.0-use.local
   resolution: "deps@workspace:tools/deps"
   dependencies:
@@ -11195,6 +11195,7 @@ __metadata:
     babel-jest: ^27.0.6
     babel-loader: 8.1.0
     chokidar: ^3.5.2
+    deps: "workspace:*"
     eslint: ^7.26.0
     eslint-config-prettier: ^8.3.0
     eslint-plugin-import: ^2.23.2
