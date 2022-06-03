@@ -48,7 +48,8 @@ async function run() {
 						location: context.location,
 						name,
 						version,
-						expected: '^<EXACT VERSION>',
+						// expected: '^<EXACT VERSION>',
+						expected: '<EXACT VERSION>', // exact version
 					});
 					return result;
 				}
