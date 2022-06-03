@@ -5,8 +5,6 @@ const depcheck = require('depcheck');
 const cp = require('child_process');
 const fs = require('fs/promises');
 
-const { workspaces } = require('./workspaces');
-
 const isFix = process.argv.includes('--fix');
 
 async function exec(cmd, options) {
@@ -32,6 +30,8 @@ const options = {
 	],
 };
 
+const ignoredPackages = [];
+
 const fgReset = '\x1b[0m';
 const fgRed = '\x1b[31m';
 const fgGreen = '\x1b[32m';
@@ -41,30 +41,28 @@ const fgCyan = '\x1b[36m';
 let updatedPackages = 0;
 
 async function run() {
-	//	console.log(await workspaces());
-	//	return;
+	const workspacePackages = (await exec('yarn workspaces list --json'))
+		.split('\n')
+		.filter(Boolean)
+		.map((line) => JSON.parse(line))
+		// filter out old unsupported dirs
+		.filter(({ name }) => !ignoredPackages.includes(name));
 
-	const { workspacePackages, versions } = workspaces();
+	const workspaceDeps = workspacePackages.map(({ name }) => [name, 'workspace:*']);
 
-	console.log(`workspacePackages`, workspacePackages);
+	const existingDeps = (await exec('yarn info --all --json'))
+		.split('\n')
+		.filter(Boolean)
+		.map((line) => JSON.parse(line))
+		.map(({ value }) => {
+			const name = value.slice(0, value.lastIndexOf('@'));
+			const [, version] = value.slice(value.lastIndexOf('@') + 1).split(':');
+			// if duplicate name detected - it will be overwritten by the latest entry
+			// and as they are sorted ASC, we get the latest version
+			return [name, `^${version}`];
+		});
 
-	const workspaceDeps = workspacePackages.map(({ name, version }) => [name, version]);
-	console.log(`workspaceDeps`, workspaceDeps);
-
-	//	const existingDeps = (await exec('yarn info --all --json'))
-	//		.split('\n')
-	//		.filter(Boolean)
-	//		.map((line) => JSON.parse(line))
-	//		.map(({ value }) => {
-	//			const name = value.slice(0, value.lastIndexOf('@'));
-	//			const [, version] = value.slice(value.lastIndexOf('@') + 1).split(':');
-	//			// if duplicate name detected - it will be overwritten by the latest entry
-	//			// and as they are sorted ASC, we get the latest version
-	//			return [name, `^${version}`];
-	//		});
-
-	const deps = Object.fromEntries([].concat(Object.entries(versions)).concat(workspaceDeps));
-	return console.log(`deps`, deps);
+	const deps = Object.fromEntries([].concat(existingDeps).concat(workspaceDeps));
 
 	await workspacePackages.reduce(async (promise, { location, name }) => {
 		await promise;
@@ -129,7 +127,7 @@ async function run() {
 		console.log('');
 		console.log('');
 		console.log(`${fgRed}Packages need fixing: ${fgGreen}${updatedPackages}${fgReset}`);
-		throw new Error();
+		throw new Error(`Packages need fixing: ${updatedPackages}`);
 	}
 }
 

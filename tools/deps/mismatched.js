@@ -104,11 +104,8 @@ async function run() {
 		console.log('');
 		console.log(`${fgRed}Versions need fixing: ${fgGreen}${mismatched.length}${fgReset}`);
 		console.log(`${fgCyan}Run ${fgGreen}deps-mismatched --fix${fgReset}`);
-		throw new Error();
+		throw new Error(`Versions need fixing: ${mismatched.length}`);
 	}
 }
 
-run().then(
-	() => process.exit(0),
-	() => process.exit(1)
-);
+run();
