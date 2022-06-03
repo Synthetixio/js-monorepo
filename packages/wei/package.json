@@ -17,7 +17,7 @@
 	"scripts": {
 		"build": "yarn build-browser && yarn build-node",
 		"build-node": "tsc -p tsconfig.node.json",
-		"build-browser": "webpack --mode=production",
+		"build-browser": "webpack-cli --mode=production",
 		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
 		"examples:browser": "yarn build-browser && http-server -o ./examples/browser-example.html -c-1",
 		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",

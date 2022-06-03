@@ -26,6 +26,17 @@ const options = {
 	ignoreMatches: [
 		// Must keep ts dependency so depcheck works over Typescript files
 		'typescript',
+
+		// these are dev deps that we declare in the root package
+		'@babel/plugin-transform-runtime',
+		'@types/jest',
+		'@types/mocha',
+		'babel-jest',
+		'babel-loader',
+		'jest',
+		'ts-loader',
+		'webpack',
+		'webpack-cli',
 	],
 };
 

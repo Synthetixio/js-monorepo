@@ -18,7 +18,7 @@
 		"build": "yarn workspaces foreach --topological run build",
 		"publish": "yarn workspaces foreach --topological publish",
 		"deps": "deps",
-		"deps:fx": "deps --fix",
+		"deps:fix": "deps --fix",
 		"deps:mismatched": "deps-mismatched",
 		"deps:circular": "deps-circular"
 	},

@@ -1,8 +1,0 @@
-ignorePatterns: [
-  "build",
-  "generated",
-  "coverage"
-]
-
-ignoreMatches: [
-]
