@@ -1,7 +1,15 @@
 import clsx from 'clsx';
 import ArrowLeftIcon from 'components/Icons/ArrowLeftIcon';
 import ArrowRightIcon from 'components/Icons/ArrowRightIcon';
-import { cloneElement, HTMLAttributes, ReactElement, useEffect, useRef, useState } from 'react';
+import {
+  cloneElement,
+  HTMLAttributes,
+  ReactElement,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 
 import { IconButton } from '../IconButton/IconButton';
 
@@ -83,24 +91,37 @@ export function Carousel({
     }
   };
   const maxLength = carouselItems.length;
-  const parsedCarouselItems = withFade
-    ? carouselItems.map((item, index) => {
-        const prevClassName = item.props?.className;
-        if (index === activeIndex)
-          return cloneElement(item, { className: `${prevClassName} ui-opacity-100` });
-        if (index === activeIndex - 1 && activeIndex - 1 > 0)
-          return cloneElement(item, { className: `${prevClassName} ui-opacity-70 ui-scale-[0.9]` });
-        if (activeIndex - 1 === index && activeIndex + 1 <= maxLength)
-          return cloneElement(item, { className: `${prevClassName} ui-opacity-70 ui-scale-[0.9]` });
-        if (index + 1 === activeIndex)
-          return cloneElement(item, { className: `${prevClassName} ui-opacity-70 ui-scale-[0.9]` });
-        if (index + 2 === activeIndex)
-          return cloneElement(item, { className: `${prevClassName} ui-opacity-50 ui-scale-[0.8]` });
-        if (index - 2 === activeIndex)
-          return cloneElement(item, { className: `${prevClassName} ui-opacity-50 ui-scale-[0.8]` });
-        return item;
-      })
-    : carouselItems;
+  const parsedCarouselItems = useMemo(
+    () =>
+      // TODO @DEV scale will fail because of the weird implementation of the card component, className <> wrapperClass
+      withFade
+        ? carouselItems.map((item, index) => {
+            const prevClassName = item.props?.className;
+            if (index + 1 === activeIndex)
+              return cloneElement(item, { className: `${prevClassName} ui-opacity-100` });
+            if (
+              (index === activeIndex || index + 2 === activeIndex) &&
+              activeIndex >= 1 &&
+              activeIndex <= maxLength
+            ) {
+              return cloneElement(item, {
+                className: `${prevClassName} ui-opacity-70 ui-scale-90`
+              });
+            }
+            if (
+              (index - 1 === activeIndex || index + 3 === activeIndex) &&
+              activeIndex - 1 >= 0 &&
+              activeIndex <= maxLength
+            ) {
+              return cloneElement(item, {
+                className: `${prevClassName} ui-opacity-50 ui-scale-75`
+              });
+            }
+            return cloneElement(item, { className: 'ui-opacity-0' });
+          })
+        : carouselItems,
+    [activeIndex, carouselItems, maxLength, withFade]
+  );
 
   return (
     <div
@@ -135,18 +156,14 @@ export function Carousel({
           </IconButton>
         </>
       )}
-      {withFade ? (
-        <div ref={styledCarouselItemsWrapperRef} className='ui-every-child:opacity-0'>
-          {parsedCarouselItems}
-        </div>
-      ) : (
-        <div
-          ref={styledCarouselItemsWrapperRef}
-          className='ui-flex ui-overflow-hidden ui-snap-mandatory ui-w-full'
-        >
-          {parsedCarouselItems}
-        </div>
-      )}
+      <div
+        ref={styledCarouselItemsWrapperRef}
+        className={clsx('ui-flex ui-overflow-hidden ui-snap-mandatory ui-w-full', {
+          'ui-every-child:opacity-100': withFade
+        })}
+      >
+        {parsedCarouselItems}
+      </div>
       {withDots && (
         <div
           className={clsx(

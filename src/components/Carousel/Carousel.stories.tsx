@@ -10,7 +10,7 @@ export default {
 } as ComponentMeta<typeof Carousel>;
 
 const Template: ComponentStory<typeof Carousel> = (args) => (
-  <div style={{ margin: '30px', maxWidth: '200px' }}>
+  <div style={{ margin: '30px', maxWidth: '1000px' }}>
     <Carousel {...args} />
   </div>
 );
@@ -19,7 +19,7 @@ export const Primary = Template.bind({});
 
 Primary.args = {
   widthOfItems: 200,
-  withFade: false,
+  withFade: true,
   withDots: true,
 
   carouselItems: [
