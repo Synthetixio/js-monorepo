@@ -1,0 +1,28 @@
+name: Storybook
+on:
+  push:
+    branches:
+      - main
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: yarn
+      - name: build storybook
+        run: yarn build-storybook
+      - name: Deploy Storybook 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages # The branch the action should deploy to.
+          folder: storybook-static # The folder that the build-storybook script generates files.

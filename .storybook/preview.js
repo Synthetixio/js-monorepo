@@ -1,7 +1,7 @@
-import "styles/index.scss";
+import 'styles/index.scss';
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
       color: /(background|color)$/i,
@@ -9,21 +9,21 @@ export const parameters = {
     }
   },
   backgrounds: {
-    default: "Light",
+    default: 'Light',
     values: [
       {
-        name: "Light",
-        value: "#ffffff"
+        name: 'Light',
+        value: '#ffffff'
       },
       {
-        name: "Dark",
-        value: "#141414"
+        name: 'Dark',
+        value: '#141414'
       }
     ]
   },
   darkMode: {
     stylePreview: true,
-    darkClass: "ui-dark",
-    classTarget: "html"
+    darkClass: 'ui-dark',
+    classTarget: 'html'
   }
 };
