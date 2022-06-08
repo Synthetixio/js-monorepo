@@ -7,7 +7,7 @@ import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { QueryContext } from '../../context';
 import { Balances, SynthBalancesMap } from '../../types';
 
-type SynthBalancesTuple = [CurrencyKey[], ethers.BigNumber[], ethers.BigNumber[]];
+type SynthBalancesTuple = [string[], ethers.BigNumber[], ethers.BigNumber[]];
 
 const useSynthsBalancesQuery = (
 	ctx: QueryContext,
@@ -27,12 +27,12 @@ const useSynthsBalancesQuery = (
 
 			let totalUSDBalance = wei(0);
 
-			currencyKeys.forEach((currencyKey: string, idx: number) => {
+			currencyKeys.forEach((currencyKeyBytes32, idx) => {
 				const balance = wei(synthsBalances[idx]);
 
 				// discard empty balances
 				if (balance.gt(0)) {
-					const synthName = ethers.utils.parseBytes32String(currencyKey) as CurrencyKey;
+					const synthName = ethers.utils.parseBytes32String(currencyKeyBytes32) as CurrencyKey;
 					const usdBalance = wei(synthsUSDBalances[idx]);
 
 					balancesMap[synthName] = {
