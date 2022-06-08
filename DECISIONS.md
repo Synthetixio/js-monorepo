@@ -1,5 +1,9 @@
 # Architectural Decision Records
 
+## 2022-06-09 Incorporate `codegen-graph-ts`
+- Because `codegen-graph-ts` depends on `wei` and `queries` depend on `codegen-graph-ts` we ended up having multiple `wei` instances of different versions in the lockfile
+- Adding package to the monorepo is a 3-step process. See details in the [README.md](README.md)
+
 ## 2022-06-02 Migrate to Yarn from NPM Workspaces
 - As it turns out NPM workspaces do not have a lot of features
 - Non-trivial to find all the workspaces in the monorepo (not too problematic)
