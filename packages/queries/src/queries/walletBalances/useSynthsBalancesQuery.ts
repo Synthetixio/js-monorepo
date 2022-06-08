@@ -17,9 +17,13 @@ const useSynthsBalancesQuery = (
 	return useQuery<Balances>(
 		['walletBalances', 'synths', ctx.networkId, walletAddress],
 		async () => {
-			const balancesMap: Partial<SynthBalancesMap> = {};
-			const [currencyKeys, synthsBalances, synthsUSDBalances] =
-				(await ctx.snxjs!.contracts.SynthUtil!.synthsBalances(walletAddress)) as SynthBalancesTuple;
+			if (!ctx.snxjs) {
+				// This should never happen since the query is not enabled when ctx.snxjs is undefined
+				throw Error('ctx.snxjs is undefined');
+			}
+			const balancesMap: SynthBalancesMap = {};
+			const [currencyKeys, synthsBalances, synthsUSDBalances]: SynthBalancesTuple =
+				await ctx.snxjs.contracts.SynthUtil.synthsBalances(walletAddress);
 
 			let totalUSDBalance = wei(0);
 
