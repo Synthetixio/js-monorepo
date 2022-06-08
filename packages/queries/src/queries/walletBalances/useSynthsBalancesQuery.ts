@@ -1,13 +1,13 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import { ethers } from 'ethers';
 import orderBy from 'lodash/orderBy';
-import Wei, { wei } from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 
 import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { QueryContext } from '../../context';
-import { Balances, SynthBalance, SynthBalancesMap } from '../../types';
+import { Balances, SynthBalancesMap } from '../../types';
 
-type SynthBalancesTuple = [CurrencyKey[], ethers.BigNumber[], ethers.BigNumber[]];
+type SynthBalancesTuple = [string[], ethers.BigNumber[], ethers.BigNumber[]];
 
 const useSynthsBalancesQuery = (
 	ctx: QueryContext,
@@ -17,18 +17,22 @@ const useSynthsBalancesQuery = (
 	return useQuery<Balances>(
 		['walletBalances', 'synths', ctx.networkId, walletAddress],
 		async () => {
-			const balancesMap: Partial<SynthBalancesMap> = {};
-			const [currencyKeys, synthsBalances, synthsUSDBalances] =
-				(await ctx.snxjs!.contracts.SynthUtil!.synthsBalances(walletAddress)) as SynthBalancesTuple;
+			if (!ctx.snxjs) {
+				// This should never happen since the query is not enabled when ctx.snxjs is undefined
+				throw Error('ctx.snxjs is undefined');
+			}
+			const balancesMap: SynthBalancesMap = {};
+			const [currencyKeys, synthsBalances, synthsUSDBalances]: SynthBalancesTuple =
+				await ctx.snxjs.contracts.SynthUtil.synthsBalances(walletAddress);
 
 			let totalUSDBalance = wei(0);
 
-			currencyKeys.forEach((currencyKey: string, idx: number) => {
+			currencyKeys.forEach((currencyKeyBytes32, idx) => {
 				const balance = wei(synthsBalances[idx]);
 
 				// discard empty balances
 				if (balance.gt(0)) {
-					const synthName = ethers.utils.parseBytes32String(currencyKey) as CurrencyKey;
+					const synthName = ethers.utils.parseBytes32String(currencyKeyBytes32) as CurrencyKey;
 					const usdBalance = wei(synthsUSDBalances[idx]);
 
 					balancesMap[synthName] = {
@@ -42,10 +46,10 @@ const useSynthsBalancesQuery = (
 			});
 
 			return {
-				balancesMap: balancesMap as SynthBalancesMap,
+				balancesMap: balancesMap,
 				balances: orderBy(
-					Object.values(balancesMap as SynthBalancesMap),
-					(balance: SynthBalance) => balance.usdBalance.toNumber(),
+					Object.values(balancesMap),
+					(balance) => balance.usdBalance.toNumber(),
 					'desc'
 				),
 				totalUSDBalance,
