@@ -2,7 +2,7 @@
 
 ### Storybook
 
-We are building storybook on every PR to main. To see the components, visit the link: https://synthetixio.github.io
+We are building storybook on every PR to main. To see the components, visit the link: https://synthetixio.github.io/ui/?path=/story/accordion--primary
 
 ### Release
 
@@ -15,7 +15,7 @@ reuseable react components
 Install globally yalc
 
 ```bash
-    npm|yarn install|add yalc -g
+npm|yarn install|add yalc -g
 ```
 
 Once you make some changes in the library run
