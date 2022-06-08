@@ -70,7 +70,7 @@ export type SynthBalance = {
 	usdBalance: Wei;
 };
 
-export type SynthBalancesMap = Record<CurrencyKey, SynthBalance>;
+export type SynthBalancesMap = { [key in CurrencyKey]?: SynthBalance };
 
 export type Balances = {
 	balancesMap: SynthBalancesMap;
