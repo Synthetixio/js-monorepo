@@ -47,7 +47,7 @@
 		"graphql": "^15.5.0",
 		"graphql-request": "^3.4.0",
 		"lodash": "^4.17.21",
-		"maxibon-codegen-graph-ts": "^0.2.0"
+		"maxibon-codegen-graph-ts": "workspace:*"
 	},
 	"devDependencies": {
 		"@testing-library/react-hooks": "^7.0.0",
