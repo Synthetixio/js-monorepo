@@ -23,6 +23,7 @@ export interface DropdownProps {
     toggleDropdown
   }: TriggerElementPropsParams) => Record<string, unknown>;
   contentAlignment?: 'left' | 'right';
+  renderFunction?: (triggerElementProps: TriggerElementPropsParams) => React.ReactNode;
 }
 
 export const Dropdown: React.FC<DropdownProps> = ({
@@ -32,7 +33,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
   triggerElement,
   triggerElementProps,
   contentAlignment = 'left',
-  contentClassName = 'ui-gradient-primary'
+  contentClassName = 'ui-gradient-primary',
+  renderFunction
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
@@ -67,7 +69,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
           ref={nodeRef}
           className={clsx(
             contentClassName,
-            'ui-absolute ui-dark:bg-gray-900 ui-rounded ui-z-50 ui-shadow-md ui-top-full ui-mt-2',
+            'ui-absolute ui-dark:bg-gray-900 ui-rounded ui-z-50 ui-shadow-md ui-top-full ui-mt-2 ui-overflow-hidden',
             {
               'ui-right-0': contentAlignment === 'right',
               'ui-w-56': width === 'sm',
@@ -75,7 +77,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
             }
           )}
         >
-          {children}
+          {renderFunction
+            ? renderFunction({ isOpen, handleOpen, handleClose, toggleDropdown })
+            : children}
         </div>
       </CSSTransition>
     </div>

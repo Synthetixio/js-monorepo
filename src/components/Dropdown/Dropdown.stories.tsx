@@ -16,7 +16,7 @@ const Template: ComponentStory<typeof Dropdown> = (args) => (
     triggerElement={<Button>Trigger</Button>}
     triggerElementProps={({ isOpen }) => ({ isActive: isOpen })}
   >
-    <div>Content</div>
+    <div className='ui-p-2'>Content</div>
   </Dropdown>
 );
 
