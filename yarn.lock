@@ -2543,7 +2543,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.169, @types/lodash@npm:^4.14.172":
+"@types/lodash@npm:^4.14.169":
   version: 4.14.182
   resolution: "@types/lodash@npm:4.14.182"
   checksum: 7dd137aa9dbabd632408bd37009d984655164fa1ecc3f2b6eb94afe35bf0a5852cbab6183148d883e9c73a958b7fec9a9bcf7c8e45d41195add6a18c34958209
@@ -8885,16 +8885,15 @@ __metadata:
   dependencies:
     "@synthetixio/wei": "workspace:*"
     "@types/commander": ^2.12.2
-    "@types/lodash": ^4.14.172
+    "@types/lodash": ^4.14.169
     axios: ^0.21.4
     commander: ^8.1.0
     eval: ^0.1.6
     graphql: 15.5.0
     graphql-request: 3.4.0
     lodash: ^4.17.21
-    react-dom: ^17.0.2
-    react-query: 3.16.0
-    typescript: 4.4.2
+    node-fetch: ^2.6.7
+    typescript: ^4.4.2
   bin:
     maxibon-codegen-graph-ts: build/src/gen/index.js
   languageName: unknown
@@ -9364,7 +9363,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2.6.7":
+"node-fetch@npm:2.6.7, node-fetch@npm:^2.6.7":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
   dependencies:
@@ -12090,16 +12089,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.4.2":
-  version: 4.4.2
-  resolution: "typescript@npm:4.4.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 194e08e9d1971d667d6fd1a0554616b7022312a2319d70e81a64e502a265992061ee7817ed9a69b52bbabe7a9b85e7938cb8c11c433e40a516b277f8c4dacd51
-  languageName: node
-  linkType: hard
-
 "typescript@npm:^4.4.2":
   version: 4.7.3
   resolution: "typescript@npm:4.7.3"
@@ -12107,16 +12096,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: fd13a1ce53790a36bb8350e1f5e5e384b5f6cb9b0635114a6d01d49cb99916abdcfbc13c7521cdae2f2d3f6d8bc4a8ae7625edf645a04ee940588cd5e7597b2f
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@4.4.2#~builtin<compat/typescript>":
-  version: 4.4.2
-  resolution: "typescript@patch:typescript@npm%3A4.4.2#~builtin<compat/typescript>::version=4.4.2&hash=7ad353"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 4e64d212c1b70ed178b0894c23b4c78a5bf2491d08707098b61f24e54331c47c3c166de210551e7edf26fc0bbdfd5b1548d3d15ed3f738880e4f01c6b6a8b63a
   languageName: node
   linkType: hard
 
