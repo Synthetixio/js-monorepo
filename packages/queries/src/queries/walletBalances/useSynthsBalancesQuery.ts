@@ -1,11 +1,11 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import { ethers } from 'ethers';
 import orderBy from 'lodash/orderBy';
-import Wei, { wei } from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 
 import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { QueryContext } from '../../context';
-import { Balances, SynthBalance, SynthBalancesMap } from '../../types';
+import { Balances, SynthBalancesMap } from '../../types';
 
 type SynthBalancesTuple = [CurrencyKey[], ethers.BigNumber[], ethers.BigNumber[]];
 
@@ -46,10 +46,10 @@ const useSynthsBalancesQuery = (
 			});
 
 			return {
-				balancesMap: balancesMap as SynthBalancesMap,
+				balancesMap: balancesMap,
 				balances: orderBy(
-					Object.values(balancesMap as SynthBalancesMap),
-					(balance: SynthBalance) => balance.usdBalance.toNumber(),
+					Object.values(balancesMap),
+					(balance) => balance.usdBalance.toNumber(),
 					'desc'
 				),
 				totalUSDBalance,
