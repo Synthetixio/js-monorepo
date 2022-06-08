@@ -1,0 +1,54 @@
+.ui-dialog-enter {
+  opacity: 0.01;
+}
+.ui-dialog-enter.ui-dialog-enter-active {
+  opacity: 1;
+  transition: opacity 120ms ease-in;
+}
+.ui-dialog-exit {
+  opacity: 1;
+}
+.ui-dialog-exit.ui-dialog-exit-active {
+  opacity: 0.01;
+  transition: opacity 120ms ease-in;
+}
+
+.ui-fade-enter {
+  opacity: 0;
+  transform: scale(0.95);
+}
+.ui-fade-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 200ms, transform 200ms;
+}
+.ui-fade-exit {
+  opacity: 1;
+}
+.ui-fade-exit-active {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 200ms, transform 200ms;
+}
+
+.ui-accordion-enter {
+  opacity: 0.01;
+
+  overflow: hidden;
+  max-height: 0;
+}
+.ui-accordion-enter.ui-accordion-enter-active {
+  opacity: 1;
+  max-height: 1000px;
+  transition: max-height 0.6s ease-in-out, opacity 220ms ease-in;
+}
+.ui-accordion-exit {
+  opacity: 1;
+  max-height: 1000px;
+}
+.ui-accordion-exit.ui-accordion-exit-active {
+  opacity: 0.01;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), opacity 120ms ease-in;
+}

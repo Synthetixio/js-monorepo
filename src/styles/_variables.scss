@@ -1,0 +1,181 @@
+$blue: #03d1ff;
+$purple: #402fc8;
+$pink: #ed1eff;
+$green: #31d8a4;
+$yellow: #ffd75c;
+$orange: #fc8738;
+$red: #ff1e39;
+$navy: #10104e;
+
+html {
+  --color-blue: #{$blue};
+  --color-blue-dark-1: #{darken($blue, 10%)};
+  --color-blue-dark-2: #{darken($blue, 20%)};
+  --color-blue-dark-3: #{darken($blue, 30%)};
+  --color-blue-dark-4: #{darken($blue, 40%)};
+  --color-blue-light-1: #{lighten($blue, 10%)};
+  --color-blue-light-2: #{lighten($blue, 20%)};
+  --color-blue-light-3: #{lighten($blue, 30%)};
+  --color-blue-light-4: #{lighten($blue, 40%)};
+
+  --color-purple: #{$purple};
+  --color-purple-dark-1: #{darken($purple, 10%)};
+  --color-purple-dark-2: #{darken($purple, 20%)};
+  --color-purple-dark-3: #{darken($purple, 30%)};
+  --color-purple-dark-4: #{darken($purple, 40%)};
+  --color-purple-light-1: #{lighten($purple, 10%)};
+  --color-purple-light-2: #{lighten($purple, 20%)};
+  --color-purple-light-3: #{lighten($purple, 30%)};
+  --color-purple-light-4: #{lighten($purple, 40%)};
+
+  --color-pink: #{$pink};
+  --color-pink-dark-1: #{darken($pink, 10%)};
+  --color-pink-dark-2: #{darken($pink, 20%)};
+  --color-pink-dark-3: #{darken($pink, 30%)};
+  --color-pink-dark-4: #{darken($pink, 40%)};
+  --color-pink-light-1: #{lighten($pink, 10%)};
+  --color-pink-light-2: #{lighten($pink, 20%)};
+  --color-pink-light-3: #{lighten($pink, 30%)};
+  --color-pink-light-4: #{lighten($pink, 40%)};
+
+  --color-green: #{$green};
+  --color-green-dark-1: #{darken($green, 10%)};
+  --color-green-dark-2: #{darken($green, 20%)};
+  --color-green-dark-3: #{darken($green, 30%)};
+  --color-green-dark-4: #{darken($green, 40%)};
+  --color-green-light-1: #{lighten($green, 10%)};
+  --color-green-light-2: #{lighten($green, 20%)};
+  --color-green-light-3: #{lighten($green, 30%)};
+  --color-green-light-4: #{lighten($green, 40%)};
+
+  --color-yellow: #{$yellow};
+  --color-yellow-dark-1: #{darken($yellow, 10%)};
+  --color-yellow-dark-2: #{darken($yellow, 20%)};
+  --color-yellow-dark-3: #{darken($yellow, 30%)};
+  --color-yellow-dark-4: #{darken($yellow, 40%)};
+  --color-yellow-light-1: #{lighten($yellow, 10%)};
+  --color-yellow-light-2: #{lighten($yellow, 20%)};
+  --color-yellow-light-3: #{lighten($yellow, 30%)};
+  --color-yellow-light-4: #{lighten($yellow, 40%)};
+
+  --color-orange: #{$orange};
+  --color-orange-dark-1: #{darken($orange, 10%)};
+  --color-orange-dark-2: #{darken($orange, 20%)};
+  --color-orange-dark-3: #{darken($orange, 30%)};
+  --color-orange-dark-4: #{darken($orange, 40%)};
+  --color-orange-light-1: #{lighten($orange, 10%)};
+  --color-orange-light-2: #{lighten($orange, 20%)};
+  --color-orange-light-3: #{lighten($orange, 30%)};
+  --color-orange-light-4: #{lighten($orange, 40%)};
+
+  --color-red: #{$red};
+  --color-red-dark-1: #{darken($red, 10%)};
+  --color-red-dark-2: #{darken($red, 20%)};
+  --color-red-dark-3: #{darken($red, 30%)};
+  --color-red-dark-4: #{darken($red, 40%)};
+  --color-red-light-1: #{lighten($red, 10%)};
+  --color-red-light-2: #{lighten($red, 20%)};
+  --color-red-light-3: #{lighten($red, 30%)};
+  --color-red-light-4: #{lighten($red, 40%)};
+
+  --color-navy: #{$navy};
+  --color-navy-dark-1: #{darken($navy, 10%)};
+  --color-navy-dark-2: #{darken($navy, 20%)};
+  --color-navy-dark-3: #{darken($navy, 30%)};
+  --color-navy-dark-4: #{darken($navy, 40%)};
+  --color-navy-light-1: #{lighten($navy, 10%)};
+  --color-navy-light-2: #{lighten($navy, 20%)};
+  --color-navy-light-3: #{lighten($navy, 30%)};
+  --color-navy-light-4: #{lighten($navy, 40%)};
+
+  --color-black-700: #000000;
+  --color-black-600: #141414;
+  --color-black-500: #212529;
+  --color-black-400: #2d2d2d;
+  --color-black-300: #868e96;
+  --color-black-200: #adb5bd;
+  --color-black-100: #304b66;
+
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-650: #828295;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  --color-red-700: #a71930;
+  --color-red-600: #c11534;
+  --color-red-500: #db283e;
+  --color-red-400: #ff5758;
+  --color-red-300: #fd6f66;
+  --color-red-200: #ffaaa5;
+  --color-red-100: #ffe5e3;
+
+  --color-disabled: #565663;
+  --color-disabled-2: #3e434b;
+  --color-overlay-bg: rgba(80, 85, 104, 0.3);
+
+  --color-primary: #00d1ff;
+  --color-dark-blue: #0b0b22;
+}
+.ui-gradient-primary {
+  background: linear-gradient(73.6deg, #85ffc4 2.11%, #5cc6ff 90.45%);
+}
+.ui-gradient-blue {
+  background: linear-gradient(180deg, #08021e 0%, #1f0777 146.21%);
+}
+.ui-gradient-dark-blue {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), #402fc8;
+}
+.ui-gradient-purple {
+  background: linear-gradient(73.6deg, #8e2de2 2.11%, #4b01e0 90.45%);
+}
+.ui-gradient-orange {
+  background: linear-gradient(73.6deg, #ff8060 2.11%, #feb27a 90.45%);
+}
+.ui-gradient-pink {
+  background: linear-gradient(73.6deg, #8e2de2 2.11%, #ed1eff 90.45%);
+}
+.ui-gradient-rainbow {
+  background: linear-gradient(180deg, #ed1eff 0%, #00d1ff 100%);
+}
+.ui-gradient-gray-1 {
+  background: linear-gradient(318.21deg, #06090f 14.05%, #2c3036 85.29%);
+}
+.ui-gradient-gray-2 {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    linear-gradient(311.52deg, #3d464c -36.37%, #131619 62.81%);
+}
+.ui-text-fill-transparent {
+  -webkit-text-fill-color: transparent;
+}
+
+.ui-darker-20 {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.ui-darker-40 {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.ui-darker-60 {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.ui-darker-80 {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+$break-points: (
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+  '2xl': 1536px
+);
+
+$font-family: 'Manrope', system-ui, -apple-system,
+  /* Firefox supports this but not yet `system-ui` */ 'Segoe UI', Roboto, Helvetica, Arial,
+  sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';

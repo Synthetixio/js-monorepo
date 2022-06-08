@@ -1,0 +1,31 @@
+.ui-textfield-wrapper {
+  input:not([disabled]),
+  textarea:not([disabled]) {
+    &:focus + label,
+    &:active + label {
+      color: var(--color-primary);
+    }
+  }
+}
+
+.ui-checkbox {
+  input:checked + svg {
+    display: block;
+  }
+}
+
+.ui-button-outline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 2.5px;
+  border: 2.5px solid transparent;
+  background: linear-gradient(73.6deg, #85ffc4 2.11%, #5cc6ff 90.45%) border-box;
+  -webkit-mask: linear-gradient(73.6deg, #85ffc4 2.11%, #5cc6ff 90.45%) padding-box,
+    linear-gradient(73.6deg, #85ffc4 2.11%, #5cc6ff 90.45%);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+}

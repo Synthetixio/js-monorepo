@@ -1,0 +1,19 @@
+@use "sass:map";
+
+@mixin breakpoint-up($min) {
+  @media only screen and (min-width: map.get($break-points, $min)) {
+    @content;
+  }
+}
+
+@mixin breakpoint-down($max) {
+  @media only screen and (max-width: map.get($break-points, $max)) {
+    @content;
+  }
+}
+
+@mixin breakpoint-between($min, $max) {
+  @media only screen and (min-width: map.get($break-points, $min)) and (max-width: map.get($break-points, $max)) {
+    @content;
+  }
+}

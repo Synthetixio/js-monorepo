@@ -1,0 +1,19 @@
+.wrapper {
+  input[type='radio']:not(:disabled) {
+    & + label span {
+      transition: background-color 0.2s, transform 0.2s;
+    }
+
+    & + label div:hover,
+    & + label:hover div {
+      transform: scale(1.05);
+    }
+
+    &:checked + label div {
+      border-color: var(--color-primary);
+    }
+    &:checked + label span {
+      background-color: var(--color-primary);
+    }
+  }
+}

@@ -1,5 +1,9 @@
 # Synthetix-ui
 
+### Storybook
+
+We are building storybook on every PR to main. To see the components, visit the link: https://synthetixio.github.io
+
 ### Release
 
 Releasing is done with the help of semantic-release. More to docs to come...

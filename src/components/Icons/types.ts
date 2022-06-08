@@ -1,8 +1,5 @@
 export interface SVGIconProps {
-	active?: boolean;
-	onClick?: () => void;
-}
-export interface SVGSocialIconProps {
-	fill?: string;
-	onClick?: () => void;
+  active?: boolean;
+  onClick?: () => void;
+  className?: string;
 }
