@@ -17,11 +17,10 @@
     "build": "yarn build:package",
     "build:css": "sass ./src/styles/_default.scss ./dist/default.css",
     "build:package": "yarn clean && yarn build:css && cross-env NODE_ENV=production BABEL_ENV=production rollup -c",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
     "commit": "cz",
     "clean": "rimraf dist",
-    "deploy-storybook": "yarn build-storybook && mkdir -p ./storybook-static/fonts && cp ./src/fonts/* ./storybook-static/fonts/ && gh-pages -d storybook-static",
     "yalc-publish": "yarn build && yalc push --update"
   },
   "dependencies": {
