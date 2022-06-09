@@ -3,11 +3,7 @@ import { BigNumber, Contract, providers } from 'ethers';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { isObjKey } from '../../utils';
 import { QueryContext } from '../../context';
-import { Ambassador } from '../../contracts/Ambassador';
-import { Grants } from '../../contracts/Grants';
-import { Spartan } from '../../contracts/Spartan';
-import { Treasury } from '../../contracts/Treasury';
-import { ELECTION_MODULE_PERIODS } from './constants';
+import { COUNCIL_CONTRACTS_V3, ELECTION_MODULE_PERIODS } from './constants';
 
 const useGetElectionsPeriodStatus = (
 	_ctx: QueryContext,
@@ -15,9 +11,9 @@ const useGetElectionsPeriodStatus = (
 	options?: UseQueryOptions<{ label: string; code: number }[]>
 ) => {
 	return useQuery(
-		['gov', 'period'],
+		['gov', 'period-status'],
 		() => {
-			const contracts = [Ambassador, Grants, Spartan, Treasury].map(
+			const contracts = COUNCIL_CONTRACTS_V3.map(
 				({ address, abi }) => new Contract(address, abi, optimismProvider)
 			);
 

@@ -1,3 +1,8 @@
+import { Ambassador } from '../../contracts/Ambassador';
+import { Grants } from '../../contracts/Grants';
+import { Spartan } from '../../contracts/Spartan';
+import { Treasury } from '../../contracts/Treasury';
+
 export const electionAuthor = '0xAFe05574a3653cdE39c8Fb842f761F5326Aa424A';
 // @TODO: If numbers change - need to update these
 export const numOfGrantMembers = 5;
@@ -12,6 +17,7 @@ export enum SPACE_KEY {
 	GRANTS = 'snxgrants.eth',
 	AMBASSADOR = 'snxambassador.eth',
 }
+export const COUNCIL_CONTRACTS_V3 = [Ambassador, Grants, Spartan, Treasury];
 export const ELECTION_MODULE_PERIODS = {
 	0: {
 		code: 0,
