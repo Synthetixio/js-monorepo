@@ -14,22 +14,28 @@ export enum SPACE_KEY {
 	GRANTS = 'snxgrants.eth',
 	AMBASSADOR = 'snxambassador.eth',
 }
+
 export const COUNCIL_CONTRACTS_V3 = [Ambassador, Grants, Spartan, Treasury];
+
+export const ADMINISTRATION_CODE = 0;
+export const NOMINATION_CODE = 1;
+export const VOTE_CODE = 2;
+export const EVALUATION_CODE = 3;
 export const ELECTION_MODULE_PERIODS = {
-	0: {
-		code: 0,
+	[ADMINISTRATION_CODE]: {
+		code: ADMINISTRATION_CODE,
 		periodLabel: 'Administration',
 	},
-	1: {
-		code: 1,
+	[NOMINATION_CODE]: {
+		code: NOMINATION_CODE,
 		periodLabel: 'Nomination',
 	},
-	2: {
-		code: 2,
-		periodLabel: 'Voting',
+	[VOTE_CODE]: {
+		code: VOTE_CODE,
+		periodLabel: 'Vote',
 	},
-	3: {
-		code: 3,
+	[EVALUATION_CODE]: {
+		code: EVALUATION_CODE,
 		periodLabel: 'Evaluation',
 	},
 };
