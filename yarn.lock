@@ -2656,17 +2656,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/wei@npm:^2.47.0-ovm.5":
-  version: 2.71.2
-  resolution: "@synthetixio/wei@npm:2.71.2"
-  dependencies:
-    big.js: 6.1.1
-    ethers: 5.5.3
-  checksum: 477b66656ab90c8aa9a848203953974be5c02b9db47b3af7f372c2dec9139359f101757236adc5ab421b198a1a5da7c63a192eda842a868e3c321a09001a0c1f
-  languageName: node
-  linkType: hard
-
-"@synthetixio/wei@workspace:*, @synthetixio/wei@workspace:packages/wei":
+"@synthetixio/wei@^2.47.0-ovm.5, @synthetixio/wei@workspace:*, @synthetixio/wei@workspace:packages/wei":
   version: 0.0.0-use.local
   resolution: "@synthetixio/wei@workspace:packages/wei"
   dependencies:

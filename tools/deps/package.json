@@ -1,7 +1,7 @@
 {
 	"name": "deps",
 	"private": true,
-	"version": "2.72.0-alpha",
+	"version": "2.72.1",
 	"bin": {
 		"deps": "./deps.js",
 		"deps-circular": "./circular.js",
@@ -10,6 +10,5 @@
 	"devDependencies": {
 		"depcheck": "1.4.3",
 		"typescript": "4.4.2"
-	},
-	"stableVersion": "1.0.0"
+	}
 }
