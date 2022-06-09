@@ -12,6 +12,24 @@ export enum SPACE_KEY {
 	GRANTS = 'snxgrants.eth',
 	AMBASSADOR = 'snxambassador.eth',
 }
+export const ELECTION_MODULE_PERIODS = {
+	0: {
+		code: 0,
+		label: 'Administration',
+	},
+	1: {
+		code: 1,
+		label: 'Nomination',
+	},
+	2: {
+		code: 2,
+		label: 'Voting',
+	},
+	3: {
+		code: 3,
+		label: 'Evaluation',
+	},
+};
 
 //@notice - need to add the latest nominations ipfs hash and their names to parse addresses to names
 export const councilNominationsJson = {

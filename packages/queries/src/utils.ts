@@ -20,3 +20,6 @@ export const getProxySynthSymbol = (provider: ethers.providers.Provider, address
 	);
 	return c.symbol();
 };
+export function isObjKey<T>(key: PropertyKey, obj: T): key is keyof T {
+	return key in obj;
+}
