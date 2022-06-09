@@ -25,6 +25,8 @@ jobs:
 
       - run: yarn install --immutable
 
+      - run: yarn npm audit --recursive --severity=critical
+
       - run: yarn deps
       - run: yarn deps:mismatched
       - run: yarn deps:circular
