@@ -30,7 +30,7 @@ const MAX_PAGE = 1000;
 }
 
 function injectParse(e: Entity) {
-	const out = [`const formattedObj: any = {};`];
+	const out = ['const formattedObj: any = {};'];
 	for (const f of e.fields!) {
 		const t = convertType(f.type);
 		switch (t.name) {
@@ -153,14 +153,14 @@ export function types(entity: Entity, filterEntity: Entity) {
 	for (const field of entity.fields!) {
 		lines.push(`\t${field.name}: ${mapType(field.type, 'Result').tsTypeName}`);
 	}
-	lines.push(`};`);
+	lines.push('};');
 
 	lines.push(`export type ${entity.name}Fields = {`);
 	for (const field of entity.fields!) {
 		const mappedType = mapType(field.type, 'Fields');
 		lines.push(`\t${field.name}: ${mappedType.nestedStructure ? mappedType.baseType : true}`);
 	}
-	lines.push(`};`);
+	lines.push('};');
 
 	lines.push(
 		`export type ${entity.name}Args<K extends keyof ${entity.name}Result> = { [Property in keyof Pick<${entity.name}Fields, K>]: ${entity.name}Fields[Property] };`

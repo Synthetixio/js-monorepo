@@ -11,7 +11,7 @@ import _eval from 'eval';
 import ts from 'typescript';
 
 describe('plain', () => {
-	let codeOut = gen({
+	const codeOut = gen({
 		schema: singleEntityInput as Schema,
 		method: 'plain',
 		outdir: '/tmp/testgen',

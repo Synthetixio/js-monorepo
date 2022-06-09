@@ -30,6 +30,7 @@ export function getDiagnosticsForText(
 	return ts.getPreEmitDiagnostics(program, textAst, cancellationToken);
 
 	function overrideIfInMemoryFile(methodName: keyof ts.CompilerHost, inMemoryValue: any) {
+		// eslint-disable-next-line @typescript-eslint/ban-types
 		const originalMethod = host[methodName] as Function;
 		host[methodName] = (...args: unknown[]) => {
 			// resolve the path because typescript will normalize it

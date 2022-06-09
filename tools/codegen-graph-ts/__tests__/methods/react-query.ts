@@ -15,7 +15,7 @@ import fetch from 'node-fetch';
 jest.mock('node-fetch');
 
 describe('reactquery', () => {
-	let codeOut = gen({
+	const codeOut = gen({
 		schema: singleEntityInput as Schema,
 		method: 'reactquery',
 		outdir: '/tmp/testgen',

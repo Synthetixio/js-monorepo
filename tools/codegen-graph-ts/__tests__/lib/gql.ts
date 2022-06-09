@@ -18,7 +18,7 @@ describe.only('generateGql', () => {
 				},
 				{ bar: true }
 			)
-		).toEqual(`{foo(first:50,orderBy:"name",orderDirection:"desc",where:{isOpen:true}){bar}}`);
+		).toEqual('{foo(first:50,orderBy:"name",orderDirection:"desc",where:{isOpen:true}){bar}}');
 	});
 
 	it('generates with nested options', () => {
@@ -33,18 +33,18 @@ describe.only('generateGql', () => {
 				},
 				{ bar: true }
 			)
-		).toEqual(`{foo(first:50,where:{name:"boo"},orderBy:"name",orderDirection:"desc"){bar}}`);
+		).toEqual('{foo(first:50,where:{name:"boo"},orderBy:"name",orderDirection:"desc"){bar}}');
 	});
 
 	it('nulls are written correctly', () => {
 		expect(generateGql('foo', { first: 50, something: null }, { bar: true })).toEqual(
-			`{foo(first:50,something:null){bar}}`
+			'{foo(first:50,something:null){bar}}'
 		);
 	});
 
 	it('floats are written correctly', () => {
 		expect(generateGql('foo', { first: 50, something: 2.34 }, { bar: true })).toEqual(
-			`{foo(first:50,something:2.34){bar}}`
+			'{foo(first:50,something:2.34){bar}}'
 		);
 	});
 
@@ -56,20 +56,20 @@ describe.only('generateGql', () => {
 
 	it('parses BigNumber and Wei in options', () => {
 		expect(generateGql('foo', { first: wei(50) }, { bar: true })).toEqual(
-			`{foo(first:50.000000000000000000){bar}}`
+			'{foo(first:50.000000000000000000){bar}}'
 		);
 		expect(generateGql('foo', { first: wei(50).toBN() }, { bar: true })).toEqual(
-			`{foo(first:50000000000000000000){bar}}`
+			'{foo(first:50000000000000000000){bar}}'
 		);
 	});
 
 	it('handles multiple gql args', () => {
-		expect(generateGql('foo', {}, { bar: true, baz: true })).toEqual(`{foo{bar baz}}`);
+		expect(generateGql('foo', {}, { bar: true, baz: true })).toEqual('{foo{bar baz}}');
 	});
 
 	it('handles nested gql args', () => {
 		expect(generateGql('foo', {}, { bar: true, baz: { one: true, two: true } })).toEqual(
-			`{foo{bar baz{one two}}}`
+			'{foo{bar baz{one two}}}'
 		);
 	});
 
@@ -86,7 +86,7 @@ describe.only('generateGql', () => {
 				{ bar: true }
 			)
 		).toEqual(
-			`{foo(first:50,orderBy:"name",orderDirection:"desc",where:{synth_not_in:["SNX","HAV"]}){bar}}`
+			'{foo(first:50,orderBy:"name",orderDirection:"desc",where:{synth_not_in:["SNX","HAV"]}){bar}}'
 		);
 	});
 });

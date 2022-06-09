@@ -30,6 +30,7 @@ describe('postgen exchanges', () => {
 	});
 
 	it('pagination returns correct number of items', async () => {
+		// eslint-disable-next-line prefer-spread
 		const bigReturn: { id: string }[] = Array.apply(null, Array(3000)).map(function (x, i) {
 			return { id: `hello${i}` };
 		});
@@ -57,6 +58,7 @@ describe('postgen exchanges', () => {
 	});
 
 	it('pagination succeeds even if not enough entries', async () => {
+		// eslint-disable-next-line prefer-spread
 		const bigReturn: { id: string }[] = Array.apply(null, Array(1200)).map(function (x, i) {
 			return { id: `hello${i}` };
 		});

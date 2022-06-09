@@ -7,7 +7,7 @@ import { Schema } from '../types';
 export default function reactquery(schema: Schema): string {
 	const out: string[] = [];
 
-	out.push(`import { useQuery, UseQueryOptions } from 'react-query';`);
+	out.push('import { useQuery, UseQueryOptions } from "react-query";');
 	out.push(heading());
 
 	for (const entity of schema.types) {

@@ -67,7 +67,7 @@ export function mapType(graphType: Type, destType: string) {
 }
 
 export function queryFunctionName(e: Entity) {
-	let n = e.name;
+	const n = e.name;
 
 	for (let i = 0; i < n.length; i++) {
 		if (n[i] !== n[i].toUpperCase()) {
