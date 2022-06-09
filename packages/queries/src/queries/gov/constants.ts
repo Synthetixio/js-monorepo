@@ -1,3 +1,5 @@
+import { Treasury, Spartan, Grants, Ambassador } from '../../contracts';
+
 export const electionAuthor = '0xAFe05574a3653cdE39c8Fb842f761F5326Aa424A';
 // @TODO: If numbers change - need to update these
 export const numOfGrantMembers = 5;
@@ -12,6 +14,25 @@ export enum SPACE_KEY {
 	GRANTS = 'snxgrants.eth',
 	AMBASSADOR = 'snxambassador.eth',
 }
+export const COUNCIL_CONTRACTS_V3 = [Ambassador, Grants, Spartan, Treasury];
+export const ELECTION_MODULE_PERIODS = {
+	0: {
+		code: 0,
+		periodLabel: 'Administration',
+	},
+	1: {
+		code: 1,
+		periodLabel: 'Nomination',
+	},
+	2: {
+		code: 2,
+		periodLabel: 'Voting',
+	},
+	3: {
+		code: 3,
+		periodLabel: 'Evaluation',
+	},
+};
 
 //@notice - need to add the latest nominations ipfs hash and their names to parse addresses to names
 export const councilNominationsJson = {
