@@ -8,7 +8,7 @@ import { COUNCIL_CONTRACTS_V3, ELECTION_MODULE_PERIODS } from './constants';
 const useGetElectionsPeriodStatus = (
 	_ctx: QueryContext,
 	optimismProvider: providers.BaseProvider,
-	options?: UseQueryOptions<{ label: string; code: number }[]>
+	options?: UseQueryOptions<{ currentPeriodLabel: string; code: number }[]>
 ) => {
 	return useQuery(
 		['gov', 'period-status'],
@@ -20,12 +20,12 @@ const useGetElectionsPeriodStatus = (
 			const promises = contracts.map(async (c) => {
 				const code: BigNumber = await c.getCurrentPeriod();
 				const codeAsNumber = wei(code).toNumber();
-				const { label } = isObjKey(codeAsNumber, ELECTION_MODULE_PERIODS)
+				const { periodLabel } = isObjKey(codeAsNumber, ELECTION_MODULE_PERIODS)
 					? ELECTION_MODULE_PERIODS[codeAsNumber]
-					: { label: 'Unknown' };
+					: { periodLabel: 'Unknown' };
 				return {
 					code: codeAsNumber,
-					label,
+					currentPeriodLabel: periodLabel,
 				};
 			});
 			return Promise.all(promises);

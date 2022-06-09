@@ -21,19 +21,19 @@ export const COUNCIL_CONTRACTS_V3 = [Ambassador, Grants, Spartan, Treasury];
 export const ELECTION_MODULE_PERIODS = {
 	0: {
 		code: 0,
-		label: 'Administration',
+		periodLabel: 'Administration',
 	},
 	1: {
 		code: 1,
-		label: 'Nomination',
+		periodLabel: 'Nomination',
 	},
 	2: {
 		code: 2,
-		label: 'Voting',
+		periodLabel: 'Voting',
 	},
 	3: {
 		code: 3,
-		label: 'Evaluation',
+		periodLabel: 'Evaluation',
 	},
 };
 
