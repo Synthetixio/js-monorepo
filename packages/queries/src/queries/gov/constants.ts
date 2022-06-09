@@ -1,7 +1,4 @@
-import { Ambassador } from '../../contracts/Ambassador';
-import { Grants } from '../../contracts/Grants';
-import { Spartan } from '../../contracts/Spartan';
-import { Treasury } from '../../contracts/Treasury';
+import { Treasury, Spartan, Grants, Ambassador } from '../../contracts';
 
 export const electionAuthor = '0xAFe05574a3653cdE39c8Fb842f761F5326Aa424A';
 // @TODO: If numbers change - need to update these
