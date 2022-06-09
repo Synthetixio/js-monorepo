@@ -1,6 +1,7 @@
 import { Entity } from '../types';
 import { convertType, mapType, queryFunctionName } from '../util';
-import packageJSON from '../../../package.json';
+
+const PACKAGE_NAME = 'maxibon-codegen-graph-ts';
 
 /**
  * Required imports and primitive types required for other functions
@@ -9,8 +10,8 @@ import packageJSON from '../../../package.json';
 export function heading() {
 	return `
 import Wei, { WeiSource, wei } from '@synthetixio/wei';
-import axios from '${packageJSON.name}/build/src/lib/axios';
-import generateGql from '${packageJSON.name}/build/src/lib/gql';
+import axios from '${PACKAGE_NAME}/build/src/lib/axios';
+import generateGql from '${PACKAGE_NAME}/build/src/lib/gql';
 
 export type SingleQueryOptions = {
     id: string,

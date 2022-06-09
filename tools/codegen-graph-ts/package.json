@@ -5,7 +5,7 @@
 	"main": "build/src/index.js",
 	"scripts": {
 		"build": "yarn build-node",
-		"build-node": "tsc -p tsconfig.node.json",
+		"build-node": "tsc",
 		"test-codegen": "mkdir -p generated && ts-node src/gen/index.ts gen -s __tests__/subgraphs/sample.json -o generated/exchanges.ts",
 		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
 		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
