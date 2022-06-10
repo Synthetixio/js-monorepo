@@ -53,7 +53,7 @@ jobs:
       - name: Update to the new synthetix version (if present)
         if: github.event.inputs.synthetix_version
         run: |
-          yarn up synthetix@${{ github.event.inputs.synthetix_version }}
+          yarn up synthetix@${{ github.event.inputs.synthetix_version }} --exact
           git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty --no-verify
 
       - run: yarn lint

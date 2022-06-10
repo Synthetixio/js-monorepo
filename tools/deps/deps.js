@@ -69,8 +69,8 @@ async function run() {
 			const [, version] = value.slice(value.lastIndexOf('@') + 1).split(':');
 			// if duplicate name detected - it will be overwritten by the latest entry
 			// and as they are sorted ASC, we get the latest version
-			// return [name, `^${version}`]
-			return [name, version]; // exact version
+			return [name, `^${version}`]; // ^version
+			//  return [name, version]; // exact version
 		});
 
 	const deps = Object.fromEntries([].concat(existingDeps).concat(workspaceDeps));

@@ -37,11 +37,11 @@
 	},
 	"homepage": "https://github.com/Synthetixio/js-monorepo#readme",
 	"dependencies": {
-		"big.js": "6.1.1",
-		"ethers": "5.5.3"
+		"big.js": "^6.1.1",
+		"ethers": "^5.5.3"
 	},
 	"devDependencies": {
-		"@types/big.js": "6.0.2"
+		"@types/big.js": "^6.0.2"
 	},
 	"stableVersion": "2.72.1"
 }

@@ -35,7 +35,7 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"ethers": "5.5.3"
+		"ethers": "^5.5.3"
 	},
 	"jest": {
 		"testMatch": [
