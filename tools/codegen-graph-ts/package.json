@@ -37,5 +37,22 @@
 		"node-fetch": "^2.6.7",
 		"typescript": "^4.4.2"
 	},
-	"bin": "build/src/gen/index.js"
+	"bin": "build/src/gen/index.js",
+	"jest": {
+		"testMatch": [
+			"<rootDir>/__tests__/**/*.{js,jsx,ts,tsx}"
+		],
+		"collectCoverageFrom": [
+			"<rootDir>/src/**/*.{js,jsx,ts,tsx}",
+			"!<rootDir>/src/**/*.d.{js,jsx,ts,tsx}"
+		],
+		"coverageThreshold": {
+			"global": {
+				"branches": 0,
+				"functions": 0,
+				"lines": 0,
+				"statements": 0
+			}
+		}
+	}
 }
