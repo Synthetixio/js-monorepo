@@ -1,5 +1,8 @@
 {
-	"name": "maxibon-codegen-graph-ts",
+	"name": "@synthetixio/codegen-graph-ts",
+	"publishConfig": {
+		"access": "public"
+	},
 	"version": "0.2.1",
 	"description": "Generate typescript request library for any subgraph based on its entity definition",
 	"main": "build/src/index.js",

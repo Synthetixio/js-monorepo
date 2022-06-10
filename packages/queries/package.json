@@ -37,6 +37,7 @@
 	},
 	"dependencies": {
 		"@snapshot-labs/snapshot.js": "^0.3.22",
+		"@synthetixio/codegen-graph-ts": "workspace:*",
 		"@synthetixio/contracts-interface": "workspace:*",
 		"@synthetixio/optimism-networks": "workspace:*",
 		"@synthetixio/providers": "workspace:*",
@@ -46,8 +47,7 @@
 		"ethers": "^5.5.3",
 		"graphql": "^15.5.0",
 		"graphql-request": "^3.4.0",
-		"lodash": "^4.17.21",
-		"maxibon-codegen-graph-ts": "workspace:*"
+		"lodash": "^4.17.21"
 	},
 	"devDependencies": {
 		"@testing-library/react-hooks": "^7.0.0",

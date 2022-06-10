@@ -1,7 +1,7 @@
 import { Entity } from '../types';
 import { convertType, mapType, queryFunctionName } from '../util';
 
-const PACKAGE_NAME = 'maxibon-codegen-graph-ts';
+const PACKAGE_NAME = '@synthetixio/codegen-graph-ts';
 
 /**
  * Required imports and primitive types required for other functions

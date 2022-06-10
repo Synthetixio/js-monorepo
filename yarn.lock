@@ -2281,6 +2281,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@synthetixio/codegen-graph-ts@workspace:*, @synthetixio/codegen-graph-ts@workspace:tools/codegen-graph-ts":
+  version: 0.0.0-use.local
+  resolution: "@synthetixio/codegen-graph-ts@workspace:tools/codegen-graph-ts"
+  dependencies:
+    "@synthetixio/wei": "workspace:*"
+    "@types/commander": ^2.12.2
+    "@types/lodash": ^4.14.169
+    axios: ^0.21.4
+    commander: ^8.1.0
+    eval: ^0.1.6
+    graphql: 15.5.0
+    graphql-request: 3.4.0
+    lodash: ^4.17.21
+    node-fetch: ^2.6.7
+    typescript: ^4.4.2
+  bin:
+    codegen-graph-ts: build/src/gen/index.js
+  languageName: unknown
+  linkType: soft
+
 "@synthetixio/contracts-interface@workspace:*, @synthetixio/contracts-interface@workspace:packages/contracts-interface":
   version: 0.0.0-use.local
   resolution: "@synthetixio/contracts-interface@workspace:packages/contracts-interface"
@@ -2317,6 +2337,7 @@ __metadata:
   resolution: "@synthetixio/queries@workspace:packages/queries"
   dependencies:
     "@snapshot-labs/snapshot.js": ^0.3.22
+    "@synthetixio/codegen-graph-ts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/optimism-networks": "workspace:*"
     "@synthetixio/providers": "workspace:*"
@@ -2330,7 +2351,6 @@ __metadata:
     graphql: ^15.5.0
     graphql-request: ^3.4.0
     lodash: ^4.17.21
-    maxibon-codegen-graph-ts: "workspace:*"
     react: ^17.0.2
     react-dom: ^17.0.2
     react-query: 3.16.0
@@ -8967,26 +8987,6 @@ __metadata:
   checksum: a4b02b676ac4ce64a89a091539ee4a70a802684713bcf06f2b70787927f510fe8a2adc849f9288857a90906083ad303467e530e8723b4a9756df9994fc164550
   languageName: node
   linkType: hard
-
-"maxibon-codegen-graph-ts@workspace:*, maxibon-codegen-graph-ts@workspace:tools/codegen-graph-ts":
-  version: 0.0.0-use.local
-  resolution: "maxibon-codegen-graph-ts@workspace:tools/codegen-graph-ts"
-  dependencies:
-    "@synthetixio/wei": "workspace:*"
-    "@types/commander": ^2.12.2
-    "@types/lodash": ^4.14.169
-    axios: ^0.21.4
-    commander: ^8.1.0
-    eval: ^0.1.6
-    graphql: 15.5.0
-    graphql-request: 3.4.0
-    lodash: ^4.17.21
-    node-fetch: ^2.6.7
-    typescript: ^4.4.2
-  bin:
-    maxibon-codegen-graph-ts: build/src/gen/index.js
-  languageName: unknown
-  linkType: soft
 
 "md5.js@npm:^1.3.4":
   version: 1.3.5
