@@ -4,12 +4,15 @@ import { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
 
 export type InputSize = 'sm' | 'md';
 
+export type TextFieldVariant = 'default' | 'black';
+
 interface BaseProps {
   label?: React.ReactNode;
   error?: string | false;
   onLabelClick?: () => void;
   wrapperClassName?: string;
   inputSize?: InputSize;
+  variant?: TextFieldVariant;
 }
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement>, BaseProps {
@@ -30,6 +33,7 @@ export const TextField: React.FC<TextFieldProps> = ({
   onLabelClick,
   wrapperClassName,
   inputSize = 'md',
+  variant = 'default',
   ...props
 }) => {
   const hasError = !!error;
@@ -40,8 +44,10 @@ export const TextField: React.FC<TextFieldProps> = ({
       'ui-h-14 ui-px-6': !multiline && inputSize === 'md',
       'ui-h-10 ui-px-3': !multiline && inputSize === 'sm',
       'ui-cursor-not-allowed': props.disabled,
-      'focus:ui-border-primary focus:dark:ui-border-primary active:dark:ui-border-primary ui-bg-gray-50 dark:ui-bg-dark-blue':
+      'focus:ui-border-primary focus:dark:ui-border-primary active:dark:ui-border-primary':
         !props.disabled,
+      'ui-bg-gray-50 dark:ui-bg-dark-blue': variant === 'default' && !props.disabled,
+      'ui-bg-black': variant === 'black' && !props.disabled,
       'ui-border-black-200 dark:ui-border-black-400': !hasError,
       'ui-border-red-400 dark:ui-border-red-400 focus:ui-border-red-400 ui-text-red-400 dark:ui-text-red-400':
         hasError
