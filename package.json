@@ -1,6 +1,6 @@
 {
 	"name": "root",
-	"version": "2.72.1",
+	"version": "2.72.1-1",
 	"workspaces": [
 		"packages/contracts-interface",
 		"packages/optimism-networks",
@@ -63,5 +63,6 @@
 		"fsevents": "^2.3.2",
 		"watchpack-chokidar2": "^2.0.1"
 	},
-	"packageManager": "yarn@3.2.1"
+	"packageManager": "yarn@3.2.1",
+	"stableVersion": "2.72.1"
 }
