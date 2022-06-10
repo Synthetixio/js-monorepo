@@ -34,7 +34,7 @@ export const Badge: React.FC<BadgeProps> = ({
         badgeColors[variant as BadgeVariant]
       )}
     >
-      <span {...props} className={clsx(defaultClass, 'ui-darker-70 ui-rounded')}>
+      <span {...props} className={clsx(defaultClass, 'ui-darker-80 ui-rounded')}>
         {children}
       </span>
     </span>
