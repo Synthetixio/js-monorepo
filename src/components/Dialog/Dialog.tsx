@@ -51,7 +51,7 @@ export const Dialog: React.FC<DialogProps> = ({
         <Card
           ref={ref}
           showBorder
-          rounded='ui-rounded-2xl'
+          rounded='md:ui-rounded-2xl'
           wrapperClassName={clsx(
             wrapperClass,
             'ui-overflow-y-auto ui-relative ui-w-full ui-max-w-md ui-h-full ui-max-h-full md:ui-h-auto'
