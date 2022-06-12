@@ -1,4 +1,3 @@
-import { wei } from '@synthetixio/wei';
 import { BigNumber, Contract, providers } from 'ethers';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { isObjKey } from '../../utils';
@@ -19,7 +18,7 @@ const useGetElectionsPeriodStatus = (
 
 			const promises = contracts.map(async (c) => {
 				const code: BigNumber = await c.getCurrentPeriod();
-				const codeAsNumber = wei(code).toNumber();
+				const codeAsNumber = code.toNumber();
 				const { periodLabel } = isObjKey(codeAsNumber, ELECTION_MODULE_PERIODS)
 					? ELECTION_MODULE_PERIODS[codeAsNumber]
 					: { periodLabel: 'Unknown' };
