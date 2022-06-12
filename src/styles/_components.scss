@@ -21,11 +21,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 2.5px;
+  border-radius: 3px;
   border: 2px solid transparent;
   background: linear-gradient(73.6deg, #85ffc4 2.11%, #5cc6ff 90.45%) border-box;
   -webkit-mask: linear-gradient(73.6deg, #85ffc4 2.11%, #5cc6ff 90.45%) padding-box,
     linear-gradient(73.6deg, #85ffc4 2.11%, #5cc6ff 90.45%);
-  -webkit-mask-composite: destination-out;
+  -webkit-mask-composite: source-out;
   mask-composite: exclude;
 }
