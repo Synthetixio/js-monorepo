@@ -50,6 +50,10 @@ const TransactionDialogContextProvider: React.FC<{
     }
   }, [txHash, provider]);
 
+  useEffect(() => {
+    if (!visible) setTxHash(undefined);
+  }, [visible]);
+
   const stateText: Record<TxState, Record<string, string>> = {
     confirmed: {
       tile: 'Transaction Confirmed',
