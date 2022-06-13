@@ -1,7 +1,7 @@
 {
 	"name": "deps",
 	"private": true,
-	"version": "2.72.2-0",
+	"version": "2.72.2-3",
 	"bin": {
 		"deps": "./deps.js",
 		"deps-circular": "./circular.js",
