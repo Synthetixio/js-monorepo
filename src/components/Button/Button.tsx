@@ -52,14 +52,21 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled || loading}
       {...props}
     >
-      <div className='ui-block ui-gradient-primary ui-bg-clip-text ui-my-auto'>
+      <div className='ui-flex ui-items-center'>
         {loading && (
           <Spinner
             className={clsx('ui-mr-2', { 'ui-opacity-75': disabled }, spinnerClassName)}
+            disabled={disabled}
             variant={variant}
           />
         )}
-        {children}
+        <div
+          className={clsx('ui-block ui-my-auto', {
+            'ui-gradient-primary ui-bg-clip-text': !disabled
+          })}
+        >
+          {children}
+        </div>
       </div>
     </button>
   );

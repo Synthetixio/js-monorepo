@@ -4,9 +4,10 @@ import { ButtonVariant } from 'components/Button/Button';
 export interface SpinnerProps {
   variant?: ButtonVariant;
   className?: string;
+  disabled?: boolean;
 }
 
-export const Spinner: React.FC<SpinnerProps> = ({ variant = 'default', className }) => {
+export const Spinner: React.FC<SpinnerProps> = ({ variant = 'default', disabled, className }) => {
   return (
     <i
       className={clsx(
@@ -14,8 +15,9 @@ export const Spinner: React.FC<SpinnerProps> = ({ variant = 'default', className
         {
           'ui-border-t-green dark:ui-border-t-green':
             variant === 'default' || variant === 'outline',
-          'ui-border-t-navy dark:ui-border-t-navy': variant === 'secondary',
-          'ui-border-t-purple dark:ui-border-t-purple': variant === 'purple'
+          'ui-border-t-navy-light-2 dark:ui-border-t-navy-light-2': variant === 'secondary',
+          'ui-border-t-pink-dark-2 dark:ui-border-t-pink-dark-2': variant === 'purple',
+          'ui-border-t-disabled dark:ui-border-t-disabled': disabled
         },
         className
       )}
