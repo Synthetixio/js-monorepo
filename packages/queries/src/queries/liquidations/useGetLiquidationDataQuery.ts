@@ -18,28 +18,31 @@ const useGetLiquidationDataQuery = (
 	return useQuery<LiquidationData>(
 		['liquidations', 'info', ctx.networkId, walletAddress],
 		async () => {
+			if (!ctx.snxjs) {
+				throw Error('Expected ctx.snxjs do be defined');
+			}
 			const {
 				contracts: { Liquidator },
-			} = ctx.snxjs!;
+			} = ctx.snxjs;
 			const [
-				liquidationRatio,
-				liquidationDelay,
-				liquidationDeadlineForAccount,
-				liquidationPenalty,
-				selfLiquidationPenalty,
+				liquidationRatioBN,
+				liquidationDelayBN,
+				liquidationDeadlineForAccountBN,
+				liquidationPenaltyBN,
+				selfLiquidationPenaltyBN,
 			] = await Promise.all([
 				Liquidator.liquidationRatio(),
 				Liquidator.liquidationDelay(),
 				Liquidator.getLiquidationDeadlineForAccount(walletAddress),
 				Liquidator.liquidationPenalty(),
 				Liquidator.selfLiquidationPenalty(),
-			]).then((results) => results.map((x) => wei(x)));
+			]);
 			return {
-				liquidationRatio,
-				liquidationDelay,
-				liquidationDeadlineForAccount,
-				liquidationPenalty,
-				selfLiquidationPenalty,
+				liquidationRatio: wei(liquidationRatioBN),
+				liquidationDelay: wei(liquidationDelayBN, 0),
+				liquidationDeadlineForAccount: wei(liquidationDeadlineForAccountBN, 0),
+				liquidationPenalty: wei(liquidationPenaltyBN),
+				selfLiquidationPenalty: wei(selfLiquidationPenaltyBN),
 			};
 		},
 		{
