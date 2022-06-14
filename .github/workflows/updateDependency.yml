@@ -36,49 +36,89 @@ jobs:
           git config --global user.email "ci@cc.snxdao.io"
           git config --global user.name "Synthetix CI"
 
-      - name: Resolve version
-        run: |
-          if [ -n "${{ github.event.inputs.monorepo_version }}" ]; then
-            export VERSION_CANDIDATE="${{ github.event.inputs.monorepo_version }}"
-          else
-            export VERSION_CANDIDATE="patch"
-          fi
-          git reset --hard
-          yarn version "$VERSION_CANDIDATE"
-          export NEW_VERSION="$(jq -r .version < package.json)"
-          echo "NEW_VERSION=$NEW_VERSION" 
-          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-          git reset --hard
-
       - name: Update to the new synthetix version (if present)
         if: github.event.inputs.synthetix_version
         run: |
           yarn up synthetix@${{ github.event.inputs.synthetix_version }} --exact
+
+          # Synthetix version will bump only affected packages
+          for WORKSPACE_PACKAGE in $(git diff --name-only '**/package.json'); do
+            WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
+            yarn workspace $WORKSPACE_NAME version --deferred patch
+          done
+
           git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty --no-verify
+
+      - name: Manual update all packages to the specified monorepo version (if present)
+        if: github.event.inputs.monorepo_version
+        run: |
+          # update all public packages versions
+          yarn workspaces foreach --no-private version --deferred "${{ github.event.inputs.monorepo_version }}"
+          
+          # update monorepo version separately
+          yarn version --deferred "${{ github.event.inputs.monorepo_version }}"
+
+      - run: yarn version apply --all
 
       - run: yarn lint
       - run: yarn build
       - run: yarn test
 
-      - run: yarn workspaces foreach version --deferred ${{ env.NEW_VERSION }}
-      - run: yarn version apply --all
-
       - name: Create git tag and commit changes
         run: |
-          git commit -am "v${{ env.NEW_VERSION }}" --allow-empty --no-verify
-          git tag -a "v${{ env.NEW_VERSION }}" -m "v${{ env.NEW_VERSION }}"
+          git diff --name-only '**/package.json' > /tmp/changed-packages.txt
+          cat /tmp/changed-packages.txt
+
+          echo -n > /tmp/commit-message.txt
+          echo 'Updated packages:' >> /tmp/commit-message.txt
+          for WORKSPACE_PACKAGE in $(cat /tmp/changed-packages.txt); do
+            WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
+            WORKSPACE_VERSION=$(jq --raw-output '.version' < $WORKSPACE_PACKAGE)
+            echo "  - $WORKSPACE_NAME@$WORKSPACE_VERSION" >> /tmp/commit-message.txt
+          done
+          cat /tmp/commit-message.txt
+
+          git commit --allow-empty --no-verify --all --file /tmp/commit-message.txt 
+          
+          for WORKSPACE_PACKAGE in $(cat /tmp/changed-packages.txt); do
+            WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
+            WORKSPACE_VERSION=$(jq --raw-output '.version' < $WORKSPACE_PACKAGE)
+            git tag -a "$WORKSPACE_NAME@$WORKSPACE_VERSION" -m "$WORKSPACE_NAME@$WORKSPACE_VERSION"
+          done         
 
       - name: Publish packages
         run: yarn workspaces foreach --no-private npm publish
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Push changes
-        run: |
-          git push
-          git push origin "refs/tags/v${{ env.NEW_VERSION }}"
+      - run: git push --follow-tags
 
-      - name: Notify dApps
+      - name: Populate env.NEW_VERSION
         run: |
-          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"dev\"}" https://api.github.com/repos/Synthetixio/staking/actions/workflows/updateDependency.yml/dispatches
-          curl -H "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST --data "{\"ref\": \"develop\"}" https://api.github.com/repos/Synthetixio/futures-keepers/actions/workflows/updateDependency.yml/dispatches
+          echo "NOTE: in case of automatic synthetix_version update root workspace will keep the same version"
+          export NEW_VERSION="$(jq -r .version < package.json)"
+          echo "NEW_VERSION=$NEW_VERSION" 
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV          
+
+      - name: Notify Synthetixio/staking
+        run: |
+          jq --null-input --compact-output --raw-output '{
+            ref: "dev"
+          }' > /tmp/staking.json
+          jq < /tmp/staking.json
+
+          curl --verbose --header "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST \
+            --data @/tmp/staking.json \
+            http://localhost:3000
+            https://api.github.com/repos/Synthetixio/staking/actions/workflows/updateDependency.yml/dispatches
+
+      - name: Notify Synthetixio/futures-keepers
+        run: |
+          jq --null-input --compact-output --raw-output '{
+            ref: "develop"
+          }' > /tmp/futures-keepers.json
+          jq < /tmp/futures-keepers.json
+
+          curl --verbose --header "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST \
+            --data @/tmp/futures-keepers.json \
+            https://api.github.com/repos/Synthetixio/futures-keepers/actions/workflows/updateDependency.yml/dispatches
