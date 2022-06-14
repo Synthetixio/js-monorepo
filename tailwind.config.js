@@ -10,15 +10,6 @@ module.exports = {
       xl: '1280px'
     },
     extend: {
-      backgroundImage: {
-        'dark-blue': 'linear-gradient(180deg, #08021E 0%, #1F0777 146.21%)',
-        'light-blue': 'linear-gradient(73.6deg, #85FFC4 2.11%, #5CC6FF 90.45%)',
-        purple: 'linear-gradient(73.6deg, #8E2DE2 2.11%, #4B01E0 90.45%)',
-        orange: 'linear-gradient(73.6deg, #FF8060 2.11%, #FEB27A 90.45%)',
-        pink: 'linear-gradient(73.6deg, #8E2DE2 2.11%, #ED1EFF 90.45%)',
-        rainbow: 'linear-gradient(90deg, #ED1EFF 0%, #00D1FF 100%)',
-        gray: 'linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(311.52deg, #3D464C -36.37%, #131619 62.81%)'
-      },
       colors: {
         blue: 'var(--color-blue)',
         'blue-dark-1': 'var(--color-blue-dark-1)',
@@ -107,7 +98,7 @@ module.exports = {
         'gray-400': 'var(--color-gray-400)',
         'gray-500': 'var(--color-gray-500)',
         'gray-600': 'var(--color-gray-600)',
-        'gray-650': 'var(--color-gray-650)',
+        'gray-650': 'rgba(var(--color-gray-650), <alpha-value>)',
         'gray-700': 'var(--color-gray-700)',
         'gray-800': 'var(--color-gray-800)',
         'gray-900': 'var(--color-gray-900)',
