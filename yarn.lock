@@ -2291,8 +2291,8 @@ __metadata:
     axios: ^0.21.4
     commander: ^8.1.0
     eval: ^0.1.6
-    graphql: 15.5.0
-    graphql-request: 3.4.0
+    graphql: ^15.5.0
+    graphql-request: ^3.4.0
     lodash: ^4.17.21
     node-fetch: ^2.6.7
     typescript: ^4.4.2
@@ -6875,19 +6875,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-request@npm:3.4.0":
-  version: 3.4.0
-  resolution: "graphql-request@npm:3.4.0"
-  dependencies:
-    cross-fetch: ^3.0.6
-    extract-files: ^9.0.0
-    form-data: ^3.0.0
-  peerDependencies:
-    graphql: 14.x || 15.x
-  checksum: 5be0398af5cd02694893169bcc3b92f454910dac3b257aa350fa59686d8ef24334619f0b5bdd2fdefea654eab9544ec6f270688255dde9eeff5475d5e64ea073
-  languageName: node
-  linkType: hard
-
 "graphql-request@npm:^3.4.0":
   version: 3.7.0
   resolution: "graphql-request@npm:3.7.0"
@@ -6898,13 +6885,6 @@ __metadata:
   peerDependencies:
     graphql: 14 - 16
   checksum: db3800cc4ee884cd1514d7d5eafafb9ed27694278fdddd7402345754a7d25e7d713246c72aa510b439b6df2633b74f2cf74fb36864a22a857d5fb2de1cf0b4d8
-  languageName: node
-  linkType: hard
-
-"graphql@npm:15.5.0":
-  version: 15.5.0
-  resolution: "graphql@npm:15.5.0"
-  checksum: 58a69f7274ae94c690bfa2517f96bbaf1327e1ca1fc46606e772ba2f7ca517adeb375346301373351e693022f448b7866163034209623d7c5315819ef8c5e7c0
   languageName: node
   linkType: hard
 
