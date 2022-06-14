@@ -105,3 +105,16 @@ git remote remove codegen-graph-ts
 git tag -l | xargs git tag -d
 git fetch --tags
 ```
+
+### Rebasing unmerged branch
+
+To preserve all the merge commits when rebasing on top of updated master use `--rebase-merges`
+```sh
+git rebase master --rebase-merge
+```
+
+Interactive rebase works too
+```sh
+git rebase master --rebase-merge --interactive
+```
+
