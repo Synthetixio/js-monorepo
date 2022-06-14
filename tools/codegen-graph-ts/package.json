@@ -6,6 +6,10 @@
 	"version": "0.2.1",
 	"description": "Generate typescript request library for any subgraph based on its entity definition",
 	"main": "build/src/index.js",
+	"files": [
+		"build",
+		"src"
+	],
 	"scripts": {
 		"build": "yarn build-node",
 		"build-node": "tsc",
