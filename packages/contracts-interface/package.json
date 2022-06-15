@@ -37,7 +37,7 @@
 	},
 	"dependencies": {
 		"ethers": "^5.5.3",
-		"synthetix": "v2.73.0-alpha"
+		"synthetix": "v2.73.1"
 	},
 	"devDependencies": {
 		"chokidar-cli": "^2.1.0"
