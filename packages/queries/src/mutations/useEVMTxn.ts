@@ -7,9 +7,9 @@ import { useEffect, useState } from 'react';
 import { QueryContext } from '../context';
 import clone from 'lodash/clone';
 import omit from 'lodash/omit';
-import { isString } from 'lodash';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import optimismOracleContract from '../contracts/OptimismGasPriceOracle';
+import errorToErrorMessage from './errorToErrorMessage';
 
 type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'confirmed' | 'failed';
 
@@ -19,16 +19,6 @@ export interface UseEVMTxnOptions extends UseMutationOptions<void> {
 	gasLimitBuffer?: number;
 	// whether or not the transaction should attempt to estimate gas or execute at all
 	enabled?: boolean;
-}
-
-function hexToASCII(hex: string): string {
-	// https://gist.github.com/gluk64/fdea559472d957f1138ed93bcbc6f78a#file-reason-js
-	// return ethers.utils.toUtf8String(S.split(' ')[1].toString());
-	let str = '';
-	for (let n = 2; n < hex.length; n += 2) {
-		str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
-	}
-	return str;
 }
 
 const useEVMTxn = (
@@ -77,14 +67,7 @@ const useEVMTxn = (
 	};
 
 	function handleError(err: any) {
-		let errorMessage =
-			err.data && isString(err.data) ? hexToASCII(err.data) : err.data?.message ?? err.message;
-		const isFrameWalletError = errorMessage.includes('(error={');
-		if (isFrameWalletError) {
-			// Frame wallet throws a weird error, we try to parse the message and if it fails we just show the ugly full message
-			errorMessage = errorMessage.match(/"message":"([^"]+)"/)?.[1] || errorMessage;
-		}
-		setErrorMessage(errorMessage);
+		setErrorMessage(errorToErrorMessage(err));
 	}
 
 	const refresh = async () => {
