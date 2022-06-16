@@ -1,18 +1,15 @@
-name: Publish Library
+name: Update synthetix in packages
 
 on:
   workflow_dispatch:
     inputs:
       synthetix_version:
-        description: 'Upstream `synthetix` repo version (leave empty if no update)'
-        required: false
-      monorepo_version:
-        description: 'New Monorepo Version (ex. 2.50.0-alpha) (leave empty to "patch")'
-        required: false
+        description: 'Upstream `synthetix` repo version'
+        required: true
 
 jobs:
   update_version:
-    name: Update synthetix in contracts-interface
+    name: Update synthetix in packages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -36,8 +33,7 @@ jobs:
           git config --global user.email "ci@cc.snxdao.io"
           git config --global user.name "Synthetix CI"
 
-      - name: Update to the new synthetix version (if present)
-        if: github.event.inputs.synthetix_version
+      - name: Update to the new synthetix version
         run: |
           yarn up synthetix@${{ github.event.inputs.synthetix_version }} --exact
 
@@ -49,20 +45,8 @@ jobs:
 
           git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty --no-verify
 
-      - name: Manual update all packages to the specified monorepo version (if present)
-        if: github.event.inputs.monorepo_version
-        run: |
-          # update all public packages versions
-          yarn workspaces foreach --no-private version --deferred "${{ github.event.inputs.monorepo_version }}"
-          
-          # update monorepo version separately
-          yarn version --deferred "${{ github.event.inputs.monorepo_version }}"
-
       - run: yarn version apply --all
-
-      - run: yarn lint
       - run: yarn build
-      - run: yarn test
 
       - name: Create git tag and commit changes
         run: |
@@ -79,15 +63,17 @@ jobs:
           cat /tmp/commit-message.txt
 
           git commit --allow-empty --no-verify --all --file /tmp/commit-message.txt 
-          
-          for WORKSPACE_PACKAGE in $(cat /tmp/changed-packages.txt); do
-            WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
-            WORKSPACE_VERSION=$(jq --raw-output '.version' < $WORKSPACE_PACKAGE)
-            git tag -a "$WORKSPACE_NAME@$WORKSPACE_VERSION" -m "$WORKSPACE_NAME@$WORKSPACE_VERSION"
-          done         
+
+          # We are currently not using tags in any way so not much sense pushing tags to the repo
+          # TODO: uncomment if we want to add tags
+          # for WORKSPACE_PACKAGE in $(cat /tmp/changed-packages.txt); do
+          #   WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
+          #   WORKSPACE_VERSION=$(jq --raw-output '.version' < $WORKSPACE_PACKAGE)
+          #   git tag -a "$WORKSPACE_NAME@$WORKSPACE_VERSION" -m "$WORKSPACE_NAME@$WORKSPACE_VERSION"
+          # done         
 
       - name: Publish packages
-        run: yarn workspaces foreach --no-private npm publish
+        run: yarn workspaces foreach --no-private npm publish --tolerate-republish
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

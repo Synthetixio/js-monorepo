@@ -1,0 +1,76 @@
+name: Publish Single Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Package name'
+        required: true
+
+      version:
+        description: 'Package version (defaults to `patch`)'
+        default: 'patch'
+        required: false
+
+jobs:
+  update_version:
+    name: Update synthetix in contracts-interface
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
+
+      - run: yarn npm whoami
+        env:
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: yarn install --immutable
+
+      - name: Config git identity
+        run: |
+          git config --global user.email "ci@cc.snxdao.io"
+          git config --global user.name "Synthetix CI"
+
+      - name: Update to the new synthetix version (if present)
+        run: |
+          yarn workspace ${{ github.event.inputs.package }} version --deferred  ${{ github.event.inputs.version }}
+          git commit -am "${{ github.event.inputs.package }}@${{ github.event.inputs.version }}" --allow-empty --no-verify
+
+      - run: yarn version apply --all
+      - run: yarn build
+
+      - name: Create git tag and commit changes
+        run: |
+          git diff --name-only '**/package.json' > /tmp/changed-packages.txt
+          cat /tmp/changed-packages.txt
+
+          echo -n > /tmp/commit-message.txt
+          echo 'Updated packages:' >> /tmp/commit-message.txt
+          for WORKSPACE_PACKAGE in $(cat /tmp/changed-packages.txt); do
+            WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
+            WORKSPACE_VERSION=$(jq --raw-output '.version' < $WORKSPACE_PACKAGE)
+            echo "  - $WORKSPACE_NAME@$WORKSPACE_VERSION" >> /tmp/commit-message.txt
+          done
+          cat /tmp/commit-message.txt
+
+          git commit --allow-empty --no-verify --all --file /tmp/commit-message.txt 
+          
+          # for WORKSPACE_PACKAGE in $(cat /tmp/changed-packages.txt); do
+          #   WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
+          #   WORKSPACE_VERSION=$(jq --raw-output '.version' < $WORKSPACE_PACKAGE)
+          #   git tag -a "$WORKSPACE_NAME@$WORKSPACE_VERSION" -m "$WORKSPACE_NAME@$WORKSPACE_VERSION"
+          # done         
+
+      - name: Publish packages
+        run: yarn workspaces foreach --no-private npm publish --tolerate-republish
+        env:
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: git push --follow-tags
