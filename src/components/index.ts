@@ -17,6 +17,7 @@ import { Dropdown, DropdownProps } from './Dropdown/Dropdown';
 import { ExternalLink, ExternalLinkProps } from './ExternalLink/ExternalLink';
 import { FieldAttributesProps } from './FieldAttributes/FieldAttributes';
 import { IconButton, IconButtonProps } from './IconButton/IconButton';
+import { Pagination, PaginationProps } from './Pagination';
 import { Radio, RadioProps } from './Radio/Radio';
 import { Select, SelectProps } from './Select/Select';
 import { Selector, SelectorProps } from './Selector/Selector';
@@ -37,6 +38,7 @@ export {
   Dropdown,
   ExternalLink,
   IconButton,
+  Pagination,
   Radio,
   Select,
   Selector,
@@ -59,6 +61,7 @@ export type {
   ExternalLinkProps,
   FieldAttributesProps,
   IconButtonProps,
+  PaginationProps,
   RadioProps,
   SelectorProps,
   SelectProps,
