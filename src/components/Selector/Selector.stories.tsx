@@ -17,7 +17,7 @@ Primary.args = {
   text: (
     <>
       Action
-      <CloseIcon />
+      <CloseIcon className='' />
     </>
   )
 };
