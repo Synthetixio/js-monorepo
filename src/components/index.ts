@@ -16,6 +16,7 @@ import { Dialog, DialogProps } from './Dialog/Dialog';
 import { Dropdown, DropdownProps } from './Dropdown/Dropdown';
 import { ExternalLink, ExternalLinkProps } from './ExternalLink/ExternalLink';
 import { FieldAttributesProps } from './FieldAttributes/FieldAttributes';
+import { Icon, IconProps } from './Icon/Icon';
 import { IconButton, IconButtonProps } from './IconButton/IconButton';
 import { Pagination, PaginationProps } from './Pagination/Pagination';
 import { Radio, RadioProps } from './Radio/Radio';
@@ -37,6 +38,7 @@ export {
   Dialog,
   Dropdown,
   ExternalLink,
+  Icon,
   IconButton,
   Pagination,
   Radio,
@@ -61,6 +63,7 @@ export type {
   ExternalLinkProps,
   FieldAttributesProps,
   IconButtonProps,
+  IconProps,
   PaginationProps,
   RadioProps,
   SelectorProps,
