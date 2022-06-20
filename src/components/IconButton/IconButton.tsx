@@ -21,9 +21,10 @@ export const IconButton: React.FC<IconButtonProps> = ({
   return (
     <button
       {...props}
-      className={clsx(`ui-border ui-transition ui-ease-out hover:ui-brightness-125`, className, {
+      className={clsx(`ui-border ui-transition ui-ease-out`, className, {
         'ui-border-blue ui-bg-blue ui-text-blue': isActive,
-        'ui-icon-button ui-bg-dark-blue ui-text-white': !isActive && variant === 'dark-blue',
+        'ui-icon-button ui-bg-dark-blue ui-text-white hover:ui-brightness-125':
+          !isActive && variant === 'dark-blue',
         'ui-icon-button ui-gradient-gray-2 ui-text-white': !isActive && variant === 'gray',
         'ui-rounded-full': rounded,
         'ui-rounded': !rounded,

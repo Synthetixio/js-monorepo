@@ -1,3 +1,17 @@
-@import "tailwind";
-@import "typography";
-@import "transitions";
+@import 'tailwind';
+@import 'typography';
+@import 'transitions';
+
+@import 'swiper/scss';
+@import 'swiper/scss/pagination';
+
+.swiper-wrapper {
+  padding-bottom: 48px;
+  .swiper-slide > * {
+    margin: auto;
+  }
+}
+
+.swiper-button-disabled > div {
+  opacity: 0.4;
+}
