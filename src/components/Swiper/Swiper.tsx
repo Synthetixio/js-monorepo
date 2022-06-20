@@ -24,7 +24,7 @@ export const Swiper: React.FC<SwiperProps> = ({
   className,
   slides,
   spaceBetween = 50,
-  slidesPerView = 3,
+  slidesPerView,
   slideProps,
   ...props
 }) => {
