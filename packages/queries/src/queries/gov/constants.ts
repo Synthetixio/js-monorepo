@@ -14,6 +14,10 @@ export enum SPACE_KEY {
 	GRANTS = 'snxgrants.eth',
 	AMBASSADOR = 'snxambassador.eth',
 }
+const BOARDROOM_PRODUCTION_URL = 'https://api.boardroom.info';
+
+export const GET_USER_DETAILS_API_URL = (address: string) =>
+	`${BOARDROOM_PRODUCTION_URL}/v1/userDetails/${address}`;
 
 export const COUNCIL_CONTRACTS_V3 = [Ambassador, Grants, Spartan, Treasury];
 
