@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Inter'), url('./Inter-Regular.woff2') format('woff2'),
+    url('./Inter-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Lustra Text';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: local('Lustra Text'), url('./Lustra-Text-Regular.woff2') format('woff2'),
+    url('./Lustra-Text-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'GT America';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: local('GT America'), url('./GT-America-Regular.woff2') format('woff2'),
+    url('./GT-America-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'GT America Extended';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: local('GT America Extended'), url('./GT-America-Extended-Bold.woff2') format('woff2'),
+    url('./GT-America-Extended-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'GT America Condensed Bold';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: local('GT America Condensed Bold'), url('./GT-America-Condensed-Bold.woff2') format('woff2'),
+    url('./GT-America-Condensed-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'GT America Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: bold;
+  src: local('GT America Extended'), url('./GT-America-Mono-Bold.woff2') format('woff2'),
+    url('./GT-America-Mono-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Inter Bold';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: local('Inter Bold'), url('./Inter-Bold.woff2') format('woff2'),
+    url('./Inter-Bold.woff') format('woff');
+}
