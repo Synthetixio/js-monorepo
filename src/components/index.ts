@@ -23,7 +23,6 @@ import { Radio, RadioProps } from './Radio/Radio';
 import { Select, SelectProps } from './Select/Select';
 import { Selector, SelectorProps } from './Selector/Selector';
 import { Spinner, SpinnerProps } from './Spinner/Spinner';
-import { Swiper, SwiperProps } from './Swiper/Swiper';
 import { Tab, TabProps } from './Tab/Tab';
 import { Tabs, TabsProps } from './Tabs/Tabs';
 import { TextField, TextFieldProps } from './TextField/TextField';
@@ -46,7 +45,6 @@ export {
   Select,
   Selector,
   Spinner,
-  Swiper,
   Tab,
   Tabs,
   TextField,
@@ -71,7 +69,6 @@ export type {
   SelectorProps,
   SelectProps,
   SpinnerProps,
-  SwiperProps,
   TabProps,
   TabsProps,
   TextFieldProps,

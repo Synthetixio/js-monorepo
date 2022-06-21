@@ -26,8 +26,7 @@
     "@synthetixio/transaction-notifier": "^2.70.1",
     "clsx": "^1.1.1",
     "lodash": "^4.17.21",
-    "react-transition-group": "^4.4.2",
-    "swiper": "^8.2.4"
+    "react-transition-group": "^4.4.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
