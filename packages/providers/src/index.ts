@@ -47,7 +47,7 @@ const handleSwitchChain = async (
 		method: 'wallet_switchEthereumChain',
 		params: [{ chainId: formattedChainId }],
 	});
-	return success === null ? true : false;
+	return success === null;
 };
 
 const getCorrespondingNetwork = (isOVM: boolean) => {
