@@ -39,6 +39,9 @@
 		"prettier": "^2.3.0",
 		"typescript": "^4.4.2"
 	},
+	"resolutions": {
+		"ethers": "^5.5.3"
+	},
 	"husky": {
 		"hooks": {
 			"pre-commit": "lint-staged"

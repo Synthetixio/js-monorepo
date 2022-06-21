@@ -1,7 +1,6 @@
 import { ethers } from 'ethers';
-import { OptimismProvider } from '@eth-optimism/provider';
 
-export type OvmProvider = typeof OptimismProvider;
+export type OvmProvider = ethers.providers.JsonRpcProvider;
 
 export type ProviderConfig = {
 	networkId?: ethers.providers.Networkish;
