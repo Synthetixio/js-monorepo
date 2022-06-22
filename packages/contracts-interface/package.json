@@ -37,7 +37,7 @@
 	},
 	"dependencies": {
 		"ethers": "^5.5.3",
-		"synthetix": "v2.73.1"
+		"synthetix": "2.74.0-alpha"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.11.0",
