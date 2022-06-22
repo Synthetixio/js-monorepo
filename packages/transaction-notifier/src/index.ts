@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import type { SynthetixProvider } from '@synthetixio/providers';
 
 import { createEmitter } from './eventEmitter';
 import { Emitter, TransactionStatusData, TransactionNotifierInterface } from './types';
@@ -6,8 +6,8 @@ import { TRANSACTION_EVENTS_MAP } from './constants';
 import getRevertReason from './ethRevertReason';
 
 class TransactionNotifier implements TransactionNotifierInterface {
-	private _provider: ethers.providers.Web3Provider;
-	constructor(provider: ethers.providers.Web3Provider) {
+	private _provider: SynthetixProvider;
+	constructor(provider: SynthetixProvider) {
 		this._provider = provider;
 	}
 
@@ -17,7 +17,7 @@ class TransactionNotifier implements TransactionNotifierInterface {
 		return emitter;
 	}
 
-	setProvider(provider: ethers.providers.Web3Provider): void {
+	setProvider(provider: SynthetixProvider): void {
 		this._provider = provider;
 	}
 

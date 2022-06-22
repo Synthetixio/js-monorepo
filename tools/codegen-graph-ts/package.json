@@ -45,6 +45,7 @@
 		"@types/commander": "^2.12.2",
 		"@types/lodash": "^4.14.169",
 		"@types/node": "^17.0.43",
+		"@types/node-fetch": "^2.6.2",
 		"eslint": "^7.26.0",
 		"eval": "^0.1.6",
 		"jest": "^27.0.6",

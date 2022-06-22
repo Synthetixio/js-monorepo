@@ -35,6 +35,8 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
+		"@ethersproject/providers": "^5.6.8",
+		"@synthetixio/providers": "workspace:*",
 		"ethers": "^5.5.3"
 	},
 	"devDependencies": {

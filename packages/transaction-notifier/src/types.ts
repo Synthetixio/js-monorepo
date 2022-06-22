@@ -1,4 +1,5 @@
-import { ethers } from 'ethers';
+import type { TransactionResponse } from '@ethersproject/providers';
+import type { SynthetixProvider } from '@synthetixio/providers';
 
 export type TransactionEventCode = 'txSent' | 'txConfirmed' | 'txFailed' | 'txError';
 
@@ -25,18 +26,18 @@ export type RevertReasonParams = {
 	txHash: string;
 	networkId: number;
 	blockNumber: number;
-	provider: ethers.providers.Web3Provider;
+	provider: SynthetixProvider;
 };
 
 export type GetCodeParams = {
-	tx: ethers.providers.TransactionResponse;
+	tx: TransactionResponse;
 	networkId: number;
 	blockNumber: number;
-	provider: ethers.providers.Web3Provider;
+	provider: SynthetixProvider;
 };
 
 export type TransactionNotifierInterface = {
 	hash(transactionHash: string): Emitter;
-	setProvider(provider: ethers.providers.Web3Provider): void;
+	setProvider(provider: SynthetixProvider): void;
 	watchTransaction(transactionHash: string, emitter: Emitter): void;
 };

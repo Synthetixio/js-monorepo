@@ -1619,7 +1619,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/providers@npm:5.6.8, @ethersproject/providers@npm:^5.3.1":
+"@ethersproject/providers@npm:5.6.8, @ethersproject/providers@npm:^5.3.1, @ethersproject/providers@npm:^5.6.8":
   version: 5.6.8
   resolution: "@ethersproject/providers@npm:5.6.8"
   dependencies:
@@ -2237,6 +2237,7 @@ __metadata:
     "@types/commander": ^2.12.2
     "@types/lodash": ^4.14.169
     "@types/node": ^17.0.43
+    "@types/node-fetch": ^2.6.2
     axios: ^0.21.4
     commander: ^8.1.0
     eslint: ^7.26.0
@@ -2304,6 +2305,7 @@ __metadata:
     "@babel/plugin-transform-runtime": ^7.13.10
     "@babel/preset-env": ^7.13.10
     "@babel/preset-typescript": ^7.13.0
+    "@ethersproject/providers": ^5.6.8
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/optimism-networks": "workspace:*"
     "@types/node": ^17.0.43
@@ -2375,6 +2377,8 @@ __metadata:
     "@babel/plugin-transform-runtime": ^7.13.10
     "@babel/preset-env": ^7.13.10
     "@babel/preset-typescript": ^7.13.0
+    "@ethersproject/providers": ^5.6.8
+    "@synthetixio/providers": "workspace:*"
     "@types/node": ^17.0.43
     eslint: ^7.26.0
     ethers: ^5.5.3
@@ -2641,6 +2645,16 @@ __metadata:
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
   checksum: c41d136f67231c3131cf1d4ca0b06687f4a322918a3a5adddc87ce90ed9dbd175a3610adee36b106ae68c0b92c637c35e02b58c8a56c424f71d30993ea220b92
+  languageName: node
+  linkType: hard
+
+"@types/node-fetch@npm:^2.6.2":
+  version: 2.6.2
+  resolution: "@types/node-fetch@npm:2.6.2"
+  dependencies:
+    "@types/node": "*"
+    form-data: ^3.0.0
+  checksum: 6f73b1470000d303d25a6fb92875ea837a216656cb7474f66cdd67bb014aa81a5a11e7ac9c21fe19bee9ecb2ef87c1962bceeaec31386119d1ac86e4c30ad7a6
   languageName: node
   linkType: hard
 
