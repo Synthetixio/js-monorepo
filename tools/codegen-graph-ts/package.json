@@ -3,7 +3,7 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"version": "2.73.1-1",
+	"version": "2.74.0-alpha",
 	"description": "Generate typescript request library for any subgraph based on its entity definition",
 	"main": "build/src/index.js",
 	"files": [
