@@ -2309,7 +2309,7 @@ __metadata:
     eslint: ^7.26.0
     ethers: ^5.5.3
     jest: ^27.0.6
-    synthetix: 2.74.0-alpha
+    synthetix: 2.74.1
     ts-loader: ^8.0.2
     ts-node: ^10.2.1
     typescript: ^4.4.2
@@ -11738,9 +11738,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synthetix@npm:2.74.0-alpha":
-  version: 2.74.0-alpha
-  resolution: "synthetix@npm:2.74.0-alpha"
+"synthetix@npm:2.74.1":
+  version: 2.74.1
+  resolution: "synthetix@npm:2.74.1"
   dependencies:
     abi-decoder: ^2.3.0
     commander: ^8.1.0
@@ -11752,7 +11752,7 @@ __metadata:
     web3-utils: ^1.2.2
   bin:
     snx: bin.js
-  checksum: 565ca2db36ad77881f2457533c106d083a857e070eeb110d8a2a559e5ccab5e0353ca8259c97e8ed638c96303ccfcf3072201400c1c4b6e7e5de39a3a9c06d7b
+  checksum: 69d46d3a90f2799fb7627d912355ae8f748536a34770ce1d674328e4e9bb59ccb5a78fc1e659d2a43ab95ef43903ff0fd97acd7b952c1522a1d18c522b15a440
   languageName: node
   linkType: hard
 
