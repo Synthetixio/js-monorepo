@@ -5,7 +5,7 @@ import {
 	OPTIMISM_NETWORKS,
 } from '@synthetixio/optimism-networks';
 import { ERRORS } from './constants';
-import type { ProviderConfig, SynthetixProvider, OvmProvider } from './types';
+import type { ProviderConfig, SynthetixProvider } from './types';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 
 const loadProvider = ({ networkId = 1, infuraId, provider }: ProviderConfig): SynthetixProvider => {
@@ -59,5 +59,5 @@ const getCorrespondingNetwork = (isOVM: boolean) => {
 };
 
 export { loadProvider, getOptimismProvider, handleSwitchChain };
-export type { ProviderConfig, SynthetixProvider, OvmProvider };
+export type { ProviderConfig, SynthetixProvider };
 export default loadProvider;
