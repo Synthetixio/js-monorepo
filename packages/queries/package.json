@@ -40,7 +40,6 @@
 		"@synthetixio/codegen-graph-ts": "workspace:*",
 		"@synthetixio/contracts-interface": "workspace:*",
 		"@synthetixio/optimism-networks": "workspace:*",
-		"@synthetixio/providers": "workspace:*",
 		"@synthetixio/wei": "workspace:*",
 		"axios": "^0.21.4",
 		"date-fns": "^2.19.0",
