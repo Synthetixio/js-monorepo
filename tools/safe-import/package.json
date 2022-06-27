@@ -1,0 +1,17 @@
+{
+	"name": "@synthetixio/safe-import",
+	"publishConfig": {
+		"access": "public"
+	},
+	"main": "index.js",
+	"files": [
+		"./*.js"
+	],
+	"version": "1.0.0",
+	"author": "Nikita <noisekit@btnk.au>",
+	"repository": "github:Synthetixio/js-monorepo",
+	"license": "MIT",
+	"dependencies": {
+		"react": "^17.0.2"
+	}
+}
