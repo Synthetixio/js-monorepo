@@ -1,6 +1,5 @@
 import clsx from 'clsx';
-import React, { useMemo, useState } from 'react';
-
+import React, { useCallback, useMemo, useState } from 'react';
 import { Tab } from '../Tab/Tab';
 
 export interface ITabItem {
@@ -28,12 +27,14 @@ export const Tabs: React.FC<TabsProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState(initial);
 
-  const selectTab = (item: ITabItem) => {
-    if (item.disabled) return;
-
-    setActiveTab(item.id);
-    onChange?.(item.id);
-  };
+  const selectTab = useCallback(
+    (item: ITabItem) => {
+      if (item.disabled) return;
+      setActiveTab(item.id);
+      onChange?.(item.id);
+    },
+    [onChange]
+  );
 
   const content = useMemo(
     () => items.find((item) => item.id === activeTab)?.content,
@@ -41,8 +42,13 @@ export const Tabs: React.FC<TabsProps> = ({
   );
 
   return (
-    <div className={className}>
-      <div className='ui-flex ui-items-center ui-flex-nowrap ui-overflow-auto'>
+    <>
+      <div
+        className={clsx(
+          'ui-flex ui-items-center ui-justify-center ui-flex-nowrap ui-overflow-auto',
+          className
+        )}
+      >
         {items.map((item) => (
           <Tab
             key={item.id}
@@ -54,7 +60,7 @@ export const Tabs: React.FC<TabsProps> = ({
           />
         ))}
       </div>
-      <div className={clsx(contentClassName, 'dark:ui-text-white')}>{content}</div>
-    </div>
+      <div className={clsx('dark:ui-text-white', contentClassName)}>{content}</div>
+    </>
   );
 };

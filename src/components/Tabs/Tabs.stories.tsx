@@ -12,11 +12,22 @@ const Template: Story<ComponentProps<typeof Tabs>> = (args) => <Tabs {...args} /
 
 export const Basic = Template.bind({});
 Basic.args = {
+  contentClassName: 'ui-overflow-hidden',
   items: [
     {
       id: 'tab1',
       label: 'tab12',
-      content: <div>Tab 1</div>
+      content: (
+        <div style={{ display: 'flex' }}>
+          Tab 1 <div>Tab 1</div>
+          Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>
+          Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>
+          Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>
+          Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>
+          Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>
+          Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>
+        </div>
+      )
     },
     {
       id: 'tab2',
@@ -30,6 +41,5 @@ Basic.args = {
       disabled: true
     }
   ],
-  initial: 'tab1',
-  contentClassName: 'ui-p-4'
+  initial: 'tab1'
 };
