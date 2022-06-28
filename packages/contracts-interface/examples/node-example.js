@@ -1,4 +1,3 @@
-/// <reference types="../src/missing-types" />
 const { synthetix } = require('../src/index.ts');
 
 (async () => {

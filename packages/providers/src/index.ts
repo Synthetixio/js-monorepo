@@ -5,13 +5,17 @@ import {
 	OPTIMISM_NETWORKS,
 } from '@synthetixio/optimism-networks';
 import { ERRORS } from './constants';
-import { ProviderConfig, SynthetixProvider, OvmProvider } from './types';
+import type { ProviderConfig, SynthetixProvider } from './types';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 
 const loadProvider = ({ networkId = 1, infuraId, provider }: ProviderConfig): SynthetixProvider => {
-	if (!provider && !infuraId) throw new Error(ERRORS.noWeb3Provider);
-	if (provider) return new ethersProviders.Web3Provider(provider);
-	if (infuraId) return new ethersProviders.InfuraProvider(networkId, infuraId);
+	if (provider) {
+		return new ethersProviders.Web3Provider(provider);
+	}
+	if (infuraId) {
+		return new ethersProviders.InfuraProvider(networkId, infuraId);
+	}
+	throw new Error(ERRORS.noWeb3Provider);
 };
 
 const getOptimismProvider = ({
@@ -43,7 +47,7 @@ const handleSwitchChain = async (
 		method: 'wallet_switchEthereumChain',
 		params: [{ chainId: formattedChainId }],
 	});
-	return success === null ? true : false;
+	return success === null;
 };
 
 const getCorrespondingNetwork = (isOVM: boolean) => {
@@ -55,5 +59,5 @@ const getCorrespondingNetwork = (isOVM: boolean) => {
 };
 
 export { loadProvider, getOptimismProvider, handleSwitchChain };
-export type { ProviderConfig, SynthetixProvider, OvmProvider };
+export type { ProviderConfig, SynthetixProvider };
 export default loadProvider;

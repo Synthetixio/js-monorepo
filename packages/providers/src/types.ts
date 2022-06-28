@@ -1,15 +1,14 @@
-import { ethers } from 'ethers';
-import { OptimismProvider } from '@eth-optimism/provider';
-
-export type OvmProvider = typeof OptimismProvider;
+import type {
+	ExternalProvider,
+	InfuraProvider,
+	Networkish,
+	Web3Provider,
+} from '@ethersproject/providers';
 
 export type ProviderConfig = {
-	networkId?: ethers.providers.Networkish;
+	networkId?: Networkish;
 	infuraId?: string;
-	provider?: ethers.providers.ExternalProvider;
+	provider?: ExternalProvider;
 };
 
-type L1Provider = ethers.providers.Web3Provider | ethers.providers.InfuraProvider;
-type L2Provider = OvmProvider;
-
-export type SynthetixProvider = L1Provider | L2Provider;
+export type SynthetixProvider = Web3Provider | InfuraProvider;

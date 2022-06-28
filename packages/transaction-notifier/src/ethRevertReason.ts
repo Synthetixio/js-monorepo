@@ -1,3 +1,4 @@
+import type { TransactionRequest } from '@ethersproject/providers';
 import { ethers } from 'ethers';
 
 import { RevertReasonParams } from './types';
@@ -19,7 +20,7 @@ const getRevertReason = async ({
 	try {
 		const tx = await provider.getTransaction(txHash);
 		const code = await provider.call(
-			tx as ethers.utils.Deferrable<ethers.providers.TransactionRequest>,
+			tx as ethers.utils.Deferrable<TransactionRequest>,
 			blockNumber
 		);
 		return decodeMessage(code);
