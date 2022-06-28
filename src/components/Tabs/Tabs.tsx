@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { Tab } from '../Tab/Tab';
 
@@ -28,15 +28,12 @@ export const Tabs: React.FC<TabsProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState(initial);
 
-  const selectTab = useCallback(
-    (item: ITabItem) => {
-      if (item.disabled) return;
+  const selectTab = (item: ITabItem) => {
+    if (item.disabled) return;
 
-      setActiveTab(item.id);
-      onChange?.(item.id);
-    },
-    [onChange]
-  );
+    setActiveTab(item.id);
+    onChange?.(item.id);
+  };
 
   const content = useMemo(
     () => items.find((item) => item.id === activeTab)?.content,

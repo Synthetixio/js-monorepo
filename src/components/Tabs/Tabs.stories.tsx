@@ -15,7 +15,7 @@ Basic.args = {
   items: [
     {
       id: 'tab1',
-      label: 'tab1',
+      label: 'tab12',
       content: <div>Tab 1</div>
     },
     {
