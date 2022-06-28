@@ -35,7 +35,6 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
-		"@eth-optimism/watcher": "^0.0.1-alpha.9",
 		"@metamask/providers": "^8.1.1",
 		"ethers": "^5.5.3"
 	},
