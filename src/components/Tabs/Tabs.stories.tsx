@@ -15,31 +15,21 @@ Basic.args = {
   contentClassName: 'ui-overflow-hidden',
   items: [
     {
-      id: 'tab1',
+      id: 1,
       label: 'tab12',
-      content: (
-        <div style={{ display: 'flex' }}>
-          Tab 1 <div>Tab 1</div>
-          Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>
-          Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>
-          Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>
-          Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>
-          Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>
-          Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>Tab 1 <div>Tab 1</div>
-        </div>
-      )
+      content: <div style={{ display: 'flex' }}>Tab 1</div>
     },
     {
-      id: 'tab2',
+      id: 2,
       label: 'tab2',
-      content: <div>Tab 2</div>
+      content: null
     },
     {
-      id: 'tab3',
+      id: 3,
       label: 'disabled',
-      content: <div>Tab 3</div>,
+      content: null,
       disabled: true
     }
   ],
-  initial: 'tab1'
+  initial: 2
 };
