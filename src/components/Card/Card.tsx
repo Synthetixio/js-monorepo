@@ -55,9 +55,14 @@ const CardRender: React.ForwardRefRenderFunction<HTMLDivElement, CardProps> = (
       {...props}
     >
       <div
-        className={clsx('ui-h-full ui-w-full ui-p-4 sm:ui-p-5', rounded, className, {
-          'ui-border-2 ui-border-black': variant === 'default' && showBorder
-        })}
+        className={clsx(
+          'ui-h-full ui-w-full ui-p-4 sm:ui-p-5 ui-overflow-auto',
+          rounded,
+          className,
+          {
+            'ui-border-2 ui-border-black': variant === 'default' && showBorder
+          }
+        )}
       >
         {children}
       </div>
