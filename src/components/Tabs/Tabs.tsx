@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import React, { useCallback, useMemo, useState } from 'react';
+
 import { Tab } from '../Tab/Tab';
 
 export interface ITabItem {
@@ -12,9 +13,9 @@ export interface ITabItem {
 export type TabsProps = {
   className?: string;
   contentClassName?: string;
-  initial: string;
+  initial: string | number;
   items: ITabItem[];
-  onChange?: (id: string) => void;
+  onChange?: (id: string | number) => void;
   dataActionId?: string;
 };
 
