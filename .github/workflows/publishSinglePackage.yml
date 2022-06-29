@@ -38,9 +38,9 @@ jobs:
           git config --global user.email "ci@cc.snxdao.io"
           git config --global user.name "Synthetix CI"
 
-      - name: Update to the new synthetix version (if present)
+      - name: Update ${{ github.event.inputs.package }} to the new version ${{ github.event.inputs.version }}
         run: |
-          yarn workspace ${{ github.event.inputs.package }} version --deferred  ${{ github.event.inputs.version }}
+          yarn deps:version ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}
           git commit -am "${{ github.event.inputs.package }}@${{ github.event.inputs.version }}" --allow-empty --no-verify
 
       - run: yarn version apply --all
@@ -62,6 +62,8 @@ jobs:
 
           git commit --allow-empty --no-verify --all --file /tmp/commit-message.txt 
           
+          # We are currently not using tags in any way so not much sense pushing tags to the repo
+          # TODO: uncomment if we want to add tags
           # for WORKSPACE_PACKAGE in $(cat /tmp/changed-packages.txt); do
           #   WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
           #   WORKSPACE_VERSION=$(jq --raw-output '.version' < $WORKSPACE_PACKAGE)
@@ -73,4 +75,8 @@ jobs:
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - run: git push --follow-tags
+      # Push with tags
+      # - run: git push --follow-tags
+
+      # Push without tags
+      - run: git push

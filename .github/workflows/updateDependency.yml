@@ -40,7 +40,7 @@ jobs:
           # Synthetix version will bump only affected packages
           for WORKSPACE_PACKAGE in $(git diff --name-only '**/package.json'); do
             WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
-            yarn workspace $WORKSPACE_NAME version --deferred patch
+            yarn deps:version $WORKSPACE_NAME patch
           done
 
           git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty --no-verify
@@ -77,14 +77,11 @@ jobs:
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - run: git push --follow-tags
+      # Push with tags
+      # - run: git push --follow-tags
 
-      - name: Populate env.NEW_VERSION
-        run: |
-          echo "NOTE: in case of automatic synthetix_version update root workspace will keep the same version"
-          export NEW_VERSION="$(jq -r .version < package.json)"
-          echo "NEW_VERSION=$NEW_VERSION" 
-          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV          
+      # Push without tags
+      - run: git push
 
       - name: Notify Synthetixio/staking
         run: |
