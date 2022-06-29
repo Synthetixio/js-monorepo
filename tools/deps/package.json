@@ -2,6 +2,9 @@
 	"name": "deps",
 	"private": true,
 	"version": "2.74.1",
+	"author": "Nikita <noisekit@btnk.au>",
+	"repository": "github:Synthetixio/js-monorepo",
+	"license": "MIT",
 	"bin": {
 		"deps": "./deps.js",
 		"deps-circular": "./circular.js",
