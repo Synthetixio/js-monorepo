@@ -3,16 +3,9 @@
 const depcheck = require('depcheck');
 const cp = require('child_process');
 const fs = require('fs/promises');
+const { fgReset, fgRed, fgGreen, fgYellow, fgCyan } = require('./lib/colors');
 
 const isFix = process.argv.includes('--fix');
-
-async function exec(cmd, options) {
-	return new Promise((resolve, reject) => {
-		cp.exec(cmd, { encoding: 'utf-8', stdio: 'pipe', ...options }, (error, data) =>
-			error ? reject(error) : resolve(data)
-		);
-	});
-}
 
 const options = {
 	ignoreBinPackage: false, // ignore the packages with bin entry
@@ -32,24 +25,16 @@ const options = {
 
 const ignoredPackages = [];
 
-const fgReset = '\x1b[0m';
-const fgRed = '\x1b[31m';
-const fgGreen = '\x1b[32m';
-const fgYellow = '\x1b[33m';
-const fgCyan = '\x1b[36m';
-
 let updatedPackages = 0;
 
 async function run() {
-	const workspacePackages = (await exec('yarn workspaces list --json'))
-		.split('\n')
-		.filter(Boolean)
-		.map((line) => JSON.parse(line))
+	const workspacePackages = (await require('./lib/workspaces')())
 		// filter out old unsupported dirs
 		.filter(({ name }) => !ignoredPackages.includes(name));
 
 	const workspaceDeps = workspacePackages.map(({ name }) => [name, 'workspace:*']);
 
+	const exec = require('./lib/exec');
 	const existingDeps = (await exec('yarn info --all --json'))
 		.split('\n')
 		.filter(Boolean)

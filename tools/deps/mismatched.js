@@ -3,32 +3,15 @@
 const path = require('path');
 const cp = require('child_process');
 const fs = require('fs');
-
-const ROOT = path.join(__dirname, '../..');
+const { fgReset, fgRed, fgGreen, fgYellow, fgCyan } = require('./lib/colors');
 
 const isFix = process.argv.includes('--fix');
 
-async function exec(cmd, options) {
-	return new Promise((resolve, reject) => {
-		cp.exec(cmd, { encoding: 'utf-8', stdio: 'pipe', ...options }, (error, data) =>
-			error ? reject(error) : resolve(data)
-		);
-	});
-}
-
-const fgReset = '\x1b[0m';
-const fgRed = '\x1b[31m';
-const fgGreen = '\x1b[32m';
-const fgYellow = '\x1b[33m';
-const fgCyan = '\x1b[36m';
-
 async function run() {
-	const workspacePackages = (await exec('yarn workspaces list --json'))
-		.split('\n')
-		.filter(Boolean)
-		.map((line) => JSON.parse(line));
+	const workspaces = await require('./lib/workspaces')();
+	const ROOT = await require('./lib/exec')('yarn workspace root exec pwd');
 
-	const { unique, mismatched } = workspacePackages
+	const { unique, mismatched } = workspaces
 		.flatMap((p) => {
 			const location = path.join(ROOT, p.location);
 			const packageJson = require(`${location}/package.json`);
