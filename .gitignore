@@ -42,6 +42,6 @@ generated
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
-!.yarn/versions
+.yarn/versions
 # For Yarn Zero Installs uncomment this line and keep deps in GIT
 # !.yarn/cache

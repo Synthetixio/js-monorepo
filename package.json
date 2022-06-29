@@ -20,7 +20,8 @@
 		"deps": "deps",
 		"deps:fix": "deps --fix",
 		"deps:mismatched": "deps-mismatched",
-		"deps:circular": "deps-circular"
+		"deps:circular": "deps-circular",
+		"deps:version": "deps-version"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.11.0",

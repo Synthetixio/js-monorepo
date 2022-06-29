@@ -5,7 +5,8 @@
 	"bin": {
 		"deps": "./deps.js",
 		"deps-circular": "./circular.js",
-		"deps-mismatched": "./mismatched.js"
+		"deps-mismatched": "./mismatched.js",
+		"deps-version": "./version.js"
 	},
 	"devDependencies": {
 		"depcheck": "^1.4.3",
