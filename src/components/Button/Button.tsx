@@ -4,7 +4,7 @@ import { ButtonHTMLAttributes } from 'react';
 
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
-export type ButtonVariant = 'default' | 'outline' | 'secondary' | 'purple' | 'custom';
+export type ButtonVariant = 'default' | 'outline' | 'secondary' | 'purple' | 'custom' | 'spotlight';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
@@ -12,6 +12,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   mobileSize?: ButtonSize;
   spinnerClassName?: string;
+  spotlightActive?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -23,6 +24,7 @@ export const Button: React.FC<ButtonProps> = ({
   className,
   spinnerClassName,
   disabled,
+  spotlightActive,
   ...props
 }) => {
   return (
@@ -38,6 +40,7 @@ export const Button: React.FC<ButtonProps> = ({
             variant === 'default' && !disabled,
           'ui-text-white ui-bg-navy': variant === 'secondary' && !disabled,
           'ui-text-white ui-bg-purple': variant === 'purple' && !disabled,
+          'ui-text-white': variant === 'spotlight',
           'ui-gradient-primary ui-bg-clip-text ui-text-fill-transparent ui-button-outline':
             variant === 'outline' && !disabled,
           'lg:ui-h-12 lg:ui-min-w-button-lg lg:ui-text-sm': size === 'lg',
@@ -68,6 +71,9 @@ export const Button: React.FC<ButtonProps> = ({
           {children}
         </div>
       </div>
+      {variant === 'spotlight' && spotlightActive && (
+        <div className='ui-bg-primary w-full ui-rounded ui-h-[2px] ui-w-full ui-absolute ui-bottom-1'></div>
+      )}
     </button>
   );
 };
