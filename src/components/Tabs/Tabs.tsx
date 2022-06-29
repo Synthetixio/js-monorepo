@@ -12,6 +12,7 @@ export interface ITabItem {
 
 export type TabsProps = {
   className?: string;
+  tabClassName?: string;
   contentClassName?: string;
   initial: string | number;
   items: ITabItem[];
@@ -24,7 +25,8 @@ export const Tabs: React.FC<TabsProps> = ({
   initial,
   onChange,
   className,
-  contentClassName
+  contentClassName,
+  tabClassName
 }) => {
   const [activeTab, setActiveTab] = useState(initial);
 
@@ -54,7 +56,7 @@ export const Tabs: React.FC<TabsProps> = ({
           <Tab
             key={item.id}
             active={item.id === activeTab}
-            className='ui-mx-2'
+            className={clsx('ui-mx-2', tabClassName)}
             disabled={item.disabled}
             text={item.label}
             onClick={() => selectTab(item)}
