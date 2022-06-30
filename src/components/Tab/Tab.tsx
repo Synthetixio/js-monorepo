@@ -12,7 +12,7 @@ export type TabProps = {
 export const Tab: React.FC<TabProps> = ({ text, active, onClick, disabled, className }) => (
   <button
     className={clsx(
-      'ui-transition ui-border ui-border-transparent ui-ease-out ui-min-w-button-md ui-rounded-[100px] ui-px-2 ui-py-1.5 ui-whitespace-nowrap',
+      'ui-transition ui-border ui-border-transparent ui-ease-out ui-rounded-[100px] ui-px-2 ui-py-1.5 ui-whitespace-nowrap',
       {
         'ui-text-primary': !active,
         'ui-bg-primary ui-text-white': active,

@@ -16,12 +16,12 @@ Basic.args = {
   items: [
     {
       id: 1,
-      label: 'tab 1',
+      label: 'tab 1 tab 1 tab 1',
       content: <div style={{ display: 'flex' }}>Tab 1</div>
     },
     {
       id: 2,
-      label: 'tab 2',
+      label: 'tab 2 tab 1 tab 2',
       content: null
     },
     {

@@ -46,12 +46,7 @@ export const Tabs: React.FC<TabsProps> = ({
 
   return (
     <>
-      <div
-        className={clsx(
-          'ui-flex ui-items-center ui-justify-center ui-flex-nowrap ui-overflow-auto',
-          className
-        )}
-      >
+      <div className={clsx('ui-flex ui-items-center ui-flex-nowrap ui-overflow-auto', className)}>
         {items.map((item) => (
           <Tab
             key={item.id}
