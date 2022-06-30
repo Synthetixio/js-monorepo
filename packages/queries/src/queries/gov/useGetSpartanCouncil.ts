@@ -3,7 +3,7 @@ import { Contract, providers } from 'ethers';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 import { Spartan } from '../../contracts';
-import { GET_USER_DETAILS_API_URL } from './constants';
+import { BOARDROOM_BATCH_USER_DETAILS_URL } from './constants';
 
 type UserDetail = {
 	address: string;
@@ -28,15 +28,13 @@ type UserDetail = {
 	council?: string;
 };
 
-// Ideally we want to use Boardroom's batch API, but it's currently broken
-// https://swagger.boardroom.info/#/user/getBatchUserDetails
-const getUsersDetails = (walletAddresses: string[]) =>
-	Promise.all(
-		walletAddresses.map(async (address) => {
-			const response = await axios.post<UserDetail>(GET_USER_DETAILS_API_URL(address));
-			return response.data;
-		})
+const getUsersDetails = async (walletAddresses: string[]) => {
+	const response = await axios.get<{ data: { users: UserDetail[] } }>(
+		BOARDROOM_BATCH_USER_DETAILS_URL,
+		{ params: { addressesList: walletAddresses.join(',') } }
 	);
+	return response.data.data.users;
+};
 
 const useGetSpartanCouncil = (
 	_ctx: QueryContext,
