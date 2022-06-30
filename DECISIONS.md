@@ -1,5 +1,13 @@
 # Architectural Decision Records
 
+## 2022-06-30 Independent versioning of packages
+- This way we can consolidate more UI libs in the monorepo and maintain semver for them.
+- We will no longer republish all `@synthetixio/*` libs together with synthetix release (so versions will no longer match).
+- We will only update and release ones that directly or indirectly depend on it. Example is in the [README.md](README.md).
+- Github actions will have 2 separate publishing flows:
+  - to update all pakcages based on desired `synthetix` version
+  - to update and publish one single package (and all that depend on it) by name
+
 ## 2022-06-09 Incorporate `codegen-graph-ts`
 - Because `codegen-graph-ts` depends on `wei` and `queries` depend on `codegen-graph-ts` we ended up having multiple `wei` instances of different versions in the lockfile
 - Adding package to the monorepo is a 3-step process. See details in the [README.md](README.md)
