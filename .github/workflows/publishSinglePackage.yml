@@ -14,7 +14,7 @@ on:
 
 jobs:
   update_version:
-    name: Update synthetix in contracts-interface
+    name: Publish Single Package
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
