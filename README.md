@@ -4,15 +4,15 @@
 
 ## Packages
 
-| Package                                                               | Status                                                                                                                                               | Description                           |
-|-----------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|
-| [`@synthetixio/contracts-interface`](/packages/contracts-interface)   | [![npm version](https://badge.fury.io/js/%40synthetixio%2Fcontracts-interface.svg)](https://badge.fury.io/js/%40synthetixio%2Fcontracts-interface)   | Synthetix contracts interface         |
-| [`@synthetixio/queries`](/packages/queries)                           | [![npm version](https://badge.fury.io/js/%40synthetixio%2Fqueries.svg)](https://badge.fury.io/js/%40synthetixio%2Fqueries)                           | React library for querying data       |
-| [`@synthetixio/providers`](/packages/providers)                       | [![npm version](https://badge.fury.io/js/%40synthetixio%2Fproviders.svg)](https://badge.fury.io/js/%40synthetixio%2Fproviders)                       | Synthetix providers for layer 1 and 2 |
-| [`@synthetixio/optimism-networks`](/packages/optimism-networks)       | [![npm version](https://badge.fury.io/js/%40synthetixio%2Foptimism-networks.svg)](https://badge.fury.io/js/%40synthetixio%2Foptimism-networks)       | Network utility for layer 2           |
-| [`@synthetixio/transaction-notifier`](/packages/transaction-notifier) | [![npm version](https://badge.fury.io/js/%40synthetixio%2Ftransaction-notifier.svg)](https://badge.fury.io/js/%40synthetixio%2Ftransaction-notifier) | Transaction utility for layer 1 and 2 |
-| [`@synthetixio/codegen-graph-ts`](/tools/codegen-graph-ts)            | [![npm version](https://badge.fury.io/js/%40synthetixio%codegen-graph-ts.svg)](https://badge.fury.io/js/%40synthetixio%codegen-graph-ts)             | Query generator                       |
-| [`@synthetixio/safe-import`](/tools/safe-import)                      | [![npm version](https://badge.fury.io/js/%40synthetixio%safe-import.svg)](https://badge.fury.io/js/%40synthetixio%safe-import)                       | Async imports with retry              |
+| Package                                                               | Status                                                                                                                                           | Description                           |
+|-----------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| [`@synthetixio/contracts-interface`](/packages/contracts-interface)   | [![npm version](https://badge.fury.io/js/@synthetixio%2Fcontracts-interface.svg)](https://badge.fury.io/js/@synthetixio%2Fcontracts-interface)   | Synthetix contracts interface         |
+| [`@synthetixio/queries`](/packages/queries)                           | [![npm version](https://badge.fury.io/js/@synthetixio%2Fqueries.svg)](https://badge.fury.io/js/@synthetixio%2Fqueries)                           | React library for querying data       |
+| [`@synthetixio/providers`](/packages/providers)                       | [![npm version](https://badge.fury.io/js/@synthetixio%2Fproviders.svg)](https://badge.fury.io/js/@synthetixio%2Fproviders)                       | Synthetix providers for layer 1 and 2 |
+| [`@synthetixio/optimism-networks`](/packages/optimism-networks)       | [![npm version](https://badge.fury.io/js/@synthetixio%2Foptimism-networks.svg)](https://badge.fury.io/js/@synthetixio%2Foptimism-networks)       | Network utility for layer 2           |
+| [`@synthetixio/transaction-notifier`](/packages/transaction-notifier) | [![npm version](https://badge.fury.io/js/@synthetixio%2Ftransaction-notifier.svg)](https://badge.fury.io/js/@synthetixio%2Ftransaction-notifier) | Transaction utility for layer 1 and 2 |
+| [`@synthetixio/codegen-graph-ts`](/tools/codegen-graph-ts)            | [![npm version](https://badge.fury.io/js/@synthetixio%2Fcodegen-graph-ts.svg)](https://badge.fury.io/js/@synthetixio%2Fcodegen-graph-ts)         | Query generator                       |
+| [`@synthetixio/safe-import`](/tools/safe-import)                      | [![npm version](https://badge.fury.io/js/@synthetixio%2Fsafe-import.svg)](https://badge.fury.io/js/@synthetixio%2Fsafe-import)                   | Async imports with retry              |
 
 ## Install
 
