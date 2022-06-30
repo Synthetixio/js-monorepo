@@ -4,15 +4,17 @@
 
 ## Packages
 
-| Package                                                               | Status                                                                                                                                               | Description                          |
-| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| [`@synthetixio/contracts-interface`](/packages/contracts-interface)   | [![npm version](https://badge.fury.io/js/%40synthetixio%2Fcontracts-interface.svg)](https://badge.fury.io/js/%40synthetixio%2Fcontracts-interface)   | Synthetix contracts interface        |
-| [`@synthetixio/queries`](/packages/queries)   | [![npm version](https://badge.fury.io/js/%40synthetixio%2Fqueries.svg)](https://badge.fury.io/js/%40synthetixio%2Fqueries)   | React library for querying data        |
-| [`@synthetixio/providers`](/packages/providers)                       | [![npm version](https://badge.fury.io/js/%40synthetixio%2Fproviders.svg)](https://badge.fury.io/js/%40synthetixio%2Fproviders)                       | Synthetix providers for layer 1 and 2  |
-| [`@synthetixio/optimism-networks`](/packages/optimism-networks)       | [![npm version](https://badge.fury.io/js/%40synthetixio%2Foptimism-networks.svg)](https://badge.fury.io/js/%40synthetixio%2Foptimism-networks)       | Network utility for layer 2 |
-| [`@synthetixio/transaction-notifier`](/packages/transaction-notifier) | [![npm version](https://badge.fury.io/js/%40synthetixio%2Ftransaction-notifier.svg)](https://badge.fury.io/js/%40synthetixio%2Ftransaction-notifier) | Transaction utility for layer 1 and 2  |
+| Package                                                               | Status                                                                                                                                           | Description                           |
+|-----------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| [`@synthetixio/contracts-interface`](/packages/contracts-interface)   | [![npm version](https://badge.fury.io/js/@synthetixio%2Fcontracts-interface.svg)](https://badge.fury.io/js/@synthetixio%2Fcontracts-interface)   | Synthetix contracts interface         |
+| [`@synthetixio/queries`](/packages/queries)                           | [![npm version](https://badge.fury.io/js/@synthetixio%2Fqueries.svg)](https://badge.fury.io/js/@synthetixio%2Fqueries)                           | React library for querying data       |
+| [`@synthetixio/providers`](/packages/providers)                       | [![npm version](https://badge.fury.io/js/@synthetixio%2Fproviders.svg)](https://badge.fury.io/js/@synthetixio%2Fproviders)                       | Synthetix providers for layer 1 and 2 |
+| [`@synthetixio/optimism-networks`](/packages/optimism-networks)       | [![npm version](https://badge.fury.io/js/@synthetixio%2Foptimism-networks.svg)](https://badge.fury.io/js/@synthetixio%2Foptimism-networks)       | Network utility for layer 2           |
+| [`@synthetixio/transaction-notifier`](/packages/transaction-notifier) | [![npm version](https://badge.fury.io/js/@synthetixio%2Ftransaction-notifier.svg)](https://badge.fury.io/js/@synthetixio%2Ftransaction-notifier) | Transaction utility for layer 1 and 2 |
+| [`@synthetixio/codegen-graph-ts`](/tools/codegen-graph-ts)            | [![npm version](https://badge.fury.io/js/@synthetixio%2Fcodegen-graph-ts.svg)](https://badge.fury.io/js/@synthetixio%2Fcodegen-graph-ts)         | Query generator                       |
+| [`@synthetixio/safe-import`](/tools/safe-import)                      | [![npm version](https://badge.fury.io/js/@synthetixio%2Fsafe-import.svg)](https://badge.fury.io/js/@synthetixio%2Fsafe-import)                   | Async imports with retry              |
 
-## Developer Instructions
+## Install
 
 This repo uses Yarn workspaces to manage multiple packages in the same repo. To prepare the repository for use, run:
 
@@ -22,7 +24,7 @@ yarn install
 
 This will install all dependencies, wire dependencies between packages in this repo, and allow for you to build projects.
 
-### Building
+## Build
 
 If you make a change and want to generate the library JS code, run:
 
@@ -32,27 +34,71 @@ yarn build
 
 This will ensure all projects are fully built in topological order. You are also free to run script commands from individual repositories if necessary or desired.
 
-### Publishing
+## Publish
+
+Monorepo is now switched to independent versioning so each package inside monorepo can have its own version independently of all others
+
+### Publishing new version after `synthetix` upgrade
 
 We have a GitHub workflow for publishing releases.
+
 To publish:
 
 1. Go here https://github.com/Synthetixio/js-monorepo/actions/workflows/updateDependency.yml
 2. Click Run Workflow
+3. Fill `synthetix_version` in a format of `1.2.3` for the version
+4. Run the workflow
 
-#### Testing release
+This will upgrade `synthetix` in the monorepo and all affected packages will be published with new `patch` release
+
+For example now only the `@synthetixio/contracts-interface` package  depends on `synthetix`, so it will get new `patch` version. But then all the packages that depend on it will get new `patch` version in a cascade (check full list of cascade updates with `yarn deps:version`). So overall these 4 packages will be published:
+ 
+- `@synthetixio/contracts-interface`
+- `@synthetixio/providers`
+- `@synthetixio/queries`
+- `@synthetixio/transaction-notifier`
+
+### Publishing new version of a single package
+
+We have a GitHub workflow for publishing package releases.
+
+To publish:
+
+1. Go here https://github.com/Synthetixio/js-monorepo/actions/workflows/publishSinglePackage.yml
+2. Click Run Workflow
+3. Fill `package` in a format of `@synthetixio/wei` for the package name
+4. Fill `version` in a format of `1.2.3` (or `patch`, `minor`, `major`) for the package version (optional, default value is `patch`)
+5. Run the workflow
+
+*NOTE*: All the packages that depend on `package` will be published with `patch` version automatically.
+For example when publishing `@synthetixio/wei` these packages will get updates (check with `yarn deps:version`):
+
+- `@synthetixio/wei`
+- `@synthetixio/codegen-graph-ts`
+- `@synthetixio/queries`
+
+### Testing release
 
 When you open a PR a dev package will be published automatically when CI passes. The version will be `0.0.0-<git short sha>`
 
-#### Manual
+### Manual
 
 Yarn workspaces are specially designed to handle package updates. If you want to push a new release for one or more packages in this repo, run:
 
-```
-yarn workspaces foreach publish
-```
-
-Yarn will automatically detect changes for packages, and offer to increment the version number and push a release as appropriate. Any dependant modules will be kept in sync as well.
+1. Firstly set desired versions to updated packages:
+    ```sh
+    yarn version check --interactive
+    ```
+2. Then apply new versions
+    ```sh
+    yarn apply --all
+    ```
+3. Commit changes
+4. And now we can publish all the updated packages
+    ```sh
+    yarn workspaces foreach --no-private npm publish --tolerate-republish
+    ```
+5. Yarn will automatically replace all the `workspace:*` versions with appropriate semver on publish.
 
 
 ## Adding external library to the monorepo preserving git history
@@ -117,4 +163,3 @@ Interactive rebase works too
 ```sh
 git rebase master --rebase-merge --interactive
 ```
-

@@ -1,15 +1,20 @@
-name: Update synthetix in packages
+name: Publish Single Package
 
 on:
   workflow_dispatch:
     inputs:
-      synthetix_version:
-        description: 'Upstream `synthetix` repo version'
+      package:
+        description: 'Package name'
         required: true
+
+      version:
+        description: 'Package version (defaults to `patch`)'
+        default: 'patch'
+        required: false
 
 jobs:
   update_version:
-    name: Update synthetix in packages
+    name: Update synthetix in contracts-interface
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -33,17 +38,10 @@ jobs:
           git config --global user.email "ci@cc.snxdao.io"
           git config --global user.name "Synthetix CI"
 
-      - name: Update to the new synthetix version
+      - name: Update ${{ github.event.inputs.package }} to the new version ${{ github.event.inputs.version }}
         run: |
-          yarn up synthetix@${{ github.event.inputs.synthetix_version }} --exact
-
-          # Synthetix version will bump only affected packages
-          for WORKSPACE_PACKAGE in $(git diff --name-only '**/package.json'); do
-            WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
-            yarn deps:version $WORKSPACE_NAME patch
-          done
-
-          git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty --no-verify
+          yarn deps:version ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}
+          git commit -am "${{ github.event.inputs.package }}@${{ github.event.inputs.version }}" --allow-empty --no-verify
 
       - run: yarn version apply --all
       - run: yarn build
@@ -63,7 +61,7 @@ jobs:
           cat /tmp/commit-message.txt
 
           git commit --allow-empty --no-verify --all --file /tmp/commit-message.txt 
-
+          
           # We are currently not using tags in any way so not much sense pushing tags to the repo
           # TODO: uncomment if we want to add tags
           # for WORKSPACE_PACKAGE in $(cat /tmp/changed-packages.txt); do
@@ -82,26 +80,3 @@ jobs:
 
       # Push without tags
       - run: git push
-
-      - name: Notify Synthetixio/staking
-        run: |
-          jq --null-input --compact-output --raw-output '{
-            ref: "dev"
-          }' > /tmp/staking.json
-          jq < /tmp/staking.json
-
-          curl --verbose --header "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST \
-            --data @/tmp/staking.json \
-            http://localhost:3000
-            https://api.github.com/repos/Synthetixio/staking/actions/workflows/updateDependency.yml/dispatches
-
-      - name: Notify Synthetixio/futures-keepers
-        run: |
-          jq --null-input --compact-output --raw-output '{
-            ref: "develop"
-          }' > /tmp/futures-keepers.json
-          jq < /tmp/futures-keepers.json
-
-          curl --verbose --header "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST \
-            --data @/tmp/futures-keepers.json \
-            https://api.github.com/repos/Synthetixio/futures-keepers/actions/workflows/updateDependency.yml/dispatches

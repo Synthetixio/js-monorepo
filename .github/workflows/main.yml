@@ -51,6 +51,6 @@ jobs:
       - run: yarn workspaces foreach version --deferred "$DEV_VERSION"
       - run: yarn version apply --all
 
-      - run: yarn workspaces foreach --no-private npm publish --tag dev
+      - run: yarn workspaces foreach --no-private npm publish --tag dev --tolerate-republish
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

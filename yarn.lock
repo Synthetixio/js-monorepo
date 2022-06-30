@@ -4977,6 +4977,7 @@ __metadata:
     deps: ./deps.js
     deps-circular: ./circular.js
     deps-mismatched: ./mismatched.js
+    deps-version: ./version.js
   languageName: unknown
   linkType: soft
 

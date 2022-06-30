@@ -1,27 +1,7 @@
 #!/usr/bin/env node
 
-const cp = require('child_process');
-
-async function exec(cmd, options) {
-	return new Promise((resolve, reject) => {
-		cp.exec(cmd, { encoding: 'utf-8', stdio: 'pipe', ...options }, (error, data) =>
-			error ? reject(error) : resolve(data)
-		);
-	});
-}
-
-const fgReset = '\x1b[0m';
-const fgRed = '\x1b[31m';
-const fgGreen = '\x1b[32m';
-const fgYellow = '\x1b[33m';
-const fgCyan = '\x1b[36m';
-
 async function run() {
-	const workspaces = (await exec('yarn workspaces list --verbose --json'))
-		.split('\n')
-		.filter(Boolean)
-		.map((line) => JSON.parse(line));
-
+	const workspaces = await require('./lib/workspaces')();
 	const all = workspaces
 		.map(({ name, workspaceDependencies }) => ({
 			name,
@@ -50,6 +30,7 @@ async function run() {
 
 	Object.values(all).forEach(walkTree);
 
+	const { fgReset, fgRed, fgGreen, fgYellow, fgCyan } = require('./lib/colors');
 	console.log(`${fgGreen}Dependency graph: ${fgCyan}${paths.length}${fgReset}`);
 	console.log(paths.join('\n'));
 	console.log('');
