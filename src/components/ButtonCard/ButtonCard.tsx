@@ -28,7 +28,7 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({
       onClick={onClick}
       {...rest}
     >
-      <div className='ui-bg-dark-blue ui-relative ui-rounded ui-p-6'>
+      <div className='ui-bg-dark-blue ui-relative ui-rounded ui-p-6 ui-h-full'>
         <div className='ui-flex ui-flex-col'>
           <h4
             className={clsx('ui-tg-main ui-text-gray-650 ui-w-full', {
