@@ -1,5 +1,7 @@
 import clsx from 'clsx';
 import { Card, CardVariant } from 'components/Card/Card';
+import { Icon } from 'components/Icon/Icon';
+import { IconButton } from 'components/IconButton/IconButton';
 import { ArrowDropdownDownIcon } from 'components/Icons/ArrowDropdownDownIcon';
 import { useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
@@ -8,6 +10,7 @@ export interface AccordionProps {
   flat?: boolean;
   title: React.ReactNode;
   className?: string;
+  wrapperClassName?: string;
   children?: React.ReactNode;
   variant?: CardVariant;
 }
@@ -17,7 +20,8 @@ export const Accordion: React.FC<AccordionProps> = ({
   title,
   children,
   className,
-  variant
+  variant,
+  wrapperClassName = ''
 }) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -25,7 +29,7 @@ export const Accordion: React.FC<AccordionProps> = ({
 
   const nodeRef = useRef(null);
   return (
-    <Card className={className} variant={variant}>
+    <Card className={className} variant={variant} wrapperClassName={wrapperClassName}>
       <div
         className={clsx('ui-flex ui-justify-between ui-items-center ui-select-none', {
           'ui-cursor-default': flat
@@ -37,14 +41,14 @@ export const Accordion: React.FC<AccordionProps> = ({
       >
         <h3 className='ui-tg-body'>{title}</h3>
         {!flat && (
-          <ArrowDropdownDownIcon
-            className={clsx(
-              'ui-transition-transform ui-text-black-600 dark:ui-text-white ui-text-base',
-              {
+          <IconButton rounded size='sm'>
+            <Icon
+              className={clsx('ui-transition-transform ui-text-primary ui-text-base', {
                 'ui-transform ui-rotate-180 ': isActive
-              }
-            )}
-          />
+              })}
+              name='Bottom-3'
+            />
+          </IconButton>
         )}
       </div>
       {/*  TODO: update the transition package */}
