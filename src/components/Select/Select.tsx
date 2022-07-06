@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { FieldAttributes, FieldAttributesProps } from 'components/FieldAttributes/FieldAttributes';
-import { ArrowDropdownDownIcon } from 'components/Icons/ArrowDropdownDownIcon';
+import { Icon } from 'components/Icon/Icon';
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { ReactElement, useMemo, useRef, useState } from 'react';
 import { Option } from 'types/option';
@@ -86,10 +86,11 @@ export const Select = <T,>({
       >
         {value ? label : <span className='ui-text-black-300'>{placeholder}</span>}
 
-        <ArrowDropdownDownIcon
+        <Icon
           className={clsx('ui-transition-transform ui-text-black-200 dark:ui-text-white', {
             'ui-transform ui-rotate-180 ': isOpen
           })}
+          name='Bottom-3'
         />
         {isOpen && (
           <div

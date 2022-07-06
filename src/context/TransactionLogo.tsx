@@ -1,6 +1,6 @@
-import { TxState } from 'context/useTransactionDialogContext';
+import { TxState } from './useTransactionDialogContext';
 
-export default function TxStateSvg({ txState }: Record<'txState', TxState>) {
+export const TransactionLogo = ({ txState }: Record<'txState', TxState>) => {
   if (txState === 'signing') {
     return (
       <svg
@@ -278,4 +278,4 @@ export default function TxStateSvg({ txState }: Record<'txState', TxState>) {
       </defs>
     </svg>
   );
-}
+};

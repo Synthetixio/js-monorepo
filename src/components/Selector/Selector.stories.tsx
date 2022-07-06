@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import CloseIcon from 'components/Icons/CloseIcon';
 
+import { Icon } from '../Icon/Icon';
 import { Selector } from './Selector';
 
 export default {
@@ -17,7 +17,7 @@ Primary.args = {
   text: (
     <>
       Action
-      <CloseIcon className='' />
+      <Icon className='ui-text-white ui-ml-2' name='Small-Cross' />
     </>
   )
 };

@@ -1,6 +1,5 @@
 import { TransactionNotifier } from '@synthetixio/transaction-notifier';
 import { Dialog, Spinner } from 'components';
-import TxStateSvg from 'components/Icons/TxState';
 import { providers } from 'ethers';
 import {
   createContext,
@@ -11,6 +10,8 @@ import {
   useEffect,
   useState
 } from 'react';
+
+import { TransactionLogo } from './TransactionLogo';
 
 export type TxState = 'signing' | 'mining' | 'failed' | 'confirmed' | 'error';
 
@@ -90,7 +91,7 @@ const TransactionDialogContextProvider: React.FC<{
     >
       <Dialog disableClose open={visible} onClose={() => setVisible(false)}>
         <div className='ui-flex ui-flex-col ui-items-center'>
-          <TxStateSvg txState={state} />
+          <TransactionLogo txState={state} />
           <h4 className='ui-tg-title-h4'>{stateText[state].tile}</h4>
           <span className='ui-tg-caption ui-text-center ui-text-gray-500'>
             {stateText[state].subline}

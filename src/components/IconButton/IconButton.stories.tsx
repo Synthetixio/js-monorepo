@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import CloseIcon from '../Icons/CloseIcon';
+import { Icon } from '../Icon/Icon';
 import { IconButton } from './IconButton';
 
 export default {
@@ -11,7 +11,7 @@ export default {
 
 const Template: ComponentStory<typeof IconButton> = (args) => (
   <IconButton {...args}>
-    <CloseIcon />
+    <Icon name='Small-Cross' />
   </IconButton>
 );
 

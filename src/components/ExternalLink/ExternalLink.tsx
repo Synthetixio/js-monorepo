@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ArrowLinkOffIcon } from 'components/Icons/ArrowLinkOffIcon';
+import { Icon } from 'components/Icon/Icon';
 
 export interface ExternalLinkProps {
   className?: string;
@@ -30,7 +30,7 @@ export const ExternalLink: React.FC<ExternalLinkProps> = ({
       target='_blank'
     >
       {text}
-      {!withoutIcon && <ArrowLinkOffIcon />}
+      {!withoutIcon && <Icon className='ui-ml-1' name='Link-off' />}
     </a>
   );
 };

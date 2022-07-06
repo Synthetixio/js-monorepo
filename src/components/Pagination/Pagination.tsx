@@ -1,8 +1,5 @@
 import clsx from 'clsx';
-import ArrowDropdownLeftIcon from 'components/Icons/ArrowDropdownLeftIcon';
-import ArrowDropdownRightIcon from 'components/Icons/ArrowDropdownRightIcon';
-import SkipLeftIcon from 'components/Icons/SkipLeftIcon';
-import SkipRightIcon from 'components/Icons/SkipRightIcon';
+import { Icon } from 'components/Icon/Icon';
 
 export interface PaginationLocalization {
   of?: string;
@@ -38,34 +35,46 @@ export const Pagination: React.FC<PaginationProps> = ({
   return (
     <div
       className={clsx(
-        'ui-flex ui-justify-around ui-items-center ui-gap-5 ui-max-w-[350px]',
+        'ui-flex ui-text-white ui-justify-around ui-items-center ui-gap-5 ui-max-w-[350px]',
         className
       )}
     >
-      <SkipLeftIcon
-        active={pageIndex !== 0}
-        className='ui-cursor-pointer'
+      <Icon
+        className={clsx({
+          'ui-cursor-pointer ui-text-primary hover:ui-text-blue-light-2': pageIndex !== 0
+        })}
+        name='Left-3'
         onClick={() => gotoPage(0)}
       />
-      <ArrowDropdownLeftIcon
-        active={pageIndex !== 0}
-        className='ui-cursor-pointer'
+
+      <Icon
+        className={clsx({
+          'ui-cursor-pointer ui-text-primary hover:ui-text-blue-light-2': pageIndex !== 0
+        })}
+        name='Left-4'
         onClick={() => gotoPage(Math.max(pageIndex - 1, 0))}
       />
+
       <h6 className='ui-tg-caption ui-text-gray-500 ui-select-none'>
         {startIndex + 1}-{endIndex}
         &nbsp;
         {localization.of}&nbsp;
         {length}
       </h6>
-      <ArrowDropdownRightIcon
-        active={canNextPage}
-        className='ui-cursor-pointer'
+
+      <Icon
+        className={clsx({
+          'ui-cursor-pointer ui-text-primary hover:ui-text-blue-light-2': canNextPage
+        })}
+        name='Right-4'
         onClick={() => canNextPage && gotoPage(pageIndex + 1)}
       />
-      <SkipRightIcon
-        active={canNextPage}
-        className='ui-cursor-pointer'
+
+      <Icon
+        className={clsx({
+          'ui-cursor-pointer ui-text-primary hover:ui-text-blue-light-2': canNextPage
+        })}
+        name='Right-3'
         onClick={() => gotoPage(pageCount - 1)}
       />
     </div>

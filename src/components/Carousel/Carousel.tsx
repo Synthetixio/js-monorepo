@@ -1,6 +1,5 @@
 import clsx from 'clsx';
-import ArrowLeftIcon from 'components/Icons/ArrowLeftIcon';
-import ArrowRightIcon from 'components/Icons/ArrowRightIcon';
+import { Icon } from 'components/Icon/Icon';
 import {
   cloneElement,
   HTMLAttributes,
@@ -140,7 +139,7 @@ export function Carousel({
             size='sm'
             onClick={handlePrev}
           >
-            <ArrowLeftIcon active />
+            <Icon className='ui-text-primary' name='Left' />
           </IconButton>
           <IconButton
             rounded
@@ -152,7 +151,7 @@ export function Carousel({
             size='sm'
             onClick={handleNext}
           >
-            <ArrowRightIcon active />
+            <Icon className='ui-text-primary' name='Right' />
           </IconButton>
         </>
       )}

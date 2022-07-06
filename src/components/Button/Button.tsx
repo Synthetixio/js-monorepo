@@ -72,7 +72,7 @@ export const Button: React.FC<ButtonProps> = ({
         </div>
       </div>
       {variant === 'spotlight' && spotlightActive && (
-        <div className='ui-bg-primary w-full ui-rounded ui-h-[2px] ui-w-full ui-absolute ui-bottom-1'></div>
+        <div className='ui-bg-primary w-full ui-rounded ui-h-[2px] ui-w-full ui-absolute ui-bottom-1' />
       )}
     </button>
   );

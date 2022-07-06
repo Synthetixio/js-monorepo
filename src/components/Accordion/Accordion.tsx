@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import { Card, CardVariant } from 'components/Card/Card';
 import { Icon } from 'components/Icon/Icon';
 import { IconButton } from 'components/IconButton/IconButton';
-import { ArrowDropdownDownIcon } from 'components/Icons/ArrowDropdownDownIcon';
 import { useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { Card } from 'components/Card/Card';
-import CloseIcon from 'components/Icons/CloseIcon';
+import { Icon } from 'components/Icon/Icon';
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import React, { useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
@@ -58,8 +58,9 @@ export const Dialog: React.FC<DialogProps> = ({
           )}
         >
           {!hideCloseIcon && (
-            <CloseIcon
-              className='ui-absolute ui-top-4 ui-right-4 ui-text-xl ui-cursor-pointer'
+            <Icon
+              className='ui-absolute ui-top-4 ui-right-4 ui-cursor-pointer'
+              name='Small-Cross'
               onClick={onClose}
             />
           )}
