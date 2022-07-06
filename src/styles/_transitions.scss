@@ -40,7 +40,7 @@
 .ui-accordion-enter.ui-accordion-enter-active {
   opacity: 1;
   max-height: 1000px;
-  transition: max-height 0.6s ease-in-out, opacity 220ms ease-in;
+  transition: max-height 0.5s ease-in-out, opacity 220ms ease-in;
 }
 .ui-accordion-exit {
   opacity: 1;
@@ -50,5 +50,5 @@
   opacity: 0.01;
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), opacity 120ms ease-in;
+  transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), opacity 120ms ease-in;
 }

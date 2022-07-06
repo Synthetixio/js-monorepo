@@ -19,7 +19,7 @@ export const Accordion: React.FC<AccordionProps> = ({
   flat = false,
   title,
   children,
-  className,
+  className = 'ui-p-4 sm:ui-p-4',
   variant,
   wrapperClassName = ''
 }) => {
@@ -31,9 +31,12 @@ export const Accordion: React.FC<AccordionProps> = ({
   return (
     <Card className={className} variant={variant} wrapperClassName={wrapperClassName}>
       <div
-        className={clsx('ui-flex ui-justify-between ui-items-center ui-select-none', {
-          'ui-cursor-default': flat
-        })}
+        className={clsx(
+          'ui-flex ui-outline-none ui-justify-between ui-items-center ui-select-none',
+          {
+            'ui-cursor-default': flat
+          }
+        )}
         role='button'
         tabIndex={0}
         onClick={toggleIsActive}
@@ -61,10 +64,7 @@ export const Accordion: React.FC<AccordionProps> = ({
         nodeRef={nodeRef}
         timeout={300}
       >
-        <div ref={nodeRef}>
-          <br />
-          {children}
-        </div>
+        <div ref={nodeRef}>{children}</div>
       </CSSTransition>
     </Card>
   );
