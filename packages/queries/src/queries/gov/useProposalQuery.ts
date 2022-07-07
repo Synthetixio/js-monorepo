@@ -8,9 +8,6 @@ import request, { gql } from 'graphql-request';
 import { SPACE_KEY } from './constants';
 import { QueryContext } from '../../context';
 
-import CouncilDilution from '../../contracts/CouncilDilution';
-import { getOVMProvider } from './utils';
-
 const useProposalQuery = (
 	_: QueryContext,
 	snapshotEndpoint: string,
@@ -144,31 +141,6 @@ const useProposalQuery = (
 						.filter((vote) => vote.balance > 0)
 						.sort((a, b) => b.balance - a.balance),
 					(a: Vote) => getAddress(a.voter)
-				);
-			}
-
-			/* Apply dilution penalties for SIP/SCCP pages */
-			if (spaceKey === SPACE_KEY.PROPOSAL) {
-				const contract = new ethers.Contract(
-					CouncilDilution.address,
-					CouncilDilution.abi,
-					getOVMProvider()
-				);
-				mappedVotes = await Promise.all(
-					mappedVotes.map(async (vote) => {
-						const dilutedValueBN = await contract.getDilutedWeightForProposal(
-							hash,
-							getAddress(vote.voter)
-						);
-						const diluteValueNumber = Number(ethers.utils.formatEther(dilutedValueBN));
-
-						const dilutedResult = vote.balance * diluteValueNumber;
-						return {
-							...vote,
-							balance: dilutedResult,
-							scores: [dilutedResult],
-						};
-					})
 				);
 			}
 
