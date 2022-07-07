@@ -82,6 +82,10 @@ export default class Wei {
 			} else {
 				this.bn = BigNumber.from(n);
 			}
+		} else if (typeof n === 'string') {
+			this.bn = BigNumber.from(
+				new Big(n.replaceAll(',', '') as string).mul(new Big(10).pow(this.p)).toFixed(0)
+			);
 		} else {
 			// not wei, scale it
 			// TODO: avoid use of Big.js, but this is a really easy way to do the conversion for now

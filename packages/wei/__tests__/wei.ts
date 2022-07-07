@@ -15,6 +15,16 @@ describe('Wei numeric type', () => {
 			expect(b.toBN()).toEqual(BigNumber.from('14'));
 		});
 
+		it('constructs from a large formatted string', () => {
+			const a = new Wei('1,214,114.3');
+			expect(a.toBN()).toEqual(BigNumber.from('1214114300000000000000000'));
+		});
+
+		it('constructs from a smaller formatted string', () => {
+			const a = new Wei('114.3');
+			expect(a.toBN()).toEqual(BigNumber.from('114300000000000000000'));
+		});
+
 		it('constructs from a number', () => {
 			const a = new Wei('14.3');
 			expect(a.toBN()).toEqual(BigNumber.from('14300000000000000000'));
