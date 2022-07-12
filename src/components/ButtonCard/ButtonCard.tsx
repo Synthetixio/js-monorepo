@@ -57,7 +57,7 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({
             'ui-right-4': direction === 'left'
           })}
         >
-          <Icon name='Link-off' className='ui-text-2xl dark:ui-text-primary'></Icon>
+          <Icon className='ui-text-2xl dark:ui-text-primary' name='Link-off' />
         </div>
       </div>
     </button>
