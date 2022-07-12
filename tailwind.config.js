@@ -98,7 +98,7 @@ module.exports = {
         'gray-400': 'var(--color-gray-400)',
         'gray-500': 'var(--color-gray-500)',
         'gray-600': 'var(--color-gray-600)',
-        'gray-650': 'rgba(var(--color-gray-650), <alpha-value>)',
+        'gray-650': 'var(--color-gray-650)',
         'gray-700': 'var(--color-gray-700)',
         'gray-800': 'var(--color-gray-800)',
         'gray-900': 'var(--color-gray-900)',
