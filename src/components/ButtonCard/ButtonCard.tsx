@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { Icon } from 'components/Icon/Icon';
 import { ButtonHTMLAttributes } from 'react';
 
 export interface ButtonCardProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -52,32 +53,11 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({
 
         <div
           className={clsx('ui-absolute ui-top-1/2 ui--translate-y-1/2', {
-            'ui-left-8': direction === 'right',
-            'ui-right-8 ui-rotate-180': direction === 'left'
+            'ui-left-4 -ui-rotate-90': direction === 'right',
+            'ui-right-4': direction === 'left'
           })}
         >
-          <svg
-            fill='none'
-            height='24'
-            viewBox='0 0 24 24'
-            width='24'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path
-              d='M11 16L7 12L11 8'
-              stroke='#00D1FF'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-            />
-            <path
-              d='M7 12H17.3291'
-              stroke='#00D1FF'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-            />
-          </svg>
+          <Icon name='Link-off' className='ui-text-2xl dark:ui-text-primary'></Icon>
         </div>
       </div>
     </button>
