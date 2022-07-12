@@ -13,6 +13,6 @@ const Template: ComponentStory<typeof ButtonCard> = (args) => <ButtonCard {...ar
 export const Primary = Template.bind({});
 
 Primary.args = {
-  subline: 'subline',
-  headline: 'headline'
+  subline: 'headline',
+  headline: 'headline headline headlineheadlineheadlineheadlineheadline'
 };
