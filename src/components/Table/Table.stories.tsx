@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Card } from 'components/Card/Card';
 import { Column } from 'react-table';
 
 import { Table } from './Table';
@@ -9,7 +10,11 @@ export default {
   decorators: [(Story) => <Story />]
 } as ComponentMeta<typeof Table>;
 
-const Template: ComponentStory<typeof Table> = (args) => <Table {...args} />;
+const Template: ComponentStory<typeof Table> = (args) => (
+  <Card variant='dark-blue'>
+    <Table {...args} />
+  </Card>
+);
 
 export const Primary = Template.bind({});
 
@@ -47,9 +52,10 @@ const data: Crypto[] = [
 const columns: Column<Crypto>[] = [
   {
     disableSortBy: true,
-    Header: 'COIN',
+    Header: 'Coin',
     accessor: 'symbol',
-    columnClass: 'ui-text-left ui-pl-14',
+    columnClass: 'ui-text-left',
+    cellClass: 'ui-text-left',
     Cell: ({ row }) => (
       <div className='ui-flex ui-items-center'>
         <img
@@ -63,18 +69,18 @@ const columns: Column<Crypto>[] = [
     )
   },
   {
-    Header: 'PRICE*',
+    Header: 'Price',
     accessor: (row) => row.price,
     sortType: (a, b) => a.original.price - b.original.price
   },
   {
-    Header: '1H',
+    Header: '1h',
     accessor: 'percent1H',
     Cell: (row) => row.value,
     sortType: (a, b) => a.original.percent1H - b.original.percent1H
   },
   {
-    Header: '7H',
+    Header: '7h',
     accessor: 'percent7D',
     Cell: (row) => row.value,
     sortType: (a, b) => a.original.percent7D - b.original.percent7D
@@ -82,8 +88,8 @@ const columns: Column<Crypto>[] = [
 ];
 
 Primary.args = {
-  className: 'ui-shadow-md',
-  data: data as unknown as Readonly<Record<string, unknown>[]>,
-  columns: columns as unknown as Readonly<Column<Record<string, unknown>>[]>,
-  initialState: { pageSize: 2 }
+  className: '',
+  data: [...data, ...data],
+  columns: columns,
+  initialState: { pageSize: 3 }
 };
