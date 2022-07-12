@@ -64,16 +64,16 @@ export const Button: React.FC<ButtonProps> = ({
           />
         )}
         <div
-          className={clsx('ui-block ui-my-auto', {
+          className={clsx('ui-block ui-my-auto ui-relative', {
             'ui-gradient-primary ui-bg-clip-text': !disabled
           })}
         >
           {children}
+          {variant === 'spotlight' && spotlightActive && (
+            <div className='ui-bg-primary w-full ui-rounded ui-h-[2px] ui-w-full ui-absolute -ui-bottom-3' />
+          )}
         </div>
       </div>
-      {variant === 'spotlight' && spotlightActive && (
-        <div className='ui-bg-primary w-full ui-rounded ui-h-[2px] ui-w-full ui-absolute ui-bottom-1' />
-      )}
     </button>
   );
 };
