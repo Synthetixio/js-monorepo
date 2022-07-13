@@ -24,6 +24,7 @@ import { Select, SelectProps } from './Select/Select';
 import { Selector, SelectorProps } from './Selector/Selector';
 import { Spinner, SpinnerProps } from './Spinner/Spinner';
 import { Tab, TabProps } from './Tab/Tab';
+import { Table, TableProps } from './Table/Table';
 import { Tabs, TabsProps } from './Tabs/Tabs';
 import { TextField, TextFieldProps } from './TextField/TextField';
 
@@ -46,6 +47,7 @@ export {
   Selector,
   Spinner,
   Tab,
+  Table,
   Tabs,
   TextField,
   TransactionDialogContextProvider,
@@ -69,6 +71,7 @@ export type {
   SelectorProps,
   SelectProps,
   SpinnerProps,
+  TableProps,
   TabProps,
   TabsProps,
   TextFieldProps,
