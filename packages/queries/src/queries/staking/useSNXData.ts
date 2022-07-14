@@ -109,6 +109,10 @@ const useSNXData = (
 					totalSNXSupply: wei(totalSNXSupply),
 					lockedSupply,
 					lockedValue: lockedSupply.mul(snxPrice),
+					lockedSupplyL1: lockedSupplyL1,
+					lockedSupplyL2: lockedSupplyL2,
+					snxHoldersQueryL2: snxHoldersQueryL2.data,
+					snxHoldersQueryL1: snxHoldersQueryL1.data,
 				};
 			}
 			return {
