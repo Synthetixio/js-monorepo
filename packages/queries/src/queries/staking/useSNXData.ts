@@ -30,6 +30,7 @@ const useSNXData = (
 			collateral: true,
 			transferable: true,
 			initialDebtOwnership: true,
+			id: true,
 		},
 		{
 			queryKey: ['L1', 'SNXHoldersL1'],
@@ -53,6 +54,7 @@ const useSNXData = (
 			collateral: true,
 			transferable: true,
 			initialDebtOwnership: true,
+			id: true,
 		},
 		{
 			queryKey: ['L2', 'SNXHoldersL2'],
