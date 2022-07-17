@@ -12,7 +12,6 @@ export const computeGasFee = (baseFeePerGas: ethers.BigNumber, maxPriorityFeePer
 	return {
 		maxPriorityFeePerGas: wei(maxPriorityFeePerGas, 9).toBN(),
 		maxFeePerGas: wei(baseFeePerGas, 9).mul(MULTIPLIER).add(wei(maxPriorityFeePerGas, 9)).toBN(),
-		baseFeePerGas: baseFeePerGas,
 	};
 };
 
