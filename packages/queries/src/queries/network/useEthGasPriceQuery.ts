@@ -32,6 +32,9 @@ const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPri
 	return useQuery<GasPrices, Error>(
 		['network', 'gasPrice', ctx.networkId],
 		async () => {
+			if (!ctx.provider) {
+				throw Error('Expected provider to be defined on context');
+			}
 			try {
 				// If network is Mainnet then we use EIP1559
 				if (ctx.networkId === NetworkIdByName.mainnet) {
@@ -43,18 +46,18 @@ const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPri
 							average: computeGasFee(block.baseFeePerGas, 2),
 						};
 					} else {
-						return getGasPriceFromProvider(ctx.provider!);
+						return getGasPriceFromProvider(ctx.provider);
 					}
 					// If not (Testnet or Optimism network), we get the Gas Price through the provider
 				} else {
-					return getGasPriceFromProvider(ctx.provider!);
+					return getGasPriceFromProvider(ctx.provider);
 				}
 			} catch (e) {
 				throw new Error(`Could not fetch and compute network fee. ${e}`);
 			}
 		},
 		{
-			enabled: !!ctx.networkId,
+			enabled: Boolean(ctx.networkId && ctx.provider),
 			...options,
 		}
 	);
