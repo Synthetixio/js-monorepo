@@ -27,6 +27,7 @@ import { Tab, TabProps } from './Tab/Tab';
 import { Table, TableProps } from './Table/Table';
 import { Tabs, TabsProps } from './Tabs/Tabs';
 import { TextField, TextFieldProps } from './TextField/TextField';
+import { Upload, UploadProps } from './Upload/Upload';
 
 export {
   Accordion,
@@ -51,6 +52,7 @@ export {
   Tabs,
   TextField,
   TransactionDialogContextProvider,
+  Upload,
   useTransactionModalContext
 };
 export type {
@@ -75,5 +77,6 @@ export type {
   TabProps,
   TabsProps,
   TextFieldProps,
-  TxState
+  TxState,
+  UploadProps
 };
