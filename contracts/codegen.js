@@ -3,6 +3,8 @@ const fs = require('fs');
 const ethers = require('ethers');
 const prettier = require('prettier');
 
+const prettierOptions = JSON.parse(fs.readFileSync('../.prettierrc', 'utf8'));
+
 const synthetixPath = path.dirname(require.resolve('synthetix'));
 const deployed = path.join(synthetixPath, 'publish/deployed');
 const networks = fs
@@ -25,7 +27,7 @@ function generateTargets(network) {
 					.filter(([name]) => ['name', 'source', 'address'].includes(name))
 					.map(([name, value]) => `export const ${name} = ${JSON.stringify(value, null, 2)};`)
 					.join('\n'),
-				{ parser: 'typescript' }
+				{ parser: 'typescript', ...prettierOptions }
 			),
 			'utf8'
 		);
@@ -49,7 +51,7 @@ function generateSources(network) {
 					.filter(([name]) => ['abi'].includes(name))
 					.map(([name, value]) => `export const ${name} = ${JSON.stringify(value, null, 2)};`)
 					.join('\n'),
-				{ parser: 'typescript' }
+				{ parser: 'typescript', ...prettierOptions }
 			),
 			'utf8'
 		);
@@ -67,7 +69,7 @@ function generateSynths(network) {
 				...synths.map(({ name }) => `  ${name} = ${JSON.stringify(name, null, 2)},`),
 				'}',
 			].join('\n'),
-			{ parser: 'typescript' }
+			{ parser: 'typescript', ...prettierOptions }
 		),
 		'utf8'
 	);
