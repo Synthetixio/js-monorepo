@@ -15,7 +15,7 @@
 		"src"
 	],
 	"scripts": {
-		"build": "node ./codegen.js && yarn build-browser && yarn build-node",
+		"build": "yarn build-browser && yarn build-node",
 		"build-node": "tsc -p tsconfig.node.json",
 		"build-browser": "webpack-cli --mode=production --max-old-space-size=4096",
 		"examples:node": "ts-node --project tsconfig.node.json ./examples/signer-example.js",
@@ -36,6 +36,7 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
+		"@synthetixio/contracts": "workspace:*",
 		"ethers": "^5.5.3",
 		"synthetix": "2.74.1"
 	},

@@ -11,8 +11,8 @@ import {
 	networkToChainId,
 } from 'synthetix';
 
-import { Synths } from '../generated/mainnet';
-import { Synths as OptimismSynths } from '../generated/mainnet-ovm';
+import { Synths } from '@synthetixio/contracts/build/mainnet/synths';
+import { Synths as OptimismSynths } from '@synthetixio/contracts/build/mainnet-ovm/synths';
 
 export const NetworkIdByName = {
 	mainnet: 1,

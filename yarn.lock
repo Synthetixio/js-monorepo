@@ -2262,6 +2262,7 @@ __metadata:
     "@babel/plugin-transform-runtime": ^7.13.10
     "@babel/preset-env": ^7.13.10
     "@babel/preset-typescript": ^7.13.0
+    "@synthetixio/contracts": "workspace:*"
     "@types/node": ^17.0.43
     chokidar-cli: ^2.1.0
     eslint: ^7.26.0
@@ -2273,6 +2274,16 @@ __metadata:
     typescript: ^4.4.2
     webpack: ^4.44.1
     webpack-cli: ^3.3.12
+  languageName: unknown
+  linkType: soft
+
+"@synthetixio/contracts@workspace:*, @synthetixio/contracts@workspace:contracts":
+  version: 0.0.0-use.local
+  resolution: "@synthetixio/contracts@workspace:contracts"
+  dependencies:
+    ethers: ^5.6.8
+    prettier: ^2.6.2
+    synthetix: ^2.74.1
   languageName: unknown
   linkType: soft
 
@@ -9543,6 +9554,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier@npm:^2.6.2":
+  version: 2.7.1
+  resolution: "prettier@npm:2.7.1"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 55a4409182260866ab31284d929b3cb961e5fdb91fe0d2e099dac92eaecec890f36e524b4c19e6ceae839c99c6d7195817579cdffc8e2c80da0cb794463a748b
+  languageName: node
+  linkType: hard
+
 "pretty-error@npm:^2.1.1":
   version: 2.1.2
   resolution: "pretty-error@npm:2.1.2"
@@ -11057,7 +11077,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synthetix@npm:2.74.1":
+"synthetix@npm:2.74.1, synthetix@npm:^2.74.1":
   version: 2.74.1
   resolution: "synthetix@npm:2.74.1"
   dependencies:

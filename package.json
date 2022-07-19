@@ -2,6 +2,7 @@
 	"name": "root",
 	"version": "2.74.1",
 	"workspaces": [
+		"contracts",
 		"packages/contracts-interface",
 		"packages/optimism-networks",
 		"packages/transaction-notifier",
