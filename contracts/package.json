@@ -15,8 +15,8 @@
 	"repository": "github:Synthetixio/js-monorepo",
 	"license": "MIT",
 	"devDependencies": {
-		"ethers": "^5.6.8",
-		"prettier": "^2.6.2",
+		"ethers": "^5.5.3",
+		"prettier": "^2.3.0",
 		"synthetix": "^2.74.1"
 	}
 }
