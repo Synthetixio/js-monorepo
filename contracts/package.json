@@ -5,10 +5,12 @@
 	},
 	"main": "index.js",
 	"scripts": {
-		"build": "node codegen.js"
+		"build": "node codegen.js && tsc"
 	},
 	"files": [
-		"build"
+		"build",
+		"generated",
+		"index.js"
 	],
 	"version": "1.0.0",
 	"author": "Nikita <noisekit@btnk.au>",
@@ -17,6 +19,7 @@
 	"devDependencies": {
 		"ethers": "^5.5.3",
 		"prettier": "^2.3.0",
-		"synthetix": "^2.74.1"
+		"synthetix": "^2.74.1",
+		"typescript": "^4.4.2"
 	}
 }

@@ -14,14 +14,14 @@ const networks = fs
 
 function generateTargets(network) {
 	const deployment = require(`synthetix/publish/deployed/${network}/deployment.json`);
-	fs.mkdirSync(`build/${network}/deployment/targets`, { recursive: true });
+	fs.mkdirSync(`generated/${network}/deployment/targets`, { recursive: true });
 	if (!deployment.targets) {
 		return;
 	}
 
 	Object.entries(deployment.targets).forEach(([key, val]) => {
 		fs.writeFileSync(
-			`build/${network}/deployment/targets/${key}.ts`,
+			`generated/${network}/deployment/targets/${key}.ts`,
 			prettier.format(
 				Object.entries(val)
 					.filter(([name]) => ['name', 'source', 'address'].includes(name))
@@ -36,7 +36,7 @@ function generateTargets(network) {
 
 function generateSources(network) {
 	const deployment = require(`synthetix/publish/deployed/${network}/deployment.json`);
-	fs.mkdirSync(`build/${network}/deployment/sources`, { recursive: true });
+	fs.mkdirSync(`generated/${network}/deployment/sources`, { recursive: true });
 	if (!deployment.sources) {
 		return;
 	}
@@ -45,7 +45,7 @@ function generateSources(network) {
 		const iface = new ethers.utils.Interface(val.abi);
 		val.abi = iface.format(ethers.utils.FormatTypes.full);
 		fs.writeFileSync(
-			`build/${network}/deployment/sources/${key}.ts`,
+			`generated/${network}/deployment/sources/${key}.ts`,
 			prettier.format(
 				Object.entries(val)
 					.filter(([name]) => ['abi'].includes(name))
@@ -60,9 +60,9 @@ function generateSources(network) {
 
 function generateSynths(network) {
 	const synths = require(`synthetix/publish/deployed/${network}/synths.json`);
-	fs.mkdirSync(`build/${network}`, { recursive: true });
+	fs.mkdirSync(`generated/${network}`, { recursive: true });
 	fs.writeFileSync(
-		`build/${network}/synths.ts`,
+		`generated/${network}/synths.ts`,
 		prettier.format(
 			[
 				'export enum Synths {',
