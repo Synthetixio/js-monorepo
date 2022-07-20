@@ -74,7 +74,7 @@ export const Table = <T extends Record<string, unknown>>(props: TableProps<T>): 
                         {column.isSorted && (
                           <Icon
                             className='ui-text-xs ui-ml-1'
-                            name={column.isSortedDesc ? 'Top' : 'Bottom'}
+                            name={column.isSortedDesc ? 'Top-3' : 'Bottom-3'}
                           />
                         )}
                       </span>

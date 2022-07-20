@@ -1,7 +1,15 @@
 import clsx from 'clsx';
 import { HTMLAttributes, ReactNode } from 'react';
 
-export type BadgeVariant = 'success' | 'blue' | 'pink' | 'pink' | 'orange' | 'red' | 'yellow';
+export type BadgeVariant =
+  | 'success'
+  | 'blue'
+  | 'pink'
+  | 'pink'
+  | 'orange'
+  | 'red'
+  | 'yellow'
+  | 'gray';
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
@@ -16,7 +24,8 @@ const badgeColors = {
   pink: 'ui-border-pink ui-bg-pink ui-text-pink',
   orange: 'ui-border-orange ui-bg-orange ui-text-orange',
   red: 'ui-border-red ui-bg-red ui-text-red',
-  yellow: 'ui-border-yellow ui-bg-yellow ui-text-yellow'
+  yellow: 'ui-border-yellow ui-bg-yellow ui-text-yellow',
+  gray: 'ui-border-gray-650 ui-bg-gray-650 ui-text-gray-650'
 };
 
 export const Badge: React.FC<BadgeProps> = ({
