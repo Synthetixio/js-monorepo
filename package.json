@@ -2,6 +2,7 @@
 	"name": "root",
 	"version": "2.74.1",
 	"workspaces": [
+		"contracts",
 		"packages/contracts-interface",
 		"packages/optimism-networks",
 		"packages/transaction-notifier",
@@ -14,6 +15,7 @@
 	"scripts": {
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
+		"clean": "yarn workspaces foreach exec rm -rf coverage build generated",
 		"test": "yarn workspaces foreach --topological-dev --verbose run test",
 		"build": "yarn workspaces foreach --topological-dev --verbose run build",
 		"publish": "yarn workspaces foreach --topological-dev --verbose publish",

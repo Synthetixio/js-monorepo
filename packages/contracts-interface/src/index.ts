@@ -34,8 +34,8 @@ import {
 	NetworkNameById,
 } from './types';
 
-import { Synths as MainnetSynths } from '../generated/mainnet';
-import { Synths as OptimismSynths } from '../generated/mainnet-ovm';
+import { Synths as MainnetSynths } from '@synthetixio/contracts/build/mainnet/synths';
+import { Synths as OptimismSynths } from '@synthetixio/contracts/build/mainnet-ovm/synths';
 
 import { ERRORS } from './constants';
 
