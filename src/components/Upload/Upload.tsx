@@ -11,25 +11,13 @@ export const Upload: React.FC<UploadProps> = ({ className, upload }) => {
     data: '',
     name: ''
   });
-
-  const handleEnter = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const handleOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const handleLeave = (e: React.DragEvent<HTMLDivElement>) => {
+  const stopDefault = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
   };
 
   const handleUpload = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
+    stopDefault(e);
 
     const [file] = e.target.files || e.dataTransfer.files;
 
@@ -61,9 +49,9 @@ export const Upload: React.FC<UploadProps> = ({ className, upload }) => {
   return (
     <div
       className={clsx('ui-relative ui-flex ui-justify-center ui-items-center ui-w-full', className)}
-      onDragEnter={(e) => handleEnter(e)}
-      onDragLeave={(e) => handleLeave(e)}
-      onDragOver={(e) => handleOver(e)}
+      onDragEnter={stopDefault}
+      onDragLeave={stopDefault}
+      onDragOver={stopDefault}
       onDrop={(e) => handleUpload(e)}
     >
       <label
