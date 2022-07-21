@@ -2401,14 +2401,9 @@ __metadata:
     "@ethersproject/providers": ^5.6.8
     "@ethersproject/strings": ^5.6.1
     "@synthetixio/providers": "workspace:*"
-    "@types/node": ^17.0.43
     eslint: ^7.26.0
     jest: ^27.0.6
-    ts-loader: ^8.0.2
-    ts-node: ^10.2.1
     typescript: ^4.4.2
-    webpack: ^4.44.1
-    webpack-cli: ^3.3.12
   languageName: unknown
   linkType: soft
 
