@@ -6,24 +6,19 @@
 	"version": "2.74.2",
 	"description": "Convenient BigNumber library for web3",
 	"source": "./src/index.ts",
-	"main": "./build/node/index.js",
-	"module": "./build/node/index.js",
-	"browser": "./build/node/index.js",
-	"types": "./build/node/index.d.ts",
+	"main": "./build/index.js",
+	"module": "./build/index.js",
+	"browser": "./build/index.js",
+	"types": "./build/index.d.ts",
 	"files": [
 		"build",
 		"src"
 	],
 	"scripts": {
-		"build": "yarn build-browser && yarn build-node",
-		"build-node": "tsc -p tsconfig.node.json",
-		"build-browser": "webpack-cli --mode=production",
-		"examples:node": "ts-node --project tsconfig.node.json ./examples/node-example.js",
-		"examples:browser": "yarn build-browser && http-server -o ./examples/browser-example.html -c-1",
-		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
+		"build": "tsc",
+		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc --noEmit",
 		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
 		"test": "jest --coverage --no-cache",
-		"tsc": "tsc --noemit",
 		"codegen": "graphql-codegen --config codegen.yml"
 	},
 	"repository": {
@@ -47,13 +42,31 @@
 		"@babel/preset-env": "^7.13.10",
 		"@babel/preset-typescript": "^7.13.0",
 		"@types/big.js": "^6.0.2",
-		"@types/node": "^17.0.43",
 		"eslint": "^7.26.0",
 		"jest": "^27.0.6",
-		"ts-loader": "^8.0.2",
-		"ts-node": "^10.2.1",
-		"typescript": "^4.4.2",
-		"webpack": "^4.44.1",
-		"webpack-cli": "^3.3.12"
+		"typescript": "^4.4.2"
+	},
+	"browserslist": [
+		"last 1 Chrome version",
+		"last 1 Firefox version",
+		"last 1 Edge version",
+		"last 1 Opera version"
+	],
+	"jest": {
+		"testMatch": [
+			"<rootDir>/**/*.test.{js,jsx,ts,tsx}"
+		],
+		"collectCoverageFrom": [
+			"<rootDir>/src/**/*.{js,jsx,ts,tsx}",
+			"!<rootDir>/src/**/*.d.{js,jsx,ts,tsx}"
+		],
+		"coverageThreshold": {
+			"global": {
+				"branches": 0,
+				"functions": 0,
+				"lines": 0,
+				"statements": 0
+			}
+		}
 	}
 }

@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { UseMutationOptions, useMutation } from 'react-query';
 
-import Wei, { wei } from '@synthetixio/wei/build/node/wei';
+import Wei, { wei } from '@synthetixio/wei';
 import { BigNumber } from '@ethersproject/bignumber';
 import { TransactionRequest } from '@ethersproject/providers';
 import { Contract } from '@ethersproject/contracts';
 import { serialize, UnsignedTransaction } from '@ethersproject/transactions';
-
 import { QueryContext } from '../context';
 import clone from 'lodash/clone';
 import omit from 'lodash/omit';
