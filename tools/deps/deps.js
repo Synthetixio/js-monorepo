@@ -20,6 +20,7 @@ const options = {
 		// Must keep ts dependency so depcheck works over Typescript files
 		'typescript',
 		'@types/jest',
+		'webpack-dev-server',
 	],
 };
 

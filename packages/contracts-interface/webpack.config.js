@@ -1,8 +1,16 @@
 'use strict';
 
-const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const htmlPlugin = new HtmlWebpackPlugin({
+	template: './examples/browser-example.html',
+	minify: false,
+	hash: false,
+	xhtml: true,
+});
 
 module.exports = {
+	mode: 'development',
 	module: {
 		rules: [
 			{
@@ -14,22 +22,14 @@ module.exports = {
 			},
 		],
 	},
-	node: {
-		child_process: 'empty',
-		fs: 'empty',
-		net: 'empty',
-	},
-	entry: './src/index.ts',
-	target: 'web',
-	output: {
-		path: path.resolve(__dirname, 'build'),
-		filename: 'index.js',
-		libraryTarget: 'umd',
-		library: 'synthetix',
-		libraryExport: 'default',
-	},
+	entry: './examples/index.js',
 	resolve: {
 		extensions: ['.ts', '.js'],
+		fallback: {
+			child_process: false,
+			fs: false,
+			net: false,
+		},
 	},
-	plugins: [],
+	plugins: [htmlPlugin],
 };
