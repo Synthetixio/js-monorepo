@@ -39,7 +39,8 @@ const useEVMTxn = (
 		if (!txn || !ctx.provider) return null;
 		const isNotOvm =
 			ctx.networkId !== NetworkIdByName['mainnet-ovm'] &&
-			ctx.networkId !== NetworkIdByName['kovan-ovm'];
+			ctx.networkId !== NetworkIdByName['kovan-ovm'] &&
+			ctx.networkId !== NetworkIdByName['goerli-ovm'];
 		if (isNotOvm) {
 			return null;
 		}

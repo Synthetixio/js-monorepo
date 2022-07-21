@@ -51,6 +51,27 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 			average: { gasPrice: defaultGasPrice },
 		});
 	});
+	test('Should query getGasPrice from provider if network is Goerli', async () => {
+		const ctx = getFakeQueryContext();
+		ctx.networkId = NetworkIdByName.kovan;
+		const wrapper = getWrapper();
+		// set to 0.015 gwei
+		const defaultGasPrice = wei(0.015, 9).toBN();
+		//mock provider
+		set(ctx.provider as ethers.providers.JsonRpcProvider, 'getGasPrice', async () =>
+			Promise.resolve(defaultGasPrice)
+		);
+
+		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
+
+		await waitFor(() => result.current.isSuccess);
+
+		expect(result.current.data).toEqual({
+			fastest: { gasPrice: defaultGasPrice },
+			fast: { gasPrice: defaultGasPrice },
+			average: { gasPrice: defaultGasPrice },
+		});
+	});
 
 	test('Should throw an error if getGasPrice fails', async () => {
 		const ctx = getFakeQueryContext();
