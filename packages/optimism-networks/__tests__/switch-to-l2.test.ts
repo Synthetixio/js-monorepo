@@ -37,6 +37,23 @@ describe('switchToL2', () => {
 			params: [{ chainId: '0x45' }],
 		});
 	});
+	test('Switch to Optimism Goerli when Goerli selected ', async () => {
+		const requestMock = jest.fn().mockResolvedValue(undefined);
+		const deps = {
+			ethereum: {
+				isMetaMask: true,
+				request: requestMock,
+				chainId: '0x5',
+			},
+		} as any;
+
+		await switchToL2(deps);
+		expect(requestMock).toBeCalledTimes(1);
+		expect(requestMock).toHaveBeenCalledWith({
+			method: 'wallet_switchEthereumChain',
+			params: [{ chainId: '0x1A4' }],
+		});
+	});
 	test('Switch to Optimism mainnet when unsupported network selected ', async () => {
 		const requestMock = jest.fn().mockResolvedValue(undefined);
 		const deps = {
