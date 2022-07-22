@@ -5,7 +5,7 @@
 		"declarationMap": true,
 		"baseUrl": ".",
 		"module": "commonjs",
-		"outDir": "./build"
+		"outDir": "./build/node"
 	},
 	"include": ["src"]
 }
