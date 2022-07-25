@@ -18,6 +18,7 @@ const useContractTxn = (
 			{
 				to: contract.address,
 				data: contract.interface.encodeFunctionData(method, args),
+				value: txnOptions.value || ethers.BigNumber.from(0),
 				...txnOptions,
 			},
 			options
