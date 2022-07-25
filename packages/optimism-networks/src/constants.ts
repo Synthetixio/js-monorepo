@@ -32,7 +32,7 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 		chainId: '0x1A4',
 		chainName: 'Optimism Kovan',
 		rpcUrls: ['https://goerli.optimism.io/'],
-		blockExplorerUrls: [''], // TODO should add when it becomes avaiable
+		blockExplorerUrls: ['https://goerli-optimistic.etherscan.io'],
 		iconUrls: [
 			'https://optimism.io/images/metamask_icon.svg',
 			'https://optimism.io/images/metamask_icon.png',
