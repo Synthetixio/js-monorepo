@@ -1,21 +1,21 @@
 import { Contract, providers } from 'ethers';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
-import { Spartan } from '../../contracts';
+import { Grants } from '../../contracts';
 import { getUsersDetails, UserDetail } from './utils';
 
-const useGetSpartanCouncil = (
+const useGetGrantsCouncil = (
 	_ctx: QueryContext,
 	optimismProvider?: providers.BaseProvider,
 	options?: UseQueryOptions<UserDetail[]>
 ) => {
 	return useQuery<UserDetail[]>(
-		['getSpartanCouncilMembers'],
+		['getGrantsCouncilMembers'],
 		async () => {
 			if (!optimismProvider) {
 				throw Error('Expected optimismProvider to be defined');
 			}
-			const contract = new Contract(Spartan.address, Spartan.abi, optimismProvider);
+			const contract = new Contract(Grants.address, Grants.abi, optimismProvider);
 			const councilMembers: string[] = await contract.getCouncilMembers();
 			return getUsersDetails(councilMembers);
 		},
@@ -26,4 +26,4 @@ const useGetSpartanCouncil = (
 		}
 	);
 };
-export default useGetSpartanCouncil;
+export default useGetGrantsCouncil;
