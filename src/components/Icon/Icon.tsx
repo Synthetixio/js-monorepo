@@ -11,7 +11,8 @@ export const Icon: React.FC<IconProps> = ({
   name,
   cursorPointer = false,
   className = 'text-lg',
-  onClick
+  onClick,
+  ...props
 }) => {
   return (
     <i
@@ -24,6 +25,7 @@ export const Icon: React.FC<IconProps> = ({
         className
       )}
       onClick={onClick}
+      {...props}
     />
   );
 };

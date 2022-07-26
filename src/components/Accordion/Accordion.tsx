@@ -20,7 +20,8 @@ export const Accordion: React.FC<AccordionProps> = ({
   children,
   className = 'ui-p-4 sm:ui-p-4',
   variant,
-  wrapperClassName = ''
+  wrapperClassName = '',
+  ...props
 }) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -28,7 +29,7 @@ export const Accordion: React.FC<AccordionProps> = ({
 
   const nodeRef = useRef(null);
   return (
-    <Card className={className} variant={variant} wrapperClassName={wrapperClassName}>
+    <Card className={className} variant={variant} wrapperClassName={wrapperClassName} {...props}>
       <div
         className={clsx(
           'ui-flex ui-outline-none ui-justify-between ui-items-center ui-select-none',

@@ -7,9 +7,10 @@ export type TabProps = {
   disabled?: boolean;
   onClick: () => void;
   className?: string;
+  testId?: string;
 };
 
-export const Tab: React.FC<TabProps> = ({ text, active, onClick, disabled, className }) => (
+export const Tab: React.FC<TabProps> = ({ text, active, onClick, disabled, className, testId }) => (
   <button
     className={clsx(
       'ui-transition ui-border ui-border-transparent ui-ease-out ui-rounded-[100px] ui-px-2 ui-py-1.5 ui-whitespace-nowrap',
@@ -22,6 +23,7 @@ export const Tab: React.FC<TabProps> = ({ text, active, onClick, disabled, class
       },
       className
     )}
+    data-testid={testId}
     onClick={onClick}
   >
     {text}

@@ -14,7 +14,8 @@ export const ExternalLink: React.FC<ExternalLinkProps> = ({
   link,
   text,
   withoutIcon,
-  border
+  border,
+  ...props
 }) => {
   return (
     <a
@@ -28,6 +29,7 @@ export const ExternalLink: React.FC<ExternalLinkProps> = ({
       href={link}
       rel='noreferrer noopener'
       target='_blank'
+      {...props}
     >
       {text}
       {!withoutIcon && <Icon className='ui-ml-1' name='Link-off' />}
