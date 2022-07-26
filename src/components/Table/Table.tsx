@@ -2,6 +2,7 @@
 import clsx from 'clsx';
 import { Icon } from 'components/Icon/Icon';
 import { Pagination, PaginationLocalization } from 'components/Pagination/Pagination';
+import { Skeleton } from 'components/Skeleton/Skeleton';
 import React, { ReactElement, ReactNode, useMemo } from 'react';
 import {
   Row,
@@ -17,10 +18,11 @@ export interface TableProps<T extends Record<string, unknown>> extends TableOpti
   className?: string;
   paginationLocalization?: PaginationLocalization;
   onClick?: (row: Row<T>) => void;
+  loading?: boolean;
 }
 
 export const Table = <T extends Record<string, unknown>>(props: TableProps<T>): ReactElement => {
-  const { className, paginationLocalization, onClick, ...rest } = props;
+  const { className, paginationLocalization, onClick, loading, ...rest } = props;
 
   const defaultColumn = useMemo(
     () => ({
@@ -115,6 +117,26 @@ export const Table = <T extends Record<string, unknown>>(props: TableProps<T>): 
                 </tr>
               );
             })}
+
+            {!page.length && !loading && (
+              <tr className='ui-text-center ui-text-gray-500 ui-border-t last:ui-border-b ui-border-solid ui-border-gray-700'>
+                <td className='ui-p-4 ui-tg-caption ui-lg:tg-content ui-opacity-75'>No Result</td>
+              </tr>
+            )}
+            {!page.length &&
+              loading &&
+              Array.from(Array(4), (_, i) => i + 1).map((i) => (
+                <tr
+                  key={i}
+                  className='ui-text-center ui-border-t last:ui-border-b ui-border-solid ui-border-gray-700'
+                >
+                  {headerGroups[0].headers.map(() => (
+                    <td className='ui-p-2 ui-tg-caption lg:ui-tg-content ui-opacity-75'>
+                      <Skeleton />
+                    </td>
+                  ))}
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

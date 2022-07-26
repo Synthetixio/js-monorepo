@@ -89,7 +89,7 @@ const columns: Column<Crypto>[] = [
 
 Primary.args = {
   className: '',
-  data: [...data, ...data],
+  data: [],
   columns: columns,
   initialState: { pageSize: 3 }
 };
