@@ -22,6 +22,7 @@ import { Pagination, PaginationProps } from './Pagination/Pagination';
 import { Radio, RadioProps } from './Radio/Radio';
 import { Select, SelectProps } from './Select/Select';
 import { Selector, SelectorProps } from './Selector/Selector';
+import { Skeleton, SkeletonProps } from './Skeleton/Skeleton';
 import { Spinner, SpinnerProps } from './Spinner/Spinner';
 import { Tab, TabProps } from './Tab/Tab';
 import { Table, TableProps } from './Table/Table';
@@ -46,6 +47,7 @@ export {
   Radio,
   Select,
   Selector,
+  Skeleton,
   Spinner,
   Tab,
   Table,
@@ -72,6 +74,7 @@ export type {
   RadioProps,
   SelectorProps,
   SelectProps,
+  SkeletonProps,
   SpinnerProps,
   TableProps,
   TabProps,

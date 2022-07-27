@@ -2,6 +2,7 @@
 import clsx from 'clsx';
 import { Icon } from 'components/Icon/Icon';
 import { Pagination, PaginationLocalization } from 'components/Pagination/Pagination';
+import { Skeleton } from 'components/Skeleton/Skeleton';
 import React, { ReactElement, ReactNode, useMemo } from 'react';
 import {
   Row,
@@ -17,10 +18,11 @@ export interface TableProps<T extends Record<string, unknown>> extends TableOpti
   className?: string;
   paginationLocalization?: PaginationLocalization;
   onClick?: (row: Row<T>) => void;
+  isLoading?: boolean;
 }
 
 export const Table = <T extends Record<string, unknown>>(props: TableProps<T>): ReactElement => {
-  const { className, paginationLocalization, onClick, ...rest } = props;
+  const { className, paginationLocalization, onClick, isLoading, ...rest } = props;
 
   const defaultColumn = useMemo(
     () => ({
@@ -29,9 +31,21 @@ export const Table = <T extends Record<string, unknown>>(props: TableProps<T>): 
     }),
     []
   );
+  const data = useMemo(
+    () => (rest.data.length || !isLoading ? rest.data : Array(4).fill({})),
+    [rest.data, isLoading]
+  );
+
+  const columns = useMemo(
+    () =>
+      rest.data.length || !isLoading
+        ? rest.columns
+        : rest.columns.map((column) => ({ ...column, Cell: <Skeleton /> })),
+    [rest.data.length, rest.columns, isLoading]
+  );
 
   const tableInstance = useTable(
-    { ...rest, defaultColumn },
+    { ...rest, data, columns, defaultColumn },
     useSortBy,
     useFlexLayout,
     usePagination
@@ -115,6 +129,12 @@ export const Table = <T extends Record<string, unknown>>(props: TableProps<T>): 
                 </tr>
               );
             })}
+
+            {!page.length && !isLoading && (
+              <tr className='ui-text-center ui-text-gray-500 ui-border-t last:ui-border-b ui-border-solid ui-border-gray-700'>
+                <td className='ui-p-4 ui-tg-caption ui-lg:tg-content ui-opacity-75'>No Result</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
