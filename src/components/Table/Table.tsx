@@ -18,11 +18,11 @@ export interface TableProps<T extends Record<string, unknown>> extends TableOpti
   className?: string;
   paginationLocalization?: PaginationLocalization;
   onClick?: (row: Row<T>) => void;
-  loading?: boolean;
+  isLoading?: boolean;
 }
 
 export const Table = <T extends Record<string, unknown>>(props: TableProps<T>): ReactElement => {
-  const { className, paginationLocalization, onClick, loading, ...rest } = props;
+  const { className, paginationLocalization, onClick, isLoading, ...rest } = props;
 
   const defaultColumn = useMemo(
     () => ({
@@ -31,9 +31,21 @@ export const Table = <T extends Record<string, unknown>>(props: TableProps<T>): 
     }),
     []
   );
+  const data = useMemo(
+    () => (rest.data.length || !isLoading ? rest.data : Array(4).fill({})),
+    [rest.data, isLoading]
+  );
+
+  const columns = useMemo(
+    () =>
+      rest.data.length || !isLoading
+        ? rest.columns
+        : rest.columns.map((column) => ({ ...column, Cell: <Skeleton /> })),
+    [rest.data.length, rest.columns, isLoading]
+  );
 
   const tableInstance = useTable(
-    { ...rest, defaultColumn },
+    { ...rest, data, columns, defaultColumn },
     useSortBy,
     useFlexLayout,
     usePagination
@@ -118,25 +130,11 @@ export const Table = <T extends Record<string, unknown>>(props: TableProps<T>): 
               );
             })}
 
-            {!page.length && !loading && (
+            {!page.length && !isLoading && (
               <tr className='ui-text-center ui-text-gray-500 ui-border-t last:ui-border-b ui-border-solid ui-border-gray-700'>
                 <td className='ui-p-4 ui-tg-caption ui-lg:tg-content ui-opacity-75'>No Result</td>
               </tr>
             )}
-            {!page.length &&
-              loading &&
-              Array.from(Array(4), (_, i) => i + 1).map((i) => (
-                <tr
-                  key={i}
-                  className='ui-text-center ui-border-t last:ui-border-b ui-border-solid ui-border-gray-700'
-                >
-                  {headerGroups[0].headers.map(() => (
-                    <td className='ui-p-2 ui-tg-caption lg:ui-tg-content ui-opacity-75'>
-                      <Skeleton />
-                    </td>
-                  ))}
-                </tr>
-              ))}
           </tbody>
         </table>
       </div>

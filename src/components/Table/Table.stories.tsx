@@ -46,6 +46,15 @@ const data: Crypto[] = [
     percent24H: 9.5,
     percent7D: 2.6,
     last7Days: 'https://picsum.photos/50'
+  },
+  {
+    coin: 'Synthetix',
+    symbol: 'SNX',
+    price: 2.71,
+    percent1H: -5.3,
+    percent24H: 9.5,
+    percent7D: 2.6,
+    last7Days: 'https://picsum.photos/50'
   }
 ];
 
@@ -91,5 +100,6 @@ Primary.args = {
   className: '',
   data: [],
   columns: columns,
-  initialState: { pageSize: 3 }
+  initialState: { pageSize: 4 },
+  isLoading: true
 };
