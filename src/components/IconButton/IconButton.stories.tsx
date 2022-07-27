@@ -10,7 +10,7 @@ export default {
 } as ComponentMeta<typeof IconButton>;
 
 const Template: ComponentStory<typeof IconButton> = (args) => (
-  <IconButton {...args}>
+  <IconButton {...args} data-testid='back-button-text'>
     <Icon name='Small-Cross' />
   </IconButton>
 );

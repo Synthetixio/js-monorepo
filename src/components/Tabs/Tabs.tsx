@@ -26,7 +26,8 @@ export const Tabs: React.FC<TabsProps> = ({
   onChange,
   className,
   contentClassName,
-  tabClassName
+  tabClassName,
+  ...props
 }) => {
   const [activeTab, setActiveTab] = useState(initial);
 
@@ -46,13 +47,17 @@ export const Tabs: React.FC<TabsProps> = ({
 
   return (
     <>
-      <div className={clsx('ui-flex ui-items-center ui-flex-nowrap ui-overflow-auto', className)}>
+      <div
+        {...props}
+        className={clsx('ui-flex ui-items-center ui-flex-nowrap ui-overflow-auto', className)}
+      >
         {items.map((item) => (
           <Tab
             key={item.id}
             active={item.id === activeTab}
             className={clsx('ui-mx-2', tabClassName)}
             disabled={item.disabled}
+            testId={'tab-' + item.id}
             text={item.label}
             onClick={() => selectTab(item)}
           />

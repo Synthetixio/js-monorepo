@@ -22,7 +22,8 @@ export const Dialog: React.FC<DialogProps> = ({
   onClose,
   children,
   disableClose,
-  hideCloseIcon
+  hideCloseIcon,
+  ...props
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, () => !disableClose && onClose?.());
@@ -56,6 +57,7 @@ export const Dialog: React.FC<DialogProps> = ({
             wrapperClass,
             'ui-overflow-y-auto ui-relative ui-w-full ui-max-w-md ui-h-full ui-max-h-full md:ui-h-auto'
           )}
+          {...props}
         >
           {!hideCloseIcon && (
             <Icon

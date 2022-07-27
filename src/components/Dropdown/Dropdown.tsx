@@ -34,7 +34,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
   triggerElementProps,
   contentAlignment = 'left',
   contentClassName = 'ui-gradient-primary',
-  renderFunction
+  renderFunction,
+  ...props
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
@@ -67,6 +68,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
       <CSSTransition unmountOnExit classNames='ui-fade' in={isOpen} nodeRef={nodeRef} timeout={200}>
         <div
           ref={nodeRef}
+          {...props}
           className={clsx(
             contentClassName,
             'ui-absolute ui-dark:bg-gray-900 ui-rounded ui-z-50 ui-shadow-md ui-top-full ui-mt-2 ui-overflow-hidden',
