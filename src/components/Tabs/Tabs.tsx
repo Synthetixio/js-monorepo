@@ -61,7 +61,7 @@ export const Tabs: React.FC<TabsProps> = ({
             active={item.id === activeTab}
             className={clsx('ui-mx-2', tabClassName)}
             disabled={item.disabled}
-            id={item.id}
+            tabId={item.id}
             testId={'tab-' + item.id}
             text={item.label}
             onClick={() => selectTab(item)}

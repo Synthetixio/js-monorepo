@@ -8,7 +8,7 @@ export type TabProps = {
   onClick: () => void;
   className?: string;
   testId?: string;
-  id: string;
+  tabId: string;
 };
 
 export const Tab: React.FC<TabProps> = ({
@@ -18,7 +18,7 @@ export const Tab: React.FC<TabProps> = ({
   disabled,
   className,
   testId,
-  id
+  tabId
 }) => (
   <button
     className={clsx(
@@ -33,7 +33,7 @@ export const Tab: React.FC<TabProps> = ({
       className
     )}
     data-testid={testId}
-    id={id}
+    id={tabId}
     onClick={onClick}
   >
     {text}
