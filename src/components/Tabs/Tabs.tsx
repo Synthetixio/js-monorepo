@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Tab } from '../Tab/Tab';
 
@@ -45,6 +45,10 @@ export const Tabs: React.FC<TabsProps> = ({
     [activeTab, items]
   );
 
+  useEffect(() => {
+    if (typeof document !== 'undefined') document.getElementById(String(initial))?.scrollIntoView();
+  }, [initial]);
+
   return (
     <>
       <div
@@ -57,6 +61,7 @@ export const Tabs: React.FC<TabsProps> = ({
             active={item.id === activeTab}
             className={clsx('ui-mx-2', tabClassName)}
             disabled={item.disabled}
+            tabId={item.id}
             testId={'tab-' + item.id}
             text={item.label}
             onClick={() => selectTab(item)}
