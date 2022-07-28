@@ -46,7 +46,13 @@ export const Tabs: React.FC<TabsProps> = ({
   );
 
   useEffect(() => {
-    if (typeof document !== 'undefined') document.getElementById(String(initial))?.scrollIntoView();
+    if (typeof document !== 'undefined') {
+      const container = document.getElementById('ui-tabs-container');
+      if (container && container?.offsetWidth < container?.scrollWidth) {
+        const target = document.getElementById(String(initial));
+        container?.scroll({ behavior: 'smooth', left: target?.clientWidth, top: 0 });
+      }
+    }
   }, [initial]);
 
   return (
@@ -54,6 +60,7 @@ export const Tabs: React.FC<TabsProps> = ({
       <div
         {...props}
         className={clsx('ui-flex ui-items-center ui-flex-nowrap ui-overflow-auto', className)}
+        id='ui-tabs-container'
       >
         {items.map((item) => (
           <Tab

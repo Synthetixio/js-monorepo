@@ -8,7 +8,13 @@ export default {
   component: Tabs
 };
 
-const Template: Story<ComponentProps<typeof Tabs>> = (args) => <Tabs {...args} />;
+const Template: Story<ComponentProps<typeof Tabs>> = (args) => (
+  <div style={{ height: 1500, display: 'flex', flexDirection: 'column-reverse' }}>
+    <div>
+      <Tabs {...args} />
+    </div>
+  </div>
+);
 
 export const Basic = Template.bind({});
 Basic.args = {
