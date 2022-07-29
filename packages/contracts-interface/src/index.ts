@@ -108,9 +108,7 @@ const getSynthetixContracts = (
 	return Object.values(targets)
 		.map((target) => {
 			if (target.name === 'Synthetix') {
-				target.address = targets.ProxyERC20.address;
-			} else if (target.name === 'SynthsUSD') {
-				target.address = targets.ProxyERC20sUSD.address;
+				target.address = targets.ProxySynthetix.address;
 			} else if (target.name === 'FeePool') {
 				target.address = targets.ProxyFeePool.address;
 			} else if (target.name.match(/Synth(s|i)[a-zA-Z]+$/)) {
