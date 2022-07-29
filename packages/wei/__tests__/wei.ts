@@ -1,6 +1,6 @@
 import Wei, { wei } from '../src/wei';
-import { BigNumber } from 'ethers';
 import Big from 'big.js';
+import { BigNumber } from '@ethersproject/bignumber';
 
 describe('Wei numeric type', () => {
 	describe('Constructor', () => {
