@@ -1,7 +1,8 @@
 // https://en.wikipedia.org/wiki/Scale_factor_(computer_science)
 
 // TODO: create a BN extension which works as a replacement for big using scaled integers
-import { BigNumber, ethers } from 'ethers';
+import { hexZeroPad } from '@ethersproject/bytes';
+import { BigNumber } from '@ethersproject/bignumber';
 import Big from 'big.js';
 
 export const WEI_PRECISION = 18;
@@ -138,7 +139,7 @@ export default class Wei {
 	 */
 	toSortable(): string {
 		// TODO: handle sign?
-		return ethers.utils.hexZeroPad(Buffer.from(this.bn.toHexString()), 64);
+		return hexZeroPad(Buffer.from(this.bn.toHexString()), 64);
 	}
 
 	/**
