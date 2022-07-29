@@ -2305,7 +2305,7 @@ __metadata:
     eslint: ^7.26.0
     ethers: ^5.5.3
     jest: ^27.0.6
-    synthetix: ^2.74.2-alpha
+    synthetix: ^2.75.0-alpha
     ts-loader: ^8.0.2
     ts-node: ^10.2.1
     typescript: ^4.4.2
@@ -2320,7 +2320,7 @@ __metadata:
   dependencies:
     ethers: ^5.5.3
     prettier: ^2.3.0
-    synthetix: ^2.74.2-alpha
+    synthetix: ^2.75.0-alpha
     typescript: ^4.4.2
   languageName: unknown
   linkType: soft
@@ -11165,9 +11165,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synthetix@npm:^2.74.2-alpha":
-  version: 2.74.2-alpha
-  resolution: "synthetix@npm:2.74.2-alpha"
+"synthetix@npm:^2.75.0-alpha":
+  version: 2.75.0-alpha
+  resolution: "synthetix@npm:2.75.0-alpha"
   dependencies:
     "@nomiclabs/hardhat-etherscan": ^3.1.0
     abi-decoder: ^2.3.0
@@ -11180,7 +11180,7 @@ __metadata:
     web3-utils: ^1.2.2
   bin:
     snx: bin.js
-  checksum: 4b1209ac0a1ef3552510daaa18fcb48f91e12333f9379709a3f0cbc52db814ce35ab875cd8a36010a236290d52d43178a3ae9b02f7507f913f413d76ddf679ee
+  checksum: 44e521267c206241c25bf3bab4b6ce3cc767e56f3f817a46e3fe34fb31756803f9639a4a89acc80906ef2783a4d42bfd1fa1fdb28036a93db7fbad3df5bc0495
   languageName: node
   linkType: hard
 
