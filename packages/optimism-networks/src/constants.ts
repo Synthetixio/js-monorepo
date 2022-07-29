@@ -29,8 +29,8 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 	},
 
 	420: {
-		chainId: '0x1A4',
-		chainName: 'Optimism Kovan',
+		chainId: '0x1a4',
+		chainName: 'Optimism Goerli',
 		rpcUrls: ['https://goerli.optimism.io/'],
 		blockExplorerUrls: ['https://goerli-optimistic.etherscan.io'],
 		iconUrls: [
