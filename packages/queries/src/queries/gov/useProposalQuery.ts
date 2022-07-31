@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import snapshot from '@snapshot-labs/snapshot.js';
 
-import { ethers } from 'ethers';
+import { getAddress } from '@ethersproject/address';
 import { uniqBy } from 'lodash';
 import { Vote, SpaceStrategy, Proposal, ProposalResults } from '../../types';
 import request, { gql } from 'graphql-request';
@@ -19,8 +19,6 @@ const useProposalQuery = (
 	return useQuery<ProposalResults>(
 		['gov', 'proposal', snapshotEndpoint, spaceKey, hash, walletAddress],
 		async () => {
-			const { getAddress } = ethers.utils;
-
 			const { proposal }: { proposal: Proposal } = await request(
 				snapshotEndpoint,
 				gql`
@@ -99,7 +97,7 @@ const useProposalQuery = (
 			// 	{ proposal: proposal.id }
 			// );
 
-			const voterAddresses = votes.map((e: Vote) => ethers.utils.getAddress(e.voter));
+			const voterAddresses = votes.map((e: Vote) => getAddress(e.voter));
 
 			interface MappedVotes extends Vote {
 				scores: number[];

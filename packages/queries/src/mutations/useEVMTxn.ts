@@ -1,9 +1,12 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { useEffect, useState } from 'react';
 import { UseMutationOptions, useMutation } from 'react-query';
 
 import Wei, { wei } from '@synthetixio/wei/build/node/wei';
-import { ethers } from 'ethers';
-import { useEffect, useState } from 'react';
+import { BigNumber } from '@ethersproject/bignumber';
+import { TransactionRequest } from '@ethersproject/providers';
+import { Contract } from '@ethersproject/contracts';
+import { serialize, UnsignedTransaction } from '@ethersproject/transactions';
+
 import { QueryContext } from '../context';
 import clone from 'lodash/clone';
 import omit from 'lodash/omit';
@@ -23,10 +26,10 @@ export interface UseEVMTxnOptions extends UseMutationOptions<void> {
 
 const useEVMTxn = (
 	ctx: QueryContext,
-	txn: ethers.providers.TransactionRequest | null,
+	txn: TransactionRequest | null,
 	options?: UseEVMTxnOptions
 ) => {
-	const [gasLimit, setGasLimit] = useState<ethers.BigNumber | null>(null);
+	const [gasLimit, setGasLimit] = useState<BigNumber | null>(null);
 	const [optimismLayerOneFee, setOptimismLayerOneFee] = useState<Wei | null>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [hash, setHash] = useState<string | null>(null);
@@ -41,16 +44,14 @@ const useEVMTxn = (
 			return null;
 		}
 
-		const OptimismGasPriceOracleContract = new ethers.Contract(
+		const OptimismGasPriceOracleContract = new Contract(
 			optimismOracleContract.address,
 			optimismOracleContract.abi,
 			ctx.provider
 		);
 		// If user initialized the transaction on mainnet and then switched to optimism we need to manually remove EIP1559 fields
 		const cleanedTxn = omit(txn, ['maxPriorityFeePerGas', 'maxFeePerGas']);
-		const serializedTxn = ethers.utils.serializeTransaction(
-			cleanedTxn as ethers.UnsignedTransaction
-		);
+		const serializedTxn = serialize(cleanedTxn as UnsignedTransaction);
 		return wei(await OptimismGasPriceOracleContract.getL1Fee(serializedTxn));
 	};
 

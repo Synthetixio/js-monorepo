@@ -3,7 +3,7 @@ import snapshot from '@snapshot-labs/snapshot.js';
 
 import request, { gql } from 'graphql-request';
 import { Proposal, SpaceStrategy, Vote } from '../../types';
-import { getAddress } from 'ethers/lib/utils';
+import { getAddress } from '@ethersproject/address';
 import { electionAuthor, SPACE_KEY } from './constants';
 import { QueryContext } from '../../context';
 

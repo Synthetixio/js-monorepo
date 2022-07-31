@@ -1,5 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { ethers } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
+import { formatBytes32String } from '@ethersproject/strings';
 
 import Wei, { wei } from '@synthetixio/wei';
 
@@ -17,9 +18,9 @@ const useExchangeFeeRate = (
 		['synths', 'exchangeFeeRate', ctx.networkId, quoteCurrencyKey, baseCurrencyKey],
 		async () => {
 			const feeRateForExchange = (await ctx.snxjs!.contracts.Exchanger.feeRateForExchange(
-				ethers.utils.formatBytes32String(quoteCurrencyKey!),
-				ethers.utils.formatBytes32String(baseCurrencyKey!)
-			)) as ethers.BigNumber;
+				formatBytes32String(quoteCurrencyKey!),
+				formatBytes32String(baseCurrencyKey!)
+			)) as BigNumber;
 
 			return wei(feeRateForExchange);
 		},

@@ -1,5 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { ethers } from 'ethers';
+import { parseBytes32String } from '@ethersproject/strings';
+import { BigNumber } from '@ethersproject/bignumber';
 import orderBy from 'lodash/orderBy';
 import { wei } from '@synthetixio/wei';
 
@@ -7,7 +8,7 @@ import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { QueryContext } from '../../context';
 import { Balances, SynthBalancesMap } from '../../types';
 
-type SynthBalancesTuple = [string[], ethers.BigNumber[], ethers.BigNumber[]];
+type SynthBalancesTuple = [string[], BigNumber[], BigNumber[]];
 
 const useSynthsBalancesQuery = (
 	ctx: QueryContext,
@@ -32,7 +33,7 @@ const useSynthsBalancesQuery = (
 
 				// discard empty balances
 				if (balance.gt(0)) {
-					const synthName = ethers.utils.parseBytes32String(currencyKeyBytes32) as CurrencyKey;
+					const synthName = parseBytes32String(currencyKeyBytes32) as CurrencyKey;
 					const usdBalance = wei(synthsUSDBalances[idx]);
 
 					balancesMap[synthName] = {

@@ -1,4 +1,6 @@
-import { BigNumber, providers as ethersProviders, utils } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
+import { Web3Provider, InfuraProvider, StaticJsonRpcProvider } from '@ethersproject/providers';
+import { hexStripZeros } from '@ethersproject/bytes';
 import {
 	L1_TO_L2_NETWORK_MAPPER,
 	L2_TO_L1_NETWORK_MAPPER,
@@ -10,25 +12,21 @@ import { NetworkIdByName } from '@synthetixio/contracts-interface';
 
 const loadProvider = ({ networkId = 1, infuraId, provider }: ProviderConfig): SynthetixProvider => {
 	if (provider) {
-		return new ethersProviders.Web3Provider(provider);
+		return new Web3Provider(provider);
 	}
 	if (infuraId) {
-		return new ethersProviders.InfuraProvider(networkId, infuraId);
+		return new InfuraProvider(networkId, infuraId);
 	}
 	throw new Error(ERRORS.noWeb3Provider);
 };
 
-const getOptimismProvider = ({
-	networkId,
-}: {
-	networkId: number;
-}): ethersProviders.StaticJsonRpcProvider => {
+const getOptimismProvider = ({ networkId }: { networkId: number }): StaticJsonRpcProvider => {
 	if (!networkId) throw new Error(ERRORS.noNetworkId);
 
 	const ovmNetworkId = L1_TO_L2_NETWORK_MAPPER[networkId] || networkId;
 	if (!OPTIMISM_NETWORKS[networkId]) throw new Error(ERRORS.wrongNetworkId);
 
-	return new ethersProviders.StaticJsonRpcProvider(OPTIMISM_NETWORKS[ovmNetworkId].rpcUrls[0]);
+	return new StaticJsonRpcProvider(OPTIMISM_NETWORKS[ovmNetworkId].rpcUrls[0]);
 };
 
 /**
@@ -36,13 +34,10 @@ const getOptimismProvider = ({
  * @param web3Provider
  * @param isOVM
  */
-const handleSwitchChain = async (
-	web3Provider: ethersProviders.Web3Provider,
-	isOVM: boolean
-): Promise<boolean> => {
+const handleSwitchChain = async (web3Provider: Web3Provider, isOVM: boolean): Promise<boolean> => {
 	if (!web3Provider.provider?.request) return false;
 	const newNetworkId = getCorrespondingNetwork(isOVM);
-	const formattedChainId = utils.hexStripZeros(BigNumber.from(newNetworkId).toHexString());
+	const formattedChainId = hexStripZeros(BigNumber.from(newNetworkId).toHexString());
 	const success = await web3Provider.provider.request({
 		method: 'wallet_switchEthereumChain',
 		params: [{ chainId: formattedChainId }],

@@ -1,10 +1,10 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { ethers } from 'ethers';
 import Wei, { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
 import { GlobalStakingInfo } from '../../types';
 import { useGetSNXHolders } from '../../../generated/mainSubgraphQueries';
+import { formatBytes32String } from '@ethersproject/strings';
 
 /**
  * @deprecated Use useLockedSnxQuery instead
@@ -37,14 +37,14 @@ const useGlobalStakingInfoQuery = (
 				unformattedTotalIssuedSynths,
 				unformattedIssuanceRatio,
 			] = await Promise.all([
-				ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(ethers.utils.formatBytes32String('SNX')),
+				ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(formatBytes32String('SNX')),
 				ctx.snxjs!.contracts.Synthetix.totalSupply(),
 				ctx.snxjs!.contracts.SynthetixState.lastDebtLedgerEntry(),
 				ctx.snxjs!.contracts.Synthetix[
 					ctx.snxjs!.contracts.Synthetix.totalIssuedSynthsExcludeOtherCollateral
 						? 'totalIssuedSynthsExcludeOtherCollateral'
 						: 'totalIssuedSynths'
-				](ethers.utils.formatBytes32String('sUSD')),
+				](formatBytes32String('sUSD')),
 				ctx.snxjs!.contracts.SystemSettings.issuanceRatio(),
 			]);
 

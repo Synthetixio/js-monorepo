@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { Contract, providers } from 'ethers';
+import { Contract } from '@ethersproject/contracts';
+import { BaseProvider } from '@ethersproject/providers';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 import { Spartan } from '../../contracts';
@@ -38,7 +39,7 @@ const getUsersDetails = async (walletAddresses: string[]) => {
 
 const useGetSpartanCouncil = (
 	_ctx: QueryContext,
-	optimismProvider?: providers.BaseProvider,
+	optimismProvider?: BaseProvider,
 	options?: UseQueryOptions<UserDetail[]>
 ) => {
 	return useQuery<UserDetail[]>(

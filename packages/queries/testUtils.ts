@@ -1,9 +1,10 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { QueryContext } from './src/context';
 
 import { NetworkIdByName, SynthetixJS, NetworkId } from '@synthetixio/contracts-interface';
-import { ethers } from 'ethers';
+import { Provider } from '@ethersproject/providers';
+import { Signer } from '@ethersproject/abstract-signer';
 
 // simple query client wrapper which allows for testing of a
 // query function hook, see https://react-query.tanstack.com/guides/testing
@@ -18,8 +19,8 @@ export function getFakeQueryContext(networkId: NetworkId = NetworkIdByName.mainn
 	return {
 		networkId,
 		subgraphEndpoints: { exchanger: '', issuance: '', exchanges: '', subgraph: '' },
-		signer: {} as ethers.Signer,
-		provider: {} as ethers.providers.Provider,
+		signer: {} as Signer,
+		provider: {} as Provider,
 		snxjs: {} as SynthetixJS,
 	};
 }

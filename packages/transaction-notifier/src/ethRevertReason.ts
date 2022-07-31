@@ -1,5 +1,6 @@
 import type { TransactionRequest } from '@ethersproject/providers';
-import { ethers } from 'ethers';
+import { toUtf8String } from '@ethersproject/strings';
+import { Deferrable } from '@ethersproject/properties';
 
 import { RevertReasonParams } from './types';
 
@@ -19,10 +20,7 @@ const getRevertReason = async ({
 
 	try {
 		const tx = await provider.getTransaction(txHash);
-		const code = await provider.call(
-			tx as ethers.utils.Deferrable<TransactionRequest>,
-			blockNumber
-		);
+		const code = await provider.call(tx as Deferrable<TransactionRequest>, blockNumber);
 		return decodeMessage(code);
 	} catch (err) {
 		return 'Unable to decode revert reason';
@@ -60,7 +58,7 @@ function decodeMessage(code: string) {
 		codeString += '0';
 	}
 
-	return ethers.utils.toUtf8String(codeString);
+	return toUtf8String(codeString);
 }
 
 export default getRevertReason;

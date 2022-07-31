@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 
-import { ethers } from 'ethers';
+import { Contract } from '@ethersproject/contracts';
 import request, { gql } from 'graphql-request';
 import { councilNominationsJson, SPACE_KEY } from './constants';
 import { Proposal } from '../../types';
@@ -14,11 +14,7 @@ const useProposalsQuery = (
 	spaceKey: SPACE_KEY,
 	options?: UseQueryOptions<Proposal[]>
 ) => {
-	const contract = new ethers.Contract(
-		CouncilDilution.address,
-		CouncilDilution.abi,
-		getOVMProvider()
-	);
+	const contract = new Contract(CouncilDilution.address, CouncilDilution.abi, getOVMProvider());
 	return useQuery<Proposal[]>(
 		['gov', 'proposals', snapshotEndpoint, spaceKey],
 		async () => {

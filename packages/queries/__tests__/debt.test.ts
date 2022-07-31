@@ -2,20 +2,16 @@ import { getFakeQueryContext, getWrapper } from '../testUtils';
 import { renderHook } from '@testing-library/react-hooks';
 import useGetDebtL2 from '../src/queries/debt/useGetDebtL2';
 import { useGetDebtL1 } from '../generated/queryFuncs';
-import { providers } from 'ethers';
-
+import { getDefaultProvider } from '@ethersproject/providers';
 jest.setTimeout(20000);
 
 describe('@synthetixio/queries debt', () => {
 	it.skip('useGetDebtL2', async () => {
 		const ctx = getFakeQueryContext();
 		const wrapper = getWrapper();
-		const { result, waitFor } = renderHook(
-			() => useGetDebtL2(ctx, providers.getDefaultProvider()),
-			{
-				wrapper,
-			}
-		);
+		const { result, waitFor } = renderHook(() => useGetDebtL2(ctx, getDefaultProvider()), {
+			wrapper,
+		});
 		await waitFor(() => !!result.current.data?.length, { timeout: 20000 });
 		// uncomment for current state of debt on L2
 		/* 	result.current.data?.forEach((synth) =>
@@ -27,12 +23,9 @@ describe('@synthetixio/queries debt', () => {
 	it.skip('useGetDebtL1', async () => {
 		const ctx = getFakeQueryContext();
 		const wrapper = getWrapper();
-		const { result, waitFor } = renderHook(
-			() => useGetDebtL1(ctx, providers.getDefaultProvider()),
-			{
-				wrapper,
-			}
-		);
+		const { result, waitFor } = renderHook(() => useGetDebtL1(ctx, getDefaultProvider()), {
+			wrapper,
+		});
 		await waitFor(() => !!result.current.data?.length, { timeout: 20000 });
 
 		// uncomment for current state of debt on L1

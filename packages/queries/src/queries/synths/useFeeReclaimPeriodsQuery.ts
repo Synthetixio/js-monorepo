@@ -1,7 +1,9 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { ethers } from 'ethers';
+import { formatBytes32String } from '@ethersproject/strings';
 import { CurrencyKey, Synth } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
+import { formatEther } from '@ethersproject/units';
+import { BigNumberish } from '@ethersproject/bignumber';
 
 import { QueryContext } from '../../context';
 import { SynthFeeAndWaitingPeriod } from '../../types';
@@ -24,8 +26,8 @@ const useFeeReclaimPeriodsQuery = (
 			const loadWaitingPeriod = async (currencyKey: Synth) => {
 				const maxSecsLeftInWaitingPeriod = (await Exchanger.maxSecsLeftInWaitingPeriod(
 					walletAddress,
-					ethers.utils.formatBytes32String(currencyKey.name)
-				)) as ethers.BigNumberish;
+					formatBytes32String(currencyKey.name)
+				)) as BigNumberish;
 
 				return Number(maxSecsLeftInWaitingPeriod);
 			};
@@ -33,10 +35,10 @@ const useFeeReclaimPeriodsQuery = (
 			const loadFee = async (currencyKey: Synth) => {
 				const [rebate, reclaim, noOfTrades] = await Exchanger.settlementOwing(
 					walletAddress,
-					ethers.utils.formatBytes32String(currencyKey.name)
+					formatBytes32String(currencyKey.name)
 				);
 				return {
-					fee: wei(ethers.utils.formatEther(rebate.sub(reclaim))),
+					fee: wei(formatEther(rebate.sub(reclaim))),
 					noOfTrades: Number(noOfTrades.toString()),
 				};
 			};
