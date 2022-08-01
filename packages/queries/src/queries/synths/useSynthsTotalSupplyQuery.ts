@@ -1,5 +1,6 @@
-import { ethers } from 'ethers';
 import { useQuery, UseQueryOptions } from 'react-query';
+import { formatBytes32String, parseBytes32String } from '@ethersproject/strings';
+import { formatEther } from '@ethersproject/units';
 
 import { NetworkIdByName, Synths } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
@@ -17,10 +18,6 @@ const useSynthsTotalSupplyQuery = (
 			const {
 				contracts: { SynthUtil, ExchangeRates, CollateralManagerState, EtherWrapper },
 			} = ctx.snxjs!;
-
-			const {
-				utils: { formatBytes32String, parseBytes32String, formatEther },
-			} = ethers;
 
 			const [sETHKey, sBTCKey, sUSDKey] = [Synths.sETH, Synths.sBTC, Synths.sUSD].map(
 				formatBytes32String

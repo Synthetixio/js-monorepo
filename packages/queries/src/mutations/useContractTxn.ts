@@ -1,14 +1,16 @@
-import { ethers } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
+import { TransactionRequest } from '@ethersproject/providers';
+import { Contract } from '@ethersproject/contracts';
 
 import { QueryContext } from '../context';
 import useEVMTxn, { UseEVMTxnOptions } from './useEVMTxn';
 
 const useContractTxn = (
 	ctx: QueryContext,
-	contract: ethers.Contract | null,
+	contract: Contract | null,
 	method: string | null,
 	args: any[] = [],
-	txnOptions: Partial<ethers.providers.TransactionRequest> = {},
+	txnOptions: Partial<TransactionRequest> = {},
 	options?: UseEVMTxnOptions
 ) => {
 	const hasSigner = Boolean(ctx.signer);
@@ -18,7 +20,7 @@ const useContractTxn = (
 			{
 				to: contract.address,
 				data: contract.interface.encodeFunctionData(method, args),
-				value: txnOptions.value || ethers.BigNumber.from(0),
+				value: txnOptions.value || BigNumber.from(0),
 				...txnOptions,
 			},
 			options

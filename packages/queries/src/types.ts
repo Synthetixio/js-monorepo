@@ -1,6 +1,6 @@
 import Wei from '@synthetixio/wei';
 import { CurrencyKey, NetworkId, NetworkName } from '@synthetixio/contracts-interface';
-import { BigNumber } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
 
 export type GasPrice = {
 	baseFeePerGas?: BigNumber; // Note that this is used for estimating price and should not be included in the transaction

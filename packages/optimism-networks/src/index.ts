@@ -1,5 +1,6 @@
 import type { MetaMaskInpageProvider } from '@metamask/providers';
-import { ethers, BigNumber } from 'ethers';
+import { hexStripZeros } from '@ethersproject/bytes';
+import { BigNumber } from '@ethersproject/bignumber';
 
 import {
 	OPTIMISM_NETWORKS,
@@ -42,7 +43,7 @@ const switchToL1 = async ({ ethereum }: { ethereum: MetaMaskInpageProvider }): P
 	const networkId =
 		L2_TO_L1_NETWORK_MAPPER[Number(ethereum.chainId)] ||
 		L2_TO_L1_NETWORK_MAPPER[DEFAULT_LAYER2_NETWORK];
-	const formattedChainId = ethers.utils.hexStripZeros(BigNumber.from(networkId).toHexString());
+	const formattedChainId = hexStripZeros(BigNumber.from(networkId).toHexString());
 	await ethereum.request({
 		method: 'wallet_switchEthereumChain',
 		params: [{ chainId: formattedChainId }],
@@ -55,7 +56,7 @@ const switchToL2 = async ({ ethereum }: { ethereum: MetaMaskInpageProvider }): P
 			L1_TO_L2_NETWORK_MAPPER[Number(ethereum.chainId)] ||
 			L1_TO_L2_NETWORK_MAPPER[DEFAULT_MAINNET_NETWORK];
 
-		const formattedChainId = ethers.utils.hexStripZeros(BigNumber.from(networkId).toHexString());
+		const formattedChainId = hexStripZeros(BigNumber.from(networkId).toHexString());
 		await ethereum.request({
 			method: 'wallet_switchEthereumChain',
 			params: [{ chainId: formattedChainId }],

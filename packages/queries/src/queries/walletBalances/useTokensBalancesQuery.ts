@@ -1,7 +1,8 @@
 import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query';
 import { wei } from '@synthetixio/wei';
 import erc20Abi from '../../abis/ERC20.json';
-import { BigNumber, ethers } from 'ethers';
+import { Contract } from '@ethersproject/contracts';
+import { BigNumber } from '@ethersproject/bignumber';
 import { CRYPTO_CURRENCY_MAP } from '../../currency';
 import { QueryContext } from '../../context';
 import { Token, TokenBalances } from '../../types';
@@ -16,12 +17,12 @@ const useTokensBalancesQuery = (
 	return useQuery<TokenBalances>(
 		['walletBalances', 'tokens', ctx.networkId, walletAddress, tokens.join()],
 		async () => {
-			const getBalance = ({ address, symbol }: Token): Promise<ethers.BigNumber> => {
+			const getBalance = ({ address, symbol }: Token): Promise<BigNumber> => {
 				if (!ctx.provider || !walletAddress) return Promise.resolve(BigNumber.from(0));
 				if (symbol === CRYPTO_CURRENCY_MAP.ETH) {
 					return ctx.provider.getBalance(walletAddress);
 				} else {
-					const tokenContract = new ethers.Contract(address, erc20Abi, ctx.provider);
+					const tokenContract = new Contract(address, erc20Abi, ctx.provider);
 					return tokenContract.balanceOf(walletAddress);
 				}
 			};

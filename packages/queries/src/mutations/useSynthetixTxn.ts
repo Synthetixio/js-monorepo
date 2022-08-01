@@ -1,5 +1,4 @@
-import { ethers } from 'ethers';
-
+import { TransactionRequest } from '@ethersproject/providers';
 import { QueryContext } from '../context';
 import useContractTxn from './useContractTxn';
 import useEVMTxn, { UseEVMTxnOptions } from './useEVMTxn';
@@ -9,7 +8,7 @@ const useSynthetixTxn = (
 	contract: string,
 	method: string,
 	args: any[] = [],
-	txnOptions: Partial<ethers.providers.TransactionRequest> = {},
+	txnOptions: Partial<TransactionRequest> = {},
 	options?: UseEVMTxnOptions
 ) => {
 	if (ctx.snxjs != null) {

@@ -1,7 +1,8 @@
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 import { renderHook } from '@testing-library/react-hooks';
-import { ethers, BigNumber } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
+import { JsonRpcProvider } from '@ethersproject/providers';
 import { set } from 'lodash';
 import useEthGasPriceQuery, { computeGasFee } from '../src/queries/network/useEthGasPriceQuery';
 import { getFakeQueryContext, getWrapper } from '../testUtils';
@@ -14,7 +15,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 		// set to 0.015 gwei
 		const defaultGasPrice = wei(0.015, 9).toBN();
 		//mock provider
-		set(ctx.provider as ethers.providers.JsonRpcProvider, 'getGasPrice', async () =>
+		set(ctx.provider as JsonRpcProvider, 'getGasPrice', async () =>
 			Promise.resolve(defaultGasPrice)
 		);
 
@@ -36,7 +37,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 		// set to 0.015 gwei
 		const defaultGasPrice = wei(0.015, 9).toBN();
 		//mock provider
-		set(ctx.provider as ethers.providers.JsonRpcProvider, 'getGasPrice', async () =>
+		set(ctx.provider as JsonRpcProvider, 'getGasPrice', async () =>
 			Promise.resolve(defaultGasPrice)
 		);
 
@@ -87,7 +88,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 		// set to 100 gwei
 		const defaultBaseFeePerGas = wei(100, 9).toBN();
 		//mock provider
-		set(ctx.provider as ethers.providers.JsonRpcProvider, 'getBlock', async () =>
+		set(ctx.provider as JsonRpcProvider, 'getBlock', async () =>
 			Promise.resolve({ baseFeePerGas: defaultBaseFeePerGas })
 		);
 

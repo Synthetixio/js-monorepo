@@ -2,7 +2,7 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import chunk from 'lodash/chunk';
 import orderBy from 'lodash/orderBy';
 import flatten from 'lodash/flatten';
-import { ethers } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
 import { QueryContext } from '../../context';
 import Wei, { wei } from '@synthetixio/wei';
 import { OPTIMISM_NETWORKS } from '@synthetixio/optimism-networks';
@@ -34,7 +34,7 @@ const useEscrowDataQuery = (
 					RewardEscrowV2.balanceOf(walletAddress),
 					RewardEscrowV2.totalVestedAccountBalance(walletAddress),
 					OPTIMISM_NETWORKS[ctx.networkId!] != null
-						? ethers.BigNumber.from(0)
+						? BigNumber.from(0)
 						: RewardEscrowV2.totalBalancePendingMigration(walletAddress),
 				]);
 

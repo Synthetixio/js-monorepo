@@ -35,10 +35,11 @@
 		"url": "https://github.com/Synthetixio/js-monorepo/issues"
 	},
 	"dependencies": {
+		"@ethersproject/bignumber": "^5.6.2",
+		"@ethersproject/bytes": "^5.6.1",
 		"@ethersproject/providers": "^5.6.8",
 		"@synthetixio/contracts-interface": "workspace:*",
-		"@synthetixio/optimism-networks": "workspace:*",
-		"ethers": "^5.5.3"
+		"@synthetixio/optimism-networks": "workspace:*"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.11.0",

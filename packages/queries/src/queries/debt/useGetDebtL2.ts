@@ -1,7 +1,9 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
-import { BigNumber, providers, utils } from 'ethers';
+import { BaseProvider } from '@ethersproject/providers';
+import { BigNumber } from '@ethersproject/bignumber';
+import { parseBytes32String } from '@ethersproject/strings';
 import {
 	useGetLoans,
 	useGetShorts,
@@ -30,7 +32,7 @@ export interface DebtData {
 
 const useGetDebtL2 = (
 	_: QueryContext,
-	L2Provider: providers.BaseProvider,
+	L2Provider: BaseProvider,
 	options?: UseQueryOptions<Debt[]>
 ) => {
 	const [debtData, setDebtData] = useState<DebtData | null>(null);
@@ -116,8 +118,8 @@ const useGetDebtL2 = (
 						}
 						return {
 							...short,
-							synthBorrowed: utils.parseBytes32String(short.synthBorrowed),
-							collateralLocked: utils.parseBytes32String(short.collateralLocked),
+							synthBorrowed: parseBytes32String(short.synthBorrowed),
+							collateralLocked: parseBytes32String(short.collateralLocked),
 						};
 					})
 					.reduce((acc, short) => {

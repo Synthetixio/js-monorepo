@@ -1,9 +1,10 @@
-import { ethers } from 'ethers';
+import { Provider } from '@ethersproject/providers';
+import { Contract } from '@ethersproject/contracts';
 
 export const formatGwei = (wei: number) => wei / 1e8 / 10;
 
-export const getProxySynthSymbol = (provider: ethers.providers.Provider, address: string) => {
-	const c = new ethers.Contract(
+export const getProxySynthSymbol = (provider: Provider, address: string) => {
+	const c = new Contract(
 		address,
 		[
 			{

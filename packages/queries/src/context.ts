@@ -1,4 +1,5 @@
-import { ethers } from 'ethers';
+import { Signer } from '@ethersproject/abstract-signer';
+import { Provider } from '@ethersproject/providers';
 import { SynthetixJS, NetworkId } from '@synthetixio/contracts-interface';
 
 export interface SubgraphEndpoints {
@@ -10,8 +11,8 @@ export interface SubgraphEndpoints {
 
 export interface QueryContext {
 	networkId: NetworkId | null;
-	provider: ethers.providers.Provider | null;
-	signer: ethers.Signer | null;
+	provider: Provider | null;
+	signer: Signer | null;
 	snxjs: SynthetixJS | null;
 	subgraphEndpoints: SubgraphEndpoints;
 }

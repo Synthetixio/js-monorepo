@@ -1,6 +1,6 @@
 import { UseQueryOptions, useQuery } from 'react-query';
 
-import Wei, { wei } from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { StakingClaimableRewards } from '../../types';
 
@@ -14,7 +14,6 @@ const useClaimableRewards = (
 		async () => {
 			const {
 				contracts: { FeePool },
-				utils,
 			} = ctx.snxjs!;
 			const feesAvailable = await FeePool.feesAvailable(walletAddress);
 			return {

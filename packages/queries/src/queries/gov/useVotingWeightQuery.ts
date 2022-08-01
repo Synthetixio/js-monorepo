@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import snapshot from '@snapshot-labs/snapshot.js';
 
-import { ethers } from 'ethers';
+import { getAddress } from '@ethersproject/address';
 import request, { gql } from 'graphql-request';
 import { electionAuthor, SPACE_KEY } from './constants';
 import { Proposal, SpaceStrategy, Vote } from '../../types';
@@ -17,8 +17,6 @@ const useVotingWeightQuery = (
 	return useQuery<number[]>(
 		['gov', 'votingWeight', snapshotEndpoint, spaceKey, walletAddress],
 		async () => {
-			const { getAddress } = ethers.utils;
-
 			const { proposals }: { proposals: Proposal[] } = await request(
 				snapshotEndpoint,
 				gql`

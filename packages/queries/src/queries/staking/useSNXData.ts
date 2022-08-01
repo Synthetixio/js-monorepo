@@ -1,7 +1,8 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 import Wei, { wei } from '@synthetixio/wei';
-import { ethers, providers } from 'ethers';
+import { BaseProvider } from '@ethersproject/providers';
+import { formatBytes32String } from '@ethersproject/strings';
 import { useGetSNXHolders } from '../../../generated/mainSubgraphQueries';
 import synthetix, { NetworkIdByName, NetworkNameById } from '@synthetixio/contracts-interface';
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from '../../constants';
@@ -15,7 +16,7 @@ const ONE_HOUR_MS = 1000 * 60 * 60;
 
 const useSNXData = (
 	ctx: QueryContext,
-	L1Provider?: providers.BaseProvider,
+	L1Provider?: BaseProvider,
 	options?: UseQueryOptions<SNXData>
 ) => {
 	const snxHoldersQueryL1 = useGetSNXHolders(
@@ -92,7 +93,7 @@ const useSNXData = (
 		async () => {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			const snxPriceP = ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(
-				ethers.utils.formatBytes32String('SNX')
+				formatBytes32String('SNX')
 			);
 
 			const totalSNXSupplyP = snxJSL1.contracts.Synthetix.totalSupply();

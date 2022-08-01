@@ -5,7 +5,7 @@ import { renderHook } from '@testing-library/react-hooks';
 
 import { set } from 'lodash';
 import { wei } from '@synthetixio/wei';
-import { ethers } from 'ethers';
+import { formatBytes32String } from '@ethersproject/strings';
 
 describe('@synthetixio/queries rates', () => {
 	const ctx = getFakeQueryContext();
@@ -14,7 +14,7 @@ describe('@synthetixio/queries rates', () => {
 		const wrapper = getWrapper();
 
 		set(ctx.snxjs as any, 'contracts.SynthUtil.synthsRates', async () => [
-			[ethers.utils.formatBytes32String('sETH'), ethers.utils.formatBytes32String('sBTC')],
+			[formatBytes32String('sETH'), formatBytes32String('sBTC')],
 			[wei(1000).toBN(), wei(10000).toBN()],
 		]);
 		set(ctx.snxjs as any, 'contracts.ExchangeRates.ratesForCurrencies', async () => [

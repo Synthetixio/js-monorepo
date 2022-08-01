@@ -1,6 +1,7 @@
 import { wei } from '@synthetixio/wei';
 import { renderHook } from '@testing-library/react-hooks';
-import { ethers } from 'ethers';
+import { formatBytes32String } from '@ethersproject/strings';
+import { AddressZero } from '@ethersproject/constants';
 import { set } from 'lodash';
 import useSynthsBalancesQuery from '../src/queries/walletBalances/useSynthsBalancesQuery';
 import { getFakeQueryContext, getWrapper } from '../testUtils';
@@ -15,15 +16,14 @@ describe('@synthetixio/queries walletBalances', () => {
 		const fakeETHValue = wei(1000);
 
 		set(ctx.snxjs as any, 'contracts.SynthUtil.synthsBalances', async () => [
-			['sUSD', 'sETH', 'sBTC'].map(ethers.utils.formatBytes32String),
+			['sUSD', 'sETH', 'sBTC'].map(formatBytes32String),
 			[wei(100), wei(1), wei(0.2)].map((v) => v.toBN()),
 			[wei(100), wei(1).mul(fakeETHValue), wei(0.2).mul(fakeBTCValue)].map((v) => v.toBN()),
 		]);
 
-		const { result, waitFor } = renderHook(
-			() => useSynthsBalancesQuery(ctx, ethers.constants.AddressZero),
-			{ wrapper }
-		);
+		const { result, waitFor } = renderHook(() => useSynthsBalancesQuery(ctx, AddressZero), {
+			wrapper,
+		});
 		await waitFor(() => result.current.isSuccess);
 
 		expect(result.current.data).toEqual({

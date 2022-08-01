@@ -1,7 +1,8 @@
 import clone from 'lodash/clone';
 import partial from 'lodash/partial';
 
-import ethers from 'ethers';
+import { Signer } from '@ethersproject/abstract-signer';
+import { Provider } from '@ethersproject/providers';
 import { QueryContext, SubgraphEndpoints } from './context';
 
 import { synthetix, NetworkId } from '@synthetixio/contracts-interface';
@@ -14,7 +15,7 @@ import * as issuance from '../generated/issuanceSubgraphQueries';
 import * as subgraph from '../generated/mainSubgraphQueries';
 
 import * as FUNCS from '../generated/queryFuncs';
-import React from 'react';
+import { createContext, useContext } from 'react';
 
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from './constants';
 
@@ -66,8 +67,8 @@ export function createQueryContext({
 	subgraphEndpoints,
 }: {
 	networkId: NetworkId | null;
-	provider?: ethers.providers.Provider;
-	signer?: ethers.Signer;
+	provider?: Provider;
+	signer?: Signer;
 	subgraphEndpoints?: SubgraphEndpoints;
 }): SynthetixQueryContextContent {
 	const ctx: QueryContext = {
@@ -133,11 +134,11 @@ export function createQueryContext({
 	return { context: ctx, queries: allFuncs };
 }
 
-export const SynthetixQueryContext = React.createContext<SynthetixQueryContextContent | null>(null);
+export const SynthetixQueryContext = createContext<SynthetixQueryContextContent | null>(null);
 export const SynthetixQueryContextProvider = SynthetixQueryContext.Provider;
 
 export default function useSynthetixQueries(): SynthetixQueries {
-	const ctx = React.useContext(SynthetixQueryContext);
+	const ctx = useContext(SynthetixQueryContext);
 	if (!ctx) {
 		throw new Error('No QueryClient set, use QueryClientProvider to set one');
 	}

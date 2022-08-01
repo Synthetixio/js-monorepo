@@ -1,5 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { ethers } from 'ethers';
+import { formatBytes32String } from '@ethersproject/strings';
+import { BigNumberish } from '@ethersproject/bignumber';
 
 import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { QueryContext } from '../../context';
@@ -16,8 +17,8 @@ const useFeeReclaimPeriodQuery = (
 			const maxSecsLeftInWaitingPeriod =
 				(await ctx.snxjs!.contracts.Exchanger.maxSecsLeftInWaitingPeriod(
 					walletAddress,
-					ethers.utils.formatBytes32String(currencyKey!)
-				)) as ethers.BigNumberish;
+					formatBytes32String(currencyKey!)
+				)) as BigNumberish;
 
 			return Number(maxSecsLeftInWaitingPeriod);
 		},

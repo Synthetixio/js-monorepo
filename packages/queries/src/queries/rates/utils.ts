@@ -1,6 +1,6 @@
 import Wei, { wei } from '@synthetixio/wei';
 import subHours from 'date-fns/subHours';
-import { ethers } from 'ethers';
+import { MaxUint256 } from '@ethersproject/constants';
 import { RateUpdateResult } from '../../../generated/exchangesSubgraphQueries';
 
 import { BaseRateUpdate } from '../../types';
@@ -16,7 +16,7 @@ export const getMinAndMaxRate = (rates: RateUpdateResult[]): [Wei, Wei] => {
 
 			return [newMin, newMax];
 		},
-		[wei(ethers.constants.MaxUint256), wei(0)]
+		[wei(MaxUint256), wei(0)]
 	);
 };
 

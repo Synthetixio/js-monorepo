@@ -1,5 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { ethers } from 'ethers';
+import { formatBytes32String } from '@ethersproject/strings';
+import { BigNumber } from '@ethersproject/bignumber';
 
 import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { QueryContext } from '../../context';
@@ -43,8 +44,8 @@ const useSynthSuspensionQuery = (
 		async () => {
 			const [isSuspended, reason] =
 				(await ctx.snxjs!.contracts.SystemStatus.synthExchangeSuspension(
-					ethers.utils.formatBytes32String(currencyKey!)
-				)) as [boolean, ethers.BigNumber];
+					formatBytes32String(currencyKey!)
+				)) as [boolean, BigNumber];
 
 			const reasonCode = Number(reason);
 			return {
