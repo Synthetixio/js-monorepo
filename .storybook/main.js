@@ -1,31 +1,23 @@
 const path = require('path');
 
 module.exports = {
-  stories: ['../src/**/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/preset-create-react-app',
-    'storybook-dark-mode'
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    "@storybook/addon-interactions",
+    "@storybook/preset-create-react-app",
+    "@chakra-ui/storybook-addon",
   ],
-  framework: '@storybook/react',
-  webpackFinal: async (config) => {
-    config.module.rules.push({
-      test: /\.css$/,
-      use: [
-        {
-          loader: 'postcss-loader',
-          options: {
-            ident: 'postcss',
-            plugins: [require('tailwindcss'), require('autoprefixer')]
-          }
-        }
-      ],
-      include: path.resolve(__dirname, '../')
-    });
-    return config;
-  },
+  framework: "@storybook/react",
   core: {
-    builder: 'webpack5'
-  }
+    builder: "@storybook/builder-webpack5",
+  },
+  features: {
+    interactionsDebugger: true,
+    emotionAlias: false,
+  },
+  typescript: {
+    reactDocgen: false,
+  },
 };

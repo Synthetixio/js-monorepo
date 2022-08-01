@@ -1,29 +1,28 @@
-import 'styles/index.scss';
+const { theme } = require('../src/theme.js')
+const { Fonts } = require('../src/fonts.js')
+import { Box } from "@chakra-ui/react"
+import React from "react";
 
 export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/
-    }
+  chakra: {
+    theme,
   },
   backgrounds: {
-    default: 'Light',
+    default: 'black',
     values: [
       {
-        name: 'Light',
-        value: '#ffffff'
+        name: 'black',
+        value: '#000000',
       },
-      {
-        name: 'Dark',
-        value: '#141414'
-      }
-    ]
+    ],
   },
-  darkMode: {
-    stylePreview: true,
-    darkClass: 'ui-dark',
-    classTarget: 'html'
-  }
-};
+}
+
+export const decorators = [
+  (Story) => (
+    <Box color="white">
+      <Fonts />
+      {Story()}
+    </Box>
+  ),
+];
