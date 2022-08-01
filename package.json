@@ -20,7 +20,7 @@
     "build-storybook": "build-storybook",
     "commit": "cz",
     "clean": "rimraf dist",
-    "prepare": "npm run build"
+    "prepare": "npm run build && rm -rf node_modules"
   },
   "babel": {
     "presets": [
