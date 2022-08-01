@@ -46,8 +46,7 @@ describe('@synthetixio/js tests', () => {
 		expect(typeof snxjs.utils).toBe(typeof ethers.utils);
 	});
 
-	test.skip('should include the supported networks', () => {
-		// TODO enable once https://github.com/Synthetixio/synthetix/pull/1853 is merged and released
+	test('should include the supported networks', () => {
 		expect(snxjs.networkToChainId[NetworkNameById[1]]).toBe(NetworkIdByName.mainnet.toString());
 		expect(snxjs.networkToChainId[NetworkNameById[10]]).toBe(
 			NetworkIdByName['mainnet-ovm'].toString()
