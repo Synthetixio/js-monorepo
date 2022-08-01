@@ -1,2 +1,2 @@
-export * from './theme.js';
-export * from './fonts.jsx';
+export * from './theme';
+export * from './fonts';
