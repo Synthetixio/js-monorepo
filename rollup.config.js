@@ -1,40 +1,37 @@
-import babel from '@rollup/plugin-babel';
-import typescript from '@rollup/plugin-typescript';
-import copy from 'rollup-plugin-copy';
-import generateDeclarations from 'rollup-plugin-generate-declarations';
-import external from 'rollup-plugin-peer-deps-external';
-import postcss from 'rollup-plugin-postcss';
 
-import pkg from './package.json';
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import { terser } from "rollup-plugin-terser";
+import typescript from "rollup-plugin-typescript2";
 
 export default {
-  input: pkg.source,
+  //entry point
+  input: "src/index.ts",
+  preserveModules: true,
+
+  //output directory
   output: [
-    { file: pkg.main, format: 'cjs' },
-    { file: pkg.module, format: 'esm' }
+    {
+      dir: "./dist/cjs/",
+      format: "cjs",
+      sourcemap: true,
+      exports: "auto",
+    },
+    {
+      dir: "./dist/esm/",
+      format: "esm",
+      sourcemap: true,
+      exports: "auto",
+    },
   ],
+
+  //plugins
   plugins: [
-    external(),
-    babel({
-      exclude: 'node_modules/**',
-      babelHelpers: 'bundled'
-    }),
-    typescript(),
-    generateDeclarations(),
-    postcss({
-      config: {
-        path: './postcss.config.js'
-      },
-      inject: {
-        insertAt: 'top'
-      },
-      minimize: true,
-      extract: false,
-      autoModules: true
-    }),
-    copy({
-      targets: [{ src: 'src/styles/fonts', dest: 'dist' }]
-    })
+    peerDepsExternal(),
+    resolve(),
+    commonjs(),
+    typescript({ useTsconfigDeclarationDir: true }),
+    terser(),
   ],
-  external: Object.keys(pkg.peerDependencies || {})
 };
