@@ -1,0 +1,47 @@
+{
+	"name": "v3-fe",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"tsc": "tsc",
+		"start": "webpack serve --open",
+		"build": "webpack --mode production"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.18.10",
+		"@babel/plugin-transform-runtime": "^7.18.10",
+		"@babel/preset-env": "^7.18.10",
+		"@babel/preset-react": "^7.18.6",
+		"@babel/preset-typescript": "^7.18.6",
+		"@babel/runtime": "^7.18.9",
+		"@faker-js/faker": "^6.1.2",
+		"@types/node": "^18.6.3",
+		"@types/react": "^18.0.10",
+		"@types/webpack": "^5.28.0",
+		"@types/webpack-dev-server": "^4.7.2",
+		"babel-loader": "^8.2.5",
+		"css-loader": "^6.7.1",
+		"html-webpack-plugin": "^5.5.0",
+		"style-loader": "^3.3.1",
+		"ts-loader": "^9.3.1",
+		"ts-node": "^10.9.1",
+		"webpack": "^5.74.0",
+		"webpack-cli": "^4.10.0",
+		"webpack-dev-server": "^4.9.3"
+	},
+	"dependencies": {
+		"@chakra-ui/icons": "^2.0.1",
+		"@chakra-ui/react": "^2.1.2",
+		"@emotion/react": "^11.9.0",
+		"@emotion/styled": "^11.8.1",
+		"@rainbow-me/rainbowkit": "^0.4.4",
+		"@uniswap/default-token-list": "^3.2.0",
+		"framer-motion": "^6.3.6",
+		"react": "18.1.0",
+		"react-chartjs-2": "^4.1.0",
+		"react-dom": "18.1.0",
+		"react-hook-form": "^7.31.3",
+		"recoil": "^0.7.3-alpha.2",
+		"wagmi": "^0.5.9"
+	}
+}
