@@ -12,7 +12,7 @@
 		"generated",
 		"index.js"
 	],
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": "Nikita <noisekit@btnk.au>",
 	"repository": "github:Synthetixio/js-monorepo",
 	"license": "MIT",
