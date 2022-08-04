@@ -92,7 +92,6 @@ jobs:
 
           curl --verbose --header "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST \
             --data @/tmp/staking.json \
-            http://localhost:3000
             https://api.github.com/repos/Synthetixio/staking/actions/workflows/updateDependency.yml/dispatches
 
       - name: Notify Synthetixio/futures-keepers
