@@ -72,6 +72,20 @@ export const DEFAULT_SUBGRAPH_ENDPOINTS: { [networkId: number]: SubgraphEndpoint
 		issuance: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-issuance',
 		subgraph: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main',
 	},
+	5: {
+		// using main for everything since it includes exchanges, exchanger and issuance
+		exchanges: 'https://api.thegraph.com/subgraphs/name/bachstatter/goerli-main',
+		exchanger: 'https://api.thegraph.com/subgraphs/name/bachstatter/goerli-main',
+		issuance: 'https://api.thegraph.com/subgraphs/name/bachstatter/goerli-main',
+		subgraph: 'https://api.thegraph.com/subgraphs/name/bachstatter/goerli-main',
+	},
+	420: {
+		// The graph doesn't support goerli-optimism (so just using goerli for now)
+		exchanges: 'https://api.thegraph.com/subgraphs/name/bachstatter/goerli-main',
+		exchanger: 'https://api.thegraph.com/subgraphs/name/bachstatter/goerli-main',
+		issuance: 'https://api.thegraph.com/subgraphs/name/bachstatter/goerli-main',
+		subgraph: 'https://api.thegraph.com/subgraphs/name/bachstatter/goerli-main',
+	},
 
 	42: {
 		exchanges: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/kovan-exchanges',
