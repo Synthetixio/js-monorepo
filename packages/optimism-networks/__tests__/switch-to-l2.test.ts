@@ -37,6 +37,23 @@ describe('switchToL2', () => {
 			params: [{ chainId: '0x45' }],
 		});
 	});
+	test('Switch to Optimism Goerli when Goerli selected ', async () => {
+		const requestMock = jest.fn().mockResolvedValue(undefined);
+		const deps = {
+			ethereum: {
+				isMetaMask: true,
+				request: requestMock,
+				chainId: '0x5',
+			},
+		} as any;
+
+		await switchToL2(deps);
+		expect(requestMock).toBeCalledTimes(1);
+		expect(requestMock).toHaveBeenCalledWith({
+			method: 'wallet_switchEthereumChain',
+			params: [{ chainId: '0x1a4' }],
+		});
+	});
 	test('Switch to Optimism mainnet when unsupported network selected ', async () => {
 		const requestMock = jest.fn().mockResolvedValue(undefined);
 		const deps = {
@@ -89,7 +106,7 @@ describe('switchToL2', () => {
 			],
 		});
 	});
-	test('switchToL2 adds optimism kovan network when needed', async () => {
+	test('switchToL2 adds optimism gorli network when needed', async () => {
 		const requestMock = jest
 			.fn()
 			.mockRejectedValueOnce({ code: METAMASK_MISSING_NETWORK_ERROR_CODE }) // network missing in metamask
@@ -98,7 +115,7 @@ describe('switchToL2', () => {
 			ethereum: {
 				isMetaMask: true,
 				request: requestMock,
-				chainId: '0x2a',
+				chainId: '5',
 			},
 		} as any;
 		await switchToL2(deps);
@@ -106,20 +123,20 @@ describe('switchToL2', () => {
 		expect(requestMock).toBeCalledTimes(2);
 		expect(requestMock).toHaveBeenNthCalledWith(1, {
 			method: 'wallet_switchEthereumChain',
-			params: [{ chainId: '0x45' }],
+			params: [{ chainId: '0x1a4' }],
 		});
 		expect(requestMock).toHaveBeenNthCalledWith(2, {
 			method: 'wallet_addEthereumChain',
 			params: [
 				{
-					blockExplorerUrls: ['https://kovan-optimistic.etherscan.io'],
-					chainId: '0x45',
-					chainName: 'Optimism Kovan',
+					blockExplorerUrls: ['https://goerli-optimistic.etherscan.io'],
+					chainId: '0x1a4',
+					chainName: 'Optimism Goerli',
 					iconUrls: [
 						'https://optimism.io/images/metamask_icon.svg',
 						'https://optimism.io/images/metamask_icon.png',
 					],
-					rpcUrls: ['https://kovan.optimism.io'],
+					rpcUrls: ['https://goerli.optimism.io/'],
 				},
 			],
 		});

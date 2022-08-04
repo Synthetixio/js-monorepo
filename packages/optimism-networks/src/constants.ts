@@ -7,13 +7,13 @@ export const DEFAULT_LAYER2_NETWORK = 10;
 export const L1_TO_L2_NETWORK_MAPPER: NetworkMapper = {
 	1: 10,
 	42: 69,
-	31337: 420,
+	5: 420,
 };
 
 export const L2_TO_L1_NETWORK_MAPPER: NetworkMapper = {
 	10: 1,
 	69: 42,
-	420: 31337,
+	420: 5,
 };
 
 export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
@@ -27,11 +27,12 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
 			'https://optimism.io/images/metamask_icon.png',
 		],
 	},
-	69: {
-		chainId: '0x45',
-		chainName: 'Optimism Kovan',
-		rpcUrls: ['https://kovan.optimism.io'],
-		blockExplorerUrls: ['https://kovan-optimistic.etherscan.io'],
+
+	420: {
+		chainId: '0x1a4',
+		chainName: 'Optimism Goerli',
+		rpcUrls: ['https://goerli.optimism.io/'],
+		blockExplorerUrls: ['https://goerli-optimistic.etherscan.io'],
 		iconUrls: [
 			'https://optimism.io/images/metamask_icon.svg',
 			'https://optimism.io/images/metamask_icon.png',

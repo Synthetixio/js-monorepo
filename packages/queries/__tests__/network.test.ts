@@ -2,8 +2,6 @@ import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 import { renderHook } from '@testing-library/react-hooks';
 import { BigNumber } from '@ethersproject/bignumber';
-import { JsonRpcProvider } from '@ethersproject/providers';
-import { set } from 'lodash';
 import useEthGasPriceQuery, { computeGasFee } from '../src/queries/network/useEthGasPriceQuery';
 import { getFakeQueryContext, getWrapper } from '../testUtils';
 
@@ -15,9 +13,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 		// set to 0.015 gwei
 		const defaultGasPrice = wei(0.015, 9).toBN();
 		//mock provider
-		set(ctx.provider as JsonRpcProvider, 'getGasPrice', async () =>
-			Promise.resolve(defaultGasPrice)
-		);
+		ctx.provider!.getGasPrice = jest.fn().mockResolvedValue(defaultGasPrice);
 
 		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
 
@@ -37,10 +33,27 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 		// set to 0.015 gwei
 		const defaultGasPrice = wei(0.015, 9).toBN();
 		//mock provider
-		set(ctx.provider as JsonRpcProvider, 'getGasPrice', async () =>
-			Promise.resolve(defaultGasPrice)
-		);
+		ctx.provider!.getGasPrice = jest.fn().mockResolvedValue(defaultGasPrice);
 
+		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
+
+		await waitFor(() => result.current.isSuccess);
+
+		expect(result.current.data).toEqual({
+			fastest: { gasPrice: defaultGasPrice },
+			fast: { gasPrice: defaultGasPrice },
+			average: { gasPrice: defaultGasPrice },
+		});
+	});
+	test('Should query getGasPrice from provider if network is Goerli', async () => {
+		const ctx = getFakeQueryContext();
+		ctx.networkId = NetworkIdByName.kovan;
+		const wrapper = getWrapper();
+		// set to 0.015 gwei
+		const defaultGasPrice = wei(0.015, 9).toBN();
+		//mock provider
+
+		ctx.provider!.getGasPrice = jest.fn().mockResolvedValue(defaultGasPrice);
 		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
 
 		await waitFor(() => result.current.isSuccess);
@@ -88,9 +101,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
 		// set to 100 gwei
 		const defaultBaseFeePerGas = wei(100, 9).toBN();
 		//mock provider
-		set(ctx.provider as JsonRpcProvider, 'getBlock', async () =>
-			Promise.resolve({ baseFeePerGas: defaultBaseFeePerGas })
-		);
+		ctx.provider!.getBlock = jest.fn().mockResolvedValue({ baseFeePerGas: defaultBaseFeePerGas });
 
 		const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
 

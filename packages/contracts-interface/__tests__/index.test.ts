@@ -8,7 +8,7 @@ describe('@synthetixio/js tests', () => {
 	let snxjs: SynthetixJS;
 
 	beforeAll(() => {
-		snxjs = synthetix({ network: NetworkNameById[42] });
+		snxjs = synthetix({ network: NetworkNameById[5] });
 	});
 
 	test('should return contracts', () => {
@@ -17,7 +17,7 @@ describe('@synthetixio/js tests', () => {
 
 	test('should return different contracts for the OVM', () => {
 		const snxjsGoerli = synthetix({ network: NetworkNameById[5] });
-		const snxjsGoerliOvm = synthetix({ network: NetworkNameById[42] });
+		const snxjsGoerliOvm = synthetix({ network: NetworkNameById[420] });
 		const synthetixContractGoerli = snxjsGoerli.contracts['Synthetix'];
 		const synthetixContractGoerliOvm = snxjsGoerliOvm.contracts['Synthetix'];
 		expect(synthetixContractGoerli.address).not.toEqual(synthetixContractGoerliOvm.address);
@@ -27,8 +27,8 @@ describe('@synthetixio/js tests', () => {
 		const synthetixContract = snxjs.contracts['Synthetix'];
 		const sUSDContract = snxjs.contracts['SynthsUSD'];
 		const sETHContract = snxjs.contracts['SynthsETH'];
-		expect(synthetixContract.address).toEqual(snxjs.targets.ProxyERC20.address);
-		expect(sUSDContract.address).toEqual(snxjs.targets.ProxyERC20sUSD.address);
+		expect(synthetixContract.address).toEqual(snxjs.targets.ProxySynthetix.address);
+		expect(sUSDContract.address).toEqual(snxjs.targets.ProxysUSD.address);
 		expect(sETHContract.address).toEqual(snxjs.targets.ProxysETH.address);
 	});
 
@@ -36,8 +36,10 @@ describe('@synthetixio/js tests', () => {
 		const snxjsGoerliOvm = synthetix({ network: NetworkNameById[5], useOvm: true });
 		const synthetixContractGoerliOvm = snxjsGoerliOvm.contracts['Synthetix'];
 		const sUSDContractGoerliOvm = snxjsGoerliOvm.contracts['SynthsUSD'];
-		expect(synthetixContractGoerliOvm.address).toEqual(snxjsGoerliOvm.targets.ProxyERC20.address);
-		expect(sUSDContractGoerliOvm.address).toEqual(snxjsGoerliOvm.targets.ProxyERC20sUSD.address);
+		expect(synthetixContractGoerliOvm.address).toEqual(
+			snxjsGoerliOvm.targets.ProxySynthetix.address
+		);
+		expect(sUSDContractGoerliOvm.address).toEqual(snxjsGoerliOvm.targets.ProxysUSD.address);
 	});
 
 	test('should return the ethers object', () => {
@@ -46,12 +48,19 @@ describe('@synthetixio/js tests', () => {
 
 	test('should include the supported networks', () => {
 		expect(snxjs.networkToChainId[NetworkNameById[1]]).toBe(NetworkIdByName.mainnet.toString());
-		expect(snxjs.networkToChainId[NetworkNameById[42]]).toBe(NetworkIdByName.kovan.toString());
+		expect(snxjs.networkToChainId[NetworkNameById[10]]).toBe(
+			NetworkIdByName['mainnet-ovm'].toString()
+		);
+
+		expect(snxjs.networkToChainId[NetworkNameById[420]]).toBe(
+			NetworkIdByName['goerli-ovm'].toString()
+		);
+		expect(snxjs.networkToChainId[NetworkNameById[5]]).toBe(NetworkIdByName.goerli.toString());
 	});
 
 	test('should include the current network', () => {
-		expect(snxjs.network.name).toBe(NetworkNameById[42]);
-		expect(snxjs.network.id).toBe(NetworkIdByName.kovan.toString());
+		expect(snxjs.network.name).toBe(NetworkNameById[5]);
+		expect(snxjs.network.id).toBe(NetworkIdByName.goerli.toString());
 	});
 
 	test('should return users', () => {

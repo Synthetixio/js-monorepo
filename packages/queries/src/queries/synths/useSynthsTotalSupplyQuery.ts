@@ -15,17 +15,20 @@ const useSynthsTotalSupplyQuery = (
 	return useQuery<SynthsTotalSupplyData>(
 		['synths', 'totalSupply', ctx.networkId],
 		async () => {
+			if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
+			if (!ctx.networkId) throw Error('Expected networkId to be defined');
 			const {
 				contracts: { SynthUtil, ExchangeRates, CollateralManagerState, EtherWrapper },
-			} = ctx.snxjs!;
+			} = ctx.snxjs;
 
 			const [sETHKey, sBTCKey, sUSDKey] = [Synths.sETH, Synths.sBTC, Synths.sUSD].map(
 				formatBytes32String
 			);
 
 			const isL2 =
-				NetworkIdByName['mainnet-ovm'] === ctx.networkId! ||
-				NetworkIdByName['kovan-ovm'] === ctx.networkId!;
+				NetworkIdByName['mainnet-ovm'] === ctx.networkId ||
+				NetworkIdByName['kovan-ovm'] === ctx.networkId ||
+				NetworkIdByName['goerli-ovm'] === ctx.networkId;
 
 			const [
 				synthTotalSupplies,
@@ -178,7 +181,7 @@ const useSynthsTotalSupplyQuery = (
 			};
 		},
 		{
-			enabled: !!ctx.snxjs,
+			enabled: Boolean(ctx.snxjs && ctx.networkId),
 			...options,
 		}
 	);
