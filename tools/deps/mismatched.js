@@ -7,18 +7,31 @@ const { fgReset, fgRed, fgGreen, fgYellow, fgCyan } = require('./lib/colors');
 
 const isFix = process.argv.includes('--fix');
 
+// ignore certain deps that are explicitly mismatched versions
+function ignored({ parent, name, _version, _location }) {
+	return (
+		parent === '@synthetixio/v3-ui' && ['react', 'react-dom'].includes(name)
+	);
+}
+
 async function run() {
 	const workspaces = await require('./lib/workspaces')();
 	const ROOT = await require('./lib/exec')('yarn workspace root exec pwd');
 
-	const { unique, mismatched } = workspaces
+	const { unique, mismatched: mismatchedUnfiltered } = workspaces
 		.flatMap((p) => {
 			const location = path.join(ROOT, p.location);
 			const packageJson = require(`${location}/package.json`);
 			const { dependencies, devDependencies } = packageJson;
 			return Object.entries(dependencies || {})
 				.map(([name, version]) => [name, version, p])
-				.concat(Object.entries(devDependencies || {}).map(([name, version]) => [name, version, p]));
+				.concat(
+					Object.entries(devDependencies || {}).map(([name, version]) => [
+						name,
+						version,
+						p,
+					])
+				);
 		})
 		.sort((a, b) => a[1].localeCompare(b[1]))
 		.sort((a, b) => a[0].localeCompare(b[0]))
@@ -55,7 +68,8 @@ async function run() {
 			},
 			{ unique: {}, mismatched: [] }
 		);
-	//  return
+
+	const mismatched = mismatchedUnfiltered.filter((item) => !ignored(item));
 
 	mismatched.forEach(({ parent, name, version, location }) => {
 		console.log(
@@ -64,28 +78,40 @@ async function run() {
 			`(expected ${fgGreen}${unique[name]}${fgReset})`
 		);
 		if (isFix) {
-			const packageJson = JSON.parse(fs.readFileSync(`${ROOT}/${location}/package.json`, 'utf-8'));
+			const packageJson = JSON.parse(
+				fs.readFileSync(`${ROOT}/${location}/package.json`, 'utf-8')
+			);
 			if ('dependencies' in packageJson && name in packageJson.dependencies) {
 				packageJson.dependencies[name] = unique[name];
 			}
-			if ('devDependencies' in packageJson && name in packageJson.devDependencies) {
+			if (
+				'devDependencies' in packageJson &&
+				name in packageJson.devDependencies
+			) {
 				packageJson.devDependencies[name] = unique[name];
 			}
 			console.log(`...FIXING ${fgYellow}${location}/package.json${fgReset}`);
-			fs.writeFileSync(`${ROOT}/${location}/package.json`, JSON.stringify(packageJson, null, '\t'));
+			fs.writeFileSync(
+				`${ROOT}/${location}/package.json`,
+				JSON.stringify(packageJson, null, '\t')
+			);
 		}
 	});
 
 	if (mismatched.length > 0 && isFix) {
 		console.log('');
-		console.log(`${fgGreen}Packages fixed: ${fgGreen}${mismatched.length}${fgReset}`);
+		console.log(
+			`${fgGreen}Packages fixed: ${fgGreen}${mismatched.length}${fgReset}`
+		);
 		cp.execSync('yarn install', { encoding: 'utf-8', stdio: 'inherit' });
 		return;
 	}
 
 	if (mismatched.length > 0) {
 		console.log('');
-		console.log(`${fgRed}Versions need fixing: ${fgGreen}${mismatched.length}${fgReset}`);
+		console.log(
+			`${fgRed}Versions need fixing: ${fgGreen}${mismatched.length}${fgReset}`
+		);
 		console.log(`${fgCyan}Run ${fgGreen}deps-mismatched --fix${fgReset}`);
 		throw new Error(`Versions need fixing: ${mismatched.length}`);
 	}
