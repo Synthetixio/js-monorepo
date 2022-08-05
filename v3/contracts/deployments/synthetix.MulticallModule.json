@@ -1,0 +1,26 @@
+{
+  "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes[]",
+          "name": "data",
+          "type": "bytes[]"
+        }
+      ],
+      "name": "multicall",
+      "outputs": [
+        {
+          "internalType": "bytes[]",
+          "name": "results",
+          "type": "bytes[]"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ],
+  "deployTxnHash": "0x746ff718d970ac05f748668ea892c0d1eedf5e8f32b14f93f199f194081dd29c",
+  "deployedOn": "run.deploy"
+}
