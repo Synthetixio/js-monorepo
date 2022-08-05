@@ -2,18 +2,18 @@
 	"env": {
 		"es6": true,
 		"node": true,
-		"jest": true
+		"jest": true,
+		"browser": true
 	},
-	"extends": ["plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+	"extends": ["plugin:@typescript-eslint/recommended"],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaVersion": 6,
 		"sourceType": "module",
 		"project": "./tsconfig.json"
 	},
-	"plugins": ["@typescript-eslint", "prettier", "import"],
+	"plugins": ["@typescript-eslint", "import"],
 	"rules": {
-		"prettier/prettier": "error",
 		"no-mixed-spaces-and-tabs": ["warn", "smart-tabs"],
 		"comma-dangle": [
 			"error",

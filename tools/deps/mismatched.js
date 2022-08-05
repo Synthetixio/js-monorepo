@@ -7,11 +7,16 @@ const { fgReset, fgRed, fgGreen, fgYellow, fgCyan } = require('./lib/colors');
 
 const isFix = process.argv.includes('--fix');
 
+// ignore certain deps that are explicitly mismatched versions
+function ignored({ parent, name, _version, _location }) {
+	return parent === '@synthetixio/v3-ui' && ['react', 'react-dom'].includes(name);
+}
+
 async function run() {
 	const workspaces = await require('./lib/workspaces')();
 	const ROOT = await require('./lib/exec')('yarn workspace root exec pwd');
 
-	const { unique, mismatched } = workspaces
+	const { unique, mismatched: mismatchedUnfiltered } = workspaces
 		.flatMap((p) => {
 			const location = path.join(ROOT, p.location);
 			const packageJson = require(`${location}/package.json`);
@@ -55,7 +60,8 @@ async function run() {
 			},
 			{ unique: {}, mismatched: [] }
 		);
-	//  return
+
+	const mismatched = mismatchedUnfiltered.filter((item) => !ignored(item));
 
 	mismatched.forEach(({ parent, name, version, location }) => {
 		console.log(

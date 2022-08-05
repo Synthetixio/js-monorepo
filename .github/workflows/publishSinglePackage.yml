@@ -61,14 +61,14 @@ jobs:
           cat /tmp/commit-message.txt
 
           git commit --allow-empty --no-verify --all --file /tmp/commit-message.txt 
-          
+
           # We are currently not using tags in any way so not much sense pushing tags to the repo
           # TODO: uncomment if we want to add tags
           # for WORKSPACE_PACKAGE in $(cat /tmp/changed-packages.txt); do
           #   WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
           #   WORKSPACE_VERSION=$(jq --raw-output '.version' < $WORKSPACE_PACKAGE)
           #   git tag -a "$WORKSPACE_NAME@$WORKSPACE_VERSION" -m "$WORKSPACE_NAME@$WORKSPACE_VERSION"
-          # done         
+          # done
 
       - name: Publish packages
         run: yarn workspaces foreach --no-private npm publish --tolerate-republish

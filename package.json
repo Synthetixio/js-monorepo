@@ -15,6 +15,8 @@
 	"scripts": {
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
+		"pretty": "prettier . --check",
+		"pretty:fix": "prettier . --write",
 		"clean": "yarn workspaces foreach exec rm -rf coverage build generated",
 		"test": "yarn workspaces foreach --topological-dev --verbose run test",
 		"build": "yarn workspaces foreach --topological-dev --verbose run build",
@@ -35,9 +37,7 @@
 		"@typescript-eslint/parser": "^4.25.0",
 		"deps": "workspace:*",
 		"eslint": "^7.26.0",
-		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-import": "^2.23.2",
-		"eslint-plugin-prettier": "^3.4.0",
 		"husky": "^4.2.5",
 		"lint-staged": "^10.2.11",
 		"prettier": "^2.3.0",

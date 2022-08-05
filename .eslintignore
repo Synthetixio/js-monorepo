@@ -1,5 +1,8 @@
 build
 coverage
-generated
 node_modules
+generated
+dist
 .vscode
+.yarn
+packages/queries/subgraphs
