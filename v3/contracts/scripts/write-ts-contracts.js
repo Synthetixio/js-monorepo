@@ -13,7 +13,7 @@ function generateTS(network) {
 		throw new Error(`No deployment files found for ${network}`);
 	}
 
-	fs.mkdirSync(`generated/${network}`, { recursive: true });
+	fs.mkdirSync(`ts-deployments/${network}`, { recursive: true });
 
 	deploymentFiles.forEach((file) => {
 		const fileName = path.basename(file, path.extname(file));
@@ -22,8 +22,11 @@ function generateTS(network) {
 		);
 		const abiInterface = new ethers.utils.Interface(json.abi);
 		json.abi = abiInterface.format(ethers.utils.FormatTypes.full);
+
+		const writeTo = `ts-deployments/${network}/${fileName}.ts`;
+
 		fs.writeFileSync(
-			`generated/${network}/${fileName}.ts`,
+			writeTo,
 			prettier.format(
 				Object.entries(json)
 					.filter(([name]) => ['abi', 'address'].includes(name))
