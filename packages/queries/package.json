@@ -15,6 +15,7 @@
 		"src"
 	],
 	"scripts": {
+		"start": "webpack-cli serve",
 		"build": "yarn codegen && tsc",
 		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc --noEmit",
 		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
@@ -57,12 +58,16 @@
 		"@types/lodash": "^4.14.169",
 		"@types/react": "^17.0.11",
 		"eslint": "^7.26.0",
+		"html-webpack-plugin": "^5.5.0",
 		"jest": "^27.0.6",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"react-query": "3.16.0",
 		"react-test-renderer": "^17.0.2",
-		"typescript": "^4.4.2"
+		"typescript": "^4.4.2",
+		"webpack": "^5.73.0",
+		"webpack-cli": "^4.10.0",
+		"webpack-dev-server": "^4.9.3"
 	},
 	"browserslist": [
 		"last 1 Chrome version",

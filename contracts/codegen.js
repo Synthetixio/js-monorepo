@@ -31,6 +31,21 @@ function generateTargets(network) {
 			),
 			'utf8'
 		);
+
+		fs.writeFileSync(
+			`generated/${network}/deployment/targets/${key}.json`,
+			prettier.format(
+				JSON.stringify(
+					Object.fromEntries(
+						Object.entries(val).filter(([name]) => ['name', 'source', 'address'].includes(name))
+					),
+					null,
+					2
+				),
+				{ parser: 'json', ...prettierOptions }
+			),
+			'utf8'
+		);
 	});
 }
 
@@ -42,17 +57,29 @@ function generateSources(network) {
 	}
 
 	Object.entries(deployment.sources).forEach(([key, val]) => {
-		const iface = new ethers.utils.Interface(val.abi);
-		val.abi = iface.format(ethers.utils.FormatTypes.full);
 		fs.writeFileSync(
 			`generated/${network}/deployment/sources/${key}.ts`,
 			prettier.format(
 				Object.entries(val)
 					.filter(([name]) => ['abi'].includes(name))
-					.map(([name, value]) => `export const ${name} = ${JSON.stringify(value, null, 2)};`)
+					.map(([name, value]) => {
+						let val;
+						if (name === 'abi') {
+							const iface = new ethers.utils.Interface(value);
+							val = iface.format(ethers.utils.FormatTypes.full);
+						} else {
+							val = value;
+						}
+						return `export const ${name} = ${JSON.stringify(val, null, 2)};`;
+					})
 					.join('\n'),
 				{ parser: 'typescript', ...prettierOptions }
 			),
+			'utf8'
+		);
+		fs.writeFileSync(
+			`generated/${network}/deployment/sources/${key}.json`,
+			prettier.format(JSON.stringify(val.abi, null, 2), { parser: 'json', ...prettierOptions }),
 			'utf8'
 		);
 	});
