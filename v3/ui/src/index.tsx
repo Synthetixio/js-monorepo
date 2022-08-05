@@ -4,6 +4,7 @@ import { Synthetix } from './App';
 import './app.css';
 
 const container = document.querySelector('#app');
-const root = createRoot(container!);
+// @ts-ignore
+const root = createRoot(container);
 
 root.render(<Synthetix />);
