@@ -1,7 +1,5 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { Configuration } from 'webpack';
-import 'webpack-dev-server';
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const htmlPlugin = new HtmlWebpackPlugin({
   template: path.join(__dirname, 'public', 'index.html'),
@@ -15,12 +13,12 @@ const tsxRule = {
   test: /\.(ts|js)x?$/,
   exclude: /node_modules/,
   use: {
-    loader: 'babel-loader',
+    loader: require.resolve('babel-loader'),
     options: {
       presets: [
-        '@babel/preset-env',
-        '@babel/preset-react',
-        '@babel/preset-typescript',
+        require.resolve('@babel/preset-env'),
+        require.resolve('@babel/preset-react'),
+        require.resolve('@babel/preset-typescript'),
       ],
     },
   },
@@ -28,7 +26,7 @@ const tsxRule = {
 
 const svgRule = {
   test: /\.svg$/,
-  use: '@svgr/webpack',
+  use: require.resolve('@svgr/webpack'),
 };
 
 const imgRule = {
@@ -43,7 +41,7 @@ const imgRule = {
 
 const cssRule = {
   test: /\.css$/,
-  use: ['style-loader', 'css-loader'],
+  use: [require.resolve('style-loader'), require.resolve('css-loader')],
 };
 
 const devServer = {
@@ -72,11 +70,11 @@ const devServer = {
   compress: true,
 };
 
-const config: Configuration = {
+module.exports = {
   devtool: 'eval',
   mode: 'development',
   entry: './src/index.tsx',
-  // @ts-ignore
+
   devServer,
 
   plugins: [htmlPlugin],
@@ -96,5 +94,3 @@ const config: Configuration = {
     rules: [tsxRule, svgRule, imgRule, cssRule],
   },
 };
-
-export default config;
