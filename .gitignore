@@ -2,6 +2,7 @@
 
 # build
 **/build
+**/dist
 
 # testing
 **/coverage

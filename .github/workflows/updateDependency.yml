@@ -70,7 +70,7 @@ jobs:
           #   WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
           #   WORKSPACE_VERSION=$(jq --raw-output '.version' < $WORKSPACE_PACKAGE)
           #   git tag -a "$WORKSPACE_NAME@$WORKSPACE_VERSION" -m "$WORKSPACE_NAME@$WORKSPACE_VERSION"
-          # done         
+          # done
 
       - name: Publish packages
         run: yarn workspaces foreach --no-private npm publish --tolerate-republish

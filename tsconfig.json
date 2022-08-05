@@ -12,10 +12,5 @@
 		"skipLibCheck": true,
 		"isolatedModules": true,
 		"lib": ["ESNext"]
-	},
-	"references": [
-		{
-			"path": "apps/v3"
-		}
-	]
+	}
 }

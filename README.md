@@ -5,7 +5,7 @@
 ## Packages
 
 | Package                                                               | Status                                                                                                                                           | Description                           |
-|-----------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------- |
 | [`@synthetixio/contracts-interface`](/packages/contracts-interface)   | [![npm version](https://badge.fury.io/js/@synthetixio%2Fcontracts-interface.svg)](https://badge.fury.io/js/@synthetixio%2Fcontracts-interface)   | Synthetix contracts interface         |
 | [`@synthetixio/queries`](/packages/queries)                           | [![npm version](https://badge.fury.io/js/@synthetixio%2Fqueries.svg)](https://badge.fury.io/js/@synthetixio%2Fqueries)                           | React library for querying data       |
 | [`@synthetixio/providers`](/packages/providers)                       | [![npm version](https://badge.fury.io/js/@synthetixio%2Fproviders.svg)](https://badge.fury.io/js/@synthetixio%2Fproviders)                       | Synthetix providers for layer 1 and 2 |
@@ -51,8 +51,8 @@ To publish:
 
 This will upgrade `synthetix` in the monorepo and all affected packages will be published with new `patch` release
 
-For example now only the `@synthetixio/contracts-interface` package  depends on `synthetix`, so it will get new `patch` version. But then all the packages that depend on it will get new `patch` version in a cascade (check full list of cascade updates with `yarn deps:version`). So overall these 4 packages will be published:
- 
+For example now only the `@synthetixio/contracts-interface` package depends on `synthetix`, so it will get new `patch` version. But then all the packages that depend on it will get new `patch` version in a cascade (check full list of cascade updates with `yarn deps:version`). So overall these 4 packages will be published:
+
 - `@synthetixio/contracts-interface`
 - `@synthetixio/providers`
 - `@synthetixio/queries`
@@ -70,7 +70,7 @@ To publish:
 4. Fill `version` in a format of `1.2.3` (or `patch`, `minor`, `major`) for the package version (optional, default value is `patch`)
 5. Run the workflow
 
-*NOTE*: All the packages that depend on `package` will be published with `patch` version automatically.
+_NOTE_: All the packages that depend on `package` will be published with `patch` version automatically.
 For example when publishing `@synthetixio/wei` these packages will get updates (check with `yarn deps:version`):
 
 - `@synthetixio/wei`
@@ -86,39 +86,39 @@ When you open a PR a dev package will be published automatically when CI passes.
 Yarn workspaces are specially designed to handle package updates. If you want to push a new release for one or more packages in this repo, run:
 
 1. Firstly set desired versions to updated packages:
-    ```sh
-    yarn version check --interactive
-    ```
+   ```sh
+   yarn version check --interactive
+   ```
 2. Then apply new versions
-    ```sh
-    yarn apply --all
-    ```
+   ```sh
+   yarn apply --all
+   ```
 3. Commit changes
 4. And now we can publish all the updated packages
-    ```sh
-    yarn workspaces foreach --no-private npm publish --tolerate-republish
-    ```
+   ```sh
+   yarn workspaces foreach --no-private npm publish --tolerate-republish
+   ```
 5. Yarn will automatically replace all the `workspace:*` versions with appropriate semver on publish.
-
 
 ## Adding external library to the monorepo preserving git history
 
 This is 3-step process:
+
 1. Prepare original repo
-2. Add remote to monorepo 
+2. Add remote to monorepo
 3. Merge original repo branch and update build to match monorepo processes
 
 Using `codegen-graph-ts` as an example
 
 ### 1. Prepare original repo
 
-- Create a separate branch `move-to-monorepo` 
+- Create a separate branch `move-to-monorepo`
 - Create the intended destination folder inside monorepo `mkdir -p tools/codegen-graph-ts`
 - Move all the package files into `tools/codegen-graph-ts`
 - Remove all the files that won't be used (CI config, lockfile, etc)
 - Commit looks like this:
 
-    ![docs/move-to-monorepo.png](docs/move-to-monorepo.png)
+  ![docs/move-to-monorepo.png](docs/move-to-monorepo.png)
 
 ### 2. Add remote to monorepo
 
@@ -127,11 +127,12 @@ cd ~/synthetix/js-monorepo
 git remote add codegen-graph-ts ~/synthetix/codegen-graph-ts
 git fetch --all
 
-# 
+#
 git merge codegen-graph-ts/move-to-monorepo --allow-unrelated-histories
 ```
 
 ### 3. Merge original repo branch
+
 Using `--allow-unrelated-histories` allows merging independent git history
 
 ```sh
@@ -147,7 +148,7 @@ Now we can remove remote as it is no longer necessary and cleanup all the added 
 ```sh
 git remote remove codegen-graph-ts
 
-# Cleanup all local tags and re-fetch existing tags without just removed `codegen-graph-ts` remote 
+# Cleanup all local tags and re-fetch existing tags without just removed `codegen-graph-ts` remote
 git tag -l | xargs git tag -d
 git fetch --tags
 ```
@@ -155,11 +156,13 @@ git fetch --tags
 ### Rebasing unmerged branch
 
 To preserve all the merge commits when rebasing on top of updated master use `--rebase-merges`
+
 ```sh
 git rebase master --rebase-merge
 ```
 
 Interactive rebase works too
+
 ```sh
 git rebase master --rebase-merge --interactive
 ```
