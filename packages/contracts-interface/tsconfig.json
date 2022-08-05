@@ -3,7 +3,8 @@
 	"compilerOptions": {
 		"declaration": true,
 		"declarationMap": true,
-		"declarationDir": "./build"
+		"module": "commonjs",
+		"outDir": "./build/node/src"
 	},
 	"include": ["src"]
 }

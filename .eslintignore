@@ -3,4 +3,3 @@ coverage
 generated
 node_modules
 .vscode
-webpack.config.js

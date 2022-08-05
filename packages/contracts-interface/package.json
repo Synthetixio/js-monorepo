@@ -15,21 +15,14 @@
 		"src"
 	],
 	"scripts": {
-		"build": "yarn build-browser && yarn build-node",
-		"build-node": "tsc -p tsconfig.node.json",
-		"build-browser": "webpack-cli --mode=production --max-old-space-size=4096",
-		"examples:node": "ts-node --project tsconfig.node.json ./examples/signer-example.js",
-		"examples:browser": "yarn build-browser && http-server -o ./examples/browser-example.html -c-1",
+		"build": "tsc",
+		"examples": "ts-node ./examples/index.js",
+		"start": "webpack-cli serve",
 		"lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
 		"lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
-		"test": "jest --forceExit --coverage --no-cache",
-		"watch": "yarn build-node && chokidar 'src/**/*.ts' -c 'yarn build-node'",
-		"tsc": "tsc --noemit"
+		"test": "jest --coverage --no-cache"
 	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Synthetixio/js-monorepo"
-	},
+	"repository": "Synthetixio/js-monorepo",
 	"author": "Synthetix",
 	"license": "MIT",
 	"bugs": {
@@ -46,15 +39,22 @@
 		"@babel/preset-env": "^7.13.10",
 		"@babel/preset-typescript": "^7.13.0",
 		"@types/node": "^17.0.43",
-		"chokidar-cli": "^2.1.0",
 		"eslint": "^7.26.0",
+		"html-webpack-plugin": "^5.5.0",
 		"jest": "^27.0.6",
-		"ts-loader": "^8.0.2",
+		"ts-loader": "^9.3.1",
 		"ts-node": "^10.2.1",
 		"typescript": "^4.4.2",
-		"webpack": "^4.44.1",
-		"webpack-cli": "^3.3.12"
+		"webpack": "^5.73.0",
+		"webpack-cli": "^4.10.0",
+		"webpack-dev-server": "^4.9.3"
 	},
+	"browserslist": [
+		"last 1 Chrome version",
+		"last 1 Firefox version",
+		"last 1 Edge version",
+		"last 1 Opera version"
+	],
 	"jest": {
 		"testMatch": [
 			"<rootDir>/**/*.test.{js,jsx,ts,tsx}"

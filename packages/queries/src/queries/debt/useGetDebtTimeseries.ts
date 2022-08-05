@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import Wei from '@synthetixio/wei';
-import { wei } from '@synthetixio/wei/build/node/wei';
+import { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { getDebtStates, getDebtSnapshots } from '../../../generated/mainSubgraphFunctions';
 import { times, findIndex, sortBy } from 'lodash';
