@@ -1873,7 +1873,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/networks@npm:5.6.3, @ethersproject/networks@npm:^5.6.3":
+"@ethersproject/networks@npm:5.6.4":
+  version: 5.6.4
+  resolution: "@ethersproject/networks@npm:5.6.4"
+  dependencies:
+    "@ethersproject/logger": ^5.6.0
+  checksum: d41c07497de4ace3f57e972428685a8703a867600cf01f2bc15a21fcb7f99afb3f05b3d8dbb29ac206473368f30d60b98dc445cc38403be4cbe6f804f70e5173
+  languageName: node
+  linkType: hard
+
+"@ethersproject/networks@npm:^5.6.3":
   version: 5.6.3
   resolution: "@ethersproject/networks@npm:5.6.3"
   dependencies:
@@ -3137,7 +3146,7 @@ __metadata:
     "@synthetixio/contracts": "workspace:*"
     "@types/node": ^17.0.43
     eslint: ^7.26.0
-    ethers: ^5.5.3
+    ethers: ^5.6.9
     html-webpack-plugin: ^5.5.0
     jest: ^27.0.6
     synthetix: 2.75.2
@@ -3154,7 +3163,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@synthetixio/contracts@workspace:contracts"
   dependencies:
-    ethers: ^5.5.3
+    ethers: ^5.6.9
     prettier: ^2.3.0
     synthetix: 2.75.2
     typescript: ^4.4.2
@@ -3283,7 +3292,7 @@ __metadata:
     cross-env: ^7.0.3
     dotenv: ^16.0.0
     ethereum-waffle: ^3.4.4
-    ethers: ^5.5.3
+    ethers: ^5.6.9
     hardhat: ^2.9.2
     hardhat-cannon: 1.0.21
     hardhat-gas-reporter: ^1.0.8
@@ -9880,11 +9889,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^5.5.3":
-  version: 5.6.8
-  resolution: "ethers@npm:5.6.8"
+"ethers@npm:^5.6.9":
+  version: 5.6.9
+  resolution: "ethers@npm:5.6.9"
   dependencies:
-    "@ethersproject/abi": 5.6.3
+    "@ethersproject/abi": 5.6.4
     "@ethersproject/abstract-provider": 5.6.1
     "@ethersproject/abstract-signer": 5.6.2
     "@ethersproject/address": 5.6.1
@@ -9899,7 +9908,7 @@ __metadata:
     "@ethersproject/json-wallets": 5.6.1
     "@ethersproject/keccak256": 5.6.1
     "@ethersproject/logger": 5.6.0
-    "@ethersproject/networks": 5.6.3
+    "@ethersproject/networks": 5.6.4
     "@ethersproject/pbkdf2": 5.6.1
     "@ethersproject/properties": 5.6.0
     "@ethersproject/providers": 5.6.8
@@ -9914,7 +9923,7 @@ __metadata:
     "@ethersproject/wallet": 5.6.2
     "@ethersproject/web": 5.6.1
     "@ethersproject/wordlists": 5.6.1
-  checksum: 3ef1e1509e96029839330bef465c368fee140d98c4fb23d743a0904b7ebdf70fa3c79683a2350355c9400497a5c179fe988d84a2b578d756f09c80462a94f614
+  checksum: e4a029ad55da2355cb7b0ff178b38b0df27f9013604b0600c246dba297223ac2ce8ef0380758fa535cd82ea46bceb4a71aeb29949e1693f3a9c60d4cdaceb208
   languageName: node
   linkType: hard
 
