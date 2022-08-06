@@ -1,308 +1,308 @@
 {
-  "address": "0x8C5Ea21632C1B03f340188812aaCFE2982990589",
-  "abi": [
-    {
-      "type": "constructor",
-      "payable": false,
-      "inputs": []
-    },
-    {
-      "type": "function",
-      "name": "allRoundDataShouldRevert",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "bool"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "decimals",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint8"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "entries",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint80",
-          "name": "roundId"
-        },
-        {
-          "type": "int256",
-          "name": "answer"
-        },
-        {
-          "type": "uint256",
-          "name": "startedAt"
-        },
-        {
-          "type": "uint256",
-          "name": "updatedAt"
-        },
-        {
-          "type": "uint80",
-          "name": "answeredInRound"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "getAnswer",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "_roundId"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "int256"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "getRoundData",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint80",
-          "name": "_roundId"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint80"
-        },
-        {
-          "type": "int256"
-        },
-        {
-          "type": "uint256"
-        },
-        {
-          "type": "uint256"
-        },
-        {
-          "type": "uint80"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "getTimestamp",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "_roundId"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "keyDecimals",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint8"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "latestRound",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint256"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "latestRoundData",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint80"
-        },
-        {
-          "type": "int256"
-        },
-        {
-          "type": "uint256"
-        },
-        {
-          "type": "uint256"
-        },
-        {
-          "type": "uint80"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "latestRoundDataShouldRevert",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "bool"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "roundId",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint80"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "setAllRoundDataShouldRevert",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "bool",
-          "name": "_shouldRevert"
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "type": "function",
-      "name": "setDecimals",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint8",
-          "name": "_decimals"
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "type": "function",
-      "name": "setLatestAnswer",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "int256",
-          "name": "answer"
-        },
-        {
-          "type": "uint256",
-          "name": "timestamp"
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "type": "function",
-      "name": "setLatestAnswerCurrent",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "int256",
-          "name": "answer"
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "type": "function",
-      "name": "setLatestAnswerWithRound",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "int256",
-          "name": "answer"
-        },
-        {
-          "type": "uint256",
-          "name": "timestamp"
-        },
-        {
-          "type": "uint80",
-          "name": "_roundId"
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "type": "function",
-      "name": "setLatestRoundDataShouldRevert",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "bool",
-          "name": "_shouldRevert"
-        }
-      ],
-      "outputs": []
-    }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x5e2f01fc0793a2284b3ecf522c5718ad283d13687d4e7b2e1612f1c9bd879305",
-  "sourceName": "contracts/ChainlinkMockAggregator.sol",
-  "contractName": "MockAggregatorV2V3",
-  "deployedOn": "contract.aggregator"
+	"address": "0x8C5Ea21632C1B03f340188812aaCFE2982990589",
+	"abi": [
+		{
+			"type": "constructor",
+			"payable": false,
+			"inputs": []
+		},
+		{
+			"type": "function",
+			"name": "allRoundDataShouldRevert",
+			"constant": true,
+			"stateMutability": "view",
+			"payable": false,
+			"inputs": [],
+			"outputs": [
+				{
+					"type": "bool"
+				}
+			]
+		},
+		{
+			"type": "function",
+			"name": "decimals",
+			"constant": true,
+			"stateMutability": "view",
+			"payable": false,
+			"inputs": [],
+			"outputs": [
+				{
+					"type": "uint8"
+				}
+			]
+		},
+		{
+			"type": "function",
+			"name": "entries",
+			"constant": true,
+			"stateMutability": "view",
+			"payable": false,
+			"inputs": [
+				{
+					"type": "uint256"
+				}
+			],
+			"outputs": [
+				{
+					"type": "uint80",
+					"name": "roundId"
+				},
+				{
+					"type": "int256",
+					"name": "answer"
+				},
+				{
+					"type": "uint256",
+					"name": "startedAt"
+				},
+				{
+					"type": "uint256",
+					"name": "updatedAt"
+				},
+				{
+					"type": "uint80",
+					"name": "answeredInRound"
+				}
+			]
+		},
+		{
+			"type": "function",
+			"name": "getAnswer",
+			"constant": true,
+			"stateMutability": "view",
+			"payable": false,
+			"inputs": [
+				{
+					"type": "uint256",
+					"name": "_roundId"
+				}
+			],
+			"outputs": [
+				{
+					"type": "int256"
+				}
+			]
+		},
+		{
+			"type": "function",
+			"name": "getRoundData",
+			"constant": true,
+			"stateMutability": "view",
+			"payable": false,
+			"inputs": [
+				{
+					"type": "uint80",
+					"name": "_roundId"
+				}
+			],
+			"outputs": [
+				{
+					"type": "uint80"
+				},
+				{
+					"type": "int256"
+				},
+				{
+					"type": "uint256"
+				},
+				{
+					"type": "uint256"
+				},
+				{
+					"type": "uint80"
+				}
+			]
+		},
+		{
+			"type": "function",
+			"name": "getTimestamp",
+			"constant": true,
+			"stateMutability": "view",
+			"payable": false,
+			"inputs": [
+				{
+					"type": "uint256",
+					"name": "_roundId"
+				}
+			],
+			"outputs": [
+				{
+					"type": "uint256"
+				}
+			]
+		},
+		{
+			"type": "function",
+			"name": "keyDecimals",
+			"constant": true,
+			"stateMutability": "view",
+			"payable": false,
+			"inputs": [],
+			"outputs": [
+				{
+					"type": "uint8"
+				}
+			]
+		},
+		{
+			"type": "function",
+			"name": "latestRound",
+			"constant": true,
+			"stateMutability": "view",
+			"payable": false,
+			"inputs": [],
+			"outputs": [
+				{
+					"type": "uint256"
+				}
+			]
+		},
+		{
+			"type": "function",
+			"name": "latestRoundData",
+			"constant": true,
+			"stateMutability": "view",
+			"payable": false,
+			"inputs": [],
+			"outputs": [
+				{
+					"type": "uint80"
+				},
+				{
+					"type": "int256"
+				},
+				{
+					"type": "uint256"
+				},
+				{
+					"type": "uint256"
+				},
+				{
+					"type": "uint80"
+				}
+			]
+		},
+		{
+			"type": "function",
+			"name": "latestRoundDataShouldRevert",
+			"constant": true,
+			"stateMutability": "view",
+			"payable": false,
+			"inputs": [],
+			"outputs": [
+				{
+					"type": "bool"
+				}
+			]
+		},
+		{
+			"type": "function",
+			"name": "roundId",
+			"constant": true,
+			"stateMutability": "view",
+			"payable": false,
+			"inputs": [],
+			"outputs": [
+				{
+					"type": "uint80"
+				}
+			]
+		},
+		{
+			"type": "function",
+			"name": "setAllRoundDataShouldRevert",
+			"constant": false,
+			"payable": false,
+			"inputs": [
+				{
+					"type": "bool",
+					"name": "_shouldRevert"
+				}
+			],
+			"outputs": []
+		},
+		{
+			"type": "function",
+			"name": "setDecimals",
+			"constant": false,
+			"payable": false,
+			"inputs": [
+				{
+					"type": "uint8",
+					"name": "_decimals"
+				}
+			],
+			"outputs": []
+		},
+		{
+			"type": "function",
+			"name": "setLatestAnswer",
+			"constant": false,
+			"payable": false,
+			"inputs": [
+				{
+					"type": "int256",
+					"name": "answer"
+				},
+				{
+					"type": "uint256",
+					"name": "timestamp"
+				}
+			],
+			"outputs": []
+		},
+		{
+			"type": "function",
+			"name": "setLatestAnswerCurrent",
+			"constant": false,
+			"payable": false,
+			"inputs": [
+				{
+					"type": "int256",
+					"name": "answer"
+				}
+			],
+			"outputs": []
+		},
+		{
+			"type": "function",
+			"name": "setLatestAnswerWithRound",
+			"constant": false,
+			"payable": false,
+			"inputs": [
+				{
+					"type": "int256",
+					"name": "answer"
+				},
+				{
+					"type": "uint256",
+					"name": "timestamp"
+				},
+				{
+					"type": "uint80",
+					"name": "_roundId"
+				}
+			],
+			"outputs": []
+		},
+		{
+			"type": "function",
+			"name": "setLatestRoundDataShouldRevert",
+			"constant": false,
+			"payable": false,
+			"inputs": [
+				{
+					"type": "bool",
+					"name": "_shouldRevert"
+				}
+			],
+			"outputs": []
+		}
+	],
+	"constructorArgs": [],
+	"deployTxnHash": "0x5e2f01fc0793a2284b3ecf522c5718ad283d13687d4e7b2e1612f1c9bd879305",
+	"sourceName": "contracts/ChainlinkMockAggregator.sol",
+	"contractName": "MockAggregatorV2V3",
+	"deployedOn": "contract.aggregator"
 }
