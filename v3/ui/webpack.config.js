@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const htmlPlugin = new HtmlWebpackPlugin({
 	template: path.join(__dirname, 'public', 'index.html'),
+	favicon: path.join(__dirname, 'public', 'images', 'favicon.ico'),
 	scriptLoading: 'defer',
 	minify: false,
 	hash: false,

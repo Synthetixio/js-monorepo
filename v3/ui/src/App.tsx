@@ -36,7 +36,7 @@ export function Synthetix() {
 }
 
 const TestWagmi = () => {
-	const file = require('../generated/goerli/synthetix.Proxy');
+	const file = require('../ts-deployments/goerli/synthetix.Proxy');
 	const { isLoading, data } = useContractRead({
 		addressOrName: file.address,
 		contractInterface: file.abi,
