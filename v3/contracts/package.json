@@ -54,6 +54,9 @@
 		"typechain": "^8.0.0",
 		"typescript": "^4.6.3"
 	},
+	"bin": {
+		"write-ts": "./scripts/write-ts-contracts.js"
+	},
 	"files": [
 		"/contracts"
 	],
