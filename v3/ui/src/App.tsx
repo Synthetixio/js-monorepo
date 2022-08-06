@@ -44,7 +44,5 @@ const TestWagmi = () => {
 		args: [true],
 	});
 
-	console.log(isLoading, data);
-
 	return <div>Hello World</div>;
 };
