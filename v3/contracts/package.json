@@ -16,7 +16,7 @@
 		"cross-env": "^7.0.3",
 		"dotenv": "^16.0.0",
 		"ethereum-waffle": "^3.4.4",
-		"ethers": "^5.6.9",
+		"ethers": "^5.5.3",
 		"hardhat": "^2.9.2",
 		"hardhat-cannon": "1.0.21",
 		"hardhat-gas-reporter": "^1.0.8",
@@ -25,6 +25,9 @@
 		"ts-node": "^10.2.1",
 		"typechain": "^8.0.0",
 		"typescript": "^4.4.2"
+	},
+	"resolutions": {
+		"ethers": "^5.6.9"
 	},
 	"bin": {
 		"write-ts": "./scripts/write-ts-contracts.js"
