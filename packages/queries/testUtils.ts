@@ -9,18 +9,18 @@ import { Signer } from '@ethersproject/abstract-signer';
 // simple query client wrapper which allows for testing of a
 // query function hook, see https://react-query.tanstack.com/guides/testing
 export function getWrapper(config?: any) {
-	return ({ children }: { children: ReactNode[] }) =>
-		QueryClientProvider({ client: new QueryClient(config), children });
+  return ({ children }: { children: ReactNode[] }) =>
+    QueryClientProvider({ client: new QueryClient(config), children });
 }
 
 // builds an incomplete query context which should generally pass
 // blanket `enabled` sections. just mock the functions/data you need
 export function getFakeQueryContext(networkId: NetworkId = NetworkIdByName.mainnet): QueryContext {
-	return {
-		networkId,
-		subgraphEndpoints: { exchanger: '', issuance: '', exchanges: '', subgraph: '' },
-		signer: {} as Signer,
-		provider: {} as Provider,
-		snxjs: {} as SynthetixJS,
-	};
+  return {
+    networkId,
+    subgraphEndpoints: { exchanger: '', issuance: '', exchanges: '', subgraph: '' },
+    signer: {} as Signer,
+    provider: {} as Provider,
+    snxjs: {} as SynthetixJS,
+  };
 }

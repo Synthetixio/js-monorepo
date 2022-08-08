@@ -4,45 +4,45 @@ import { chain, createClient, WagmiConfig, configureChains, useContractRead } fr
 import { publicProvider } from 'wagmi/providers/public';
 
 export const supportedChains = [
-	chain.goerli,
-	{
-		...chain.hardhat,
-		multicall: {
-			address: '0x2017758D5341a319410f8DdD0a034d0170EE0444',
-			blockCreated: 10228837,
-		},
-	},
+  chain.goerli,
+  {
+    ...chain.hardhat,
+    multicall: {
+      address: '0x2017758D5341a319410f8DdD0a034d0170EE0444',
+      blockCreated: 10228837,
+    },
+  },
 ];
 
 const { chains, provider } = configureChains(supportedChains, [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
-	appName: 'Synthetix',
-	chains,
+  appName: 'Synthetix',
+  chains,
 });
 
 const wagmiClient = createClient({
-	autoConnect: true,
-	provider,
-	connectors,
+  autoConnect: true,
+  provider,
+  connectors,
 });
 
 export function Synthetix() {
-	return (
-		<WagmiConfig client={wagmiClient}>
-			<TestWagmi />
-		</WagmiConfig>
-	);
+  return (
+    <WagmiConfig client={wagmiClient}>
+      <TestWagmi />
+    </WagmiConfig>
+  );
 }
 
 const TestWagmi = () => {
-	const file = require('../ts-deployments/goerli/synthetix.Proxy');
-	const { isLoading, data } = useContractRead({
-		addressOrName: file.address,
-		contractInterface: file.abi,
-		functionName: 'getCollateralTypes',
-		args: [true],
-	});
+  const file = require('../ts-deployments/goerli/synthetix.Proxy');
+  const { isLoading, data } = useContractRead({
+    addressOrName: file.address,
+    contractInterface: file.abi,
+    functionName: 'getCollateralTypes',
+    args: [true],
+  });
 
-	return <div>Hello World</div>;
+  return <div>Hello World</div>;
 };

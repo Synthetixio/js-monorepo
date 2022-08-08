@@ -9,21 +9,21 @@ import { calculateTimestampForPeriod } from './utils';
 const RATES_ENDPOINT = 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-rates';
 
 const useCandlesticksQuery = (
-	ctx: QueryContext,
-	currencyKey: string | null,
-	period: Period = Period.ONE_DAY,
-	options?: UseQueryOptions<Array<Candle>>
+  ctx: QueryContext,
+  currencyKey: string | null,
+  period: Period = Period.ONE_DAY,
+  options?: UseQueryOptions<Array<Candle>>
 ) => {
-	const periodInHours = PERIOD_IN_HOURS[period];
+  const periodInHours = PERIOD_IN_HOURS[period];
 
-	// TODO: move to data library in js monorepo once L2 branch is merged
-	return useQuery<Array<Candle>>(
-		['rates', 'candlesticks', ctx.networkId, currencyKey, period],
-		async () => {
-			const candleGranularity = 'daily';
-			const response = (await request(
-				RATES_ENDPOINT,
-				gql`
+  // TODO: move to data library in js monorepo once L2 branch is merged
+  return useQuery<Array<Candle>>(
+    ['rates', 'candlesticks', ctx.networkId, currencyKey, period],
+    async () => {
+      const candleGranularity = 'daily';
+      const response = (await request(
+        RATES_ENDPOINT,
+        gql`
 					query ${candleGranularity}Candles($synth: String!, $minTimestamp: BigInt!) {
 						${candleGranularity}Candles(
 							where: { synth: $synth, timestamp_gt: $minTimestamp }
@@ -40,20 +40,20 @@ const useCandlesticksQuery = (
 						}
 					}
 				`,
-				{
-					synth: currencyKey,
-					minTimestamp: calculateTimestampForPeriod(periodInHours),
-				}
-			)) as {
-				[key: string]: Array<Candle>;
-			};
-			return response[`${candleGranularity}Candles`].reverse();
-		},
-		{
-			enabled: !!currencyKey,
-			...options,
-		}
-	);
+        {
+          synth: currencyKey,
+          minTimestamp: calculateTimestampForPeriod(periodInHours),
+        }
+      )) as {
+        [key: string]: Array<Candle>;
+      };
+      return response[`${candleGranularity}Candles`].reverse();
+    },
+    {
+      enabled: !!currencyKey,
+      ...options,
+    }
+  );
 };
 
 export default useCandlesticksQuery;

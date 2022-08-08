@@ -11,56 +11,56 @@ import { Balances, SynthBalancesMap } from '../../types';
 type SynthBalancesTuple = [string[], BigNumber[], BigNumber[]];
 
 const useSynthsBalancesQuery = (
-	ctx: QueryContext,
-	walletAddress: string | null,
-	options?: UseQueryOptions<Balances>
+  ctx: QueryContext,
+  walletAddress: string | null,
+  options?: UseQueryOptions<Balances>
 ) => {
-	return useQuery<Balances>(
-		['walletBalances', 'synths', ctx.networkId, walletAddress],
-		async () => {
-			if (!ctx.snxjs) {
-				// This should never happen since the query is not enabled when ctx.snxjs is undefined
-				throw Error('ctx.snxjs is undefined');
-			}
-			const balancesMap: SynthBalancesMap = {};
-			const [currencyKeys, synthsBalances, synthsUSDBalances]: SynthBalancesTuple =
-				await ctx.snxjs.contracts.SynthUtil.synthsBalances(walletAddress);
+  return useQuery<Balances>(
+    ['walletBalances', 'synths', ctx.networkId, walletAddress],
+    async () => {
+      if (!ctx.snxjs) {
+        // This should never happen since the query is not enabled when ctx.snxjs is undefined
+        throw Error('ctx.snxjs is undefined');
+      }
+      const balancesMap: SynthBalancesMap = {};
+      const [currencyKeys, synthsBalances, synthsUSDBalances]: SynthBalancesTuple =
+        await ctx.snxjs.contracts.SynthUtil.synthsBalances(walletAddress);
 
-			let totalUSDBalance = wei(0);
+      let totalUSDBalance = wei(0);
 
-			currencyKeys.forEach((currencyKeyBytes32, idx) => {
-				const balance = wei(synthsBalances[idx]);
+      currencyKeys.forEach((currencyKeyBytes32, idx) => {
+        const balance = wei(synthsBalances[idx]);
 
-				// discard empty balances
-				if (balance.gt(0)) {
-					const synthName = parseBytes32String(currencyKeyBytes32) as CurrencyKey;
-					const usdBalance = wei(synthsUSDBalances[idx]);
+        // discard empty balances
+        if (balance.gt(0)) {
+          const synthName = parseBytes32String(currencyKeyBytes32) as CurrencyKey;
+          const usdBalance = wei(synthsUSDBalances[idx]);
 
-					balancesMap[synthName] = {
-						currencyKey: synthName,
-						balance,
-						usdBalance,
-					};
+          balancesMap[synthName] = {
+            currencyKey: synthName,
+            balance,
+            usdBalance,
+          };
 
-					totalUSDBalance = totalUSDBalance.add(usdBalance);
-				}
-			});
+          totalUSDBalance = totalUSDBalance.add(usdBalance);
+        }
+      });
 
-			return {
-				balancesMap: balancesMap,
-				balances: orderBy(
-					Object.values(balancesMap),
-					(balance) => balance.usdBalance.toNumber(),
-					'desc'
-				),
-				totalUSDBalance,
-			};
-		},
-		{
-			enabled: !!ctx.snxjs && !!walletAddress,
-			...options,
-		}
-	);
+      return {
+        balancesMap: balancesMap,
+        balances: orderBy(
+          Object.values(balancesMap),
+          (balance) => balance.usdBalance.toNumber(),
+          'desc'
+        ),
+        totalUSDBalance,
+      };
+    },
+    {
+      enabled: !!ctx.snxjs && !!walletAddress,
+      ...options,
+    }
+  );
 };
 
 export default useSynthsBalancesQuery;

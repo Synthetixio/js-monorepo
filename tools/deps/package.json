@@ -1,18 +1,18 @@
 {
-	"name": "deps",
-	"private": true,
-	"version": "2.74.1",
-	"author": "Nikita <noisekit@btnk.au>",
-	"repository": "github:Synthetixio/js-monorepo",
-	"license": "MIT",
-	"bin": {
-		"deps": "./deps.js",
-		"deps-circular": "./circular.js",
-		"deps-mismatched": "./mismatched.js",
-		"deps-version": "./version.js"
-	},
-	"devDependencies": {
-		"depcheck": "^1.4.3",
-		"typescript": "^4.4.2"
-	}
+  "name": "deps",
+  "private": true,
+  "version": "2.74.1",
+  "author": "Nikita <noisekit@btnk.au>",
+  "repository": "github:Synthetixio/js-monorepo",
+  "license": "MIT",
+  "bin": {
+    "deps": "./deps.js",
+    "deps-circular": "./circular.js",
+    "deps-mismatched": "./mismatched.js",
+    "deps-version": "./version.js"
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.3",
+    "typescript": "^4.4.2"
+  }
 }

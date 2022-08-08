@@ -1,697 +1,697 @@
 {
-	"address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
-	"abi": [
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "FundAlreadyApproved",
-			"type": "error"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "FundAlreadyExists",
-			"type": "error"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "FundNotFound",
-			"type": "error"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "accountId",
-					"type": "uint256"
-				},
-				{
-					"internalType": "address",
-					"name": "collateralType",
-					"type": "address"
-				},
-				{
-					"internalType": "uint256",
-					"name": "requestedAmount",
-					"type": "uint256"
-				}
-			],
-			"name": "InsufficientAvailableCollateral",
-			"type": "error"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "collateralType",
-					"type": "address"
-				}
-			],
-			"name": "InvalidCollateralType",
-			"type": "error"
-		},
-		{
-			"inputs": [],
-			"name": "InvalidParameters",
-			"type": "error"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "origin",
-					"type": "address"
-				}
-			],
-			"name": "OnlyTokenProxyAllowed",
-			"type": "error"
-		},
-		{
-			"inputs": [],
-			"name": "PositionOutOfBounds",
-			"type": "error"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "accountId",
-					"type": "uint256"
-				},
-				{
-					"internalType": "bytes32",
-					"name": "role",
-					"type": "bytes32"
-				},
-				{
-					"internalType": "address",
-					"name": "target",
-					"type": "address"
-				}
-			],
-			"name": "RoleNotAuthorized",
-			"type": "error"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "addr",
-					"type": "address"
-				}
-			],
-			"name": "Unauthorized",
-			"type": "error"
-		},
-		{
-			"inputs": [],
-			"name": "ZeroAddress",
-			"type": "error"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "bytes32",
-					"name": "liquidityItemId",
-					"type": "bytes32"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "accountId",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "collateralType",
-					"type": "address"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "amount",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "leverage",
-					"type": "uint256"
-				}
-			],
-			"name": "DelegationUpdated",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "FundApprovedAdded",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "FundApprovedRemoved",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "owner",
-					"type": "address"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "FundCreated",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256[]",
-					"name": "markets",
-					"type": "uint256[]"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256[]",
-					"name": "weights",
-					"type": "uint256[]"
-				},
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "executedBy",
-					"type": "address"
-				}
-			],
-			"name": "FundPositionSet",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "nominatedOwner",
-					"type": "address"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "NominatedNewOwner",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "newOwner",
-					"type": "address"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "OwnershipAccepted",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "target",
-					"type": "address"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "OwnershipRenounced",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "bytes32",
-					"name": "liquidityItemId",
-					"type": "bytes32"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "accountId",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "collateralType",
-					"type": "address"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "amount",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "leverage",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "shares",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "initialDebt",
-					"type": "uint256"
-				}
-			],
-			"name": "PositionAdded",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "bytes32",
-					"name": "liquidityItemId",
-					"type": "bytes32"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "collateralType",
-					"type": "address"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "amount",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "leverage",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "shares",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "initialDebt",
-					"type": "uint256"
-				}
-			],
-			"name": "PositionDecreased",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "bytes32",
-					"name": "liquidityItemId",
-					"type": "bytes32"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "collateralType",
-					"type": "address"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "amount",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "leverage",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "shares",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "initialDebt",
-					"type": "uint256"
-				}
-			],
-			"name": "PositionIncreased",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "bytes32",
-					"name": "liquidityItemId",
-					"type": "bytes32"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "accountId",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "collateralType",
-					"type": "address"
-				}
-			],
-			"name": "PositionRemoved",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "PreferredFundSet",
-			"type": "event"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "acceptFundOwnership",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "requestedFundId",
-					"type": "uint256"
-				},
-				{
-					"internalType": "address",
-					"name": "owner",
-					"type": "address"
-				}
-			],
-			"name": "createFund",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "getFundName",
-			"outputs": [
-				{
-					"internalType": "string",
-					"name": "fundName",
-					"type": "string"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "getFundPosition",
-			"outputs": [
-				{
-					"internalType": "uint256[]",
-					"name": "",
-					"type": "uint256[]"
-				},
-				{
-					"internalType": "uint256[]",
-					"name": "",
-					"type": "uint256[]"
-				},
-				{
-					"internalType": "uint256[]",
-					"name": "",
-					"type": "uint256[]"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "nominatedOwner",
-					"type": "address"
-				},
-				{
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "nominateNewFundOwner",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "nominatedOwnerOf",
-			"outputs": [
-				{
-					"internalType": "address",
-					"name": "",
-					"type": "address"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "ownerOf",
-			"outputs": [
-				{
-					"internalType": "address",
-					"name": "",
-					"type": "address"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				}
-			],
-			"name": "renounceFundNomination",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				},
-				{
-					"internalType": "string",
-					"name": "name",
-					"type": "string"
-				}
-			],
-			"name": "setFundName",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "fundId",
-					"type": "uint256"
-				},
-				{
-					"internalType": "uint256[]",
-					"name": "markets",
-					"type": "uint256[]"
-				},
-				{
-					"internalType": "uint256[]",
-					"name": "weights",
-					"type": "uint256[]"
-				},
-				{
-					"internalType": "uint256[]",
-					"name": "maxDebtShareValues",
-					"type": "uint256[]"
-				}
-			],
-			"name": "setFundPosition",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		}
-	],
-	"deployTxnHash": "0x9dfbda581216dbcd6068f77a7dfcaf31ec3cca317439c0bed507c87a790ad21e",
-	"deployedOn": "run.deploy"
+  "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "FundAlreadyApproved",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "FundAlreadyExists",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "FundNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "accountId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "requestedAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "InsufficientAvailableCollateral",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "InvalidCollateralType",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidParameters",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "origin",
+          "type": "address"
+        }
+      ],
+      "name": "OnlyTokenProxyAllowed",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "PositionOutOfBounds",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "accountId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "role",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
+        }
+      ],
+      "name": "RoleNotAuthorized",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "Unauthorized",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ZeroAddress",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "liquidityItemId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "accountId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "leverage",
+          "type": "uint256"
+        }
+      ],
+      "name": "DelegationUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "FundApprovedAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "FundApprovedRemoved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "FundCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256[]",
+          "name": "markets",
+          "type": "uint256[]"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256[]",
+          "name": "weights",
+          "type": "uint256[]"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "executedBy",
+          "type": "address"
+        }
+      ],
+      "name": "FundPositionSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "nominatedOwner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "NominatedNewOwner",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "OwnershipAccepted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "OwnershipRenounced",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "liquidityItemId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "accountId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "leverage",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "shares",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "initialDebt",
+          "type": "uint256"
+        }
+      ],
+      "name": "PositionAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "liquidityItemId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "leverage",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "shares",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "initialDebt",
+          "type": "uint256"
+        }
+      ],
+      "name": "PositionDecreased",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "liquidityItemId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "leverage",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "shares",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "initialDebt",
+          "type": "uint256"
+        }
+      ],
+      "name": "PositionIncreased",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "liquidityItemId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "accountId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "PositionRemoved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "PreferredFundSet",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "acceptFundOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "requestedFundId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "createFund",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getFundName",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "fundName",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getFundPosition",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "nominatedOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "nominateNewFundOwner",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "nominatedOwnerOf",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "ownerOf",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "renounceFundNomination",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "setFundName",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "markets",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "weights",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "maxDebtShareValues",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "setFundPosition",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "deployTxnHash": "0x9dfbda581216dbcd6068f77a7dfcaf31ec3cca317439c0bed507c87a790ad21e",
+  "deployedOn": "run.deploy"
 }
