@@ -6,7 +6,6 @@ import 'hardhat-cannon';
 import 'hardhat-gas-reporter';
 import 'hardhat-interact';
 import { HardhatUserConfig } from 'hardhat/config';
-import { NetworkUserConfig } from 'hardhat/types';
 import { resolve } from 'path';
 
 // todo: below module seems to be legacy broken
@@ -18,38 +17,6 @@ const infuraApiKey: string | undefined = process.env.INFURA_API_KEY;
 const infuraIpfsId: string | undefined = process.env.INFURA_IPFS_ID;
 const infuraIpfsSecret: string | undefined = process.env.INFURA_IPFS_SECRET;
 
-const chainIds = {
-	'arbitrum-mainnet': 42161,
-	avalanche: 43114,
-	bsc: 56,
-	hardhat: 31337,
-	mainnet: 1,
-	'optimism-mainnet': 10,
-	'polygon-mainnet': 137,
-	'polygon-mumbai': 80001,
-	rinkeby: 4,
-	goerli: 5,
-};
-
-function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
-	let jsonRpcUrl: string;
-	switch (chain) {
-		case 'avalanche':
-			jsonRpcUrl = 'https://api.avax.network/ext/bc/C/rpc';
-			break;
-		case 'bsc':
-			jsonRpcUrl = 'https://bsc-dataseed1.binance.org';
-			break;
-		default:
-			jsonRpcUrl = 'https://' + chain + '.infura.io/v3/' + infuraApiKey;
-	}
-	return {
-		chainId: chainIds[chain],
-		url: process.env.PROVIDER_URL || jsonRpcUrl,
-		accounts: [process.env.PRIVATE_KEY || ''],
-	};
-}
-
 const config: HardhatUserConfig = {
 	defaultNetwork: 'hardhat',
 	gasReporter: {
@@ -60,17 +27,25 @@ const config: HardhatUserConfig = {
 	},
 	networks: {
 		hardhat: {
-			chainId: chainIds.hardhat,
+			chainId: 31337,
 		},
-		arbitrum: getChainConfig('arbitrum-mainnet'),
-		avalanche: getChainConfig('avalanche'),
-		bsc: getChainConfig('bsc'),
-		mainnet: getChainConfig('mainnet'),
-		optimism: getChainConfig('optimism-mainnet'),
-		'polygon-mainnet': getChainConfig('polygon-mainnet'),
-		'polygon-mumbai': getChainConfig('polygon-mumbai'),
-		rinkeby: getChainConfig('rinkeby'),
-		goerli: getChainConfig('goerli'),
+		local: {
+			url: 'http://localhost:8545',
+		},
+		kovan: {
+			url: `https://kovan.infura.io/v3/${process.env.INFURA_API_KEY}`,
+			accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+		},
+		rinkeby: {
+			chainId: 4,
+			url: `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`,
+			accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+		},
+		goerli: {
+			chainId: 5,
+			url: `https://goerli.infura.io/v3/${process.env.INFURA_API_KEY}`,
+			accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+		},
 	},
 	paths: {
 		artifacts: './artifacts',
