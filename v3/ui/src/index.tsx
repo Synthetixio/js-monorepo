@@ -9,26 +9,26 @@ import './app.css';
 import { BrowserRouter } from 'react-router-dom';
 
 export const supportedChains = [
-	chain.goerli,
-	{
-		...chain.hardhat,
-		multicall: {
-			address: '0x2017758D5341a319410f8DdD0a034d0170EE0444',
-			blockCreated: 10228837,
-		},
-	},
+  chain.goerli,
+  {
+    ...chain.hardhat,
+    multicall: {
+      address: '0x2017758D5341a319410f8DdD0a034d0170EE0444',
+      blockCreated: 10228837,
+    },
+  },
 ];
 const { chains, provider } = configureChains(supportedChains, [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
-	appName: 'Synthetix',
-	chains,
+  appName: 'Synthetix',
+  chains,
 });
 
 const wagmiClient = createClient({
-	autoConnect: true,
-	provider,
-	connectors,
+  autoConnect: true,
+  provider,
+  connectors,
 });
 
 const container = document.querySelector('#app');
@@ -36,11 +36,11 @@ const container = document.querySelector('#app');
 const root = createRoot(container);
 
 root.render(
-	<BrowserRouter>
-		<ChakraProvider>
-			<WagmiConfig client={wagmiClient}>
-				<Synthetix />
-			</WagmiConfig>
-		</ChakraProvider>
-	</BrowserRouter>
+  <BrowserRouter>
+    <ChakraProvider>
+      <WagmiConfig client={wagmiClient}>
+        <Synthetix />
+      </WagmiConfig>
+    </ChakraProvider>
+  </BrowserRouter>
 );

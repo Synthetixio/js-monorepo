@@ -1,4 +1,4 @@
 export const paths = {
-	index: '/',
-	test: '/test',
+  index: '/',
+  test: '/test',
 } as const;
