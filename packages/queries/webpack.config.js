@@ -10,13 +10,14 @@ const htmlPlugin = new HtmlWebpackPlugin({
 
 module.exports = {
 	mode: 'development',
+	devtool: 'source-map',
 	module: {
 		rules: [
 			{
 				test: /\.ts$/,
 				exclude: ['/node_modules/'],
 				use: {
-					loader: 'ts-loader',
+					loader: 'babel-loader',
 				},
 			},
 		],
@@ -31,4 +32,7 @@ module.exports = {
 		},
 	},
 	plugins: [htmlPlugin],
+	devServer: {
+		port: 3000,
+	},
 };

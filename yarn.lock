@@ -2622,6 +2622,7 @@ __metadata:
     "@ethersproject/units": ^5.6.1
     "@snapshot-labs/snapshot.js": ^0.4.13
     "@synthetixio/codegen-graph-ts": "workspace:*"
+    "@synthetixio/contracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/optimism-networks": "workspace:*"
     "@synthetixio/wei": "workspace:*"
@@ -2629,6 +2630,7 @@ __metadata:
     "@types/lodash": ^4.14.169
     "@types/react": ^17.0.11
     axios: ^0.21.4
+    babel-loader: ^8.2.5
     date-fns: ^2.19.0
     eslint: ^7.26.0
     graphql: ^15.5.0
@@ -2636,6 +2638,7 @@ __metadata:
     html-webpack-plugin: ^5.5.0
     jest: ^27.0.6
     lodash: ^4.17.21
+    numbro: ^2.3.6
     react: ^17.0.2
     react-dom: ^17.0.2
     react-query: 3.16.0
@@ -4222,6 +4225,13 @@ __metadata:
   version: 6.2.0
   resolution: "big.js@npm:6.2.0"
   checksum: 42bcbf0be703c4ae8669c969d0e108f9e1730f20e85bd779e31f7a92d28f6b3e87de96e25ef8657edc0b5dc945a0f66c184ec2654276b86f49e4e9ba025f131a
+  languageName: node
+  linkType: hard
+
+"bignumber.js@npm:^8.1.1":
+  version: 8.1.1
+  resolution: "bignumber.js@npm:8.1.1"
+  checksum: 71544348507cd16c2c152699a8e5146964d9cf4f46108075bcd16a964dffb3963256259fc6ffc9753b4d33dfd0cf863a6b564103a3a20e10002f12a1902e8075
   languageName: node
   linkType: hard
 
@@ -8957,6 +8967,15 @@ __metadata:
     bn.js: 4.11.6
     strip-hex-prefix: 1.0.0
   checksum: 5b8c9dbe7b49dc7a069e5f0ba4e197257c89db11463478cb002fee7a34dc8868636952bd9f6310e5fdf22b266e0e6dffb5f9537c741734718107e90ae59b3de4
+  languageName: node
+  linkType: hard
+
+"numbro@npm:^2.3.6":
+  version: 2.3.6
+  resolution: "numbro@npm:2.3.6"
+  dependencies:
+    bignumber.js: ^8.1.1
+  checksum: a659bb418d15310c0accc99e73d5865f20ebe1ded319f78634aec81a07d90389b8c970d16608daf4ded8c47cb896e200ecd81aacc6955fc8c565f4faf33f1a6a
   languageName: node
   linkType: hard
 
