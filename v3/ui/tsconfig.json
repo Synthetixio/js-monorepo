@@ -1,25 +1,25 @@
 {
-	"compilerOptions": {
-		"composite": true,
-		"target": "es5",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"allowJs": true,
-		"skipLibCheck": true,
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"incremental": true,
-		"esModuleInterop": true,
-		"module": "esnext",
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"jsx": "preserve",
-		"moduleResolution": "node"
-	},
-	"include": ["**/*.ts", "**/*.tsx"],
-	"exclude": ["node_modules"],
-	"ts-node": {
-		"compilerOptions": {
-			"module": "CommonJS"
-		}
-	}
+  "compilerOptions": {
+    "composite": true,
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "moduleResolution": "node"
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
 }

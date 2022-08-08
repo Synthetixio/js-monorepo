@@ -32,116 +32,116 @@ type RawSynthetixQueries = typeof FUNCS;
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;
 
 type SubgraphQueryFunction<F> = F extends (
-	u: string,
-	o: subgraph.MultiQueryOptions<infer A, infer B>,
-	args: infer C
+  u: string,
+  o: subgraph.MultiQueryOptions<infer A, infer B>,
+  args: infer C
 ) => infer R
-	? (
-			options: subgraph.MultiQueryOptions<A, B>,
-			args: Partial<C>,
-			queryOptions?: UseQueryOptions<R>
-	  ) => R
-	: F extends (u: string, o: subgraph.SingleQueryOptions, args: infer A) => infer P
-	? (options: subgraph.SingleQueryOptions, args: Partial<A>, queryOptions?: UseQueryOptions<P>) => P
-	: never;
+  ? (
+      options: subgraph.MultiQueryOptions<A, B>,
+      args: Partial<C>,
+      queryOptions?: UseQueryOptions<R>
+    ) => R
+  : F extends (u: string, o: subgraph.SingleQueryOptions, args: infer A) => infer P
+  ? (options: subgraph.SingleQueryOptions, args: Partial<A>, queryOptions?: UseQueryOptions<P>) => P
+  : never;
 
 type SubgraphQueries<T> = {
-	[Property in keyof T]: SubgraphQueryFunction<T[Property]>;
+  [Property in keyof T]: SubgraphQueryFunction<T[Property]>;
 };
 
 type Queries<T> = {
-	[Property in keyof T]: OmitFirstArg<T[Property]>;
+  [Property in keyof T]: OmitFirstArg<T[Property]>;
 };
 
 export type SynthetixQueries = {
-	exchanges: SubgraphQueries<typeof exchanges>;
-	exchanger: SubgraphQueries<typeof exchanger>;
-	issuance: SubgraphQueries<typeof issuance>;
-	subgraph: SubgraphQueries<typeof subgraph>;
+  exchanges: SubgraphQueries<typeof exchanges>;
+  exchanger: SubgraphQueries<typeof exchanger>;
+  issuance: SubgraphQueries<typeof issuance>;
+  subgraph: SubgraphQueries<typeof subgraph>;
 } & Queries<RawSynthetixQueries>;
 
 export function createQueryContext({
-	networkId,
-	provider,
-	signer,
-	subgraphEndpoints,
+  networkId,
+  provider,
+  signer,
+  subgraphEndpoints,
 }: {
-	networkId: NetworkId | null;
-	provider?: Provider;
-	signer?: Signer;
-	subgraphEndpoints?: SubgraphEndpoints;
+  networkId: NetworkId | null;
+  provider?: Provider;
+  signer?: Signer;
+  subgraphEndpoints?: SubgraphEndpoints;
 }): SynthetixQueryContextContent {
-	const ctx: QueryContext = {
-		networkId,
-		provider: null,
-		signer: null,
-		snxjs: null,
-		subgraphEndpoints: subgraphEndpoints || DEFAULT_SUBGRAPH_ENDPOINTS[1],
-	};
+  const ctx: QueryContext = {
+    networkId,
+    provider: null,
+    signer: null,
+    snxjs: null,
+    subgraphEndpoints: subgraphEndpoints || DEFAULT_SUBGRAPH_ENDPOINTS[1],
+  };
 
-	if (networkId) {
-		ctx.snxjs = synthetix({ networkId, signer, provider });
+  if (networkId) {
+    ctx.snxjs = synthetix({ networkId, signer, provider });
 
-		// snag the resultant provider from snxjs
-		ctx.signer = ctx.snxjs.contracts.Synthetix.signer;
-		ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
+    // snag the resultant provider from snxjs
+    ctx.signer = ctx.snxjs.contracts.Synthetix.signer;
+    ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
 
-		if (!subgraphEndpoints) {
-			ctx.subgraphEndpoints = DEFAULT_SUBGRAPH_ENDPOINTS[networkId];
-		}
-	}
+    if (!subgraphEndpoints) {
+      ctx.subgraphEndpoints = DEFAULT_SUBGRAPH_ENDPOINTS[networkId];
+    }
+  }
 
-	const modFuncs: { [i: string]: unknown } = clone(FUNCS);
+  const modFuncs: { [i: string]: unknown } = clone(FUNCS);
 
-	for (const f in modFuncs) {
-		modFuncs[f] = partial(modFuncs[f] as UseQueryFunction, ctx);
-	}
+  for (const f in modFuncs) {
+    modFuncs[f] = partial(modFuncs[f] as UseQueryFunction, ctx);
+  }
 
-	modFuncs.exchanges = {};
-	for (const f in exchanges) {
-		(modFuncs.exchanges as any)[f] = partial(
-			(exchanges as any)[f] as UseSubgraphFunction,
-			ctx.subgraphEndpoints.exchanges
-		);
-	}
+  modFuncs.exchanges = {};
+  for (const f in exchanges) {
+    (modFuncs.exchanges as any)[f] = partial(
+      (exchanges as any)[f] as UseSubgraphFunction,
+      ctx.subgraphEndpoints.exchanges
+    );
+  }
 
-	modFuncs.exchanger = {};
-	for (const f in exchanger) {
-		(modFuncs.exchanger as any)[f] = partial(
-			(exchanger as any)[f] as UseSubgraphFunction,
-			ctx.subgraphEndpoints.exchanger
-		);
-	}
+  modFuncs.exchanger = {};
+  for (const f in exchanger) {
+    (modFuncs.exchanger as any)[f] = partial(
+      (exchanger as any)[f] as UseSubgraphFunction,
+      ctx.subgraphEndpoints.exchanger
+    );
+  }
 
-	modFuncs.issuance = {};
-	for (const f in issuance) {
-		(modFuncs.issuance as any)[f] = partial(
-			(issuance as any)[f] as UseSubgraphFunction,
-			ctx.subgraphEndpoints.issuance
-		);
-	}
+  modFuncs.issuance = {};
+  for (const f in issuance) {
+    (modFuncs.issuance as any)[f] = partial(
+      (issuance as any)[f] as UseSubgraphFunction,
+      ctx.subgraphEndpoints.issuance
+    );
+  }
 
-	modFuncs.subgraph = {};
-	for (const f in subgraph) {
-		(modFuncs.subgraph as any)[f] = partial(
-			(subgraph as any)[f] as UseSubgraphFunction,
-			ctx.subgraphEndpoints.subgraph
-		);
-	}
+  modFuncs.subgraph = {};
+  for (const f in subgraph) {
+    (modFuncs.subgraph as any)[f] = partial(
+      (subgraph as any)[f] as UseSubgraphFunction,
+      ctx.subgraphEndpoints.subgraph
+    );
+  }
 
-	const allFuncs = modFuncs as SynthetixQueries;
+  const allFuncs = modFuncs as SynthetixQueries;
 
-	return { context: ctx, queries: allFuncs };
+  return { context: ctx, queries: allFuncs };
 }
 
 export const SynthetixQueryContext = createContext<SynthetixQueryContextContent | null>(null);
 export const SynthetixQueryContextProvider = SynthetixQueryContext.Provider;
 
 export default function useSynthetixQueries(): SynthetixQueries {
-	const ctx = useContext(SynthetixQueryContext);
-	if (!ctx) {
-		throw new Error('No QueryClient set, use QueryClientProvider to set one');
-	}
+  const ctx = useContext(SynthetixQueryContext);
+  if (!ctx) {
+    throw new Error('No QueryClient set, use QueryClientProvider to set one');
+  }
 
-	return ctx.queries;
+  return ctx.queries;
 }

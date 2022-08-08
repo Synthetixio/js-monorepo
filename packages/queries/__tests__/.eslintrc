@@ -1,7 +1,7 @@
 {
-	"rules": {
-		"no-console": "off",
-		"@typescript-eslint/no-var-requires": "off",
-		"@typescript-eslint/no-non-null-assertion": "off"
-	}
+  "rules": {
+    "no-console": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
+  }
 }

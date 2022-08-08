@@ -16,37 +16,37 @@ type SynthRatesTuple = [string[], CurrencyRate[]];
 const additionalCurrencies = [CRYPTO_CURRENCY_MAP.SNX].map(formatBytes32String);
 
 const useExchangeRatesQuery = (ctx: QueryContext, options?: UseQueryOptions<Rates>) => {
-	return useQuery<Rates>(
-		['rates', 'exchangeRates', ctx.networkId],
-		async () => {
-			const exchangeRates: Rates = {};
+  return useQuery<Rates>(
+    ['rates', 'exchangeRates', ctx.networkId],
+    async () => {
+      const exchangeRates: Rates = {};
 
-			const [synthsRates, ratesForCurrencies] = (await Promise.all([
-				ctx.snxjs!.contracts.SynthUtil.synthsRates(),
-				ctx.snxjs!.contracts.ExchangeRates.ratesForCurrencies(additionalCurrencies),
-			])) as [SynthRatesTuple, CurrencyRate[]];
+      const [synthsRates, ratesForCurrencies] = (await Promise.all([
+        ctx.snxjs!.contracts.SynthUtil.synthsRates(),
+        ctx.snxjs!.contracts.ExchangeRates.ratesForCurrencies(additionalCurrencies),
+      ])) as [SynthRatesTuple, CurrencyRate[]];
 
-			const synths = [...synthsRates[0], ...additionalCurrencies] as CurrencyKey[];
-			const rates = [...synthsRates[1], ...ratesForCurrencies] as CurrencyRate[];
+      const synths = [...synthsRates[0], ...additionalCurrencies] as CurrencyKey[];
+      const rates = [...synthsRates[1], ...ratesForCurrencies] as CurrencyRate[];
 
-			synths.forEach((currencyKeyBytes32: CurrencyKey, idx: number) => {
-				const currencyKey = parseBytes32String(currencyKeyBytes32) as CurrencyKey;
-				const rate = Number(formatEther(rates[idx]));
+      synths.forEach((currencyKeyBytes32: CurrencyKey, idx: number) => {
+        const currencyKey = parseBytes32String(currencyKeyBytes32) as CurrencyKey;
+        const rate = Number(formatEther(rates[idx]));
 
-				exchangeRates[currencyKey] = wei(rate);
-				// only interested in the standard synths (sETH -> ETH, etc)
-				if (iStandardSynth(currencyKey)) {
-					exchangeRates[synthToAsset(currencyKey)] = wei(rate);
-				}
-			});
+        exchangeRates[currencyKey] = wei(rate);
+        // only interested in the standard synths (sETH -> ETH, etc)
+        if (iStandardSynth(currencyKey)) {
+          exchangeRates[synthToAsset(currencyKey)] = wei(rate);
+        }
+      });
 
-			return exchangeRates;
-		},
-		{
-			enabled: !!ctx.networkId,
-			...options,
-		}
-	);
+      return exchangeRates;
+    },
+    {
+      enabled: !!ctx.networkId,
+      ...options,
+    }
+  );
 };
 
 export default useExchangeRatesQuery;
