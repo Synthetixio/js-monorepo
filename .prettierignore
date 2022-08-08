@@ -6,3 +6,5 @@ dist
 .vscode
 .yarn
 packages/queries/subgraphs
+cache
+artifacts
