@@ -15,19 +15,8 @@ import { resolve } from 'path';
 dotenvConfig({ path: resolve(__dirname, './.env') });
 
 const infuraApiKey: string | undefined = process.env.INFURA_API_KEY;
-if (!infuraApiKey) {
-	throw new Error('Please set your INFURA_API_KEY in a .env file');
-}
-
 const infuraIpfsId: string | undefined = process.env.INFURA_IPFS_ID;
-if (!infuraIpfsId) {
-	throw new Error('Please set your INFURA_IPFS_ID in a .env file');
-}
-
 const infuraIpfsSecret: string | undefined = process.env.INFURA_IPFS_SECRET;
-if (!infuraIpfsSecret) {
-	throw new Error('Please set your INFURA_IPFS_SECRET in a .env file');
-}
 
 const chainIds = {
 	'arbitrum-mainnet': 42161,
