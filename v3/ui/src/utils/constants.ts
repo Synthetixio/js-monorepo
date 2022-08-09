@@ -75,3 +75,16 @@ export const contracts = {
   ACCOUNT_MODULE: 'synthetix.AccountModule',
   MULTICALL: 'Multicall',
 };
+
+export const fundsData: Record<string, { name: string }> = {
+  1: {
+    name: 'Spartan Council',
+  },
+  0: {
+    name: 'None',
+  },
+};
+
+export const CONTRACT_SYNTHETIX_PROXY = 'synthetix.Proxy';
+export const CONTRACT_ACCOUNT = 'synthetix.Account';
+export const CONTRACT_MULTICALL = 'Multicall';

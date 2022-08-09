@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Container, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Footer from './Footer';
@@ -16,7 +16,9 @@ export const DefaultLayout: React.FC = () => {
     >
       <Flex flex="1" flexDirection="column">
         <Header />
-        <Outlet />
+        <Container maxW="container.sm" py="8">
+          <Outlet />
+        </Container>
       </Flex>
       <Footer />
     </Box>
