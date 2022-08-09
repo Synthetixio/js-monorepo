@@ -5,6 +5,7 @@ import { chain, createClient, WagmiConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { ChakraProvider } from '@chakra-ui/react';
 import './app.css';
+import './i18n';
 import '@rainbow-me/rainbowkit/styles.css';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
