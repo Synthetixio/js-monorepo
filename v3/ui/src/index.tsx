@@ -3,10 +3,12 @@ import { createRoot } from 'react-dom/client';
 import { Synthetix } from './App';
 import { chain, createClient, WagmiConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
-import { getDefaultWallets } from '@rainbow-me/rainbowkit';
 import { ChakraProvider } from '@chakra-ui/react';
 import './app.css';
 import { BrowserRouter } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
+import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
+import '@rainbow-me/rainbowkit/styles.css';
 
 export const supportedChains = [
   chain.goerli,
@@ -37,10 +39,22 @@ const root = createRoot(container);
 
 root.render(
   <BrowserRouter>
-    <ChakraProvider>
-      <WagmiConfig client={wagmiClient}>
-        <Synthetix />
-      </WagmiConfig>
-    </ChakraProvider>
+    <RecoilRoot>
+      <ChakraProvider>
+        <WagmiConfig client={wagmiClient}>
+          <RainbowKitProvider
+            theme={darkTheme({
+              accentColor: 'rgb(49, 130, 206)',
+              accentColorForeground: 'white',
+              borderRadius: 'small',
+              fontStack: 'system',
+            })}
+            chains={chains}
+          >
+            <Synthetix />
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </ChakraProvider>
+    </RecoilRoot>
   </BrowserRouter>
 );
