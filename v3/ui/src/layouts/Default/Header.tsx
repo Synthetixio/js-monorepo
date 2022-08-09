@@ -1,3 +1,4 @@
+import React from 'react';
 import kwenta from '../../assets/svgs/kwenta.svg';
 import logo from '../../assets/svgs/logo.png';
 import logomark from '../../assets/svgs/logomark.svg';

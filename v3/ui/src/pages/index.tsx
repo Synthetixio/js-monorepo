@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from '@chakra-ui/react';
 
 export function Home() {
-  return <Button>Home Page</Button>;
+  return <div>Home Page</div>;
 }
