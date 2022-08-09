@@ -1,15 +1,17 @@
 import { chain, chainId as chainMapping } from 'wagmi';
+import { ChainName } from './types';
 
-export const supportedChains = [
-  chain.goerli,
-  {
-    ...chain.hardhat,
-    multicall: {
-      address: '0x2017758D5341a319410f8DdD0a034d0170EE0444',
-      blockCreated: 10228837,
-    },
-  },
-];
+const hardhatMulticallConfig = {
+  address: '0x2017758D5341a319410f8DdD0a034d0170EE0444',
+  blockCreated: 10228837,
+};
+
+export const chains = {
+  goerli: chain.goerli,
+  hardhat: { ...chain.hardhat, ...hardhatMulticallConfig },
+};
+
+export const supportedChains = Object.keys(chains).map((chain) => chains[chain as ChainName]);
 
 export const getChainById = (chainId: number) =>
   supportedChains.find((chain) => chain.id === chainId);

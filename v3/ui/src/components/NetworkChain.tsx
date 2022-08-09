@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Spinner } from '@chakra-ui/react';
-import { ChainName } from '@wagmi/core/dist/declarations/src/constants/chains';
 import { ethers } from 'ethers';
 import { useEffect, useRef, FC } from 'react';
 import { useRecoilState } from 'recoil';
@@ -12,6 +11,8 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 type Props = {
   children?: React.ReactElement | React.ReactElement[];
 };
+
+type ChainName = 'goerli' | 'hardhat';
 
 export const routeToChain = (basePath: string, chainId: number) => {
   const chain = getChainNameById(chainId);

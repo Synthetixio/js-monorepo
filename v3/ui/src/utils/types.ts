@@ -1,4 +1,5 @@
 import { BigNumber } from 'ethers';
+import { chains } from './constants';
 
 export type CollateralType = {
   address: string;
@@ -10,3 +11,5 @@ export type CollateralType = {
   price?: BigNumber;
   priceDecimals?: number;
 };
+
+export type ChainName = keyof typeof chains;
