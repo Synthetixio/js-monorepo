@@ -48,6 +48,7 @@ const imgRule = {
 
 const cssRule = {
   test: /\.css$/,
+  include: [new RegExp('./src'), new RegExp('@rainbow-me/rainbowkit')],
   use: [
     require.resolve('style-loader'),
     {
