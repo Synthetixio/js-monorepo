@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 interface Props {
   address: string;
-  displayFullAddress: boolean;
+  displayFullAddress?: boolean;
 }
 
 export const Address: FC<Props> = ({ address, displayFullAddress }) => {
