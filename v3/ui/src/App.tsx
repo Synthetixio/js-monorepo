@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Spinner } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
-import { DefaultLayout } from './layouts/Default/DefaultLayout';
+import { DefaultLayout } from './layouts/Default';
 import { Home } from './pages';
 import { Account } from './pages/accounts';
 

@@ -1,6 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { ProvidePlugin } = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+
+const { NODE_ENV: mode = 'development' } = process.env;
 
 const htmlPlugin = new HtmlWebpackPlugin({
   template: path.join(__dirname, 'public', 'index.html'),
@@ -12,23 +15,10 @@ const htmlPlugin = new HtmlWebpackPlugin({
   publicPath: '/',
 });
 
-const providePlugin = new ProvidePlugin({
-  React: 'react', // automatically import react where needed
-});
-
 const tsxRule = {
   test: /\.(ts|js)x?$/,
   exclude: /node_modules/,
-  use: {
-    loader: require.resolve('babel-loader'),
-    options: {
-      presets: [
-        require.resolve('@babel/preset-env'),
-        require.resolve('@babel/preset-react'),
-        require.resolve('@babel/preset-typescript'),
-      ],
-    },
-  },
+  use: require.resolve('babel-loader'),
 };
 
 const svgRule = {
@@ -49,13 +39,16 @@ const imgRule = {
 const cssRule = {
   test: /\.css$/,
   include: [new RegExp('./src'), new RegExp('@rainbow-me/rainbowkit')],
+  exclude: [],
   use: [
-    require.resolve('style-loader'),
+    {
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        publicPath: '/',
+      },
+    },
     {
       loader: require.resolve('css-loader'),
-      options: {
-        importLoaders: 1,
-      },
     },
   ],
 };
@@ -81,11 +74,17 @@ const devServer = {
   allowedHosts: 'all',
   open: false,
   compress: true,
+
+  static: ['public'],
+};
+
+const optimization = {
+  minimizer: [new CssMinimizerPlugin()],
 };
 
 module.exports = {
-  devtool: 'eval',
-  mode: 'development',
+  devtool: 'source-map',
+  mode,
   entry: './src/index.tsx',
 
   output: {
@@ -95,7 +94,7 @@ module.exports = {
 
   devServer,
 
-  plugins: [htmlPlugin, providePlugin],
+  plugins: [htmlPlugin, new MiniCssExtractPlugin()],
 
   resolve: {
     fallback: {
@@ -111,4 +110,6 @@ module.exports = {
   module: {
     rules: [tsxRule, svgRule, imgRule, cssRule],
   },
+
+  optimization,
 };
