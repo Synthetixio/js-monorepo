@@ -1,28 +1,27 @@
-const { theme } = require('../src/theme.js')
-const { Fonts } = require('../src/fonts.js')
-import { Box } from "@chakra-ui/react"
-import React from "react";
+import { theme, Fonts } from '../src';
+import { Box } from '@chakra-ui/react';
+import React from 'react';
 
 export const parameters = {
   chakra: {
-    theme,
+    theme
   },
   backgrounds: {
     default: 'black',
     values: [
       {
         name: 'black',
-        value: '#000000',
-      },
-    ],
-  },
-}
+        value: '#000000'
+      }
+    ]
+  }
+};
 
 export const decorators = [
   (Story) => (
-    <Box color="white">
+    <Box color='white'>
       <Fonts />
       {Story()}
     </Box>
-  ),
+  )
 ];
