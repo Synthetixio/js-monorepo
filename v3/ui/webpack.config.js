@@ -9,6 +9,7 @@ const htmlPlugin = new HtmlWebpackPlugin({
   minify: false,
   hash: false,
   xhtml: true,
+  publicPath: '/',
 });
 
 const providePlugin = new ProvidePlugin({
@@ -64,13 +65,10 @@ const devServer = {
   hot: true,
   liveReload: false,
 
-  historyApiFallback: {
-    index: 'public/index.html',
-  },
+  historyApiFallback: true,
 
   devMiddleware: {
     writeToDisk: true,
-    publicPath: '/',
   },
 
   client: {
@@ -88,6 +86,11 @@ module.exports = {
   devtool: 'eval',
   mode: 'development',
   entry: './src/index.tsx',
+
+  output: {
+    clean: true,
+    publicPath: '/',
+  },
 
   devServer,
 
