@@ -11,13 +11,14 @@ export const theme = extendTheme({
       600: '#00a7cc',
       700: '#007d99',
       800: '#005466',
-      900: '#002a33'
-    }
+      900: '#002a33',
+    },
   },
   fonts: {
-    heading: `"GT America Condensed Bold", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
-    body: `Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
-    mono: `SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace`
+    heading:
+      '"GT America Condensed Bold", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+    body: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+    mono: 'SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
   },
   components: {
     Popover: {
@@ -25,10 +26,10 @@ export const theme = extendTheme({
         responsive: {
           popper: {
             maxWidth: 'unset',
-            width: 'unset'
-          }
-        }
-      }
-    }
-  }
+            width: 'unset',
+          },
+        },
+      },
+    },
+  },
 });

@@ -2,6 +2,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 import babel from 'rollup-plugin-babel';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 export default {
   //entry point
@@ -14,31 +15,32 @@ export default {
       dir: './dist/cjs/',
       format: 'cjs',
       sourcemap: true,
-      exports: 'auto'
+      exports: 'auto',
     },
     {
       dir: './dist/esm/',
       format: 'esm',
       sourcemap: true,
-      exports: 'auto'
-    }
+      exports: 'auto',
+    },
   ],
 
   //plugins
   plugins: [
+    peerDepsExternal(),
     babel({
       exclude: ['node_modules/**'],
       presets: [
-        '@babel/preset-typescript',
-        '@babel/preset-react',
-        ['@babel/preset-env', { modules: false }]
+        require.resolve('@babel/preset-typescript'),
+        require.resolve('@babel/preset-react'),
+        [require.resolve('@babel/preset-env'), { modules: false }],
       ],
-      extensions: ['.js', '.jsx', '.ts', '.tsx']
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
     }),
     resolve({
-      extensions: ['.js', '.jsx', '.ts', '.tsx']
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
     }),
     commonjs(),
-    terser()
-  ]
+    terser(),
+  ],
 };

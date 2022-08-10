@@ -4,24 +4,24 @@ import React from 'react';
 
 export const parameters = {
   chakra: {
-    theme
+    theme,
   },
   backgrounds: {
     default: 'black',
     values: [
       {
         name: 'black',
-        value: '#000000'
-      }
-    ]
-  }
+        value: '#000000',
+      },
+    ],
+  },
 };
 
 export const decorators = [
   (Story) => (
-    <Box color='white'>
+    <Box color="white">
       <Fonts />
       {Story()}
     </Box>
-  )
+  ),
 ];
