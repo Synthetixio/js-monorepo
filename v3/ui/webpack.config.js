@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { ProvidePlugin } = require('webpack');
 
 const htmlPlugin = new HtmlWebpackPlugin({
   template: path.join(__dirname, 'public', 'index.html'),
@@ -8,6 +9,10 @@ const htmlPlugin = new HtmlWebpackPlugin({
   minify: false,
   hash: false,
   xhtml: true,
+});
+
+const providePlugin = new ProvidePlugin({
+  React: 'react', // automatically import react where needed
 });
 
 const tsxRule = {
@@ -42,7 +47,15 @@ const imgRule = {
 
 const cssRule = {
   test: /\.css$/,
-  use: [require.resolve('style-loader'), require.resolve('css-loader')],
+  use: [
+    require.resolve('style-loader'),
+    {
+      loader: require.resolve('css-loader'),
+      options: {
+        importLoaders: 1,
+      },
+    },
+  ],
 };
 
 const devServer = {
@@ -78,7 +91,7 @@ module.exports = {
 
   devServer,
 
-  plugins: [htmlPlugin],
+  plugins: [htmlPlugin, providePlugin],
 
   resolve: {
     fallback: {

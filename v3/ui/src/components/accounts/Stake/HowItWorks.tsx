@@ -1,4 +1,3 @@
-import React from 'react';
 import { CollateralType } from '../../../utils/types';
 import { Heading, Link, UnorderedList, ListItem } from '@chakra-ui/react';
 import { BigNumber, utils } from 'ethers';

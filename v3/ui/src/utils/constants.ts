@@ -86,7 +86,3 @@ export const fundsData: Record<string, { name: string }> = {
     name: 'None',
   },
 };
-
-export const CONTRACT_SYNTHETIX_PROXY = 'synthetix.Proxy';
-export const CONTRACT_ACCOUNT = 'synthetix.Account';
-export const CONTRACT_MULTICALL = 'Multicall';

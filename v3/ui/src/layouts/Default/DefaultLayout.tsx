@@ -1,6 +1,8 @@
 import { Box, Container, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import { NetworkChain } from '../../components/NetworkChain';
+import { Initializer } from '../../Initializer';
 import Footer from './Footer';
 import Header from './Header';
 
@@ -15,10 +17,14 @@ export const DefaultLayout: React.FC = () => {
       flexDirection="column"
     >
       <Flex flex="1" flexDirection="column">
-        <Header />
-        <Container maxW="container.sm" py="8">
-          <Outlet />
-        </Container>
+        <NetworkChain>
+          <Initializer>
+            <Header />
+            <Container maxW="container.sm" py="8">
+              <Outlet />
+            </Container>
+          </Initializer>
+        </NetworkChain>
       </Flex>
       <Footer />
     </Box>

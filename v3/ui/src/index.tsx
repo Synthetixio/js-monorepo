@@ -1,15 +1,14 @@
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Synthetix } from './App';
 import { createClient, WagmiConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { ChakraProvider } from '@chakra-ui/react';
+import '@rainbow-me/rainbowkit/styles.css';
 import './app.css';
 import './i18n';
-import '@rainbow-me/rainbowkit/styles.css';
+import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import { supportedChains } from './utils/constants';
 
 const { chains, provider } = configureChains(supportedChains, [publicProvider()]);

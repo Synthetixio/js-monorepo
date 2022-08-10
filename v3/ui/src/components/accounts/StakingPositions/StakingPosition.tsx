@@ -23,7 +23,7 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { utils, BigNumber } from 'ethers';
-import { Link as NavLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function StakingPosition({ position }: { position: StakingPositionType }) {
   // If the connected wallet doesn’t own this account token, remove/disable the interactivity
@@ -58,6 +58,8 @@ export default function StakingPosition({ position }: { position: StakingPositio
         ${debt}
         <Text fontSize="xs" mt="1'">
           <Link
+            as={RouterLink}
+            to="#"
             _hover={{ textDecoration: 'none' }}
             onClick={onOpenDebt}
             display="inline"
@@ -257,15 +259,15 @@ export default function StakingPosition({ position }: { position: StakingPositio
       </Td>
 
       <Td>
-        <NavLink to={'/funds/example'}>
-          <Link
-            _hover={{ textDecoration: 'none' }}
-            display="inline"
-            borderBottom="1px dotted rgba(255,255,255,0.5)"
-          >
-            Spartan Council
-          </Link>
-        </NavLink>
+        <Link
+          as={RouterLink}
+          to={'/funds/example'}
+          _hover={{ textDecoration: 'none' }}
+          display="inline"
+          borderBottom="1px dotted rgba(255,255,255,0.5)"
+        >
+          Spartan Council
+        </Link>
         <Link color="blue.400" ml="1">
           <EditIcon onClick={onOpenFund} style={{ transform: 'translateY(-2px)' }} />
         </Link>

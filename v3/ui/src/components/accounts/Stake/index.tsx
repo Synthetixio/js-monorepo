@@ -1,4 +1,3 @@
-import React from 'react';
 import { accountsState, chainIdState, collateralTypesState } from '../../../utils/state';
 import { fundsData, getChainById } from '../../../utils/constants';
 import { useContract } from '../../../utils/hooks/useContract';
@@ -130,22 +129,22 @@ export default function Stake({
     const amountToDelegate = Boolean(accountId)
       ? preferredFundStakingPosition?.collateralAmount.add(amountBN)
       : amountBN;
-    console.log({ snxProxy });
+
     if (!snxProxy) return [];
     const createAccountCall: MulticallCall = [snxProxy.contract, 'createAccount', [newAccountId]];
     const stakingCalls: MulticallCall[] = [
       [snxProxy.contract, 'stake', [id, selectedCollateralType.address, amountBN]],
-      [
-        snxProxy.contract,
-        'delegateCollateral',
-        [
-          id,
-          Boolean(accountId) ? selectedFundId : fundId || 0,
-          selectedCollateralType.address,
-          amountToDelegate || 0,
-          ethers.constants.One,
-        ],
-      ],
+      // [
+      //   snxProxy.contract,
+      //   'delegateCollateral',
+      //   [
+      //     id,
+      //     Boolean(accountId) ? selectedFundId : fundId || 0,
+      //     selectedCollateralType.address,
+      //     amountToDelegate || 0,
+      //     ethers.constants.One,
+      //   ],
+      // ],
     ];
 
     return [Boolean(accountId) ? stakingCalls : [createAccountCall, ...stakingCalls]];
@@ -254,7 +253,7 @@ export default function Stake({
       } else {
         toast({
           title: 'Create your account',
-          description: 'You\'ll be redirected once your account is created.',
+          description: "You'll be redirected once your account is created.",
           status: 'info',
           isClosable: true,
           duration: 9000,

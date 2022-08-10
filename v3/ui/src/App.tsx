@@ -3,21 +3,17 @@ import { Spinner } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
 import { DefaultLayout } from './layouts/Default/DefaultLayout';
 import { Home } from './pages';
-import { NetworkChain } from './components/NetworkChain';
-import { Initializer } from './Initializer';
+import { Account } from './pages/accounts';
 
 export const Synthetix: React.FC = () => {
   return (
     <Suspense fallback={<Spinner />}>
-      <NetworkChain>
-        <Initializer>
-          <Routes>
-            <Route element={<DefaultLayout />}>
-              <Route path="/" element={<Home />} />
-            </Route>
-          </Routes>
-        </Initializer>
-      </NetworkChain>
+      <Routes>
+        <Route element={<DefaultLayout />}>
+          <Route path="/accounts/:id" element={<Account />} />
+          <Route path="/" element={<Home />} />
+        </Route>
+      </Routes>
     </Suspense>
   );
 };

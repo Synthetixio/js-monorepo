@@ -1,4 +1,3 @@
-import React from 'react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import {
   Box,

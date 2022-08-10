@@ -1,9 +1,8 @@
-import { CONTRACT_MULTICALL, CONTRACT_SYNTHETIX_PROXY } from '../constants';
+import ethers, { CallOverrides, Contract } from 'ethers';
+import { useEffect, useState } from 'react';
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
+import { contracts } from '../constants';
 import { useContract } from './useContract';
-import ethers, { CallOverrides, Contract, constants } from 'ethers';
-import { useEffect, useMemo, useState } from 'react';
-import { useContractWrite, useWaitForTransaction } from 'wagmi';
-import { UseContractWriteArgs } from 'wagmi/dist/declarations/src/hooks/contracts/useContractWrite';
 
 // contact, funcion name, arguments
 // [ethers.Contract, functionName, arguments, overrides (i.e value, gasLimit, gasPrice)]
@@ -45,10 +44,10 @@ export const useMulticall = (
   const [receipts, setReceipts] = useState<ethers.providers.TransactionReceipt[]>([]);
 
   // for synthetix multicall
-  const snxProxy = useContract(CONTRACT_SYNTHETIX_PROXY);
+  const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
 
   // for regular multicall
-  const multicall = useContract(CONTRACT_MULTICALL);
+  const multicall = useContract(contracts.MULTICALL);
 
   let callContract: ethers.Contract | undefined,
     callFunc: string | undefined,
@@ -88,17 +87,18 @@ export const useMulticall = (
     }
   }
 
-  const currentTxn = useContractWrite({
+  const { config: writeConfig, error } = usePrepareContractWrite({
     addressOrName: callContract!.address,
     contractInterface: callContract!.interface,
     functionName: callFunc!,
-    args: callArgs,
+    args: callArgs!,
+    enabled: Boolean(callContract),
     overrides,
-    onError: (e) => {
-      setStatus('error');
-      config?.onError && config.onError(e);
-    },
   });
+
+  console.log('prepare error', error, callContract!.address, callArgs);
+
+  const currentTxn = useContractWrite(writeConfig);
 
   useWaitForTransaction({
     hash: currentTxn.data?.hash,
@@ -115,6 +115,11 @@ export const useMulticall = (
         config?.onSuccess && config.onSuccess();
       }
     },
+    onError: (e) => {
+      console.log('blah', e);
+      setStatus('error');
+      config?.onError && config.onError(e);
+    },
   });
 
   function reset() {
@@ -127,13 +132,13 @@ export const useMulticall = (
   async function exec() {
     if (status === 'idle') {
       setStatus('pending');
-      await currentTxn.writeAsync();
+      await currentTxn!.writeAsync();
     }
   }
 
   useEffect(() => {
     if (step !== 0 && lastExecutedStep !== step) {
-      currentTxn.write();
+      currentTxn!.write();
       setLastExecutedStep((s) => s + 1);
     }
   }, [step, currentTxn, lastExecutedStep]);

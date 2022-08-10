@@ -1,7 +1,7 @@
-import Stake from './Stake';
 import { Text, Link } from '@chakra-ui/react';
+import Stake from '../../components/accounts/Stake';
 
-export default function CreateAccount() {
+export function CreateAccount() {
   return (
     <>
       <Text fontSize="lg" mb="4">

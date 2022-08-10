@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Flex, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useRecoilState } from 'recoil';

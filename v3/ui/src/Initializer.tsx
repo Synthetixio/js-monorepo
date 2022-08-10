@@ -1,4 +1,3 @@
-import React from 'react';
 import { Spinner } from '@chakra-ui/react';
 import { ReactNode, FC } from 'react';
 import { useCollateralTypes } from './hooks';

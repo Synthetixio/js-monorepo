@@ -1,4 +1,3 @@
-import React from 'react';
 // import { collateralTypesState } from '../../../state/index';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Box, Text, Flex, Menu, MenuButton, MenuList, MenuItem, Image } from '@chakra-ui/react';
