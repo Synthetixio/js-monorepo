@@ -2152,7 +2152,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chakra-ui/react@npm:^2.1.2, @chakra-ui/react@npm:^2.2.6":
+"@chakra-ui/react@npm:^2.2.6":
   version: 2.2.6
   resolution: "@chakra-ui/react@npm:2.2.6"
   dependencies:
@@ -2718,7 +2718,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:^11.10.0, @emotion/react@npm:^11.9.3":
+"@emotion/react@npm:^11.10.0":
   version: 11.10.0
   resolution: "@emotion/react@npm:11.10.0"
   dependencies:
@@ -2761,7 +2761,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/styled@npm:^11.10.0, @emotion/styled@npm:^11.9.3":
+"@emotion/styled@npm:^11.10.0":
   version: 11.10.0
   resolution: "@emotion/styled@npm:11.10.0"
   dependencies:
@@ -3932,7 +3932,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@motionone/animation@npm:^10.12.0, @motionone/animation@npm:^10.13.1":
+"@motionone/animation@npm:^10.13.1":
   version: 10.13.2
   resolution: "@motionone/animation@npm:10.13.2"
   dependencies:
@@ -3941,20 +3941,6 @@ __metadata:
     "@motionone/utils": ^10.13.2
     tslib: ^2.3.1
   checksum: f748e40c004b1d34ffec246e7193ecf79b8a211495ad1ea66701ac34ca5fb3b306a081db8989def0e3898334f2c58fda82fd48dffd70a0218315dd1a568ba8fd
-  languageName: node
-  linkType: hard
-
-"@motionone/dom@npm:10.12.0":
-  version: 10.12.0
-  resolution: "@motionone/dom@npm:10.12.0"
-  dependencies:
-    "@motionone/animation": ^10.12.0
-    "@motionone/generators": ^10.12.0
-    "@motionone/types": ^10.12.0
-    "@motionone/utils": ^10.12.0
-    hey-listen: ^1.0.8
-    tslib: ^2.3.1
-  checksum: 123356f28e44362c4f081aae3df22e576f46bfcb07e01257b2ac64a115668448f29b8de67e4b6e692c5407cffb78ffe7cf9fa1bc064007482bab5dd23a69d380
   languageName: node
   linkType: hard
 
@@ -3982,7 +3968,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@motionone/generators@npm:^10.12.0, @motionone/generators@npm:^10.13.1":
+"@motionone/generators@npm:^10.13.1":
   version: 10.13.2
   resolution: "@motionone/generators@npm:10.13.2"
   dependencies:
@@ -3993,14 +3979,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@motionone/types@npm:^10.12.0, @motionone/types@npm:^10.13.0, @motionone/types@npm:^10.13.2":
+"@motionone/types@npm:^10.13.0, @motionone/types@npm:^10.13.2":
   version: 10.13.2
   resolution: "@motionone/types@npm:10.13.2"
   checksum: 34745476c2344c4b2216c4de1a7306becf5eb9db5e35c6caef79a6712a9c71e943cc5053d79530453e4af58540ee5be68bb19d662da7f2ba25b697702fb65f53
   languageName: node
   linkType: hard
 
-"@motionone/utils@npm:^10.12.0, @motionone/utils@npm:^10.13.1, @motionone/utils@npm:^10.13.2":
+"@motionone/utils@npm:^10.13.1, @motionone/utils@npm:^10.13.2":
   version: 10.13.2
   resolution: "@motionone/utils@npm:10.13.2"
   dependencies:
@@ -6173,10 +6159,10 @@ __metadata:
     "@babel/preset-env": ^7.13.10
     "@babel/preset-react": ^7.18.6
     "@babel/preset-typescript": ^7.13.0
-    "@chakra-ui/react": ^2.1.2
+    "@chakra-ui/react": ^2.2.6
     "@chakra-ui/storybook-addon": ^4.0.4
-    "@emotion/react": ^11.9.3
-    "@emotion/styled": ^11.9.3
+    "@emotion/react": ^11.10.0
+    "@emotion/styled": ^11.10.0
     "@rollup/plugin-commonjs": ^22.0.1
     "@rollup/plugin-node-resolve": ^13.3.0
     "@storybook/addon-essentials": ^6.5.7
@@ -6185,7 +6171,7 @@ __metadata:
     "@storybook/builder-webpack5": ^6.5.7
     "@storybook/manager-webpack5": ^6.5.10
     "@storybook/react": ^6.5.7
-    framer-motion: ^6.3.6
+    framer-motion: ^7.0.0
     react: ^18.1.0
     react-dom: ^18.1.0
     rollup: ^2.77.2
@@ -6207,6 +6193,7 @@ __metadata:
     "@babel/preset-typescript": ^7.13.0
     "@chakra-ui/icons": ^2.0.6
     "@chakra-ui/react": ^2.2.6
+    "@emotion/is-prop-valid": ^1.2.0
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@faker-js/faker": ^7.4.0
@@ -6234,7 +6221,6 @@ __metadata:
     react-i18next: ^11.18.3
     react-router-dom: ^6.3.0
     recoil: ^0.7.4
-    style-loader: ^3.3.1
     wagmi: ^0.5.9
     webpack: ^5.73.0
     webpack-cli: ^4.10.0
@@ -15106,27 +15092,6 @@ __metadata:
   dependencies:
     map-cache: ^0.2.2
   checksum: 1cbbd0b0116b67d5790175de0038a11df23c1cd2e8dcdbade58ebba5594c2d641dade6b4f126d82a7b4a6ffc2ea12e3d387dbb64ea2ae97cf02847d436f60fdc
-  languageName: node
-  linkType: hard
-
-"framer-motion@npm:^6.3.6":
-  version: 6.5.1
-  resolution: "framer-motion@npm:6.5.1"
-  dependencies:
-    "@emotion/is-prop-valid": ^0.8.2
-    "@motionone/dom": 10.12.0
-    framesync: 6.0.1
-    hey-listen: ^1.0.8
-    popmotion: 11.0.3
-    style-value-types: 5.0.0
-    tslib: ^2.1.0
-  peerDependencies:
-    react: ">=16.8 || ^17.0.0 || ^18.0.0"
-    react-dom: ">=16.8 || ^17.0.0 || ^18.0.0"
-  dependenciesMeta:
-    "@emotion/is-prop-valid":
-      optional: true
-  checksum: 737959063137b4ccafe01e0ac0c9e5a9531bf3f729f62c34ca7a5d7955e6664f70affd22b044f7db51df41acb21d120a4f71a860e17a80c4db766ad66f2153a1
   languageName: node
   linkType: hard
 
@@ -26002,15 +25967,6 @@ __metadata:
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
   checksum: 21425246a5a8f14d1625a657a3a56f8a323193fa341a71af818a2ed2a429efa2385a328b4381cf2f12c2d0e6380801eb9e0427ed9c3a10ff95c86e383184d632
-  languageName: node
-  linkType: hard
-
-"style-loader@npm:^3.3.1":
-  version: 3.3.1
-  resolution: "style-loader@npm:3.3.1"
-  peerDependencies:
-    webpack: ^5.0.0
-  checksum: 470feef680f59e2fce4d6601b5c55b88c01ad8d1dd693c528ffd591ff5fd7c01a4eff3bdbe62f26f847d6bd2430c9ab594be23307cfe7a3446ab236683f0d066
   languageName: node
   linkType: hard
 

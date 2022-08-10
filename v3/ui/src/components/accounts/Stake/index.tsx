@@ -171,7 +171,7 @@ export default function Stake({
   //   ]);
   //   overrides.value = amount!;
   // }
-  // add extra step to "approve" the token if needed before running the multicall
+  // add extra step to 'approve' the token if needed before running the multicall
   if (!sufficientAllowance) {
     // TODO: could use permit here as well, in which case its an unshift
     calls.unshift([[collateralContract!.contract, 'approve', [snxProxy?.address, amountBN]]]);

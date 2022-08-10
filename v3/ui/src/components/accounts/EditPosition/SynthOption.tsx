@@ -11,13 +11,14 @@ import {
   Image,
 } from '@chakra-ui/react';
 import { Link as NavLink } from 'react-router-dom';
+import { FC } from 'react';
 
 type Props = {
   name: string;
   ticker: string;
 };
 
-const SynthOption: React.FC<Props> = ({ name, ticker }) => {
+const SynthOption: FC<Props> = ({ name, ticker }) => {
   return (
     <Box borderBottom="1px solid rgba(255,255,255,0.3)" pb="4" mb="4">
       <Flex alignItems="center">
