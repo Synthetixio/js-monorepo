@@ -1,4 +1,3 @@
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
@@ -6,7 +5,7 @@ import babel from 'rollup-plugin-babel';
 
 export default {
   //entry point
-  input: 'src/index.js',
+  input: 'src/index.ts',
   preserveModules: true,
 
   //output directory
@@ -27,15 +26,17 @@ export default {
 
   //plugins
   plugins: [
-    peerDepsExternal(),
-    resolve(),
     babel({
-      exclude: 'node_modules/**',
+      exclude: ['node_modules/**'],
       presets: [
         '@babel/preset-typescript',
-        ['@babel/preset-env', { modules: false }],
-        '@babel/preset-react'
-      ]
+        '@babel/preset-react',
+        ['@babel/preset-env', { modules: false }]
+      ],
+      extensions: ['.js', '.jsx', '.ts', '.tsx']
+    }),
+    resolve({
+      extensions: ['.js', '.jsx', '.ts', '.tsx']
     }),
     commonjs(),
     terser()
