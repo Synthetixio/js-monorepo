@@ -3,13 +3,19 @@
 const path = require('path');
 const cp = require('child_process');
 const fs = require('fs');
+const prettier = require('prettier');
 const { fgReset, fgRed, fgGreen, fgYellow, fgCyan } = require('./lib/colors');
+
+const prettierOptions = JSON.parse(fs.readFileSync(`${__dirname}/../../.prettierrc`, 'utf8'));
 
 const isFix = process.argv.includes('--fix');
 
 // ignore certain deps that are explicitly mismatched versions
 function ignored({ parent, name, _version, _location }) {
-  return parent === '@synthetixio/v3-ui' && ['react', 'react-dom'].includes(name);
+  return (
+    (parent === '@synthetixio/v3-ui' && ['react', 'react-dom'].includes(name)) ||
+    (parent === '@synthetixio/v3-theme' && ['react', 'react-dom'].includes(name))
+  );
 }
 
 async function run() {
@@ -78,7 +84,13 @@ async function run() {
         packageJson.devDependencies[name] = unique[name];
       }
       console.log(`...FIXING ${fgYellow}${location}/package.json${fgReset}`);
-      fs.writeFileSync(`${ROOT}/${location}/package.json`, JSON.stringify(packageJson, null, '\t'));
+      fs.writeFileSync(
+        `${ROOT}/${location}/package.json`,
+        prettier.format(JSON.stringify(packageJson, null, '  '), {
+          parser: 'json',
+          ...prettierOptions,
+        })
+      );
     }
   });
 
