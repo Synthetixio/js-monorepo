@@ -70,7 +70,7 @@ function useContract({ name, networkName, networkId, infuraId }) {
 			const provider = new InfuraProvider(networkId, infuraId);
 			return new ethers.Contract(address, abi, provider);
 		},
-		{ enabled: Boolean(networkId && infuraId) }
+		{ enabled: Boolean(networkId && infuraId), staleTime: Infinity }
 	);
 }
 
