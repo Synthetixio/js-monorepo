@@ -8,7 +8,7 @@ const hardhatMulticallConfig = {
 
 export const chains = {
   goerli: chain.goerli,
-  hardhat: { ...chain.hardhat, ...hardhatMulticallConfig },
+  hardhat: { ...chain.hardhat, multicall: hardhatMulticallConfig },
 };
 
 export const supportedChains = Object.keys(chains).map((chain) => chains[chain as ChainName]);

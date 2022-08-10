@@ -134,17 +134,17 @@ export default function Stake({
     const createAccountCall: MulticallCall = [snxProxy.contract, 'createAccount', [newAccountId]];
     const stakingCalls: MulticallCall[] = [
       [snxProxy.contract, 'stake', [id, selectedCollateralType.address, amountBN]],
-      // [
-      //   snxProxy.contract,
-      //   'delegateCollateral',
-      //   [
-      //     id,
-      //     Boolean(accountId) ? selectedFundId : fundId || 0,
-      //     selectedCollateralType.address,
-      //     amountToDelegate || 0,
-      //     ethers.constants.One,
-      //   ],
-      // ],
+      [
+        snxProxy.contract,
+        'delegateCollateral',
+        [
+          id,
+          Boolean(accountId) ? selectedFundId : fundId || 0,
+          selectedCollateralType.address,
+          amountToDelegate || 0,
+          ethers.constants.One,
+        ],
+      ],
     ];
 
     return [Boolean(accountId) ? stakingCalls : [createAccountCall, ...stakingCalls]];

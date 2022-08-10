@@ -12,7 +12,6 @@ const htmlPlugin = new HtmlWebpackPlugin({
   minify: false,
   hash: false,
   xhtml: true,
-  publicPath: '/',
 });
 
 const tsxRule = {

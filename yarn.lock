@@ -6195,7 +6195,7 @@ __metadata:
     react: ^18.0.0
     react-dom: ^18.0.0
     style-loader: ^3.3.1
-    wagmi: ^0.6.2
+    wagmi: ^0.5.9
     webpack: ^5.73.0
     webpack-cli: ^4.10.0
     webpack-dev-server: ^4.9.3
@@ -7466,9 +7466,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wagmi/core@npm:^0.5.2":
-  version: 0.5.2
-  resolution: "@wagmi/core@npm:0.5.2"
+"@wagmi/core@npm:^0.4.9":
+  version: 0.4.9
+  resolution: "@wagmi/core@npm:0.4.9"
   dependencies:
     eventemitter3: ^4.0.7
     zustand: ^4.0.0-rc.1
@@ -7481,7 +7481,7 @@ __metadata:
       optional: true
     "@walletconnect/ethereum-provider":
       optional: true
-  checksum: 0316a9cb62bc9f1079d140eb29235e2e7da3228d960f9692de14c203493001aea91c383bc45385d1ce180bd6e2bc1e8e48df69d4485c5b4891fede0339193114
+  checksum: ea31970d4a34fbf07aff94e51e9ee060ccfc0c72d0b8dd6bfaa932181b4d88b9b048dc9bd264b73fd0fe4710c0a44fb0ec2599578f6e45c3ef22955a630a3535
   languageName: node
   linkType: hard
 
@@ -27127,19 +27127,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wagmi@npm:^0.6.2":
-  version: 0.6.2
-  resolution: "wagmi@npm:0.6.2"
+"wagmi@npm:^0.5.9":
+  version: 0.5.12
+  resolution: "wagmi@npm:0.5.12"
   dependencies:
     "@coinbase/wallet-sdk": ^3.3.0
-    "@wagmi/core": ^0.5.2
+    "@wagmi/core": ^0.4.9
     "@walletconnect/ethereum-provider": ^1.7.8
     react-query: 4.0.0-beta.23
     use-sync-external-store: ^1.2.0
   peerDependencies:
     ethers: ">=5.5.1"
     react: ">=17.0.0"
-  checksum: c2c1eccf1aaf54221d42bad655852e09fe27e9dd2c00e386a4f749962cba4861e9722c5614d40385c704ce613190a44823b7bd649bb678992ce4f8f6adccb80b
+  checksum: 347cdc8456594c42483d1ec4ce3c88930247d4ed0ea4f9544e1f68b7d14005388c1fb5066f61d593f57cd382f185b6dd5ef1b9a3a717ac0f37accf3cf65acb4c
   languageName: node
   linkType: hard
 

@@ -1,8 +1,8 @@
-import ethers, { CallOverrides, Contract } from 'ethers';
-import { useEffect, useState } from 'react';
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import { contracts } from '../constants';
 import { useContract } from './useContract';
+import ethers, { CallOverrides, Contract } from 'ethers';
+import { useEffect, useState } from 'react';
+import { useContractWrite, useWaitForTransaction } from 'wagmi';
 
 // contact, funcion name, arguments
 // [ethers.Contract, functionName, arguments, overrides (i.e value, gasLimit, gasPrice)]
@@ -87,18 +87,17 @@ export const useMulticall = (
     }
   }
 
-  const { config: writeConfig, error } = usePrepareContractWrite({
+  const currentTxn = useContractWrite({
     addressOrName: callContract!.address,
     contractInterface: callContract!.interface,
     functionName: callFunc!,
-    args: callArgs!,
-    enabled: Boolean(callContract),
+    args: callArgs,
     overrides,
+    onError: (e) => {
+      setStatus('error');
+      config?.onError && config.onError(e);
+    },
   });
-
-  console.log('prepare error', error, callContract!.address, callArgs);
-
-  const currentTxn = useContractWrite(writeConfig);
 
   useWaitForTransaction({
     hash: currentTxn.data?.hash,
@@ -115,11 +114,6 @@ export const useMulticall = (
         config?.onSuccess && config.onSuccess();
       }
     },
-    onError: (e) => {
-      console.log('blah', e);
-      setStatus('error');
-      config?.onError && config.onError(e);
-    },
   });
 
   function reset() {
@@ -132,13 +126,13 @@ export const useMulticall = (
   async function exec() {
     if (status === 'idle') {
       setStatus('pending');
-      await currentTxn!.writeAsync();
+      await currentTxn.writeAsync();
     }
   }
 
   useEffect(() => {
     if (step !== 0 && lastExecutedStep !== step) {
-      currentTxn!.write();
+      currentTxn.write();
       setLastExecutedStep((s) => s + 1);
     }
   }, [step, currentTxn, lastExecutedStep]);
