@@ -44,9 +44,7 @@ export const Subnav: FC<Props> = ({ id }) => {
                 <NavLink
                   to={{
                     pathname: `/accounts/${account}`,
-                    query: {
-                      chain: router.query.chain,
-                    },
+                    search: '?chain=' + searchParams.get('chain'),
                   }}
                   key={account}
                 >
