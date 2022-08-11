@@ -1,3 +1,4 @@
+import { BigNumber } from 'ethers';
 import { chain, chainId as chainMapping } from 'wagmi';
 import { ChainName } from './types';
 
@@ -85,4 +86,15 @@ export const fundsData: Record<string, { name: string }> = {
   0: {
     name: 'None',
   },
+};
+
+export type CollateralType = {
+  address: string;
+  symbol: string;
+  logoURI: string;
+  decimals: number;
+  targetCRatio?: BigNumber;
+  minimumCRatio?: BigNumber;
+  price?: BigNumber;
+  priceDecimals?: number;
 };
