@@ -1,22 +1,28 @@
 {
   "name": "@synthetixio/v3-theme",
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "1.0.0",
-  "description": "component library",
-  "repository": "https://github.com/Synthetixio/ui",
+  "description": "Synthetix app theme",
+  "repository": "Synthetixio/js-monorepo",
+  "homepage": "https://synthetixio.github.io/ui",
   "license": "MIT",
-  "main": "./dist/cjs/v3/theme/src/index.js",
-  "module": "./dist/esm/v3/theme/src/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./build/index.js",
+  "module": "./build/index.js",
+  "browser": "./build/index.js",
+  "types": "./build/index.d.ts",
   "src": "./src",
   "files": [
-    "src",
-    "dist"
+    "build",
+    "src"
   ],
   "scripts": {
-    "build": "rm -rf ./dist  && rollup -c && tsc --emitDeclarationOnly",
+    "build": "tsc",
     "start": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "clean": "rm -rf dist"
+    "lint": "eslint './src/**/*.{js,ts,tsx}' && tsc --noEmit",
+    "lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.2.6",
@@ -27,28 +33,21 @@
     "react-dom": "^18.1.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.0",
+    "@babel/plugin-transform-runtime": "^7.13.10",
     "@babel/preset-env": "^7.13.10",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.13.0",
     "@chakra-ui/storybook-addon": "^4.0.4",
-    "@rollup/plugin-commonjs": "^22.0.1",
-    "@rollup/plugin-node-resolve": "^13.3.0",
     "@storybook/addon-essentials": "^6.5.7",
     "@storybook/addon-interactions": "^6.5.7",
     "@storybook/addon-links": "^6.5.7",
     "@storybook/builder-webpack5": "^6.5.7",
     "@storybook/manager-webpack5": "^6.5.10",
     "@storybook/react": "^6.5.7",
-    "rollup": "^2.77.2",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-terser": "^7.0.2",
+    "eslint": "^7.26.0",
     "typescript": "^4.4.2"
   },
-  "publishConfig": {
-    "access": "public"
-  },
-  "homepage": "https://synthetixio.github.io/ui",
   "browserslist": [
     "last 1 Chrome version",
     "last 1 Firefox version",
