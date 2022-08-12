@@ -1,5 +1,5 @@
 {
-  "name": "snx-v-3-docs",
+  "name": "snx-v3-docs",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -15,13 +15,23 @@
   },
   "dependencies": {
     "@docusaurus/core": "^2.0.1",
+    "@docusaurus/preset-classic": "2.0.1",
+    "@mdx-js/react": "^1.6.22",
+    "clsx": "^1.2.1",
     "prism-react-renderer": "^1.3.5",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "@docusaurus/Link": "latest"
+    "react-dom": "^17.0.2"
   },
   "browserslist": {
-    "production": [">0.5%", "not dead", "not op_mini all"],
-    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

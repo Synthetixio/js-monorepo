@@ -27117,9 +27117,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"snx-v-3-docs@workspace:v3/docs":
+"snx-v3-docs@workspace:v3/docs":
   version: 0.0.0-use.local
-  resolution: "snx-v-3-docs@workspace:v3/docs"
+  resolution: "snx-v3-docs@workspace:v3/docs"
   dependencies:
     "@docusaurus/core": ^2.0.1
     "@docusaurus/preset-classic": 2.0.1

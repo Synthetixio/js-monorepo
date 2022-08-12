@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from '@docusaurus/Link';
 
 export default function Home() {
   return (
@@ -12,43 +11,44 @@ export default function Home() {
               alt="Synthetix Documentation"
               style={{ marginTop: '4px' }}
             />
-            <Link
+            <a
+              target="_blank"
               style={{ float: 'right' }}
-              to="https://snx-v3-prototype.netlify.app"
+              href="https://snx-v3-prototype.netlify.app"
               class="button button--outline button--primary"
             >
               Go to App
-            </Link>
+            </a>
           </div>
         </div>
 
         <div class="row">
           <div class="col">
-            <Link className="intro-link" to="/protocol/overview">
+            <a target="_blank" className="intro-link" href="/protocol/overview">
               <h1>Synthetix Protocol</h1>
               <span>Create, trade, and stake for on-chain derivatives.</span>
-            </Link>
+            </a>
           </div>
         </div>
 
         <div class="row">
           <div class="col col--6">
-            <Link className="intro-link" to="/governance/overview">
+            <a target="_blank" className="intro-link" href="/governance/overview">
               <h1>Governance</h1>
               <span>
                 Vote for the DAO and review SIPs &amp; SCCPs for protocol upgrades and
                 configurations.
               </span>
-            </Link>
+            </a>
           </div>
           <div class="col col--6">
-            <Link className="intro-link" to="/upgrades/overview">
+            <a target="_blank" className="intro-link" href="/upgrades/overview">
               <h1>Upgrades</h1>
               <span>
                 Review the protocol’s changelog, upcoming releases, and technical details of the
                 proxy architecture.
               </span>
-            </Link>
+            </a>
           </div>
         </div>
       </div>
