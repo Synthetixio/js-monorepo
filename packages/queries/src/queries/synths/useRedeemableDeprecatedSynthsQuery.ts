@@ -17,7 +17,7 @@ const useRedeemableDeprecatedSynthsQuery = (
       if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
       const {
         contracts: { SynthRedeemer: Redeemer },
-      } = ctx.snxjs!;
+      } = ctx.snxjs;
       const synthDeprecatedFilter = Redeemer.filters.SynthDeprecated();
       const deprecatedSynthsEvents = await Redeemer.queryFilter(synthDeprecatedFilter);
       const deprecatedProxySynthsAddresses: string[] = deprecatedSynthsEvents.map(
@@ -58,7 +58,7 @@ const useRedeemableDeprecatedSynthsQuery = (
       };
     },
     {
-      enabled: !!ctx.networkId! && !!walletAddress,
+      enabled: !!ctx.networkId && !!walletAddress,
       ...options,
     }
   );

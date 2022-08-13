@@ -58,7 +58,7 @@ const useSynthSuspensionQuery = (
       };
     },
     {
-      enabled: !!ctx.snxjs && currencyKey != null,
+      enabled: !!ctx.snxjs && currencyKey !== null,
       ...options,
     }
   );
