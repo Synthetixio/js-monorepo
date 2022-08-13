@@ -3,7 +3,7 @@ import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { BaseProvider } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber';
-import { parseBytes32String } from '@ethersproject/strings';
+import { formatBytes32String, parseBytes32String } from '@ethersproject/strings';
 import {
   useGetLoans,
   useGetShorts,
@@ -11,8 +11,9 @@ import {
   useGetWrappers,
 } from '../../../generated/mainSubgraphQueries';
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from '../../constants';
-import { useEffect, useState } from 'react';
-import synthetix, { NetworkIdByName } from '@synthetixio/contracts-interface';
+import { useEffect, useMemo, useState } from 'react';
+import { Contract } from '@ethersproject/contracts';
+import { address, abi } from '@synthetixio/contracts/build/mainnet-ovm/deployment/ExchangeRates';
 
 export interface Debt {
   totalSupply: Wei;
@@ -36,7 +37,8 @@ const useGetDebtL2 = (
   options?: UseQueryOptions<Debt[]>
 ) => {
   const [debtData, setDebtData] = useState<DebtData | null>(null);
-  const snxjs = synthetix({ networkId: NetworkIdByName['mainnet-ovm'], provider: L2Provider });
+
+  const ExchangeRatesOptimism = useMemo(() => new Contract(address, abi, L2Provider), []);
   const wrappers = useGetWrappers(
     DEFAULT_SUBGRAPH_ENDPOINTS[10].subgraph,
     {
@@ -169,7 +171,7 @@ const useGetDebtL2 = (
       });
 
       const promises = synthDataWithLoans.map((synth) => {
-        return snxjs.contracts.ExchangeRates.rateForCurrency(snxjs.toBytes32(synth.symbol));
+        return ExchangeRatesOptimism.rateForCurrency(formatBytes32String(synth.symbol));
       });
 
       const rates: BigNumber[] = await Promise.all(promises);

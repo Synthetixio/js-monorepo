@@ -42,10 +42,13 @@ const useSynthSuspensionQuery = (
   return useQuery<SynthSuspended>(
     ['synth', 'suspension', ctx.networkId, currencyKey],
     async () => {
-      const [isSuspended, reason] =
-        (await ctx.snxjs!.contracts.SystemStatus.synthExchangeSuspension(
-          formatBytes32String(currencyKey!)
-        )) as [boolean, BigNumber];
+      if (!ctx.snxjs) {
+        // This should never happen since the query is not enabled when ctx.snxjs is undefined
+        throw Error('ctx.snxjs is undefined');
+      }
+      const [isSuspended, reason] = (await ctx.snxjs.contracts.SystemStatus.synthExchangeSuspension(
+        formatBytes32String(currencyKey!)
+      )) as [boolean, BigNumber];
 
       const reasonCode = Number(reason);
       return {

@@ -1,11 +1,13 @@
+import { useMemo } from 'react';
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 import Wei, { wei } from '@synthetixio/wei';
 import { BaseProvider } from '@ethersproject/providers';
 import { formatBytes32String } from '@ethersproject/strings';
 import { useGetSNXHolders } from '../../../generated/mainSubgraphQueries';
-import synthetix, { NetworkIdByName, NetworkNameById } from '@synthetixio/contracts-interface';
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from '../../constants';
+import { address, abi } from '@synthetixio/contracts/build/mainnet/deployment/Synthetix';
+import { Contract } from '@ethersproject/contracts';
 
 interface SNXData {
   lockedSupply: Wei;
@@ -19,6 +21,7 @@ const useSNXData = (
   L1Provider?: BaseProvider,
   options?: UseQueryOptions<SNXData>
 ) => {
+  const Synthetix = useMemo(() => new Contract(address, abi, L1Provider), []);
   const snxHoldersQueryL1 = useGetSNXHolders(
     DEFAULT_SUBGRAPH_ENDPOINTS[1].subgraph,
     {
@@ -77,11 +80,6 @@ const useSNXData = (
       wei(0)
     ) || wei(0);
 
-  const snxJSL1 = synthetix({
-    network: NetworkNameById[1],
-    networkId: NetworkIdByName['mainnet'],
-    provider: L1Provider || ctx.provider!,
-  });
   return useQuery<SNXData>(
     [
       'staking',
@@ -91,12 +89,13 @@ const useSNXData = (
       lockedSupplyL2.toString(),
     ],
     async () => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const snxPriceP = ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(
+      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
+
+      const snxPriceP = ctx.snxjs.contracts.ExchangeRates.rateForCurrency(
         formatBytes32String('SNX')
       );
 
-      const totalSNXSupplyP = snxJSL1.contracts.Synthetix.totalSupply();
+      const totalSNXSupplyP = Synthetix.totalSupply();
 
       const [snxPrice, totalSNXSupply] = await Promise.all([snxPriceP, totalSNXSupplyP]);
       if (

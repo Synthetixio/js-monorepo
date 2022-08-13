@@ -14,6 +14,7 @@ const useRedeemableDeprecatedSynthsQuery = (
   return useQuery<DeprecatedSynthsBalances>(
     ['WalletBalances', 'RedeemableDeprecatedSynths', ctx.networkId, walletAddress],
     async () => {
+      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
       const {
         contracts: { SynthRedeemer: Redeemer },
       } = ctx.snxjs!;

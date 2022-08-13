@@ -24,10 +24,11 @@ const useGetDebtDataQuery = (
   return useQuery<WalletDebtData>(
     ['debt', 'data', ctx.networkId, walletAddress],
     async () => {
+      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
       const {
         contracts: { SystemSettings, Synthetix },
         utils,
-      } = ctx.snxjs!;
+      } = ctx.snxjs;
       const sUSDBytes = utils.formatBytes32String('sUSD');
       const result = await Promise.all([
         SystemSettings.issuanceRatio(),
@@ -64,7 +65,7 @@ const useGetDebtDataQuery = (
       };
     },
     {
-      enabled: ctx.networkId != null && walletAddress != null,
+      enabled: ctx.networkId !== null && walletAddress !== null,
       ...options,
     }
   );

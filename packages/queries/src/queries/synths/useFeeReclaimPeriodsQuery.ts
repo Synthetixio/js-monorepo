@@ -21,7 +21,7 @@ const useFeeReclaimPeriodsQuery = (
       const {
         synths,
         contracts: { Exchanger },
-      } = ctx.snxjs!;
+      } = ctx.snxjs;
 
       const loadWaitingPeriod = async (currencyKey: Synth) => {
         const maxSecsLeftInWaitingPeriod = (await Exchanger.maxSecsLeftInWaitingPeriod(
