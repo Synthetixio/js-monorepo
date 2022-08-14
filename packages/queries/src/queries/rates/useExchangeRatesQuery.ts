@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useQuery, UseQueryOptions } from 'react-query';
 import { BigNumberish } from '@ethersproject/bignumber';
 import { formatBytes32String, parseBytes32String } from '@ethersproject/strings';
@@ -20,11 +19,8 @@ const useExchangeRatesQuery = (ctx: QueryContext, options?: UseQueryOptions<Rate
   return useQuery<Rates>(
     ['rates', 'exchangeRates', ctx.networkId],
     async () => {
+      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
       const exchangeRates: Rates = {};
-      console.log('Executing exchange rate hook');
-      if (!ctx.snxjs) return exchangeRates;
-
-      console.log('Snx.js is defined', ctx.snxjs);
 
       const [synthsRates, ratesForCurrencies] = (await Promise.all([
         ctx.snxjs.contracts.SynthUtil.synthsRates(),

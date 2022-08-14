@@ -3,6 +3,8 @@ import Wei from '@synthetixio/wei';
 
 import { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
+import { formatBytes32String } from '@ethersproject/strings';
+import { formatEther } from '@ethersproject/units';
 
 type WalletDebtData = {
   targetCRatio: Wei;
@@ -27,9 +29,8 @@ const useGetDebtDataQuery = (
       if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
       const {
         contracts: { SystemSettings, Synthetix },
-        utils,
       } = ctx.snxjs;
-      const sUSDBytes = utils.formatBytes32String('sUSD');
+      const sUSDBytes = formatBytes32String('sUSD');
       const result = await Promise.all([
         SystemSettings.issuanceRatio(),
         Synthetix.collateralisationRatio(walletAddress),
@@ -51,7 +52,7 @@ const useGetDebtDataQuery = (
         balance,
         totalSupply,
         targetThreshold,
-      ] = result.map((item) => wei(utils.formatEther(item)));
+      ] = result.map((item) => wei(formatEther(item)));
       return {
         targetCRatio,
         currentCRatio,
