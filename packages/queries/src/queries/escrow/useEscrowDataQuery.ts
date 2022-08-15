@@ -24,9 +24,10 @@ const useEscrowDataQuery = (
   return useQuery<EscrowData>(
     ['escrow', 'stakingRewards', ctx.networkId, walletAddress],
     async () => {
+      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
       const {
         contracts: { RewardEscrowV2 },
-      } = ctx.snxjs!;
+      } = ctx.snxjs;
 
       const [numVestingEntries, totalEscrowed, totalVested, totalBalancePendingMigration] =
         await Promise.all([
@@ -103,7 +104,7 @@ const useEscrowDataQuery = (
       };
     },
     {
-      enabled: ctx.snxjs != null && !!walletAddress,
+      enabled: ctx.snxjs !== null && !!walletAddress,
       ...options,
     }
   );

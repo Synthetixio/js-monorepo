@@ -6775,6 +6775,7 @@ __metadata:
     "@ethersproject/units": ^5.6.1
     "@snapshot-labs/snapshot.js": ^0.4.13
     "@synthetixio/codegen-graph-ts": "workspace:*"
+    "@synthetixio/contracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/optimism-networks": "workspace:*"
     "@synthetixio/wei": "workspace:*"

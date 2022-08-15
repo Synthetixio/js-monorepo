@@ -19,11 +19,12 @@ const useExchangeRatesQuery = (ctx: QueryContext, options?: UseQueryOptions<Rate
   return useQuery<Rates>(
     ['rates', 'exchangeRates', ctx.networkId],
     async () => {
+      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
       const exchangeRates: Rates = {};
 
       const [synthsRates, ratesForCurrencies] = (await Promise.all([
-        ctx.snxjs!.contracts.SynthUtil.synthsRates(),
-        ctx.snxjs!.contracts.ExchangeRates.ratesForCurrencies(additionalCurrencies),
+        ctx.snxjs.contracts.SynthUtil.synthsRates(),
+        ctx.snxjs.contracts.ExchangeRates.ratesForCurrencies(additionalCurrencies),
       ])) as [SynthRatesTuple, CurrencyRate[]];
 
       const synths = [...synthsRates[0], ...additionalCurrencies] as CurrencyKey[];

@@ -11,7 +11,7 @@ const useSynthetixTxn = (
   txnOptions: Partial<TransactionRequest> = {},
   options?: UseEVMTxnOptions
 ) => {
-  if (ctx.snxjs != null) {
+  if (ctx.snxjs !== null) {
     return useContractTxn(ctx, ctx.snxjs.contracts[contract], method, args, txnOptions, options);
   }
 

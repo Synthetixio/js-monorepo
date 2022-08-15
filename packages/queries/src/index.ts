@@ -5,7 +5,7 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { Provider } from '@ethersproject/providers';
 import { QueryContext, SubgraphEndpoints } from './context';
 
-import { synthetix, NetworkId } from '@synthetixio/contracts-interface';
+import { NetworkId, SynthetixJS } from '@synthetixio/contracts-interface';
 
 import { UseQueryOptions, UseQueryResult } from 'react-query';
 
@@ -61,11 +61,13 @@ export type SynthetixQueries = {
 } & Queries<RawSynthetixQueries>;
 
 export function createQueryContext({
+  synthetixjs,
   networkId,
   provider,
   signer,
   subgraphEndpoints,
 }: {
+  synthetixjs: SynthetixJS | null;
   networkId: NetworkId | null;
   provider?: Provider;
   signer?: Signer;
@@ -79,12 +81,11 @@ export function createQueryContext({
     subgraphEndpoints: subgraphEndpoints || DEFAULT_SUBGRAPH_ENDPOINTS[1],
   };
 
-  if (networkId) {
-    ctx.snxjs = synthetix({ networkId, signer, provider });
+  if (networkId && synthetixjs && signer && provider) {
+    ctx.snxjs = synthetixjs;
 
-    // snag the resultant provider from snxjs
-    ctx.signer = ctx.snxjs.contracts.Synthetix.signer;
-    ctx.provider = ctx.snxjs.contracts.Synthetix.provider;
+    ctx.signer = signer;
+    ctx.provider = provider;
 
     if (!subgraphEndpoints) {
       ctx.subgraphEndpoints = DEFAULT_SUBGRAPH_ENDPOINTS[networkId];
