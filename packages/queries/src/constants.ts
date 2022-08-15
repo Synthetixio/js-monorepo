@@ -100,5 +100,3 @@ export const DEFAULT_SUBGRAPH_ENDPOINTS: { [networkId: number]: SubgraphEndpoint
     subgraph: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-kovan-main',
   },
 };
-
-// test
