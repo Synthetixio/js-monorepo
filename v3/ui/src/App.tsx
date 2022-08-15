@@ -21,7 +21,7 @@ export const Synthetix: React.FC = () => {
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route path="/accounts/:id/collateral/position" element={<AccountPosition />} />
-          <Route path="/accounts/:id/collateral/:symbol/:fundId" element={<StakingPosition />} />
+          <Route path="/accounts/:id/positions/:symbol/:fundId" element={<StakingPosition />} />
           <Route path="/accounts/:id/collateral" element={<Collateral />} />
           <Route path="/accounts/:id/settings" element={<Settings />} />
           <Route path="/accounts/:id" element={<Account />} />
