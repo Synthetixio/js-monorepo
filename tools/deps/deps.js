@@ -17,6 +17,7 @@ const options = {
   skipMissing: false, // skip calculation of missing dependencies
   ignorePatterns: [
     // files matching these patterns will be ignored
+    'dist',
     'build',
     'generated',
     'coverage',

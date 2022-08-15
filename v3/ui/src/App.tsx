@@ -1,48 +1,37 @@
-import { getDefaultWallets } from '@rainbow-me/rainbowkit';
-import React from 'react';
-import { chain, createClient, WagmiConfig, configureChains, useContractRead } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
+import React, { Suspense } from 'react';
+import { Spinner } from '@chakra-ui/react';
+import { Route, Routes } from 'react-router-dom';
+import { DefaultLayout } from './layouts/Default';
+import { Home } from './pages';
+import {
+  Account,
+  CreateAccount,
+  Settings,
+  Collateral,
+  AccountPosition,
+  StakingPosition,
+} from './pages/accounts';
+import { CreateSynth } from './pages/synths/CreateSynth';
+import { Synth } from './pages/synths/Synth';
+import { Fund } from './pages/funds/fund';
 
-export const supportedChains = [
-  chain.goerli,
-  {
-    ...chain.hardhat,
-    multicall: {
-      address: '0x2017758D5341a319410f8DdD0a034d0170EE0444',
-      blockCreated: 10228837,
-    },
-  },
-];
-
-const { chains, provider } = configureChains(supportedChains, [publicProvider()]);
-
-const { connectors } = getDefaultWallets({
-  appName: 'Synthetix',
-  chains,
-});
-
-const wagmiClient = createClient({
-  autoConnect: true,
-  provider,
-  connectors,
-});
-
-export function Synthetix() {
+export const Synthetix: React.FC = () => {
   return (
-    <WagmiConfig client={wagmiClient}>
-      <TestWagmi />
-    </WagmiConfig>
+    <Suspense fallback={<Spinner />}>
+      <Routes>
+        <Route element={<DefaultLayout />}>
+          <Route path="/accounts/:id/collateral/position" element={<AccountPosition />} />
+          <Route path="/accounts/:id/positions/:symbol/:fundId" element={<StakingPosition />} />
+          <Route path="/accounts/:id/collateral" element={<Collateral />} />
+          <Route path="/accounts/:id/settings" element={<Settings />} />
+          <Route path="/accounts/:id" element={<Account />} />
+          <Route path="/accounts/create" element={<CreateAccount />} />
+          <Route path="/synths/create" element={<CreateSynth />} />
+          <Route path="/synths/:address" element={<Synth />} />
+          <Route path="/funds/:id" element={<Fund />} />
+          <Route path="/" element={<Home />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
-}
-
-const TestWagmi = () => {
-  const file = require('../ts-deployments/goerli/synthetix.Proxy');
-  const { isLoading, data } = useContractRead({
-    addressOrName: file.address,
-    contractInterface: file.abi,
-    functionName: 'getCollateralTypes',
-    args: [true],
-  });
-
-  return <div>Hello World</div>;
 };
