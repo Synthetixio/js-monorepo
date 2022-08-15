@@ -3395,7 +3395,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/is-prop-valid@npm:^1.2.0, @emotion/is-prop-valid@npm:latest":
+"@emotion/is-prop-valid@npm:^1.2.0":
   version: 1.2.0
   resolution: "@emotion/is-prop-valid@npm:1.2.0"
   dependencies:
@@ -6912,7 +6912,7 @@ __metadata:
     "@babel/preset-typescript": ^7.13.0
     "@chakra-ui/icons": ^2.0.6
     "@chakra-ui/react": ^2.2.6
-    "@emotion/is-prop-valid": latest
+    "@emotion/is-prop-valid": ^1.2.0
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@faker-js/faker": ^7.4.0
