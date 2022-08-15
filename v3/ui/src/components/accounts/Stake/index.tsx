@@ -35,6 +35,7 @@ import { useRecoilState } from 'recoil';
 import { erc20ABI, useAccount, useBalance, useContractRead, useNetwork } from 'wagmi';
 import { CollateralType } from '../../../utils/types';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 type FormType = {
   collateralType: CollateralType;
@@ -49,6 +50,7 @@ export default function Stake({
   accountId?: string;
   stakingPositions?: StakingPositionType[];
 }) {
+  const { t } = useTranslation();
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
   const [collateralTypes] = useRecoilState(collateralTypesState);
@@ -323,8 +325,8 @@ export default function Stake({
                 >
                   {/* @ts-ignore */}
                   {formState.errors.amount?.type === 'sufficientFunds'
-                    ? 'Insufficient Funds'
-                    : 'Stake'}
+                    ? t('common.insufficientFunds')
+                    : t('common.stake')}
                 </Button>
               ) : (
                 <Button
@@ -334,7 +336,7 @@ export default function Stake({
                   px="8"
                   onClick={() => openConnectModal && openConnectModal()}
                 >
-                  Connect Wallet
+                  {t('common.connectWallet')}
                 </Button>
               )}
             </Flex>
@@ -348,23 +350,20 @@ export default function Stake({
 
               {Boolean(accountId) ? (
                 <Text fontSize="xs" textAlign="right" ml="auto">
-                  Fund:{' '}
+                  {t('common.fund')}:{' '}
                   {selectedFundId
                     ? fundsData[selectedFundId]
                       ? fundsData[selectedFundId].name
-                      : 'Unknown Fund'
-                    : 'None'}{' '}
+                      : t('common.unknownFund')
+                    : t('common.none')}{' '}
                   <Link color="blue.400">
                     <EditIcon onClick={onOpenFund} style={{ transform: 'translateY(-2px)' }} />
                   </Link>
                 </Text>
               ) : (
                 <Text fontSize="xs" textAlign="right" ml="auto">
-                  Receive an snxAccount token{' '}
-                  <Tooltip
-                    textAlign="center"
-                    label="You will be minted an NFT that represents your account. You can easily transfer it between wallets."
-                  >
+                  {t('home.stake.receiveToken')}{' '}
+                  <Tooltip textAlign="center" label={t('home.stake.receiveTokenTooltip')}>
                     <InfoOutlineIcon transform="translateY(-1.5px)" />
                   </Tooltip>
                 </Text>
@@ -376,7 +375,7 @@ export default function Stake({
         <Modal size="2xl" isOpen={isOpenFund} onClose={onCloseFund}>
           <ModalOverlay />
           <ModalContent bg="black" color="white">
-            <ModalHeader>Select Fund</ModalHeader>
+            <ModalHeader>{t('home.stake.selectFund')}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <EditPosition onClose={onCloseFund} />

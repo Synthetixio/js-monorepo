@@ -1,3 +1,25 @@
 {
-  "home": "Home Page"
+  "common": {
+    "learnMore": "Learn more",
+    "none": "None",
+    "fund": "Fund",
+    "connectWallet": "Connect Wallet",
+    "unknownFund": "Unknown Fund",
+    "stake": "Stake",
+    "insufficientFunds": "Insufficient Funds"
+  },
+  "home": {
+    "createAccount": {
+      "description": "Stake with Synthetix to enable the creation of synthetic assets on-chain. You earn yield but must also maintain your C-Ratio."
+    },
+    "stake": {
+      "selectFund": "Select Fund",
+      "receiveToken": "Receive an snxAccount token",
+      "receiveTokenTooltip": "You will be minted an NFT that represents your account. You can easily transfer it between wallets.",
+      "howItWorks": {
+        "title": "How it works",
+        "goVote":"Go vote"
+      }
+    }
+  }
 }

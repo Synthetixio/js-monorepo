@@ -1,12 +1,14 @@
 import { CollateralType } from '../../../utils/types';
 import { Heading, Link, UnorderedList, ListItem } from '@chakra-ui/react';
 import { BigNumber, utils } from 'ethers';
+import { useTranslation } from 'react-i18next';
 
 export default function HowItWorks({
   selectedCollateralType,
 }: {
   selectedCollateralType: CollateralType;
 }) {
+  const { t } = useTranslation();
   const formatValue = (value: BigNumber, decimals: number) =>
     parseInt(utils.formatUnits(value, decimals));
 
@@ -20,7 +22,7 @@ export default function HowItWorks({
         textTransform="uppercase"
         letterSpacing="1.5px"
       >
-        How it works
+        {t('home.stake.howItWorks.title')}
       </Heading>
       <UnorderedList>
         <ListItem mb="2">
@@ -32,7 +34,7 @@ export default function HowItWorks({
             isExternal
             href="https://governance.synthetix.io"
           >
-            Go vote
+            {t('home.stake.howItWorks.goVote')}
           </Link>
         </ListItem>
         {selectedCollateralType && (
