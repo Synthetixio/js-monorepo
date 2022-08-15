@@ -51,6 +51,7 @@
   ],
   "resolutions": {
     "@ethersproject/abi": "^5.6.4",
+    "@emotion/is-prop-valid": "^1.2.0",
     "ethers": "^5.5.3",
     "browserslist": "^4.20.4",
     "caniuse-lite": "^1.0.30001355"
