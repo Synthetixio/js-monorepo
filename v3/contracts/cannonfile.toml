@@ -64,7 +64,7 @@ artifact = "Multicall3"
 artifact = "WETH9"
 
 [invoke.register_lusd_collateral]
-target = ["synthetix.Proxy"]
+target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
 func = "adjustCollateralType"
 args = [
@@ -77,7 +77,7 @@ args = [
 depends = ["import.synthetix", "import.lusd", "import.aggregator_lusd"]
 
 [invoke.register_snx_collateral]
-target = ["synthetix.Proxy"]
+target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
 func = "adjustCollateralType"
 args = [
@@ -90,7 +90,7 @@ args = [
 depends = ["import.synthetix", "import.snx", "import.aggregator_snx"]
 
 [invoke.register_weth_collateral]
-target = ["synthetix.Proxy"]
+target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
 func = "adjustCollateralType"
 args = [
@@ -113,7 +113,7 @@ args = [
 depends=["import.snx", "import.synthetix"]
 
 [invoke.createPreferredFund]
-target = ["synthetix.Proxy"]
+target = ["synthetix.CoreProxy"]
 func = "createFund"
 args = [
     1,
@@ -122,7 +122,7 @@ args = [
 depends=["import.synthetix"]
 
 [invoke.setPreferredFund]
-target = ["synthetix.Proxy"]
+target = ["synthetix.CoreProxy"]
 func = "setPreferredFund"
 from = "<%= settings.owner %>"
 args = [

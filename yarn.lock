@@ -6827,13 +6827,13 @@ __metadata:
     "@typechain/ethers-v5": ^10.0.0
     "@typechain/hardhat": ^6.0.0
     "@types/node": ^17.0.43
-    "@usecannon/cli": ^1.0.7
+    "@usecannon/cli": ^1.0.26
     cross-env: ^7.0.3
     dotenv: ^16.0.0
     ethereum-waffle: ^3.4.4
     ethers: ^5.5.3
     hardhat: ^2.9.2
-    hardhat-cannon: 1.0.21
+    hardhat-cannon: 1.0.26
     hardhat-gas-reporter: ^1.0.8
     hardhat-interact: ^0.2.3
     prettier: ^2.3.0
@@ -8096,9 +8096,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^1.0.21":
-  version: 1.0.21
-  resolution: "@usecannon/builder@npm:1.0.21"
+"@usecannon/builder@npm:^1.0.26":
+  version: 1.0.26
+  resolution: "@usecannon/builder@npm:1.0.26"
   dependencies:
     adm-zip: ^0.5.9
     ajv: ^8.11.0
@@ -8110,17 +8110,17 @@ __metadata:
     typescript: ^4.6.2
   peerDependencies:
     ethers: ">=5.6.0"
-  checksum: e7bbe730c7fe7bbaa0693116291df9db460ae2544923487c9dac929e447ffef9d4928f6f0f5432207a1ca3ceae593c9bac3015d50fc9cc9c73fc7da43d115f15
+  checksum: 31c207f94dff400daac2109e4772cb27b5a07545341e2966ff9b3f846085ebc6da3a0701fadca4dffb7cd5b8553f20f1bf07210cdbd292172559c66523a37a9d
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:^1.0.21, @usecannon/cli@npm:^1.0.7":
-  version: 1.0.21
-  resolution: "@usecannon/cli@npm:1.0.21"
+"@usecannon/cli@npm:^1.0.26":
+  version: 1.0.26
+  resolution: "@usecannon/cli@npm:1.0.26"
   dependencies:
     "@synthetixio/wei": ^2.74.1
     "@types/node-fetch": ^2.6.2
-    "@usecannon/builder": ^1.0.21
+    "@usecannon/builder": ^1.0.26
     chalk: ^4.1.2
     commander: ^9.3.0
     debug: ^4.3.4
@@ -8131,7 +8131,7 @@ __metadata:
     prompts: ^2.4.2
   bin:
     cannon: dist/bin/cannon.js
-  checksum: 17f36f263f6bec327c3913644fd2a987df51f606019e99a30ce210ae650b3f0e668c652b5f75670cb66547214262233f10d0ab29fef10336fbd3a90f86c1f4f5
+  checksum: c54694dc094989f5b718213ab6dc8045791dc83162be12b0e899429beda688c4f2ee4029b5be4cc6cc91c2dd73538ca6059f5a39ae399af248f2ad090f7c617b
   languageName: node
   linkType: hard
 
@@ -17133,16 +17133,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat-cannon@npm:1.0.21":
-  version: 1.0.21
-  resolution: "hardhat-cannon@npm:1.0.21"
+"hardhat-cannon@npm:1.0.26":
+  version: 1.0.26
+  resolution: "hardhat-cannon@npm:1.0.26"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@types/adm-zip": ^0.5.0
     "@types/archiver": ^5.3.1
     "@types/yazl": ^2.4.2
-    "@usecannon/builder": ^1.0.21
-    "@usecannon/cli": ^1.0.21
+    "@usecannon/builder": ^1.0.26
+    "@usecannon/cli": ^1.0.26
     adm-zip: ^0.5.9
     ajv: ^8.10.0
     chalk: ^4.1.2
@@ -17160,7 +17160,7 @@ __metadata:
     "@nomiclabs/hardhat-ethers": ^2.0.0
     "@nomiclabs/hardhat-etherscan": ^3.0.0
     hardhat: ^2.0.0
-  checksum: d58b05eef46a0484e81aa47b1abc9c0c576599a7400a04b7c0ab3bb0d53804aa07adfb32be0652523429d1869e641a72cd2522c84959fe624f4dd763dc4ddbfa
+  checksum: e8c3f75490a274a3ddfadeb90e7fb1e52eaae02e4d2005aa923a94c0342070599bd467e8b1eb58896d54420af5007ed353b6fdd122ea9c21267f5e8241279489
   languageName: node
   linkType: hard
 
