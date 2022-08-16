@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 export function CreateSynth() {
   const { t } = useTranslation();
@@ -57,16 +57,15 @@ export function CreateSynth() {
           <FormLabel htmlFor="priceFeed">{t('synths.createSynth.priceFeedAddress')}</FormLabel>
           <Input id="priceFeed" type="priceFeed" />
           <FormHelperText>
-            This contract must implement the Synthetix Price Feed Interface.{' '}
-            <u>Review the documentation</u>
+            <Trans i18nKey="synths.createSynth.priceFeedAddressHelp" components={[<u />]} />
           </FormHelperText>
         </FormControl>
 
         <Heading size="md" mb="2">
-          Fees
+          {t('common.fees')}
         </Heading>
         <Text mb="4" opacity="0.66" fontStyle="italic">
-          No fees will be applied when this synth is minted or burned.
+          {t('synths.createSynth.feesInfo')}
         </Text>
         <Menu>
           <MenuButton
@@ -77,7 +76,7 @@ export function CreateSynth() {
             ml="auto"
             mb="16"
           >
-            Add a Fee
+            {t('synths.createSynth.addFee')}
           </MenuButton>
           <MenuList px={2} bg="black" border="1px solid rgba(255,255,255,0.33)">
             <MenuItem
@@ -86,7 +85,7 @@ export function CreateSynth() {
               _focus={{ bg: 'gray.800' }}
               _active={{ bg: 'gray.800' }}
             >
-              Flat
+              {t('synths.createSynth.flat')}
             </MenuItem>
             <MenuItem
               mb={1}
@@ -94,7 +93,7 @@ export function CreateSynth() {
               _focus={{ bg: 'gray.800' }}
               _active={{ bg: 'gray.800' }}
             >
-              Dynamic Exchange
+              {t('synths.createSynth.dynamicExchange')}
             </MenuItem>
             <MenuItem
               mb={1}
@@ -102,14 +101,14 @@ export function CreateSynth() {
               _focus={{ bg: 'gray.800' }}
               _active={{ bg: 'gray.800' }}
             >
-              Simulated Liquidity
+              {t('synths.createSynth.simulatedLiquidity')}
             </MenuItem>
             <MenuItem
               _hover={{ bg: 'gray.800' }}
               _focus={{ bg: 'gray.800' }}
               _active={{ bg: 'gray.800' }}
             >
-              Custom
+              {t('synths.createSynth.custom')}
             </MenuItem>
           </MenuList>
         </Menu>
