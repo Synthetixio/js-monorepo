@@ -5,7 +5,7 @@ import { DefaultLayout } from './layouts/Default';
 import { Home } from './pages';
 import {
   Account,
-  CreateAccount,
+  CreateAccountPage,
   Settings,
   Collateral,
   AccountPosition,
@@ -25,7 +25,7 @@ export const Synthetix: React.FC = () => {
           <Route path="/accounts/:id/collateral" element={<Collateral />} />
           <Route path="/accounts/:id/settings" element={<Settings />} />
           <Route path="/accounts/:id" element={<Account />} />
-          <Route path="/accounts/create" element={<CreateAccount />} />
+          <Route path="/accounts/create" element={<CreateAccountPage />} />
           <Route path="/synths/create" element={<CreateSynth />} />
           <Route path="/synths/:address" element={<Synth />} />
           <Route path="/funds/:id" element={<Fund />} />

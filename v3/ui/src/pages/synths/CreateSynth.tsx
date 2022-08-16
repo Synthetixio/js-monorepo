@@ -16,43 +16,45 @@ import {
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export function CreateSynth() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
     <Box>
       <Helmet>
-        <title>Create a Synth</title>
+        <title>{t('synths.createSynth.title')}</title>
         <meta name="description" content="Create a Synth" />
       </Helmet>
       <Box>
         <Heading size="lg" mb="8" mr="auto">
-          Deploy a New Synth
+          {t('synths.createSynth.deploySynth')}
         </Heading>
         <SimpleGrid columns={2} spacing={4}>
           <FormControl mb="6">
-            <FormLabel htmlFor="name">Name</FormLabel>
+            <FormLabel htmlFor="name">{t('common.name')}</FormLabel>
             <Input id="name" type="name" />
           </FormControl>
           <FormControl mb="6">
-            <FormLabel htmlFor="ticker">Ticker</FormLabel>
+            <FormLabel htmlFor="ticker">{t('common.ticker')}</FormLabel>
             <Input id="ticker" type="ticker" />
           </FormControl>
         </SimpleGrid>
         <SimpleGrid columns={2} spacing={4}>
           <FormControl mb="6">
-            <FormLabel htmlFor="icon">Icon URI</FormLabel>
+            <FormLabel htmlFor="icon">{t('synths.createSynth.iconURI')}</FormLabel>
             <Input id="icon" type="icon" />
           </FormControl>
           <FormControl mb="6">
-            <FormLabel htmlFor="category">Category</FormLabel>
+            <FormLabel htmlFor="category">{t('common.category')}</FormLabel>
             <Input id="category" type="category" />
           </FormControl>
         </SimpleGrid>
 
         <FormControl mb="8">
-          <FormLabel htmlFor="priceFeed">Price Feed Contract Address</FormLabel>
+          <FormLabel htmlFor="priceFeed">{t('synths.createSynth.priceFeedAddress')}</FormLabel>
           <Input id="priceFeed" type="priceFeed" />
           <FormHelperText>
             This contract must implement the Synthetix Price Feed Interface.{' '}
@@ -118,7 +120,7 @@ export function CreateSynth() {
           mb="1"
           onClick={() => navigate('/synths/example')}
         >
-          Create Synth
+          {t('synths.createSynth.cta')}
         </Button>
       </Box>
     </Box>

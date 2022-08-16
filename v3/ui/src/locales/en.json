@@ -6,7 +6,10 @@
     "connectWallet": "Connect Wallet",
     "unknownFund": "Unknown Fund",
     "stake": "Stake",
-    "insufficientFunds": "Insufficient Funds"
+    "insufficientFunds": "Insufficient Funds",
+    "name": "Name",
+    "ticker": "Ticker",
+    "category": "Category"
   },
   "home": {
     "createAccount": {
@@ -18,8 +21,17 @@
       "receiveTokenTooltip": "You will be minted an NFT that represents your account. You can easily transfer it between wallets.",
       "howItWorks": {
         "title": "How it works",
-        "goVote":"Go vote"
+        "goVote": "Go vote"
       }
+    }
+  },
+  "synths": {
+    "createSynth": {
+      "title": "Create a Synth",
+      "deploySynth": "Deploy a New Synth",
+      "iconURI": "Icon URI",
+      "priceFeedAddress": "Price Feed Contract Address",
+      "cta": "Create Synth"
     }
   }
 }
