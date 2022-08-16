@@ -8,7 +8,7 @@ export function StakingNav() {
   const [{ accounts: userAccounts }] = useRecoilState(accountsState);
   const { id } = useParams();
   const [search] = useSearchParams();
-  const routingSearchParams = `?chain=${search.get('get')}`;
+  const routingSearchParams = `?chain=${search.get('chain')}`;
 
   return (
     <Flex mb="6" alignItems="center">
