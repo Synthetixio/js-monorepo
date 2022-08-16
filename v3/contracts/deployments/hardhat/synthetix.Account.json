@@ -716,7 +716,7 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x3913d8c9b1bba34e5a5dc827f3cfedffa358a3e6813c6a7a6401437887ce8e3c",
+  "deployTxnHash": "0xebd1a73174272a5b411ef046a2610ae894d8e568b7e3b24c07a42620baa1afed",
   "sourceName": "contracts/satellites/AccountToken.sol",
   "contractName": "AccountToken",
   "deployedOn": "invoke.init_account"
