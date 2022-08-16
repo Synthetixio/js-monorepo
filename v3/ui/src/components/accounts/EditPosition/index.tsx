@@ -3,21 +3,15 @@ import { useContract } from '../../../utils/hooks/useContract';
 import StakerOption from './StakerOption';
 import {
   Box,
-  Heading,
-  Text,
-  Input,
-  Flex,
   Button,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Radio,
   RadioGroup,
-  Spacer,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
 } from '@chakra-ui/react';
-import { BigNumber } from 'ethers';
 import { useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useContractReads } from 'wagmi';

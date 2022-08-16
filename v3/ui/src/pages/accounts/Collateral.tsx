@@ -1,11 +1,10 @@
 import { Heading, Text } from '@chakra-ui/react';
 import Stake from '../../components/accounts/Stake/index';
-import StakingPositions from '../../components/accounts/StakingPositions/index';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 export function Collateral() {
-  const { id } = useParams();
+  const { id: _id } = useParams();
 
   return (
     <>
