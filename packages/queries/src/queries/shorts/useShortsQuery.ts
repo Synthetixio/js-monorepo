@@ -14,11 +14,12 @@ const useSBTCShortsQuery = (
   return useQuery<ShortRewardsData>(
     ['shorts', 'data', ctx.networkId, walletAddress],
     async () => {
+      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
       const {
         contracts: { CollateralManager, ExchangeRates },
-      } = ctx.snxjs!;
+      } = ctx.snxjs;
 
-      const ShortingRewards = ctx.snxjs!.contracts['ShortingRewards' + currencyKey];
+      const ShortingRewards = ctx.snxjs.contracts['ShortingRewards' + currencyKey];
 
       const getDuration = ShortingRewards.DURATION || ShortingRewards.rewardsDuration;
 
@@ -36,8 +37,8 @@ const useSBTCShortsQuery = (
         ShortingRewards.periodFinish(),
         ShortingRewards.earned(walletAddress),
         ShortingRewards.balanceOf(walletAddress),
-        CollateralManager.short(ctx.snxjs!.toBytes32(Synths[currencyKey])),
-        ExchangeRates.rateAndInvalid(ctx.snxjs!.toBytes32(Synths[currencyKey])),
+        CollateralManager.short(ctx.snxjs.toBytes32(Synths[currencyKey])),
+        ExchangeRates.rateAndInvalid(ctx.snxjs.toBytes32(Synths[currencyKey])),
       ]);
 
       const durationInWeeks = Number(duration) / 3600 / 24 / 7;

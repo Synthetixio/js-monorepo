@@ -13,9 +13,10 @@ const useGetFeePoolDataQuery = (
   return useQuery<FeePoolData>(
     ['staking', 'feePool', ctx.networkId, period],
     async () => {
+      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
       const {
         contracts: { FeePool },
-      } = ctx.snxjs!;
+      } = ctx.snxjs;
       const feePeriod = await FeePool.recentFeePeriods(period);
       const feePeriodDuration = await FeePool.feePeriodDuration();
       return {

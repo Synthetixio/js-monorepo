@@ -11,9 +11,10 @@ const useTokenSaleEscrowQuery = (
   return useQuery<TokenSaleEscrow | null>(
     ['escrow', 'tokenSale', ctx.networkId, walletAddress],
     async () => {
+      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
       const {
         contracts: { EscrowChecker, SynthetixEscrow },
-      } = ctx.snxjs!;
+      } = ctx.snxjs;
       const [accountSchedule, totalEscrowed] = await Promise.all([
         EscrowChecker.checkAccountSchedule(walletAddress),
         SynthetixEscrow.balanceOf(walletAddress),

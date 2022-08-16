@@ -17,7 +17,8 @@ const useExchangeFeeRate = (
   return useQuery<Wei>(
     ['synths', 'exchangeFeeRate', ctx.networkId, quoteCurrencyKey, baseCurrencyKey],
     async () => {
-      const feeRateForExchange = (await ctx.snxjs!.contracts.Exchanger.feeRateForExchange(
+      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
+      const feeRateForExchange = (await ctx.snxjs.contracts.Exchanger.feeRateForExchange(
         formatBytes32String(quoteCurrencyKey!),
         formatBytes32String(baseCurrencyKey!)
       )) as BigNumber;

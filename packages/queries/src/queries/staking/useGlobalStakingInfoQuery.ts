@@ -30,6 +30,7 @@ const useGlobalStakingInfoQuery = (
   return useQuery<GlobalStakingInfo>(
     ['staking', 'snxLockedValue', ctx.networkId],
     async () => {
+      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
       const [
         unformattedSnxPrice,
         unformattedSnxTotalSupply,
@@ -37,15 +38,15 @@ const useGlobalStakingInfoQuery = (
         unformattedTotalIssuedSynths,
         unformattedIssuanceRatio,
       ] = await Promise.all([
-        ctx.snxjs!.contracts.ExchangeRates.rateForCurrency(formatBytes32String('SNX')),
-        ctx.snxjs!.contracts.Synthetix.totalSupply(),
-        ctx.snxjs!.contracts.SynthetixState.lastDebtLedgerEntry(),
-        ctx.snxjs!.contracts.Synthetix[
-          ctx.snxjs!.contracts.Synthetix.totalIssuedSynthsExcludeOtherCollateral
+        ctx.snxjs.contracts.ExchangeRates.rateForCurrency(formatBytes32String('SNX')),
+        ctx.snxjs.contracts.Synthetix.totalSupply(),
+        ctx.snxjs.contracts.SynthetixState.lastDebtLedgerEntry(),
+        ctx.snxjs.contracts.Synthetix[
+          ctx.snxjs.contracts.Synthetix.totalIssuedSynthsExcludeOtherCollateral
             ? 'totalIssuedSynthsExcludeOtherCollateral'
             : 'totalIssuedSynths'
         ](formatBytes32String('sUSD')),
-        ctx.snxjs!.contracts.SystemSettings.issuanceRatio(),
+        ctx.snxjs.contracts.SystemSettings.issuanceRatio(),
       ]);
 
       const lastDebtLedgerEntry = wei(unformattedLastDebtLedgerEntry, 27);

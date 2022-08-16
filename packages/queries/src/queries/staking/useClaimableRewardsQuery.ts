@@ -12,9 +12,10 @@ const useClaimableRewards = (
   return useQuery<StakingClaimableRewards>(
     ['staking', 'claimableRewards', ctx.networkId, walletAddress],
     async () => {
+      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
       const {
         contracts: { FeePool },
-      } = ctx.snxjs!;
+      } = ctx.snxjs;
       const feesAvailable = await FeePool.feesAvailable(walletAddress);
       return {
         tradingRewards: wei(feesAvailable[0]),

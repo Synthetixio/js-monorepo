@@ -11,7 +11,9 @@ const useETHBalanceQuery = (
   return useQuery<Wei>(
     ['walletBalances', 'eth', ctx.networkId, walletAddress],
     async () => {
-      const balance = await ctx.provider!.getBalance(walletAddress!);
+      if (!ctx.snxjs || !ctx.provider || !walletAddress) return wei(0);
+
+      const balance = await ctx.provider?.getBalance(walletAddress);
 
       return wei(balance);
     },
