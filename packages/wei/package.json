@@ -42,7 +42,7 @@
     "@babel/preset-env": "^7.13.10",
     "@babel/preset-typescript": "^7.13.0",
     "@types/big.js": "^6.0.2",
-    "eslint": "^7.26.0",
+    "eslint": "^8.22.0",
     "jest": "^27.0.6",
     "typescript": "^4.4.2"
   },
