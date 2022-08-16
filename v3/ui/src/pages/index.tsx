@@ -15,6 +15,7 @@ export function Home() {
     if (accounts.length) {
       navigate({ pathname: `/accounts/${accounts[0]}` });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

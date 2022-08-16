@@ -3,15 +3,9 @@ module.exports = {
     es6: true,
     node: true,
     jest: true,
-    browser: true,
   },
   extends: ['plugin:@typescript-eslint/recommended'],
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 6,
-    sourceType: 'module',
-    project: './tsconfig.json',
-  },
   plugins: ['@typescript-eslint', 'import'],
   rules: {
     'no-mixed-spaces-and-tabs': ['warn', 'smart-tabs'],
@@ -34,6 +28,14 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-var-requires': 'off',
+
+    // TODO: fixme and switch to `error`
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+    ],
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
   settings: {
     'import/resolver': {
@@ -47,6 +49,10 @@ module.exports = {
     {
       files: ['v3/ui/**/*'],
 
+      env: {
+        browser: true,
+      },
+
       extends: ['plugin:react/recommended'],
       plugins: ['react', 'react-hooks'],
 
@@ -56,16 +62,16 @@ module.exports = {
         },
       },
 
+      globals: {
+        React: true,
+      },
+
       rules: {
         quotes: 'off',
 
-        // react
-        //        'react/prop-types': 'off',
-        //        'react/jsx-key': 'off',
-
         // react-hooks
-        //        'react-hooks/rules-of-hooks': 'error',
-        //        'react-hooks/exhaustive-deps': 'error',
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'error',
       },
     },
   ],
