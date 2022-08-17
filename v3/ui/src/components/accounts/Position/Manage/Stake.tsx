@@ -20,9 +20,7 @@ export default function Stake() {
               border="none"
               placeholder="0.0"
               // value={null}
-              onChange={(e) => {
-                null;
-              }}
+              onChange={() => null}
             />
             <Button
               display="none"

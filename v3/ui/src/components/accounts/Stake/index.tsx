@@ -208,7 +208,7 @@ export default function Stake({
         });
       }
     },
-    onError: (e) => {
+    onError: () => {
       toast({
         title: 'Could not complete account creation',
         description: 'Please try again.',
@@ -269,7 +269,7 @@ export default function Stake({
       <FormProvider {...methods}>
         <Box bg="gray.900" mb="8" p="6" pb="4" borderRadius="12px">
           <form
-            onSubmit={handleSubmit((data) => {
+            onSubmit={handleSubmit((_data) => {
               multiTxn.exec();
             })}
           >

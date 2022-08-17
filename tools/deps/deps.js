@@ -17,7 +17,6 @@ const options = {
   skipMissing: false, // skip calculation of missing dependencies
   ignorePatterns: [
     // files matching these patterns will be ignored
-    'dist',
     'build',
     'generated',
     'coverage',
@@ -64,6 +63,7 @@ async function run() {
 
     const { dependencies, devDependencies, missing } = await depcheck(location, {
       ...options,
+      ...packageJson.depcheck,
       package: packageJson,
     });
 

@@ -45,7 +45,7 @@
     "@storybook/builder-webpack5": "^6.5.7",
     "@storybook/manager-webpack5": "^6.5.10",
     "@storybook/react": "^6.5.7",
-    "eslint": "^7.26.0",
+    "eslint": "^8.22.0",
     "typescript": "^4.4.2"
   },
   "browserslist": [

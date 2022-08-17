@@ -1,7 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const presetClassic = require('@docusaurus/preset-classic'); // This notifies deps that this package is in use.
+require.resolve('@docusaurus/preset-classic'); // This notifies deps that this package is in use.
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 

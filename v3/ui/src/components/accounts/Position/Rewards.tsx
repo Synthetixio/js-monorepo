@@ -66,9 +66,7 @@ export default function Rewards() {
                     border="none"
                     placeholder="0.0"
                     // value={null}
-                    onChange={(e) => {
-                      null;
-                    }}
+                    onChange={() => null}
                   />
                 </Flex>
               </form>
