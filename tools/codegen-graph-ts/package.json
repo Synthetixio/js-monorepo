@@ -35,7 +35,8 @@
     "commander": "^8.1.0",
     "graphql": "^15.5.0",
     "graphql-request": "^3.4.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "react-query": "3.16.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",
