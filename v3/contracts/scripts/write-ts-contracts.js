@@ -13,7 +13,10 @@ function generateTS(network) {
     throw new Error(`No deployment files found for ${network}`);
   }
 
-  fs.mkdirSync(`ts-deployments/${network}`, { recursive: true });
+  const dir = `ts-deployments/${network}`;
+  fs.rmSync(dir, { recursive: true, force: true });
+
+  fs.mkdirSync(dir, { recursive: true });
 
   deploymentFiles.forEach((file) => {
     const fileName = path.basename(file, path.extname(file));
