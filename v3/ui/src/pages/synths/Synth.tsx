@@ -34,6 +34,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import { Link as Navlink } from 'react-router-dom';
 
 import { Address } from '../../components/shared/Address';
@@ -105,16 +106,17 @@ const data3 = {
 };
 
 export function Synth() {
+  const { t } = useTranslation();
   return (
     <Box>
       <Helmet>
-        <title>Synth</title>
-        <meta name="description" content="Synth" />
+        <title>{t('synths.synth.title')}</title>
+        <meta name="description" content={t('synths.synth.description')} />
       </Helmet>
       <Box>
         <Tooltip label="This synth has been verified by the Spartan Council">
           <Tag mb="4" mr="2" colorScheme="green" size="sm">
-            Verified
+            {t('common.verified')}
           </Tag>
         </Tooltip>
         <Tag
@@ -126,7 +128,7 @@ export function Synth() {
           border="1px solid white"
           color="white"
         >
-          Crypto
+          {t('common.crypto')}
         </Tag>
         <Flex alignItems="center" mb="6">
           <Box w="64px" h="64px" borderRadius="32px" overflow="hidden" mr="3">
@@ -161,7 +163,7 @@ export function Synth() {
           <GridItem mb={6}>
             <Stat>
               <StatLabel>
-                Price
+                {t('common.price')}
                 <Link display="inline-block" opacity="0.66" ml="2">
                   <Tooltip label="View Price Contract on Tenderly">
                     <Image alt="tenderly" width="10" height="10" src="/tenderly.svg" />

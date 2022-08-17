@@ -10,7 +10,10 @@
     "name": "Name",
     "ticker": "Ticker",
     "category": "Category",
-    "fees": "Fees"
+    "fees": "Fees",
+    "verified": "Verified",
+    "crypto": "Crypto",
+    "price": "Price"
   },
   "home": {
     "createAccount": {
@@ -40,6 +43,10 @@
       "dynamicExchange": "Dynamic Exchange",
       "simulatedLiquidity": "Simulated Liquidity",
       "custom": "Custom"
+    },
+    "synth": {
+      "title": "Synth",
+      "description": "Synth"
     }
   }
 }
