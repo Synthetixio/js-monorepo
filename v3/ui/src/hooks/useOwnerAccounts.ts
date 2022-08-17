@@ -56,7 +56,7 @@ export const useOwnerAccounts = () => {
           chainId: accountContract?.chainId,
         }))
       : [];
-  }, [accountContract?.abi, accountContract?.address, address, data]);
+  }, [accountContract?.abi, accountContract?.address, accountContract?.chainId, address, data]);
 
   useContractReads({
     contracts: tokenCalls,
