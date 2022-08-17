@@ -2,35 +2,31 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { ethers } from "ethers";
+import { ethers } from 'ethers';
 import {
   FactoryOptions,
   HardhatEthersHelpers as HardhatEthersHelpersBase,
-} from "@nomiclabs/hardhat-ethers/types";
+} from '@nomiclabs/hardhat-ethers/types';
 
-import * as Contracts from ".";
+import * as Contracts from '.';
 
-declare module "hardhat/types/runtime" {
+declare module 'hardhat/types/runtime' {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "Multicall3",
+      name: 'Multicall3',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Multicall3__factory>;
     getContractFactory(
-      name: "WETH9",
+      name: 'WETH9',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.WETH9__factory>;
 
     getContractAt(
-      name: "Multicall3",
+      name: 'Multicall3',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Multicall3>;
-    getContractAt(
-      name: "WETH9",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.WETH9>;
+    getContractAt(name: 'WETH9', address: string, signer?: ethers.Signer): Promise<Contracts.WETH9>;
 
     // default types
     getContractFactory(
