@@ -186,14 +186,21 @@
       "name": "getAccountPermissions",
       "outputs": [
         {
-          "internalType": "address[]",
+          "components": [
+            {
+              "internalType": "address",
+              "name": "target",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32[]",
+              "name": "roles",
+              "type": "bytes32[]"
+            }
+          ],
+          "internalType": "struct IAccountModule.AccountPermission[]",
           "name": "",
-          "type": "address[]"
-        },
-        {
-          "internalType": "bytes32[][]",
-          "name": "",
-          "type": "bytes32[][]"
+          "type": "tuple[]"
         }
       ],
       "stateMutability": "view",
@@ -316,6 +323,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xc5dc508a31497d51d1dce82eb26f8f00c7ee7097f0aa6f4095d7b0e407c1833a",
+  "deployTxnHash": "0xfcb3d3706cbe4496bae4f8ebb6335c499a1e4cb7bd660f1a1259d2d3ff51f3d1",
   "deployedOn": "run.deploy_core"
 }

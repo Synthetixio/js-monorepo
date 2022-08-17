@@ -1,4 +1,4 @@
-import { contracts } from '../constants';
+import { contracts } from '../utils/constants';
 import { useContract } from './useContract';
 import ethers, { CallOverrides, Contract } from 'ethers';
 import { useEffect, useState } from 'react';
@@ -88,6 +88,7 @@ export const useMulticall = (
   }
 
   const currentTxn = useContractWrite({
+    mode: 'recklesslyUnprepared',
     addressOrName: callContract!.address,
     contractInterface: callContract!.interface,
     functionName: callFunc!,

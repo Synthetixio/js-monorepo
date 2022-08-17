@@ -1,7 +1,8 @@
-import { Box, Container, Heading } from '@chakra-ui/react';
+import { Box, Button, Container, Heading } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { useContractWrite } from 'wagmi';
 import Stake from '../../components/accounts/Stake';
 import { StakingNav } from '../../components/accounts/StakingNav';
 import StakingPositions from '../../components/accounts/StakingPositions';
@@ -9,10 +10,11 @@ import {
   StakingPositionOnChainType,
   StakingPositionType,
 } from '../../components/accounts/StakingPositions/types';
-import { useSynthetixProxyEvent, useSynthetixRead } from '../../hooks';
-import { fundsData } from '../../utils/constants';
+import { useContract, useSynthetixProxyEvent, useSynthetixRead } from '../../hooks';
+import { contracts, fundsData } from '../../utils/constants';
 import { collateralTypesState } from '../../utils/state';
 import { CollateralType } from '../../utils/types';
+import { utils } from 'ethers';
 
 const getCollateralType = (address: string, supportedCollateralTypes: CollateralType[]) =>
   supportedCollateralTypes.find((ct) => ct.address === address);
@@ -77,15 +79,17 @@ export function Account() {
 
   // const accountModule = useContract(contracts.ACCOUNT_MODULE);
 
-  // const { data, isError, isLoading, write } = useContractWrite({
+  // const { data, error, isLoading, write } = useContractWrite({
+  //   mode: 'recklesslyUnprepared',
   //   addressOrName: accountModule?.address,
   //   contractInterface: accountModule?.abi,
   //   functionName: 'grantRole',
   //   args: [
-  //     '1491219061',
+  //     '6130245259',
   //     utils.formatBytes32String('stake'),
   //     '0x9b12d2A80fad64A5499e70bf74447C352c99fD46',
   //   ],
+  //   chainId: accountModule?.chainId,
   // });
 
   return (

@@ -543,7 +543,7 @@
       ]
     }
   ],
-  "deployTxnHash": "0x36a20c0f1303e97655ef264cb0b9badc38f3ba3008cb39b3a18f578f9139df6d",
+  "deployTxnHash": "0x2495bb0eade2b003b8c43e65584bb11a6cfa6d6ae9d330428e6325fbcdc270a1",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_snx"

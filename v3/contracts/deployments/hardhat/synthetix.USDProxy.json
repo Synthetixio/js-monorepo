@@ -543,7 +543,7 @@
       ]
     }
   ],
-  "deployTxnHash": "0x19b923c79448555628da2ec6b8b6b66deb37eccbd83d1824a61898ddf63ae6a3",
+  "deployTxnHash": "0x77cb79c70580a54af2ff79c947595877da9e227dfa1500045ebadf9137c615cd",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_usd"

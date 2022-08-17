@@ -286,7 +286,7 @@
     "Liquity USD",
     "LUSD"
   ],
-  "deployTxnHash": "0x4b51b4f11ae68b63b5f4323682dd2b7e0c6bfafd56ac341f1010a002c25a0a11",
+  "deployTxnHash": "0xa85ed6801a5afcfd88f274821a3a008d497a99a3113a27a408b751a5ba308c4a",
   "sourceName": "contracts/MintableERC20.sol",
   "contractName": "MintableERC20",
   "deployedOn": "contract.token"

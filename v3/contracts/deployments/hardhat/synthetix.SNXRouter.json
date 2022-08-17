@@ -578,6 +578,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x8a82805c1a4ac87ca7cc65ad95831d318a6028113f5691f241c8b5d1840700e2",
+  "deployTxnHash": "0xfea9e9b1e7872b27c862edd8ab197cd9bcfe04382220f28a3b58c5080518cc97",
   "deployedOn": "run.deploy_snx"
 }

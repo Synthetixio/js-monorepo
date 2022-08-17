@@ -1,8 +1,6 @@
 import { accountsState, chainIdState, collateralTypesState } from '../../../utils/state';
-import { fundsData, getChainById } from '../../../utils/constants';
-import { useContract } from '../../../utils/hooks/useContract';
-import { useSynthetixRead } from '../../../utils/hooks/useDeploymentRead';
-import { MulticallCall, useMulticall } from '../../../utils/hooks/useMulticall';
+import { contracts, fundsData, getChainById } from '../../../utils/constants';
+import { useContract, useSynthetixRead, MulticallCall, useMulticall } from '../../../hooks';
 import EditPosition from '../EditPosition';
 import { StakingPositionType } from '../StakingPositions/types';
 import Balance from './Balance';
@@ -67,8 +65,8 @@ export default function Stake({
   });
   const { handleSubmit, register, formState, reset, control } = methods;
 
-  const collateralContract = useContract('snx.token');
-  const snxProxy = useContract('synthetix.Proxy');
+  const collateralContract = useContract(contracts.SNX_TOKEN);
+  const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   const { isOpen: isOpenFund, onOpen: onOpenFund, onClose: onCloseFund } = useDisclosure();
 
   const navigate = useNavigate();

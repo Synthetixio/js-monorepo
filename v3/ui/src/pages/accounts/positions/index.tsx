@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
+import { StakingNav } from '../../../components/accounts/StakingNav';
 
 const getCollateralType = (address: string, supportedCollateralTypes: CollateralType[]) =>
   supportedCollateralTypes.find((ct) => ct.address === address);
@@ -83,10 +84,10 @@ export function AccountPosition() {
         <meta name="description" content="Account" />
       </Helmet>
       <Box>
-        {/* <Subnav /> */}
+        <StakingNav />
         <StakingPositions data={stakingPositions} />
         <Heading size="md" mb="3">
-          Stake Collateral
+          Stake Collateralll
         </Heading>
         <Stake accountId={accountId} stakingPositions={stakingPositions} />
       </Box>

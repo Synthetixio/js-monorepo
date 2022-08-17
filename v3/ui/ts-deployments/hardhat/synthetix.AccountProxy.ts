@@ -2,6 +2,7 @@ export const address = '0xE01ECc866d907003Ab60d4e1ee4265D5f34a8cd2';
 export const abi = [
   'error AlreadyInitialized()',
   'error CannotSelfApprove(address)',
+  'error IndexOutOfBounds()',
   'error InvalidTransferRecipient(address)',
   'error TokenAlreadyMinted(uint256)',
   'error TokenDoesNotExist(uint256)',
@@ -25,7 +26,10 @@ export const abi = [
   'function setApprovalForAll(address operator, bool approved)',
   'function supportsInterface(bytes4 interfaceId) view returns (bool)',
   'function symbol() view returns (string)',
+  'function tokenByIndex(uint256 index) view returns (uint256)',
+  'function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)',
   'function tokenURI(uint256 tokenId) view returns (string)',
+  'function totalSupply() view returns (uint256)',
   'function transferFrom(address from, address to, uint256 tokenId)',
   'error NoChange()',
   'error NotNominated(address addr)',

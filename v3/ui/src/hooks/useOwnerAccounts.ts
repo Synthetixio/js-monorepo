@@ -53,15 +53,16 @@ export const useOwnerAccounts = () => {
           contractInterface: accountContract?.abi,
           functionName: 'tokenOfOwnerByIndex',
           args: [address, tokenId],
+          chainId: accountContract?.chainId,
         }))
       : [];
   }, [accountContract?.abi, accountContract?.address, address, data]);
 
   useContractReads({
     contracts: tokenCalls,
-    onSuccess: (data) => {
+    onSuccess: (rawData) => {
       setUserAccounts({
-        accounts: data.map((d) => d.toNumber()),
+        accounts: rawData.map((d) => d.toNumber()),
         refetchAccounts: refetch,
       });
       setIsLoading(false);

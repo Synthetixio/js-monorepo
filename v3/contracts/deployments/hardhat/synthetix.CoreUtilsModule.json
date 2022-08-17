@@ -52,6 +52,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x7d5b0c1c876478964f32c3c6ba366a8913ff908597b6eae31898c574fe9c8387",
+  "deployTxnHash": "0x6953698edbf5df636c6affa412da60ac5f1e4edb462194076c1d79f73248bbcc",
   "deployedOn": "run.deploy_core"
 }

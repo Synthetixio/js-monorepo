@@ -17,6 +17,11 @@
     },
     {
       "type": "error",
+      "name": "IndexOutOfBounds",
+      "inputs": []
+    },
+    {
+      "type": "error",
       "name": "InvalidTransferRecipient",
       "inputs": [
         {
@@ -393,6 +398,46 @@
     },
     {
       "type": "function",
+      "name": "tokenByIndex",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "index"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "tokenOfOwnerByIndex",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "owner"
+        },
+        {
+          "type": "uint256",
+          "name": "index"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
       "name": "tokenURI",
       "constant": true,
       "stateMutability": "view",
@@ -406,6 +451,19 @@
       "outputs": [
         {
           "type": "string"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "totalSupply",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
         }
       ]
     },
@@ -632,7 +690,7 @@
       "outputs": []
     }
   ],
-  "deployTxnHash": "0x3cad3e78f51e1380d06d2a0cea1351758a2969fd79481e501a2377fb812895b3",
+  "deployTxnHash": "0xb40584f184107d5d02819657daa5e33b79f4f60a8a8516d1bddb964e9c715d8e",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_account"

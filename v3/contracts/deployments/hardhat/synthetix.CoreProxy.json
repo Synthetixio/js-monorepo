@@ -390,10 +390,17 @@
       ],
       "outputs": [
         {
-          "type": "address[]"
-        },
-        {
-          "type": "bytes32[][]"
+          "type": "tuple[]",
+          "components": [
+            {
+              "type": "address",
+              "name": "target"
+            },
+            {
+              "type": "bytes32[]",
+              "name": "roles"
+            }
+          ]
         }
       ]
     },
@@ -2411,7 +2418,7 @@
   "constructorArgs": [
     "0xbcAe82DABb21E6211d952aFcc2742fd7F4737f88"
   ],
-  "deployTxnHash": "0x0848c9a1ff7f151f997c479d49a3adcb349355e14dff4c6a10e69b9cf33e52bf",
+  "deployTxnHash": "0x78a6a7f930ed42c7a44e3b609e8492b5f97e97c3ea0d579054be9a601b54a396",
   "sourceName": "contracts/Proxy.sol",
   "contractName": "Proxy",
   "deployedOn": "contract.CoreProxy"
