@@ -71,5 +71,15 @@
         "statements": 0
       }
     }
+  },
+  "depcheck": {
+    "ignorePatterns": [
+      "build",
+      "coverage",
+      "generated"
+    ],
+    "ignoreMatches": [
+      "react-query"
+    ]
   }
 }
