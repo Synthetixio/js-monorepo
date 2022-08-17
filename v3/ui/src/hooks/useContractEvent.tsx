@@ -1,11 +1,12 @@
 import { useContract } from './useContract';
 import { useContractEvent as useWagmiContractEvent } from 'wagmi';
+import { contracts } from '../utils/constants';
 
 type ContractReadParams = Parameters<typeof useWagmiContractEvent>[0];
 type ConfigType = Omit<ContractReadParams, 'addressOrName' | 'contractInterface'>;
 
 export const useSynthetixProxyEvent = (config: ConfigType) => {
-  return useContractEvent('synthetix.Proxy', config);
+  return useContractEvent(contracts.SYNTHETIX_PROXY, config);
 };
 
 export const useContractEvent = (contractName: string, config: ConfigType) => {

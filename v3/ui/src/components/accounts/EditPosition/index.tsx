@@ -1,5 +1,4 @@
-import { fundsData } from '../../../utils/constants';
-import { useContract } from '../../../utils/hooks/useContract';
+import { contracts, fundsData } from '../../../utils/constants';
 import StakerOption from './StakerOption';
 import {
   Box,
@@ -15,6 +14,7 @@ import {
 import { useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useContractReads } from 'wagmi';
+import { useContract } from '../../../hooks';
 
 const NO_FUND_TAB_INDEX = 1;
 
@@ -23,7 +23,7 @@ type PropsType = {
 };
 
 export default function EditPosition({ onClose }: PropsType) {
-  const snxProxy = useContract('synthetix.Proxy');
+  const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
 
   const snxContractData = {
     addressOrName: snxProxy?.address,

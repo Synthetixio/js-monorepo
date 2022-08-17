@@ -30,7 +30,7 @@
     "react-i18next": "^11.18.3",
     "react-router-dom": "^6.3.0",
     "recoil": "^0.7.4",
-    "wagmi": "^0.5.9"
+    "wagmi": "^0.6.3"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",

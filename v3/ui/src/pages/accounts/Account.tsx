@@ -77,15 +77,17 @@ export function Account() {
 
   // const accountModule = useContract(contracts.ACCOUNT_MODULE);
 
-  // const { data, isError, isLoading, write } = useContractWrite({
+  // const { data, error, isLoading, write } = useContractWrite({
+  //   mode: 'recklesslyUnprepared',
   //   addressOrName: accountModule?.address,
   //   contractInterface: accountModule?.abi,
   //   functionName: 'grantRole',
   //   args: [
-  //     '1491219061',
+  //     '6130245259',
   //     utils.formatBytes32String('stake'),
   //     '0x9b12d2A80fad64A5499e70bf74447C352c99fD46',
   //   ],
+  //   chainId: accountModule?.chainId,
   // });
 
   return (

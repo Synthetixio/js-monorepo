@@ -54,3 +54,5 @@ generated
 **/.coverage_contracts
 **/dist
 **/node_modules
+
+staged-txns.txt
