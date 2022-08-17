@@ -76,6 +76,7 @@ export const useCollateralTypes = () => {
     });
 
     return [...latestRoundData, ...priceDecimals];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supportedCollateralTypes, provider]);
 
   // After the price data is fetched, set the data in recoil and turn off the loading state.

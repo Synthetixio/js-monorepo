@@ -21,9 +21,7 @@ export default function Mint() {
               border="none"
               placeholder="0.0"
               // value={null}
-              onChange={(e) => {
-                null;
-              }}
+              onChange={() => null}
             />
             <Button
               display="none"

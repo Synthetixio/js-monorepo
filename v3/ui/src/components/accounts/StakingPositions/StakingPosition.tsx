@@ -1,28 +1,27 @@
-import EditPosition from '../EditPosition';
 import { StakingPositionType } from './types';
-import { EditIcon, InfoIcon, QuestionOutlineIcon, WarningIcon } from '@chakra-ui/icons';
+import { EditIcon, InfoIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
+  Badge,
   Box,
-  Heading,
-  Text,
-  Link,
-  Tr,
-  Td,
   Button,
-  useDisclosure,
+  Flex,
+  Heading,
+  Input,
+  Link,
   Modal,
-  ModalOverlay,
+  ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalHeader,
-  ModalCloseButton,
-  ModalBody,
+  ModalOverlay,
   SimpleGrid,
-  Flex,
-  Input,
-  Badge,
+  Td,
+  Text,
   Tooltip,
+  Tr,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { utils, BigNumber } from 'ethers';
+import { BigNumber, utils } from 'ethers';
 import { Link as RouterLink } from 'react-router-dom';
 
 export default function StakingPosition({ position }: { position: StakingPositionType }) {
@@ -123,9 +122,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
                               border="none"
                               placeholder="0.0"
                               // value={null}
-                              onChange={(e) => {
-                                null;
-                              }}
+                              onChange={() => null}
                             />
                             <Button
                               // isLoading={null}
@@ -183,9 +180,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
                               border="none"
                               placeholder="0.0"
                               // value={null}
-                              onChange={(e) => {
-                                null;
-                              }}
+                              onChange={() => null}
                             />
                             <Button
                               // isLoading={null}

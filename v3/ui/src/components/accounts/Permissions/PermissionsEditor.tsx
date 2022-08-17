@@ -25,7 +25,7 @@ interface Props {
 
 export const PermissionsEditor: FC<Props> = ({ address: existingAddress }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [address, setAddress] = useState(existingAddress);
+  const [address, _setAddress] = useState(existingAddress);
 
   return (
     <>

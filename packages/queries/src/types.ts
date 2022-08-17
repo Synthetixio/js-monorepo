@@ -27,11 +27,11 @@ export type BaseRateUpdate = {
 export type Candle = {
   id: string;
   synth: string;
-  open: BigInt;
-  high: BigInt;
-  low: BigInt;
-  close: BigInt;
-  timestamp: BigInt;
+  open: bigint;
+  high: bigint;
+  low: bigint;
+  close: bigint;
+  timestamp: bigint;
 };
 
 export type BaseRateUpdates = BaseRateUpdate[];

@@ -27,16 +27,16 @@ import { useSearchParams } from 'react-router-dom';
 export default function Permissions() {
   const { isOpen: isOwnerOpen, onOpen: onOwnerOpen, onClose: onOwnerClose } = useDisclosure();
   const {
-    isOpen: isPermissionsOpen,
-    onOpen: onPermissionsOpen,
-    onClose: onPermissionsClose,
+    isOpen: _isPermissionsOpen,
+    onOpen: _onPermissionsOpen,
+    onClose: _onPermissionsClose,
   } = useDisclosure();
 
   // Only show edit icon if current account is owner or modify permissions
   const { address: accountAddress } = useAccount();
 
   const [searchParams] = useSearchParams();
-  const id = searchParams.get('id');
+  const _id = searchParams.get('id');
   /*
   const { data: owner, isError, isLoading } = useContractRead(
     {
