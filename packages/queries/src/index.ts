@@ -67,7 +67,7 @@ export function createQueryContext({
   signer,
   subgraphEndpoints,
 }: {
-  synthetixjs: SynthetixJS | null;
+  synthetixjs: { contracts: SynthetixJS['contracts'] } | null;
   networkId: NetworkId | null;
   provider?: Provider;
   signer?: Signer;
