@@ -56,7 +56,6 @@ export default function Permissions() {
         {}
       );
     },
-    cacheTime: 0,
   });
 
   useEffect(() => {
@@ -65,36 +64,36 @@ export default function Permissions() {
     }
   }, [loadingAccountPermissions, permissionData]);
 
-  useSynthetixProxyEvent({
-    eventName: 'RoleGranted',
-    listener: (event) => {
-      const [eventAccountId, role, target] = event;
-      if (accountId === eventAccountId.toString()) {
-        console.log('GRANT', event);
-        const parsedRole = utils.parseBytes32String(role);
-        if (!accountPermissions[target].includes(parsedRole)) {
-          setAccountPermissions({
-            ...accountPermissions,
-            [target]: [...accountPermissions[target], utils.parseBytes32String(role)],
-          });
-        }
-      }
-    },
-  });
+  // useSynthetixProxyEvent({
+  //   eventName: 'RoleGranted',
+  //   listener: (event) => {
+  //     const [eventAccountId, role, target] = event;
+  //     if (accountId === eventAccountId.toString()) {
+  //       console.log('GRANT', event);
+  //       const parsedRole = utils.parseBytes32String(role);
+  //       if (!accountPermissions[target].includes(parsedRole)) {
+  //         setAccountPermissions({
+  //           ...accountPermissions,
+  //           [target]: [...accountPermissions[target], utils.parseBytes32String(role)],
+  //         });
+  //       }
+  //     }
+  //   },
+  // });
 
-  useSynthetixProxyEvent({
-    eventName: 'RoleRevoked',
-    listener: (event) => {
-      const [eventAccountId, role, target] = event;
-      if (accountId === eventAccountId.toString()) {
-        console.log('REMOVE', event);
-        setAccountPermissions({
-          ...accountPermissions,
-          [target]: accountPermissions[target].filter((r) => r !== utils.parseBytes32String(role)),
-        });
-      }
-    },
-  });
+  // useSynthetixProxyEvent({
+  //   eventName: 'RoleRevoked',
+  //   listener: (event) => {
+  //     const [eventAccountId, role, target] = event;
+  //     if (accountId === eventAccountId.toString()) {
+  //       console.log('REMOVE', event);
+  //       setAccountPermissions({
+  //         ...accountPermissions,
+  //         [target]: accountPermissions[target].filter((r) => r !== utils.parseBytes32String(role)),
+  //       });
+  //     }
+  //   },
+  // });
 
   const { isLoading: loadingOwner, data: accountOwner } = useAccountRead({
     functionName: 'ownerOf',
@@ -144,7 +143,7 @@ export default function Permissions() {
                 </Tag>
               </Td>
               <Td>
-                <EditIcon color="blue.400" onClick={onOwnerOpen} />
+                <EditIcon color="blue.400" onClick={onOwnerOpen} mx="2" />
                 {accountAddress == accountOwner && null /* only show above if owner*/}
               </Td>
             </Tr>

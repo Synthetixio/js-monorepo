@@ -1,9 +1,17 @@
-import { AddIcon, EditIcon } from '@chakra-ui/icons';
+import { AddIcon, EditIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Button,
   Checkbox,
   CheckboxGroup,
+  Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Grid,
   GridItem,
@@ -17,9 +25,11 @@ import {
   ModalOverlay,
   useDisclosure,
 } from '@chakra-ui/react';
-import { FC, useState } from 'react';
+import { FC, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useManageRoles } from '../../../hooks';
+import { utils } from 'ethers';
+import { formatShortAddress } from '../../shared/Address';
 
 type Props =
   | {
@@ -33,15 +43,34 @@ export const PermissionsEditor: FC<Props> = ({
   roles: existingRoles,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isAlertOpen, onOpen: onAlertOpen, onClose: onAlertClose } = useDisclosure();
+  const cancelRef = useRef();
   const { id: accountId } = useParams();
   const [roles, setRoles] = useState<Array<string>>(existingRoles);
+  const [address, setAddress] = useState<string>(existingAddress ?? '');
 
-  const { exec, status } = useManageRoles(accountId!, existingAddress, existingRoles, roles);
+  const { exec, status } = useManageRoles(accountId!, address, existingRoles, roles);
+  const isValidAddress = useMemo(() => utils.isAddress(address), [address]);
+  const isExecuting = useMemo(() => status === 'pending', [status]);
+  const onAlertCancel = () => {
+    setRoles(existingRoles); // reset
+    onAlertClose();
+  };
 
   return (
     <>
       {existingAddress ? (
-        <EditIcon color="blue.400" onClick={onOpen} />
+        <Flex>
+          <EditIcon color="blue.400" onClick={onOpen} mx="2" />
+          <SmallCloseIcon
+            color="blue.400"
+            cursor="pointer"
+            onClick={() => {
+              setRoles([]);
+              onAlertOpen();
+            }}
+          />
+        </Flex>
       ) : (
         <Button size="xs" colorScheme="blue" onClick={onOpen}>
           <AddIcon mr="1.5" />
@@ -60,10 +89,17 @@ export const PermissionsEditor: FC<Props> = ({
           <ModalHeader>Modify Permissions</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <FormControl mb={5}>
+            <FormControl mb={5} isInvalid={!isValidAddress}>
               <FormLabel htmlFor="address">Address</FormLabel>
-              <Input id="address" value={existingAddress} readOnly={Boolean(existingAddress)} />
-              {/* add address validation on this field? */}
+              <Input
+                id="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                readOnly={Boolean(existingAddress)}
+              />
+              {!isValidAddress && address !== '' && (
+                <FormErrorMessage>Invalid address</FormErrorMessage>
+              )}
             </FormControl>
 
             <Heading size="sm" mb="2">
@@ -115,7 +151,7 @@ export const PermissionsEditor: FC<Props> = ({
             </CheckboxGroup>
 
             <Button
-              isLoading={status === 'pending'}
+              isLoading={isExecuting}
               mt="6"
               mb="4"
               colorScheme="blue"
@@ -129,6 +165,44 @@ export const PermissionsEditor: FC<Props> = ({
           </ModalBody>
         </ModalContent>
       </Modal>
+
+      <AlertDialog isOpen={isAlertOpen} leastDestructiveRef={cancelRef} onClose={onAlertCancel}>
+        <AlertDialogOverlay>
+          <AlertDialogContent
+            bg="black"
+            color="white"
+            borderColor="gray.800"
+            borderWidth="2px"
+            borderRadius="2"
+          >
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete Permissions
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure you want to revoke all permissions for{' '}
+              <p>{formatShortAddress(address)}</p>
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onAlertCancel} variant="link" padding="4">
+                Cancel
+              </Button>
+              <Button
+                colorScheme="red"
+                onClick={async () => {
+                  await exec();
+                  onAlertClose();
+                }}
+                isLoading={isExecuting}
+                ml={3}
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 };

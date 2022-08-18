@@ -46,6 +46,7 @@ export function AccountPosition() {
   useSynthetixProxyEvent({
     eventName: 'DelegationUpdated',
     listener: (event) => {
+      console.log('EVENTTT', event);
       const [_lid, userAccountId, fundId, collateralTypeAddress, collateralAmount, _leverage] =
         event;
 

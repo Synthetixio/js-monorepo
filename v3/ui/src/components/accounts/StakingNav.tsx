@@ -1,15 +1,5 @@
 import { CheckIcon, ChevronDownIcon, ChevronLeftIcon, SettingsIcon } from '@chakra-ui/icons';
-import {
-  Button,
-  ButtonProps,
-  Flex,
-  forwardRef,
-  Link,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-} from '@chakra-ui/react';
+import { Button, Flex, Link, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import {
   generatePath,
   Link as RouterLink,
@@ -19,18 +9,6 @@ import {
 } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { accountsState } from '../../utils/state';
-
-const CustomMenuBtn = forwardRef<ButtonProps, 'div'>((props, ref) => (
-  <Button
-    colorScheme="red"
-    _hover={{ bg: 'gray.800' }}
-    _focus={{ bg: 'gray.900' }}
-    _active={{ bg: 'gray.800' }}
-    variant="outline"
-    ref={ref}
-    {...props}
-  />
-));
 
 export function StakingNav() {
   const [{ accounts: userAccounts }] = useRecoilState(accountsState);
@@ -43,7 +21,14 @@ export function StakingNav() {
   return (
     <Flex mb="6" alignItems="center">
       <Menu>
-        <MenuButton as={CustomMenuBtn} rightIcon={<ChevronDownIcon />}>
+        <MenuButton
+          as={Button}
+          colorScheme="blue"
+          _hover={{ bg: 'gray.300' }}
+          _active={{ bg: 'gray.300' }}
+          variant="outline"
+          rightIcon={<ChevronDownIcon />}
+        >
           {id ? `Account #${id}` : 'Create Account'}
         </MenuButton>
         <MenuList fontSize="xs" px="2" bg="black" border="1px solid rgba(255,255,255,0.33)">
