@@ -1,18 +1,31 @@
 import { Container, Link, Box, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import Stats from '../../../components/accounts/Position/Stats';
+import { StakingStats } from '../../../components/accounts/Position/StakingStats';
 import Manage from '../../../components/accounts/Position/Manage';
 import Rewards from '../../../components/accounts/Position/Rewards';
 import Pool from '../../../components/accounts/Position/Pool';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 import { useParams, Link as NavLink } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { collateralTypesState } from '../../../utils/state';
+import { useMemo } from 'react';
 
 export function StakingPosition() {
-  const { id } = useParams();
+  const { id: accountId, fundId, collateral: collateralSymbol } = useParams();
+
+  const [collateralTypes] = useRecoilState(collateralTypesState);
+
+  const collateral = useMemo(() => {
+    return collateralTypes.find(
+      (item) => item.symbol.toLowerCase() === collateralSymbol?.toLocaleLowerCase()
+    );
+  }, [collateralTypes, collateralSymbol]);
+
+  if (!collateral || !fundId || !accountId) return null;
 
   return (
     <Container>
       <Box mb="6">
-        <NavLink to={`/accounts/${id}/positions`}>
+        <NavLink to={`/accounts/${accountId}/positions`}>
           <Link
             fontSize="xs"
             fontWeight="normal"
@@ -23,7 +36,7 @@ export function StakingPosition() {
           </Link>
         </NavLink>
       </Box>
-      <Stats />
+      <StakingStats accountId={accountId} fundId={fundId} collateral={collateral} />
 
       <Tabs isFitted>
         <TabList>
@@ -31,7 +44,6 @@ export function StakingPosition() {
           <Tab>Pool Liquidity</Tab>
           <Tab>Claim Rewards</Tab>
         </TabList>
-
         <TabPanels>
           <TabPanel>
             <Manage />

@@ -13,5 +13,5 @@ export const Initializer: FC<Props> = ({ children }) => {
 
   const isLoading = isLoadingCollateralTypes || isLoadingOwnerAccounts;
 
-  return isLoading ? <Spinner mx="auto" my="auto" /> : <>{children}</>;
+  return !isLoading ? <Spinner mx="auto" my="auto" /> : <>{children}</>;
 };

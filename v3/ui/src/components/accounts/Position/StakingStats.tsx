@@ -1,7 +1,18 @@
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { Box, Heading, Text, Grid, GridItem, Tooltip } from '@chakra-ui/react';
+import { FC } from 'react';
+import { CollateralType } from '../../../utils/constants';
+import { useStakingPositionStats } from '../../../hooks/useStakingPosition';
+import { LoadableValue } from '../../../components/shared/LoadableValue';
 
-export default function Stats() {
+interface Props {
+  accountId: string;
+  fundId: string;
+  collateral: CollateralType;
+}
+
+export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
+  const { cRatio } = useStakingPositionStats(accountId, fundId, collateral);
   return (
     <Box>
       <Grid mb="1" textAlign="center" templateColumns="repeat(4, 1fr)">
@@ -9,7 +20,10 @@ export default function Stats() {
           <Text fontSize="sm" fontWeight="semibold">
             Collateral
           </Text>
-          <Heading size="md">1,000 SNX</Heading>
+          <Heading size="md">
+            <LoadableValue value={cRatio} />
+            SNX
+          </Heading>
           <Text opacity="0.6" fontSize="sm">
             $4,200
           </Text>
@@ -20,14 +34,14 @@ export default function Stats() {
           </Text>
           <Heading size="md">$2,400</Heading>
           <Text opacity="0.6" fontSize="sm">
-            $400 snxUSD minted {/* or burned */}
+            snxUSD minted {/* or burned */}
           </Text>
         </GridItem>
         <GridItem mb="3">
           <Text fontSize="sm" fontWeight="semibold">
             C-Ratio
           </Text>
-          <Heading size="md">200%</Heading>
+          <Heading size="md">100%</Heading>
           <Text opacity="0.6" fontSize="sm">
             Minimum 150%
           </Text>
@@ -47,4 +61,4 @@ export default function Stats() {
       </Grid>
     </Box>
   );
-}
+};
