@@ -2,7 +2,7 @@ name = "synthetix-periphery"
 description = "Synthetix system supplemental contracts"
 
 [setting.owner]
-defaultValue = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
+defaultValue = "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
 
 [setting.erc20_version]
 defaultValue = "1.0.0"
@@ -64,7 +64,7 @@ artifact = "Multicall3"
 artifact = "WETH9"
 
 [invoke.register_lusd_collateral]
-target = ["synthetix.Proxy"]
+target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
 func = "adjustCollateralType"
 args = [
@@ -77,7 +77,7 @@ args = [
 depends = ["import.synthetix", "import.lusd", "import.aggregator_lusd"]
 
 [invoke.register_snx_collateral]
-target = ["synthetix.Proxy"]
+target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
 func = "adjustCollateralType"
 args = [
@@ -90,7 +90,7 @@ args = [
 depends = ["import.synthetix", "import.snx", "import.aggregator_snx"]
 
 [invoke.register_weth_collateral]
-target = ["synthetix.Proxy"]
+target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
 func = "adjustCollateralType"
 args = [
@@ -113,7 +113,7 @@ args = [
 depends=["import.snx", "import.synthetix"]
 
 [invoke.createPreferredFund]
-target = ["synthetix.Proxy"]
+target = ["synthetix.CoreProxy"]
 func = "createFund"
 args = [
     1,
@@ -122,7 +122,7 @@ args = [
 depends=["import.synthetix"]
 
 [invoke.setPreferredFund]
-target = ["synthetix.Proxy"]
+target = ["synthetix.CoreProxy"]
 func = "setPreferredFund"
 from = "<%= settings.owner %>"
 args = [

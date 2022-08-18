@@ -4,7 +4,7 @@ import { ChainName } from './types';
 
 const hardhatMulticallConfig = {
   address: '0x2017758D5341a319410f8DdD0a034d0170EE0444',
-  blockCreated: 10228837,
+  blockCreated: 14353601,
 };
 
 export const chains = {
@@ -73,10 +73,11 @@ export const localCollateralTypes = (chainId: number) => {
 };
 
 export const contracts = {
-  SYNTHETIX_PROXY: 'synthetix.Proxy',
-  ACCOUNT: 'synthetix.Account',
-  ACCOUNT_MODULE: 'synthetix.AccountModule',
+  SYNTHETIX_PROXY: 'synthetix.CoreProxy',
+  ACCOUNT: 'synthetix.AccountProxy',
+  ACCOUNT_MODULE: 'synthetix.CoreAccountModule',
   MULTICALL: 'Multicall',
+  SNX_TOKEN: 'snx.token',
 };
 
 export const fundsData: Record<string, { name: string }> = {

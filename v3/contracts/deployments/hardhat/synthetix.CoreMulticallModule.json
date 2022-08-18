@@ -1,0 +1,32 @@
+{
+  "address": "0x94597307C9549c5BB03d1434dBb2301611ACaaB1",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes[]",
+          "name": "data",
+          "type": "bytes[]"
+        }
+      ],
+      "name": "multicall",
+      "outputs": [
+        {
+          "internalType": "bytes[]",
+          "name": "results",
+          "type": "bytes[]"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ],
+<<<<<<< HEAD:v3/contracts/deployments/hardhat/synthetix.MulticallModule.json
+  "deployTxnHash": "0x746ff718d970ac05f748668ea892c0d1eedf5e8f32b14f93f199f194081dd29c",
+  "deployedOn": "run.deploy"
+}
+=======
+  "deployTxnHash": "0x4605a2ac9caf14c8e4dd2fd85f752fc97cc0dd7ecc15cecba7021195eaeb6760",
+  "deployedOn": "run.deploy_core"
+}
+>>>>>>> master:v3/contracts/deployments/hardhat/synthetix.CoreMulticallModule.json
