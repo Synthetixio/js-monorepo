@@ -1,7 +1,8 @@
-import { Box, Container, Heading } from '@chakra-ui/react';
+import { Box, Button, Container, Heading } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { useContractWrite } from 'wagmi';
 import Stake from '../../components/accounts/Stake';
 import { StakingNav } from '../../components/accounts/StakingNav';
 import StakingPositions from '../../components/accounts/StakingPositions';
@@ -9,10 +10,11 @@ import {
   StakingPositionOnChainType,
   StakingPositionType,
 } from '../../components/accounts/StakingPositions/types';
-import { useSynthetixProxyEvent, useSynthetixRead } from '../../hooks';
-import { fundsData } from '../../utils/constants';
+import { useContract, useSynthetixProxyEvent, useSynthetixRead } from '../../hooks';
+import { contracts, fundsData } from '../../utils/constants';
 import { collateralTypesState } from '../../utils/state';
 import { CollateralType } from '../../utils/types';
+import { utils } from 'ethers';
 
 const getCollateralType = (address: string, supportedCollateralTypes: CollateralType[]) =>
   supportedCollateralTypes.find((ct) => ct.address === address);
@@ -75,7 +77,7 @@ export function Account() {
     },
   });
 
-  // const accountModule = useContract(contracts.ACCOUNT_MODULE);
+  // const accountModule = useContract(contracts.SYNTHETIX_PROXY);
 
   // const { data, error, isLoading, write } = useContractWrite({
   //   mode: 'recklesslyUnprepared',
@@ -90,18 +92,19 @@ export function Account() {
   //   chainId: accountModule?.chainId,
   // });
 
+  // console.log(data, error);
+
   return (
     <Box>
-      <Container maxW="container.sm">
-        <Box>
-          <StakingNav />
-          <StakingPositions data={stakingPositions} />
-          <Heading size="md" mb="3">
-            Stake Collateral
-          </Heading>
-          <Stake accountId={accountId} stakingPositions={stakingPositions} />
-        </Box>
-      </Container>
+      {/* <Button colorScheme="blue" isLoading={isLoading} onClick={() => write()}>
+            Grant
+          </Button> */}
+      <StakingNav />
+      <StakingPositions data={stakingPositions} />
+      <Heading size="md" mb="3">
+        Stake Collateral
+      </Heading>
+      <Stake accountId={accountId} stakingPositions={stakingPositions} />
     </Box>
   );
 }

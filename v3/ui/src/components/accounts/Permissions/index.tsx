@@ -20,11 +20,17 @@ import {
   Tbody,
   Td,
   Tag,
+  Stack,
+  Skeleton,
 } from '@chakra-ui/react';
 import { useAccount } from 'wagmi';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useAccountRead, useSynthetixProxyEvent, useSynthetixRead } from '../../../hooks';
+import { BigNumber, utils } from 'ethers';
+import { useEffect, useState } from 'react';
 
 export default function Permissions() {
+  const [accountPermissions, setAccountPermissions] = useState<Record<string, Array<string>>>({});
   const { isOpen: isOwnerOpen, onOpen: onOwnerOpen, onClose: onOwnerClose } = useDisclosure();
   const {
     isOpen: _isPermissionsOpen,
@@ -35,28 +41,66 @@ export default function Permissions() {
   // Only show edit icon if current account is owner or modify permissions
   const { address: accountAddress } = useAccount();
 
-  const [searchParams] = useSearchParams();
-  const _id = searchParams.get('id');
-  /*
-  const { data: owner, isError, isLoading } = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'ownerOf',
-    {
-      args: id,
-    }
-  )
-  */
-  const owner = '0x0000000000000000000000000000000000000000';
+  const { id: accountId } = useParams();
 
-  // Unsure what the interface will look like to pull address -> permissions/roles
-  const addresses = [
-    '0x0000000000000000000000000000000000000000',
-    '0x0000000000000000000000000000000000000000',
-    '0x0000000000000000000000000000000000000000',
-  ];
+  const { isLoading: loadingAccountPermissions, data: permissionData } = useSynthetixRead({
+    functionName: 'getAccountPermissions',
+    args: [accountId],
+    enabled: Boolean(accountId),
+    select: (data) => {
+      return data.reduce(
+        (acc, { target, roles }) => ({
+          ...acc,
+          [target]: roles.map((r: string) => utils.parseBytes32String(r)),
+        }),
+        {}
+      );
+    },
+    cacheTime: 0,
+  });
+
+  useEffect(() => {
+    if (permissionData && !loadingAccountPermissions) {
+      setAccountPermissions(permissionData);
+    }
+  }, [loadingAccountPermissions, permissionData]);
+
+  useSynthetixProxyEvent({
+    eventName: 'RoleGranted',
+    listener: (event) => {
+      const [eventAccountId, role, target] = event;
+      if (accountId === eventAccountId.toString()) {
+        console.log('GRANT', event);
+        const parsedRole = utils.parseBytes32String(role);
+        if (!accountPermissions[target].includes(parsedRole)) {
+          setAccountPermissions({
+            ...accountPermissions,
+            [target]: [...accountPermissions[target], utils.parseBytes32String(role)],
+          });
+        }
+      }
+    },
+  });
+
+  useSynthetixProxyEvent({
+    eventName: 'RoleRevoked',
+    listener: (event) => {
+      const [eventAccountId, role, target] = event;
+      if (accountId === eventAccountId.toString()) {
+        console.log('REMOVE', event);
+        setAccountPermissions({
+          ...accountPermissions,
+          [target]: accountPermissions[target].filter((r) => r !== utils.parseBytes32String(role)),
+        });
+      }
+    },
+  });
+
+  const { isLoading: loadingOwner, data: accountOwner } = useAccountRead({
+    functionName: 'ownerOf',
+    args: [accountId],
+    enabled: Boolean(accountId),
+  });
 
   // Need to listen for events to rerender this when changes are made?
 
@@ -71,39 +115,45 @@ export default function Permissions() {
           <PermissionsEditor />
         </Box>
       </Flex>
+      <Stack>
+        <Table size="sm" variant="simple" mb="8">
+          <Thead>
+            <Tr>
+              <Th color="white" pb="2">
+                Address
+              </Th>
+              <Th color="white" pb="2">
+                Permissions
+              </Th>
+              <Th color="white" pb="2"></Th>
+            </Tr>
+          </Thead>
 
-      <Table size="sm" variant="simple" mb="8">
-        <Thead>
-          <Tr>
-            <Th color="white" pb="2">
-              Address
-            </Th>
-            <Th color="white" pb="2">
-              Permissions
-            </Th>
-            <Th color="white" pb="2"></Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          <Tr>
-            <Td py="4">
-              <Address address={owner} />
-            </Td>
-            <Td>
-              <Tag colorScheme="purple" size="sm" mr="1">
-                Owner
-              </Tag>
-            </Td>
-            <Td>
-              <EditIcon color="blue.400" onClick={onOwnerOpen} />
-              {accountAddress == owner && null /* only show above if owner*/}
-            </Td>
-          </Tr>
-          {addresses.map((address) => (
-            <Item key={address} address={address} />
-          ))}
-        </Tbody>
-      </Table>
+          <Tbody>
+            <Tr>
+              <Td py="4">
+                <Skeleton isLoaded={!loadingOwner}>
+                  {/* wagmi types return Result which needs to be generic but currently assumes is an object */}
+                  {/* @ts-ignore */}
+                  <Address address={accountOwner} />
+                </Skeleton>
+              </Td>
+              <Td>
+                <Tag colorScheme="purple" size="sm" mr="1">
+                  Owner
+                </Tag>
+              </Td>
+              <Td>
+                <EditIcon color="blue.400" onClick={onOwnerOpen} />
+                {accountAddress == accountOwner && null /* only show above if owner*/}
+              </Td>
+            </Tr>
+            {Object.keys(accountPermissions).map((target) => {
+              return <Item key={target} address={target} roles={accountPermissions[target]} />;
+            })}
+          </Tbody>
+        </Table>
+      </Stack>
 
       <Modal size="lg" isOpen={isOwnerOpen} onClose={onOwnerClose}>
         <ModalOverlay />

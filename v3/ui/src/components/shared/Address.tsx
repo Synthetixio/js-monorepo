@@ -1,12 +1,16 @@
-import { Text, Link, Tooltip, Image } from '@chakra-ui/react';
+import { Text, Link, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
+import Tenderly from '../../assets/svgs/tenderly.svg';
+import Etherscan from '../../assets/svgs/etherscan.svg';
 
 interface Props {
-  address: string;
+  address?: string;
   displayFullAddress?: boolean;
 }
 
 export const Address: FC<Props> = ({ address, displayFullAddress }) => {
+  if (!address) return null;
+
   // ENS support here?
   const addressDisplay = displayFullAddress
     ? address
@@ -16,12 +20,12 @@ export const Address: FC<Props> = ({ address, displayFullAddress }) => {
       {addressDisplay}
       <Link display="inline-block" opacity="0.66" ml="2">
         <Tooltip label="View Account on Tenderly">
-          <Image alt="tenderly" width="10" height="10" src="/tenderly.svg" />
+          <Tenderly width="10px" height="10px" />
         </Tooltip>
       </Link>
       <Link display="inline-block" opacity="0.66" ml="2">
         <Tooltip label="View Account on Etherscan">
-          <Image alt="etherscan" width="10" height="10" src="/etherscan.svg" />
+          <Etherscan height="10px" width="10px" />
         </Tooltip>
       </Link>
     </Text>

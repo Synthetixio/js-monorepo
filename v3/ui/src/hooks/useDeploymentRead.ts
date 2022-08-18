@@ -10,6 +10,10 @@ export const useSynthetixRead = (config: ConfigType) => {
   return useDeploymentRead(contracts.SYNTHETIX_PROXY, config);
 };
 
+export const useAccountRead = (config: ConfigType) => {
+  return useDeploymentRead(contracts.ACCOUNT_PROXY, config);
+};
+
 // Similar to https://wagmi.sh/docs/hooks/useContractRead, but its aware of the currently selected network and the user specifies the contract name rather than address.
 export const useDeploymentRead = (contractName: string, config: ConfigType) => {
   const contract = useContract(contractName);
