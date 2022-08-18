@@ -30,10 +30,12 @@ type UserDetail = {
 };
 
 const getUsersDetails = async (walletAddresses: string[], boardroomApiKey: string) => {
-  const response = await axios.get<{ data: { users: UserDetail[] } }>(
-    `${BOARDROOM_BATCH_USER_DETAILS_URL}?key=${boardroomApiKey}`,
-    { params: { addressesList: walletAddresses.join(',') } }
-  );
+  const url = new URL(BOARDROOM_BATCH_USER_DETAILS_URL);
+  url.searchParams.set('key', boardroomApiKey);
+
+  const response = await axios.get<{ data: { users: UserDetail[] } }>(url.toString(), {
+    params: { addressesList: walletAddresses.join(',') },
+  });
   return response.data.data.users;
 };
 
