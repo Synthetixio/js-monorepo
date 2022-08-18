@@ -4,6 +4,7 @@ import { QueryContext } from '../../context';
 
 import { ShortRewardsData } from '../../types';
 import { wei } from '@synthetixio/wei';
+import { formatBytes32String } from '@ethersproject/strings';
 
 const useSBTCShortsQuery = (
   ctx: QueryContext,
@@ -37,8 +38,8 @@ const useSBTCShortsQuery = (
         ShortingRewards.periodFinish(),
         ShortingRewards.earned(walletAddress),
         ShortingRewards.balanceOf(walletAddress),
-        CollateralManager.short(ctx.snxjs.toBytes32(Synths[currencyKey])),
-        ExchangeRates.rateAndInvalid(ctx.snxjs.toBytes32(Synths[currencyKey])),
+        CollateralManager.short(formatBytes32String(Synths[currencyKey])),
+        ExchangeRates.rateAndInvalid(formatBytes32String(Synths[currencyKey])),
       ]);
 
       const durationInWeeks = Number(duration) / 3600 / 24 / 7;
