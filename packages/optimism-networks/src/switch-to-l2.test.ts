@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { switchToL2 } from '../src';
-import { METAMASK_MISSING_NETWORK_ERROR_CODE } from '../src/constants';
+import { switchToL2 } from '.';
+import { METAMASK_MISSING_NETWORK_ERROR_CODE } from './constants';
 
 describe('switchToL2', () => {
   test('Switch to Optimism mainnet when mainnet selected ', async () => {

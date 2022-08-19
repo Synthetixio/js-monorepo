@@ -20,7 +20,7 @@ export type WeiSource = Wei | number | string | BigNumber | Big;
  * Wei value from it using `new Wei(numberinwei, true)` which is NOT the default behavior,
  * even for BN types.
  */
-export default class Wei {
+export class Wei {
   static is(w: unknown): w is Wei {
     return w instanceof Wei;
   }

@@ -54,3 +54,5 @@ pids
 **/node_modules
 
 staged-txns.txt
+
+tsconfig.tsbuildinfo

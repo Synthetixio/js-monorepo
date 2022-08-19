@@ -1,4 +1,4 @@
-import { ERRORS } from '../src/constants';
+import { ERRORS } from './constants';
 
 describe('@synthetixio/providers', () => {
   it('needs tests', () => {
