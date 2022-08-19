@@ -30,6 +30,7 @@ import { useParams } from 'react-router-dom';
 import { useManageRoles } from '../../../hooks';
 import { utils } from 'ethers';
 import { formatShortAddress } from '../../shared/Address';
+import { AddressInput } from './AddressInput';
 
 type Props =
   | {
@@ -50,7 +51,6 @@ export const PermissionsEditor: FC<Props> = ({
   const [address, setAddress] = useState<string>(existingAddress ?? '');
 
   const { exec, status } = useManageRoles(accountId!, address, existingRoles, roles);
-  const isValidAddress = useMemo(() => utils.isAddress(address), [address]);
   const isExecuting = useMemo(() => status === 'pending', [status]);
   const onAlertCancel = () => {
     setRoles(existingRoles); // reset
@@ -89,18 +89,10 @@ export const PermissionsEditor: FC<Props> = ({
           <ModalHeader>Modify Permissions</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <FormControl mb={5} isInvalid={!isValidAddress}>
-              <FormLabel htmlFor="address">Address</FormLabel>
-              <Input
-                id="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                readOnly={Boolean(existingAddress)}
-              />
-              {!isValidAddress && address !== '' && (
-                <FormErrorMessage>Invalid address</FormErrorMessage>
-              )}
-            </FormControl>
+            <AddressInput
+              address={existingAddress}
+              onChange={(address: string) => setAddress(address)}
+            />
 
             <Heading size="sm" mb="2">
               Select Permissions

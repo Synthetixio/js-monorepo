@@ -33,15 +33,6 @@ export const Item: FC<Props> = ({ address, roles }) => {
             {r}
           </Tag>
         ))}
-        {/* <Tag colorScheme="green" size="sm" mr="1">
-          Stake
-        </Tag>
-        <Tag colorScheme="green" size="sm" mr="1">
-          Burn
-        </Tag>
-        <Tag colorScheme="blue" size="sm" mr="1">
-          Claim Rewards
-        </Tag> */}
       </Td>
       <Td>
         {/* only render below if owner or has modify permissions role */}

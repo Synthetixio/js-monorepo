@@ -96,9 +96,6 @@ export function Account() {
 
   return (
     <Box>
-      {/* <Button colorScheme="blue" isLoading={isLoading} onClick={() => write()}>
-            Grant
-          </Button> */}
       <StakingNav />
       <StakingPositions data={stakingPositions} />
       <Heading size="md" mb="3">

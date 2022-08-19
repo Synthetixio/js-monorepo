@@ -22,25 +22,21 @@ import {
   Tag,
   Stack,
   Skeleton,
+  Text,
 } from '@chakra-ui/react';
 import { useAccount } from 'wagmi';
 import { useParams } from 'react-router-dom';
 import { useAccountRead, useSynthetixProxyEvent, useSynthetixRead } from '../../../hooks';
 import { BigNumber, utils } from 'ethers';
 import { useEffect, useState } from 'react';
+import { AddressInput } from './AddressInput';
+import { TransferOwnership } from './TransferOwnership';
 
 export default function Permissions() {
   const [accountPermissions, setAccountPermissions] = useState<Record<string, Array<string>>>({});
-  const { isOpen: isOwnerOpen, onOpen: onOwnerOpen, onClose: onOwnerClose } = useDisclosure();
-  const {
-    isOpen: _isPermissionsOpen,
-    onOpen: _onPermissionsOpen,
-    onClose: _onPermissionsClose,
-  } = useDisclosure();
 
   // Only show edit icon if current account is owner or modify permissions
   const { address: accountAddress } = useAccount();
-
   const { id: accountId } = useParams();
 
   const { isLoading: loadingAccountPermissions, data: permissionData } = useSynthetixRead({
@@ -101,6 +97,8 @@ export default function Permissions() {
     enabled: Boolean(accountId),
   });
 
+  console.log(accountOwner);
+
   // Need to listen for events to rerender this when changes are made?
 
   return (
@@ -142,10 +140,7 @@ export default function Permissions() {
                   Owner
                 </Tag>
               </Td>
-              <Td>
-                <EditIcon color="blue.400" onClick={onOwnerOpen} mx="2" />
-                {accountAddress == accountOwner && null /* only show above if owner*/}
-              </Td>
+              <Td>{accountAddress == accountOwner && <TransferOwnership />}</Td>
             </Tr>
             {Object.keys(accountPermissions).map((target) => {
               return <Item key={target} address={target} roles={accountPermissions[target]} />;
@@ -153,15 +148,6 @@ export default function Permissions() {
           </Tbody>
         </Table>
       </Stack>
-
-      <Modal size="lg" isOpen={isOwnerOpen} onClose={onOwnerClose}>
-        <ModalOverlay />
-        <ModalContent bg="black" color="white">
-          <ModalHeader>Transfer Account Ownership</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>UI to transfer ownership of account token NFT</ModalBody>
-        </ModalContent>
-      </Modal>
     </Box>
   );
 }

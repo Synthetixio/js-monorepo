@@ -21,14 +21,7 @@ export function StakingNav() {
   return (
     <Flex mb="6" alignItems="center">
       <Menu>
-        <MenuButton
-          as={Button}
-          colorScheme="blue"
-          _hover={{ bg: 'gray.300' }}
-          _active={{ bg: 'gray.300' }}
-          variant="outline"
-          rightIcon={<ChevronDownIcon />}
-        >
+        <MenuButton _hover={{ bg: 'gray.300' }} _active={{ bg: 'gray.300' }}>
           {id ? `Account #${id}` : 'Create Account'}
         </MenuButton>
         <MenuList fontSize="xs" px="2" bg="black" border="1px solid rgba(255,255,255,0.33)">

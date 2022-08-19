@@ -71,6 +71,7 @@ export const NetworkChain: FC<Props> = ({ children }) => {
     }
     if (chainIdParamExists) {
       if (activeChain) {
+        // TODO: when chainId not supported, route to activeChain
         if (activeChain.id !== chainId) {
           if (hasWalletConnected) {
             onInitialMount.current = false;
