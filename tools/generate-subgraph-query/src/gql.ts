@@ -6,7 +6,7 @@ export interface GqlArgs {
 
 export type GqlOptions = { [arg: string]: any };
 
-function formatGqlOptions(options: GqlOptions): string {
+export function formatGqlOptions(options: GqlOptions): string {
   return _.map(options, (v, k) => {
     let valueString: string;
     if (_.isPlainObject(v)) {
@@ -27,7 +27,7 @@ function formatGqlOptions(options: GqlOptions): string {
   }).join(',');
 }
 
-function formatGqlArgs(args: GqlArgs): string {
+export function formatGqlArgs(args: GqlArgs): string {
   return (
     '{' +
     _.map(args, (v, k) => {
@@ -41,7 +41,7 @@ function formatGqlArgs(args: GqlArgs): string {
   );
 }
 
-export default function generateGql(name: string, options: GqlOptions, args: GqlArgs): string {
+export function generateGql(name: string, options: GqlOptions, args: GqlArgs): string {
   return `{${name}${
     Object.keys(options).length ? `(${formatGqlOptions(options)})` : ''
   }${formatGqlArgs(args)}}`;
