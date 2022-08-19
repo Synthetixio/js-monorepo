@@ -1,9 +1,8 @@
 import { InfoOutlineIcon } from '@chakra-ui/icons';
-import { Box, Heading, Text, Grid, GridItem, Tooltip } from '@chakra-ui/react';
+import { Box, Heading, Text, Grid, GridItem, Tooltip, Skeleton } from '@chakra-ui/react';
 import { FC } from 'react';
 import { CollateralType } from '../../../utils/constants';
 import { useStakingPositionStats } from '../../../hooks/useStakingPosition';
-import { LoadableValue } from '../../../components/shared/LoadableValue';
 
 interface Props {
   accountId: string;
@@ -12,7 +11,7 @@ interface Props {
 }
 
 export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
-  const { cRatio } = useStakingPositionStats(accountId, fundId, collateral);
+  const { collateralValue, debt, cRatio } = useStakingPositionStats(accountId, fundId, collateral);
   return (
     <Box>
       <Grid mb="1" textAlign="center" templateColumns="repeat(4, 1fr)">
@@ -21,8 +20,9 @@ export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
             Collateral
           </Text>
           <Heading size="md">
-            <LoadableValue value={cRatio} />
-            SNX
+            <Skeleton isLoaded={collateralValue !== undefined}>
+              {collateralValue?.toString()} SNX
+            </Skeleton>
           </Heading>
           <Text opacity="0.6" fontSize="sm">
             $4,200
@@ -32,7 +32,9 @@ export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
           <Text fontSize="sm" fontWeight="semibold">
             Debt
           </Text>
-          <Heading size="md">$2,400</Heading>
+          <Heading size="md">
+            <Skeleton isLoaded={debt !== undefined}>{debt?.toString()}</Skeleton>
+          </Heading>
           <Text opacity="0.6" fontSize="sm">
             snxUSD minted {/* or burned */}
           </Text>
@@ -41,7 +43,9 @@ export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
           <Text fontSize="sm" fontWeight="semibold">
             C-Ratio
           </Text>
-          <Heading size="md">100%</Heading>
+          <Heading size="md">
+            <Skeleton isLoaded={cRatio !== undefined}>{cRatio?.toString()}%</Skeleton>
+          </Heading>
           <Text opacity="0.6" fontSize="sm">
             Minimum 150%
           </Text>

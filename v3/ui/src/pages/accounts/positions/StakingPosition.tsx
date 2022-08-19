@@ -25,7 +25,7 @@ export function StakingPosition() {
   return (
     <Container>
       <Box mb="6">
-        <NavLink to={`/accounts/${accountId}/positions`}>
+        <NavLink to={`/accounts/${accountId}`}>
           <Link
             fontSize="xs"
             fontWeight="normal"

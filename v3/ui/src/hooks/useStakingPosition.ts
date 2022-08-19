@@ -10,6 +10,7 @@ export const useStakingPositionStats = (
     functionName: 'accountFundCollateralValue',
     args: [accountId, fundId, collateral.address],
   });
+
   const { data: cRatio } = useSynthetixRead({
     functionName: 'collateralizationRatio',
     args: [accountId, fundId, collateral.address],
