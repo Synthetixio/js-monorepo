@@ -50,16 +50,38 @@ function generateTargets(network) {
 
 function generateSynths(network) {
   const synths = require(`synthetix/publish/deployed/${network}/synths.json`);
+  const assets = require('synthetix/publish/assets.json');
+  const synthsWithAssetData = synths.map((synth) => Object.assign({}, assets[synth.asset], synth));
+  const synthsByName = synthsWithAssetData.reduce((acc, val) => {
+    acc[val.name] = val;
+    return acc;
+  }, {});
+  /**
+   * If we're not adding a type assertion to the SynthsByName
+   * the ts inference will generate a giant weird looking union type that is hard to work with.
+   *  */
+  const synthByNameType = `Partial<
+  Record<
+    string,
+    {
+      asset: string;
+      category: string;
+      sign: string;
+      description: string;
+      name: string;
+      subclass?: string;
+    }
+  >
+>`;
   fs.mkdirSync(`generated/${network}`, { recursive: true });
   fs.writeFileSync(
     `generated/${network}/synths.ts`,
     prettier.format(
-      [
-        'export enum Synths {',
-        ...synths.map(({ name }) => `  ${name} = ${JSON.stringify(name, null, 2)},`),
-        '}',
-      ].join('\n'),
-      { parser: 'typescript', ...prettierOptions }
+      `export const SynthsByName : ${synthByNameType} = ${JSON.stringify(synthsByName, null, 2)}`,
+      {
+        parser: 'typescript',
+        ...prettierOptions,
+      }
     ),
     'utf8'
   );
