@@ -1,21 +1,27 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { CurrencyKey, Synths } from '@synthetixio/contracts-interface';
 import { QueryContext } from '../../context';
-
 import { ShortRewardsData } from '../../types';
 import { wei } from '@synthetixio/wei';
 import { formatBytes32String } from '@ethersproject/strings';
+import { loadSynthsByNameFromNetwork } from '../../utils';
 
 const useSBTCShortsQuery = (
   ctx: QueryContext,
-  currencyKey: CurrencyKey,
+  currencyKey: string,
   walletAddress: string | null,
   options?: UseQueryOptions<ShortRewardsData>
 ) => {
   return useQuery<ShortRewardsData>(
     ['shorts', 'data', ctx.networkId, walletAddress],
     async () => {
-      if (!ctx.snxjs) throw Error('Expected snxjs to be defined');
+      if (!ctx.snxjs || !ctx.networkId) throw Error('Expected snxjs and networkId to be defined');
+      const { SynthsByName } = await loadSynthsByNameFromNetwork(ctx.networkId);
+      const synth = SynthsByName[currencyKey];
+      if (!synth) {
+        throw Error(
+          `Unsupported currency key ${currencyKey} in not available on network ${ctx.networkId}`
+        );
+      }
       const {
         contracts: { CollateralManager, ExchangeRates },
       } = ctx.snxjs;
@@ -38,8 +44,8 @@ const useSBTCShortsQuery = (
         ShortingRewards.periodFinish(),
         ShortingRewards.earned(walletAddress),
         ShortingRewards.balanceOf(walletAddress),
-        CollateralManager.short(formatBytes32String(Synths[currencyKey])),
-        ExchangeRates.rateAndInvalid(formatBytes32String(Synths[currencyKey])),
+        CollateralManager.short(formatBytes32String(synth.name)),
+        ExchangeRates.rateAndInvalid(formatBytes32String(synth.name)),
       ]);
 
       const durationInWeeks = Number(duration) / 3600 / 24 / 7;
@@ -65,7 +71,7 @@ const useSBTCShortsQuery = (
       };
     },
     {
-      enabled: ctx.snxjs != null && walletAddress != null && currencyKey != null,
+      enabled: ctx.snxjs != null && walletAddress != null && ctx.networkId != null,
       ...options,
     }
   );

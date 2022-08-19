@@ -11,8 +11,8 @@ import {
   networkToChainId,
 } from 'synthetix';
 
-import { Synths } from '@synthetixio/contracts/build/mainnet/synths';
-import { Synths as OptimismSynths } from '@synthetixio/contracts/build/mainnet-ovm/synths';
+import { SynthsByName } from '@synthetixio/contracts/build/mainnet/synths';
+import { SynthsByName as OptimismSynthsByName } from '@synthetixio/contracts/build/mainnet-ovm/synths';
 
 export const NetworkIdByName = {
   mainnet: 1,
@@ -76,17 +76,17 @@ export type Config = {
   provider?: ethers.providers.Provider;
   useOvm?: boolean;
 };
+function notNill<Value>(value: Value | null | undefined): value is Value {
+  return value !== null && value !== undefined;
+}
+const AllSynths = Object.values(SynthsByName)
+  .concat(Object.values(OptimismSynthsByName))
+  .filter(notNill);
 
-export type CurrencyKey = keyof typeof Synths | keyof typeof OptimismSynths;
-
-export const FIAT_SYNTHS = new Set([
-  Synths.sEUR,
-  Synths.sJPY,
-  Synths.sUSD,
-  Synths.sAUD,
-  Synths.sGBP,
-  Synths.sCHF,
-]);
+export type CurrencyKey = string;
+export const FIAT_SYNTHS = new Set(
+  AllSynths.filter((x) => x.category === 'forex').map((x) => x.name)
+);
 
 export enum CurrencyCategory {
   'crypto' = 'Crypto',
@@ -95,12 +95,4 @@ export enum CurrencyCategory {
   'commodity' = 'Commodity',
 }
 
-export type Synth = {
-  name: CurrencyKey;
-  asset: string;
-  category: CurrencyCategory;
-  sign: string;
-  description: string;
-  aggregator?: string;
-  subclass?: string;
-};
+export type Synth = typeof AllSynths[number];
