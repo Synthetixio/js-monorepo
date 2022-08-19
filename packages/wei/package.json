@@ -15,7 +15,7 @@
     "src"
   ],
   "scripts": {
-    "build": "rm -rf build && tsc --build",
+    "build": "tsc --build --clean",
     "lint": "eslint './src/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
     "test": "jest --coverage --no-cache"

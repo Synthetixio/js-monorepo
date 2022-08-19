@@ -15,10 +15,10 @@
     "src"
   ],
   "scripts": {
-    "build": "rm -rf build && tsc --build",
+    "build": "tsc --build --clean",
     "examples": "ts-node ./examples/index.js",
     "start": "webpack-cli serve",
-    "lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
+    "lint": "eslint './src/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
     "test": "jest --coverage --no-cache"
   },
