@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'DebtCache';
 export const address = '0x216EaF79575563A5e13227ad075850cDeb004083';
 export const source = 'DebtCache';

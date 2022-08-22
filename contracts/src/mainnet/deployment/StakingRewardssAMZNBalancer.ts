@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'StakingRewardssAMZNBalancer';
 export const address = '0xDC338C7544654c7dadFEb7E44076E457963113B0';
 export const source = 'StakingRewards';

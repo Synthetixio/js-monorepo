@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'FuturesMarketXMR';
 export const address = '0x3Ed04CEfF4c91872F19b1da35740C0Be9CA21558';
 export const source = 'FuturesMarket';

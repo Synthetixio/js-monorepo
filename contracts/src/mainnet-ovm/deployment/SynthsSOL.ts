@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthsSOL';
 export const address = '0x8b2F7Ae8cA8EE8428B6D76dE88326bB413db2766';
 export const source = 'MultiCollateralSynth';

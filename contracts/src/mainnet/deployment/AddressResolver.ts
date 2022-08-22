@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'AddressResolver';
 export const address = '0x823bE81bbF96BEc0e25CA13170F5AaCb5B79ba83';
 export const source = 'AddressResolver';

@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'StakingRewardssXAUUniswapV2';
 export const address = '0x8302FE9F0C509a996573D3Cc5B0D5D51e4FDD5eC';
 export const source = 'StakingRewardssXAUUniswapV2';

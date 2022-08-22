@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthetixBridgeToOptimism';
 export const address = '0x39Ea01a0298C315d149a490E34B59Dbf2EC7e48F';
 export const source = 'SynthetixBridgeToOptimism';

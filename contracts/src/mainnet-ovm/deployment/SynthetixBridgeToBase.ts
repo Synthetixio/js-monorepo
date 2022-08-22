@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthetixBridgeToBase';
 export const address = '0x136b1EC699c62b0606854056f02dC7Bb80482d63';
 export const source = 'SynthetixBridgeToBase';

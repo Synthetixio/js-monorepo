@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'ProxysINR';
 export const address = '0xa3A538EA5D5838dC32dde15946ccD74bDd5652fF';
 export const source = 'ProxyERC20';

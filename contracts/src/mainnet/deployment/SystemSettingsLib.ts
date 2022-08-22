@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SystemSettingsLib';
 export const address = '0x4A9a8B1B596Fe1096cD75a588fD559968ca64259';
 export const source = 'SystemSettingsLib';

@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'ProxyFeePool';
 export const address = '0x4FC6f7C8Ff4f0D535315F1E6e84897c89367b47E';
 export const source = 'Proxy';

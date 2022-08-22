@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'FuturesMarketXAG';
 export const address = '0xb147C69BEe211F57290a6cde9d1BAbfD0DCF3Ea3';
 export const source = 'FuturesMarket';

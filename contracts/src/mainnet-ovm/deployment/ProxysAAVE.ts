@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'ProxysAAVE';
 export const address = '0x00B8D5a5e1Ac97Cb4341c4Bc4367443c8776e8d9';
 export const source = 'ProxyERC20';

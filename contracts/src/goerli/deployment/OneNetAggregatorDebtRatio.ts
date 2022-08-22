@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'OneNetAggregatorDebtRatio';
 export const address = '0x409b427d6c8227eeCb4079EF74A6F9224297E19E';
 export const source = 'OneNetAggregatorDebtRatio';

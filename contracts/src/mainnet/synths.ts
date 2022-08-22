@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const SynthsByName: Partial<
   Record<
     string,

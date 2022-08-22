@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'TokenStateSynthetix';
 export const address = '0x5b1b5fEa1b99D83aD479dF0C222F0492385381dD';
 export const source = 'LegacyTokenState';

@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthsMATIC';
 export const address = '0x81DDfAc111913d3d5218DEA999216323B7CD6356';
 export const source = 'MultiCollateralSynth';

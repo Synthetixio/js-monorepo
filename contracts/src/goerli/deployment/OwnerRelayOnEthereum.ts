@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'OwnerRelayOnEthereum';
 export const address = '0xFdB31235cDFe68bfFD1d687AC3A2b31E80eacf0d';
 export const source = 'OwnerRelayOnEthereum';

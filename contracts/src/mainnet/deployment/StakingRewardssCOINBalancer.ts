@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'StakingRewardssCOINBalancer';
 export const address = '0x1C1D97f6338759AB814a5A717aE359573Ab5D5d4';
 export const source = 'StakingRewards';

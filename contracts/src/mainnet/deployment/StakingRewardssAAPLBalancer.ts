@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'StakingRewardssAAPLBalancer';
 export const address = '0x7af65f1740c0eB816A27FD808EaF6Ab09F6Fa646';
 export const source = 'StakingRewards';

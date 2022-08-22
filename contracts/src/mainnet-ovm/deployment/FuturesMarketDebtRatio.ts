@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'FuturesMarketDebtRatio';
 export const address = '0xd325B17d5C9C3f2B6853A760afCF81945b0184d3';
 export const source = 'FuturesMarket';

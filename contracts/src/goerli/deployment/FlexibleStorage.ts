@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'FlexibleStorage';
 export const address = '0x485f9215839a122A3EF7c412B25931C6FeC02A45';
 export const source = 'FlexibleStorage';

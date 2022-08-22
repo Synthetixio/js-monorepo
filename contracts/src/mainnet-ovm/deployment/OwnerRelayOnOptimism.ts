@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'OwnerRelayOnOptimism';
 export const address = '0x6d4a64C57612841c2C6745dB2a4E4db34F002D20';
 export const source = 'OwnerRelayOnOptimism';

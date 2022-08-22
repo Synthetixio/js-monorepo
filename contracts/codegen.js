@@ -37,10 +37,11 @@ function generateTargets(network) {
     fs.writeFileSync(
       `src/${network}/deployment/${target.name}.ts`,
       prettier.format(
-        Object.entries(target)
-          .filter(([name]) => ['name', 'source', 'address', 'abi'].includes(name))
-          .map(([name, value]) => `export const ${name} = ${JSON.stringify(value, null, 2)};`)
-          .join('\n'),
+        '// !!! DO NOT EDIT !!! Automatically generated file\n\n' +
+          Object.entries(target)
+            .filter(([name]) => ['name', 'source', 'address', 'abi'].includes(name))
+            .map(([name, value]) => `export const ${name} = ${JSON.stringify(value, null, 2)};`)
+            .join('\n'),
         { parser: 'typescript', ...prettierOptions }
       ),
       'utf8'
@@ -77,7 +78,8 @@ function generateSynths(network) {
   fs.writeFileSync(
     `src/${network}/synths.ts`,
     prettier.format(
-      `export const SynthsByName : ${synthByNameType} = ${JSON.stringify(synthsByName, null, 2)}`,
+      '// !!! DO NOT EDIT !!! Automatically generated file\n\n' +
+        `export const SynthsByName : ${synthByNameType} = ${JSON.stringify(synthsByName, null, 2)}`,
       {
         parser: 'typescript',
         ...prettierOptions,

@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'FuturesMarketBTC';
 export const address = '0x2f421752B7C07268DEA60A1B39D67927a5abA2F6';
 export const source = 'FuturesMarket';

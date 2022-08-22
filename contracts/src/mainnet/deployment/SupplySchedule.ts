@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SupplySchedule';
 export const address = '0x8d203C458d536Fe0F97e9f741bC231EaC8cd91cf';
 export const source = 'SupplySchedule';

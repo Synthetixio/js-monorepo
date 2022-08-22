@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthsBTC';
 export const address = '0xfE18be6b3Bd88A2D2A7f928d00292E7a9963CfC6';
 export const source = 'MultiCollateralSynth';

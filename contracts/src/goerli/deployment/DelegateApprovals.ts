@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'DelegateApprovals';
 export const address = '0xf053f15a780C40A4aBa0E50EB09e3C2dc0Ed4Fae';
 export const source = 'DelegateApprovals';

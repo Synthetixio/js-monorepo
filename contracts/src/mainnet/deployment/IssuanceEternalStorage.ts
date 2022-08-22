@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'IssuanceEternalStorage';
 export const address = '0x631E93A0fb06B5eC6d52c0A2D89a3f9672d6Ba64';
 export const source = 'IssuanceEternalStorage';

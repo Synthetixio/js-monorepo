@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'EscrowChecker';
 export const address = '0x69927Cda9Df863464afAC7DA506928BF3a3ec11f';
 export const source = 'EscrowChecker';

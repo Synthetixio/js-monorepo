@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'StakingRewardssEURCurve';
 export const address = '0xc0d8994Cd78eE1980885DF1A0C5470fC977b5cFe';
 export const source = 'StakingRewards';

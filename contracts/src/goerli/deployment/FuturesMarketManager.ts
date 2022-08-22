@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'FuturesMarketManager';
 export const address = '0x55Bc4475e73E32255D3825fbD44cF5467950F33E';
 export const source = 'EmptyFuturesMarketManager';

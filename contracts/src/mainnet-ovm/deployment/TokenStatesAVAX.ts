@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'TokenStatesAVAX';
 export const address = '0x2114d1C571CB541f3416a65f8BccFf9BB9E55Dc5';
 export const source = 'TokenState';

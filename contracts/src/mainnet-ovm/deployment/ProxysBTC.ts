@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'ProxysBTC';
 export const address = '0x298B9B95708152ff6968aafd889c6586e9169f1D';
 export const source = 'ProxyERC20';

@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'Synthetix';
 export const address = '0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4';
 export const source = 'MintableSynthetix';

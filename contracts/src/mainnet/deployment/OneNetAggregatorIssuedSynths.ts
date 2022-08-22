@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'OneNetAggregatorIssuedSynths';
 export const address = '0xcf1405b18dBCEA2893Abe635c88359C75878B9e1';
 export const source = 'OneNetAggregatorIssuedSynths';

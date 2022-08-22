@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'RewardEscrow';
 export const address = '0xb671F2210B1F6621A2607EA63E6B2DC3e2464d1F';
 export const source = 'RewardEscrow';

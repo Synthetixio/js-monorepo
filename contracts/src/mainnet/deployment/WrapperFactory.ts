@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'WrapperFactory';
 export const address = '0x02f9bC46beD33acdB9cb002fe346734CeF8a9480';
 export const source = 'WrapperFactory';

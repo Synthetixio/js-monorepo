@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'StakingRewardssNFLXBalancer';
 export const address = '0x8Ef8cA2AcAaAfEc19fB366C11561718357F780F2';
 export const source = 'StakingRewards';

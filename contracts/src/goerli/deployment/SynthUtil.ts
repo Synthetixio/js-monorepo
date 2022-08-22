@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthUtil';
 export const address = '0x492395BA6866EF703DA49667fF92Cb8551e7a2D1';
 export const source = 'SynthUtil';

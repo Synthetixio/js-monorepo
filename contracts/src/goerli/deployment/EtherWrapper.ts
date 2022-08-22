@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'EtherWrapper';
 export const address = '0x4556b9761b2aC071D1665FAe01faA255a53d1307';
 export const source = 'EtherWrapper';

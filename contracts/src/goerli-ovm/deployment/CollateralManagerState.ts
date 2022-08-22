@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'CollateralManagerState';
 export const address = '0xA6B255CB2Bd5Ad5f3EaE2D246ec1c2c3F7F79574';
 export const source = 'CollateralManagerState';

@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'FuturesMarketAVAX';
 export const address = '0x4ff54624D5FB61C34c634c3314Ed3BfE4dBB665a';
 export const source = 'FuturesMarket';

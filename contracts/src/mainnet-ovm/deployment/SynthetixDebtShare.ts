@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthetixDebtShare';
 export const address = '0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79';
 export const source = 'SynthetixDebtShare';

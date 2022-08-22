@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SignedSafeDecimalMath';
 export const address = '0x6d2eA159C128eC361a9a23b1456Ef0aAD0bec46b';
 export const source = 'SignedSafeDecimalMath';

@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'StakingRewardssTSLABalancer';
 export const address = '0xF0de877F2F9E7A60767f9BA662F10751566AD01c';
 export const source = 'StakingRewards';

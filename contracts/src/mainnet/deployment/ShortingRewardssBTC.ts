@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'ShortingRewardssBTC';
 export const address = '0xCed4055b47cfD0421f3727a35F69CE659c8bAF7a';
 export const source = 'ShortingRewards';

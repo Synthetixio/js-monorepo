@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'ShortingRewardssETH';
 export const address = '0x12DC1273915A16ab8BD47bA7866B240c253e4c12';
 export const source = 'ShortingRewards';

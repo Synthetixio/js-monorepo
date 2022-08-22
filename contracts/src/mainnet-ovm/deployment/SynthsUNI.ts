@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthsUNI';
 export const address = '0xf5a6115Aa582Fd1BEEa22BC93B7dC7a785F60d03';
 export const source = 'MultiCollateralSynth';

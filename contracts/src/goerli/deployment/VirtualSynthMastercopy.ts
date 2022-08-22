@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'VirtualSynthMastercopy';
 export const address = '0x1f6b96d2e7a5D70777D2A9c52215044FB3f40D37';
 export const source = 'VirtualSynthMastercopy';

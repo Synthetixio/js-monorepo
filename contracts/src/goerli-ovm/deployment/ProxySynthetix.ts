@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'ProxySynthetix';
 export const address = '0x2E5ED97596a8368EB9E44B1f3F25B2E813845303';
 export const source = 'ProxyERC20';

@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'CollateralEth';
 export const address = '0x35725C94f3B1aB6BbD533c0B6Df525537d422c5F';
 export const source = 'CollateralEth';

@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'TokenStatesBTC';
 export const address = '0x4F6296455F8d754c19821cF1EC8FeBF2cD456E67';
 export const source = 'TokenState';

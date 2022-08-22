@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthetixEscrow';
 export const address = '0x971e78e0C92392A4E39099835cF7E6aB535b2227';
 export const source = 'SynthetixEscrow';

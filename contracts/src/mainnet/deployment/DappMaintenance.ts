@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'DappMaintenance';
 export const address = '0xAb0B2f1Cf979cdbF4676251F35353eC5AF2732Dd';
 export const source = 'DappMaintenance';

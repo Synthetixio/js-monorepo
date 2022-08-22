@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthsLINK';
 export const address = '0xc5Db22719A06418028A40A9B5E9A7c02959D0d08';
 export const source = 'MultiCollateralSynth';

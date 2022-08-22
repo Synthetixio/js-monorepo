@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'FuturesMarketAPE';
 export const address = '0xFe00395ec846240dc693e92AB2Dd720F94765Aa3';
 export const source = 'FuturesMarket';

@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthsADA';
 export const address = '0xe36E2D3c7c34281FA3bC737950a68571736880A1';
 export const source = 'MultiCollateralSynth';

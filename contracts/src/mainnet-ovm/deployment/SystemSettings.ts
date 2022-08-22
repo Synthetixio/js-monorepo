@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SystemSettings';
 export const address = '0x05E1b1Dff853B1D67828Aa5E8CB37cC25aA050eE';
 export const source = 'SystemSettings';

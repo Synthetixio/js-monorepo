@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'TokenStatesKRW';
 export const address = '0x93B6e9FbBd2c32a0DC3C2B943B7C3CBC2fE23730';
 export const source = 'TokenState';

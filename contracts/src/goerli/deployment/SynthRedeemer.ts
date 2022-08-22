@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthRedeemer';
 export const address = '0x32A0BAA5Acec418a85Fd032f0292893B8E4f743B';
 export const source = 'SynthRedeemer';

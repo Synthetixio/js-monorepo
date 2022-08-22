@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'FuturesMarketETH';
 export const address = '0x0D10c032ad006C98C33A95e59ab3BA2b0849bD59';
 export const source = 'FuturesMarket';

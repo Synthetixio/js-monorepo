@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'ExchangeRates';
 export const address = '0x0cA3985f973f044978d2381AFEd9c4D85a762d11';
 export const source = 'ExchangeRates';

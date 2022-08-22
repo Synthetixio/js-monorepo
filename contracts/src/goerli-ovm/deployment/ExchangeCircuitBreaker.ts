@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'ExchangeCircuitBreaker';
 export const address = '0xFdb50671276DbC9D24D68b272B54dE4a87aaCc6c';
 export const source = 'ExchangeCircuitBreaker';

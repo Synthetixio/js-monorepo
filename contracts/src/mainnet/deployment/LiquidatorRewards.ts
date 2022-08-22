@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'LiquidatorRewards';
 export const address = '0xf79603a71144e415730C1A6f57F366E4Ea962C00';
 export const source = 'LiquidatorRewards';

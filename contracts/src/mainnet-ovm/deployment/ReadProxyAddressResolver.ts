@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'ReadProxyAddressResolver';
 export const address = '0x1Cb059b7e74fD21665968C908806143E744D5F30';
 export const source = 'ReadProxy';

@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'NativeEtherWrapper';
 export const address = '0x7A3d898b717e50a96fd8b232E9d15F0A547A7eeb';
 export const source = 'NativeEtherWrapper';

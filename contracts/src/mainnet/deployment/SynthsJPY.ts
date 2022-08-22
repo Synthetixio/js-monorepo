@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthsJPY';
 export const address = '0xF6b1C627e95BFc3c1b4c9B825a032Ff0fBf3e07d';
 export const source = 'MultiCollateralSynth';

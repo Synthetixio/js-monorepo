@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'StakingRewardssMSFTBalancer';
 export const address = '0x9D003Cc298E7Ea141A809C241C0a703176DA3ba3';
 export const source = 'StakingRewards';

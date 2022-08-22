@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthsCHF';
 export const address = '0x0F83287FF768D1c1e17a42F44d644D7F22e8ee1d';
 export const source = 'MultiCollateralSynth';

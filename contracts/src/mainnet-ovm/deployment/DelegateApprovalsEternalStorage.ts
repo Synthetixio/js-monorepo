@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'DelegateApprovalsEternalStorage';
 export const address = '0x02f7fB66B55e6ca476d126d96f14c5732Eeb4363';
 export const source = 'EternalStorage';

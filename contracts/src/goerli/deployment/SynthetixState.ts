@@ -1,3 +1,5 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
 export const name = 'SynthetixState';
 export const address = '0xcbcFB6E2d8517DB83BedB30f79D5197607207A2c';
 export const source = 'SynthetixState';
