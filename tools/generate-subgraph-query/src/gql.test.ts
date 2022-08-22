@@ -1,5 +1,5 @@
 import { wei } from '@synthetixio/wei';
-import generateGql from '../../src/lib/gql';
+import { generateGql } from './gql';
 
 describe.only('generateGql', () => {
   it('generates with no options', () => {
