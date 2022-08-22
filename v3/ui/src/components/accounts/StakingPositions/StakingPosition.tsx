@@ -21,8 +21,9 @@ import {
   Tr,
   useDisclosure,
 } from '@chakra-ui/react';
-import { BigNumber, utils } from 'ethers';
+import { BigNumber } from 'ethers';
 import { Link as RouterLink } from 'react-router-dom';
+import { formatValue } from '../../../utils/helpers';
 
 export default function StakingPosition({ position }: { position: StakingPositionType }) {
   // If the connected wallet doesn’t own this account token, remove/disable the interactivity
@@ -31,9 +32,6 @@ export default function StakingPosition({ position }: { position: StakingPositio
   const { isOpen: isOpenDebt, onOpen: onOpenDebt, onClose: onCloseDebt } = useDisclosure();
 
   const { collateralAmount: collateralAmountBN, collateralType } = position;
-
-  const formatValue = (value: BigNumber, decimals: number) =>
-    parseInt(utils.formatUnits(value, decimals));
 
   const { decimals, price: priceBN, priceDecimals } = collateralType;
 

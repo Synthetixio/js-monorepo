@@ -67,7 +67,7 @@ export function createQueryContext({
   signer,
   subgraphEndpoints,
 }: {
-  synthetixjs: SynthetixJS | null;
+  synthetixjs: { contracts: SynthetixJS['contracts'] } | null;
   networkId: NetworkId | null;
   provider?: Provider;
   signer?: Signer;
@@ -146,3 +146,6 @@ export default function useSynthetixQueries(): SynthetixQueries {
 
   return ctx.queries;
 }
+
+export * from './constants';
+export * from './queries/gov/constants';

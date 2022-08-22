@@ -1,6 +1,6 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { Provider } from '@ethersproject/providers';
-import { SynthetixJS, NetworkId } from '@synthetixio/contracts-interface';
+import { NetworkId, SynthetixJS } from '@synthetixio/contracts-interface';
 
 export interface SubgraphEndpoints {
   exchanges: string;
@@ -13,6 +13,6 @@ export interface QueryContext {
   networkId: NetworkId | null;
   provider: Provider | null;
   signer: Signer | null;
-  snxjs: SynthetixJS | null;
+  snxjs: { contracts: SynthetixJS['contracts'] } | null;
   subgraphEndpoints: SubgraphEndpoints;
 }

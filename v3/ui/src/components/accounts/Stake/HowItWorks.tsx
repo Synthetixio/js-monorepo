@@ -1,6 +1,7 @@
 import { CollateralType } from '../../../utils/types';
 import { Heading, Link, UnorderedList, ListItem } from '@chakra-ui/react';
-import { BigNumber, utils } from 'ethers';
+import { BigNumber } from 'ethers';
+import { formatValue } from '../../../utils/helpers';
 import { useTranslation } from 'react-i18next';
 
 export default function HowItWorks({
@@ -9,8 +10,6 @@ export default function HowItWorks({
   selectedCollateralType: CollateralType;
 }) {
   const { t } = useTranslation();
-  const formatValue = (value: BigNumber, decimals: number) =>
-    parseInt(utils.formatUnits(value, decimals));
 
   return (
     <>

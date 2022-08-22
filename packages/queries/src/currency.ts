@@ -1,7 +1,11 @@
 import keyBy from 'lodash/keyBy';
 import { Rates } from './types';
 
-import { CurrencyKey, Synths } from '@synthetixio/contracts-interface';
+import {
+  CurrencyKey,
+  Synths,
+  FIAT_SYNTHS as FIAT_SYNTHS_CONTRACT,
+} from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 
 export const ETH_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -40,16 +44,7 @@ export enum CryptoCurrency {
   XTZ = 'XTZ',
   YFI = 'YFI',
 }
-
-export const FIAT_SYNTHS: Set<CurrencyKey> = new Set([
-  Synths.sUSD,
-  Synths.sEUR,
-  Synths.sJPY,
-  Synths.sAUD,
-  Synths.sGBP,
-  Synths.sCHF,
-  Synths.sKRW,
-]);
+export const FIAT_SYNTHS = FIAT_SYNTHS_CONTRACT;
 
 export const CRYPTO_CURRENCY = Object.keys(CryptoCurrency);
 
@@ -57,7 +52,6 @@ export const CRYPTO_CURRENCY_MAP = keyBy(CRYPTO_CURRENCY);
 
 export const isSynth = (currencyKey: CurrencyKey) => currencyKey in Synths;
 export const isCryptoCurrency = (currencyKey: CurrencyKey) => currencyKey in CryptoCurrency;
-// @ts-ignore
 export const isFiatCurrency = (currencyKey: CurrencyKey) => FIAT_SYNTHS.has(currencyKey);
 
 // TODO: replace this with a more robust logic (like checking the asset field)

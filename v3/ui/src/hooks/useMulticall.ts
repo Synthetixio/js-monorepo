@@ -1,7 +1,7 @@
 import { contracts } from '../utils/constants';
 import { useContract } from './useContract';
 import ethers, { CallOverrides, Contract } from 'ethers';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
 
 // contact, funcion name, arguments
@@ -49,43 +49,51 @@ export const useMulticall = (
   // for regular multicall
   const multicall = useContract(contracts.MULTICALL);
 
-  let callContract: ethers.Contract | undefined,
-    callFunc: string | undefined,
-    callArgs: any[] | undefined;
-  if (calls.length && snxProxy && multicall) {
-    if (calls[step].length === 1) {
-      // direct call
-      [callContract, callFunc, callArgs] = calls[step][0];
-    } else if (calls[step].length > 1) {
-      if (calls[step].find((c) => c[0].address !== snxProxy?.address)) {
-        // Multicall3
-        callContract = multicall.contract;
-        callFunc = 'aggregate3Value';
+  const { callContract, callFunc, callArgs } = useMemo(() => {
+    let callContract: ethers.Contract | undefined,
+      callFunc: string | undefined,
+      callArgs: any[] | undefined;
+    if (calls.length && snxProxy && multicall) {
+      if (calls[step].length === 1) {
+        // direct call
+        [callContract, callFunc, callArgs] = calls[step][0];
+      } else if (calls[step].length > 1) {
+        if (calls[step].find((c) => c[0].address !== snxProxy?.address)) {
+          // Multicall3
+          callContract = multicall.contract;
+          callFunc = 'aggregate3Value';
 
-        callArgs = [
-          calls[step].map((c) => {
-            const callData = c[0].interface.encodeFunctionData(c[1], c[2] || []);
-            return {
-              target: c[0].address,
-              callData,
-              allowFailure: false,
-              value: 0,
-            };
-          }),
-        ];
-      } else {
-        // Synthetix Multicall
-        callContract = snxProxy.contract;
-        callFunc = 'multicall';
-        callArgs = [
-          calls[step].map((c) => {
-            const callData = c[0].interface.encodeFunctionData(c[1], c[2] || []);
-            return callData;
-          }),
-        ];
+          callArgs = [
+            calls[step].map((c) => {
+              const callData = c[0].interface.encodeFunctionData(c[1], c[2] || []);
+              return {
+                target: c[0].address,
+                callData,
+                allowFailure: false,
+                value: 0,
+              };
+            }),
+          ];
+        } else {
+          // Synthetix Multicall
+          callContract = snxProxy.contract;
+          callFunc = 'multicall';
+          callArgs = [
+            calls[step].map((c) => {
+              const callData = c[0].interface.encodeFunctionData(c[1], c[2] || []);
+              return callData;
+            }),
+          ];
+        }
       }
     }
-  }
+
+    return {
+      callContract,
+      callFunc,
+      callArgs,
+    };
+  }, [calls, multicall, snxProxy, step]);
 
   const currentTxn = useContractWrite({
     mode: 'recklesslyUnprepared',

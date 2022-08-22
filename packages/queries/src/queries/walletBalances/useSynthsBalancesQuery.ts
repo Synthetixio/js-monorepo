@@ -7,6 +7,7 @@ import { wei } from '@synthetixio/wei';
 import { CurrencyKey } from '@synthetixio/contracts-interface';
 import { QueryContext } from '../../context';
 import { Balances, SynthBalancesMap } from '../../types';
+import { notNill } from '../../utils';
 
 type SynthBalancesTuple = [string[], BigNumber[], BigNumber[]];
 
@@ -49,7 +50,7 @@ const useSynthsBalancesQuery = (
       return {
         balancesMap: balancesMap,
         balances: orderBy(
-          Object.values(balancesMap),
+          Object.values(balancesMap).filter(notNill),
           (balance) => balance.usdBalance.toNumber(),
           'desc'
         ),

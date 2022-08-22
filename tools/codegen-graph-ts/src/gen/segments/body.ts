@@ -1,8 +1,6 @@
 import { Entity } from '../types';
 import { convertType, mapType, queryFunctionName } from '../util';
 
-const PACKAGE_NAME = '@synthetixio/codegen-graph-ts';
-
 /**
  * Required imports and primitive types required for other functions
  * @returns Text to be injected for the heading
@@ -10,8 +8,8 @@ const PACKAGE_NAME = '@synthetixio/codegen-graph-ts';
 export function heading() {
   return `
 import Wei, { WeiSource, wei } from '@synthetixio/wei';
-import axios from '${PACKAGE_NAME}/build/src/lib/axios';
-import generateGql from '${PACKAGE_NAME}/build/src/lib/gql';
+import axios from 'axios';
+import { generateGql } from '@synthetixio/generate-subgraph-query';
 
 export type SingleQueryOptions = {
     id: string,

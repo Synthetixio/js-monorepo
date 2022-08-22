@@ -1,0 +1,42 @@
+// !!! DO NOT EDIT !!! Automatically generated file
+
+export const name = 'SynthetixBridgeToBase';
+export const address = '0x136b1EC699c62b0606854056f02dC7Bb80482d63';
+export const source = 'SynthetixBridgeToBase';
+export const abi = [
+  'constructor(address _owner, address _resolver)',
+  'event CacheUpdated(bytes32 name, address destination)',
+  'event DepositFinalized(address indexed _to, uint256 _amount)',
+  'event FeePeriodCloseFinalized(uint256 snxBackedAmount, uint256 totalDebtShares)',
+  'event FinalizeSynthTransfer(bytes32 indexed currencyKey, address indexed destination, uint256 amount)',
+  'event ImportedVestingEntries(address indexed account, uint256 escrowedAmount, tuple(uint64 endTime, uint256 escrowAmount)[] vestingEntries)',
+  'event InitiateSynthTransfer(bytes32 indexed currencyKey, address indexed destination, uint256 amount)',
+  'event InitiationResumed()',
+  'event InitiationSuspended()',
+  'event OwnerChanged(address oldOwner, address newOwner)',
+  'event OwnerNominated(address newOwner)',
+  'event RewardDepositFinalized(address from, uint256 amount)',
+  'event WithdrawalInitiated(address indexed _from, address _to, uint256 _amount)',
+  'function CONTRACT_NAME() pure returns (bytes32)',
+  'function acceptOwnership()',
+  'function finalizeDeposit(address to, uint256 amount)',
+  'function finalizeEscrowMigration(address account, uint256 escrowedAmount, tuple(uint64 endTime, uint256 escrowAmount)[] vestingEntries)',
+  'function finalizeFeePeriodClose(uint256 snxBackedAmount, uint256 totalDebtShares)',
+  'function finalizeRewardDeposit(address from, uint256 amount)',
+  'function finalizeSynthTransfer(bytes32 currencyKey, address destination, uint256 amount)',
+  'function initiateSynthTransfer(bytes32 currencyKey, address destination, uint256 amount)',
+  'function initiationActive() view returns (bool)',
+  'function isResolverCached() view returns (bool)',
+  'function nominateNewOwner(address _owner)',
+  'function nominatedOwner() view returns (address)',
+  'function owner() view returns (address)',
+  'function rebuildCache()',
+  'function resolver() view returns (address)',
+  'function resolverAddressesRequired() view returns (bytes32[] addresses)',
+  'function resumeInitiation()',
+  'function suspendInitiation()',
+  'function synthTransferReceived() view returns (uint256)',
+  'function synthTransferSent() view returns (uint256)',
+  'function withdraw(uint256 amount)',
+  'function withdrawTo(address to, uint256 amount)',
+];

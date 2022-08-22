@@ -6687,7 +6687,6 @@ __metadata:
     "@babel/plugin-transform-runtime": ^7.13.10
     "@babel/preset-env": ^7.13.10
     "@babel/preset-typescript": ^7.13.0
-    "@synthetixio/wei": "workspace:*"
     "@types/commander": ^2.12.2
     "@types/lodash": ^4.14.169
     "@types/node": ^17.0.43
@@ -6723,7 +6722,7 @@ __metadata:
     ethers: ^5.5.3
     html-webpack-plugin: ^5.5.0
     jest: ^27.0.6
-    synthetix: 2.75.2
+    synthetix: 2.76.1
     ts-loader: ^9.3.1
     ts-node: ^10.2.1
     typescript: ^4.4.2
@@ -6739,7 +6738,19 @@ __metadata:
   dependencies:
     ethers: ^5.5.3
     prettier: ^2.3.0
-    synthetix: 2.75.2
+    synthetix: 2.76.1
+    typescript: ^4.4.2
+  languageName: unknown
+  linkType: soft
+
+"@synthetixio/generate-subgraph-query@workspace:*, @synthetixio/generate-subgraph-query@workspace:tools/generate-subgraph-query":
+  version: 0.0.0-use.local
+  resolution: "@synthetixio/generate-subgraph-query@workspace:tools/generate-subgraph-query"
+  dependencies:
+    "@synthetixio/wei": "workspace:*"
+    eslint: ^8.22.0
+    jest: ^27.0.6
+    lodash: ^4.17.21
     typescript: ^4.4.2
   languageName: unknown
   linkType: soft
@@ -6801,6 +6812,7 @@ __metadata:
     "@synthetixio/codegen-graph-ts": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
+    "@synthetixio/generate-subgraph-query": "workspace:*"
     "@synthetixio/optimism-networks": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@testing-library/react-hooks": ^7.0.0
@@ -28438,9 +28450,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synthetix@npm:2.75.2":
-  version: 2.75.2
-  resolution: "synthetix@npm:2.75.2"
+"synthetix@npm:2.76.1":
+  version: 2.76.1
+  resolution: "synthetix@npm:2.76.1"
   dependencies:
     "@nomiclabs/hardhat-etherscan": ^3.1.0
     abi-decoder: ^2.3.0
@@ -28453,7 +28465,7 @@ __metadata:
     web3-utils: ^1.2.2
   bin:
     snx: bin.js
-  checksum: dd2c7978337f1f3fa90842e0f7f3254be955a5218ea2aac9195c91d32f324e629617c9eda053d716cb36d9114164ce937c460b8b21881797e1fb80fcd6178080
+  checksum: 17d1afae688d9b15477f63bb02826e3b1b5006d8774ecb50005faac89c9c28ba30e384a08e36b2105ff462ca3d9b10874de09bb3180ea8ad74038dc94607fa01
   languageName: node
   linkType: hard
 
