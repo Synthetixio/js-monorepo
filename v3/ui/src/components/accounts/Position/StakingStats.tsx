@@ -12,6 +12,7 @@ interface Props {
 
 export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
   const { collateralValue, debt, cRatio } = useStakingPositionStats(accountId, fundId, collateral);
+
   return (
     <Box>
       <Grid mb="1" textAlign="center" templateColumns="repeat(4, 1fr)">

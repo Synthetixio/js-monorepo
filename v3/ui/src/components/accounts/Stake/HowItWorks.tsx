@@ -1,15 +1,13 @@
 import { CollateralType } from '../../../utils/types';
 import { Heading, Link, UnorderedList, ListItem } from '@chakra-ui/react';
-import { BigNumber, utils } from 'ethers';
+import { BigNumber } from 'ethers';
+import { formatValue } from '../../../utils/helpers';
 
 export default function HowItWorks({
   selectedCollateralType,
 }: {
   selectedCollateralType: CollateralType;
 }) {
-  const formatValue = (value: BigNumber, decimals: number) =>
-    parseInt(utils.formatUnits(value, decimals));
-
   return (
     <>
       <Heading

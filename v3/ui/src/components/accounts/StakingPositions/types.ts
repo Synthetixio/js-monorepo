@@ -16,7 +16,7 @@ export type StakingPositionOnChainType = {
 // All LiquidityItems associated with the account can be retrieved by calling "getAccountLiquidityItems(accountId)" (Other related views are available: https://github.com/Synthetixio/synthetix-v3/blob/feature-v3-mvp/packages/synthetix-main/contracts/modules/FundModule.sol#L634)
 export type StakingPositionType = {
   // This is the ID on of the LiquidityItem struct. (I think this needs to be added? Seems good to have.)
-  id?: number;
+  id: string;
 
   // This is the fundId on the LiquidityItem struct
   fundId: BigNumber;
