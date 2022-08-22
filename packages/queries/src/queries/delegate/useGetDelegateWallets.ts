@@ -2,7 +2,7 @@ import { UseQueryOptions, UseQueryResult } from 'react-query';
 import { DelegationWallet } from '../../types';
 
 import { QueryContext } from '../../context';
-import { useGetDelegatedWallets } from '../../../generated/mainSubgraphQueries';
+import { useGetDelegatedWallets } from '../../subgraph/mainSubgraphQueries';
 
 const useGetDelegateWallets = (
   ctx: QueryContext,

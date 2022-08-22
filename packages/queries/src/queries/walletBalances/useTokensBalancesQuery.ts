@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query';
 import { wei } from '@synthetixio/wei';
-import erc20Abi from '../../abis/ERC20.json';
+import { ERC20Abi } from '../../abis/ERC20';
 import { Contract } from '@ethersproject/contracts';
 import { BigNumber } from '@ethersproject/bignumber';
 import { CRYPTO_CURRENCY_MAP } from '../../currency';
@@ -22,7 +22,7 @@ const useTokensBalancesQuery = (
         if (symbol === CRYPTO_CURRENCY_MAP.ETH) {
           return ctx.provider.getBalance(walletAddress);
         } else {
-          const tokenContract = new Contract(address, erc20Abi, ctx.provider);
+          const tokenContract = new Contract(address, ERC20Abi, ctx.provider);
           return tokenContract.balanceOf(walletAddress);
         }
       };

@@ -9,7 +9,7 @@ import {
   useGetShorts,
   useGetSynths,
   useGetWrappers,
-} from '../../../generated/mainSubgraphQueries';
+} from '../../subgraph/mainSubgraphQueries';
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from '../../constants';
 import { useEffect, useMemo, useState } from 'react';
 import { Contract } from '@ethersproject/contracts';

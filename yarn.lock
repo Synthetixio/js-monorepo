@@ -6825,6 +6825,7 @@ __metadata:
     graphql-request: ^3.4.0
     jest: ^27.0.6
     lodash: ^4.17.21
+    prettier: ^2.3.0
     react: ^17.0.2
     react-dom: ^17.0.2
     react-query: 3.16.0

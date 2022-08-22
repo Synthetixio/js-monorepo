@@ -1,8 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import Wei from '@synthetixio/wei';
-import { wei } from '@synthetixio/wei';
+import Wei, { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
-import { getDebtStates, getDebtSnapshots } from '../../../generated/mainSubgraphFunctions';
+import { getDebtStates, getDebtSnapshots } from '../../subgraph/mainSubgraphFunctions';
 import { times, findIndex, sortBy } from 'lodash';
 
 type WalletDebtTimeseriesData = {

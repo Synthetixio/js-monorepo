@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { renderHook } from '@testing-library/react-hooks';
 import { BigNumber } from '@ethersproject/bignumber';
-import { getWrapper } from '../../testUtils';
+import { getWrapper } from '../testUtils';
 import useEVMTxn from './useEVMTxn';
 
 describe('useEVMTxn', () => {

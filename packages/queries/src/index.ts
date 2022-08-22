@@ -9,12 +9,12 @@ import { NetworkId, SynthetixJS } from '@synthetixio/contracts-interface';
 
 import { UseQueryOptions, UseQueryResult } from 'react-query';
 
-import * as exchanges from '../generated/exchangesSubgraphQueries';
-import * as exchanger from '../generated/exchangerSubgraphQueries';
-import * as issuance from '../generated/issuanceSubgraphQueries';
-import * as subgraph from '../generated/mainSubgraphQueries';
+import * as exchanges from './subgraph/exchangesSubgraphQueries';
+import * as exchanger from './subgraph/exchangerSubgraphQueries';
+import * as issuance from './subgraph/issuanceSubgraphQueries';
+import * as subgraph from './subgraph/mainSubgraphQueries';
 
-import * as FUNCS from '../generated/queryFuncs';
+import * as FUNCS from './subgraph/queryFuncs';
 import { createContext, useContext } from 'react';
 
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from './constants';
@@ -146,6 +146,9 @@ export default function useSynthetixQueries(): SynthetixQueries {
 
   return ctx.queries;
 }
+
+export * from './abis/ElectionModule';
+export * from './abis/ERC20';
 
 export * from './constants';
 export * from './queries/gov/constants';

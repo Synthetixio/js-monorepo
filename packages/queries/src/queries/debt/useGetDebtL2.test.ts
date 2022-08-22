@@ -1,7 +1,7 @@
-import { getFakeQueryContext, getWrapper } from '../testUtils';
+import { getFakeQueryContext, getWrapper } from '../../testUtils';
 import { renderHook } from '@testing-library/react-hooks';
-import useGetDebtL2 from '../src/queries/debt/useGetDebtL2';
-import { useGetDebtL1 } from '../generated/queryFuncs';
+import useGetDebtL2 from './useGetDebtL2';
+import { useGetDebtL1 } from '../../subgraph/queryFuncs';
 import { getDefaultProvider } from '@ethersproject/providers';
 jest.setTimeout(20000);
 
