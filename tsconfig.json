@@ -12,5 +12,14 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "lib": ["ESNext"]
-  }
+  },
+  "exclude": [
+    "**/node_modules/**",
+    "**/coverage/**",
+    "**/tests/**",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/build/**",
+    "**/dist/**"
+  ]
 }
