@@ -3,6 +3,10 @@ const fs = require('fs');
 
 const cgt = require('@synthetixio/codegen-graph-ts');
 
+// for depcheck, this dep is listed in generated files
+// TODO: remove when we commit generated files
+require.resolve('@synthetixio/generate-subgraph-query');
+
 try {
   fs.mkdirSync(__dirname + '/generated/');
 } catch {}

@@ -15,7 +15,7 @@ const networks = fs
 
 function generateTargets(network) {
   const deployment = require(`synthetix/publish/deployed/${network}/deployment.json`);
-  fs.mkdirSync(`generated/${network}/deployment/targets`, { recursive: true });
+  fs.mkdirSync(`src/${network}/deployment/targets`, { recursive: true });
   const { targets, sources } = deployment;
 
   if (!targets || !sources) {
@@ -35,12 +35,13 @@ function generateTargets(network) {
     target.abi = iface.format(ethers.utils.FormatTypes.full);
 
     fs.writeFileSync(
-      `generated/${network}/deployment/${target.name}.ts`,
+      `src/${network}/deployment/${target.name}.ts`,
       prettier.format(
-        Object.entries(target)
-          .filter(([name]) => ['name', 'source', 'address', 'abi'].includes(name))
-          .map(([name, value]) => `export const ${name} = ${JSON.stringify(value, null, 2)};`)
-          .join('\n'),
+        '// !!! DO NOT EDIT !!! Automatically generated file\n\n' +
+          Object.entries(target)
+            .filter(([name]) => ['name', 'source', 'address', 'abi'].includes(name))
+            .map(([name, value]) => `export const ${name} = ${JSON.stringify(value, null, 2)};`)
+            .join('\n'),
         { parser: 'typescript', ...prettierOptions }
       ),
       'utf8'
@@ -50,16 +51,39 @@ function generateTargets(network) {
 
 function generateSynths(network) {
   const synths = require(`synthetix/publish/deployed/${network}/synths.json`);
-  fs.mkdirSync(`generated/${network}`, { recursive: true });
+  const assets = require('synthetix/publish/assets.json');
+  const synthsWithAssetData = synths.map((synth) => Object.assign({}, assets[synth.asset], synth));
+  const synthsByName = synthsWithAssetData.reduce((acc, val) => {
+    acc[val.name] = val;
+    return acc;
+  }, {});
+  /**
+   * If we're not adding a type assertion to the SynthsByName
+   * the ts inference will generate a giant weird looking union type that is hard to work with.
+   *  */
+  const synthByNameType = `Partial<
+  Record<
+    string,
+    {
+      asset: string;
+      category: string;
+      sign: string;
+      description: string;
+      name: string;
+      subclass?: string;
+    }
+  >
+>`;
+  fs.mkdirSync(`src/${network}`, { recursive: true });
   fs.writeFileSync(
-    `generated/${network}/synths.ts`,
+    `src/${network}/synths.ts`,
     prettier.format(
-      [
-        'export enum Synths {',
-        ...synths.map(({ name }) => `  ${name} = ${JSON.stringify(name, null, 2)},`),
-        '}',
-      ].join('\n'),
-      { parser: 'typescript', ...prettierOptions }
+      '// !!! DO NOT EDIT !!! Automatically generated file\n\n' +
+        `export const SynthsByName : ${synthByNameType} = ${JSON.stringify(synthsByName, null, 2)}`,
+      {
+        parser: 'typescript',
+        ...prettierOptions,
+      }
     ),
     'utf8'
   );

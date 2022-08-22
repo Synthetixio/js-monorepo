@@ -9,7 +9,14 @@ import { Provider } from '@ethersproject/providers';
 
 const MULTIPLIER = wei(2);
 
-export const computeGasFee = (baseFeePerGas: BigNumber, maxPriorityFeePerGas: number) => {
+export const computeGasFee = (
+  baseFeePerGas: BigNumber,
+  maxPriorityFeePerGas: number
+): {
+  maxPriorityFeePerGas: BigNumber;
+  maxFeePerGas: BigNumber;
+  baseFeePerGas: BigNumber;
+} => {
   return {
     maxPriorityFeePerGas: wei(maxPriorityFeePerGas, 9).toBN(),
     maxFeePerGas: wei(baseFeePerGas, 9).mul(MULTIPLIER).add(wei(maxPriorityFeePerGas, 9)).toBN(),

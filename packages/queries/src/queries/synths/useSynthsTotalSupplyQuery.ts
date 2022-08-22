@@ -2,7 +2,7 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import { formatBytes32String, parseBytes32String } from '@ethersproject/strings';
 import { formatEther } from '@ethersproject/units';
 
-import { NetworkIdByName, Synths } from '@synthetixio/contracts-interface';
+import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
@@ -21,9 +21,7 @@ const useSynthsTotalSupplyQuery = (
         contracts: { SynthUtil, ExchangeRates, CollateralManagerState, EtherWrapper },
       } = ctx.snxjs;
 
-      const [sETHKey, sBTCKey, sUSDKey] = [Synths.sETH, Synths.sBTC, Synths.sUSD].map(
-        formatBytes32String
-      );
+      const [sETHKey, sBTCKey, sUSDKey] = ['sETH', 'sBTC', 'sUSD'].map(formatBytes32String);
 
       const isL2 =
         NetworkIdByName['mainnet-ovm'] === ctx.networkId ||
@@ -101,14 +99,14 @@ const useSynthsTotalSupplyQuery = (
         let skewValue = value;
 
         switch (name) {
-          case Synths.sBTC: {
+          case 'sBTC': {
             btcNegativeEntries = btcShorts.add(btcBorrows);
 
             skewValue = totalSupply.sub(btcNegativeEntries).mul(btcPrice);
             break;
           }
 
-          case Synths.sETH: {
+          case 'sETH': {
             const multiCollateralLoansETH = ethShorts.add(ethBorrows);
             ethNegativeEntries = multiCollateralLoansETH.add(wrapprSETH);
 
@@ -116,7 +114,7 @@ const useSynthsTotalSupplyQuery = (
             break;
           }
 
-          case Synths.sUSD: {
+          case 'sUSD': {
             const multiCollateralLoansSUSD = susdShorts.add(susdBorrows);
             usdNegativeEntries = multiCollateralLoansSUSD.add(wrapprSUSD);
 
