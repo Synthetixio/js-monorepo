@@ -44,7 +44,7 @@ const useExchangeRatesQuery = (ctx: QueryContext, options?: UseQueryOptions<Rate
       return exchangeRates;
     },
     {
-      enabled: !!ctx.networkId,
+      enabled: Boolean(ctx.networkId && ctx.snxjs),
       ...options,
     }
   );
