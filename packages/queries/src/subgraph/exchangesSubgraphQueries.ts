@@ -182,8 +182,10 @@ export const useGetDailyCandles = <K extends keyof DailyCandleResult>(
     }
     let results: Pick<DailyCandleResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('dailyCandles', paginatedOptions, args),
       });
@@ -308,8 +310,10 @@ export const useGetDailyExchangers = <K extends keyof DailyExchangerResult>(
     }
     let results: Pick<DailyExchangerResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('dailyExchangers', paginatedOptions, args),
       });
@@ -451,8 +455,10 @@ export const useGetDailySNXPrices = <K extends keyof DailySNXPriceResult>(
     }
     let results: Pick<DailySNXPriceResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('dailySNXPrices', paginatedOptions, args),
       });
@@ -630,8 +636,10 @@ export const useGetDailyTotals = <K extends keyof DailyTotalResult>(
     }
     let results: Pick<DailyTotalResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('dailyTotals', paginatedOptions, args),
       });
@@ -769,8 +777,10 @@ export const useGetExchangeFees = <K extends keyof ExchangeFeeResult>(
     }
     let results: Pick<ExchangeFeeResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('exchangeFees', paginatedOptions, args),
       });
@@ -963,8 +973,10 @@ export const useGetExchangeRebates = <K extends keyof ExchangeRebateResult>(
     }
     let results: Pick<ExchangeRebateResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('exchangeRebates', paginatedOptions, args),
       });
@@ -1164,8 +1176,10 @@ export const useGetExchangeReclaims = <K extends keyof ExchangeReclaimResult>(
     }
     let results: Pick<ExchangeReclaimResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('exchangeReclaims', paginatedOptions, args),
       });
@@ -1292,8 +1306,10 @@ export const useGetExchangers = <K extends keyof ExchangerResult>(
     }
     let results: Pick<ExchangerResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('exchangers', paginatedOptions, args),
       });
@@ -1415,8 +1431,10 @@ export const useGetFifteenMinuteExchangers = <K extends keyof FifteenMinuteExcha
     }
     let results: Pick<FifteenMinuteExchangerResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('fifteenMinuteExchangers', paginatedOptions, args),
       });
@@ -1560,8 +1578,10 @@ export const useGetFifteenMinuteSNXPrices = <K extends keyof FifteenMinuteSNXPri
     }
     let results: Pick<FifteenMinuteSNXPriceResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('fifteenMinuteSNXPrices', paginatedOptions, args),
       });
@@ -1741,8 +1761,10 @@ export const useGetFifteenMinuteTotals = <K extends keyof FifteenMinuteTotalResu
     }
     let results: Pick<FifteenMinuteTotalResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('fifteenMinuteTotals', paginatedOptions, args),
       });
@@ -1911,8 +1933,10 @@ export const useGetInversePricingInfos = <K extends keyof InversePricingInfoResu
     }
     let results: Pick<InversePricingInfoResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('inversePricingInfos', paginatedOptions, args),
       });
@@ -2056,8 +2080,10 @@ export const useGetLatestRates = <K extends keyof LatestRateResult>(
     }
     let results: Pick<LatestRateResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('latestRates', paginatedOptions, args),
       });
@@ -2181,8 +2207,10 @@ export const useGetPostArchernarExchangers = <K extends keyof PostArchernarExcha
     }
     let results: Pick<PostArchernarExchangerResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('postArchernarExchangers', paginatedOptions, args),
       });
@@ -2349,8 +2377,10 @@ export const useGetPostArchernarTotals = <K extends keyof PostArchernarTotalResu
     }
     let results: Pick<PostArchernarTotalResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('postArchernarTotals', paginatedOptions, args),
       });
@@ -2535,8 +2565,10 @@ export const useGetRateUpdates = <K extends keyof RateUpdateResult>(
     }
     let results: Pick<RateUpdateResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('rateUpdates', paginatedOptions, args),
       });
@@ -2828,8 +2860,10 @@ export const useGetSynthExchanges = <K extends keyof SynthExchangeResult>(
     }
     let results: Pick<SynthExchangeResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('synthExchanges', paginatedOptions, args),
       });
@@ -3007,8 +3041,10 @@ export const useGetTotals = <K extends keyof TotalResult>(
     }
     let results: Pick<TotalResult, K>[] = [];
     do {
-      if (paginationKey && paginationValue)
+      if (paginationKey && paginationValue) {
+        // @ts-ignore
         paginatedOptions.where![paginationKey] = paginationValue as any;
+      }
       const res = await axios.post(url, {
         query: generateGql('totals', paginatedOptions, args),
       });

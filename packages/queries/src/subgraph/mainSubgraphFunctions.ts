@@ -149,8 +149,10 @@ export const getAccountFlaggedForLiquidations = async function <
   }
   let results: Pick<AccountFlaggedForLiquidationResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('accountFlaggedForLiquidations', paginatedOptions, args),
     });
@@ -287,8 +289,10 @@ export const getAccountLiquidateds = async function <K extends keyof AccountLiqu
   }
   let results: Pick<AccountLiquidatedResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('accountLiquidateds', paginatedOptions, args),
     });
@@ -406,8 +410,10 @@ export const getAccountRemovedFromLiquidations = async function <
   }
   let results: Pick<AccountRemovedFromLiquidationResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('accountRemovedFromLiquidations', paginatedOptions, args),
     });
@@ -489,8 +495,10 @@ export const getActiveStakers = async function <K extends keyof ActiveStakerResu
   }
   let results: Pick<ActiveStakerResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('activeStakers', paginatedOptions, args),
     });
@@ -711,8 +719,10 @@ export const getAtomicSynthExchanges = async function <K extends keyof AtomicSyn
   }
   let results: Pick<AtomicSynthExchangeResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('atomicSynthExchanges', paginatedOptions, args),
     });
@@ -871,8 +881,10 @@ export const getBurneds = async function <K extends keyof BurnedResult>(
   }
   let results: Pick<BurnedResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('burneds', paginatedOptions, args),
     });
@@ -1061,8 +1073,10 @@ export const getCandles = async function <K extends keyof CandleResult>(
   }
   let results: Pick<CandleResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('candles', paginatedOptions, args),
     });
@@ -1209,8 +1223,10 @@ export const getCollateralDepositeds = async function <K extends keyof Collatera
   }
   let results: Pick<CollateralDepositedResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('collateralDepositeds', paginatedOptions, args),
     });
@@ -1352,8 +1368,10 @@ export const getCollateralWithdrawns = async function <K extends keyof Collatera
   }
   let results: Pick<CollateralWithdrawnResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('collateralWithdrawns', paginatedOptions, args),
     });
@@ -1460,8 +1478,10 @@ export const getDailyBurneds = async function <K extends keyof DailyBurnedResult
   }
   let results: Pick<DailyBurnedResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('dailyBurneds', paginatedOptions, args),
     });
@@ -1615,8 +1635,10 @@ export const getDailyCandles = async function <K extends keyof DailyCandleResult
   }
   let results: Pick<DailyCandleResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('dailyCandles', paginatedOptions, args),
     });
@@ -1767,8 +1789,10 @@ export const getDailyExchangePartners = async function <K extends keyof DailyExc
   }
   let results: Pick<DailyExchangePartnerResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('dailyExchangePartners', paginatedOptions, args),
     });
@@ -1875,8 +1899,10 @@ export const getDailyIssueds = async function <K extends keyof DailyIssuedResult
   }
   let results: Pick<DailyIssuedResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('dailyIssueds', paginatedOptions, args),
     });
@@ -2045,8 +2071,10 @@ export const getDebtSnapshots = async function <K extends keyof DebtSnapshotResu
   }
   let results: Pick<DebtSnapshotResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('debtSnapshots', paginatedOptions, args),
     });
@@ -2191,8 +2219,10 @@ export const getDebtStates = async function <K extends keyof DebtStateResult>(
   }
   let results: Pick<DebtStateResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('debtStates', paginatedOptions, args),
     });
@@ -2323,8 +2353,10 @@ export const getDelegatedWallets = async function <K extends keyof DelegatedWall
   }
   let results: Pick<DelegatedWalletResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('delegatedWallets', paginatedOptions, args),
     });
@@ -2498,8 +2530,10 @@ export const getExchangeEntryAppendeds = async function <
   }
   let results: Pick<ExchangeEntryAppendedResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('exchangeEntryAppendeds', paginatedOptions, args),
     });
@@ -2687,8 +2721,10 @@ export const getExchangeEntrySettleds = async function <K extends keyof Exchange
   }
   let results: Pick<ExchangeEntrySettledResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('exchangeEntrySettleds', paginatedOptions, args),
     });
@@ -2791,8 +2827,10 @@ export const getExchangeFees = async function <K extends keyof ExchangeFeeResult
   }
   let results: Pick<ExchangeFeeResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('exchangeFees', paginatedOptions, args),
     });
@@ -2905,8 +2943,10 @@ export const getExchangePartners = async function <K extends keyof ExchangePartn
   }
   let results: Pick<ExchangePartnerResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('exchangePartners', paginatedOptions, args),
     });
@@ -3070,8 +3110,10 @@ export const getExchangeRebates = async function <K extends keyof ExchangeRebate
   }
   let results: Pick<ExchangeRebateResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('exchangeRebates', paginatedOptions, args),
     });
@@ -3238,8 +3280,10 @@ export const getExchangeReclaims = async function <K extends keyof ExchangeRecla
   }
   let results: Pick<ExchangeReclaimResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('exchangeReclaims', paginatedOptions, args),
     });
@@ -3442,8 +3486,10 @@ export const getExchangers = async function <K extends keyof ExchangerResult>(
   }
   let results: Pick<ExchangerResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('exchangers', paginatedOptions, args),
     });
@@ -3591,8 +3637,10 @@ export const getFeePeriods = async function <K extends keyof FeePeriodResult>(
   }
   let results: Pick<FeePeriodResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('feePeriods', paginatedOptions, args),
     });
@@ -3731,8 +3779,10 @@ export const getFeesClaimeds = async function <K extends keyof FeesClaimedResult
   }
   let results: Pick<FeesClaimedResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('feesClaimeds', paginatedOptions, args),
     });
@@ -3859,8 +3909,10 @@ export const getInversePricingInfos = async function <K extends keyof InversePri
   }
   let results: Pick<InversePricingInfoResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('inversePricingInfos', paginatedOptions, args),
     });
@@ -4012,8 +4064,10 @@ export const getIssueds = async function <K extends keyof IssuedResult>(
   }
   let results: Pick<IssuedResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('issueds', paginatedOptions, args),
     });
@@ -4097,8 +4151,10 @@ export const getIssuers = async function <K extends keyof IssuerResult>(
   }
   let results: Pick<IssuerResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('issuers', paginatedOptions, args),
     });
@@ -4198,8 +4254,10 @@ export const getLatestRates = async function <K extends keyof LatestRateResult>(
   }
   let results: Pick<LatestRateResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('latestRates', paginatedOptions, args),
     });
@@ -4348,8 +4406,10 @@ export const getLatestSynthBalances = async function <K extends keyof LatestSynt
   }
   let results: Pick<LatestSynthBalanceResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('latestSynthBalances', paginatedOptions, args),
     });
@@ -4551,8 +4611,10 @@ export const getLoans = async function <K extends keyof LoanResult>(
   }
   let results: Pick<LoanResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('loans', paginatedOptions, args),
     });
@@ -4683,8 +4745,10 @@ export const getLoanLiquidateds = async function <K extends keyof LoanLiquidated
   }
   let results: Pick<LoanLiquidatedResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('loanLiquidateds', paginatedOptions, args),
     });
@@ -4840,8 +4904,10 @@ export const getLoanPartiallyLiquidateds = async function <
   }
   let results: Pick<LoanPartiallyLiquidatedResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('loanPartiallyLiquidateds', paginatedOptions, args),
     });
@@ -4981,8 +5047,10 @@ export const getLoanRepaids = async function <K extends keyof LoanRepaidResult>(
   }
   let results: Pick<LoanRepaidResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('loanRepaids', paginatedOptions, args),
     });
@@ -5126,8 +5194,10 @@ export const getRateUpdates = async function <K extends keyof RateUpdateResult>(
   }
   let results: Pick<RateUpdateResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('rateUpdates', paginatedOptions, args),
     });
@@ -5236,8 +5306,10 @@ export const getRewardEscrowHolders = async function <K extends keyof RewardEscr
   }
   let results: Pick<RewardEscrowHolderResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('rewardEscrowHolders', paginatedOptions, args),
     });
@@ -5419,8 +5491,10 @@ export const getSNXHolders = async function <K extends keyof SNXHolderResult>(
   }
   let results: Pick<SNXHolderResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('snxholders', paginatedOptions, args),
     });
@@ -5658,8 +5732,10 @@ export const getShorts = async function <K extends keyof ShortResult>(
   }
   let results: Pick<ShortResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('shorts', paginatedOptions, args),
     });
@@ -5834,8 +5910,10 @@ export const getShortCollateralChanges = async function <
   }
   let results: Pick<ShortCollateralChangeResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('shortCollateralChanges', paginatedOptions, args),
     });
@@ -5999,8 +6077,10 @@ export const getShortContracts = async function <K extends keyof ShortContractRe
   }
   let results: Pick<ShortContractResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('shortContracts', paginatedOptions, args),
     });
@@ -6168,8 +6248,10 @@ export const getShortContractUpdates = async function <K extends keyof ShortCont
   }
   let results: Pick<ShortContractUpdateResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('shortContractUpdates', paginatedOptions, args),
     });
@@ -6332,8 +6414,10 @@ export const getShortLiquidations = async function <K extends keyof ShortLiquida
   }
   let results: Pick<ShortLiquidationResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('shortLiquidations', paginatedOptions, args),
     });
@@ -6499,8 +6583,10 @@ export const getShortLoanChanges = async function <K extends keyof ShortLoanChan
   }
   let results: Pick<ShortLoanChangeResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('shortLoanChanges', paginatedOptions, args),
     });
@@ -6630,8 +6716,10 @@ export const getSynths = async function <K extends keyof SynthResult>(
   }
   let results: Pick<SynthResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('synths', paginatedOptions, args),
     });
@@ -6779,8 +6867,10 @@ export const getSynthBalances = async function <K extends keyof SynthBalanceResu
   }
   let results: Pick<SynthBalanceResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('synthBalances', paginatedOptions, args),
     });
@@ -6876,8 +6966,10 @@ export const getSynthByCurrencyKeys = async function <K extends keyof SynthByCur
   }
   let results: Pick<SynthByCurrencyKeyResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('synthByCurrencyKeys', paginatedOptions, args),
     });
@@ -7095,8 +7187,10 @@ export const getSynthExchanges = async function <K extends keyof SynthExchangeRe
   }
   let results: Pick<SynthExchangeResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('synthExchanges', paginatedOptions, args),
     });
@@ -7209,8 +7303,10 @@ export const getSynthetixs = async function <K extends keyof SynthetixResult>(
   }
   let results: Pick<SynthetixResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('synthetixs', paginatedOptions, args),
     });
@@ -7506,8 +7602,10 @@ export const getSystemSettings = async function <K extends keyof SystemSettingRe
   }
   let results: Pick<SystemSettingResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('systemSettings', paginatedOptions, args),
     });
@@ -7671,8 +7769,10 @@ export const getTemporaryExchangePartnerTrackers = async function <
   }
   let results: Pick<TemporaryExchangePartnerTrackerResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('temporaryExchangePartnerTrackers', paginatedOptions, args),
     });
@@ -7859,8 +7959,10 @@ export const getTotals = async function <K extends keyof TotalResult>(
   }
   let results: Pick<TotalResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('totals', paginatedOptions, args),
     });
@@ -7961,8 +8063,10 @@ export const getTotalActiveStakers = async function <K extends keyof TotalActive
   }
   let results: Pick<TotalActiveStakerResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('totalActiveStakers', paginatedOptions, args),
     });
@@ -8071,8 +8175,10 @@ export const getTotalDailyActiveStakers = async function <
   }
   let results: Pick<TotalDailyActiveStakerResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('totalDailyActiveStakers', paginatedOptions, args),
     });
@@ -8241,8 +8347,10 @@ export const getWrappers = async function <K extends keyof WrapperResult>(
   }
   let results: Pick<WrapperResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('wrappers', paginatedOptions, args),
     });
@@ -8407,8 +8515,10 @@ export const getWrapperBurns = async function <K extends keyof WrapperBurnResult
   }
   let results: Pick<WrapperBurnResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('wrapperBurns', paginatedOptions, args),
     });
@@ -8572,8 +8682,10 @@ export const getWrapperMints = async function <K extends keyof WrapperMintResult
   }
   let results: Pick<WrapperMintResult, K>[] = [];
   do {
-    if (paginationKey && paginationValue)
+    if (paginationKey && paginationValue) {
+      // @ts-ignore
       paginatedOptions.where![paginationKey] = paginationValue as any;
+    }
     const res = await axios.post(url, {
       query: generateGql('wrapperMints', paginatedOptions, args),
     });
