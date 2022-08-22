@@ -1,8 +1,11 @@
 import { InfoOutlineIcon } from '@chakra-ui/icons';
-import { Box, Heading, Text, Grid, GridItem, Tooltip, Skeleton } from '@chakra-ui/react';
+import { Box, Heading, Text, Grid, GridItem, Tooltip, Skeleton, Spinner } from '@chakra-ui/react';
 import { FC } from 'react';
 import { CollateralType } from '../../../utils/constants';
 import { useStakingPositionStats } from '../../../hooks/useStakingPosition';
+import { formatValue } from '../../../utils/helpers';
+import { BigNumber } from 'ethers';
+import { PositionDebt } from './PositionDebt';
 
 interface Props {
   accountId: string;
@@ -11,7 +14,16 @@ interface Props {
 }
 
 export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
-  const { collateralValue, debt, cRatio } = useStakingPositionStats(accountId, fundId, collateral);
+  const { debt, cRatio, stakingPosition } = useStakingPositionStats(accountId, fundId, collateral);
+
+  if (!stakingPosition) return <Spinner />;
+
+  const { collateralAmount: collateralAmountBN, collateralType } = stakingPosition;
+  const { decimals, price: priceBN, priceDecimals } = collateralType;
+
+  const collateralAmount = formatValue(collateralAmountBN, decimals);
+  const price = formatValue(priceBN!, priceDecimals!);
+  const collateralValue = collateralAmount * price;
 
   return (
     <Box>
@@ -26,16 +38,16 @@ export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
             </Skeleton>
           </Heading>
           <Text opacity="0.6" fontSize="sm">
-            $4,200
+            ${collateralValue.toFixed(2)}
           </Text>
         </GridItem>
         <GridItem mb="3">
           <Text fontSize="sm" fontWeight="semibold">
             Debt
           </Text>
-          <Heading size="md">
-            <Skeleton isLoaded={debt !== undefined}>{debt?.toString()}</Skeleton>
-          </Heading>
+          <Skeleton isLoaded={debt !== undefined}>
+            <PositionDebt debt={debt?.toString() || 0} />
+          </Skeleton>
           <Text opacity="0.6" fontSize="sm">
             snxUSD minted {/* or burned */}
           </Text>
@@ -48,7 +60,12 @@ export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
             <Skeleton isLoaded={cRatio !== undefined}>{cRatio?.toString()}%</Skeleton>
           </Heading>
           <Text opacity="0.6" fontSize="sm">
-            Minimum 150%
+            Minimum
+            {formatValue(
+              collateralType!.minimumCRatio!.mul(BigNumber.from(100)),
+              collateralType.decimals
+            ).toFixed(0)}
+            %
           </Text>
         </GridItem>
         <GridItem mb="3">

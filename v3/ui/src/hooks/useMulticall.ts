@@ -93,8 +93,7 @@ export const useMulticall = (
       callFunc,
       callArgs,
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [calls]);
+  }, [calls, multicall, snxProxy, step]);
 
   const currentTxn = useContractWrite({
     mode: 'recklesslyUnprepared',
