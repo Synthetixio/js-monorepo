@@ -32,10 +32,11 @@ import {
   NetworkName,
   NetworkIdByName,
   NetworkNameById,
+  FIAT_SYNTHS,
 } from './types';
 
-import { Synths as MainnetSynths } from '@synthetixio/contracts/build/mainnet/synths';
-import { Synths as OptimismSynths } from '@synthetixio/contracts/build/mainnet-ovm/synths';
+import { SynthsByName as MainnetSynths } from '@synthetixio/contracts/build/mainnet/synths';
+import { SynthsByName as OptimismSynths } from '@synthetixio/contracts/build/mainnet-ovm/synths';
 
 import { ERRORS } from './constants';
 
@@ -102,8 +103,8 @@ const getSynthetixContracts = (
   provider?: ethers.providers.Provider,
   useOvm?: boolean
 ): ContractsMap => {
-  const sources = getSource({ network, useOvm });
-  const targets = getTarget({ network, useOvm });
+  const sources = getSource({ network, useOvm: Boolean(useOvm) });
+  const targets = getTarget({ network, useOvm: Boolean(useOvm) });
 
   return Object.values(targets)
     .map((target) => {
@@ -126,8 +127,8 @@ const getSynthetixContracts = (
       return acc;
     }, {});
 };
-
-const Synths = { ...MainnetSynths, ...OptimismSynths };
+//  Adding a type assertion to help typescript infer the type correctly
+const Synths: typeof MainnetSynths = { ...MainnetSynths, ...OptimismSynths };
 
 export {
   synthetix,
@@ -137,6 +138,7 @@ export {
   CurrencyCategory,
   networkToChainId,
   getNetworkFromId,
+  FIAT_SYNTHS,
 };
 export type {
   Config,

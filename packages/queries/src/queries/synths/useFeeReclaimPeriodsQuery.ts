@@ -1,12 +1,13 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import { formatBytes32String } from '@ethersproject/strings';
-import { CurrencyKey, Synth } from '@synthetixio/contracts-interface';
+import { Synth } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 import { formatEther } from '@ethersproject/units';
 import { BigNumberish } from '@ethersproject/bignumber';
 
 import { QueryContext } from '../../context';
 import { SynthFeeAndWaitingPeriod } from '../../types';
+import { loadSynthsByNameFromNetwork, notNill } from '../../utils';
 
 const useFeeReclaimPeriodsQuery = (
   ctx: QueryContext,
@@ -16,10 +17,10 @@ const useFeeReclaimPeriodsQuery = (
   return useQuery<SynthFeeAndWaitingPeriod[]>(
     ['synths', 'feeReclaimPeriods', ctx.networkId],
     async () => {
-      if (!ctx.snxjs) return [];
-
+      if (!ctx.snxjs || !ctx.networkId) return [];
+      const { SynthsByName } = await loadSynthsByNameFromNetwork(ctx.networkId);
+      const synths = Object.values(SynthsByName).filter(notNill);
       const {
-        synths,
         contracts: { Exchanger },
       } = ctx.snxjs;
 
@@ -48,7 +49,7 @@ const useFeeReclaimPeriodsQuery = (
       return synths.map((currencyKey, i) => {
         const { fee, noOfTrades } = fees[i];
         return {
-          currencyKey: currencyKey.name as CurrencyKey,
+          currencyKey: currencyKey.name,
           waitingPeriod: waitingPeriods[i],
           fee,
           noOfTrades,
@@ -56,7 +57,7 @@ const useFeeReclaimPeriodsQuery = (
       });
     },
     {
-      enabled: !!ctx.snxjs && !!walletAddress,
+      enabled: !!ctx.snxjs && !!walletAddress && !!ctx.networkId,
       ...options,
     }
   );
