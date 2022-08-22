@@ -5,7 +5,8 @@ import { CollateralType } from '../../../utils/constants';
 import { useStakingPositionStats } from '../../../hooks/useStakingPosition';
 import { formatValue } from '../../../utils/helpers';
 import { BigNumber } from 'ethers';
-import { PositionDebt } from './PositionDebt';
+import { CRatio } from './CRatio';
+import { currency } from '../../../utils/currency';
 
 interface Props {
   accountId: string;
@@ -33,21 +34,19 @@ export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
             Collateral
           </Text>
           <Heading size="md">
-            <Skeleton isLoaded={collateralValue !== undefined}>
-              {collateralValue?.toString()} SNX
+            <Skeleton isLoaded={collateralAmount !== undefined}>
+              {collateralAmount?.toString()} SNX
             </Skeleton>
           </Heading>
           <Text opacity="0.6" fontSize="sm">
-            ${collateralValue.toFixed(2)}
+            ${currency(collateralValue)}
           </Text>
         </GridItem>
         <GridItem mb="3">
           <Text fontSize="sm" fontWeight="semibold">
             Debt
           </Text>
-          <Skeleton isLoaded={debt !== undefined}>
-            <PositionDebt debt={debt?.toString() || 0} />
-          </Skeleton>
+          <Skeleton isLoaded={debt !== undefined}>{debt?.toString() || 0}</Skeleton>
           <Text opacity="0.6" fontSize="sm">
             snxUSD minted {/* or burned */}
           </Text>
@@ -56,11 +55,11 @@ export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
           <Text fontSize="sm" fontWeight="semibold">
             C-Ratio
           </Text>
-          <Heading size="md">
-            <Skeleton isLoaded={cRatio !== undefined}>{cRatio?.toString()}%</Skeleton>
-          </Heading>
+          <Skeleton isLoaded={true}>
+            <CRatio cRatio={cRatio?.toString()} />
+          </Skeleton>
           <Text opacity="0.6" fontSize="sm">
-            Minimum
+            Minimum{' '}
             {formatValue(
               collateralType!.minimumCRatio!.mul(BigNumber.from(100)),
               collateralType.decimals
@@ -72,9 +71,10 @@ export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
           <Text fontSize="sm" fontWeight="semibold">
             Projected Fees
           </Text>
+          {/* TODO: when subgraph is ready */}
           <Heading size="md">25% APY</Heading>
           <Text opacity="0.6" fontSize="sm">
-            $1,000 earned
+            ${currency(1000)} earned
             <Tooltip label="Your fees, earned when the synths in your staking position are exchanged, are automatically deducted from your debt. You can retrieve the earned fees by minting sUSD.">
               <InfoOutlineIcon ml="1" transform="translateY(-1.5px)" />
             </Tooltip>
