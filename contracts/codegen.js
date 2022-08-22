@@ -15,7 +15,7 @@ const networks = fs
 
 function generateTargets(network) {
   const deployment = require(`synthetix/publish/deployed/${network}/deployment.json`);
-  fs.mkdirSync(`generated/${network}/deployment/targets`, { recursive: true });
+  fs.mkdirSync(`src/${network}/deployment/targets`, { recursive: true });
   const { targets, sources } = deployment;
 
   if (!targets || !sources) {
@@ -35,7 +35,7 @@ function generateTargets(network) {
     target.abi = iface.format(ethers.utils.FormatTypes.full);
 
     fs.writeFileSync(
-      `generated/${network}/deployment/${target.name}.ts`,
+      `src/${network}/deployment/${target.name}.ts`,
       prettier.format(
         Object.entries(target)
           .filter(([name]) => ['name', 'source', 'address', 'abi'].includes(name))
@@ -73,9 +73,9 @@ function generateSynths(network) {
     }
   >
 >`;
-  fs.mkdirSync(`generated/${network}`, { recursive: true });
+  fs.mkdirSync(`src/${network}`, { recursive: true });
   fs.writeFileSync(
-    `generated/${network}/synths.ts`,
+    `src/${network}/synths.ts`,
     prettier.format(
       `export const SynthsByName : ${synthByNameType} = ${JSON.stringify(synthsByName, null, 2)}`,
       {

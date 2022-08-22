@@ -5,11 +5,12 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "node codegen.js && tsc"
+    "build": "yarn codegen && rm -rf build && tsc --build --force",
+    "codegen": "rm -rf src && node codegen.js"
   },
   "files": [
     "build",
-    "generated",
+    "src",
     "index.js"
   ],
   "version": "1.1.3",
