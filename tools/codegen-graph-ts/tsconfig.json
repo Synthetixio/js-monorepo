@@ -3,9 +3,11 @@
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "module": "commonjs",
-    "declarationDir": "./build/src",
-    "outDir": "./build/src"
+    "outDir": "./build",
+    "rootDir": "./src"
   },
   "include": ["src"]
 }
