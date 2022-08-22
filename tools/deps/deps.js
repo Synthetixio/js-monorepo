@@ -18,7 +18,6 @@ const options = {
   ignorePatterns: [
     // files matching these patterns will be ignored
     'build',
-    'generated',
     'coverage',
   ],
   ignoreMatches: [
