@@ -19,7 +19,7 @@
   "devDependencies": {
     "ethers": "^5.5.3",
     "prettier": "^2.3.0",
-    "synthetix": "2.75.2",
+    "synthetix": "2.76.1",
     "typescript": "^4.4.2"
   }
 }
