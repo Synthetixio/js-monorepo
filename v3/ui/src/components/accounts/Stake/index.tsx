@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { accountsState, chainIdState, collateralTypesState } from '../../../utils/state';
 import { contracts, fundsData, getChainById } from '../../../utils/constants';
 import { useContract, useSynthetixRead, MulticallCall, useMulticall } from '../../../hooks';
@@ -129,6 +130,7 @@ export default function Stake({
       : amountBN;
 
     if (!snxProxy) return [];
+
     const createAccountCall: MulticallCall = [snxProxy.contract, 'createAccount', [newAccountId]];
     const stakingCalls: MulticallCall[] = [
       [snxProxy.contract, 'stake', [id, selectedCollateralType.address, amountBN]],
@@ -145,16 +147,25 @@ export default function Stake({
       ],
     ];
 
-    return [Boolean(accountId) ? stakingCalls : [createAccountCall, ...stakingCalls]];
+    const result = [Boolean(accountId) ? stakingCalls : [createAccountCall, ...stakingCalls]];
+
+    if (!sufficientAllowance) {
+      // TODO: could use permit here as well, in which case its an unshift
+      result.unshift([[collateralContract!.contract, 'approve', [snxProxy?.address, amountBN]]]);
+    }
+
+    return result;
   }, [
     accountId,
     amountBN,
+    collateralContract,
     fundId,
     newAccountId,
     selectedCollateralType.address,
     selectedFundId,
     snxProxy,
     stakingPositions,
+    sufficientAllowance,
   ]);
 
   const overrides: CallOverrides = {};
@@ -170,10 +181,6 @@ export default function Stake({
   //   overrides.value = amount!;
   // }
   // add extra step to 'approve' the token if needed before running the multicall
-  if (!sufficientAllowance) {
-    // TODO: could use permit here as well, in which case its an unshift
-    calls.unshift([[collateralContract!.contract, 'approve', [snxProxy?.address, amountBN]]]);
-  }
 
   const multiTxn = useMulticall(calls, overrides, {
     onSuccess: async () => {
