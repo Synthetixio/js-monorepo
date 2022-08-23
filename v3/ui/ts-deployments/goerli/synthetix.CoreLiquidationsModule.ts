@@ -1,4 +1,4 @@
-export const address = '0x6A2aeBdD74C86F96b9f39CCAb25aD0f3c87b0F09';
+export const address = '0x311b5E39022131EF5F7a9e9ef8D4De1Cd21F6E06';
 export const abi = [
   'error EmptyVault(uint256 fundId, address collateralType)',
   'error FailedTransfer(address from, address to, uint256 value)',

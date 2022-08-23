@@ -690,7 +690,7 @@
       "outputs": []
     }
   ],
-  "deployTxnHash": "0x58e1db24a6d12812c0ebaf3c793cd557181e547e9e517eb5feeaee143d9f4723",
+  "deployTxnHash": "0x20ae7e39b36d2880d4d912890c2ac582d1362cb0794a1b0cfc10c1d0edcf0b1f",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_account"

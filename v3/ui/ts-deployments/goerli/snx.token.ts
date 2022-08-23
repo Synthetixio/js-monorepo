@@ -1,4 +1,4 @@
-export const address = '0x23DB2BEd0e37d322CC760C27C4132452545c0aE2';
+export const address = '0xe6A5cB2EAcf43B87bEdD5279e11CF1E8EC24A6d2';
 export const abi = [
   'constructor(string name, string symbol)',
   'event Approval(address indexed owner, address indexed spender, uint256 value)',

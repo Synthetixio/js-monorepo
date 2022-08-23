@@ -1,4 +1,4 @@
-export const address = '0xd6C5912F6C8B11e203b5e266781c4ff5421E5ADE';
+export const address = '0xD20a197537c02bC3069a97A5833679B7E05EC637';
 export const abi = [
   'constructor()',
   'function allRoundDataShouldRevert() view returns (bool)',

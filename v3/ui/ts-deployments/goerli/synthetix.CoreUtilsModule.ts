@@ -1,4 +1,4 @@
-export const address = '0xF473aaF2545db1491153a8f67733555cF5858788';
+export const address = '0x01288eb25e2D38A2C9f220c2b8FEbc2A320A0023';
 export const abi = [
   'error AlreadyInitialized()',
   'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',

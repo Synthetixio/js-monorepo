@@ -1,4 +1,4 @@
-export const address = '0x34e7Cd9c23E180bf151C2eCBe8c4AFC48EAA203c';
+export const address = '0x3958eeB41112bf02B49021B78280b843faa3F6D3';
 export const abi = [
   'error AlreadyInitialized()',
   'error NoChange()',
