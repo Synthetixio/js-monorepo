@@ -1,5 +1,5 @@
 {
-  "address": "0x79D1dA8e2696f2bBc0C9151e6476dC90fb6b53f2",
+  "address": "0xADCF09404b8060B145476EBD458cc30444ee3747",
   "abi": [
     {
       "type": "error",
@@ -391,6 +391,7 @@
       "outputs": [
         {
           "type": "tuple[]",
+          "name": "permissions",
           "components": [
             {
               "type": "address",
@@ -637,7 +638,25 @@
     },
     {
       "type": "error",
-      "name": "InsufficientAvailableCollateral",
+      "name": "FailedTransfer",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "from"
+        },
+        {
+          "type": "address",
+          "name": "to"
+        },
+        {
+          "type": "uint256",
+          "name": "value"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InsufficientAccountCollateral",
       "inputs": [
         {
           "type": "uint256",
@@ -945,6 +964,10 @@
               "name": "minimumCRatio"
             },
             {
+              "type": "uint256",
+              "name": "liquidationReward"
+            },
+            {
               "type": "address",
               "name": "priceFeed"
             },
@@ -983,6 +1006,10 @@
             {
               "type": "uint256",
               "name": "minimumCRatio"
+            },
+            {
+              "type": "uint256",
+              "name": "liquidationReward"
             },
             {
               "type": "address",
@@ -1061,6 +1088,20 @@
     },
     {
       "type": "error",
+      "name": "EmptyVault",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "fundId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ]
+    },
+    {
+      "type": "error",
       "name": "FundAlreadyApproved",
       "inputs": [
         {
@@ -1092,7 +1133,16 @@
     {
       "type": "error",
       "name": "InvalidParameters",
-      "inputs": []
+      "inputs": [
+        {
+          "type": "string",
+          "name": "incorrectParameter"
+        },
+        {
+          "type": "string",
+          "name": "help"
+        }
+      ]
     },
     {
       "type": "event",
@@ -1253,164 +1303,6 @@
     {
       "type": "event",
       "anonymous": false,
-      "name": "PositionAdded",
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "liquidityItemId",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "accountId",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "fundId",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amount",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "leverage",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "shares",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "initialDebt",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "PositionDecreased",
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "liquidityItemId",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "fundId",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amount",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "leverage",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "shares",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "initialDebt",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "PositionIncreased",
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "liquidityItemId",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "fundId",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amount",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "leverage",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "shares",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "initialDebt",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "PositionRemoved",
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "liquidityItemId",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "accountId",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "fundId",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
       "name": "PreferredFundSet",
       "inputs": [
         {
@@ -1423,39 +1315,7 @@
     {
       "type": "event",
       "anonymous": false,
-      "name": "RewardsClaimed",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "fundId",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "token",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "accountId",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "index",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amountClaimed",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "RewardsDistributionSet",
+      "name": "RewardDistributionSet",
       "inputs": [
         {
           "type": "uint256",
@@ -1490,6 +1350,38 @@
         {
           "type": "uint256",
           "name": "duration",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "RewardsClaimed",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "fundId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "index",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amountClaimed",
           "indexed": false
         }
       ]
@@ -1628,7 +1520,7 @@
           "type": "uint256[]"
         },
         {
-          "type": "uint256[]"
+          "type": "int256[]"
         }
       ]
     },
@@ -1734,11 +1626,70 @@
           "name": "weights"
         },
         {
-          "type": "uint256[]",
+          "type": "int256[]",
           "name": "maxDebtShareValues"
         }
       ],
       "outputs": []
+    },
+    {
+      "type": "error",
+      "name": "IneligibleForLiquidation",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "collateralValue"
+        },
+        {
+          "type": "uint256",
+          "name": "debt"
+        },
+        {
+          "type": "uint256",
+          "name": "currentCRatio"
+        },
+        {
+          "type": "uint256",
+          "name": "cratio"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "Liquidation",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "fundId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "debtLiquidated",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "collateralLiquidated",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amountRewarded",
+          "indexed": false
+        }
+      ]
     },
     {
       "type": "function",
@@ -1784,7 +1735,46 @@
           "name": "collateralType"
         }
       ],
-      "outputs": []
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "amountRewarded"
+        },
+        {
+          "type": "uint256",
+          "name": "debtLiquidated"
+        },
+        {
+          "type": "uint256",
+          "name": "collateralLiquidated"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "liquidateVault",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "fundId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "amountRewarded"
+        },
+        {
+          "type": "uint256",
+          "name": "collateralLiquidated"
+        }
+      ]
     },
     {
       "type": "error",
@@ -1850,29 +1840,7 @@
     },
     {
       "type": "function",
-      "name": "fundBalance",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "marketId"
-        },
-        {
-          "type": "uint256",
-          "name": "fundId"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "int256"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "liquidity",
+      "name": "marketLiquidity",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -1885,6 +1853,24 @@
       "outputs": [
         {
           "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "marketTotalBalance",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "int256"
         }
       ]
     },
@@ -1903,24 +1889,6 @@
         {
           "type": "uint256",
           "name": "marketId"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "totalBalance",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "marketId"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "int256"
         }
       ]
     },
@@ -1965,6 +1933,83 @@
       ]
     },
     {
+      "type": "error",
+      "name": "InsufficientRewardAllocation",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "requestedAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "remainingAllocation"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getRewardAllocation",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "fundId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "payout",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "fundId"
+        },
+        {
+          "type": "address"
+        },
+        {
+          "type": "address",
+          "name": "to"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "setRewardAllocation",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "fundId"
+        },
+        {
+          "type": "uint256",
+          "name": "allocation"
+        }
+      ],
+      "outputs": []
+    },
+    {
       "type": "function",
       "name": "mintInitialSystemToken",
       "constant": false,
@@ -1983,6 +2028,38 @@
     },
     {
       "type": "error",
+      "name": "InsufficientCollateralRatio",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "collateralValue"
+        },
+        {
+          "type": "uint256",
+          "name": "debt"
+        },
+        {
+          "type": "uint256",
+          "name": "ratio"
+        },
+        {
+          "type": "uint256",
+          "name": "minRatio"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InsufficientDebt",
+      "inputs": [
+        {
+          "type": "int256",
+          "name": "currentDebt"
+        }
+      ]
+    },
+    {
+      "type": "error",
       "name": "InvalidLeverage",
       "inputs": [
         {
@@ -1993,9 +2070,8 @@
     },
     {
       "type": "function",
-      "name": "accountFundCollateralValue",
-      "constant": true,
-      "stateMutability": "view",
+      "name": "accountCollateralRatio",
+      "constant": false,
       "payable": false,
       "inputs": [
         {
@@ -2019,7 +2095,7 @@
     },
     {
       "type": "function",
-      "name": "accountFundDebt",
+      "name": "accountVaultCollateral",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -2039,7 +2115,41 @@
       ],
       "outputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
+        },
+        {
+          "type": "uint256",
+          "name": "value"
+        },
+        {
+          "type": "uint256",
+          "name": "shares"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "accountVaultDebt",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "accountId"
+        },
+        {
+          "type": "uint256",
+          "name": "fundId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "int256"
         }
       ]
     },
@@ -2070,7 +2180,7 @@
     },
     {
       "type": "function",
-      "name": "claimRewards",
+      "name": "debtPerShare",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -2081,59 +2191,11 @@
         {
           "type": "address",
           "name": "collateralType"
-        },
-        {
-          "type": "uint256",
-          "name": "accountId"
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "type": "function",
-      "name": "collateralizationRatio",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "accountId"
-        },
-        {
-          "type": "uint256",
-          "name": "fundId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
         }
       ],
       "outputs": [
         {
-          "type": "uint256"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "debtPerShare",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "fundId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256"
+          "type": "int256"
         }
       ]
     },
@@ -2157,7 +2219,7 @@
         },
         {
           "type": "uint256",
-          "name": "amount"
+          "name": "collateralAmount"
         },
         {
           "type": "uint256",
@@ -2165,6 +2227,158 @@
         }
       ],
       "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getLiquidityItem",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "liquidityItemId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "tuple",
+          "name": "liquidityItem",
+          "components": [
+            {
+              "type": "uint128",
+              "name": "usdMinted"
+            },
+            {
+              "type": "int128",
+              "name": "cumulativeDebt"
+            },
+            {
+              "type": "uint128",
+              "name": "leverage"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "mintUSD",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "accountId"
+        },
+        {
+          "type": "uint256",
+          "name": "fundId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "totalVaultShares",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "fundId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "vaultCollateral",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "fundId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "amount"
+        },
+        {
+          "type": "uint256",
+          "name": "value"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "vaultDebt",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "fundId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "int256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "claimRewards",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "fundId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "accountId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256[]"
+        }
+      ]
     },
     {
       "type": "function",
@@ -2205,96 +2419,6 @@
     },
     {
       "type": "function",
-      "name": "fundDebt",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "fundId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "getAccountLiquidityItemIds",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "accountId"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bytes32[]",
-          "name": "liquidityItemIds"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "getAccountLiquidityItems",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "accountId"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "tuple[]",
-          "name": "liquidityItems",
-          "components": [
-            {
-              "type": "uint256",
-              "name": "accountId"
-            },
-            {
-              "type": "address",
-              "name": "collateralType"
-            },
-            {
-              "type": "uint256",
-              "name": "fundId"
-            },
-            {
-              "type": "uint256",
-              "name": "collateralAmount"
-            },
-            {
-              "type": "uint256",
-              "name": "shares"
-            },
-            {
-              "type": "uint256",
-              "name": "initialDebt"
-            },
-            {
-              "type": "uint256",
-              "name": "leverage"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "function",
       "name": "getAvailableRewards",
       "constant": false,
       "payable": false,
@@ -2305,7 +2429,7 @@
         },
         {
           "type": "address",
-          "name": "token"
+          "name": "collateralType"
         },
         {
           "type": "uint256",
@@ -2320,81 +2444,7 @@
     },
     {
       "type": "function",
-      "name": "getLiquidityItem",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "liquidityItemId"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "tuple",
-          "name": "liquidityItem",
-          "components": [
-            {
-              "type": "uint256",
-              "name": "accountId"
-            },
-            {
-              "type": "address",
-              "name": "collateralType"
-            },
-            {
-              "type": "uint256",
-              "name": "fundId"
-            },
-            {
-              "type": "uint256",
-              "name": "collateralAmount"
-            },
-            {
-              "type": "uint256",
-              "name": "shares"
-            },
-            {
-              "type": "uint256",
-              "name": "initialDebt"
-            },
-            {
-              "type": "uint256",
-              "name": "leverage"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "mintUSD",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "accountId"
-        },
-        {
-          "type": "uint256",
-          "name": "fundId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "uint256",
-          "name": "amount"
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "type": "function",
-      "name": "totalDebtShares",
+      "name": "getCurrentRewardAccumulation",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -2410,13 +2460,15 @@
       ],
       "outputs": [
         {
-          "type": "uint256"
+          "type": "uint256[]"
         }
       ]
     }
   ],
-  "constructorArgs": ["0xbcAe82DABb21E6211d952aFcc2742fd7F4737f88"],
-  "deployTxnHash": "0x78a6a7f930ed42c7a44e3b609e8492b5f97e97c3ea0d579054be9a601b54a396",
+  "constructorArgs": [
+    "0xB91ac80B781a7a0592f76D503b72240e41685c24"
+  ],
+  "deployTxnHash": "0x27005efcfa456c59d81b9f541873292eb783385267e6ba95024a58e46d0de12b",
   "sourceName": "contracts/Proxy.sol",
   "contractName": "Proxy",
   "deployedOn": "contract.CoreProxy"

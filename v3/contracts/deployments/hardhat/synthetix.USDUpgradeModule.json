@@ -102,6 +102,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x1a686e2f95d0831e7566ada69a8d656c2bda716e210b5af6e6637e7e79a890e5",
+  "deployTxnHash": "0x8a1da8d6217cde329fc5bd67c5624c93693bba1568ecd749ee7f21a12255f22a",
   "deployedOn": "run.deploy_usd"
 }

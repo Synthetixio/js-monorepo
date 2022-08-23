@@ -282,7 +282,10 @@
       ]
     }
   ],
-  "constructorArgs": ["Synthetix Token", "SNX"],
+  "constructorArgs": [
+    "Synthetix Token",
+    "SNX"
+  ],
   "deployTxnHash": "0x7fbf344c941251e07a9fc7c6689989b42fbc5799e1e3625e6c2cd2c0b30b7a06",
   "sourceName": "contracts/MintableERC20.sol",
   "contractName": "MintableERC20",

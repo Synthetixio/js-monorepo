@@ -1,5 +1,5 @@
 {
-  "address": "0x6b109Abb7e10Ee5240ccA7c6e7eF82aBa9c5DEde",
+  "address": "0x973Eb29052E6bD4cE1dD9c8a4DB3396aD3ff16ef",
   "abi": [
     {
       "inputs": [
@@ -10,6 +10,22 @@
         }
       ],
       "name": "MarketAlreadyRegistered",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "expected",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "actual",
+          "type": "bytes32"
+        }
+      ],
+      "name": "MismatchAssociatedSystemKind",
       "type": "error"
     },
     {
@@ -87,19 +103,14 @@
           "internalType": "uint256",
           "name": "marketId",
           "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
         }
       ],
-      "name": "fundBalance",
+      "name": "marketLiquidity",
       "outputs": [
         {
-          "internalType": "int256",
+          "internalType": "uint256",
           "name": "",
-          "type": "int256"
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -113,12 +124,12 @@
           "type": "uint256"
         }
       ],
-      "name": "liquidity",
+      "name": "marketTotalBalance",
       "outputs": [
         {
-          "internalType": "uint256",
+          "internalType": "int256",
           "name": "",
-          "type": "uint256"
+          "type": "int256"
         }
       ],
       "stateMutability": "view",
@@ -149,25 +160,6 @@
           "internalType": "uint256",
           "name": "marketId",
           "type": "uint256"
-        }
-      ],
-      "name": "totalBalance",
-      "outputs": [
-        {
-          "internalType": "int256",
-          "name": "",
-          "type": "int256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "marketId",
-          "type": "uint256"
         },
         {
           "internalType": "address",
@@ -186,6 +178,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x1f843d1f0f6993a857726aa1f56ff9f443960c03138995a4923b0f846625f28a",
-  "deployedOn": "run.deploy"
+  "deployTxnHash": "0x9d9ef994458346ff5780dff3a9a53e91784d5f03e00ae3b5715f038e532ae88d",
+  "deployedOn": "run.deploy_core"
 }

@@ -23,12 +23,12 @@ export const TransferOwnership = () => {
   const { id: accountId } = useParams();
   const [address, setAddress] = useState<string>('');
 
-  const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
+  const accountProxy = useContract(contracts.ACCOUNT_PROXY);
   const { write, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: snxProxy!.address,
-    contractInterface: snxProxy!.abi,
-    functionName: 'transferAccount',
+    addressOrName: accountProxy!.address,
+    contractInterface: accountProxy!.abi,
+    functionName: 'approve',
     args: [address, accountId],
   });
 

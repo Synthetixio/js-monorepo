@@ -97,8 +97,6 @@ export default function Permissions() {
     enabled: Boolean(accountId),
   });
 
-  console.log(accountOwner);
-
   // Need to listen for events to rerender this when changes are made?
 
   return (

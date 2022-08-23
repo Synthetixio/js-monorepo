@@ -1,26 +1,31 @@
 import { Box, Button } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { useAccount, useContractWrite } from 'wagmi';
-import { useContract, useSynthetixRead } from '../../hooks';
+import { useAccountRead, useContract } from '../../hooks';
 import { contracts } from '../../utils/constants';
 
 export const AcceptNomination = () => {
   const { id: accountId } = useParams();
   const { address } = useAccount();
 
-  const { data: nominatedOwner } = useSynthetixRead({
-    functionName: 'nominatedAccountOwnerOf',
+  const { data: nominatedOwner } = useAccountRead({
+    functionName: 'getApproved',
     args: [accountId],
   });
 
-  const snxContract = useContract(contracts.SYNTHETIX_PROXY);
+  const { data: accountOwner } = useAccountRead({
+    functionName: 'ownerOf',
+    args: [accountId],
+    enabled: Boolean(accountId),
+  });
+
+  const accountProxy = useContract(contracts.ACCOUNT_PROXY);
   const { isLoading, write } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: snxContract?.address,
-    contractInterface: snxContract?.abi,
-    functionName: 'acceptAccountOwnership',
-    args: [accountId],
-    onError: (e) => console.log(e),
+    addressOrName: accountProxy?.address,
+    contractInterface: accountProxy?.abi,
+    functionName: 'transferFrom',
+    args: [accountOwner, address, accountId],
   });
 
   return (

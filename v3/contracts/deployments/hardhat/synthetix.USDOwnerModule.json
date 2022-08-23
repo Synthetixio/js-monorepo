@@ -150,6 +150,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x720b489e87a450e45026fd299c0c932c5999908d2cd790b84da54aeeb8bacade",
+  "deployTxnHash": "0x641c12e4961df5da72a35876f07cc756f6a17b42b94ca1c5b80a8d9f7e74fbd9",
   "deployedOn": "run.deploy_usd"
 }

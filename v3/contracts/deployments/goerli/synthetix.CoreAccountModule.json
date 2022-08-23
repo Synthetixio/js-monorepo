@@ -1,19 +1,25 @@
 {
-  "address": "0x51222Fc4c81Edf897eAB7A5caCB7EcAC72eB8Fa4",
+  "address": "0xEB2d00609E384f169D293A5AE739DEcA197EdFFd",
   "abi": [
-    {
-      "inputs": [],
-      "name": "AlreadyInitialized",
-      "type": "error"
-    },
     {
       "inputs": [],
       "name": "InvalidRole",
       "type": "error"
     },
     {
-      "inputs": [],
-      "name": "NotInitialized",
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "expected",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "actual",
+          "type": "bytes32"
+        }
+      ],
+      "name": "MismatchAssociatedSystemKind",
       "type": "error"
     },
     {
@@ -25,6 +31,11 @@
         }
       ],
       "name": "OnlyTokenProxyAllowed",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "PositionOutOfBounds",
       "type": "error"
     },
     {
@@ -46,17 +57,6 @@
         }
       ],
       "name": "RoleNotAuthorized",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "addr",
-          "type": "address"
-        }
-      ],
-      "name": "Unauthorized",
       "type": "error"
     },
     {
@@ -167,7 +167,7 @@
       "name": "getAccountAddress",
       "outputs": [
         {
-          "internalType": "address",
+          "internalType": "contract INftModule",
           "name": "",
           "type": "address"
         }
@@ -176,29 +176,30 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "getAccountModuleSatellites",
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "accountId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getAccountPermissions",
       "outputs": [
         {
           "components": [
             {
-              "internalType": "bytes32",
-              "name": "name",
-              "type": "bytes32"
-            },
-            {
-              "internalType": "bytes32",
-              "name": "contractName",
-              "type": "bytes32"
-            },
-            {
               "internalType": "address",
-              "name": "deployedAddress",
+              "name": "target",
               "type": "address"
+            },
+            {
+              "internalType": "bytes32[]",
+              "name": "roles",
+              "type": "bytes32[]"
             }
           ],
-          "internalType": "struct ISatelliteFactory.Satellite[]",
-          "name": "",
+          "internalType": "struct IAccountModule.AccountPermission[]",
+          "name": "permissions",
           "type": "tuple[]"
         }
       ],
@@ -247,26 +248,6 @@
         }
       ],
       "name": "hasRole",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "initializeAccountModule",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isAccountModuleInitialized",
       "outputs": [
         {
           "internalType": "bool",
@@ -340,21 +321,8 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "newAccountTokenImplementation",
-          "type": "address"
-        }
-      ],
-      "name": "upgradeAccountImplementation",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
     }
   ],
-  "deployTxnHash": "0x6c4f53e8d0dc0a3985c74606b7ed3a70fb04ccd244181cc6d7a625a9ebcea122",
-  "deployedOn": "run.deploy"
+  "deployTxnHash": "0xc250dedfaa42ee0588cdeace4e8094b6023bd0879471bec4e4cb16bfef3d990a",
+  "deployedOn": "run.deploy_core"
 }

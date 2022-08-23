@@ -1,6 +1,27 @@
 {
-  "address": "0xD346F959c5eF2ab397cda2ddcd759d11E225C74E",
+  "address": "0x4eFcA5171B76059F3545F7d346ba50321b8e5cB4",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "FailedTransfer",
+      "type": "error"
+    },
     {
       "inputs": [
         {
@@ -19,7 +40,7 @@
           "type": "uint256"
         }
       ],
-      "name": "InsufficientAvailableCollateral",
+      "name": "InsufficientAccountCollateral",
       "type": "error"
     },
     {
@@ -31,6 +52,27 @@
         }
       ],
       "name": "InvalidCollateralType",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidPointsOrder",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "expected",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "actual",
+          "type": "bytes32"
+        }
+      ],
+      "name": "MismatchAssociatedSystemKind",
       "type": "error"
     },
     {
@@ -78,6 +120,11 @@
     {
       "inputs": [],
       "name": "ValueAlreadyInSet",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ValueOutOfRange",
       "type": "error"
     },
     {
@@ -269,6 +316,11 @@
           "internalType": "uint256",
           "name": "totalLocked",
           "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalEscrowed",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -369,6 +421,11 @@
               "type": "uint256"
             },
             {
+              "internalType": "uint256",
+              "name": "liquidationReward",
+              "type": "uint256"
+            },
+            {
               "internalType": "address",
               "name": "priceFeed",
               "type": "address"
@@ -415,6 +472,11 @@
               "type": "uint256"
             },
             {
+              "internalType": "uint256",
+              "name": "liquidationReward",
+              "type": "uint256"
+            },
+            {
               "internalType": "address",
               "name": "priceFeed",
               "type": "address"
@@ -431,6 +493,29 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "accountId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "duration",
+          "type": "uint256"
+        }
+      ],
+      "name": "redeemReward",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -480,6 +565,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xd7d453619f6e0881a4729a13bdf2262710f8eadeef8f36db5cd2940f95ad2e5f",
-  "deployedOn": "run.deploy"
+  "deployTxnHash": "0xbb987e1d09e72f580dde034209752dce0e1409e517ccdfea576ef04e87c6fb21",
+  "deployedOn": "run.deploy_core"
 }

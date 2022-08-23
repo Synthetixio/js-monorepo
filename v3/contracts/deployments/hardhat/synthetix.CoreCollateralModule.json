@@ -4,6 +4,27 @@
     {
       "inputs": [
         {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "FailedTransfer",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "uint256",
           "name": "accountId",
           "type": "uint256"
@@ -19,7 +40,7 @@
           "type": "uint256"
         }
       ],
-      "name": "InsufficientAvailableCollateral",
+      "name": "InsufficientAccountCollateral",
       "type": "error"
     },
     {
@@ -400,6 +421,11 @@
               "type": "uint256"
             },
             {
+              "internalType": "uint256",
+              "name": "liquidationReward",
+              "type": "uint256"
+            },
+            {
               "internalType": "address",
               "name": "priceFeed",
               "type": "address"
@@ -443,6 +469,11 @@
             {
               "internalType": "uint256",
               "name": "minimumCRatio",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "liquidationReward",
               "type": "uint256"
             },
             {
@@ -534,6 +565,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x6c4dcc71be615894449c030b3272b098cd8c1fae005f54414ac05ad04934e7a1",
+  "deployTxnHash": "0x549463219677bbb9c6b6f6fcda5be75e535e6f9b27598454337c9ceced91ffe5",
   "deployedOn": "run.deploy_core"
 }
