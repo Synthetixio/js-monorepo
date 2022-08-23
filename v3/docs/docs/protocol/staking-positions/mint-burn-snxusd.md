@@ -1,8 +1,8 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 ---
 
-# sUSD Loans
+# Mint and Burn snxUSD
 
 Stakers can mint and burn sUSD, a decentralized stablecoin backed by the collateral in the Synthetix system. This directly effects the debt responsibility of the account: each dollar of sUSD minted adds $1 of debt responsibility to the account and each dollar of sUSD burned reduces the debt responsbility by $1.
 

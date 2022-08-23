@@ -59,7 +59,7 @@ export default function Header() {
             _focus={{ boxShadow: 'none' }}
             mx="3"
             fontWeight="semibold"
-            href={'https://snx-v3-docs.netlify.app/'}
+            href={'https://snx-v3-docs.vercel.app/'}
             isExternal
           >
             Developers
