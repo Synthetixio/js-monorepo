@@ -1,5 +1,4 @@
 // !!! DO NOT EDIT !!! Automatically generated file
-
 import { useQuery, UseQueryOptions } from 'react-query';
 import Wei, { WeiSource, wei } from '@synthetixio/wei';
 import axios from 'axios';

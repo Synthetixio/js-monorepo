@@ -1,3 +1,4 @@
+// !!! DO NOT EDIT !!! Automatically generated file
 import Wei, { WeiSource, wei } from '@synthetixio/wei';
 import axios from 'axios';
 import { generateGql } from '@synthetixio/generate-subgraph-query';

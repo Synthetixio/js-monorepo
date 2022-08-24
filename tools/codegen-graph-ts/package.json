@@ -15,7 +15,7 @@
     "src"
   ],
   "scripts": {
-    "build": "yarn codegen && rm -rf build && tsc --build",
+    "build": "rm -rf build && tsc --build && yarn codegen",
     "codegen": "ts-node src/gen/index.ts gen -s tests/exchanges.json -o tests/exchanges.ts && prettier --write tests/exchanges.ts",
     "lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
     "lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",

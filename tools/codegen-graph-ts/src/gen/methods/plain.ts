@@ -7,6 +7,7 @@ import { Schema } from '../types';
 export default function plain(schema: Schema): string {
   const out: string[] = [];
 
+  out.push('// !!! DO NOT EDIT !!! Automatically generated file');
   out.push(heading());
 
   for (const entity of schema.types) {
