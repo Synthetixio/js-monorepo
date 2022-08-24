@@ -13,14 +13,6 @@ const Button: ComponentStyleConfig = {
         bgGradient: 'linear(to-r, green.700, cyan.800)',
       },
     },
-    outline: {},
-    ghost: {
-      color: 'cyan.500',
-    },
-    'ghost-border': {
-      border: '1px solid whiteAlpha.300',
-      color: 'cyan.500',
-    },
   },
 };
 

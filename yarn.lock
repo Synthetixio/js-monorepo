@@ -1846,6 +1846,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chakra-ui/anatomy@npm:2.0.5":
+  version: 2.0.5
+  resolution: "@chakra-ui/anatomy@npm:2.0.5"
+  checksum: b2cf60295e0ecafbaef22a9805ac5445d5253abb7e4b4566426cdc161a2042e9ee5a0b0295bd1239f0df04c2094e75298310e32abf770591dbdc532c3727a1cd
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/avatar@npm:2.0.7":
   version: 2.0.7
   resolution: "@chakra-ui/avatar@npm:2.0.7"
@@ -2584,6 +2591,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chakra-ui/theme-tools@npm:^2.0.10":
+  version: 2.0.10
+  resolution: "@chakra-ui/theme-tools@npm:2.0.10"
+  dependencies:
+    "@chakra-ui/anatomy": 2.0.5
+    "@chakra-ui/utils": 2.0.9
+    "@ctrl/tinycolor": ^3.4.0
+  peerDependencies:
+    "@chakra-ui/styled-system": ">=2.0.0"
+  checksum: 1aa204970063409e7ec0919e0e3dddfee956d9045bedcf3b97696552e81df260abfdfd952b37cc11e5a9bd8724d52ea7735319c7b5b2f0296beda9fb91ab0144
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/theme@npm:2.1.5":
   version: 2.1.5
   resolution: "@chakra-ui/theme@npm:2.1.5"
@@ -2658,6 +2678,18 @@ __metadata:
     framesync: 5.3.0
     lodash.mergewith: 4.6.2
   checksum: 4023c29dbf8303d83752c7be0a6bb2dcda39a922b10e5141ce4a37e1040a95eb1cd4c389cfe4f8e56a081226aa5057f8d9b3a90c4660266f0df03dfa8807b08d
+  languageName: node
+  linkType: hard
+
+"@chakra-ui/utils@npm:2.0.9":
+  version: 2.0.9
+  resolution: "@chakra-ui/utils@npm:2.0.9"
+  dependencies:
+    "@types/lodash.mergewith": 4.6.6
+    css-box-model: 1.2.1
+    framesync: 5.3.0
+    lodash.mergewith: 4.6.2
+  checksum: 9c744f3f6d307c4d864315988bca3cd6a675b049035b80196a04fb452dc212ba009e5fec3151b516cb78d5fbc4f0305ccafd7da605cc99424c6e075f7f5543af
   languageName: node
   linkType: hard
 
@@ -6908,6 +6940,7 @@ __metadata:
     "@babel/preset-typescript": ^7.13.0
     "@chakra-ui/react": ^2.2.6
     "@chakra-ui/storybook-addon": ^4.0.4
+    "@chakra-ui/theme-tools": ^2.0.10
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@storybook/addon-essentials": ^6.5.7
