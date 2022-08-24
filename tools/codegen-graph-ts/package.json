@@ -32,6 +32,8 @@
   },
   "homepage": "https://github.com/KillerByte/codegen-graph-ts#readme",
   "dependencies": {
+    "@synthetixio/generate-subgraph-query": "workspace:*",
+    "@synthetixio/wei": "workspace:*",
     "axios": "^0.21.4",
     "commander": "^8.1.0",
     "graphql": "^15.5.0",
