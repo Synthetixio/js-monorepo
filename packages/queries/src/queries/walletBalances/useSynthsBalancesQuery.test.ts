@@ -3,8 +3,8 @@ import { renderHook } from '@testing-library/react-hooks';
 import { formatBytes32String } from '@ethersproject/strings';
 import { AddressZero } from '@ethersproject/constants';
 import { set } from 'lodash';
-import useSynthsBalancesQuery from '../src/queries/walletBalances/useSynthsBalancesQuery';
-import { getFakeQueryContext, getWrapper } from '../testUtils';
+import useSynthsBalancesQuery from './useSynthsBalancesQuery';
+import { getFakeQueryContext, getWrapper } from '../../testUtils';
 
 describe('@synthetixio/queries walletBalances', () => {
   const ctx = getFakeQueryContext();

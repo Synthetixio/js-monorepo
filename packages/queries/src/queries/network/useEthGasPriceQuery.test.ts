@@ -2,8 +2,8 @@ import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 import { renderHook } from '@testing-library/react-hooks';
 import { BigNumber } from '@ethersproject/bignumber';
-import useEthGasPriceQuery, { computeGasFee } from '../src/queries/network/useEthGasPriceQuery';
-import { getFakeQueryContext, getWrapper } from '../testUtils';
+import useEthGasPriceQuery, { computeGasFee } from './useEthGasPriceQuery';
+import { getFakeQueryContext, getWrapper } from '../../testUtils';
 
 describe('@synthetixio/queries network useEthGasPriceQuery', () => {
   test('Should query getGasPrice from provider if network is Optimism', async () => {

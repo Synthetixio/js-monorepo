@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { QueryContext } from './src/context';
+import { QueryContext } from './context';
 
 import { NetworkIdByName, SynthetixJS, NetworkId } from '@synthetixio/contracts-interface';
 import { Provider } from '@ethersproject/providers';

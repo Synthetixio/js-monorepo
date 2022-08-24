@@ -4,7 +4,7 @@ import { QueryContext } from '../../context';
 import Wei, { wei } from '@synthetixio/wei';
 import { BaseProvider } from '@ethersproject/providers';
 import { formatBytes32String } from '@ethersproject/strings';
-import { useGetSNXHolders } from '../../../generated/mainSubgraphQueries';
+import { useGetSNXHolders } from '../../subgraph/mainSubgraphQueries';
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from '../../constants';
 import { address, abi } from '@synthetixio/contracts/build/mainnet/deployment/Synthetix';
 import { Contract } from '@ethersproject/contracts';

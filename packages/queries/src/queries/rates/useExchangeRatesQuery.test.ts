@@ -1,5 +1,5 @@
-import useExchangeRatesQuery from '../src/queries/rates/useExchangeRatesQuery';
-import { getFakeQueryContext, getWrapper } from '../testUtils';
+import useExchangeRatesQuery from './useExchangeRatesQuery';
+import { getFakeQueryContext, getWrapper } from '../../testUtils';
 
 import { renderHook } from '@testing-library/react-hooks';
 

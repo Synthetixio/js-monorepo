@@ -3,7 +3,7 @@ import Wei, { wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
 import { GlobalStakingInfo } from '../../types';
-import { useGetSNXHolders } from '../../../generated/mainSubgraphQueries';
+import { useGetSNXHolders } from '../../subgraph/mainSubgraphQueries';
 import { formatBytes32String } from '@ethersproject/strings';
 
 /**
