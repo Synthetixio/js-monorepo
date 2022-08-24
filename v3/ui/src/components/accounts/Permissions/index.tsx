@@ -1,35 +1,26 @@
+import {
+  Box,
+  Flex,
+  Heading,
+  Skeleton,
+  Stack,
+  Table,
+  Tag,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react';
+import { utils } from 'ethers';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAccount } from 'wagmi';
+import { useAccountRead, useSynthetixProxyEvent, useSynthetixRead } from '../../../hooks';
 import { Address } from '../../shared/Address';
 import { Item } from './Item';
 import { PermissionsEditor } from './PermissionsEditor';
-import { EditIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Heading,
-  Flex,
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  Tag,
-  Stack,
-  Skeleton,
-  Text,
-} from '@chakra-ui/react';
-import { useAccount } from 'wagmi';
-import { useParams } from 'react-router-dom';
-import { useAccountRead, useSynthetixProxyEvent, useSynthetixRead } from '../../../hooks';
-import { BigNumber, utils } from 'ethers';
-import { useEffect, useState } from 'react';
-import { AddressInput } from './AddressInput';
 import { TransferOwnership } from './TransferOwnership';
 
 export default function Permissions() {
@@ -60,44 +51,55 @@ export default function Permissions() {
     }
   }, [loadingAccountPermissions, permissionData]);
 
-  // useSynthetixProxyEvent({
-  //   eventName: 'RoleGranted',
-  //   listener: (event) => {
-  //     const [eventAccountId, role, target] = event;
-  //     if (accountId === eventAccountId.toString()) {
-  //       console.log('GRANT', event);
-  //       const parsedRole = utils.parseBytes32String(role);
-  //       if (!accountPermissions[target].includes(parsedRole)) {
-  //         setAccountPermissions({
-  //           ...accountPermissions,
-  //           [target]: [...accountPermissions[target], utils.parseBytes32String(role)],
-  //         });
-  //       }
-  //     }
-  //   },
-  // });
+  useSynthetixProxyEvent({
+    eventName: 'RoleGranted',
+    listener: (event) => {
+      const [eventAccountId, role, target] = event;
 
-  // useSynthetixProxyEvent({
-  //   eventName: 'RoleRevoked',
-  //   listener: (event) => {
-  //     const [eventAccountId, role, target] = event;
-  //     if (accountId === eventAccountId.toString()) {
-  //       console.log('REMOVE', event);
-  //       setAccountPermissions({
-  //         ...accountPermissions,
-  //         [target]: accountPermissions[target].filter((r) => r !== utils.parseBytes32String(role)),
-  //       });
-  //     }
-  //   },
-  // });
+      if (accountId === eventAccountId.toString()) {
+        setAccountPermissions((currentPermissions) => {
+          const parsedRole = utils.parseBytes32String(role);
+          const targetPermissions = currentPermissions[target];
+
+          if (!targetPermissions?.includes(parsedRole)) {
+            return {
+              ...currentPermissions,
+              [target]: targetPermissions
+                ? [...targetPermissions, utils.parseBytes32String(role)]
+                : [utils.parseBytes32String(role)],
+            };
+          } else {
+            return currentPermissions;
+          }
+        });
+      }
+    },
+  });
+
+  useSynthetixProxyEvent({
+    eventName: 'RoleRevoked',
+    listener: (event) => {
+      const [eventAccountId, role, target] = event;
+      if (accountId === eventAccountId.toString()) {
+        setAccountPermissions((currentPermissions) => {
+          const targetPermissions = currentPermissions[target];
+          return {
+            ...currentPermissions,
+            [target]: targetPermissions
+              ? targetPermissions.filter((r) => r !== utils.parseBytes32String(role))
+              : [],
+          };
+        });
+      }
+    },
+  });
 
   const { isLoading: loadingOwner, data: accountOwner } = useAccountRead({
     functionName: 'ownerOf',
     args: [accountId],
     enabled: Boolean(accountId),
+    cacheTime: 0,
   });
-
-  // Need to listen for events to rerender this when changes are made?
 
   return (
     <Box>
@@ -110,42 +112,47 @@ export default function Permissions() {
           <PermissionsEditor />
         </Box>
       </Flex>
-      <Stack>
-        <Table size="sm" variant="simple" mb="8">
-          <Thead>
-            <Tr>
-              <Th color="white" pb="2">
-                Address
-              </Th>
-              <Th color="white" pb="2">
-                Permissions
-              </Th>
-              <Th color="white" pb="2"></Th>
-            </Tr>
-          </Thead>
+      {Boolean(accountOwner) ? (
+        <Stack>
+          <Table size="sm" variant="simple" mb="8">
+            <Thead>
+              <Tr>
+                <Th color="white" pb="2">
+                  Address
+                </Th>
+                <Th color="white" pb="2">
+                  Permissions
+                </Th>
+                <Th color="white" pb="2"></Th>
+              </Tr>
+            </Thead>
 
-          <Tbody>
-            <Tr>
-              <Td py="4">
-                <Skeleton isLoaded={!loadingOwner}>
-                  {/* wagmi types return Result which needs to be generic but currently assumes is an object */}
-                  {/* @ts-ignore */}
-                  <Address address={accountOwner} />
-                </Skeleton>
-              </Td>
-              <Td>
-                <Tag colorScheme="purple" size="sm" mr="1">
-                  Owner
-                </Tag>
-              </Td>
-              <Td>{accountAddress == accountOwner && <TransferOwnership />}</Td>
-            </Tr>
-            {Object.keys(accountPermissions).map((target) => {
-              return <Item key={target} address={target} roles={accountPermissions[target]} />;
-            })}
-          </Tbody>
-        </Table>
-      </Stack>
+            <Tbody>
+              <Tr>
+                <Td py="4">
+                  <Skeleton isLoaded={!loadingOwner}>
+                    {/* wagmi types return Result which needs to be generic but currently assumes is an object */}
+                    {/* @ts-ignore */}
+                    <Address address={accountOwner} />
+                  </Skeleton>
+                </Td>
+                <Td>
+                  <Tag colorScheme="purple" size="sm" mr="1">
+                    Owner
+                  </Tag>
+                </Td>
+                <Td>{accountAddress == accountOwner && <TransferOwnership />}</Td>
+              </Tr>
+
+              {Object.keys(accountPermissions).map((target) => {
+                return <Item key={target} address={target} roles={accountPermissions[target]} />;
+              })}
+            </Tbody>
+          </Table>
+        </Stack>
+      ) : (
+        <Text>No permissions</Text>
+      )}
     </Box>
   );
 }

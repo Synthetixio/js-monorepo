@@ -1,5 +1,5 @@
 {
-  "address": "0x81B885216f84aC721F4cae006D124B13874d5cFb",
+  "address": "0xc3d9D25B077307271cdB66157a3e93b3272d71fE",
   "abi": [
     {
       "type": "error",
@@ -2466,9 +2466,9 @@
     }
   ],
   "constructorArgs": [
-    "0xd46cB8364A8516e4972bC4E37089683036163b1c"
+    "0xe5A0D0015F75997149fe4BA26a43192f0Cda8a2f"
   ],
-  "deployTxnHash": "0xe98b9b45d95bdc2e2b6d643858d5201fec8798d1a01e890be794d7c7ebbc6ca6",
+  "deployTxnHash": "0x3903684ada3020bd20351168a00b25109f389db85522e23e0d06618aaa5ba5b2",
   "sourceName": "contracts/Proxy.sol",
   "contractName": "Proxy",
   "deployedOn": "contract.CoreProxy"

@@ -52,7 +52,10 @@ export const TransferOwnership = () => {
               Enter the wallet address that you would like to transfer ownership too. This cannot be
               undone.
             </Text>
-            <AddressInput address={address} onChange={(address: string) => setAddress(address)} />
+            <AddressInput
+              address={address}
+              onChange={(addressVal: string) => setAddress(addressVal)}
+            />
           </ModalBody>
           <ModalFooter>
             <Button onClick={onOwnerClose} variant="link" padding="4">
@@ -62,7 +65,7 @@ export const TransferOwnership = () => {
               colorScheme="red"
               onClick={async () => {
                 await write();
-                // onOwnerClose();
+                onOwnerClose();
               }}
               isLoading={isLoading}
               ml={3}

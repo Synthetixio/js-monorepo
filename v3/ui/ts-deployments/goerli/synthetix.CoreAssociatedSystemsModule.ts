@@ -1,4 +1,4 @@
-export const address = '0x1f2B61185d1e577D7a8C313E324DfF373d6A0D45';
+export const address = '0x4C24e1527A5fc2a530A8e4116d6A8d4bf70e6c50';
 export const abi = [
   'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',
   'error Unauthorized(address addr)',

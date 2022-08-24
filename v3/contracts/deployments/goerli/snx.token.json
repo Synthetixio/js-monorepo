@@ -1,5 +1,5 @@
 {
-  "address": "0xe6A5cB2EAcf43B87bEdD5279e11CF1E8EC24A6d2",
+  "address": "0xC9292898dD521541f8b5Ef5Deda2A0a1391904E0",
   "abi": [
     {
       "type": "constructor",
@@ -286,7 +286,7 @@
     "Synthetix Token",
     "SNX"
   ],
-  "deployTxnHash": "0xaca8e3e556a3bc09b87d0bba0c56164812d0f7ffc01f8890f355a870d1f87311",
+  "deployTxnHash": "0xf12414a2d99f793c6941845324a2f846781a0490f90c33b18b30129a7cf62ca3",
   "sourceName": "contracts/MintableERC20.sol",
   "contractName": "MintableERC20",
   "deployedOn": "contract.token"

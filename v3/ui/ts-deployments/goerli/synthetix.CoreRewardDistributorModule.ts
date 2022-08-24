@@ -1,4 +1,4 @@
-export const address = '0x02064102a28Baa0a1fF16783f05701D407f5309f';
+export const address = '0x6cb309C4c03Bcc807D2C99178Da761fe756B68c8';
 export const abi = [
   'error InsufficientRewardAllocation(uint256 requestedAmount, uint256 remainingAllocation)',
   'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',

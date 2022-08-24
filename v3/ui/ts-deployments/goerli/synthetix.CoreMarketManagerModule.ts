@@ -1,4 +1,4 @@
-export const address = '0x973Eb29052E6bD4cE1dD9c8a4DB3396aD3ff16ef';
+export const address = '0x9b00Fa7d5bD48CEe9d50efC076a54A74792A99cE';
 export const abi = [
   'error MarketAlreadyRegistered(address market)',
   'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',

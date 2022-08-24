@@ -1,5 +1,5 @@
 {
-  "address": "0x542a380ce0D963C6FEe56f6AFA632BA50Ed5086a",
+  "address": "0x47A8cc97141A2Ae9f552640d9964Ae7428afDba7",
   "abi": [
     {
       "inputs": [
@@ -21,6 +21,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xca83fa1e124e8424ade0dd70203cff20b1bc6d88b16581b962ba9b1c50c124d5",
+  "deployTxnHash": "0x75e3797d835c47e9b32db2d88136dc47e67e0d4e792939ccebdf143a2b193b14",
   "deployedOn": "run.deploy_core"
 }

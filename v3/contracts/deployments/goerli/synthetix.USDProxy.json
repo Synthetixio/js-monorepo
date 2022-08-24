@@ -1,5 +1,5 @@
 {
-  "address": "0xD7b89AC7797a403383A80E63e0fD41d6eE02dAF4",
+  "address": "0x8FBc5Bc069D3bBA5Db642061A0e069B732de421A",
   "abi": [
     {
       "type": "error",
@@ -543,7 +543,7 @@
       ]
     }
   ],
-  "deployTxnHash": "0x3bf89fc2858161fd0c90a5412136fe01080ca2dc791684c401bb833a25bd0d32",
+  "deployTxnHash": "0x4e3d0021b483cacbcfa02d92a714945028f81db44c08aa6d37957b018ed5e936",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_usd"

@@ -1,5 +1,5 @@
 {
-  "address": "0xD20a197537c02bC3069a97A5833679B7E05EC637",
+  "address": "0x1E5f4b1045de066e1266cC20C63BBBFDB10fb4A8",
   "abi": [
     {
       "type": "constructor",
@@ -301,7 +301,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x454a1a9edc25c9391385497efb2ec0fc59b6a2efecb71a5d875ad4b2ab5e19e9",
+  "deployTxnHash": "0x943aa9d983fc0232573b16abb637aaca43e532e254088256db25c7f5b46d5e92",
   "sourceName": "contracts/ChainlinkMockAggregator.sol",
   "contractName": "MockAggregatorV2V3",
   "deployedOn": "contract.aggregator"

@@ -1,4 +1,4 @@
-export const address = '0xB078Bb045d5902c8705Cc8fAA89d79f17eFe0A56';
+export const address = '0x7ED4F7176fce33D83913f1255902205BEbFCA7db';
 export const abi = [
   'error AlreadyInitialized()',
   'error CannotSelfApprove(address)',

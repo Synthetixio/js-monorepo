@@ -1,4 +1,4 @@
-export const address = '0xEB2d00609E384f169D293A5AE739DEcA197EdFFd';
+export const address = '0x0F1Ca68A6c8D5a999383738D397e697A023b3bA2';
 export const abi = [
   'error InvalidRole()',
   'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',

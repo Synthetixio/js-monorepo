@@ -74,5 +74,9 @@
       "eslint"
     ]
   },
-  "packageManager": "yarn@3.2.1"
+  "packageManager": "yarn@3.2.1",
+  "dependencies": {
+    "ethers": "^5.7.0",
+    "wagmi": "^0.6.4"
+  }
 }

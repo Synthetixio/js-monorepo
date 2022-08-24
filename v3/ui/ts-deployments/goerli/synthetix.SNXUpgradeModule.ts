@@ -1,4 +1,4 @@
-export const address = '0x04e851fd228F0B21C95c49eC9758e25c46446949';
+export const address = '0xcA70d1b3542E0Ffd002a7EA9c275Ad114f71521F';
 export const abi = [
   'error ImplementationIsSterile(address implementation)',
   'error NoChange()',

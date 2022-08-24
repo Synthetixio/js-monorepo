@@ -86,12 +86,13 @@ export const PermissionsEditor: FC<Props> = ({
           borderWidth="2px"
           borderRadius="2"
         >
-          <ModalHeader>Modify Permissions</ModalHeader>
+          <ModalHeader>{`${existingAddress ? 'Modify' : 'Add'} Permissions`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <AddressInput
-              address={existingAddress}
-              onChange={(address: string) => setAddress(address)}
+              address={address}
+              onChange={(addressVal: string) => setAddress(addressVal)}
+              readOnly={Boolean(existingAddress)}
             />
 
             <Heading size="sm" mb="2">

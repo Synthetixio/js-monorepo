@@ -8359,6 +8359,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wagmi/core@npm:^0.5.4":
+  version: 0.5.4
+  resolution: "@wagmi/core@npm:0.5.4"
+  dependencies:
+    eventemitter3: ^4.0.7
+    zustand: ^4.0.0
+  peerDependencies:
+    "@coinbase/wallet-sdk": ">=3.3.0"
+    "@walletconnect/ethereum-provider": ">=1.7.5"
+    ethers: ">=5.5.1"
+  peerDependenciesMeta:
+    "@coinbase/wallet-sdk":
+      optional: true
+    "@walletconnect/ethereum-provider":
+      optional: true
+  checksum: 7041c4158f69178a31f88d41e4545e0d02195e80cbb8f790cf1d1a95c2683caf0f0d74fac8f65c44870ec2b01feb5d41ac884ab7e30e02058a5a334e9e23575a
+  languageName: node
+  linkType: hard
+
 "@walletconnect/browser-utils@npm:^1.8.0":
   version: 1.8.0
   resolution: "@walletconnect/browser-utils@npm:1.8.0"
@@ -26523,10 +26542,12 @@ __metadata:
     eslint-plugin-import: ^2.23.2
     eslint-plugin-react: ^7.30.1
     eslint-plugin-react-hooks: ^4.6.0
+    ethers: ^5.7.0
     husky: ^4.2.5
     lint-staged: ^10.2.11
     prettier: ^2.3.0
     typescript: ^4.4.2
+    wagmi: ^0.6.4
   languageName: unknown
   linkType: soft
 
@@ -30205,6 +30226,24 @@ __metadata:
     ethers: ">=5.5.1"
     react: ">=17.0.0"
   checksum: 70f568ba2b87104e8e508ab0b23e71cc45d375911ca24ef407b897700baff276815d2d2899e72b22e5bd67969c3c0062bc22507ec7037c6b9bf1e2f90529fed5
+  languageName: node
+  linkType: hard
+
+"wagmi@npm:^0.6.4":
+  version: 0.6.4
+  resolution: "wagmi@npm:0.6.4"
+  dependencies:
+    "@coinbase/wallet-sdk": ^3.3.0
+    "@tanstack/query-sync-storage-persister": ^4.0.10
+    "@tanstack/react-query": ^4.0.10
+    "@tanstack/react-query-persist-client": ^4.0.10
+    "@wagmi/core": ^0.5.4
+    "@walletconnect/ethereum-provider": ^1.7.8
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    ethers: ">=5.5.1"
+    react: ">=17.0.0"
+  checksum: 4afa6b894a11e558734f9bc10b03b277ec6ed79aa48e52c4664931dceca3361eafa79dd7d8b5da544fad9a567f776a4a7fcec1efff2b139274f32d767cb2f891
   languageName: node
   linkType: hard
 
