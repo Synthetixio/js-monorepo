@@ -2465,9 +2465,7 @@
       ]
     }
   ],
-  "constructorArgs": [
-    "0xB91ac80B781a7a0592f76D503b72240e41685c24"
-  ],
+  "constructorArgs": ["0xB91ac80B781a7a0592f76D503b72240e41685c24"],
   "deployTxnHash": "0x6d7937ebad9c5562c233fb71f739b044a16b23d023747ca93d58d06316c1e2a3",
   "sourceName": "contracts/Proxy.sol",
   "contractName": "Proxy",

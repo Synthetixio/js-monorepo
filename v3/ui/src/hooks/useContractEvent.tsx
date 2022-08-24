@@ -1,7 +1,6 @@
-import { useContract } from './useContract';
-import { useContractEvent as useWagmiContractEvent, useProvider } from 'wagmi';
+import { useContractEvent as useWagmiContractEvent } from 'wagmi';
 import { contracts } from '../utils/constants';
-import { useEffect } from 'react';
+import { useContract } from './useContract';
 
 type ContractReadParams = Parameters<typeof useWagmiContractEvent>[0];
 type ConfigType = Omit<ContractReadParams, 'addressOrName' | 'contractInterface'>;

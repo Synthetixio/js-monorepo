@@ -282,10 +282,7 @@
       ]
     }
   ],
-  "constructorArgs": [
-    "Liquity USD",
-    "LUSD"
-  ],
+  "constructorArgs": ["Liquity USD", "LUSD"],
   "deployTxnHash": "0xc59818f294567ad4583c319092fe7322493ead662638fe7821bf077debc7600b",
   "sourceName": "contracts/MintableERC20.sol",
   "contractName": "MintableERC20",

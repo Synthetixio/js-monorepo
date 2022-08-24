@@ -29,7 +29,11 @@ export const AddressInput = ({ address, onChange, readOnly = false }: Props) => 
           onChange={(e) => onChange(e.target.value)}
           readOnly={readOnly}
         />
-        {isValidAddress && <InputRightElement children={<CheckIcon color="green.500" />} />}
+        {isValidAddress && (
+          <InputRightElement>
+            <CheckIcon color="green.500" />
+          </InputRightElement>
+        )}
       </InputGroup>
       {!isValidAddress && address !== '' && <FormErrorMessage>Invalid address</FormErrorMessage>}
     </FormControl>

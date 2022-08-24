@@ -1,7 +1,7 @@
-import { Text, Link, Tooltip } from '@chakra-ui/react';
+import { Link, Text } from '@chakra-ui/react';
 import { FC } from 'react';
-import Tenderly from '../../assets/svgs/tenderly.svg';
 import Etherscan from '../../assets/svgs/etherscan.svg';
+import Tenderly from '../../assets/svgs/tenderly.svg';
 
 interface Props {
   address?: string;

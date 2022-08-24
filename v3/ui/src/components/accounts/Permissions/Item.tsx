@@ -1,8 +1,7 @@
+import { Tag, Td, Tr } from '@chakra-ui/react';
 import { FC } from 'react';
-import { Tr, Td, Tag } from '@chakra-ui/react';
-import { PermissionsEditor } from './PermissionsEditor';
 import { Address } from '../../shared/Address';
-import { utils } from 'ethers';
+import { PermissionsEditor } from './PermissionsEditor';
 interface Props {
   address: string;
   roles: Array<string>;

@@ -10,13 +10,9 @@ import {
   Checkbox,
   CheckboxGroup,
   Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
   Grid,
   GridItem,
   Heading,
-  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -28,7 +24,6 @@ import {
 import { FC, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useManageRoles } from '../../../hooks';
-import { utils } from 'ethers';
 import { formatShortAddress } from '../../shared/Address';
 import { AddressInput } from './AddressInput';
 

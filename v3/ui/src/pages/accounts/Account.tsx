@@ -1,20 +1,7 @@
-import { Box, Button, Container, Heading } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Box, Heading } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { useContractWrite } from 'wagmi';
 import Stake from '../../components/accounts/Stake';
 import { StakingNav } from '../../components/accounts/StakingNav';
-import StakingPositions from '../../components/accounts/StakingPositions';
-import {
-  StakingPositionOnChainType,
-  StakingPositionType,
-} from '../../components/accounts/StakingPositions/types';
-import { useContract, useSynthetixProxyEvent, useSynthetixRead } from '../../hooks';
-import { contracts, fundsData } from '../../utils/constants';
-import { collateralTypesState } from '../../utils/state';
-import { CollateralType } from '../../utils/types';
-import { utils } from 'ethers';
 
 // const getCollateralType = (address: string, supportedCollateralTypes: CollateralType[]) =>
 //   supportedCollateralTypes.find((ct) => ct.address === address);
