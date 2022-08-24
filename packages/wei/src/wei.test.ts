@@ -1,4 +1,4 @@
-import Wei, { wei } from '../src/wei';
+import { Wei, wei } from './wei';
 import Big from 'big.js';
 import { BigNumber } from '@ethersproject/bignumber';
 

@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import Wei, { wei } from '@synthetixio/wei';
+import { Wei, wei } from '@synthetixio/wei';
 
 import { QueryContext } from '../../context';
 import { GlobalStakingInfo } from '../../types';

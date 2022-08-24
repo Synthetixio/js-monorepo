@@ -1,4 +1,4 @@
-import { getOptimismNetwork } from '../src';
+import { getOptimismNetwork } from '.';
 
 describe('@synthetixio/optimism-networks', () => {
   it('gets network information', () => {

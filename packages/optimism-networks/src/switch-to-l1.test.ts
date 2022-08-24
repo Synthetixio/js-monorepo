@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { switchToL1 } from '../src';
+import { switchToL1 } from '.';
 
 describe('switchToL1', () => {
   test('Switch to mainnet when optimism mainnet selected', async () => {

@@ -1,8 +1,8 @@
 import { ethers } from 'ethers';
 
-import synthetix, { SynthetixJS } from '../src';
-import { NetworkNameById, NetworkIdByName } from '../src/types';
-import { ERRORS } from '../src/constants';
+import synthetix, { SynthetixJS } from '.';
+import { NetworkNameById, NetworkIdByName } from './types';
+import { ERRORS } from './constants';
 
 describe('@synthetixio/js tests', () => {
   let snxjs: SynthetixJS;

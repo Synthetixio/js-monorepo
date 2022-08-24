@@ -1,4 +1,4 @@
-import { TRANSACTION_EVENTS } from '../src/constants';
+import { TRANSACTION_EVENTS } from './constants';
 
 describe('@synthetixio/transaction-notifier', () => {
   it('needs tests', () => {

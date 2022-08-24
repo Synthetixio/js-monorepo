@@ -21,7 +21,7 @@
     "build": "tsc",
     "start": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "lint": "eslint './src/**/*.{js,ts,tsx}' && tsc --noEmit",
+    "lint": "eslint './src/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'"
   },
   "dependencies": {

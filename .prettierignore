@@ -7,3 +7,4 @@ dist
 packages/queries/subgraphs
 cache
 artifacts
+.docusaurus
