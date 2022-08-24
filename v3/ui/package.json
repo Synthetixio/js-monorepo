@@ -17,7 +17,7 @@
     "@emotion/styled": "^11.10.0",
     "@faker-js/faker": "^7.4.0",
     "@rainbow-me/rainbowkit": "^0.4.5",
-    "@synthetixio/v3-theme": "workspace:^",
+    "@synthetixio/v3-theme": "1.0.1",
     "chart.js": "^3.9.1",
     "ethers": "^5.5.3",
     "framer-motion": "^7.0.0",
