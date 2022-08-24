@@ -199,7 +199,7 @@
             }
           ],
           "internalType": "struct IAccountModule.AccountPermission[]",
-          "name": "",
+          "name": "permissions",
           "type": "tuple[]"
         }
       ],
@@ -323,6 +323,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xfcb3d3706cbe4496bae4f8ebb6335c499a1e4cb7bd660f1a1259d2d3ff51f3d1",
+  "deployTxnHash": "0x6a8fa55a1a645355c3279d688a389ade0d4a574cad2c564e5f7df2574c5056d3",
   "deployedOn": "run.deploy_core"
 }

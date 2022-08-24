@@ -1,5 +1,5 @@
 {
-  "address": "0x9A97910c3663cF7648602Bb5C92D57DF7D901940",
+  "address": "0x94C4Be6659c3c1E9240cF30E3bf13f52FDAC8a9D",
   "abi": [
     {
       "type": "constructor",
@@ -283,7 +283,7 @@
     }
   ],
   "constructorArgs": ["Liquity USD", "LUSD"],
-  "deployTxnHash": "0x0ed29f6976ea4a91d97ad73db96febcbc2d19447bcccc9cb57a493b01a38cc5d",
+  "deployTxnHash": "0xc59818f294567ad4583c319092fe7322493ead662638fe7821bf077debc7600b",
   "sourceName": "contracts/MintableERC20.sol",
   "contractName": "MintableERC20",
   "deployedOn": "contract.token"

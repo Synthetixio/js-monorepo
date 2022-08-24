@@ -13,7 +13,7 @@ export const abi = [
   'event RoleRevoked(uint256 accountId, bytes32 role, address target, address executedBy)',
   'function createAccount(uint256 accountId)',
   'function getAccountAddress() view returns (address)',
-  'function getAccountPermissions(uint256 accountId) view returns (tuple(address target, bytes32[] roles)[])',
+  'function getAccountPermissions(uint256 accountId) view returns (tuple(address target, bytes32[] roles)[] permissions)',
   'function grantRole(uint256 accountId, bytes32 role, address target)',
   'function hasRole(uint256 accountId, bytes32 role, address target) view returns (bool)',
   'function renounceRole(uint256 accountId, bytes32 role, address target)',

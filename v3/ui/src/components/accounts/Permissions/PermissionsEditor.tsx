@@ -1,113 +1,196 @@
+import { AddIcon, EditIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import {
-  Heading,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Button,
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
+  Checkbox,
+  CheckboxGroup,
+  Flex,
   Grid,
   GridItem,
-  Input,
-  CheckboxGroup,
-  Checkbox,
+  Heading,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { FC, useState } from 'react';
-import { EditIcon, AddIcon } from '@chakra-ui/icons';
+import { FC, useMemo, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useManageRoles } from '../../../hooks';
+import { formatShortAddress } from '../../shared/Address';
+import { AddressInput } from './AddressInput';
 
-interface Props {
-  address?: string;
-}
+type Props =
+  | {
+      address: string;
+      roles: Array<string>;
+    }
+  | Record<string, never>;
 
-export const PermissionsEditor: FC<Props> = ({ address: existingAddress }) => {
+export const PermissionsEditor: FC<Props> = ({
+  address: existingAddress,
+  roles: existingRoles,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [address, _setAddress] = useState(existingAddress);
+  const { isOpen: isAlertOpen, onOpen: onAlertOpen, onClose: onAlertClose } = useDisclosure();
+  const cancelRef = useRef();
+  const { id: accountId } = useParams();
+  const [roles, setRoles] = useState<Array<string>>(existingRoles);
+  const [address, setAddress] = useState<string>(existingAddress ?? '');
+
+  const { exec, status } = useManageRoles(accountId!, address, existingRoles, roles);
+  const isExecuting = useMemo(() => status === 'pending', [status]);
+  const onAlertCancel = () => {
+    setRoles(existingRoles); // reset
+    onAlertClose();
+  };
 
   return (
     <>
       {existingAddress ? (
-        <EditIcon color="blue.400" onClick={onOpen} />
+        <Flex>
+          <EditIcon color="blue.400" onClick={onOpen} mx="2" />
+          <SmallCloseIcon
+            color="blue.400"
+            cursor="pointer"
+            onClick={() => {
+              setRoles([]);
+              onAlertOpen();
+            }}
+          />
+        </Flex>
       ) : (
-        <Button size="xs" colorScheme="green" onClick={onOpen}>
+        <Button size="xs" colorScheme="blue" onClick={onOpen}>
           <AddIcon mr="1.5" />
           Add Address
         </Button>
       )}
-      <Modal size="lg" isOpen={isOpen} onClose={onClose}>
+      <Modal size="xl" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent bg="black" color="white">
-          <ModalHeader>Modify Permissions</ModalHeader>
+        <ModalContent
+          bg="black"
+          color="white"
+          borderColor="gray.800"
+          borderWidth="2px"
+          borderRadius="2"
+        >
+          <ModalHeader>{`${existingAddress ? 'Modify' : 'Add'} Permissions`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <FormControl mb={5}>
-              <FormLabel htmlFor="address">Address</FormLabel>
-              <Input id="address" value={address} readOnly={!!existingAddress} />
-              {/* add address validation on this field? */}
-            </FormControl>
+            <AddressInput
+              address={address}
+              onChange={(addressVal: string) => setAddress(addressVal)}
+              readOnly={Boolean(existingAddress)}
+            />
 
             <Heading size="sm" mb="2">
-              Permit Actions
+              Select Permissions
             </Heading>
-            <CheckboxGroup>
-              <Grid gap={3} templateColumns="repeat(3, 1fr)">
+            <CheckboxGroup
+              defaultValue={existingRoles}
+              onChange={(t: Array<string>) => {
+                setRoles(t);
+              }}
+            >
+              <Grid gap={3} templateColumns="repeat(2, 1fr)">
                 <GridItem>
-                  <Checkbox value="a" mb="1">
+                  <Checkbox value="stake" mb="2">
                     Stake
                   </Checkbox>
                   <br />
-                  <Checkbox value="b" mb="1">
+                  <Checkbox value="unstake" mb="2">
+                    Unstake
+                  </Checkbox>
+                  <br />
+                  <Checkbox value="claim" mb="2">
+                    Claim Rewards
+                  </Checkbox>
+                  <br />
+                  <Checkbox value="burn" mb="2">
                     Burn
                   </Checkbox>
                   <br />
                 </GridItem>
 
                 <GridItem>
-                  <Checkbox value="c" mb="1">
-                    Unstake
-                  </Checkbox>
-                  <br />
-                  <Checkbox value="d" mb="1">
+                  <Checkbox value="mint" mb="2">
                     Mint
                   </Checkbox>
                   <br />
-                </GridItem>
-
-                <GridItem>
-                  <Checkbox value="e" mb="1">
-                    Claim Rewards
-                  </Checkbox>
-                  <br />
-                  <Checkbox value="f" mb="1">
+                  <Checkbox value="manage-locks" mb="2">
                     Manage Locks
                   </Checkbox>
                   <br />
-                </GridItem>
-              </Grid>
-
-              <Grid gap={3} templateColumns="repeat(2, 1fr)">
-                <GridItem>
-                  <Checkbox value="g" mb="1">
+                  <Checkbox value="manage-staking-position" mb="2">
                     Manage Staking Position
                   </Checkbox>
                   <br />
-                </GridItem>
-                <GridItem>
-                  <Checkbox value="h">Modify Permissions</Checkbox>
+                  <Checkbox value="modify">Modify Permissions</Checkbox>
                   <br />
                 </GridItem>
               </Grid>
             </CheckboxGroup>
 
-            <Button mt="6" mb="4" colorScheme="blue">
+            <Button
+              isLoading={isExecuting}
+              mt="6"
+              mb="4"
+              colorScheme="blue"
+              onClick={async () => {
+                await exec();
+                onClose();
+              }}
+            >
               {existingAddress ? 'Update' : 'Add'} Permissions
             </Button>
           </ModalBody>
         </ModalContent>
       </Modal>
+
+      <AlertDialog isOpen={isAlertOpen} leastDestructiveRef={cancelRef} onClose={onAlertCancel}>
+        <AlertDialogOverlay>
+          <AlertDialogContent
+            bg="black"
+            color="white"
+            borderColor="gray.800"
+            borderWidth="2px"
+            borderRadius="2"
+          >
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete Permissions
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure you want to revoke all permissions for{' '}
+              <p>{formatShortAddress(address)}</p>
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onAlertCancel} variant="link" padding="4">
+                Cancel
+              </Button>
+              <Button
+                colorScheme="red"
+                onClick={async () => {
+                  await exec();
+                  onAlertClose();
+                }}
+                isLoading={isExecuting}
+                ml={3}
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 };
