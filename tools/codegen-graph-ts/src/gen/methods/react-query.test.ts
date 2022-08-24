@@ -1,15 +1,10 @@
-import { gen } from '../../src/gen';
-import { Schema } from '../../src/gen/types';
-
-import singleEntityInput from '../subgraphs/single-entity.json';
-
-import { getDiagnosticsForText } from '../../helpers/ts';
+import { gen } from '..';
+import { Schema } from '../types';
+import singleEntityInput from '../../../tests/single-entity.json';
+import { getDiagnosticsForText } from '../../../tests/testUtils';
 import _ from 'lodash';
-
 import _eval from 'eval';
-
 import ts from 'typescript';
-
 import fetch from 'node-fetch';
 
 jest.mock('node-fetch');

@@ -1,4 +1,4 @@
-import { queryFunctionName } from '../../src/gen/util';
+import { queryFunctionName } from './util';
 
 describe('queryFunctionName()', () => {
   it('does correct capitalization', () => {

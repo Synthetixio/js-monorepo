@@ -1,4 +1,4 @@
-import * as sgExchanges from '../../generated/exchanges';
+import * as sgExchanges from '../../tests/exchanges';
 
 import axios from 'axios';
 

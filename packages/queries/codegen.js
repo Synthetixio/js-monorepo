@@ -54,7 +54,6 @@ for (const f of fs.readdirSync('subgraphs')) {
     `src/subgraph/${f.substr(0, f.length - 5)}SubgraphQueries.ts`,
     prettier.format(
       `
-      ${WARNING}
       ${text}
       `,
       { parser: 'typescript', ...prettierOptions }
@@ -73,7 +72,6 @@ for (const f of fs.readdirSync('subgraphs')) {
     `src/subgraph/${f.substr(0, f.length - 5)}SubgraphFunctions.ts`,
     prettier.format(
       `
-      ${WARNING}
       ${text}
       `,
       { parser: 'typescript', ...prettierOptions }

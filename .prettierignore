@@ -1,7 +1,6 @@
 build
 coverage
 node_modules
-generated
 dist
 .vscode
 .yarn
