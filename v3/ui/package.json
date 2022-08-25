@@ -5,7 +5,8 @@
   "scripts": {
     "start": "webpack-cli serve",
     "build": "webpack --mode production",
-    "write-ts": "write-ts"
+    "standalone-install": "yarn workspaces focus '@synthetixio/v3-ui'",
+    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v3-ui' run build"
   },
   "resolutions": {
     "ethers": "^5.7.0"
