@@ -1,0 +1,22 @@
+export const address = '0x0F1Ca68A6c8D5a999383738D397e697A023b3bA2';
+export const abi = [
+  'error InvalidRole()',
+  'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',
+  'error OnlyTokenProxyAllowed(address origin)',
+  'error PositionOutOfBounds()',
+  'error RoleNotAuthorized(uint256 accountId, bytes32 role, address target)',
+  'error ValueAlreadyInSet()',
+  'error ValueNotInSet()',
+  'error ZeroAddress()',
+  'event AccountCreated(address accountAddress)',
+  'event RoleGranted(uint256 accountId, bytes32 role, address target, address executedBy)',
+  'event RoleRevoked(uint256 accountId, bytes32 role, address target, address executedBy)',
+  'function createAccount(uint256 accountId)',
+  'function getAccountAddress() view returns (address)',
+  'function getAccountPermissions(uint256 accountId) view returns (tuple(address target, bytes32[] roles)[] permissions)',
+  'function grantRole(uint256 accountId, bytes32 role, address target)',
+  'function hasRole(uint256 accountId, bytes32 role, address target) view returns (bool)',
+  'function renounceRole(uint256 accountId, bytes32 role, address target)',
+  'function revokeRole(uint256 accountId, bytes32 role, address target)',
+  'function transferAccount(address to, uint256 accountId)',
+];

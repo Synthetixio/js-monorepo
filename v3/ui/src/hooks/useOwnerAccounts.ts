@@ -27,7 +27,7 @@ export const useOwnerAccounts = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { address } = useAccount();
   const { chain: activeChain } = useNetwork();
-  const accountContract = useContract(contracts.ACCOUNT);
+  const accountContract = useContract(contracts.ACCOUNT_PROXY);
 
   const { data, refetch } = useContractRead({
     addressOrName: accountContract?.address,

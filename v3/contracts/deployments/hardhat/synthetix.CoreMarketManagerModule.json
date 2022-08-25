@@ -103,19 +103,14 @@
           "internalType": "uint256",
           "name": "marketId",
           "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
         }
       ],
-      "name": "fundBalance",
+      "name": "marketLiquidity",
       "outputs": [
         {
-          "internalType": "int256",
+          "internalType": "uint256",
           "name": "",
-          "type": "int256"
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -129,12 +124,12 @@
           "type": "uint256"
         }
       ],
-      "name": "liquidity",
+      "name": "marketTotalBalance",
       "outputs": [
         {
-          "internalType": "uint256",
+          "internalType": "int256",
           "name": "",
-          "type": "uint256"
+          "type": "int256"
         }
       ],
       "stateMutability": "view",
@@ -165,25 +160,6 @@
           "internalType": "uint256",
           "name": "marketId",
           "type": "uint256"
-        }
-      ],
-      "name": "totalBalance",
-      "outputs": [
-        {
-          "internalType": "int256",
-          "name": "",
-          "type": "int256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "marketId",
-          "type": "uint256"
         },
         {
           "internalType": "address",
@@ -202,6 +178,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x3877a5204ccd5a61c97ab0da9dfb7a616297c21480f0bc5425de9430046bc061",
+  "deployTxnHash": "0x7a679a3052009eb2e0ff28a04ca4085ec7ea36c8af5442ca97aca591543c4e92",
   "deployedOn": "run.deploy_core"
 }

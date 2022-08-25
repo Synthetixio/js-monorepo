@@ -26,7 +26,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { BigNumber, CallOverrides, ethers } from 'ethers';
+import { BigNumber, CallOverrides, ethers, utils } from 'ethers';
 import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
@@ -140,7 +140,7 @@ export default function Stake({
           Boolean(accountId) ? selectedFundId : fundId || 0,
           selectedCollateralType.address,
           amountToDelegate || 0,
-          ethers.constants.One,
+          utils.parseEther('1'),
         ],
       ],
     ];

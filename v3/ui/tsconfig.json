@@ -14,8 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "moduleResolution": "node",
-    "allowUmdGlobalAccess": true,
-    "baseUrl": "./src"
+    "allowUmdGlobalAccess": true
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"],
