@@ -1,5 +1,4 @@
 import { CustomExample } from './CustomExample';
-import React from 'react';
 
 export default {
   title: 'Custom Example',
