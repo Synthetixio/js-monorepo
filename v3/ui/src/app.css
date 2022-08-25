@@ -1,3 +1,4 @@
+@import url('@synthetixio/v3-theme/styles.css');
 /* Always rely on extending the theme or styling components directly when possible. This is for 'hacks' */
 
 div[data-popper-arrow-inner] {

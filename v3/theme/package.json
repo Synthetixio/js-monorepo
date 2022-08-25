@@ -12,13 +12,17 @@
   "module": "./build/index.js",
   "browser": "./build/index.js",
   "types": "./build/index.d.ts",
+  "exports": {
+    ".": "./build/index.js",
+    "./styles.css": "./build/style.css"
+  },
   "src": "./src",
   "files": [
     "build",
     "src"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && ./build.sh",
     "start": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint": "eslint './src/**/*.{js,ts,tsx}'",
@@ -26,9 +30,6 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.2.6",
-    "@emotion/react": "^11.10.0",
-    "@emotion/styled": "^11.10.0",
-    "framer-motion": "^7.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   },
