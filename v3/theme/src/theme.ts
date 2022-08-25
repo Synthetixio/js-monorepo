@@ -15,7 +15,23 @@ const Button: ComponentStyleConfig = {
     },
   },
 };
-
+const Input: ComponentStyleConfig = {
+  defaultProps: {
+    focusBorderColor: 'cyan.500',
+    errorBorderColor: 'red.500',
+  },
+};
+const Select: ComponentStyleConfig = {
+  defaultProps: {
+    focusBorderColor: 'cyan.500',
+    iconColor: 'cyan.500',
+  },
+};
+const NumberInput: ComponentStyleConfig = {
+  defaultProps: {
+    focusBorderColor: 'cyan.500',
+  },
+};
 export const theme = extendTheme({
   initialColorMode: 'dark',
   colors: {
@@ -163,6 +179,9 @@ export const theme = extendTheme({
       },
     },
     Button,
+    Input,
+    Select,
+    NumberInput,
   },
 
   // To be imported and used with the bgGradient prop
