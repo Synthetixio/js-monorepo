@@ -1,9 +1,9 @@
-import { Global, css } from '@emotion/react';
+import { Global } from '@emotion/react';
 import React from 'react';
 
 export const Fonts = () => (
   <Global
-    styles={css`
+    styles={`
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200..700&display=swap');
       @font-face {
         font-family: 'GT America Condensed';
