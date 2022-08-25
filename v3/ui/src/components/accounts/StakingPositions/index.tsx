@@ -2,8 +2,12 @@ import StakingPosition from './StakingPosition';
 import { StakingPositionType } from './types';
 import { Box, Heading, Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
 
-export default function StakingPositions({ data }: { data: StakingPositionType[] }) {
-  return data?.length ? (
+export default function StakingPositions({
+  positions,
+}: {
+  positions: Record<string, StakingPositionType>;
+}) {
+  return (
     <Box>
       <Heading size="md" mb="2">
         Staking Positions
@@ -28,8 +32,8 @@ export default function StakingPositions({ data }: { data: StakingPositionType[]
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((position, i) => {
-            return <StakingPosition key={i} position={position} />;
+          {Object.keys(positions).map((positionId) => {
+            return <StakingPosition key={positionId} position={positions[positionId]} />;
           })}
           {/*
             <Tr>
@@ -50,5 +54,5 @@ export default function StakingPositions({ data }: { data: StakingPositionType[]
         </Tbody>
       </Table>
     </Box>
-  ) : null;
+  );
 }

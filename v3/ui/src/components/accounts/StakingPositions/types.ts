@@ -30,9 +30,5 @@ export type StakingPositionType = {
   // This is retrieved from recoil collateralType storage.
   collateralType: CollateralType;
 
-  // This is the amount of debt accrued from minting/burning sUSD from this fund. This could be negative. (I think this needs to be added?)
-  loanDebt?: number;
-
-  // This is a function of "shares" and "initialDebt" (initialDebt could be negative) from the LiquidityItem struct and the fund's total debt and total debt shares. The latter will probably be made available in recoil, per above.
-  marketDebt?: number;
+  cRatio: BigNumber;
 };

@@ -30,7 +30,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
   const { isOpen: isOpenFund, onOpen: onOpenFund, onClose: onCloseFund } = useDisclosure();
   const { isOpen: isOpenDebt, onOpen: onOpenDebt, onClose: onCloseDebt } = useDisclosure();
 
-  const { collateralAmount: collateralAmountBN, collateralType } = position;
+  const { collateralAmount: collateralAmountBN, collateralType, cRatio } = position;
 
   const formatValue = (value: BigNumber, decimals: number) =>
     parseInt(utils.formatUnits(value, decimals));
@@ -233,7 +233,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
       <Td py="4">
         {debt <= 0 ? (
           <Text fontWeight="bold" color="green">
-            No debt <InfoIcon transform="translateY(-1px)" />
+            {cRatio} <InfoIcon transform="translateY(-1px)" />
           </Text>
         ) : (
           <>0%</>
