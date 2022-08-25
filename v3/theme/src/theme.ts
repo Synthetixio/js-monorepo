@@ -1,6 +1,38 @@
-import { extendTheme } from '@chakra-ui/react';
+import { ComponentStyleConfig, extendTheme } from '@chakra-ui/react';
 
+const Button: ComponentStyleConfig = {
+  variants: {
+    solid: {
+      bgGradient: 'linear(to-r, green.400, cyan.500)',
+      color: 'black',
+      _hover: {
+        bgGradient: 'linear(to-r, green.500, cyan.600)',
+      },
+      _active: {
+        bgGradient: 'linear(to-r, green.700, cyan.800)',
+      },
+    },
+  },
+};
+const Input: ComponentStyleConfig = {
+  defaultProps: {
+    focusBorderColor: 'cyan.500',
+    errorBorderColor: 'red.500',
+  },
+};
+const Select: ComponentStyleConfig = {
+  defaultProps: {
+    focusBorderColor: 'cyan.500',
+    iconColor: 'cyan.500',
+  },
+};
+const NumberInput: ComponentStyleConfig = {
+  defaultProps: {
+    focusBorderColor: 'cyan.500',
+  },
+};
 export const theme = extendTheme({
+  initialColorMode: 'dark',
   colors: {
     gray: {
       50: '#F6F6F6',
@@ -145,14 +177,20 @@ export const theme = extendTheme({
         },
       },
     },
+    Button,
+    Input,
+    Select,
+    NumberInput,
   },
-
   // To be imported and used with the bgGradient prop
   // See: https://chakra-ui.com/docs/styled-system/gradient#background-gradient-api
   gradients: {
-    greenLight: 'linear(to-r, green.200, cyan.300)',
-    green: 'linear(to-r, green.400, cyan.500)',
-    greenDark: 'linear(to-r, green.700, cyan.800)',
+    'green-cyan': {
+      300: 'linear(to-r, green.200, cyan.300)',
+      500: 'linear(to-r, green.400, cyan.500)',
+      600: 'linear(to-r, green.500, cyan.600)',
+      700: 'linear(to-r, green.700, cyan.800)',
+    },
 
     grey: 'linear(to-r, grey.900, blackAlpha.900)',
 
