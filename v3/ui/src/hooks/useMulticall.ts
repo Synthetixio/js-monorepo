@@ -140,11 +140,11 @@ export const useMulticall = (
   }
 
   useEffect(() => {
-    if (step !== 0 && lastExecutedStep !== step) {
+    if (step !== 0 && lastExecutedStep !== step && lastExecutedStep < calls.length) {
       currentTxn.write();
       setLastExecutedStep((s) => s + 1);
     }
-  }, [step, currentTxn, lastExecutedStep]);
+  }, [step, currentTxn, lastExecutedStep, calls.length]);
 
   return {
     step,
