@@ -6897,7 +6897,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/v3-theme@1.0.1, @synthetixio/v3-theme@workspace:v3/theme":
+"@synthetixio/v3-theme@workspace:v3/theme":
   version: 0.0.0-use.local
   resolution: "@synthetixio/v3-theme@workspace:v3/theme"
   dependencies:
@@ -6941,7 +6941,6 @@ __metadata:
     "@rainbow-me/rainbowkit": ^0.4.5
     "@svgr/webpack": ^6.3.1
     "@synthetixio/v3-contracts": "workspace:*"
-    "@synthetixio/v3-theme": 1.0.1
     "@types/react": ^17.0.11
     "@types/react-chartjs-2": ^2.5.7
     "@types/react-helmet": ^6.1.5
