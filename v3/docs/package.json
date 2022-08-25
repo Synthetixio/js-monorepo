@@ -1,5 +1,5 @@
 {
-  "name": "snx-v3-docs",
+  "name": "@synthetixio/v3-docs",
   "version": "0.0.0",
   "private": true,
   "scripts": {

@@ -22,7 +22,7 @@
     "src"
   ],
   "scripts": {
-    "build": "tsc && ./build.sh",
+    "build": "tsc --build --verbose && ./build.sh",
     "start": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint": "eslint './src/**/*.{js,ts,tsx}'",
