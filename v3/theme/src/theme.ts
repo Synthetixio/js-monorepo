@@ -1,5 +1,4 @@
 import { ComponentStyleConfig, extendTheme } from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools';
 
 const Button: ComponentStyleConfig = {
   variants: {
@@ -110,7 +109,7 @@ export const theme = extendTheme({
     cyan: {
       50: '#E5FAFF',
       100: '#B7F2FF',
-      200: mode('#8AEAFF', '#00D1FF'),
+      200: '#8AEAFF',
       300: '#5CE1FF',
       400: '#2ED9FF',
       500: '#00D1FF',
