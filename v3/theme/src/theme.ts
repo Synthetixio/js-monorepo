@@ -182,7 +182,6 @@ export const theme = extendTheme({
     Select,
     NumberInput,
   },
-
   // To be imported and used with the bgGradient prop
   // See: https://chakra-ui.com/docs/styled-system/gradient#background-gradient-api
   gradients: {
