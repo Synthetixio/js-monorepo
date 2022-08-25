@@ -1,10 +1,10 @@
 build
 coverage
 node_modules
-generated
 dist
 .vscode
 .yarn
 packages/queries/subgraphs
 cache
 artifacts
+.docusaurus

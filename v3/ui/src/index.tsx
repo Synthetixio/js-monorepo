@@ -4,6 +4,7 @@ import { createClient, WagmiConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { ChakraProvider } from '@chakra-ui/react';
 import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
+// import { theme, Fonts } from '@synthetixio/v3-theme';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { supportedChains } from './utils/constants';
@@ -35,6 +36,7 @@ root.render(
   <BrowserRouter>
     <RecoilRoot>
       <ChakraProvider>
+        {/* <Fonts /> */}
         <WagmiConfig client={wagmiClient}>
           <RainbowKitProvider
             /* @ts-ignore*/

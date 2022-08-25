@@ -7,6 +7,7 @@ import { Schema } from '../types';
 export default function reactquery(schema: Schema): string {
   const out: string[] = [];
 
+  out.push('// !!! DO NOT EDIT !!! Automatically generated file');
   out.push('import { useQuery, UseQueryOptions } from "react-query";');
   out.push(heading());
 

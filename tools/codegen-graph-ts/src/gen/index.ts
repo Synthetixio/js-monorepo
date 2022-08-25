@@ -2,12 +2,12 @@
 
 import { Command } from 'commander';
 
-import fs from 'fs';
+import * as fs from 'fs';
 
 import { INTROSPECTION_QUERY } from './constants';
 import { Schema } from './types';
 import methods from './methods';
-import ts from 'typescript';
+import * as ts from 'typescript';
 
 import axios from 'axios';
 

@@ -6,16 +6,16 @@
   "version": "2.76.1",
   "description": "A library for interacting with Synthetix smart contracts",
   "source": "./src/index.ts",
-  "main": "./build/node/src/index.js",
-  "module": "./build/node/src/index.js",
-  "browser": "./build/node/src/index.js",
-  "types": "./build/node/src/index.d.ts",
+  "main": "./build/index.js",
+  "module": "./build/index.js",
+  "browser": "./build/index.js",
+  "types": "./build/index.d.ts",
   "files": [
     "build",
     "src"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf build && tsc --build",
     "examples": "ts-node ./examples/index.js",
     "start": "webpack-cli serve",
     "lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",

@@ -5,3 +5,4 @@ export * from './useDeploymentRead';
 export * from './useOwnerAccounts';
 export * from './useContractEvent';
 export * from './useMulticall';
+export * from './useManageRoles';

@@ -74,8 +74,7 @@ export const localCollateralTypes = (chainId: number) => {
 
 export const contracts = {
   SYNTHETIX_PROXY: 'synthetix.CoreProxy',
-  ACCOUNT: 'synthetix.AccountProxy',
-  ACCOUNT_MODULE: 'synthetix.CoreAccountModule',
+  ACCOUNT_PROXY: 'synthetix.AccountProxy',
   MULTICALL: 'Multicall',
   SNX_TOKEN: 'snx.token',
 };

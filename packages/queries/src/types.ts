@@ -123,7 +123,7 @@ export type TokenListResponse = {
 
 export type TokenListQueryResponse = {
   tokens: Token[];
-  tokensMap: Record<string, Token>;
+  tokensMap: Partial<Record<string, Token>>;
   symbols: string[];
 };
 

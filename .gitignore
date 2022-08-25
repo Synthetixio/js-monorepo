@@ -35,8 +35,6 @@ pids
 
 /build/stats.json
 
-generated
-
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
@@ -56,3 +54,5 @@ generated
 **/node_modules
 
 staged-txns.txt
+
+tsconfig.tsbuildinfo

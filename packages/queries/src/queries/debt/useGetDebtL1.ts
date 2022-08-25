@@ -11,7 +11,7 @@ import {
   useGetShorts,
   useGetSynths,
   useGetWrappers,
-} from '../../../generated/mainSubgraphQueries';
+} from '../../subgraph/mainSubgraphQueries';
 import { DEFAULT_SUBGRAPH_ENDPOINTS } from '../../constants';
 import { Debt, DebtData } from './useGetDebtL2';
 import { Contract } from '@ethersproject/contracts';

@@ -1,0 +1,24 @@
+{
+  "exclude": [
+    "**/node_modules/**",
+    "**/coverage/**",
+    "**/tests/**",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/stories/**",
+    "**/build/**",
+    "**/dist/**"
+  ],
+  "references": [
+    { "path": "./contracts" },
+
+    { "path": "./packages/contracts-interface" },
+    { "path": "./packages/optimism-networks" },
+    { "path": "./packages/providers" },
+    { "path": "./packages/queries" },
+    { "path": "./packages/transaction-notifier" },
+    { "path": "./packages/wei" },
+
+    { "path": "./tools/codegen-graph-ts" }
+  ]
+}

@@ -5,19 +5,21 @@
   },
   "version": "2.74.2",
   "description": "Generate typescript request library for any subgraph based on its entity definition",
-  "main": "build/src/index.js",
+  "source": "./src/index.ts",
+  "main": "./build/index.js",
+  "module": "./build/index.js",
+  "browser": "./build/index.js",
+  "types": "./build/index.d.ts",
   "files": [
     "build",
     "src"
   ],
   "scripts": {
-    "build": "yarn build-node",
-    "build-node": "tsc",
-    "test-codegen": "mkdir -p generated && ts-node src/gen/index.ts gen -s __tests__/subgraphs/sample.json -o generated/exchanges.ts",
+    "build": "rm -rf build && tsc --build && yarn codegen",
+    "codegen": "ts-node src/gen/index.ts gen -s tests/exchanges.json -o tests/exchanges.ts && prettier --write tests/exchanges.ts",
     "lint": "eslint './src/**/*.{js,ts,tsx}' && tsc",
     "lint:fix": "eslint --fix './src/**/*.{js,ts,tsx}'",
-    "test": "yarn test-codegen && jest --coverage --no-cache",
-    "tsc": "tsc --noemit"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,8 @@
   },
   "homepage": "https://github.com/KillerByte/codegen-graph-ts#readme",
   "dependencies": {
+    "@synthetixio/generate-subgraph-query": "workspace:*",
+    "@synthetixio/wei": "workspace:*",
     "axios": "^0.21.4",
     "commander": "^8.1.0",
     "graphql": "^15.5.0",
@@ -56,7 +60,7 @@
   "bin": "build/src/gen/index.js",
   "jest": {
     "testMatch": [
-      "<rootDir>/__tests__/**/*.{js,jsx,ts,tsx}"
+      "<rootDir>/**/*.test.{js,jsx,ts,tsx}"
     ],
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{js,jsx,ts,tsx}",
@@ -74,8 +78,7 @@
   "depcheck": {
     "ignorePatterns": [
       "build",
-      "coverage",
-      "generated"
+      "coverage"
     ],
     "ignoreMatches": [
       "react-query"

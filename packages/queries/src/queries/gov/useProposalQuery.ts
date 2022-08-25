@@ -138,7 +138,7 @@ const useProposalQuery = (
             })
             .filter((vote) => vote.balance > 0)
             .sort((a, b) => b.balance - a.balance),
-          (a: Vote) => getAddress(a.voter)
+          (a) => getAddress(a.voter)
         );
       }
 

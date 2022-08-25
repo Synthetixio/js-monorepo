@@ -5,7 +5,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "yarn codegen && rm -rf build && tsc --build --force",
+    "build": "yarn codegen && rm -rf build && tsc --build",
     "codegen": "rm -rf src && node codegen.js"
   },
   "files": [

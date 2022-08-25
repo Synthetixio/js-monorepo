@@ -78,7 +78,10 @@ export function multiBody(e: Entity) {
     let results: Pick<${e.name}Result, K>[] = [];
 
     do {
-        if (paginationKey && paginationValue) paginatedOptions.where![paginationKey] = paginationValue as any;
+        if (paginationKey && paginationValue) {
+          // @ts-ignore
+          paginatedOptions.where![paginationKey] = paginationValue as any;
+        }
 
         const res = await axios.post(url, {
             query: generateGql('${queryFunctionName(e)}s', paginatedOptions, args)

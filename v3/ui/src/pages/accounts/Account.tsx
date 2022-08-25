@@ -1,14 +1,13 @@
-import { Box, Container, Heading } from '@chakra-ui/react';
-import { useStakingPositions } from '../../hooks/useStakingPositions';
+import { Box, Heading } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import Stake from '../../components/accounts/Stake';
 import { StakingNav } from '../../components/accounts/StakingNav';
 import StakingPositions from '../../components/accounts/StakingPositions';
+import { useStakingPositions } from '../../hooks/useStakingPositions';
 
 export function Account() {
   const { id } = useParams();
   const accountId = Array.isArray(id) ? id[0] : id;
-
   const { stakingPositions } = useStakingPositions(accountId);
 
   // const accountModule = useContract(contracts.ACCOUNT_MODULE);
@@ -28,16 +27,12 @@ export function Account() {
 
   return (
     <Box>
-      <Container maxW="container.sm">
-        <Box>
-          <StakingNav />
-          <StakingPositions data={stakingPositions} />
-          <Heading size="md" mb="3">
-            Stake Collateral
-          </Heading>
-          <Stake accountId={accountId} stakingPositions={stakingPositions} />
-        </Box>
-      </Container>
+      <StakingNav />
+      <StakingPositions data={stakingPositions} />
+      <Heading size="md" mb="3">
+        Stake Collateral
+      </Heading>
+      <Stake accountId={accountId} />
     </Box>
   );
 }

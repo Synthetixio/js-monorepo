@@ -1,11 +1,9 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.module.json",
   "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
     "module": "commonjs",
-    "declarationDir": "./build/src",
-    "outDir": "./build/src"
+    "outDir": "./build",
+    "rootDir": "./src"
   },
   "include": ["src"]
 }

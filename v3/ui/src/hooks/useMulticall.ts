@@ -97,8 +97,8 @@ export const useMulticall = (
 
   const currentTxn = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: callContract!.address,
-    contractInterface: callContract!.interface,
+    addressOrName: callContract?.address ?? '',
+    contractInterface: callContract?.interface ?? '',
     functionName: callFunc!,
     args: callArgs,
     overrides,

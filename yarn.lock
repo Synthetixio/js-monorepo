@@ -3745,7 +3745,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/bignumber@npm:5.6.2, @ethersproject/bignumber@npm:^5.6.2":
+"@ethersproject/bignumber@npm:^5.6.2":
   version: 5.6.2
   resolution: "@ethersproject/bignumber@npm:5.6.2"
   dependencies:
@@ -3756,7 +3756,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/bytes@npm:5.6.1, @ethersproject/bytes@npm:^5.6.1":
+"@ethersproject/bytes@npm:^5.6.1":
   version: 5.6.1
   resolution: "@ethersproject/bytes@npm:5.6.1"
   dependencies:
@@ -6687,6 +6687,8 @@ __metadata:
     "@babel/plugin-transform-runtime": ^7.13.10
     "@babel/preset-env": ^7.13.10
     "@babel/preset-typescript": ^7.13.0
+    "@synthetixio/generate-subgraph-query": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@types/commander": ^2.12.2
     "@types/lodash": ^4.14.169
     "@types/node": ^17.0.43
@@ -6825,6 +6827,7 @@ __metadata:
     graphql-request: ^3.4.0
     jest: ^27.0.6
     lodash: ^4.17.21
+    prettier: ^2.3.0
     react: ^17.0.2
     react-dom: ^17.0.2
     react-query: 3.16.0
@@ -6863,7 +6866,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/v3-contracts@workspace:*, @synthetixio/v3-contracts@workspace:v3/contracts":
+"@synthetixio/v3-contracts@workspace:v3/contracts":
   version: 0.0.0-use.local
   resolution: "@synthetixio/v3-contracts@workspace:v3/contracts"
   dependencies:
@@ -6937,7 +6940,6 @@ __metadata:
     "@faker-js/faker": ^7.4.0
     "@rainbow-me/rainbowkit": ^0.4.5
     "@svgr/webpack": ^6.3.1
-    "@synthetixio/v3-contracts": "workspace:*"
     "@types/react": ^17.0.11
     "@types/react-chartjs-2": ^2.5.7
     "@types/react-helmet": ^6.1.5
@@ -7796,17 +7798,6 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: 6afc938a1d7618d88ab8793e251f0bd5981bf3f08c1b600f74df3f8800b92589ea534dc6dcb7c8d683893fcc740bf8d7843a42bf2dae59785cfe88f004bd7b0b
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:*, @types/react@npm:>=16.9.0":
-  version: 18.0.15
-  resolution: "@types/react@npm:18.0.15"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: e22cc388d1c145aa184787e44dc28db4789976c704cd5db475c170bb76a560eb81def5f346cfe750949bb3d43ad88822b8cbb9f19b1286e3795892a8263e7715
   languageName: node
   linkType: hard
 
@@ -10987,13 +10978,6 @@ __metadata:
   version: 1.6.51
   resolution: "big-integer@npm:1.6.51"
   checksum: 3d444173d1b2e20747e2c175568bedeebd8315b0637ea95d75fd27830d3b8e8ba36c6af40374f36bdaea7b5de376dcada1b07587cb2a79a928fccdb6e6e3c518
-  languageName: node
-  linkType: hard
-
-"big.js@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "big.js@npm:5.2.2"
-  checksum: b89b6e8419b097a8fb4ed2399a1931a68c612bce3cfd5ca8c214b2d017531191070f990598de2fc6f3f993d91c0f08aa82697717f6b3b8732c9731866d233c9e
   languageName: node
   linkType: hard
 

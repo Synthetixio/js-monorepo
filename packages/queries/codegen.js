@@ -1,15 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require('fs');
-
+const prettier = require('prettier');
 const cgt = require('@synthetixio/codegen-graph-ts');
 
-// for depcheck, this dep is listed in generated files
-// TODO: remove when we commit generated files
-require.resolve('@synthetixio/generate-subgraph-query');
+const prettierOptions = JSON.parse(fs.readFileSync('../../.prettierrc', 'utf8'));
 
-try {
-  fs.mkdirSync(__dirname + '/generated/');
-} catch {}
+fs.mkdirSync(__dirname + '/src/subgraph/', { recursive: true });
 
 const imports = [];
 const funcsDef = [];
@@ -28,10 +24,13 @@ function findQueries(p, requireSoFar) {
   }
 }
 
-findQueries(__dirname + '/src/queries', '../src/queries');
-findQueries(__dirname + '/src/mutations', '../src/mutations');
+findQueries(__dirname + '/src/queries', '../queries');
+findQueries(__dirname + '/src/mutations', '../mutations');
+
+const WARNING = '// !!! DO NOT EDIT !!! Automatically generated file\n\n';
 
 const out = `
+${WARNING}
 ${imports.join('\n')}
 
 export {
@@ -39,7 +38,11 @@ ${funcsDef.join('\n')}
 };
 `;
 
-fs.writeFileSync('generated/queryFuncs.ts', out);
+fs.writeFileSync(
+  'src/subgraph/queryFuncs.ts',
+  prettier.format(out, { parser: 'typescript', ...prettierOptions }),
+  'utf8'
+);
 
 for (const f of fs.readdirSync('subgraphs')) {
   const text = cgt.gen({
@@ -47,7 +50,16 @@ for (const f of fs.readdirSync('subgraphs')) {
     method: 'reactquery',
   });
 
-  fs.writeFileSync(`generated/${f.substr(0, f.length - 5)}SubgraphQueries.ts`, text);
+  fs.writeFileSync(
+    `src/subgraph/${f.substr(0, f.length - 5)}SubgraphQueries.ts`,
+    prettier.format(
+      `
+      ${text}
+      `,
+      { parser: 'typescript', ...prettierOptions }
+    ),
+    'utf8'
+  );
 }
 
 for (const f of fs.readdirSync('subgraphs')) {
@@ -56,5 +68,14 @@ for (const f of fs.readdirSync('subgraphs')) {
     method: 'plain',
   });
 
-  fs.writeFileSync(`generated/${f.substr(0, f.length - 5)}SubgraphFunctions.ts`, text);
+  fs.writeFileSync(
+    `src/subgraph/${f.substr(0, f.length - 5)}SubgraphFunctions.ts`,
+    prettier.format(
+      `
+      ${text}
+      `,
+      { parser: 'typescript', ...prettierOptions }
+    ),
+    'utf8'
+  );
 }
