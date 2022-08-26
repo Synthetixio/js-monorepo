@@ -42,7 +42,7 @@ export const useStakingPositions = (accountId: string) => {
               fundName: fundsData[f.toString()].name,
               collateralType: ct,
               collateralAmount: data[idx].amount,
-              cRatio: data[idx + functionNames.length] ?? 'No Debt',
+              cRatio: data[idx + functionNames.length],
             };
           }
         });

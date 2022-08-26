@@ -8,7 +8,6 @@ import {
   CreateAccount,
   Settings,
   Collateral,
-  AccountPosition,
   StakingPosition,
   AcceptNomination,
 } from './pages/accounts';
@@ -21,7 +20,6 @@ export const Synthetix: React.FC = () => {
     <Suspense fallback={<Spinner />}>
       <Routes>
         <Route element={<DefaultLayout />}>
-          <Route path="/accounts/:id/collateral/position" element={<AccountPosition />} />
           <Route path="/accounts/:id/positions/:symbol/:fundId" element={<StakingPosition />} />
           <Route path="/accounts/:id/collateral" element={<Collateral />} />
           <Route path="/accounts/:id/accept-nomination" element={<AcceptNomination />} />

@@ -1,8 +1,8 @@
 import { Container, Link, Box, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import Stats from '../../../components/accounts/Position/Stats';
-import Manage from '../../../components/accounts/Position/Manage';
-import Rewards from '../../../components/accounts/Position/Rewards';
-import Pool from '../../../components/accounts/Position/Pool';
+import Stats from '../../components/accounts/Position/Stats';
+import Manage from '../../components/accounts/Position/Manage';
+import Rewards from '../../components/accounts/Position/Rewards';
+import Pool from '../../components/accounts/Position/Pool';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 import { useParams, Link as NavLink } from 'react-router-dom';
 
