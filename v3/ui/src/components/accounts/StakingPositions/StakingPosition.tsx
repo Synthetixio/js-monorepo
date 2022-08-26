@@ -1,5 +1,5 @@
 import { StakingPositionType } from './types';
-import { EditIcon, InfoIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
+import { EditIcon, ExternalLinkIcon, InfoIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
   Badge,
   Box,
@@ -23,6 +23,7 @@ import {
 } from '@chakra-ui/react';
 import { BigNumber, utils } from 'ethers';
 import { Link as RouterLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function StakingPosition({ position }: { position: StakingPositionType }) {
   // If the connected wallet doesn’t own this account token, remove/disable the interactivity
@@ -303,10 +304,19 @@ export default function StakingPosition({ position }: { position: StakingPositio
           </ModalContent>
         </Modal>
       </Td>
-      <Td isNumeric>
-        <Button size="xs" colorScheme="red">
-          Unstake
-        </Button>
+      <Td>
+        <NavLink
+          to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.fundId}`}
+        >
+          <Link
+            color="blue.400"
+            display="inline-block"
+            transform="translateY(-1.5px)"
+            target="_blank"
+          >
+            <ExternalLinkIcon />
+          </Link>
+        </NavLink>
       </Td>
     </Tr>
   );
