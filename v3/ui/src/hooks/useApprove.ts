@@ -20,7 +20,7 @@ export const useApprove = (contractAddress: string, amount: BigNumberish, spende
     contractInterface: erc20ABI,
     functionName: 'allowance',
     args: [accountAddress, spender],
-    enabled: hasWalletConnected,
+    enabled: hasWalletConnected && !!contractAddress,
   });
 
   const sufficientAllowance = useMemo(() => {
@@ -29,7 +29,8 @@ export const useApprove = (contractAddress: string, amount: BigNumberish, spende
 
   const approve = useCallback(async () => {
     if (!sufficientAllowance) {
-      await writeAsync();
+      const txReceipt = await writeAsync();
+      await txReceipt.wait();
       refetchAllowance();
     }
   }, [refetchAllowance, sufficientAllowance, writeAsync]);

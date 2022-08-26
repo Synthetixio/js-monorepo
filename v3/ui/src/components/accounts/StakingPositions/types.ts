@@ -1,4 +1,4 @@
-import { BigNumber, BigNumberish } from 'ethers';
+import { BigNumber } from 'ethers';
 import { CollateralType } from '../../../utils/types';
 
 export type StakingPositionOnChainType = {
@@ -19,7 +19,7 @@ export type StakingPositionType = {
   id?: number | string;
 
   // This is the fundId on the LiquidityItem struct
-  fundId: BigNumberish;
+  fundId: BigNumber;
 
   // This would be retrieved from recoil most likely. We'll probably want a similar set up to CollateralTypes for the Preferred/Approved funds.
   fundName: string;
@@ -30,7 +30,7 @@ export type StakingPositionType = {
   // This is retrieved from recoil collateralType storage.
   collateralType: CollateralType;
 
-  cRatio: BigNumberish;
+  cRatio: BigNumber;
 
   accountId: string;
 };
