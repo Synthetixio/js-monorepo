@@ -6996,7 +6996,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/wei@^2.53.0-alpha2, @synthetixio/wei@^2.74.1, @synthetixio/wei@workspace:*, @synthetixio/wei@workspace:packages/wei":
+"@synthetixio/wei@npm:^2.53.0-alpha2, @synthetixio/wei@npm:^2.74.1":
+  version: 2.74.2
+  resolution: "@synthetixio/wei@npm:2.74.2"
+  dependencies:
+    "@ethersproject/bignumber": ^5.6.2
+    "@ethersproject/bytes": ^5.6.1
+    big.js: ^6.1.1
+  checksum: 47fc28875794670481dfd745e6069710e95cadfca9b97f63a0b5df7853576425b66f9bc0636613f57b83507503671c19b3abd9cc8c8e42a401878a8c1102792d
+  languageName: node
+  linkType: hard
+
+"@synthetixio/wei@workspace:*, @synthetixio/wei@workspace:packages/wei":
   version: 0.0.0-use.local
   resolution: "@synthetixio/wei@workspace:packages/wei"
   dependencies:
