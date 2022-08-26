@@ -3,13 +3,13 @@ import { ComponentStyleConfig, extendTheme } from '@chakra-ui/react';
 const Button: ComponentStyleConfig = {
   variants: {
     solid: {
-      bgGradient: 'linear(to-r, green.400, cyan.500)',
+      bgGradient: 'gradient["green-cyan"][500]',
       color: 'black',
       _hover: {
-        bgGradient: 'linear(to-r, green.500, cyan.600)',
+        bgGradient: 'gradient["green-cyan"][600]',
       },
       _active: {
-        bgGradient: 'linear(to-r, green.700, cyan.800)',
+        bgGradient: 'gradient["green-cyan"][700]',
       },
     },
   },
@@ -51,13 +51,95 @@ const Alert: ComponentStyleConfig = {
       return {
         container: {
           bg: `${props.colorScheme}.900`,
-          borderInlineStartColor: `${props.colorScheme}.400`,
+          borderInlineStartColor: `${props.colorScheme}.500`,
         },
       };
     },
     solid: (props) => {
       return { container: { bg: `${props.colorScheme}.500`, color: 'black' } };
     },
+  },
+};
+const Skeleton: ComponentStyleConfig = {
+  defaultProps: {
+    startColor: 'gray.900',
+    endColor: 'gray.800',
+  },
+};
+const Checkbox: ComponentStyleConfig = {
+  defaultProps: {
+    colorScheme: 'cyan',
+  },
+  baseStyle: {
+    control: {
+      borderColor: 'cyan.500',
+      _checked: {
+        bg: 'cyan.500',
+        borderColor: 'cyan.500',
+        _hover: {
+          bg: 'cyan.600',
+          borderColor: 'cyan.600',
+        },
+      },
+      _invalid: {
+        borderColor: 'red.500',
+      },
+      _disabled: {
+        _hover: {
+          borderColor: 'transparent',
+        },
+      },
+      _hover: {
+        borderColor: 'cyan.600',
+      },
+    },
+  },
+};
+const Radio: ComponentStyleConfig = {
+  defaultProps: {
+    colorScheme: 'cyan',
+  },
+  baseStyle: {
+    control: {
+      borderColor: 'cyan.500',
+      _checked: {
+        bg: 'cyan.500',
+        borderColor: 'cyan.500',
+        _hover: {
+          bg: 'cyan.600',
+          borderColor: 'cyan.600',
+        },
+      },
+      _invalid: {
+        borderColor: 'red.500',
+      },
+      _disabled: {
+        _hover: {
+          borderColor: 'transparent',
+        },
+      },
+      _hover: {
+        borderColor: 'cyan.600',
+      },
+    },
+  },
+};
+const Badge: ComponentStyleConfig = {
+  defaultProps: {
+    colorScheme: 'cyan',
+  },
+  variants: {
+    subtle: (props) => ({
+      color: `${props.colorScheme}.500`,
+    }),
+    solid: (props) => ({
+      background: `${props.colorScheme}.500`,
+      color: 'black',
+    }),
+    outline: (props) => ({
+      borderColor: `${props.colorScheme}.500`,
+      color: `${props.colorScheme}.500`,
+    }),
   },
 };
 export const theme = extendTheme({
@@ -92,9 +174,9 @@ export const theme = extendTheme({
       100: '#FFD8BE',
       200: '#FFBE92',
       300: '#FFA365',
-      400: '#FC8738',
-      500: '#DA6E25',
-      600: '#B85716',
+      400: '#FF9A54',
+      500: '#FC8738',
+      600: '#DC732D',
       700: '#96420A',
       800: '#743002',
       900: '#522100',
@@ -102,12 +184,12 @@ export const theme = extendTheme({
     yellow: {
       50: '#FFFBEF',
       100: '#FFF2CA',
-      200: '#FFE9A5',
-      300: '#FFE081',
-      400: '#FFD75C',
-      500: '#DDB847',
-      600: '#BB9A34',
-      700: '#997C24',
+      200: '#FFF5A8',
+      300: '#FFF889',
+      400: '#FFF458',
+      500: '#FAE527',
+      600: '#EAD516',
+      700: '#B5932B',
       800: '#776017',
       900: '#55430D',
     },
@@ -117,8 +199,8 @@ export const theme = extendTheme({
       200: '#9AE6B4',
       300: '#72FFD3',
       400: '#47FAC2',
-      500: '#31D8A4',
-      600: '#20B687',
+      500: '#34EDB3',
+      600: '#2BD39F',
       700: '#11946B',
       800: '#077250',
       900: '#015037',
@@ -163,10 +245,10 @@ export const theme = extendTheme({
       50: '#FDE8FF',
       100: '#F9B6FF',
       200: '#F583FF',
-      300: '#F150FF',
-      400: '#ED1EFF',
-      500: '#CC0DDD',
-      600: '#AC00BB',
+      300: '#F471FF',
+      400: '#EB46FF',
+      500: '#EE2EFF',
+      600: '#BE02CE',
       700: '#8D0099',
       800: '#6E0077',
       900: '#4E0055',
@@ -212,30 +294,40 @@ export const theme = extendTheme({
     NumberInput,
     Alert,
     Textarea,
+    Skeleton,
+    Checkbox,
+    Radio,
+    Badge,
   },
   // To be imported and used with the bgGradient prop
   // See: https://chakra-ui.com/docs/styled-system/gradient#background-gradient-api
   gradients: {
     'green-cyan': {
-      300: 'linear(to-r, green.200, cyan.300)',
-      500: 'linear(to-r, green.400, cyan.500)',
-      600: 'linear(to-r, green.500, cyan.600)',
-      700: 'linear(to-r, green.700, cyan.800)',
+      500: 'linear(to-tr, green.500, cyan.500)',
+      600: 'linear(to-tr, green.600, cyan.600)',
+      700: 'linear(to-tr, green.700, cyan.800)',
     },
 
-    grey: 'linear(to-r, grey.900, blackAlpha.900)',
+    grey: {
+      900: 'linear(to-tr, grey.900, blackAlpha.900)',
+    },
 
-    pinkLight: 'linear(to-r, pink.300, purple.400)',
-    pink: 'linear(to-r, pink.600, purple.600)',
-    pinkDark: 'linear(to-r, pink.800, purple.800)',
+    'pink-purple': {
+      500: 'linear(to-tr, pink.500, purple.500)',
+      600: 'linear(to-tr, pink.600, purple.600)',
+      700: 'linear(to-tr, pink.700, purple.800)',
+    },
 
-    orangeLight: 'linear(to-r, orange.200, orange.50)',
-    orange: 'linear(to-r, orange.400, orange.200)',
-    orangeDark: 'linear(to-r, orange.600, orange.400)',
-
-    cyanLight: 'linear(to-r, pink.200, cyan.300)',
-    cyan: 'linear(to-r, pink.400, cyan.500)',
-    cyanDark: 'linear(to-r, pink.600, cyan.700)',
+    'pink-blue': {
+      500: 'linear(to-tr, pink.500, blue.500)',
+      600: 'linear(to-tr, pink.600, blue.600)',
+      700: 'linear(to-tr, pink.700, blue.800)',
+    },
+    orange: {
+      500: 'linear(to-tr, orange.500, orange.300)',
+      600: 'linear(to-tr, orange.600, orange.400)',
+      700: 'linear(to-tr, orange.700, orange.500)',
+    },
   },
 
   sizes: {
