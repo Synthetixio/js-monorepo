@@ -1,6 +1,6 @@
 import { accountsState, chainIdState, collateralTypesState } from '../../../utils/state';
 import { contracts, fundsData, getChainById } from '../../../utils/constants';
-import { useContract, useSynthetixRead, MulticallCall, useMulticall } from '../../../hooks';
+import { useContract, useSynthetixRead } from '../../../hooks';
 import EditPosition from '../EditPosition';
 import Balance from './Balance';
 import CollateralTypeSelector from './CollateralTypeSelector';
@@ -26,12 +26,14 @@ import {
 } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { BigNumber, CallOverrides, ethers, utils } from 'ethers';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
-import { erc20ABI, useAccount, useBalance, useContractRead, useNetwork } from 'wagmi';
+import { useAccount, useBalance, useNetwork } from 'wagmi';
 import { CollateralType, StakingPositionType } from '../../../utils/types';
 import { useNavigate } from 'react-router-dom';
+import { MulticallCall } from '../../../hooks/useMulticall2';
+import { useApproveMulticall } from '../../../hooks/useApproveMulticall';
 
 type FormType = {
   collateralType: CollateralType;
@@ -96,28 +98,16 @@ export default function Stake({
     enabled: hasWalletConnected,
   });
 
-  const { data: allowance, refetch: refetchAllowance } = useContractRead({
-    addressOrName: selectedCollateralType?.address,
-    contractInterface: erc20ABI,
-    functionName: 'allowance',
-    args: [accountAddress, snxProxy?.address],
-    enabled: !isNativeCurrency && hasWalletConnected,
-  });
-
   const amountBN = Boolean(amount)
     ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
     : BigNumber.from(0);
-
-  const sufficientAllowance = useMemo(() => {
-    return allowance && allowance.gt(0) && allowance.gte(amountBN);
-  }, [allowance, amountBN]);
 
   const generateAccountId = () => {
     return Math.floor(Math.random() * 10000000000);
   }; // ten digit numberf
   const newAccountId = useMemo(() => generateAccountId(), []);
 
-  const calls: MulticallCall[][] = useMemo(() => {
+  const calls: MulticallCall[] = useMemo(() => {
     const id = accountId ?? newAccountId;
     const key = `${selectedFundId}-${selectedCollateralType.symbol}`;
     const currentStakingPosition = stakingPositions[key];
@@ -127,23 +117,34 @@ export default function Stake({
       : amountBN;
 
     if (!snxProxy) return [];
-    const createAccountCall: MulticallCall = [snxProxy.contract, 'createAccount', [newAccountId]];
+
+    const createAccountCall: MulticallCall[] = [
+      {
+        contract: snxProxy.contract,
+        functionName: 'createAccount',
+        callArgs: [newAccountId],
+      },
+    ];
     const stakingCalls: MulticallCall[] = [
-      [snxProxy.contract, 'stake', [id, selectedCollateralType.address, amountBN]],
-      [
-        snxProxy.contract,
-        'delegateCollateral',
-        [
+      {
+        contract: snxProxy.contract,
+        functionName: 'stake',
+        callArgs: [id, selectedCollateralType.address, amountBN],
+      },
+      {
+        contract: snxProxy.contract,
+        functionName: 'delegateCollateral',
+        callArgs: [
           id,
           Boolean(accountId) ? selectedFundId : fundId || 0,
           selectedCollateralType.address,
           amountToDelegate || 0,
           utils.parseEther('1'),
         ],
-      ],
+      },
     ];
 
-    return [Boolean(accountId) ? stakingCalls : [createAccountCall, ...stakingCalls]];
+    return Boolean(accountId) ? stakingCalls : [...createAccountCall, ...stakingCalls];
   }, [
     accountId,
     amountBN,
@@ -168,96 +169,98 @@ export default function Stake({
   //   ]);
   //   overrides.value = amount!;
   // }
-  // add extra step to 'approve' the token if needed before running the multicall
-  if (!sufficientAllowance) {
-    // TODO: could use permit here as well, in which case its an unshift
-    calls.unshift([[collateralContract!.contract, 'approve', [snxProxy?.address, amountBN]]]);
-  }
 
-  const multiTxn = useMulticall(calls, overrides, {
-    onSuccess: async () => {
-      toast.closeAll();
-      reset({
-        collateralType: selectedCollateralType,
-        fundId: selectedFundId,
-        amount: '',
-      });
-      await Promise.all([
-        refetchAllowance(),
-        refetchAccounts!({ cancelRefetch: Boolean(accountId) }),
-      ]);
-      if (!Boolean(accountId)) {
-        // router.push({
-        //   pathname: `/accounts/${newAccountId}`,
-        //   query: router.query,
-        // });
-        navigate(`/accounts/${newAccountId}`);
-      } else {
-        // TODO: get language from noah
-        toast({
-          title: 'Success',
-          description: 'Your staked collateral amounts have been updated.',
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-        });
-      }
+  const multiTxn = useApproveMulticall(
+    calls,
+    {
+      contractAddress: collateralContract!.contract.address,
+      amount: amountBN,
+      spender: snxProxy?.address,
     },
-    onError: () => {
-      toast({
-        title: 'Could not complete account creation',
-        description: 'Please try again.',
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      });
-    },
-  });
-
-  useEffect(() => {
-    if (multiTxn.status === 'pending') {
-      // const buildToastDescription = (text: string) => {
-      //   // TODO: fix this; txHash not showing up :(
-      //   const txHash = multiTxn.currentTxn.data?.hash;
-      //   return (
-      //     <>
-      //       <Text fontSize="sm">{text}</Text>
-      //       {chain?.blockExplorers?.etherscan ? (
-      //         <Link
-      //           href={`${chain?.blockExplorers?.etherscan.url}/${txHash}`}
-      //           isExternal
-      //         >
-      //           Check tx on etherscan <ExternalLinkIcon mx="2px" />
-      //         </Link>
-      //       ) : (
-      //         <Text fontSize="xs">{txHash}</Text>
-      //       )}
-      //     </>
-      //   );
-      // };
-
-      if (!sufficientAllowance && multiTxn.step === 0) {
-        toast({
-          // title: `[${multiTxn.step + 1}/${
-          //   calls.length
-          // }] Approve collateral for transfer`,
-          title: 'Approve collateral for transfer',
-          description: 'The next transaction will create your account and stake this collateral.',
-          status: 'info',
-          isClosable: true,
-          duration: 9000,
+    overrides,
+    {
+      onSuccess: async () => {
+        toast.closeAll();
+        reset({
+          collateralType: selectedCollateralType,
+          fundId: selectedFundId,
+          amount: '',
         });
-      } else {
+        await Promise.all([refetchAccounts!({ cancelRefetch: Boolean(accountId) })]);
+        if (!Boolean(accountId)) {
+          // router.push({
+          //   pathname: `/accounts/${newAccountId}`,
+          //   query: router.query,
+          // });
+          navigate(`/accounts/${newAccountId}`);
+        } else {
+          // TODO: get language from noah
+          toast({
+            title: 'Success',
+            description: 'Your staked collateral amounts have been updated.',
+            status: 'success',
+            duration: 5000,
+            isClosable: true,
+          });
+        }
+      },
+      onError: () => {
         toast({
-          title: 'Create your account',
-          description: "You'll be redirected once your account is created.",
-          status: 'info',
-          isClosable: true,
+          title: 'Could not complete account creation',
+          description: 'Please try again.',
+          status: 'error',
           duration: 9000,
+          isClosable: true,
         });
-      }
+      },
     }
-  }, [calls.length, multiTxn.status, multiTxn.step, sufficientAllowance, toast]);
+  );
+  // const { approve } = useApprove(selectedCollateralType?.address, amountBN, snxProxy?.address);
+
+  // useEffect(() => {
+  //   if (multiTxn.status === 'pending') {
+  //     // const buildToastDescription = (text: string) => {
+  //     //   // TODO: fix this; txHash not showing up :(
+  //     //   const txHash = multiTxn.currentTxn.data?.hash;
+  //     //   return (
+  //     //     <>
+  //     //       <Text fontSize="sm">{text}</Text>
+  //     //       {chain?.blockExplorers?.etherscan ? (
+  //     //         <Link
+  //     //           href={`${chain?.blockExplorers?.etherscan.url}/${txHash}`}
+  //     //           isExternal
+  //     //         >
+  //     //           Check tx on etherscan <ExternalLinkIcon mx="2px" />
+  //     //         </Link>
+  //     //       ) : (
+  //     //         <Text fontSize="xs">{txHash}</Text>
+  //     //       )}
+  //     //     </>
+  //     //   );
+  //     // };
+
+  //     if (!sufficientAllowance && multiTxn.step === 0) {
+  //       toast({
+  //         // title: `[${multiTxn.step + 1}/${
+  //         //   calls.length
+  //         // }] Approve collateral for transfer`,
+  //         title: 'Approve collateral for transfer',
+  //         description: 'The next transaction will create your account and stake this collateral.',
+  //         status: 'info',
+  //         isClosable: true,
+  //         duration: 9000,
+  //       });
+  //     } else {
+  //       toast({
+  //         title: 'Create your account',
+  //         description: "You'll be redirected once your account is created.",
+  //         status: 'info',
+  //         isClosable: true,
+  //         duration: 9000,
+  //       });
+  //     }
+  //   }
+  // }, [calls.length, multiTxn.status, multiTxn.step, sufficientAllowance, toast]);
 
   return (
     <>
