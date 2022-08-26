@@ -26,7 +26,7 @@ const config = {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/synthetixio/snx-v3-docs/tree/main/',
+          editUrl: 'https://github.com/synthetixio/js-monorepo/tree/master/v3/docs',
         },
         blog: false,
         theme: {
@@ -92,7 +92,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://snx-v3-prototype.netlify.app/',
+            href: 'https://snx-v3-prototype.vercel.app/',
             label: 'Go to App',
             className: 'button--header button button--primary button--outline',
             position: 'right',
