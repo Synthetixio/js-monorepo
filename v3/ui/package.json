@@ -41,7 +41,6 @@
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.13.0",
     "@svgr/webpack": "^6.3.1",
-    "@synthetixio/v3-contracts": "workspace:*",
     "@types/react": "^17.0.11",
     "@types/react-chartjs-2": "^2.5.7",
     "@types/react-helmet": "^6.1.5",
