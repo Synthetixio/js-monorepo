@@ -8,8 +8,8 @@ on:
         required: true
 
       version:
-        description: 'Package version (defaults to `patch`)'
-        default: 'patch'
+        description: 'Package version (defaults to `prerelease`)'
+        default: 'prerelease'
         required: false
 
 jobs:
