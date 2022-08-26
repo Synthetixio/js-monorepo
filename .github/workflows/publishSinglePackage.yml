@@ -31,7 +31,7 @@ jobs:
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - run: yarn workspaces focus '${{ github.event.inputs.package }}'
+      - run: yarn install --immutable
 
       - name: Config git identity
         run: |
