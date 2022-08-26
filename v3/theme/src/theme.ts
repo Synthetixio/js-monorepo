@@ -24,11 +24,40 @@ const Select: ComponentStyleConfig = {
   defaultProps: {
     focusBorderColor: 'cyan.500',
     iconColor: 'cyan.500',
+    errorBorderColor: 'red.500',
   },
 };
 const NumberInput: ComponentStyleConfig = {
   defaultProps: {
     focusBorderColor: 'cyan.500',
+    errorBorderColor: 'red.500',
+  },
+};
+
+const Textarea: ComponentStyleConfig = {
+  defaultProps: {
+    focusBorderColor: 'cyan.500',
+    colorScheme: 'cyan',
+    errorBorderColor: 'red.500',
+  },
+};
+
+const Alert: ComponentStyleConfig = {
+  defaultProps: {
+    variant: 'left-accent',
+  },
+  variants: {
+    'left-accent': (props) => {
+      return {
+        container: {
+          bg: `${props.colorScheme}.900`,
+          borderInlineStartColor: `${props.colorScheme}.400`,
+        },
+      };
+    },
+    solid: (props) => {
+      return { container: { bg: `${props.colorScheme}.500`, color: 'black' } };
+    },
   },
 };
 export const theme = extendTheme({
@@ -181,6 +210,8 @@ export const theme = extendTheme({
     Input,
     Select,
     NumberInput,
+    Alert,
+    Textarea,
   },
   // To be imported and used with the bgGradient prop
   // See: https://chakra-ui.com/docs/styled-system/gradient#background-gradient-api
