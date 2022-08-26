@@ -175,21 +175,6 @@ export default function Stake({
     calls.unshift([[collateralContract!.contract, 'approve', [snxProxy?.address, amountBN]]]);
   }
 
-  /*
-  [
-    [[], []],
-    [[], []]
-  ]
-
-  [
-    { address: '', functionName: '', args: [], overrides: {} },
-    { address: '', functionName: '', args: [], overrides: {} },
-  ]
-  */
-  /*
-    useApprovalWrite({ address: "0x0d1d4e623D10F9FBA5Db95830F7d3839406C6AF2", amount: '', multicalls: [], successMessage: "", errorMessage: "" });
-  */
-
   const multiTxn = useMulticall(calls, overrides, {
     onSuccess: async () => {
       toast.closeAll();

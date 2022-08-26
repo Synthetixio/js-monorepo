@@ -3,6 +3,7 @@ import { useContractReads } from 'wagmi';
 import { collateralTypesState, fundsState } from '../utils/state';
 import { useSnxProxy } from './useContract';
 import { fundsData } from '../utils/constants';
+import { StakingPositionType } from '../components/accounts/StakingPositions/types';
 
 type ContractReadsParams = Parameters<typeof useContractReads>[0];
 
@@ -29,7 +30,7 @@ export const useStakingPositions = (accountId: string) => {
   return useContractReads({
     contracts: funcCalls,
     select: (data) => {
-      const positions: Record<string, any> = {};
+      const positions: Record<string, StakingPositionType> = {};
 
       funds.forEach((f) => {
         supportedCollateralTypes.forEach((ct, idx) => {
