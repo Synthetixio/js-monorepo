@@ -86,8 +86,8 @@ export const useStakingPosition = (
     collateralType: collateral,
     accountId,
     fundName: fundsData[fundId].name,
-    collateralAmount: data.collateralAmount || 0,
-    cRatio: data.cRatio || 0,
-    debt: data.debt || 0,
+    collateralAmount: data?.collateralAmount || 0,
+    cRatio: data?.cRatio || 0,
+    debt: data?.debt || 0,
   };
 };

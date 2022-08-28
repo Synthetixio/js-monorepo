@@ -33,8 +33,8 @@ import { useRecoilState } from 'recoil';
 import { useAccount, useBalance, useNetwork } from 'wagmi';
 import { CollateralType } from '../../../utils/types';
 import { useNavigate } from 'react-router-dom';
-import { MulticallCall } from '../../../hooks/useMulticall2';
-import { useApproveMulticall } from '../../../hooks/useApproveMulticall';
+import { MulticallCall, useMulticall } from '../../../hooks/useMulticall2';
+import { useApproveCall } from '../../../hooks/useApproveCall';
 
 type FormType = {
   collateralType: CollateralType;
@@ -171,52 +171,49 @@ export default function Stake({
   //   overrides.value = amount!;
   // }
 
-  const multiTxn = useApproveMulticall(
-    calls,
-    {
-      contractAddress: collateralContract!.contract.address,
-      amount: amountBN,
-      spender: snxProxy?.address,
-    },
-    overrides,
-    {
-      onSuccess: async () => {
-        toast.closeAll();
-        reset({
-          collateralType: selectedCollateralType,
-          fundId: selectedFundId,
-          amount: '',
-        });
-        await Promise.all([refetchAccounts!({ cancelRefetch: Boolean(accountId) })]);
-        if (!Boolean(accountId)) {
-          // router.push({
-          //   pathname: `/accounts/${newAccountId}`,
-          //   query: router.query,
-          // });
-          navigate(`/accounts/${newAccountId}`);
-        } else {
-          // TODO: get language from noah
-          toast({
-            title: 'Success',
-            description: 'Your staked collateral amounts have been updated.',
-            status: 'success',
-            duration: 5000,
-            isClosable: true,
-          });
-        }
-      },
-      onError: () => {
+  const multiTxn = useMulticall(calls, overrides, {
+    onSuccess: async () => {
+      toast.closeAll();
+      reset({
+        collateralType: selectedCollateralType,
+        fundId: selectedFundId,
+        amount: '',
+      });
+      await Promise.all([refetchAccounts!({ cancelRefetch: Boolean(accountId) })]);
+      if (!Boolean(accountId)) {
+        // router.push({
+        //   pathname: `/accounts/${newAccountId}`,
+        //   query: router.query,
+        // });
+        navigate(`/accounts/${newAccountId}`);
+      } else {
+        // TODO: get language from noah
         toast({
-          title: 'Could not complete account creation',
-          description: 'Please try again.',
-          status: 'error',
-          duration: 9000,
+          title: 'Success',
+          description: 'Your staked collateral amounts have been updated.',
+          status: 'success',
+          duration: 5000,
           isClosable: true,
         });
-      },
-    }
+      }
+    },
+    onError: () => {
+      toast({
+        title: 'Could not complete account creation',
+        description: 'Please try again.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    },
+  });
+
+  const { exec } = useApproveCall(
+    collateralContract!.contract.address,
+    amountBN,
+    snxProxy?.address,
+    multiTxn.exec
   );
-  // const { approve } = useApprove(selectedCollateralType?.address, amountBN, snxProxy?.address);
 
   // useEffect(() => {
   //   if (multiTxn.status === 'pending') {
@@ -269,7 +266,7 @@ export default function Stake({
         <Box bg="gray.900" mb="8" p="6" pb="4" borderRadius="12px">
           <form
             onSubmit={handleSubmit((_data) => {
-              multiTxn.exec();
+              exec();
             })}
           >
             <Flex mb="3">
