@@ -1,8 +1,14 @@
 import { BigNumberish } from 'ethers';
 import { useCallback, useMemo } from 'react';
 import { erc20ABI, useAccount, useContractRead, useContractWrite, useNetwork } from 'wagmi';
+import { TxConfig } from './useMulticall2';
 
-export const useApprove = (contractAddress: string, amount: BigNumberish, spender: string) => {
+export const useApprove = (
+  contractAddress: string,
+  amount: BigNumberish,
+  spender: string,
+  config?: Partial<TxConfig>
+) => {
   const { address: accountAddress } = useAccount();
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
@@ -13,6 +19,12 @@ export const useApprove = (contractAddress: string, amount: BigNumberish, spende
     contractInterface: erc20ABI,
     functionName: 'approve',
     args: [spender, amount],
+    onError: (e) => {
+      config?.onError && config.onError(e);
+    },
+    onMutate: () => {
+      config?.onMutate && config.onMutate();
+    },
   });
 
   const { data: allowance, refetch: refetchAllowance } = useContractRead({
@@ -32,8 +44,9 @@ export const useApprove = (contractAddress: string, amount: BigNumberish, spende
       const txReceipt = await writeAsync();
       await txReceipt.wait();
       refetchAllowance();
+      config?.onSuccess && config.onSuccess();
     }
-  }, [refetchAllowance, sufficientAllowance, writeAsync]);
+  }, [config, refetchAllowance, sufficientAllowance, writeAsync]);
 
   return {
     isLoading,
