@@ -1,6 +1,6 @@
 {
   "name": "@synthetixio/v3-ui",
-  "version": "0.0.0",
+  "version": "0.0.1-0",
   "private": true,
   "scripts": {
     "start": "webpack-cli serve",
@@ -60,5 +60,6 @@
     "ignoreMatches": [
       "webpack-dev-server"
     ]
-  }
+  },
+  "stableVersion": "0.0.0"
 }
