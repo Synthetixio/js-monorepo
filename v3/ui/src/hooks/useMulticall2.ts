@@ -13,9 +13,9 @@ export type MulticallCall = {
 
 export type ContractWriteParams = Parameters<typeof useContractWrite>;
 
-export type MulticallConfigType = {
+export type TxConfig = {
   onSuccess: () => void;
-  onStepSuccess: (stepNumber: number) => void;
+  onMutate: () => void;
   onError: (e: Error) => void;
 };
 
@@ -38,7 +38,7 @@ type MulticallStatusType = 'idle' | 'pending' | 'success' | 'error';
 export const useMulticall = (
   calls: MulticallCall[],
   overrides: ContractWriteParams[0]['overrides'] = {},
-  config?: Partial<MulticallConfigType>
+  config?: Partial<TxConfig>
 ) => {
   const [status, setStatus] = useState<MulticallStatusType>('idle');
 
@@ -100,6 +100,9 @@ export const useMulticall = (
     functionName: callFunc!,
     args: callArgs,
     overrides,
+    onMutate: () => {
+      config?.onMutate && config.onMutate();
+    },
     onError: (e) => {
       setStatus('error');
       config?.onError && config.onError(e);
@@ -114,6 +117,10 @@ export const useMulticall = (
       setStatus('success');
       reset();
       config?.onSuccess && config.onSuccess();
+    },
+    onError: (e) => {
+      setStatus('error');
+      config?.onError && config.onError(e);
     },
   });
 

@@ -56,7 +56,10 @@ export default function Stake({
     functionName: 'getPreferredFund',
   });
   // on loading dropdown and token amount maybe use https://chakra-ui.com/docs/components/feedback/skeleton
-  const toast = useToast();
+  const toast = useToast({
+    isClosable: true,
+    duration: 9000,
+  });
   const methods = useForm<FormType>({
     mode: 'onChange',
     defaultValues: {
@@ -171,6 +174,16 @@ export default function Stake({
   // }
 
   const multiTxn = useMulticall(calls, overrides, {
+    onMutate: () => {
+      toast.closeAll();
+      toast({
+        title: 'Create your account',
+        description: "You'll be redirected once your account is created.",
+        status: 'info',
+        isClosable: true,
+        duration: 9000,
+      });
+    },
     onSuccess: async () => {
       toast.closeAll();
       reset({
@@ -180,11 +193,7 @@ export default function Stake({
       });
       await Promise.all([refetchAccounts!({ cancelRefetch: Boolean(accountId) })]);
       if (!Boolean(accountId)) {
-        // router.push({
-        //   pathname: `/accounts/${newAccountId}`,
-        //   query: router.query,
-        // });
-        navigate(`/accounts/${newAccountId}`);
+        navigate(`/accounts/${newAccountId}?chain=${chain?.network}`);
       } else {
         // TODO: get language from noah
         toast({
@@ -192,7 +201,6 @@ export default function Stake({
           description: 'Your staked collateral amounts have been updated.',
           status: 'success',
           duration: 5000,
-          isClosable: true,
         });
       }
     },
@@ -201,8 +209,6 @@ export default function Stake({
         title: 'Could not complete account creation',
         description: 'Please try again.',
         status: 'error',
-        duration: 9000,
-        isClosable: true,
       });
     },
   });
@@ -211,53 +217,25 @@ export default function Stake({
     collateralContract!.contract.address,
     amountBN,
     snxProxy?.address,
-    multiTxn.exec
+    multiTxn.exec,
+    {
+      onMutate: () => {
+        toast({
+          title: 'Approve collateral for transfer',
+          description: 'The next transaction will create your account and stake this collateral.',
+          status: 'info',
+        });
+      },
+      onError: () => {
+        toast.closeAll();
+        toast({
+          title: 'Approval failed',
+          description: 'Please try again.',
+          status: 'error',
+        });
+      },
+    }
   );
-
-  // useEffect(() => {
-  //   if (multiTxn.status === 'pending') {
-  //     // const buildToastDescription = (text: string) => {
-  //     //   // TODO: fix this; txHash not showing up :(
-  //     //   const txHash = multiTxn.currentTxn.data?.hash;
-  //     //   return (
-  //     //     <>
-  //     //       <Text fontSize="sm">{text}</Text>
-  //     //       {chain?.blockExplorers?.etherscan ? (
-  //     //         <Link
-  //     //           href={`${chain?.blockExplorers?.etherscan.url}/${txHash}`}
-  //     //           isExternal
-  //     //         >
-  //     //           Check tx on etherscan <ExternalLinkIcon mx="2px" />
-  //     //         </Link>
-  //     //       ) : (
-  //     //         <Text fontSize="xs">{txHash}</Text>
-  //     //       )}
-  //     //     </>
-  //     //   );
-  //     // };
-
-  //     if (!sufficientAllowance && multiTxn.step === 0) {
-  //       toast({
-  //         // title: `[${multiTxn.step + 1}/${
-  //         //   calls.length
-  //         // }] Approve collateral for transfer`,
-  //         title: 'Approve collateral for transfer',
-  //         description: 'The next transaction will create your account and stake this collateral.',
-  //         status: 'info',
-  //         isClosable: true,
-  //         duration: 9000,
-  //       });
-  //     } else {
-  //       toast({
-  //         title: 'Create your account',
-  //         description: "You'll be redirected once your account is created.",
-  //         status: 'info',
-  //         isClosable: true,
-  //         duration: 9000,
-  //       });
-  //     }
-  //   }
-  // }, [calls.length, multiTxn.status, multiTxn.step, sufficientAllowance, toast]);
 
   return (
     <>
