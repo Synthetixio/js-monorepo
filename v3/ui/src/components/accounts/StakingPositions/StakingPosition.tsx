@@ -1,5 +1,5 @@
 import { StakingPositionType } from './types';
-import { EditIcon, InfoIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
+import { EditIcon, ExternalLinkIcon, InfoIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
   Badge,
   Box,
@@ -21,8 +21,10 @@ import {
   Tr,
   useDisclosure,
 } from '@chakra-ui/react';
-import { BigNumber, utils } from 'ethers';
+import { BigNumber } from 'ethers';
 import { Link as RouterLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { formatValue } from '../../../utils/helpers';
 
 export default function StakingPosition({ position }: { position: StakingPositionType }) {
   // If the connected wallet doesn’t own this account token, remove/disable the interactivity
@@ -31,9 +33,6 @@ export default function StakingPosition({ position }: { position: StakingPositio
   const { isOpen: isOpenDebt, onOpen: onOpenDebt, onClose: onCloseDebt } = useDisclosure();
 
   const { collateralAmount: collateralAmountBN, collateralType, cRatio } = position;
-
-  const formatValue = (value: BigNumber, decimals: number) =>
-    parseInt(utils.formatUnits(value, decimals));
 
   const { decimals, price: priceBN, priceDecimals } = collateralType;
 
@@ -233,7 +232,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
       <Td py="4">
         {debt <= 0 ? (
           <Text fontWeight="bold" color="green">
-            {cRatio} <InfoIcon transform="translateY(-1px)" />
+            {cRatio.toString()} <InfoIcon transform="translateY(-1px)" />
           </Text>
         ) : (
           <>0%</>
@@ -303,10 +302,19 @@ export default function StakingPosition({ position }: { position: StakingPositio
           </ModalContent>
         </Modal>
       </Td>
-      <Td isNumeric>
-        <Button size="xs" colorScheme="red">
-          Unstake
-        </Button>
+      <Td>
+        <NavLink
+          to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.fundId}`}
+        >
+          <Link
+            color="blue.400"
+            display="inline-block"
+            transform="translateY(-1.5px)"
+            target="_blank"
+          >
+            <ExternalLinkIcon />
+          </Link>
+        </NavLink>
       </Td>
     </Tr>
   );

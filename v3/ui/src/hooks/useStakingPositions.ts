@@ -3,8 +3,9 @@ import { useContractReads } from 'wagmi';
 import { collateralTypesState, fundsState } from '../utils/state';
 import { useSnxProxy } from './useContract';
 import { fundsData } from '../utils/constants';
-import { StakingPositionType } from '../utils/types';
 import { useSynthetixProxyEvent } from './useContractEvent';
+import { BigNumber } from 'ethers';
+import { StakingPositionType } from '../components/accounts/StakingPositions/types';
 
 type ContractReadsParams = Parameters<typeof useContractReads>[0];
 
@@ -44,7 +45,8 @@ export const useStakingPositions = (accountId: string) => {
               fundName: fundsData[f.toString()].name,
               collateralType: ct,
               collateralAmount: data[idx].amount,
-              cRatio: data[idx + functionNames.length],
+              cRatio: BigNumber.from(data[idx + functionNames.length] || 0),
+              accountId,
             };
           }
         });
@@ -57,7 +59,6 @@ export const useStakingPositions = (accountId: string) => {
   useSynthetixProxyEvent({
     eventName: 'DelegationUpdated',
     listener: (event) => {
-      console.log('EVENT', event);
       const [userAccountId] = event;
       if (accountId === userAccountId.toString()) {
         getStakingPositions.refetch();
