@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.74.10-0",
+  "version": "2.74.10",
   "description": "Javascript library for handling networks on Optimism Layer 2",
   "source": "./src/index.ts",
   "main": "./build/index.js",
@@ -66,6 +66,5 @@
         "statements": 0
       }
     }
-  },
-  "stableVersion": "2.74.9"
+  }
 }
