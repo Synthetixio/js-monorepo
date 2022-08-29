@@ -19,8 +19,8 @@ module.exports = {
         functions: 'never',
       },
     ],
-    indent: 'off',
-    quotes: ['error', 'single'],
+    indent: 'off', // Prettier
+    quotes: 'off', // Prettier
     'no-undef': 'error',
     'prefer-const': 'error',
     semi: ['error', 'always'],
