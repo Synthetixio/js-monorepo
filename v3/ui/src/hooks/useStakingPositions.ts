@@ -3,7 +3,8 @@ import { useContractReads } from 'wagmi';
 import { collateralTypesState, fundsState } from '../utils/state';
 import { useSnxProxy } from './useContract';
 import { fundsData } from '../utils/constants';
-import { StakingPositionType } from '../components/accounts/StakingPositions/types';
+import { StakingPositionType } from '../utils/types';
+import { useSynthetixProxyEvent } from './useContractEvent';
 
 type ContractReadsParams = Parameters<typeof useContractReads>[0];
 
@@ -27,7 +28,8 @@ export const useStakingPositions = (accountId: string) => {
     });
   });
 
-  return useContractReads({
+  const getStakingPositions = useContractReads({
+    enabled: true,
     contracts: funcCalls,
     select: (data) => {
       const positions: Record<string, StakingPositionType> = {};
@@ -51,4 +53,17 @@ export const useStakingPositions = (accountId: string) => {
       return positions;
     },
   });
+
+  useSynthetixProxyEvent({
+    eventName: 'DelegationUpdated',
+    listener: (event) => {
+      console.log('EVENT', event);
+      const [userAccountId] = event;
+      if (accountId === userAccountId.toString()) {
+        getStakingPositions.refetch();
+      }
+    },
+  });
+
+  return getStakingPositions;
 };
