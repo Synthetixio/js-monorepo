@@ -1,17 +1,66 @@
 import { ComponentStyleConfig, extendTheme } from '@chakra-ui/react';
 
+const gradients = {
+  'green-cyan': {
+    500: 'linear(to-tr, green.500, cyan.500)',
+    600: 'linear(to-tr, green.600, cyan.600)',
+    700: 'linear(to-tr, green.700, cyan.800)',
+  },
+
+  grey: {
+    900: 'linear(to-tr, grey.900, blackAlpha.900)',
+  },
+
+  'pink-purple': {
+    500: 'linear(to-tr, pink.500, purple.500)',
+    600: 'linear(to-tr, pink.600, purple.600)',
+    700: 'linear(to-tr, pink.700, purple.800)',
+  },
+
+  'pink-blue': {
+    500: 'linear(to-tr, pink.500, blue.500)',
+    600: 'linear(to-tr, pink.600, blue.600)',
+    700: 'linear(to-tr, pink.700, blue.800)',
+  },
+  orange: {
+    500: 'linear(to-tr, orange.500, orange.300)',
+    600: 'linear(to-tr, orange.600, orange.400)',
+    700: 'linear(to-tr, orange.700, orange.500)',
+  },
+};
+
 const Button: ComponentStyleConfig = {
+  defaultProps: {
+    colorScheme: 'cyan',
+  },
   variants: {
     solid: {
-      bgGradient: 'gradient["green-cyan"][500]',
+      bgGradient: gradients['green-cyan'][500],
       color: 'black',
       _hover: {
-        bgGradient: 'gradient["green-cyan"][600]',
+        bgGradient: gradients['green-cyan'][600],
+        _disabled: {
+          background: gradients['green-cyan'][500],
+        },
       },
       _active: {
-        bgGradient: 'gradient["green-cyan"][700]',
+        bgGradient: gradients['green-cyan'][700],
       },
     },
+    outline: (props) => {
+      if (props.colorScheme === 'gray') {
+        return {
+          color: 'white.500',
+          borderColor: 'gray.900',
+        };
+      }
+      return {
+        color: `${props.colorScheme}.500`,
+      };
+    },
+    ghost: (props) => ({
+      color: `${props.colorScheme}.500`,
+    }),
   },
 };
 const Input: ComponentStyleConfig = {
@@ -140,6 +189,29 @@ const Badge: ComponentStyleConfig = {
       borderColor: `${props.colorScheme}.500`,
       color: `${props.colorScheme}.500`,
     }),
+  },
+};
+const Tag: ComponentStyleConfig = {
+  defaultProps: {
+    colorScheme: 'cyan',
+    variant: 'solid',
+  },
+  variants: {
+    solid: (props) => ({
+      container: {
+        background: `${props.colorScheme}.500`,
+        color: 'black',
+      },
+    }),
+  },
+};
+const Accordion: ComponentStyleConfig = {
+  baseStyle: {
+    container: {
+      borderColor: 'gray.900',
+      borderWidth: '1px',
+      borderRadius: 'base',
+    },
   },
 };
 export const theme = extendTheme({
@@ -298,37 +370,12 @@ export const theme = extendTheme({
     Checkbox,
     Radio,
     Badge,
+    Tag,
+    Accordion,
   },
   // To be imported and used with the bgGradient prop
   // See: https://chakra-ui.com/docs/styled-system/gradient#background-gradient-api
-  gradients: {
-    'green-cyan': {
-      500: 'linear(to-tr, green.500, cyan.500)',
-      600: 'linear(to-tr, green.600, cyan.600)',
-      700: 'linear(to-tr, green.700, cyan.800)',
-    },
-
-    grey: {
-      900: 'linear(to-tr, grey.900, blackAlpha.900)',
-    },
-
-    'pink-purple': {
-      500: 'linear(to-tr, pink.500, purple.500)',
-      600: 'linear(to-tr, pink.600, purple.600)',
-      700: 'linear(to-tr, pink.700, purple.800)',
-    },
-
-    'pink-blue': {
-      500: 'linear(to-tr, pink.500, blue.500)',
-      600: 'linear(to-tr, pink.600, blue.600)',
-      700: 'linear(to-tr, pink.700, blue.800)',
-    },
-    orange: {
-      500: 'linear(to-tr, orange.500, orange.300)',
-      600: 'linear(to-tr, orange.600, orange.400)',
-      700: 'linear(to-tr, orange.700, orange.500)',
-    },
-  },
+  gradients,
 
   sizes: {
     px: '1px',
