@@ -2055,18 +2055,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chakra-ui/icon@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@chakra-ui/icon@npm:3.0.9"
-  dependencies:
-    "@chakra-ui/shared-utils": 2.0.1
-  peerDependencies:
-    "@chakra-ui/system": ">=2.0.0"
-    react: ">=18"
-  checksum: ff2a47a2c8be9ac57d2cdde141834cab9b6380b246995118bc331cacdb1c9b56345063f59e5c2bea39e48bedc43c543800c02e54038062fc0a43ba1df2ef9494
-  languageName: node
-  linkType: hard
-
 "@chakra-ui/icons@npm:2.0.6, @chakra-ui/icons@npm:^2.0.6":
   version: 2.0.6
   resolution: "@chakra-ui/icons@npm:2.0.6"
@@ -2076,18 +2064,6 @@ __metadata:
     "@chakra-ui/system": ">=2.0.0"
     react: ">=18"
   checksum: d7ee790ce31a912a6c1e062e7e22c016ce2f254547885837ac95297f6eb585da7b2a721d0f5840b5fed3a72b2c8d4cce6a377be2806f4d11ce6dbc200738dd6e
-  languageName: node
-  linkType: hard
-
-"@chakra-ui/icons@npm:^2.0.9":
-  version: 2.0.9
-  resolution: "@chakra-ui/icons@npm:2.0.9"
-  dependencies:
-    "@chakra-ui/icon": 3.0.9
-  peerDependencies:
-    "@chakra-ui/system": ">=2.0.0"
-    react: ">=18"
-  checksum: ce515e1a553e2eaa8cb588d87e8cc5c025f2ae503ac556c6b9acb632c22e271c3dd8b18463a4477afd3b33161b0cecb52fdcebf70f9b11c326081029e5512293
   languageName: node
   linkType: hard
 
@@ -2415,13 +2391,6 @@ __metadata:
     "@chakra-ui/system": ">=2.0.0"
     react: ">=18"
   checksum: 53176e72d52d1f507e51561e9a1e692d4235730b0d81c3d3ad46418e4009fd94374d2164e592720fa092e754eb6c036d33090c9755620d731fd108803cf19453
-  languageName: node
-  linkType: hard
-
-"@chakra-ui/shared-utils@npm:2.0.1":
-  version: 2.0.1
-  resolution: "@chakra-ui/shared-utils@npm:2.0.1"
-  checksum: a12ee9e3d09a07481af459ee42938f0c48e98fac9995da99930a2b8db9ba70f04a7648bf792a6c9f59be6a7b6fc2e828d151ce2770a3dfb347e10d8d92bde867
   languageName: node
   linkType: hard
 
@@ -6964,7 +6933,6 @@ __metadata:
     "@babel/preset-env": ^7.13.10
     "@babel/preset-react": ^7.18.6
     "@babel/preset-typescript": ^7.13.0
-    "@chakra-ui/icons": ^2.0.9
     "@chakra-ui/react": ^2.2.6
     "@chakra-ui/storybook-addon": ^4.0.4
     "@emotion/react": ^11.10.0
