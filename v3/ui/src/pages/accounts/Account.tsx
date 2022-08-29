@@ -7,7 +7,7 @@ import { useStakingPositions } from '../../hooks';
 
 export function Account() {
   const { id: accountId } = useParams();
-  const { data: stakingPositions, isLoading } = useStakingPositions(accountId);
+  const { data: stakingPositions, isLoading } = useStakingPositions(accountId || '');
 
   return (
     <Box>
@@ -20,7 +20,7 @@ export function Account() {
       <Heading size="md" mb="3">
         Stake Collateral
       </Heading>
-      <Stake accountId={accountId} />
+      <Stake accountId={accountId} stakingPositions={stakingPositions} />
     </Box>
   );
 }
