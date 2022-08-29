@@ -6,19 +6,19 @@ sidebar_position: 1
 
 ## Opening Staking Positions
 
-Users may stake any of the accepted collateral types into the protocol and then delegate that collateral to a pool of their choice. This creates a **staking position**.
+Users may stake any of the accepted collateral types into the protocol by depositing collateral and then delegating it to a pool of their choice. This creates a **staking position**.
 
 This staking position will start to assume debt and credit from the markets backed by the pool. Users may also mint and burn snxUSD, increasing and decreasing the debt associated with their staking position. Additional collateral may also be assigned to the staking position by delegating more collateral of the same type to the same pool.
 
-Retrieve information about the accepted collateral types with the [`getCollateralTypes() function`](/). Users can stake collateral into their accounts with the [`stake()` function](/). Once collateral has been staked, users can create a staking position by delegating their collateral to a pool with the [`delegateCollateral()` function](/).
+Retrieve information about the accepted collateral types with the [`getCollateralTypes() function`](/protocol/technical-reference/smart-contracts#getcollateraltypes). Users can deposit collateral into their accounts with the [`depositCollateral()` function](/protocol/technical-reference/smart-contracts#depositcollateral). Once collateral has been deposited, users can create a staking position by delegating their collateral to a pool with the [`delegateCollateral()` function](/protocol/technical-reference/smart-contracts#depositcollateral).
 
-_Staking collateral without delegating it only moves the assets into the protocol._ Stake and delegate are typically called together using the [Multicall Module](/).
+_Depositing collateral without delegating it only moves the assets into the protocol._ Deposit and delegate are typically called together using the [Multicall Module](/protocol/technical-reference/smart-contracts#multicall-module).
 
 ## Closing Staking Positions
 
 To close (or reduce) a staking position, users must decrease the amount they’ve delegated to a pool. Note that the delegated collateral may only be reduced depending on the debt carried by the position. See [Managing Debt](./managing-debt) for more information.
 
-The [`delegateCollateral()` function](/) can be used to decrease the amount of collateral delegated. This will increase the value returned by the [`getAccountAvailableCollateral()` function](/). This is the maximum amount that can be retrieved from the protocol with the [`unstake()` function](/).
+The [`delegateCollateral()` function](/protocol/technical-reference/smart-contracts#depositcollateral) can be used to decrease the amount of collateral delegated. This will increase the value returned by the [`getAccountAvailableCollateral()` function](/protocol/technical-reference/smart-contracts#getaccountavailablecollateral). This is the maximum amount that can be retrieved from the protocol with the [`withdrawCollateral()` function](/protocol/technical-reference/smart-contracts#withdrawcollateral) or delegating again to another pool.
 
 ## Pools
 
@@ -30,11 +30,11 @@ A pool exists at ID `0` which backs no markets and never will (because it has no
 
 ### Preferred Pool
 
-The Spartan Council specifies a _preferred pool_ with an ID that can be retrieved with the [`getPreferredPool() function`](/). This is expected to be a pool owned by the Spartan Council and may receive preferential [rewards](/).
+The Spartan Council specifies a _preferred pool_ with an ID that can be retrieved with the [`getPreferredPool()` function](/protocol/technical-reference/smart-contracts#getpreferredpool). This is expected to be a pool owned by the Spartan Council and may receive rewards.
 
 ### Approved Pools
 
-The Spartan Council also specifies _approved pools_ with IDs that can be retrieved with the [`getApprovedPools() function`](/). This is expected to be a series of pools owned by the Spartan Council with exposure to different combinations of markets.
+The Spartan Council also specifies _approved pools_ with IDs that can be retrieved with the [`getApprovedPools()` function](/protocol/technical-reference/smart-contracts#getapprovedpools). This is expected to be a series of pools owned by the Spartan Council with exposure to different combinations of markets.
 
 ### Custom Pools
 

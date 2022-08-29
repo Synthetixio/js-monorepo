@@ -6,6 +6,8 @@ sidebar_position: 2
 
 ## Collateralization Ratio
 
+_Coming soon._
+
 ## Mint and Burn sUSD
 
 _Coming soon._
