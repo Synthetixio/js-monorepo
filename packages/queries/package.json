@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.0.6-0",
+  "version": "3.0.6",
   "description": "react-query for pulling synthetix data in react interfaces",
   "source": "./src/index.ts",
   "main": "./build/index.js",
@@ -95,6 +95,5 @@
         "statements": 0
       }
     }
-  },
-  "stableVersion": "3.0.5"
+  }
 }
