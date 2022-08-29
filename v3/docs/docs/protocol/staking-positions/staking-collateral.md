@@ -18,7 +18,7 @@ _Staking collateral without delegating it only moves the assets into the protoco
 
 To close (or reduce) a staking position, users must decrease the amount they’ve delegated to a pool. Note that the delegated collateral may only be reduced depending on the debt carried by the position. See [Managing Debt](./managing-debt) for more information.
 
-The [`delegateCollateral()` function](/) can be used to decrease the amount of collateral delegated. This will increase the value returned by the [`getAccountUnstakebleCollateral()` function](/). This is the maximum amount that can be retrieved from the protocol with the [`unstake()` function](/).
+The [`delegateCollateral()` function](/) can be used to decrease the amount of collateral delegated. This will increase the value returned by the [`getAccountAvailableCollateral()` function](/). This is the maximum amount that can be retrieved from the protocol with the [`unstake()` function](/).
 
 ## Pools
 
@@ -30,11 +30,11 @@ A pool exists at ID `0` which backs no markets and never will (because it has no
 
 ### Preferred Pool
 
-The Spartan Council specifies a _preferred pool_ with an ID that can be retrieved with the [`getPreferredPool() function`](). This is expected to be a pool owned by the Spartan Council and may receive preferential [rewards](/).
+The Spartan Council specifies a _preferred pool_ with an ID that can be retrieved with the [`getPreferredPool() function`](/). This is expected to be a pool owned by the Spartan Council and may receive preferential [rewards](/).
 
 ### Approved Pools
 
-The Spartan Council also specifies _approved pools_ with IDs that can be retrieved with the [`getApprovedPools() function`](). This is expected to be a series of pools owned by the Spartan Council with exposure to different combinations of markets.
+The Spartan Council also specifies _approved pools_ with IDs that can be retrieved with the [`getApprovedPools() function`](/). This is expected to be a series of pools owned by the Spartan Council with exposure to different combinations of markets.
 
 ### Custom Pools
 
