@@ -46,6 +46,7 @@ export const useStakingPositions = (accountId: string) => {
               collateralType: ct,
               collateralAmount: data[idx].amount,
               cRatio: BigNumber.from(data[idx + functionNames.length] || 0),
+              debt: data[idx + functionNames.length * 2] || BigNumber.from(0),
               accountId,
             };
           }

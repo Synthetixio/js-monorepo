@@ -214,7 +214,7 @@ export default function Stake({
     },
   });
 
-  const { exec } = useApproveCall(
+  const { exec: createAccount, isLoading } = useApproveCall(
     collateralContract!.contract.address,
     amountBN,
     snxProxy?.address,
@@ -244,7 +244,7 @@ export default function Stake({
         <Box bg="gray.900" mb="8" p="6" pb="4" borderRadius="12px">
           <form
             onSubmit={handleSubmit((_data) => {
-              exec();
+              createAccount();
             })}
           >
             <Flex mb="3">
@@ -289,7 +289,7 @@ export default function Stake({
             */}
               {hasWalletConnected ? (
                 <Button
-                  isLoading={multiTxn.status === 'pending'}
+                  isLoading={multiTxn.status === 'pending' || isLoading}
                   isDisabled={!formState.isValid}
                   size="lg"
                   colorScheme="blue"

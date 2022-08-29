@@ -32,15 +32,13 @@ export default function StakingPosition({ position }: { position: StakingPositio
   const { isOpen: isOpenFund, onOpen: onOpenFund, onClose: onCloseFund } = useDisclosure();
   const { isOpen: isOpenDebt, onOpen: onOpenDebt, onClose: onCloseDebt } = useDisclosure();
 
-  const { collateralAmount: collateralAmountBN, collateralType, cRatio } = position;
+  const { collateralAmount: collateralAmountBN, collateralType, cRatio, debt } = position;
 
   const { decimals, price: priceBN, priceDecimals } = collateralType;
 
   const collateralAmount = formatValue(collateralAmountBN, decimals);
   const price = formatValue(priceBN!, priceDecimals!);
   const collateralValue = collateralAmount * price;
-
-  const debt = 0;
 
   return (
     <Tr>
@@ -53,7 +51,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </>
       </Td>
       <Td py="4">
-        ${debt}
+        ${debt.toString()}
         <Text fontSize="xs" mt="1'">
           <Link
             as={RouterLink}
@@ -230,7 +228,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </Text>
       </Td>
       <Td py="4">
-        {debt <= 0 ? (
+        {debt.gte('0') ? (
           <Text fontWeight="bold" color="green">
             {cRatio.toString()} <InfoIcon transform="translateY(-1px)" />
           </Text>
