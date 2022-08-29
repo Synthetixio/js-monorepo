@@ -1,10 +1,10 @@
-name: Publish Single Package
+name: Publish Packages
 
 on:
   workflow_dispatch:
     inputs:
       package:
-        description: 'Package name'
+        description: 'Comma-separated packages names'
         required: true
 
       version:
@@ -38,10 +38,7 @@ jobs:
           git config --global user.email "ci@cc.snxdao.io"
           git config --global user.name "Synthetix CI"
 
-      - name: Update ${{ github.event.inputs.package }} to the new version ${{ github.event.inputs.version }}
-        run: |
-          yarn deps:version ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}
-          git commit -am "${{ github.event.inputs.package }}@${{ github.event.inputs.version }}" --allow-empty --no-verify
+      - run: yarn deps:version '${{ github.event.inputs.package }}' ${{ github.event.inputs.version }}
 
       - run: yarn version apply --all
       - run: yarn build
