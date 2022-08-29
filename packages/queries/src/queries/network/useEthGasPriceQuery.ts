@@ -64,7 +64,7 @@ const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPri
       }
     },
     {
-      enabled: !!ctx.networkId,
+      enabled: Boolean(ctx.networkId && ctx.provider),
       ...options,
     }
   );
