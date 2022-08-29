@@ -1,7 +1,19 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { Text, Box, Link, Tooltip, Input, Button, Flex, Heading, Badge } from '@chakra-ui/react';
+import { useState } from 'react';
+import { useMintBurn } from '../../../../hooks/useMintBurn';
+import { CollateralType } from '../../../../utils/constants';
 
-export default function Mint() {
+interface Props {
+  accountId: string;
+  fundId: string;
+  collateral: CollateralType;
+}
+
+export default function Mint({ accountId, fundId, collateral }: Props) {
+  const { mint } = useMintBurn(accountId, fundId, collateral);
+  const [amount, setAmount] = useState(0);
+
   return (
     <Box mb="4">
       <Heading fontSize="md" mb="1">
@@ -13,18 +25,23 @@ export default function Mint() {
       </Text>
 
       <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
-        <form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            mint();
+          }}
+        >
           <Flex mb="3">
             <Input
               flex="1"
               type="number"
               border="none"
               placeholder="0.0"
-              // value={null}
-              onChange={() => null}
+              min={0}
+              value={amount}
+              onChange={(e) => setAmount(Math.max(Number(e.target.value), 0))}
             />
             <Button
-              display="none"
               // isLoading={null}
               // isDisabled={null}
               colorScheme="blue"

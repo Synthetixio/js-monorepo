@@ -5,8 +5,15 @@ import Preview from './Manage/Preview';
 import Stake from './Manage/Stake';
 import Unstake from './Manage/Unstake';
 import { Text, Box, Button, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
+import { CollateralType } from '../../../utils/constants';
 
-export default function Manage() {
+interface Props {
+  accountId: string;
+  fundId: string;
+  collateral: CollateralType;
+}
+
+export default function Manage(props: Props) {
   return (
     <Box mb="2">
       <Text mt="2" mb="6">
@@ -34,7 +41,7 @@ export default function Manage() {
           </TabPanel>
           <TabPanel>
             <Stake />
-            <Mint />
+            <Mint {...props} />
           </TabPanel>
           <TabPanel>
             <Burn />

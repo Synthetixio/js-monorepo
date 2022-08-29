@@ -47,7 +47,7 @@ export function StakingPosition() {
 
         <TabPanels>
           <TabPanel>
-            <Manage />
+            <Manage accountId={accountId} fundId={fundId} collateral={collateral} />
           </TabPanel>
           <TabPanel>
             <Pool />
