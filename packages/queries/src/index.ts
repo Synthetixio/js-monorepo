@@ -152,3 +152,4 @@ export * from './abis/ERC20';
 
 export * from './constants';
 export * from './queries/gov/constants';
+export * from './subgraph/mainSubgraphQueries';
