@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { FC } from 'react';
 import { CollateralType } from '../../../utils/constants';
-import { useStakingPosition } from '../../../hooks/useStakingPositions';
+import { useStakingPosition } from '../../../hooks/useStakingPosition';
 import { formatValue } from '../../../utils/helpers';
 import { BigNumber } from 'ethers';
 import { currency } from '../../../utils/currency';

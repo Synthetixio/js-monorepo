@@ -7,7 +7,7 @@ import { useStakingPositions } from '../../hooks';
 
 export function Account() {
   const { id: accountId } = useParams();
-  const { data: stakingPositions, isLoading } = useStakingPositions(accountId);
+  const { data: stakingPositions, isLoading } = useStakingPositions(accountId || '');
 
   return (
     <Box>
