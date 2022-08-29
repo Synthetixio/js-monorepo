@@ -2,7 +2,6 @@ import { accountsState, chainIdState, collateralTypesState } from '../../../util
 import { contracts, fundsData, getChainById } from '../../../utils/constants';
 import { useContract, useSynthetixRead } from '../../../hooks';
 import EditPosition from '../EditPosition';
-import { StakingPositionType } from '../StakingPositions/types';
 import Balance from './Balance';
 import CollateralTypeSelector from './CollateralTypeSelector';
 import HowItWorks from './HowItWorks';
@@ -35,6 +34,7 @@ import { CollateralType } from '../../../utils/types';
 import { useNavigate } from 'react-router-dom';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall2';
 import { useApproveCall } from '../../../hooks/useApproveCall';
+import { StakingPositionType } from '../StakingPositions/types';
 
 type FormType = {
   collateralType: CollateralType;
@@ -44,10 +44,10 @@ type FormType = {
 
 export default function Stake({
   accountId,
-  stakingPositions = [],
+  stakingPositions = {},
 }: {
   accountId?: string;
-  stakingPositions?: StakingPositionType[];
+  stakingPositions?: Record<string, StakingPositionType>;
 }) {
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
@@ -113,12 +113,11 @@ export default function Stake({
 
   const calls: MulticallCall[] = useMemo(() => {
     const id = accountId ?? newAccountId;
-    const preferredFundStakingPosition = stakingPositions.find(
-      (position) => fundId && position.fundId.eq(fundId)
-    );
+    const key = `${selectedFundId}-${selectedCollateralType.symbol}`;
+    const currentStakingPosition = stakingPositions[key];
 
     const amountToDelegate = Boolean(accountId)
-      ? preferredFundStakingPosition?.collateralAmount.add(amountBN)
+      ? currentStakingPosition?.collateralAmount.add(amountBN)
       : amountBN;
 
     if (!snxProxy) return [];
@@ -156,6 +155,7 @@ export default function Stake({
     fundId,
     newAccountId,
     selectedCollateralType.address,
+    selectedCollateralType.symbol,
     selectedFundId,
     snxProxy,
     stakingPositions,

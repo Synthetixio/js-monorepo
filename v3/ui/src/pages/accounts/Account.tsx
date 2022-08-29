@@ -20,7 +20,7 @@ export function Account() {
       <Heading size="md" mb="3">
         Stake Collateral
       </Heading>
-      <Stake accountId={accountId} />
+      <Stake accountId={accountId} stakingPositions={stakingPositions} />
     </Box>
   );
 }
