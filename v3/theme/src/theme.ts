@@ -214,6 +214,72 @@ const Accordion: ComponentStyleConfig = {
     },
   },
 };
+
+const Progress: ComponentStyleConfig = {
+  defaultProps: {
+    colorScheme: 'cyan',
+    variant: 'solid',
+    borderRadius: 'full',
+  },
+  variants: {
+    solid: (props) => ({
+      filledTrack: {
+        background: `${props.colorScheme}.500`,
+        borderRadius: 'full',
+      },
+      track: {
+        borderRadius: 'full',
+      },
+    }),
+  },
+};
+
+const Tabs: ComponentStyleConfig = {
+  defaultProps: {
+    colorScheme: 'cyan',
+  },
+  variants: {
+    'solid-rounded': (props) => ({
+      tab: {
+        _selected: {
+          background: `${props.colorScheme}.500`,
+          color: 'black',
+        },
+        color: `${props.colorScheme}.500`,
+      },
+    }),
+    'soft-rounded': {
+      tab: {
+        _selected: {
+          background: 'whiteAlpha.300',
+          color: 'cyan.500',
+        },
+        color: 'cyan.500',
+      },
+    },
+  },
+};
+
+const Tooltip: ComponentStyleConfig = {
+  baseStyle: {
+    background: 'gray.900',
+    color: 'gray.900',
+  },
+};
+
+const Switch: ComponentStyleConfig = {
+  defaultProps: {
+    colorScheme: 'cyan',
+  },
+  baseStyle: {
+    track: {
+      _checked: {
+        background: 'cyan.500',
+      },
+    },
+  },
+};
+
 export const theme = extendTheme({
   initialColorMode: 'dark',
   colors: {
@@ -372,6 +438,10 @@ export const theme = extendTheme({
     Badge,
     Tag,
     Accordion,
+    Progress,
+    Tabs,
+    Tooltip,
+    Switch,
   },
   // To be imported and used with the bgGradient prop
   // See: https://chakra-ui.com/docs/styled-system/gradient#background-gradient-api
