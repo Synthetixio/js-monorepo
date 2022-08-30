@@ -22,6 +22,12 @@ const gradients = {
     600: 'linear(to-tr, pink.600, blue.600)',
     700: 'linear(to-tr, pink.700, blue.800)',
   },
+  'pink-cyan': {
+    500: 'linear(to-tr, pink.500, cyan.500)',
+    600: 'linear(to-tr, pink.600, cyan.600)',
+    700: 'linear(to-tr, pink.700, cyan.800)',
+  },
+
   orange: {
     500: 'linear(to-tr, orange.500, orange.300)',
     600: 'linear(to-tr, orange.600, orange.400)',
