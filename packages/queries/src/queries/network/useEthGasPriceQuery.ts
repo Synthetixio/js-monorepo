@@ -39,7 +39,7 @@ const getGasPriceFromProvider = async (provider: Provider) => {
 
 const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPrices, Error>) => {
   return useQuery<GasPrices, Error>(
-    ['network', 'gasPrice', ctx.networkId],
+    ['network', 'gasPrice', ctx.networkId, ctx.provider],
     async () => {
       if (!ctx.provider) throw Error('Expected ctx.provider to be defined');
       try {
