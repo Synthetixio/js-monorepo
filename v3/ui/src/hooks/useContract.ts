@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { useRecoilState } from 'recoil';
 import { useProvider } from 'wagmi';
-import { getChainById } from '../utils/constants';
+import { contracts, getChainById } from '../utils/constants';
 import { chainIdState } from '../utils/state';
 
 export const getContract = (
@@ -34,3 +34,5 @@ export const useContract = (name: string) => {
 
   return getContract(name, provider, localChainId);
 };
+
+export const useSnxProxy = () => useContract(contracts.SYNTHETIX_PROXY);

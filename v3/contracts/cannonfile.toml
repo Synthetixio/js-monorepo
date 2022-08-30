@@ -72,6 +72,7 @@ args = [
     "<%= imports.aggregator_lusd.contracts.aggregator.address %>",
     "1500000000000000000",
     "1100000000000000000",
+    "1000000000000000000",
     true,
 ]
 depends = ["import.synthetix", "import.lusd", "import.aggregator_lusd"]
@@ -85,6 +86,7 @@ args = [
     "<%= imports.aggregator_snx.contracts.aggregator.address %>",
     "4000000000000000000",
     "2000000000000000000",
+    "1000000000000000000",
     true,
 ]
 depends = ["import.synthetix", "import.snx", "import.aggregator_snx"]
@@ -98,6 +100,7 @@ args = [
     "<%= imports.aggregator_weth.contracts.aggregator.address %>",
     "3000000000000000000",
     "1500000000000000000",
+    "1000000000000000000",
     true,
 ]
 depends = ["import.synthetix", "contract.WETH", "import.aggregator_weth"]

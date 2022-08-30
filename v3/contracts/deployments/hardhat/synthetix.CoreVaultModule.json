@@ -215,12 +215,6 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "bytes32",
-          "name": "liquidityItemId",
-          "type": "bytes32"
-        },
-        {
-          "indexed": false,
           "internalType": "uint256",
           "name": "accountId",
           "type": "uint256"
@@ -614,30 +608,6 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        }
-      ],
-      "name": "debtPerShare",
-      "outputs": [
-        {
-          "internalType": "int256",
-          "name": "",
-          "type": "int256"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
           "name": "accountId",
           "type": "uint256"
         },
@@ -665,42 +635,6 @@
       "name": "delegateCollateral",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "bytes32",
-          "name": "liquidityItemId",
-          "type": "bytes32"
-        }
-      ],
-      "name": "getLiquidityItem",
-      "outputs": [
-        {
-          "components": [
-            {
-              "internalType": "uint128",
-              "name": "usdMinted",
-              "type": "uint128"
-            },
-            {
-              "internalType": "int128",
-              "name": "cumulativeDebt",
-              "type": "int128"
-            },
-            {
-              "internalType": "uint128",
-              "name": "leverage",
-              "type": "uint128"
-            }
-          ],
-          "internalType": "struct FundVaultStorage.LiquidityItem",
-          "name": "liquidityItem",
-          "type": "tuple"
-        }
-      ],
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -781,6 +715,30 @@
           "type": "uint256"
         }
       ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "vaultCollateralRatio",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
@@ -809,6 +767,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x341750d18a44ee0f41c5e8af77f9d4958a0a3b2509f6ff74ae8afb83f535bcdd",
+  "deployTxnHash": "0x6b7d611fa729e173b7a8b47b5699e487eff0346a104e03f9af6777eb470e8720",
   "deployedOn": "run.deploy_core"
 }

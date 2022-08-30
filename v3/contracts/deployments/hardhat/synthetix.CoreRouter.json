@@ -780,6 +780,12 @@
         },
         {
           "indexed": false,
+          "internalType": "uint256",
+          "name": "liquidationReward",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
           "internalType": "bool",
           "name": "enabled",
           "type": "bool"
@@ -870,6 +876,11 @@
         {
           "internalType": "uint256",
           "name": "minimumCRatio",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "liquidationReward",
           "type": "uint256"
         },
         {
@@ -1256,12 +1267,6 @@
     {
       "anonymous": false,
       "inputs": [
-        {
-          "indexed": false,
-          "internalType": "bytes32",
-          "name": "liquidityItemId",
-          "type": "bytes32"
-        },
         {
           "indexed": false,
           "internalType": "uint256",
@@ -1814,6 +1819,11 @@
       "type": "error"
     },
     {
+      "inputs": [],
+      "name": "MustBeVaultLiquidated",
+      "type": "error"
+    },
+    {
       "anonymous": false,
       "inputs": [
         {
@@ -1854,6 +1864,43 @@
         }
       ],
       "name": "Liquidation",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "debtLiquidated",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "collateralLiquidated",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amountRewarded",
+          "type": "uint256"
+        }
+      ],
+      "name": "VaultLiquidation",
       "type": "event"
     },
     {
@@ -1935,18 +1982,28 @@
           "internalType": "address",
           "name": "collateralType",
           "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "liquidateAsAccountId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxUsd",
+          "type": "uint256"
         }
       ],
       "name": "liquidateVault",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "amountRewarded",
+          "name": "amountLiquidated",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
-          "name": "collateralLiquidated",
+          "name": "collateralRewarded",
           "type": "uint256"
         }
       ],
@@ -2403,30 +2460,6 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        }
-      ],
-      "name": "debtPerShare",
-      "outputs": [
-        {
-          "internalType": "int256",
-          "name": "",
-          "type": "int256"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
           "name": "accountId",
           "type": "uint256"
         },
@@ -2454,42 +2487,6 @@
       "name": "delegateCollateral",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "bytes32",
-          "name": "liquidityItemId",
-          "type": "bytes32"
-        }
-      ],
-      "name": "getLiquidityItem",
-      "outputs": [
-        {
-          "components": [
-            {
-              "internalType": "uint128",
-              "name": "usdMinted",
-              "type": "uint128"
-            },
-            {
-              "internalType": "int128",
-              "name": "cumulativeDebt",
-              "type": "int128"
-            },
-            {
-              "internalType": "uint128",
-              "name": "leverage",
-              "type": "uint128"
-            }
-          ],
-          "internalType": "struct FundVaultStorage.LiquidityItem",
-          "name": "liquidityItem",
-          "type": "tuple"
-        }
-      ],
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -2567,6 +2564,30 @@
         {
           "internalType": "uint256",
           "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fundId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "vaultCollateralRatio",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
           "type": "uint256"
         }
       ],
@@ -2723,6 +2744,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xbd3b8aa056549e7c9ab66bbd937ad7c7af1fb7c5a038f3e3722b792cfac18a5e",
+  "deployTxnHash": "0x013ffccbdedc4899e173ab28690b65799b5b499ed63953afa03607a7d714be33",
   "deployedOn": "run.deploy_core"
 }

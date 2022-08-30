@@ -2,7 +2,13 @@
 sidebar_position: 2
 ---
 
-# Mint and Burn snxUSD
+# Managing Debt
+
+## Collateralization Ratio
+
+_Coming soon._
+
+## Mint and Burn sUSD
 
 _Coming soon._
 
