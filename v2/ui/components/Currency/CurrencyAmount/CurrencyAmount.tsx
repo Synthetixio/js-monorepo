@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { formatCurrency } from 'utils/formatters/number';
+import { formatCurrency, convertCurrency } from 'utils/formatters/number';
 
 import { CurrencyKey } from 'constants/currency';
 
 import { ContainerRow } from '../common';
-import { wei, WeiSource } from '@synthetixio/wei';
+import { WeiSource } from '@synthetixio/wei';
 
 type CurrencyAmountProps = {
   amountCurrencyKey: CurrencyKey;
@@ -34,11 +34,7 @@ export const CurrencyAmount: FC<CurrencyAmountProps> = ({
     {showValue && <Amount className="amount">{formatCurrency(amountCurrencyKey, amount)}</Amount>}
     {showTotalValue && (
       <TotalValue className="total-value">
-        {formatCurrency(
-          valueCurrencyKey,
-          conversionRate !== null ? wei(totalValue).div(conversionRate) : totalValue,
-          { sign }
-        )}
+        {formatCurrency(valueCurrencyKey, convertCurrency(totalValue, conversionRate), { sign })}
       </TotalValue>
     )}
   </Container>

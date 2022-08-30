@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import ChangePercent from 'components/ChangePercent';
 import { CurrencyKey } from 'constants/currency';
-import { formatCurrency } from 'utils/formatters/number';
+import { formatCurrency, convertCurrency } from 'utils/formatters/number';
 import { ContainerRow } from '../common';
-import { wei, WeiSource } from '@synthetixio/wei';
+import { WeiSource } from '@synthetixio/wei';
 
 type CurrencyPriceProps = {
   currencyKey: CurrencyKey;
@@ -25,13 +25,7 @@ export const CurrencyPrice: FC<CurrencyPriceProps> = ({
   return (
     <Container {...rest}>
       <Price className="price">
-        {formatCurrency(
-          currencyKey,
-          conversionRate !== null ? wei(price).div(conversionRate) : price,
-          {
-            sign,
-          }
-        )}
+        {formatCurrency(currencyKey, convertCurrency(price, conversionRate), { sign })}
       </Price>
       {change != null && <ChangePercent className="percent" value={change} />}
     </Container>

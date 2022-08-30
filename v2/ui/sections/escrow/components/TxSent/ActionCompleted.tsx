@@ -19,8 +19,8 @@ type ActionCompletedProps = {
 
 const ActionCompleted: FC<ActionCompletedProps> = ({
   resetTransaction,
-  vestingAmount,
-  currencyKey,
+  vestingAmount = '',
+  currencyKey = '',
   hash,
   isMigration = false,
 }) => {
@@ -45,9 +45,7 @@ const ActionCompleted: FC<ActionCompletedProps> = ({
           <InfoData>
             {isMigration
               ? t('escrow.actions.migration.completed.escrow-schedule')
-              : formatCurrency(currencyKey as string, vestingAmount, {
-                  currencyKey: currencyKey,
-                })}
+              : formatCurrency(currencyKey, vestingAmount, { currencyKey })}
           </InfoData>
         </InfoContainer>
       </FlexDivCentered>

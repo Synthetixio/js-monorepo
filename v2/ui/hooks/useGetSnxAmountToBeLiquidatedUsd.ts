@@ -2,6 +2,13 @@ import { useQuery } from 'react-query';
 import Connector from 'containers/Connector';
 import Wei, { wei } from '@synthetixio/wei';
 
+function calcAmountWithPenalty(value: Wei, penalty?: Wei): Wei {
+  if (penalty !== undefined) {
+    return wei(value).mul(wei(1).add(penalty));
+  }
+  return value;
+}
+
 const useGetSnxAmountToBeLiquidatedUsd = (
   debtBalance?: Wei,
   collateralInUsd?: Wei,
@@ -33,8 +40,11 @@ const useGetSnxAmountToBeLiquidatedUsd = (
       ]).then((x) => x.map((x) => wei(x)));
 
       return {
-        amountToSelfLiquidateUsd: amountToFixCRatioUsdSelf.mul(wei(1).add(selfLiquidationPenalty)),
-        amountToLiquidateUsd: amountToFixCratioUsd.mul(wei(1).add(liquidationPenalty)),
+        amountToSelfLiquidateUsd: calcAmountWithPenalty(
+          amountToFixCRatioUsdSelf,
+          selfLiquidationPenalty
+        ),
+        amountToLiquidateUsd: calcAmountWithPenalty(amountToFixCratioUsd, liquidationPenalty),
       };
     },
     {

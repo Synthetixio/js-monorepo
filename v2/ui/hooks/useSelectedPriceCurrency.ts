@@ -1,4 +1,4 @@
-import Wei from '@synthetixio/wei';
+import type { Wei } from '@synthetixio/wei';
 import { useCallback } from 'react';
 
 import { useRecoilValue } from 'recoil';
@@ -12,10 +12,12 @@ const useSelectedPriceCurrency = () => {
   const exchangeRatesQuery = useExchangeRatesQuery();
 
   const exchangeRates = exchangeRatesQuery.data ?? null;
-  const selectPriceCurrencyRate = exchangeRates && exchangeRates[selectedPriceCurrency.name];
+  const selectPriceCurrencyRate = exchangeRates
+    ? exchangeRates[selectedPriceCurrency.name]
+    : undefined;
 
   const getPriceAtCurrentRate = useCallback(
-    (price: Wei) => (selectPriceCurrencyRate != null ? price.div(selectPriceCurrencyRate) : price),
+    (price: Wei): Wei => (selectPriceCurrencyRate ? price.div(selectPriceCurrencyRate) : price),
     [selectPriceCurrencyRate]
   );
 

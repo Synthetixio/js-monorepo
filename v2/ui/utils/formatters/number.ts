@@ -87,6 +87,13 @@ export const formatCurrency = (
     ? formatFiatCurrency(value, options)
     : formatCryptoCurrency(value, options);
 
+export function convertCurrency(value: WeiSource, conversionRate?: WeiSource): WeiSource {
+  if (conversionRate !== undefined) {
+    return wei(value).div(conversionRate);
+  }
+  return value;
+}
+
 export const formatPercent = (value: WeiSource, options?: { minDecimals: number }) => {
   const decimals = options?.minDecimals ?? 2;
 

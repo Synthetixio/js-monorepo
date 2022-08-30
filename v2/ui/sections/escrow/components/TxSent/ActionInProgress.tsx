@@ -24,8 +24,8 @@ type ActionInProgressProps = {
 };
 
 const ActionInProgress: FC<ActionInProgressProps> = ({
-  vestingAmount,
-  currencyKey,
+  vestingAmount = '',
+  currencyKey = '',
   hash,
   isMigration = false,
 }) => {
@@ -50,7 +50,7 @@ const ActionInProgress: FC<ActionInProgressProps> = ({
           <InfoData>
             {isMigration
               ? t('escrow.actions.migration.in-progress.escrow-schedule')
-              : formatCurrency(currencyKey as string, vestingAmount, { currencyKey: currencyKey })}
+              : formatCurrency(currencyKey, vestingAmount, { currencyKey: currencyKey })}
           </InfoData>
         </InfoContainer>
       </FlexDivCentered>

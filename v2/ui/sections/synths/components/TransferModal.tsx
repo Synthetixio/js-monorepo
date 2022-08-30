@@ -77,7 +77,7 @@ const TransferModal: FC<TransferModalProps> = ({
   let error: string | null = null;
   if (!ethers.utils.isAddress(destinationAddress))
     error = t('synths.transfer.error.invalid-address');
-  if (transferAmountWei.gt(currentAsset?.balance))
+  if (currentAsset?.balance !== undefined && transferAmountWei.gt(currentAsset.balance))
     error = t('synths.transfer.error.insufficient-balance');
 
   const renderButton = () => {

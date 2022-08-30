@@ -71,7 +71,9 @@ const AssetsTable: FC<AssetsTableProps> = ({
 
   const { selectedPriceCurrency, selectPriceCurrencyRate } = useSelectedPriceCurrency();
   const totalValueString = totalValue.toString();
-  const selectPriceCurrencyRateString = selectPriceCurrencyRate?.toString();
+  const selectPriceCurrencyRateString = selectPriceCurrencyRate
+    ? selectPriceCurrencyRate.toString()
+    : '';
   const assetColumns: any[] = useMemo(() => {
     if (!isAppReady) {
       return [];

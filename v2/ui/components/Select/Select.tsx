@@ -4,6 +4,7 @@ import { useTheme } from 'styled-components';
 
 import { IndicatorSeparator, DropdownIndicator, MultiValueRemove } from './components';
 
+// @ts-ignore
 type SelectProps<T> = Props<T> & {
   variant?: 'solid' | 'outline';
   hideArrow?: boolean;
@@ -147,6 +148,7 @@ function Select<T>(props: SelectProps<T>) {
   const { components, ...rest } = props;
 
   return (
+    // @ts-ignore
     <ReactSelect
       styles={computedStyles}
       classNamePrefix="react-select"
