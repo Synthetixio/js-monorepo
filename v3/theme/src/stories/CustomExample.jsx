@@ -123,7 +123,7 @@ export const CustomExample = ({ content, buttonLabel, ...props }) => {
         <InfoIcon />
       </Tooltip>
       <Switch />
-      <Selector rightIcon={<InfoIcon />}>sup</Selector>
+      <Selector rightIcon={<InfoIcon />}>Clear Debt</Selector>
     </Box>
   );
 };
