@@ -156,6 +156,12 @@
         },
         {
           "indexed": false,
+          "internalType": "uint256",
+          "name": "liquidationReward",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
           "internalType": "bool",
           "name": "enabled",
           "type": "bool"
@@ -246,6 +252,11 @@
         {
           "internalType": "uint256",
           "name": "minimumCRatio",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "liquidationReward",
           "type": "uint256"
         },
         {
@@ -565,6 +576,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x3fbc1b334dc1bd0ccac57ef7eee08e8ae003bde4a9e943415218c532763b8fce",
+  "deployTxnHash": "0xe18a727c169e5a29ab3f28a7c38ad4c3cb32d57b80d2d18556ac6a9a72e6fd6e",
   "deployedOn": "run.deploy_core"
 }

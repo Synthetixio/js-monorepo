@@ -125,12 +125,6 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "bytes32",
-          "name": "liquidityItemId",
-          "type": "bytes32"
-        },
-        {
-          "indexed": false,
           "internalType": "uint256",
           "name": "accountId",
           "type": "uint256"
@@ -461,6 +455,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x19318561995a4ede66d13d522778ab737092d6f748c533367afdb279e374b5a1",
+  "deployTxnHash": "0xe542f030da4a8b12db7176bee17535872b4bc703ffee249c4cd31981120684b3",
   "deployedOn": "run.deploy_core"
 }

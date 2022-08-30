@@ -7,6 +7,11 @@ export const collateralTypesState = atom<Array<CollateralType>>({
   default: [],
 });
 
+export const fundsState = atom<Array<string>>({
+  key: 'funds',
+  default: [],
+});
+
 type RefetchType = ReturnType<typeof useContractRead>['refetch'];
 export const accountsState = atom<{
   accounts: Array<number>;

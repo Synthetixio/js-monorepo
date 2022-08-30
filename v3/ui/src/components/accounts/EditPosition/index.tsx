@@ -1,5 +1,3 @@
-import { contracts, fundsData } from '../../../utils/constants';
-import StakerOption from './StakerOption';
 import {
   Box,
   Button,
@@ -13,8 +11,10 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { useContractReads } from 'wagmi';
-import { useContract } from '../../../hooks';
+import { useRecoilValue } from 'recoil';
+import { fundsData } from '../../../utils/constants';
+import { fundsState } from '../../../utils/state';
+import StakerOption from './StakerOption';
 
 const NO_FUND_TAB_INDEX = 1;
 
@@ -23,33 +23,7 @@ type PropsType = {
 };
 
 export default function EditPosition({ onClose }: PropsType) {
-  const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
-
-  const snxContractData = {
-    addressOrName: snxProxy?.address,
-    contractInterface: snxProxy?.abi,
-  };
-
-  const { data } = useContractReads({
-    contracts: [
-      {
-        ...snxContractData,
-        functionName: 'getPreferredFund',
-      },
-      {
-        ...snxContractData,
-        functionName: 'getApprovedFunds',
-      },
-    ],
-  });
-
-  const funds = data
-    ? [
-        data[0].toString(),
-        ...data[1].filter((id) => !id.eq(data[0])).map((fundId) => fundId.toString()),
-      ]
-    : [];
-
+  const funds = useRecoilValue(fundsState);
   const { setValue } = useFormContext();
   const fundValue = useWatch({
     name: 'fundId',

@@ -8,3 +8,5 @@ packages/queries/subgraphs
 cache
 artifacts
 .docusaurus
+v3/contracts/src
+v3/contracts/deployments
