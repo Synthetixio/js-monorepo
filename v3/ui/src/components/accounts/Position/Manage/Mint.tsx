@@ -28,7 +28,7 @@ export default function Mint({ accountId, fundId, collateral }: Props) {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            mint();
+            mint(amount);
           }}
         >
           <Flex mb="3">
@@ -38,6 +38,7 @@ export default function Mint({ accountId, fundId, collateral }: Props) {
               border="none"
               placeholder="0.0"
               min={0}
+              step="0.001"
               value={amount}
               onChange={(e) => setAmount(Math.max(Number(e.target.value), 0))}
             />

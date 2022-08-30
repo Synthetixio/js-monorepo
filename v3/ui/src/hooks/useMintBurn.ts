@@ -13,14 +13,11 @@ export const useMintBurn = (
 ) => {
   const snxProxy = useSnxProxy();
 
-  const depositAmount = ethers.utils.parseEther('2');
-
   const { writeAsync: mintTx, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
     addressOrName: snxProxy?.address,
     contractInterface: snxProxy?.abi,
     functionName: 'mintUSD',
-    args: [accountId, fundId, collateral.address, depositAmount],
     onError: (e) => {
       config?.onError && config.onError(e);
     },
@@ -29,11 +26,17 @@ export const useMintBurn = (
     },
   });
 
-  const mint = useCallback(async () => {
-    try {
-      await mintTx();
-    } catch (error) {}
-  }, [mintTx]);
+  const mint = useCallback(
+    async (amount: number) => {
+      try {
+        const depositAmount = ethers.utils.parseEther(`${amount}`);
+        await mintTx({
+          recklesslySetUnpreparedArgs: [accountId, fundId, collateral.address, depositAmount],
+        });
+      } catch (error) {}
+    },
+    [accountId, collateral.address, fundId, mintTx]
+  );
 
   return {
     isLoading,

@@ -53,7 +53,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </>
       </Td>
       <Td py="4">
-        ${debt}
+        ${formatValue(debt)}
         <Text fontSize="xs" mt="1'">
           <Link
             as={RouterLink}
