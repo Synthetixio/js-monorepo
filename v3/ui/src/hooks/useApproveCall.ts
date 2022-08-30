@@ -10,7 +10,7 @@ export const useApproveCall = (
   call: () => Promise<void>,
   config?: Partial<TxConfig>
 ) => {
-  const { approve } = useApprove(contractAddress, amount, spender, config);
+  const { approve, isLoading } = useApprove(contractAddress, amount, spender, config);
 
   const exec = useCallback(async () => {
     try {
@@ -20,6 +20,7 @@ export const useApproveCall = (
   }, [call, approve]);
 
   return {
+    isLoading,
     exec,
   };
 };

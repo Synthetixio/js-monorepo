@@ -43,17 +43,64 @@ async function run() {
 
   console.log(`${fgCyan}Dependency update cascade:${fgReset}`);
   console.dir(cascade, { depth: null });
-  const [name, version] = process.argv.slice(2);
-  if (name && version) {
-    console.log(`${fgCyan}Bumping ${fgGreen}${name}${fgCyan} to ${fgYellow}${version}${fgReset}`);
-    await exec(`yarn workspace ${name} version --deferred ${version}`);
+  const [namesRaw, version] = process.argv.slice(2);
+  const names = namesRaw
+    .split(',')
+    .map((name) => `${name}`.trim())
+    .filter((name) => name in cascade);
 
-    for await (const pkg of cascade[name]) {
-      console.log(
-        `${fgCyan}Bumping dependency ${fgGreen}${pkg}${fgCyan} to ${fgYellow}patch${fgReset}`
-      );
-      await exec(`yarn workspace ${pkg} version --deferred patch`);
+  if (names.length < 1) {
+    throw new Error('Package or comma separated multiple packages must be specified');
+  }
+
+  if (!version) {
+    throw new Error('Version must be specified');
+  }
+
+  if (names.length > 1 && !['major', 'minor', 'patch', 'prerelease'].includes(version)) {
+    throw new Error(
+      "When publishing packages can only use one of these versions: 'major', 'minor', 'patch', 'prerelease'"
+    );
+  }
+
+  const updates = Array.from(new Set(names.concat(names.flatMap((name) => cascade[name])))).map(
+    (name) => {
+      switch (true) {
+        // If name was manually listed apply version unconditionally
+        case names.includes(name):
+          console.log(
+            `${fgCyan}Bumping dependency ${fgGreen}${name}${fgCyan} to ${fgYellow}${version}${fgReset}`
+          );
+          return `yarn workspace ${name} version --deferred ${version}`;
+
+        // When publishing exact version like `1.2.3`, update all dependent packages with `patch` strategy
+        case /^\d+\.\d+\.\d+$/.test(version):
+        // Use `patch` strategy for any other full release
+        case ['major', 'minor', 'patch'].includes(version): {
+          console.log(
+            `${fgCyan}Bumping dependency ${fgGreen}${name}${fgCyan} to ${fgYellow}patch${fgReset}`
+          );
+          return `yarn workspace ${name} version --deferred patch`;
+        }
+
+        // When publishing pre-release version like `1.2.3-whatever`, update all dependent packages with `prerelease` strategy
+        case /^\d+\.\d+\.\d+-.+$/.test(version):
+        // Same for `prerelease`
+        case ['prerelease'].includes(version):
+        // And for any other unknown case
+        default: {
+          console.log(
+            `${fgCyan}Bumping dependency ${fgGreen}${name}${fgCyan} to ${fgYellow}prerelease${fgReset}`
+          );
+          return `yarn workspace ${name} version --deferred prerelease`;
+        }
+      }
     }
+  );
+
+  for await (const update of updates) {
+    console.log(`${fgCyan}Executing update ${fgGreen}${update}${fgReset}`);
+    await exec(update);
   }
 }
 run();

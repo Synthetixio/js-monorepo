@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.74.2",
+  "version": "2.74.3",
   "description": "Convenient BigNumber library for web3",
   "source": "./src/index.ts",
   "main": "./build/index.js",

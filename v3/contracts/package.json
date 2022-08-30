@@ -49,7 +49,7 @@
     "clean": "shx rm -rf ./artifacts ./cache ./coverage ./src/types ./coverage.json",
     "commit": "git-cz",
     "compile": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat compile",
-    "test": "hardhat test",
+    "test": "echo Skip contract tests || hardhat test",
     "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain",
     "cannon-build": "hardhat cannon:build",
     "cannon": "cannon",

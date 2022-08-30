@@ -32,5 +32,7 @@ export type StakingPositionType = {
 
   cRatio: BigNumber;
 
+  debt: BigNumber;
+
   accountId: string;
 };
