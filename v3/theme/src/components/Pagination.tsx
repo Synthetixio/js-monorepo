@@ -1,6 +1,6 @@
 import { Box, Flex, IconButton, Select, Text } from '@chakra-ui/react';
 import { ChevronRightIcon, ChevronLeftIcon } from '@chakra-ui/icons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface PaginationProps {
   text: string;
@@ -12,6 +12,34 @@ interface PaginationProps {
   onChange: (activeIndexes: [number, number]) => void;
 }
 
+const getCurrentPage = ({
+  ltr,
+  currentPage,
+  pageSize,
+  maxLength,
+}: {
+  ltr: boolean;
+  pageSize: number;
+  maxLength: number;
+  currentPage: [number, number];
+}): [number, number] => {
+  if (ltr) {
+    const biggerAsMaxLength = currentPage[1] + pageSize > maxLength;
+    if (biggerAsMaxLength) {
+      return [maxLength - pageSize, maxLength];
+    } else {
+      return [currentPage[0] + pageSize, currentPage[1] + pageSize];
+    }
+  } else {
+    const isSmallerOrEvenToZero = currentPage[0] - pageSize <= 0;
+    if (isSmallerOrEvenToZero) {
+      return [1, pageSize];
+    } else {
+      return [currentPage[0] - pageSize, currentPage[1] - pageSize];
+    }
+  }
+};
+
 export default function Pagination({
   text = 'Show rows per page',
   dropdownOptions = [8, 16, 24],
@@ -20,32 +48,17 @@ export default function Pagination({
 }: PaginationProps) {
   const [pageSize, setPageSite] = useState(dropdownOptions[0]);
   const [currentPage, setCurrentPage] = useState<[number, number]>([1, pageSize]);
-  const currentPageString = currentPage.toString();
   const handleButtonClick = (ltr: boolean) => {
-    if (ltr) {
-      const biggerAsMaxLength = currentPage[1] + pageSize > maxLength;
-      if (biggerAsMaxLength) {
-        setCurrentPage([maxLength - pageSize, maxLength]);
-      } else {
-        setCurrentPage([currentPage[0] + pageSize, currentPage[1] + pageSize]);
-      }
-    } else {
-      const isSmallerOrEvenToZero = currentPage[0] - pageSize <= 0;
-      if (isSmallerOrEvenToZero) {
-        setCurrentPage([1, pageSize]);
-      } else {
-        setCurrentPage([currentPage[0] - pageSize, currentPage[1] - pageSize]);
-      }
-    }
+    const newCurrentPage = getCurrentPage({
+      ltr,
+      currentPage,
+      pageSize,
+      maxLength,
+    });
+    setCurrentPage(newCurrentPage);
+    onChange([newCurrentPage[0] - 1, newCurrentPage[1] - 1]);
   };
 
-  useEffect(() => {
-    setCurrentPage([1, pageSize]);
-  }, [pageSize]);
-
-  useEffect(() => {
-    onChange(currentPageString.split(',').map((page) => Number(page) - 1) as [number, number]);
-  }, [currentPageString]);
   return (
     <Flex alignItems={'center'} gap="2">
       <Text fontSize={'sm'} fontFamily="body" color="gray.700">
@@ -53,7 +66,11 @@ export default function Pagination({
       </Text>
       <Box borderWidth="1px" borderStyle="solid" borderColor="gray.900" borderRadius="6px">
         <Select
-          onChange={(value) => setPageSite(Number(value.target.value))}
+          onChange={(value) => {
+            const newPageSize = Number(value.target.value);
+            setPageSite(newPageSize);
+            setCurrentPage([1, newPageSize]);
+          }}
           iconColor="cyan.500"
           size={'sm'}
         >
