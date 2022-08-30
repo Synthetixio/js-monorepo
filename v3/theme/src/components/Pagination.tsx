@@ -6,43 +6,46 @@ interface PaginationProps {
   text: string;
   dropdownOptions: number[];
   maxLength: number;
+  /**
+   * @returns the two indexes that the array needs to be sliced.
+   */
   onChange: (activeIndexes: [number, number]) => void;
 }
 
 export default function Pagination({
   text = 'Show rows per page',
-  dropdownOptions,
+  dropdownOptions = [8, 16, 24],
   maxLength,
   onChange,
 }: PaginationProps) {
   const [pageSize, setPageSite] = useState(dropdownOptions[0]);
-  const [currentPages, setCurrentPages] = useState<[number, number]>([1, pageSize]);
+  const [currentPage, setCurrentPage] = useState<[number, number]>([1, pageSize]);
+  const currentPageString = currentPage.toString();
   const handleButtonClick = (ltr: boolean) => {
     if (ltr) {
-      const biggerAsMaxLength = currentPages[1] + pageSize > maxLength;
+      const biggerAsMaxLength = currentPage[1] + pageSize > maxLength;
       if (biggerAsMaxLength) {
-        setCurrentPages([maxLength - pageSize, maxLength]);
+        setCurrentPage([maxLength - pageSize, maxLength]);
       } else {
-        setCurrentPages([currentPages[0] + pageSize, currentPages[1] + pageSize]);
+        setCurrentPage([currentPage[0] + pageSize, currentPage[1] + pageSize]);
       }
     } else {
-      const isSmallerAsZero = currentPages[0] - pageSize <= 0;
-      if (isSmallerAsZero) {
-        setCurrentPages([1, pageSize]);
+      const isSmallerOrEvenToZero = currentPage[0] - pageSize <= 0;
+      if (isSmallerOrEvenToZero) {
+        setCurrentPage([1, pageSize]);
       } else {
-        setCurrentPages([currentPages[0] - pageSize, currentPages[1] - pageSize]);
+        setCurrentPage([currentPage[0] - pageSize, currentPage[1] - pageSize]);
       }
     }
   };
+
   useEffect(() => {
-    if (currentPages[0] + pageSize >= maxLength) {
-      setCurrentPages([maxLength - pageSize, maxLength]);
-    } else {
-      setCurrentPages([currentPages[0], currentPages[0] + pageSize]);
-    }
+    setCurrentPage([1, pageSize]);
   }, [pageSize]);
 
-  useEffect(() => onChange(currentPages), [currentPages]);
+  useEffect(() => {
+    onChange(currentPageString.split(',').map((page) => Number(page) - 1) as [number, number]);
+  }, [currentPageString]);
   return (
     <Flex alignItems={'center'} gap="2">
       <Text fontSize={'sm'} fontFamily="body" color="gray.700">
@@ -62,18 +65,18 @@ export default function Pagination({
         </Select>
       </Box>
       <Text fontFamily="body" color="white" fontSize={'sm'}>
-        {currentPages[0]}-{currentPages[1]} of {maxLength}
+        {currentPage[0]}-{currentPage[1]} of {maxLength}
       </Text>
       <IconButton
         icon={<ChevronLeftIcon />}
-        disabled={currentPages[0] === 1}
+        disabled={currentPage[0] === 1}
         variant="unstyled"
         aria-label="left icon"
         onClick={() => handleButtonClick(false)}
       />
       <IconButton
         icon={<ChevronRightIcon />}
-        disabled={maxLength === currentPages[1]}
+        disabled={maxLength === currentPage[1]}
         variant="unstyled"
         aria-label="right icon"
         onClick={() => handleButtonClick(true)}
