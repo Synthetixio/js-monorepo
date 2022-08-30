@@ -2067,7 +2067,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chakra-ui/icons@npm:2.0.6, @chakra-ui/icons@npm:^2.0.6":
+"@chakra-ui/icons@npm:2.0.6":
   version: 2.0.6
   resolution: "@chakra-ui/icons@npm:2.0.6"
   dependencies:
@@ -6992,7 +6992,7 @@ __metadata:
     "@babel/preset-env": ^7.13.10
     "@babel/preset-react": ^7.18.6
     "@babel/preset-typescript": ^7.13.0
-    "@chakra-ui/icons": ^2.0.6
+    "@chakra-ui/icons": ^2.0.9
     "@chakra-ui/react": ^2.2.6
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
