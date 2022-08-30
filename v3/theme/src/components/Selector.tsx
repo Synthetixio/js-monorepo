@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from '@chakra-ui/react';
-import { PropsWithChildren } from 'react';
+import { cloneElement, PropsWithChildren, ReactElement } from 'react';
 
 interface SelectorProps extends ButtonProps {
   active: boolean;
@@ -15,12 +15,20 @@ export default function Selector({
   onClick,
   ...rest
 }: PropsWithChildren<SelectorProps>) {
+  let rightIconCloned: ReactElement;
+  let leftIconCloned: ReactElement;
+  if (rightIcon) {
+    rightIconCloned = cloneElement(rightIcon, { w: 3, h: 3 });
+  }
+  if (leftIcon) {
+    leftIconCloned = cloneElement(leftIconCloned, { w: 3, h: 3 });
+  }
   return (
     <Button
       p={2}
       onClick={onClick}
-      leftIcon={leftIcon}
-      rightIcon={rightIcon}
+      leftIcon={leftIcon && leftIconCloned}
+      rightIcon={rightIcon && rightIconCloned}
       size={size}
       _hover={{ background: 'cyan.200', color: 'black' }}
       color={active ? 'black' : 'cyan.500'}

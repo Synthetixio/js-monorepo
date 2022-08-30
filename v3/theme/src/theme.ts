@@ -261,9 +261,9 @@ const Tabs: ComponentStyleConfig = {
 };
 
 const Tooltip: ComponentStyleConfig = {
-  baseStyle: {
-    background: 'gray.900',
-    color: 'gray.900',
+  defaultProps: {
+    bg: 'gray.900',
+    color: 'white.500',
   },
 };
 

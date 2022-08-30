@@ -28,6 +28,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { InfoIcon } from '@chakra-ui/icons';
+import Selector from '../components/Selector';
 
 export const CustomExample = ({ content, buttonLabel, ...props }) => {
   return (
@@ -122,6 +123,7 @@ export const CustomExample = ({ content, buttonLabel, ...props }) => {
         <InfoIcon />
       </Tooltip>
       <Switch />
+      <Selector rightIcon={<InfoIcon />}>sup</Selector>
     </Box>
   );
 };
