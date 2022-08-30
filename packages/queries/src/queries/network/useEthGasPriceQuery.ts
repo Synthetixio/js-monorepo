@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useQuery, UseQueryOptions } from 'react-query';
 import { QueryContext } from '../../context';
 import { GasPrices } from '../../types';
@@ -39,13 +40,15 @@ const getGasPriceFromProvider = async (provider: Provider) => {
 
 const useEthGasPriceQuery = (ctx: QueryContext, options?: UseQueryOptions<GasPrices, Error>) => {
   return useQuery<GasPrices, Error>(
-    ['network', 'gasPrice', ctx.networkId, ctx.provider],
+    ['network', 'gasPrice', ctx.networkId],
     async () => {
+      console.log('running useEthGasPriceQuery');
       if (!ctx.provider) throw Error('Expected ctx.provider to be defined');
       try {
         // If network is Mainnet then we use EIP1559
         if (ctx.networkId === NetworkIdByName.mainnet) {
           const block = await ctx?.provider?.getBlock('latest');
+          console.log('block', block);
           if (block?.baseFeePerGas) {
             return {
               fastest: computeGasFee(block.baseFeePerGas, 6),
