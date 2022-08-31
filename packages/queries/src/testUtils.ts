@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { QueryContext } from './context';
 
@@ -10,7 +10,7 @@ import { Signer } from '@ethersproject/abstract-signer';
 // query function hook, see https://react-query.tanstack.com/guides/testing
 export function getWrapper(config?: any) {
   return ({ children }: { children: ReactNode[] }) =>
-    QueryClientProvider({ client: new QueryClient(config), children });
+    React.createElement(QueryClientProvider, { client: new QueryClient(config) }, children);
 }
 
 // builds an incomplete query context which should generally pass
