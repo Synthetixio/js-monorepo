@@ -19,8 +19,16 @@ import {
   AccordionIcon,
   IconButton,
   Divider,
+  Progress,
+  Tabs,
+  TabList,
+  Tab,
+  Tooltip,
+  Switch,
 } from '@chakra-ui/react';
 import React from 'react';
+import { InfoIcon } from '@chakra-ui/icons';
+import Selector from '../components/Selector';
 
 export const CustomExample = ({ content, buttonLabel, ...props }) => {
   return (
@@ -95,6 +103,27 @@ export const CustomExample = ({ content, buttonLabel, ...props }) => {
           <AccordionPanel>Some Random things</AccordionPanel>
         </AccordionItem>
       </Accordion>
+      <br />
+      <Progress value={80} />
+      <br />
+      <Tabs variant={'solid-rounded'}>
+        <TabList>
+          <Tab>Harry</Tab>
+          <Tab>Potter</Tab>
+        </TabList>
+      </Tabs>
+      <Tabs variant={'soft-rounded'}>
+        <TabList>
+          <Tab>Harry</Tab>
+          <Tab>Potter</Tab>
+        </TabList>
+      </Tabs>
+      <br />
+      <Tooltip label="sup" hasArrow>
+        <InfoIcon />
+      </Tooltip>
+      <Switch />
+      <Selector rightIcon={<InfoIcon />}>Clear Debt</Selector>
     </Box>
   );
 };
