@@ -55,11 +55,6 @@
       "type": "error"
     },
     {
-      "inputs": [],
-      "name": "InvalidPointsOrder",
-      "type": "error"
-    },
-    {
       "inputs": [
         {
           "internalType": "bytes32",
@@ -81,11 +76,6 @@
       "type": "error"
     },
     {
-      "inputs": [],
-      "name": "PositionOutOfBounds",
-      "type": "error"
-    },
-    {
       "inputs": [
         {
           "internalType": "uint256",
@@ -94,7 +84,7 @@
         },
         {
           "internalType": "bytes32",
-          "name": "role",
+          "name": "permission",
           "type": "bytes32"
         },
         {
@@ -103,7 +93,12 @@
           "type": "address"
         }
       ],
-      "name": "RoleNotAuthorized",
+      "name": "PermissionDenied",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "PositionOutOfBounds",
       "type": "error"
     },
     {
@@ -120,11 +115,6 @@
     {
       "inputs": [],
       "name": "ValueAlreadyInSet",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "ValueOutOfRange",
       "type": "error"
     },
     {
@@ -167,7 +157,7 @@
           "type": "bool"
         }
       ],
-      "name": "CollateralAdjusted",
+      "name": "CollateralConfigured",
       "type": "event"
     },
     {
@@ -194,11 +184,11 @@
         {
           "indexed": false,
           "internalType": "address",
-          "name": "executedBy",
+          "name": "sender",
           "type": "address"
         }
       ],
-      "name": "CollateralStaked",
+      "name": "CollateralDeposited",
       "type": "event"
     },
     {
@@ -225,11 +215,11 @@
         {
           "indexed": false,
           "internalType": "address",
-          "name": "executedBy",
+          "name": "sender",
           "type": "address"
         }
       ],
-      "name": "CollateralUnstaked",
+      "name": "CollateralWithdrawn",
       "type": "event"
     },
     {
@@ -284,16 +274,11 @@
         },
         {
           "internalType": "uint256",
-          "name": "offset",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "items",
+          "name": "amount",
           "type": "uint256"
         }
       ],
-      "name": "cleanExpiredLocks",
+      "name": "depositCollateral",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -311,7 +296,31 @@
           "type": "address"
         }
       ],
-      "name": "getAccountCollateralTotals",
+      "name": "getAccountAvailableCollateral",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "accountId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "getAccountCollateral",
       "outputs": [
         {
           "internalType": "uint256",
@@ -321,83 +330,6 @@
         {
           "internalType": "uint256",
           "name": "totalAssigned",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "totalLocked",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "totalEscrowed",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        }
-      ],
-      "name": "getAccountCollaterals",
-      "outputs": [
-        {
-          "internalType": "address[]",
-          "name": "collateralTypes",
-          "type": "address[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        }
-      ],
-      "name": "getAccountUnassignedCollateral",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        }
-      ],
-      "name": "getAccountUnstakebleCollateral",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
           "type": "uint256"
         }
       ],
@@ -514,29 +446,6 @@
           "type": "uint256"
         },
         {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "duration",
-          "type": "uint256"
-        }
-      ],
-      "name": "redeemReward",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
           "internalType": "address",
           "name": "collateralType",
           "type": "address"
@@ -547,35 +456,12 @@
           "type": "uint256"
         }
       ],
-      "name": "stake",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "unstake",
+      "name": "withdrawCollateral",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xe18a727c169e5a29ab3f28a7c38ad4c3cb32d57b80d2d18556ac6a9a72e6fd6e",
+  "deployTxnHash": "0xb9fddf6bfb21872549da62202c6aa2566e73e7fbb36f3864e91b86097db25e95",
   "deployedOn": "run.deploy_core"
 }

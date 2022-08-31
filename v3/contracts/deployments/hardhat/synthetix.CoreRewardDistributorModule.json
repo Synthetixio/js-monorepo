@@ -48,7 +48,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "fundId",
+          "name": "poolId",
           "type": "uint256"
         }
       ],
@@ -67,7 +67,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "fundId",
+          "name": "poolId",
           "type": "uint256"
         },
         {
@@ -101,7 +101,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "fundId",
+          "name": "poolId",
           "type": "uint256"
         },
         {
@@ -116,6 +116,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x45c7445c0ed2836e6b86d38614aec9489ba1549d0eed0cf53c447b3ef28c3d3c",
+  "deployTxnHash": "0x1d476e42b98e65bfc54c1ef195b63fd04ab21314c0135a35061f8ba806c55682",
   "deployedOn": "run.deploy_core"
 }

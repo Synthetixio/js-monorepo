@@ -1,33 +1,29 @@
-import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { useContractReads } from 'wagmi';
 import { contracts } from '../utils/constants';
-import { fundsState } from '../utils/state';
+import { poolsState } from '../utils/state';
 import { useContract } from './useContract';
 
-export const useFunds = () => {
-  const setFunds = useSetRecoilState(fundsState);
+export const usePools = () => {
+  const setFunds = useSetRecoilState(poolsState);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   const snxContractData = {
     addressOrName: snxProxy?.address,
     contractInterface: snxProxy?.abi,
     chainId: snxProxy?.chainId,
   };
-  const { isLoading, data } = useContractReads({
+  const { isLoading } = useContractReads({
     contracts: [
       {
         ...snxContractData,
-        functionName: 'getPreferredFund',
+        functionName: 'getPreferredPool',
       },
       {
         ...snxContractData,
-        functionName: 'getApprovedFunds',
+        functionName: 'getApprovedPools',
       },
     ],
-  });
-
-  useEffect(() => {
-    if (!isLoading && data) {
+    onSuccess: (data) => {
       const funds = data
         ? [
             data[0].toString(),
@@ -35,7 +31,7 @@ export const useFunds = () => {
           ]
         : [];
       setFunds(funds);
-    }
+    },
   });
 
   return {

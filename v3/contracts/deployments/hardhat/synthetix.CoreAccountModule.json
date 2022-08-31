@@ -3,7 +3,7 @@
   "abi": [
     {
       "inputs": [],
-      "name": "InvalidRole",
+      "name": "InvalidPermission",
       "type": "error"
     },
     {
@@ -30,12 +30,7 @@
           "type": "address"
         }
       ],
-      "name": "OnlyTokenProxyAllowed",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "PositionOutOfBounds",
+      "name": "OnlyAccountTokenProxy",
       "type": "error"
     },
     {
@@ -47,7 +42,7 @@
         },
         {
           "internalType": "bytes32",
-          "name": "role",
+          "name": "permission",
           "type": "bytes32"
         },
         {
@@ -56,7 +51,33 @@
           "type": "address"
         }
       ],
-      "name": "RoleNotAuthorized",
+      "name": "PermissionDenied",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "accountId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "permission",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
+        }
+      ],
+      "name": "PermissionNotGranted",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "PositionOutOfBounds",
       "type": "error"
     },
     {
@@ -78,10 +99,16 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
-          "name": "accountAddress",
+          "name": "sender",
           "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "accountId",
+          "type": "uint256"
         }
       ],
       "name": "AccountCreated",
@@ -91,19 +118,19 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint256",
           "name": "accountId",
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "bytes32",
-          "name": "role",
+          "name": "permission",
           "type": "bytes32"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "target",
           "type": "address"
@@ -111,30 +138,30 @@
         {
           "indexed": false,
           "internalType": "address",
-          "name": "executedBy",
+          "name": "sender",
           "type": "address"
         }
       ],
-      "name": "RoleGranted",
+      "name": "PermissionGranted",
       "type": "event"
     },
     {
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint256",
           "name": "accountId",
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "bytes32",
-          "name": "role",
+          "name": "permission",
           "type": "bytes32"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "target",
           "type": "address"
@@ -142,11 +169,11 @@
         {
           "indexed": false,
           "internalType": "address",
-          "name": "executedBy",
+          "name": "sender",
           "type": "address"
         }
       ],
-      "name": "RoleRevoked",
+      "name": "PermissionRevoked",
       "type": "event"
     },
     {
@@ -157,22 +184,28 @@
           "type": "uint256"
         }
       ],
-      "name": "createAccount",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getAccountAddress",
+      "name": "accountOwner",
       "outputs": [
         {
-          "internalType": "contract INftModule",
+          "internalType": "address",
           "name": "",
           "type": "address"
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "requestedAccountId",
+          "type": "uint256"
+        }
+      ],
+      "name": "createAccount",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -194,11 +227,11 @@
             },
             {
               "internalType": "bytes32[]",
-              "name": "roles",
+              "name": "permissions",
               "type": "bytes32[]"
             }
           ],
-          "internalType": "struct IAccountModule.AccountPermission[]",
+          "internalType": "struct IAccountModule.AccountPermissions[]",
           "name": "permissions",
           "type": "tuple[]"
         }
@@ -207,52 +240,13 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "role",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "address",
-          "name": "target",
-          "type": "address"
-        }
-      ],
-      "name": "grantRole",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "role",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "address",
-          "name": "target",
-          "type": "address"
-        }
-      ],
-      "name": "hasRole",
+      "inputs": [],
+      "name": "getAccountTokenAddress",
       "outputs": [
         {
-          "internalType": "bool",
+          "internalType": "address",
           "name": "",
-          "type": "bool"
+          "type": "address"
         }
       ],
       "stateMutability": "view",
@@ -267,7 +261,7 @@
         },
         {
           "internalType": "bytes32",
-          "name": "role",
+          "name": "permission",
           "type": "bytes32"
         },
         {
@@ -276,7 +270,7 @@
           "type": "address"
         }
       ],
-      "name": "renounceRole",
+      "name": "grantPermission",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -290,7 +284,7 @@
         },
         {
           "internalType": "bytes32",
-          "name": "role",
+          "name": "permission",
           "type": "bytes32"
         },
         {
@@ -299,9 +293,15 @@
           "type": "address"
         }
       ],
-      "name": "revokeRole",
-      "outputs": [],
-      "stateMutability": "nonpayable",
+      "name": "hasPermission",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -317,12 +317,53 @@
           "type": "uint256"
         }
       ],
-      "name": "transferAccount",
+      "name": "notifyAccountTransfer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "accountId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "permission",
+          "type": "bytes32"
+        }
+      ],
+      "name": "renouncePermission",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "accountId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "permission",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
+        }
+      ],
+      "name": "revokePermission",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xaaca19c1a2b8a0bbc4da3a7bdee8635149f78c489aa1e5acff38d12ce9dbd455",
+  "deployTxnHash": "0x0bf432e51e410578be26ee4328725484282471481f8425cf1367036d66a00ff4",
   "deployedOn": "run.deploy_core"
 }

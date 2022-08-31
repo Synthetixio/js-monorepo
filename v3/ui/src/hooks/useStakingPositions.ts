@@ -1,8 +1,8 @@
 import { useRecoilValue } from 'recoil';
 import { useContractReads } from 'wagmi';
-import { collateralTypesState, fundsState } from '../utils/state';
+import { collateralTypesState, poolsState } from '../utils/state';
 import { useSnxProxy } from './useContract';
-import { fundsData } from '../utils/constants';
+import { poolsData } from '../utils/constants';
 import { useSynthetixProxyEvent } from './useContractEvent';
 import { BigNumber } from 'ethers';
 import { StakingPositionType } from '../components/accounts/StakingPositions/types';
@@ -10,7 +10,7 @@ import { StakingPositionType } from '../components/accounts/StakingPositions/typ
 type ContractReadsParams = Parameters<typeof useContractReads>[0];
 
 export const useStakingPositions = (accountId: string) => {
-  const funds = useRecoilValue(fundsState);
+  const funds = useRecoilValue(poolsState);
   const supportedCollateralTypes = useRecoilValue(collateralTypesState);
   const snxProxy = useSnxProxy();
 
@@ -42,7 +42,7 @@ export const useStakingPositions = (accountId: string) => {
             positions[key] = {
               id: key,
               fundId: f,
-              fundName: fundsData[f.toString()].name,
+              fundName: poolsData[f.toString()].name,
               collateralType: ct,
               collateralAmount: data[idx].amount,
               cRatio: BigNumber.from(data[idx + functionNames.length] || 0),

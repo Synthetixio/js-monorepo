@@ -12,8 +12,8 @@ import {
 import { useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
-import { fundsData } from '../../../utils/constants';
-import { fundsState } from '../../../utils/state';
+import { poolsData } from '../../../utils/constants';
+import { poolsState } from '../../../utils/state';
 import StakerOption from './StakerOption';
 
 const NO_FUND_TAB_INDEX = 1;
@@ -23,7 +23,7 @@ type PropsType = {
 };
 
 export default function EditPosition({ onClose }: PropsType) {
-  const funds = useRecoilValue(fundsState);
+  const pools = useRecoilValue(poolsState);
   const { setValue } = useFormContext();
   const fundValue = useWatch({
     name: 'fundId',
@@ -57,8 +57,8 @@ export default function EditPosition({ onClose }: PropsType) {
                 }}
                 value={selectedFund || fundValue}
               >
-                {funds.map((option) => {
-                  const { name } = fundsData[option];
+                {pools.map((option) => {
+                  const { name } = poolsData[option];
                   return (
                     <StakerOption
                       checked={selectedFund ? selectedFund : fundValue}

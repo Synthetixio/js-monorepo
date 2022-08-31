@@ -7,4 +7,4 @@ export * from './useContractEvent';
 export * from './useMulticall';
 export * from './useManageRoles';
 export * from './useStakingPositions';
-export * from './useFunds';
+export * from './usePools';

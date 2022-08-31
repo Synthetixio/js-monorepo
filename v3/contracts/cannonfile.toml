@@ -115,20 +115,20 @@ args = [
 ]
 depends=["import.snx", "import.synthetix"]
 
-[invoke.createPreferredFund]
+[invoke.createPreferredPool]
 target = ["synthetix.CoreProxy"]
-func = "createFund"
+func = "createPool"
 args = [
     1,
     "<%= settings.owner %>",
 ]
 depends=["import.synthetix"]
 
-[invoke.setPreferredFund]
+[invoke.setPreferredPool]
 target = ["synthetix.CoreProxy"]
-func = "setPreferredFund"
+func = "setPreferredPool"
 from = "<%= settings.owner %>"
 args = [
     1,
 ]
-depends=["invoke.createPreferredFund"]
+depends=["invoke.createPreferredPool"]

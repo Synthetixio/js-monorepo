@@ -9,7 +9,7 @@ export const abi = [
   'error InvalidParameters(string incorrectParameter, string help)',
   'error OnlyTokenProxyAllowed(address origin)',
   'error Unauthorized(address addr)',
-  'event DelegationUpdated(bytes32 liquidityItemId, uint256 accountId, uint256 fundId, address collateralType, uint256 amount, uint256 leverage)',
+  'event DelegationUpdated(uint256 accountId, uint256 fundId, address collateralType, uint256 amount, uint256 leverage)',
   'event FundApprovedAdded(uint256 fundId)',
   'event FundApprovedRemoved(uint256 fundId)',
   'event FundCreated(address owner, uint256 fundId)',

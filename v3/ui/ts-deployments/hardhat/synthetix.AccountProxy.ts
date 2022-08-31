@@ -1,4 +1,4 @@
-export const address = '0xA4e05Ef3FcA69F6a3e31d6fD47045A2c569933aA';
+export const address = '0xcE8D3fE9785DB86b45B96b18b797018d6Af25efE';
 export const abi = [
   'error AlreadyInitialized()',
   'error CannotSelfApprove(address)',
@@ -10,7 +10,7 @@ export const abi = [
   'error ZeroAddress()',
   'event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)',
   'event ApprovalForAll(address indexed owner, address indexed operator, bool approved)',
-  'event Mint(address owner, uint256 nftId)',
+  'event Mint(address indexed owner, uint256 indexed tokenId)',
   'event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)',
   'function approve(address to, uint256 tokenId)',
   'function balanceOf(address holder) view returns (uint256)',

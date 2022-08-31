@@ -301,18 +301,16 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </Modal>
       </Td>
       <Td>
-        <NavLink
+        <Link
+          as={NavLink}
           to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.fundId}`}
+          color="blue.400"
+          display="inline-block"
+          transform="translateY(-1.5px)"
+          target="_blank"
         >
-          <Link
-            color="blue.400"
-            display="inline-block"
-            transform="translateY(-1.5px)"
-            target="_blank"
-          >
-            <ExternalLinkIcon />
-          </Link>
-        </NavLink>
+          <ExternalLinkIcon />
+        </Link>
       </Td>
     </Tr>
   );

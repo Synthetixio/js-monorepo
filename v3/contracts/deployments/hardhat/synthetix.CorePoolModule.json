@@ -1,5 +1,5 @@
 {
-  "address": "0xbcAe82DABb21E6211d952aFcc2742fd7F4737f88",
+  "address": "0x94597307C9549c5BB03d1434dBb2301611ACaaB1",
   "abi": [
     {
       "inputs": [
@@ -41,60 +41,12 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "collateralValue",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "debt",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "ratio",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "minRatio",
-          "type": "uint256"
-        }
-      ],
-      "name": "InsufficientCollateralRatio",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "int256",
-          "name": "currentDebt",
-          "type": "int256"
-        }
-      ],
-      "name": "InsufficientDebt",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "address",
           "name": "collateralType",
           "type": "address"
         }
       ],
       "name": "InvalidCollateralType",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "leverage",
-          "type": "uint256"
-        }
-      ],
-      "name": "InvalidLeverage",
       "type": "error"
     },
     {
@@ -164,22 +116,6 @@
     {
       "inputs": [
         {
-          "internalType": "bytes32",
-          "name": "expected",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "actual",
-          "type": "bytes32"
-        }
-      ],
-      "name": "MismatchAssociatedSystemKind",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "address",
           "name": "origin",
           "type": "address"
@@ -240,6 +176,22 @@
         }
       ],
       "name": "PoolNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "Unauthorized",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ZeroAddress",
       "type": "error"
     },
     {
@@ -515,123 +467,11 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
           "name": "poolId",
           "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
         }
       ],
-      "name": "accountCollateralRatio",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "poolId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        }
-      ],
-      "name": "accountVaultCollateral",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "value",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "shares",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "poolId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        }
-      ],
-      "name": "accountVaultDebt",
-      "outputs": [
-        {
-          "internalType": "int256",
-          "name": "",
-          "type": "int256"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "poolId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "burnUSD",
+      "name": "acceptPoolOwnership",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -640,77 +480,23 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "poolId",
+          "name": "requestedPoolId",
           "type": "uint256"
         },
         {
           "internalType": "address",
-          "name": "collateralType",
+          "name": "owner",
           "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "collateralAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "leverage",
-          "type": "uint256"
         }
       ],
-      "name": "delegateCollateral",
+      "name": "createPool",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "poolId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "mintUSD",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "poolId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        }
-      ],
-      "name": "totalVaultShares",
+      "inputs": [],
+      "name": "getMinLiquidityRatio",
       "outputs": [
         {
           "internalType": "uint256",
@@ -727,24 +513,14 @@
           "internalType": "uint256",
           "name": "poolId",
           "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
         }
       ],
-      "name": "vaultCollateral",
+      "name": "getPoolName",
       "outputs": [
         {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "value",
-          "type": "uint256"
+          "internalType": "string",
+          "name": "poolName",
+          "type": "string"
         }
       ],
       "stateMutability": "view",
@@ -756,21 +532,108 @@
           "internalType": "uint256",
           "name": "poolId",
           "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
         }
       ],
-      "name": "vaultCollateralRatio",
+      "name": "getPoolPosition",
       "outputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint256[]",
           "name": "",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "int256[]",
+          "name": "",
+          "type": "int256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "nominatedOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "poolId",
           "type": "uint256"
         }
       ],
+      "name": "nominateNewPoolOwner",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "poolId",
+          "type": "uint256"
+        }
+      ],
+      "name": "nominatedOwnerOf",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "poolId",
+          "type": "uint256"
+        }
+      ],
+      "name": "ownerOf",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "poolId",
+          "type": "uint256"
+        }
+      ],
+      "name": "renouncePoolNomination",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "minLiquidityRatio",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMinLiquidityRatio",
+      "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
@@ -782,23 +645,45 @@
           "type": "uint256"
         },
         {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
         }
       ],
-      "name": "vaultDebt",
-      "outputs": [
+      "name": "setPoolName",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
         {
-          "internalType": "int256",
-          "name": "",
-          "type": "int256"
+          "internalType": "uint256",
+          "name": "poolId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "markets",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "weights",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "int256[]",
+          "name": "maxDebtShareValues",
+          "type": "int256[]"
         }
       ],
+      "name": "setPoolPosition",
+      "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x3d4286bc3f50230e1250243edb87004d26f42f0325f60e531054b4397c971104",
+  "deployTxnHash": "0xc69ede1eb7e5bbc2e94996994cef007326ba16d546bb6b11c2c04100187a3abf",
   "deployedOn": "run.deploy_core"
 }

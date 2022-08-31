@@ -12,7 +12,7 @@ export const abi = [
   'error RoleNotAuthorized(uint256 accountId, bytes32 role, address target)',
   'error Unauthorized(address addr)',
   'error ZeroAddress()',
-  'event DelegationUpdated(bytes32 liquidityItemId, uint256 accountId, uint256 fundId, address collateralType, uint256 amount, uint256 leverage)',
+  'event DelegationUpdated(uint256 accountId, uint256 fundId, address collateralType, uint256 amount, uint256 leverage)',
   'event FundApprovedAdded(uint256 fundId)',
   'event FundApprovedRemoved(uint256 fundId)',
   'event FundCreated(address owner, uint256 fundId)',

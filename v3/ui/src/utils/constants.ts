@@ -79,7 +79,7 @@ export const contracts = {
   SNX_TOKEN: 'snx.token',
 };
 
-export const fundsData: Record<string, { name: string }> = {
+export const poolsData: Record<string, { name: string }> = {
   1: {
     name: 'Spartan Council',
   },

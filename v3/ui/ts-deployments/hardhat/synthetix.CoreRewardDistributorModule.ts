@@ -3,7 +3,7 @@ export const abi = [
   'error InsufficientRewardAllocation(uint256 requestedAmount, uint256 remainingAllocation)',
   'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',
   'error Unauthorized(address addr)',
-  'function getRewardAllocation(uint256 fundId) view returns (uint256)',
-  'function payout(uint256 fundId, address, address to, uint256 amount) returns (bool)',
-  'function setRewardAllocation(uint256 fundId, uint256 allocation)',
+  'function getRewardAllocation(uint256 poolId) view returns (uint256)',
+  'function payout(uint256 poolId, address, address to, uint256 amount) returns (bool)',
+  'function setRewardAllocation(uint256 poolId, uint256 allocation)',
 ];

@@ -1,5 +1,5 @@
 {
-  "address": "0xA4e05Ef3FcA69F6a3e31d6fD47045A2c569933aA",
+  "address": "0xcE8D3fE9785DB86b45B96b18b797018d6Af25efE",
   "abi": [
     {
       "type": "error",
@@ -114,12 +114,12 @@
         {
           "type": "address",
           "name": "owner",
-          "indexed": false
+          "indexed": true
         },
         {
           "type": "uint256",
-          "name": "nftId",
-          "indexed": false
+          "name": "tokenId",
+          "indexed": true
         }
       ]
     },
@@ -690,7 +690,7 @@
       "outputs": []
     }
   ],
-  "deployTxnHash": "0xbc33fcd3674112c3d0e69272a274ea65c123667bfe95009a8abcff19be0e98e6",
+  "deployTxnHash": "0x4ba4b5a470a126b1f4b8574017c2af84291ee510f15158441930f2816dfc45a0",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_account"

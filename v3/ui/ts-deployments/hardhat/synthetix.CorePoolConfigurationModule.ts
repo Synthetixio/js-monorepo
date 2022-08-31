@@ -1,15 +1,12 @@
-export const address = '0xcC1Ae82cf39F67e653500A1BF3D952F3da7422c7';
+export const address = '0xD1e696E7Fbe6871EA6C2DEd979fC6BDd821522d9';
 export const abi = [
   'error EmptyVault(uint256 poolId, address collateralType)',
   'error InsufficientAccountCollateral(uint256 accountId, address collateralType, uint256 requestedAmount)',
   'error InvalidCollateralType(address collateralType)',
   'error InvalidParameters(string incorrectParameter, string help)',
-  'error InvalidParameters(string incorrectParameter, string help)',
   'error MarketNotFound(uint256 marketId)',
   'error MaxDebtPerShareTooLow(uint256 marketId, int256 requestedMaxDebtPerShare, int256 maximumMaxDebtPerShare)',
-  'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',
   'error OnlyTokenProxyAllowed(address origin)',
-  'error PermissionDenied(uint256 accountId, bytes32 permission, address target)',
   'error PoolAlreadyApproved(uint256 poolId)',
   'error PoolAlreadyExists(uint256 poolId)',
   'error PoolNotFound(uint256 poolId)',
@@ -25,8 +22,9 @@ export const abi = [
   'event PreferredPoolSet(uint256 poolId)',
   'event RewardDistributionSet(uint256 indexed poolId, address indexed token, uint256 indexed index, address distributor, uint256 totalRewarded, uint256 start, uint256 duration)',
   'event RewardsClaimed(uint256 indexed poolId, address indexed token, uint256 indexed accountId, uint256 index, uint256 amountClaimed)',
-  'function claimRewards(uint256 poolId, address collateralType, uint256 accountId) returns (uint256[])',
-  'function distributeRewards(uint256 poolId, address collateralType, uint256 index, address distributor, uint256 amount, uint256 start, uint256 duration)',
-  'function getAvailableRewards(uint256 poolId, address collateralType, uint256 accountId) returns (uint256[])',
-  'function getCurrentRewardAccumulation(uint256 poolId, address collateralType) view returns (uint256[])',
+  'function addApprovedPool(uint256 poolId)',
+  'function getApprovedPools() view returns (uint256[])',
+  'function getPreferredPool() view returns (uint256)',
+  'function removeApprovedPool(uint256 poolId)',
+  'function setPreferredPool(uint256 poolId)',
 ];

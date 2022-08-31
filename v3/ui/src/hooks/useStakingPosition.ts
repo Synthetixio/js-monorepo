@@ -1,6 +1,6 @@
 import { useContractReads } from 'wagmi';
 import { useSnxProxy } from './useContract';
-import { CollateralType, fundsData } from '../utils/constants';
+import { CollateralType, poolsData } from '../utils/constants';
 
 export const useStakingPosition = (
   accountId: string,
@@ -33,7 +33,7 @@ export const useStakingPosition = (
     fundId: fundId,
     collateralType: collateral,
     accountId,
-    fundName: fundsData[fundId].name,
+    fundName: poolsData[fundId].name,
     collateralAmount: data?.collateralAmount || 0,
     cRatio: data?.cRatio || 0,
     debt: data?.debt || 0,

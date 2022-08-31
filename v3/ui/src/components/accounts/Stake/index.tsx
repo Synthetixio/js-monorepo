@@ -1,5 +1,5 @@
 import { accountsState, chainIdState, collateralTypesState } from '../../../utils/state';
-import { contracts, fundsData, getChainById } from '../../../utils/constants';
+import { contracts, poolsData, getChainById } from '../../../utils/constants';
 import { useContract, useSynthetixRead } from '../../../hooks';
 import EditPosition from '../EditPosition';
 import Balance from './Balance';
@@ -54,7 +54,7 @@ export default function Stake({
   const [collateralTypes] = useRecoilState(collateralTypesState);
 
   const { data: fundId } = useSynthetixRead({
-    functionName: 'getPreferredFund',
+    functionName: 'getPreferredPool',
   });
   // on loading dropdown and token amount maybe use https://chakra-ui.com/docs/components/feedback/skeleton
   const toast = useToast({
@@ -132,7 +132,7 @@ export default function Stake({
     const stakingCalls: MulticallCall[] = [
       {
         contract: snxProxy.contract,
-        functionName: 'stake',
+        functionName: 'depositCollateral',
         callArgs: [id, selectedCollateralType.address, amountBN],
       },
       {
@@ -326,8 +326,8 @@ export default function Stake({
                 <Text fontSize="xs" textAlign="right" ml="auto">
                   Fund:{' '}
                   {selectedFundId
-                    ? fundsData[selectedFundId]
-                      ? fundsData[selectedFundId].name
+                    ? poolsData[selectedFundId]
+                      ? poolsData[selectedFundId].name
                       : 'Unknown Fund'
                     : 'None'}{' '}
                   <Link color="blue.400">
