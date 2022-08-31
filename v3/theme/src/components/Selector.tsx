@@ -21,14 +21,14 @@ export default function Selector({
     rightIconCloned = cloneElement(rightIcon, { w: 3, h: 3 });
   }
   if (leftIcon) {
-    leftIconCloned = cloneElement(leftIconCloned, { w: 3, h: 3 });
+    leftIconCloned = cloneElement(leftIcon, { w: 3, h: 3 });
   }
   return (
     <Button
       p={2}
       onClick={onClick}
-      leftIcon={leftIcon && leftIconCloned}
-      rightIcon={rightIcon && rightIconCloned}
+      leftIcon={leftIcon ? leftIconCloned : undefined}
+      rightIcon={rightIcon ? rightIconCloned : undefined}
       size={size}
       _hover={{ background: 'cyan.200', color: 'black' }}
       color={active ? 'black' : 'cyan.500'}
