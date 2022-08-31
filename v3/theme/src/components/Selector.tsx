@@ -27,8 +27,8 @@ export default function Selector({
     <Button
       p={2}
       onClick={onClick}
-      leftIcon={leftIcon ? leftIconCloned : undefined}
-      rightIcon={rightIcon ? rightIconCloned : undefined}
+      leftIcon={leftIcon && leftIconCloned}
+      rightIcon={rightIcon && rightIconCloned}
       size={size}
       _hover={{ background: 'cyan.200', color: 'black' }}
       color={active ? 'black' : 'cyan.500'}
