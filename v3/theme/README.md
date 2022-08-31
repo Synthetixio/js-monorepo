@@ -1,9 +1,6 @@
-# Synthetix-ui
+## Synthetix Theme
 
-### Storybook
+This package is bundling up a Chakra Theme configuration. This theme is used in the V3 and will in Staking V2
 
-We are building storybook on every PR to main. To see the components, visit the link: https://synthetixio.github.io/ui/?path=/story/accordion--primary
-
-### Release
-
-Releasing is done with the help of semantic-release.
+You can browse the components on a storybook instance here:
+https://v3-storybook-synthetixio.vercel.app/
