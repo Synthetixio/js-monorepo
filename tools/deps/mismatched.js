@@ -12,10 +12,7 @@ const isFix = process.argv.includes('--fix');
 
 // ignore certain deps that are explicitly mismatched versions
 function ignored({ parent, name, _version, _location }) {
-  return (
-    (parent === '@synthetixio/v3-ui' && ['react', 'react-dom'].includes(name)) ||
-    (parent === '@synthetixio/v3-theme' && ['react', 'react-dom'].includes(name))
-  );
+  return parent === '@synthetixio/<PACKAGE_NAME>' && ['<DEPENDENCY>'].includes(name);
 }
 
 async function run() {

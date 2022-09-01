@@ -2,6 +2,6 @@
 sidebar_position: 1
 ---
 
-# Creating Pools
+# Oracle Manager
 
 _Coming soon._

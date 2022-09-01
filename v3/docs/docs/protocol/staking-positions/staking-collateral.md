@@ -16,13 +16,13 @@ _Depositing collateral without delegating it only moves the assets into the prot
 
 ## Closing Staking Positions
 
-To close (or reduce) a staking position, users must decrease the amount they’ve delegated to a pool. Note that the delegated collateral may only be reduced depending on the debt carried by the position. See [Managing Debt](./managing-debt) for more information.
+To close (or reduce) a staking position, users must decrease the amount they’ve delegated to a pool. Note that the delegated collateral may only be reduced if the staking position’s C-Ratio is greater than the _Target C-Ratio_. (This is a C-Ratio higher than the minimum, specified per collateral type. The Target C-Ratio of a given collateral type can be retrieved with the [`getCollateralType` function](/protocol/technical-reference/smart-contracts#getcollateraltype), represented as an integer with 18 decimal places.)
 
 The [`delegateCollateral()` function](/protocol/technical-reference/smart-contracts#depositcollateral) can be used to decrease the amount of collateral delegated. This will increase the value returned by the [`getAccountAvailableCollateral()` function](/protocol/technical-reference/smart-contracts#getaccountavailablecollateral). This is the maximum amount that can be retrieved from the protocol with the [`withdrawCollateral()` function](/protocol/technical-reference/smart-contracts#withdrawcollateral) or delegating again to another pool.
 
 ## Pools
 
-Pools are specified with an integer ID. Every pool has a vault for each of the accepted collateral types. Pools may also have an owner, which can decide which markets will be backed by the collateral delegated to the pool.
+Pools are specified with an integer ID. See [Pools & Vaults](/protocol/pools-vaults/delegating-credit-and-debt) for more information.
 
 ### Stablecoin-only Pool
 
@@ -38,7 +38,7 @@ The Spartan Council also specifies _approved pools_ with IDs that can be retriev
 
 ### Custom Pools
 
-Pools may be created by anyone. (See [Creating Pools](../pools-vaults/creating-pools).) You may specify a custom pool’s ID when delegating your collateral.
+Pools may be created by anyone. (See [Creating Pools](/protocol/pools-vaults/delegating-credit-and-debt#creating-pools).) You may specify a custom pool’s ID when delegating your collateral.
 
 :::caution
 

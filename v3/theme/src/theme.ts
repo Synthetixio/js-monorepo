@@ -22,6 +22,12 @@ const gradients = {
     600: 'linear(to-tr, pink.600, blue.600)',
     700: 'linear(to-tr, pink.700, blue.800)',
   },
+  'pink-cyan': {
+    500: 'linear(to-tr, pink.500, cyan.500)',
+    600: 'linear(to-tr, pink.600, cyan.600)',
+    700: 'linear(to-tr, pink.700, cyan.800)',
+  },
+
   orange: {
     500: 'linear(to-tr, orange.500, orange.300)',
     600: 'linear(to-tr, orange.600, orange.400)',
@@ -214,6 +220,72 @@ const Accordion: ComponentStyleConfig = {
     },
   },
 };
+
+const Progress: ComponentStyleConfig = {
+  defaultProps: {
+    colorScheme: 'cyan',
+    variant: 'solid',
+    borderRadius: 'full',
+  },
+  variants: {
+    solid: (props) => ({
+      filledTrack: {
+        background: `${props.colorScheme}.500`,
+        borderRadius: 'full',
+      },
+      track: {
+        borderRadius: 'full',
+      },
+    }),
+  },
+};
+
+const Tabs: ComponentStyleConfig = {
+  defaultProps: {
+    colorScheme: 'cyan',
+  },
+  variants: {
+    'solid-rounded': (props) => ({
+      tab: {
+        _selected: {
+          background: `${props.colorScheme}.500`,
+          color: 'black',
+        },
+        color: `${props.colorScheme}.500`,
+      },
+    }),
+    'soft-rounded': {
+      tab: {
+        _selected: {
+          background: 'whiteAlpha.300',
+          color: 'cyan.500',
+        },
+        color: 'cyan.500',
+      },
+    },
+  },
+};
+
+const Tooltip: ComponentStyleConfig = {
+  defaultProps: {
+    bg: 'gray.900',
+    color: 'white.500',
+  },
+};
+
+const Switch: ComponentStyleConfig = {
+  defaultProps: {
+    colorScheme: 'cyan',
+  },
+  baseStyle: {
+    track: {
+      _checked: {
+        background: 'cyan.500',
+      },
+    },
+  },
+};
+
 export const theme = extendTheme({
   initialColorMode: 'dark',
   colors: {
@@ -372,6 +444,10 @@ export const theme = extendTheme({
     Badge,
     Tag,
     Accordion,
+    Progress,
+    Tabs,
+    Tooltip,
+    Switch,
   },
   // To be imported and used with the bgGradient prop
   // See: https://chakra-ui.com/docs/styled-system/gradient#background-gradient-api
