@@ -18,11 +18,11 @@ Optionally, pools have human-readable names stored on-chain, which can be set by
 
 The owner of a pool may choose the markets to back (with their corresponding **weights** and **maximum debt share values**) with the [`setPoolConfiguration` function](/protocol/technical-reference/smart-contracts#setpoolconfiguration).
 
-Fundamentally, this configuration effects a dollar-denominated `capacity` value for each market. This determines how much debt the pool is willing to assume from market, and how to limit the amount of snxUSD that markets can withdraw.
+Fundamentally, this configuration effects an `marketCollateral` and `amountWithdrawable` value for each market. This determines how much debt the pool is willing to assume from market, and how to limit the amount of snxUSD that markets can withdraw.
 
 ### Weights
 
-Weights determine what proportion of the liquidity in a particular pool should be allocated to each market. For example, if a pool has $500,000 of liquidity with a weight of 3 assigned to an sBTC market and a weight 1 assigned to an sEUR market, the **market-allocated liquidity** for the markets would be $375,000 and $125,000, respectively.
+Weights determine what proportion of the liquidity in a particular pool should be allocated to each market. For example, if a pool has $500,000 of liquidity with a weight of 3 assigned to an sBTC market and a weight 1 assigned to an sEUR market, the **market-allocated liquidity** (or `marketCollateral`) for the markets would be $375,000 and $125,000, respectively.
 
 ### Maximum debt per dollar of liquidity
 
@@ -32,8 +32,6 @@ The maximum debt per dollar of liquidity determines the maximum debt the stakers
 
 The Minimum Liquidity Ratio is a global value (configured by SCCP) which is functionally similar to the Target C-Ratio. This creates another **maximum debt** value. For example, if a market has $100 of market allocated liquidity from a pool and the Minimum Liquidity Ratio is set to 400%, the maximum debt from this pool would be $25.
 
-## Calculating `capacity`
+## Calculating `amountWithdrawable`
 
-To calculate the capacity of a given market, the protocol takes the lesser of the two **maximum liquidity values** described above across each pool delegating to a given market and returns the sum.
-
-It is possible for a market to report a `balance` greater than the `capacity` provided to it. In this case, the market would be partially insolvent (unless it is relying on liquidity from a source other than Synthetix). At this point, the [`withdrawUsd` function](/protocol/technical-reference/smart-contracts#withdrawusd) will revert when called by the market.
+To calculate the `amountWithdrawable` of a given market, the protocol takes the lesser of the two **maximum liquidity values** described above across each pool delegating to a given market and returns the sum.
