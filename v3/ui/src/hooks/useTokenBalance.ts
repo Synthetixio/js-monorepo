@@ -1,5 +1,6 @@
 import { ethers } from 'ethers';
 import { useAccount, useBalance, useNetwork } from 'wagmi';
+import { formatValue } from '../utils/helpers';
 
 export const useTokenBalance = (token: string | undefined) => {
   const { address: accountAddress } = useAccount();
@@ -12,11 +13,9 @@ export const useTokenBalance = (token: string | undefined) => {
     enabled: hasWalletConnected,
   });
 
-  const balance = balanceData?.value || ethers.BigNumber.from(0);
-  const decimals = balanceData?.decimals || 18;
-
   return {
-    value: balance,
-    decimals,
+    value: balanceData?.value || ethers.BigNumber.from(0),
+    decimals: balanceData?.decimals || 18,
+    formatedValue: formatValue(balanceData?.value || 0, balanceData?.decimals || 18),
   };
 };

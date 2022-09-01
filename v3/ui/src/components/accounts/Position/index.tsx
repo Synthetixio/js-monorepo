@@ -34,8 +34,8 @@ export const Position: FC<Props> = ({ accountId, fundId, collateral }) => {
     <>
       <StakingStats
         collateral={collateral}
-        collateralAmount={collateralAmount}
         collateralValue={collateralValue}
+        collateralAmount={collateralAmount}
         debt={debt}
         cRatio={cRatio}
       />
@@ -49,7 +49,15 @@ export const Position: FC<Props> = ({ accountId, fundId, collateral }) => {
 
         <TabPanels>
           <TabPanel>
-            <Manage accountId={accountId} fundId={fundId} collateral={collateral} />
+            <Manage
+              collateralValue={collateralValue}
+              collateralAmount={collateralAmount}
+              debt={debt}
+              cRatio={cRatio}
+              accountId={accountId}
+              fundId={fundId}
+              collateral={collateral}
+            />
           </TabPanel>
           <TabPanel>
             <Pool />

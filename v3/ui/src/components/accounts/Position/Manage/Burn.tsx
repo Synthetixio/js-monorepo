@@ -1,13 +1,16 @@
-import { Text, Box, Link, Input, Button, Flex, Heading } from '@chakra-ui/react';
-import { useContract } from '../../../../hooks';
-import { useTokenBalance } from '../../../../hooks/useTokenBalance';
-import { contracts } from '../../../../utils/constants';
+import { Text, Box, Link, Input, Flex, Heading } from '@chakra-ui/react';
+import { BigNumber } from 'ethers';
+import { FC } from 'react';
+
 import { Balance } from '../../Stake/Balance';
 
-export default function Burn() {
-  const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
-  const balanceData = useTokenBalance(snxUsdProxy?.address);
+interface Props {
+  balance: BigNumber;
+  onChange: (value: number) => void;
+  value: number;
+}
 
+export const Burn: FC<Props> = ({ balance, onChange, value }) => {
   return (
     <Box mb="4">
       <Heading fontSize="md" mb="1">
@@ -34,26 +37,17 @@ export default function Burn() {
               type="number"
               border="none"
               placeholder="0.0"
-              // value={null}
-              onChange={() => null}
+              min="0"
+              step="any"
+              value={value ? `${value}`.replace(/^0+/, '') : 0}
+              onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
             />
-            <Button
-              display="none"
-              // isLoading={null}
-              // isDisabled={null}
-              colorScheme="blue"
-              ml="4"
-              px="8"
-              type="submit"
-            >
-              Burn
-            </Button>
           </Flex>
         </form>
         <Flex alignItems="center">
-          <Balance balance={balanceData?.value} decimals={balanceData.decimals} symbol="snxUsd" />
+          <Balance balance={balance} decimals={18} symbol="snxUsd" />
         </Flex>
       </Box>
     </Box>
   );
-}
+};

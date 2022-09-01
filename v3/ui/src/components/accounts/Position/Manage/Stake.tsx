@@ -1,16 +1,17 @@
-import { Text, Box, Input, Button, Flex, Heading } from '@chakra-ui/react';
+import { Text, Box, Input, Flex, Heading } from '@chakra-ui/react';
+import { BigNumber } from 'ethers';
 import { FC } from 'react';
-import { useTokenBalance } from '../../../../hooks/useTokenBalance';
 import { CollateralType } from '../../../../utils/types';
 import { Balance } from '../../Stake/Balance';
 
 interface Props {
   collateral: CollateralType;
+  balance: BigNumber;
+  onChange: (value: number) => void;
+  value: number;
 }
 
-export const Stake: FC<Props> = ({ collateral }) => {
-  const balanceData = useTokenBalance(collateral.address);
-
+export const Stake: FC<Props> = ({ collateral, balance, value, onChange }) => {
   return (
     <Box mb="4">
       <Heading fontSize="md" mb="1">
@@ -29,25 +30,17 @@ export const Stake: FC<Props> = ({ collateral }) => {
               type="number"
               border="none"
               placeholder="0.0"
-              // value={null}
-              onChange={() => null}
+              min="0"
+              step="any"
+              value={value ? `${value}`.replace(/^0+/, '') : 0}
+              onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
             />
-            <Button
-              display="none"
-              // isLoading={null}
-              // isDisabled={null}
-              colorScheme="blue"
-              ml="4"
-              px="8"
-              type="submit"
-            >
-              Mint
-            </Button>
           </Flex>
         </form>
         <Flex alignItems="center">
           <Balance
-            balance={balanceData?.value}
+            onMax={(balance) => onChange(parseFloat(balance) || 0)}
+            balance={balance}
             decimals={collateral.decimals}
             symbol={collateral.symbol}
           />
