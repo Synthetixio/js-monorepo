@@ -1,44 +1,26 @@
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Heading,
-  Text,
-  Grid,
-  GridItem,
-  Tooltip,
-  Skeleton,
-  Spinner,
-  Flex,
-} from '@chakra-ui/react';
+import { Box, Heading, Text, Grid, GridItem, Tooltip, Skeleton, Flex } from '@chakra-ui/react';
 import { FC } from 'react';
 import { CollateralType } from '../../../utils/constants';
-import { useStakingPosition } from '../../../hooks/useStakingPosition';
 import { formatValue } from '../../../utils/helpers';
 import { BigNumber } from 'ethers';
 import { currency } from '../../../utils/currency';
 
 interface Props {
-  accountId: string;
-  fundId: string;
   collateral: CollateralType;
+  collateralAmount: number;
+  collateralValue: number;
+  debt: number;
+  cRatio: number;
 }
 
-export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
-  const {
-    isLoading,
-    debt,
-    cRatio,
-    collateralAmount: collateralAmountBN,
-  } = useStakingPosition(accountId, fundId, collateral);
-
-  if (isLoading) return <Spinner />;
-
-  const { decimals, price: priceBN, priceDecimals } = collateral;
-
-  const collateralAmount = formatValue(collateralAmountBN, decimals);
-  const price = formatValue(priceBN!, priceDecimals!);
-  const collateralValue = collateralAmount * price;
-
+export const StakingStats: FC<Props> = ({
+  collateral,
+  debt,
+  collateralAmount,
+  collateralValue,
+  cRatio,
+}) => {
   return (
     <Box>
       <Grid mb="1" textAlign="center" templateColumns="repeat(4, 1fr)">
@@ -70,8 +52,8 @@ export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
           </Text>
           <Skeleton isLoaded={true}>
             <Flex alignItems="center" justify="center">
-              {cRatio?.toString()}
-              {Number(debt.toString()) === 0 && (
+              {currency(cRatio?.toString())}%
+              {Number(debt?.toString() || 0) === 0 && (
                 <Tooltip label="You Don't have a C-Ratio if you have no Debt.">
                   <InfoIcon fontSize="sm" ml={1} />
                 </Tooltip>

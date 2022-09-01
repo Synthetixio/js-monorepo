@@ -1154,6 +1154,34 @@
       ]
     },
     {
+      "type": "error",
+      "name": "MarketNotFound",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "MaxDebtPerShareTooLow",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId"
+        },
+        {
+          "type": "int256",
+          "name": "requestedMaxDebtPerShare"
+        },
+        {
+          "type": "int256",
+          "name": "maximumMaxDebtPerShare"
+        }
+      ]
+    },
+    {
       "type": "event",
       "anonymous": false,
       "name": "DelegationUpdated",
@@ -1832,6 +1860,32 @@
         {
           "type": "address",
           "name": "market"
+        },
+        {
+          "type": "uint256",
+          "name": "existingMarketId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "MarketDepositNotApproved",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "market"
+        },
+        {
+          "type": "address",
+          "name": "from"
+        },
+        {
+          "type": "uint256",
+          "name": "requestedAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "approvedAmount"
         }
       ]
     },
@@ -1857,7 +1911,7 @@
         {
           "type": "address",
           "name": "market",
-          "indexed": false
+          "indexed": true
         },
         {
           "type": "uint256",
@@ -1886,6 +1940,41 @@
         }
       ],
       "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "marketCollateralValue",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "marketDebtPerShare",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "int256"
+        }
+      ]
     },
     {
       "type": "function",
@@ -2485,7 +2574,7 @@
   "constructorArgs": [
     "0xB91ac80B781a7a0592f76D503b72240e41685c24"
   ],
-  "deployTxnHash": "0xa1785b904a101ae0b4d74e79df303894817f1257260a59621e6a2f2b3d6a844a",
+  "deployTxnHash": "0x13c83de7b6445d3c582f47f67ba8936a0c0fdeff803061f2547cca1084b02dd4",
   "sourceName": "contracts/Proxy.sol",
   "contractName": "Proxy",
   "deployedOn": "contract.CoreProxy"

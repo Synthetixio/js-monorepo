@@ -1,13 +1,10 @@
-import { Container, Link, Box, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import Manage from '../../components/accounts/Position/Manage';
-import Rewards from '../../components/accounts/Position/Rewards';
-import Pool from '../../components/accounts/Position/Pool';
+import { Container, Link, Box } from '@chakra-ui/react';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 import { useParams, Link as NavLink } from 'react-router-dom';
-import { StakingStats } from '../../components/accounts/StakingPositions/StakingStats';
 import { useRecoilState } from 'recoil';
 import { collateralTypesState } from '../../utils/state';
 import { useMemo } from 'react';
+import { Position } from '../../components/accounts/Position';
 
 export function StakingPosition() {
   const { id: accountId, fundId, collateral: collateralSymbol } = useParams();
@@ -36,27 +33,7 @@ export function StakingPosition() {
           </Link>
         </NavLink>
       </Box>
-      <StakingStats accountId={accountId} fundId={fundId} collateral={collateral} />
-
-      <Tabs isFitted>
-        <TabList>
-          <Tab>Manage Position</Tab>
-          <Tab>Pool Liquidity</Tab>
-          <Tab>Claim Rewards</Tab>
-        </TabList>
-
-        <TabPanels>
-          <TabPanel>
-            <Manage accountId={accountId} fundId={fundId} collateral={collateral} />
-          </TabPanel>
-          <TabPanel>
-            <Pool />
-          </TabPanel>
-          <TabPanel>
-            <Rewards />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <Position collateral={collateral} fundId={fundId} accountId={accountId} />
     </Container>
   );
 }

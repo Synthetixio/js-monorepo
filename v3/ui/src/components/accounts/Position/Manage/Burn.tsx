@@ -1,6 +1,13 @@
-import { Text, Box, Link, Input, Button, Flex, Heading, Badge } from '@chakra-ui/react';
+import { Text, Box, Link, Input, Button, Flex, Heading } from '@chakra-ui/react';
+import { useContract } from '../../../../hooks';
+import { useTokenBalance } from '../../../../hooks/useTokenBalance';
+import { contracts } from '../../../../utils/constants';
+import { Balance } from '../../Stake/Balance';
 
 export default function Burn() {
+  const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
+  const balanceData = useTokenBalance(snxUsdProxy?.address);
+
   return (
     <Box mb="4">
       <Heading fontSize="md" mb="1">
@@ -44,20 +51,7 @@ export default function Burn() {
           </Flex>
         </form>
         <Flex alignItems="center">
-          <Box>
-            <Text fontSize="xs">Balance: $2,000</Text>
-          </Box>
-          <Link>
-            <Badge
-              as="button"
-              ml="3"
-              variant="outline"
-              colorScheme="blue"
-              transform="translateY(-2px)"
-            >
-              Use Max
-            </Badge>
-          </Link>
+          <Balance balance={balanceData?.value} decimals={balanceData.decimals} symbol="snxUsd" />
         </Flex>
       </Box>
     </Box>

@@ -117,6 +117,38 @@
     {
       "inputs": [
         {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        }
+      ],
+      "name": "MarketNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "int256",
+          "name": "requestedMaxDebtPerShare",
+          "type": "int256"
+        },
+        {
+          "internalType": "int256",
+          "name": "maximumMaxDebtPerShare",
+          "type": "int256"
+        }
+      ],
+      "name": "MaxDebtPerShareTooLow",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "bytes32",
           "name": "expected",
           "type": "bytes32"
@@ -568,6 +600,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xb64e56e260441c0d06b9ca97087b5d915b95d4e555b13b557032cd355ac28af3",
+  "deployTxnHash": "0x2c5cbbf4ba4925a76d0575912b088a4adf458ef3c8014e26734b58639ee9ed63",
   "deployedOn": "run.deploy_core"
 }

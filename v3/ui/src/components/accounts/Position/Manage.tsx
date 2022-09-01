@@ -2,10 +2,11 @@ import Burn from './Manage/Burn';
 import Custom from './Manage/Custom';
 import Mint from './Manage/Mint';
 import Preview from './Manage/Preview';
-import Stake from './Manage/Stake';
+import { Stake } from './Manage/Stake';
 import Unstake from './Manage/Unstake';
 import { Text, Box, Button, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
 import { CollateralType } from '../../../utils/constants';
+import { MaintainCRatio } from './Manage/MaintainCRatio';
 
 interface Props {
   accountId: string;
@@ -29,18 +30,10 @@ export default function Manage(props: Props) {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Text fontSize="sm" mb="4">
-              <strong>
-                If your C-Ratio drops below the minimum (150%), you may be liquidated and lose your
-                collateral.
-              </strong>{' '}
-              There are two ways to increase your C-Ratio:
-            </Text>
-            <Stake />
-            <Burn />
+            <MaintainCRatio {...props} />
           </TabPanel>
           <TabPanel>
-            <Stake />
+            <Stake {...props} />
             <Mint {...props} />
           </TabPanel>
           <TabPanel>

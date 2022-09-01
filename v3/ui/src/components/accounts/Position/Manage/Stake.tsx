@@ -1,6 +1,16 @@
-import { Text, Box, Link, Input, Button, Flex, Heading, Badge } from '@chakra-ui/react';
+import { Text, Box, Input, Button, Flex, Heading } from '@chakra-ui/react';
+import { FC } from 'react';
+import { useTokenBalance } from '../../../../hooks/useTokenBalance';
+import { CollateralType } from '../../../../utils/types';
+import { Balance } from '../../Stake/Balance';
 
-export default function Stake() {
+interface Props {
+  collateral: CollateralType;
+}
+
+export const Stake: FC<Props> = ({ collateral }) => {
+  const balanceData = useTokenBalance(collateral.address);
+
   return (
     <Box mb="4">
       <Heading fontSize="md" mb="1">
@@ -36,22 +46,13 @@ export default function Stake() {
           </Flex>
         </form>
         <Flex alignItems="center">
-          <Box>
-            <Text fontSize="xs">Balance: 100 SNX</Text>
-          </Box>
-          <Link>
-            <Badge
-              as="button"
-              ml="3"
-              variant="outline"
-              colorScheme="blue"
-              transform="translateY(-2px)"
-            >
-              Use Max
-            </Badge>
-          </Link>
+          <Balance
+            balance={balanceData?.value}
+            decimals={collateral.decimals}
+            symbol={collateral.symbol}
+          />
         </Flex>
       </Box>
     </Box>
   );
-}
+};
