@@ -34,4 +34,4 @@ The Minimum Liquidity Ratio is a global value (configured by SCCP) which is func
 
 ## Calculating `amountWithdrawable`
 
-To calculate the `amountWithdrawable` of a given market, the protocol takes the lesser of the two **maximum liquidity values** described above across each pool delegating to a given market and returns the sum.
+To calculate the `amountWithdrawable` of a given market, the protocol takes the lesser of the two **maximum debt** values described above across each pool delegating to a given market and returns the sum.
