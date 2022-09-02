@@ -2,6 +2,27 @@
   "languages": {
     "en": "English"
   },
+  "staking-v2": {
+    "main-action-cards": {
+      "stake-headline": "Stake & borrow",
+      "stake-body": "Mint sUSD by staking your SNX.",
+      "stake-link-button": "Stake & Borrow More",
+      "stake-main-button": "Start Staking",
+      "maintain-headline": "Maintain Collateralization Ratio",
+      "maintain-body": "Maintain Collateralization Ratio Health",
+      "maintain-badge-success": "Adjust to collect weekly rewards",
+      "maintain-badge-warning": "Your ratio is looking healthy!",
+      "maintain-main-button": "Maintain",
+      "maintain-explanation-link": "C-Ratio explained",
+      "maintain-flag-button": "Unflag",
+      "collect-headline": "Collect Rewards",
+      "collect-body": "Maintain your target C-Ratio to collect your weekly rewards.",
+      "collect-epoch": "Epoch",
+      "collect-price": "SNX Price",
+      "collect-main-button": "Claim your rewards",
+      "collect-explanation-link": "Rewards explained"
+    }
+  },
   "meta": {
     "description": "A dApp for SNX holders to earn rewards through staking.",
     "og": {

@@ -1,5 +1,6 @@
 import { Badge, Box, Button, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import React, { PropsWithChildren, ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getVariant } from '../c-ratio-health-card/getVariant';
 import { InfoIcon } from '../icons';
 import { CollectIcon } from '../icons/CollectIcon';
@@ -47,12 +48,13 @@ const Container = ({ children }: PropsWithChildren<{}>) => {
 };
 
 const StakeActionCard: React.FC<Props> = ({ isStaking }) => {
+  const { t } = useTranslation();
   return (
     <Container>
       <CardHeader
         step={1}
-        headingText="Stake & Borrow"
-        bodyText="Mint sUSD by staking your SNX."
+        headingText={t('staking-v2.main-action-cards.stake-headline')}
+        bodyText={t('staking-v2.main-action-cards.stake-body')}
         icon={<StakeIcon />}
       />
       {isStaking ? (
@@ -63,7 +65,7 @@ const StakeActionCard: React.FC<Props> = ({ isStaking }) => {
           mb="2"
           variant="link"
         >
-          Stake & Borrow More
+          {t('staking-v2.main-action-cards.stake-link-button')}
         </Button>
       ) : (
         <Button
@@ -72,7 +74,7 @@ const StakeActionCard: React.FC<Props> = ({ isStaking }) => {
           }}
           variant="solid"
         >
-          Start Staking
+          {t('staking-v2.main-action-cards.stake-main-button')}
         </Button>
       )}
     </Container>
@@ -85,6 +87,7 @@ const MaintainActionCard: React.FC<Props & { isFlagged: boolean }> = ({
   isStaking,
   isFlagged,
 }) => {
+  const { t } = useTranslation();
   const variant = getVariant({
     liquidationCratioPercentage,
     targetCratioPercentage,
@@ -95,8 +98,8 @@ const MaintainActionCard: React.FC<Props & { isFlagged: boolean }> = ({
     <Container>
       <CardHeader
         step={2}
-        headingText="Maintain Collateralization Ratio"
-        bodyText="Maintain your Collateralization Health."
+        headingText={t('staking-v2.main-action-cards.maintain-headline')}
+        bodyText={t('staking-v2.main-action-cards.maintain-body')}
         icon={<MaintainIcon />}
       />
       {isStaking && (
@@ -129,7 +132,9 @@ const MaintainActionCard: React.FC<Props & { isFlagged: boolean }> = ({
             isStaking ? console.log('navigate to maintain page') : console.log('C-Ratio explained');
           }}
         >
-          {isStaking ? 'Maintain' : 'C-Ratio explained'}
+          {isStaking
+            ? t('staking-v2.main-action-cards.maintain-main-button')
+            : t('staking-v2.main-action-cards.maintain-explanation-link')}
         </Button>
       ) : (
         <Button
@@ -138,7 +143,9 @@ const MaintainActionCard: React.FC<Props & { isFlagged: boolean }> = ({
           }}
           variant={variant}
         >
-          {isFlagged ? 'Unflag' : 'Maintain'}
+          {isFlagged
+            ? t('staking-v2.main-action-cards.maintain-flag-button')
+            : t('staking-v2.main-action-cards.maintain-main-button')}
         </Button>
       )}
     </Container>
@@ -152,6 +159,7 @@ const CollectActionCard: React.FC<Props> = ({
   epoch,
   hasClaimed,
 }) => {
+  const { t } = useTranslation();
   const variant = getVariant({
     liquidationCratioPercentage,
     targetCratioPercentage,
@@ -162,16 +170,22 @@ const CollectActionCard: React.FC<Props> = ({
     <Container>
       <CardHeader
         step={3}
-        headingText="Collect Rewards"
-        bodyText="Maintain your target C-Ratio to collect your weekly rewards."
+        headingText={t('staking-v2.main-action-cards.collect-headline')}
+        bodyText={t('staking-v2.main-action-cards.collect-body')}
         icon={<CollectIcon />}
       />
       {isStaking && (
         <Flex justifyContent="space-between">
           <Flex flexDirection="column">
             <Flex alignItems="center">
-              <Text color="whiteAlpha.700" fontSize="xs" mr="1" fontWeight="700">
-                EPOCH
+              <Text
+                textTransform="uppercase"
+                color="whiteAlpha.700"
+                fontSize="xs"
+                mr="1"
+                fontWeight="700"
+              >
+                {t('staking-v2.main-action-cards.collect-epoch')}
               </Text>
               <InfoIcon width="10px" height="10px" />
             </Flex>
@@ -182,7 +196,7 @@ const CollectActionCard: React.FC<Props> = ({
           {canClaim && (
             <Flex flexDirection="column">
               <Text color="whiteAlpha.700" fontSize="xs" mr="1" fontWeight="700">
-                SNX Price
+                {t('staking-v2.main-action-cards.collect-price')}
               </Text>
 
               <Text color="success" fontSize="md" fontFamily="mono">
@@ -200,7 +214,7 @@ const CollectActionCard: React.FC<Props> = ({
           variant={canClaim ? variant : 'disabled'}
           disabled={!canClaim}
         >
-          Claim your rewards
+          {t('staking-v2.main-action-cards.collect-main-button')}
         </Button>
       ) : (
         <Button
@@ -210,7 +224,7 @@ const CollectActionCard: React.FC<Props> = ({
           mb="2"
           variant="link"
         >
-          Rewards explained
+          {t('staking-v2.main-action-cards.collect-explanation-link')}
         </Button>
       )}
     </Container>
