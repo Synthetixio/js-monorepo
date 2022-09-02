@@ -1,0 +1,19 @@
+<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M14 11l.75-.75a1.06 1.06 0 00-1.5-1.5l-2.543 2.543a1 1 0 000 1.414l2.543 2.543a1.06 1.06 0 001.5-1.5L14 13h7a1 1 0 100-2h-7z" fill="url(#arrows-gold_paint0_linear)"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M18.414 18.56l-.75-.75a1.06 1.06 0 011.5-1.5l2.543 2.544a1 1 0 010 1.414l-2.543 2.543a1.06 1.06 0 01-1.5-1.5l.75-.75h-7a1 1 0 010-2h7z" fill="url(#arrows-gold_paint1_linear)"/>
+    <circle cx="16" cy="16" r="15" stroke="url(#arrows-gold_paint2_linear)" stroke-width="2"/>
+    <defs>
+        <linearGradient id="arrows-gold_paint0_linear" x1="16.207" y1="8.439" x2="16.207" y2="15.561" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#BE9461"/>
+            <stop offset="1" stop-color="#9C6C3C"/>
+        </linearGradient>
+        <linearGradient id="arrows-gold_paint1_linear" x1="16.207" y1="16" x2="16.207" y2="23.121" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#BE9461"/>
+            <stop offset="1" stop-color="#9C6C3C"/>
+        </linearGradient>
+        <linearGradient id="arrows-gold_paint2_linear" x1="16" y1="0" x2="16" y2="32" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#BE9461"/>
+            <stop offset="1" stop-color="#9C6C3C"/>
+        </linearGradient>
+    </defs>
+</svg>
