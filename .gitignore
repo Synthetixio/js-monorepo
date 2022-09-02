@@ -56,3 +56,6 @@ pids
 staged-txns.txt
 
 tsconfig.tsbuildinfo
+
+v3/ui/ts-deployments/hardhat
+v3/contracts/deployments/hardhat

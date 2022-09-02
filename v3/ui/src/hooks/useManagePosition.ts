@@ -8,7 +8,7 @@ import { MulticallCall, useMulticall } from './useMulticall2';
 
 interface IPosition {
   accountId: string;
-  fundId: string;
+  poolId: string;
   collateral: CollateralType;
 }
 
@@ -37,7 +37,7 @@ export const useManagePosition = (
           functionName: 'delegateCollateral',
           callArgs: [
             position.accountId,
-            position.fundId,
+            position.poolId,
             position.collateral.address,
             currentAmount.add(amountBN),
             utils.parseEther('1'),
@@ -53,7 +53,7 @@ export const useManagePosition = (
     position.accountId,
     position.collateral.address,
     position.collateral.decimals,
-    position.fundId,
+    position.poolId,
     snxProxy,
     amountBN,
   ]);

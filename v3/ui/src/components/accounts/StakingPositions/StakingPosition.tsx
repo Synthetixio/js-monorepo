@@ -1,4 +1,3 @@
-import { StakingPositionType } from './types';
 import { EditIcon, ExternalLinkIcon, InfoIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
   Badge,
@@ -25,6 +24,8 @@ import { BigNumber } from 'ethers';
 import { Link as RouterLink } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { formatValue } from '../../../utils/helpers';
+import { currency } from '../../../utils/currency';
+import { StakingPositionType } from '../../../utils/types';
 
 export default function StakingPosition({ position }: { position: StakingPositionType }) {
   // If the connected wallet doesn’t own this account token, remove/disable the interactivity
@@ -51,7 +52,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </>
       </Td>
       <Td py="4">
-        ${formatValue(debt)}
+        ${currency(formatValue(debt))}
         <Text fontSize="xs" mt="1'">
           <Link
             as={RouterLink}
@@ -301,18 +302,16 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </Modal>
       </Td>
       <Td>
-        <NavLink
-          to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.fundId}`}
+        <Link
+          as={NavLink}
+          to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.poolId}`}
+          color="blue.400"
+          display="inline-block"
+          transform="translateY(-1.5px)"
+          target="_blank"
         >
-          <Link
-            color="blue.400"
-            display="inline-block"
-            transform="translateY(-1.5px)"
-            target="_blank"
-          >
-            <ExternalLinkIcon />
-          </Link>
-        </NavLink>
+          <ExternalLinkIcon />
+        </Link>
       </Td>
     </Tr>
   );

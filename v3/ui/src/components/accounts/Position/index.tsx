@@ -10,17 +10,17 @@ import { useStakingPosition } from '../../../hooks/useStakingPosition';
 
 interface Props {
   accountId: string;
-  fundId: string;
+  poolId: string;
   collateral: CollateralType;
 }
 
-export const Position: FC<Props> = ({ accountId, fundId, collateral }) => {
+export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
   const {
     isLoading,
     debt,
     cRatio,
     collateralAmount: collateralAmountBN,
-  } = useStakingPosition(accountId, fundId, collateral);
+  } = useStakingPosition(accountId, poolId, collateral);
 
   if (isLoading) return <Spinner />;
 
@@ -55,7 +55,7 @@ export const Position: FC<Props> = ({ accountId, fundId, collateral }) => {
               debt={debt}
               cRatio={cRatio}
               accountId={accountId}
-              fundId={fundId}
+              poolId={poolId}
               collateral={collateral}
             />
           </TabPanel>

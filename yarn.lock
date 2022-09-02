@@ -6962,7 +6962,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/v3-contracts@workspace:v3/contracts":
+"@synthetixio/v3-contracts@workspace:*, @synthetixio/v3-contracts@workspace:v3/contracts":
   version: 0.0.0-use.local
   resolution: "@synthetixio/v3-contracts@workspace:v3/contracts"
   dependencies:
@@ -7049,6 +7049,7 @@ __metadata:
     "@faker-js/faker": ^7.4.0
     "@rainbow-me/rainbowkit": ^0.4.5
     "@svgr/webpack": ^6.3.1
+    "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
     "@types/react": ^18.0.18
     "@types/react-chartjs-2": ^2.5.7

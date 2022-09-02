@@ -7,7 +7,7 @@ import { ethers } from 'ethers';
 
 export const useMintBurn = (
   accountId: string,
-  fundId: string,
+  poolId: string,
   collateral: CollateralType,
   config?: TxConfig
 ) => {
@@ -31,11 +31,11 @@ export const useMintBurn = (
       try {
         const depositAmount = ethers.utils.parseEther(`${amount}`);
         await mintTx({
-          recklesslySetUnpreparedArgs: [accountId, fundId, collateral.address, depositAmount],
+          recklesslySetUnpreparedArgs: [accountId, poolId, collateral.address, depositAmount],
         });
       } catch (error) {}
     },
-    [accountId, collateral.address, fundId, mintTx]
+    [accountId, collateral.address, poolId, mintTx]
   );
 
   return {

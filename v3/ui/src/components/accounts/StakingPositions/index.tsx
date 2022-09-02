@@ -26,7 +26,7 @@ export default function StakingPositions({
               C-Ratio
             </Th>
             <Th color="rgba(255,255,255,0.8)" pb="2">
-              Fund
+              Pool
             </Th>
             <Th color="rgba(255,255,255,0.8)" pb="2"></Th>
           </Tr>

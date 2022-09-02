@@ -1,12 +1,12 @@
 import { useContractReads } from 'wagmi';
 import { useSnxProxy } from './useContract';
-import { CollateralType, fundsData } from '../utils/constants';
-import { BigNumber } from 'ethers';
+import { CollateralType, poolsData } from '../utils/constants';
 import { formatValue } from '../utils/helpers';
+import { BigNumber } from 'ethers';
 
 export const useStakingPosition = (
   accountId: string,
-  fundId: string,
+  poolId: string,
   collateral: CollateralType
 ) => {
   const snxProxy = useSnxProxy();
@@ -16,7 +16,7 @@ export const useStakingPosition = (
     addressOrName: snxProxy?.address,
     contractInterface: snxProxy?.abi,
     functionName: fn,
-    args: [accountId, fundId, collateral.address],
+    args: [accountId, poolId, collateral.address],
   }));
 
   const { data, isLoading } = useContractReads({
@@ -35,10 +35,10 @@ export const useStakingPosition = (
 
   return {
     isLoading,
-    fundId: fundId,
+    poolId: poolId,
     collateralType: collateral,
     accountId,
-    fundName: fundsData[fundId].name,
+    poolName: poolsData[poolId].name,
     collateralAmount: data?.collateralAmount || 0,
     cRatio: data?.cRatio || 0,
     debt: data?.debt || 0,

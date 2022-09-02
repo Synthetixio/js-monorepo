@@ -10,7 +10,7 @@ import { useManagePosition } from '../../../hooks/useManagePosition';
 
 interface Props {
   accountId: string;
-  fundId: string;
+  poolId: string;
   collateral: CollateralType;
   collateralAmount: number;
   collateralValue: number;
@@ -21,7 +21,7 @@ interface Props {
 export default function Manage({
   collateral,
   accountId,
-  fundId,
+  poolId,
   collateralAmount,
   collateralValue,
   debt,
@@ -34,7 +34,7 @@ export default function Manage({
     {
       collateral,
       accountId,
-      fundId,
+      poolId,
     },
     collateralChange,
     debtChange,
@@ -65,8 +65,8 @@ export default function Manage({
             />
           </TabPanel>
           <TabPanel>
-            {/* <Stake {...{collateral, accountId, fundId }} /> */}
-            <Mint {...{ collateral, accountId, fundId }} />
+            {/* <Stake {...{collateral, accountId, poolId }} /> */}
+            <Mint {...{ collateral, accountId, poolId }} />
           </TabPanel>
           <TabPanel>
             {/* <Burn /> */}

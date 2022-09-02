@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 import { Position } from '../../components/accounts/Position';
 
 export function StakingPosition() {
-  const { id: accountId, fundId, collateral: collateralSymbol } = useParams();
+  const { id: accountId, poolId, collateral: collateralSymbol } = useParams();
 
   const [collateralTypes] = useRecoilState(collateralTypesState);
 
@@ -17,7 +17,7 @@ export function StakingPosition() {
     );
   }, [collateralTypes, collateralSymbol]);
 
-  if (!collateral || !fundId || !accountId) return null;
+  if (!collateral || !poolId || !accountId) return null;
 
   return (
     <Container>
@@ -33,7 +33,7 @@ export function StakingPosition() {
           </Link>
         </NavLink>
       </Box>
-      <Position collateral={collateral} fundId={fundId} accountId={accountId} />
+      <Position collateral={collateral} poolId={poolId} accountId={accountId} />
     </Container>
   );
 }

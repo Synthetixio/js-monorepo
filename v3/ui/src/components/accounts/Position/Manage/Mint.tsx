@@ -6,12 +6,12 @@ import { CollateralType } from '../../../../utils/constants';
 
 interface Props {
   accountId: string;
-  fundId: string;
+  poolId: string;
   collateral: CollateralType;
 }
 
-export default function Mint({ accountId, fundId, collateral }: Props) {
-  const { mint } = useMintBurn(accountId, fundId, collateral);
+export default function Mint({ accountId, poolId, collateral }: Props) {
+  const { mint } = useMintBurn(accountId, poolId, collateral);
   const [amount, setAmount] = useState(0);
 
   return (
