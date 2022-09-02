@@ -72,7 +72,7 @@ const FlagWarningText: React.FC<{
       <Title>{t('staking.flag-warning.title')}</Title>
       <InfoText>
         <Trans
-          i18nKey={'staking.flag-warning.info'}
+          i18nKey="staking.flag-warning.info"
           components={[
             <Strong />,
             <StyledExternalLink href={EXTERNAL_LINKS.Synthetix.SIP148Liquidations} />,

@@ -30,7 +30,7 @@ const CouncilBoard: React.FC = () => {
 
   return (
     <StyledCard>
-      <img width={'100%'} src="/gifs/SC-NFT.gif" alt="sc-nft" />
+      <img width="100%" src="/gifs/SC-NFT.gif" alt="sc-nft" />
       <Title>{t('gov.council.title')}</Title>
 
       {councilMembers ? (

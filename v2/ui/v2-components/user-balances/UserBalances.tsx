@@ -42,8 +42,8 @@ export const UserBalances = ({
         borderLeftRadius="0px"
         borderBottomLeftRadius="0px"
         borderColor="gray.900"
-        py={'6px'}
-        px={'9.5px'}
+        py="6px"
+        px="9.5px"
         height={10}
         minWidth={110}
       >

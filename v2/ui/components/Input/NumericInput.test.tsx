@@ -9,7 +9,7 @@ describe('NumericInput', () => {
 
     const result = render(
       <ContextProvider>
-        <NumericInput value={''} onChange={onChangeMock} placeholder={'MyNumericInput'} />
+        <NumericInput value="" onChange={onChangeMock} placeholder="MyNumericInput" />
       </ContextProvider>
     );
     const input = result.getByPlaceholderText('MyNumericInput');
@@ -23,7 +23,7 @@ describe('NumericInput', () => {
 
     const result = render(
       <ContextProvider>
-        <NumericInput value={''} onChange={onChangeMock} placeholder={'MyNumericInput'} />
+        <NumericInput value="" onChange={onChangeMock} placeholder="MyNumericInput" />
       </ContextProvider>
     );
     const input = result.getByPlaceholderText('MyNumericInput');

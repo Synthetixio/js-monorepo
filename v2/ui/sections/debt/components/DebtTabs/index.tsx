@@ -76,8 +76,7 @@ const DebtTabs: FC<DebtTabsProps> = ({
   const isManageTab = activeTab === DebtPanelType.MANAGE;
   return (
     <>
-      {
-        <TopContainer isManageTab={isManageTab} isMainnet={isMainnet}>
+      <TopContainer isManageTab={isManageTab} isMainnet={isMainnet}>
           <DebtTabsContainer>
             <TabList noOfTabs={tabData.length}>
               {tabData.map(({ title, icon, key, disabled = false }, index) => (
@@ -120,7 +119,6 @@ const DebtTabs: FC<DebtTabsProps> = ({
           </DebtTabsContainer>
           <DebtHedgingInfoPanel hidden={!isManageTab} />
         </TopContainer>
-      }
       {activeTab === DebtPanelType.OVERVIEW && (
         <>
           <BottomContainer>

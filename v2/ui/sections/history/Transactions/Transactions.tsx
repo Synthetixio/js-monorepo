@@ -40,7 +40,7 @@ const Transactions: FC<TransactionsProps> = ({ transactions, isLoaded, noResults
           cellProps: CellProps<HistoricalStakingTransaction, HistoricalStakingTransaction['type']>
         ) => (
           <TypeContainer>
-            <TypeIconContainer>{<TypeIcon type={cellProps.value} />}</TypeIconContainer>
+            <TypeIconContainer><TypeIcon type={cellProps.value} /></TypeIconContainer>
             {t(`history.table.staking-tx-type.${cellProps.value}`)}
           </TypeContainer>
         ),
@@ -109,7 +109,7 @@ const Transactions: FC<TransactionsProps> = ({ transactions, isLoaded, noResults
           cellProps: CellProps<HistoricalStakingTransaction, HistoricalStakingTransaction['type']>
         ) => (
           <TypeContainer>
-            <TypeIconContainer>{<TypeIcon type={cellProps.value} />}</TypeIconContainer>
+            <TypeIconContainer><TypeIcon type={cellProps.value} /></TypeIconContainer>
             {t(`history.table.staking-tx-type.${cellProps.value}`)}
           </TypeContainer>
         ),
