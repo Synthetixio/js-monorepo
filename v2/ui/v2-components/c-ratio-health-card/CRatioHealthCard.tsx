@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
 import { CRatioProgressBar } from './CRatioProgressBar';
-import { getVariant } from './getVariant';
+import { getHealthVariant } from '../../v2-modules/getHealthVariant';
 
 type Props = {
   liquidationCratioPercentage: number;
@@ -28,7 +28,7 @@ export const CRatioHealthCard: React.FC<Props> = ({
         padding="2"
       >
         <Text
-          color={getVariant({
+          color={getHealthVariant({
             targetCratioPercentage,
             liquidationCratioPercentage,
             currentCRatioPercentage,

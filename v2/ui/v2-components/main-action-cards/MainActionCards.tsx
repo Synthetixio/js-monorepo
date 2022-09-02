@@ -1,7 +1,7 @@
 import { Badge, Box, Button, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import React, { PropsWithChildren, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getVariant } from '../c-ratio-health-card/getVariant';
+import { getHealthVariant } from '../../v2-modules/getHealthVariant';
 import { InfoIcon } from '../icons';
 import { CollectIcon } from '../icons/CollectIcon';
 import { MaintainIcon } from '../icons/MaintainIcon';
@@ -88,7 +88,7 @@ const MaintainActionCard: React.FC<Props & { isFlagged: boolean }> = ({
   isFlagged,
 }) => {
   const { t } = useTranslation();
-  const variant = getVariant({
+  const variant = getHealthVariant({
     liquidationCratioPercentage,
     targetCratioPercentage,
     currentCRatioPercentage,
@@ -160,7 +160,7 @@ const CollectActionCard: React.FC<Props> = ({
   hasClaimed,
 }) => {
   const { t } = useTranslation();
-  const variant = getVariant({
+  const variant = getHealthVariant({
     liquidationCratioPercentage,
     targetCratioPercentage,
     currentCRatioPercentage,
