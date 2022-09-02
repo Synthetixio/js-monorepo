@@ -36,9 +36,6 @@ export const useStakingPositions = (accountId: string) => {
   const getStakingPositions = useContractReads({
     enabled: true,
     contracts: funcCalls,
-    onError: (e) => {
-      console.error(e);
-    },
     select: (data) => {
       const positions: Record<string, StakingPositionType> = {};
 

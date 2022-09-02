@@ -173,8 +173,6 @@ export default function Stake({
   //   overrides.value = amount!;
   // }
 
-  console.log('LOGS', calls);
-
   const multiTxn = useMulticall(calls, overrides, {
     onMutate: () => {
       toast.closeAll();
