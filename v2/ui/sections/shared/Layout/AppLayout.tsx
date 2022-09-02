@@ -47,25 +47,19 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
           <Header />
         </>
       )}
-      <Content STAKING_V2_ENABLED={STAKING_V2_ENABLED}>{children}</Content>
+      <Content>{children}</Content>
       <NotificationContainer />
     </>
   );
 };
 
-interface ContentProps {
-  readonly STAKING_V2_ENABLED: boolean;
-}
-
-const Content = styled.div<ContentProps>`
+const Content = styled.div`
   max-width: 1200px;
   margin: 0 auto;
 
-  ${({ STAKING_V2_ENABLED }) => media.greaterThan('mdUp')`
-    padding-left: ${
-      STAKING_V2_ENABLED ? '0px' : `calc(${DESKTOP_SIDE_NAV_WIDTH + DESKTOP_BODY_PADDING}px)`
-    };
- `};
+  ${media.greaterThan('mdUp')`
+    padding-left: calc(${DESKTOP_SIDE_NAV_WIDTH + DESKTOP_BODY_PADDING}px);
+  `}
 `;
 
 export default AppLayout;
