@@ -10,3 +10,5 @@ artifacts
 .docusaurus
 v3/contracts/src
 v3/contracts/deployments
+v2/ui/.next
+v2/ui/out

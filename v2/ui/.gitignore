@@ -1,0 +1,10 @@
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# storybook
+storybook-static
+out/
+.next/
