@@ -193,12 +193,7 @@ const DepositTab: FC<DepositTabProps> = ({
     <>
       <Container>
         <IconWrap>
-          <Currency.Icon
-            currencyKey={icon}
-            width="38"
-            height="38"
-            type={type ? type : undefined}
-          />
+          <Currency.Icon currencyKey={icon} width="38" height="38" type={type ? type : undefined} />
         </IconWrap>
         <InputSection>
           <EmptyDiv />
