@@ -1,9 +1,0 @@
-node_modules
-build
-.next
-out
-coverage
-.yarn
-tests
-test-setup
-test-utils
