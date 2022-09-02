@@ -77,5 +77,32 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    { "source": "/staking", "destination": "staking.html" },
+    { "source": "/loans/(.*)", "destination": "loans/[[...action]].html" },
+    { "source": "/migrate-escrow", "destination": "migrate-escrow.html" },
+    { "source": "/pools/weth-snx", "destination": "pools/weth-snx.html" },
+    { "source": "/pools/(.*)", "destination": "pools/[[...pool]].html" },
+    { "source": "/index", "destination": "index.html" },
+    { "source": "/404", "destination": "404.html" },
+    { "source": "/earn/claim", "destination": "earn/claim.html" },
+    { "source": "/earn/curve-LP", "destination": "earn/curve-LP.html" },
+    { "source": "/earn/iBTC-LP", "destination": "earn/iBTC-LP.html" },
+    { "source": "/earn/iETH-LP", "destination": "earn/iETH-LP.html" },
+    { "source": "/earn/(.*)", "destination": "earn/[[...pool]].html" },
+    { "source": "/delegate", "destination": "delegate.html" },
+    { "source": "/earn", "destination": "earn.html" },
+    { "source": "/history", "destination": "history.html" },
+    { "source": "/staking/burn", "destination": "staking/burn.html" },
+    { "source": "/staking/mint", "destination": "staking/mint.html" },
+    { "source": "/staking/(.*)", "destination": "staking/[[...action]].html" },
+    { "source": "/debt", "destination": "debt.html" },
+    { "source": "/escrow/(.*)", "destination": "escrow/[[...action]].html" },
+    { "source": "/synths", "destination": "synths.html" },
+    { "source": "/merge-accounts/(.*)", "destination": "merge-accounts/[[...action]].html" },
+    { "source": "/gov/(.*)", "destination": "gov/[[...panel]].html" },
+    { "source": "/bridge", "destination": "bridge.html" },
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
