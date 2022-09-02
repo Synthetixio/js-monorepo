@@ -66,7 +66,7 @@ artifact = "WETH9"
 [invoke.register_lusd_collateral]
 target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
-func = "adjustCollateralType"
+func = "configureCollateralType"
 args = [
     "<%= imports.lusd.contracts.token.address %>",
     "<%= imports.aggregator_lusd.contracts.aggregator.address %>",
@@ -80,7 +80,7 @@ depends = ["import.synthetix", "import.lusd", "import.aggregator_lusd"]
 [invoke.register_snx_collateral]
 target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
-func = "adjustCollateralType"
+func = "configureCollateralType"
 args = [
     "<%= imports.snx.contracts.token.address %>",
     "<%= imports.aggregator_snx.contracts.aggregator.address %>",
@@ -94,7 +94,7 @@ depends = ["import.synthetix", "import.snx", "import.aggregator_snx"]
 [invoke.register_weth_collateral]
 target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
-func = "adjustCollateralType"
+func = "configureCollateralType"
 args = [
     "<%= contracts.WETH.address %>",
     "<%= imports.aggregator_weth.contracts.aggregator.address %>",

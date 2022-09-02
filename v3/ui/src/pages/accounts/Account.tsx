@@ -13,14 +13,15 @@ export function Account() {
     <Box>
       <StakingNav />
       <Stack>
-        <Skeleton isLoaded={!isLoading && Boolean(stakingPositions)}>
-          <StakingPositions positions={stakingPositions ?? {}} />
-        </Skeleton>
+        <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+        <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+        <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
       </Stack>
+      {stakingPositions && <StakingPositions positions={stakingPositions ?? {}} />}
       <Heading size="md" mb="3">
         Stake Collateral
       </Heading>
-      <Stake accountId={accountId} stakingPositions={stakingPositions} />
+      <Stake accountId={accountId} stakingPositions={stakingPositions ?? {}} />
     </Box>
   );
 }

@@ -180,11 +180,24 @@
       "inputs": [
         {
           "internalType": "uint256",
+          "name": "requestedAccountId",
+          "type": "uint256"
+        }
+      ],
+      "name": "createAccount",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
           "name": "accountId",
           "type": "uint256"
         }
       ],
-      "name": "accountOwner",
+      "name": "getAccountOwner",
       "outputs": [
         {
           "internalType": "address",
@@ -193,19 +206,6 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "requestedAccountId",
-          "type": "uint256"
-        }
-      ],
-      "name": "createAccount",
-      "outputs": [],
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -364,6 +364,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x0bf432e51e410578be26ee4328725484282471481f8425cf1367036d66a00ff4",
+  "deployTxnHash": "0xbd0540fff5e88d32ab5af4c8d4f832d7fb42a6a7e38ee9a10a0a3331f3f2a75a",
   "deployedOn": "run.deploy_core"
 }

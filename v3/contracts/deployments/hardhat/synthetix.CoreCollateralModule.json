@@ -121,56 +121,13 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "priceFeed",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "targetCRatio",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "minimumCRatio",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "liquidationReward",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "bool",
-          "name": "enabled",
-          "type": "bool"
-        }
-      ],
-      "name": "CollateralConfigured",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint256",
           "name": "accountId",
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "collateralType",
           "type": "address"
@@ -182,7 +139,7 @@
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "sender",
           "type": "address"
@@ -195,13 +152,56 @@
       "anonymous": false,
       "inputs": [
         {
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "priceFeed",
+          "type": "address"
+        },
+        {
           "indexed": false,
+          "internalType": "uint256",
+          "name": "targetCollateralizationRatio",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "minimumCollateralizationRatio",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "liquidationReward",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "bool",
+          "name": "enabled",
+          "type": "bool"
+        }
+      ],
+      "name": "CollateralTypeConfigured",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
           "internalType": "uint256",
           "name": "accountId",
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "collateralType",
           "type": "address"
@@ -213,7 +213,7 @@
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "sender",
           "type": "address"
@@ -255,7 +255,7 @@
           "type": "bool"
         }
       ],
-      "name": "adjustCollateralType",
+      "name": "configureCollateralType",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -462,6 +462,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xb9fddf6bfb21872549da62202c6aa2566e73e7fbb36f3864e91b86097db25e95",
+  "deployTxnHash": "0xb5c259fefec6c821e0fbc141115a95705094927105eb86416e59738b555aaf3a",
   "deployedOn": "run.deploy_core"
 }

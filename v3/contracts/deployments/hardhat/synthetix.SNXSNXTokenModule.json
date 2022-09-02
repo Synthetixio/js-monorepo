@@ -367,6 +367,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xb638f29b65483c05b3596fcc3d2adb684ae940ee735485e77c60bfc24d141666",
+  "deployTxnHash": "0x3d7bbf11397749fbbbbddebb71d87db682ab732e887a042a708b6490495c3e3f",
   "deployedOn": "run.deploy_snx"
 }

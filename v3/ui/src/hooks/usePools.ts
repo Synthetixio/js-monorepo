@@ -5,7 +5,7 @@ import { poolsState } from '../utils/state';
 import { useContract } from './useContract';
 
 export const usePools = () => {
-  const setFunds = useSetRecoilState(poolsState);
+  const setPools = useSetRecoilState(poolsState);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   const snxContractData = {
     addressOrName: snxProxy?.address,
@@ -24,13 +24,13 @@ export const usePools = () => {
       },
     ],
     onSuccess: (data) => {
-      const funds = data
+      const pools = data
         ? [
             data[0].toString(),
-            ...data[1].filter((id) => !id.eq(data[0])).map((fundId) => fundId.toString()),
+            ...data[1].filter((id) => !id.eq(data[0])).map((poolId) => poolId.toString()),
           ]
         : [];
-      setFunds(funds);
+      setPools(pools);
     },
   });
 

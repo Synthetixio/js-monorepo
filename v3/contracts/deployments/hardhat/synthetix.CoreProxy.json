@@ -375,7 +375,20 @@
     },
     {
       "type": "function",
-      "name": "accountOwner",
+      "name": "createAccount",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "requestedAccountId"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getAccountOwner",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -390,19 +403,6 @@
           "type": "address"
         }
       ]
-    },
-    {
-      "type": "function",
-      "name": "createAccount",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "requestedAccountId"
-        }
-      ],
-      "outputs": []
     },
     {
       "type": "function",
@@ -727,26 +727,53 @@
     {
       "type": "event",
       "anonymous": false,
-      "name": "CollateralConfigured",
+      "name": "CollateralDeposited",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "CollateralTypeConfigured",
       "inputs": [
         {
           "type": "address",
           "name": "collateralType",
-          "indexed": false
+          "indexed": true
         },
         {
           "type": "address",
           "name": "priceFeed",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "targetCollateralizationRatio",
           "indexed": false
         },
         {
           "type": "uint256",
-          "name": "targetCRatio",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "minimumCRatio",
+          "name": "minimumCollateralizationRatio",
           "indexed": false
         },
         {
@@ -757,34 +784,7 @@
         {
           "type": "bool",
           "name": "enabled",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "CollateralDeposited",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "accountId",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amount",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "sender",
-          "indexed": false
+          "indexed": true
         }
       ]
     },
@@ -796,12 +796,12 @@
         {
           "type": "uint256",
           "name": "accountId",
-          "indexed": false
+          "indexed": true
         },
         {
           "type": "address",
           "name": "collateralType",
-          "indexed": false
+          "indexed": true
         },
         {
           "type": "uint256",
@@ -811,13 +811,13 @@
         {
           "type": "address",
           "name": "sender",
-          "indexed": false
+          "indexed": true
         }
       ]
     },
     {
       "type": "function",
-      "name": "adjustCollateralType",
+      "name": "configureCollateralType",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -1029,20 +1029,6 @@
     },
     {
       "type": "error",
-      "name": "EmptyVault",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        }
-      ]
-    },
-    {
-      "type": "error",
       "name": "IneligibleForLiquidation",
       "inputs": [
         {
@@ -1126,73 +1112,11 @@
     },
     {
       "type": "error",
-      "name": "OnlyTokenProxyAllowed",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "origin"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "PoolAlreadyApproved",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "PoolAlreadyExists",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId"
-        }
-      ]
-    },
-    {
-      "type": "error",
       "name": "PoolNotFound",
       "inputs": [
         {
           "type": "uint256",
           "name": "poolId"
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "DelegationUpdated",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "accountId",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amount",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "leverage",
-          "indexed": false
         }
       ]
     },
@@ -1229,211 +1153,6 @@
         {
           "type": "uint256",
           "name": "amountRewarded",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "NominatedNewOwner",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "nominatedOwner",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "OwnershipAccepted",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "newOwner",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "OwnershipRenounced",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "target",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "PoolApprovedAdded",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "PoolApprovedRemoved",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "PoolCreated",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "owner",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "PoolPositionSet",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": false
-        },
-        {
-          "type": "uint256[]",
-          "name": "markets",
-          "indexed": false
-        },
-        {
-          "type": "uint256[]",
-          "name": "weights",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "executedBy",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "PreferredPoolSet",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "RewardDistributionSet",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "token",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "index",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "distributor",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "totalRewarded",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "start",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "duration",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "RewardsClaimed",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "token",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "accountId",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "index",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amountClaimed",
           "indexed": false
         }
       ]
@@ -1626,7 +1345,61 @@
         {
           "type": "uint256",
           "name": "marketId",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "UsdDeposited",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "target",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
           "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "UsdWithdrawn",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "target",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
         }
       ]
     },
@@ -1653,7 +1426,7 @@
     },
     {
       "type": "function",
-      "name": "marketCollateralValue",
+      "name": "getMarketCollateral",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -1671,7 +1444,7 @@
     },
     {
       "type": "function",
-      "name": "marketDebtPerShare",
+      "name": "getMarketDebtPerShare",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -1688,7 +1461,25 @@
     },
     {
       "type": "function",
-      "name": "marketLiquidity",
+      "name": "getMarketIssuance",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "int128"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getMarketReportedBalance",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -1706,7 +1497,7 @@
     },
     {
       "type": "function",
-      "name": "marketTotalBalance",
+      "name": "getMarketTotalBalance",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -1719,6 +1510,24 @@
       "outputs": [
         {
           "type": "int256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getWithdrawableUsd",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
         }
       ]
     },
@@ -1777,6 +1586,52 @@
         {
           "type": "bytes[]",
           "name": "results"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "PoolAlreadyApproved",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "PoolApprovedAdded",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "PoolApprovedRemoved",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "PreferredPoolSet",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": false
         }
       ]
     },
@@ -1846,6 +1701,167 @@
       "outputs": []
     },
     {
+      "type": "error",
+      "name": "PoolAlreadyExists",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "NominatedPoolOwner",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "owner",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "PoolConfigurationSet",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "uint256[]",
+          "name": "markets",
+          "indexed": true
+        },
+        {
+          "type": "uint256[]",
+          "name": "weights",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "executedBy",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "PoolCreated",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "owner",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "PoolNameUpdated",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "PoolNominationRenounced",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "owner",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "PoolNominationRevoked",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "owner",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "PoolOwnershipAccepted",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "owner",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "PoolOwnershipRenounced",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "owner",
+          "indexed": true
+        }
+      ]
+    },
+    {
       "type": "function",
       "name": "acceptPoolOwnership",
       "constant": false,
@@ -1890,7 +1906,7 @@
     },
     {
       "type": "function",
-      "name": "getPoolName",
+      "name": "getNominatedPoolOwner",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -1902,14 +1918,13 @@
       ],
       "outputs": [
         {
-          "type": "string",
-          "name": "poolName"
+          "type": "address"
         }
       ]
     },
     {
       "type": "function",
-      "name": "getPoolPosition",
+      "name": "getPoolConfiguration",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -1933,7 +1948,44 @@
     },
     {
       "type": "function",
-      "name": "nominateNewPoolOwner",
+      "name": "getPoolName",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "string",
+          "name": "poolName"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getPoolOwner",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "nominatePoolOwner",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -1950,43 +2002,20 @@
     },
     {
       "type": "function",
-      "name": "nominatedOwnerOf",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "address"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "ownerOf",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "address"
-        }
-      ]
-    },
-    {
-      "type": "function",
       "name": "renouncePoolNomination",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "renouncePoolOwnership",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -2012,24 +2041,7 @@
     },
     {
       "type": "function",
-      "name": "setPoolName",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId"
-        },
-        {
-          "type": "string",
-          "name": "name"
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "type": "function",
-      "name": "setPoolPosition",
+      "name": "setPoolConfiguration",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -2048,6 +2060,23 @@
         {
           "type": "int256[]",
           "name": "maxDebtShareValues"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "setPoolName",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId"
+        },
+        {
+          "type": "string",
+          "name": "name"
         }
       ],
       "outputs": []
@@ -2189,93 +2218,109 @@
       ]
     },
     {
-      "type": "function",
-      "name": "accountCollateralRatio",
-      "constant": false,
-      "payable": false,
+      "type": "event",
+      "anonymous": false,
+      "name": "DelegationUpdated",
       "inputs": [
         {
           "type": "uint256",
-          "name": "accountId"
+          "name": "accountId",
+          "indexed": true
         },
         {
           "type": "uint256",
-          "name": "poolId"
+          "name": "poolId",
+          "indexed": true
         },
         {
           "type": "address",
-          "name": "collateralType"
-        }
-      ],
-      "outputs": [
+          "name": "collateralType",
+          "indexed": false
+        },
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "leverage",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "UsdBurned",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "UsdMinted",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
         }
       ]
     },
     {
       "type": "function",
-      "name": "accountVaultCollateral",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "accountId"
-        },
-        {
-          "type": "uint256",
-          "name": "poolId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "amount"
-        },
-        {
-          "type": "uint256",
-          "name": "value"
-        },
-        {
-          "type": "uint256",
-          "name": "shares"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "accountVaultDebt",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "accountId"
-        },
-        {
-          "type": "uint256",
-          "name": "poolId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "int256"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "burnUSD",
+      "name": "burnUsd",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -2329,7 +2374,7 @@
     },
     {
       "type": "function",
-      "name": "mintUSD",
+      "name": "getPosition",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -2344,21 +2389,68 @@
         {
           "type": "address",
           "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "collateralAmount"
         },
         {
           "type": "uint256",
-          "name": "amount"
+          "name": "collateralValue"
+        },
+        {
+          "type": "int256",
+          "name": "debt"
+        },
+        {
+          "type": "uint256",
+          "name": "collateralizationRatio"
         }
-      ],
-      "outputs": []
+      ]
     },
     {
       "type": "function",
-      "name": "totalVaultShares",
+      "name": "getPositionCollateral",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
       "inputs": [
+        {
+          "type": "uint256",
+          "name": "accountId"
+        },
+        {
+          "type": "uint256",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "amount"
+        },
+        {
+          "type": "uint256",
+          "name": "value"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getPositionCollateralizationRatio",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "accountId"
+        },
         {
           "type": "uint256",
           "name": "poolId"
@@ -2376,7 +2468,32 @@
     },
     {
       "type": "function",
-      "name": "vaultCollateral",
+      "name": "getPositionDebt",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "accountId"
+        },
+        {
+          "type": "uint256",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "int256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getVaultCollateral",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -2403,7 +2520,7 @@
     },
     {
       "type": "function",
-      "name": "vaultCollateralRatio",
+      "name": "getVaultCollateralRatio",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -2424,7 +2541,7 @@
     },
     {
       "type": "function",
-      "name": "vaultDebt",
+      "name": "getVaultDebt",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -2440,6 +2557,105 @@
       "outputs": [
         {
           "type": "int256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "mintUsd",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "accountId"
+        },
+        {
+          "type": "uint256",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "RewardDistributionSet",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "index",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "distributor",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "totalRewarded",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "start",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "duration",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "RewardsClaimed",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "index",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amountClaimed",
+          "indexed": false
         }
       ]
     },
@@ -2616,7 +2832,7 @@
   "constructorArgs": [
     "0x72013AC0Ad943F31C5fFf2032d987e117d725Ffe"
   ],
-  "deployTxnHash": "0xefcff7d41a403410a073f9ce1eb8bc153f45584089bd9a4b3eaa6f3a85add245",
+  "deployTxnHash": "0x430de615b69cf9d6c8d2ef3080998c3e41f2f18bea8d4b0cc9d202ac4199a898",
   "sourceName": "contracts/Proxy.sol",
   "contractName": "Proxy",
   "deployedOn": "contract.CoreProxy"

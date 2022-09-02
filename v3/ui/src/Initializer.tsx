@@ -10,9 +10,9 @@ type Props = {
 export const Initializer: FC<Props> = ({ children }) => {
   const { isLoading: isLoadingCollateralTypes } = useCollateralTypes();
   const { isLoading: isLoadingOwnerAccounts } = useOwnerAccounts();
-  const { isLoading: isLoadingFunds } = usePools();
+  const { isLoading: isLoadingPools } = usePools();
 
-  const isLoading = isLoadingCollateralTypes || isLoadingOwnerAccounts || isLoadingFunds;
+  const isLoading = isLoadingCollateralTypes || isLoadingOwnerAccounts || isLoadingPools;
 
   return isLoading ? <Spinner mx="auto" my="auto" /> : <>{children}</>;
 };
