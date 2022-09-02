@@ -105,6 +105,7 @@ module.exports = {
           'error',
           { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
         ],
+        'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'never' }],
 
         // TODO: fixme and switch to `error`
         '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
