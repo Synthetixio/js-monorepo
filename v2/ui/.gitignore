@@ -6,3 +6,5 @@
 
 # storybook
 storybook-static
+out/
+.next/
