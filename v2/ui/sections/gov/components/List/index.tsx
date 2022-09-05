@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { CellProps, Row } from 'react-table';
-import { FlexDivCol } from 'styles/common';
-import media from 'styles/media';
+import { FlexDivCol } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 import Button from 'components/Button';
 import useSynthetixQueries, { Proposal as ProposalType } from '@synthetixio/queries';
 import Table from 'components/Table';

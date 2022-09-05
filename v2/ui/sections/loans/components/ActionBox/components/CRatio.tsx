@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
-import { FlexDivRow, FlexDivRowCentered } from 'styles/common';
+import { FlexDivRow, FlexDivRowCentered } from '@snx-v1/styles';
 import { formatPercent } from 'utils/formatters/number';
 import InfoSVG from 'sections/loans/components/ActionBox/components/InfoSVG';
 import Wei from '@synthetixio/wei';

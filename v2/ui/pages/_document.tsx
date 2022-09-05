@@ -1,6 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
-import { mediaStyles } from 'styles/media';
+import { mediaStyles } from '@snx-v1/media';
 import Colors from 'styles/theme/colors';
 import GlobalLoader from 'components/GlobalLoader';
 import Script from 'next/script';

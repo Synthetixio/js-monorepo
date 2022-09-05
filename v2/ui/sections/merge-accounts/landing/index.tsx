@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 
-import media from 'styles/media';
+import media from '@snx-v1/media';
 import useStakingCalculations from 'sections/staking/hooks/useStakingCalculations';
 
 import { Cols as BaseCols, Col } from 'sections/merge-accounts/common';

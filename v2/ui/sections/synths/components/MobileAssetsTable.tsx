@@ -15,7 +15,7 @@ import {
   TableNoResultsDesc,
   TableNoResultsButtonContainer,
   NoTextTransform,
-} from 'styles/common';
+} from '@snx-v1/styles';
 import { CryptoBalance } from 'hooks/useCryptoBalances';
 
 import { EXTERNAL_LINKS } from 'constants/links';

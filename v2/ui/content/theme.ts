@@ -130,14 +130,15 @@ const Menu: ComponentMultiStyleConfig = {
       height: '100%',
     },
     list: {
-      mt: 4,
+      mt: 2,
       bgColor: 'navy.900',
+      padding: 0,
       border: 'none',
       borderRadius: 'md',
       py: 0,
     },
     item: {
-      bgColor: 'black',
+      bgColor: 'blackAlpha.300',
       color: 'white',
       p: 3,
       _active: {
@@ -152,7 +153,7 @@ const Menu: ComponentMultiStyleConfig = {
         borderBottomRightRadius: 'md',
       },
       _focus: {
-        bgColor: 'black',
+        bgColor: 'blackAlpha.400',
       },
       _even: {
         bgColor: 'whiteAlpha.300',
@@ -184,7 +185,7 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
         bg: 'navy.900',
         color: 'white',
         backgroundImage: `repeating-linear-gradient(135deg, ${chakraTheme.colors.gray['900']} 0, ${chakraTheme.colors.navy['900']} 1px, transparent 0, transparent 50%)`,
-        backgroundSize: '12px 12px',
+        backgroundSize: '8px 8px',
       },
       '::-webkit-scrollbar': {
         width: '8px',

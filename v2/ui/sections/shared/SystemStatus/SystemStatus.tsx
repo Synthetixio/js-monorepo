@@ -3,13 +3,13 @@ import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import media from 'styles/media';
+import media from '@snx-v1/media';
 import {
   FlexDivColCentered,
   FullScreenContainer,
   resetHeadingMixin,
   FlexDivCol,
-} from 'styles/common';
+} from '@snx-v1/styles';
 
 import StakingLogo from 'assets/svg/app/staking-logo.svg';
 

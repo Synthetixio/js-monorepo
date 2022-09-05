@@ -18,4 +18,6 @@ export { FailedIcon } from './FailedIcon';
 export { InfoIcon } from './InfoIcon';
 export { TriangleDownIcon } from './TriangleDownIcon';
 export { TriangleUpIcon } from './TriangleUpIcon';
+export { LoansIcon } from './LoansIcon';
+export { GovIcon } from './GovIcon';
 export { KebabMenuVertical } from './KebabMenuVertical';

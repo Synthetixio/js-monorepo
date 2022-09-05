@@ -7,8 +7,14 @@ import { useRecoilValue } from 'recoil';
 
 import { delegateWalletState } from 'store/wallet';
 import ROUTES from 'constants/routes';
-import { ExternalLink, FlexDiv, GlowingCircle, IconButton, FlexDivJustifyEnd } from 'styles/common';
-import media from 'styles/media';
+import {
+  ExternalLink,
+  FlexDiv,
+  GlowingCircle,
+  IconButton,
+  FlexDivJustifyEnd,
+} from '@snx-v1/styles';
+import media from '@snx-v1/media';
 import PendingConfirmation from 'assets/svg/app/pending-confirmation.svg';
 import Success from 'assets/svg/app/success.svg';
 import ExpandIcon from 'assets/svg/app/expand.svg';
@@ -46,7 +52,7 @@ import {
   FlexDivColCentered,
   ModalContent,
   ModalItem,
-} from 'styles/common';
+} from '@snx-v1/styles';
 import { EXTERNAL_LINKS } from 'constants/links';
 import Currency from 'components/Currency';
 

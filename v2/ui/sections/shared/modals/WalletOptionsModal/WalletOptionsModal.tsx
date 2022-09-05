@@ -37,7 +37,7 @@ import {
   FlexDivCol,
   FlexDivCentered,
   Divider,
-} from 'styles/common';
+} from '@snx-v1/styles';
 import { truncateAddress } from 'utils/formatters/string';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 

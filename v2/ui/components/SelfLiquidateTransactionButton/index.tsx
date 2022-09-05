@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ModalContent, ModalItem, ModalItemTitle, ModalItemText } from 'styles/common';
+import { ModalContent, ModalItem, ModalItemTitle, ModalItemText } from '@snx-v1/styles';
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';
 
 import { useTranslation } from 'react-i18next';

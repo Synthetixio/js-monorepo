@@ -1,6 +1,6 @@
 import { components, OptionProps } from 'react-select';
 import styled from 'styled-components';
-import { FlexDivCentered } from 'styles/common';
+import { FlexDivCentered } from '@snx-v1/styles';
 import TypeIcon from '../TypeIcon';
 
 import { TypeFilterOptionType } from '../types';

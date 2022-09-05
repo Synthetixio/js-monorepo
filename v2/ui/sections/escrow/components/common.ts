@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { FlexDivColCentered, GridDivCenteredRow, linkCSS } from 'styles/common';
+import { FlexDivColCentered, GridDivCenteredRow, linkCSS } from '@snx-v1/styles';
 import Button from 'components/Button';
 import Table from 'components/Table';
 

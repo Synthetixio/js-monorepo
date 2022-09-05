@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { FC } from 'react';
 import { Trans } from 'react-i18next';
 
-import { FlexDivCentered, FlexDivCol, FlexDivRowCentered, NoTextTransform } from 'styles/common';
+import { FlexDivCentered, FlexDivCol, FlexDivRowCentered, NoTextTransform } from '@snx-v1/styles';
 
 import { CurrencyKey } from 'constants/currency';
 import { NO_VALUE } from 'constants/placeholder';

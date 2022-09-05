@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import Etherscan from 'containers/BlockExplorer';
-import { ExternalLink, FlexDivCentered } from 'styles/common';
+import { ExternalLink, FlexDivCentered } from '@snx-v1/styles';
 
 import LinkIcon from 'assets/svg/app/link-blue.svg';
 import styled from 'styled-components';

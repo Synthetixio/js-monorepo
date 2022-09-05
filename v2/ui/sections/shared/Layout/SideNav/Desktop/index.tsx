@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import useCryptoBalances from 'hooks/useCryptoBalances';
 
 import { CryptoCurrency, Synths } from 'constants/currency';
-import { DESKTOP_SIDE_NAV_WIDTH, zIndex } from 'constants/ui';
+import { DESKTOP_SIDE_NAV_WIDTH, zIndex } from '@snx-v1/constantsUi';
 
 import { delegateWalletState } from 'store/wallet';
 
@@ -13,7 +13,7 @@ import PriceItem from 'sections/shared/Layout/Stats/PriceItem';
 import PeriodBarStats from 'sections/shared/Layout/Stats/PeriodBarStats';
 import BalanceItem from 'sections/shared/Layout/Stats/BalanceItem';
 import CRatioBarStats from 'sections/shared/Layout/Stats/CRatioBarStats';
-import { Tooltip } from 'styles/common';
+import { Tooltip } from '@snx-v1/styles';
 import { useTranslation } from 'react-i18next';
 
 import DesktopMenu from './DesktopMenu';
