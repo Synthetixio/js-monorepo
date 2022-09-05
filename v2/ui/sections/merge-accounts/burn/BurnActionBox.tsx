@@ -129,7 +129,7 @@ const BurnTabInner: FC = () => {
           size="lg"
           disabled={txn.txnStatus !== 'unsent'}
         >
-          <Trans i18nKey={'staking.actions.burn.action.burn'} components={[<NoTextTransform />]} />
+          <Trans i18nKey="staking.actions.burn.action.burn" components={[<NoTextTransform />]} />
         </StyledCTA>
       );
     }

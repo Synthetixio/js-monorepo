@@ -29,7 +29,7 @@ export default function PoolTabs({
             allowanceAmount={allowanceAmount}
             stakedTokens={stakedTokens}
             fetchBalances={fetchBalances}
-            stakingRewardsContractName={'StakingRewardsSNXWETHUniswapV3'}
+            stakingRewardsContractName="StakingRewardsSNXWETHUniswapV3"
           />
         ),
         color: theme.colors.blue,
@@ -45,7 +45,7 @@ export default function PoolTabs({
             allowanceAmount={allowanceAmount}
             stakedTokens={stakedTokens}
             fetchBalances={fetchBalances}
-            stakingRewardsContractName={'StakingRewardsSNXWETHUniswapV3'}
+            stakingRewardsContractName="StakingRewardsSNXWETHUniswapV3"
           />
         ),
         color: theme.colors.orange,

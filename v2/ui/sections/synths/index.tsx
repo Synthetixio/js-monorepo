@@ -133,7 +133,7 @@ const Index: FC = () => {
                   arrow={false}
                   content={
                     <Trans
-                      i18nKey={'synths.redeemable-deprecated-synths.tooltip'}
+                      i18nKey="synths.redeemable-deprecated-synths.tooltip"
                       components={[
                         <BlueStyledExternalLink href="https://sips.synthetix.io/sips/sip-174" />,
                       ]}

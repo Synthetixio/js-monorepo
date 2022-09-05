@@ -196,7 +196,7 @@ const Incentives: FC<IncentivesProps> = ({
           tabHeight={50}
           inverseTabColor={true}
           color={theme.colors.blue}
-          key={'active-button'}
+          key="active-button"
           name={t('earn.tab.active')}
           active={view === View.ACTIVE}
           onClick={() => {
@@ -210,7 +210,7 @@ const Incentives: FC<IncentivesProps> = ({
           tabHeight={50}
           inverseTabColor={true}
           color={theme.colors.orange}
-          key={'inactive-button'}
+          key="inactive-button"
           name={t('earn.tab.inactive')}
           active={view === View.INACTIVE}
           onClick={() => {

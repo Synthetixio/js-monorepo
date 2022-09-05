@@ -21,7 +21,7 @@ const Index: FC = () => {
         <GridBox step={1} name={hasDebt ? 'burn' : 'nominate'} />
       </Col>
       <Col>
-        <GridBox step={2} name={'merge'} />
+        <GridBox step={2} name="merge" />
       </Col>
     </Cols>
   );

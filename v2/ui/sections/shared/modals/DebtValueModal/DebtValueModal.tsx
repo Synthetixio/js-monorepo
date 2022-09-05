@@ -61,7 +61,7 @@ export const DebtValueModal: FC<{ value: string; isOpened: boolean; onDismiss: (
           width={383}
           height={94}
           data={data}
-          id={'debt-value-chart'}
+          id="debt-value-chart"
           onMouseMove={(e: any) => {
             const currentRate = get(e, 'activePayload[0].payload', null);
             if (currentRate) {

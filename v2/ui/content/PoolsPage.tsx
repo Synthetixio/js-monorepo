@@ -97,7 +97,7 @@ function Pool() {
             {t('pool.info-headline')}
             <Subtitle>
               <Trans
-                i18nKey={'pool.info'}
+                i18nKey="pool.info"
                 components={[
                   <ol>
                     <li>
