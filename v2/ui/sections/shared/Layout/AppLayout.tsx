@@ -7,7 +7,7 @@ import { DESKTOP_SIDE_NAV_WIDTH, DESKTOP_BODY_PADDING } from 'constants/ui';
 import ROUTES from 'constants/routes';
 import NotificationContainer from 'constants/NotificationContainer';
 
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import { delegateWalletState } from 'store/wallet';
 import Header from './Header';
 import SideNav from './SideNav';

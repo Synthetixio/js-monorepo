@@ -13,7 +13,7 @@ import BaseModal from 'components/BaseModal';
 import { ButtonTransaction } from 'components/Form/common';
 
 import { FlexDivColCentered, FlexDivCentered, BlueStyledExternalLink } from 'styles/common';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 import Connector from 'containers/Connector';
 import Etherscan from 'containers/BlockExplorer';

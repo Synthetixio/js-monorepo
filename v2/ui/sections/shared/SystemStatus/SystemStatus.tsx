@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import {
   FlexDivColCentered,
   FullScreenContainer,

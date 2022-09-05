@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { FlexDivRow } from 'styles/common';
 
 import BaseModal from 'components/BaseModal';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 export const RowsContainer = styled.div`
   overflow: auto;

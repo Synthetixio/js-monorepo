@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 import ROUTES from 'constants/routes';
 import { CryptoCurrency } from 'constants/currency';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import { delegateWalletState } from 'store/wallet';
 import useFeePeriodTimeAndProgress from 'hooks/useFeePeriodTimeAndProgress';
 import IncentivesTable, { NOT_APPLICABLE } from './IncentivesTable';

@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { FlexDivCol } from 'styles/common';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 import ActionBox from './components/ActionBox/ActionBox';
 import InfoBox from './components/InfoBox/InfoBox';

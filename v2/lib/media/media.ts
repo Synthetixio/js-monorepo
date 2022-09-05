@@ -1,6 +1,5 @@
 import { generateMedia } from 'styled-media-query';
 import { createMedia } from '@artsy/fresnel';
-import mapValues from 'lodash/mapValues';
 
 export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 type Breakpoints = Record<Breakpoint, number>;
@@ -15,8 +14,13 @@ export const breakpoints: Breakpoints = {
 
 // match fresnel media queries behavior with styled-media-query (e.g - 480 will be 479 using fresnel, so we +1)
 const normalizeFresnelBreakpoint = (breakpoints: Breakpoints) =>
-  // '0' needs to be ignored.
-  mapValues(breakpoints, (breakpoint) => (breakpoint > 0 ? breakpoint + 1 : breakpoint));
+  Object.fromEntries(
+    Object.entries(breakpoints).map(([key, breakpoint]) => [
+      key,
+      // '0' needs to be ignored.
+      breakpoint > 0 ? breakpoint + 1 : breakpoint,
+    ])
+  );
 
 const AppMedia = createMedia({
   breakpoints: normalizeFresnelBreakpoint(breakpoints),

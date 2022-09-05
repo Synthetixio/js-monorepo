@@ -7,7 +7,7 @@ import CrossIcon from 'assets/svg/app/cross.svg';
 import Card from 'components/Card';
 import { resetButtonCSS } from 'styles/common';
 import { zIndex } from 'constants/ui';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 type BaseModalProps = {
   title: ReactNode;

@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 import Wei from '@synthetixio/wei';
 
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import { DesktopOrTabletView, MobileOnlyView } from 'components/Media';
 import { MOBILE_BODY_PADDING } from 'constants/ui';
 

@@ -10,7 +10,7 @@ import MintIcon from 'assets/svg/app/mint.svg';
 import BurnIcon from 'assets/svg/app/burn.svg';
 
 import { GlowingCircle } from 'styles/common';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 import GridBox, { GridBoxProps } from 'components/GridBox/Gridbox';
 

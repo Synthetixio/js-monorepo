@@ -6,7 +6,7 @@ import { CryptoCurrency, Synths } from 'constants/currency';
 import { MobileOrTabletView } from 'components/Media';
 
 import { FlexDivRowCentered } from 'styles/common';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 import PriceItem from 'sections/shared/Layout/Stats/PriceItem';
 import PeriodBarStats from 'sections/shared/Layout/Stats/PeriodBarStats';

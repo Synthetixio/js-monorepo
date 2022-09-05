@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
 import SNXStatBackground from 'assets/svg/app/snx-stat-background.svg';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import { FlexDivRowCentered, FlexDivColCentered, Tooltip } from 'styles/common';
 import InfoIcon from 'assets/svg/app/info.svg';
 

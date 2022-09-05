@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import Select from 'components/Select';
 import Currency from 'components/Currency';
 import NumericInput from 'components/Input/NumericInput';

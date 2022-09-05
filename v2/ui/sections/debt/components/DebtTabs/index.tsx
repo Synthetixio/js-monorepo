@@ -3,7 +3,7 @@ import React, { FC, ReactNode, useState, useEffect, Dispatch, SetStateAction } f
 import { Trans, useTranslation } from 'react-i18next';
 
 import { FlexDiv, FlexDivCol, Tooltip } from 'styles/common';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import { TabButton, TabList, TabPanelContainer } from '../../../../components/Tab';
 import DebtHedgingInfoPanel from '../DebtHedgingInfoPanel';
 import DebtPieChart from '../DebtPieChart';

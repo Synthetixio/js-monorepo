@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import { useTranslation } from 'react-i18next';
 
 const GridBox: FC<{

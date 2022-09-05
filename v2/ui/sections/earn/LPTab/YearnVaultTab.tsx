@@ -6,7 +6,7 @@ import StructuredTab from 'components/StructuredTab';
 import ApproveModal from 'components/ApproveModal';
 import ROUTES from 'constants/routes';
 import { FlexDivColCentered, IconButton, FlexDivJustifyEnd, FlexDivCentered } from 'styles/common';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import { CurrencyKey } from 'constants/currency';
 import PendingConfirmation from 'assets/svg/app/pending-confirmation.svg';
 import Success from 'assets/svg/app/success.svg';

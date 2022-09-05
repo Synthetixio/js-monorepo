@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import i18n from 'i18n';
 
 import { zIndex } from 'constants/ui';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 import { languageState } from 'store/app';
 

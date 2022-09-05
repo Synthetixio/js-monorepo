@@ -4,7 +4,7 @@ import { FC, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
 import { FlexDivColCentered } from 'styles/common';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 type SubMenuProps = {
   children: ReactNode;

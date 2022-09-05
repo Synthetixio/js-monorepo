@@ -11,7 +11,7 @@ import { GridBoxContainer } from 'components/GridBox/Gridbox';
 import { useTranslation } from 'react-i18next';
 import { FlexDivCentered } from 'styles/common';
 import Slider from 'react-slick';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 type WizardGridBoxProps = {
   gridArea?: string;

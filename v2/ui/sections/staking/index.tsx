@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { StakingPanelType } from 'store/staking';
 import { FlexDivCol } from 'styles/common';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 import InfoBox from './components/InfoBox';
 import ActionBox from './components/ActionBox';

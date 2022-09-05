@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import ROUTES from 'constants/routes';
 import { EXTERNAL_LINKS } from 'constants/links';
 
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import { GlowingCircle } from 'styles/common';
 
 import KwentaIcon from 'assets/svg/app/kwenta.svg';

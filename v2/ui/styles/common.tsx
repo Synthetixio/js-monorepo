@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import { DESKTOP_SIDE_NAV_WIDTH, MOBILE_BODY_PADDING } from 'constants/ui';
 import Tippy from '@tippyjs/react';
 

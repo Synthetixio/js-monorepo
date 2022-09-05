@@ -8,7 +8,7 @@ import GithubIcon from 'assets/svg/social/github.svg';
 
 import { EXTERNAL_LINKS } from 'constants/links';
 
-import { media } from 'styles/media';
+import { media } from '@snx-v2/media';
 
 const SOCIAL_LINKS = [
   {

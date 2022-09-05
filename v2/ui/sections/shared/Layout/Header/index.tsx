@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { MOBILE_BODY_PADDING } from 'constants/ui';
 import { FlexDivCol, FlexDivCentered } from 'styles/common';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import { DesktopOnlyView, MobileOrTabletView } from 'components/Media';
 import BannerManager from 'components/BannerManager';
 import UserMenu from '../UserMenu';

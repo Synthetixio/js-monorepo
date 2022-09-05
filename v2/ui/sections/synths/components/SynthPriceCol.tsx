@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 import CurrencyPrice from 'components/Currency/CurrencyPrice';
 import { CurrencyKey } from '@synthetixio/contracts-interface';

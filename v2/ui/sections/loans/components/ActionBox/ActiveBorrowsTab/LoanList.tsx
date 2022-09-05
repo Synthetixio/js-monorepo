@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { CellProps } from 'react-table';
 
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import Table from 'components/Table';
 import Currency from 'components/Currency';
 import { Loan } from 'containers/Loans/types';

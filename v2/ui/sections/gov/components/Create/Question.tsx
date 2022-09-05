@@ -10,7 +10,7 @@ import PendingConfirmation from 'assets/svg/app/pending-confirmation.svg';
 
 import Input, { inputCSS } from 'components/Input/Input';
 import { Divider, FlexDivColCentered, IconButton } from 'styles/common';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 import {
   InputContainer,
   Container,

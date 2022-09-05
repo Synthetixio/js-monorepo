@@ -189,7 +189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/fresnel@npm:^1.8.0":
+"@artsy/fresnel@npm:^1.9.0":
   version: 1.9.0
   resolution: "@artsy/fresnel@npm:1.9.0"
   peerDependencies:
@@ -6116,6 +6116,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/media@workspace:*, @snx-v2/media@workspace:v2/lib/media":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/media@workspace:v2/lib/media"
+  dependencies:
+    "@artsy/fresnel": ^1.9.0
+    styled-media-query: ^2.1.2
+  languageName: unknown
+  linkType: soft
+
 "@socket.tech/ll-core@npm:^0.1.10, @socket.tech/ll-core@npm:^0.1.14":
   version: 0.1.16
   resolution: "@socket.tech/ll-core@npm:0.1.16"
@@ -7899,7 +7908,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@synthetixio/v2-ui@workspace:v2/ui"
   dependencies:
-    "@artsy/fresnel": ^1.8.0
     "@babel/core": ^7.18.13
     "@chakra-ui/react": ^2.2.8
     "@chakra-ui/storybook-addon": ^4.0.4
@@ -7910,6 +7918,7 @@ __metadata:
     "@next/bundle-analyzer": ^10.2.3
     "@reach/dialog": ^0.15.3
     "@snx-v2/getHealthVariant": "workspace:*"
+    "@snx-v2/media": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
     "@storybook/addon-docs": ^6.5.10

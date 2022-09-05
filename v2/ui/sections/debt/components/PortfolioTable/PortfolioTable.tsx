@@ -5,7 +5,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 
 import { TableNoResults, TableNoResultsTitle, FlexDiv, Tooltip } from 'styles/common';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 import useSelectedPriceCurrency from 'hooks/useSelectedPriceCurrency';
 

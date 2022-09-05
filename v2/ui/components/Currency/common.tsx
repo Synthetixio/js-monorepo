@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import media from 'styles/media';
+import media from '@snx-v2/media';
 
 export const ContainerRow = styled.span`
   display: inline-grid;

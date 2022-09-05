@@ -1,0 +1,10 @@
+{
+  "name": "@snx-v2/media",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.0",
+  "dependencies": {
+    "@artsy/fresnel": "^1.9.0",
+    "styled-media-query": "^2.1.2"
+  }
+}
