@@ -64,6 +64,36 @@ const Text: ComponentStyleConfig = {
   },
 };
 
+const Stat: ComponentMultiStyleConfig = {
+  parts: ['container', 'label', 'helpText', 'number', 'icon'],
+  baseStyle: {
+    container: {
+      bg: 'navy.900',
+      minW: '215px',
+      display: 'inline-block',
+      px: 4,
+      py: 2,
+      border: `1px solid ${chakraTheme.colors.gray['900']}`,
+      borderRadius: '5px',
+      padding: '14px',
+    },
+    label: {
+      color: 'white',
+      my: 1,
+      ml: 1,
+    },
+    number: {
+      mt: 2,
+      mb: 1,
+      color: 'whiteAlpha.700',
+      fontSize: '14px',
+      fontFamily: 'heading',
+      fontWeight: 400,
+      lineHeight: '16.94px',
+    },
+  },
+};
+
 const Menu: ComponentMultiStyleConfig = {
   parts: ['button', 'list', 'item'],
   baseStyle: {
@@ -127,6 +157,7 @@ export const stakingTheme: Partial<ChakraTheme> = {
     },
     Menu,
     Text,
+    Stat,
   },
   styles: {
     global: {

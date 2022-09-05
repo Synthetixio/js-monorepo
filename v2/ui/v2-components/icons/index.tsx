@@ -18,3 +18,4 @@ export { FailedIcon } from './FailedIcon';
 export { InfoIcon } from './InfoIcon';
 export { TriangleDownIcon } from './TriangleDownIcon';
 export { TriangleUpIcon } from './TriangleUpIcon';
+export { KebabMenuVertical } from './KebabMenuVertical';
