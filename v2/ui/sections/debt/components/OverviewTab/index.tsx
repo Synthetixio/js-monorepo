@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
 import DebtChart from '../DebtChart';
 import useHistoricalDebtData from 'hooks/useHistoricalDebtData';
-import { FlexDivCol, FlexDiv, Tooltip } from '@snx-v2/styles';
+import { FlexDivCol, FlexDiv, Tooltip } from '@snx-v1/styles';
 
 import Connector from 'containers/Connector';
 import Info from 'assets/svg/app/info.svg';

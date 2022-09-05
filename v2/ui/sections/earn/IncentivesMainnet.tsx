@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import useLPData from 'hooks/useLPData';
 import ROUTES from 'constants/routes';
 import { CryptoCurrency } from 'constants/currency';
-import media from '@snx-v2/media';
+import media from '@snx-v1/media';
 import useFeePeriodTimeAndProgress from 'hooks/useFeePeriodTimeAndProgress';
 import { TabButton, TabList } from 'components/Tab';
 import { CurrencyIconType } from 'components/Currency/CurrencyIcon/CurrencyIcon';

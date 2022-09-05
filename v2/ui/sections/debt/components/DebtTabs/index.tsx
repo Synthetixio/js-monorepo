@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import React, { FC, ReactNode, useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
-import { FlexDiv, FlexDivCol, Tooltip } from '@snx-v2/styles';
-import media from '@snx-v2/media';
+import { FlexDiv, FlexDivCol, Tooltip } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 import { TabButton, TabList, TabPanelContainer } from '../../../../components/Tab';
 import DebtHedgingInfoPanel from '../DebtHedgingInfoPanel';
 import DebtPieChart from '../DebtPieChart';

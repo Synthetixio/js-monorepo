@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Tooltip } from '@snx-v2/styles';
+import { Tooltip } from '@snx-v1/styles';
 import { Loan } from 'containers/Loans/types';
 
 const MODAL_WIDTH = 105;

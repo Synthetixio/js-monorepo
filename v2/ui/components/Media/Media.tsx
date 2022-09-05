@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Media } from '@snx-v2/media';
+import { Media } from '@snx-v1/media';
 
 type MediaProps = {
   children: ReactNode;

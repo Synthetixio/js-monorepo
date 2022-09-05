@@ -7,8 +7,8 @@ import {
   FlexDivCol,
   FlexDivCentered,
   ExternalLink,
-} from '@snx-v2/styles';
-import media from '@snx-v2/media';
+} from '@snx-v1/styles';
+import media from '@snx-v1/media';
 import Button from 'components/Button';
 
 export const TotalValueWrapper = styled(FlexDiv)`

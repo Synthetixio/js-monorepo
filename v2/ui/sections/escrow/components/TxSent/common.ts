@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FlexDivColCentered } from '@snx-v2/styles';
+import { FlexDivColCentered } from '@snx-v1/styles';
 
 export const Container = styled(FlexDivColCentered)`
   width: 100%;

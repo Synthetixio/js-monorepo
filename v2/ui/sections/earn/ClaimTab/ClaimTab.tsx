@@ -13,8 +13,8 @@ import {
   GlowingCircle,
   IconButton,
   FlexDivJustifyEnd,
-} from '@snx-v2/styles';
-import media from '@snx-v2/media';
+} from '@snx-v1/styles';
+import media from '@snx-v1/media';
 import PendingConfirmation from 'assets/svg/app/pending-confirmation.svg';
 import Success from 'assets/svg/app/success.svg';
 import ExpandIcon from 'assets/svg/app/expand.svg';
@@ -52,7 +52,7 @@ import {
   FlexDivColCentered,
   ModalContent,
   ModalItem,
-} from '@snx-v2/styles';
+} from '@snx-v1/styles';
 import { EXTERNAL_LINKS } from 'constants/links';
 import Currency from 'components/Currency';
 

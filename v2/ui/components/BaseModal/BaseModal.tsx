@@ -4,10 +4,10 @@ import styled from 'styled-components';
 
 import CrossIcon from 'assets/svg/app/cross.svg';
 
-import { Card } from '@snx-v2/Card';
-import { resetButtonCSS } from '@snx-v2/styles';
-import { zIndex } from '@snx-v2/constantsUi';
-import media from '@snx-v2/media';
+import { Card } from '@snx-v1/Card';
+import { resetButtonCSS } from '@snx-v1/styles';
+import { zIndex } from '@snx-v1/constantsUi';
+import media from '@snx-v1/media';
 
 type BaseModalProps = {
   title: ReactNode;

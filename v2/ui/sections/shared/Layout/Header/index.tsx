@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { MOBILE_BODY_PADDING } from '@snx-v2/constantsUi';
-import { FlexDivCol, FlexDivCentered } from '@snx-v2/styles';
-import media from '@snx-v2/media';
+import { MOBILE_BODY_PADDING } from '@snx-v1/constantsUi';
+import { FlexDivCol, FlexDivCentered } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 import { DesktopOnlyView, MobileOrTabletView } from 'components/Media';
 import BannerManager from 'components/BannerManager';
 import UserMenu from '../UserMenu';

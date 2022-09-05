@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
-import { FlexDivCentered } from '@snx-v2/styles';
+import { FlexDivCentered } from '@snx-v1/styles';
 
 type GlowingCircleProps = {
   content: ReactNode;

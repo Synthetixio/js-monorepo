@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import styled, { css, useTheme } from 'styled-components';
 
-import { resetButtonCSS } from '@snx-v2/styles';
+import { resetButtonCSS } from '@snx-v1/styles';
 
 type TabButtonProps = {
   name: string;

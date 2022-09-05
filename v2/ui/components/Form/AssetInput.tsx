@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 
 import { formatNumber } from 'utils/formatters/number';
-import { FlexDivCentered, FlexDivColCentered, TextButton } from '@snx-v2/styles';
+import { FlexDivCentered, FlexDivColCentered, TextButton } from '@snx-v1/styles';
 
 import NumericInput from 'components/Input/NumericInput';
 import Select from 'components/Select';

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import media from '@snx-v2/media';
+import media from '@snx-v1/media';
 
 import Button from 'components/Button';
 import { ACTIONS } from '@synthetixio/queries';

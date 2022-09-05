@@ -12,7 +12,7 @@ import {
   Tooltip,
   FlexDivRowCentered,
   BlueStyledExternalLink,
-} from '@snx-v2/styles';
+} from '@snx-v1/styles';
 
 import AssetsTable from 'sections/synths/components/AssetsTable';
 import TransferModal from 'sections/synths/components/TransferModal';

@@ -10,7 +10,7 @@ import {
   NoTextTransform,
   IconButton,
   FlexDivRowCentered,
-} from '@snx-v2/styles';
+} from '@snx-v1/styles';
 import NavigationBack from 'assets/svg/app/navigation-back.svg';
 import GasSelector from 'components/GasSelector';
 import Loans from 'containers/Loans';

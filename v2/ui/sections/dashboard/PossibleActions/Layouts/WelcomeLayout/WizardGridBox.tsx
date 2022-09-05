@@ -9,9 +9,9 @@ import Debt from 'assets/svg/app/wizard/debt.svg';
 
 import { GridBoxContainer } from 'components/GridBox/Gridbox';
 import { useTranslation } from 'react-i18next';
-import { FlexDivCentered } from '@snx-v2/styles';
+import { FlexDivCentered } from '@snx-v1/styles';
 import Slider from 'react-slick';
-import media from '@snx-v2/media';
+import media from '@snx-v1/media';
 
 type WizardGridBoxProps = {
   gridArea?: string;

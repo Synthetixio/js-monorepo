@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Connector from '../containers/Connector';
 import Button from '../components/Button';
 import { useTranslation } from 'react-i18next';
-import media from '@snx-v2/media';
+import media from '@snx-v1/media';
 
 const BridgePage = () => {
   const { connectWallet, walletConnectedToUnsupportedNetwork, isWalletConnected } =

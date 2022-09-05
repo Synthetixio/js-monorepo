@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FlexDivColCentered } from '@snx-v2/styles';
+import { FlexDivColCentered } from '@snx-v1/styles';
 
 import BaseModal from 'components/BaseModal';
 

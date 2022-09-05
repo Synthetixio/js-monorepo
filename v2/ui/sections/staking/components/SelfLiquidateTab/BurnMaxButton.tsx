@@ -1,6 +1,6 @@
 import useSynthetixQueries from '@synthetixio/queries';
 import React, { useState } from 'react';
-import { ModalContent, ModalItem, ModalItemTitle, ModalItemText } from '@snx-v2/styles';
+import { ModalContent, ModalItem, ModalItemTitle, ModalItemText } from '@snx-v1/styles';
 import Button from 'components/Button';
 import { formatCryptoCurrency } from 'utils/formatters/number';
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';

@@ -36,7 +36,7 @@ import {
   ModalItemText,
   ModalItemTitle,
   Tooltip,
-} from '@snx-v2/styles';
+} from '@snx-v1/styles';
 import { EXTERNAL_LINKS } from 'constants/links';
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';
 import WarningIcon from 'assets/svg/app/warning.svg';

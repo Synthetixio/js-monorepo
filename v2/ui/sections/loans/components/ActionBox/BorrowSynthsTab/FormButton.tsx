@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Trans } from 'react-i18next';
 import Button from 'components/Button';
-import { NoTextTransform } from '@snx-v2/styles';
+import { NoTextTransform } from '@snx-v1/styles';
 import ConnectOrSwitchNetwork from 'components/ConnectOrSwitchNetwork';
 
 type FormButtonProps = {

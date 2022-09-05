@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import Wei from '@synthetixio/wei';
 import { Trans } from 'react-i18next';
-import { FlexDivCol, NoTextTransform } from '@snx-v2/styles';
+import { FlexDivCol, NoTextTransform } from '@snx-v1/styles';
 import { formatFiatCurrency } from 'utils/formatters/number';
 
 type BalanceItemProps = {

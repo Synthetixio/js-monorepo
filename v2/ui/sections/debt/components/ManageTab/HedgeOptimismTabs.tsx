@@ -1,7 +1,7 @@
 import { TabButton } from 'components/Tab';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { FlexDivJustifyCenter } from '@snx-v2/styles';
+import { FlexDivJustifyCenter } from '@snx-v1/styles';
 import BuyHedgeTabOptimism from './BuyHedgeTabOptimism';
 import SellHedgeTabOptimism from './SellHedgeTabOptimism';
 

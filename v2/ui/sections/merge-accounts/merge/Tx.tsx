@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ExternalLink } from '@snx-v2/styles';
+import { ExternalLink } from '@snx-v1/styles';
 import PendingConfirmation from 'assets/svg/app/pending-confirmation.svg';
 import Success from 'assets/svg/app/success.svg';
 import TxState from 'sections/earn/TxState';
@@ -18,7 +18,7 @@ import {
   ActionsGrid,
   ActionsGridBox,
 } from 'sections/merge-accounts/common';
-import { FlexDivColCentered } from '@snx-v2/styles';
+import { FlexDivColCentered } from '@snx-v1/styles';
 
 export const TxWaiting: FC<{ txLink: string }> = ({ txLink }) => {
   const { t } = useTranslation();

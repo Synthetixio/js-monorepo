@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { ethers } from 'ethers';
 import styled from 'styled-components';
-import { ExternalLink } from '@snx-v2/styles';
-import media from '@snx-v2/media';
+import { ExternalLink } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 import Connector from 'containers/Connector';
 import Button from 'components/Button';
 import Currency from 'components/Currency';

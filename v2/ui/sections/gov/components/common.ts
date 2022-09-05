@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import media from '@snx-v2/media';
+import media from '@snx-v1/media';
 
 import {
   FlexDiv,
@@ -7,7 +7,7 @@ import {
   FlexDivColCentered,
   FlexDivRowCentered,
   Tooltip,
-} from '@snx-v2/styles';
+} from '@snx-v1/styles';
 import Button from 'components/Button';
 
 export const Container = styled.div`

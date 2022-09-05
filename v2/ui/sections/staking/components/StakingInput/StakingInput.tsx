@@ -34,7 +34,7 @@ import {
   FlexDivCentered,
   Tooltip,
   FlexDiv,
-} from '@snx-v2/styles';
+} from '@snx-v1/styles';
 import { InputContainer, InputLocked } from '../common';
 import { GasLimitEstimate } from 'constants/network';
 import { formatCurrency, formatNumber } from 'utils/formatters/number';

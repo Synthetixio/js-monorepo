@@ -1,7 +1,7 @@
 import { FC, ReactNode, SyntheticEvent } from 'react';
 import { DialogOverlay, DialogContent } from '@reach/dialog';
 import styled from 'styled-components';
-import { zIndex } from '@snx-v2/constantsUi';
+import { zIndex } from '@snx-v1/constantsUi';
 
 type FullScreenModalProps = {
   title?: ReactNode;

@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import media from '@snx-v2/media';
+import media from '@snx-v1/media';
 import ProgressBar from 'components/ProgressBar';
 import { ProgressBarType } from 'components/ProgressBar/ProgressBar';
-import { FlexDivCol } from '@snx-v2/styles';
+import { FlexDivCol } from '@snx-v1/styles';
 import { formatPercent } from 'utils/formatters/number';
 import Wei from '@synthetixio/wei';
 

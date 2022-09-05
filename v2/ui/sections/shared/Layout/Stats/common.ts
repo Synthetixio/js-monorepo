@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FlexDivCentered, FlexDivCol, FlexDivRowCentered } from '@snx-v2/styles';
+import { FlexDivCentered, FlexDivCol, FlexDivRowCentered } from '@snx-v1/styles';
 
 import ProgressBar from 'components/ProgressBar';
 

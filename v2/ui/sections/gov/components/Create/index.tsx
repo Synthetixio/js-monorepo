@@ -13,7 +13,7 @@ import { ethers } from 'ethers';
 
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';
 
-import { ModalContent, ModalItem, ModalItemText, ModalItemTitle } from '@snx-v2/styles';
+import { ModalContent, ModalItem, ModalItemText, ModalItemTitle } from '@snx-v1/styles';
 
 import { useTranslation } from 'react-i18next';
 import useSynthetixQueries from '@synthetixio/queries';

@@ -1,12 +1,12 @@
 import { FC, useState, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
-import { MOBILE_BODY_PADDING } from '@snx-v2/constantsUi';
+import { MOBILE_BODY_PADDING } from '@snx-v1/constantsUi';
 import { CryptoCurrency, Synths } from 'constants/currency';
 import { MobileOrTabletView } from 'components/Media';
 
-import { FlexDivRowCentered } from '@snx-v2/styles';
-import media from '@snx-v2/media';
+import { FlexDivRowCentered } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 
 import PriceItem from 'sections/shared/Layout/Stats/PriceItem';
 import PeriodBarStats from 'sections/shared/Layout/Stats/PeriodBarStats';
@@ -20,7 +20,7 @@ import { delegateWalletState } from 'store/wallet';
 import useSynthetixQueries from '@synthetixio/queries';
 import { wei } from '@synthetixio/wei';
 import useCryptoBalances from 'hooks/useCryptoBalances';
-import { Tooltip } from '@snx-v2/styles';
+import { Tooltip } from '@snx-v1/styles';
 import { useTranslation } from 'react-i18next';
 import useGetCurrencyRateChange from 'hooks/useGetCurrencyRateChange';
 import { subDays, endOfHour } from 'date-fns';

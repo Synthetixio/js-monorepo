@@ -15,8 +15,8 @@ import {
   ModalItem,
   ModalItemText,
   ModalItemTitle,
-} from '@snx-v2/styles';
-import media from '@snx-v2/media';
+} from '@snx-v1/styles';
+import media from '@snx-v1/media';
 
 import NavigationBack from 'assets/svg/app/navigation-back.svg';
 import PendingConfirmation from 'assets/svg/app/pending-confirmation.svg';

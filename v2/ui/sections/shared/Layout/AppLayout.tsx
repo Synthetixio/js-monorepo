@@ -3,11 +3,11 @@ import router from 'next/router';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { DESKTOP_SIDE_NAV_WIDTH, DESKTOP_BODY_PADDING } from '@snx-v2/constantsUi';
+import { DESKTOP_SIDE_NAV_WIDTH, DESKTOP_BODY_PADDING } from '@snx-v1/constantsUi';
 import ROUTES from 'constants/routes';
 import NotificationContainer from 'constants/NotificationContainer';
 
-import media from '@snx-v2/media';
+import media from '@snx-v1/media';
 import { delegateWalletState } from 'store/wallet';
 import Header from './Header';
 import SideNav from './SideNav';

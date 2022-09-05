@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { useTranslation, Trans } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 
-import { TableNoResults, TableNoResultsTitle, FlexDiv, Tooltip } from '@snx-v2/styles';
-import media from '@snx-v2/media';
+import { TableNoResults, TableNoResultsTitle, FlexDiv, Tooltip } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 
 import useSelectedPriceCurrency from 'hooks/useSelectedPriceCurrency';
 

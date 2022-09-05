@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { FlexDivCol } from '@snx-v2/styles';
+import { FlexDivCol } from '@snx-v1/styles';
 import { DebtPanelType } from 'store/debt';
 
 import OverviewTab from './components/OverviewTab';

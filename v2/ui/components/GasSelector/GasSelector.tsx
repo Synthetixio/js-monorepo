@@ -16,7 +16,7 @@ import { Synths } from 'constants/currency';
 import { formatCurrency } from 'utils/formatters/number';
 import Button from 'components/Button';
 import { useTranslation } from 'react-i18next';
-import { FlexDivRow, FlexDivRowCentered, NumericValue } from '@snx-v2/styles';
+import { FlexDivRow, FlexDivRowCentered, NumericValue } from '@snx-v1/styles';
 import Info from 'assets/svg/app/info.svg';
 import Wei from '@synthetixio/wei';
 import GasPriceDisplay from './GasPriceDisplay';

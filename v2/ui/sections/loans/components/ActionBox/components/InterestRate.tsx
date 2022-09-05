@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { FlexDivRow, FlexDivRowCentered } from '@snx-v2/styles';
+import { FlexDivRow, FlexDivRowCentered } from '@snx-v1/styles';
 import { formatPercent } from 'utils/formatters/number';
 import Loans from 'containers/Loans';
 

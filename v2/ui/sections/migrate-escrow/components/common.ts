@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { FlexDivColCentered, FlexDivCol } from '@snx-v2/styles';
+import { FlexDivColCentered, FlexDivCol } from '@snx-v1/styles';
 import Button from 'components/Button';
 
 export const TabContainer = styled(FlexDivColCentered)`

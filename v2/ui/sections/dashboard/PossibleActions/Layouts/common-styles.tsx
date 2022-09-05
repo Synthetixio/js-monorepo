@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { GridDiv } from '@snx-v2/styles';
+import { GridDiv } from '@snx-v1/styles';
 
 export const ActionsContainer = styled(GridDiv)`
   margin-top: 30px;

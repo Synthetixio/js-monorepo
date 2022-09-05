@@ -3,7 +3,7 @@ import styled, { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import makeBlockie from 'ethereum-blockies-base64';
 
-import { ExternalLink, FlexDivRowCentered } from '@snx-v2/styles';
+import { ExternalLink, FlexDivRowCentered } from '@snx-v1/styles';
 
 import Spinner from 'assets/svg/app/loader.svg';
 

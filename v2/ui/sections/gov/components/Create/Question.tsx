@@ -9,8 +9,8 @@ import Success from 'assets/svg/app/success.svg';
 import PendingConfirmation from 'assets/svg/app/pending-confirmation.svg';
 
 import Input, { inputCSS } from 'components/Input/Input';
-import { Divider, FlexDivColCentered, IconButton } from '@snx-v2/styles';
-import media from '@snx-v2/media';
+import { Divider, FlexDivColCentered, IconButton } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 import {
   InputContainer,
   Container,

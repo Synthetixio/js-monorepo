@@ -1,11 +1,11 @@
 {
-  "name": "@snx-v2/styles",
+  "name": "@snx-v1/styles",
   "private": true,
   "main": "index.ts",
   "version": "0.0.0",
   "dependencies": {
-    "@snx-v2/constantsUi": "workspace:*",
-    "@snx-v2/media": "workspace:*",
+    "@snx-v1/constantsUi": "workspace:*",
+    "@snx-v1/media": "workspace:*",
     "@tippyjs/react": "^4.2.6",
     "styled-components": "^5.3.5"
   }

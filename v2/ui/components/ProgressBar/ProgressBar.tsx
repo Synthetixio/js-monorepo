@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled, { css } from 'styled-components';
 import Color from 'color';
 
-import { FlexDivRowCentered } from '@snx-v2/styles';
+import { FlexDivRowCentered } from '@snx-v1/styles';
 
 export type ProgressBarType =
   | 'rainbow'

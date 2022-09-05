@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useTranslation, Trans } from 'react-i18next';
 import styled from 'styled-components';
-import { ExternalLink, LineSpacer } from '@snx-v2/styles';
+import { ExternalLink, LineSpacer } from '@snx-v1/styles';
 import MainContent from 'sections/gov';
 import { EXTERNAL_LINKS } from 'constants/links';
 

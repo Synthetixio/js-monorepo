@@ -9,7 +9,7 @@ import DeprecatedXIcon from 'assets/svg/app/deprecated-x.svg';
 
 import { CryptoCurrency, CurrencyKey } from 'constants/currency';
 
-import { FlexDivCentered } from '@snx-v2/styles';
+import { FlexDivCentered } from '@snx-v1/styles';
 import useSynthetixQueries from '@synthetixio/queries';
 import { EXTERNAL_LINKS } from 'constants/links';
 

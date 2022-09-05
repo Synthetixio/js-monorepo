@@ -1,8 +1,8 @@
 import { FC, ReactNode } from 'react';
 import Link from 'next/link';
 import styled, { css } from 'styled-components';
-import media from '@snx-v2/media';
-import { FlexDivColCentered, ExternalLink, Tooltip } from '@snx-v2/styles';
+import media from '@snx-v1/media';
+import { FlexDivColCentered, ExternalLink, Tooltip } from '@snx-v1/styles';
 
 export type GridBoxProps = {
   title: string;

@@ -22,7 +22,7 @@ import {
   Title,
 } from 'sections/escrow/components/common';
 import Button from 'components/Button';
-import { FlexDivCentered, FlexDivColCentered, ExternalLink } from '@snx-v2/styles';
+import { FlexDivCentered, FlexDivColCentered, ExternalLink } from '@snx-v1/styles';
 import useSynthetixQueries from '@synthetixio/queries';
 import Connector from 'containers/Connector';
 

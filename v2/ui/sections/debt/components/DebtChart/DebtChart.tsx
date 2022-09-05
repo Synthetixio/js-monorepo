@@ -14,7 +14,7 @@ import {
 } from 'recharts';
 
 import Connector from 'containers/Connector';
-import { FlexDivColCentered } from '@snx-v2/styles';
+import { FlexDivColCentered } from '@snx-v1/styles';
 import { formatCurrency } from 'utils/formatters/number';
 import { Synths } from 'constants/currency';
 

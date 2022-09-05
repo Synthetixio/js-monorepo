@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { resetButtonCSS } from '@snx-v2/styles';
+import { resetButtonCSS } from '@snx-v1/styles';
 import Color from 'color';
 
 type ButtonProps = {

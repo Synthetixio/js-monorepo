@@ -17,7 +17,7 @@ import {
   ModalItemText as TxModalItemText,
   NoTextTransform,
   IconButton,
-} from '@snx-v2/styles';
+} from '@snx-v1/styles';
 import StructuredTab from 'components/StructuredTab';
 import GasSelector from 'components/GasSelector';
 import { walletAddressState } from 'store/wallet';

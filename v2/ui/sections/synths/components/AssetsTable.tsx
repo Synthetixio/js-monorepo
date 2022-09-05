@@ -2,9 +2,9 @@ import { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 import Wei from '@synthetixio/wei';
 
-import media from '@snx-v2/media';
+import media from '@snx-v1/media';
 import { DesktopOrTabletView, MobileOnlyView } from 'components/Media';
-import { MOBILE_BODY_PADDING } from '@snx-v2/constantsUi';
+import { MOBILE_BODY_PADDING } from '@snx-v1/constantsUi';
 
 import DesktopAssetsTable from './DesktopAssetsTable';
 import MobileAssetsTable from './MobileAssetsTable';

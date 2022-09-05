@@ -3,8 +3,8 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { FlexDivCol } from '@snx-v2/styles';
-import media from '@snx-v2/media';
+import { FlexDivCol } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 
 import ActionBox from './components/ActionBox/ActionBox';
 import InfoBox from './components/InfoBox/InfoBox';

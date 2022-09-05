@@ -3,7 +3,7 @@ import Head from 'next/head';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { LineSpacer } from '@snx-v2/styles';
+import { LineSpacer } from '@snx-v1/styles';
 
 import { Incentives } from 'sections/earn';
 import StatBox from 'components/StatBox';

@@ -8,7 +8,7 @@ import { wei } from '@synthetixio/wei';
 import ArrowRightIcon from 'assets/svg/app/arrow-right.svg';
 import { formatCurrency } from 'utils/formatters/number';
 import { EXTERNAL_LINKS } from 'constants/links';
-import { FlexDivCentered } from '@snx-v2/styles';
+import { FlexDivCentered } from '@snx-v1/styles';
 import { CryptoCurrency, Synths } from 'constants/currency';
 import { parseSafeWei } from 'utils/parse';
 

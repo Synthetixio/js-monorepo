@@ -8,7 +8,7 @@ import GasSelector from 'components/GasSelector';
 import {
   ModalItemTitle as TxModalItemTitle,
   ModalItemText as TxModalItemText,
-} from '@snx-v2/styles';
+} from '@snx-v1/styles';
 import { DEBT_ASSETS, DEBT_ASSETS_L2, getSafeMinCRatioBuffer } from 'sections/loans/constants';
 import {
   FormContainer,

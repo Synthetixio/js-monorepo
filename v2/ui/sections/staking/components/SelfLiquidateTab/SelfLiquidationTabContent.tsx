@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Synths } from 'constants/currency';
 import styled from 'styled-components';
 import Loader from 'components/Loader';
-import { FlexDivJustifyCenter } from '@snx-v2/styles';
+import { FlexDivJustifyCenter } from '@snx-v1/styles';
 
 const formatSUSD = (val: WeiSource) =>
   formatCryptoCurrency(val, {
