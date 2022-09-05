@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 
-import CardHeader, { CardHeaderProps } from './CardHeader';
-import CardBody, { CardBodyProps } from './CardBody';
+import { CardHeader, CardHeaderProps } from './CardHeader';
+import { CardBody, CardBodyProps } from './CardBody';
 
 type CardProps = {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ type StaticComponents = {
 };
 
 // @ts-ignore
-const Card: FC<CardProps> & StaticComponents = ({ children, isRounded, ...rest }) => (
+export const Card: FC<CardProps> & StaticComponents = ({ children, isRounded, ...rest }) => (
   <Container isRounded={isRounded} {...rest}>
     {children}
   </Container>
@@ -31,5 +31,3 @@ const Container = styled.div<{ isRounded?: boolean }>`
   flex-direction: column;
   border-radius: ${(props) => (props.isRounded ? '100px' : '4px')};
 `;
-
-export default Card;

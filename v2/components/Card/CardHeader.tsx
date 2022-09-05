@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 
 import { FlexDivCentered } from '@snx-v2/styles';
@@ -8,7 +8,7 @@ export type CardHeaderProps = {
   className?: string;
 };
 
-const CardHeader: FC<CardHeaderProps> = ({ children, ...rest }) => (
+export const CardHeader: FC<CardHeaderProps> = ({ children, ...rest }) => (
   <Container {...rest}>{children}</Container>
 );
 
@@ -24,5 +24,3 @@ const Container = styled(FlexDivCentered)`
   font-size: 12px;
   flex-shrink: 0;
 `;
-
-export default CardHeader;

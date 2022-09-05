@@ -77,7 +77,7 @@ module.exports = {
     },
 
     {
-      files: ['v2/ui/**/*'],
+      files: ['v2/ui/**/*', 'v2/components/**/*'],
 
       extends: ['plugin:react/recommended'],
       plugins: ['react', 'react-hooks'],
