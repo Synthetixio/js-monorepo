@@ -23,11 +23,11 @@ export const useStakingPosition = (
   const { data, isLoading, refetch } = useContractReads({
     contracts: funcCalls,
     select: (data) => {
-      const debt = data[1]?.toNumber() || 0;
+      const debt = formatValue(data[1], 18) || 0;
       const collateralValue = formatValue(data[0]?.value || 0, collateral.priceDecimals);
       const cRatio = debt !== 0 ? BigNumber.from(collateralValue).mul(100).div(debt) : 0;
       return {
-        collateralAmount: data[0]?.amount || 0,
+        collateralAmount: data[0].amount || 0,
         cRatio,
         debt,
       };

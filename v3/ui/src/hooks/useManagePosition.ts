@@ -50,8 +50,18 @@ export const useManagePosition = (
       );
     }
 
+    if (debtChange < 0) {
+      const amount = utils.parseEther(`${-debtChange}`);
+      list.push({
+        contract: snxProxy?.contract,
+        functionName: 'burnUsd',
+        callArgs: [position.accountId, position.poolId, position.collateral.address, amount],
+      });
+    }
+
     if (debtChange > 0) {
       const amount = utils.parseEther(`${debtChange}`);
+
       list.push({
         contract: snxProxy?.contract,
         functionName: 'mintUsd',
@@ -79,15 +89,6 @@ export const useManagePosition = (
           callArgs: [position.accountId, position.collateral.address, collateralChangeBN.abs()],
         }
       );
-    }
-
-    if (debtChange < 0) {
-      const amount = utils.parseEther(`${-debtChange}`);
-      list.push({
-        contract: snxProxy?.contract,
-        functionName: 'burnUsd',
-        callArgs: [position.accountId, position.poolId, position.collateral.address, amount],
-      });
     }
 
     return list;

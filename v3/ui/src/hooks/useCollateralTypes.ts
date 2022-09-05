@@ -26,6 +26,7 @@ export const useCollateralTypes = () => {
     onSuccess(data) {
       const mappedCollateralTypes = localCollateralTypes(localChainId).map((coll) => {
         const onChainCollType = data.find((d) => d.tokenAddress === coll.address);
+        console.log('targetCRatio: ', onChainCollType?.targetCRatio.toString());
         return {
           ...coll,
           symbol: coll.symbol.toLowerCase(),

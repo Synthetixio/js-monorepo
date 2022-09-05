@@ -51,7 +51,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </>
       </Td>
       <Td py="4">
-        ${currency(debt.toString() || 0)}
+        ${currency(debt.toString())}
         <Text fontSize="xs" mt="1'">
           <Link
             as={RouterLink}
@@ -228,18 +228,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </Text>
       </Td>
       <Td py="4">
-        {debt.gte('0') ? (
-          <Text fontWeight="bold" color="green">
-            {cRatio.toString()} <InfoIcon transform="translateY(-1px)" />
-          </Text>
-        ) : (
-          <>0%</>
-        )}
-        {/* collateralValue / debt * 100 */}
-        {/* <Text fontWeight="bold" color="red">
-          232% <WarningIcon transform="translateY(-1px)" />
-        </Text> */}
-
+        ${currency(cRatio.toString())}
         <Text fontSize="xs" opacity="0.66" mt="1'">
           {/*target here as well?*/}
           {formatValue(
