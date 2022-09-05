@@ -20,3 +20,4 @@ export { TriangleDownIcon } from './TriangleDownIcon';
 export { TriangleUpIcon } from './TriangleUpIcon';
 export { LoansIcon } from './LoansIcon';
 export { GovIcon } from './GovIcon';
+export { KebabMenuVertical } from './KebabMenuVertical';
