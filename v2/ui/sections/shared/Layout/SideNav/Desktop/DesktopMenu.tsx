@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 
-import { linkCSS } from 'styles/common';
-import media from 'styles/media';
+import { linkCSS } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 import CaretRightIcon from 'assets/svg/app/caret-right-small.svg';
 import ROUTES from 'constants/routes';
 import StakingLogo from 'assets/svg/app/staking-logo.svg';
@@ -16,7 +16,7 @@ import { delegateWalletState } from 'store/wallet';
 import { MENU_LINKS, MENU_LINKS_L2, MENU_LINKS_DELEGATE } from '../../constants';
 import { useAddOptimism } from '../../../hooks';
 import DesktopSubMenu, { SubMenuLinkItem } from './DesktopSubMenu';
-import { DESKTOP_SIDE_NAV_WIDTH } from 'constants/ui';
+import { DESKTOP_SIDE_NAV_WIDTH } from '@snx-v1/constantsUi';
 import Connector from 'containers/Connector';
 
 const DesktopMenu: FC = () => {

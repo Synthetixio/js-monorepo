@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FlexDivRow, FlexDivRowCentered } from 'styles/common';
+import { FlexDivRow, FlexDivRowCentered } from '@snx-v1/styles';
 import { formatPercent } from 'utils/formatters/number';
 import Loans from 'containers/Loans';
 

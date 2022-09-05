@@ -1,10 +1,10 @@
-import { DESKTOP_SIDE_NAV_WIDTH } from 'constants/ui';
+import { DESKTOP_SIDE_NAV_WIDTH } from '@snx-v1/constantsUi';
 import useIsMounted from 'hooks/isMounted';
 import { FC, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
-import { FlexDivColCentered } from 'styles/common';
-import media from 'styles/media';
+import { FlexDivColCentered } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 
 type SubMenuProps = {
   children: ReactNode;

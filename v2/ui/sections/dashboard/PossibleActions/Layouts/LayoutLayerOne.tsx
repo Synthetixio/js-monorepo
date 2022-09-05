@@ -12,8 +12,8 @@ import KwentaIcon from 'assets/svg/app/kwenta.svg';
 import MintIcon from 'assets/svg/app/mint.svg';
 import BurnIcon from 'assets/svg/app/burn.svg';
 
-import { GlowingCircle } from 'styles/common';
-import media from 'styles/media';
+import { GlowingCircle } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 
 import GridBox, { GridBoxProps } from 'components/GridBox/Gridbox';
 import Currency from 'components/Currency';

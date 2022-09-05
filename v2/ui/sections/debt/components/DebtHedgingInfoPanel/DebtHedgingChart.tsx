@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ResponsiveContainer, YAxis, Line, LineChart, XAxis } from 'recharts';
 import { useTranslation } from 'react-i18next';
-import { FlexDivCol, FlexDivColCentered } from 'styles/common';
+import { FlexDivCol, FlexDivColCentered } from '@snx-v1/styles';
 import useGlobalHistoricalDebtData from 'hooks/useGlobalHistoricalDebtData';
 import colors from 'styles/theme/colors';
 import SpinnerIcon from 'assets/svg/app/loader.svg';

@@ -3,8 +3,8 @@ import { createGlobalStyle } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import i18n from 'i18n';
 
-import { zIndex } from 'constants/ui';
-import media from 'styles/media';
+import { zIndex } from '@snx-v1/constantsUi';
+import media from '@snx-v1/media';
 
 import { languageState } from 'store/app';
 

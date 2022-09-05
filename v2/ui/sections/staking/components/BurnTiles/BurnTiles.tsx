@@ -7,8 +7,8 @@ import Wei from '@synthetixio/wei';
 import BurnCircle from 'assets/svg/app/burn-circle.svg';
 import BurnCustomCircle from 'assets/svg/app/burn-custom-circle.svg';
 import BurnTargetCircle from 'assets/svg/app/burn-target-circle.svg';
-import media from 'styles/media';
-import { FlexDivCol } from 'styles/common';
+import media from '@snx-v1/media';
+import { FlexDivCol } from '@snx-v1/styles';
 
 import { formatPercent } from 'utils/formatters/number';
 

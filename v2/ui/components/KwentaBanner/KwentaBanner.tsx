@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import KwentaIcon from 'assets/svg/app/kwenta-full.svg';
 import CaretRight from 'assets/svg/app/caret-right-gold.svg';
 
-import { FlexDiv, FlexDivCentered, ExternalLink } from 'styles/common';
+import { FlexDiv, FlexDivCentered, ExternalLink } from '@snx-v1/styles';
 import { EXTERNAL_LINKS } from 'constants/links';
 import media from 'styled-media-query';
 

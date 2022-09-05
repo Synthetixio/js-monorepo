@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import styled from 'styled-components';
-import { Tooltip } from 'styles/common';
+import { Tooltip } from '@snx-v1/styles';
 import InfoIcon from 'assets/svg/app/info.svg';
 
 type SVGProps = {

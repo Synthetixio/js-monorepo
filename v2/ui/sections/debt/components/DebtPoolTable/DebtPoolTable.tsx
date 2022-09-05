@@ -3,7 +3,7 @@ import { CellProps } from 'react-table';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { TableNoResults, TableNoResultsTitle, FlexDiv, Tooltip } from 'styles/common';
+import { TableNoResults, TableNoResultsTitle, FlexDiv, Tooltip } from '@snx-v1/styles';
 
 import useSelectedPriceCurrency from 'hooks/useSelectedPriceCurrency';
 

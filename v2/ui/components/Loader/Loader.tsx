@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import LoaderIcon from 'assets/svg/app/loader.svg';
-import { AbsoluteCenteredDiv } from 'styles/common';
+import { AbsoluteCenteredDiv } from '@snx-v1/styles';
 
 type LoaderProps = {
   inline?: boolean;

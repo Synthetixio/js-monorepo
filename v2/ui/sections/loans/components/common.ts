@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { FlexDivColCentered, ErrorMessage as BaseErrorMessage } from 'styles/common';
-import media from 'styles/media';
+import { FlexDivColCentered, ErrorMessage as BaseErrorMessage } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 
 export const FormContainer = styled(FlexDivColCentered)`
   justify-content: space-between;

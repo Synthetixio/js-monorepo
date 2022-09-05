@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
-import { FlexDivCentered } from 'styles/common';
+import { FlexDivCentered } from '@snx-v1/styles';
 
 type ChartLabelProps = {
   labelColor: string;

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { absoluteCenteredCSS, resetHeadingMixin } from 'styles/common';
+import { absoluteCenteredCSS, resetHeadingMixin } from '@snx-v1/styles';
 
 const NotFoundPage = () => {
   const { t } = useTranslation();

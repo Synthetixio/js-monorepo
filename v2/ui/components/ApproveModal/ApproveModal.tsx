@@ -16,7 +16,7 @@ import {
   ModalItem,
   ModalItemTitle,
   ModalItemText,
-} from 'styles/common';
+} from '@snx-v1/styles';
 
 import { yearnSNXVault } from 'contracts';
 import { SynthetixJS } from '@synthetixio/contracts-interface';

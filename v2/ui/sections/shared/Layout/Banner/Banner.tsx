@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Color from 'color';
 
-import { FlexDivCentered } from 'styles/common';
+import { FlexDivCentered } from '@snx-v1/styles';
 import CloseIcon from 'assets/svg/app/close.svg';
 
 export enum BannerType {

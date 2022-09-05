@@ -1,7 +1,7 @@
 import { HTMLProps } from 'react';
 import styled, { css } from 'styled-components';
 
-import { resetButtonCSS } from 'styles/common';
+import { resetButtonCSS } from '@snx-v1/styles';
 
 import CaretDownIcon from 'assets/svg/app/caret-down.svg';
 import CloseIcon from 'assets/svg/app/menu-close.svg';

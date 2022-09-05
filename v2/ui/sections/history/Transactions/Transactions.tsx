@@ -13,7 +13,7 @@ import ExternalLinkIcon from 'assets/svg/app/open-external.svg';
 import { formatShortDate } from 'utils/formatters/date';
 import { formatCurrency } from 'utils/formatters/number';
 
-import { ExternalLink, FlexDivCentered, FlexDivJustifyEnd } from 'styles/common';
+import { ExternalLink, FlexDivCentered, FlexDivJustifyEnd } from '@snx-v1/styles';
 import { NO_VALUE } from 'constants/placeholder';
 import { CryptoCurrency, Synths } from 'constants/currency';
 
