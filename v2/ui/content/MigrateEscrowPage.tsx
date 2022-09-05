@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import Main from 'sections/migrate-escrow/migrate';
 import StatBox from 'components/StatBox';
-import { LineSpacer } from 'styles/common';
+import { LineSpacer } from '@snx-v1/styles';
 import StatsSection from 'components/StatsSection';
 import useEscrowCalculations from 'sections/escrow/hooks/useEscrowCalculations';
 import { formatCryptoCurrency } from 'utils/formatters/number';

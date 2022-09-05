@@ -17,7 +17,7 @@ import {
   GridDiv,
   TableNoResults,
   TableNoResultsButtonContainer,
-} from 'styles/common';
+} from '@snx-v1/styles';
 
 import Transactions from './Transactions';
 import {

@@ -2,8 +2,8 @@ import { FC, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
 import SNXStatBackground from 'assets/svg/app/snx-stat-background.svg';
-import media from 'styles/media';
-import { FlexDivRowCentered, FlexDivColCentered, Tooltip } from 'styles/common';
+import media from '@snx-v1/media';
+import { FlexDivRowCentered, FlexDivColCentered, Tooltip } from '@snx-v1/styles';
 import InfoIcon from 'assets/svg/app/info.svg';
 
 export type Size = 'md' | 'lg';

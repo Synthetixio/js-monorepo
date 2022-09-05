@@ -24,6 +24,8 @@ import {
   GuideIcon,
   FailedIcon,
   InfoIcon,
+  LoansIcon,
+  GovIcon,
 } from '../icons';
 
 import { StakingLogo } from '../staking-logo';
@@ -76,11 +78,11 @@ export const Navigation = ({
     <Flex
       alignItems="center"
       justifyContent="space-between"
-      bg="navy.900"
+      bg={['transparent', 'transparent', 'navy.900']}
       px={[4, 4, 10]}
       py={4}
       borderBottom="1px"
-      borderBottomColor="gray.900"
+      borderBottomColor={['transparent', 'transparent', 'gray.900']}
     >
       {size === 'desktop' ? <StakingLogo /> : <StakingIcon />}
       <Flex alignItems="center">
@@ -133,7 +135,7 @@ export const Navigation = ({
           <Menu>
             {({ isOpen }) => (
               <>
-                <MenuButton>
+                <MenuButton borderRadius="4px" bg="navy.900">
                   {icon}
                   {size === 'desktop' && (
                     <>
@@ -166,6 +168,7 @@ export const Navigation = ({
           ml={2}
           height={10}
           width={10}
+          bg="navy.900"
           borderColor="gray.900"
           borderWidth="1px"
           borderRadius="4px"
@@ -175,65 +178,73 @@ export const Navigation = ({
         >
           <NotificationsIcon />
         </Center>
-        {size === 'desktop' ? (
-          <>
-            <Center
-              ml={2}
-              height={10}
-              width={10}
-              borderColor="gray.900"
-              borderWidth="1px"
-              borderRadius="4px"
-              _hover={{
-                cursor: 'pointer',
-              }}
-            >
-              <SettingsIcon />
-            </Center>
-            <Center
-              ml={2}
-              height={10}
-              px={4}
-              borderColor="gray.900"
-              borderWidth="1px"
-              borderRadius="4px"
-              onClick={() => console.log('Help')}
-              _hover={{
-                cursor: 'pointer',
-              }}
-            >
-              <Text variant="nav" fontWeight={700}>
-                {t('common.wallet.menu.help')}
-              </Text>
-            </Center>
-          </>
-        ) : (
-          <Menu>
-            <Center ml={2} height={10} borderColor="gray.900" borderWidth="1px" borderRadius="4px">
-              <MenuButton>
-                <KebabMenu />
-              </MenuButton>
-            </Center>
-            <MenuList>
-              <MenuItem>
-                <Center>
-                  <InfoIcon ml={0.5} mr={1.5} />
-                  <Text ml={1}>{t('common.wallet.menu.help')}</Text>
-                </Center>
-              </MenuItem>
-              <MenuItem>
-                <Center>
-                  <SettingsIcon color="white" />
-                  <Text ml={1}>{t('common.wallet.menu.settings')}</Text>
-                </Center>
-              </MenuItem>
-              <MenuItem>
-                <GuideIcon />
-                <Text ml={1}>{t('common.wallet.menu.guide')}</Text>
-              </MenuItem>
-            </MenuList>
-          </Menu>
-        )}
+        <>
+          <Center
+            ml={2}
+            height={10}
+            width={10}
+            bg="navy.900"
+            borderColor="gray.900"
+            borderWidth="1px"
+            borderRadius="4px"
+            _hover={{
+              cursor: 'pointer',
+            }}
+          >
+            <SettingsIcon />
+          </Center>
+        </>
+
+        <Menu>
+          <Center
+            ml={2}
+            bg="navy.900"
+            height={10}
+            borderColor="gray.900"
+            borderWidth="1px"
+            borderRadius="4px"
+          >
+            <MenuButton>
+              <KebabMenu />
+            </MenuButton>
+          </Center>
+          <MenuList>
+            <MenuItem>
+              <Center>
+                <InfoIcon ml={0.5} mr={1.5} />
+                <Text ml={2}>{t('common.wallet.menu.help')}</Text>
+              </Center>
+            </MenuItem>
+            <MenuItem>
+              <Center>
+                <LoansIcon />
+                <Text ml={2}>{t('common.wallet.menu.loans')}</Text>
+              </Center>
+            </MenuItem>
+            <MenuItem>
+              <Center>
+                <GovIcon />
+                <Text ml={2}>{t('common.wallet.menu.gov')}</Text>
+              </Center>
+            </MenuItem>
+            <MenuItem>
+              <Center>
+                <WalletIcon color="white" />
+                <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>
+              </Center>
+            </MenuItem>
+            <MenuItem>
+              <Center>
+                <SettingsIcon color="white" />
+                <Text ml={2}>{t('common.wallet.menu.settings')}</Text>
+              </Center>
+            </MenuItem>
+            <MenuItem>
+              <GuideIcon />
+              <Text ml={2}>{t('common.wallet.menu.guide')}</Text>
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </Flex>
     </Flex>
   );

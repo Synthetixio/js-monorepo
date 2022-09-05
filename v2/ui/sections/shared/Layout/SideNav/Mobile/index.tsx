@@ -8,7 +8,7 @@ import BackIcon from 'assets/svg/app/back.svg';
 import CloseIcon from 'assets/svg/app/close.svg';
 
 import ROUTES from 'constants/routes';
-import { MOBILE_SIDE_NAV_WIDTH, zIndex } from 'constants/ui';
+import { MOBILE_SIDE_NAV_WIDTH, zIndex } from '@snx-v1/constantsUi';
 import UIContainer from 'containers/UI';
 
 import MobileMenu from './MobileMenu';

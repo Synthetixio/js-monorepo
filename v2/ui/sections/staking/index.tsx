@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import { StakingPanelType } from 'store/staking';
-import { FlexDivCol } from 'styles/common';
-import media from 'styles/media';
+import { FlexDivCol } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 
 import InfoBox from './components/InfoBox';
 import ActionBox from './components/ActionBox';

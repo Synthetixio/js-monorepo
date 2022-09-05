@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { FlexDivCol } from 'styles/common';
-import media from 'styles/media';
+import { FlexDivCol } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 
 import ActionBox from './components/ActionBox';
 import EscrowTable from './components/EscrowTable';

@@ -1,8 +1,8 @@
 import { FC, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
-import { FlexDivColCentered } from 'styles/common';
-import { zIndex } from 'constants/ui';
+import { FlexDivColCentered } from '@snx-v1/styles';
+import { zIndex } from '@snx-v1/constantsUi';
 
 import { Title } from './common';
 

@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Etherscan from 'containers/BlockExplorer';
-import { FlexDivCentered } from 'styles/common';
+import { FlexDivCentered } from '@snx-v1/styles';
 import PendingConfirmation from 'assets/svg/app/pending-confirmation.svg';
 import {
   Container,

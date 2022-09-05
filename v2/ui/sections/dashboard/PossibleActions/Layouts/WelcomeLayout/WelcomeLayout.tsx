@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import ROUTES from 'constants/routes';
 import { EXTERNAL_LINKS } from 'constants/links';
 
-import media from 'styles/media';
-import { GlowingCircle } from 'styles/common';
+import media from '@snx-v1/media';
+import { GlowingCircle } from '@snx-v1/styles';
 
 import KwentaIcon from 'assets/svg/app/kwenta.svg';
 import MintIcon from 'assets/svg/app/mint.svg';

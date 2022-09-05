@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { FlexDivColCentered, FlexDivRowCentered, FlexDivCol, ExternalLink } from 'styles/common';
+import { FlexDivColCentered, FlexDivRowCentered, FlexDivCol, ExternalLink } from '@snx-v1/styles';
 import Button from 'components/Button';
 import Input from 'components/Input/Input';
 import Select from 'components/Select';

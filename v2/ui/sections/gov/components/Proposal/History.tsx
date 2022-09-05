@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import Spinner from 'assets/svg/app/loader.svg';
-import { FlexDivCol, FlexDivRow, FlexDivRowCentered } from 'styles/common';
+import { FlexDivCol, FlexDivRow, FlexDivRowCentered } from '@snx-v1/styles';
 import { useTranslation } from 'react-i18next';
 import { truncateAddress, truncateString } from 'utils/formatters/string';
 import { formatNumber } from 'utils/formatters/number';

@@ -207,7 +207,7 @@
     "actions": {
       "title": "Possible Actions",
       "claim": {
-        "title": "CLAIM {{amount}} SNX",
+        "title": "CLAIM SNX",
         "copy": "Claim your staking rewards before the end of this epoch",
         "copy-liquidation": "Claim your liquidation rewards",
         "tooltip": "No rewards to claim"
@@ -1261,6 +1261,9 @@
       "menu": {
         "help": "Help",
         "settings": "Settings",
+        "loans": "Loans",
+        "wallet": "Wallet",
+        "gov": "Governance",
         "guide": "Guide"
       }
     },

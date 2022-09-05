@@ -1,6 +1,6 @@
 import { ReactNode, FC } from 'react';
 import styled, { css } from 'styled-components';
-import { FlexDivColCentered } from 'styles/common';
+import { FlexDivColCentered } from '@snx-v1/styles';
 
 type ButtonTileProps = {
   title: string;

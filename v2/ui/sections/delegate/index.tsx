@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { FlexDivCol } from 'styles/common';
-import media from 'styles/media';
+import { FlexDivCol } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 
 import DelegateForm from 'sections/delegate/DelegateForm';
 import DelegateTable from 'sections/delegate/DelegateTable';

@@ -58,7 +58,7 @@ module.exports = {
 
       settings: {
         react: {
-          version: '18.0.0',
+          version: '18.2.0',
         },
       },
 
@@ -77,14 +77,14 @@ module.exports = {
     },
 
     {
-      files: ['v2/ui/**/*'],
+      files: ['v2/ui/**/*', 'v2/components/**/*', 'v1/components/**/*'],
 
       extends: ['plugin:react/recommended'],
       plugins: ['react', 'react-hooks'],
 
       settings: {
         react: {
-          version: '17.0.2',
+          version: '18.2.0',
         },
       },
 

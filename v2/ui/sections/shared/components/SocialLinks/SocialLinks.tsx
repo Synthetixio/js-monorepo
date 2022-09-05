@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { ExternalLink, GridDivCenteredCol } from 'styles/common';
+import { ExternalLink, GridDivCenteredCol } from '@snx-v1/styles';
 
 import DiscordIcon from 'assets/svg/social/discord.svg';
 import TwitterIcon from 'assets/svg/social/twitter.svg';
@@ -8,7 +8,7 @@ import GithubIcon from 'assets/svg/social/github.svg';
 
 import { EXTERNAL_LINKS } from 'constants/links';
 
-import { media } from 'styles/media';
+import { media } from '@snx-v1/media';
 
 const SOCIAL_LINKS = [
   {

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Banner, { BannerType } from 'sections/shared/Layout/Banner';
 import { LOCAL_STORAGE_KEYS } from 'constants/storage';
-import { ExternalLink } from 'styles/common';
+import { ExternalLink } from '@snx-v1/styles';
 import { formatShortDateWithTime } from 'utils/formatters/date';
 import { wei } from '@synthetixio/wei';
 import useSynthetixQueries from '@synthetixio/queries';

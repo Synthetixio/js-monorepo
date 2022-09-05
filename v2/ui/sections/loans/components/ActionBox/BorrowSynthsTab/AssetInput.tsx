@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import media from 'styles/media';
+import media from '@snx-v1/media';
 import Select from 'components/Select';
 import Currency from 'components/Currency';
 import NumericInput from 'components/Input/NumericInput';
-import { FlexDivCentered, FlexDivColCentered } from 'styles/common';
+import { FlexDivCentered, FlexDivColCentered } from '@snx-v1/styles';
 import { DesktopOnlyView, MobileOrTabletView } from 'components/Media';
 
 import Balance from 'sections/loans/components/ActionBox/components/Balance';

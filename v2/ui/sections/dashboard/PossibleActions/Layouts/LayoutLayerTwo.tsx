@@ -13,8 +13,8 @@ import BurnIcon from 'assets/svg/app/burn.svg';
 
 import GridBox, { GridBoxProps } from 'components/GridBox/Gridbox';
 
-import { GlowingCircle } from 'styles/common';
-import media from 'styles/media';
+import { GlowingCircle } from '@snx-v1/styles';
+import media from '@snx-v1/media';
 
 import useUserStakingData from 'hooks/useUserStakingData';
 

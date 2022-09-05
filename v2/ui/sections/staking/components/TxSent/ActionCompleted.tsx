@@ -9,7 +9,7 @@ import {
   FlexDivColCentered,
   ExternalLink,
   boxShadowBlue,
-} from 'styles/common';
+} from '@snx-v1/styles';
 
 import Success from 'assets/svg/app/success.svg';
 

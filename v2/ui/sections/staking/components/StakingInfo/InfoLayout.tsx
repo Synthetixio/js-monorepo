@@ -6,7 +6,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import ArrowRightIcon from 'assets/svg/app/arrow-right.svg';
 import { formatCurrency, formatPercent } from 'utils/formatters/number';
 import { EXTERNAL_LINKS } from 'constants/links';
-import { FlexDivCentered } from 'styles/common';
+import { FlexDivCentered } from '@snx-v1/styles';
 import { CryptoCurrency } from 'constants/currency';
 
 import BarStatsRow from './BarStatsRow';

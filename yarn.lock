@@ -189,7 +189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/fresnel@npm:^1.8.0":
+"@artsy/fresnel@npm:^1.9.0":
   version: 1.9.0
   resolution: "@artsy/fresnel@npm:1.9.0"
   peerDependencies:
@@ -6110,6 +6110,42 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@snx-v1/Card@workspace:*, @snx-v1/Card@workspace:v1/components/Card":
+  version: 0.0.0-use.local
+  resolution: "@snx-v1/Card@workspace:v1/components/Card"
+  dependencies:
+    "@snx-v1/styles": "workspace:*"
+    react: ^18.2.0
+    styled-components: ^5.3.5
+  languageName: unknown
+  linkType: soft
+
+"@snx-v1/constantsUi@workspace:*, @snx-v1/constantsUi@workspace:v1/lib/constantsUi":
+  version: 0.0.0-use.local
+  resolution: "@snx-v1/constantsUi@workspace:v1/lib/constantsUi"
+  languageName: unknown
+  linkType: soft
+
+"@snx-v1/media@workspace:*, @snx-v1/media@workspace:v1/lib/media":
+  version: 0.0.0-use.local
+  resolution: "@snx-v1/media@workspace:v1/lib/media"
+  dependencies:
+    "@artsy/fresnel": ^1.9.0
+    styled-media-query: ^2.1.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v1/styles@workspace:*, @snx-v1/styles@workspace:v1/lib/styles":
+  version: 0.0.0-use.local
+  resolution: "@snx-v1/styles@workspace:v1/lib/styles"
+  dependencies:
+    "@snx-v1/constantsUi": "workspace:*"
+    "@snx-v1/media": "workspace:*"
+    "@tippyjs/react": ^4.2.6
+    styled-components: ^5.3.5
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/getHealthVariant@workspace:*, @snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant":
   version: 0.0.0-use.local
   resolution: "@snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant"
@@ -7683,12 +7719,179 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-android-arm-eabi@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-android-arm-eabi@npm:1.2.247"
+  dependencies:
+    "@swc/wasm": 1.2.122
+  conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@swc/core-android-arm64@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-android-arm64@npm:1.2.247"
+  dependencies:
+    "@swc/wasm": 1.2.130
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@swc/core-darwin-arm64@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-darwin-arm64@npm:1.2.247"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@swc/core-darwin-x64@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-darwin-x64@npm:1.2.247"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core-freebsd-x64@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-freebsd-x64@npm:1.2.247"
+  dependencies:
+    "@swc/wasm": 1.2.130
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-arm-gnueabihf@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.2.247"
+  dependencies:
+    "@swc/wasm": 1.2.130
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-arm64-gnu@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.2.247"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-arm64-musl@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-linux-arm64-musl@npm:1.2.247"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-x64-gnu@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-linux-x64-gnu@npm:1.2.247"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-x64-musl@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-linux-x64-musl@npm:1.2.247"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@swc/core-win32-arm64-msvc@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.2.247"
+  dependencies:
+    "@swc/wasm": 1.2.130
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@swc/core-win32-ia32-msvc@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.2.247"
+  dependencies:
+    "@swc/wasm": 1.2.130
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@swc/core-win32-x64-msvc@npm:1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core-win32-x64-msvc@npm:1.2.247"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core@npm:^1.2.247":
+  version: 1.2.247
+  resolution: "@swc/core@npm:1.2.247"
+  dependencies:
+    "@swc/core-android-arm-eabi": 1.2.247
+    "@swc/core-android-arm64": 1.2.247
+    "@swc/core-darwin-arm64": 1.2.247
+    "@swc/core-darwin-x64": 1.2.247
+    "@swc/core-freebsd-x64": 1.2.247
+    "@swc/core-linux-arm-gnueabihf": 1.2.247
+    "@swc/core-linux-arm64-gnu": 1.2.247
+    "@swc/core-linux-arm64-musl": 1.2.247
+    "@swc/core-linux-x64-gnu": 1.2.247
+    "@swc/core-linux-x64-musl": 1.2.247
+    "@swc/core-win32-arm64-msvc": 1.2.247
+    "@swc/core-win32-ia32-msvc": 1.2.247
+    "@swc/core-win32-x64-msvc": 1.2.247
+  dependenciesMeta:
+    "@swc/core-android-arm-eabi":
+      optional: true
+    "@swc/core-android-arm64":
+      optional: true
+    "@swc/core-darwin-arm64":
+      optional: true
+    "@swc/core-darwin-x64":
+      optional: true
+    "@swc/core-freebsd-x64":
+      optional: true
+    "@swc/core-linux-arm-gnueabihf":
+      optional: true
+    "@swc/core-linux-arm64-gnu":
+      optional: true
+    "@swc/core-linux-arm64-musl":
+      optional: true
+    "@swc/core-linux-x64-gnu":
+      optional: true
+    "@swc/core-linux-x64-musl":
+      optional: true
+    "@swc/core-win32-arm64-msvc":
+      optional: true
+    "@swc/core-win32-ia32-msvc":
+      optional: true
+    "@swc/core-win32-x64-msvc":
+      optional: true
+  bin:
+    swcx: run_swcx.js
+  checksum: 8ad850c5637405473cb7680865c0b1bdd9e955c0f32e86e6564d43c6a3fb0941b69d7ca152b661694e614530c69fe9824f32d10b606564187730d1d146f62805
+  languageName: node
+  linkType: hard
+
 "@swc/helpers@npm:0.4.3":
   version: 0.4.3
   resolution: "@swc/helpers@npm:0.4.3"
   dependencies:
     tslib: ^2.4.0
   checksum: 5c2f173e950dd3929d84ae48b3586a274d5a874e7cf2013b3d8081e4f8c723fa3a4d4e63b263e84bb7f06431f87b640e91a12655410463c81a3dc2bbc15eceda
+  languageName: node
+  linkType: hard
+
+"@swc/wasm@npm:1.2.122":
+  version: 1.2.122
+  resolution: "@swc/wasm@npm:1.2.122"
+  checksum: 563345370c5ad18373d3b403590ab880fe52dcd8fc8c8601be263fcd9886520b28a7f4e46236cf49ca2b136c79d4ef50c960bc34b7cdc2068118b0d84dfca1f4
+  languageName: node
+  linkType: hard
+
+"@swc/wasm@npm:1.2.130":
+  version: 1.2.130
+  resolution: "@swc/wasm@npm:1.2.130"
+  checksum: 02203bfef3e382c64cbbd63c138c8fdf61865e74d923b317e9d9e9f33f5a3f0a9533b5fdbc9505e76d78e864be04a82fc847eb987a1e47ccac5850146c858292
   languageName: node
   linkType: hard
 
@@ -7899,7 +8102,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@synthetixio/v2-ui@workspace:v2/ui"
   dependencies:
-    "@artsy/fresnel": ^1.8.0
     "@babel/core": ^7.18.13
     "@chakra-ui/react": ^2.2.8
     "@chakra-ui/storybook-addon": ^4.0.4
@@ -7909,6 +8111,10 @@ __metadata:
     "@metamask/providers": ^8.1.1
     "@next/bundle-analyzer": ^10.2.3
     "@reach/dialog": ^0.15.3
+    "@snx-v1/Card": "workspace:*"
+    "@snx-v1/constantsUi": "workspace:*"
+    "@snx-v1/media": "workspace:*"
+    "@snx-v1/styles": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
@@ -7921,6 +8127,7 @@ __metadata:
     "@storybook/react": ^6.5.7
     "@storybook/testing-library": ^0.0.13
     "@svgr/webpack": ^6.3.1
+    "@swc/core": ^1.2.247
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/optimism-networks": "workspace:*"
@@ -7932,7 +8139,7 @@ __metadata:
     "@testing-library/jest-dom": ^5.16.4
     "@testing-library/react": ^13.3.0
     "@testing-library/user-event": ^14.2.1
-    "@tippyjs/react": ^4.1.0
+    "@tippyjs/react": ^4.2.6
     "@types/color": ^3.0.1
     "@types/date-fns": ^2.6.0
     "@types/lodash": ^4.14.169
@@ -7996,6 +8203,7 @@ __metadata:
     storybook: ^6.5.10
     styled-components: ^5.3.5
     styled-media-query: ^2.1.2
+    swc-loader: ^0.2.3
     synthetix: ^2.76.1
     tippy.js: ^6.3.1
     typescript: ^4.8.2
@@ -8071,6 +8279,14 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     typescript: ^4.8.2
+  peerDependencies:
+    "@chakra-ui/icons": ^2.0.9
+    "@chakra-ui/react": ^2.2.8
+    "@emotion/react": ^11.10.0
+    "@emotion/styled": ^11.10.0
+    framer-motion: ^7.0.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -8276,7 +8492,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tippyjs/react@npm:^4.1.0":
+"@tippyjs/react@npm:^4.2.6":
   version: 4.2.6
   resolution: "@tippyjs/react@npm:4.2.6"
   dependencies:
@@ -31603,6 +31819,16 @@ __metadata:
     tar: ^4.0.2
     xhr-request: ^1.0.1
   checksum: 1de56e0cb02c1c80e041efb2bd2cc7250c5451c3016967266c16d5c1e8c74fe5c3aae45dc46065b1f4d77667a8453b967961ec58b3975469522f566aa840a914
+  languageName: node
+  linkType: hard
+
+"swc-loader@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "swc-loader@npm:0.2.3"
+  peerDependencies:
+    "@swc/core": ^1.2.147
+    webpack: ">=2"
+  checksum: 010d84d399525c0185d36d62c86c55ae017e7a90046bc8a39be4b7e07526924037868049f6037bc966da98151cb2600934b96a66279b742d3c413a718b427251
   languageName: node
   linkType: hard
 
