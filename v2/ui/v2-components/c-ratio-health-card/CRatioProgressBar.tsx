@@ -1,7 +1,7 @@
 import { Box, Text, Progress, Tooltip } from '@chakra-ui/react';
 import React, { FC } from 'react';
+import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { InfoIcon, TriangleDownIcon, TriangleUpIcon } from '../icons';
-import { getVariant } from './getVariant';
 
 const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
   left,
@@ -53,7 +53,7 @@ export const CRatioProgressBar: FC<Props> = ({
 }) => {
   const maxRatioShown = Math.max(targetCratioPercentage, currentCRatioPercentage) * 1.1;
   const scaleFactor = maxRatioShown / 100;
-  const variant = getVariant({
+  const variant = getHealthVariant({
     targetCratioPercentage,
     liquidationCratioPercentage,
     currentCRatioPercentage,

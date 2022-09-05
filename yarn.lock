@@ -5859,6 +5859,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@snx-v2/getHealthVariant@workspace:*, @snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant"
+  dependencies:
+    typescript: ^4.8.2
+  languageName: unknown
+  linkType: soft
+
 "@socket.tech/ll-core@npm:^0.1.10, @socket.tech/ll-core@npm:^0.1.14":
   version: 0.1.16
   resolution: "@socket.tech/ll-core@npm:0.1.16"
@@ -7652,6 +7660,7 @@ __metadata:
     "@metamask/providers": ^8.1.1
     "@next/bundle-analyzer": ^10.2.3
     "@reach/dialog": ^0.15.3
+    "@snx-v2/getHealthVariant": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
     "@storybook/addon-docs": ^6.5.10
