@@ -21,6 +21,10 @@
       "collect-price": "SNX Price",
       "collect-main-button": "Claim your rewards",
       "collect-explanation-link": "Rewards explained"
+    },
+    "cratio-health-card": {
+      "heading": "Collateralization Ratio Health",
+      "sub-heading": "In order to keep gathering rewards you must keep you C-Ratio above Target"
     }
   },
   "meta": {
