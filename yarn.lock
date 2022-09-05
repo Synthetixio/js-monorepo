@@ -5859,7 +5859,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant":
+"@snx-v2/getHealthVariant@workspace:*, @snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant":
   version: 0.0.0-use.local
   resolution: "@snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant"
   dependencies:

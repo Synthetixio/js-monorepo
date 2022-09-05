@@ -1,4 +1,4 @@
-import { getHealthVariant } from '@snx-v2/getHealthVariant';
+import { getHealthVariant } from './getHealthVariant';
 
 describe('getVariant', () => {
   test('success', () => {
