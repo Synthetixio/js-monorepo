@@ -1,4 +1,4 @@
-import { ComponentStyleConfig, extendTheme } from '@chakra-ui/react';
+import { ComponentStyleConfig, cssVar, extendTheme } from '@chakra-ui/react';
 
 const gradients = {
   'green-cyan': {
@@ -265,11 +265,13 @@ const Tabs: ComponentStyleConfig = {
     },
   },
 };
-
+const $arrowBg = cssVar('popper-arrow-bg');
 const Tooltip: ComponentStyleConfig = {
-  defaultProps: {
+  baseStyle: {
     bg: 'gray.900',
     color: 'white.500',
+    // https://github.com/chakra-ui/chakra-ui/issues/4695#issuecomment-991023319 Bug in Chakra UI
+    [$arrowBg.variable]: 'colors.gray.900',
   },
 };
 
@@ -283,6 +285,12 @@ const Switch: ComponentStyleConfig = {
         background: 'cyan.500',
       },
     },
+  },
+};
+
+const Spinner: ComponentStyleConfig = {
+  baseStyle: {
+    color: 'cyan.500',
   },
 };
 
@@ -448,6 +456,7 @@ export const theme = extendTheme({
     Tabs,
     Tooltip,
     Switch,
+    Spinner,
   },
   // To be imported and used with the bgGradient prop
   // See: https://chakra-ui.com/docs/styled-system/gradient#background-gradient-api
