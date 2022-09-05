@@ -6,7 +6,7 @@ import { truncateAddress } from 'utils/formatters/string';
 import { CellProps } from 'react-table';
 import Table from 'components/Table';
 import useMediaQuery from 'hooks/useMediaQuery';
-import { ExternalLink, FlexDivRow, Tooltip } from 'styles/common';
+import { ExternalLink, FlexDivRow, Tooltip } from '@snx-v2/styles';
 import WalletIcon from 'assets/svg/app/wallet-yellow.svg';
 import ToggleDelegateApproval from './ToggleDelegateApproval';
 import useSynthetixQueries, { DELEGATE_ENTITY_ATTRS } from '@synthetixio/queries';

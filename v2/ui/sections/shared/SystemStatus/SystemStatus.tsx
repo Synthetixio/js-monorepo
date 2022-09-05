@@ -9,7 +9,7 @@ import {
   FullScreenContainer,
   resetHeadingMixin,
   FlexDivCol,
-} from 'styles/common';
+} from '@snx-v2/styles';
 
 import StakingLogo from 'assets/svg/app/staking-logo.svg';
 

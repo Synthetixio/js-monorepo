@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import SNXStatBackground from 'assets/svg/app/snx-stat-background.svg';
 import media from '@snx-v2/media';
-import { FlexDivRowCentered, FlexDivColCentered, Tooltip } from 'styles/common';
+import { FlexDivRowCentered, FlexDivColCentered, Tooltip } from '@snx-v2/styles';
 import InfoIcon from 'assets/svg/app/info.svg';
 
 export type Size = 'md' | 'lg';

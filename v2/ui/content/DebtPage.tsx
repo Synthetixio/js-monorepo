@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import last from 'lodash/last';
 
-import { FlexDivCol, LineSpacer } from 'styles/common';
+import { FlexDivCol, LineSpacer } from '@snx-v2/styles';
 import StatsSection from 'components/StatsSection';
 import StatBox from 'components/StatBox';
 import useUserStakingData from 'hooks/useUserStakingData';

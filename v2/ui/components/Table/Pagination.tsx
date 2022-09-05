@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { GridDivCenteredCol, resetButtonCSS } from 'styles/common';
+import { GridDivCenteredCol, resetButtonCSS } from '@snx-v2/styles';
 
 import LeftArrowIcon from 'assets/svg/app/caret-left.svg';
 import LeftEndArrowIcon from 'assets/svg/app/caret-left-end.svg';

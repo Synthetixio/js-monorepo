@@ -5,7 +5,7 @@ import { BigNumber, constants, utils } from 'ethers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FlexDivCentered } from 'styles/common';
+import { FlexDivCentered } from '@snx-v2/styles';
 import { DataRow, StyledInput } from '../../staking/components/common';
 import { WETHSNXLPTokenContract } from 'constants/gelato';
 import Connector from 'containers/Connector';

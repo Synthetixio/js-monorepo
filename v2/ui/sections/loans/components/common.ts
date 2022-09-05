@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FlexDivColCentered, ErrorMessage as BaseErrorMessage } from 'styles/common';
+import { FlexDivColCentered, ErrorMessage as BaseErrorMessage } from '@snx-v2/styles';
 import media from '@snx-v2/media';
 
 export const FormContainer = styled(FlexDivColCentered)`

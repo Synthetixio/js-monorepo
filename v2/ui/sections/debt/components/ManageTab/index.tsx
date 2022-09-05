@@ -1,6 +1,6 @@
 import Connector from 'containers/Connector';
 import styled from 'styled-components';
-import { FlexDivColCentered } from 'styles/common';
+import { FlexDivColCentered } from '@snx-v2/styles';
 import HedgeOptimismTabs from './HedgeOptimismTabs';
 import ConnectOrSwitchNetwork from 'components/ConnectOrSwitchNetwork';
 import HedgeTapMainnet from './HedgeTabMainnet';

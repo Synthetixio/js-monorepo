@@ -18,7 +18,7 @@ import {
   Subtitle,
   Title,
 } from 'sections/escrow/components/common';
-import { ExternalLink } from 'styles/common';
+import { ExternalLink } from '@snx-v2/styles';
 import Connector from 'containers/Connector';
 
 const NominateInfoBox: FC = () => {

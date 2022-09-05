@@ -1,0 +1,6 @@
+{
+  "name": "@snx-v2/constantsUi",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.0"
+}

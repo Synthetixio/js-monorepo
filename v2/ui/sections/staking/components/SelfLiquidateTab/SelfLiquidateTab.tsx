@@ -9,7 +9,7 @@ import { delegateWalletState } from 'store/wallet';
 import SelfLiquidationTabContent from './SelfLiquidationTabContent';
 import Connector from 'containers/Connector';
 import styled from 'styled-components';
-import { FlexDivJustifyCenter } from 'styles/common';
+import { FlexDivJustifyCenter } from '@snx-v2/styles';
 import Loader from 'components/Loader';
 import useGetCanBurn from 'hooks/useGetCanBurn';
 import ConnectOrSwitchNetwork from 'components/ConnectOrSwitchNetwork';

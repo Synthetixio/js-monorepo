@@ -12,7 +12,7 @@ import KwentaIcon from 'assets/svg/app/kwenta.svg';
 import MintIcon from 'assets/svg/app/mint.svg';
 import BurnIcon from 'assets/svg/app/burn.svg';
 
-import { GlowingCircle } from 'styles/common';
+import { GlowingCircle } from '@snx-v2/styles';
 import media from '@snx-v2/media';
 
 import GridBox, { GridBoxProps } from 'components/GridBox/Gridbox';

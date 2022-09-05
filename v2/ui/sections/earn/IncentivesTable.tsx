@@ -17,7 +17,7 @@ import useSelectedPriceCurrency from 'hooks/useSelectedPriceCurrency';
 
 import { formatPercent, formatFiatCurrency, formatCurrency } from 'utils/formatters/number';
 
-import { FlexDivCol, GlowingCircle, IconButton, TableNoResults } from 'styles/common';
+import { FlexDivCol, GlowingCircle, IconButton, TableNoResults } from '@snx-v2/styles';
 import { CryptoCurrency, CurrencyKey } from 'constants/currency';
 import { DURATION_SEPARATOR } from 'constants/date';
 

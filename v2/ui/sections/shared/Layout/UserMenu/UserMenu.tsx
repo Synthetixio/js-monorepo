@@ -11,8 +11,8 @@ import {
   GridDivCenteredCol,
   IconButton,
   UpperCased,
-} from 'styles/common';
-import { zIndex } from 'constants/ui';
+} from '@snx-v2/styles';
+import { zIndex } from '@snx-v2/constantsUi';
 import UI from 'containers/UI';
 import Button from 'components/Button';
 import { DesktopOnlyView, DesktopOrTabletView, MobileOrTabletView } from 'components/Media';

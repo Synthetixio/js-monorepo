@@ -8,7 +8,7 @@ import useLocalStorage from 'hooks/useLocalStorage';
 import { MenuModal } from '../common';
 import Button from 'components/Button';
 import TextInput from 'components/Input/SearchInput';
-import { Divider, GridDivCenteredRow } from 'styles/common';
+import { Divider, GridDivCenteredRow } from '@snx-v2/styles';
 import { ethers } from 'ethers';
 import { truncateAddress } from 'utils/formatters/string';
 import Trash from 'assets/svg/app/trash.svg';

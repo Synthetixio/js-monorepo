@@ -6110,6 +6110,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@snx-v2/constantsUi@workspace:*, @snx-v2/constantsUi@workspace:v2/lib/constantsUi":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/constantsUi@workspace:v2/lib/constantsUi"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/getHealthVariant@workspace:*, @snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant":
   version: 0.0.0-use.local
   resolution: "@snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant"
@@ -6122,6 +6128,17 @@ __metadata:
   dependencies:
     "@artsy/fresnel": ^1.9.0
     styled-media-query: ^2.1.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/styles@workspace:*, @snx-v2/styles@workspace:v2/lib/styles":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/styles@workspace:v2/lib/styles"
+  dependencies:
+    "@snx-v2/constantsUi": "workspace:*"
+    "@snx-v2/media": "workspace:*"
+    "@tippyjs/react": ^4.2.6
+    styled-components: ^5.3.5
   languageName: unknown
   linkType: soft
 
@@ -7917,8 +7934,10 @@ __metadata:
     "@metamask/providers": ^8.1.1
     "@next/bundle-analyzer": ^10.2.3
     "@reach/dialog": ^0.15.3
+    "@snx-v2/constantsUi": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/media": "workspace:*"
+    "@snx-v2/styles": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
     "@storybook/addon-docs": ^6.5.10
@@ -8293,7 +8312,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tippyjs/react@npm:^4.1.0":
+"@tippyjs/react@npm:^4.1.0, @tippyjs/react@npm:^4.2.6":
   version: 4.2.6
   resolution: "@tippyjs/react@npm:4.2.6"
   dependencies:

@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import { InfoContainer, Title } from '../../components/common';
-import { FlexDivCol } from 'styles/common';
+import { FlexDivCol } from '@snx-v2/styles';
 import Warning from 'assets/svg/app/warning.svg';
 
 const InfoBox = () => {

@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FlexDivRowCentered, FlexDivCentered, ExternalLink, boxShadowBlue } from 'styles/common';
+import { FlexDivRowCentered, FlexDivCentered, ExternalLink, boxShadowBlue } from '@snx-v2/styles';
 import Success from 'assets/svg/app/circle-tick.svg';
 
 import { InfoContainer, InfoData, InfoTitle, SectionHeader, Container } from './common';

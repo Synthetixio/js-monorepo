@@ -1,7 +1,7 @@
 import Wei from '@synthetixio/wei';
 import { TFunction } from 'i18next';
 
-import { GlowingCircle } from 'styles/common';
+import { GlowingCircle } from '@snx-v2/styles';
 import ClaimIcon from 'assets/svg/app/claim.svg';
 import ROUTES from 'constants/routes';
 

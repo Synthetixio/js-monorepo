@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FlexDivRowCentered } from 'styles/common';
+import { FlexDivRowCentered } from '@snx-v2/styles';
 
 import { MenuModal } from '../common';
 

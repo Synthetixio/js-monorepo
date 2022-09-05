@@ -21,7 +21,7 @@ import {
   ModalItem,
   ModalItemText,
   ModalItemTitle,
-} from 'styles/common';
+} from '@snx-v2/styles';
 import Currency from 'components/Currency';
 import { CryptoCurrency, CurrencyKey } from 'constants/currency';
 import TxState from 'sections/earn/TxState';

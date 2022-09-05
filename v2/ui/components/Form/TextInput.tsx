@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 
 import { FormLabel } from './common';
-import { FlexDivColCentered } from 'styles/common';
+import { FlexDivColCentered } from '@snx-v2/styles';
 
 type TextInputProps = {
   value: string;

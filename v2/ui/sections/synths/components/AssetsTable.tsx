@@ -4,7 +4,7 @@ import Wei from '@synthetixio/wei';
 
 import media from '@snx-v2/media';
 import { DesktopOrTabletView, MobileOnlyView } from 'components/Media';
-import { MOBILE_BODY_PADDING } from 'constants/ui';
+import { MOBILE_BODY_PADDING } from '@snx-v2/constantsUi';
 
 import DesktopAssetsTable from './DesktopAssetsTable';
 import MobileAssetsTable from './MobileAssetsTable';

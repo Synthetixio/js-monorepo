@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MintCircle from 'assets/svg/app/mint-circle.svg';
 import ButtonTile from '../ButtonTile';
-import { FlexDivCol } from 'styles/common';
+import { FlexDivCol } from '@snx-v2/styles';
 import styled from 'styled-components';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { amountToMintState, MintActionType, mintTypeState } from 'store/staking';

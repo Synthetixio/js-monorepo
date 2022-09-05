@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import i18n from 'i18n';
 
-import { zIndex } from 'constants/ui';
+import { zIndex } from '@snx-v2/constantsUi';
 import media from '@snx-v2/media';
 
 import { languageState } from 'store/app';

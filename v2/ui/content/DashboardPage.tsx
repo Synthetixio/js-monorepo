@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { useTranslation } from 'react-i18next';
 
-import { FlexDivCol, LineSpacer } from 'styles/common';
+import { FlexDivCol, LineSpacer } from '@snx-v2/styles';
 import { PossibleActions } from 'sections/dashboard';
 
 import StatBox from 'components/StatBox';

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { ExternalLink } from '../../../../styles/common';
+import { ExternalLink } from '@snx-v2/styles';
 import { EXTERNAL_LINKS } from '../../../../constants/links';
 import { handleSwitchChain } from '@synthetixio/providers';
 import Connector from '../../../../containers/Connector';

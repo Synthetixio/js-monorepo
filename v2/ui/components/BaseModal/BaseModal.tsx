@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import CrossIcon from 'assets/svg/app/cross.svg';
 
 import Card from 'components/Card';
-import { resetButtonCSS } from 'styles/common';
-import { zIndex } from 'constants/ui';
+import { resetButtonCSS } from '@snx-v2/styles';
+import { zIndex } from '@snx-v2/constantsUi';
 import media from '@snx-v2/media';
 
 type BaseModalProps = {

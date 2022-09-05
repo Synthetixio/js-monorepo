@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { FlexDivCol } from 'styles/common';
+import { FlexDivCol } from '@snx-v2/styles';
 import media from '@snx-v2/media';
 
 import ActionBox from './ActionBox';

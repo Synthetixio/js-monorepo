@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Spinner from 'assets/svg/app/loader.svg';
-import { FlexDivRowCentered } from 'styles/common';
+import { FlexDivRowCentered } from '@snx-v2/styles';
 import { formatNumber, formatPercent } from 'utils/formatters/number';
 import ProgressBar from 'components/ProgressBar';
 import { MaxHeightColumn, StyledTooltip } from 'sections/gov/components/common';

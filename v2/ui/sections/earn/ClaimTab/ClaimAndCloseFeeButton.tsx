@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { StyledButton } from '../common';
-import { Tooltip } from 'styles/common';
+import { Tooltip } from '@snx-v2/styles';
 import styled from 'styled-components';
 import Wei from '@synthetixio/wei';
 import ROUTES from 'constants/routes';

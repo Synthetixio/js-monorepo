@@ -6,13 +6,13 @@ import BaseModal from 'components/BaseModal';
 import { InputsDivider, ButtonTransaction } from 'components/Form/common';
 import AssetInput, { Asset } from 'components/Form/AssetInput';
 import TextInput from 'components/Form/TextInput';
-import { FlexDivColCentered, FlexDivCentered } from 'styles/common';
+import { FlexDivColCentered, FlexDivCentered } from '@snx-v2/styles';
 
 import GasSelector from 'components/GasSelector';
 import { isSynth, synthToContractName } from 'utils/currencies';
 import { formatNumber } from 'utils/formatters/number';
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';
-import { ModalContent, ModalItem, ModalItemTitle, ModalItemText } from 'styles/common';
+import { ModalContent, ModalItem, ModalItemTitle, ModalItemText } from '@snx-v2/styles';
 
 import { truncateAddress } from 'utils/formatters/string';
 import Connector from 'containers/Connector';

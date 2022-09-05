@@ -19,7 +19,7 @@ import {
   ModalItemTitle,
   ModalItemText,
   ErrorMessage,
-} from 'styles/common';
+} from '@snx-v2/styles';
 import { GasPrice } from '@synthetixio/queries';
 import Wei from '@synthetixio/wei';
 

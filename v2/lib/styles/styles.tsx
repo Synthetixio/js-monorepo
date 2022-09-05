@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
 import media from '@snx-v2/media';
-import { DESKTOP_SIDE_NAV_WIDTH, MOBILE_BODY_PADDING } from 'constants/ui';
+import { DESKTOP_SIDE_NAV_WIDTH, MOBILE_BODY_PADDING } from '@snx-v2/constantsUi';
 import Tippy from '@tippyjs/react';
 
 export const FlexDiv = styled.div`

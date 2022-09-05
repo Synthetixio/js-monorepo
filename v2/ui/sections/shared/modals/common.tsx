@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FlexDivRow } from 'styles/common';
+import { FlexDivRow } from '@snx-v2/styles';
 
 import BaseModal from 'components/BaseModal';
 import media from '@snx-v2/media';

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { FlexDivCentered, FlexDivCol, FlexDivRowCentered } from 'styles/common';
+import { FlexDivCentered, FlexDivCol, FlexDivRowCentered } from '@snx-v2/styles';
 import ProgressBar from 'components/ProgressBar';
 
 type BarStatsRowProps = {

@@ -15,7 +15,7 @@ import {
   ModalItem,
   ModalItemText,
   ModalItemTitle,
-} from 'styles/common';
+} from '@snx-v2/styles';
 import media from '@snx-v2/media';
 
 import NavigationBack from 'assets/svg/app/navigation-back.svg';

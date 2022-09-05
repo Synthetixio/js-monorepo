@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 
-import { linkCSS } from 'styles/common';
+import { linkCSS } from '@snx-v2/styles';
 import media from '@snx-v2/media';
 import CaretRightIcon from 'assets/svg/app/caret-right-small.svg';
 import ROUTES from 'constants/routes';

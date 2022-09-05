@@ -8,7 +8,7 @@ import PoolTabs from 'sections/pool/TabsButton';
 import { useGUNILPToken } from 'sections/pool/useGUNILPToken';
 import styled from 'styled-components';
 import media from 'styled-media-query';
-import { ExternalLink, FlexDivCol, LineSpacer, StatsSection } from 'styles/common';
+import { ExternalLink, FlexDivCol, LineSpacer, StatsSection } from '@snx-v2/styles';
 import { WETHSNXLPTokenContract } from 'constants/gelato';
 import { InfoContainer, Subtitle } from 'sections/migrate-escrow/components/common';
 import Connector from 'containers/Connector';

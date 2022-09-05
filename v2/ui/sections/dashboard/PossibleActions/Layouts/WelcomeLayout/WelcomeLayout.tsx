@@ -6,7 +6,7 @@ import ROUTES from 'constants/routes';
 import { EXTERNAL_LINKS } from 'constants/links';
 
 import media from '@snx-v2/media';
-import { GlowingCircle } from 'styles/common';
+import { GlowingCircle } from '@snx-v2/styles';
 
 import KwentaIcon from 'assets/svg/app/kwenta.svg';
 import MintIcon from 'assets/svg/app/mint.svg';

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { FlexDivCol } from 'styles/common';
+import { FlexDivCol } from '@snx-v2/styles';
 
 export type CardBodyProps = {
   children: React.ReactNode;

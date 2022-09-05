@@ -12,14 +12,14 @@ import useSynthetixQueries, {
 import BaseModal from 'components/BaseModal';
 import { ButtonTransaction } from 'components/Form/common';
 
-import { FlexDivColCentered, FlexDivCentered, BlueStyledExternalLink } from 'styles/common';
+import { FlexDivColCentered, FlexDivCentered, BlueStyledExternalLink } from '@snx-v2/styles';
 import media from '@snx-v2/media';
 
 import Connector from 'containers/Connector';
 import Etherscan from 'containers/BlockExplorer';
 import GasSelector from 'components/GasSelector';
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';
-import { ModalContent, ModalItemTitle, NoTextTransform } from 'styles/common';
+import { ModalContent, ModalItemTitle, NoTextTransform } from '@snx-v2/styles';
 import PendingConfirmation from 'assets/svg/app/pending-confirmation.svg';
 import { formatCryptoCurrency, formatCurrency } from 'utils/formatters/number';
 import TxState from 'sections/gov/components/TxState';

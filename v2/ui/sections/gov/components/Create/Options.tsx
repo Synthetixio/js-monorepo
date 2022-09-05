@@ -3,7 +3,7 @@ import Input from 'components/Input/Input';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FlexDivColCentered, FlexDivRowCentered } from 'styles/common';
+import { FlexDivColCentered, FlexDivRowCentered } from '@snx-v2/styles';
 import CrossIcon from 'assets/svg/app/cross.svg';
 import { Card } from '../common';
 

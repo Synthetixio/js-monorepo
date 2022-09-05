@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import StatBox from 'components/StatBox';
 import StatsSection from 'components/StatsSection';
-import { LineSpacer } from 'styles/common';
+import { LineSpacer } from '@snx-v2/styles';
 import Main from 'sections/synths';
 import { formatCurrency } from 'utils/formatters/number';
 import useSelectedPriceCurrency from 'hooks/useSelectedPriceCurrency';

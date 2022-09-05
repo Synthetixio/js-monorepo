@@ -1,6 +1,6 @@
 import React, { FC, PropsWithChildren } from 'react';
 import styled, { css } from 'styled-components';
-import { FlexDivCentered, FlexDivCol, FlexDivRowCentered } from 'styles/common';
+import { FlexDivCentered, FlexDivCol, FlexDivRowCentered } from '@snx-v2/styles';
 import { useTranslation } from 'react-i18next';
 
 import Spinner from 'assets/svg/app/spinner.svg';

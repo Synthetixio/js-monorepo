@@ -7,7 +7,7 @@ import {
   FlexDivColCentered,
   FlexDivRowCentered,
   Tooltip,
-} from 'styles/common';
+} from '@snx-v2/styles';
 import Button from 'components/Button';
 
 export const Container = styled.div`

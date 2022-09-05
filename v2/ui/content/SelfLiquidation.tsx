@@ -5,7 +5,7 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { delegateWalletState } from 'store/wallet';
 import styled from 'styled-components';
-import { ExternalLink, LineSpacer } from 'styles/common';
+import { ExternalLink, LineSpacer } from '@snx-v2/styles';
 import { formatShortDateWithTime } from 'utils/formatters/date';
 import { formatCryptoCurrency, formatPercent, isZero } from 'utils/formatters/number';
 import WarningIcon from 'assets/svg/app/warning.svg';

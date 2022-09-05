@@ -8,7 +8,7 @@ import { truncateAddress } from 'utils/formatters/string';
 import useSynthetixQueries, { DelegationWallet } from '@synthetixio/queries';
 
 import { MenuModal } from '../common';
-import { Tooltip } from 'styles/common';
+import { Tooltip } from '@snx-v2/styles';
 
 import SpinnerIcon from 'assets/svg/app/loader.svg';
 import Connector from 'containers/Connector';

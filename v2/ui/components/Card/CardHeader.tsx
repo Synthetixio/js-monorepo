@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { FlexDivCentered } from 'styles/common';
+import { FlexDivCentered } from '@snx-v2/styles';
 
 export type CardHeaderProps = {
   children: React.ReactNode;

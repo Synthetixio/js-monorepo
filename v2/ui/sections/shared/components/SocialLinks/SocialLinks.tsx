@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { ExternalLink, GridDivCenteredCol } from 'styles/common';
+import { ExternalLink, GridDivCenteredCol } from '@snx-v2/styles';
 
 import DiscordIcon from 'assets/svg/social/discord.svg';
 import TwitterIcon from 'assets/svg/social/twitter.svg';

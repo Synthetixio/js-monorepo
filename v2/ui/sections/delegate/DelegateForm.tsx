@@ -11,7 +11,7 @@ import {
   ModalItemTitle as TxModalItemTitle,
   ModalItemText as TxModalItemText,
   NoTextTransform,
-} from 'styles/common';
+} from '@snx-v2/styles';
 import GasSelector from 'components/GasSelector';
 
 import useSynthetixQueries, {

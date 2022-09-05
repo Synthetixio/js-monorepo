@@ -19,7 +19,7 @@ import {
   ModalItemSeperator as TxModalItemSeperator,
   NoTextTransform,
   IconButton,
-} from 'styles/common';
+} from '@snx-v2/styles';
 import GasSelector from 'components/GasSelector';
 import { walletAddressState } from 'store/wallet';
 import {

@@ -14,7 +14,7 @@ import {
   ModalItemText,
   ModalItemTitle,
   Tooltip,
-} from 'styles/common';
+} from '@snx-v2/styles';
 import { formatCryptoCurrency } from 'utils/formatters/number';
 import Dhedge from 'assets/svg/app/dhedge.svg';
 import LoaderIcon from 'assets/svg/app/loader.svg';

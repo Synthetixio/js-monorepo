@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
 import { useTable, useFlexLayout, useSortBy, Column, Row, usePagination, Cell } from 'react-table';
 
-import { FlexDivCentered } from 'styles/common';
+import { FlexDivCentered } from '@snx-v2/styles';
 
 import Spinner from 'assets/svg/app/loader.svg';
 import Pagination from './Pagination';

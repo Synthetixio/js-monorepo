@@ -16,7 +16,7 @@ import {
   NoTextTransform,
   GlowingCircle,
   IconButton,
-} from 'styles/common';
+} from '@snx-v2/styles';
 import { StyledCTA } from 'sections/staking/components/common';
 import {
   FormContainer,

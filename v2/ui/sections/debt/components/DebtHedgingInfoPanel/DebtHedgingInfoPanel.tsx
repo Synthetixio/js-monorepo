@@ -1,7 +1,7 @@
 import { Trans, useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DebtHedgingChart from './DebtHedgingChart';
-import { ExternalLink, FlexDivCol } from 'styles/common';
+import { ExternalLink, FlexDivCol } from '@snx-v2/styles';
 import media from 'styled-media-query';
 import { EXTERNAL_LINKS } from 'constants/links';
 import Connector from 'containers/Connector';

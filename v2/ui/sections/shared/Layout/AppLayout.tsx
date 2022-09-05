@@ -3,7 +3,7 @@ import router from 'next/router';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { DESKTOP_SIDE_NAV_WIDTH, DESKTOP_BODY_PADDING } from 'constants/ui';
+import { DESKTOP_SIDE_NAV_WIDTH, DESKTOP_BODY_PADDING } from '@snx-v2/constantsUi';
 import ROUTES from 'constants/routes';
 import NotificationContainer from 'constants/NotificationContainer';
 

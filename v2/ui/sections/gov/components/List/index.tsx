@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { CellProps, Row } from 'react-table';
-import { FlexDivCol } from 'styles/common';
+import { FlexDivCol } from '@snx-v2/styles';
 import media from '@snx-v2/media';
 import Button from 'components/Button';
 import useSynthetixQueries, { Proposal as ProposalType } from '@synthetixio/queries';

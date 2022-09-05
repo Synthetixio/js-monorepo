@@ -38,5 +38,3 @@ export const media = generateMedia({
 export const mediaStyles = AppMedia.createMediaStyle();
 
 export const { Media, MediaContextProvider } = AppMedia;
-
-export default media;

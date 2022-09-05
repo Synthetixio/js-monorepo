@@ -17,7 +17,7 @@ import {
   TableNoResultsButtonContainer,
   NoTextTransform,
   FlexDiv,
-} from 'styles/common';
+} from '@snx-v2/styles';
 import { CryptoBalance } from 'hooks/useCryptoBalances';
 
 import { EXTERNAL_LINKS } from 'constants/links';

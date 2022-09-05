@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import Etherscan from 'containers/BlockExplorer';
-import { FlexDivCentered, ExternalLink } from 'styles/common';
+import { FlexDivCentered, ExternalLink } from '@snx-v2/styles';
 import PendingConfirmation from 'assets/svg/app/pending-confirmation.svg';
 
 import {

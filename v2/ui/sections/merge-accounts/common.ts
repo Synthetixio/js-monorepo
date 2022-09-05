@@ -7,7 +7,7 @@ import {
   FlexDivCol,
   FlexDivCentered,
   ExternalLink,
-} from 'styles/common';
+} from '@snx-v2/styles';
 import media from '@snx-v2/media';
 import Button from 'components/Button';
 

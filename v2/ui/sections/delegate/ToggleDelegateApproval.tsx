@@ -6,7 +6,7 @@ import {
   ModalItemTitle as TxModalItemTitle,
   ModalItemText as TxModalItemText,
   Tooltip,
-} from 'styles/common';
+} from '@snx-v2/styles';
 import { truncateAddress } from 'utils/formatters/string';
 import { TxModalItem } from 'sections/delegate/common';
 

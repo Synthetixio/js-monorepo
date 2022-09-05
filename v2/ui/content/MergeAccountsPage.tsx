@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Connector from 'containers/Connector';
 
 import StatBox from 'components/StatBox';
-import { LineSpacer } from 'styles/common';
+import { LineSpacer } from '@snx-v2/styles';
 import StatsSection from 'components/StatsSection';
 import useStakingCalculations from 'sections/staking/hooks/useStakingCalculations';
 import useSelectedPriceCurrency from 'hooks/useSelectedPriceCurrency';

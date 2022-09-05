@@ -6,7 +6,7 @@ import media from '@snx-v2/media';
 import Select from 'components/Select';
 import Currency from 'components/Currency';
 import NumericInput from 'components/Input/NumericInput';
-import { FlexDivCentered, FlexDivColCentered } from 'styles/common';
+import { FlexDivCentered, FlexDivColCentered } from '@snx-v2/styles';
 import { DesktopOnlyView, MobileOrTabletView } from 'components/Media';
 
 import Balance from 'sections/loans/components/ActionBox/components/Balance';
