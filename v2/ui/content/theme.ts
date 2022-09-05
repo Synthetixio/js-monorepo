@@ -105,12 +105,12 @@ const Menu: ComponentMultiStyleConfig = {
     },
     list: {
       mt: 2,
-      bgColor: 'black',
+      bgColor: 'navy.900',
       padding: 0,
       border: 'none',
     },
     item: {
-      bgColor: 'black',
+      bgColor: 'blackAlpha.300',
       color: 'white',
       py: 3,
       _active: {
@@ -125,7 +125,7 @@ const Menu: ComponentMultiStyleConfig = {
         borderBottomRightRadius: 'md',
       },
       _focus: {
-        bgColor: 'black',
+        bgColor: 'blackAlpha.400',
       },
       _even: {
         bgColor: 'whiteAlpha.300',

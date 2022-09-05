@@ -1261,6 +1261,9 @@
       "menu": {
         "help": "Help",
         "settings": "Settings",
+        "loans": "Loans",
+        "wallet": "Wallet",
+        "gov": "Governance",
         "guide": "Guide"
       }
     },
