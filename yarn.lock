@@ -6110,9 +6110,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@snx-v1/Card@workspace:*, @snx-v1/Card@workspace:v2/components/Card":
+"@snx-v1/Card@workspace:*, @snx-v1/Card@workspace:v1/components/Card":
   version: 0.0.0-use.local
-  resolution: "@snx-v1/Card@workspace:v2/components/Card"
+  resolution: "@snx-v1/Card@workspace:v1/components/Card"
   dependencies:
     "@snx-v1/styles": "workspace:*"
     react: ^18.2.0
@@ -6120,24 +6120,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v1/constantsUi@workspace:*, @snx-v1/constantsUi@workspace:v2/lib/constantsUi":
+"@snx-v1/constantsUi@workspace:*, @snx-v1/constantsUi@workspace:v1/lib/constantsUi":
   version: 0.0.0-use.local
-  resolution: "@snx-v1/constantsUi@workspace:v2/lib/constantsUi"
+  resolution: "@snx-v1/constantsUi@workspace:v1/lib/constantsUi"
   languageName: unknown
   linkType: soft
 
-"@snx-v1/media@workspace:*, @snx-v1/media@workspace:v2/lib/media":
+"@snx-v1/media@workspace:*, @snx-v1/media@workspace:v1/lib/media":
   version: 0.0.0-use.local
-  resolution: "@snx-v1/media@workspace:v2/lib/media"
+  resolution: "@snx-v1/media@workspace:v1/lib/media"
   dependencies:
     "@artsy/fresnel": ^1.9.0
     styled-media-query: ^2.1.2
   languageName: unknown
   linkType: soft
 
-"@snx-v1/styles@workspace:*, @snx-v1/styles@workspace:v2/lib/styles":
+"@snx-v1/styles@workspace:*, @snx-v1/styles@workspace:v1/lib/styles":
   version: 0.0.0-use.local
-  resolution: "@snx-v1/styles@workspace:v2/lib/styles"
+  resolution: "@snx-v1/styles@workspace:v1/lib/styles"
   dependencies:
     "@snx-v1/constantsUi": "workspace:*"
     "@snx-v1/media": "workspace:*"

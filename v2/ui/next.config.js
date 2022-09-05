@@ -33,7 +33,7 @@ function optimiseContracts(config, { webpack }) {
 const path = require('path');
 const tsxRule = {
   test: /\.tsx?$/,
-  include: [/v2\/lib/, /v2\/components/],
+  include: [/v1\/lib/, /v1\/components/, /v2\/lib/, /v2\/components/],
   use: {
     loader: require.resolve('swc-loader'),
     options: {
