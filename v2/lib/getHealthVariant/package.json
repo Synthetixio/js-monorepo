@@ -1,12 +1,6 @@
 {
   "name": "@snx-v2/getHealthVariant",
   "private": true,
-  "main": "build/index.js",
-  "version": "0.0.0",
-  "scripts": {
-    "build": "tsc"
-  },
-  "devDependencies": {
-    "typescript": "^4.8.2"
-  }
+  "main": "index.ts",
+  "version": "0.0.0"
 }

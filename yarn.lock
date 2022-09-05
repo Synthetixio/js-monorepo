@@ -5862,8 +5862,6 @@ __metadata:
 "@snx-v2/getHealthVariant@workspace:*, @snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant":
   version: 0.0.0-use.local
   resolution: "@snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant"
-  dependencies:
-    typescript: ^4.8.2
   languageName: unknown
   linkType: soft
 
