@@ -28,5 +28,4 @@ describe('getVariant', () => {
     const result = getHealthVariant(arg);
     expect(result).toBe('error');
   });
-  m;
 });
