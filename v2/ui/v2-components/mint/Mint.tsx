@@ -4,12 +4,13 @@ interface MintProps {
   snxBalance: string;
 }
 
-export const Mint = () => {
+export const Mint = ({ snxBalance }: MintProps) => {
   return (
     <Box>
       <Text>How much SNX do you want to stake</Text>
+      <Text>{snxBalance}</Text>
       <Box>
-        <Input>Input Here</Input>
+        <Input placeholder="Hello World" />
       </Box>
     </Box>
   );
