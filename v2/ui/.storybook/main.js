@@ -1,5 +1,6 @@
 module.exports = {
   stories: ['../**/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
+
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -7,6 +8,7 @@ module.exports = {
     '@chakra-ui/storybook-addon',
   ],
   framework: '@storybook/react',
+
   core: {
     builder: '@storybook/builder-webpack5',
   },

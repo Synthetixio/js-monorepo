@@ -76,51 +76,49 @@ const DebtTabs: FC<DebtTabsProps> = ({
   const isManageTab = activeTab === DebtPanelType.MANAGE;
   return (
     <>
-      {
-        <TopContainer isManageTab={isManageTab} isMainnet={isMainnet}>
-          <DebtTabsContainer>
-            <TabList noOfTabs={tabData.length}>
-              {tabData.map(({ title, icon, key, disabled = false }, index) => (
-                <TabButton
-                  isSingle={false}
-                  tabHeight={tabHeight}
-                  key={`${key}-${index}-button`}
-                  name={title}
-                  active={activeTab === key}
-                  isDisabled={disabled}
-                  onClick={() => {
-                    setActiveTab(key);
-                    if (setPanelType != null) {
-                      setPanelType(key);
-                    }
-                  }}
-                >
-                  {icon != null && icon}
-                  <TitleContainer>{title}</TitleContainer>
-                </TabButton>
-              ))}
-            </TabList>
+      <TopContainer isManageTab={isManageTab} isMainnet={isMainnet}>
+        <DebtTabsContainer>
+          <TabList noOfTabs={tabData.length}>
+            {tabData.map(({ title, icon, key, disabled = false }, index) => (
+              <TabButton
+                isSingle={false}
+                tabHeight={tabHeight}
+                key={`${key}-${index}-button`}
+                name={title}
+                active={activeTab === key}
+                isDisabled={disabled}
+                onClick={() => {
+                  setActiveTab(key);
+                  if (setPanelType != null) {
+                    setPanelType(key);
+                  }
+                }}
+              >
+                {icon != null && icon}
+                <TitleContainer>{title}</TitleContainer>
+              </TabButton>
+            ))}
+          </TabList>
 
-            {tabData.map(
-              ({ title, tabChildren, key }, index) =>
-                activeTab === key && (
-                  <TabPanelContainer
-                    id={`${title}-tabpanel`}
-                    role="tabpanel"
-                    aria-labelledby={`${title}-tab`}
-                    tabIndex={-1}
-                    padding={boxPadding}
-                    height={boxHeight}
-                    key={`${key}-${index}-panel`}
-                  >
-                    {tabChildren}
-                  </TabPanelContainer>
-                )
-            )}
-          </DebtTabsContainer>
-          <DebtHedgingInfoPanel hidden={!isManageTab} />
-        </TopContainer>
-      }
+          {tabData.map(
+            ({ title, tabChildren, key }, index) =>
+              activeTab === key && (
+                <TabPanelContainer
+                  id={`${title}-tabpanel`}
+                  role="tabpanel"
+                  aria-labelledby={`${title}-tab`}
+                  tabIndex={-1}
+                  padding={boxPadding}
+                  height={boxHeight}
+                  key={`${key}-${index}-panel`}
+                >
+                  {tabChildren}
+                </TabPanelContainer>
+              )
+          )}
+        </DebtTabsContainer>
+        <DebtHedgingInfoPanel hidden={!isManageTab} />
+      </TopContainer>
       {activeTab === DebtPanelType.OVERVIEW && (
         <>
           <BottomContainer>

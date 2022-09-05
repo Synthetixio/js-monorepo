@@ -68,6 +68,7 @@ module.exports = {
 
       rules: {
         quotes: 'off',
+        'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'never' }],
 
         // react-hooks
         'react-hooks/rules-of-hooks': 'error',
@@ -105,6 +106,7 @@ module.exports = {
           'error',
           { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
         ],
+        'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'never' }],
 
         // TODO: fixme and switch to `error`
         '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',

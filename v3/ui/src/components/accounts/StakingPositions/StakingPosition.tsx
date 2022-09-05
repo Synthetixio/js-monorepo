@@ -253,7 +253,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
       <Td>
         <Link
           as={RouterLink}
-          to={'/funds/example'}
+          to="/funds/example"
           _hover={{ textDecoration: 'none' }}
           display="inline"
           borderBottom="1px dotted rgba(255,255,255,0.5)"

@@ -100,7 +100,7 @@ const RedeemDeprecatedSynthsModal: FC<{
       <Inner>
         {txn.txnStatus === 'pending' ? (
           <TxState
-            title={''}
+            title=""
             content={
               <FlexDivColCentered>
                 <PendingConfirmation width="78" />
@@ -139,7 +139,7 @@ const RedeemDeprecatedSynthsModal: FC<{
             </ModalContainer>
             <StyledButtonTransaction size="lg" variant="primary" onClick={handleRedeem}>
               <Trans
-                i18nKey={'synths.redeemable-deprecated-synths.button-label'}
+                i18nKey="synths.redeemable-deprecated-synths.button-label"
                 values={{}}
                 components={[<CurrencyKeyStyle />]}
               />
@@ -214,7 +214,7 @@ const ReceiveValueContainer: FC<{ redeemAmount: Wei; sUSDBalance: Wei }> = ({
       {t('synths.redeemable-deprecated-synths.modal-receive-title')}
 
       <ValueSelectLabelCurrenciesBlock>
-        <Currency.Icon currencyKey={'sUSD'} height={'16px'} width={'16px'} />
+        <Currency.Icon currencyKey="sUSD" height="16px" width="16px" />
         {Synths.sUSD?.name}
       </ValueSelectLabelCurrenciesBlock>
     </ValueSelectLabel>

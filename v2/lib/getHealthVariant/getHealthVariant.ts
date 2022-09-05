@@ -1,4 +1,4 @@
-export const getVariant = ({
+export const getHealthVariant = ({
   targetCratioPercentage,
   liquidationCratioPercentage,
   currentCRatioPercentage,

@@ -38,7 +38,7 @@ export default function CollateralTypeSelector({ collateralTypes }: Props) {
           <ChevronDownIcon opacity="0.66" w="5" h="5" ml="4" mr="2" />
         </Flex>
       </MenuButton>
-      <MenuList p={1} minW="0" w={'125px'} bg="black" border="1px solid rgba(255,255,255,0.33)">
+      <MenuList p={1} minW="0" w="125px" bg="black" border="1px solid rgba(255,255,255,0.33)">
         {Object.values(collateralTypes).map((collateralType) => (
           <MenuItem
             key={collateralType.symbol}

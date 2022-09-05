@@ -1,4 +1,4 @@
-import { getVariant } from './getVariant';
+import { getHealthVariant } from './getHealthVariant';
 
 describe('getVariant', () => {
   test('success', () => {
@@ -7,7 +7,7 @@ describe('getVariant', () => {
       targetCratioPercentage: 400,
       currentCRatioPercentage: 401,
     };
-    const result = getVariant(arg);
+    const result = getHealthVariant(arg);
     expect(result).toBe('success');
   });
   test('warning', () => {
@@ -16,7 +16,7 @@ describe('getVariant', () => {
       targetCratioPercentage: 400,
       currentCRatioPercentage: 399,
     };
-    const result = getVariant(arg);
+    const result = getHealthVariant(arg);
     expect(result).toBe('warning');
   });
   test('error', () => {
@@ -25,7 +25,7 @@ describe('getVariant', () => {
       targetCratioPercentage: 400,
       currentCRatioPercentage: 129,
     };
-    const result = getVariant(arg);
+    const result = getHealthVariant(arg);
     expect(result).toBe('error');
   });
 });

@@ -221,7 +221,7 @@ const BuyHedgeTabOptimism = () => {
       <PoweredByContainer>
         {t('debt.actions.manage.powered-by')}{' '}
         <ExternalLink href={EXTERNAL_LINKS.Toros.dSNXPool}>
-          <TorosLogo alt="toros logo" src={'/images/toros-white.png'} />
+          <TorosLogo alt="toros logo" src="/images/toros-white.png" />
         </ExternalLink>
       </PoweredByContainer>
       {txModalOpen && (
