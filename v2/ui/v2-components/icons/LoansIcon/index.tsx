@@ -1,0 +1,1 @@
+export { LoansIcon } from './LoansIcon';

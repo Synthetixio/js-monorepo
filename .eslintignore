@@ -6,3 +6,6 @@ dist
 .yarn
 packages/queries/subgraphs
 .docusaurus
+
+v2/ui/.next/
+v2/ui/out/

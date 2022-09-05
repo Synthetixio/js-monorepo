@@ -1,0 +1,11 @@
+{
+  "name": "@snx-v1/Card",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.0",
+  "dependencies": {
+    "@snx-v1/styles": "workspace:*",
+    "react": "^18.2.0",
+    "styled-components": "^5.3.5"
+  }
+}

@@ -22,7 +22,7 @@ The [`delegateCollateral()` function](/protocol/technical-reference/smart-contra
 
 ## Pools
 
-Pools are specified with an integer ID. See [Pools & Vaults](/protocol/pools-vaults/delegating-credit-and-debt) for more information.
+Pools are specified with an integer ID. See [Pools & Vaults](/protocol/pools-markets/delegating-credit-and-debt) for more information.
 
 ### Stablecoin-only Pool
 
@@ -38,7 +38,7 @@ The Spartan Council also specifies _approved pools_ with IDs that can be retriev
 
 ### Custom Pools
 
-Pools may be created by anyone. (See [Creating Pools](/protocol/pools-vaults/delegating-credit-and-debt#creating-pools).) You may specify a custom pool’s ID when delegating your collateral.
+Pools may be created by anyone. (See [Creating Pools](/protocol/pools-markets/delegating-credit-and-debt#creating-pools).) You may specify a custom pool’s ID when delegating your collateral.
 
 :::caution
 

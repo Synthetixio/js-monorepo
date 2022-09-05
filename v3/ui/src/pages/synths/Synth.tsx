@@ -290,7 +290,7 @@ export function Synth() {
       </Box>
 
       <Flex mt="8">
-        <Navlink to={'/synths/create'}>
+        <Navlink to="/synths/create">
           <Button size="xs" colorScheme="green">
             <AddIcon w="2" h="2" />
             &nbsp;&nbsp;Create a synth

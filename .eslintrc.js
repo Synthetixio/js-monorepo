@@ -8,7 +8,6 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'import'],
   rules: {
-    'no-mixed-spaces-and-tabs': ['warn', 'smart-tabs'],
     'comma-dangle': [
       'error',
       {
@@ -59,7 +58,7 @@ module.exports = {
 
       settings: {
         react: {
-          version: '18.0.0',
+          version: '18.2.0',
         },
       },
 
@@ -69,10 +68,65 @@ module.exports = {
 
       rules: {
         quotes: 'off',
+        'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'never' }],
 
         // react-hooks
         'react-hooks/rules-of-hooks': 'error',
         'react-hooks/exhaustive-deps': 'error',
+      },
+    },
+
+    {
+      files: ['v2/ui/**/*', 'v2/components/**/*', 'v1/components/**/*'],
+
+      extends: ['plugin:react/recommended'],
+      plugins: ['react', 'react-hooks'],
+
+      settings: {
+        react: {
+          version: '18.2.0',
+        },
+      },
+
+      env: {
+        browser: true,
+      },
+
+      globals: {
+        React: true,
+        JSX: true,
+      },
+
+      rules: {
+        'no-console': 'off',
+        '@typescript-eslint/no-empty-interface': 'off',
+        '@typescript-eslint/ban-types': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
+        '@typescript-eslint/no-unused-vars': [
+          'error',
+          { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+        ],
+        'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'never' }],
+
+        // TODO: fixme and switch to `error`
+        '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
+
+        // react
+        'react/prop-types': 'off',
+        'react/jsx-key': 'off',
+
+        // react-hooks
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'error',
+      },
+    },
+    {
+      files: ['v2/ui/tests/e2e/**/*'],
+      env: {
+        mocha: true,
+      },
+      globals: {
+        cy: true,
       },
     },
   ],
