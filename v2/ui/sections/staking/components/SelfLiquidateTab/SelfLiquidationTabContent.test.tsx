@@ -94,7 +94,7 @@ describe('SelfLiquidationTabContent', () => {
           liquidationPenalty={wei(0.3)}
           amountToSelfLiquidateUsd={wei(120)}
           SNXRate={wei(3)}
-          walletAddress={'123'}
+          walletAddress="123"
           canBurn={true}
         />
       </ContextProvider>
@@ -123,7 +123,7 @@ describe('SelfLiquidationTabContent', () => {
           liquidationPenalty={wei(0.3)}
           amountToSelfLiquidateUsd={wei(120)}
           SNXRate={wei(3)}
-          walletAddress={'123'}
+          walletAddress="123"
           canBurn={false}
         />
       </ContextProvider>
@@ -152,7 +152,7 @@ describe('SelfLiquidationTabContent', () => {
           liquidationPenalty={wei(0.3)}
           amountToSelfLiquidateUsd={wei(120)}
           SNXRate={wei(3)}
-          walletAddress={'123'}
+          walletAddress="123"
           canBurn={true}
         />
       </ContextProvider>

@@ -58,7 +58,7 @@ const DebtPieChart: FC<DebtPieChartProps> = () => {
     <SynthsPieChartContainer>
       <PieChart
         data={debtPoolQuery.data || []}
-        dataKey={'skewValueChart'}
+        dataKey="skewValueChart"
         tooltipFormatter={Tooltip}
       />
       <TableWrapper>

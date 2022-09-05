@@ -1,5 +1,6 @@
 import { ChakraTheme, ComponentMultiStyleConfig, ComponentStyleConfig } from '@chakra-ui/react';
 import { theme as chakraTheme } from '@synthetixio/v3-theme';
+import merge from 'lodash/merge';
 
 const Progress: ComponentMultiStyleConfig = {
   parts: ['filledTrack', 'track'],
@@ -46,6 +47,32 @@ const Button: ComponentStyleConfig = {
       },
       _active: {
         bgGradient: chakraTheme.gradients['green-cyan']['700'],
+      },
+    },
+    error: {
+      bg: 'error',
+    },
+    warning: {
+      bg: 'warning',
+    },
+
+    success: {
+      bg: 'success',
+    },
+    disabled: {
+      bg: 'gray.900',
+      color: 'gray.600',
+      opacity: 0.5,
+      _disabled: {
+        opacity: 0.5,
+      },
+      _hover: {
+        bg: 'gray.900',
+        opacity: 0.5,
+        _disabled: {
+          bg: 'gray.900',
+          opacity: 0.5,
+        },
       },
     },
   },
@@ -110,8 +137,7 @@ const Menu: ComponentMultiStyleConfig = {
   },
 };
 
-export const stakingTheme: Partial<ChakraTheme> = {
-  ...chakraTheme,
+export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
   colors: {
     ...chakraTheme.colors,
     error: chakraTheme.colors.red['400'],
@@ -119,12 +145,8 @@ export const stakingTheme: Partial<ChakraTheme> = {
     warning: chakraTheme.colors.orange['500'],
   },
   components: {
-    ...chakraTheme.components,
     Progress,
-    Button: {
-      ...chakraTheme.components.Button,
-      ...Button,
-    },
+    Button,
     Menu,
     Text,
   },
@@ -133,6 +155,8 @@ export const stakingTheme: Partial<ChakraTheme> = {
       body: {
         bg: 'navy.900',
         color: 'white',
+        backgroundImage: `repeating-linear-gradient(135deg, ${chakraTheme.colors.gray['900']} 0, ${chakraTheme.colors.navy['900']} 1px, transparent 0, transparent 50%)`,
+        backgroundSize: '12px 12px',
       },
       '::-webkit-scrollbar': {
         width: '8px',
@@ -165,4 +189,4 @@ export const stakingTheme: Partial<ChakraTheme> = {
       },
     },
   },
-};
+});

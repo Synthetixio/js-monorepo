@@ -50,7 +50,7 @@ export default function Header() {
             _focus={{ boxShadow: 'none' }}
             mx="3"
             fontWeight="semibold"
-            href={'https://governance.synthetix.io/'}
+            href="https://governance.synthetix.io/"
             isExternal
           >
             DAO
@@ -59,7 +59,7 @@ export default function Header() {
             _focus={{ boxShadow: 'none' }}
             mx="3"
             fontWeight="semibold"
-            href={'https://snx-v3-docs.vercel.app/'}
+            href="https://snx-v3-docs.vercel.app/"
             isExternal
           >
             Developers

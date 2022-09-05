@@ -17,14 +17,17 @@
     "test": "NODE_ENV=test jest",
     "test:unit": "yarn test",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "standalone-install": "yarn workspaces focus '@synthetixio/v2-ui'",
+    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v2-ui' run build"
   },
   "dependencies": {
     "@artsy/fresnel": "^1.8.0",
-    "@chakra-ui/react": "^2.2.6",
+    "@chakra-ui/react": "^2.2.8",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@reach/dialog": "^0.15.3",
+    "@snx-v2/getHealthVariant": "workspace:*",
     "@socket.tech/widget": "^0.1.1",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/contracts-interface": "workspace:*",

@@ -26,7 +26,7 @@ const SelfLiquidateTransactionButton: React.FC<{
       <Button
         data-testid="self-liquidate-btn"
         disabled={disabled}
-        variant={'primary'}
+        variant="primary"
         onClick={() => {
           if (disabled) return;
           setTxModalOpen(true);
