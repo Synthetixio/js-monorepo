@@ -1,7 +1,7 @@
 import { Badge, Box, Button, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import React, { PropsWithChildren, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getHealthVariant } from '../../v2-modules/getHealthVariant';
+import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { InfoIcon } from '../icons';
 import { CollectIcon } from '../icons/CollectIcon';
 import { MaintainIcon } from '../icons/MaintainIcon';

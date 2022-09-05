@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
+import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import React from 'react';
 import { CRatioProgressBar } from './CRatioProgressBar';
-import { getHealthVariant } from '../../v2-modules/getHealthVariant';
 
 type Props = {
   liquidationCratioPercentage: number;

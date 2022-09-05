@@ -1,4 +1,4 @@
-import { getHealthVariant } from './getHealthVariant';
+import { getHealthVariant } from '@snx-v2/getHealthVariant';
 
 describe('getVariant', () => {
   test('success', () => {
@@ -28,4 +28,5 @@ describe('getVariant', () => {
     const result = getHealthVariant(arg);
     expect(result).toBe('error');
   });
+  m;
 });
