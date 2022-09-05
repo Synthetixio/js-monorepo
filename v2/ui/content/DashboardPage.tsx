@@ -32,7 +32,7 @@ const DashboardPage: FC = () => {
         <title>{t('dashboard.page-title')}</title>
       </Head>
       <Content>
-        <Box mt={3}>
+        <Box mt={4}>
           <StatItem />
         </Box>
         <StatsSection>

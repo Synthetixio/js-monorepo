@@ -19,16 +19,24 @@ export const StatItem = () => {
       <Flex justifyContent="space-between" alignItems="center">
         <Box>
           <Flex alignItems="center">
-            <StatLabel fontSize="xs" fontWeight={700} mr={2}>
+            <StatLabel mt={0} fontSize="xs" fontWeight={700} lineHeight="16px" mr={2}>
               Active Debt
             </StatLabel>
-            <Tooltip hasArrow label="Soonthetix" aria-label="A tooltip" bg="gray.900" p={2} mt={1}>
+            <Tooltip
+              borderRadius="4px"
+              color="white"
+              hasArrow
+              label="Soonthetix"
+              bg="gray.900"
+              p={2}
+              mt={2}
+            >
               <Flex>
                 <InfoIcon width="12.5px" height="12.5px" />
               </Flex>
             </Tooltip>
           </Flex>
-          <StatNumber>$100,002,389.99</StatNumber>
+          <StatNumber fontSize="sm">$100,002,389.99</StatNumber>
         </Box>
         <Menu>
           <>
