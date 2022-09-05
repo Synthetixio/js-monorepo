@@ -7660,6 +7660,7 @@ __metadata:
     "@metamask/providers": ^8.1.1
     "@next/bundle-analyzer": ^10.2.3
     "@reach/dialog": ^0.15.3
+    "@snx-v2/getHealthVariant": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
     "@storybook/addon-docs": ^6.5.10
