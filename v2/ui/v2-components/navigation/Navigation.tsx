@@ -82,7 +82,7 @@ export const Navigation = ({
       px={[4, 4, 10]}
       py={4}
       borderBottom="1px"
-      borderBottomColor={['navy.900', 'navy.900', 'gray.900']}
+      borderBottomColor={['transparent', 'transparent', 'gray.900']}
     >
       {size === 'desktop' ? <StakingLogo /> : <StakingIcon />}
       <Flex alignItems="center">

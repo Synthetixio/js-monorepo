@@ -156,7 +156,7 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
         bg: 'navy.900',
         color: 'white',
         backgroundImage: `repeating-linear-gradient(135deg, ${chakraTheme.colors.gray['900']} 0, ${chakraTheme.colors.navy['900']} 1px, transparent 0, transparent 50%)`,
-        backgroundSize: '12px 12px',
+        backgroundSize: '8px 8px',
       },
       '::-webkit-scrollbar': {
         width: '8px',
