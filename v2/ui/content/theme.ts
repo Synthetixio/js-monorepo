@@ -92,7 +92,7 @@ const Text: ComponentStyleConfig = {
 };
 
 const Stat: ComponentMultiStyleConfig = {
-  parts: ['container', 'label', 'helpText', 'number', 'icon'],
+  parts: ['container', 'label', 'number'],
   baseStyle: {
     container: {
       bg: 'navy.900',
@@ -130,15 +130,16 @@ const Menu: ComponentMultiStyleConfig = {
       height: '100%',
     },
     list: {
-      mt: 2,
-      bgColor: 'black',
-      padding: 0,
+      mt: 4,
+      bgColor: 'navy.900',
       border: 'none',
+      borderRadius: 'md',
+      py: 0,
     },
     item: {
       bgColor: 'black',
       color: 'white',
-      py: 3,
+      p: 3,
       _active: {
         bgColor: 'navy.900',
       },
