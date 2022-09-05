@@ -41,7 +41,7 @@ export const StakingStats: FC<Props> = ({
           <Text fontSize="sm" fontWeight="semibold">
             Debt
           </Text>
-          <Skeleton isLoaded={debt !== undefined}>{debt?.toString() || 0}</Skeleton>
+          <Skeleton isLoaded={debt !== undefined}>${currency(debt.toString() || 0)}</Skeleton>
           <Text opacity="0.6" fontSize="sm">
             snxUSD minted {/* or burned */}
           </Text>

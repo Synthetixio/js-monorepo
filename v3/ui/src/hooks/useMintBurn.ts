@@ -17,7 +17,7 @@ export const useMintBurn = (
     mode: 'recklesslyUnprepared',
     addressOrName: snxProxy?.address,
     contractInterface: snxProxy?.abi,
-    functionName: 'mintUSD',
+    functionName: 'mintUsd',
     onError: (e) => {
       config?.onError && config.onError(e);
     },
@@ -33,7 +33,9 @@ export const useMintBurn = (
         await mintTx({
           recklesslySetUnpreparedArgs: [accountId, poolId, collateral.address, depositAmount],
         });
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     },
     [accountId, collateral.address, poolId, mintTx]
   );

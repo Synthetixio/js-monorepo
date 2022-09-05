@@ -22,7 +22,6 @@ import {
 } from '@chakra-ui/react';
 import { BigNumber } from 'ethers';
 import { Link as RouterLink } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
 import { formatValue } from '../../../utils/helpers';
 import { currency } from '../../../utils/currency';
 import { StakingPositionType } from '../../../utils/types';
@@ -52,7 +51,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </>
       </Td>
       <Td py="4">
-        ${currency(formatValue(debt))}
+        ${currency(debt.toString() || 0)}
         <Text fontSize="xs" mt="1'">
           <Link
             as={RouterLink}
@@ -303,12 +302,11 @@ export default function StakingPosition({ position }: { position: StakingPositio
       </Td>
       <Td>
         <Link
-          as={NavLink}
+          as={RouterLink}
           to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.poolId}`}
           color="blue.400"
           display="inline-block"
           transform="translateY(-1.5px)"
-          target="_blank"
         >
           <ExternalLinkIcon />
         </Link>

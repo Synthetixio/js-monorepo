@@ -1,19 +1,14 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import { Text, Box, Link, Tooltip, Input, Button, Flex, Heading, Badge } from '@chakra-ui/react';
-import { useState } from 'react';
-import { useMintBurn } from '../../../../hooks/useMintBurn';
-import { CollateralType } from '../../../../utils/constants';
+import { Text, Box, Tooltip, Flex, Heading } from '@chakra-ui/react';
+import { FC } from 'react';
+import { NumberInput } from './NumberInput';
 
 interface Props {
-  accountId: string;
-  poolId: string;
-  collateral: CollateralType;
+  onChange: (value: number) => void;
+  value: number;
 }
 
-export default function Mint({ accountId, poolId, collateral }: Props) {
-  const { mint } = useMintBurn(accountId, poolId, collateral);
-  const [amount, setAmount] = useState(0);
-
+export const Mint: FC<Props> = ({ onChange, value }) => {
   return (
     <Box mb="4">
       <Heading fontSize="md" mb="1">
@@ -25,35 +20,9 @@ export default function Mint({ accountId, poolId, collateral }: Props) {
       </Text>
 
       <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            mint(amount);
-          }}
-        >
-          <Flex mb="3">
-            <Input
-              flex="1"
-              type="number"
-              border="none"
-              placeholder="0.0"
-              min={0}
-              step="0.001"
-              value={amount}
-              onChange={(e) => setAmount(Math.max(Number(e.target.value), 0))}
-            />
-            <Button
-              // isLoading={null}
-              // isDisabled={null}
-              colorScheme="blue"
-              ml="4"
-              px="8"
-              type="submit"
-            >
-              Mint
-            </Button>
-          </Flex>
-        </form>
+        <Flex mb="3">
+          <NumberInput value={value} onChange={onChange} />
+        </Flex>
         <Flex alignItems="center">
           <Box>
             <Text fontSize="xs">
@@ -63,19 +32,8 @@ export default function Mint({ accountId, poolId, collateral }: Props) {
               </Tooltip>
             </Text>
           </Box>
-          <Link>
-            <Badge
-              as="button"
-              ml="3"
-              variant="outline"
-              colorScheme="blue"
-              transform="translateY(-2px)"
-            >
-              Use Max
-            </Badge>
-          </Link>
         </Flex>
       </Box>
     </Box>
   );
-}
+};

@@ -20,6 +20,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
     debt,
     cRatio,
     collateralAmount: collateralAmountBN,
+    refetch,
   } = useStakingPosition(accountId, poolId, collateral);
 
   if (isLoading) return <Spinner />;
@@ -57,6 +58,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
               accountId={accountId}
               poolId={poolId}
               collateral={collateral}
+              refetch={refetch}
             />
           </TabPanel>
           <TabPanel>

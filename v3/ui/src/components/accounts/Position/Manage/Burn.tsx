@@ -30,20 +30,18 @@ export const Burn: FC<Props> = ({ balance, onChange, value }) => {
       </Text>
 
       <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
-        <form>
-          <Flex mb="3">
-            <Input
-              flex="1"
-              type="number"
-              border="none"
-              placeholder="0.0"
-              min="0"
-              step="any"
-              value={value ? `${value}`.replace(/^0+/, '') : 0}
-              onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
-            />
-          </Flex>
-        </form>
+        <Flex mb="3">
+          <Input
+            flex="1"
+            type="number"
+            border="none"
+            placeholder="0.0"
+            min="0"
+            step="any"
+            value={value ? `${value}`.replace(/^0+/, '') : 0}
+            onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
+          />
+        </Flex>
         <Flex alignItems="center">
           <Balance balance={balance} decimals={18} symbol="snxUsd" />
         </Flex>

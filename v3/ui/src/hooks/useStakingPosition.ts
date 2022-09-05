@@ -11,7 +11,8 @@ export const useStakingPosition = (
 ) => {
   const snxProxy = useSnxProxy();
 
-  const functionNames = ['accountVaultCollateral', 'accountVaultDebt'];
+  const functionNames = ['getPositionCollateral', 'getPositionDebt'];
+
   const funcCalls = functionNames.map((fn) => ({
     addressOrName: snxProxy?.address,
     contractInterface: snxProxy?.abi,
@@ -19,10 +20,10 @@ export const useStakingPosition = (
     args: [accountId, poolId, collateral.address],
   }));
 
-  const { data, isLoading } = useContractReads({
+  const { data, isLoading, refetch } = useContractReads({
     contracts: funcCalls,
     select: (data) => {
-      const debt = formatValue(data[1] || 0);
+      const debt = data[1]?.toNumber() || 0;
       const collateralValue = formatValue(data[0]?.value || 0, collateral.priceDecimals);
       const cRatio = debt !== 0 ? BigNumber.from(collateralValue).mul(100).div(debt) : 0;
       return {
@@ -35,12 +36,13 @@ export const useStakingPosition = (
 
   return {
     isLoading,
-    poolId: poolId,
+    poolId,
     collateralType: collateral,
     accountId,
     poolName: poolsData[poolId].name,
     collateralAmount: data?.collateralAmount || 0,
     cRatio: data?.cRatio || 0,
     debt: data?.debt || 0,
+    refetch,
   };
 };

@@ -1,12 +1,13 @@
 import Custom from './Manage/Custom';
-import Mint from './Manage/Mint';
+import { Mint } from './Manage/Mint';
 import { Preview } from './Manage/Preview';
-import Unstake from './Manage/Unstake';
+import { Unstake } from './Manage/Unstake';
 import { Text, Box, Tabs, TabList, Tab, TabPanels, TabPanel, Button } from '@chakra-ui/react';
 import { CollateralType } from '../../../utils/constants';
 import { MaintainCRatio } from './Manage/MaintainCRatio';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useManagePosition } from '../../../hooks/useManagePosition';
+import { parseUnits } from 'ethers/lib/utils';
 
 interface Props {
   accountId: string;
@@ -16,6 +17,7 @@ interface Props {
   collateralValue: number;
   debt: number;
   cRatio: number;
+  refetch: () => void;
 }
 
 export default function Manage({
@@ -26,9 +28,15 @@ export default function Manage({
   collateralValue,
   debt,
   cRatio,
+  refetch,
 }: Props) {
   const [collateralChange, setCollateralChange] = useState(0);
   const [debtChange, setDebtChange] = useState(0);
+
+  const reset = useCallback(() => {
+    setCollateralChange(0);
+    setDebtChange(0);
+  }, []);
 
   const { exec } = useManagePosition(
     {
@@ -38,7 +46,11 @@ export default function Manage({
     },
     collateralChange,
     debtChange,
-    collateralAmount
+    collateralAmount,
+    () => {
+      reset();
+      refetch();
+    }
   );
 
   return (
@@ -47,7 +59,7 @@ export default function Manage({
         Manage your staking position by adjusting your collateral and debt.
       </Text>
 
-      <Tabs size="sm" variant="soft-rounded" colorScheme="blue">
+      <Tabs onChange={reset} size="sm" variant="soft-rounded" colorScheme="blue">
         <TabList justifyContent="space-between">
           <Tab>Maintain C-Ratio</Tab>
           <Tab>Borrow snxUSD</Tab>
@@ -66,11 +78,16 @@ export default function Manage({
           </TabPanel>
           <TabPanel>
             {/* <Stake {...{collateral, accountId, poolId }} /> */}
-            <Mint {...{ collateral, accountId, poolId }} />
+            <Mint onChange={setDebtChange} value={debtChange} />
           </TabPanel>
           <TabPanel>
             {/* <Burn /> */}
-            <Unstake />
+            <Unstake
+              collateral={collateral}
+              balance={parseUnits(`${collateralAmount}`, collateral.decimals)}
+              onChange={(val) => setCollateralChange(-val)}
+              value={-collateralChange}
+            />
           </TabPanel>
           <TabPanel>
             <Custom />

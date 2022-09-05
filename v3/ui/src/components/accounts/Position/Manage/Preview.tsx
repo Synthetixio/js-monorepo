@@ -1,7 +1,7 @@
 import { Text, Box } from '@chakra-ui/react';
-import { BigNumber } from 'ethers';
 import { FC } from 'react';
 import { CollateralType } from '../../../../utils/types';
+import Big from 'big.js';
 
 interface Props {
   collateral: CollateralType;
@@ -25,7 +25,7 @@ export const Preview: FC<Props> = ({
 }) => {
   const newDebt = debt + debtChange;
   const newCollateralAmount = collateralAmount + collateralChange;
-  const cVal = BigNumber.from(collateralValue).div(collateralAmount);
+  const cVal = new Big(collateralValue).div(collateralAmount || 1);
   const newCRatio = newDebt ? cVal.mul(newCollateralAmount).mul(100).div(newDebt) : 0;
 
   return (

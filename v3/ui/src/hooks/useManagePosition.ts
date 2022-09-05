@@ -16,21 +16,25 @@ export const useManagePosition = (
   position: IPosition,
   collateralChange: number,
   debtChange: number,
-  collateralAmount: number
+  collateralAmount: number,
+  refetch?: () => void
 ) => {
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
-  const amountBN = parseUnits(collateralChange, position.collateral.decimals);
+  const collateralChangeBN = parseUnits(collateralChange, position.collateral.decimals);
 
   const calls: MulticallCall[] = useMemo(() => {
     const list: MulticallCall[] = [];
 
-    if (collateralChange > 0 && snxProxy) {
+    if (!snxProxy) return [];
+
+    if (collateralChange > 0) {
       const currentAmount = parseUnits(collateralAmount, position.collateral.decimals);
+
       list.push(
         {
           contract: snxProxy?.contract,
-          functionName: 'stake',
-          callArgs: [position.accountId, position.collateral.address, amountBN],
+          functionName: 'depositCollateral',
+          callArgs: [position.accountId, position.collateral.address, collateralChangeBN],
         },
         {
           contract: snxProxy.contract,
@@ -39,29 +43,72 @@ export const useManagePosition = (
             position.accountId,
             position.poolId,
             position.collateral.address,
-            currentAmount.add(amountBN),
+            currentAmount.add(collateralChangeBN),
             utils.parseEther('1'),
           ],
         }
       );
     }
 
+    if (debtChange > 0) {
+      const amount = utils.parseEther(`${debtChange}`);
+      list.push({
+        contract: snxProxy?.contract,
+        functionName: 'mintUsd',
+        callArgs: [position.accountId, position.poolId, position.collateral.address, amount],
+      });
+    }
+
+    if (collateralChange < 0) {
+      const currentAmount = parseUnits(collateralAmount, position.collateral.decimals);
+      list.push(
+        {
+          contract: snxProxy.contract,
+          functionName: 'delegateCollateral',
+          callArgs: [
+            position.accountId,
+            position.poolId,
+            position.collateral.address,
+            currentAmount.add(collateralChangeBN),
+            utils.parseEther('1'),
+          ],
+        },
+        {
+          contract: snxProxy.contract,
+          functionName: 'withdrawCollateral',
+          callArgs: [position.accountId, position.collateral.address, collateralChangeBN.abs()],
+        }
+      );
+    }
+
+    if (debtChange < 0) {
+      const amount = utils.parseEther(`${-debtChange}`);
+      list.push({
+        contract: snxProxy?.contract,
+        functionName: 'burnUsd',
+        callArgs: [position.accountId, position.poolId, position.collateral.address, amount],
+      });
+    }
+
     return list;
   }, [
-    collateralAmount,
-    collateralChange,
-    position.accountId,
-    position.collateral.address,
-    position.collateral.decimals,
-    position.poolId,
     snxProxy,
-    amountBN,
+    collateralChange,
+    debtChange,
+    collateralAmount,
+    position.collateral.decimals,
+    position.collateral.address,
+    position.accountId,
+    position.poolId,
+    collateralChangeBN,
   ]);
 
-  const multiTxn = useMulticall(calls);
+  const multiTxn = useMulticall(calls, undefined, {
+    onSuccess: refetch,
+  });
   const { approve, isLoading } = useApprove(
     position.collateral.address,
-    amountBN,
+    collateralChangeBN,
     snxProxy?.address
   );
   const exec = useCallback(async () => {
