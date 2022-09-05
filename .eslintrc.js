@@ -68,6 +68,7 @@ module.exports = {
 
       rules: {
         quotes: 'off',
+        'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'never' }],
 
         // react-hooks
         'react-hooks/rules-of-hooks': 'error',
