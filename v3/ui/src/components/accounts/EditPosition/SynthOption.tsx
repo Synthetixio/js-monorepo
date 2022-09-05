@@ -36,7 +36,7 @@ const SynthOption: FC<Props> = ({ name, ticker }) => {
         <Box flex="1" pl="4">
           <Heading size="sm" mb="0.5">
             {name}&nbsp;
-            <NavLink to={'/synths/example'}>
+            <NavLink to="/synths/example">
               <Link color="blue.400">
                 <ExternalLinkIcon />
               </Link>

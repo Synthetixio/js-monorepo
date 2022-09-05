@@ -5859,6 +5859,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@snx-v2/getHealthVariant@workspace:*, @snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant"
+  languageName: unknown
+  linkType: soft
+
 "@socket.tech/ll-core@npm:^0.1.10, @socket.tech/ll-core@npm:^0.1.14":
   version: 0.1.16
   resolution: "@socket.tech/ll-core@npm:0.1.16"
@@ -7458,6 +7464,7 @@ __metadata:
     jest: ^29.0.1
     lodash: ^4.17.21
     node-fetch: ^2.6.7
+    prettier: ^2.7.1
     react-query: 3.16.0
     ts-node: ^10.9.1
     typescript: ^4.8.2
@@ -7651,6 +7658,7 @@ __metadata:
     "@metamask/providers": ^8.1.1
     "@next/bundle-analyzer": ^10.2.3
     "@reach/dialog": ^0.15.3
+    "@snx-v2/getHealthVariant": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
     "@storybook/addon-docs": ^6.5.10

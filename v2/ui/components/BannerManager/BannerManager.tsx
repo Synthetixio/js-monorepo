@@ -44,7 +44,7 @@ const BannerManager: FC = () => {
         type={BannerType.WARNING}
         message={
           <Trans
-            i18nKey={'user-menu.banner.liquidation-warning'}
+            i18nKey="user-menu.banner.liquidation-warning"
             values={{
               liquidationRatio: issuanceRatioPercentage,
               liquidationDeadline: formatShortDateWithTime(
@@ -67,7 +67,7 @@ const BannerManager: FC = () => {
         type={BannerType.WARNING}
         message={
           <Trans
-            i18nKey={'user-menu.banner.election-in-voting'}
+            i18nKey="user-menu.banner.election-in-voting"
             components={[<StyledExternalLink href={EXTERNAL_LINKS.Synthetix.Governance} />]}
           />
         }
@@ -80,7 +80,7 @@ const BannerManager: FC = () => {
         type={BannerType.WARNING}
         message={
           <Trans
-            i18nKey={'user-menu.banner.election-in-nomination'}
+            i18nKey="user-menu.banner.election-in-nomination"
             components={[<StyledExternalLink href={EXTERNAL_LINKS.Synthetix.Governance} />]}
           />
         }
@@ -95,7 +95,7 @@ const BannerManager: FC = () => {
         localStorageKey={LOCAL_STORAGE_KEYS.THALES_STAKING_INFO_VISIBLE}
         message={
           <Trans
-            i18nKey={'user-menu.banner.thales-staking-info'}
+            i18nKey="user-menu.banner.thales-staking-info"
             components={[<StyledExternalLink href="https://thalesmarket.io/token?tab=staking" />]}
           />
         }
@@ -108,7 +108,7 @@ const BannerManager: FC = () => {
       localStorageKey={LOCAL_STORAGE_KEYS.WARNING_URL_BANNER_VISIBLE}
       message={
         <Trans
-          i18nKey={'user-menu.banner.url-warning'}
+          i18nKey="user-menu.banner.url-warning"
           components={[<StyledExternalLink href="https://staking.synthetix.io" />]}
         />
       }

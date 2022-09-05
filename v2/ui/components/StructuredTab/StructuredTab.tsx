@@ -70,7 +70,7 @@ const StructuredTab: FC<StructuredTabProps> = ({
 
   const mobile = () => (
     <Select
-      inputId={'tabs'}
+      inputId="tabs"
       formatOptionLabel={(option) => option.title}
       options={tabData}
       value={tabData.find(({ key }) => key === activeTabOrFirstTab)}

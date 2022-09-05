@@ -13,7 +13,9 @@ const GridBox: FC<{
   return (
     <Link href={`/merge-accounts/${name}`}>
       <GridBoxContainer>
-        <GridBoxIcon>{<Icon>{step}</Icon>}</GridBoxIcon>
+        <GridBoxIcon>
+          <Icon>{step}</Icon>
+        </GridBoxIcon>
         <GridBoxTitle>{t(`merge-accounts.landing.steps.${step}.title`)}</GridBoxTitle>
         <GridBoxCopy>{t(`merge-accounts.landing.steps.${step}.description`)}</GridBoxCopy>
       </GridBoxContainer>

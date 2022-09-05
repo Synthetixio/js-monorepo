@@ -17,7 +17,7 @@ const GovPage: React.FC = () => {
         <h2>{t('gov.new-governance-site.title')}</h2>
         <p>{t('gov.new-governance-site.subtitle')}</p>
         <Trans
-          i18nKey={'gov.new-governance-site.link-text'}
+          i18nKey="gov.new-governance-site.link-text"
           components={[<StyledExternalLink href={EXTERNAL_LINKS.Synthetix.Governance} />]}
         />
       </NewElectionsContainer>

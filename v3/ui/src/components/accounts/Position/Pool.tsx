@@ -53,7 +53,7 @@ export default function Pool() {
         </Heading>
         <Text fontSize="sm">
           <span style={{ opacity: 0.8 }}>Pool #1</span>
-          <NavLink to={'/pools/example'}>
+          <NavLink to="/pools/example">
             <Link color="blue.400" ml="1" display="inline-block" transform="translateY(-2px)">
               <ExternalLinkIcon />
             </Link>
@@ -100,7 +100,7 @@ export default function Pool() {
                 </Heading>
                 <Text fontSize="xs" display="block" color="gray.400">
                   Pool #1{' '}
-                  <NavLink to={'/pools/example'}>
+                  <NavLink to="/pools/example">
                     <Link
                       color="blue.400"
                       display="inline-block"
@@ -136,7 +136,7 @@ export default function Pool() {
                 </Heading>
                 <Text fontSize="xs" display="block" color="gray.400">
                   Pool #2{' '}
-                  <NavLink to={'/pools/example'}>
+                  <NavLink to="/pools/example">
                     <Link
                       color="blue.400"
                       display="inline-block"
@@ -172,7 +172,7 @@ export default function Pool() {
                 </Heading>
                 <Text fontSize="xs" display="block" color="gray.400">
                   Pool #3{' '}
-                  <NavLink to={'/pools/example'}>
+                  <NavLink to="/pools/example">
                     <Link
                       color="blue.400"
                       display="inline-block"
@@ -208,7 +208,7 @@ export default function Pool() {
                 </Heading>
                 <Text fontSize="xs" display="block" color="gray.400">
                   Pool #4{' '}
-                  <NavLink to={'/pools/example'}>
+                  <NavLink to="/pools/example">
                     <Link
                       color="blue.400"
                       display="inline-block"
@@ -326,7 +326,7 @@ export default function Pool() {
               <Heading size="sm">Synthetic&nbsp;Bitcoin</Heading>
               <Text mt="1" fontSize="xs">
                 <span style={{ opacity: 0.8 }}>sBTC</span>
-                <NavLink to={'/synths/example'}>
+                <NavLink to="/synths/example">
                   <Link color="blue.400" ml="1" display="inline-block" transform="translateY(-1px)">
                     <ExternalLinkIcon />
                   </Link>

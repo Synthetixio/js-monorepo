@@ -20,7 +20,7 @@ export default function StakerOption({ name, value, checked = false }: PropsType
         </Heading>
         <Text fontSize="xs" display="block" color="gray.400">
           Fund #{value}{' '}
-          <NavLink to={'/funds/example'}>
+          <NavLink to="/funds/example">
             <Link
               color="blue.400"
               display="inline-block"

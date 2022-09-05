@@ -22,7 +22,7 @@ export default function Position() {
           {/* if only staking with spartan council fund */}
           <InfoOutlineIcon display="inline-block" transform="translateY(-1px)" /> Your staking
           position is currently managed by{' '}
-          <NavLink to={'/dao'}>
+          <NavLink to="/dao">
             <Link fontWeight="semibold" color="blue.400">
               The Spartan Council
             </Link>
@@ -51,7 +51,7 @@ export default function Position() {
               <Heading size="sm">Synthetic&nbsp;Bitcoin</Heading>
               <Text mt="1" fontSize="xs">
                 <span style={{ opacity: 0.8 }}>sBTC</span>
-                <NavLink to={'/synths/example'}>
+                <NavLink to="/synths/example">
                   <Link color="blue.400" ml="1" display="inline-block" transform="translateY(-1px)">
                     <ExternalLinkIcon />
                   </Link>

@@ -32,13 +32,32 @@ function optimiseContracts(config, { webpack }) {
 
 module.exports = withPlugins([withBundleAnalyzer], {
   swcMinify: true,
+
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    // WE DONT CARE! WE TYPECHECK IN CI BEFORE BUILD! AND YOU WILL BE GONE SOON ANYWAY
+    ignoreBuildErrors: true,
+  },
+
   eslint: {
     ignoreDuringBuilds: true,
   },
+
+  images: {
+    disableStaticImages: true,
+  },
+
   webpack: (config, context) => {
     config.resolve.mainFields = ['module', 'browser', 'main'];
     if (!context.isServer) {
       optimiseContracts(config, context);
+
+      // build all the v2 libraries from scratch without the need for pre-building them as standalone deps
+      config.module.rules[2].oneOf[2].include.push(/v2\/lib/);
+      config.module.rules[2].oneOf[2].include.push(/v2\/components/);
     }
 
     config.module.rules.push({
