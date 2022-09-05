@@ -8139,7 +8139,7 @@ __metadata:
     "@testing-library/jest-dom": ^5.16.4
     "@testing-library/react": ^13.3.0
     "@testing-library/user-event": ^14.2.1
-    "@tippyjs/react": ^4.1.0
+    "@tippyjs/react": ^4.2.6
     "@types/color": ^3.0.1
     "@types/date-fns": ^2.6.0
     "@types/lodash": ^4.14.169
@@ -8492,7 +8492,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tippyjs/react@npm:^4.1.0, @tippyjs/react@npm:^4.2.6":
+"@tippyjs/react@npm:^4.2.6":
   version: 4.2.6
   resolution: "@tippyjs/react@npm:4.2.6"
   dependencies:
