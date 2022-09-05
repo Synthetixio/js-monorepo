@@ -7,7 +7,7 @@ import { CollateralType } from '../../../utils/constants';
 import { MaintainCRatio } from './Manage/MaintainCRatio';
 import { useCallback, useState } from 'react';
 import { useManagePosition } from '../../../hooks/useManagePosition';
-import { parseUnits } from 'ethers/lib/utils';
+import { Stake } from './Manage/Stake';
 
 interface Props {
   accountId: string;
@@ -77,14 +77,18 @@ export default function Manage({
             />
           </TabPanel>
           <TabPanel>
-            {/* <Stake {...{collateral, accountId, poolId }} /> */}
+            <Stake
+              onChange={setCollateralChange}
+              value={collateralChange}
+              collateral={collateral}
+            />
             <Mint onChange={setDebtChange} value={debtChange} />
           </TabPanel>
           <TabPanel>
             {/* <Burn /> */}
             <Unstake
               collateral={collateral}
-              balance={parseUnits(`${collateralAmount}`, collateral.decimals)}
+              collateralAmount={collateralAmount}
               onChange={(val) => setCollateralChange(-val)}
               value={-collateralChange}
             />

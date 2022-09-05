@@ -2,6 +2,7 @@ import { Text, Box } from '@chakra-ui/react';
 import { FC } from 'react';
 import { CollateralType } from '../../../../utils/types';
 import Big from 'big.js';
+import { currency } from '../../../../utils/currency';
 
 interface Props {
   collateral: CollateralType;
@@ -23,6 +24,7 @@ export const Preview: FC<Props> = ({
   collateralChange,
   debtChange,
 }) => {
+  const noChange = !collateralChange && !debtChange;
   const newDebt = debt + debtChange;
   const newCollateralAmount = collateralAmount + collateralChange;
   const cVal = new Big(collateralValue).div(collateralAmount || 1);
@@ -54,7 +56,7 @@ export const Preview: FC<Props> = ({
       <Box py="2" borderBottom="1px solid rgba(255,255,255,0.2)">
         <strong>C-Ratio</strong>
         <Text color="green.400" float="right">
-          {cRatio.toString()}% → {newCRatio.toString()}%
+          {currency(cRatio.toString())}% → {currency((noChange ? cRatio : newCRatio).toString())}%
         </Text>
       </Box>
     </Box>

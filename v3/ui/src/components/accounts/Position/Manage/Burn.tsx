@@ -1,16 +1,21 @@
-import { Text, Box, Link, Input, Flex, Heading } from '@chakra-ui/react';
-import { BigNumber } from 'ethers';
+import { Text, Box, Link, Flex, Heading } from '@chakra-ui/react';
 import { FC } from 'react';
+import { useContract } from '../../../../hooks';
+import { useTokenBalance } from '../../../../hooks/useTokenBalance';
+import { contracts } from '../../../../utils/constants';
 
 import { Balance } from '../../Stake/Balance';
+import { NumberInput } from './NumberInput';
 
 interface Props {
-  balance: BigNumber;
   onChange: (value: number) => void;
   value: number;
 }
 
-export const Burn: FC<Props> = ({ balance, onChange, value }) => {
+export const Burn: FC<Props> = ({ onChange, value }) => {
+  const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
+  const balance = useTokenBalance(snxUsdProxy?.address);
+
   return (
     <Box mb="4">
       <Heading fontSize="md" mb="1">
@@ -31,19 +36,15 @@ export const Burn: FC<Props> = ({ balance, onChange, value }) => {
 
       <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
-          <Input
-            flex="1"
-            type="number"
-            border="none"
-            placeholder="0.0"
-            min="0"
-            step="any"
-            value={value ? `${value}`.replace(/^0+/, '') : 0}
-            onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
-          />
+          <NumberInput value={value} onChange={onChange} max={balance.formatedValue} />
         </Flex>
         <Flex alignItems="center">
-          <Balance balance={balance} decimals={18} symbol="snxUsd" />
+          <Balance
+            balance={balance.value}
+            onMax={(balance) => onChange(parseFloat(balance) || 0)}
+            decimals={balance.decimals}
+            symbol="snxUsd"
+          />
         </Flex>
       </Box>
     </Box>
