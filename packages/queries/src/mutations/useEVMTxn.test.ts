@@ -2,10 +2,12 @@ describe('useEVMTxn', () => {
   let useEVMTxn;
   let react;
   let reactQuery;
+  let setState;
 
   beforeEach(async () => {
+    setState = jest.fn();
     react = {
-      useState: jest.fn(() => []),
+      useState: jest.fn((defaultValue) => [defaultValue, setState]),
       useEffect: jest.fn(),
     };
     reactQuery = {
@@ -38,5 +40,29 @@ describe('useEVMTxn', () => {
 
     expect(reactQuery.useMutation).toBeCalled();
     expect(estimateGas).not.toBeCalled();
+  });
+
+  test('refresh', async () => {
+    const estimateGas = jest.fn(() => Promise.resolve(10));
+    const sendTransaction = jest.fn();
+
+    const ctx = {
+      networkId: 666,
+      signer: {
+        estimateGas,
+        sendTransaction,
+      },
+    };
+    const txn = null;
+    useEVMTxn(ctx, txn);
+
+    const [effect, cacheKeys] = react.useEffect.mock.lastCall;
+    expect(effect.toString()).toMatch('refresh()');
+    expect(cacheKeys).toEqual([undefined, undefined, undefined, undefined, undefined, 666]);
+
+    // run the effect / refresh()
+    effect();
+
+    expect(setState).toBeCalled();
   });
 });
