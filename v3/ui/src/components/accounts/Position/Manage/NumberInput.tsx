@@ -1,5 +1,5 @@
 import { Input } from '@chakra-ui/react';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 
 interface Props {
   onChange: (value: number) => void;
@@ -12,6 +12,12 @@ export const NumberInput: FC<Props> = ({ value, onChange, max }) => {
     (value: number) => onChange(max !== undefined ? Math.min(max, value) : value),
     [max, onChange]
   );
+  useEffect(() => {
+    if (max !== undefined && value > max) {
+      onChange(max);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [max]);
   return (
     <Input
       flex="1"

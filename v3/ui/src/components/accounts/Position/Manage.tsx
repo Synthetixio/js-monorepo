@@ -10,6 +10,7 @@ import { useManagePosition } from '../../../hooks/useManagePosition';
 import { Stake } from './Manage/Stake';
 import { Burn } from './Manage/Burn';
 import { useValidatePosition } from '../../../hooks/useValidatePosition';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   accountId: string;
@@ -32,6 +33,7 @@ export default function Manage({
   cRatio,
   refetch,
 }: Props) {
+  const { t } = useTranslation();
   const [collateralChange, setCollateralChange] = useState(0);
   const [debtChange, setDebtChange] = useState(0);
 
@@ -69,15 +71,15 @@ export default function Manage({
   return (
     <Box mb="2">
       <Text mt="2" mb="6">
-        Manage your staking position by adjusting your collateral and debt.
+        {t('position.manage.title')}
       </Text>
 
-      <Tabs onChange={reset} size="sm" variant="soft-rounded" colorScheme="blue">
+      <Tabs isLazy onChange={reset} size="sm" variant="soft-rounded" colorScheme="blue">
         <TabList justifyContent="space-between">
-          <Tab>Maintain C-Ratio</Tab>
-          <Tab>Borrow snxUSD</Tab>
-          <Tab>Repay snxUSD</Tab>
-          <Tab>Custom</Tab>
+          <Tab>{t('position.manage.maintain')}</Tab>
+          <Tab>{t('position.manage.borrow')}</Tab>
+          <Tab>{t('position.manage.repay')}</Tab>
+          <Tab>{t('position.manage.custom')}</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
