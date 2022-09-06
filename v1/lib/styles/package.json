@@ -5,8 +5,14 @@
   "version": "0.0.0",
   "dependencies": {
     "@snx-v1/constantsUi": "workspace:*",
-    "@snx-v1/media": "workspace:*",
+    "@snx-v1/media": "workspace:*"
+  },
+  "devDependencies": {
     "@tippyjs/react": "^4.2.6",
     "styled-components": "^5.3.5"
+  },
+  "peerDependencies": {
+    "@tippyjs/react": "4",
+    "styled-components": "5"
   }
 }

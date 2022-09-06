@@ -4,8 +4,14 @@
   "main": "index.ts",
   "version": "0.0.0",
   "dependencies": {
-    "@snx-v1/styles": "workspace:*",
+    "@snx-v1/styles": "workspace:*"
+  },
+  "devDependencies": {
     "react": "^18.2.0",
     "styled-components": "^5.3.5"
+  },
+  "peerDependencies": {
+    "react": "18",
+    "styled-components": "5"
   }
 }
