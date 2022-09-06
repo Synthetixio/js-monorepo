@@ -2612,7 +2612,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chakra-ui/react@npm:^2.2.8":
+"@chakra-ui/react@npm:^2.2.8, @chakra-ui/react@npm:^2.3.1":
   version: 2.3.1
   resolution: "@chakra-ui/react@npm:2.3.1"
   dependencies:
@@ -6117,6 +6117,9 @@ __metadata:
     "@snx-v1/styles": "workspace:*"
     react: ^18.2.0
     styled-components: ^5.3.5
+  peerDependencies:
+    react: 18
+    styled-components: 5
   languageName: unknown
   linkType: soft
 
@@ -6132,6 +6135,9 @@ __metadata:
   dependencies:
     "@artsy/fresnel": ^1.9.0
     styled-media-query: ^2.1.2
+  peerDependencies:
+    "@artsy/fresnel": 1
+    styled-media-query: 2
   languageName: unknown
   linkType: soft
 
@@ -6143,12 +6149,27 @@ __metadata:
     "@snx-v1/media": "workspace:*"
     "@tippyjs/react": ^4.2.6
     styled-components: ^5.3.5
+  peerDependencies:
+    "@tippyjs/react": 4
+    styled-components: 5
   languageName: unknown
   linkType: soft
 
 "@snx-v2/getHealthVariant@workspace:*, @snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant":
   version: 0.0.0-use.local
   resolution: "@snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant"
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/icons@workspace:*, @snx-v2/icons@workspace:v2/components/icons":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/icons@workspace:v2/components/icons"
+  dependencies:
+    "@chakra-ui/react": ^2.3.1
+    react: ^18.2.0
+  peerDependencies:
+    "@chakra-ui/react": 2
+    react: 18
   languageName: unknown
   linkType: soft
 
@@ -8116,6 +8137,7 @@ __metadata:
     "@snx-v1/media": "workspace:*"
     "@snx-v1/styles": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
     "@storybook/addon-docs": ^6.5.10

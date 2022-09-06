@@ -2,10 +2,7 @@ import { Badge, Box, Button, Flex, Heading, Stack, Text } from '@chakra-ui/react
 import React, { PropsWithChildren, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
-import { InfoIcon } from '../icons';
-import { CollectIcon } from '../icons/CollectIcon';
-import { MaintainIcon } from '../icons/MaintainIcon';
-import { StakeIcon } from '../icons/StakeIcon';
+import { CollectIcon, InfoIcon, MaintainIcon, StakeIcon } from '@snx-v2/icons';
 
 const CardHeader = ({
   step,

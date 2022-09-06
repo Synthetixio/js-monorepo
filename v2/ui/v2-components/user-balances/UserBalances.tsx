@@ -1,6 +1,6 @@
-import { Center, Text, Skeleton } from '@chakra-ui/react';
+import { Center, Skeleton, Text } from '@chakra-ui/react';
 import Wei, { wei } from '@synthetixio/wei';
-import { SNXIcon, SUSDIcon } from '../icons';
+import { SNXIcon, SUSDIcon } from '@snx-v2/icons';
 
 interface UserBalancesProps {
   isSnxLoading: boolean;

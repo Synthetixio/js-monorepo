@@ -1,17 +1,17 @@
 import {
+  Box,
   Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Stat,
   StatLabel,
   StatNumber,
-  Box,
-  Stat,
-  Menu,
-  MenuItem,
   Text,
-  MenuButton,
-  MenuList,
   Tooltip,
 } from '@chakra-ui/react';
-import { InfoIcon, KebabMenuVertical } from '../icons';
+import { InfoIcon, KebabMenuVertical } from '@snx-v2/icons';
 
 interface DropDownItem {
   label: string;
