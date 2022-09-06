@@ -10,7 +10,7 @@
   },
   "peerDependencies": {
     "@chakra-ui/react": "2",
-    "@storybook/react": "^6.5.10",
+    "@storybook/react": "6",
     "react": "18"
   },
   "dependencies": {
