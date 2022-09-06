@@ -6155,6 +6155,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/ExternalLink@workspace:v2/components/ExternalLink":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/ExternalLink@workspace:v2/components/ExternalLink"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/react": ^6.5.10
+    react: ^18.2.0
+  peerDependencies:
+    "@chakra-ui/react": 2
+    "@storybook/react": ^6.5.10
+    react: 18
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/getHealthVariant@workspace:*, @snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant":
   version: 0.0.0-use.local
   resolution: "@snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant"
@@ -7373,7 +7388,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react@npm:^6.5.7":
+"@storybook/react@npm:^6.5.10, @storybook/react@npm:^6.5.7":
   version: 6.5.10
   resolution: "@storybook/react@npm:6.5.10"
   dependencies:
