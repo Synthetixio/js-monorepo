@@ -2,6 +2,25 @@ import { ChakraTheme, ComponentMultiStyleConfig, ComponentStyleConfig } from '@c
 import { theme as chakraTheme } from '@synthetixio/v3-theme';
 import merge from 'lodash/merge';
 
+const Badge: ComponentStyleConfig = {
+  variants: {
+    mint: {
+      color: 'cyan.400',
+      bg: 'whiteAlpha.300',
+      fontFamily: 'heading',
+      py: 1,
+      px: 2,
+      width: '100%',
+      textAlign: 'center',
+      userSelect: 'none',
+      borderRadius: 'base',
+      _hover: {
+        cursor: 'pointer',
+      },
+    },
+  },
+};
+
 const Progress: ComponentMultiStyleConfig = {
   parts: ['filledTrack', 'track'],
   baseStyle: {
@@ -178,6 +197,7 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
     Menu,
     Text,
     Stat,
+    Badge,
   },
   styles: {
     global: {

@@ -18,6 +18,7 @@ import ActiveDebt from 'sections/shared/modals/DebtValueModal/DebtValueBox';
 import Connector from 'containers/Connector';
 import { Mint } from 'v2-components/mint';
 import { Box } from '@chakra-ui/react';
+import { wei } from '@synthetixio/wei';
 
 const DashboardPage: FC = () => {
   const { t } = useTranslation();
@@ -33,7 +34,7 @@ const DashboardPage: FC = () => {
       </Head>
       <Content>
         <Box mt={4}>
-          <Mint snxBalance="12345" />
+          <Mint snxBalance={wei(200000)} susdBalance={wei(1200332)} exchangeRate={0.25} />
         </Box>
         <StatsSection>
           <StakedValue
