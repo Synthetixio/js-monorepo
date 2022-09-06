@@ -23,7 +23,7 @@ describe('useEVMTxn', () => {
     jest.resetModules();
   });
 
-  test.only('Does not call estimateGas when txn is null', async () => {
+  test('Does not call estimateGas when txn is null', async () => {
     const estimateGas = jest.fn(() => Promise.resolve(10));
     const sendTransaction = jest.fn();
 

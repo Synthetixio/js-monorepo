@@ -97,7 +97,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
     return;
   });
 
-  test.only('Should fallback to getting gas from provider if baseFeePerGas not available on  Mainnet', async () => {
+  test('Should fallback to getting gas from provider if baseFeePerGas not available on  Mainnet', async () => {
     const ctx = {
       networkId: 1,
       provider: {},
