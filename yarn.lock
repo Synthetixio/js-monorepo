@@ -2612,7 +2612,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chakra-ui/react@npm:^2.2.8, @chakra-ui/react@npm:^2.3.1":
+"@chakra-ui/react@npm:^2.2.8":
   version: 2.3.1
   resolution: "@chakra-ui/react@npm:2.3.1"
   dependencies:
@@ -6159,7 +6159,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/ExternalLink@workspace:v2/components/ExternalLink"
   dependencies:
-    "@chakra-ui/react": ^2.3.1
+    "@chakra-ui/react": ^2.2.8
     "@snx-v2/icons": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
