@@ -1,14 +1,16 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { Text, Box, Tooltip, Flex, Heading } from '@chakra-ui/react';
 import { FC } from 'react';
+import { currency } from '../../../../utils/currency';
 import { NumberInput } from './NumberInput';
 
 interface Props {
   onChange: (value: number) => void;
   value: number;
+  max: number;
 }
 
-export const Mint: FC<Props> = ({ onChange, value }) => {
+export const Mint: FC<Props> = ({ onChange, value, max }) => {
   return (
     <Box mb="4">
       <Heading fontSize="md" mb="1">
@@ -26,7 +28,7 @@ export const Mint: FC<Props> = ({ onChange, value }) => {
         <Flex alignItems="center">
           <Box>
             <Text fontSize="xs">
-              Max Mint: $1,200
+              Max Mint: ${currency(max)}
               <Tooltip label="You can't mint snxUSD that takes your C-Ratio below the target c-ratio of 300%.">
                 <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
               </Tooltip>

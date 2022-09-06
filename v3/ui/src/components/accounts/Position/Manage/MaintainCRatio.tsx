@@ -24,12 +24,12 @@ export const MaintainCRatio: FC<Props> = ({
     <Text fontSize="sm" mb="4">
       <strong>
         If your C-Ratio drops below the minimum (
-        {formatValue(collateral.minimumCRatio!.mul(100), collateral.decimals).toFixed(0)}%), you may
-        be liquidated and lose your collateral.
+        {formatValue(collateral.minimumCRatio!.mul(100), 6).toFixed(0)}%), you may be liquidated and
+        lose your collateral.
       </strong>{' '}
       There are two ways to increase your C-Ratio:
     </Text>
     <Stake collateral={collateral} value={collateralChange} onChange={setCollateralChange} />
-    <Burn value={-debtChange} onChange={setDebtChange} />
+    <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} />
   </>
 );

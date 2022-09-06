@@ -1,8 +1,9 @@
-import { Text, Box } from '@chakra-ui/react';
+import { Text, Box, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
 import { CollateralType } from '../../../../utils/types';
-import Big from 'big.js';
 import { currency } from '../../../../utils/currency';
+import { useValidatePosition } from '../../../../hooks/useValidatePosition';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 
 interface Props {
   collateral: CollateralType;
@@ -10,7 +11,6 @@ interface Props {
   collateralValue: number;
   debt: number;
   cRatio: number;
-
   collateralChange: number;
   debtChange: number;
 }
@@ -24,11 +24,17 @@ export const Preview: FC<Props> = ({
   collateralChange,
   debtChange,
 }) => {
-  const noChange = !collateralChange && !debtChange;
-  const newDebt = debt + debtChange;
-  const newCollateralAmount = collateralAmount + collateralChange;
-  const cVal = new Big(collateralValue).div(collateralAmount || 1);
-  const newCRatio = newDebt ? cVal.mul(newCollateralAmount).mul(100).div(newDebt) : 0;
+  const { newDebt, newCollateralAmount, newCRatio, isValid, targetCRatio, noChange } =
+    useValidatePosition(
+      {
+        collateral,
+        collateralAmount,
+        collateralValue,
+        debt,
+      },
+      collateralChange,
+      debtChange
+    );
 
   return (
     <Box mb="4" p="4">
@@ -43,20 +49,29 @@ export const Preview: FC<Props> = ({
       <Box py="2" borderBottom="1px solid rgba(255,255,255,0.2)">
         <strong>Collateral</strong>
         <Text color="green.400" float="right">
-          {collateralAmount.toString()} {collateral.symbol} → {newCollateralAmount.toString()}{' '}
+          {collateralAmount.toString()} {collateral.symbol}{' '}
+          {!!collateralChange && <>→ {newCollateralAmount.toString()}</>}
           {collateral.symbol}
         </Text>
       </Box>
       <Box py="2" borderBottom="1px solid rgba(255,255,255,0.2)">
         <strong>snxUSD Debt</strong>
         <Text color="green.400" float="right">
-          ${debt.toString()} → ${newDebt.toString()}
+          ${debt.toString()} {!!debtChange && <> → ${newDebt.toString()}</>}
         </Text>
       </Box>
       <Box py="2" borderBottom="1px solid rgba(255,255,255,0.2)">
         <strong>C-Ratio</strong>
-        <Text color="green.400" float="right">
-          {currency(cRatio.toString())}% → {currency((noChange ? cRatio : newCRatio).toString())}%
+        <Text color={isValid ? 'green.400' : 'red.400'} float="right">
+          {currency(cRatio.toString())}% {!noChange && <>→ {currency(newCRatio.toString())}%</>}
+          {!isValid && (
+            <Tooltip
+              label={`Your new position C-Ratio is below the target C-Ratio of ${targetCRatio}%.`}
+              color="white"
+            >
+              <InfoOutlineIcon transform="translateY(-1.5px)" ml="1" />
+            </Tooltip>
+          )}
         </Text>
       </Box>
     </Box>

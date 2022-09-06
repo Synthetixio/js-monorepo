@@ -8,6 +8,8 @@ import { MaintainCRatio } from './Manage/MaintainCRatio';
 import { useCallback, useState } from 'react';
 import { useManagePosition } from '../../../hooks/useManagePosition';
 import { Stake } from './Manage/Stake';
+import { Burn } from './Manage/Burn';
+import { useValidatePosition } from '../../../hooks/useValidatePosition';
 
 interface Props {
   accountId: string;
@@ -53,6 +55,17 @@ export default function Manage({
     }
   );
 
+  const { isValid, noChange, maxDebt } = useValidatePosition(
+    {
+      collateral,
+      collateralAmount,
+      collateralValue,
+      debt,
+    },
+    collateralChange,
+    debtChange
+  );
+
   return (
     <Box mb="2">
       <Text mt="2" mb="6">
@@ -82,10 +95,10 @@ export default function Manage({
               value={collateralChange}
               collateral={collateral}
             />
-            <Mint onChange={setDebtChange} value={debtChange} />
+            <Mint onChange={setDebtChange} value={debtChange} max={maxDebt} />
           </TabPanel>
           <TabPanel>
-            {/* <Burn /> */}
+            <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} />
             <Unstake
               collateral={collateral}
               collateralAmount={collateralAmount}
@@ -108,9 +121,15 @@ export default function Manage({
         collateralChange={collateralChange}
         debtChange={debtChange}
       />
-
       <Box px="4">
-        <Button onClick={exec} colorScheme="blue" size="lg" width="100%" mb="2">
+        <Button
+          disabled={!isValid || noChange}
+          onClick={exec}
+          colorScheme="blue"
+          size="lg"
+          width="100%"
+          mb="2"
+        >
           Update Position
         </Button>
       </Box>
