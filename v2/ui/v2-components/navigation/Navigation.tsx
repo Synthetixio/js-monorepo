@@ -1,35 +1,35 @@
 import {
+  Button,
+  Center,
   Flex,
   Menu,
   MenuButton,
-  Button,
-  MenuList,
   MenuItem,
-  Center,
+  MenuList,
   Text,
   useBreakpointValue,
 } from '@chakra-ui/react';
 
-import { NetworkIdByName, NetworkId } from '@synthetixio/contracts-interface';
+import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 import {
-  WalletIcon,
-  EthereumIcon,
   ChevronDown,
-  NotificationsIcon,
-  SettingsIcon,
-  OptimismIcon,
   ChevronUp,
-  KebabMenu,
-  GuideIcon,
+  EthereumIcon,
   FailedIcon,
-  InfoIcon,
-  LoansIcon,
   GovIcon,
-} from '../icons';
+  GuideIcon,
+  InfoIcon,
+  KebabMenu,
+  LoansIcon,
+  NotificationsIcon,
+  OptimismIcon,
+  SettingsIcon,
+  StakingIcon,
+  WalletIcon,
+} from '@snx-v2/icons';
 
 import { StakingLogo } from '../staking-logo';
-import { StakingIcon } from '../icons';
 import { UserBalances } from '../user-balances';
 import { useTranslation } from 'react-i18next';
 import { truncateAddress } from '../../utils/formatters/string';

@@ -1,32 +1,56 @@
 import { wei } from '@synthetixio/wei';
-import { renderHook } from '@testing-library/react-hooks';
 import { formatBytes32String } from '@ethersproject/strings';
-import { AddressZero } from '@ethersproject/constants';
-import { set } from 'lodash';
-import useSynthsBalancesQuery from './useSynthsBalancesQuery';
-import { getFakeQueryContext, getWrapper } from '../../testUtils';
 
 describe('@synthetixio/queries walletBalances', () => {
-  const ctx = getFakeQueryContext();
+  let useSynthsBalancesQuery;
+  let reactQuery;
+
+  beforeEach(async () => {
+    reactQuery = {
+      useQuery: jest.fn(() => 'useQuery'),
+    };
+
+    jest.doMock('react-query', () => reactQuery);
+
+    ({ default: useSynthsBalancesQuery } = await import('./useSynthsBalancesQuery'));
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
 
   test('useSynthsBalancesQuery', async () => {
-    const wrapper = getWrapper();
+    const ctx = {
+      networkId: 666,
+      snxjs: {
+        contracts: {},
+      },
+    };
+    const walletAddress = '0xFEE';
+    await useSynthsBalancesQuery(ctx, walletAddress);
+    const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
+    expect(cacheKey).toEqual(['walletBalances', 'synths', 666, '0xFEE']);
+    expect(options.enabled).toEqual(true);
 
     const fakeBTCValue = wei(10000);
     const fakeETHValue = wei(1000);
 
-    set(ctx.snxjs as any, 'contracts.SynthUtil.synthsBalances', async () => [
-      ['sUSD', 'sETH', 'sBTC'].map(formatBytes32String),
-      [wei(100), wei(1), wei(0.2)].map((v) => v.toBN()),
-      [wei(100), wei(1).mul(fakeETHValue), wei(0.2).mul(fakeBTCValue)].map((v) => v.toBN()),
-    ]);
+    const currencyKeys = ['sUSD', 'sETH', 'sBTC'].map(formatBytes32String);
+    const synthsBalances = [wei(100), wei(1), wei(0.2)].map((v) => v.toBN());
+    const synthsUSDBalances = [wei(100), wei(1).mul(fakeETHValue), wei(0.2).mul(fakeBTCValue)].map(
+      (v) => v.toBN()
+    );
+    ctx.snxjs.contracts = {
+      SynthUtil: {
+        synthsBalances: jest.fn(() =>
+          Promise.resolve([currencyKeys, synthsBalances, synthsUSDBalances])
+        ),
+      },
+    };
 
-    const { result, waitFor } = renderHook(() => useSynthsBalancesQuery(ctx, AddressZero), {
-      wrapper,
-    });
-    await waitFor(() => result.current.isSuccess);
+    const result = await query();
 
-    expect(result.current.data).toEqual({
+    expect(result).toEqual({
       balancesMap: {
         sUSD: {
           currencyKey: 'sUSD',
