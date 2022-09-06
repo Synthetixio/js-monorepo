@@ -1,11 +1,7 @@
+import React from 'react';
 import { Icon, IconProps } from '@chakra-ui/react';
 
-interface FailedIconProps extends IconProps {
-  width: string | number;
-  height: string | number;
-}
-
-export const FailedIcon = ({ width = '94px', height = '94px' }: FailedIconProps) => {
+export const FailedIcon = ({ width = '94px', height = '94px' }: IconProps) => {
   return (
     <Icon
       width={width}

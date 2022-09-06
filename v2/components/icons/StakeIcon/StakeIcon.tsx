@@ -2,25 +2,17 @@ import React from 'react';
 import { IconProps, Icon } from '@chakra-ui/react';
 
 interface StakeIconProps extends IconProps {
-  width?: number;
-  height?: number;
   fromColor?: string;
   toColor?: string;
 }
 export const StakeIcon = ({
-  width = 32,
-  height = 32,
+  width = '32px',
+  height = '32px',
   fromColor = '#34EDB3',
   toColor = '#00D1FF',
   ...props
 }: StakeIconProps) => (
-  <Icon
-    width={`${width}px`}
-    height={`${height}px`}
-    fill="none"
-    viewBox={`0 0 ${width} ${height}`}
-    {...props}
-  >
+  <Icon width={width} height={height} fill="none" viewBox="0 0 32 32" {...props}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
