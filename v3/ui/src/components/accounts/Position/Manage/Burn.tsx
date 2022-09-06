@@ -10,9 +10,10 @@ import { NumberInput } from './NumberInput';
 interface Props {
   onChange: (value: number) => void;
   value: number;
+  debt: number;
 }
 
-export const Burn: FC<Props> = ({ onChange, value }) => {
+export const Burn: FC<Props> = ({ onChange, value, debt }) => {
   const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
   const balance = useTokenBalance(snxUsdProxy?.address);
 
@@ -36,12 +37,16 @@ export const Burn: FC<Props> = ({ onChange, value }) => {
 
       <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
-          <NumberInput value={value} onChange={onChange} max={balance.formatedValue} />
+          <NumberInput
+            value={value}
+            onChange={onChange}
+            max={Math.min(balance.formatedValue, debt)}
+          />
         </Flex>
         <Flex alignItems="center">
           <Balance
             balance={balance.value}
-            onMax={(balance) => onChange(parseFloat(balance) || 0)}
+            onMax={() => onChange(Math.min(balance.formatedValue, debt) || 0)}
             decimals={balance.decimals}
             symbol="snxUsd"
           />

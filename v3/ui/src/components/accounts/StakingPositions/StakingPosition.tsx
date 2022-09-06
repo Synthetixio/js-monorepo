@@ -1,4 +1,4 @@
-import { EditIcon, ExternalLinkIcon, InfoIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
+import { EditIcon, ExternalLinkIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
   Badge,
   Box,

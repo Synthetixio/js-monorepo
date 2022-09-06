@@ -1,4 +1,4 @@
-import Custom from './Manage/Custom';
+import { Custom } from './Manage/Custom';
 import { Mint } from './Manage/Mint';
 import { Preview } from './Manage/Preview';
 import { Unstake } from './Manage/Unstake';
@@ -87,6 +87,7 @@ export default function Manage({
               collateralChange={collateralChange}
               setDebtChange={setDebtChange}
               debtChange={debtChange}
+              debt={debt}
             />
           </TabPanel>
           <TabPanel>
@@ -98,7 +99,7 @@ export default function Manage({
             <Mint onChange={setDebtChange} value={debtChange} max={maxDebt} />
           </TabPanel>
           <TabPanel>
-            <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} />
+            <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
             <Unstake
               collateral={collateral}
               collateralAmount={collateralAmount}
@@ -107,7 +108,16 @@ export default function Manage({
             />
           </TabPanel>
           <TabPanel>
-            <Custom />
+            <Custom
+              collateral={collateral}
+              setCollateralChange={setCollateralChange}
+              collateralAmount={collateralAmount}
+              collateralChange={collateralChange}
+              setDebtChange={setDebtChange}
+              debtChange={debtChange}
+              debt={debt}
+              maxDebt={maxDebt}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>

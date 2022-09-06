@@ -9,7 +9,7 @@ interface Props {
 
 export const NumberInput: FC<Props> = ({ value, onChange, max }) => {
   const handleChange = useCallback(
-    (value: number) => onChange(max ? Math.min(max, value) : value),
+    (value: number) => onChange(max !== undefined ? Math.min(max, value) : value),
     [max, onChange]
   );
   return (

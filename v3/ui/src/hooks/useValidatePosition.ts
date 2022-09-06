@@ -38,7 +38,7 @@ export const useValidatePosition = (
 
   return {
     noChange: !debtChange && !collateralChange,
-    isValid: newCRatio >= targetCRatio,
+    isValid: newCRatio >= targetCRatio || newCRatio === 0,
     targetCRatio,
     newCRatio,
     newDebt,

@@ -24,10 +24,17 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react';
+import { FC } from 'react';
 import { Link as NavLink } from 'react-router-dom';
+import { poolsData } from '../../../utils/constants';
 
-export default function Pool() {
+interface Props {
+  poolId: string;
+}
+
+export const Pool: FC<Props> = ({ poolId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const pool = poolsData[poolId.toString()];
   return (
     <Box mb="2">
       <Text mt="2" mb="6">
@@ -40,7 +47,7 @@ export default function Pool() {
           Current Pool
         </Text>
         <Heading size="lg" mb="1">
-          Spartan Council
+          {pool?.name}
           <Link
             color="blue.400"
             ml="1.5"
@@ -53,7 +60,7 @@ export default function Pool() {
         </Heading>
         <Text fontSize="sm">
           <span style={{ opacity: 0.8 }}>Pool #1</span>
-          <NavLink to="/pools/example">
+          <NavLink to={`/pools/${poolId}`}>
             <Link color="blue.400" ml="1" display="inline-block" transform="translateY(-2px)">
               <ExternalLinkIcon />
             </Link>
@@ -359,4 +366,4 @@ export default function Pool() {
       </Text>
     </Box>
   );
-}
+};

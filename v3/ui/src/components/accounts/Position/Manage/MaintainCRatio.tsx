@@ -11,6 +11,7 @@ interface Props {
   collateralChange: number;
   setDebtChange: (value: number) => void;
   debtChange: number;
+  debt: number;
 }
 
 export const MaintainCRatio: FC<Props> = ({
@@ -19,6 +20,7 @@ export const MaintainCRatio: FC<Props> = ({
   setCollateralChange,
   setDebtChange,
   debtChange,
+  debt,
 }) => (
   <>
     <Text fontSize="sm" mb="4">
@@ -30,6 +32,6 @@ export const MaintainCRatio: FC<Props> = ({
       There are two ways to increase your C-Ratio:
     </Text>
     <Stake collateral={collateral} value={collateralChange} onChange={setCollateralChange} />
-    <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} />
+    <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
   </>
 );

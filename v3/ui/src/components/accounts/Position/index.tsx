@@ -2,7 +2,7 @@ import { StakingStats } from './StakingStats';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Spinner } from '@chakra-ui/react';
 import Manage from './Manage';
 import Rewards from './Rewards';
-import Pool from './Pool';
+import { Pool } from './Pool';
 import { FC } from 'react';
 import { CollateralType } from '../../../utils/types';
 import { formatValue } from '../../../utils/helpers';
@@ -62,7 +62,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
             />
           </TabPanel>
           <TabPanel>
-            <Pool />
+            <Pool poolId={poolId} />
           </TabPanel>
           <TabPanel>
             <Rewards />

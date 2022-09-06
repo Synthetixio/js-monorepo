@@ -23,13 +23,16 @@ export const Mint: FC<Props> = ({ onChange, value, max }) => {
 
       <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
-          <NumberInput value={value} onChange={onChange} />
+          <NumberInput value={value} onChange={onChange} max={max} />
         </Flex>
         <Flex alignItems="center">
           <Box>
             <Text fontSize="xs">
               Max Mint: ${currency(max)}
-              <Tooltip label="You can't mint snxUSD that takes your C-Ratio below the target c-ratio of 300%.">
+              <Tooltip
+                color="white"
+                label="You can't mint snxUSD that takes your C-Ratio below the target c-ratio of 300%."
+              >
                 <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
               </Tooltip>
             </Text>

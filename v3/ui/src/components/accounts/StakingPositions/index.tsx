@@ -1,6 +1,6 @@
 import StakingPosition from './StakingPosition';
-import { StakingPositionType } from './types';
 import { Box, Heading, Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+import { StakingPositionType } from '../../../utils/types';
 
 export default function StakingPositions({
   positions,
