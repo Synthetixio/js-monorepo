@@ -1,30 +1,52 @@
-import useExchangeRatesQuery from './useExchangeRatesQuery';
-import { getFakeQueryContext, getWrapper } from '../../testUtils';
-
-import { renderHook } from '@testing-library/react-hooks';
-
-import { set } from 'lodash';
 import { wei } from '@synthetixio/wei';
 import { formatBytes32String } from '@ethersproject/strings';
 
 describe('@synthetixio/queries rates', () => {
-  const ctx = getFakeQueryContext();
+  let useExchangeRatesQuery;
+  let reactQuery;
+
+  beforeEach(async () => {
+    reactQuery = {
+      useQuery: jest.fn(() => 'useQuery'),
+    };
+
+    jest.doMock('react-query', () => reactQuery);
+
+    ({ default: useExchangeRatesQuery } = await import('./useExchangeRatesQuery'));
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+  });
 
   test('useExchangeRatesQuery', async () => {
-    const wrapper = getWrapper();
+    const ctx = {
+      networkId: 666,
+      snxjs: {
+        contracts: {},
+      },
+    };
 
-    set(ctx.snxjs as any, 'contracts.SynthUtil.synthsRates', async () => [
-      [formatBytes32String('sETH'), formatBytes32String('sBTC')],
-      [wei(1000).toBN(), wei(10000).toBN()],
-    ]);
-    set(ctx.snxjs as any, 'contracts.ExchangeRates.ratesForCurrencies', async () => [
-      wei(10).toBN(),
-    ]);
+    const walletAddress = '0xFEE';
+    await useExchangeRatesQuery(ctx, walletAddress);
+    const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
+    expect(cacheKey).toEqual(['rates', 'exchangeRates', 666]);
+    expect(options.enabled).toEqual(true);
 
-    const { result, waitFor } = renderHook(() => useExchangeRatesQuery(ctx), { wrapper });
-    await waitFor(() => result.current.isSuccess);
+    const currencyKeys = ['sETH', 'sBTC'].map(formatBytes32String);
+    const synthRates = [wei(1000), wei(10000)].map((v) => v.toBN());
+    ctx.snxjs.contracts = {
+      SynthUtil: {
+        synthsRates: jest.fn(() => Promise.resolve([currencyKeys, synthRates])),
+      },
+      ExchangeRates: {
+        ratesForCurrencies: jest.fn(() => Promise.resolve([wei(10).toBN()])),
+      },
+    };
 
-    expect(result.current.data).toEqual({
+    const result = await query();
+
+    expect(result).toEqual({
       ETH: wei(1000),
       BTC: wei(10000),
       sETH: wei(1000),

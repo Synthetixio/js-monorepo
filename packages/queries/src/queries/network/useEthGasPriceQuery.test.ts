@@ -1,64 +1,43 @@
-import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
-import { renderHook } from '@testing-library/react-hooks';
-import { BigNumber } from '@ethersproject/bignumber';
-import useEthGasPriceQuery, { computeGasFee } from './useEthGasPriceQuery';
-import { getFakeQueryContext, getWrapper } from '../../testUtils';
 
 describe('@synthetixio/queries network useEthGasPriceQuery', () => {
-  test('Should query getGasPrice from provider if network is Optimism', async () => {
-    const ctx = getFakeQueryContext();
-    ctx.networkId = NetworkIdByName['mainnet-ovm'];
-    const wrapper = getWrapper();
-    // set to 0.015 gwei
-    const defaultGasPrice = wei(0.015, 9).toBN();
-    //mock provider
-    ctx.provider!.getGasPrice = jest.fn().mockResolvedValue(defaultGasPrice);
+  let useEthGasPriceQuery;
+  let computeGasFee;
+  let reactQuery;
 
-    const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
+  beforeEach(async () => {
+    reactQuery = {
+      useQuery: jest.fn(() => 'useQuery'),
+    };
 
-    await waitFor(() => result.current.isSuccess);
+    jest.doMock('react-query', () => reactQuery);
 
-    expect(result.current.data).toEqual({
-      fastest: { gasPrice: defaultGasPrice },
-      fast: { gasPrice: defaultGasPrice },
-      average: { gasPrice: defaultGasPrice },
-    });
+    ({ default: useEthGasPriceQuery, computeGasFee } = await import('./useEthGasPriceQuery'));
   });
 
-  test('Should query getGasPrice from provider if network is Kovan', async () => {
-    const ctx = getFakeQueryContext();
-    ctx.networkId = NetworkIdByName.kovan;
-    const wrapper = getWrapper();
-    // set to 0.015 gwei
-    const defaultGasPrice = wei(0.015, 9).toBN();
-    //mock provider
-    ctx.provider!.getGasPrice = jest.fn().mockResolvedValue(defaultGasPrice);
-
-    const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
-
-    await waitFor(() => result.current.isSuccess);
-
-    expect(result.current.data).toEqual({
-      fastest: { gasPrice: defaultGasPrice },
-      fast: { gasPrice: defaultGasPrice },
-      average: { gasPrice: defaultGasPrice },
-    });
+  afterEach(() => {
+    jest.resetModules();
   });
-  test('Should query getGasPrice from provider if network is Goerli', async () => {
-    const ctx = getFakeQueryContext();
-    ctx.networkId = NetworkIdByName.kovan;
-    const wrapper = getWrapper();
-    // set to 0.015 gwei
+
+  test('Should query getGasPrice from provider if network is not mainnet', async () => {
+    const ctx = {
+      networkId: 666,
+      provider: {},
+    };
+    useEthGasPriceQuery(ctx);
+    const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
+
+    expect(cacheKey).toEqual(['network', 'gasPrice', 666]);
+    expect(options.enabled).toEqual(true);
+
     const defaultGasPrice = wei(0.015, 9).toBN();
-    //mock provider
+    ctx.provider = {
+      getGasPrice: jest.fn(() => Promise.resolve(defaultGasPrice)),
+    };
 
-    ctx.provider!.getGasPrice = jest.fn().mockResolvedValue(defaultGasPrice);
-    const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
+    const result = await query();
 
-    await waitFor(() => result.current.isSuccess);
-
-    expect(result.current.data).toEqual({
+    expect(result).toEqual({
       fastest: { gasPrice: defaultGasPrice },
       fast: { gasPrice: defaultGasPrice },
       average: { gasPrice: defaultGasPrice },
@@ -66,26 +45,23 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
   });
 
   test('Should throw an error if getGasPrice fails', async () => {
-    const ctx = getFakeQueryContext();
-    ctx.networkId = NetworkIdByName['mainnet-ovm'];
-    const wrapper = getWrapper({
-      defaultOptions: {
-        queries: {
-          // ✅ turns retries off
-          retry: false,
-        },
-      },
-    });
+    const ctx = {
+      networkId: 666,
+      provider: {},
+    };
+    useEthGasPriceQuery(ctx);
+    const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
 
-    delete (ctx as any).provider.getGasPrice;
-    // eslint-disable-next-line
-    console.error = () => {}; //suppress error
-    const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
-    await waitFor(() => result.current.isError);
-    expect(result.current.error?.message).toContain('Could not retrieve gas price from provider');
+    expect(cacheKey).toEqual(['network', 'gasPrice', 666]);
+    expect(options.enabled).toEqual(true);
+
+    ctx.provider = {
+      getGasPrice: jest.fn(() => Promise.reject('OMG')),
+    };
+    expect(query()).rejects.toEqual(Error('Could not retrieve gas price from provider'));
   });
 
-  test('computeGasFee works', () => {
+  test('computeGasFee', () => {
     const baseFeePerGas = wei(10, 9).toBN();
     const maxPriorityFeePerGas = 2;
     const result = computeGasFee(baseFeePerGas, maxPriorityFeePerGas);
@@ -95,24 +71,55 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
   });
 
   test('Should use EIP1559 logic if network is Mainnet', async () => {
-    const ctx = getFakeQueryContext();
-    ctx.networkId = NetworkIdByName.mainnet;
-    const wrapper = getWrapper();
-    // set to 100 gwei
-    const defaultBaseFeePerGas = wei(100, 9).toBN();
-    //mock provider
-    ctx.provider!.getBlock = jest.fn().mockResolvedValue({ baseFeePerGas: defaultBaseFeePerGas });
+    const ctx = {
+      networkId: 1,
+      provider: {},
+    };
+    useEthGasPriceQuery(ctx);
+    const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
 
-    const { result, waitFor } = renderHook(() => useEthGasPriceQuery(ctx), { wrapper });
+    expect(cacheKey).toEqual(['network', 'gasPrice', 1]);
+    expect(options.enabled).toEqual(true);
 
-    await waitFor(() => result.current.isSuccess);
+    const baseFeePerGas = wei(100, 9).toBN();
+    ctx.provider = {
+      getBlock: jest.fn(() => Promise.resolve({ baseFeePerGas })),
+    };
 
-    const block = await ctx.provider?.getBlock('latest');
+    const result = await query();
 
-    expect(result.current.data).toEqual({
-      fastest: computeGasFee(block?.baseFeePerGas ?? BigNumber.from(0), 6),
-      fast: computeGasFee(block?.baseFeePerGas ?? BigNumber.from(0), 4),
-      average: computeGasFee(block?.baseFeePerGas ?? BigNumber.from(0), 2),
+    expect(result).toEqual({
+      fastest: computeGasFee(baseFeePerGas, 6),
+      fast: computeGasFee(baseFeePerGas, 4),
+      average: computeGasFee(baseFeePerGas, 2),
+    });
+
+    return;
+  });
+
+  test('Should fallback to getting gas from provider if baseFeePerGas not available on  Mainnet', async () => {
+    const ctx = {
+      networkId: 1,
+      provider: {},
+    };
+    useEthGasPriceQuery(ctx);
+    const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
+
+    expect(cacheKey).toEqual(['network', 'gasPrice', 1]);
+    expect(options.enabled).toEqual(true);
+
+    const defaultGasPrice = wei(100, 9).toBN();
+    ctx.provider = {
+      getBlock: jest.fn(() => Promise.resolve({ nothing: 'here' })),
+      getGasPrice: jest.fn(() => Promise.resolve(defaultGasPrice)),
+    };
+
+    const result = await query();
+
+    expect(result).toEqual({
+      fastest: { gasPrice: defaultGasPrice },
+      fast: { gasPrice: defaultGasPrice },
+      average: { gasPrice: defaultGasPrice },
     });
   });
 });
