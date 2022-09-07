@@ -55,7 +55,7 @@ CollectRewards.args = {
       </Flex>
     </div>
   ),
-  icon: <SUSDIcon alignSelf="center" width={64} height={64} />,
+  icon: <SUSDIcon alignSelf="center" width="64px" height="64px" />,
 };
 export const CollectRewardsPending = Template.bind({});
 
