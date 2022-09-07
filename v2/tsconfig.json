@@ -13,9 +13,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": ".",
+    "baseUrl": "./ui",
     "incremental": true
   },
-  "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "additional.d.ts", "**/*.ts", "**/*.tsx", "next.config.js"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "../v1/**/*.ts",
+    "../v1/**/*.tsx",
+    "./ui/next-env.d.ts",
+    "./ui/additional.d.ts",
+    "./ui/next.config.js"
+  ]
 }
