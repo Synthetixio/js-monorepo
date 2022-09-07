@@ -57,3 +57,58 @@ CollectRewards.args = {
   ),
   icon: <SUSDIcon alignSelf="center" width={64} height={64} />,
 };
+export const CollectRewardsPending = Template.bind({});
+
+CollectRewardsPending.args = {
+  isOpen: true,
+  onClose: () => {},
+  title: 'Transaction Pending',
+  children: (
+    <div>
+      <Flex flexDirection="column" alignItems="center" bg="black" pt="4" pb="4" mt="4">
+        <Text fontWeight={500} color="gray.600">
+          Claimed
+        </Text>
+        <Text fontWeight={500}>100 SNX</Text>
+      </Flex>
+      <Flex alignItems="center" justifyContent="center" bg="black" pt="4" pb="4" mt="4">
+        <Spinner size="sm" mr="3" />
+        <Text color="cyan.500" fontWeight={500}>
+          Loading
+        </Text>
+      </Flex>
+      <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
+      <Flex justifyContent="center">
+        <ExternalLink fontSize="sm">View Etherscan</ExternalLink>
+      </Flex>
+    </div>
+  ),
+  // TODO ask designer to export transaction pending
+  icon: <TransactionPending />,
+};
+export const CollectRewardsCompleted = Template.bind({});
+
+CollectRewardsCompleted.args = {
+  isOpen: true,
+  onClose: () => {},
+  title: 'Transaction Completed',
+  children: (
+    <div>
+      <Flex flexDirection="column" alignItems="center" bg="black" pt="4" pb="4" mt="4">
+        <Text fontWeight={500} color="gray.600">
+          Claimed
+        </Text>
+        <Text fontWeight={500}>100 SNX</Text>
+      </Flex>
+      <Flex alignItems="center" justifyContent="center" mt="2">
+        <Button>Done</Button>
+      </Flex>
+      <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
+      <Flex justifyContent="center">
+        <ExternalLink fontSize="sm">View Etherscan</ExternalLink>
+      </Flex>
+    </div>
+  ),
+  // TODO ask designer to export transaction completed
+  icon: <TransactionCompleted />,
+};
