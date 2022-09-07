@@ -48,6 +48,12 @@ const Progress: ComponentMultiStyleConfig = {
         boxShadow: `0px 0px 15px ${props.theme.colors.success}`,
       },
     }),
+    white: {
+      filledTrack: {
+        bg: 'white',
+        borderRadius: 'full',
+      },
+    },
   },
 };
 const Button: ComponentStyleConfig = {

@@ -25,4 +25,6 @@ export * from './CollectIcon';
 export * from './MaintainIcon';
 export * from './StakeIcon';
 export * from './ArrowTopRight';
+export * from './TransactionCompleted';
+export * from './TransactionPending';
 export * from './TokensIcon';

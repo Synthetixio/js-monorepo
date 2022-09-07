@@ -6166,6 +6166,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/TransactionModal@workspace:v2/components/TransactionModal":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/TransactionModal@workspace:v2/components/TransactionModal"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/client-api": ^6.5.10
+    "@storybook/react": ^6.5.10
+    "@synthetixio/v3-theme": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/getHealthVariant@workspace:*, @snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant":
   version: 0.0.0-use.local
   resolution: "@snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant"
@@ -6866,7 +6880,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/client-api@npm:6.5.10":
+"@storybook/client-api@npm:6.5.10, @storybook/client-api@npm:^6.5.10":
   version: 6.5.10
   resolution: "@storybook/client-api@npm:6.5.10"
   dependencies:
