@@ -15,7 +15,6 @@
     "build": "yarn workspaces foreach --topological-dev --verbose run build",
     "codegen": "yarn workspaces foreach --topological-dev --verbose run codegen",
     "publish": "yarn workspaces foreach --topological-dev --verbose publish",
-    "typecheck": "yarn workspaces foreach --topological-dev --verbose run tsc:check",
     "deps": "deps",
     "deps:fix": "deps --fix",
     "deps:mismatched": "deps-mismatched",
