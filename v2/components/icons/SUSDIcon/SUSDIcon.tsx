@@ -1,23 +1,21 @@
 import { Icon, IconProps } from '@chakra-ui/react';
 
 interface SUSDIconProps extends IconProps {
-  width?: number;
-  height?: number;
   color?: string;
   backgroundColor?: string;
 }
 
 export const SUSDIcon = ({
-  width = 25,
-  height = 24,
+  width = '25px',
+  height = '24px',
   color = 'white',
   backgroundColor = '#0E052F',
   ...props
 }: SUSDIconProps) => {
   return (
     <Icon
-      width={`${width}px`}
-      height={`${height}px`}
+      width={width}
+      height={height}
       fill="none"
       viewBox="0 0 25 24"
       sx={{
@@ -27,7 +25,7 @@ export const SUSDIcon = ({
       }}
       {...props}
     >
-      <mask id="b" maskUnits="userSpaceOnUse" x="0" y="0" width={width} height={height}>
+      <mask id="b" maskUnits="userSpaceOnUse" x="0" y="0" width="25" height="24">
         <circle cx="12.5" cy="12" r="12" fill="url(#a)" />
       </mask>
       <g mask="url(#b)">
