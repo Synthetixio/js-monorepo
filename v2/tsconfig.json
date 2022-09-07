@@ -16,12 +16,27 @@
     "baseUrl": "./ui",
     "incremental": true
   },
+
+  "exclude": [
+    "**/node_modules/**",
+    "**/coverage/**",
+    "**/tests/**",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/stories/**",
+    "**/build/**",
+    "**/dist/**"
+  ],
+
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "../v1/**/*.ts",
     "../v1/**/*.tsx",
     "./ui/next-env.d.ts",
+    "./ui/typings/missing-types.d.ts",
+    "./ui/typings/styled-components.d.ts",
+    "./ui/typings/window.d.ts",
     "./ui/additional.d.ts",
     "./ui/next.config.js"
   ]
