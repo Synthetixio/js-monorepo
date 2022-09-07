@@ -6172,7 +6172,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/icons": "workspace:*"
-    "@storybook/client-api": latest
+    "@storybook/client-api": ^6.5.10
     "@storybook/react": ^6.5.10
     "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
@@ -6880,7 +6880,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/client-api@npm:6.5.10, @storybook/client-api@npm:latest":
+"@storybook/client-api@npm:6.5.10, @storybook/client-api@npm:^6.5.10":
   version: 6.5.10
   resolution: "@storybook/client-api@npm:6.5.10"
   dependencies:
