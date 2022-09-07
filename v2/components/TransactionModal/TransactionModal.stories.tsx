@@ -83,7 +83,6 @@ CollectRewardsPending.args = {
       </Flex>
     </div>
   ),
-  // TODO ask designer to export transaction pending
   icon: <TransactionPending />,
 };
 export const CollectRewardsCompleted = Template.bind({});
@@ -109,6 +108,5 @@ CollectRewardsCompleted.args = {
       </Flex>
     </div>
   ),
-  // TODO ask designer to export transaction completed
   icon: <TransactionCompleted />,
 };
