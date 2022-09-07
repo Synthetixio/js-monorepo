@@ -25,6 +25,9 @@
     "cratio-health-card": {
       "heading": "Collateralization Ratio Health",
       "sub-heading": "In order to keep gathering rewards you must keep you C-Ratio above Target"
+    },
+    "transaction-modal": {
+      "metamask-note": "Follow the Metamask prompts to authorize the transaction."
     }
   },
   "meta": {
