@@ -32,8 +32,10 @@ export const Mint = ({
   };
 
   const onBadgePress = (amount: number) => {
-    setActiveBadge(amount);
-    setVal(snxBalance.mul(amount).toString(2));
+    if (snxBalance.gt(0)) {
+      setActiveBadge(amount);
+      setVal(snxBalance.mul(amount).toString(2));
+    }
   };
 
   const convert = (value: string) => {
