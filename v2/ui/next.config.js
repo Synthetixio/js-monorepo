@@ -106,15 +106,6 @@ const tsxRule = {
 module.exports = withPlugins([withBundleAnalyzer], {
   swcMinify: true,
 
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    // WE DONT CARE! WE TYPECHECK IN CI BEFORE BUILD! AND YOU WILL BE GONE SOON ANYWAY
-    ignoreBuildErrors: true,
-  },
-
   eslint: {
     ignoreDuringBuilds: true,
   },
