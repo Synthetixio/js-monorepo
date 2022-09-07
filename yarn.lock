@@ -6180,6 +6180,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/formatters@workspace:*, @snx-v2/formatters@workspace:v2/lib/formatters":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/formatters@workspace:v2/lib/formatters"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/getHealthVariant@workspace:*, @snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant":
   version: 0.0.0-use.local
   resolution: "@snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant"
@@ -8159,6 +8165,7 @@ __metadata:
     "@snx-v1/constantsUi": "workspace:*"
     "@snx-v1/media": "workspace:*"
     "@snx-v1/styles": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@socket.tech/widget": ^0.1.1

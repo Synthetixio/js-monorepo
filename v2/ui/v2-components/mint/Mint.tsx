@@ -3,7 +3,7 @@ import { Input, Box, Text, Flex, Badge, Tooltip, Button } from '@chakra-ui/react
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { InfoIcon, TokensIcon } from '@snx-v2/icons';
-import { numberWithCommas } from 'utils/formatters/number';
+import { numberWithCommas } from '@snx-v2/formatters';
 import { ChangeEvent } from 'react';
 
 interface MintProps {
