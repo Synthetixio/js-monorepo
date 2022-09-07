@@ -20,8 +20,8 @@ export const Mint = ({
   exchangeRate = 0.25,
 }: MintProps) => {
   const { t } = useTranslation();
-  const [val, setVal] = useState<string>('');
-  const [activeBadge, setActiveBadge] = useState<number>(0);
+  const [val, setVal] = useState('');
+  const [activeBadge, setActiveBadge] = useState(0);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
