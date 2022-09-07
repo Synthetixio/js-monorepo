@@ -32,7 +32,8 @@
       "gas": "Gas Price (GWEI)",
       "snx-balance": "SNX Balance: {{snxBalance}}",
       "susd-balance": "sUSD Balance: {{susdBalance}}",
-      "enter-amount": "Enter Amount"
+      "enter-amount": "Enter Amount",
+      "tx-cost": "Tx cost: {{txCost}}"
     }
   },
   "meta": {

@@ -16,9 +16,6 @@ import useSelectedPriceCurrency from 'hooks/useSelectedPriceCurrency';
 import StakedValue from 'sections/shared/modals/StakedValueModal/StakedValueBox';
 import ActiveDebt from 'sections/shared/modals/DebtValueModal/DebtValueBox';
 import Connector from 'containers/Connector';
-import { Mint } from 'v2-components/mint';
-import { Box } from '@chakra-ui/react';
-import { wei } from '@synthetixio/wei';
 
 const DashboardPage: FC = () => {
   const { t } = useTranslation();
@@ -33,9 +30,6 @@ const DashboardPage: FC = () => {
         <title>{t('dashboard.page-title')}</title>
       </Head>
       <Content>
-        <Box mt={4}>
-          <Mint snxBalance={wei(200000)} susdBalance={wei(1200332)} exchangeRate={0.25} />
-        </Box>
         <StatsSection>
           <StakedValue
             title={t('common.stat-box.staked-value')}
