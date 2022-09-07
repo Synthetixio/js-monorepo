@@ -6204,6 +6204,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/mint@workspace:v2/components/Mint":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/mint@workspace:v2/components/Mint"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/react": ^6.5.10
+    "@synthetixio/wei": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
 "@socket.tech/ll-core@npm:^0.1.10, @socket.tech/ll-core@npm:^0.1.14":
   version: 0.1.16
   resolution: "@socket.tech/ll-core@npm:0.1.16"
