@@ -6216,6 +6216,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/Navigation@workspace:v2/components/Navigation":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/Navigation@workspace:v2/components/Navigation"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/UserBalances": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/react": ^6.5.10
+    "@synthetixio/contracts-interface": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/StatItem@workspace:v2/components/StatItem":
   version: 0.0.0-use.local
   resolution: "@snx-v2/StatItem@workspace:v2/components/StatItem"
@@ -8249,9 +8263,7 @@ __metadata:
     "@snx-v1/constantsUi": "workspace:*"
     "@snx-v1/media": "workspace:*"
     "@snx-v1/styles": "workspace:*"
-    "@snx-v2/UserBalances": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
-    "@snx-v2/icons": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
     "@storybook/addon-docs": ^6.5.10
