@@ -1,19 +1,8 @@
 import { Icon, IconProps } from '@chakra-ui/react';
 
-interface FailedIconProps extends IconProps {
-  width: string | number;
-  height: string | number;
-}
-
-export const FailedIcon = ({ width = '94px', height = '94px' }: FailedIconProps) => {
+export const FailedIcon = ({ width = '94px', height = '94px' }: IconProps) => {
   return (
-    <Icon
-      width={width}
-      height={height}
-      viewBox="0 0 94 94"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <Icon width={width} height={height} viewBox="0 0 94 94" fill="none">
       <g filter="url(#filter0_d_1044_28165)">
         <path
           fillRule="evenodd"

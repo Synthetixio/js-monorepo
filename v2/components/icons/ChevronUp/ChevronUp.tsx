@@ -1,11 +1,6 @@
 import { Icon, IconProps } from '@chakra-ui/react';
 
-interface ChevronUpProps extends IconProps {
-  width?: number | string;
-  height?: number | string;
-}
-
-export const ChevronUp = ({ width = '20px', height = '20px', ...props }: ChevronUpProps) => {
+export const ChevronUp = ({ width = '20px', height = '20px', ...props }: IconProps) => {
   return (
     <Icon width={width} height={height} color="cyan.400" viewBox="0 0 25 24" fill="none" {...props}>
       <path

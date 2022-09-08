@@ -1,1 +1,0 @@
-export { Mint } from './Mint';
