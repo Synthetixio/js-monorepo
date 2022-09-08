@@ -6168,6 +6168,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/Banner@workspace:v2/components/Banner":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/Banner@workspace:v2/components/Banner"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@storybook/react": ^6.5.10
+    "@synthetixio/v3-theme": "workspace:*"
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/ExternalLink@workspace:v2/components/ExternalLink":
   version: 0.0.0-use.local
   resolution: "@snx-v2/ExternalLink@workspace:v2/components/ExternalLink"
