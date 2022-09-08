@@ -6179,9 +6179,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/CRatioProgressBar@workspace:v2/components/c-ratio-health-card":
+"@snx-v2/CRatioProgressBar@workspace:v2/components/CRatioHealthCard":
   version: 0.0.0-use.local
-  resolution: "@snx-v2/CRatioProgressBar@workspace:v2/components/c-ratio-health-card"
+  resolution: "@snx-v2/CRatioProgressBar@workspace:v2/components/CRatioHealthCard"
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/getHealthVariant": "workspace:*"
@@ -6214,6 +6214,16 @@ __metadata:
     "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/UserBalances@workspace:v2/components/UserBalances":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/UserBalances@workspace:v2/components/UserBalances"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
   languageName: unknown
   linkType: soft
 

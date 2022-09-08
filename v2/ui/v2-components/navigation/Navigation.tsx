@@ -30,9 +30,9 @@ import {
 } from '@snx-v2/icons';
 
 import { StakingLogo } from '../staking-logo';
-import { UserBalances } from '../user-balances';
 import { useTranslation } from 'react-i18next';
 import { truncateAddress } from '../../utils/formatters/string';
+import { UserBalances } from '@snx-v2/UserBalances';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
