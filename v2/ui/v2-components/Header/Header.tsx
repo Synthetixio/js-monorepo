@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from 'react';
-import Connector from 'containers/Connector';
-
 import { NetworkIdByName, NetworkId } from '@synthetixio/contracts-interface';
 import { Navigation } from '@snx-v2/Navigation';
+import Connector from 'containers/Connector';
 
 export const Header: FC = () => {
   const { isWalletConnected, walletAddress, connectWallet, switchNetwork, network } =

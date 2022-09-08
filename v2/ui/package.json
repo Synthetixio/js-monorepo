@@ -30,7 +30,7 @@
     "@snx-v1/constantsUi": "workspace:*",
     "@snx-v1/media": "workspace:*",
     "@snx-v1/styles": "workspace:*",
-    "@snx-v2/Header": "workspace:*",
+    "@snx-v2/Navigation": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@socket.tech/widget": "^0.1.1",
     "@synthetixio/contracts": "workspace:*",
