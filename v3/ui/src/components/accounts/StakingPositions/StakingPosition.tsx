@@ -25,6 +25,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { formatValue } from '../../../utils/helpers';
 import { currency } from '../../../utils/currency';
 import { StakingPositionType } from '../../../utils/types';
+import { poolsData } from '../../../utils/constants';
 
 export default function StakingPosition({ position }: { position: StakingPositionType }) {
   // If the connected wallet doesn’t own this account token, remove/disable the interactivity
@@ -247,7 +248,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
           display="inline"
           borderBottom="1px dotted rgba(255,255,255,0.5)"
         >
-          Spartan Council
+          {poolsData[position.poolId.toString()].name}
         </Link>
         <Link color="blue.400" ml="1">
           <EditIcon onClick={onOpenFund} style={{ transform: 'translateY(-2px)' }} />

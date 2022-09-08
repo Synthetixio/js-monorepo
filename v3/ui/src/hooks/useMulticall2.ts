@@ -136,5 +136,6 @@ export const useMulticall = (
     exec,
     status,
     currentTxn,
+    isValid: !!calls.length,
   };
 };

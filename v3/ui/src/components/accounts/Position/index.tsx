@@ -62,7 +62,14 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
             />
           </TabPanel>
           <TabPanel>
-            <Pool poolId={poolId} />
+            <Pool
+              collateralAmount={collateralAmount}
+              accountId={accountId}
+              poolId={poolId}
+              collateral={collateral}
+              debt={debt}
+              refetch={refetch}
+            />
           </TabPanel>
           <TabPanel>
             <Rewards />
