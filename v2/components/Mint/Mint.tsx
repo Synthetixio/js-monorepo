@@ -53,7 +53,7 @@ export const Mint = ({
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
           {t('staking-v2.mint.heading')}
         </Text>
-        <Tooltip label="Soonthetix" hasArrow>
+        <Tooltip label={t('staking-v2.mint.heading-tooltip')} hasArrow>
           <Flex alignItems="center">
             <InfoIcon width="16px" height="16px" />
           </Flex>
@@ -144,7 +144,7 @@ export const Mint = ({
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
           {t('staking-v2.mint.borrowing')}
         </Text>
-        <Tooltip label="Soonthetix" hasArrow>
+        <Tooltip label={t('staking-v2.mint.borrowing-tooltip')} hasArrow>
           <Flex>
             <InfoIcon width="16px" height="16px" />
           </Flex>
@@ -183,7 +183,7 @@ export const Mint = ({
           <Text mr={1} fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs">
             {t('staking-v2.mint.gas')}
           </Text>
-          <Tooltip label="Soonthetix" hasArrow>
+          <Tooltip label={t('staking-v2.mint.gas-tooltip')} hasArrow>
             <Flex>
               <InfoIcon width="16px" height="16px" />
             </Flex>
