@@ -37,6 +37,12 @@
     },
     "transaction-modal": {
       "metamask-note": "Follow the Metamask prompts to authorize the transaction."
+    },
+    "balance-box": {
+      "heading": "My Balances",
+      "box-heading": "SNX Total",
+      "staked": "Staked",
+      "transferable": "Transferable"
     }
   },
   "meta": {
