@@ -40,6 +40,7 @@
     },
     "balance-box": {
       "heading": "My Balances",
+      "heading-tooltip": "Here you can find you SNX balance. How much you have staked and much is available to your disposal",
       "box-heading": "SNX Total",
       "staked": "Staked",
       "transferable": "Transferable"
