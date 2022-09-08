@@ -1,9 +1,6 @@
-import React from 'react';
 import { Icon, IconProps } from '@chakra-ui/react';
 
 interface TransactionPendingProps extends IconProps {
-  width?: number | string;
-  height?: number | string;
   color?: string;
 }
 

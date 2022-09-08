@@ -1,11 +1,6 @@
 import { Icon, IconProps } from '@chakra-ui/react';
 
-interface InfoIconProps extends IconProps {
-  width?: string | number;
-  height?: string | number;
-}
-
-export const InfoIcon = ({ width = '20px', height = '20px', color = 'white' }: InfoIconProps) => {
+export const InfoIcon = ({ width = '20px', height = '20px', color = 'white' }: IconProps) => {
   return (
     <Icon width={width} height={height} viewBox="0 0 24 24" fill="none" color={color}>
       <path

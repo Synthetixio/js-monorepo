@@ -1,17 +1,11 @@
 import { Icon, IconProps } from '@chakra-ui/react';
 
-interface WalletIconProps extends IconProps {
-  width?: number | string;
-  height?: number | string;
-  color?: string;
-}
-
 export const WalletIcon = ({
   width = '20px',
   height = '20ox',
   color = 'whiteAlpha.700',
   ...props
-}: WalletIconProps) => {
+}: IconProps) => {
   return (
     <Icon width={width} color={color} height={height} viewBox="0 0 20 20" fill="none" {...props}>
       <path

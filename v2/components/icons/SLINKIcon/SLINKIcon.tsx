@@ -1,11 +1,6 @@
 import { Icon, IconProps } from '@chakra-ui/react';
 
-interface SLINKIconProps extends IconProps {
-  width?: number;
-  height?: number;
-}
-
-export const SLINKIcon = ({ width = 34, height = 34, ...props }: SLINKIconProps) => {
+export const SLINKIcon = ({ width = '34px', height = '34px', ...props }: IconProps) => {
   return (
     <Icon
       width={width}

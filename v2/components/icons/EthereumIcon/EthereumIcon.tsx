@@ -1,8 +1,6 @@
-import { Icon } from '@chakra-ui/react';
+import { Icon, IconProps } from '@chakra-ui/react';
 
-interface EthereumIconProps {
-  width?: number | string;
-  height?: number | string;
+interface EthereumIconProps extends IconProps {
   color?: string;
   fill?: string;
 }
