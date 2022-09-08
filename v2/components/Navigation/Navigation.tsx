@@ -27,9 +27,8 @@ import {
   SettingsIcon,
   StakingIcon,
   WalletIcon,
+  StakingLogo,
 } from '@snx-v2/icons';
-
-import { StakingLogo } from '../staking-logo';
 import { useTranslation } from 'react-i18next';
 import { truncateAddress } from '../../utils/formatters/string';
 import { UserBalances } from '@snx-v2/UserBalances';
