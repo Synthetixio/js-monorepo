@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Connector from 'containers/Connector';
 
@@ -70,7 +70,7 @@ const AssetsTable: FC<AssetsTableProps> = ({
   const { isAppReady, isL2, isWalletConnected } = Connector.useContainer();
   const { useGetSynthsByName } = useSynthetixQueries();
   const synthByNameQuery = useGetSynthsByName();
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const { selectedPriceCurrency, selectPriceCurrencyRate } = useSelectedPriceCurrency();
   const totalValueString = totalValue.toString();
@@ -166,7 +166,7 @@ const AssetsTable: FC<AssetsTableProps> = ({
         }: CellProps<CryptoBalance>) => {
           if (currencyKey === CryptoCurrency.SNX) {
             return (
-              <Link href={ROUTES.Staking.Home}>
+              <Link to={ROUTES.Staking.Home}>
                 <StyledButtonPink>{t('common.stake-snx')}</StyledButtonPink>
               </Link>
             );
@@ -253,7 +253,7 @@ const AssetsTable: FC<AssetsTableProps> = ({
               {t('synths.assets.synths.table.no-synths.desc')}
             </TableNoResultsDesc>
             <TableNoResultsButtonContainer>
-              <Button variant="primary" onClick={() => router.push(ROUTES.Staking.Home)}>
+              <Button variant="primary" onClick={() => navigate(ROUTES.Staking.Home)}>
                 {t('common.stake-snx')}
               </Button>
             </TableNoResultsButtonContainer>

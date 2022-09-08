@@ -1,4 +1,4 @@
-import React from 'react';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { FlexDivCol } from '@snx-v1/styles';
@@ -6,12 +6,15 @@ import media from '@snx-v1/media';
 
 import ActionBox from './components/ActionBox';
 import EscrowTable from './components/EscrowTable';
-import { useRouter } from 'next/router';
+import { useLocation } from 'react-router-dom';
 import { EscrowPanelType } from 'store/escrow';
 
 const Index: React.FC = () => {
-  const router = useRouter();
-  const defaultTab = (router.query.action && router.query.action[0]) || EscrowPanelType.REWARDS;
+  const { search } = useLocation();
+  const defaultTab = useMemo(() => {
+    const action = new URLSearchParams(search).get('action');
+    return action ?? EscrowPanelType.REWARDS;
+  }, [search]);
 
   return (
     <Container>

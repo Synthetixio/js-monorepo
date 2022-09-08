@@ -1,5 +1,5 @@
-import React, { FC, Suspense, useEffect, PropsWithChildren } from 'react';
-import { AppProps } from 'next/app';
+import React from 'react';
+import { useEffect } from 'react';
 import Head from 'react-helmet';
 import { RecoilRoot } from 'recoil';
 import { useTranslation } from 'react-i18next';
@@ -7,12 +7,10 @@ import { ThemeProvider } from 'styled-components';
 
 import WithAppContainers from 'containers';
 import theme from 'styles/theme';
-
 import Layout from 'sections/shared/Layout';
-import AppLayout from 'sections/shared/Layout/AppLayout';
-import { MediaContextProvider } from '@snx-v1/media';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { MediaContextProvider } from 'styles/media';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { DEFAULT_REQUEST_REFRESH_INTERVAL } from 'constants/defaults';
 
 import { SynthetixQueryContextProvider, createQueryContext } from '@synthetixio/queries';
@@ -21,10 +19,8 @@ import SystemStatus from 'sections/shared/SystemStatus';
 
 import '../i18n';
 import Connector from 'containers/Connector';
-import { isSupportedNetworkId } from '../utils/network';
-import useLocalStorage from '../hooks/useLocalStorage';
-import GlobalLoader from '../components/GlobalLoader';
-import { LOCAL_STORAGE_KEYS } from '../constants/storage';
+
+import Routes from './Routes';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,65 +31,45 @@ const queryClient = new QueryClient({
   },
 });
 
-const InnerApp: FC<AppProps> = ({ Component, pageProps }) => {
-  const { provider, signer, network, L1DefaultProvider, synthetixjs } = Connector.useContainer();
+function InnerApp() {
+  const { provider, signer, network, L1DefaultProvider } = Connector.useContainer();
 
   useEffect(() => {
     try {
       document.querySelector('#global-loader')?.remove();
     } catch (_e) {}
   }, []);
-  const networkId = network?.id ? Number(network?.id) : -1;
+
   return (
     <>
       <SynthetixQueryContextProvider
         value={
-          provider && isSupportedNetworkId(networkId) && synthetixjs
+          provider && network?.id
             ? createQueryContext({
                 provider: provider,
                 signer: signer || undefined,
-                networkId,
-                synthetixjs,
+                networkId: network.id,
               })
             : createQueryContext({
                 networkId: 1,
                 provider: L1DefaultProvider,
-                synthetixjs: null,
               })
         }
       >
         <Layout>
           <SystemStatus>
-            <AppLayout>
-              <Component {...pageProps} />
-            </AppLayout>
+            <Routes />
           </SystemStatus>
         </Layout>
         <ReactQueryDevtools />
       </SynthetixQueryContextProvider>
     </>
   );
-};
-const ChakraProviderWithTheme: FC<PropsWithChildren> = React.lazy(
-  () =>
-    import(
-      /* webpackChunkName: "ChakraProviderWithTheme" */
-      '../components/ChakraProviderWithTheme'
-    )
-);
+}
 
-const LazyChakraProvider: FC<PropsWithChildren<{ enabled: boolean }>> = ({ enabled, children }) => {
-  if (!enabled) return <>{children}</>;
-
-  return (
-    <Suspense fallback={<GlobalLoader />}>
-      <ChakraProviderWithTheme>{children}</ChakraProviderWithTheme>
-    </Suspense>
-  );
-};
-const App: FC<AppProps> = (props) => {
+function App() {
   const { t } = useTranslation();
-  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
+
   return (
     <>
       <Head>
@@ -115,23 +91,39 @@ const App: FC<AppProps> = (props) => {
         <meta name="twitter:image" content="/images/staking-twitter.jpg" />
         <meta name="twitter:url" content="https://staking.synthetix.io" />
         <link rel="icon" href="/images/favicon.ico" />
+
+        {/* matomo */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+					  var _paq = window._paq = window._paq || [];
+					  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+					  _paq.push(['trackPageView']);
+					  _paq.push(['enableLinkTracking']);
+					  (function() {
+					    var u="https://analytics.synthetix.io/";
+					    _paq.push(['setTrackerUrl', u+'matomo.php']);
+					    _paq.push(['setSiteId', '3']);
+					    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+					    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+					  })();
+				`,
+          }}
+        />
       </Head>
-      <LazyChakraProvider enabled={STAKING_V2_ENABLED}>
-        <ThemeProvider theme={theme}>
-          <RecoilRoot>
-            <QueryClientProvider client={queryClient} contextSharing={true}>
-              <WithAppContainers>
-                {/* @ts-ignore TODO: update styled-media-query */}
-                <MediaContextProvider>
-                  <InnerApp {...props} />
-                </MediaContextProvider>
-              </WithAppContainers>
-            </QueryClientProvider>
-          </RecoilRoot>
-        </ThemeProvider>
-      </LazyChakraProvider>
+      <ThemeProvider theme={theme}>
+        <RecoilRoot>
+          <QueryClientProvider client={queryClient} contextSharing={true}>
+            <WithAppContainers>
+              <MediaContextProvider>
+                <InnerApp />
+              </MediaContextProvider>
+            </WithAppContainers>
+          </QueryClientProvider>
+        </RecoilRoot>
+      </ThemeProvider>
     </>
   );
-};
+}
 
 export default App;

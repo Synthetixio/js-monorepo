@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 
 import { Loan } from 'containers/Loans/types';
 import Loans from 'containers/Loans';
@@ -14,7 +14,7 @@ type CloseProps = {
 };
 
 const Close: React.FC<CloseProps> = ({ loan, loanId }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [gasPrice, setGasPrice] = useState<GasPrice | undefined>(undefined);
   const { useSynthetixTxn } = useSynthetixQueries();
   const { reloadPendingWithdrawals } = Loans.useContainer();
@@ -27,7 +27,7 @@ const Close: React.FC<CloseProps> = ({ loan, loanId }) => {
       await reloadPendingWithdrawals();
       setIsWorking('');
       setTxModalOpen(false);
-      router.push(ROUTES.Loans.List);
+      navigate(ROUTES.Loans.List);
     },
     onError: () => {
       setIsWorking('');

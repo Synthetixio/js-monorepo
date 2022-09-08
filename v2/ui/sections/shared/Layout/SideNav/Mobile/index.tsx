@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import StakingLogo from 'assets/svg/app/staking-logo-small.svg';
@@ -13,13 +13,14 @@ import UIContainer from 'containers/UI';
 
 import MobileMenu from './MobileMenu';
 import { SubMenuLink } from '../../constants';
-import { useRouter } from 'next/router';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { MenuLinkItem } from './MobileMenu';
 
 const MobileSideNav: FC = () => {
   const { isMobileNavOpen, isMobileSubNavOpen, activeMobileSubNav, dispatch } =
     UIContainer.useContainer();
-  const router = useRouter();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { t } = useTranslation();
 
@@ -36,7 +37,7 @@ const MobileSideNav: FC = () => {
           {isMobileSubNavOpen ? (
             <BackIcon width="16" onClick={() => dispatch({ type: 'clear_sub' })} />
           ) : (
-            <Link href={ROUTES.Home}>
+            <Link to={ROUTES.Home}>
               <StakingLogo width="39" />
             </Link>
           )}
@@ -48,13 +49,13 @@ const MobileSideNav: FC = () => {
           <div>
             {activeMobileSubNav?.map(({ i18nLabel, subLink }: SubMenuLink, i) => {
               const onClick = () => {
-                router.push(subLink);
+                navigate(subLink);
                 dispatch({ type: 'close' });
               };
               return (
                 <MenuLinkItem
                   key={`subMenuLinkItem-${i}`}
-                  isActive={router.asPath === subLink}
+                  isActive={location.pathname === subLink}
                   data-testid={`sidenav-submenu-${subLink}`}
                   onClick={onClick}
                 >

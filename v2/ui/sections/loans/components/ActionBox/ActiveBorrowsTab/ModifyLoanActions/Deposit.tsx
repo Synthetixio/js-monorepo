@@ -4,7 +4,7 @@ import { wei } from '@synthetixio/wei';
 
 import { Loan } from 'containers/Loans/types';
 import Wrapper from './Wrapper';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import ROUTES from 'constants/routes';
 import { getETHToken } from 'contracts/ethToken';
 import Connector from 'containers/Connector';
@@ -18,7 +18,7 @@ type DepositProps = {
 const Deposit: React.FC<DepositProps> = ({ loan, loanId }) => {
   const [gasPrice, setGasPrice] = useState<GasPrice | undefined>(undefined);
   const { useSynthetixTxn } = useSynthetixQueries();
-  const router = useRouter();
+  const navigate = useNavigate();
   const { walletAddress } = Connector.useContainer();
 
   const [isWorking, setIsWorking] = useState<string>('');
@@ -49,7 +49,7 @@ const Deposit: React.FC<DepositProps> = ({ loan, loanId }) => {
       onSuccess: () => {
         setIsWorking('');
         setTxModalOpen(false);
-        router.push(ROUTES.Loans.List);
+        navigate(ROUTES.Loans.List);
       },
       onError: () => {
         setIsWorking('');

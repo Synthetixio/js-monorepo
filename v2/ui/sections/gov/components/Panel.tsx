@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { SPACE_KEY } from 'constants/snapshot';
@@ -17,7 +17,7 @@ import useGetPanelType from '../hooks/useGetPanelType';
 
 const Panel = () => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const navigate = useNavigate();
   const panelType = useGetPanelType();
 
   const proposalsData = useMemo(
@@ -33,21 +33,9 @@ const Panel = () => {
   );
   switch (panelType) {
     case PanelType.PROPOSAL:
-      return (
-        <Proposal
-          onBack={() => {
-            router.push(ROUTES.Gov.Home);
-          }}
-        />
-      );
+      return <Proposal onBack={() => navigate(ROUTES.Gov.Home)} />;
     case PanelType.CREATE:
-      return (
-        <Create
-          onBack={() => {
-            router.push(ROUTES.Gov.Home);
-          }}
-        />
-      );
+      return <Create onBack={() => navigate(ROUTES.Gov.Home)} />;
     default:
       return (
         <Grid>
