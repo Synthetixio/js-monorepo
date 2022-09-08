@@ -25,7 +25,7 @@ export const useStakingPosition = (
     select: (data) => {
       const debt = formatValue(data[1], 18) || 0;
       const collateralValue = formatValue(data[0]?.value || 0, collateral.priceDecimals);
-      const cRatio = debt !== 0 ? BigNumber.from(collateralValue).mul(100).div(debt) : 0;
+      const cRatio = debt !== 0 ? BigNumber.from(collateralValue).mul(100).div(debt).toNumber() : 0;
       return {
         collateralAmount: data[0].amount || 0,
         cRatio,
