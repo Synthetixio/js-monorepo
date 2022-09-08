@@ -10,7 +10,7 @@ import Button from 'components/Button';
 import TextInput from 'components/Input/SearchInput';
 import { Divider, GridDivCenteredRow } from '@snx-v1/styles';
 import { ethers } from 'ethers';
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 import Trash from 'assets/svg/app/trash.svg';
 import Connector from 'containers/Connector';
 

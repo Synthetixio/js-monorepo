@@ -14,7 +14,7 @@ import { formatNumber } from 'utils/formatters/number';
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';
 import { ModalContent, ModalItem, ModalItemTitle, ModalItemText } from '@snx-v1/styles';
 
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 import Connector from 'containers/Connector';
 import useSynthetixQueries, { GasPrice } from '@synthetixio/queries';
 import { ethers } from 'ethers';

@@ -38,7 +38,7 @@ import {
   FlexDivCentered,
   Divider,
 } from '@snx-v1/styles';
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 
 export type WalletOptionsProps = {

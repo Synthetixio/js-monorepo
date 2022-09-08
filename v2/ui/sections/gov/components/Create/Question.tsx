@@ -24,7 +24,7 @@ import {
 } from '../common';
 import { useTranslation } from 'react-i18next';
 import { Transaction } from 'constants/network';
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 import TxState from 'sections/gov/components/TxState';
 import { SPACE_KEY } from 'constants/snapshot';
 

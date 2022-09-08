@@ -7,7 +7,7 @@ import {
   ModalItemText as TxModalItemText,
   Tooltip,
 } from '@snx-v1/styles';
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 import { TxModalItem } from 'sections/delegate/common';
 
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';

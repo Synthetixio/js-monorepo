@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 import { CellProps } from 'react-table';
 import Table from 'components/Table';
 import useMediaQuery from 'hooks/useMediaQuery';

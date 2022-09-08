@@ -35,7 +35,7 @@ import DelegateIcon from 'assets/svg/app/delegate.svg';
 import WatchWalletModal from 'sections/shared/modals/WatchWalletModal';
 import DelegateModal from 'sections/shared/modals/DelegateModal';
 import Connector from 'containers/Connector';
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 
 const UserMenu: FC = () => {
   const { t } = useTranslation();

@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
 
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 import Button from 'components/Button';
 import StructuredTab from 'components/StructuredTab';
 import Connector from 'containers/Connector';

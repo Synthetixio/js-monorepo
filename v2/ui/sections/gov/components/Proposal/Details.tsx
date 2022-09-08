@@ -5,7 +5,7 @@ import makeBlockie from 'ethereum-blockies-base64';
 import Etherscan from 'containers/BlockExplorer';
 
 import { FlexDivRowCentered, ExternalLink } from '@snx-v1/styles';
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 import { formatTxTimestamp } from 'utils/formatters/date';
 import Link from 'assets/svg/app/link.svg';
 import { Blockie } from '../common';

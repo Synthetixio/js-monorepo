@@ -19,7 +19,7 @@ import {
   ActionsGridBox,
 } from 'sections/merge-accounts/common';
 import { FlexDivColCentered } from '@snx-v1/styles';
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 
 export const TxWaiting: FC<{
   fromAddress: string | null;

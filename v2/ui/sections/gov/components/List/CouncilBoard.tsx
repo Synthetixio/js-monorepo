@@ -8,7 +8,7 @@ import { ExternalLink, FlexDivRowCentered } from '@snx-v1/styles';
 import Spinner from 'assets/svg/app/loader.svg';
 
 import Etherscan from 'containers/BlockExplorer';
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 
 import Link from 'assets/svg/app/link.svg';
 import { Blockie, StyledTooltip } from '../common';

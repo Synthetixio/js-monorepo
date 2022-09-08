@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useRecoilState } from 'recoil';
 
 import { delegateWalletState } from 'store/wallet';
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 import useSynthetixQueries, { DelegationWallet } from '@synthetixio/queries';
 
 import { MenuModal } from '../common';

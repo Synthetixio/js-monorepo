@@ -35,7 +35,7 @@ import {
   WhiteSubheader,
 } from 'sections/gov/components/common';
 
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 import useSignMessage, { SignatureType } from 'mutations/gov/useSignMessage';
 import Button from 'components/Button';
 

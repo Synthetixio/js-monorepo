@@ -6,7 +6,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import useSynthetixQueries, { GasPrice } from '@synthetixio/queries';
 
-import { truncateAddress } from 'utils/formatters/string';
+import { truncateAddress } from '@snx-v2/formatters';
 import Button from 'components/Button';
 import Connector from 'containers/Connector';
 import Etherscan from 'containers/BlockExplorer';
