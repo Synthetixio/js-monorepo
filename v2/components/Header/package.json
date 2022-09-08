@@ -1,0 +1,10 @@
+{
+  "name": "@snx-v2/Header",
+  "private": true,
+  "main": "index.tsx",
+  "version": "0.0.0",
+  "dependencies": {
+    "@synthetixio/contracts-interface": "workspace:*",
+    "react": "^18.2.0"
+  }
+}

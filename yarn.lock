@@ -6203,6 +6203,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/Header@workspace:v2/components/Header":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/Header@workspace:v2/components/Header"
+  dependencies:
+    "@synthetixio/contracts-interface": "workspace:*"
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/MainActionCards@workspace:v2/components/MainActionCards":
   version: 0.0.0-use.local
   resolution: "@snx-v2/MainActionCards@workspace:v2/components/MainActionCards"
