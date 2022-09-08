@@ -6203,10 +6203,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/Header@workspace:v2/components/Header":
+"@snx-v2/Header@workspace:*, @snx-v2/Header@workspace:v2/components/header":
   version: 0.0.0-use.local
-  resolution: "@snx-v2/Header@workspace:v2/components/Header"
+  resolution: "@snx-v2/Header@workspace:v2/components/header"
   dependencies:
+    "@snx-v2/Navigation": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
     react: ^18.2.0
   languageName: unknown
@@ -6225,7 +6226,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/Navigation@workspace:v2/components/Navigation":
+"@snx-v2/Navigation@workspace:*, @snx-v2/Navigation@workspace:v2/components/Navigation":
   version: 0.0.0-use.local
   resolution: "@snx-v2/Navigation@workspace:v2/components/Navigation"
   dependencies:
@@ -8272,6 +8273,7 @@ __metadata:
     "@snx-v1/constantsUi": "workspace:*"
     "@snx-v1/media": "workspace:*"
     "@snx-v1/styles": "workspace:*"
+    "@snx-v2/Header": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10

@@ -4,6 +4,7 @@
   "main": "index.tsx",
   "version": "0.0.0",
   "dependencies": {
+    "@snx-v2/Navigation": "workspace:*",
     "@synthetixio/contracts-interface": "workspace:*",
     "react": "^18.2.0"
   }
