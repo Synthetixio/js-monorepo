@@ -28,8 +28,11 @@
     },
     "mint": {
       "heading": "How much SNX do you want to stake?",
+      "heading-tooltip": "Choose how much SNX you would like to stake. You can use the presets available or enter custom amount.",
       "borrowing": "Borrowing",
+      "borrowing-tooltip": "By staking SNX you're effectively borrowing sUSD.",
       "gas": "Gas Price (GWEI)",
+      "gas-tooltip": "Is how much it costs to perform a transaction on the blockchain & GWEI is a denomination of Ether",
       "snx-balance": "SNX Balance: {{snxBalance}}",
       "susd-balance": "sUSD Balance: {{susdBalance}}",
       "enter-amount": "Enter Amount",
