@@ -6232,6 +6232,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/UserBalances": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@storybook/react": ^6.5.10
     "@synthetixio/contracts-interface": "workspace:*"
