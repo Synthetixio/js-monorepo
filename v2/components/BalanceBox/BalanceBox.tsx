@@ -19,7 +19,7 @@ export const BalanceBox = ({
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
           {t('staking-v2.balance-box.heading')}
         </Text>
-        <Tooltip label="Soonthetix" hasArrow>
+        <Tooltip label={t('staking-v2.balance-box.heading-tooltip')} hasArrow>
           <Center>
             <InfoIcon width="10px" height="10px" />
           </Center>
