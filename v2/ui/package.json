@@ -32,7 +32,6 @@
     "@snx-v1/styles": "workspace:*",
     "@snx-v2/UserBalances": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
-    "@snx-v2/getHealthVariant": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@socket.tech/widget": "^0.1.1",
     "@synthetixio/contracts": "workspace:*",
