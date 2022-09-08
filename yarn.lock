@@ -6179,6 +6179,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/CRatioProgressBar@workspace:v2/components/c-ratio-health-card":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/CRatioProgressBar@workspace:v2/components/c-ratio-health-card"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/getHealthVariant": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/react": ^6.5.10
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/ExternalLink@workspace:v2/components/ExternalLink":
   version: 0.0.0-use.local
   resolution: "@snx-v2/ExternalLink@workspace:v2/components/ExternalLink"
