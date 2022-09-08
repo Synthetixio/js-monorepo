@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconProps, Icon } from '@chakra-ui/react';
 
 export const MaintainIcon = ({

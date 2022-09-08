@@ -1,4 +1,3 @@
-import React from 'react';
 import { Icon, IconProps } from '@chakra-ui/react';
 
 export const GuideIcon = ({ width = '20px', height = '20px', color = 'white' }: IconProps) => {

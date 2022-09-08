@@ -1,10 +1,10 @@
-import React from 'react';
 import { IconProps, Icon } from '@chakra-ui/react';
 
 interface StakeIconProps extends IconProps {
   fromColor?: string;
   toColor?: string;
 }
+
 export const StakeIcon = ({
   width = '32px',
   height = '32px',

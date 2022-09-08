@@ -2,13 +2,7 @@ import { Icon, IconProps } from '@chakra-ui/react';
 
 export const TokensIcon = ({ width = '35px', height = '35px' }: IconProps) => {
   return (
-    <Icon
-      width={width}
-      height={height}
-      viewBox="0 0 34 35"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <Icon width={width} height={height} viewBox="0 0 34 35" fill="none">
       <circle cx="16.9999" cy="17.5" r="17" fill="url(#paint0_linear_2172_5863)" />
       <circle cx="16.9999" cy="17.4999" r="12.5333" fill="#0B0B22" stroke="black" />
       <path

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Icon, IconProps } from '@chakra-ui/react';
 
 export const KebabMenu = ({ width = '24px', height = '24px', color = 'white' }: IconProps) => {
