@@ -6203,9 +6203,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/Header@workspace:*, @snx-v2/Header@workspace:v2/components/Header":
+"@snx-v2/Header@workspace:*, @snx-v2/Header@workspace:v2/components/header":
   version: 0.0.0-use.local
-  resolution: "@snx-v2/Header@workspace:v2/components/Header"
+  resolution: "@snx-v2/Header@workspace:v2/components/header"
   dependencies:
     "@snx-v2/Navigation": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
