@@ -6155,6 +6155,37 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/ExternalLink@workspace:v2/components/ExternalLink":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/ExternalLink@workspace:v2/components/ExternalLink"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/react": ^6.5.10
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/TransactionModal@workspace:v2/components/TransactionModal":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/TransactionModal@workspace:v2/components/TransactionModal"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/client-api": ^6.5.10
+    "@storybook/react": ^6.5.10
+    "@synthetixio/v3-theme": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/formatters@workspace:*, @snx-v2/formatters@workspace:v2/lib/formatters":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/formatters@workspace:v2/lib/formatters"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/getHealthVariant@workspace:*, @snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant":
   version: 0.0.0-use.local
   resolution: "@snx-v2/getHealthVariant@workspace:v2/lib/getHealthVariant"
@@ -6170,6 +6201,20 @@ __metadata:
   peerDependencies:
     "@chakra-ui/react": 2
     react: 18
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/mint@workspace:v2/components/Mint":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/mint@workspace:v2/components/Mint"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/react": ^6.5.10
+    "@synthetixio/wei": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
   languageName: unknown
   linkType: soft
 
@@ -6855,7 +6900,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/client-api@npm:6.5.10":
+"@storybook/client-api@npm:6.5.10, @storybook/client-api@npm:^6.5.10":
   version: 6.5.10
   resolution: "@storybook/client-api@npm:6.5.10"
   dependencies:
@@ -7373,7 +7418,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react@npm:^6.5.7":
+"@storybook/react@npm:^6.5.10":
   version: 6.5.10
   resolution: "@storybook/react@npm:6.5.10"
   dependencies:
@@ -8134,6 +8179,7 @@ __metadata:
     "@snx-v1/constantsUi": "workspace:*"
     "@snx-v1/media": "workspace:*"
     "@snx-v1/styles": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@socket.tech/widget": ^0.1.1
@@ -8144,7 +8190,7 @@ __metadata:
     "@storybook/addon-links": ^6.5.7
     "@storybook/builder-webpack5": ^6.5.7
     "@storybook/manager-webpack5": ^6.5.10
-    "@storybook/react": ^6.5.7
+    "@storybook/react": ^6.5.10
     "@storybook/testing-library": ^0.0.13
     "@svgr/webpack": ^6.3.1
     "@swc/core": ^1.2.247
@@ -8293,7 +8339,7 @@ __metadata:
     "@storybook/addon-links": ^6.5.7
     "@storybook/builder-webpack5": ^6.5.7
     "@storybook/manager-webpack5": ^6.5.10
-    "@storybook/react": ^6.5.7
+    "@storybook/react": ^6.5.10
     eslint: ^8.22.0
     framer-motion: ^7.0.0
     react: ^18.2.0

@@ -10,6 +10,9 @@ const gradients = {
   grey: {
     900: 'linear(to-tr, grey.900, blackAlpha.900)',
   },
+  dark: {
+    500: 'linear(to-tr, #171923, #141414)',
+  },
 
   'pink-purple': {
     500: 'linear(to-tr, pink.500, purple.500)',
@@ -369,6 +372,7 @@ export const theme = extendTheme({
       800: '#073968',
       900: '#012546',
     },
+
     cyan: {
       50: '#E5FAFF',
       100: '#B7F2FF',

@@ -7,6 +7,7 @@ import {
 } from 'constants/defaults';
 import { CurrencyKey } from 'constants/currency';
 import { isFiatCurrency } from 'utils/currencies';
+import { numberWithCommas } from '@snx-v2/formatters';
 
 export type FormatNumberOptions = {
   minDecimals?: number;
@@ -29,12 +30,6 @@ export const LONG_CRYPTO_CURRENCY_DECIMALS = 8;
 export const getDecimalPlaces = (value: WeiSource) => (value.toString().split('.')[1] || '').length;
 
 export const zeroBN = wei(0);
-
-export function numberWithCommas(value: string) {
-  const parts = value.split('.');
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return parts.join('.');
-}
 
 // TODO: implement max decimals
 export const formatNumber = (value: WeiSource, options?: FormatNumberOptions) => {
