@@ -32,6 +32,7 @@ module.exports = {
         },
       },
     ],
+    ['@babel/transform-runtime', { corejs: 3 }],
   ],
 
   env: {
@@ -40,6 +41,8 @@ module.exports = {
         [
           require.resolve('@babel/preset-env'),
           {
+            useBuiltIns: 'usage',
+            corejs: { version: 3, proposals: true },
             modules: false,
             targets: {
               browsers: require('./package.json').browserslist,

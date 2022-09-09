@@ -43,12 +43,12 @@ const htmlPlugin = new HtmlWebpackPlugin({
   minify: false,
   hash: false,
   xhtml: true,
+  excludeChunks: ['main'],
 });
 
 const tsxRule = {
   test: /\.(ts|tsx)$/,
   include: [/v1\/lib/, /v1\/components/, /v2\/lib/, /v2\/components/, /v2\/ui/],
-  //  exclude: [/node_modules/],
   resolve: {
     fullySpecified: false,
   },
@@ -114,8 +114,26 @@ module.exports = {
   devServer,
   mode: isProd ? 'production' : 'development',
   entry: './index.ts',
+
   output: {
     path: path.resolve(__dirname, 'out'),
+    publicPath: '',
+    filename: '[name].js',
+    chunkFilename: isProd ? 'chunk/[name].[contenthash:8].js' : '[name].js',
+    assetModuleFilename: '[name].[contenthash:8][ext]',
+    clean: true,
+  },
+
+  optimization: {
+    runtimeChunk: false,
+    splitChunks: {
+      chunks: 'async',
+    },
+    moduleIds: 'deterministic',
+    chunkIds: 'deterministic',
+    minimize: isProd,
+    innerGraph: true,
+    emitOnErrors: false,
   },
 
   plugins: [htmlPlugin]
