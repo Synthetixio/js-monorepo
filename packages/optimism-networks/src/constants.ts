@@ -32,7 +32,7 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
     chainId: '0x1a4',
     chainName: 'Optimism Goerli',
     rpcUrls: ['https://goerli.optimism.io/'],
-    blockExplorerUrls: ['https://goerli-optimistic.etherscan.io'],
+    blockExplorerUrls: ['https://goerli-optimism.etherscan.io'],
     iconUrls: [
       'https://optimism.io/images/metamask_icon.svg',
       'https://optimism.io/images/metamask_icon.png',
