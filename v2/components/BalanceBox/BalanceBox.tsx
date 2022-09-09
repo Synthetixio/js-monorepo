@@ -14,7 +14,7 @@ export const BalanceBox = ({
 }: PropsWithChildren<Props>) => {
   const { t } = useTranslation();
   return (
-    <Box maxWidth="287px">
+    <Box width="287px">
       <Flex alignItems="center">
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
           {t('staking-v2.balance-box.heading')}
@@ -25,7 +25,7 @@ export const BalanceBox = ({
           </Center>
         </Tooltip>
       </Flex>
-      <Box bg="navy.900" padding="4">
+      <Box bg="navy.900" padding="2" border="1px" borderColor="gray.800" borderRadius="sm">
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="4" fontSize="xs">
           {t('staking-v2.balance-box.box-heading')}
         </Text>
