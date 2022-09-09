@@ -16,9 +16,10 @@ export type ChainName = keyof typeof chains;
 
 export type StakingPositionType = {
   id: string;
-  fundId: string;
-  fundName: string;
+  poolId: string;
+  poolName: string;
   collateralAmount: BigNumber;
   collateralType: CollateralType;
   cRatio: BigNumber;
+  debt: BigNumber;
 };

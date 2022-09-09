@@ -66,7 +66,7 @@ artifact = "WETH9"
 [invoke.register_lusd_collateral]
 target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
-func = "adjustCollateralType"
+func = "configureCollateral"
 args = [
     "<%= imports.lusd.contracts.token.address %>",
     "<%= imports.aggregator_lusd.contracts.aggregator.address %>",
@@ -80,7 +80,7 @@ depends = ["import.synthetix", "import.lusd", "import.aggregator_lusd"]
 [invoke.register_snx_collateral]
 target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
-func = "adjustCollateralType"
+func = "configureCollateral"
 args = [
     "<%= imports.snx.contracts.token.address %>",
     "<%= imports.aggregator_snx.contracts.aggregator.address %>",
@@ -94,7 +94,7 @@ depends = ["import.synthetix", "import.snx", "import.aggregator_snx"]
 [invoke.register_weth_collateral]
 target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
-func = "adjustCollateralType"
+func = "configureCollateral"
 args = [
     "<%= contracts.WETH.address %>",
     "<%= imports.aggregator_weth.contracts.aggregator.address %>",
@@ -115,20 +115,20 @@ args = [
 ]
 depends=["import.snx", "import.synthetix"]
 
-[invoke.createPreferredFund]
+[invoke.createPreferredPool]
 target = ["synthetix.CoreProxy"]
-func = "createFund"
+func = "createPool"
 args = [
     1,
     "<%= settings.owner %>",
 ]
 depends=["import.synthetix"]
 
-[invoke.setPreferredFund]
+[invoke.setPreferredPool]
 target = ["synthetix.CoreProxy"]
-func = "setPreferredFund"
+func = "setPreferredPool"
 from = "<%= settings.owner %>"
 args = [
     1,
 ]
-depends=["invoke.createPreferredFund"]
+depends=["invoke.createPreferredPool"]

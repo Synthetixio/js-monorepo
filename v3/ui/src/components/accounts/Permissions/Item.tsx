@@ -4,26 +4,26 @@ import { Address } from '../../shared/Address';
 import { PermissionsEditor } from './PermissionsEditor';
 interface Props {
   address: string;
-  roles: Array<string>;
+  permissions: Array<string>;
 }
 
-const roleColors: Record<string, string> = {
+const permissionColors: Record<string, string> = {
   stake: 'green',
   burn: 'red',
   'claim rewards': 'blue',
 };
 
-export const Item: FC<Props> = ({ address, roles }) => {
+export const Item: FC<Props> = ({ address, permissions }) => {
   return (
     <Tr>
       <Td py="4" width="200px">
         <Address address={address} />
       </Td>
       <Td>
-        {roles.map((r) => (
+        {permissions.map((r) => (
           <Tag
             key={r}
-            colorScheme={roleColors[r]}
+            colorScheme={permissionColors[r]}
             size="sm"
             mr="1"
             my="1"
@@ -34,8 +34,8 @@ export const Item: FC<Props> = ({ address, roles }) => {
         ))}
       </Td>
       <Td>
-        {/* only render below if owner or has modify permissions role */}
-        <PermissionsEditor address={address} roles={roles} />
+        {/* only render below if owner or has modify permissions */}
+        <PermissionsEditor address={address} permissions={permissions} />
       </Td>
     </Tr>
   );

@@ -23,32 +23,37 @@ import {
 } from '@chakra-ui/react';
 import { FC, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useManageRoles } from '../../../hooks';
+import { useManagePermissions } from '../../../hooks';
 import { formatShortAddress } from '../../shared/Address';
 import { AddressInput } from './AddressInput';
 
 type Props =
   | {
       address: string;
-      roles: Array<string>;
+      permissions: Array<string>;
     }
   | Record<string, never>;
 
 export const PermissionsEditor: FC<Props> = ({
   address: existingAddress,
-  roles: existingRoles,
+  permissions: existingPermissions,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isAlertOpen, onOpen: onAlertOpen, onClose: onAlertClose } = useDisclosure();
   const cancelRef = useRef();
   const { id: accountId } = useParams();
-  const [roles, setRoles] = useState<Array<string>>(existingRoles);
+  const [permissions, setPermissions] = useState<Array<string>>(existingPermissions);
   const [address, setAddress] = useState<string>(existingAddress ?? '');
 
-  const { exec, status } = useManageRoles(accountId!, address, existingRoles, roles);
+  const { exec, status } = useManagePermissions(
+    accountId!,
+    address,
+    existingPermissions,
+    permissions
+  );
   const isExecuting = useMemo(() => status === 'pending', [status]);
   const onAlertCancel = () => {
-    setRoles(existingRoles); // reset
+    setPermissions(existingPermissions); // reset
     onAlertClose();
   };
 
@@ -61,7 +66,7 @@ export const PermissionsEditor: FC<Props> = ({
             color="blue.400"
             cursor="pointer"
             onClick={() => {
-              setRoles([]);
+              setPermissions([]);
               onAlertOpen();
             }}
           />
@@ -94,9 +99,9 @@ export const PermissionsEditor: FC<Props> = ({
               Select Permissions
             </Heading>
             <CheckboxGroup
-              defaultValue={existingRoles}
+              defaultValue={existingPermissions}
               onChange={(t: Array<string>) => {
-                setRoles(t);
+                setPermissions(t);
               }}
             >
               <Grid gap={3} templateColumns="repeat(2, 1fr)">

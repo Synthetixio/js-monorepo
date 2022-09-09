@@ -1,5 +1,5 @@
 import { accountsState, chainIdState, collateralTypesState } from '../../../utils/state';
-import { contracts, fundsData, getChainById } from '../../../utils/constants';
+import { contracts, poolsData, getChainById } from '../../../utils/constants';
 import { useContract, useSynthetixRead } from '../../../hooks';
 import EditPosition from '../EditPosition';
 import Balance from './Balance';
@@ -30,16 +30,15 @@ import { useMemo } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { useAccount, useBalance, useNetwork } from 'wagmi';
-import { CollateralType } from '../../../utils/types';
+import { CollateralType, StakingPositionType } from '../../../utils/types';
 import { useNavigate } from 'react-router-dom';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall2';
 import { useApproveCall } from '../../../hooks/useApproveCall';
-import { StakingPositionType } from '../StakingPositions/types';
 
 type FormType = {
   collateralType: CollateralType;
   amount: string;
-  fundId: string;
+  poolId: string;
 };
 
 export default function Stake({
@@ -53,8 +52,8 @@ export default function Stake({
   const hasWalletConnected = Boolean(activeChain);
   const [collateralTypes] = useRecoilState(collateralTypesState);
 
-  const { data: fundId } = useSynthetixRead({
-    functionName: 'getPreferredFund',
+  const { data: poolId } = useSynthetixRead({
+    functionName: 'getPreferredPool',
   });
   // on loading dropdown and token amount maybe use https://chakra-ui.com/docs/components/feedback/skeleton
   const toast = useToast({
@@ -65,14 +64,14 @@ export default function Stake({
     mode: 'onChange',
     defaultValues: {
       collateralType: collateralTypes[0],
-      fundId: fundId?.toString() ?? '0',
+      poolId: poolId?.toString() ?? '0',
     },
   });
   const { handleSubmit, register, formState, reset, control } = methods;
 
   const collateralContract = useContract(contracts.SNX_TOKEN);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
-  const { isOpen: isOpenFund, onOpen: onOpenFund, onClose: onCloseFund } = useDisclosure();
+  const { isOpen: isOpenPool, onOpen: onOpenPool, onClose: onClosePool } = useDisclosure();
 
   const navigate = useNavigate();
   const { openConnectModal } = useConnectModal();
@@ -83,9 +82,9 @@ export default function Stake({
     control,
     name: 'collateralType',
   });
-  const selectedFundId = useWatch({
+  const selectedPoolId = useWatch({
     control,
-    name: 'fundId',
+    name: 'poolId',
   });
   const amount = useWatch({
     control,
@@ -113,7 +112,7 @@ export default function Stake({
 
   const calls: MulticallCall[] = useMemo(() => {
     const id = accountId ?? newAccountId;
-    const key = `${selectedFundId}-${selectedCollateralType.symbol}`;
+    const key = `${selectedPoolId}-${selectedCollateralType.symbol}`;
     const currentStakingPosition = stakingPositions[key];
 
     const amountToDelegate = Boolean(accountId)
@@ -132,7 +131,7 @@ export default function Stake({
     const stakingCalls: MulticallCall[] = [
       {
         contract: snxProxy.contract,
-        functionName: 'stake',
+        functionName: 'depositCollateral',
         callArgs: [id, selectedCollateralType.address, amountBN],
       },
       {
@@ -140,7 +139,7 @@ export default function Stake({
         functionName: 'delegateCollateral',
         callArgs: [
           id,
-          Boolean(accountId) ? selectedFundId : fundId || 0,
+          Boolean(accountId) ? selectedPoolId : poolId || 0,
           selectedCollateralType.address,
           amountToDelegate || 0,
           utils.parseEther('1'),
@@ -152,11 +151,11 @@ export default function Stake({
   }, [
     accountId,
     amountBN,
-    fundId,
+    poolId,
     newAccountId,
     selectedCollateralType.address,
     selectedCollateralType.symbol,
-    selectedFundId,
+    selectedPoolId,
     snxProxy,
     stakingPositions,
   ]);
@@ -189,7 +188,7 @@ export default function Stake({
       toast.closeAll();
       reset({
         collateralType: selectedCollateralType,
-        fundId: selectedFundId,
+        poolId: selectedPoolId,
         amount: '',
       });
       await Promise.all([refetchAccounts!({ cancelRefetch: Boolean(accountId) })]);
@@ -258,7 +257,7 @@ export default function Stake({
                 id="amount"
                 {...register('amount', {
                   validate: {
-                    sufficientFunds: (v) => {
+                    sufficientPools: (v) => {
                       const amountBN = Boolean(v)
                         ? ethers.utils.parseUnits(v, selectedCollateralType.decimals)
                         : BigNumber.from(0);
@@ -298,8 +297,8 @@ export default function Stake({
                   type="submit"
                 >
                   {/* @ts-ignore */}
-                  {formState.errors.amount?.type === 'sufficientFunds'
-                    ? 'Insufficient Funds'
+                  {formState.errors.amount?.type === 'sufficientPools'
+                    ? 'Insufficient Pools'
                     : 'Stake'}
                 </Button>
               ) : (
@@ -324,14 +323,14 @@ export default function Stake({
 
               {Boolean(accountId) ? (
                 <Text fontSize="xs" textAlign="right" ml="auto">
-                  Fund:{' '}
-                  {selectedFundId
-                    ? fundsData[selectedFundId]
-                      ? fundsData[selectedFundId].name
-                      : 'Unknown Fund'
+                  Pool:{' '}
+                  {selectedPoolId
+                    ? poolsData[selectedPoolId]
+                      ? poolsData[selectedPoolId].name
+                      : 'Unknown Pool'
                     : 'None'}{' '}
                   <Link color="blue.400">
-                    <EditIcon onClick={onOpenFund} style={{ transform: 'translateY(-2px)' }} />
+                    <EditIcon onClick={onOpenPool} style={{ transform: 'translateY(-2px)' }} />
                   </Link>
                 </Text>
               ) : (
@@ -349,13 +348,13 @@ export default function Stake({
           </form>
         </Box>
 
-        <Modal size="2xl" isOpen={isOpenFund} onClose={onCloseFund}>
+        <Modal size="2xl" isOpen={isOpenPool} onClose={onClosePool}>
           <ModalOverlay />
           <ModalContent bg="black" color="white">
-            <ModalHeader>Select Fund</ModalHeader>
+            <ModalHeader>Select Pool</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <EditPosition onClose={onCloseFund} />
+              <EditPosition onClose={onClosePool} />
               {/*
               <Heading size="sm" mb="3">Leverage</Heading>
               <Grid templateColumns='repeat(12, 1fr)' gap={6} alignItems="center" mb="6">

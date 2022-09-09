@@ -19,17 +19,17 @@ export default function StakerOption({ name, value, checked = false }: PropsType
           {name}
         </Heading>
         <Text fontSize="xs" display="block" color="gray.400">
-          Fund #{value}{' '}
-          <NavLink to="/funds/example">
-            <Link
-              color="blue.400"
-              display="inline-block"
-              transform="translateY(-1.5px)"
-              target="_blank"
-            >
-              <ExternalLinkIcon />
-            </Link>
-          </NavLink>
+          Pool #{value}{' '}
+          <Link
+            as={NavLink}
+            to={'/pools/example'}
+            color="blue.400"
+            display="inline-block"
+            transform="translateY(-1.5px)"
+            target="_blank"
+          >
+            <ExternalLinkIcon />
+          </Link>
         </Text>
       </Box>
       {/*

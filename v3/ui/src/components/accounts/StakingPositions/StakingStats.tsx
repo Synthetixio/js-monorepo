@@ -19,17 +19,17 @@ import { currency } from '../../../utils/currency';
 
 interface Props {
   accountId: string;
-  fundId: string;
+  poolId: string;
   collateral: CollateralType;
 }
 
-export const StakingStats: FC<Props> = ({ accountId, fundId, collateral }) => {
+export const StakingStats: FC<Props> = ({ accountId, poolId, collateral }) => {
   const {
     isLoading,
     debt,
     cRatio,
     collateralAmount: collateralAmountBN,
-  } = useStakingPosition(accountId, fundId, collateral);
+  } = useStakingPosition(accountId, poolId, collateral);
 
   if (isLoading) return <Spinner />;
 

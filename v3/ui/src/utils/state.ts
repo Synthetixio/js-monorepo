@@ -7,8 +7,8 @@ export const collateralTypesState = atom<Array<CollateralType>>({
   default: [],
 });
 
-export const fundsState = atom<Array<string>>({
-  key: 'funds',
+export const poolsState = atom<Array<string>>({
+  key: 'pools',
   default: [],
 });
 

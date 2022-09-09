@@ -1,5 +1,5 @@
 {
-  "address": "0xe6B4023F62cd0642b697E57C4e74CceC20664C32",
+  "address": "0x5249f94fe90EC33CF34844D537055BdD468BFFDe",
   "abi": [
     {
       "type": "function",
@@ -417,7 +417,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x7bd04a23d5a44a6cbac950be4312ddd3dcb62ba0c3f008baaa7105b7ede40fac",
+  "deployTxnHash": "0x2c3de85e9586b8ec43f13eda0032383f100ad5c36dccd4109783598549d4b3c4",
   "sourceName": "contracts/Multicall3.sol",
   "contractName": "Multicall3",
   "deployedOn": "contract.Multicall"

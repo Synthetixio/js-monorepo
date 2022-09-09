@@ -1,29 +1,33 @@
 import { useRecoilValue } from 'recoil';
 import { useContractReads } from 'wagmi';
-import { collateralTypesState, fundsState } from '../utils/state';
+import { collateralTypesState, poolsState } from '../utils/state';
 import { useSnxProxy } from './useContract';
-import { fundsData } from '../utils/constants';
+import { poolsData } from '../utils/constants';
 import { useSynthetixProxyEvent } from './useContractEvent';
 import { BigNumber } from 'ethers';
-import { StakingPositionType } from '../components/accounts/StakingPositions/types';
+import { StakingPositionType } from '../utils/types';
 
 type ContractReadsParams = Parameters<typeof useContractReads>[0];
 
 export const useStakingPositions = (accountId: string) => {
-  const funds = useRecoilValue(fundsState);
+  const pools = useRecoilValue(poolsState);
   const supportedCollateralTypes = useRecoilValue(collateralTypesState);
   const snxProxy = useSnxProxy();
 
   const funcCalls: ContractReadsParams['contracts'] = [];
-  const functionNames = ['accountVaultCollateral', 'accountCollateralRatio', 'accountVaultDebt'];
+  const functionNames = [
+    'getPositionCollateral',
+    'getPositionDebt',
+    'getPositionCollateralizationRatio',
+  ];
   functionNames.forEach((functionName) => {
-    funds.forEach((f) => {
+    pools.forEach((p) => {
       supportedCollateralTypes.forEach((ct) => {
         funcCalls.push({
           addressOrName: snxProxy?.address,
           contractInterface: snxProxy?.abi,
           functionName,
-          args: [accountId, f, ct.address],
+          args: [accountId, p, ct.address],
         });
       });
     });
@@ -35,18 +39,18 @@ export const useStakingPositions = (accountId: string) => {
     select: (data) => {
       const positions: Record<string, StakingPositionType> = {};
 
-      funds.forEach((f) => {
+      pools.forEach((poolId) => {
         supportedCollateralTypes.forEach((ct, idx) => {
-          const key = `${f}-${ct.symbol}`;
+          const key = `${poolId}-${ct.symbol}`;
           if (!data[idx].amount.eq(0)) {
             positions[key] = {
               id: key,
-              fundId: f,
-              fundName: fundsData[f.toString()].name,
+              poolId,
+              poolName: poolsData[poolId.toString()].name,
               collateralType: ct,
               collateralAmount: data[idx].amount,
-              cRatio: BigNumber.from(data[idx + functionNames.length] || 0),
-              debt: data[idx + functionNames.length * 2] || BigNumber.from(0),
+              cRatio: BigNumber.from(data[idx + functionNames.length * 2] || 0),
+              debt: data[idx + functionNames.length] || BigNumber.from(0),
               accountId,
             };
           }

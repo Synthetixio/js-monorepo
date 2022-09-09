@@ -2,14 +2,14 @@ import { Box, Text, Flex } from '@chakra-ui/react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
-export function Fund() {
+export function Pool() {
   const { id } = useParams();
 
   return (
     <Box>
       <Helmet>
-        <title>Fund</title>
-        <meta name="description" content="Fund" />
+        <title>Pool</title>
+        <meta name="description" content="Pool" />
       </Helmet>
       <Box>
         {/*
@@ -18,7 +18,7 @@ export function Fund() {
           </Tooltip>
           */}
         <Flex mb="6" flexDirection="column">
-          <Text color="gray.400">Fund #{id}</Text>
+          <Text color="gray.400">Pool #{id}</Text>
           {/*<Heading size="lg" mr="auto" lineHeight="1.2">Spartan Council</Heading>*/}
         </Flex>
         {/*
