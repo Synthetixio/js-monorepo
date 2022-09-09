@@ -1,13 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta content="initial-scale=1, width=device-width" name="viewport" />
-		<meta content="ie=edge" http-equiv="X-UA-Compatible" />
-		<link href="./public/images/favicon.ico" rel="icon" />
-		<title>No NEXT</title>
-	</head>
-	<body>
-		<div id="app"></div>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="initial-scale=1, width=device-width" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <link href="./public/images/favicon.ico" rel="icon" />
+    <title>No NEXT</title>
+    <style>
+      html,
+      body {
+        background-color: #06061b;
+      }
+    </style>
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/fonts/Inter-Regular.woff2"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/fonts/Inter-SemiBold.woff2"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/fonts/Inter-Bold.woff2"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/fonts/GT-America-Mono-Bold.woff2"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/fonts/GT-America-Extended-Bold.woff2"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/fonts/GT-America-Condensed-Medium.woff2"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/fonts/GT-America-Condensed-Bold.woff2"
+    />
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="global-loader">
+      <svg
+        viewBox="0 0 38 38"
+        xmlns="http://www.w3.org/2000/svg"
+        style="
+          width: 50px;
+          height: 50px;
+          left: 50%;
+          top: 50%;
+          margin-top: -25px;
+          margin-left: -25px;
+          position: fixed;
+        "
+      >
+        <defs>
+          <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
+            <stop stop-color="#42DDFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#42DDFF" stop-opacity="0.631" offset="63.146%"></stop>
+            <stop stop-color="#42DDFF" offset="100%"></stop>
+          </linearGradient>
+        </defs>
+        <g transform="translate(1 1)" fill="none" fill-rule="evenodd">
+          <path d="M36 18c0-9.94-8.06-18-18-18" stroke="url(#a)" stroke-width="2">
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 18 18"
+              to="360 18 18"
+              dur="0.9s"
+              repeatCount="indefinite"
+            ></animateTransform>
+          </path>
+          <circle fill="#42DDFF" cx="36" cy="18" r="1">
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 18 18"
+              to="360 18 18"
+              dur="0.9s"
+              repeatCount="indefinite"
+            ></animateTransform>
+          </circle>
+        </g>
+      </svg>
+    </div>
+    <script>
+      var _paq = (window._paq = window._paq || []);
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function () {
+        var u = 'https://analytics.synthetix.io/';
+        _paq.push(['setTrackerUrl', u + 'matomo.php']);
+        _paq.push(['setSiteId', '3']);
+        var d = document,
+          g = d.createElement('script'),
+          s = d.getElementsByTagName('script')[0];
+        g.async = true;
+        g.src = u + 'matomo.js';
+        s.parentNode.insertBefore(g, s);
+      })();
+    </script>
+  </body>
 </html>

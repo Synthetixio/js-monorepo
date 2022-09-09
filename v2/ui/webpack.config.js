@@ -1,5 +1,36 @@
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const generate = require('./scripts/minify-synthetix-contract');
+
+function optimiseContracts() {
+  const networks = ['goerli', 'goerli-ovm', 'mainnet', 'mainnet-ovm'];
+  const out = path.resolve(__dirname, './out');
+  generate({ networks, out });
+
+  return []
+    .concat(
+      networks.map(
+        (network) =>
+          new webpack.NormalModuleReplacementPlugin(
+            new RegExp(`/synthetix/publish/deployed/${network}/deployment.json`),
+            require.resolve(`${out}/${network}.json`)
+          )
+      )
+    )
+    .concat([
+      new webpack.NormalModuleReplacementPlugin(
+        new RegExp('/synthetix/publish/deployed/(kovan|local)'),
+        require.resolve('./scripts/noop')
+      ),
+      new webpack.NormalModuleReplacementPlugin(
+        /^synthetix$/,
+        require.resolve('synthetix/index.js')
+      ),
+    ]);
+}
+
+const contractPlugins = optimiseContracts();
 
 const htmlPlugin = new HtmlWebpackPlugin({
   template: './index.html',
@@ -10,8 +41,12 @@ const htmlPlugin = new HtmlWebpackPlugin({
 });
 
 const tsxRule = {
-  test: /\.tsx?$/,
-  include: [/v1\/lib/, /v1\/components/, /v2\/lib/, /v2\/components/],
+  test: /\.(ts|tsx)$/,
+  include: [/v1\/lib/, /v1\/components/, /v2\/lib/, /v2\/components/, /v2\/ui/],
+  //  exclude: [/node_modules/],
+  resolve: {
+    fullySpecified: false,
+  },
   use: {
     loader: require.resolve('swc-loader'),
     options: {
@@ -128,22 +163,41 @@ const devServer = {
 };
 
 module.exports = {
-  devtool: 'eval',
+  //  devtool: 'eval',
+  devtool: false,
   devServer,
   mode: 'development',
   entry: './index.ts',
+  output: {
+    path: path.resolve(__dirname, 'out'),
+  },
 
-  plugins: [htmlPlugin],
+  plugins: [htmlPlugin]
+    .concat(contractPlugins)
+    .concat([
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+        //      process: 'process/browser.js',
+      }),
+    ])
+    .concat([
+      new webpack.NormalModuleReplacementPlugin(
+        /^@tanstack\/react-query$/,
+        require.resolve('@tanstack/react-query')
+      ),
+    ]),
 
   resolve: {
     fallback: {
-      stream: false,
-      crypto: false,
+      buffer: require.resolve('buffer'),
+      stream: require.resolve('stream-browserify'),
+      crypto: require.resolve('crypto-browserify'),
+      process: require.resolve('process/browser.js'),
       http: false,
       https: false,
       os: false,
     },
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs'],
   },
 
   module: {
