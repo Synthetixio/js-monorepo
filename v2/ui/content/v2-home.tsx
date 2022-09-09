@@ -38,7 +38,12 @@ const V2Home = () => {
             liquidationCratioPercentage={liquidationCratioPercentage}
           />
         </Box>
-        <Flex ml="6" justifyContent="center">
+        <Flex
+          ml="6"
+          alignSelf={['center', 'center', 'center', 'flex-start']}
+          maxWidth="287px"
+          width="full"
+        >
           <BalanceBox snxPrice={3} snxBalance={1000} stakedSnx={900} transferable={800} />
         </Flex>
       </Flex>

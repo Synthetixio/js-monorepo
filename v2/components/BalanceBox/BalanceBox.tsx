@@ -14,7 +14,7 @@ export const BalanceBox = ({
 }: PropsWithChildren<Props>) => {
   const { t } = useTranslation();
   return (
-    <Box width="287px">
+    <Box width="full">
       <Flex alignItems="center">
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
           {t('staking-v2.balance-box.heading')}
