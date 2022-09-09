@@ -58,7 +58,7 @@ const getWalletIcon = (walletType?: string | null) => {
     case 'ledger':
       return <LedgerIcon />;
     case 'walletconnect':
-      return <WalletConnectIcon />;
+      return <WalletConnectIcon height="15" width="22" viewBox="0 0 40 25" />;
     case 'coinbase wallet':
     case 'walletlink':
       return <CoinbaseIcon />;
