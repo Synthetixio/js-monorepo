@@ -129,7 +129,7 @@ describe('switchToL2', () => {
       method: 'wallet_addEthereumChain',
       params: [
         {
-          blockExplorerUrls: ['https://goerli-optimistic.etherscan.io'],
+          blockExplorerUrls: ['https://goerli-optimism.etherscan.io'],
           chainId: '0x1a4',
           chainName: 'Optimism Goerli',
           iconUrls: [
