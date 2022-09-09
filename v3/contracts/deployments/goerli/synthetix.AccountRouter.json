@@ -1,5 +1,5 @@
 {
-  "address": "0xb04E642a16e92ADeB4ADbbbEb9ab6dcc3339c60A",
+  "address": "0x65bE3FF3DEA70bE313003e6D5462Ce5d35EC1676",
   "abi": [
     {
       "inputs": [],
@@ -125,15 +125,15 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "owner",
           "type": "address"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint256",
-          "name": "nftId",
+          "name": "tokenId",
           "type": "uint256"
         }
       ],
@@ -737,6 +737,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xc59a17680d62fd26e2b370d28bfbedae61dd2f5bd4a8c1f0446c6c8515bc6a98",
+  "deployTxnHash": "0x452a2b4ebde5374317768c4154991d62c230289a7f7cb86823ab50a3d6fb21ca",
   "deployedOn": "run.deploy_account"
 }
