@@ -32,9 +32,6 @@ const DashboardPage: FC = () => {
         <title>{t('dashboard.page-title')}</title>
       </Head>
       <Content>
-        <Box>
-          <Burn></Burn>
-        </Box>
         <StatsSection>
           <StakedValue
             title={t('common.stat-box.staked-value')}
