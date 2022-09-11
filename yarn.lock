@@ -6255,6 +6255,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/UserBalances@workspace:*, @snx-v2/UserBalances@workspace:v2/components/UserBalances":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/UserBalances@workspace:v2/components/UserBalances"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/burn@workspace:v2/components/Burn":
   version: 0.0.0-use.local
   resolution: "@snx-v2/burn@workspace:v2/components/Burn"

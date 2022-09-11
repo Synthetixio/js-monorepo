@@ -13,6 +13,13 @@ interface BurnProps {
   exchangeRate?: number;
 }
 
+enum ActiveBadge {
+  max,
+  cRatio,
+  debt,
+}
+
+// TODO: Logic for calculation
 export const Burn = ({
   snxBalance = wei(0),
   susdBalance = wei(0),
@@ -21,7 +28,7 @@ export const Burn = ({
 }: BurnProps) => {
   const { t } = useTranslation();
   const [val, setVal] = useState('');
-  const [activeBadge, setActiveBadge] = useState(0);
+  const [activeBadge, setActiveBadge] = useState<ActiveBadge | null>(null);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
@@ -31,17 +38,15 @@ export const Burn = ({
     }
   };
 
-  const onBadgePress = (amount: number) => {
-    if (snxBalance.gt(0)) {
-      setActiveBadge(amount);
-      setVal(snxBalance.mul(amount).toString(2));
-    }
+  // TODO: Calculate c-ratio/debt clearing calcs
+  const onBadgePress = (amount: ActiveBadge) => {
+    setActiveBadge(amount);
   };
 
   const convert = (value: string) => {
     const num = parseFloat(value);
     if (!isNaN(num)) {
-      return (num * exchangeRate).toFixed(2).toString();
+      return (num * (1 / exchangeRate)).toFixed(2).toString();
     }
 
     return Number(0).toFixed(2).toString();
@@ -51,7 +56,7 @@ export const Burn = ({
     <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="md" p={5}>
       <Flex alignItems="center">
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
-          {t('staking-v2.mint.heading')}
+          {t('staking-v2.burn.heading')}
         </Text>
         <Tooltip label="Soonthetix" hasArrow>
           <Flex alignItems="center">
@@ -64,13 +69,13 @@ export const Burn = ({
           <Flex alignItems="center">
             <TokensIcon />
             <Text ml={2} fontFamily="heading" fontSize="lg" fontWeight="black">
-              SNX
+              sUSD
             </Text>
           </Flex>
           <Flex flexDir="column" alignItems="flex-end" w="30%">
             <Input
               borderWidth="0px"
-              placeholder={t('staking-v2.mint.enter-amount')}
+              placeholder={t('staking-v2.burn.enter-amount')}
               onChange={onChange}
               type="text"
               inputMode="decimal"
@@ -89,60 +94,91 @@ export const Burn = ({
               _placeholder={{ color: 'whiteAlpha.700' }}
             />
             <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-              {t('staking-v2.mint.snx-balance', { snxBalance: snxBalance.toString(2) })}
+              {t('staking-v2.burn.susd-balance', { susdBalance: susdBalance.toString(2) })}
             </Text>
           </Flex>
         </Flex>
         <Flex w="100%" justifyContent="space-between" mt={1}>
           <Badge
-            variant="mint"
+            variant="burn"
             sx={{
-              bg: activeBadge >= 0.25 ? 'cyan.500' : 'whiteAlpha.300',
-              color: activeBadge >= 0.25 ? 'black' : 'cyan.500',
+              bg: activeBadge === ActiveBadge.max ? 'cyan.500' : 'whiteAlpha.300',
+              color: activeBadge === ActiveBadge.max ? 'black' : 'cyan.500',
             }}
             mr={1}
-            onClick={() => onBadgePress(0.25)}
+            px={1}
+            onClick={() => onBadgePress(ActiveBadge.max)}
+            display="flex"
+            justifyContent="space-between"
+            textTransform="capitalize"
+            fontWeight="bold"
           >
-            25%
+            {t('staking-v2.burn.burn-max')}
+            <Tooltip label="Soonthetix" hasArrow>
+              <Flex alignItems="center">
+                <InfoIcon
+                  width="16px"
+                  height="16px"
+                  color={activeBadge === ActiveBadge.max ? 'blue.900' : 'cyan.400'}
+                />
+              </Flex>
+            </Tooltip>
           </Badge>
           <Badge
-            variant="mint"
+            variant="burn"
             sx={{
-              bg: activeBadge >= 0.5 ? 'cyan.500' : 'whiteAlpha.300',
-              color: activeBadge >= 0.5 ? 'black' : 'cyan.500',
+              bg: activeBadge === ActiveBadge.cRatio ? 'cyan.500' : 'whiteAlpha.300',
+              color: activeBadge === ActiveBadge.cRatio ? 'black' : 'cyan.500',
             }}
-            mx={1}
-            onClick={() => onBadgePress(0.5)}
+            mr={1}
+            px={1}
+            onClick={() => onBadgePress(ActiveBadge.cRatio)}
+            display="flex"
+            justifyContent="space-between"
+            textTransform="capitalize"
+            fontWeight="bold"
           >
-            50%
+            {t('staking-v2.burn.burn-cratio')}
+            <Tooltip label="Soonthetix" hasArrow>
+              <Flex alignItems="center">
+                <InfoIcon
+                  width="16px"
+                  height="16px"
+                  color={activeBadge === ActiveBadge.cRatio ? 'blue.900' : 'cyan.400'}
+                />
+              </Flex>
+            </Tooltip>
           </Badge>
           <Badge
-            variant="mint"
+            variant="burn"
             sx={{
-              bg: activeBadge >= 0.75 ? 'cyan.500' : 'whiteAlpha.300',
-              color: activeBadge >= 0.75 ? 'black' : 'cyan.500',
+              bg: activeBadge === ActiveBadge.debt ? 'cyan.500' : 'whiteAlpha.300',
+              color: activeBadge === ActiveBadge.debt ? 'black' : 'cyan.500',
             }}
-            mx={1}
-            onClick={() => onBadgePress(0.75)}
+            mr={1}
+            px={2}
+            onClick={() => onBadgePress(ActiveBadge.debt)}
+            display="flex"
+            justifyContent="space-between"
+            textTransform="capitalize"
+            fontWeight="bold"
           >
-            75%
-          </Badge>
-          <Badge
-            variant="mint"
-            sx={{
-              bg: activeBadge === 1 ? 'cyan.500' : 'whiteAlpha.300',
-              color: activeBadge === 1 ? 'black' : 'cyan.500',
-            }}
-            ml={1}
-            onClick={() => onBadgePress(1)}
-          >
-            100%
+            {t('staking-v2.burn.burn-debt')}
+            <Tooltip label="Soonthetix" hasArrow>
+              <Flex alignItems="center">
+                <InfoIcon
+                  width="16px"
+                  height="16px"
+                  color={activeBadge === ActiveBadge.debt ? 'blue.900' : 'cyan.400'}
+                />
+              </Flex>
+            </Tooltip>
           </Badge>
         </Flex>
       </Box>
       <Flex alignItems="center">
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
-          {t('staking-v2.mint.borrowing')}
+          {t('staking-v2.burn.unstaking')}
         </Text>
         <Tooltip label="Soonthetix" hasArrow>
           <Flex>
@@ -155,7 +191,7 @@ export const Burn = ({
           <Flex alignItems="center">
             <TokensIcon />
             <Text ml={2} fontFamily="heading" fontSize="lg" fontWeight="black">
-              sUSD
+              SNX
             </Text>
           </Flex>
           <Flex flexDir="column" alignItems="flex-end">
@@ -173,7 +209,7 @@ export const Burn = ({
               {numberWithCommas(convert(val))}
             </Text>
             <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-              {t('staking-v2.mint.susd-balance', { susdBalance: susdBalance.toString(2) })}
+              {t('staking-v2.burn.snx-balance', { snxBalance: snxBalance.toString(2) })}
             </Text>
           </Flex>
         </Flex>
@@ -181,7 +217,7 @@ export const Burn = ({
       <Flex mt={3} alignItems="center" justifyContent="space-between">
         <Flex alignItems="center">
           <Text mr={1} fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs">
-            {t('staking-v2.mint.gas')}
+            {t('staking-v2.burn.gas')}
           </Text>
           <Tooltip label="Soonthetix" hasArrow>
             <Flex>
@@ -191,7 +227,7 @@ export const Burn = ({
         </Flex>
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs">
           {/* TODO: Logic on calculating local currency based on gas fee */}
-          {`${t('staking-v2.mint.tx-cost', { txCost: gasPrice.toString(4) })} Ξ ≈ 8.00`}
+          {`${t('staking-v2.burn.tx-cost', { txCost: gasPrice.toString(4) })} Ξ ≈ 8.00`}
         </Text>
       </Flex>
       <Button
@@ -199,10 +235,10 @@ export const Burn = ({
         fontWeight="black"
         mt={4}
         w="100%"
-        onClick={() => console.log('mint')}
+        onClick={() => console.log('burn')}
         disabled={val === ''}
       >
-        Mint
+        Burn
       </Button>
     </Box>
   );

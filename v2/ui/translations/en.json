@@ -48,7 +48,10 @@
       "snx-balance": "SNX Balance: {{snxBalance}}",
       "susd-balance": "sUSD Balance: {{susdBalance}}",
       "enter-amount": "Enter Amount",
-      "tx-cost": "Tx cost: {{txCost}}"
+      "tx-cost": "Tx cost: {{txCost}}",
+      "burn-max": "Burn Max",
+      "burn-cratio": "Burn to C-Ratio",
+      "burn-debt": "Clear Debt"
     },
     "transaction-modal": {
       "metamask-note": "Follow the Metamask prompts to authorize the transaction."
