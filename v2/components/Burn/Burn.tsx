@@ -7,10 +7,10 @@ import { numberWithCommas } from '@snx-v2/formatters';
 import { ChangeEvent } from 'react';
 
 interface BurnProps {
-  snxBalance: Wei;
-  susdBalance: Wei;
-  gasPrice: Wei;
-  exchangeRate: number;
+  snxBalance?: Wei;
+  susdBalance?: Wei;
+  gasPrice?: Wei;
+  exchangeRate?: number;
 }
 
 export const Burn = ({

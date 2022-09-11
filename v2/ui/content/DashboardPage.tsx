@@ -16,6 +16,8 @@ import useSelectedPriceCurrency from 'hooks/useSelectedPriceCurrency';
 import StakedValue from 'sections/shared/modals/StakedValueModal/StakedValueBox';
 import ActiveDebt from 'sections/shared/modals/DebtValueModal/DebtValueBox';
 import Connector from 'containers/Connector';
+import { Box } from '@chakra-ui/react';
+import { Burn } from '../../components/Burn';
 
 const DashboardPage: FC = () => {
   const { t } = useTranslation();
@@ -30,6 +32,9 @@ const DashboardPage: FC = () => {
         <title>{t('dashboard.page-title')}</title>
       </Head>
       <Content>
+        <Box>
+          <Burn></Burn>
+        </Box>
         <StatsSection>
           <StakedValue
             title={t('common.stat-box.staked-value')}
