@@ -36,9 +36,9 @@ export default function Permissions() {
     enabled: Boolean(accountId),
     select: (data) => {
       return data.reduce(
-        (acc, { target, roles }) => ({
+        (acc, { target, permissions }) => ({
           ...acc,
-          [target]: roles.map((r: string) => utils.parseBytes32String(r)),
+          [target]: permissions.map((r: string) => utils.parseBytes32String(r)),
         }),
         {}
       );
@@ -52,21 +52,21 @@ export default function Permissions() {
   }, [loadingAccountPermissions, permissionData]);
 
   useSynthetixProxyEvent({
-    eventName: 'RoleGranted',
+    eventName: 'PermissionGranted',
     listener: (event) => {
-      const [eventAccountId, role, target] = event;
+      const [eventAccountId, permission, target] = event;
 
       if (accountId === eventAccountId.toString()) {
         setAccountPermissions((currentPermissions) => {
-          const parsedRole = utils.parseBytes32String(role);
+          const parsedPermission = utils.parseBytes32String(permission);
           const targetPermissions = currentPermissions[target];
 
-          if (!targetPermissions?.includes(parsedRole)) {
+          if (!targetPermissions?.includes(parsedPermission)) {
             return {
               ...currentPermissions,
               [target]: targetPermissions
-                ? [...targetPermissions, utils.parseBytes32String(role)]
-                : [utils.parseBytes32String(role)],
+                ? [...targetPermissions, utils.parseBytes32String(permission)]
+                : [utils.parseBytes32String(permission)],
             };
           } else {
             return currentPermissions;
@@ -77,16 +77,16 @@ export default function Permissions() {
   });
 
   useSynthetixProxyEvent({
-    eventName: 'RoleRevoked',
+    eventName: 'PermissionRevoked',
     listener: (event) => {
-      const [eventAccountId, role, target] = event;
+      const [eventAccountId, permission, target] = event;
       if (accountId === eventAccountId.toString()) {
         setAccountPermissions((currentPermissions) => {
           const targetPermissions = currentPermissions[target];
           return {
             ...currentPermissions,
             [target]: targetPermissions
-              ? targetPermissions.filter((r) => r !== utils.parseBytes32String(role))
+              ? targetPermissions.filter((r) => r !== utils.parseBytes32String(permission))
               : [],
           };
         });
@@ -108,7 +108,7 @@ export default function Permissions() {
           Permissions
         </Heading>
         <Box ml="auto">
-          {/* only render below if owner or has modify permissions role */}
+          {/* only render below if owner or has modify permissions */}
           <PermissionsEditor />
         </Box>
       </Flex>
@@ -145,7 +145,9 @@ export default function Permissions() {
               </Tr>
 
               {Object.keys(accountPermissions).map((target) => {
-                return <Item key={target} address={target} roles={accountPermissions[target]} />;
+                return (
+                  <Item key={target} address={target} permissions={accountPermissions[target]} />
+                );
               })}
             </Tbody>
           </Table>

@@ -21,10 +21,11 @@ import {
   Tr,
   useDisclosure,
 } from '@chakra-ui/react';
-import { BigNumber } from 'ethers';
+import { BigNumber, utils } from 'ethers';
 import { Link as RouterLink } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { formatValue } from '../../../utils/helpers';
+import { currency } from '../../../utils/currency';
 
 export default function StakingPosition({ position }: { position: StakingPositionType }) {
   // If the connected wallet doesn’t own this account token, remove/disable the interactivity
@@ -51,7 +52,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </>
       </Td>
       <Td py="4">
-        ${debt.toString()}
+        ${currency(utils.formatEther(debt))}
         <Text fontSize="xs" mt="1'">
           <Link
             as={RouterLink}
@@ -301,18 +302,16 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </Modal>
       </Td>
       <Td>
-        <NavLink
+        <Link
+          as={NavLink}
           to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.fundId}`}
+          color="blue.400"
+          display="inline-block"
+          transform="translateY(-1.5px)"
+          target="_blank"
         >
-          <Link
-            color="blue.400"
-            display="inline-block"
-            transform="translateY(-1.5px)"
-            target="_blank"
-          >
-            <ExternalLinkIcon />
-          </Link>
-        </NavLink>
+          <ExternalLinkIcon />
+        </Link>
       </Td>
     </Tr>
   );

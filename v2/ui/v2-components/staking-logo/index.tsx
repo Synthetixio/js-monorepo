@@ -1,1 +1,0 @@
-export { StakingLogo } from './StakingLogo';

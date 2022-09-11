@@ -1,55 +1,6 @@
 {
-  "address": "0xd7a4405B1a9876747c7705033A03A39eB583a90d",
+  "address": "0xB4c359C1f354Efe60e42e7e41805e3560683B931",
   "abi": [
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        }
-      ],
-      "name": "EmptyVault",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        }
-      ],
-      "name": "FundAlreadyApproved",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        }
-      ],
-      "name": "FundAlreadyExists",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        }
-      ],
-      "name": "FundNotFound",
-      "type": "error"
-    },
     {
       "inputs": [
         {
@@ -79,7 +30,7 @@
           "type": "address"
         }
       ],
-      "name": "InvalidCollateralType",
+      "name": "InvalidCollateral",
       "type": "error"
     },
     {
@@ -112,6 +63,38 @@
         }
       ],
       "name": "InvalidParameters",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        }
+      ],
+      "name": "MarketNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "int256",
+          "name": "requestedMaxDebtPerShare",
+          "type": "int256"
+        },
+        {
+          "internalType": "int256",
+          "name": "maximumMaxDebtPerShare",
+          "type": "int256"
+        }
+      ],
+      "name": "MaxDebtPerShareTooLow",
       "type": "error"
     },
     {
@@ -133,24 +116,13 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "origin",
-          "type": "address"
-        }
-      ],
-      "name": "OnlyTokenProxyAllowed",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "uint256",
           "name": "accountId",
           "type": "uint256"
         },
         {
           "internalType": "bytes32",
-          "name": "role",
+          "name": "permission",
           "type": "bytes32"
         },
         {
@@ -159,7 +131,18 @@
           "type": "address"
         }
       ],
-      "name": "RoleNotAuthorized",
+      "name": "PermissionDenied",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "poolId",
+          "type": "uint256"
+        }
+      ],
+      "name": "PoolNotFound",
       "type": "error"
     },
     {
@@ -177,198 +160,9 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
-          "internalType": "bytes32",
-          "name": "liquidityItemId",
-          "type": "bytes32"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "leverage",
-          "type": "uint256"
-        }
-      ],
-      "name": "DelegationUpdated",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        }
-      ],
-      "name": "FundApprovedAdded",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        }
-      ],
-      "name": "FundApprovedRemoved",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        }
-      ],
-      "name": "FundCreated",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256[]",
-          "name": "markets",
-          "type": "uint256[]"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256[]",
-          "name": "weights",
-          "type": "uint256[]"
-        },
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "executedBy",
-          "type": "address"
-        }
-      ],
-      "name": "FundPositionSet",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "nominatedOwner",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        }
-      ],
-      "name": "NominatedNewOwner",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "newOwner",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        }
-      ],
-      "name": "OwnershipAccepted",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "target",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        }
-      ],
-      "name": "OwnershipRenounced",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "fundId",
-          "type": "uint256"
-        }
-      ],
-      "name": "PreferredFundSet",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
           "indexed": true,
           "internalType": "uint256",
-          "name": "fundId",
+          "name": "poolId",
           "type": "uint256"
         },
         {
@@ -417,7 +211,7 @@
         {
           "indexed": true,
           "internalType": "uint256",
-          "name": "fundId",
+          "name": "poolId",
           "type": "uint256"
         },
         {
@@ -452,7 +246,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "fundId",
+          "name": "poolId",
           "type": "uint256"
         },
         {
@@ -481,7 +275,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "fundId",
+          "name": "poolId",
           "type": "uint256"
         },
         {
@@ -524,7 +318,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "fundId",
+          "name": "poolId",
           "type": "uint256"
         },
         {
@@ -553,7 +347,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "fundId",
+          "name": "poolId",
           "type": "uint256"
         },
         {
@@ -574,6 +368,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xfedb8b7e605c54f4723b09974062267e874869f36b5b0595957b16301f052ead",
+  "deployTxnHash": "0xe5f6168793e84165369442aa6ad054cc98e89026a61a81b2768f7d8b48d4965b",
   "deployedOn": "run.deploy_core"
 }

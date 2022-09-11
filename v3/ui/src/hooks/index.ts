@@ -5,6 +5,6 @@ export * from './useDeploymentRead';
 export * from './useOwnerAccounts';
 export * from './useContractEvent';
 export * from './useMulticall';
-export * from './useManageRoles';
+export * from './useManagePermissions';
 export * from './useStakingPositions';
-export * from './useFunds';
+export * from './usePools';

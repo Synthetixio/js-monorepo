@@ -1,15 +1,94 @@
 {
-  "address": "0x9b00Fa7d5bD48CEe9d50efC076a54A74792A99cE",
+  "address": "0x71199f9BC1429ECA9174ef91462c8ab94Aa5De3c",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "incorrectParameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "help",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameters",
+      "type": "error"
+    },
     {
       "inputs": [
         {
           "internalType": "address",
           "name": "market",
           "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "existingMarketId",
+          "type": "uint256"
         }
       ],
       "name": "MarketAlreadyRegistered",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "market",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "requestedAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "approvedAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "MarketDepositNotApproved",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        }
+      ],
+      "name": "MarketNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "int256",
+          "name": "requestedMaxDebtPerShare",
+          "type": "int256"
+        },
+        {
+          "internalType": "int256",
+          "name": "maximumMaxDebtPerShare",
+          "type": "int256"
+        }
+      ],
+      "name": "MaxDebtPerShareTooLow",
       "type": "error"
     },
     {
@@ -59,19 +138,81 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "market",
           "type": "address"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint256",
           "name": "marketId",
           "type": "uint256"
         }
       ],
       "name": "MarketRegistered",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "UsdDeposited",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "UsdWithdrawn",
       "type": "event"
     },
     {
@@ -92,7 +233,7 @@
           "type": "uint256"
         }
       ],
-      "name": "deposit",
+      "name": "depositUsd",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -105,7 +246,7 @@
           "type": "uint256"
         }
       ],
-      "name": "marketLiquidity",
+      "name": "getMarketCollateral",
       "outputs": [
         {
           "internalType": "uint256",
@@ -124,12 +265,88 @@
           "type": "uint256"
         }
       ],
-      "name": "marketTotalBalance",
+      "name": "getMarketDebtPerShare",
       "outputs": [
         {
           "internalType": "int256",
           "name": "",
           "type": "int256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMarketIssuance",
+      "outputs": [
+        {
+          "internalType": "int128",
+          "name": "",
+          "type": "int128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMarketReportedBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMarketTotalBalance",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getWithdrawableUsd",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -172,12 +389,12 @@
           "type": "uint256"
         }
       ],
-      "name": "withdraw",
+      "name": "withdrawUsd",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x907a7e9ec19781a98dd19344464b39868f07a3f506a7656f1bc5e829c0ac1700",
+  "deployTxnHash": "0x50e00945e9a640fa2e2a1d0ba902ac0bc840e578c7c9d19fdbbf8e12471c92d5",
   "deployedOn": "run.deploy_core"
 }
