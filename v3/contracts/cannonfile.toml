@@ -1,4 +1,5 @@
 name = "synthetix-periphery"
+version = "1.0.0"
 description = "Synthetix system supplemental contracts"
 
 [setting.owner]
