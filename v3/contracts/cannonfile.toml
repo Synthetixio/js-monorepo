@@ -6,10 +6,10 @@ description = "Synthetix system supplemental contracts"
 defaultValue = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
 
 [setting.erc20_version]
-defaultValue = "1.0.0"
+defaultValue = "latest"
 
 [setting.synthetix_version]
-defaultValue = "1.0.0"
+defaultValue = "3.0.0"
 
 [setting.chainlink_version]
 defaultValue = "0.1.0"
@@ -27,12 +27,12 @@ defaultValue = "10000000"
 defaultValue = "100000000"
 
 [import.lusd]
-source = "erc20:<%= settings.erc20_version %>"
+source = "mintableerc20:<%= settings.erc20_version %>"
 options.name = "Liquity USD"
 options.symbol = "LUSD"
 
 [import.snx]
-source = "erc20:<%= settings.erc20_version %>"
+source = "mintableerc20:<%= settings.erc20_version %>"
 options.name = "Synthetix Token"
 options.symbol = "SNX"
 
@@ -55,7 +55,7 @@ options.decimals = "<%= settings.rate_decimals %>"
 options.rate = "<%= settings.weth_rate %>"
 
 [import.synthetix]
-source = "synthetix-main:<%= settings.synthetix_version %>"
+source = "synthetix:<%= settings.synthetix_version %>"
 options.owner = "<%= settings.owner %>"
 
 [contract.Multicall]

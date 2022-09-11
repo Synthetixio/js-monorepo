@@ -74,16 +74,16 @@ const config: HardhatUserConfig = {
     target: 'ethers-v5',
   },
   cannon: {
-    registryEndpoint: 'https://rinkeby.infura.io/v3/' + infuraApiKey,
     registryAddress: '0x79E25D87432920FC5C187e14676FA6a8A8a00418',
+    registryEndpoint: `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`,
     ipfsConnection: {
       protocol: 'https',
       host: 'ipfs.infura.io',
       port: 5001,
       headers: {
-        authorization: `Basic ${Buffer.from(infuraIpfsId + ':' + infuraIpfsSecret).toString(
-          'base64'
-        )}`,
+        authorization: `Basic ${Buffer.from(
+          process.env.INFURA_IPFS_ID + ':' + process.env.INFURA_IPFS_SECRET
+        ).toString('base64')}`,
       },
     },
   },
