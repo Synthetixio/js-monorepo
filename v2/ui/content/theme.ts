@@ -2,6 +2,25 @@ import { ChakraTheme, ComponentMultiStyleConfig, ComponentStyleConfig } from '@c
 import { theme as chakraTheme } from '@synthetixio/v3-theme';
 import merge from 'lodash/merge';
 
+const Badge: ComponentStyleConfig = {
+  variants: {
+    mint: {
+      color: 'cyan.400',
+      bg: 'whiteAlpha.300',
+      fontFamily: 'heading',
+      py: 1,
+      px: 2,
+      width: '100%',
+      textAlign: 'center',
+      userSelect: 'none',
+      borderRadius: 'base',
+      _hover: {
+        cursor: 'pointer',
+      },
+    },
+  },
+};
+
 const Progress: ComponentMultiStyleConfig = {
   parts: ['filledTrack', 'track'],
   baseStyle: {
@@ -29,6 +48,12 @@ const Progress: ComponentMultiStyleConfig = {
         boxShadow: `0px 0px 15px ${props.theme.colors.success}`,
       },
     }),
+    white: {
+      filledTrack: {
+        bg: 'white',
+        borderRadius: 'full',
+      },
+    },
   },
 };
 const Button: ComponentStyleConfig = {
@@ -91,6 +116,32 @@ const Text: ComponentStyleConfig = {
   },
 };
 
+const Stat: ComponentMultiStyleConfig = {
+  parts: ['container', 'label', 'number'],
+  baseStyle: {
+    container: {
+      bg: 'navy.900',
+      minW: '215px',
+      display: 'inline-block',
+      px: 3,
+      py: 3,
+      border: `1px solid ${chakraTheme.colors.gray['900']}`,
+      borderRadius: '5px',
+    },
+    label: {
+      color: 'white',
+    },
+    number: {
+      mt: 1,
+      color: 'whiteAlpha.700',
+      fontSize: '14px',
+      fontFamily: 'heading',
+      fontWeight: 400,
+      lineHeight: '16.94px',
+    },
+  },
+};
+
 const Menu: ComponentMultiStyleConfig = {
   parts: ['button', 'list', 'item'],
   baseStyle: {
@@ -108,11 +159,13 @@ const Menu: ComponentMultiStyleConfig = {
       bgColor: 'navy.900',
       padding: 0,
       border: 'none',
+      borderRadius: 'md',
+      py: 0,
     },
     item: {
       bgColor: 'blackAlpha.300',
       color: 'white',
-      py: 3,
+      p: 3,
       _active: {
         bgColor: 'navy.900',
       },
@@ -149,6 +202,8 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
     Button,
     Menu,
     Text,
+    Stat,
+    Badge,
   },
   styles: {
     global: {

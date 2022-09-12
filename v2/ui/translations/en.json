@@ -25,6 +25,28 @@
     "cratio-health-card": {
       "heading": "Collateralization Ratio Health",
       "sub-heading": "In order to keep gathering rewards you must keep you C-Ratio above Target"
+    },
+    "mint": {
+      "heading": "How much SNX do you want to stake?",
+      "heading-tooltip": "Choose how much SNX you would like to stake. You can use the presets available or enter custom amount.",
+      "borrowing": "Borrowing",
+      "borrowing-tooltip": "By staking SNX you're effectively borrowing sUSD.",
+      "gas": "Gas Price (GWEI)",
+      "gas-tooltip": "Is how much it costs to perform a transaction on the blockchain & GWEI is a denomination of Ether",
+      "snx-balance": "SNX Balance: {{snxBalance}}",
+      "susd-balance": "sUSD Balance: {{susdBalance}}",
+      "enter-amount": "Enter Amount",
+      "tx-cost": "Tx cost: {{txCost}}"
+    },
+    "transaction-modal": {
+      "metamask-note": "Follow the Metamask prompts to authorize the transaction."
+    },
+    "balance-box": {
+      "heading": "My Balances",
+      "heading-tooltip": "Here you can find you SNX balance. How much you have staked and much is available to your disposal",
+      "box-heading": "SNX Total",
+      "staked": "Staked",
+      "transferable": "Transferable"
     }
   },
   "meta": {
@@ -207,7 +229,7 @@
     "actions": {
       "title": "Possible Actions",
       "claim": {
-        "title": "CLAIM {{amount}} SNX",
+        "title": "CLAIM SNX",
         "copy": "Claim your staking rewards before the end of this epoch",
         "copy-liquidation": "Claim your liquidation rewards",
         "tooltip": "No rewards to claim"
@@ -1254,7 +1276,7 @@
       "no-wallet-connected": "No wallet connected",
       "unsupported-network": "Unsupported Network",
       "switch-to-supported": "Switch to a supported network:",
-      "balance": "Balance: {{balance}}",
+      "balance": "Balance:",
       "transferable": "<0>Transferable</0> {{transferable}}",
       "not-connected": "Not connected",
       "or": "or",

@@ -13,9 +13,10 @@ import { resolve } from 'path';
 
 dotenvConfig({ path: resolve(__dirname, './.env') });
 
-const infuraApiKey: string | undefined = process.env.INFURA_API_KEY;
-const infuraIpfsId: string | undefined = process.env.INFURA_IPFS_ID;
-const infuraIpfsSecret: string | undefined = process.env.INFURA_IPFS_SECRET;
+// These are unused, uncomment if we plan to use
+// const infuraApiKey: string | undefined = process.env.INFURA_API_KEY;
+// const infuraIpfsId: string | undefined = process.env.INFURA_IPFS_ID;
+// const infuraIpfsSecret: string | undefined = process.env.INFURA_IPFS_SECRET;
 
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
@@ -74,16 +75,16 @@ const config: HardhatUserConfig = {
     target: 'ethers-v5',
   },
   cannon: {
-    registryEndpoint: 'https://rinkeby.infura.io/v3/' + infuraApiKey,
     registryAddress: '0x79E25D87432920FC5C187e14676FA6a8A8a00418',
+    registryEndpoint: `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`,
     ipfsConnection: {
       protocol: 'https',
       host: 'ipfs.infura.io',
       port: 5001,
       headers: {
-        authorization: `Basic ${Buffer.from(infuraIpfsId + ':' + infuraIpfsSecret).toString(
-          'base64'
-        )}`,
+        authorization: `Basic ${Buffer.from(
+          process.env.INFURA_IPFS_ID + ':' + process.env.INFURA_IPFS_SECRET
+        ).toString('base64')}`,
       },
     },
   },

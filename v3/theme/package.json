@@ -49,7 +49,7 @@
     "@storybook/addon-links": "^6.5.7",
     "@storybook/builder-webpack5": "^6.5.7",
     "@storybook/manager-webpack5": "^6.5.10",
-    "@storybook/react": "^6.5.7",
+    "@storybook/react": "^6.5.10",
     "eslint": "^8.22.0",
     "framer-motion": "^7.0.0",
     "react": "^18.2.0",

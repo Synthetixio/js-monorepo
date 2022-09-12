@@ -96,7 +96,7 @@ export const PoolDialog: FC<Props> = ({
                 </Box>
                 <Box flex="1" pl="3">
                   <Heading size="sm" mb="0.5">
-                    {poolsData[poolId].name}
+                    {poolsData[poolId]?.name}
                   </Heading>
                   <Text fontSize="xs" display="block" color="gray.400">
                     Pool #{poolId}{' '}

@@ -27,7 +27,7 @@ export const Balance: FC<Props> = ({ balance, decimals, symbol, onMax }) => {
           </Badge>
         </Link>
       )}
-      {onMax && (
+      {onMax && !balance.eq(0) && (
         <Badge
           as="button"
           ml="2"

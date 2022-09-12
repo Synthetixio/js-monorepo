@@ -1,7 +1,7 @@
 {
   "name": "@synthetixio/v2-ui",
   "private": true,
-  "version": "2.45.2",
+  "version": "2.45.3",
   "engines": {
     "node": "16.x"
   },
@@ -30,6 +30,10 @@
     "@snx-v1/constantsUi": "workspace:*",
     "@snx-v1/media": "workspace:*",
     "@snx-v1/styles": "workspace:*",
+    "@snx-v2/Banner": "workspace:*",
+    "@snx-v2/CRatioHealthCard": "workspace:*",
+    "@snx-v2/Navigation": "workspace:*",
+    "@snx-v2/formatters": "workspace:*",
     "@snx-v2/getHealthVariant": "workspace:*",
     "@socket.tech/widget": "^0.1.1",
     "@synthetixio/contracts": "workspace:*",
@@ -99,7 +103,7 @@
     "@storybook/addon-links": "^6.5.7",
     "@storybook/builder-webpack5": "^6.5.7",
     "@storybook/manager-webpack5": "^6.5.10",
-    "@storybook/react": "^6.5.7",
+    "@storybook/react": "^6.5.10",
     "@storybook/testing-library": "^0.0.13",
     "@svgr/webpack": "^6.3.1",
     "@swc/core": "^1.2.247",
