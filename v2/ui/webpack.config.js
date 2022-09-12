@@ -117,7 +117,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, 'out'),
-    publicPath: '',
+    publicPath: '/',
     filename: '[name].js',
     chunkFilename: isProd ? 'chunk/[name].[contenthash:8].js' : '[name].js',
     assetModuleFilename: '[name].[contenthash:8][ext]',
