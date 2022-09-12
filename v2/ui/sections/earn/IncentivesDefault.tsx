@@ -3,7 +3,7 @@ import Wei from '@synthetixio/wei';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import ROUTES from 'constants/routes';
 import { CryptoCurrency } from 'constants/currency';
@@ -55,11 +55,8 @@ const Incentives: FC<IncentivesProps> = ({
 
   const now = useMemo(() => new Date().getTime(), []);
 
-  const { search } = useLocation();
-  const activeTab = useMemo(() => {
-    const pool = new URLSearchParams(search).get('pool');
-    return isWalletConnected && pool && VALID_TABS.includes(pool as Tab) ? (pool as Tab) : null;
-  }, [search, isWalletConnected]);
+  const { pool } = useParams();
+  const activeTab = isWalletConnected && VALID_TABS.includes(pool as Tab) ? (pool as Tab) : null;
 
   const curveData = curvesUSDPoolQuery.data;
   const incentives = useMemo(

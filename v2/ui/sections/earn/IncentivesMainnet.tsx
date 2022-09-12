@@ -2,7 +2,7 @@ import { FC, useMemo, useState } from 'react';
 import Wei, { wei } from '@synthetixio/wei';
 import styled, { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import useLPData from 'hooks/useLPData';
 import ROUTES from 'constants/routes';
@@ -63,11 +63,8 @@ const Incentives: FC<IncentivesProps> = ({
 
   const now = useMemo(() => new Date().getTime(), []);
 
-  const { search } = useLocation();
-  const activeTab = useMemo(() => {
-    const pool = new URLSearchParams(search).get('pool');
-    return isWalletConnected && pool && VALID_TABS.includes(pool as Tab) ? (pool as Tab) : null;
-  }, [search, isWalletConnected]);
+  const { pool } = useParams();
+  const activeTab = isWalletConnected && VALID_TABS.includes(pool as Tab) ? (pool as Tab) : null;
 
   const incentives = useMemo(() => {
     return isWalletConnected

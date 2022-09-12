@@ -1,6 +1,6 @@
 import { FC, useState, useMemo, useEffect, useCallback } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import StructuredTab from 'components/StructuredTab';
 import ApproveModal from 'components/ApproveModal';
@@ -71,6 +71,8 @@ const YearnVaultTab: FC<LPTabProps> = ({
   const [claimTransactionState, setClaimTransactionState] = useState<Transaction>(
     Transaction.PRESUBMIT
   );
+
+  const { pool, action } = useParams();
 
   const navigate = useNavigate();
   const goToEarn = useCallback(() => navigate(ROUTES.Earn.Home), [navigate]);
@@ -203,6 +205,8 @@ const YearnVaultTab: FC<LPTabProps> = ({
           boxPadding={0}
           boxHeight={242}
           tabData={tabData}
+          activeTab={action}
+          setActiveTab={(key) => navigate(`/earn/${pool}/${key}`)}
         />
       </GridContainer>
       {showApproveOverlayModal && (

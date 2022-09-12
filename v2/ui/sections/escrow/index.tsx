@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { FlexDivCol } from '@snx-v1/styles';
@@ -6,20 +5,21 @@ import media from '@snx-v1/media';
 
 import ActionBox from './components/ActionBox';
 import EscrowTable from './components/EscrowTable';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { EscrowPanelType } from 'store/escrow';
 
 const Index: React.FC = () => {
-  const { search } = useLocation();
-  const defaultTab = useMemo(() => {
-    const action = new URLSearchParams(search).get('action');
-    return action ?? EscrowPanelType.REWARDS;
-  }, [search]);
+  const params = useParams();
+  const action = params.action || '';
+  // @ts-ignore
+  const currentTab = Object.values(EscrowPanelType).includes(action)
+    ? action
+    : EscrowPanelType.REWARDS;
 
   return (
     <Container>
       <Col>
-        <ActionBox currentTab={defaultTab} />
+        <ActionBox currentTab={currentTab} />
       </Col>
       <Col>
         <EscrowTable />

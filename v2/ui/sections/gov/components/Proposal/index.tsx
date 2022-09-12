@@ -1,11 +1,10 @@
-import { useMemo } from 'react';
 import { Grid, Col } from 'sections/gov/components/common';
 import Content from './Content';
 import Details from './Details';
 import Info from './Info';
 import { useQuery } from '@tanstack/react-query';
 import { snapshotEndpoint } from 'constants/snapshot';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 type ProposalProps = {
   onBack: Function;
@@ -62,11 +61,7 @@ const useGetProposal = (hash?: string) => {
 };
 
 const Index: React.FC<ProposalProps> = ({ onBack }) => {
-  const { search } = useLocation();
-  const hash = useMemo(() => {
-    const [, panel] = new URLSearchParams(search).getAll('panel');
-    return panel;
-  }, [search]);
+  const { panel: hash } = useParams();
   const proposalQuery = useGetProposal(hash);
   const proposal = proposalQuery.data;
 

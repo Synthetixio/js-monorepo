@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { SPACE_KEY } from 'constants/snapshot';
@@ -13,12 +13,11 @@ import Proposal from './Proposal';
 import List from './List';
 import Create from './Create';
 import ROUTES from 'constants/routes';
-import useGetPanelType from '../hooks/useGetPanelType';
 
 const Panel = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const panelType = useGetPanelType();
+  const { panel } = useParams();
 
   const proposalsData = useMemo(
     () => ({
@@ -28,14 +27,13 @@ const Panel = () => {
       blue: true,
       key: SPACE_KEY.PROPOSAL,
     }),
-
     [t]
   );
-  switch (panelType) {
-    case PanelType.PROPOSAL:
-      return <Proposal onBack={() => navigate(ROUTES.Gov.Home)} />;
-    case PanelType.CREATE:
+  switch (true) {
+    case panel === 'create':
       return <Create onBack={() => navigate(ROUTES.Gov.Home)} />;
+    case Boolean(panel):
+      return <Proposal onBack={() => navigate(ROUTES.Gov.Home)} />;
     default:
       return (
         <Grid>
