@@ -16,7 +16,7 @@ const EarnPage = safeLazy(() => import(/* webpackChunkName: "earn" */ './content
 const DebtPage = safeLazy(() => import(/* webpackChunkName: "debt" */ './content/DebtPage'));
 const EscrowPage = safeLazy(() => import(/* webpackChunkName: "escrow" */ './content/EscrowPage'));
 const MigrateEscrowPage = safeLazy(
-  () => import(/* webpackChunkName: "escrow" */ './content/MigrateEscrowPage')
+  () => import(/* webpackChunkName: "migrate-escrow" */ './content/MigrateEscrowPage')
 );
 const HistoryPage = safeLazy(
   () => import(/* webpackChunkName: "history" */ './content/HistoryPage')
@@ -30,15 +30,15 @@ const MergeAccountsPage = safeLazy(
 const BridgePage = safeLazy(() => import(/* webpackChunkName: "bridge" */ './content/BridgePage'));
 const NotFound = safeLazy(() => import(/* webpackChunkName: "404" */ './content/404'));
 
+const V2HomePage = safeLazy(() => import(/* webpackChunkName: "v2-home" */ './content/V2Home'));
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <AppLayout>
         <Routes>
-          {/*<Route path="/loans" element={<Navigate to="/loans/new" replace={true} />} />*/}
-          {/*<Route path="/escrow" element={<Navigate to="/escrow/rewards" replace={true} />} />*/}
-
           <Route path="/" element={<DashboardPage />} />
+          <Route path="/v2-home" element={<V2HomePage />} />
 
           <Route path="/staking" element={<StakingPage />}>
             <Route path=":action" element={<StakingPage />} />
@@ -65,7 +65,7 @@ export default function AppRoutes() {
 
           <Route path="/migrate-escrow" element={<MigrateEscrowPage />} />
 
-          <Route path="/escrow" element={<EscrowPage />}>
+          <Route path="/escrow" element={<LoansPage />}>
             <Route path=":action" element={<EscrowPage />} />
           </Route>
 

@@ -6057,7 +6057,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/BalanceBox@workspace:v2/components/BalanceBox":
+"@snx-v2/BalanceBox@workspace:*, @snx-v2/BalanceBox@workspace:v2/components/BalanceBox":
   version: 0.0.0-use.local
   resolution: "@snx-v2/BalanceBox@workspace:v2/components/BalanceBox"
   dependencies:
@@ -6105,7 +6105,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/MainActionCards@workspace:v2/components/MainActionCards":
+"@snx-v2/MainActionCards@workspace:*, @snx-v2/MainActionCards@workspace:v2/components/MainActionCards":
   version: 0.0.0-use.local
   resolution: "@snx-v2/MainActionCards@workspace:v2/components/MainActionCards"
   dependencies:
@@ -7993,8 +7993,10 @@ __metadata:
     "@snx-v1/constantsUi": "workspace:*"
     "@snx-v1/media": "workspace:*"
     "@snx-v1/styles": "workspace:*"
+    "@snx-v2/BalanceBox": "workspace:*"
     "@snx-v2/Banner": "workspace:*"
     "@snx-v2/CRatioHealthCard": "workspace:*"
+    "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
