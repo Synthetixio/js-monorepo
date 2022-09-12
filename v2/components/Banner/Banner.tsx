@@ -36,8 +36,8 @@ export const Banner: FC<Props> = ({ text, variant, countDown }) => {
         borderRadius="5"
         width="fit-content"
       >
-        <Text>{text}</Text>{' '}
-        <Text marginLeft="2" as="b">
+        <Text fontSize="xs">{text}</Text>{' '}
+        <Text fontSize="xs" fontFamily="mono" fontWeight="700" marginLeft="2" as="b">
           {countDown}
         </Text>
       </Flex>

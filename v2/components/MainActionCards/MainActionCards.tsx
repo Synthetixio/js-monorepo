@@ -31,7 +31,8 @@ const Container = ({ children }: PropsWithChildren<{}>) => {
     <Flex
       flexDirection="column"
       justifyContent="space-between"
-      width={['full', '70%', '72']}
+      width="full"
+      maxWidth={['full', '70%', '72']}
       height={['auto', 'auto', '56']}
       alignItems="space-between"
       border="1px"
