@@ -22,7 +22,7 @@ export default function StakerOption({ name, value, checked = false }: PropsType
           Pool #{value}{' '}
           <Link
             as={NavLink}
-            to={'/pools/example'}
+            to="/pools/example"
             color="blue.400"
             display="inline-block"
             transform="translateY(-1.5px)"
