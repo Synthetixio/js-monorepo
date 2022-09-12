@@ -1,12 +1,8 @@
 import React, { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
 import { SPACE_KEY } from 'constants/snapshot';
-import { PanelType } from 'store/gov';
-
 import { Grid, Col } from 'sections/gov/components/common';
-
 import UnstructuredTab from 'components/UnstructuredTab';
 import CouncilBoard from './List/CouncilBoard';
 import Proposal from './Proposal';
