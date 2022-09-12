@@ -45,7 +45,9 @@ const Container = ({ children }: PropsWithChildren<{}>) => {
   );
 };
 
-const StakeActionCard: React.FC<Props> = ({ isStaking }) => {
+const StakeActionCard: React.FC<Props> = ({ currentCRatioPercentage }) => {
+  const isStaking = currentCRatioPercentage > 0;
+
   const { t } = useTranslation();
   return (
     <Container>
@@ -82,7 +84,6 @@ const MaintainActionCard: React.FC<Props & { isFlagged: boolean }> = ({
   liquidationCratioPercentage,
   targetCratioPercentage,
   currentCRatioPercentage,
-  isStaking,
   isFlagged,
 }) => {
   const { t } = useTranslation();
@@ -91,6 +92,7 @@ const MaintainActionCard: React.FC<Props & { isFlagged: boolean }> = ({
     targetCratioPercentage,
     currentCRatioPercentage,
   });
+  const isStaking = currentCRatioPercentage > 0;
 
   return (
     <Container>
@@ -153,7 +155,7 @@ const CollectActionCard: React.FC<Props> = ({
   liquidationCratioPercentage,
   targetCratioPercentage,
   currentCRatioPercentage,
-  isStaking,
+
   epoch,
   hasClaimed,
 }) => {
@@ -163,6 +165,7 @@ const CollectActionCard: React.FC<Props> = ({
     targetCratioPercentage,
     currentCRatioPercentage,
   });
+  const isStaking = currentCRatioPercentage > 0;
   const canClaim = !hasClaimed && variant === 'success';
   return (
     <Container>
@@ -233,7 +236,6 @@ type Props = {
   liquidationCratioPercentage: number;
   targetCratioPercentage: number;
   currentCRatioPercentage: number;
-  isStaking: boolean;
   isFlagged: boolean;
   epoch: string;
   hasClaimed: boolean;

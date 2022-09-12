@@ -6,14 +6,7 @@ export const CollectIcon = ({
   color = '#2ED9FF',
   ...props
 }: IconProps) => (
-  <Icon
-    width={width}
-    height={width}
-    fill="none"
-    viewBox={`0 0 ${width} ${height}`}
-    {...props}
-    color={color}
-  >
+  <Icon width={width} height={height} fill="none" viewBox="0 0 32 32" {...props} color={color}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"

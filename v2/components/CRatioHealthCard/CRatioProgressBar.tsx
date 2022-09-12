@@ -22,7 +22,9 @@ const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
         <Text whiteSpace="nowrap" fontSize="xx-small" transform="translateY(calc(-100% - 10px) )">
           {text}{' '}
           <Tooltip label={tooltipText}>
-            <InfoIcon />
+            <span>
+              <InfoIcon />
+            </span>
           </Tooltip>
         </Text>
       </Box>
