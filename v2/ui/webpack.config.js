@@ -147,9 +147,11 @@ module.exports = {
     .concat([
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
+        process: 'process/browser.js',
       }),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development'),
+        'process.env.DEBUG': JSON.stringify(process.env.DEBUG),
         'process.env.NEXT_PUBLIC_PORTIS_APP_ID': JSON.stringify(
           process.env.NEXT_PUBLIC_PORTIS_APP_ID
         ),
@@ -161,6 +163,13 @@ module.exports = {
         ),
         'process.env.NEXT_PUBLIC_INFURA_PROJECT_ID': JSON.stringify(
           process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
+        ),
+        'process.env.INFURA_ARCHIVE_KEY': JSON.stringify(process.env.INFURA_ARCHIVE_KEY),
+        'process.env.NEXT_PUBLIC_SOCKET_API_KEY': JSON.stringify(
+          process.env.NEXT_PUBLIC_SOCKET_API_KEY
+        ),
+        'process.env.NEXT_PUBLIC_BOARDROOM_KEY': JSON.stringify(
+          process.env.NEXT_PUBLIC_BOARDROOM_KEY
         ),
       }),
     ])
