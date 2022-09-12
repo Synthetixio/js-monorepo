@@ -13,9 +13,10 @@ import { resolve } from 'path';
 
 dotenvConfig({ path: resolve(__dirname, './.env') });
 
-const infuraApiKey: string | undefined = process.env.INFURA_API_KEY;
-const infuraIpfsId: string | undefined = process.env.INFURA_IPFS_ID;
-const infuraIpfsSecret: string | undefined = process.env.INFURA_IPFS_SECRET;
+// These are unused, uncomment if we plan to use
+// const infuraApiKey: string | undefined = process.env.INFURA_API_KEY;
+// const infuraIpfsId: string | undefined = process.env.INFURA_IPFS_ID;
+// const infuraIpfsSecret: string | undefined = process.env.INFURA_IPFS_SECRET;
 
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
