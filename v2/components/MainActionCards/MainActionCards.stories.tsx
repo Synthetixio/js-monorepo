@@ -16,6 +16,5 @@ Primary.args = {
   currentCRatioPercentage: 440,
   epoch: '07:14:55',
   isFlagged: false,
-  isStaking: true,
   hasClaimed: false,
 };
