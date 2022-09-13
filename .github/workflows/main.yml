@@ -1,9 +1,5 @@
 name: Main Workflow
-on:
-  pull_request:
-    branches:
-      - main
-      - master
+on: push
 
 jobs:
   build:

@@ -30,7 +30,6 @@ const V2Home = () => {
           />
           <MainActionCards
             epoch={epoch}
-            isStaking={true}
             isFlagged={false}
             hasClaimed={false}
             targetCratioPercentage={targetCratioPercentage}
