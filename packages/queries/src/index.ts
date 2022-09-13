@@ -7,7 +7,7 @@ import { QueryContext, SubgraphEndpoints } from './context';
 
 import { NetworkId, SynthetixJS } from '@synthetixio/contracts-interface';
 
-import { UseQueryOptions, UseQueryResult } from 'react-query';
+import { UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 
 import * as exchanges from './subgraph/exchangesSubgraphQueries';
 import * as exchanger from './subgraph/exchangerSubgraphQueries';

@@ -3,7 +3,7 @@ import { Grid, Col } from 'sections/gov/components/common';
 import Content from './Content';
 import Details from './Details';
 import Info from './Info';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { snapshotEndpoint } from 'constants/snapshot';
 import { useRouter } from 'next/router';
 

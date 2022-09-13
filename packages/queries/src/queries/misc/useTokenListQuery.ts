@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import axios from 'axios';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import { Token, TokenListQueryResponse, TokenListResponse } from '../../types';

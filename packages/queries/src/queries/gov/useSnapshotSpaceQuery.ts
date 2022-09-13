@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { request, gql } from 'graphql-request';
 import { SPACE_KEY } from './constants';
 import { SpaceData } from '../../types';

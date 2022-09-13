@@ -140,6 +140,13 @@ module.exports = withPlugins([withBundleAnalyzer], {
       },
     });
 
+    config.plugins.push(
+      new context.webpack.NormalModuleReplacementPlugin(
+        /^@tanstack\/react-query$/,
+        require.resolve('@tanstack/react-query')
+      )
+    );
+
     return config;
   },
   trailingSlash: !!process.env.NEXT_PUBLIC_TRAILING_SLASH_ENABLED,

@@ -1,4 +1,4 @@
-import { useMutation, UseMutationOptions, useQueryClient } from 'react-query';
+import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 
 import { MESSAGE_URL, snapshotEndpoint, SPACE_KEY } from 'constants/snapshot';

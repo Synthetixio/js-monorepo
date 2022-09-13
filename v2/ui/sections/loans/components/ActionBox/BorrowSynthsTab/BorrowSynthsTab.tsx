@@ -35,7 +35,7 @@ import { parseSafeWei } from 'utils/parse';
 import { ethers } from 'ethers';
 import { calculateLoanCRatio } from './calculateLoanCRatio';
 import { getETHToken } from 'contracts/ethToken';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 type BorrowSynthsTabProps = {};
 const L1_COLLATERAL_ASSETS: { [asset: string]: string[] } = {

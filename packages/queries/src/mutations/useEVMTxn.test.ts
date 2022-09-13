@@ -16,7 +16,7 @@ describe('useEVMTxn', () => {
     };
 
     jest.doMock('react', () => react);
-    jest.doMock('react-query', () => reactQuery);
+    jest.doMock('@tanstack/react-query', () => reactQuery);
 
     ({ default: useEVMTxn } = await import('./useEVMTxn'));
   });

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Contract } from '@ethersproject/contracts';
 import { BaseProvider } from '@ethersproject/providers';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { QueryContext } from '../../context';
 import { Spartan } from '../../contracts';
 import { BOARDROOM_BATCH_USER_DETAILS_URL } from './constants';

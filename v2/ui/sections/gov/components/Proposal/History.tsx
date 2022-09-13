@@ -9,7 +9,7 @@ import { StyledTooltip } from 'sections/gov/components/common';
 import { Blockie } from '../common';
 import makeBlockie from 'ethereum-blockies-base64';
 import { ethers } from 'ethers';
-import { UseQueryResult } from 'react-query';
+import { UseQueryResult } from '@tanstack/react-query';
 import { FixedSizeList as List } from 'react-window';
 import { ProposalResults } from '@synthetixio/queries';
 import Connector from 'containers/Connector';
