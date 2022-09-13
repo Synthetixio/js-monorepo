@@ -1,30 +1,14 @@
 import { ChakraTheme, ComponentMultiStyleConfig, ComponentStyleConfig } from '@chakra-ui/react';
 import { theme as chakraTheme } from '@synthetixio/v3-theme';
 import merge from 'lodash/merge';
-
-function statusColor(status: string) {
-  switch (status) {
-    case 'error':
-      return 'red.500';
-    case 'info':
-      return 'cyan.500';
-    case 'success':
-      return 'green.500';
-    case 'warning':
-      return 'orange.500';
-
-    // Return info by default
-    default:
-      return 'cyan.500';
-  }
-}
+import { singleColor, multipleColor } from 'utils/themeUtils';
 
 const Alert: ComponentMultiStyleConfig = {
   parts: ['title', 'description', 'container', 'icon'],
   baseStyle: ({ status }) => {
     return {
       container: {
-        background: statusColor(status),
+        background: singleColor(status),
         borderLeft: 'none',
         borderRadius: 'md',
       },
@@ -44,9 +28,41 @@ const Alert: ComponentMultiStyleConfig = {
     };
   },
   variants: {
-    subtle: {},
-    solid: {},
-    'left-accent': {},
+    solid: ({ status }) => ({
+      container: {
+        background: multipleColor(status).backgroundColor,
+        borderRadius: 'md',
+        borderColor: multipleColor(status).borderColor,
+        borderWidth: '2px',
+        borderLeft: '2px',
+      },
+      title: {
+        color: 'white',
+      },
+      description: {
+        color: 'white',
+      },
+      icon: {
+        color: multipleColor(status).borderColor,
+      },
+    }),
+    'left-accent': ({ status }) => ({
+      container: {
+        background: multipleColor(status).backgroundColor,
+        borderRadius: 'md',
+        borderLeftColor: multipleColor(status).borderColor,
+        borderLeft: '2px',
+      },
+      title: {
+        color: 'white',
+      },
+      description: {
+        color: 'white',
+      },
+      icon: {
+        color: multipleColor(status).borderColor,
+      },
+    }),
   },
 };
 

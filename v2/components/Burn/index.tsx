@@ -1,1 +1,1 @@
-export { Burn } from './Burn';
+export * from './Burn';

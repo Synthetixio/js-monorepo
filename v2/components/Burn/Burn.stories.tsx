@@ -1,4 +1,4 @@
-import { Burn } from '.';
+import { Burn } from './Burn';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { wei } from '@synthetixio/wei';
 

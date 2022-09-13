@@ -16,8 +16,6 @@ import useSelectedPriceCurrency from 'hooks/useSelectedPriceCurrency';
 import StakedValue from 'sections/shared/modals/StakedValueModal/StakedValueBox';
 import ActiveDebt from 'sections/shared/modals/DebtValueModal/DebtValueBox';
 import Connector from 'containers/Connector';
-import { Alert, AlertIcon, AlertTitle, AlertDescription, Box, Flex } from '@chakra-ui/react';
-import { Burn } from '../../components/Burn';
 
 const DashboardPage: FC = () => {
   const { t } = useTranslation();
@@ -32,21 +30,6 @@ const DashboardPage: FC = () => {
         <title>{t('dashboard.page-title')}</title>
       </Head>
       <Content>
-        <Box>
-          <Alert status="error">
-            <AlertIcon />
-            <Flex flexWrap="wrap">
-              <AlertTitle>Your browser is outdated!</AlertTitle>
-              <AlertDescription>
-                Your Chakra experience may be degraded. Your Chakra experience may be degraded.
-              </AlertDescription>
-            </Flex>
-          </Alert>
-          <Alert status="success" />
-          <Alert status="info" />
-          <Alert status="warning" />
-          <Burn />
-        </Box>
         <StatsSection>
           <StakedValue
             title={t('common.stat-box.staked-value')}
