@@ -33,7 +33,14 @@ async function createTypesFromAbi(targetName, network, abi) {
 
   // We only care about the types so lets remove the factories
   return Promise.all([
-    fs.promises.rm(`src/${network}/deployment/factories`, { recursive: true, force: true }),
+    fs.promises.rename(
+      `src/${network}/deployment/${targetName}AbiTypes.ts`,
+      `src/${network}/deployment/${targetName}AbiTypes.json.d.ts`
+    ),
+    fs.promises.rm(`src/${network}/deployment/factories`, {
+      recursive: true,
+      force: true,
+    }),
     // Same thing here, only care about the types
     fs.promises.rm(`src/${network}/deployment/index.ts`, { force: true }),
     // No need to keep the abi, it arleady exists in the string format in the main ts file
@@ -49,8 +56,6 @@ async function generateTargets(network) {
   if (!targets || !sources) {
     return;
   }
-
-  console.log('run target');
 
   await Promise.all(
     Object.values(targets).map(async (target) => {
