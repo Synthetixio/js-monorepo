@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { QueryContext } from '../../context';
 import { ShortRewardsData } from '../../types';
 import { wei } from '@synthetixio/wei';

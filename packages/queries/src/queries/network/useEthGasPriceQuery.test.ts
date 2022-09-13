@@ -10,7 +10,7 @@ describe('@synthetixio/queries network useEthGasPriceQuery', () => {
       useQuery: jest.fn(() => 'useQuery'),
     };
 
-    jest.doMock('react-query', () => reactQuery);
+    jest.doMock('@tanstack/react-query', () => reactQuery);
 
     ({ default: useEthGasPriceQuery, computeGasFee } = await import('./useEthGasPriceQuery'));
   });

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { QueryContext } from '../../context';
 import Wei, { wei } from '@synthetixio/wei';
 import { BaseProvider } from '@ethersproject/providers';

@@ -1,6 +1,6 @@
 import useSynthetixQueries from '@synthetixio/queries';
 import { wei } from '@synthetixio/wei';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import Connector from '../containers/Connector';
 import { useStakedSNX } from './useStakedSNX';
 

@@ -9,7 +9,7 @@ import { Loan } from './types';
 import getLoan from './getLoan';
 
 import useSynthetixQueries from '@synthetixio/queries';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { wei } from '@synthetixio/wei';
 
 const SECONDS_IN_A_YR = 365 * 24 * 60 * 60;
@@ -35,15 +35,15 @@ function Container() {
     return [ethLoanContract, ethLoanStateContract, collateralManagerContract];
   }, [isAppReady, signer, synthetixjs, walletAddress]);
 
-  const minCratioQuery = useQuery(
-    'minCratio',
-    async () => {
+  const minCratioQuery = useQuery({
+    queryKey: ['minCratio'],
+    queryFn: async () => {
       if (!ethLoanContract) return wei(0);
       const minCratio = await ethLoanContract.minCratio();
       return wei(minCratio);
     },
-    { enabled: Boolean(ethLoanContract) }
-  );
+    enabled: Boolean(ethLoanContract),
+  });
 
   const subgraphOpenLoansQuery = subgraph.useGetLoans(
     { where: { isOpen: true, account: walletAddress } },

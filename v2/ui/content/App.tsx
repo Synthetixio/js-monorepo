@@ -11,8 +11,8 @@ import theme from 'styles/theme';
 import Layout from 'sections/shared/Layout';
 import AppLayout from 'sections/shared/Layout/AppLayout';
 import { MediaContextProvider } from '@snx-v1/media';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DEFAULT_REQUEST_REFRESH_INTERVAL } from 'constants/defaults';
 
 import { SynthetixQueryContextProvider, createQueryContext } from '@synthetixio/queries';
@@ -118,9 +118,7 @@ const App: FC<AppProps> = (props) => {
       </Head>
       <LazyChakraProvider enabled={STAKING_V2_ENABLED}>
         <ThemeProvider theme={theme}>
-          {/* @ts-ignore TODO: update recoil */}
           <RecoilRoot>
-            {/* @ts-ignore TODO: update react-query */}
             <QueryClientProvider client={queryClient} contextSharing={true}>
               <WithAppContainers>
                 {/* @ts-ignore TODO: update styled-media-query */}

@@ -1,7 +1,7 @@
 import Wei, { wei } from '@synthetixio/wei';
 import Connector from 'containers/Connector';
 import { BigNumber } from 'ethers';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 const useLiquidationRewards = (address: string | null, options?: UseQueryOptions<Wei>) => {
   const { network, synthetixjs } = Connector.useContainer();

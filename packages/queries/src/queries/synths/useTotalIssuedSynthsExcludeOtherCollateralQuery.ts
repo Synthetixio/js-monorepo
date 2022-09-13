@@ -1,6 +1,6 @@
 import { formatBytes32String } from '@ethersproject/strings';
 import Wei, { wei } from '@synthetixio/wei';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { QueryContext } from '../../context';
 
 const useTotalIssuedSynthsExcludeOtherCollateralQuery = (
