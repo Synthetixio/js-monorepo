@@ -6219,7 +6219,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts":
+"@snx-v2/useDebtData@workspace:v2/lib/useDebtData":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useDebtData@workspace:v2/lib/useDebtData"
+  dependencies:
+    "@ethersproject/strings": ^5.6.1
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/contracts": "workspace:*"
+    "@synthetixio/providers": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    ethers: ^5.5.3
+    react-query: 3.16.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useSynthetixContracts@workspace:*, @snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts"
   dependencies:
