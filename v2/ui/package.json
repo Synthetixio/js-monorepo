@@ -107,6 +107,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@svgr/webpack": "^6.3.1",
     "@swc/core": "^1.2.247",
+    "@tanstack/react-query-devtools": "^4.3.5",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.2.1",

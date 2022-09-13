@@ -8299,6 +8299,7 @@ __metadata:
     "@synthetixio/v3-theme": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
+    "@tanstack/react-query-devtools": ^4.3.5
     "@testing-library/jest-dom": ^5.16.4
     "@testing-library/react": ^13.3.0
     "@testing-library/user-event": ^14.2.1
@@ -8525,6 +8526,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/match-sorter-utils@npm:^8.1.1":
+  version: 8.1.1
+  resolution: "@tanstack/match-sorter-utils@npm:8.1.1"
+  dependencies:
+    remove-accents: 0.4.2
+  checksum: bf1458b7ca08cf79750ebd46fddef9c9b845ef55b5b69c0f7f69d48d6cbd73dbfd98763509f655298033b93cfc92b21d54f9f13a4d631cc68ca9191913967205
+  languageName: node
+  linkType: hard
+
 "@tanstack/query-core@npm:4.3.4":
   version: 4.3.4
   resolution: "@tanstack/query-core@npm:4.3.4"
@@ -8536,6 +8546,20 @@ __metadata:
   version: 4.0.10
   resolution: "@tanstack/query-sync-storage-persister@npm:4.0.10"
   checksum: 03835595780386a15caf6e884682b8cb8d0a02a6d071dcb1b0c8fa9fa6e0dc4827cbdc7f328aa7e52ed800297312db81eb61ab83dc8c06c40a3a96bb92fb6fce
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:^4.3.5":
+  version: 4.3.5
+  resolution: "@tanstack/react-query-devtools@npm:4.3.5"
+  dependencies:
+    "@tanstack/match-sorter-utils": ^8.1.1
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    "@tanstack/react-query": 4.3.4
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: adb362662da64c7335f8fca794f919b2ef426ec68257df9ac4d7fb2c1c881bd746e7faf874b3d2c113a8bd6c94ec4e8c91bd12a4f922512354e4d4451139ee0a
   languageName: node
   linkType: hard
 
@@ -29380,6 +29404,13 @@ __metadata:
   bin:
     remarkable: bin/remarkable.js
   checksum: aee83ece531a7196f92e668aa76450f17bc1af77ce2939153f57b289b54f3aa3a72f355f4d57680336ab8205d53dca7ae06e6e743355ad2d4868cc7c85eafe89
+  languageName: node
+  linkType: hard
+
+"remove-accents@npm:0.4.2":
+  version: 0.4.2
+  resolution: "remove-accents@npm:0.4.2"
+  checksum: 84a6988555dea24115e2d1954db99509588d43fe55a1590f0b5894802776f7b488b3151c37ceb9e4f4b646f26b80b7325dcea2fae58bc3865df146e1fa606711
   languageName: node
   linkType: hard
 
