@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSetRecoilState } from 'recoil';
 
@@ -51,7 +51,7 @@ const ActionCompleted: React.FC<ActionCompletedProps> = ({
   to,
 }) => {
   const { t } = useTranslation();
-  const { push } = useRouter();
+  const navigate = useNavigate();
   const { isMainnet } = Connector.useContainer();
   const lpData = useLPData();
 
@@ -138,7 +138,7 @@ const ActionCompleted: React.FC<ActionCompletedProps> = ({
           >
             {t('staking.actions.mint.completed-default.dismiss')}
           </RightButton>
-          <HedgeButton onClick={() => push(ROUTES.Debt.Home)}>
+          <HedgeButton onClick={() => navigate(ROUTES.Debt.Home)}>
             {t('staking.actions.mint.completed-default.hedge')}
           </HedgeButton>
         </ButtonWrap>
@@ -175,7 +175,7 @@ const ActionCompleted: React.FC<ActionCompletedProps> = ({
         >
           {t('staking.actions.mint.completed.dismiss')}
         </LeftButton>
-        <RightButton onClick={() => push(ROUTES.Earn.Home)}>
+        <RightButton onClick={() => navigate(ROUTES.Earn.Home)}>
           {t('staking.actions.mint.completed.see-more')}
         </RightButton>
       </ButtonWrap>

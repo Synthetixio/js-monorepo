@@ -1,5 +1,5 @@
 import SocketBridge from '../components/SocketBridge';
-import Head from 'next/head';
+import Head from 'react-helmet';
 import styled from 'styled-components';
 import Connector from '../containers/Connector';
 import Button from '../components/Button';

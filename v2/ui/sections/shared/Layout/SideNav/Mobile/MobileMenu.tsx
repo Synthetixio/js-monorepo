@@ -1,6 +1,6 @@
 import { FC, Dispatch } from 'react';
 import styled, { css } from 'styled-components';
-import { useRouter } from 'next/router';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 
@@ -22,7 +22,8 @@ type MobileMenuProps = {
 
 const MobileMenu: FC<MobileMenuProps> = ({ dispatch }) => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { isL2 } = Connector.useContainer();
   const delegateWallet = useRecoilValue(delegateWalletState);
   const { showAddOptimism, addOptimismNetwork } = useAddOptimism();
@@ -34,7 +35,7 @@ const MobileMenu: FC<MobileMenuProps> = ({ dispatch }) => {
       dispatch({ type: 'set_sub', subMenu });
     } else {
       dispatch({ type: 'close' });
-      router.push(link);
+      navigate(link);
     }
   };
 
@@ -47,8 +48,9 @@ const MobileMenu: FC<MobileMenuProps> = ({ dispatch }) => {
           data-testid={`sidenav-${link}`}
           isActive={
             subMenu
-              ? !!subMenu.find(({ subLink }) => subLink === router.asPath)
-              : router.asPath === link || (link !== ROUTES.Home && router.asPath.includes(link))
+              ? !!subMenu.find(({ subLink }) => subLink === location.pathname)
+              : location.pathname === link ||
+                (link !== ROUTES.Home && location.pathname.includes(link))
           }
         >
           <div className="link">

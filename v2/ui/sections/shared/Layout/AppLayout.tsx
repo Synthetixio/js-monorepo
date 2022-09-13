@@ -1,5 +1,5 @@
 import { FC, ReactNode, useEffect } from 'react';
-import router from 'next/router';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -22,6 +22,8 @@ type AppLayoutProps = {
 };
 
 const AppLayout: FC<AppLayoutProps> = ({ children }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { isL2 } = Connector.useContainer();
 
   const { useIsBridgeActiveQuery } = useSynthetixQueries();
@@ -30,10 +32,10 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   const delegateWallet = useRecoilValue(delegateWalletState);
 
   useEffect(() => {
-    if (delegateWallet && router.pathname !== ROUTES.Home) {
-      router.push(ROUTES.Home);
+    if (delegateWallet && location.pathname !== ROUTES.Home) {
+      navigate(ROUTES.Home);
     }
-  }, [isL2, depositsInactive, delegateWallet]);
+  }, [isL2, depositsInactive, delegateWallet, location.pathname, navigate]);
 
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
 

@@ -3,7 +3,7 @@ import Wei from '@synthetixio/wei';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
-import { useRouter } from 'next/router';
+import { useParams } from 'react-router-dom';
 
 import ROUTES from 'constants/routes';
 import { CryptoCurrency } from 'constants/currency';
@@ -45,7 +45,7 @@ const Incentives: FC<IncentivesProps> = ({
   refetchAllRewards,
 }) => {
   const { t } = useTranslation();
-  const router = useRouter();
+
   const delegateWallet = useRecoilValue(delegateWalletState);
   const { isWalletConnected } = Connector.useContainer();
   const curvesUSDPoolQuery = useCurveSusdPoolQuery();
@@ -55,16 +55,9 @@ const Incentives: FC<IncentivesProps> = ({
 
   const now = useMemo(() => new Date().getTime(), []);
 
-  const activeTab = useMemo(
-    () =>
-      isWalletConnected &&
-      Array.isArray(router.query.pool) &&
-      router.query.pool.length &&
-      VALID_TABS.includes(router.query.pool[0] as Tab)
-        ? (router.query.pool[0] as Tab)
-        : null,
-    [router.query.pool, isWalletConnected]
-  );
+  const { pool } = useParams();
+  const activeTab = isWalletConnected && VALID_TABS.includes(pool as Tab) ? (pool as Tab) : null;
+
   const curveData = curvesUSDPoolQuery.data;
   const incentives = useMemo(
     () =>

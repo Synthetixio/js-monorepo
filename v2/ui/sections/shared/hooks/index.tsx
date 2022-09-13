@@ -22,7 +22,7 @@ export function useAddOptimism() {
 
   const addOptimismNetwork = useCallback(async () => {
     setNetworkError(null);
-    if (process.browser && !(window.ethereum && window.ethereum.isMetaMask)) {
+    if (typeof window !== 'undefined' && !(window.ethereum && window.ethereum.isMetaMask)) {
       return setNetworkError(t('user-menu.error.please-install-metamask'));
     }
 

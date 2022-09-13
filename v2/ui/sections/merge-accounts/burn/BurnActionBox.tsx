@@ -1,7 +1,7 @@
 import { useMemo, useEffect, FC, useCallback } from 'react';
 import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import Wei, { wei } from '@synthetixio/wei';
 import StructuredTab from 'components/StructuredTab';
 import Etherscan from 'containers/BlockExplorer';
@@ -59,7 +59,7 @@ const BurnTab: FC = () => {
 const BurnTabInner: FC = () => {
   const { t } = useTranslation();
 
-  const router = useRouter();
+  const navigate = useNavigate();
   const { blockExplorerInstance } = Etherscan.useContainer();
 
   const {
@@ -103,7 +103,7 @@ const BurnTabInner: FC = () => {
     [blockExplorerInstance, txn.hash]
   );
 
-  const onGoBack = () => router.replace(ROUTES.MergeAccounts.Home);
+  const onGoBack = () => navigate(ROUTES.MergeAccounts.Home, { replace: true });
 
   const onBurn = useCallback(() => txn.mutate(), [txn]);
 
@@ -144,7 +144,7 @@ const BurnTabInner: FC = () => {
       <TxSuccess
         {...{ unstakeAmount, burnAmount: burnAmountUi, txLink }}
         onDismiss={() => {
-          router.push(ROUTES.MergeAccounts.Nominate);
+          navigate(ROUTES.MergeAccounts.Nominate);
         }}
       />
     );

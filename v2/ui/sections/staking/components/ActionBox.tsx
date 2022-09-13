@@ -1,6 +1,6 @@
 import React, { useMemo, FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 
 import StructuredTab from 'components/StructuredTab';
@@ -20,7 +20,7 @@ type ActionBoxProps = {
 
 const ActionBox: FC<ActionBoxProps> = ({ currentTab }) => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const navigate = useNavigate();
   const onMintTypeChange = useSetRecoilState(mintTypeState);
   const onBurnTypeChange = useSetRecoilState(burnTypeState);
   const theme = useTheme();
@@ -66,7 +66,7 @@ const ActionBox: FC<ActionBoxProps> = ({ currentTab }) => {
       boxPadding={20}
       boxHeight={450}
       tabData={tabData}
-      setActiveTab={(key) => router.push(`/staking/${key}`)}
+      setActiveTab={(key) => navigate(`/staking/${key}`)}
       activeTab={currentTab}
     />
   );

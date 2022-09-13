@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 
 import { EXTERNAL_LINKS } from 'constants/links';
 import { CryptoCurrency } from 'constants/currency';
@@ -35,7 +35,7 @@ const RewardEscrowSchedule: React.FC = () => {
   const escrowDataQuery = useEscrowDataQuery(walletAddress);
   const schedule = escrowDataQuery?.data?.schedule;
   const totalBalancePendingMigration = escrowDataQuery?.data?.totalBalancePendingMigration ?? 0;
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <Container>
       <ContainerHeader>
@@ -93,7 +93,7 @@ const RewardEscrowSchedule: React.FC = () => {
               <StyledButton
                 size="lg"
                 variant="primary"
-                onClick={() => router.push(ROUTES.Staking.Home)}
+                onClick={() => navigate(ROUTES.Staking.Home)}
               >
                 {t('escrow.actions.stake.stake-now')}
               </StyledButton>

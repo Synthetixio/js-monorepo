@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 import { FlexDivCol } from '@snx-v1/styles';
@@ -6,17 +5,21 @@ import media from '@snx-v1/media';
 
 import ActionBox from './components/ActionBox';
 import EscrowTable from './components/EscrowTable';
-import { useRouter } from 'next/router';
+import { useParams } from 'react-router-dom';
 import { EscrowPanelType } from 'store/escrow';
 
 const Index: React.FC = () => {
-  const router = useRouter();
-  const defaultTab = (router.query.action && router.query.action[0]) || EscrowPanelType.REWARDS;
+  const params = useParams();
+  const action = params.action || '';
+  // @ts-ignore
+  const currentTab = Object.values(EscrowPanelType).includes(action)
+    ? action
+    : EscrowPanelType.REWARDS;
 
   return (
     <Container>
       <Col>
-        <ActionBox currentTab={defaultTab} />
+        <ActionBox currentTab={currentTab} />
       </Col>
       <Col>
         <EscrowTable />

@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import useSynthetixQueries, { GasPrice } from '@synthetixio/queries';
 
 import ROUTES from 'constants/routes';
@@ -63,8 +63,8 @@ const MergeTabInner: FC = () => {
   const [gasPrice, setGasPrice] = useState<GasPrice | undefined>(undefined);
   const [txModalOpen, setTxModalOpen] = useState<boolean>(false);
 
-  const router = useRouter();
-  const onGoBack = () => router.replace(ROUTES.MergeAccounts.Home);
+  const navigate = useNavigate();
+  const onGoBack = () => navigate(ROUTES.MergeAccounts.Home, { replace: true });
 
   const [sourceAccountAddress, setSourceAccountAddress] = useState('');
   const [nominatedAccountAddress, setNominatedAccountAddress] = useState('');
@@ -240,7 +240,7 @@ const MergeTabInner: FC = () => {
       <TxSuccess
         {...{ txLink }}
         onDismiss={() => {
-          router.push(ROUTES.Escrow.Home);
+          navigate(ROUTES.Escrow.Home);
         }}
       />
     );

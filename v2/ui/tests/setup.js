@@ -1,14 +1,13 @@
+/* eslint-disable react/display-name */
 import '@testing-library/jest-dom';
 import { TextEncoder, TextDecoder } from 'util';
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
-// next + swc does not allow to use moduleNameMapper for statics so mock them manually as modules
-// see https://github.com/vercel/next.js/discussions/33928
-jest.mock(
-  'assets/svg/app/loader.svg',
-  () =>
-    function SVG() {
-      return null;
-    }
-);
+jest.mock('assets/svg/app/loader.svg', () => () => null);
+jest.mock('assets/svg/app/cross.svg', () => () => null);
+jest.mock('assets/svg/app/claim.svg', () => () => null);
+jest.mock('assets/svg/app/pending-confirmation.svg', () => () => null);
+jest.mock('assets/svg/app/warning.svg', () => () => null);
+jest.mock('assets/svg/app/menu-close.svg', () => () => null);
+jest.mock('assets/svg/app/caret-down.svg', () => () => null);
