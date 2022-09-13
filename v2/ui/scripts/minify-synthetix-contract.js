@@ -2,6 +2,10 @@ const fs = require('fs');
 const ethers = require('ethers');
 
 module.exports = function generate({ networks, out }) {
+  if (!networks.some((network) => !fs.existsSync(`${out}/${network}.json`))) {
+    return;
+  }
+  fs.mkdirSync(out, { recursive: true });
   networks.forEach((network) => {
     const deployment = require(`synthetix/publish/deployed/${network}/deployment.json`);
 

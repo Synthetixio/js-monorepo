@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import router from 'next/router';
+import { useNavigate } from 'react-router-dom';
 
 import { formatCurrency } from 'utils/formatters/number';
 import { CryptoCurrency } from 'constants/currency';
@@ -59,11 +59,12 @@ const TabContent: FC<TabContentProps> = ({
   const { t } = useTranslation();
   const vestingCurrencyKey = CryptoCurrency['SNX'];
 
+  const navigate = useNavigate();
   const renderButton = () => {
     if (isVestNeeded) {
       return (
         <StyledCTA
-          onClick={() => router.push(ROUTES.Escrow.Home)}
+          onClick={() => navigate(ROUTES.Escrow.Home)}
           blue={true}
           variant="primary"
           size="lg"

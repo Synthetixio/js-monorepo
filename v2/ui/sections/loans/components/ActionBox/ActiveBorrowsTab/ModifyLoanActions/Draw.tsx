@@ -3,7 +3,7 @@ import { Loan } from 'containers/Loans/types';
 import Wrapper from './Wrapper';
 import useSynthetixQueries, { GasPrice } from '@synthetixio/queries';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import { calculateMaxDraw } from './helpers';
 import { wei } from '@synthetixio/wei';
 import ROUTES from 'constants/routes';
@@ -14,7 +14,7 @@ type DrawProps = {
 };
 
 const Draw: React.FC<DrawProps> = ({ loan, loanId }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const { useSynthetixTxn } = useSynthetixQueries();
 
   const { t } = useTranslation();
@@ -55,7 +55,7 @@ const Draw: React.FC<DrawProps> = ({ loan, loanId }) => {
     onSuccess: () => {
       setIsWorking('');
       setTxModalOpen(false);
-      router.push(ROUTES.Loans.List);
+      navigate(ROUTES.Loans.List);
     },
     onError: () => {
       setIsWorking('');

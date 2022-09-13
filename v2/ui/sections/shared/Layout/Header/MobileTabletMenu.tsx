@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
+import { useLocation } from 'react-router-dom';
 
 import UIContainer from 'containers/UI';
 import TitleIcon from 'assets/svg/app/menu-hamburger-white.svg';
@@ -10,9 +10,12 @@ import { headerInfo } from '../../helpers';
 
 const MobileTabletMenu: FC = () => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const location = useLocation();
 
-  const { headerTitle, headerSubtitle } = useMemo(() => headerInfo(router.asPath), [router.asPath]);
+  const { headerTitle, headerSubtitle } = useMemo(
+    () => headerInfo(location.pathname),
+    [location.pathname]
+  );
 
   const { dispatch } = UIContainer.useContainer();
 

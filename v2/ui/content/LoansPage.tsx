@@ -1,8 +1,7 @@
-import { useEffect, FC } from 'react';
-import Head from 'next/head';
+import { FC } from 'react';
+import Head from 'react-helmet';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
 import Connector from 'containers/Connector';
 
 import StatBox from 'components/StatBox';
@@ -22,19 +21,12 @@ type LoansPageProps = {};
 
 const LoansPage: FC<LoansPageProps> = () => {
   const { t } = useTranslation();
-  const router = useRouter();
 
   const { walletAddress } = Connector.useContainer();
 
   const { stakedCollateralValue, debtBalance } = useStakingCalculations();
   const { selectedPriceCurrency, getPriceAtCurrentRate } = useSelectedPriceCurrency();
   const { stakingAPR } = useUserStakingData(walletAddress);
-
-  useEffect(() => {
-    if (router.asPath === '/loans') {
-      router.push('/loans/new');
-    }
-  }, [router, router.asPath, router.push]);
 
   return (
     <>

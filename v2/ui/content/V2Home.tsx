@@ -2,8 +2,8 @@ import { Box, Flex } from '@chakra-ui/react';
 import { Banner } from '@snx-v2/Banner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
-import { BalanceBox } from '../../components/BalanceBox';
-import { MainActionCards } from '../../components/MainActionCards';
+import { BalanceBox } from '@snx-v2/BalanceBox';
+import { MainActionCards } from '@snx-v2/MainActionCards';
 
 const V2Home = () => {
   const targetCratioPercentage = 400;

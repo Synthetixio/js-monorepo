@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Tooltip } from '@snx-v1/styles';
@@ -13,7 +13,7 @@ type BorrowModifyModalProps = {
 };
 
 const BorrowModifyModal: FC<BorrowModifyModalProps> = ({ actions, loan }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
@@ -25,7 +25,7 @@ const BorrowModifyModal: FC<BorrowModifyModalProps> = ({ actions, loan }) => {
   };
   const onStartModify = (action: string) => {
     closeMenu();
-    router.push(`/loans/${loan.collateralAsset === 'sETH' ? 'eth' : 'erc20'}/${loan.id}/${action}`);
+    navigate(`/loans/${loan.collateralAsset === 'sETH' ? 'eth' : 'erc20'}/${loan.id}/${action}`);
   };
 
   return (

@@ -1,33 +1,23 @@
 import Connector from 'containers/Connector';
-import { useRouter } from 'next/router';
-import React, { FC, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import React, { FC } from 'react';
 import { EscrowPanelType } from 'store/escrow';
 import RewardEscrowSchedule from './RewardEscrowSchedule';
 import TokenSaleEscrowSchedule from './TokenSaleEscrowSchedule';
 
 const EscrowTable: FC = () => {
-  const router = useRouter();
   const { isWalletConnected } = Connector.useContainer();
+  const { action } = useParams();
+  switch (true) {
+    case isWalletConnected && action === EscrowPanelType.REWARDS:
+      return <RewardEscrowSchedule />;
 
-  const activeTab = useMemo(
-    () =>
-      isWalletConnected && Array.isArray(router.query.action) && router.query.action.length
-        ? router.query.action[0]
-        : null,
-    [router.query.action, isWalletConnected]
-  );
+    case isWalletConnected && action === EscrowPanelType.ICO:
+      return <TokenSaleEscrowSchedule />;
 
-  const returnSchedule = useMemo(
-    () =>
-      !activeTab || activeTab === EscrowPanelType.REWARDS ? (
-        <RewardEscrowSchedule />
-      ) : (
-        <TokenSaleEscrowSchedule />
-      ),
-    [activeTab]
-  );
-
-  return returnSchedule;
+    default:
+      return <RewardEscrowSchedule />;
+  }
 };
 
 export default EscrowTable;

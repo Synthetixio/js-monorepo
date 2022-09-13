@@ -8,7 +8,7 @@ import useSynthetixQueries, { Proposal as ProposalType } from '@synthetixio/quer
 import Table from 'components/Table';
 import { useTranslation } from 'react-i18next';
 import Countdown from 'react-countdown';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import ROUTES from 'constants/routes';
 import { DURATION_SEPARATOR } from 'constants/date';
 import { getCurrentTimestampSeconds } from 'utils/formatters/date';
@@ -40,7 +40,7 @@ type ResponsiveTableProps = {
 
 const ResponsiveTable: React.FC<ResponsiveTableProps> = ({ mobile, spaceKey }) => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const { isWalletConnected, isL2 } = Connector.useContainer();
 
@@ -124,19 +124,15 @@ const ResponsiveTable: React.FC<ResponsiveTableProps> = ({ mobile, spaceKey }) =
         maxRows={10}
         isLoading={proposals.isLoading}
         showPagination={true}
-        onTableRowClick={(row: Row<ProposalType>) => {
-          router.push(ROUTES.Gov.Proposal(spaceKey, row.original.id));
-        }}
+        onTableRowClick={(row: Row<ProposalType>) =>
+          navigate(ROUTES.Gov.Proposal(spaceKey, row.original.id))
+        }
         minHeight={false}
       />
       {isWalletConnected &&
         (spaceKey === SPACE_KEY.PROPOSAL ? (
           isL2 ? (
-            <AbsoluteContainer
-              onClick={() => {
-                router.push(ROUTES.Gov.Create(spaceKey));
-              }}
-            >
+            <AbsoluteContainer onClick={() => navigate(ROUTES.Gov.Create(spaceKey))}>
               <CreateButton variant="secondary">{t('gov.table.create')}</CreateButton>
             </AbsoluteContainer>
           ) : (
@@ -147,11 +143,7 @@ const ResponsiveTable: React.FC<ResponsiveTableProps> = ({ mobile, spaceKey }) =
             </AbsoluteContainer>
           )
         ) : (
-          <AbsoluteContainer
-            onClick={() => {
-              router.push(ROUTES.Gov.Create(spaceKey));
-            }}
-          >
+          <AbsoluteContainer onClick={() => navigate(ROUTES.Gov.Create(spaceKey))}>
             <CreateButton variant="secondary">{t('gov.table.create')}</CreateButton>
           </AbsoluteContainer>
         ))}

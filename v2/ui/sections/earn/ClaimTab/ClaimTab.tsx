@@ -2,7 +2,7 @@ import { useState, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Wei from '@synthetixio/wei';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import { delegateWalletState } from 'store/wallet';
@@ -86,7 +86,7 @@ const ClaimTab: React.FC<ClaimTabProps> = ({
   hasClaimed,
 }) => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const navigate = useNavigate();
   const { isAppReady, walletAddress, isL2, isWalletConnected } = Connector.useContainer();
 
   const delegateWallet = useRecoilValue(delegateWalletState);
@@ -157,7 +157,7 @@ const ClaimTab: React.FC<ClaimTabProps> = ({
     txn.mutate();
   };
 
-  const goToEarn = useCallback(() => router.push(ROUTES.Earn.Home), [router]);
+  const goToEarn = useCallback(() => navigate(ROUTES.Earn.Home), [navigate]);
 
   if (txn.txnStatus === 'pending') {
     return (

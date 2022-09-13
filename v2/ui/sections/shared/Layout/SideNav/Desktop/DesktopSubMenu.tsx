@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
 import { FlexDivColCentered } from '@snx-v1/styles';
 import media from '@snx-v1/media';
+import { Link } from 'react-router-dom';
 
 type SubMenuProps = {
   children: ReactNode;
@@ -47,7 +48,7 @@ export const SubContainer = styled(FlexDivColCentered)<{ i: number; isActive: bo
     `}
 `;
 
-export const SubMenuLinkItem = styled.div<{ isActive: boolean }>`
+export const SubMenuLinkItem = styled(Link)<{ isActive: boolean }>`
   padding-left: 26px;
   line-height: 40px;
   padding-bottom: 10px;

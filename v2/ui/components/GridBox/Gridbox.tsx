@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import media from '@snx-v1/media';
 import { FlexDivColCentered, ExternalLink, Tooltip } from '@snx-v1/styles';
@@ -50,7 +50,7 @@ export const GridBox: FC<GridBoxProps> = ({
           components
         ) : (
           <>
-            {link ? <Link href={link}>{components}</Link> : null}
+            {link ? <Link to={link}>{components}</Link> : null}
             {externalLink ? <ExternalLink href={externalLink}>{components}</ExternalLink> : null}
           </>
         )}
