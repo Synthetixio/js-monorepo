@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { dSNXPoolAddressOptimism } from 'constants/dhedge';
 import Connector from 'containers/Connector';

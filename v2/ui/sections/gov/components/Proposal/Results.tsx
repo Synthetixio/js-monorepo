@@ -5,7 +5,7 @@ import { FlexDivRowCentered } from '@snx-v1/styles';
 import { formatNumber, formatPercent } from 'utils/formatters/number';
 import ProgressBar from 'components/ProgressBar';
 import { MaxHeightColumn, StyledTooltip } from 'sections/gov/components/common';
-import { UseQueryResult } from 'react-query';
+import { UseQueryResult } from '@tanstack/react-query';
 import { ProposalResults } from '@synthetixio/queries';
 
 type ResultsProps = {

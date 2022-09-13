@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import Connector from 'containers/Connector';
 import Wei, { wei } from '@synthetixio/wei';
 

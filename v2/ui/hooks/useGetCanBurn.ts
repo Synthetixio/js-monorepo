@@ -1,5 +1,5 @@
 import Connector from 'containers/Connector';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 const useGetCanBurn = (walletAddress: string | null, options?: UseQueryOptions<Boolean>) => {
   const { synthetixjs } = Connector.useContainer();

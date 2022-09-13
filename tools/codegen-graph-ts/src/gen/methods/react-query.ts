@@ -8,7 +8,7 @@ export default function reactquery(schema: Schema): string {
   const out: string[] = [];
 
   out.push('// !!! DO NOT EDIT !!! Automatically generated file');
-  out.push('import { useQuery, UseQueryOptions } from "react-query";');
+  out.push('import { useQuery, UseQueryOptions } from "@tanstack/react-query";');
   out.push(heading());
 
   for (const entity of schema.types) {

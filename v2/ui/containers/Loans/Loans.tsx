@@ -9,7 +9,7 @@ import { Loan } from './types';
 import getLoan from './getLoan';
 
 import useSynthetixQueries from '@synthetixio/queries';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { wei } from '@synthetixio/wei';
 
 const SECONDS_IN_A_YR = 365 * 24 * 60 * 60;

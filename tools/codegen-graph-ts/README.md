@@ -59,7 +59,7 @@ const cgt = require('codegen-graph-ts');
 
 const text = cgt.gen({
     schema: JSON.parse(fs.readFileSync('manifest.json')),
-    method: 'plain' // Alternatively, set to 'react-query'
+    method: 'plain' // Alternatively, set to '@tanstack/react-query'
 });
 
 fs.writeFileSync(`subgraphQuery.ts`, text);

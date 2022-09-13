@@ -17,7 +17,7 @@ import {
   createQueryContext,
   SynthetixQueryContextProvider,
 } from '@synthetixio/queries'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 const queryClient = new QueryClient()
 
 export default function MyApp() {

@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 const STAKED_SNX_DATA_URL = 'https://api.synthetix.io/staking-ratio';
 

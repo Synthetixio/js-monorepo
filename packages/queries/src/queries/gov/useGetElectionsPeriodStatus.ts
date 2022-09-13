@@ -1,7 +1,7 @@
 import { BaseProvider } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber';
 import { Contract } from '@ethersproject/contracts';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { isObjKey } from '../../utils';
 import { QueryContext } from '../../context';
 import { COUNCIL_CONTRACTS_V3, ELECTION_MODULE_PERIODS } from './constants';

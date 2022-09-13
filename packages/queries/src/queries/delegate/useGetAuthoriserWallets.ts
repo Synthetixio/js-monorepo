@@ -1,4 +1,4 @@
-import { UseQueryOptions, UseQueryResult } from 'react-query';
+import { UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { DelegationWallet } from '../../types';
 import { QueryContext } from '../../context';
 import { useGetDelegatedWallets } from '../../subgraph/mainSubgraphQueries';

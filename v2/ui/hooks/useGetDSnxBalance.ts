@@ -1,7 +1,7 @@
 import Wei, { wei } from '@synthetixio/wei';
 import { dSNXContractMainnet, dSNXPoolContractOptimism } from 'constants/dhedge';
 import Connector from 'containers/Connector';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 const useGetDSnxBalance = (queryOptions?: UseQueryOptions<Wei>) => {
   const { provider, network, walletAddress, isMainnet } = Connector.useContainer();

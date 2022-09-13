@@ -1,6 +1,6 @@
 import { Period, PERIOD_IN_HOURS } from '../../constants';
 import request, { gql } from 'graphql-request';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Candle } from '../../types';
 import { QueryContext } from '../../context';
 

@@ -11,7 +11,7 @@ import theme from 'styles/theme';
 import Layout from 'sections/shared/Layout';
 import AppLayout from 'sections/shared/Layout/AppLayout';
 import { MediaContextProvider } from '@snx-v1/media';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { DEFAULT_REQUEST_REFRESH_INTERVAL } from 'constants/defaults';
 
