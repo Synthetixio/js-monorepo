@@ -1,7 +1,7 @@
 import { ChakraTheme, ComponentMultiStyleConfig, ComponentStyleConfig } from '@chakra-ui/react';
 import { theme as chakraTheme } from '@synthetixio/v3-theme';
 import merge from 'lodash/merge';
-import { singleColor, multipleColor } from 'utils/themeUtils';
+import { singleColor, multipleColor } from '../utils/themeUtils';
 
 const Alert: ComponentMultiStyleConfig = {
   parts: ['title', 'description', 'container', 'icon'],
@@ -85,7 +85,7 @@ const Badge: ComponentStyleConfig = {
       },
     },
     burn: {
-      width: `${100 / 3}%`,
+      width: '100%',
       textAlign: 'center',
       userSelect: 'none',
       borderRadius: 'base',
