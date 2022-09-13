@@ -106,15 +106,7 @@ export const Burn = ({
               color: activeBadge === ActiveBadge.max ? 'black' : 'cyan.500',
             }}
             mr={1}
-            px={1}
             onClick={() => onBadgePress(ActiveBadge.max)}
-            display="flex"
-            justifyContent="space-between"
-            textTransform="capitalize"
-            fontWeight="bold"
-            py={1}
-            w={`${100 / 3}%`}
-            borderRadius="sm"
           >
             {t('staking-v2.burn.burn-max')}
             <Tooltip label="Soonthetix" hasArrow>
@@ -134,16 +126,7 @@ export const Burn = ({
               color: activeBadge === ActiveBadge.cRatio ? 'black' : 'cyan.500',
             }}
             mr={1}
-            px={1}
             onClick={() => onBadgePress(ActiveBadge.cRatio)}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            textTransform="capitalize"
-            fontWeight="bold"
-            w={`${100 / 3}%`}
-            py={1}
-            borderRadius="sm"
           >
             {t('staking-v2.burn.burn-cratio')}
             <Tooltip label="Soonthetix" hasArrow>
@@ -162,16 +145,7 @@ export const Burn = ({
               bg: activeBadge === ActiveBadge.debt ? 'cyan.500' : 'whiteAlpha.300',
               color: activeBadge === ActiveBadge.debt ? 'black' : 'cyan.500',
             }}
-            px={2}
             onClick={() => onBadgePress(ActiveBadge.debt)}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            textTransform="capitalize"
-            fontWeight="bold"
-            py={1}
-            w={`${100 / 3}%`}
-            borderRadius="sm"
           >
             {t('staking-v2.burn.burn-debt')}
             <Tooltip label="Soonthetix" hasArrow>
