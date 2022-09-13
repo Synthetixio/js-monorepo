@@ -1,3 +1,6 @@
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const isProd = process.env.NODE_ENV === 'production';
+
 module.exports = {
   stories: ['../../**/**/*.stories.tsx'],
 
@@ -15,5 +18,12 @@ module.exports = {
 
   features: {
     emotionAlias: false,
+  },
+
+  webpackFinal: (config) => {
+    if (!isProd) {
+      config.plugins.push(new ReactRefreshWebpackPlugin());
+    }
+    return config;
   },
 };
