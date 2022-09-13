@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 
 import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface';
+import { Link } from 'react-router-dom';
 import { wei } from '@synthetixio/wei';
 import {
   ChevronDown,
@@ -83,7 +84,7 @@ export const Navigation = ({
       borderBottom="1px"
       borderBottomColor={['transparent', 'transparent', 'gray.900']}
     >
-      {size === 'desktop' ? <StakingLogo /> : <StakingIcon />}
+      <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
       <Flex alignItems="center">
         {isWalletConnected && walletAddress ? (
           <>
