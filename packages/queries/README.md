@@ -4,10 +4,10 @@ This library provides React hooks for retrieving data from the [Synthetix subgra
 
 ## Usage
 
-Install `react-query` and `@synthetixio/queries`.
+Install `@tanstack/react-query` and `@synthetixio/queries`.
 
 ```
-npm i react-query @synthetixio/queries
+npm i @tanstack/react-query @synthetixio/queries
 ```
 
 Add `QueryClientProvider` and `SynthetixQueryContextProvider` in a wrapping component.

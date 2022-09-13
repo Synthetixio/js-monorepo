@@ -70,10 +70,13 @@ const synthDataSortFn = (a: any, b: any) => {
   return a.poolProportion.lt(b.poolProportion) ? 1 : -1;
 };
 export const useGetDebtPoolData = () => {
-  return useQuery('debt-pool-data', () => {
-    return fetch(DEBT_DATA_URL)
-      .then((x) => x.json())
-      .then(formatDebtPoolData)
-      .then((x) => x.filter((x) => x.name !== 'total_excluding_sUSD').sort(synthDataSortFn));
+  return useQuery({
+    queryKey: ['debt-pool-data'],
+    queryFn: () => {
+      return fetch(DEBT_DATA_URL)
+        .then((x) => x.json())
+        .then(formatDebtPoolData)
+        .then((x) => x.filter((x) => x.name !== 'total_excluding_sUSD').sort(synthDataSortFn));
+    },
   });
 };

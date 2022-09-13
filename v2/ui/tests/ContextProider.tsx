@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const ContextProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
-    /* @ts-ignore TODO: update react-query */
     <QueryClientProvider client={new QueryClient()} contextSharing={true}>
       <SynthetixQueryContextProvider
         value={createQueryContext({ networkId: 10, synthetixjs: null })}

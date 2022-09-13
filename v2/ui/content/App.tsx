@@ -118,9 +118,7 @@ const App: FC<AppProps> = (props) => {
       </Head>
       <LazyChakraProvider enabled={STAKING_V2_ENABLED}>
         <ThemeProvider theme={theme}>
-          {/* @ts-ignore TODO: update recoil */}
           <RecoilRoot>
-            {/* @ts-ignore TODO: update react-query */}
             <QueryClientProvider client={queryClient} contextSharing={true}>
               <WithAppContainers>
                 {/* @ts-ignore TODO: update styled-media-query */}

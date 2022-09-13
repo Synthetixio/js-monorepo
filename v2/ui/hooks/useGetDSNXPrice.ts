@@ -11,19 +11,17 @@ const contract = new Contract(dSNXPoolAddressOptimism, abi);
 const useGetDSNXPrice = (walletAddress: string | null, queryOptions?: UseQueryOptions<Wei>) => {
   const { provider, network } = Connector.useContainer();
 
-  return useQuery(
-    [walletAddress, network?.name],
-    async () => {
+  return useQuery({
+    queryKey: [walletAddress, network?.name],
+    queryFn: async () => {
       if (!walletAddress) return wei(0);
       if (!provider) return wei(0);
       if (!network?.name) return wei(0);
       const price = await contract.connect(provider).tokenPrice();
       return wei(price);
     },
-    {
-      enabled: Boolean(walletAddress && network?.name && provider),
-      ...queryOptions,
-    }
-  );
+    enabled: Boolean(walletAddress && network?.name && provider),
+    ...queryOptions,
+  });
 };
 export default useGetDSNXPrice;
