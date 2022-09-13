@@ -193,7 +193,6 @@ export const Navigation = ({
             <SettingsIcon />
           </Center>
         </>
-
         <Menu>
           <Center
             ml={2}

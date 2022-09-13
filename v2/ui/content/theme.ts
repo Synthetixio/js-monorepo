@@ -111,7 +111,7 @@ const Text: ComponentStyleConfig = {
       fontSize: '14px',
       fontFamily: 'heading',
       lineHeight: '20px',
-      letterSpacing: 0.55,
+      letterSpacing: 0,
     },
   },
 };

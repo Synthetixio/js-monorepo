@@ -17,3 +17,7 @@ Primary.args = {
   walletAddress: '0xada3f268965c7410dfa0d74b928D950D94fAa554',
   switchNetwork: () => {},
 };
+
+Primary.parameters = {
+  layout: 'fullscreen',
+};
