@@ -12,88 +12,77 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
-export interface SynthetixBridgeToBaseAbiTypesInterface
-  extends utils.Interface {
+export interface SynthetixBridgeToBaseAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "finalizeDeposit(address,uint256)": FunctionFragment;
-    "finalizeEscrowMigration(address,uint256,(uint64,uint256)[])": FunctionFragment;
-    "finalizeFeePeriodClose(uint256,uint256)": FunctionFragment;
-    "finalizeRewardDeposit(address,uint256)": FunctionFragment;
-    "finalizeSynthTransfer(bytes32,address,uint256)": FunctionFragment;
-    "initiateSynthTransfer(bytes32,address,uint256)": FunctionFragment;
-    "initiationActive()": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "resumeInitiation()": FunctionFragment;
-    "suspendInitiation()": FunctionFragment;
-    "synthTransferReceived()": FunctionFragment;
-    "synthTransferSent()": FunctionFragment;
-    "withdraw(uint256)": FunctionFragment;
-    "withdrawTo(address,uint256)": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'finalizeDeposit(address,uint256)': FunctionFragment;
+    'finalizeEscrowMigration(address,uint256,(uint64,uint256)[])': FunctionFragment;
+    'finalizeFeePeriodClose(uint256,uint256)': FunctionFragment;
+    'finalizeRewardDeposit(address,uint256)': FunctionFragment;
+    'finalizeSynthTransfer(bytes32,address,uint256)': FunctionFragment;
+    'initiateSynthTransfer(bytes32,address,uint256)': FunctionFragment;
+    'initiationActive()': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'resumeInitiation()': FunctionFragment;
+    'suspendInitiation()': FunctionFragment;
+    'synthTransferReceived()': FunctionFragment;
+    'synthTransferSent()': FunctionFragment;
+    'withdraw(uint256)': FunctionFragment;
+    'withdrawTo(address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "acceptOwnership"
-      | "finalizeDeposit"
-      | "finalizeEscrowMigration"
-      | "finalizeFeePeriodClose"
-      | "finalizeRewardDeposit"
-      | "finalizeSynthTransfer"
-      | "initiateSynthTransfer"
-      | "initiationActive"
-      | "isResolverCached"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "rebuildCache"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "resumeInitiation"
-      | "suspendInitiation"
-      | "synthTransferReceived"
-      | "synthTransferSent"
-      | "withdraw"
-      | "withdrawTo"
+      | 'CONTRACT_NAME'
+      | 'acceptOwnership'
+      | 'finalizeDeposit'
+      | 'finalizeEscrowMigration'
+      | 'finalizeFeePeriodClose'
+      | 'finalizeRewardDeposit'
+      | 'finalizeSynthTransfer'
+      | 'initiateSynthTransfer'
+      | 'initiationActive'
+      | 'isResolverCached'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'rebuildCache'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'resumeInitiation'
+      | 'suspendInitiation'
+      | 'synthTransferReceived'
+      | 'synthTransferSent'
+      | 'withdraw'
+      | 'withdrawTo'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "finalizeDeposit",
+    functionFragment: 'finalizeDeposit',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "finalizeEscrowMigration",
+    functionFragment: 'finalizeEscrowMigration',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
@@ -104,194 +93,99 @@ export interface SynthetixBridgeToBaseAbiTypesInterface
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "finalizeFeePeriodClose",
+    functionFragment: 'finalizeFeePeriodClose',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "finalizeRewardDeposit",
+    functionFragment: 'finalizeRewardDeposit',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "finalizeSynthTransfer",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'finalizeSynthTransfer',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "initiateSynthTransfer",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'initiateSynthTransfer',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'initiationActive', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "initiationActive",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resumeInitiation', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'suspendInitiation', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'synthTransferReceived', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'synthTransferSent', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "resumeInitiation",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "suspendInitiation",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "synthTransferReceived",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "synthTransferSent",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdraw",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawTo",
+    functionFragment: 'withdrawTo',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "finalizeDeposit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "finalizeEscrowMigration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "finalizeFeePeriodClose",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "finalizeRewardDeposit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "finalizeSynthTransfer",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "initiateSynthTransfer",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "initiationActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resumeInitiation",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "suspendInitiation",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthTransferReceived",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthTransferSent",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "withdrawTo", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'finalizeDeposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'finalizeEscrowMigration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'finalizeFeePeriodClose', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'finalizeRewardDeposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'finalizeSynthTransfer', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initiateSynthTransfer', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initiationActive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resumeInitiation', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'suspendInitiation', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthTransferReceived', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthTransferSent', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawTo', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "DepositFinalized(address,uint256)": EventFragment;
-    "FeePeriodCloseFinalized(uint256,uint256)": EventFragment;
-    "FinalizeSynthTransfer(bytes32,address,uint256)": EventFragment;
-    "ImportedVestingEntries(address,uint256,tuple[])": EventFragment;
-    "InitiateSynthTransfer(bytes32,address,uint256)": EventFragment;
-    "InitiationResumed()": EventFragment;
-    "InitiationSuspended()": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "RewardDepositFinalized(address,uint256)": EventFragment;
-    "WithdrawalInitiated(address,address,uint256)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'DepositFinalized(address,uint256)': EventFragment;
+    'FeePeriodCloseFinalized(uint256,uint256)': EventFragment;
+    'FinalizeSynthTransfer(bytes32,address,uint256)': EventFragment;
+    'ImportedVestingEntries(address,uint256,tuple[])': EventFragment;
+    'InitiateSynthTransfer(bytes32,address,uint256)': EventFragment;
+    'InitiationResumed()': EventFragment;
+    'InitiationSuspended()': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'RewardDepositFinalized(address,uint256)': EventFragment;
+    'WithdrawalInitiated(address,address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DepositFinalized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FeePeriodCloseFinalized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FinalizeSynthTransfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ImportedVestingEntries"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "InitiateSynthTransfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "InitiationResumed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "InitiationSuspended"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardDepositFinalized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "WithdrawalInitiated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'DepositFinalized'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FeePeriodCloseFinalized'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FinalizeSynthTransfer'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ImportedVestingEntries'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'InitiateSynthTransfer'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'InitiationResumed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'InitiationSuspended'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardDepositFinalized'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'WithdrawalInitiated'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -299,13 +193,9 @@ export interface DepositFinalizedEventObject {
   _to: string;
   _amount: BigNumber;
 }
-export type DepositFinalizedEvent = TypedEvent<
-  [string, BigNumber],
-  DepositFinalizedEventObject
->;
+export type DepositFinalizedEvent = TypedEvent<[string, BigNumber], DepositFinalizedEventObject>;
 
-export type DepositFinalizedEventFilter =
-  TypedEventFilter<DepositFinalizedEvent>;
+export type DepositFinalizedEventFilter = TypedEventFilter<DepositFinalizedEvent>;
 
 export interface FeePeriodCloseFinalizedEventObject {
   snxBackedAmount: BigNumber;
@@ -316,8 +206,7 @@ export type FeePeriodCloseFinalizedEvent = TypedEvent<
   FeePeriodCloseFinalizedEventObject
 >;
 
-export type FeePeriodCloseFinalizedEventFilter =
-  TypedEventFilter<FeePeriodCloseFinalizedEvent>;
+export type FeePeriodCloseFinalizedEventFilter = TypedEventFilter<FeePeriodCloseFinalizedEvent>;
 
 export interface FinalizeSynthTransferEventObject {
   currencyKey: string;
@@ -329,26 +218,19 @@ export type FinalizeSynthTransferEvent = TypedEvent<
   FinalizeSynthTransferEventObject
 >;
 
-export type FinalizeSynthTransferEventFilter =
-  TypedEventFilter<FinalizeSynthTransferEvent>;
+export type FinalizeSynthTransferEventFilter = TypedEventFilter<FinalizeSynthTransferEvent>;
 
 export interface ImportedVestingEntriesEventObject {
   account: string;
   escrowedAmount: BigNumber;
-  vestingEntries: [BigNumber, BigNumber] &
-    { endTime: BigNumber; escrowAmount: BigNumber }[];
+  vestingEntries: [BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }[];
 }
 export type ImportedVestingEntriesEvent = TypedEvent<
-  [
-    string,
-    BigNumber,
-    [BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }[]
-  ],
+  [string, BigNumber, [BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }[]],
   ImportedVestingEntriesEventObject
 >;
 
-export type ImportedVestingEntriesEventFilter =
-  TypedEventFilter<ImportedVestingEntriesEvent>;
+export type ImportedVestingEntriesEventFilter = TypedEventFilter<ImportedVestingEntriesEvent>;
 
 export interface InitiateSynthTransferEventObject {
   currencyKey: string;
@@ -360,45 +242,30 @@ export type InitiateSynthTransferEvent = TypedEvent<
   InitiateSynthTransferEventObject
 >;
 
-export type InitiateSynthTransferEventFilter =
-  TypedEventFilter<InitiateSynthTransferEvent>;
+export type InitiateSynthTransferEventFilter = TypedEventFilter<InitiateSynthTransferEvent>;
 
 export interface InitiationResumedEventObject {}
-export type InitiationResumedEvent = TypedEvent<
-  [],
-  InitiationResumedEventObject
->;
+export type InitiationResumedEvent = TypedEvent<[], InitiationResumedEventObject>;
 
-export type InitiationResumedEventFilter =
-  TypedEventFilter<InitiationResumedEvent>;
+export type InitiationResumedEventFilter = TypedEventFilter<InitiationResumedEvent>;
 
 export interface InitiationSuspendedEventObject {}
-export type InitiationSuspendedEvent = TypedEvent<
-  [],
-  InitiationSuspendedEventObject
->;
+export type InitiationSuspendedEvent = TypedEvent<[], InitiationSuspendedEventObject>;
 
-export type InitiationSuspendedEventFilter =
-  TypedEventFilter<InitiationSuspendedEvent>;
+export type InitiationSuspendedEventFilter = TypedEventFilter<InitiationSuspendedEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -411,8 +278,7 @@ export type RewardDepositFinalizedEvent = TypedEvent<
   RewardDepositFinalizedEventObject
 >;
 
-export type RewardDepositFinalizedEventFilter =
-  TypedEventFilter<RewardDepositFinalizedEvent>;
+export type RewardDepositFinalizedEventFilter = TypedEventFilter<RewardDepositFinalizedEvent>;
 
 export interface WithdrawalInitiatedEventObject {
   _from: string;
@@ -424,8 +290,7 @@ export type WithdrawalInitiatedEvent = TypedEvent<
   WithdrawalInitiatedEventObject
 >;
 
-export type WithdrawalInitiatedEventFilter =
-  TypedEventFilter<WithdrawalInitiatedEvent>;
+export type WithdrawalInitiatedEventFilter = TypedEventFilter<WithdrawalInitiatedEvent>;
 
 export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -444,9 +309,7 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -692,10 +555,7 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
 
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -715,10 +575,7 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
 
     synthTransferSent(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    withdraw(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawTo(
       to: PromiseOrValue<string>,
@@ -728,13 +585,10 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "DepositFinalized(address,uint256)"(
+    'DepositFinalized(address,uint256)'(
       _to?: PromiseOrValue<string> | null,
       _amount?: null
     ): DepositFinalizedEventFilter;
@@ -743,7 +597,7 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
       _amount?: null
     ): DepositFinalizedEventFilter;
 
-    "FeePeriodCloseFinalized(uint256,uint256)"(
+    'FeePeriodCloseFinalized(uint256,uint256)'(
       snxBackedAmount?: null,
       totalDebtShares?: null
     ): FeePeriodCloseFinalizedEventFilter;
@@ -752,7 +606,7 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
       totalDebtShares?: null
     ): FeePeriodCloseFinalizedEventFilter;
 
-    "FinalizeSynthTransfer(bytes32,address,uint256)"(
+    'FinalizeSynthTransfer(bytes32,address,uint256)'(
       currencyKey?: PromiseOrValue<BytesLike> | null,
       destination?: PromiseOrValue<string> | null,
       amount?: null
@@ -763,7 +617,7 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
       amount?: null
     ): FinalizeSynthTransferEventFilter;
 
-    "ImportedVestingEntries(address,uint256,tuple[])"(
+    'ImportedVestingEntries(address,uint256,tuple[])'(
       account?: PromiseOrValue<string> | null,
       escrowedAmount?: null,
       vestingEntries?: null
@@ -774,7 +628,7 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
       vestingEntries?: null
     ): ImportedVestingEntriesEventFilter;
 
-    "InitiateSynthTransfer(bytes32,address,uint256)"(
+    'InitiateSynthTransfer(bytes32,address,uint256)'(
       currencyKey?: PromiseOrValue<BytesLike> | null,
       destination?: PromiseOrValue<string> | null,
       amount?: null
@@ -785,31 +639,25 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
       amount?: null
     ): InitiateSynthTransferEventFilter;
 
-    "InitiationResumed()"(): InitiationResumedEventFilter;
+    'InitiationResumed()'(): InitiationResumedEventFilter;
     InitiationResumed(): InitiationResumedEventFilter;
 
-    "InitiationSuspended()"(): InitiationSuspendedEventFilter;
+    'InitiationSuspended()'(): InitiationSuspendedEventFilter;
     InitiationSuspended(): InitiationSuspendedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "RewardDepositFinalized(address,uint256)"(
+    'RewardDepositFinalized(address,uint256)'(
       from?: null,
       amount?: null
     ): RewardDepositFinalizedEventFilter;
-    RewardDepositFinalized(
-      from?: null,
-      amount?: null
-    ): RewardDepositFinalizedEventFilter;
+    RewardDepositFinalized(from?: null, amount?: null): RewardDepositFinalizedEventFilter;
 
-    "WithdrawalInitiated(address,address,uint256)"(
+    'WithdrawalInitiated(address,address,uint256)'(
       _from?: PromiseOrValue<string> | null,
       _to?: null,
       _amount?: null
@@ -824,9 +672,7 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
   estimateGas: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     finalizeDeposit(
       to: PromiseOrValue<string>,
@@ -883,17 +729,13 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
-    resumeInitiation(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    resumeInitiation(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     suspendInitiation(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -983,9 +825,7 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     resumeInitiation(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -995,9 +835,7 @@ export interface SynthetixBridgeToBaseAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    synthTransferReceived(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    synthTransferReceived(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     synthTransferSent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -12,255 +12,221 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface SynthetixAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "DECIMALS()": FunctionFragment;
-    "TOKEN_NAME()": FunctionFragment;
-    "TOKEN_SYMBOL()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "allowance(address,address)": FunctionFragment;
-    "anySynthOrSNXRateIsInvalid()": FunctionFragment;
-    "approve(address,uint256)": FunctionFragment;
-    "availableCurrencyKeys()": FunctionFragment;
-    "availableSynthCount()": FunctionFragment;
-    "availableSynths(uint256)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "burnSecondary(address,uint256)": FunctionFragment;
-    "burnSynths(uint256)": FunctionFragment;
-    "burnSynthsOnBehalf(address,uint256)": FunctionFragment;
-    "burnSynthsToTarget()": FunctionFragment;
-    "burnSynthsToTargetOnBehalf(address)": FunctionFragment;
-    "collateral(address)": FunctionFragment;
-    "collateralisationRatio(address)": FunctionFragment;
-    "debtBalanceOf(address,bytes32)": FunctionFragment;
-    "decimals()": FunctionFragment;
-    "emitAtomicSynthExchange(address,bytes32,uint256,bytes32,uint256,address)": FunctionFragment;
-    "emitExchangeRebate(address,bytes32,uint256)": FunctionFragment;
-    "emitExchangeReclaim(address,bytes32,uint256)": FunctionFragment;
-    "emitExchangeTracking(bytes32,bytes32,uint256,uint256)": FunctionFragment;
-    "emitSynthExchange(address,bytes32,uint256,bytes32,uint256,address)": FunctionFragment;
-    "exchange(bytes32,uint256,bytes32)": FunctionFragment;
-    "exchangeAtomically(bytes32,uint256,bytes32,bytes32,uint256)": FunctionFragment;
-    "exchangeOnBehalf(address,bytes32,uint256,bytes32)": FunctionFragment;
-    "exchangeOnBehalfWithTracking(address,bytes32,uint256,bytes32,address,bytes32)": FunctionFragment;
-    "exchangeWithTracking(bytes32,uint256,bytes32,address,bytes32)": FunctionFragment;
-    "exchangeWithTrackingForInitiator(bytes32,uint256,bytes32,address,bytes32)": FunctionFragment;
-    "exchangeWithVirtual(bytes32,uint256,bytes32,bytes32)": FunctionFragment;
-    "initializeLiquidatorRewardsRestitution(uint256)": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "isWaitingPeriod(bytes32)": FunctionFragment;
-    "issueMaxSynths()": FunctionFragment;
-    "issueMaxSynthsOnBehalf(address)": FunctionFragment;
-    "issueSynths(uint256)": FunctionFragment;
-    "issueSynthsOnBehalf(address,uint256)": FunctionFragment;
-    "liquidateDelinquentAccount(address)": FunctionFragment;
-    "liquidateSelf()": FunctionFragment;
-    "maxIssuableSynths(address)": FunctionFragment;
-    "messageSender()": FunctionFragment;
-    "migrateEscrowBalanceToRewardEscrowV2()": FunctionFragment;
-    "mint()": FunctionFragment;
-    "mintSecondary(address,uint256)": FunctionFragment;
-    "mintSecondaryRewards(uint256)": FunctionFragment;
-    "name()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "proxy()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "remainingIssuableSynths(address)": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "restituted()": FunctionFragment;
-    "sUSD()": FunctionFragment;
-    "setMessageSender(address)": FunctionFragment;
-    "setProxy(address)": FunctionFragment;
-    "setTokenState(address)": FunctionFragment;
-    "settle(bytes32)": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "synths(bytes32)": FunctionFragment;
-    "synthsByAddress(address)": FunctionFragment;
-    "tokenState()": FunctionFragment;
-    "totalIssuedSynths(bytes32)": FunctionFragment;
-    "totalIssuedSynthsExcludeOtherCollateral(bytes32)": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "transfer(address,uint256)": FunctionFragment;
-    "transferFrom(address,address,uint256)": FunctionFragment;
-    "transferableSynthetix(address)": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'DECIMALS()': FunctionFragment;
+    'TOKEN_NAME()': FunctionFragment;
+    'TOKEN_SYMBOL()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'allowance(address,address)': FunctionFragment;
+    'anySynthOrSNXRateIsInvalid()': FunctionFragment;
+    'approve(address,uint256)': FunctionFragment;
+    'availableCurrencyKeys()': FunctionFragment;
+    'availableSynthCount()': FunctionFragment;
+    'availableSynths(uint256)': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'burnSecondary(address,uint256)': FunctionFragment;
+    'burnSynths(uint256)': FunctionFragment;
+    'burnSynthsOnBehalf(address,uint256)': FunctionFragment;
+    'burnSynthsToTarget()': FunctionFragment;
+    'burnSynthsToTargetOnBehalf(address)': FunctionFragment;
+    'collateral(address)': FunctionFragment;
+    'collateralisationRatio(address)': FunctionFragment;
+    'debtBalanceOf(address,bytes32)': FunctionFragment;
+    'decimals()': FunctionFragment;
+    'emitAtomicSynthExchange(address,bytes32,uint256,bytes32,uint256,address)': FunctionFragment;
+    'emitExchangeRebate(address,bytes32,uint256)': FunctionFragment;
+    'emitExchangeReclaim(address,bytes32,uint256)': FunctionFragment;
+    'emitExchangeTracking(bytes32,bytes32,uint256,uint256)': FunctionFragment;
+    'emitSynthExchange(address,bytes32,uint256,bytes32,uint256,address)': FunctionFragment;
+    'exchange(bytes32,uint256,bytes32)': FunctionFragment;
+    'exchangeAtomically(bytes32,uint256,bytes32,bytes32,uint256)': FunctionFragment;
+    'exchangeOnBehalf(address,bytes32,uint256,bytes32)': FunctionFragment;
+    'exchangeOnBehalfWithTracking(address,bytes32,uint256,bytes32,address,bytes32)': FunctionFragment;
+    'exchangeWithTracking(bytes32,uint256,bytes32,address,bytes32)': FunctionFragment;
+    'exchangeWithTrackingForInitiator(bytes32,uint256,bytes32,address,bytes32)': FunctionFragment;
+    'exchangeWithVirtual(bytes32,uint256,bytes32,bytes32)': FunctionFragment;
+    'initializeLiquidatorRewardsRestitution(uint256)': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'isWaitingPeriod(bytes32)': FunctionFragment;
+    'issueMaxSynths()': FunctionFragment;
+    'issueMaxSynthsOnBehalf(address)': FunctionFragment;
+    'issueSynths(uint256)': FunctionFragment;
+    'issueSynthsOnBehalf(address,uint256)': FunctionFragment;
+    'liquidateDelinquentAccount(address)': FunctionFragment;
+    'liquidateSelf()': FunctionFragment;
+    'maxIssuableSynths(address)': FunctionFragment;
+    'messageSender()': FunctionFragment;
+    'migrateEscrowBalanceToRewardEscrowV2()': FunctionFragment;
+    'mint()': FunctionFragment;
+    'mintSecondary(address,uint256)': FunctionFragment;
+    'mintSecondaryRewards(uint256)': FunctionFragment;
+    'name()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'proxy()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'remainingIssuableSynths(address)': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'restituted()': FunctionFragment;
+    'sUSD()': FunctionFragment;
+    'setMessageSender(address)': FunctionFragment;
+    'setProxy(address)': FunctionFragment;
+    'setTokenState(address)': FunctionFragment;
+    'settle(bytes32)': FunctionFragment;
+    'symbol()': FunctionFragment;
+    'synths(bytes32)': FunctionFragment;
+    'synthsByAddress(address)': FunctionFragment;
+    'tokenState()': FunctionFragment;
+    'totalIssuedSynths(bytes32)': FunctionFragment;
+    'totalIssuedSynthsExcludeOtherCollateral(bytes32)': FunctionFragment;
+    'totalSupply()': FunctionFragment;
+    'transfer(address,uint256)': FunctionFragment;
+    'transferFrom(address,address,uint256)': FunctionFragment;
+    'transferableSynthetix(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "DECIMALS"
-      | "TOKEN_NAME"
-      | "TOKEN_SYMBOL"
-      | "acceptOwnership"
-      | "allowance"
-      | "anySynthOrSNXRateIsInvalid"
-      | "approve"
-      | "availableCurrencyKeys"
-      | "availableSynthCount"
-      | "availableSynths"
-      | "balanceOf"
-      | "burnSecondary"
-      | "burnSynths"
-      | "burnSynthsOnBehalf"
-      | "burnSynthsToTarget"
-      | "burnSynthsToTargetOnBehalf"
-      | "collateral"
-      | "collateralisationRatio"
-      | "debtBalanceOf"
-      | "decimals"
-      | "emitAtomicSynthExchange"
-      | "emitExchangeRebate"
-      | "emitExchangeReclaim"
-      | "emitExchangeTracking"
-      | "emitSynthExchange"
-      | "exchange"
-      | "exchangeAtomically"
-      | "exchangeOnBehalf"
-      | "exchangeOnBehalfWithTracking"
-      | "exchangeWithTracking"
-      | "exchangeWithTrackingForInitiator"
-      | "exchangeWithVirtual"
-      | "initializeLiquidatorRewardsRestitution"
-      | "isResolverCached"
-      | "isWaitingPeriod"
-      | "issueMaxSynths"
-      | "issueMaxSynthsOnBehalf"
-      | "issueSynths"
-      | "issueSynthsOnBehalf"
-      | "liquidateDelinquentAccount"
-      | "liquidateSelf"
-      | "maxIssuableSynths"
-      | "messageSender"
-      | "migrateEscrowBalanceToRewardEscrowV2"
-      | "mint"
-      | "mintSecondary"
-      | "mintSecondaryRewards"
-      | "name"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "proxy"
-      | "rebuildCache"
-      | "remainingIssuableSynths"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "restituted"
-      | "sUSD"
-      | "setMessageSender"
-      | "setProxy"
-      | "setTokenState"
-      | "settle"
-      | "symbol"
-      | "synths"
-      | "synthsByAddress"
-      | "tokenState"
-      | "totalIssuedSynths"
-      | "totalIssuedSynthsExcludeOtherCollateral"
-      | "totalSupply"
-      | "transfer"
-      | "transferFrom"
-      | "transferableSynthetix"
+      | 'CONTRACT_NAME'
+      | 'DECIMALS'
+      | 'TOKEN_NAME'
+      | 'TOKEN_SYMBOL'
+      | 'acceptOwnership'
+      | 'allowance'
+      | 'anySynthOrSNXRateIsInvalid'
+      | 'approve'
+      | 'availableCurrencyKeys'
+      | 'availableSynthCount'
+      | 'availableSynths'
+      | 'balanceOf'
+      | 'burnSecondary'
+      | 'burnSynths'
+      | 'burnSynthsOnBehalf'
+      | 'burnSynthsToTarget'
+      | 'burnSynthsToTargetOnBehalf'
+      | 'collateral'
+      | 'collateralisationRatio'
+      | 'debtBalanceOf'
+      | 'decimals'
+      | 'emitAtomicSynthExchange'
+      | 'emitExchangeRebate'
+      | 'emitExchangeReclaim'
+      | 'emitExchangeTracking'
+      | 'emitSynthExchange'
+      | 'exchange'
+      | 'exchangeAtomically'
+      | 'exchangeOnBehalf'
+      | 'exchangeOnBehalfWithTracking'
+      | 'exchangeWithTracking'
+      | 'exchangeWithTrackingForInitiator'
+      | 'exchangeWithVirtual'
+      | 'initializeLiquidatorRewardsRestitution'
+      | 'isResolverCached'
+      | 'isWaitingPeriod'
+      | 'issueMaxSynths'
+      | 'issueMaxSynthsOnBehalf'
+      | 'issueSynths'
+      | 'issueSynthsOnBehalf'
+      | 'liquidateDelinquentAccount'
+      | 'liquidateSelf'
+      | 'maxIssuableSynths'
+      | 'messageSender'
+      | 'migrateEscrowBalanceToRewardEscrowV2'
+      | 'mint'
+      | 'mintSecondary'
+      | 'mintSecondaryRewards'
+      | 'name'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'proxy'
+      | 'rebuildCache'
+      | 'remainingIssuableSynths'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'restituted'
+      | 'sUSD'
+      | 'setMessageSender'
+      | 'setProxy'
+      | 'setTokenState'
+      | 'settle'
+      | 'symbol'
+      | 'synths'
+      | 'synthsByAddress'
+      | 'tokenState'
+      | 'totalIssuedSynths'
+      | 'totalIssuedSynthsExcludeOtherCollateral'
+      | 'totalSupply'
+      | 'transfer'
+      | 'transferFrom'
+      | 'transferableSynthetix'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'DECIMALS', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'TOKEN_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'TOKEN_SYMBOL', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "DECIMALS", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "TOKEN_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "TOKEN_SYMBOL",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "allowance",
+    functionFragment: 'allowance',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'anySynthOrSNXRateIsInvalid', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "anySynthOrSNXRateIsInvalid",
-    values?: undefined
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'availableCurrencyKeys', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'availableSynthCount', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "approve",
+    functionFragment: 'availableSynths',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'burnSecondary',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "availableCurrencyKeys",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "availableSynthCount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "availableSynths",
+    functionFragment: 'burnSynths',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "burnSecondary",
+    functionFragment: 'burnSynthsOnBehalf',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'burnSynthsToTarget', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "burnSynths",
-    values: [PromiseOrValue<BigNumberish>]
+    functionFragment: 'burnSynthsToTargetOnBehalf',
+    values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'collateral', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "burnSynthsOnBehalf",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "burnSynthsToTarget",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "burnSynthsToTargetOnBehalf",
+    functionFragment: 'collateralisationRatio',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "collateral",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "collateralisationRatio",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "debtBalanceOf",
+    functionFragment: 'debtBalanceOf',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
-  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "emitAtomicSynthExchange",
+    functionFragment: 'emitAtomicSynthExchange',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BytesLike>,
@@ -271,23 +237,15 @@ export interface SynthetixAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "emitExchangeRebate",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'emitExchangeRebate',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "emitExchangeReclaim",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'emitExchangeReclaim',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "emitExchangeTracking",
+    functionFragment: 'emitExchangeTracking',
     values: [
       PromiseOrValue<BytesLike>,
       PromiseOrValue<BytesLike>,
@@ -296,7 +254,7 @@ export interface SynthetixAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "emitSynthExchange",
+    functionFragment: 'emitSynthExchange',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BytesLike>,
@@ -307,15 +265,11 @@ export interface SynthetixAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "exchange",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    functionFragment: 'exchange',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "exchangeAtomically",
+    functionFragment: 'exchangeAtomically',
     values: [
       PromiseOrValue<BytesLike>,
       PromiseOrValue<BigNumberish>,
@@ -325,7 +279,7 @@ export interface SynthetixAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "exchangeOnBehalf",
+    functionFragment: 'exchangeOnBehalf',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BytesLike>,
@@ -334,7 +288,7 @@ export interface SynthetixAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "exchangeOnBehalfWithTracking",
+    functionFragment: 'exchangeOnBehalfWithTracking',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BytesLike>,
@@ -345,17 +299,7 @@ export interface SynthetixAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "exchangeWithTracking",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "exchangeWithTrackingForInitiator",
+    functionFragment: 'exchangeWithTracking',
     values: [
       PromiseOrValue<BytesLike>,
       PromiseOrValue<BigNumberish>,
@@ -365,7 +309,17 @@ export interface SynthetixAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "exchangeWithVirtual",
+    functionFragment: 'exchangeWithTrackingForInitiator',
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'exchangeWithVirtual',
     values: [
       PromiseOrValue<BytesLike>,
       PromiseOrValue<BigNumberish>,
@@ -374,405 +328,215 @@ export interface SynthetixAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "initializeLiquidatorRewardsRestitution",
+    functionFragment: 'initializeLiquidatorRewardsRestitution',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'isWaitingPeriod',
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(functionFragment: 'issueMaxSynths', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'issueMaxSynthsOnBehalf',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'issueSynths',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
+    functionFragment: 'issueSynthsOnBehalf',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "isWaitingPeriod",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "issueMaxSynths",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "issueMaxSynthsOnBehalf",
+    functionFragment: 'liquidateDelinquentAccount',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'liquidateSelf', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "issueSynths",
+    functionFragment: 'maxIssuableSynths',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'messageSender', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'migrateEscrowBalanceToRewardEscrowV2',
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: 'mint', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'mintSecondary',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'mintSecondaryRewards',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "issueSynthsOnBehalf",
+    functionFragment: 'nominateNewOwner',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'proxy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'remainingIssuableSynths',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'restituted', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'sUSD', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'setMessageSender',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'setProxy', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setTokenState', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'settle', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'synths', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'synthsByAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'tokenState', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'totalIssuedSynths',
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'totalIssuedSynthsExcludeOtherCollateral',
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "liquidateDelinquentAccount",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "liquidateSelf",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "maxIssuableSynths",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "messageSender",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "migrateEscrowBalanceToRewardEscrowV2",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "mint", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "mintSecondary",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mintSecondaryRewards",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "proxy", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "remainingIssuableSynths",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "restituted",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "sUSD", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "setMessageSender",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setProxy",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setTokenState",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "settle",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "synths",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "synthsByAddress",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "tokenState",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalIssuedSynths",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalIssuedSynthsExcludeOtherCollateral",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transfer",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferableSynthetix",
+    functionFragment: 'transferableSynthetix',
     values: [PromiseOrValue<string>]
   ): string;
 
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'DECIMALS', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'TOKEN_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'TOKEN_SYMBOL', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'anySynthOrSNXRateIsInvalid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'availableCurrencyKeys', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'availableSynthCount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'availableSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnSecondary', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnSynthsOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnSynthsToTarget', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnSynthsToTargetOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'collateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'collateralisationRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'debtBalanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'emitAtomicSynthExchange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'emitExchangeRebate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'emitExchangeReclaim', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'emitExchangeTracking', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'emitSynthExchange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeAtomically', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeOnBehalfWithTracking', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeWithTracking', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
+    functionFragment: 'exchangeWithTrackingForInitiator',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "DECIMALS", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "TOKEN_NAME", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeWithVirtual', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "TOKEN_SYMBOL",
+    functionFragment: 'initializeLiquidatorRewardsRestitution',
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isWaitingPeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issueMaxSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issueMaxSynthsOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issueSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issueSynthsOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidateDelinquentAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidateSelf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxIssuableSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'messageSender', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "acceptOwnership",
+    functionFragment: 'migrateEscrowBalanceToRewardEscrowV2',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mintSecondary', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mintSecondaryRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'proxy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'remainingIssuableSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'restituted', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'sUSD', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMessageSender', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setProxy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setTokenState', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'settle', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthsByAddress', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'tokenState', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalIssuedSynths', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "anySynthOrSNXRateIsInvalid",
+    functionFragment: 'totalIssuedSynthsExcludeOtherCollateral',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "availableCurrencyKeys",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "availableSynthCount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "availableSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "burnSecondary",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "burnSynths", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "burnSynthsOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "burnSynthsToTarget",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "burnSynthsToTargetOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "collateral", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "collateralisationRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "debtBalanceOf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "emitAtomicSynthExchange",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "emitExchangeRebate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "emitExchangeReclaim",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "emitExchangeTracking",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "emitSynthExchange",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "exchange", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeAtomically",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeOnBehalfWithTracking",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeWithTracking",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeWithTrackingForInitiator",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeWithVirtual",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "initializeLiquidatorRewardsRestitution",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isWaitingPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issueMaxSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issueMaxSynthsOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issueSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issueSynthsOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidateDelinquentAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidateSelf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "maxIssuableSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "messageSender",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "migrateEscrowBalanceToRewardEscrowV2",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "mintSecondary",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "mintSecondaryRewards",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "proxy", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "remainingIssuableSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "restituted", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "sUSD", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setMessageSender",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setProxy", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setTokenState",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "settle", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "synths", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "synthsByAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "tokenState", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalIssuedSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalIssuedSynthsExcludeOtherCollateral",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferableSynthetix",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferableSynthetix', data: BytesLike): Result;
 
   events: {
-    "AccountLiquidated(address,uint256,uint256,address)": EventFragment;
-    "Approval(address,address,uint256)": EventFragment;
-    "AtomicSynthExchange(address,bytes32,uint256,bytes32,uint256,address)": EventFragment;
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "ExchangeRebate(address,bytes32,uint256)": EventFragment;
-    "ExchangeReclaim(address,bytes32,uint256)": EventFragment;
-    "ExchangeTracking(bytes32,bytes32,uint256,uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "ProxyUpdated(address)": EventFragment;
-    "SynthExchange(address,bytes32,uint256,bytes32,uint256,address)": EventFragment;
-    "TokenStateUpdated(address)": EventFragment;
-    "Transfer(address,address,uint256)": EventFragment;
+    'AccountLiquidated(address,uint256,uint256,address)': EventFragment;
+    'Approval(address,address,uint256)': EventFragment;
+    'AtomicSynthExchange(address,bytes32,uint256,bytes32,uint256,address)': EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'ExchangeRebate(address,bytes32,uint256)': EventFragment;
+    'ExchangeReclaim(address,bytes32,uint256)': EventFragment;
+    'ExchangeTracking(bytes32,bytes32,uint256,uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'ProxyUpdated(address)': EventFragment;
+    'SynthExchange(address,bytes32,uint256,bytes32,uint256,address)': EventFragment;
+    'TokenStateUpdated(address)': EventFragment;
+    'Transfer(address,address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AccountLiquidated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AtomicSynthExchange"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ExchangeRebate"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ExchangeReclaim"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ExchangeTracking"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ProxyUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthExchange"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokenStateUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AccountLiquidated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AtomicSynthExchange'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ExchangeRebate'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ExchangeReclaim'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ExchangeTracking'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ProxyUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthExchange'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TokenStateUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
 export interface AccountLiquidatedEventObject {
@@ -786,18 +550,14 @@ export type AccountLiquidatedEvent = TypedEvent<
   AccountLiquidatedEventObject
 >;
 
-export type AccountLiquidatedEventFilter =
-  TypedEventFilter<AccountLiquidatedEvent>;
+export type AccountLiquidatedEventFilter = TypedEventFilter<AccountLiquidatedEvent>;
 
 export interface ApprovalEventObject {
   owner: string;
   spender: string;
   value: BigNumber;
 }
-export type ApprovalEvent = TypedEvent<
-  [string, string, BigNumber],
-  ApprovalEventObject
->;
+export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEventObject>;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
@@ -814,17 +574,13 @@ export type AtomicSynthExchangeEvent = TypedEvent<
   AtomicSynthExchangeEventObject
 >;
 
-export type AtomicSynthExchangeEventFilter =
-  TypedEventFilter<AtomicSynthExchangeEvent>;
+export type AtomicSynthExchangeEventFilter = TypedEventFilter<AtomicSynthExchangeEvent>;
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -863,27 +619,20 @@ export type ExchangeTrackingEvent = TypedEvent<
   ExchangeTrackingEventObject
 >;
 
-export type ExchangeTrackingEventFilter =
-  TypedEventFilter<ExchangeTrackingEvent>;
+export type ExchangeTrackingEventFilter = TypedEventFilter<ExchangeTrackingEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -912,23 +661,16 @@ export type SynthExchangeEventFilter = TypedEventFilter<SynthExchangeEvent>;
 export interface TokenStateUpdatedEventObject {
   newTokenState: string;
 }
-export type TokenStateUpdatedEvent = TypedEvent<
-  [string],
-  TokenStateUpdatedEventObject
->;
+export type TokenStateUpdatedEvent = TypedEvent<[string], TokenStateUpdatedEventObject>;
 
-export type TokenStateUpdatedEventFilter =
-  TypedEventFilter<TokenStateUpdatedEvent>;
+export type TokenStateUpdatedEventFilter = TypedEventFilter<TokenStateUpdatedEvent>;
 
 export interface TransferEventObject {
   from: string;
   to: string;
   value: BigNumber;
 }
-export type TransferEvent = TypedEvent<
-  [string, string, BigNumber],
-  TransferEventObject
->;
+export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEventObject>;
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
@@ -949,9 +691,7 @@ export interface SynthetixAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -996,10 +736,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     burnSecondary(
       arg0: PromiseOrValue<string>,
@@ -1027,10 +764,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    collateral(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     collateralisationRatio(
       _issuer: PromiseOrValue<string>,
@@ -1199,9 +933,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    mint(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    mint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     mintSecondary(
       arg0: PromiseOrValue<string>,
@@ -1274,10 +1006,7 @@ export interface SynthetixAbiTypes extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    synths(
-      currencyKey: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    synths(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     synthsByAddress(
       synthAddress: PromiseOrValue<string>,
@@ -1347,15 +1076,9 @@ export interface SynthetixAbiTypes extends BaseContract {
 
   availableSynthCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  availableSynths(
-    index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  availableSynths(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  balanceOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   burnSecondary(
     arg0: PromiseOrValue<string>,
@@ -1383,10 +1106,7 @@ export interface SynthetixAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  collateral(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   collateralisationRatio(
     _issuer: PromiseOrValue<string>,
@@ -1544,10 +1264,7 @@ export interface SynthetixAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  maxIssuableSynths(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  maxIssuableSynths(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   messageSender(overrides?: CallOverrides): Promise<string>;
 
@@ -1555,9 +1272,7 @@ export interface SynthetixAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  mint(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  mint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   mintSecondary(
     arg0: PromiseOrValue<string>,
@@ -1628,15 +1343,9 @@ export interface SynthetixAbiTypes extends BaseContract {
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  synths(
-    currencyKey: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  synths(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  synthsByAddress(
-    synthAddress: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  synthsByAddress(synthAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   tokenState(overrides?: CallOverrides): Promise<string>;
 
@@ -1704,10 +1413,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     burnSecondary(
       arg0: PromiseOrValue<string>,
@@ -1715,10 +1421,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    burnSynths(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    burnSynths(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     burnSynthsOnBehalf(
       burnForAddress: PromiseOrValue<string>,
@@ -1733,10 +1436,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    collateral(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     collateralisationRatio(
       _issuer: PromiseOrValue<string>,
@@ -1851,9 +1551,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       destinationCurrencyKey: PromiseOrValue<BytesLike>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, string] & { amountReceived: BigNumber; vSynth: string }
-    >;
+    ): Promise<[BigNumber, string] & { amountReceived: BigNumber; vSynth: string }>;
 
     initializeLiquidatorRewardsRestitution(
       amount: PromiseOrValue<BigNumberish>,
@@ -1874,10 +1572,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    issueSynths(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    issueSynths(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     issueSynthsOnBehalf(
       issueForAddress: PromiseOrValue<string>,
@@ -1899,9 +1594,7 @@ export interface SynthetixAbiTypes extends BaseContract {
 
     messageSender(overrides?: CallOverrides): Promise<string>;
 
-    migrateEscrowBalanceToRewardEscrowV2(
-      overrides?: CallOverrides
-    ): Promise<void>;
+    migrateEscrowBalanceToRewardEscrowV2(overrides?: CallOverrides): Promise<void>;
 
     mint(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1918,10 +1611,7 @@ export interface SynthetixAbiTypes extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -1950,20 +1640,11 @@ export interface SynthetixAbiTypes extends BaseContract {
 
     sUSD(overrides?: CallOverrides): Promise<string>;
 
-    setMessageSender(
-      sender: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setMessageSender(sender: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setProxy(
-      _proxy: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setProxy(_proxy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setTokenState(
-      _tokenState: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setTokenState(_tokenState: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     settle(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -1978,10 +1659,7 @@ export interface SynthetixAbiTypes extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    synths(
-      currencyKey: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    synths(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     synthsByAddress(
       synthAddress: PromiseOrValue<string>,
@@ -2022,7 +1700,7 @@ export interface SynthetixAbiTypes extends BaseContract {
   };
 
   filters: {
-    "AccountLiquidated(address,uint256,uint256,address)"(
+    'AccountLiquidated(address,uint256,uint256,address)'(
       account?: PromiseOrValue<string> | null,
       snxRedeemed?: null,
       amountLiquidated?: null,
@@ -2035,7 +1713,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       liquidator?: null
     ): AccountLiquidatedEventFilter;
 
-    "Approval(address,address,uint256)"(
+    'Approval(address,address,uint256)'(
       owner?: PromiseOrValue<string> | null,
       spender?: PromiseOrValue<string> | null,
       value?: null
@@ -2046,7 +1724,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       value?: null
     ): ApprovalEventFilter;
 
-    "AtomicSynthExchange(address,bytes32,uint256,bytes32,uint256,address)"(
+    'AtomicSynthExchange(address,bytes32,uint256,bytes32,uint256,address)'(
       account?: PromiseOrValue<string> | null,
       fromCurrencyKey?: null,
       fromAmount?: null,
@@ -2063,13 +1741,10 @@ export interface SynthetixAbiTypes extends BaseContract {
       toAddress?: null
     ): AtomicSynthExchangeEventFilter;
 
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "ExchangeRebate(address,bytes32,uint256)"(
+    'ExchangeRebate(address,bytes32,uint256)'(
       account?: PromiseOrValue<string> | null,
       currencyKey?: null,
       amount?: null
@@ -2080,7 +1755,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       amount?: null
     ): ExchangeRebateEventFilter;
 
-    "ExchangeReclaim(address,bytes32,uint256)"(
+    'ExchangeReclaim(address,bytes32,uint256)'(
       account?: PromiseOrValue<string> | null,
       currencyKey?: null,
       amount?: null
@@ -2091,7 +1766,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       amount?: null
     ): ExchangeReclaimEventFilter;
 
-    "ExchangeTracking(bytes32,bytes32,uint256,uint256)"(
+    'ExchangeTracking(bytes32,bytes32,uint256,uint256)'(
       trackingCode?: PromiseOrValue<BytesLike> | null,
       toCurrencyKey?: null,
       toAmount?: null,
@@ -2104,19 +1779,16 @@ export interface SynthetixAbiTypes extends BaseContract {
       fee?: null
     ): ExchangeTrackingEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "ProxyUpdated(address)"(proxyAddress?: null): ProxyUpdatedEventFilter;
+    'ProxyUpdated(address)'(proxyAddress?: null): ProxyUpdatedEventFilter;
     ProxyUpdated(proxyAddress?: null): ProxyUpdatedEventFilter;
 
-    "SynthExchange(address,bytes32,uint256,bytes32,uint256,address)"(
+    'SynthExchange(address,bytes32,uint256,bytes32,uint256,address)'(
       account?: PromiseOrValue<string> | null,
       fromCurrencyKey?: null,
       fromAmount?: null,
@@ -2133,12 +1805,10 @@ export interface SynthetixAbiTypes extends BaseContract {
       toAddress?: null
     ): SynthExchangeEventFilter;
 
-    "TokenStateUpdated(address)"(
-      newTokenState?: null
-    ): TokenStateUpdatedEventFilter;
+    'TokenStateUpdated(address)'(newTokenState?: null): TokenStateUpdatedEventFilter;
     TokenStateUpdated(newTokenState?: null): TokenStateUpdatedEventFilter;
 
-    "Transfer(address,address,uint256)"(
+    'Transfer(address,address,uint256)'(
       from?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
       value?: null
@@ -2159,9 +1829,7 @@ export interface SynthetixAbiTypes extends BaseContract {
 
     TOKEN_SYMBOL(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     allowance(
       owner: PromiseOrValue<string>,
@@ -2186,10 +1854,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     burnSecondary(
       arg0: PromiseOrValue<string>,
@@ -2217,10 +1882,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    collateral(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     collateralisationRatio(
       _issuer: PromiseOrValue<string>,
@@ -2349,9 +2011,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    issueMaxSynths(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    issueMaxSynths(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     issueMaxSynthsOnBehalf(
       issueForAddress: PromiseOrValue<string>,
@@ -2374,9 +2034,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    liquidateSelf(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    liquidateSelf(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     maxIssuableSynths(
       account: PromiseOrValue<string>,
@@ -2389,9 +2047,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    mint(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    mint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     mintSecondary(
       arg0: PromiseOrValue<string>,
@@ -2417,9 +2073,7 @@ export interface SynthetixAbiTypes extends BaseContract {
 
     proxy(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     remainingIssuableSynths(
       account: PromiseOrValue<string>,
@@ -2456,10 +2110,7 @@ export interface SynthetixAbiTypes extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    synths(
-      currencyKey: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    synths(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     synthsByAddress(
       synthAddress: PromiseOrValue<string>,
@@ -2518,9 +2169,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    anySynthOrSNXRateIsInvalid(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    anySynthOrSNXRateIsInvalid(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
       spender: PromiseOrValue<string>,
@@ -2528,13 +2177,9 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    availableCurrencyKeys(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    availableCurrencyKeys(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    availableSynthCount(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    availableSynthCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     availableSynths(
       index: PromiseOrValue<BigNumberish>,
@@ -2744,9 +2389,7 @@ export interface SynthetixAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    mint(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    mint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     mintSecondary(
       arg0: PromiseOrValue<string>,
@@ -2783,9 +2426,7 @@ export interface SynthetixAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     restituted(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -12,272 +12,168 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface SynthetixStateAbiTypesInterface extends utils.Interface {
   functions: {
-    "setIssuanceRatio(uint256)": FunctionFragment;
-    "debtLedger(uint256)": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "importedXDRAmount()": FunctionFragment;
-    "incrementTotalIssuerCount()": FunctionFragment;
-    "appendDebtLedgerValue(uint256)": FunctionFragment;
-    "lastDebtLedgerEntry()": FunctionFragment;
-    "setPreferredCurrency(address,bytes4)": FunctionFragment;
-    "setAssociatedContract(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "issuanceData(address)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "totalIssuerCount()": FunctionFragment;
-    "importIssuerData(address[],uint256[])": FunctionFragment;
-    "setCurrentIssuanceData(address,uint256)": FunctionFragment;
-    "associatedContract()": FunctionFragment;
-    "clearIssuanceData(address)": FunctionFragment;
-    "issuanceRatio()": FunctionFragment;
-    "hasIssued(address)": FunctionFragment;
-    "decrementTotalIssuerCount()": FunctionFragment;
-    "preferredCurrency(address)": FunctionFragment;
-    "debtLedgerLength()": FunctionFragment;
+    'setIssuanceRatio(uint256)': FunctionFragment;
+    'debtLedger(uint256)': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'importedXDRAmount()': FunctionFragment;
+    'incrementTotalIssuerCount()': FunctionFragment;
+    'appendDebtLedgerValue(uint256)': FunctionFragment;
+    'lastDebtLedgerEntry()': FunctionFragment;
+    'setPreferredCurrency(address,bytes4)': FunctionFragment;
+    'setAssociatedContract(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'issuanceData(address)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'totalIssuerCount()': FunctionFragment;
+    'importIssuerData(address[],uint256[])': FunctionFragment;
+    'setCurrentIssuanceData(address,uint256)': FunctionFragment;
+    'associatedContract()': FunctionFragment;
+    'clearIssuanceData(address)': FunctionFragment;
+    'issuanceRatio()': FunctionFragment;
+    'hasIssued(address)': FunctionFragment;
+    'decrementTotalIssuerCount()': FunctionFragment;
+    'preferredCurrency(address)': FunctionFragment;
+    'debtLedgerLength()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "setIssuanceRatio"
-      | "debtLedger"
-      | "nominateNewOwner"
-      | "importedXDRAmount"
-      | "incrementTotalIssuerCount"
-      | "appendDebtLedgerValue"
-      | "lastDebtLedgerEntry"
-      | "setPreferredCurrency"
-      | "setAssociatedContract"
-      | "nominatedOwner"
-      | "acceptOwnership"
-      | "issuanceData"
-      | "owner"
-      | "totalIssuerCount"
-      | "importIssuerData"
-      | "setCurrentIssuanceData"
-      | "associatedContract"
-      | "clearIssuanceData"
-      | "issuanceRatio"
-      | "hasIssued"
-      | "decrementTotalIssuerCount"
-      | "preferredCurrency"
-      | "debtLedgerLength"
+      | 'setIssuanceRatio'
+      | 'debtLedger'
+      | 'nominateNewOwner'
+      | 'importedXDRAmount'
+      | 'incrementTotalIssuerCount'
+      | 'appendDebtLedgerValue'
+      | 'lastDebtLedgerEntry'
+      | 'setPreferredCurrency'
+      | 'setAssociatedContract'
+      | 'nominatedOwner'
+      | 'acceptOwnership'
+      | 'issuanceData'
+      | 'owner'
+      | 'totalIssuerCount'
+      | 'importIssuerData'
+      | 'setCurrentIssuanceData'
+      | 'associatedContract'
+      | 'clearIssuanceData'
+      | 'issuanceRatio'
+      | 'hasIssued'
+      | 'decrementTotalIssuerCount'
+      | 'preferredCurrency'
+      | 'debtLedgerLength'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "setIssuanceRatio",
+    functionFragment: 'setIssuanceRatio',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "debtLedger",
+    functionFragment: 'debtLedger',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'importedXDRAmount', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'incrementTotalIssuerCount', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "importedXDRAmount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "incrementTotalIssuerCount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "appendDebtLedgerValue",
+    functionFragment: 'appendDebtLedgerValue',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'lastDebtLedgerEntry', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "lastDebtLedgerEntry",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setPreferredCurrency",
+    functionFragment: 'setPreferredCurrency',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setAssociatedContract",
+    functionFragment: 'setAssociatedContract',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'issuanceData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalIssuerCount', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "issuanceData",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "totalIssuerCount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "importIssuerData",
+    functionFragment: 'importIssuerData',
     values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "setCurrentIssuanceData",
+    functionFragment: 'setCurrentIssuanceData',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'associatedContract', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "associatedContract",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "clearIssuanceData",
+    functionFragment: 'clearIssuanceData',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'issuanceRatio', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'hasIssued', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'decrementTotalIssuerCount', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "issuanceRatio",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "hasIssued",
+    functionFragment: 'preferredCurrency',
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "decrementTotalIssuerCount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "preferredCurrency",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "debtLedgerLength",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'debtLedgerLength', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "setIssuanceRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "debtLedger", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "importedXDRAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "incrementTotalIssuerCount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "appendDebtLedgerValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastDebtLedgerEntry",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setPreferredCurrency",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setAssociatedContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issuanceData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalIssuerCount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "importIssuerData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setCurrentIssuanceData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "associatedContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "clearIssuanceData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issuanceRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "hasIssued", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "decrementTotalIssuerCount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "preferredCurrency",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "debtLedgerLength",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'setIssuanceRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'debtLedger', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'importedXDRAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'incrementTotalIssuerCount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'appendDebtLedgerValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastDebtLedgerEntry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPreferredCurrency', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setAssociatedContract', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issuanceData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalIssuerCount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'importIssuerData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setCurrentIssuanceData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'associatedContract', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'clearIssuanceData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issuanceRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'hasIssued', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decrementTotalIssuerCount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'preferredCurrency', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'debtLedgerLength', data: BytesLike): Result;
 
   events: {
-    "IssuanceRatioUpdated(uint256)": EventFragment;
-    "AssociatedContractUpdated(address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
+    'IssuanceRatioUpdated(uint256)': EventFragment;
+    'AssociatedContractUpdated(address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "IssuanceRatioUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AssociatedContractUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'IssuanceRatioUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AssociatedContractUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
 }
 
 export interface IssuanceRatioUpdatedEventObject {
   newRatio: BigNumber;
 }
-export type IssuanceRatioUpdatedEvent = TypedEvent<
-  [BigNumber],
-  IssuanceRatioUpdatedEventObject
->;
+export type IssuanceRatioUpdatedEvent = TypedEvent<[BigNumber], IssuanceRatioUpdatedEventObject>;
 
-export type IssuanceRatioUpdatedEventFilter =
-  TypedEventFilter<IssuanceRatioUpdatedEvent>;
+export type IssuanceRatioUpdatedEventFilter = TypedEventFilter<IssuanceRatioUpdatedEvent>;
 
 export interface AssociatedContractUpdatedEventObject {
   associatedContract: string;
@@ -287,16 +183,12 @@ export type AssociatedContractUpdatedEvent = TypedEvent<
   AssociatedContractUpdatedEventObject
 >;
 
-export type AssociatedContractUpdatedEventFilter =
-  TypedEventFilter<AssociatedContractUpdatedEvent>;
+export type AssociatedContractUpdatedEventFilter = TypedEventFilter<AssociatedContractUpdatedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -304,10 +196,7 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
@@ -328,9 +217,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -343,10 +230,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    debtLedger(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    debtLedger(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     nominateNewOwner(
       _owner: PromiseOrValue<string>,
@@ -418,19 +302,13 @@ export interface SynthetixStateAbiTypes extends BaseContract {
 
     issuanceRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    hasIssued(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    hasIssued(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     decrementTotalIssuerCount(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    preferredCurrency(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    preferredCurrency(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     debtLedgerLength(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
@@ -440,10 +318,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  debtLedger(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  debtLedger(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   nominateNewOwner(
     _owner: PromiseOrValue<string>,
@@ -515,19 +390,13 @@ export interface SynthetixStateAbiTypes extends BaseContract {
 
   issuanceRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-  hasIssued(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  hasIssued(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   decrementTotalIssuerCount(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  preferredCurrency(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  preferredCurrency(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   debtLedgerLength(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -537,15 +406,9 @@ export interface SynthetixStateAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    debtLedger(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    debtLedger(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     importedXDRAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -601,48 +464,32 @@ export interface SynthetixStateAbiTypes extends BaseContract {
 
     associatedContract(overrides?: CallOverrides): Promise<string>;
 
-    clearIssuanceData(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    clearIssuanceData(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     issuanceRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    hasIssued(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    hasIssued(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     decrementTotalIssuerCount(overrides?: CallOverrides): Promise<void>;
 
-    preferredCurrency(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    preferredCurrency(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     debtLedgerLength(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
-    "IssuanceRatioUpdated(uint256)"(
-      newRatio?: null
-    ): IssuanceRatioUpdatedEventFilter;
+    'IssuanceRatioUpdated(uint256)'(newRatio?: null): IssuanceRatioUpdatedEventFilter;
     IssuanceRatioUpdated(newRatio?: null): IssuanceRatioUpdatedEventFilter;
 
-    "AssociatedContractUpdated(address)"(
+    'AssociatedContractUpdated(address)'(
       associatedContract?: null
     ): AssociatedContractUpdatedEventFilter;
-    AssociatedContractUpdated(
-      associatedContract?: null
-    ): AssociatedContractUpdatedEventFilter;
+    AssociatedContractUpdated(associatedContract?: null): AssociatedContractUpdatedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
   };
 
@@ -652,10 +499,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    debtLedger(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    debtLedger(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     nominateNewOwner(
       _owner: PromiseOrValue<string>,
@@ -688,14 +532,9 @@ export interface SynthetixStateAbiTypes extends BaseContract {
 
     nominatedOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    issuanceData(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    issuanceData(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -722,19 +561,13 @@ export interface SynthetixStateAbiTypes extends BaseContract {
 
     issuanceRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    hasIssued(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    hasIssued(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decrementTotalIssuerCount(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    preferredCurrency(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    preferredCurrency(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     debtLedgerLength(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -766,9 +599,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    lastDebtLedgerEntry(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    lastDebtLedgerEntry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setPreferredCurrency(
       account: PromiseOrValue<string>,
@@ -808,9 +639,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    associatedContract(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    associatedContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     clearIssuanceData(
       account: PromiseOrValue<string>,

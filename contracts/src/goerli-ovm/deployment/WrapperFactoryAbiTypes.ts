@@ -11,171 +11,103 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface WrapperFactoryAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "createWrapper(address,bytes32,bytes32)": FunctionFragment;
-    "distributeFees()": FunctionFragment;
-    "feesEscrowed()": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "isWrapper(address)": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'createWrapper(address,bytes32,bytes32)': FunctionFragment;
+    'distributeFees()': FunctionFragment;
+    'feesEscrowed()': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'isWrapper(address)': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "acceptOwnership"
-      | "createWrapper"
-      | "distributeFees"
-      | "feesEscrowed"
-      | "isResolverCached"
-      | "isWrapper"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "rebuildCache"
-      | "resolver"
-      | "resolverAddressesRequired"
+      | 'CONTRACT_NAME'
+      | 'acceptOwnership'
+      | 'createWrapper'
+      | 'distributeFees'
+      | 'feesEscrowed'
+      | 'isResolverCached'
+      | 'isWrapper'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'rebuildCache'
+      | 'resolver'
+      | 'resolverAddressesRequired'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
+    functionFragment: 'createWrapper',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'distributeFees', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'feesEscrowed', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isWrapper', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "createWrapper",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "distributeFees",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "feesEscrowed",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isWrapper",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "createWrapper",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "distributeFees",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "feesEscrowed",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "isWrapper", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'createWrapper', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'distributeFees', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'feesEscrowed', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isWrapper', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "WrapperCreated(address,bytes32,address)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'WrapperCreated(address,bytes32,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "WrapperCreated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'WrapperCreated'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -183,20 +115,14 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -205,10 +131,7 @@ export interface WrapperCreatedEventObject {
   currencyKey: string;
   wrapperAddress: string;
 }
-export type WrapperCreatedEvent = TypedEvent<
-  [string, string, string],
-  WrapperCreatedEventObject
->;
+export type WrapperCreatedEvent = TypedEvent<[string, string, string], WrapperCreatedEventObject>;
 
 export type WrapperCreatedEventFilter = TypedEventFilter<WrapperCreatedEvent>;
 
@@ -229,9 +152,7 @@ export interface WrapperFactoryAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -306,10 +227,7 @@ export interface WrapperFactoryAbiTypes extends BaseContract {
 
   isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
-  isWrapper(
-    possibleWrapper: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  isWrapper(possibleWrapper: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   nominateNewOwner(
     _owner: PromiseOrValue<string>,
@@ -346,15 +264,9 @@ export interface WrapperFactoryAbiTypes extends BaseContract {
 
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
-    isWrapper(
-      possibleWrapper: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    isWrapper(possibleWrapper: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -368,22 +280,16 @@ export interface WrapperFactoryAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "WrapperCreated(address,bytes32,address)"(
+    'WrapperCreated(address,bytes32,address)'(
       token?: PromiseOrValue<string> | null,
       currencyKey?: PromiseOrValue<BytesLike> | null,
       wrapperAddress?: null
@@ -398,9 +304,7 @@ export interface WrapperFactoryAbiTypes extends BaseContract {
   estimateGas: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     createWrapper(
       token: PromiseOrValue<string>,
@@ -409,9 +313,7 @@ export interface WrapperFactoryAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    distributeFees(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    distributeFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     feesEscrowed(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -431,9 +333,7 @@ export interface WrapperFactoryAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -482,8 +382,6 @@ export interface WrapperFactoryAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

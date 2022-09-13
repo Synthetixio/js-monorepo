@@ -9,117 +9,81 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface FuturesMarketDataAbiTypesInterface extends utils.Interface {
   functions: {
-    "allMarketSummaries()": FunctionFragment;
-    "globals()": FunctionFragment;
-    "marketDetails(address)": FunctionFragment;
-    "marketDetailsForKey(bytes32)": FunctionFragment;
-    "marketSummaries(address[])": FunctionFragment;
-    "marketSummariesForKeys(bytes32[])": FunctionFragment;
-    "parameters(bytes32)": FunctionFragment;
-    "positionDetails(address,address)": FunctionFragment;
-    "positionDetailsForMarketKey(bytes32,address)": FunctionFragment;
-    "resolverProxy()": FunctionFragment;
+    'allMarketSummaries()': FunctionFragment;
+    'globals()': FunctionFragment;
+    'marketDetails(address)': FunctionFragment;
+    'marketDetailsForKey(bytes32)': FunctionFragment;
+    'marketSummaries(address[])': FunctionFragment;
+    'marketSummariesForKeys(bytes32[])': FunctionFragment;
+    'parameters(bytes32)': FunctionFragment;
+    'positionDetails(address,address)': FunctionFragment;
+    'positionDetailsForMarketKey(bytes32,address)': FunctionFragment;
+    'resolverProxy()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "allMarketSummaries"
-      | "globals"
-      | "marketDetails"
-      | "marketDetailsForKey"
-      | "marketSummaries"
-      | "marketSummariesForKeys"
-      | "parameters"
-      | "positionDetails"
-      | "positionDetailsForMarketKey"
-      | "resolverProxy"
+      | 'allMarketSummaries'
+      | 'globals'
+      | 'marketDetails'
+      | 'marketDetailsForKey'
+      | 'marketSummaries'
+      | 'marketSummariesForKeys'
+      | 'parameters'
+      | 'positionDetails'
+      | 'positionDetailsForMarketKey'
+      | 'resolverProxy'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'allMarketSummaries', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'globals', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'marketDetails', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "allMarketSummaries",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "globals", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "marketDetails",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "marketDetailsForKey",
+    functionFragment: 'marketDetailsForKey',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "marketSummaries",
+    functionFragment: 'marketSummaries',
     values: [PromiseOrValue<string>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "marketSummariesForKeys",
+    functionFragment: 'marketSummariesForKeys',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
+  encodeFunctionData(functionFragment: 'parameters', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "parameters",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "positionDetails",
+    functionFragment: 'positionDetails',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "positionDetailsForMarketKey",
+    functionFragment: 'positionDetailsForMarketKey',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "resolverProxy",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'resolverProxy', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "allMarketSummaries",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "globals", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "marketDetails",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "marketDetailsForKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "marketSummaries",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "marketSummariesForKeys",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "parameters", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "positionDetails",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "positionDetailsForMarketKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverProxy",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'allMarketSummaries', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'globals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketDetails', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketDetailsForKey', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketSummaries', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketSummariesForKeys', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'parameters', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'positionDetails', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'positionDetailsForMarketKey', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverProxy', data: BytesLike): Result;
 
   events: {};
 }
@@ -141,9 +105,7 @@ export interface FuturesMarketDataAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -151,9 +113,7 @@ export interface FuturesMarketDataAbiTypes extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    allMarketSummaries(
-      overrides?: CallOverrides
-    ): Promise<
+    allMarketSummaries(overrides?: CallOverrides): Promise<
       [
         [
           string,
@@ -192,9 +152,7 @@ export interface FuturesMarketDataAbiTypes extends BaseContract {
       ]
     >;
 
-    globals(
-      overrides?: CallOverrides
-    ): Promise<
+    globals(overrides?: CallOverrides): Promise<
       [
         [BigNumber, BigNumber, BigNumber, BigNumber] & {
           minInitialMargin: BigNumber;
@@ -557,9 +515,7 @@ export interface FuturesMarketDataAbiTypes extends BaseContract {
     resolverProxy(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  allMarketSummaries(
-    overrides?: CallOverrides
-  ): Promise<
+  allMarketSummaries(overrides?: CallOverrides): Promise<
     [
       string,
       string,
@@ -596,9 +552,7 @@ export interface FuturesMarketDataAbiTypes extends BaseContract {
       }[]
   >;
 
-  globals(
-    overrides?: CallOverrides
-  ): Promise<
+  globals(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
       minInitialMargin: BigNumber;
       liquidationFeeRatio: BigNumber;
@@ -933,9 +887,7 @@ export interface FuturesMarketDataAbiTypes extends BaseContract {
   resolverProxy(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    allMarketSummaries(
-      overrides?: CallOverrides
-    ): Promise<
+    allMarketSummaries(overrides?: CallOverrides): Promise<
       [
         string,
         string,
@@ -972,9 +924,7 @@ export interface FuturesMarketDataAbiTypes extends BaseContract {
         }[]
     >;
 
-    globals(
-      overrides?: CallOverrides
-    ): Promise<
+    globals(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
         minInitialMargin: BigNumber;
         liquidationFeeRatio: BigNumber;
@@ -1316,10 +1266,7 @@ export interface FuturesMarketDataAbiTypes extends BaseContract {
 
     globals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    marketDetails(
-      market: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    marketDetails(market: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     marketDetailsForKey(
       marketKey: PromiseOrValue<BytesLike>,
@@ -1336,10 +1283,7 @@ export interface FuturesMarketDataAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    parameters(
-      marketKey: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    parameters(marketKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     positionDetails(
       market: PromiseOrValue<string>,
@@ -1357,9 +1301,7 @@ export interface FuturesMarketDataAbiTypes extends BaseContract {
   };
 
   populateTransaction: {
-    allMarketSummaries(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    allMarketSummaries(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     globals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -11,295 +11,195 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface DelegateApprovalsAbiTypesInterface extends utils.Interface {
   functions: {
-    "canIssueFor(address,address)": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "canClaimFor(address,address)": FunctionFragment;
-    "ISSUE_FOR_ADDRESS()": FunctionFragment;
-    "approveClaimOnBehalf(address)": FunctionFragment;
-    "removeIssueOnBehalf(address)": FunctionFragment;
-    "approveExchangeOnBehalf(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "removeBurnOnBehalf(address)": FunctionFragment;
-    "removeClaimOnBehalf(address)": FunctionFragment;
-    "removeAllDelegatePowers(address)": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "canBurnFor(address,address)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "eternalStorage()": FunctionFragment;
-    "approveBurnOnBehalf(address)": FunctionFragment;
-    "APPROVE_ALL()": FunctionFragment;
-    "approveIssueOnBehalf(address)": FunctionFragment;
-    "approvedAll(address,address)": FunctionFragment;
-    "setEternalStorage(address)": FunctionFragment;
-    "removeExchangeOnBehalf(address)": FunctionFragment;
-    "approveAllDelegatePowers(address)": FunctionFragment;
-    "CLAIM_FOR_ADDRESS()": FunctionFragment;
-    "EXCHANGE_FOR_ADDRESS()": FunctionFragment;
-    "BURN_FOR_ADDRESS()": FunctionFragment;
-    "canExchangeFor(address,address)": FunctionFragment;
+    'canIssueFor(address,address)': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'canClaimFor(address,address)': FunctionFragment;
+    'ISSUE_FOR_ADDRESS()': FunctionFragment;
+    'approveClaimOnBehalf(address)': FunctionFragment;
+    'removeIssueOnBehalf(address)': FunctionFragment;
+    'approveExchangeOnBehalf(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'removeBurnOnBehalf(address)': FunctionFragment;
+    'removeClaimOnBehalf(address)': FunctionFragment;
+    'removeAllDelegatePowers(address)': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'canBurnFor(address,address)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'eternalStorage()': FunctionFragment;
+    'approveBurnOnBehalf(address)': FunctionFragment;
+    'APPROVE_ALL()': FunctionFragment;
+    'approveIssueOnBehalf(address)': FunctionFragment;
+    'approvedAll(address,address)': FunctionFragment;
+    'setEternalStorage(address)': FunctionFragment;
+    'removeExchangeOnBehalf(address)': FunctionFragment;
+    'approveAllDelegatePowers(address)': FunctionFragment;
+    'CLAIM_FOR_ADDRESS()': FunctionFragment;
+    'EXCHANGE_FOR_ADDRESS()': FunctionFragment;
+    'BURN_FOR_ADDRESS()': FunctionFragment;
+    'canExchangeFor(address,address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "canIssueFor"
-      | "nominateNewOwner"
-      | "canClaimFor"
-      | "ISSUE_FOR_ADDRESS"
-      | "approveClaimOnBehalf"
-      | "removeIssueOnBehalf"
-      | "approveExchangeOnBehalf"
-      | "nominatedOwner"
-      | "removeBurnOnBehalf"
-      | "removeClaimOnBehalf"
-      | "removeAllDelegatePowers"
-      | "acceptOwnership"
-      | "canBurnFor"
-      | "owner"
-      | "eternalStorage"
-      | "approveBurnOnBehalf"
-      | "APPROVE_ALL"
-      | "approveIssueOnBehalf"
-      | "approvedAll"
-      | "setEternalStorage"
-      | "removeExchangeOnBehalf"
-      | "approveAllDelegatePowers"
-      | "CLAIM_FOR_ADDRESS"
-      | "EXCHANGE_FOR_ADDRESS"
-      | "BURN_FOR_ADDRESS"
-      | "canExchangeFor"
+      | 'canIssueFor'
+      | 'nominateNewOwner'
+      | 'canClaimFor'
+      | 'ISSUE_FOR_ADDRESS'
+      | 'approveClaimOnBehalf'
+      | 'removeIssueOnBehalf'
+      | 'approveExchangeOnBehalf'
+      | 'nominatedOwner'
+      | 'removeBurnOnBehalf'
+      | 'removeClaimOnBehalf'
+      | 'removeAllDelegatePowers'
+      | 'acceptOwnership'
+      | 'canBurnFor'
+      | 'owner'
+      | 'eternalStorage'
+      | 'approveBurnOnBehalf'
+      | 'APPROVE_ALL'
+      | 'approveIssueOnBehalf'
+      | 'approvedAll'
+      | 'setEternalStorage'
+      | 'removeExchangeOnBehalf'
+      | 'approveAllDelegatePowers'
+      | 'CLAIM_FOR_ADDRESS'
+      | 'EXCHANGE_FOR_ADDRESS'
+      | 'BURN_FOR_ADDRESS'
+      | 'canExchangeFor'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "canIssueFor",
+    functionFragment: 'canIssueFor',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "canClaimFor",
+    functionFragment: 'canClaimFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'ISSUE_FOR_ADDRESS', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'approveClaimOnBehalf',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'removeIssueOnBehalf',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'approveExchangeOnBehalf',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'removeBurnOnBehalf',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'removeClaimOnBehalf',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'removeAllDelegatePowers',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'canBurnFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'eternalStorage', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'approveBurnOnBehalf',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'APPROVE_ALL', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'approveIssueOnBehalf',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'approvedAll',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "ISSUE_FOR_ADDRESS",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "approveClaimOnBehalf",
+    functionFragment: 'setEternalStorage',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "removeIssueOnBehalf",
+    functionFragment: 'removeExchangeOnBehalf',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "approveExchangeOnBehalf",
+    functionFragment: 'approveAllDelegatePowers',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'CLAIM_FOR_ADDRESS', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'EXCHANGE_FOR_ADDRESS', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'BURN_FOR_ADDRESS', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeBurnOnBehalf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeClaimOnBehalf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeAllDelegatePowers",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "canBurnFor",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "eternalStorage",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "approveBurnOnBehalf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "APPROVE_ALL",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "approveIssueOnBehalf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "approvedAll",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setEternalStorage",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeExchangeOnBehalf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "approveAllDelegatePowers",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "CLAIM_FOR_ADDRESS",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "EXCHANGE_FOR_ADDRESS",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "BURN_FOR_ADDRESS",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "canExchangeFor",
+    functionFragment: 'canExchangeFor',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "canIssueFor",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "canClaimFor",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "ISSUE_FOR_ADDRESS",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "approveClaimOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeIssueOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "approveExchangeOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeBurnOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeClaimOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeAllDelegatePowers",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "canBurnFor", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "eternalStorage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "approveBurnOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "APPROVE_ALL",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "approveIssueOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "approvedAll",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setEternalStorage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeExchangeOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "approveAllDelegatePowers",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "CLAIM_FOR_ADDRESS",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "EXCHANGE_FOR_ADDRESS",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "BURN_FOR_ADDRESS",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "canExchangeFor",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'canIssueFor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'canClaimFor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'ISSUE_FOR_ADDRESS', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approveClaimOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeIssueOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approveExchangeOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeBurnOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeClaimOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeAllDelegatePowers', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'canBurnFor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'eternalStorage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approveBurnOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'APPROVE_ALL', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approveIssueOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approvedAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setEternalStorage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeExchangeOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approveAllDelegatePowers', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'CLAIM_FOR_ADDRESS', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'EXCHANGE_FOR_ADDRESS', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'BURN_FOR_ADDRESS', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'canExchangeFor', data: BytesLike): Result;
 
   events: {
-    "Approval(address,address,bytes32)": EventFragment;
-    "WithdrawApproval(address,address,bytes32)": EventFragment;
-    "EternalStorageUpdated(address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
+    'Approval(address,address,bytes32)': EventFragment;
+    'WithdrawApproval(address,address,bytes32)': EventFragment;
+    'EternalStorageUpdated(address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "WithdrawApproval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "EternalStorageUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'WithdrawApproval'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'EternalStorageUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -307,10 +207,7 @@ export interface ApprovalEventObject {
   delegate: string;
   action: string;
 }
-export type ApprovalEvent = TypedEvent<
-  [string, string, string],
-  ApprovalEventObject
->;
+export type ApprovalEvent = TypedEvent<[string, string, string], ApprovalEventObject>;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
@@ -324,27 +221,19 @@ export type WithdrawApprovalEvent = TypedEvent<
   WithdrawApprovalEventObject
 >;
 
-export type WithdrawApprovalEventFilter =
-  TypedEventFilter<WithdrawApprovalEvent>;
+export type WithdrawApprovalEventFilter = TypedEventFilter<WithdrawApprovalEvent>;
 
 export interface EternalStorageUpdatedEventObject {
   newEternalStorage: string;
 }
-export type EternalStorageUpdatedEvent = TypedEvent<
-  [string],
-  EternalStorageUpdatedEventObject
->;
+export type EternalStorageUpdatedEvent = TypedEvent<[string], EternalStorageUpdatedEventObject>;
 
-export type EternalStorageUpdatedEventFilter =
-  TypedEventFilter<EternalStorageUpdatedEvent>;
+export type EternalStorageUpdatedEventFilter = TypedEventFilter<EternalStorageUpdatedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -352,10 +241,7 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
@@ -376,9 +262,7 @@ export interface DelegateApprovalsAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -614,10 +498,7 @@ export interface DelegateApprovalsAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     canClaimFor(
       authoriser: PromiseOrValue<string>,
@@ -632,10 +513,7 @@ export interface DelegateApprovalsAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    removeIssueOnBehalf(
-      delegate: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    removeIssueOnBehalf(delegate: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     approveExchangeOnBehalf(
       delegate: PromiseOrValue<string>,
@@ -644,15 +522,9 @@ export interface DelegateApprovalsAbiTypes extends BaseContract {
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
-    removeBurnOnBehalf(
-      delegate: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    removeBurnOnBehalf(delegate: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    removeClaimOnBehalf(
-      delegate: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    removeClaimOnBehalf(delegate: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     removeAllDelegatePowers(
       delegate: PromiseOrValue<string>,
@@ -671,10 +543,7 @@ export interface DelegateApprovalsAbiTypes extends BaseContract {
 
     eternalStorage(overrides?: CallOverrides): Promise<string>;
 
-    approveBurnOnBehalf(
-      delegate: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    approveBurnOnBehalf(delegate: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     APPROVE_ALL(overrides?: CallOverrides): Promise<string>;
 
@@ -718,7 +587,7 @@ export interface DelegateApprovalsAbiTypes extends BaseContract {
   };
 
   filters: {
-    "Approval(address,address,bytes32)"(
+    'Approval(address,address,bytes32)'(
       authoriser?: PromiseOrValue<string> | null,
       delegate?: null,
       action?: null
@@ -729,7 +598,7 @@ export interface DelegateApprovalsAbiTypes extends BaseContract {
       action?: null
     ): ApprovalEventFilter;
 
-    "WithdrawApproval(address,address,bytes32)"(
+    'WithdrawApproval(address,address,bytes32)'(
       authoriser?: PromiseOrValue<string> | null,
       delegate?: null,
       action?: null
@@ -740,20 +609,13 @@ export interface DelegateApprovalsAbiTypes extends BaseContract {
       action?: null
     ): WithdrawApprovalEventFilter;
 
-    "EternalStorageUpdated(address)"(
-      newEternalStorage?: null
-    ): EternalStorageUpdatedEventFilter;
-    EternalStorageUpdated(
-      newEternalStorage?: null
-    ): EternalStorageUpdatedEventFilter;
+    'EternalStorageUpdated(address)'(newEternalStorage?: null): EternalStorageUpdatedEventFilter;
+    EternalStorageUpdated(newEternalStorage?: null): EternalStorageUpdatedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
   };
 
@@ -809,9 +671,7 @@ export interface DelegateApprovalsAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     canBurnFor(
       authoriser: PromiseOrValue<string>,
@@ -970,9 +830,7 @@ export interface DelegateApprovalsAbiTypes extends BaseContract {
 
     CLAIM_FOR_ADDRESS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    EXCHANGE_FOR_ADDRESS(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    EXCHANGE_FOR_ADDRESS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     BURN_FOR_ADDRESS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -12,196 +12,126 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface CircuitBreakerAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "circuitBroken(address)": FunctionFragment;
-    "isDeviationAboveThreshold(uint256,uint256)": FunctionFragment;
-    "isInvalid(address,uint256)": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "lastValue(address)": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "priceDeviationThresholdFactor()": FunctionFragment;
-    "probeCircuitBreaker(address,uint256)": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "resetLastValue(address[],uint256[])": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'circuitBroken(address)': FunctionFragment;
+    'isDeviationAboveThreshold(uint256,uint256)': FunctionFragment;
+    'isInvalid(address,uint256)': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'lastValue(address)': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'priceDeviationThresholdFactor()': FunctionFragment;
+    'probeCircuitBreaker(address,uint256)': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'resetLastValue(address[],uint256[])': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "acceptOwnership"
-      | "circuitBroken"
-      | "isDeviationAboveThreshold"
-      | "isInvalid"
-      | "isResolverCached"
-      | "lastValue"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "priceDeviationThresholdFactor"
-      | "probeCircuitBreaker"
-      | "rebuildCache"
-      | "resetLastValue"
-      | "resolver"
-      | "resolverAddressesRequired"
+      | 'CONTRACT_NAME'
+      | 'acceptOwnership'
+      | 'circuitBroken'
+      | 'isDeviationAboveThreshold'
+      | 'isInvalid'
+      | 'isResolverCached'
+      | 'lastValue'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'priceDeviationThresholdFactor'
+      | 'probeCircuitBreaker'
+      | 'rebuildCache'
+      | 'resetLastValue'
+      | 'resolver'
+      | 'resolverAddressesRequired'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'circuitBroken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "circuitBroken",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isDeviationAboveThreshold",
+    functionFragment: 'isDeviationAboveThreshold',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "isInvalid",
+    functionFragment: 'isInvalid',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastValue', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastValue",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'priceDeviationThresholdFactor', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "priceDeviationThresholdFactor",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "probeCircuitBreaker",
+    functionFragment: 'probeCircuitBreaker',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "resetLastValue",
+    functionFragment: 'resetLastValue',
     values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]]
   ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "circuitBroken",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isDeviationAboveThreshold",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "isInvalid", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "lastValue", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "priceDeviationThresholdFactor",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "probeCircuitBreaker",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resetLastValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'circuitBroken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isDeviationAboveThreshold', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isInvalid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'priceDeviationThresholdFactor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'probeCircuitBreaker', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resetLastValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "CircuitBroken(address,uint256,uint256)": EventFragment;
-    "LastValueOverridden(address,uint256,uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'CircuitBroken(address,uint256,uint256)': EventFragment;
+    'LastValueOverridden(address,uint256,uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CircuitBroken"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LastValueOverridden"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CircuitBroken'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LastValueOverridden'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -227,27 +157,20 @@ export type LastValueOverriddenEvent = TypedEvent<
   LastValueOverriddenEventObject
 >;
 
-export type LastValueOverriddenEventFilter =
-  TypedEventFilter<LastValueOverriddenEvent>;
+export type LastValueOverriddenEventFilter = TypedEventFilter<LastValueOverriddenEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -268,9 +191,7 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -317,9 +238,7 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    priceDeviationThresholdFactor(
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    priceDeviationThresholdFactor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     probeCircuitBreaker(
       oracleAddress: PromiseOrValue<string>,
@@ -350,10 +269,7 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  circuitBroken(
-    oracleAddress: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  circuitBroken(oracleAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   isDeviationAboveThreshold(
     base: PromiseOrValue<BigNumberish>,
@@ -369,10 +285,7 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
 
   isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
-  lastValue(
-    oracleAddress: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  lastValue(oracleAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   nominateNewOwner(
     _owner: PromiseOrValue<string>,
@@ -429,23 +342,15 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
 
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
-    lastValue(
-      oracleAddress: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    lastValue(oracleAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    priceDeviationThresholdFactor(
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    priceDeviationThresholdFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
     probeCircuitBreaker(
       oracleAddress: PromiseOrValue<string>,
@@ -467,13 +372,10 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "CircuitBroken(address,uint256,uint256)"(
+    'CircuitBroken(address,uint256,uint256)'(
       oracleAddress?: PromiseOrValue<string> | null,
       previousValue?: null,
       newValue?: null
@@ -484,7 +386,7 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
       newValue?: null
     ): CircuitBrokenEventFilter;
 
-    "LastValueOverridden(address,uint256,uint256)"(
+    'LastValueOverridden(address,uint256,uint256)'(
       oracleAddress?: PromiseOrValue<string> | null,
       previousValue?: null,
       newValue?: null
@@ -495,22 +397,17 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
       newValue?: null
     ): LastValueOverriddenEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
   estimateGas: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     circuitBroken(
       oracleAddress: PromiseOrValue<string>,
@@ -531,10 +428,7 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
 
     isResolverCached(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastValue(
-      oracleAddress: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    lastValue(oracleAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     nominateNewOwner(
       _owner: PromiseOrValue<string>,
@@ -545,9 +439,7 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    priceDeviationThresholdFactor(
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    priceDeviationThresholdFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
     probeCircuitBreaker(
       oracleAddress: PromiseOrValue<string>,
@@ -555,9 +447,7 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resetLastValue(
       oracleAddresses: PromiseOrValue<string>[],
@@ -610,9 +500,7 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    priceDeviationThresholdFactor(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    priceDeviationThresholdFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     probeCircuitBreaker(
       oracleAddress: PromiseOrValue<string>,
@@ -632,8 +520,6 @@ export interface CircuitBreakerAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

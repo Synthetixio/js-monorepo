@@ -12,61 +12,51 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface CollateralStateEthAbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "associatedContract()": FunctionFragment;
-    "createLoan((uint256,address,uint256,bytes32,uint256,bool,uint256,uint256,uint256))": FunctionFragment;
-    "getLoan(address,uint256)": FunctionFragment;
-    "getNumLoans(address)": FunctionFragment;
-    "loans(address,uint256)": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "setAssociatedContract(address)": FunctionFragment;
-    "updateLoan((uint256,address,uint256,bytes32,uint256,bool,uint256,uint256,uint256))": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'associatedContract()': FunctionFragment;
+    'createLoan((uint256,address,uint256,bytes32,uint256,bool,uint256,uint256,uint256))': FunctionFragment;
+    'getLoan(address,uint256)': FunctionFragment;
+    'getNumLoans(address)': FunctionFragment;
+    'loans(address,uint256)': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'setAssociatedContract(address)': FunctionFragment;
+    'updateLoan((uint256,address,uint256,bytes32,uint256,bool,uint256,uint256,uint256))': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "associatedContract"
-      | "createLoan"
-      | "getLoan"
-      | "getNumLoans"
-      | "loans"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "setAssociatedContract"
-      | "updateLoan"
+      | 'acceptOwnership'
+      | 'associatedContract'
+      | 'createLoan'
+      | 'getLoan'
+      | 'getNumLoans'
+      | 'loans'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'setAssociatedContract'
+      | 'updateLoan'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'associatedContract', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "associatedContract",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "createLoan",
+    functionFragment: 'createLoan',
     values: [
       {
         id: PromiseOrValue<BigNumberish>;
@@ -82,32 +72,26 @@ export interface CollateralStateEthAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "getLoan",
+    functionFragment: 'getLoan',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(functionFragment: 'getNumLoans', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'loans',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getNumLoans",
+    functionFragment: 'nominateNewOwner',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'setAssociatedContract',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "loans",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "setAssociatedContract",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateLoan",
+    functionFragment: 'updateLoan',
     values: [
       {
         id: PromiseOrValue<BigNumberish>;
@@ -123,45 +107,27 @@ export interface CollateralStateEthAbiTypesInterface extends utils.Interface {
     ]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "associatedContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "createLoan", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getLoan", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getNumLoans",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "loans", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setAssociatedContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "updateLoan", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'associatedContract', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'createLoan', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getLoan', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getNumLoans', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'loans', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setAssociatedContract', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateLoan', data: BytesLike): Result;
 
   events: {
-    "AssociatedContractUpdated(address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'AssociatedContractUpdated(address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AssociatedContractUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AssociatedContractUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface AssociatedContractUpdatedEventObject {
@@ -172,27 +138,20 @@ export type AssociatedContractUpdatedEvent = TypedEvent<
   AssociatedContractUpdatedEventObject
 >;
 
-export type AssociatedContractUpdatedEventFilter =
-  TypedEventFilter<AssociatedContractUpdatedEvent>;
+export type AssociatedContractUpdatedEventFilter = TypedEventFilter<AssociatedContractUpdatedEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -213,9 +172,7 @@ export interface CollateralStateEthAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -363,17 +320,7 @@ export interface CollateralStateEthAbiTypes extends BaseContract {
     loanID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [
-      BigNumber,
-      string,
-      BigNumber,
-      string,
-      BigNumber,
-      boolean,
-      BigNumber,
-      BigNumber,
-      BigNumber
-    ] & {
+    [BigNumber, string, BigNumber, string, BigNumber, boolean, BigNumber, BigNumber, BigNumber] & {
       id: BigNumber;
       account: string;
       collateral: BigNumber;
@@ -386,27 +333,14 @@ export interface CollateralStateEthAbiTypes extends BaseContract {
     }
   >;
 
-  getNumLoans(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  getNumLoans(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   loans(
     arg0: PromiseOrValue<string>,
     arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [
-      BigNumber,
-      string,
-      BigNumber,
-      string,
-      BigNumber,
-      boolean,
-      BigNumber,
-      BigNumber,
-      BigNumber
-    ] & {
+    [BigNumber, string, BigNumber, string, BigNumber, boolean, BigNumber, BigNumber, BigNumber] & {
       id: BigNumber;
       account: string;
       collateral: BigNumber;
@@ -496,10 +430,7 @@ export interface CollateralStateEthAbiTypes extends BaseContract {
       }
     >;
 
-    getNumLoans(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getNumLoans(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     loans(
       arg0: PromiseOrValue<string>,
@@ -529,10 +460,7 @@ export interface CollateralStateEthAbiTypes extends BaseContract {
       }
     >;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -560,27 +488,20 @@ export interface CollateralStateEthAbiTypes extends BaseContract {
   };
 
   filters: {
-    "AssociatedContractUpdated(address)"(
+    'AssociatedContractUpdated(address)'(
       associatedContract?: null
     ): AssociatedContractUpdatedEventFilter;
-    AssociatedContractUpdated(
-      associatedContract?: null
-    ): AssociatedContractUpdatedEventFilter;
+    AssociatedContractUpdated(associatedContract?: null): AssociatedContractUpdatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     associatedContract(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -605,10 +526,7 @@ export interface CollateralStateEthAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getNumLoans(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getNumLoans(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     loans(
       arg0: PromiseOrValue<string>,
@@ -651,9 +569,7 @@ export interface CollateralStateEthAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    associatedContract(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    associatedContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createLoan(
       loan: {

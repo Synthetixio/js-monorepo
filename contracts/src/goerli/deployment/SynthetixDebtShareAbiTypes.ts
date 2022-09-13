@@ -12,363 +12,247 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface SynthetixDebtShareAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "addAuthorizedBroker(address)": FunctionFragment;
-    "addAuthorizedToSnapshot(address)": FunctionFragment;
-    "allowance(address,address)": FunctionFragment;
-    "approve(address,uint256)": FunctionFragment;
-    "authorizedBrokers(address)": FunctionFragment;
-    "authorizedToSnapshot(address)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "balanceOfOnPeriod(address,uint256)": FunctionFragment;
-    "balances(address,uint256)": FunctionFragment;
-    "burnShare(address,uint256)": FunctionFragment;
-    "currentPeriodId()": FunctionFragment;
-    "decimals()": FunctionFragment;
-    "finishSetup()": FunctionFragment;
-    "importAddresses(address[],uint256[])": FunctionFragment;
-    "isInitialized()": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "mintShare(address,uint256)": FunctionFragment;
-    "name()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "removeAuthorizedBroker(address)": FunctionFragment;
-    "removeAuthorizedToSnapshot(address)": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "sharePercent(address)": FunctionFragment;
-    "sharePercentOnPeriod(address,uint256)": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "takeSnapshot(uint128)": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "totalSupplyOnPeriod(uint256)": FunctionFragment;
-    "transfer(address,uint256)": FunctionFragment;
-    "transferFrom(address,address,uint256)": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'addAuthorizedBroker(address)': FunctionFragment;
+    'addAuthorizedToSnapshot(address)': FunctionFragment;
+    'allowance(address,address)': FunctionFragment;
+    'approve(address,uint256)': FunctionFragment;
+    'authorizedBrokers(address)': FunctionFragment;
+    'authorizedToSnapshot(address)': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'balanceOfOnPeriod(address,uint256)': FunctionFragment;
+    'balances(address,uint256)': FunctionFragment;
+    'burnShare(address,uint256)': FunctionFragment;
+    'currentPeriodId()': FunctionFragment;
+    'decimals()': FunctionFragment;
+    'finishSetup()': FunctionFragment;
+    'importAddresses(address[],uint256[])': FunctionFragment;
+    'isInitialized()': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'mintShare(address,uint256)': FunctionFragment;
+    'name()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'removeAuthorizedBroker(address)': FunctionFragment;
+    'removeAuthorizedToSnapshot(address)': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'sharePercent(address)': FunctionFragment;
+    'sharePercentOnPeriod(address,uint256)': FunctionFragment;
+    'symbol()': FunctionFragment;
+    'takeSnapshot(uint128)': FunctionFragment;
+    'totalSupply()': FunctionFragment;
+    'totalSupplyOnPeriod(uint256)': FunctionFragment;
+    'transfer(address,uint256)': FunctionFragment;
+    'transferFrom(address,address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "acceptOwnership"
-      | "addAuthorizedBroker"
-      | "addAuthorizedToSnapshot"
-      | "allowance"
-      | "approve"
-      | "authorizedBrokers"
-      | "authorizedToSnapshot"
-      | "balanceOf"
-      | "balanceOfOnPeriod"
-      | "balances"
-      | "burnShare"
-      | "currentPeriodId"
-      | "decimals"
-      | "finishSetup"
-      | "importAddresses"
-      | "isInitialized"
-      | "isResolverCached"
-      | "mintShare"
-      | "name"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "rebuildCache"
-      | "removeAuthorizedBroker"
-      | "removeAuthorizedToSnapshot"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "sharePercent"
-      | "sharePercentOnPeriod"
-      | "symbol"
-      | "takeSnapshot"
-      | "totalSupply"
-      | "totalSupplyOnPeriod"
-      | "transfer"
-      | "transferFrom"
+      | 'CONTRACT_NAME'
+      | 'acceptOwnership'
+      | 'addAuthorizedBroker'
+      | 'addAuthorizedToSnapshot'
+      | 'allowance'
+      | 'approve'
+      | 'authorizedBrokers'
+      | 'authorizedToSnapshot'
+      | 'balanceOf'
+      | 'balanceOfOnPeriod'
+      | 'balances'
+      | 'burnShare'
+      | 'currentPeriodId'
+      | 'decimals'
+      | 'finishSetup'
+      | 'importAddresses'
+      | 'isInitialized'
+      | 'isResolverCached'
+      | 'mintShare'
+      | 'name'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'rebuildCache'
+      | 'removeAuthorizedBroker'
+      | 'removeAuthorizedToSnapshot'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'sharePercent'
+      | 'sharePercentOnPeriod'
+      | 'symbol'
+      | 'takeSnapshot'
+      | 'totalSupply'
+      | 'totalSupplyOnPeriod'
+      | 'transfer'
+      | 'transferFrom'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addAuthorizedBroker",
+    functionFragment: 'addAuthorizedBroker',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "addAuthorizedToSnapshot",
+    functionFragment: 'addAuthorizedToSnapshot',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "allowance",
+    functionFragment: 'allowance',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "approve",
+    functionFragment: 'approve',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "authorizedBrokers",
+    functionFragment: 'authorizedBrokers',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "authorizedToSnapshot",
+    functionFragment: 'authorizedToSnapshot',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "balanceOfOnPeriod",
+    functionFragment: 'balanceOfOnPeriod',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "balances",
+    functionFragment: 'balances',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "burnShare",
+    functionFragment: 'burnShare',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'currentPeriodId', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'finishSetup', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "currentPeriodId",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "finishSetup",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "importAddresses",
+    functionFragment: 'importAddresses',
     values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]]
   ): string;
+  encodeFunctionData(functionFragment: 'isInitialized', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isInitialized",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mintShare",
+    functionFragment: 'mintShare',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'removeAuthorizedBroker',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeAuthorizedBroker",
+    functionFragment: 'removeAuthorizedToSnapshot',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'sharePercent', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "removeAuthorizedToSnapshot",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "sharePercent",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "sharePercentOnPeriod",
+    functionFragment: 'sharePercentOnPeriod',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "takeSnapshot",
+    functionFragment: 'takeSnapshot',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'totalSupplyOnPeriod',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalSupplyOnPeriod",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transfer",
+    functionFragment: 'transfer',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addAuthorizedBroker",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addAuthorizedToSnapshot",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "authorizedBrokers",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "authorizedToSnapshot",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "balanceOfOnPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "balances", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "burnShare", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "currentPeriodId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "finishSetup",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "importAddresses",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isInitialized",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "mintShare", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeAuthorizedBroker",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeAuthorizedToSnapshot",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "sharePercent",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "sharePercentOnPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "takeSnapshot",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupplyOnPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addAuthorizedBroker', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addAuthorizedToSnapshot', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'authorizedBrokers', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'authorizedToSnapshot', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOfOnPeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balances', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnShare', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'currentPeriodId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'finishSetup', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'importAddresses', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isInitialized', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mintShare', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeAuthorizedBroker', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeAuthorizedToSnapshot', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'sharePercent', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'sharePercentOnPeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'takeSnapshot', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSupplyOnPeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
 
   events: {
-    "Burn(address,uint256)": EventFragment;
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "ChangeAuthorizedBroker(address,bool)": EventFragment;
-    "ChangeAuthorizedToSnapshot(address,bool)": EventFragment;
-    "Mint(address,uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "Transfer(address,address,uint256)": EventFragment;
+    'Burn(address,uint256)': EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'ChangeAuthorizedBroker(address,bool)': EventFragment;
+    'ChangeAuthorizedToSnapshot(address,bool)': EventFragment;
+    'Mint(address,uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'Transfer(address,address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Burn"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ChangeAuthorizedBroker"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ChangeAuthorizedToSnapshot"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Mint"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Burn'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ChangeAuthorizedBroker'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ChangeAuthorizedToSnapshot'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Mint'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
 export interface BurnEventObject {
@@ -383,10 +267,7 @@ export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -399,8 +280,7 @@ export type ChangeAuthorizedBrokerEvent = TypedEvent<
   ChangeAuthorizedBrokerEventObject
 >;
 
-export type ChangeAuthorizedBrokerEventFilter =
-  TypedEventFilter<ChangeAuthorizedBrokerEvent>;
+export type ChangeAuthorizedBrokerEventFilter = TypedEventFilter<ChangeAuthorizedBrokerEvent>;
 
 export interface ChangeAuthorizedToSnapshotEventObject {
   authorizedToSnapshot: string;
@@ -426,20 +306,14 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -448,10 +322,7 @@ export interface TransferEventObject {
   to: string;
   value: BigNumber;
 }
-export type TransferEvent = TypedEvent<
-  [string, string, BigNumber],
-  TransferEventObject
->;
+export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEventObject>;
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
@@ -472,9 +343,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -510,20 +379,14 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    authorizedBrokers(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    authorizedBrokers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     authorizedToSnapshot(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     balanceOfOnPeriod(
       account: PromiseOrValue<string>,
@@ -535,9 +398,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { amount: BigNumber; periodId: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; periodId: BigNumber }>;
 
     burnShare(
       account: PromiseOrValue<string>,
@@ -600,10 +461,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string[]] & { addresses: string[] }>;
 
-    sharePercent(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    sharePercent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     sharePercentOnPeriod(
       account: PromiseOrValue<string>,
@@ -667,20 +525,11 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  authorizedBrokers(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  authorizedBrokers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  authorizedToSnapshot(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  authorizedToSnapshot(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  balanceOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   balanceOfOnPeriod(
     account: PromiseOrValue<string>,
@@ -692,9 +541,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
     arg0: PromiseOrValue<string>,
     arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & { amount: BigNumber; periodId: BigNumber }
-  >;
+  ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; periodId: BigNumber }>;
 
   burnShare(
     account: PromiseOrValue<string>,
@@ -755,10 +602,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
 
   resolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
 
-  sharePercent(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  sharePercent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   sharePercentOnPeriod(
     account: PromiseOrValue<string>,
@@ -798,10 +642,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    addAuthorizedBroker(
-      target: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    addAuthorizedBroker(target: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     addAuthorizedToSnapshot(
       target: PromiseOrValue<string>,
@@ -820,20 +661,11 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    authorizedBrokers(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    authorizedBrokers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    authorizedToSnapshot(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    authorizedToSnapshot(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOfOnPeriod(
       account: PromiseOrValue<string>,
@@ -845,9 +677,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { amount: BigNumber; periodId: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; periodId: BigNumber }>;
 
     burnShare(
       account: PromiseOrValue<string>,
@@ -879,10 +709,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -904,10 +731,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
 
-    sharePercent(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    sharePercent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     sharePercentOnPeriod(
       account: PromiseOrValue<string>,
@@ -917,10 +741,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    takeSnapshot(
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    takeSnapshot(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -944,22 +765,16 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
   };
 
   filters: {
-    "Burn(address,uint256)"(
+    'Burn(address,uint256)'(
       account?: PromiseOrValue<string> | null,
       amount?: null
     ): BurnEventFilter;
-    Burn(
-      account?: PromiseOrValue<string> | null,
-      amount?: null
-    ): BurnEventFilter;
+    Burn(account?: PromiseOrValue<string> | null, amount?: null): BurnEventFilter;
 
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "ChangeAuthorizedBroker(address,bool)"(
+    'ChangeAuthorizedBroker(address,bool)'(
       authorizedBroker?: PromiseOrValue<string> | null,
       authorized?: null
     ): ChangeAuthorizedBrokerEventFilter;
@@ -968,7 +783,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
       authorized?: null
     ): ChangeAuthorizedBrokerEventFilter;
 
-    "ChangeAuthorizedToSnapshot(address,bool)"(
+    'ChangeAuthorizedToSnapshot(address,bool)'(
       authorizedToSnapshot?: PromiseOrValue<string> | null,
       authorized?: null
     ): ChangeAuthorizedToSnapshotEventFilter;
@@ -977,25 +792,19 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
       authorized?: null
     ): ChangeAuthorizedToSnapshotEventFilter;
 
-    "Mint(address,uint256)"(
+    'Mint(address,uint256)'(
       account?: PromiseOrValue<string> | null,
       amount?: null
     ): MintEventFilter;
-    Mint(
-      account?: PromiseOrValue<string> | null,
-      amount?: null
-    ): MintEventFilter;
+    Mint(account?: PromiseOrValue<string> | null, amount?: null): MintEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "Transfer(address,address,uint256)"(
+    'Transfer(address,address,uint256)'(
       from?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
       value?: null
@@ -1010,9 +819,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
   estimateGas: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     addAuthorizedBroker(
       target: PromiseOrValue<string>,
@@ -1036,20 +843,14 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    authorizedBrokers(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    authorizedBrokers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     authorizedToSnapshot(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOfOnPeriod(
       account: PromiseOrValue<string>,
@@ -1073,9 +874,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    finishSetup(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    finishSetup(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     importAddresses(
       accounts: PromiseOrValue<string>[],
@@ -1104,9 +903,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     removeAuthorizedBroker(
       target: PromiseOrValue<string>,
@@ -1122,10 +919,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sharePercent(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    sharePercent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     sharePercentOnPeriod(
       account: PromiseOrValue<string>,
@@ -1274,9 +1068,7 @@ export interface SynthetixDebtShareAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sharePercent(
       account: PromiseOrValue<string>,

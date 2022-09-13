@@ -12,193 +12,127 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
-export interface OneNetAggregatorDebtRatioAbiTypesInterface
-  extends utils.Interface {
+export interface OneNetAggregatorDebtRatioAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "decimals()": FunctionFragment;
-    "getAnswer(uint256)": FunctionFragment;
-    "getRoundData(uint80)": FunctionFragment;
-    "getTimestamp(uint256)": FunctionFragment;
-    "latestRound()": FunctionFragment;
-    "latestRoundData()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "overrideTimestamp()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "setOverrideTimestamp(uint256)": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'decimals()': FunctionFragment;
+    'getAnswer(uint256)': FunctionFragment;
+    'getRoundData(uint80)': FunctionFragment;
+    'getTimestamp(uint256)': FunctionFragment;
+    'latestRound()': FunctionFragment;
+    'latestRoundData()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'overrideTimestamp()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'setOverrideTimestamp(uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "acceptOwnership"
-      | "decimals"
-      | "getAnswer"
-      | "getRoundData"
-      | "getTimestamp"
-      | "latestRound"
-      | "latestRoundData"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "overrideTimestamp"
-      | "owner"
-      | "resolver"
-      | "setOverrideTimestamp"
+      | 'CONTRACT_NAME'
+      | 'acceptOwnership'
+      | 'decimals'
+      | 'getAnswer'
+      | 'getRoundData'
+      | 'getTimestamp'
+      | 'latestRound'
+      | 'latestRoundData'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'overrideTimestamp'
+      | 'owner'
+      | 'resolver'
+      | 'setOverrideTimestamp'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getAnswer', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getAnswer",
+    functionFragment: 'getRoundData',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getRoundData",
+    functionFragment: 'getTimestamp',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'latestRound', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'latestRoundData', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getTimestamp",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "latestRound",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "latestRoundData",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'overrideTimestamp', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "overrideTimestamp",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "setOverrideTimestamp",
+    functionFragment: 'setOverrideTimestamp',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getAnswer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getRoundData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getTimestamp",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "latestRound",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "latestRoundData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "overrideTimestamp",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setOverrideTimestamp",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAnswer', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRoundData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getTimestamp', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'latestRound', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'latestRoundData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'overrideTimestamp', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setOverrideTimestamp', data: BytesLike): Result;
 
   events: {
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "SetOverrideTimestamp(uint256)": EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'SetOverrideTimestamp(uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SetOverrideTimestamp"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SetOverrideTimestamp'): EventFragment;
 }
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
 export interface SetOverrideTimestampEventObject {
   timestamp: BigNumber;
 }
-export type SetOverrideTimestampEvent = TypedEvent<
-  [BigNumber],
-  SetOverrideTimestampEventObject
->;
+export type SetOverrideTimestampEvent = TypedEvent<[BigNumber], SetOverrideTimestampEventObject>;
 
-export type SetOverrideTimestampEventFilter =
-  TypedEventFilter<SetOverrideTimestampEvent>;
+export type SetOverrideTimestampEventFilter = TypedEventFilter<SetOverrideTimestampEvent>;
 
 export interface OneNetAggregatorDebtRatioAbiTypes extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -217,9 +151,7 @@ export interface OneNetAggregatorDebtRatioAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -283,10 +215,7 @@ export interface OneNetAggregatorDebtRatioAbiTypes extends BaseContract {
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  getAnswer(
-    _roundId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  getAnswer(_roundId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getRoundData(
     arg0: PromiseOrValue<BigNumberish>,
@@ -350,10 +279,7 @@ export interface OneNetAggregatorDebtRatioAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber, BigNumber, BigNumber, BigNumber]>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -370,27 +296,20 @@ export interface OneNetAggregatorDebtRatioAbiTypes extends BaseContract {
   };
 
   filters: {
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "SetOverrideTimestamp(uint256)"(
-      timestamp?: null
-    ): SetOverrideTimestampEventFilter;
+    'SetOverrideTimestamp(uint256)'(timestamp?: null): SetOverrideTimestampEventFilter;
     SetOverrideTimestamp(timestamp?: null): SetOverrideTimestampEventFilter;
   };
 
   estimateGas: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -399,10 +318,7 @@ export interface OneNetAggregatorDebtRatioAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getRoundData(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getRoundData(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getTimestamp(
       _roundId: PromiseOrValue<BigNumberish>,

@@ -12,361 +12,245 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface TradingRewardsAbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "claimRewardsForPeriod(uint256)": FunctionFragment;
-    "claimRewardsForPeriods(uint256[])": FunctionFragment;
-    "closeCurrentPeriodWithRewards(uint256)": FunctionFragment;
-    "getAvailableRewards()": FunctionFragment;
-    "getAvailableRewardsForAccountForPeriod(address,uint256)": FunctionFragment;
-    "getAvailableRewardsForAccountForPeriods(address,uint256[])": FunctionFragment;
-    "getCurrentPeriod()": FunctionFragment;
-    "getPeriodAvailableRewards(uint256)": FunctionFragment;
-    "getPeriodController()": FunctionFragment;
-    "getPeriodIsClaimable(uint256)": FunctionFragment;
-    "getPeriodIsFinalized(uint256)": FunctionFragment;
-    "getPeriodRecordedFees(uint256)": FunctionFragment;
-    "getPeriodTotalRewards(uint256)": FunctionFragment;
-    "getRewardsToken()": FunctionFragment;
-    "getUnaccountedFeesForAccountForPeriod(address,uint256)": FunctionFragment;
-    "getUnassignedRewards()": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "lastPauseTime()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "paused()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "recordExchangeFeeForAccount(uint256,address)": FunctionFragment;
-    "recoverAssignedRewardTokensAndDestroyPeriod(address,uint256)": FunctionFragment;
-    "recoverTokens(address,address)": FunctionFragment;
-    "recoverUnassignedRewardTokens(address)": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "setPaused(bool)": FunctionFragment;
-    "setPeriodController(address)": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'claimRewardsForPeriod(uint256)': FunctionFragment;
+    'claimRewardsForPeriods(uint256[])': FunctionFragment;
+    'closeCurrentPeriodWithRewards(uint256)': FunctionFragment;
+    'getAvailableRewards()': FunctionFragment;
+    'getAvailableRewardsForAccountForPeriod(address,uint256)': FunctionFragment;
+    'getAvailableRewardsForAccountForPeriods(address,uint256[])': FunctionFragment;
+    'getCurrentPeriod()': FunctionFragment;
+    'getPeriodAvailableRewards(uint256)': FunctionFragment;
+    'getPeriodController()': FunctionFragment;
+    'getPeriodIsClaimable(uint256)': FunctionFragment;
+    'getPeriodIsFinalized(uint256)': FunctionFragment;
+    'getPeriodRecordedFees(uint256)': FunctionFragment;
+    'getPeriodTotalRewards(uint256)': FunctionFragment;
+    'getRewardsToken()': FunctionFragment;
+    'getUnaccountedFeesForAccountForPeriod(address,uint256)': FunctionFragment;
+    'getUnassignedRewards()': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'lastPauseTime()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'paused()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'recordExchangeFeeForAccount(uint256,address)': FunctionFragment;
+    'recoverAssignedRewardTokensAndDestroyPeriod(address,uint256)': FunctionFragment;
+    'recoverTokens(address,address)': FunctionFragment;
+    'recoverUnassignedRewardTokens(address)': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'setPaused(bool)': FunctionFragment;
+    'setPeriodController(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "claimRewardsForPeriod"
-      | "claimRewardsForPeriods"
-      | "closeCurrentPeriodWithRewards"
-      | "getAvailableRewards"
-      | "getAvailableRewardsForAccountForPeriod"
-      | "getAvailableRewardsForAccountForPeriods"
-      | "getCurrentPeriod"
-      | "getPeriodAvailableRewards"
-      | "getPeriodController"
-      | "getPeriodIsClaimable"
-      | "getPeriodIsFinalized"
-      | "getPeriodRecordedFees"
-      | "getPeriodTotalRewards"
-      | "getRewardsToken"
-      | "getUnaccountedFeesForAccountForPeriod"
-      | "getUnassignedRewards"
-      | "isResolverCached"
-      | "lastPauseTime"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "paused"
-      | "rebuildCache"
-      | "recordExchangeFeeForAccount"
-      | "recoverAssignedRewardTokensAndDestroyPeriod"
-      | "recoverTokens"
-      | "recoverUnassignedRewardTokens"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "setPaused"
-      | "setPeriodController"
+      | 'acceptOwnership'
+      | 'claimRewardsForPeriod'
+      | 'claimRewardsForPeriods'
+      | 'closeCurrentPeriodWithRewards'
+      | 'getAvailableRewards'
+      | 'getAvailableRewardsForAccountForPeriod'
+      | 'getAvailableRewardsForAccountForPeriods'
+      | 'getCurrentPeriod'
+      | 'getPeriodAvailableRewards'
+      | 'getPeriodController'
+      | 'getPeriodIsClaimable'
+      | 'getPeriodIsFinalized'
+      | 'getPeriodRecordedFees'
+      | 'getPeriodTotalRewards'
+      | 'getRewardsToken'
+      | 'getUnaccountedFeesForAccountForPeriod'
+      | 'getUnassignedRewards'
+      | 'isResolverCached'
+      | 'lastPauseTime'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'paused'
+      | 'rebuildCache'
+      | 'recordExchangeFeeForAccount'
+      | 'recoverAssignedRewardTokensAndDestroyPeriod'
+      | 'recoverTokens'
+      | 'recoverUnassignedRewardTokens'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'setPaused'
+      | 'setPeriodController'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimRewardsForPeriod",
+    functionFragment: 'claimRewardsForPeriod',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "claimRewardsForPeriods",
+    functionFragment: 'claimRewardsForPeriods',
     values: [PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "closeCurrentPeriodWithRewards",
+    functionFragment: 'closeCurrentPeriodWithRewards',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'getAvailableRewards', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getAvailableRewards",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAvailableRewardsForAccountForPeriod",
+    functionFragment: 'getAvailableRewardsForAccountForPeriod',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getAvailableRewardsForAccountForPeriods",
+    functionFragment: 'getAvailableRewardsForAccountForPeriods',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]]
   ): string;
+  encodeFunctionData(functionFragment: 'getCurrentPeriod', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getCurrentPeriod",
-    values?: undefined
+    functionFragment: 'getPeriodAvailableRewards',
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'getPeriodController', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getPeriodAvailableRewards",
+    functionFragment: 'getPeriodIsClaimable',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getPeriodController",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getPeriodIsClaimable",
+    functionFragment: 'getPeriodIsFinalized',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getPeriodIsFinalized",
+    functionFragment: 'getPeriodRecordedFees',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getPeriodRecordedFees",
+    functionFragment: 'getPeriodTotalRewards',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'getRewardsToken', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getPeriodTotalRewards",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getRewardsToken",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getUnaccountedFeesForAccountForPeriod",
+    functionFragment: 'getUnaccountedFeesForAccountForPeriod',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'getUnassignedRewards', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastPauseTime', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getUnassignedRewards",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastPauseTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "paused", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "recordExchangeFeeForAccount",
+    functionFragment: 'recordExchangeFeeForAccount',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "recoverAssignedRewardTokensAndDestroyPeriod",
+    functionFragment: 'recoverAssignedRewardTokensAndDestroyPeriod',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "recoverTokens",
+    functionFragment: 'recoverTokens',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "recoverUnassignedRewardTokens",
+    functionFragment: 'recoverUnassignedRewardTokens',
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setPaused', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setPaused",
-    values: [PromiseOrValue<boolean>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setPeriodController",
+    functionFragment: 'setPeriodController',
     values: [PromiseOrValue<string>]
   ): string;
 
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimRewardsForPeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimRewardsForPeriods', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'closeCurrentPeriodWithRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAvailableRewards', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "acceptOwnership",
+    functionFragment: 'getAvailableRewardsForAccountForPeriod',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "claimRewardsForPeriod",
+    functionFragment: 'getAvailableRewardsForAccountForPeriods',
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: 'getCurrentPeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getPeriodAvailableRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getPeriodController', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getPeriodIsClaimable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getPeriodIsFinalized', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getPeriodRecordedFees', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getPeriodTotalRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRewardsToken', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "claimRewardsForPeriods",
+    functionFragment: 'getUnaccountedFeesForAccountForPeriod',
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: 'getUnassignedRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastPauseTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'recordExchangeFeeForAccount', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "closeCurrentPeriodWithRewards",
+    functionFragment: 'recoverAssignedRewardTokensAndDestroyPeriod',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAvailableRewards",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAvailableRewardsForAccountForPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAvailableRewardsForAccountForPeriods",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getCurrentPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPeriodAvailableRewards",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPeriodController",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPeriodIsClaimable",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPeriodIsFinalized",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPeriodRecordedFees",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPeriodTotalRewards",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRewardsToken",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getUnaccountedFeesForAccountForPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getUnassignedRewards",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastPauseTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "recordExchangeFeeForAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "recoverAssignedRewardTokensAndDestroyPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "recoverTokens",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "recoverUnassignedRewardTokens",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setPaused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setPeriodController",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'recoverTokens', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'recoverUnassignedRewardTokens', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPaused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPeriodController', data: BytesLike): Result;
 
   events: {
-    "AssignedRewardTokensRecovered(address,uint256,uint256)": EventFragment;
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "ExchangeFeeRecorded(address,uint256,uint256)": EventFragment;
-    "NewPeriodStarted(uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "PauseChanged(bool)": EventFragment;
-    "PeriodControllerChanged(address)": EventFragment;
-    "PeriodFinalizedWithRewards(uint256,uint256)": EventFragment;
-    "RewardsClaimed(address,uint256,uint256)": EventFragment;
-    "TokensRecovered(address,address,uint256)": EventFragment;
-    "UnassignedRewardTokensRecovered(address,uint256)": EventFragment;
+    'AssignedRewardTokensRecovered(address,uint256,uint256)': EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'ExchangeFeeRecorded(address,uint256,uint256)': EventFragment;
+    'NewPeriodStarted(uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'PauseChanged(bool)': EventFragment;
+    'PeriodControllerChanged(address)': EventFragment;
+    'PeriodFinalizedWithRewards(uint256,uint256)': EventFragment;
+    'RewardsClaimed(address,uint256,uint256)': EventFragment;
+    'TokensRecovered(address,address,uint256)': EventFragment;
+    'UnassignedRewardTokensRecovered(address,uint256)': EventFragment;
   };
 
-  getEvent(
-    nameOrSignatureOrTopic: "AssignedRewardTokensRecovered"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ExchangeFeeRecorded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NewPeriodStarted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PauseChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PeriodControllerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PeriodFinalizedWithRewards"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardsClaimed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokensRecovered"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "UnassignedRewardTokensRecovered"
-  ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AssignedRewardTokensRecovered'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ExchangeFeeRecorded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'NewPeriodStarted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'PauseChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'PeriodControllerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'PeriodFinalizedWithRewards'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardsClaimed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TokensRecovered'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UnassignedRewardTokensRecovered'): EventFragment;
 }
 
 export interface AssignedRewardTokensRecoveredEventObject {
@@ -386,10 +270,7 @@ export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -403,38 +284,27 @@ export type ExchangeFeeRecordedEvent = TypedEvent<
   ExchangeFeeRecordedEventObject
 >;
 
-export type ExchangeFeeRecordedEventFilter =
-  TypedEventFilter<ExchangeFeeRecordedEvent>;
+export type ExchangeFeeRecordedEventFilter = TypedEventFilter<ExchangeFeeRecordedEvent>;
 
 export interface NewPeriodStartedEventObject {
   periodID: BigNumber;
 }
-export type NewPeriodStartedEvent = TypedEvent<
-  [BigNumber],
-  NewPeriodStartedEventObject
->;
+export type NewPeriodStartedEvent = TypedEvent<[BigNumber], NewPeriodStartedEventObject>;
 
-export type NewPeriodStartedEventFilter =
-  TypedEventFilter<NewPeriodStartedEvent>;
+export type NewPeriodStartedEventFilter = TypedEventFilter<NewPeriodStartedEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -448,13 +318,9 @@ export type PauseChangedEventFilter = TypedEventFilter<PauseChangedEvent>;
 export interface PeriodControllerChangedEventObject {
   newPeriodController: string;
 }
-export type PeriodControllerChangedEvent = TypedEvent<
-  [string],
-  PeriodControllerChangedEventObject
->;
+export type PeriodControllerChangedEvent = TypedEvent<[string], PeriodControllerChangedEventObject>;
 
-export type PeriodControllerChangedEventFilter =
-  TypedEventFilter<PeriodControllerChangedEvent>;
+export type PeriodControllerChangedEventFilter = TypedEventFilter<PeriodControllerChangedEvent>;
 
 export interface PeriodFinalizedWithRewardsEventObject {
   periodID: BigNumber;
@@ -521,9 +387,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -865,10 +729,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
 
     lastPauseTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -905,10 +766,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
 
-    setPaused(
-      _paused: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setPaused(_paused: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     setPeriodController(
       newPeriodController: PromiseOrValue<string>,
@@ -917,7 +775,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
   };
 
   filters: {
-    "AssignedRewardTokensRecovered(address,uint256,uint256)"(
+    'AssignedRewardTokensRecovered(address,uint256,uint256)'(
       recoverAddress?: null,
       amount?: null,
       periodID?: null
@@ -928,13 +786,10 @@ export interface TradingRewardsAbiTypes extends BaseContract {
       periodID?: null
     ): AssignedRewardTokensRecoveredEventFilter;
 
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "ExchangeFeeRecorded(address,uint256,uint256)"(
+    'ExchangeFeeRecorded(address,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       amount?: null,
       periodID?: null
@@ -945,29 +800,24 @@ export interface TradingRewardsAbiTypes extends BaseContract {
       periodID?: null
     ): ExchangeFeeRecordedEventFilter;
 
-    "NewPeriodStarted(uint256)"(periodID?: null): NewPeriodStartedEventFilter;
+    'NewPeriodStarted(uint256)'(periodID?: null): NewPeriodStartedEventFilter;
     NewPeriodStarted(periodID?: null): NewPeriodStartedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "PauseChanged(bool)"(isPaused?: null): PauseChangedEventFilter;
+    'PauseChanged(bool)'(isPaused?: null): PauseChangedEventFilter;
     PauseChanged(isPaused?: null): PauseChangedEventFilter;
 
-    "PeriodControllerChanged(address)"(
+    'PeriodControllerChanged(address)'(
       newPeriodController?: null
     ): PeriodControllerChangedEventFilter;
-    PeriodControllerChanged(
-      newPeriodController?: null
-    ): PeriodControllerChangedEventFilter;
+    PeriodControllerChanged(newPeriodController?: null): PeriodControllerChangedEventFilter;
 
-    "PeriodFinalizedWithRewards(uint256,uint256)"(
+    'PeriodFinalizedWithRewards(uint256,uint256)'(
       periodID?: null,
       rewards?: null
     ): PeriodFinalizedWithRewardsEventFilter;
@@ -976,7 +826,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
       rewards?: null
     ): PeriodFinalizedWithRewardsEventFilter;
 
-    "RewardsClaimed(address,uint256,uint256)"(
+    'RewardsClaimed(address,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       amount?: null,
       periodID?: null
@@ -987,7 +837,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
       periodID?: null
     ): RewardsClaimedEventFilter;
 
-    "TokensRecovered(address,address,uint256)"(
+    'TokensRecovered(address,address,uint256)'(
       tokenAddress?: null,
       recoverAddress?: null,
       amount?: null
@@ -998,7 +848,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
       amount?: null
     ): TokensRecoveredEventFilter;
 
-    "UnassignedRewardTokensRecovered(address,uint256)"(
+    'UnassignedRewardTokensRecovered(address,uint256)'(
       recoverAddress?: null,
       amount?: null
     ): UnassignedRewardTokensRecoveredEventFilter;
@@ -1009,9 +859,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     claimRewardsForPeriod(
       periodID: PromiseOrValue<BigNumberish>,
@@ -1096,9 +944,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     recordExchangeFeeForAccount(
       usdFeeAmount: PromiseOrValue<BigNumberish>,
@@ -1158,9 +1004,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    getAvailableRewards(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getAvailableRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAvailableRewardsForAccountForPeriod(
       account: PromiseOrValue<string>,
@@ -1181,9 +1025,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getPeriodController(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getPeriodController(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPeriodIsClaimable(
       periodID: PromiseOrValue<BigNumberish>,
@@ -1213,9 +1055,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getUnassignedRewards(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getUnassignedRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isResolverCached(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1261,9 +1101,7 @@ export interface TradingRewardsAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setPaused(
       _paused: PromiseOrValue<boolean>,

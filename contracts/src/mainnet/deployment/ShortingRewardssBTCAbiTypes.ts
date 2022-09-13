@@ -12,340 +12,204 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface ShortingRewardssBTCAbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "earned(address)": FunctionFragment;
-    "enrol(address,uint256)": FunctionFragment;
-    "getReward(address)": FunctionFragment;
-    "getRewardForDuration()": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "lastPauseTime()": FunctionFragment;
-    "lastTimeRewardApplicable()": FunctionFragment;
-    "lastUpdateTime()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "notifyRewardAmount(uint256)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "paused()": FunctionFragment;
-    "periodFinish()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "rewardPerToken()": FunctionFragment;
-    "rewardPerTokenStored()": FunctionFragment;
-    "rewardRate()": FunctionFragment;
-    "rewards(address)": FunctionFragment;
-    "rewardsDistribution()": FunctionFragment;
-    "rewardsDuration()": FunctionFragment;
-    "rewardsToken()": FunctionFragment;
-    "setPaused(bool)": FunctionFragment;
-    "setRewardsDistribution(address)": FunctionFragment;
-    "setRewardsDuration(uint256)": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "userRewardPerTokenPaid(address)": FunctionFragment;
-    "withdraw(address,uint256)": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'earned(address)': FunctionFragment;
+    'enrol(address,uint256)': FunctionFragment;
+    'getReward(address)': FunctionFragment;
+    'getRewardForDuration()': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'lastPauseTime()': FunctionFragment;
+    'lastTimeRewardApplicable()': FunctionFragment;
+    'lastUpdateTime()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'notifyRewardAmount(uint256)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'paused()': FunctionFragment;
+    'periodFinish()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'rewardPerToken()': FunctionFragment;
+    'rewardPerTokenStored()': FunctionFragment;
+    'rewardRate()': FunctionFragment;
+    'rewards(address)': FunctionFragment;
+    'rewardsDistribution()': FunctionFragment;
+    'rewardsDuration()': FunctionFragment;
+    'rewardsToken()': FunctionFragment;
+    'setPaused(bool)': FunctionFragment;
+    'setRewardsDistribution(address)': FunctionFragment;
+    'setRewardsDuration(uint256)': FunctionFragment;
+    'totalSupply()': FunctionFragment;
+    'userRewardPerTokenPaid(address)': FunctionFragment;
+    'withdraw(address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "balanceOf"
-      | "earned"
-      | "enrol"
-      | "getReward"
-      | "getRewardForDuration"
-      | "isResolverCached"
-      | "lastPauseTime"
-      | "lastTimeRewardApplicable"
-      | "lastUpdateTime"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "notifyRewardAmount"
-      | "owner"
-      | "paused"
-      | "periodFinish"
-      | "rebuildCache"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "rewardPerToken"
-      | "rewardPerTokenStored"
-      | "rewardRate"
-      | "rewards"
-      | "rewardsDistribution"
-      | "rewardsDuration"
-      | "rewardsToken"
-      | "setPaused"
-      | "setRewardsDistribution"
-      | "setRewardsDuration"
-      | "totalSupply"
-      | "userRewardPerTokenPaid"
-      | "withdraw"
+      | 'acceptOwnership'
+      | 'balanceOf'
+      | 'earned'
+      | 'enrol'
+      | 'getReward'
+      | 'getRewardForDuration'
+      | 'isResolverCached'
+      | 'lastPauseTime'
+      | 'lastTimeRewardApplicable'
+      | 'lastUpdateTime'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'notifyRewardAmount'
+      | 'owner'
+      | 'paused'
+      | 'periodFinish'
+      | 'rebuildCache'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'rewardPerToken'
+      | 'rewardPerTokenStored'
+      | 'rewardRate'
+      | 'rewards'
+      | 'rewardsDistribution'
+      | 'rewardsDuration'
+      | 'rewardsToken'
+      | 'setPaused'
+      | 'setRewardsDistribution'
+      | 'setRewardsDuration'
+      | 'totalSupply'
+      | 'userRewardPerTokenPaid'
+      | 'withdraw'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'earned', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "earned",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "enrol",
+    functionFragment: 'enrol',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'getReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getRewardForDuration', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastPauseTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastUpdateTime', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getReward",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getRewardForDuration",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastPauseTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastTimeRewardApplicable",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastUpdateTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "notifyRewardAmount",
+    functionFragment: 'notifyRewardAmount',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "paused", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'periodFinish', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardPerToken', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardPerTokenStored', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardRate', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewardsDistribution', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardsDuration', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardsToken', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setPaused', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(
-    functionFragment: "periodFinish",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardPerToken",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardPerTokenStored",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewards",
+    functionFragment: 'setRewardsDistribution',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "rewardsDistribution",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardsDuration",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardsToken",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setPaused",
-    values: [PromiseOrValue<boolean>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setRewardsDistribution",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setRewardsDuration",
+    functionFragment: 'setRewardsDuration',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "userRewardPerTokenPaid",
+    functionFragment: 'userRewardPerTokenPaid',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "withdraw",
+    functionFragment: 'withdraw',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "earned", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "enrol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getReward", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getRewardForDuration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastPauseTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastTimeRewardApplicable",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastUpdateTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "notifyRewardAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "periodFinish",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardPerToken",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardPerTokenStored",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "rewardRate", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "rewards", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardsDistribution",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardsDuration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardsToken",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setPaused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setRewardsDistribution",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setRewardsDuration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "userRewardPerTokenPaid",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'earned', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'enrol', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getReward', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRewardForDuration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastPauseTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastTimeRewardApplicable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastUpdateTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'notifyRewardAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'periodFinish', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardPerToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardPerTokenStored', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardsDistribution', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardsDuration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardsToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPaused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setRewardsDistribution', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setRewardsDuration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'userRewardPerTokenPaid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "Enrol(address,uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "PauseChanged(bool)": EventFragment;
-    "RewardAdded(uint256)": EventFragment;
-    "RewardPaid(address,uint256)": EventFragment;
-    "RewardsDurationUpdated(uint256)": EventFragment;
-    "Withdrawn(address,uint256)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'Enrol(address,uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'PauseChanged(bool)': EventFragment;
+    'RewardAdded(uint256)': EventFragment;
+    'RewardPaid(address,uint256)': EventFragment;
+    'RewardsDurationUpdated(uint256)': EventFragment;
+    'Withdrawn(address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Enrol"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PauseChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardPaid"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardsDurationUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Withdrawn"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Enrol'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'PauseChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardAdded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardPaid'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardsDurationUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Withdrawn'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -361,20 +225,14 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -396,10 +254,7 @@ export interface RewardPaidEventObject {
   user: string;
   reward: BigNumber;
 }
-export type RewardPaidEvent = TypedEvent<
-  [string, BigNumber],
-  RewardPaidEventObject
->;
+export type RewardPaidEvent = TypedEvent<[string, BigNumber], RewardPaidEventObject>;
 
 export type RewardPaidEventFilter = TypedEventFilter<RewardPaidEvent>;
 
@@ -411,17 +266,13 @@ export type RewardsDurationUpdatedEvent = TypedEvent<
   RewardsDurationUpdatedEventObject
 >;
 
-export type RewardsDurationUpdatedEventFilter =
-  TypedEventFilter<RewardsDurationUpdatedEvent>;
+export type RewardsDurationUpdatedEventFilter = TypedEventFilter<RewardsDurationUpdatedEvent>;
 
 export interface WithdrawnEventObject {
   user: string;
   amount: BigNumber;
 }
-export type WithdrawnEvent = TypedEvent<
-  [string, BigNumber],
-  WithdrawnEventObject
->;
+export type WithdrawnEvent = TypedEvent<[string, BigNumber], WithdrawnEventObject>;
 
 export type WithdrawnEventFilter = TypedEventFilter<WithdrawnEvent>;
 
@@ -442,9 +293,7 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -456,15 +305,9 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    earned(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     enrol(
       account: PromiseOrValue<string>,
@@ -521,10 +364,7 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewards(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     rewardsDistribution(overrides?: CallOverrides): Promise<[string]>;
 
@@ -565,15 +405,9 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  balanceOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  earned(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   enrol(
     account: PromiseOrValue<string>,
@@ -628,10 +462,7 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
 
   rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewards(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   rewardsDistribution(overrides?: CallOverrides): Promise<string>;
 
@@ -670,15 +501,9 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
   callStatic: {
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     enrol(
       account: PromiseOrValue<string>,
@@ -686,10 +511,7 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    getReward(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    getReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     getRewardForDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -701,10 +523,7 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -731,10 +550,7 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsDistribution(overrides?: CallOverrides): Promise<string>;
 
@@ -742,10 +558,7 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
 
     rewardsToken(overrides?: CallOverrides): Promise<string>;
 
-    setPaused(
-      _paused: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setPaused(_paused: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     setRewardsDistribution(
       _rewardsDistribution: PromiseOrValue<string>,
@@ -772,76 +585,46 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "Enrol(address,uint256)"(
-      user?: PromiseOrValue<string> | null,
-      amount?: null
-    ): EnrolEventFilter;
-    Enrol(
-      user?: PromiseOrValue<string> | null,
-      amount?: null
-    ): EnrolEventFilter;
+    'Enrol(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): EnrolEventFilter;
+    Enrol(user?: PromiseOrValue<string> | null, amount?: null): EnrolEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "PauseChanged(bool)"(isPaused?: null): PauseChangedEventFilter;
+    'PauseChanged(bool)'(isPaused?: null): PauseChangedEventFilter;
     PauseChanged(isPaused?: null): PauseChangedEventFilter;
 
-    "RewardAdded(uint256)"(reward?: null): RewardAddedEventFilter;
+    'RewardAdded(uint256)'(reward?: null): RewardAddedEventFilter;
     RewardAdded(reward?: null): RewardAddedEventFilter;
 
-    "RewardPaid(address,uint256)"(
+    'RewardPaid(address,uint256)'(
       user?: PromiseOrValue<string> | null,
       reward?: null
     ): RewardPaidEventFilter;
-    RewardPaid(
-      user?: PromiseOrValue<string> | null,
-      reward?: null
-    ): RewardPaidEventFilter;
+    RewardPaid(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
 
-    "RewardsDurationUpdated(uint256)"(
-      newDuration?: null
-    ): RewardsDurationUpdatedEventFilter;
-    RewardsDurationUpdated(
-      newDuration?: null
-    ): RewardsDurationUpdatedEventFilter;
+    'RewardsDurationUpdated(uint256)'(newDuration?: null): RewardsDurationUpdatedEventFilter;
+    RewardsDurationUpdated(newDuration?: null): RewardsDurationUpdatedEventFilter;
 
-    "Withdrawn(address,uint256)"(
+    'Withdrawn(address,uint256)'(
       user?: PromiseOrValue<string> | null,
       amount?: null
     ): WithdrawnEventFilter;
-    Withdrawn(
-      user?: PromiseOrValue<string> | null,
-      amount?: null
-    ): WithdrawnEventFilter;
+    Withdrawn(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     enrol(
       account: PromiseOrValue<string>,
@@ -882,9 +665,7 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
 
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -896,10 +677,7 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsDistribution(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -962,17 +740,13 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    getRewardForDuration(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getRewardForDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isResolverCached(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastPauseTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastTimeRewardApplicable(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    lastTimeRewardApplicable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1000,26 +774,17 @@ export interface ShortingRewardssBTCAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardPerToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardPerTokenStored(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    rewardPerTokenStored(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardsDistribution(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    rewardsDistribution(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

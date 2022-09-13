@@ -9,76 +9,49 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface SynthUtilAbiTypesInterface extends utils.Interface {
   functions: {
-    "addressResolverProxy()": FunctionFragment;
-    "synthsBalances(address)": FunctionFragment;
-    "synthsRates()": FunctionFragment;
-    "synthsTotalSupplies()": FunctionFragment;
-    "totalSynthsInKey(address,bytes32)": FunctionFragment;
+    'addressResolverProxy()': FunctionFragment;
+    'synthsBalances(address)': FunctionFragment;
+    'synthsRates()': FunctionFragment;
+    'synthsTotalSupplies()': FunctionFragment;
+    'totalSynthsInKey(address,bytes32)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "addressResolverProxy"
-      | "synthsBalances"
-      | "synthsRates"
-      | "synthsTotalSupplies"
-      | "totalSynthsInKey"
+      | 'addressResolverProxy'
+      | 'synthsBalances'
+      | 'synthsRates'
+      | 'synthsTotalSupplies'
+      | 'totalSynthsInKey'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'addressResolverProxy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'synthsBalances', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'synthsRates', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'synthsTotalSupplies', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "addressResolverProxy",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "synthsBalances",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "synthsRates",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "synthsTotalSupplies",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalSynthsInKey",
+    functionFragment: 'totalSynthsInKey',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "addressResolverProxy",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthsBalances",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthsRates",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthsTotalSupplies",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSynthsInKey",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'addressResolverProxy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthsBalances', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthsRates', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthsTotalSupplies', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSynthsInKey', data: BytesLike): Result;
 
   events: {};
 }
@@ -100,9 +73,7 @@ export interface SynthUtilAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -119,9 +90,7 @@ export interface SynthUtilAbiTypes extends BaseContract {
 
     synthsRates(overrides?: CallOverrides): Promise<[string[], BigNumber[]]>;
 
-    synthsTotalSupplies(
-      overrides?: CallOverrides
-    ): Promise<[string[], BigNumber[], BigNumber[]]>;
+    synthsTotalSupplies(overrides?: CallOverrides): Promise<[string[], BigNumber[], BigNumber[]]>;
 
     totalSynthsInKey(
       account: PromiseOrValue<string>,
@@ -139,9 +108,7 @@ export interface SynthUtilAbiTypes extends BaseContract {
 
   synthsRates(overrides?: CallOverrides): Promise<[string[], BigNumber[]]>;
 
-  synthsTotalSupplies(
-    overrides?: CallOverrides
-  ): Promise<[string[], BigNumber[], BigNumber[]]>;
+  synthsTotalSupplies(overrides?: CallOverrides): Promise<[string[], BigNumber[], BigNumber[]]>;
 
   totalSynthsInKey(
     account: PromiseOrValue<string>,
@@ -159,9 +126,7 @@ export interface SynthUtilAbiTypes extends BaseContract {
 
     synthsRates(overrides?: CallOverrides): Promise<[string[], BigNumber[]]>;
 
-    synthsTotalSupplies(
-      overrides?: CallOverrides
-    ): Promise<[string[], BigNumber[], BigNumber[]]>;
+    synthsTotalSupplies(overrides?: CallOverrides): Promise<[string[], BigNumber[], BigNumber[]]>;
 
     totalSynthsInKey(
       account: PromiseOrValue<string>,
@@ -175,10 +140,7 @@ export interface SynthUtilAbiTypes extends BaseContract {
   estimateGas: {
     addressResolverProxy(overrides?: CallOverrides): Promise<BigNumber>;
 
-    synthsBalances(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    synthsBalances(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     synthsRates(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -192,9 +154,7 @@ export interface SynthUtilAbiTypes extends BaseContract {
   };
 
   populateTransaction: {
-    addressResolverProxy(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    addressResolverProxy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     synthsBalances(
       account: PromiseOrValue<string>,
@@ -203,9 +163,7 @@ export interface SynthUtilAbiTypes extends BaseContract {
 
     synthsRates(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    synthsTotalSupplies(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    synthsTotalSupplies(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSynthsInKey(
       account: PromiseOrValue<string>,

@@ -11,166 +11,116 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface DappMaintenanceAbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "isPausedSX()": FunctionFragment;
-    "isPausedStaking()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "setMaintenanceModeAll(bool)": FunctionFragment;
-    "setMaintenanceModeSX(bool)": FunctionFragment;
-    "setMaintenanceModeStaking(bool)": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'isPausedSX()': FunctionFragment;
+    'isPausedStaking()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'setMaintenanceModeAll(bool)': FunctionFragment;
+    'setMaintenanceModeSX(bool)': FunctionFragment;
+    'setMaintenanceModeStaking(bool)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "isPausedSX"
-      | "isPausedStaking"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "setMaintenanceModeAll"
-      | "setMaintenanceModeSX"
-      | "setMaintenanceModeStaking"
+      | 'acceptOwnership'
+      | 'isPausedSX'
+      | 'isPausedStaking'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'setMaintenanceModeAll'
+      | 'setMaintenanceModeSX'
+      | 'setMaintenanceModeStaking'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isPausedSX', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isPausedStaking', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isPausedSX",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isPausedStaking",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "setMaintenanceModeAll",
+    functionFragment: 'setMaintenanceModeAll',
     values: [PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMaintenanceModeSX",
+    functionFragment: 'setMaintenanceModeSX',
     values: [PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMaintenanceModeStaking",
+    functionFragment: 'setMaintenanceModeStaking',
     values: [PromiseOrValue<boolean>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "isPausedSX", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "isPausedStaking",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaintenanceModeAll",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaintenanceModeSX",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaintenanceModeStaking",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isPausedSX', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isPausedStaking', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaintenanceModeAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaintenanceModeSX', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaintenanceModeStaking', data: BytesLike): Result;
 
   events: {
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "SXMaintenance(bool)": EventFragment;
-    "StakingMaintenance(bool)": EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'SXMaintenance(bool)': EventFragment;
+    'StakingMaintenance(bool)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SXMaintenance"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "StakingMaintenance"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SXMaintenance'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'StakingMaintenance'): EventFragment;
 }
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
 export interface SXMaintenanceEventObject {
   isPaused: boolean;
 }
-export type SXMaintenanceEvent = TypedEvent<
-  [boolean],
-  SXMaintenanceEventObject
->;
+export type SXMaintenanceEvent = TypedEvent<[boolean], SXMaintenanceEventObject>;
 
 export type SXMaintenanceEventFilter = TypedEventFilter<SXMaintenanceEvent>;
 
 export interface StakingMaintenanceEventObject {
   isPaused: boolean;
 }
-export type StakingMaintenanceEvent = TypedEvent<
-  [boolean],
-  StakingMaintenanceEventObject
->;
+export type StakingMaintenanceEvent = TypedEvent<[boolean], StakingMaintenanceEventObject>;
 
-export type StakingMaintenanceEventFilter =
-  TypedEventFilter<StakingMaintenanceEvent>;
+export type StakingMaintenanceEventFilter = TypedEventFilter<StakingMaintenanceEvent>;
 
 export interface DappMaintenanceAbiTypes extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -189,9 +139,7 @@ export interface DappMaintenanceAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -271,10 +219,7 @@ export interface DappMaintenanceAbiTypes extends BaseContract {
 
     isPausedStaking(overrides?: CallOverrides): Promise<boolean>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -297,26 +242,21 @@ export interface DappMaintenanceAbiTypes extends BaseContract {
   };
 
   filters: {
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "SXMaintenance(bool)"(isPaused?: null): SXMaintenanceEventFilter;
+    'SXMaintenance(bool)'(isPaused?: null): SXMaintenanceEventFilter;
     SXMaintenance(isPaused?: null): SXMaintenanceEventFilter;
 
-    "StakingMaintenance(bool)"(isPaused?: null): StakingMaintenanceEventFilter;
+    'StakingMaintenance(bool)'(isPaused?: null): StakingMaintenanceEventFilter;
     StakingMaintenance(isPaused?: null): StakingMaintenanceEventFilter;
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     isPausedSX(overrides?: CallOverrides): Promise<BigNumber>;
 

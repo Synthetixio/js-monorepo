@@ -11,145 +11,99 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface AddressResolverAbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "areAddressesImported(bytes32[],address[])": FunctionFragment;
-    "getAddress(bytes32)": FunctionFragment;
-    "getSynth(bytes32)": FunctionFragment;
-    "importAddresses(bytes32[],address[])": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "rebuildCaches(address[])": FunctionFragment;
-    "repository(bytes32)": FunctionFragment;
-    "requireAndGetAddress(bytes32,string)": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'areAddressesImported(bytes32[],address[])': FunctionFragment;
+    'getAddress(bytes32)': FunctionFragment;
+    'getSynth(bytes32)': FunctionFragment;
+    'importAddresses(bytes32[],address[])': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'rebuildCaches(address[])': FunctionFragment;
+    'repository(bytes32)': FunctionFragment;
+    'requireAndGetAddress(bytes32,string)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "areAddressesImported"
-      | "getAddress"
-      | "getSynth"
-      | "importAddresses"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "rebuildCaches"
-      | "repository"
-      | "requireAndGetAddress"
+      | 'acceptOwnership'
+      | 'areAddressesImported'
+      | 'getAddress'
+      | 'getSynth'
+      | 'importAddresses'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'rebuildCaches'
+      | 'repository'
+      | 'requireAndGetAddress'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
+    functionFragment: 'areAddressesImported',
+    values: [PromiseOrValue<BytesLike>[], PromiseOrValue<string>[]]
   ): string;
+  encodeFunctionData(functionFragment: 'getAddress', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'getSynth', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "areAddressesImported",
+    functionFragment: 'importAddresses',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<string>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "getAddress",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getSynth",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "importAddresses",
-    values: [PromiseOrValue<BytesLike>[], PromiseOrValue<string>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCaches', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'repository', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCaches",
-    values: [PromiseOrValue<string>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "repository",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "requireAndGetAddress",
+    functionFragment: 'requireAndGetAddress',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "areAddressesImported",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getAddress", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getSynth", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "importAddresses",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCaches",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "repository", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "requireAndGetAddress",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'areAddressesImported', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAddress', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getSynth', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'importAddresses', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCaches', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'repository', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'requireAndGetAddress', data: BytesLike): Result;
 
   events: {
-    "AddressImported(bytes32,address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'AddressImported(bytes32,address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AddressImported"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AddressImported'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface AddressImportedEventObject {
   name: string;
   destination: string;
 }
-export type AddressImportedEvent = TypedEvent<
-  [string, string],
-  AddressImportedEventObject
->;
+export type AddressImportedEvent = TypedEvent<[string, string], AddressImportedEventObject>;
 
 export type AddressImportedEventFilter = TypedEventFilter<AddressImportedEvent>;
 
@@ -157,20 +111,14 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -191,9 +139,7 @@ export interface AddressResolverAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -211,15 +157,9 @@ export interface AddressResolverAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    getAddress(
-      name: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    getAddress(name: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    getSynth(
-      key: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    getSynth(key: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     importAddresses(
       names: PromiseOrValue<BytesLike>[],
@@ -241,10 +181,7 @@ export interface AddressResolverAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    repository(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    repository(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     requireAndGetAddress(
       name: PromiseOrValue<BytesLike>,
@@ -263,15 +200,9 @@ export interface AddressResolverAbiTypes extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  getAddress(
-    name: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  getAddress(name: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  getSynth(
-    key: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  getSynth(key: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   importAddresses(
     names: PromiseOrValue<BytesLike>[],
@@ -293,10 +224,7 @@ export interface AddressResolverAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  repository(
-    arg0: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  repository(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   requireAndGetAddress(
     name: PromiseOrValue<BytesLike>,
@@ -313,15 +241,9 @@ export interface AddressResolverAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    getAddress(
-      name: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    getAddress(name: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    getSynth(
-      key: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    getSynth(key: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     importAddresses(
       names: PromiseOrValue<BytesLike>[],
@@ -329,24 +251,15 @@ export interface AddressResolverAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    rebuildCaches(
-      destinations: PromiseOrValue<string>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    rebuildCaches(destinations: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    repository(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    repository(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     requireAndGetAddress(
       name: PromiseOrValue<BytesLike>,
@@ -356,29 +269,18 @@ export interface AddressResolverAbiTypes extends BaseContract {
   };
 
   filters: {
-    "AddressImported(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): AddressImportedEventFilter;
-    AddressImported(
-      name?: null,
-      destination?: null
-    ): AddressImportedEventFilter;
+    'AddressImported(bytes32,address)'(name?: null, destination?: null): AddressImportedEventFilter;
+    AddressImported(name?: null, destination?: null): AddressImportedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     areAddressesImported(
       names: PromiseOrValue<BytesLike>[],
@@ -386,15 +288,9 @@ export interface AddressResolverAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getAddress(
-      name: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getAddress(name: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSynth(
-      key: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getSynth(key: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     importAddresses(
       names: PromiseOrValue<BytesLike>[],
@@ -416,10 +312,7 @@ export interface AddressResolverAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    repository(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    repository(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     requireAndGetAddress(
       name: PromiseOrValue<BytesLike>,

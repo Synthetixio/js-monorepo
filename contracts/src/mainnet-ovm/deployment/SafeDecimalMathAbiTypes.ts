@@ -9,68 +9,50 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface SafeDecimalMathAbiTypesInterface extends utils.Interface {
   functions: {
-    "PRECISE_UNIT()": FunctionFragment;
-    "UNIT()": FunctionFragment;
-    "decimals()": FunctionFragment;
-    "highPrecisionDecimals()": FunctionFragment;
-    "preciseUnit()": FunctionFragment;
-    "unit()": FunctionFragment;
+    'PRECISE_UNIT()': FunctionFragment;
+    'UNIT()': FunctionFragment;
+    'decimals()': FunctionFragment;
+    'highPrecisionDecimals()': FunctionFragment;
+    'preciseUnit()': FunctionFragment;
+    'unit()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "PRECISE_UNIT"
-      | "UNIT"
-      | "decimals"
-      | "highPrecisionDecimals"
-      | "preciseUnit"
-      | "unit"
+      | 'PRECISE_UNIT'
+      | 'UNIT'
+      | 'decimals'
+      | 'highPrecisionDecimals'
+      | 'preciseUnit'
+      | 'unit'
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "PRECISE_UNIT",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "UNIT", values?: undefined): string;
-  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "highPrecisionDecimals",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "preciseUnit",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "unit", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'PRECISE_UNIT', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'UNIT', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'highPrecisionDecimals', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'preciseUnit', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'unit', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "PRECISE_UNIT",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "UNIT", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "highPrecisionDecimals",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "preciseUnit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "unit", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'PRECISE_UNIT', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'UNIT', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'highPrecisionDecimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'preciseUnit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unit', data: BytesLike): Result;
 
   events: {};
 }
@@ -92,9 +74,7 @@ export interface SafeDecimalMathAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -164,9 +144,7 @@ export interface SafeDecimalMathAbiTypes extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    highPrecisionDecimals(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    highPrecisionDecimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     preciseUnit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -12,377 +12,242 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface FlexibleStorageAbiTypesInterface extends utils.Interface {
   functions: {
-    "deleteAddressValue(bytes32,bytes32)": FunctionFragment;
-    "deleteBoolValue(bytes32,bytes32)": FunctionFragment;
-    "deleteBytes32Value(bytes32,bytes32)": FunctionFragment;
-    "deleteIntValue(bytes32,bytes32)": FunctionFragment;
-    "deleteUIntValue(bytes32,bytes32)": FunctionFragment;
-    "getAddressValue(bytes32,bytes32)": FunctionFragment;
-    "getAddressValues(bytes32,bytes32[])": FunctionFragment;
-    "getBoolValue(bytes32,bytes32)": FunctionFragment;
-    "getBoolValues(bytes32,bytes32[])": FunctionFragment;
-    "getBytes32Value(bytes32,bytes32)": FunctionFragment;
-    "getBytes32Values(bytes32,bytes32[])": FunctionFragment;
-    "getIntValue(bytes32,bytes32)": FunctionFragment;
-    "getIntValues(bytes32,bytes32[])": FunctionFragment;
-    "getUIntValue(bytes32,bytes32)": FunctionFragment;
-    "getUIntValues(bytes32,bytes32[])": FunctionFragment;
-    "hashes(bytes32)": FunctionFragment;
-    "migrateContractKey(bytes32,bytes32,bool)": FunctionFragment;
-    "resolverProxy()": FunctionFragment;
-    "setAddressValue(bytes32,bytes32,address)": FunctionFragment;
-    "setAddressValues(bytes32,bytes32[],address[])": FunctionFragment;
-    "setBoolValue(bytes32,bytes32,bool)": FunctionFragment;
-    "setBoolValues(bytes32,bytes32[],bool[])": FunctionFragment;
-    "setBytes32Value(bytes32,bytes32,bytes32)": FunctionFragment;
-    "setBytes32Values(bytes32,bytes32[],bytes32[])": FunctionFragment;
-    "setIntValue(bytes32,bytes32,int256)": FunctionFragment;
-    "setIntValues(bytes32,bytes32[],int256[])": FunctionFragment;
-    "setUIntValue(bytes32,bytes32,uint256)": FunctionFragment;
-    "setUIntValues(bytes32,bytes32[],uint256[])": FunctionFragment;
+    'deleteAddressValue(bytes32,bytes32)': FunctionFragment;
+    'deleteBoolValue(bytes32,bytes32)': FunctionFragment;
+    'deleteBytes32Value(bytes32,bytes32)': FunctionFragment;
+    'deleteIntValue(bytes32,bytes32)': FunctionFragment;
+    'deleteUIntValue(bytes32,bytes32)': FunctionFragment;
+    'getAddressValue(bytes32,bytes32)': FunctionFragment;
+    'getAddressValues(bytes32,bytes32[])': FunctionFragment;
+    'getBoolValue(bytes32,bytes32)': FunctionFragment;
+    'getBoolValues(bytes32,bytes32[])': FunctionFragment;
+    'getBytes32Value(bytes32,bytes32)': FunctionFragment;
+    'getBytes32Values(bytes32,bytes32[])': FunctionFragment;
+    'getIntValue(bytes32,bytes32)': FunctionFragment;
+    'getIntValues(bytes32,bytes32[])': FunctionFragment;
+    'getUIntValue(bytes32,bytes32)': FunctionFragment;
+    'getUIntValues(bytes32,bytes32[])': FunctionFragment;
+    'hashes(bytes32)': FunctionFragment;
+    'migrateContractKey(bytes32,bytes32,bool)': FunctionFragment;
+    'resolverProxy()': FunctionFragment;
+    'setAddressValue(bytes32,bytes32,address)': FunctionFragment;
+    'setAddressValues(bytes32,bytes32[],address[])': FunctionFragment;
+    'setBoolValue(bytes32,bytes32,bool)': FunctionFragment;
+    'setBoolValues(bytes32,bytes32[],bool[])': FunctionFragment;
+    'setBytes32Value(bytes32,bytes32,bytes32)': FunctionFragment;
+    'setBytes32Values(bytes32,bytes32[],bytes32[])': FunctionFragment;
+    'setIntValue(bytes32,bytes32,int256)': FunctionFragment;
+    'setIntValues(bytes32,bytes32[],int256[])': FunctionFragment;
+    'setUIntValue(bytes32,bytes32,uint256)': FunctionFragment;
+    'setUIntValues(bytes32,bytes32[],uint256[])': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "deleteAddressValue"
-      | "deleteBoolValue"
-      | "deleteBytes32Value"
-      | "deleteIntValue"
-      | "deleteUIntValue"
-      | "getAddressValue"
-      | "getAddressValues"
-      | "getBoolValue"
-      | "getBoolValues"
-      | "getBytes32Value"
-      | "getBytes32Values"
-      | "getIntValue"
-      | "getIntValues"
-      | "getUIntValue"
-      | "getUIntValues"
-      | "hashes"
-      | "migrateContractKey"
-      | "resolverProxy"
-      | "setAddressValue"
-      | "setAddressValues"
-      | "setBoolValue"
-      | "setBoolValues"
-      | "setBytes32Value"
-      | "setBytes32Values"
-      | "setIntValue"
-      | "setIntValues"
-      | "setUIntValue"
-      | "setUIntValues"
+      | 'deleteAddressValue'
+      | 'deleteBoolValue'
+      | 'deleteBytes32Value'
+      | 'deleteIntValue'
+      | 'deleteUIntValue'
+      | 'getAddressValue'
+      | 'getAddressValues'
+      | 'getBoolValue'
+      | 'getBoolValues'
+      | 'getBytes32Value'
+      | 'getBytes32Values'
+      | 'getIntValue'
+      | 'getIntValues'
+      | 'getUIntValue'
+      | 'getUIntValues'
+      | 'hashes'
+      | 'migrateContractKey'
+      | 'resolverProxy'
+      | 'setAddressValue'
+      | 'setAddressValues'
+      | 'setBoolValue'
+      | 'setBoolValues'
+      | 'setBytes32Value'
+      | 'setBytes32Values'
+      | 'setIntValue'
+      | 'setIntValues'
+      | 'setUIntValue'
+      | 'setUIntValues'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "deleteAddressValue",
+    functionFragment: 'deleteAddressValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "deleteBoolValue",
+    functionFragment: 'deleteBoolValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "deleteBytes32Value",
+    functionFragment: 'deleteBytes32Value',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "deleteIntValue",
+    functionFragment: 'deleteIntValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "deleteUIntValue",
+    functionFragment: 'deleteUIntValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getAddressValue",
+    functionFragment: 'getAddressValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getAddressValues",
+    functionFragment: 'getAddressValues',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "getBoolValue",
+    functionFragment: 'getBoolValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getBoolValues",
+    functionFragment: 'getBoolValues',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "getBytes32Value",
+    functionFragment: 'getBytes32Value',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getBytes32Values",
+    functionFragment: 'getBytes32Values',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "getIntValue",
+    functionFragment: 'getIntValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getIntValues",
+    functionFragment: 'getIntValues',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "getUIntValue",
+    functionFragment: 'getUIntValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getUIntValues",
+    functionFragment: 'getUIntValues',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[]]
   ): string;
+  encodeFunctionData(functionFragment: 'hashes', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "hashes",
-    values: [PromiseOrValue<BytesLike>]
+    functionFragment: 'migrateContractKey',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(functionFragment: 'resolverProxy', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'setAddressValue',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "migrateContractKey",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<boolean>
-    ]
+    functionFragment: 'setAddressValues',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<string>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "resolverProxy",
-    values?: undefined
+    functionFragment: 'setBoolValue',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setAddressValue",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>
-    ]
+    functionFragment: 'setBoolValues',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<boolean>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "setAddressValues",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<string>[]
-    ]
+    functionFragment: 'setBytes32Value',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setBoolValue",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<boolean>
-    ]
+    functionFragment: 'setBytes32Values',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "setBoolValues",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<boolean>[]
-    ]
+    functionFragment: 'setIntValue',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setBytes32Value",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    functionFragment: 'setIntValues',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "setBytes32Values",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BytesLike>[]
-    ]
+    functionFragment: 'setUIntValue',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setIntValue",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setIntValues",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>[]
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setUIntValue",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setUIntValues",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>[]
-    ]
+    functionFragment: 'setUIntValues',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BigNumberish>[]]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "deleteAddressValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteBoolValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteBytes32Value",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteIntValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteUIntValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAddressValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAddressValues",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getBoolValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getBoolValues",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getBytes32Value",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getBytes32Values",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getIntValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getIntValues",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getUIntValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getUIntValues",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "hashes", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "migrateContractKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverProxy",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setAddressValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setAddressValues",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setBoolValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setBoolValues",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setBytes32Value",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setBytes32Values",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setIntValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setIntValues",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setUIntValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setUIntValues",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'deleteAddressValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deleteBoolValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deleteBytes32Value', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deleteIntValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deleteUIntValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAddressValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAddressValues', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getBoolValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getBoolValues', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getBytes32Value', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getBytes32Values', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getIntValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getIntValues', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getUIntValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getUIntValues', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'hashes', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'migrateContractKey', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverProxy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setAddressValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setAddressValues', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setBoolValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setBoolValues', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setBytes32Value', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setBytes32Values', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setIntValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setIntValues', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setUIntValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setUIntValues', data: BytesLike): Result;
 
   events: {
-    "KeyMigrated(bytes32,bytes32,bool)": EventFragment;
-    "ValueDeletedAddress(bytes32,bytes32,address)": EventFragment;
-    "ValueDeletedBool(bytes32,bytes32,bool)": EventFragment;
-    "ValueDeletedBytes32(bytes32,bytes32,bytes32)": EventFragment;
-    "ValueDeletedInt(bytes32,bytes32,int256)": EventFragment;
-    "ValueDeletedUInt(bytes32,bytes32,uint256)": EventFragment;
-    "ValueSetAddress(bytes32,bytes32,address)": EventFragment;
-    "ValueSetBool(bytes32,bytes32,bool)": EventFragment;
-    "ValueSetBytes32(bytes32,bytes32,bytes32)": EventFragment;
-    "ValueSetInt(bytes32,bytes32,int256)": EventFragment;
-    "ValueSetUInt(bytes32,bytes32,uint256)": EventFragment;
+    'KeyMigrated(bytes32,bytes32,bool)': EventFragment;
+    'ValueDeletedAddress(bytes32,bytes32,address)': EventFragment;
+    'ValueDeletedBool(bytes32,bytes32,bool)': EventFragment;
+    'ValueDeletedBytes32(bytes32,bytes32,bytes32)': EventFragment;
+    'ValueDeletedInt(bytes32,bytes32,int256)': EventFragment;
+    'ValueDeletedUInt(bytes32,bytes32,uint256)': EventFragment;
+    'ValueSetAddress(bytes32,bytes32,address)': EventFragment;
+    'ValueSetBool(bytes32,bytes32,bool)': EventFragment;
+    'ValueSetBytes32(bytes32,bytes32,bytes32)': EventFragment;
+    'ValueSetInt(bytes32,bytes32,int256)': EventFragment;
+    'ValueSetUInt(bytes32,bytes32,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "KeyMigrated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ValueDeletedAddress"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ValueDeletedBool"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ValueDeletedBytes32"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ValueDeletedInt"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ValueDeletedUInt"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ValueSetAddress"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ValueSetBool"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ValueSetBytes32"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ValueSetInt"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ValueSetUInt"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'KeyMigrated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ValueDeletedAddress'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ValueDeletedBool'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ValueDeletedBytes32'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ValueDeletedInt'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ValueDeletedUInt'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ValueSetAddress'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ValueSetBool'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ValueSetBytes32'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ValueSetInt'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ValueSetUInt'): EventFragment;
 }
 
 export interface KeyMigratedEventObject {
@@ -390,10 +255,7 @@ export interface KeyMigratedEventObject {
   toContractName: string;
   removeAccessFromPreviousContract: boolean;
 }
-export type KeyMigratedEvent = TypedEvent<
-  [string, string, boolean],
-  KeyMigratedEventObject
->;
+export type KeyMigratedEvent = TypedEvent<[string, string, boolean], KeyMigratedEventObject>;
 
 export type KeyMigratedEventFilter = TypedEventFilter<KeyMigratedEvent>;
 
@@ -407,8 +269,7 @@ export type ValueDeletedAddressEvent = TypedEvent<
   ValueDeletedAddressEventObject
 >;
 
-export type ValueDeletedAddressEventFilter =
-  TypedEventFilter<ValueDeletedAddressEvent>;
+export type ValueDeletedAddressEventFilter = TypedEventFilter<ValueDeletedAddressEvent>;
 
 export interface ValueDeletedBoolEventObject {
   contractName: string;
@@ -420,8 +281,7 @@ export type ValueDeletedBoolEvent = TypedEvent<
   ValueDeletedBoolEventObject
 >;
 
-export type ValueDeletedBoolEventFilter =
-  TypedEventFilter<ValueDeletedBoolEvent>;
+export type ValueDeletedBoolEventFilter = TypedEventFilter<ValueDeletedBoolEvent>;
 
 export interface ValueDeletedBytes32EventObject {
   contractName: string;
@@ -433,8 +293,7 @@ export type ValueDeletedBytes32Event = TypedEvent<
   ValueDeletedBytes32EventObject
 >;
 
-export type ValueDeletedBytes32EventFilter =
-  TypedEventFilter<ValueDeletedBytes32Event>;
+export type ValueDeletedBytes32EventFilter = TypedEventFilter<ValueDeletedBytes32Event>;
 
 export interface ValueDeletedIntEventObject {
   contractName: string;
@@ -458,18 +317,14 @@ export type ValueDeletedUIntEvent = TypedEvent<
   ValueDeletedUIntEventObject
 >;
 
-export type ValueDeletedUIntEventFilter =
-  TypedEventFilter<ValueDeletedUIntEvent>;
+export type ValueDeletedUIntEventFilter = TypedEventFilter<ValueDeletedUIntEvent>;
 
 export interface ValueSetAddressEventObject {
   contractName: string;
   record: string;
   value: string;
 }
-export type ValueSetAddressEvent = TypedEvent<
-  [string, string, string],
-  ValueSetAddressEventObject
->;
+export type ValueSetAddressEvent = TypedEvent<[string, string, string], ValueSetAddressEventObject>;
 
 export type ValueSetAddressEventFilter = TypedEventFilter<ValueSetAddressEvent>;
 
@@ -478,10 +333,7 @@ export interface ValueSetBoolEventObject {
   record: string;
   value: boolean;
 }
-export type ValueSetBoolEvent = TypedEvent<
-  [string, string, boolean],
-  ValueSetBoolEventObject
->;
+export type ValueSetBoolEvent = TypedEvent<[string, string, boolean], ValueSetBoolEventObject>;
 
 export type ValueSetBoolEventFilter = TypedEventFilter<ValueSetBoolEvent>;
 
@@ -490,10 +342,7 @@ export interface ValueSetBytes32EventObject {
   record: string;
   value: string;
 }
-export type ValueSetBytes32Event = TypedEvent<
-  [string, string, string],
-  ValueSetBytes32EventObject
->;
+export type ValueSetBytes32Event = TypedEvent<[string, string, string], ValueSetBytes32EventObject>;
 
 export type ValueSetBytes32EventFilter = TypedEventFilter<ValueSetBytes32Event>;
 
@@ -502,10 +351,7 @@ export interface ValueSetIntEventObject {
   record: string;
   value: BigNumber;
 }
-export type ValueSetIntEvent = TypedEvent<
-  [string, string, BigNumber],
-  ValueSetIntEventObject
->;
+export type ValueSetIntEvent = TypedEvent<[string, string, BigNumber], ValueSetIntEventObject>;
 
 export type ValueSetIntEventFilter = TypedEventFilter<ValueSetIntEvent>;
 
@@ -514,10 +360,7 @@ export interface ValueSetUIntEventObject {
   record: string;
   value: BigNumber;
 }
-export type ValueSetUIntEvent = TypedEvent<
-  [string, string, BigNumber],
-  ValueSetUIntEventObject
->;
+export type ValueSetUIntEvent = TypedEvent<[string, string, BigNumber], ValueSetUIntEventObject>;
 
 export type ValueSetUIntEventFilter = TypedEventFilter<ValueSetUIntEvent>;
 
@@ -538,9 +381,7 @@ export interface FlexibleStorageAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -638,10 +479,7 @@ export interface FlexibleStorageAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
-    hashes(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    hashes(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     migrateContractKey(
       fromContractName: PromiseOrValue<BytesLike>,
@@ -813,10 +651,7 @@ export interface FlexibleStorageAbiTypes extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
-  hashes(
-    arg0: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  hashes(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   migrateContractKey(
     fromContractName: PromiseOrValue<BytesLike>,
@@ -988,10 +823,7 @@ export interface FlexibleStorageAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
-    hashes(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    hashes(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     migrateContractKey(
       fromContractName: PromiseOrValue<BytesLike>,
@@ -1074,7 +906,7 @@ export interface FlexibleStorageAbiTypes extends BaseContract {
   };
 
   filters: {
-    "KeyMigrated(bytes32,bytes32,bool)"(
+    'KeyMigrated(bytes32,bytes32,bool)'(
       fromContractName?: null,
       toContractName?: null,
       removeAccessFromPreviousContract?: null
@@ -1085,7 +917,7 @@ export interface FlexibleStorageAbiTypes extends BaseContract {
       removeAccessFromPreviousContract?: null
     ): KeyMigratedEventFilter;
 
-    "ValueDeletedAddress(bytes32,bytes32,address)"(
+    'ValueDeletedAddress(bytes32,bytes32,address)'(
       contractName?: null,
       record?: null,
       value?: null
@@ -1096,18 +928,14 @@ export interface FlexibleStorageAbiTypes extends BaseContract {
       value?: null
     ): ValueDeletedAddressEventFilter;
 
-    "ValueDeletedBool(bytes32,bytes32,bool)"(
+    'ValueDeletedBool(bytes32,bytes32,bool)'(
       contractName?: null,
       record?: null,
       value?: null
     ): ValueDeletedBoolEventFilter;
-    ValueDeletedBool(
-      contractName?: null,
-      record?: null,
-      value?: null
-    ): ValueDeletedBoolEventFilter;
+    ValueDeletedBool(contractName?: null, record?: null, value?: null): ValueDeletedBoolEventFilter;
 
-    "ValueDeletedBytes32(bytes32,bytes32,bytes32)"(
+    'ValueDeletedBytes32(bytes32,bytes32,bytes32)'(
       contractName?: null,
       record?: null,
       value?: null
@@ -1118,82 +946,54 @@ export interface FlexibleStorageAbiTypes extends BaseContract {
       value?: null
     ): ValueDeletedBytes32EventFilter;
 
-    "ValueDeletedInt(bytes32,bytes32,int256)"(
+    'ValueDeletedInt(bytes32,bytes32,int256)'(
       contractName?: null,
       record?: null,
       value?: null
     ): ValueDeletedIntEventFilter;
-    ValueDeletedInt(
-      contractName?: null,
-      record?: null,
-      value?: null
-    ): ValueDeletedIntEventFilter;
+    ValueDeletedInt(contractName?: null, record?: null, value?: null): ValueDeletedIntEventFilter;
 
-    "ValueDeletedUInt(bytes32,bytes32,uint256)"(
+    'ValueDeletedUInt(bytes32,bytes32,uint256)'(
       contractName?: null,
       record?: null,
       value?: null
     ): ValueDeletedUIntEventFilter;
-    ValueDeletedUInt(
-      contractName?: null,
-      record?: null,
-      value?: null
-    ): ValueDeletedUIntEventFilter;
+    ValueDeletedUInt(contractName?: null, record?: null, value?: null): ValueDeletedUIntEventFilter;
 
-    "ValueSetAddress(bytes32,bytes32,address)"(
+    'ValueSetAddress(bytes32,bytes32,address)'(
       contractName?: null,
       record?: null,
       value?: null
     ): ValueSetAddressEventFilter;
-    ValueSetAddress(
-      contractName?: null,
-      record?: null,
-      value?: null
-    ): ValueSetAddressEventFilter;
+    ValueSetAddress(contractName?: null, record?: null, value?: null): ValueSetAddressEventFilter;
 
-    "ValueSetBool(bytes32,bytes32,bool)"(
+    'ValueSetBool(bytes32,bytes32,bool)'(
       contractName?: null,
       record?: null,
       value?: null
     ): ValueSetBoolEventFilter;
-    ValueSetBool(
-      contractName?: null,
-      record?: null,
-      value?: null
-    ): ValueSetBoolEventFilter;
+    ValueSetBool(contractName?: null, record?: null, value?: null): ValueSetBoolEventFilter;
 
-    "ValueSetBytes32(bytes32,bytes32,bytes32)"(
+    'ValueSetBytes32(bytes32,bytes32,bytes32)'(
       contractName?: null,
       record?: null,
       value?: null
     ): ValueSetBytes32EventFilter;
-    ValueSetBytes32(
-      contractName?: null,
-      record?: null,
-      value?: null
-    ): ValueSetBytes32EventFilter;
+    ValueSetBytes32(contractName?: null, record?: null, value?: null): ValueSetBytes32EventFilter;
 
-    "ValueSetInt(bytes32,bytes32,int256)"(
+    'ValueSetInt(bytes32,bytes32,int256)'(
       contractName?: null,
       record?: null,
       value?: null
     ): ValueSetIntEventFilter;
-    ValueSetInt(
-      contractName?: null,
-      record?: null,
-      value?: null
-    ): ValueSetIntEventFilter;
+    ValueSetInt(contractName?: null, record?: null, value?: null): ValueSetIntEventFilter;
 
-    "ValueSetUInt(bytes32,bytes32,uint256)"(
+    'ValueSetUInt(bytes32,bytes32,uint256)'(
       contractName?: null,
       record?: null,
       value?: null
     ): ValueSetUIntEventFilter;
-    ValueSetUInt(
-      contractName?: null,
-      record?: null,
-      value?: null
-    ): ValueSetUIntEventFilter;
+    ValueSetUInt(contractName?: null, record?: null, value?: null): ValueSetUIntEventFilter;
   };
 
   estimateGas: {
@@ -1287,10 +1087,7 @@ export interface FlexibleStorageAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    hashes(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    hashes(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     migrateContractKey(
       fromContractName: PromiseOrValue<BytesLike>,

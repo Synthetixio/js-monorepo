@@ -12,55 +12,47 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface CollateralUtilAbiTypesInterface extends utils.Interface {
   functions: {
-    "collateralRedeemed(bytes32,uint256,bytes32)": FunctionFragment;
-    "getCollateralRatio((uint256,address,uint256,bytes32,uint256,bool,uint256,uint256,uint256),bytes32)": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "liquidationAmount((uint256,address,uint256,bytes32,uint256,bool,uint256,uint256,uint256),uint256,bytes32)": FunctionFragment;
-    "maxLoan(uint256,bytes32,uint256,bytes32)": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
+    'collateralRedeemed(bytes32,uint256,bytes32)': FunctionFragment;
+    'getCollateralRatio((uint256,address,uint256,bytes32,uint256,bool,uint256,uint256,uint256),bytes32)': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'liquidationAmount((uint256,address,uint256,bytes32,uint256,bool,uint256,uint256,uint256),uint256,bytes32)': FunctionFragment;
+    'maxLoan(uint256,bytes32,uint256,bytes32)': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "collateralRedeemed"
-      | "getCollateralRatio"
-      | "isResolverCached"
-      | "liquidationAmount"
-      | "maxLoan"
-      | "rebuildCache"
-      | "resolver"
-      | "resolverAddressesRequired"
+      | 'collateralRedeemed'
+      | 'getCollateralRatio'
+      | 'isResolverCached'
+      | 'liquidationAmount'
+      | 'maxLoan'
+      | 'rebuildCache'
+      | 'resolver'
+      | 'resolverAddressesRequired'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "collateralRedeemed",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    functionFragment: 'collateralRedeemed',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getCollateralRatio",
+    functionFragment: 'getCollateralRatio',
     values: [
       {
         id: PromiseOrValue<BigNumberish>;
@@ -76,12 +68,9 @@ export interface CollateralUtilAbiTypesInterface extends utils.Interface {
       PromiseOrValue<BytesLike>
     ]
   ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidationAmount",
+    functionFragment: 'liquidationAmount',
     values: [
       {
         id: PromiseOrValue<BigNumberish>;
@@ -99,7 +88,7 @@ export interface CollateralUtilAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "maxLoan",
+    functionFragment: 'maxLoan',
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>,
@@ -107,58 +96,31 @@ export interface CollateralUtilAbiTypesInterface extends utils.Interface {
       PromiseOrValue<BytesLike>
     ]
   ): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "collateralRedeemed",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getCollateralRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidationAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "maxLoan", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'collateralRedeemed', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getCollateralRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxLoan', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -179,9 +141,7 @@ export interface CollateralUtilAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -367,10 +327,7 @@ export interface CollateralUtilAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
   };
 
@@ -425,9 +382,7 @@ export interface CollateralUtilAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -491,8 +446,6 @@ export interface CollateralUtilAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

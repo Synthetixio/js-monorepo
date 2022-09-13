@@ -12,214 +12,173 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
-export interface FuturesMarketSettingsAbiTypesInterface
-  extends utils.Interface {
+export interface FuturesMarketSettingsAbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "liquidationBufferRatio()": FunctionFragment;
-    "liquidationFeeRatio()": FunctionFragment;
-    "makerFee(bytes32)": FunctionFragment;
-    "makerFeeNextPrice(bytes32)": FunctionFragment;
-    "maxFundingRate(bytes32)": FunctionFragment;
-    "maxLeverage(bytes32)": FunctionFragment;
-    "maxMarketValueUSD(bytes32)": FunctionFragment;
-    "minInitialMargin()": FunctionFragment;
-    "minKeeperFee()": FunctionFragment;
-    "nextPriceConfirmWindow(bytes32)": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "parameters(bytes32)": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "setLiquidationBufferRatio(uint256)": FunctionFragment;
-    "setLiquidationFeeRatio(uint256)": FunctionFragment;
-    "setMakerFee(bytes32,uint256)": FunctionFragment;
-    "setMakerFeeNextPrice(bytes32,uint256)": FunctionFragment;
-    "setMaxFundingRate(bytes32,uint256)": FunctionFragment;
-    "setMaxLeverage(bytes32,uint256)": FunctionFragment;
-    "setMaxMarketValueUSD(bytes32,uint256)": FunctionFragment;
-    "setMinInitialMargin(uint256)": FunctionFragment;
-    "setMinKeeperFee(uint256)": FunctionFragment;
-    "setNextPriceConfirmWindow(bytes32,uint256)": FunctionFragment;
-    "setParameters(bytes32,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)": FunctionFragment;
-    "setSkewScaleUSD(bytes32,uint256)": FunctionFragment;
-    "setTakerFee(bytes32,uint256)": FunctionFragment;
-    "setTakerFeeNextPrice(bytes32,uint256)": FunctionFragment;
-    "skewScaleUSD(bytes32)": FunctionFragment;
-    "takerFee(bytes32)": FunctionFragment;
-    "takerFeeNextPrice(bytes32)": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'liquidationBufferRatio()': FunctionFragment;
+    'liquidationFeeRatio()': FunctionFragment;
+    'makerFee(bytes32)': FunctionFragment;
+    'makerFeeNextPrice(bytes32)': FunctionFragment;
+    'maxFundingRate(bytes32)': FunctionFragment;
+    'maxLeverage(bytes32)': FunctionFragment;
+    'maxMarketValueUSD(bytes32)': FunctionFragment;
+    'minInitialMargin()': FunctionFragment;
+    'minKeeperFee()': FunctionFragment;
+    'nextPriceConfirmWindow(bytes32)': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'parameters(bytes32)': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'setLiquidationBufferRatio(uint256)': FunctionFragment;
+    'setLiquidationFeeRatio(uint256)': FunctionFragment;
+    'setMakerFee(bytes32,uint256)': FunctionFragment;
+    'setMakerFeeNextPrice(bytes32,uint256)': FunctionFragment;
+    'setMaxFundingRate(bytes32,uint256)': FunctionFragment;
+    'setMaxLeverage(bytes32,uint256)': FunctionFragment;
+    'setMaxMarketValueUSD(bytes32,uint256)': FunctionFragment;
+    'setMinInitialMargin(uint256)': FunctionFragment;
+    'setMinKeeperFee(uint256)': FunctionFragment;
+    'setNextPriceConfirmWindow(bytes32,uint256)': FunctionFragment;
+    'setParameters(bytes32,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)': FunctionFragment;
+    'setSkewScaleUSD(bytes32,uint256)': FunctionFragment;
+    'setTakerFee(bytes32,uint256)': FunctionFragment;
+    'setTakerFeeNextPrice(bytes32,uint256)': FunctionFragment;
+    'skewScaleUSD(bytes32)': FunctionFragment;
+    'takerFee(bytes32)': FunctionFragment;
+    'takerFeeNextPrice(bytes32)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "isResolverCached"
-      | "liquidationBufferRatio"
-      | "liquidationFeeRatio"
-      | "makerFee"
-      | "makerFeeNextPrice"
-      | "maxFundingRate"
-      | "maxLeverage"
-      | "maxMarketValueUSD"
-      | "minInitialMargin"
-      | "minKeeperFee"
-      | "nextPriceConfirmWindow"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "parameters"
-      | "rebuildCache"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "setLiquidationBufferRatio"
-      | "setLiquidationFeeRatio"
-      | "setMakerFee"
-      | "setMakerFeeNextPrice"
-      | "setMaxFundingRate"
-      | "setMaxLeverage"
-      | "setMaxMarketValueUSD"
-      | "setMinInitialMargin"
-      | "setMinKeeperFee"
-      | "setNextPriceConfirmWindow"
-      | "setParameters"
-      | "setSkewScaleUSD"
-      | "setTakerFee"
-      | "setTakerFeeNextPrice"
-      | "skewScaleUSD"
-      | "takerFee"
-      | "takerFeeNextPrice"
+      | 'acceptOwnership'
+      | 'isResolverCached'
+      | 'liquidationBufferRatio'
+      | 'liquidationFeeRatio'
+      | 'makerFee'
+      | 'makerFeeNextPrice'
+      | 'maxFundingRate'
+      | 'maxLeverage'
+      | 'maxMarketValueUSD'
+      | 'minInitialMargin'
+      | 'minKeeperFee'
+      | 'nextPriceConfirmWindow'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'parameters'
+      | 'rebuildCache'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'setLiquidationBufferRatio'
+      | 'setLiquidationFeeRatio'
+      | 'setMakerFee'
+      | 'setMakerFeeNextPrice'
+      | 'setMaxFundingRate'
+      | 'setMaxLeverage'
+      | 'setMaxMarketValueUSD'
+      | 'setMinInitialMargin'
+      | 'setMinKeeperFee'
+      | 'setNextPriceConfirmWindow'
+      | 'setParameters'
+      | 'setSkewScaleUSD'
+      | 'setTakerFee'
+      | 'setTakerFeeNextPrice'
+      | 'skewScaleUSD'
+      | 'takerFee'
+      | 'takerFeeNextPrice'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'liquidationBufferRatio', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'liquidationFeeRatio', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'makerFee', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidationBufferRatio",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidationFeeRatio",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "makerFee",
+    functionFragment: 'makerFeeNextPrice',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "makerFeeNextPrice",
+    functionFragment: 'maxFundingRate',
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(functionFragment: 'maxLeverage', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'maxMarketValueUSD',
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(functionFragment: 'minInitialMargin', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'minKeeperFee', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'nextPriceConfirmWindow',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "maxFundingRate",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "maxLeverage",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "maxMarketValueUSD",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "minInitialMargin",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "minKeeperFee",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nextPriceConfirmWindow",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'parameters', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "parameters",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setLiquidationBufferRatio",
+    functionFragment: 'setLiquidationBufferRatio',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setLiquidationFeeRatio",
+    functionFragment: 'setLiquidationFeeRatio',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMakerFee",
+    functionFragment: 'setMakerFee',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMakerFeeNextPrice",
+    functionFragment: 'setMakerFeeNextPrice',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMaxFundingRate",
+    functionFragment: 'setMaxFundingRate',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMaxLeverage",
+    functionFragment: 'setMaxLeverage',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMaxMarketValueUSD",
+    functionFragment: 'setMaxMarketValueUSD',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMinInitialMargin",
+    functionFragment: 'setMinInitialMargin',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMinKeeperFee",
+    functionFragment: 'setMinKeeperFee',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setNextPriceConfirmWindow",
+    functionFragment: 'setNextPriceConfirmWindow',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setParameters",
+    functionFragment: 'setParameters',
     values: [
       PromiseOrValue<BytesLike>,
       PromiseOrValue<BigNumberish>,
@@ -234,191 +193,87 @@ export interface FuturesMarketSettingsAbiTypesInterface
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "setSkewScaleUSD",
+    functionFragment: 'setSkewScaleUSD',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setTakerFee",
+    functionFragment: 'setTakerFee',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setTakerFeeNextPrice",
+    functionFragment: 'setTakerFeeNextPrice',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'skewScaleUSD', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'takerFee', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "skewScaleUSD",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "takerFee",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "takerFeeNextPrice",
+    functionFragment: 'takerFeeNextPrice',
     values: [PromiseOrValue<BytesLike>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidationBufferRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidationFeeRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "makerFee", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "makerFeeNextPrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "maxFundingRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "maxLeverage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "maxMarketValueUSD",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "minInitialMargin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "minKeeperFee",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nextPriceConfirmWindow",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "parameters", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setLiquidationBufferRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setLiquidationFeeRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMakerFee",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMakerFeeNextPrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaxFundingRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaxLeverage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaxMarketValueUSD",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMinInitialMargin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMinKeeperFee",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setNextPriceConfirmWindow",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setParameters",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setSkewScaleUSD",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setTakerFee",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setTakerFeeNextPrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "skewScaleUSD",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "takerFee", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "takerFeeNextPrice",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationBufferRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationFeeRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'makerFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'makerFeeNextPrice', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxFundingRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxLeverage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxMarketValueUSD', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minInitialMargin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minKeeperFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nextPriceConfirmWindow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'parameters', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setLiquidationBufferRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setLiquidationFeeRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMakerFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMakerFeeNextPrice', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaxFundingRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaxLeverage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaxMarketValueUSD', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMinInitialMargin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMinKeeperFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setNextPriceConfirmWindow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setParameters', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSkewScaleUSD', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setTakerFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setTakerFeeNextPrice', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'skewScaleUSD', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'takerFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'takerFeeNextPrice', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "LiquidationBufferRatioUpdated(uint256)": EventFragment;
-    "LiquidationFeeRatioUpdated(uint256)": EventFragment;
-    "MinInitialMarginUpdated(uint256)": EventFragment;
-    "MinKeeperFeeUpdated(uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "ParameterUpdated(bytes32,bytes32,uint256)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'LiquidationBufferRatioUpdated(uint256)': EventFragment;
+    'LiquidationFeeRatioUpdated(uint256)': EventFragment;
+    'MinInitialMarginUpdated(uint256)': EventFragment;
+    'MinKeeperFeeUpdated(uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'ParameterUpdated(bytes32,bytes32,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "LiquidationBufferRatioUpdated"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LiquidationFeeRatioUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MinInitialMarginUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MinKeeperFeeUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ParameterUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LiquidationBufferRatioUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LiquidationFeeRatioUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MinInitialMarginUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MinKeeperFeeUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ParameterUpdated'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -452,38 +307,27 @@ export type MinInitialMarginUpdatedEvent = TypedEvent<
   MinInitialMarginUpdatedEventObject
 >;
 
-export type MinInitialMarginUpdatedEventFilter =
-  TypedEventFilter<MinInitialMarginUpdatedEvent>;
+export type MinInitialMarginUpdatedEventFilter = TypedEventFilter<MinInitialMarginUpdatedEvent>;
 
 export interface MinKeeperFeeUpdatedEventObject {
   sUSD: BigNumber;
 }
-export type MinKeeperFeeUpdatedEvent = TypedEvent<
-  [BigNumber],
-  MinKeeperFeeUpdatedEventObject
->;
+export type MinKeeperFeeUpdatedEvent = TypedEvent<[BigNumber], MinKeeperFeeUpdatedEventObject>;
 
-export type MinKeeperFeeUpdatedEventFilter =
-  TypedEventFilter<MinKeeperFeeUpdatedEvent>;
+export type MinKeeperFeeUpdatedEventFilter = TypedEventFilter<MinKeeperFeeUpdatedEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -497,8 +341,7 @@ export type ParameterUpdatedEvent = TypedEvent<
   ParameterUpdatedEventObject
 >;
 
-export type ParameterUpdatedEventFilter =
-  TypedEventFilter<ParameterUpdatedEvent>;
+export type ParameterUpdatedEventFilter = TypedEventFilter<ParameterUpdatedEvent>;
 
 export interface FuturesMarketSettingsAbiTypes extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -517,9 +360,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -731,10 +572,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
 
   liquidationFeeRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-  makerFee(
-    _marketKey: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  makerFee(_marketKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
   makerFeeNextPrice(
     _marketKey: PromiseOrValue<BytesLike>,
@@ -746,10 +584,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  maxLeverage(
-    _marketKey: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  maxLeverage(_marketKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
   maxMarketValueUSD(
     _marketKey: PromiseOrValue<BytesLike>,
@@ -902,10 +737,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  takerFee(
-    _marketKey: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  takerFee(_marketKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
   takerFeeNextPrice(
     _marketKey: PromiseOrValue<BytesLike>,
@@ -921,10 +753,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
 
     liquidationFeeRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    makerFee(
-      _marketKey: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    makerFee(_marketKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     makerFeeNextPrice(
       _marketKey: PromiseOrValue<BytesLike>,
@@ -955,10 +784,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -1042,10 +868,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setMinKeeperFee(
-      _sUSD: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setMinKeeperFee(_sUSD: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setNextPriceConfirmWindow(
       _marketKey: PromiseOrValue<BytesLike>,
@@ -1090,10 +913,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    takerFee(
-      _marketKey: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    takerFee(_marketKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     takerFeeNextPrice(
       _marketKey: PromiseOrValue<BytesLike>,
@@ -1102,46 +922,28 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "LiquidationBufferRatioUpdated(uint256)"(
-      bps?: null
-    ): LiquidationBufferRatioUpdatedEventFilter;
-    LiquidationBufferRatioUpdated(
-      bps?: null
-    ): LiquidationBufferRatioUpdatedEventFilter;
+    'LiquidationBufferRatioUpdated(uint256)'(bps?: null): LiquidationBufferRatioUpdatedEventFilter;
+    LiquidationBufferRatioUpdated(bps?: null): LiquidationBufferRatioUpdatedEventFilter;
 
-    "LiquidationFeeRatioUpdated(uint256)"(
-      bps?: null
-    ): LiquidationFeeRatioUpdatedEventFilter;
-    LiquidationFeeRatioUpdated(
-      bps?: null
-    ): LiquidationFeeRatioUpdatedEventFilter;
+    'LiquidationFeeRatioUpdated(uint256)'(bps?: null): LiquidationFeeRatioUpdatedEventFilter;
+    LiquidationFeeRatioUpdated(bps?: null): LiquidationFeeRatioUpdatedEventFilter;
 
-    "MinInitialMarginUpdated(uint256)"(
-      minMargin?: null
-    ): MinInitialMarginUpdatedEventFilter;
-    MinInitialMarginUpdated(
-      minMargin?: null
-    ): MinInitialMarginUpdatedEventFilter;
+    'MinInitialMarginUpdated(uint256)'(minMargin?: null): MinInitialMarginUpdatedEventFilter;
+    MinInitialMarginUpdated(minMargin?: null): MinInitialMarginUpdatedEventFilter;
 
-    "MinKeeperFeeUpdated(uint256)"(sUSD?: null): MinKeeperFeeUpdatedEventFilter;
+    'MinKeeperFeeUpdated(uint256)'(sUSD?: null): MinKeeperFeeUpdatedEventFilter;
     MinKeeperFeeUpdated(sUSD?: null): MinKeeperFeeUpdatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "ParameterUpdated(bytes32,bytes32,uint256)"(
+    'ParameterUpdated(bytes32,bytes32,uint256)'(
       marketKey?: PromiseOrValue<BytesLike> | null,
       parameter?: PromiseOrValue<BytesLike> | null,
       value?: null
@@ -1154,9 +956,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     isResolverCached(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1164,10 +964,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
 
     liquidationFeeRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    makerFee(
-      _marketKey: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    makerFee(_marketKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     makerFeeNextPrice(
       _marketKey: PromiseOrValue<BytesLike>,
@@ -1212,9 +1009,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1313,10 +1108,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    takerFee(
-      _marketKey: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    takerFee(_marketKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     takerFeeNextPrice(
       _marketKey: PromiseOrValue<BytesLike>,
@@ -1331,13 +1123,9 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
 
     isResolverCached(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    liquidationBufferRatio(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    liquidationBufferRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    liquidationFeeRatio(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    liquidationFeeRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     makerFee(
       _marketKey: PromiseOrValue<BytesLike>,
@@ -1393,9 +1181,7 @@ export interface FuturesMarketSettingsAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setLiquidationBufferRatio(
       _ratio: PromiseOrValue<BigNumberish>,

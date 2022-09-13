@@ -12,211 +12,137 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
-export interface ExchangeCircuitBreakerAbiTypesInterface
-  extends utils.Interface {
+export interface ExchangeCircuitBreakerAbiTypesInterface extends utils.Interface {
   functions: {
-    "CIRCUIT_BREAKER_SUSPENSION_REASON()": FunctionFragment;
-    "CONTRACT_NAME()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "exchangeRates()": FunctionFragment;
-    "isDeviationAboveThreshold(uint256,uint256)": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "lastExchangeRate(bytes32)": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "priceDeviationThresholdFactor()": FunctionFragment;
-    "rateWithBreakCircuit(bytes32)": FunctionFragment;
-    "rateWithInvalid(bytes32)": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "resetLastExchangeRate(bytes32[])": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
+    'CIRCUIT_BREAKER_SUSPENSION_REASON()': FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'exchangeRates()': FunctionFragment;
+    'isDeviationAboveThreshold(uint256,uint256)': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'lastExchangeRate(bytes32)': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'priceDeviationThresholdFactor()': FunctionFragment;
+    'rateWithBreakCircuit(bytes32)': FunctionFragment;
+    'rateWithInvalid(bytes32)': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'resetLastExchangeRate(bytes32[])': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CIRCUIT_BREAKER_SUSPENSION_REASON"
-      | "CONTRACT_NAME"
-      | "acceptOwnership"
-      | "exchangeRates"
-      | "isDeviationAboveThreshold"
-      | "isResolverCached"
-      | "lastExchangeRate"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "priceDeviationThresholdFactor"
-      | "rateWithBreakCircuit"
-      | "rateWithInvalid"
-      | "rebuildCache"
-      | "resetLastExchangeRate"
-      | "resolver"
-      | "resolverAddressesRequired"
+      | 'CIRCUIT_BREAKER_SUSPENSION_REASON'
+      | 'CONTRACT_NAME'
+      | 'acceptOwnership'
+      | 'exchangeRates'
+      | 'isDeviationAboveThreshold'
+      | 'isResolverCached'
+      | 'lastExchangeRate'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'priceDeviationThresholdFactor'
+      | 'rateWithBreakCircuit'
+      | 'rateWithInvalid'
+      | 'rebuildCache'
+      | 'resetLastExchangeRate'
+      | 'resolver'
+      | 'resolverAddressesRequired'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "CIRCUIT_BREAKER_SUSPENSION_REASON",
+    functionFragment: 'CIRCUIT_BREAKER_SUSPENSION_REASON',
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'exchangeRates', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "exchangeRates",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isDeviationAboveThreshold",
+    functionFragment: 'isDeviationAboveThreshold',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastExchangeRate",
+    functionFragment: 'lastExchangeRate',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'priceDeviationThresholdFactor', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "priceDeviationThresholdFactor",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rateWithBreakCircuit",
+    functionFragment: 'rateWithBreakCircuit',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "rateWithInvalid",
+    functionFragment: 'rateWithInvalid',
     values: [PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "resetLastExchangeRate",
+    functionFragment: 'resetLastExchangeRate',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
 
   decodeFunctionResult(
-    functionFragment: "CIRCUIT_BREAKER_SUSPENSION_REASON",
+    functionFragment: 'CIRCUIT_BREAKER_SUSPENSION_REASON',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeRates",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isDeviationAboveThreshold",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastExchangeRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "priceDeviationThresholdFactor",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rateWithBreakCircuit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rateWithInvalid",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resetLastExchangeRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeRates', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isDeviationAboveThreshold', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastExchangeRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'priceDeviationThresholdFactor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rateWithBreakCircuit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rateWithInvalid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resetLastExchangeRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "LastRateOverriden(bytes32,uint256,uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'LastRateOverriden(bytes32,uint256,uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LastRateOverriden"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LastRateOverriden'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -230,27 +156,20 @@ export type LastRateOverridenEvent = TypedEvent<
   LastRateOverridenEventObject
 >;
 
-export type LastRateOverridenEventFilter =
-  TypedEventFilter<LastRateOverridenEvent>;
+export type LastRateOverridenEventFilter = TypedEventFilter<LastRateOverridenEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -271,9 +190,7 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -281,9 +198,7 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    CIRCUIT_BREAKER_SUSPENSION_REASON(
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    CIRCUIT_BREAKER_SUSPENSION_REASON(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     CONTRACT_NAME(overrides?: CallOverrides): Promise<[string]>;
 
@@ -315,9 +230,7 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    priceDeviationThresholdFactor(
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    priceDeviationThresholdFactor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     rateWithBreakCircuit(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -345,9 +258,7 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
     ): Promise<[string[]] & { addresses: string[] }>;
   };
 
-  CIRCUIT_BREAKER_SUSPENSION_REASON(
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  CIRCUIT_BREAKER_SUSPENSION_REASON(overrides?: CallOverrides): Promise<BigNumber>;
 
   CONTRACT_NAME(overrides?: CallOverrides): Promise<string>;
 
@@ -405,9 +316,7 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
   resolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
 
   callStatic: {
-    CIRCUIT_BREAKER_SUSPENSION_REASON(
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    CIRCUIT_BREAKER_SUSPENSION_REASON(overrides?: CallOverrides): Promise<BigNumber>;
 
     CONTRACT_NAME(overrides?: CallOverrides): Promise<string>;
 
@@ -428,18 +337,13 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    priceDeviationThresholdFactor(
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    priceDeviationThresholdFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
     rateWithBreakCircuit(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -469,13 +373,10 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "LastRateOverriden(bytes32,uint256,uint256)"(
+    'LastRateOverriden(bytes32,uint256,uint256)'(
       currencyKey?: null,
       previousRate?: null,
       newRate?: null
@@ -486,26 +387,19 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
       newRate?: null
     ): LastRateOverridenEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
   estimateGas: {
-    CIRCUIT_BREAKER_SUSPENSION_REASON(
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    CIRCUIT_BREAKER_SUSPENSION_REASON(overrides?: CallOverrides): Promise<BigNumber>;
 
     CONTRACT_NAME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     exchangeRates(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -531,9 +425,7 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    priceDeviationThresholdFactor(
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    priceDeviationThresholdFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
     rateWithBreakCircuit(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -545,9 +437,7 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resetLastExchangeRate(
       currencyKeys: PromiseOrValue<BytesLike>[],
@@ -560,9 +450,7 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
   };
 
   populateTransaction: {
-    CIRCUIT_BREAKER_SUSPENSION_REASON(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    CIRCUIT_BREAKER_SUSPENSION_REASON(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     CONTRACT_NAME(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -594,9 +482,7 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    priceDeviationThresholdFactor(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    priceDeviationThresholdFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rateWithBreakCircuit(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -619,8 +505,6 @@ export interface ExchangeCircuitBreakerAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

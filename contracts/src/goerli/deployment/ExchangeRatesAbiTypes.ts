@@ -12,205 +12,171 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface ExchangeRatesAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "addAggregator(bytes32,address)": FunctionFragment;
-    "aggregatorKeys(uint256)": FunctionFragment;
-    "aggregatorWarningFlags()": FunctionFragment;
-    "aggregators(bytes32)": FunctionFragment;
-    "anyRateIsInvalid(bytes32[])": FunctionFragment;
-    "anyRateIsInvalidAtRound(bytes32[],uint256[])": FunctionFragment;
-    "atomicEquivalentForDexPricing(bytes32)": FunctionFragment;
-    "atomicTwapWindow()": FunctionFragment;
-    "atomicVolatilityConsiderationWindow(bytes32)": FunctionFragment;
-    "atomicVolatilityUpdateThreshold(bytes32)": FunctionFragment;
-    "currenciesUsingAggregator(address)": FunctionFragment;
-    "currencyKeyDecimals(bytes32)": FunctionFragment;
-    "dexPriceAggregator()": FunctionFragment;
-    "effectiveAtomicValueAndRates(bytes32,uint256,bytes32)": FunctionFragment;
-    "effectiveValue(bytes32,uint256,bytes32)": FunctionFragment;
-    "effectiveValueAndRates(bytes32,uint256,bytes32)": FunctionFragment;
-    "effectiveValueAndRatesAtRound(bytes32,uint256,bytes32,uint256,uint256)": FunctionFragment;
-    "getCurrentRoundId(bytes32)": FunctionFragment;
-    "getLastRoundIdBeforeElapsedSecs(bytes32,uint256,uint256,uint256)": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "lastRateUpdateTimes(bytes32)": FunctionFragment;
-    "lastRateUpdateTimesForCurrencies(bytes32[])": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "rateAndInvalid(bytes32)": FunctionFragment;
-    "rateAndTimestampAtRound(bytes32,uint256)": FunctionFragment;
-    "rateAndUpdatedTime(bytes32)": FunctionFragment;
-    "rateForCurrency(bytes32)": FunctionFragment;
-    "rateIsFlagged(bytes32)": FunctionFragment;
-    "rateIsInvalid(bytes32)": FunctionFragment;
-    "rateIsStale(bytes32)": FunctionFragment;
-    "rateStalePeriod()": FunctionFragment;
-    "rateWithSafetyChecks(bytes32)": FunctionFragment;
-    "ratesAndInvalidForCurrencies(bytes32[])": FunctionFragment;
-    "ratesAndUpdatedTimeForCurrencyLastNRounds(bytes32,uint256,uint256)": FunctionFragment;
-    "ratesForCurrencies(bytes32[])": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "removeAggregator(bytes32)": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "setDexPriceAggregator(address)": FunctionFragment;
-    "synthTooVolatileForAtomicExchange(bytes32)": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'addAggregator(bytes32,address)': FunctionFragment;
+    'aggregatorKeys(uint256)': FunctionFragment;
+    'aggregatorWarningFlags()': FunctionFragment;
+    'aggregators(bytes32)': FunctionFragment;
+    'anyRateIsInvalid(bytes32[])': FunctionFragment;
+    'anyRateIsInvalidAtRound(bytes32[],uint256[])': FunctionFragment;
+    'atomicEquivalentForDexPricing(bytes32)': FunctionFragment;
+    'atomicTwapWindow()': FunctionFragment;
+    'atomicVolatilityConsiderationWindow(bytes32)': FunctionFragment;
+    'atomicVolatilityUpdateThreshold(bytes32)': FunctionFragment;
+    'currenciesUsingAggregator(address)': FunctionFragment;
+    'currencyKeyDecimals(bytes32)': FunctionFragment;
+    'dexPriceAggregator()': FunctionFragment;
+    'effectiveAtomicValueAndRates(bytes32,uint256,bytes32)': FunctionFragment;
+    'effectiveValue(bytes32,uint256,bytes32)': FunctionFragment;
+    'effectiveValueAndRates(bytes32,uint256,bytes32)': FunctionFragment;
+    'effectiveValueAndRatesAtRound(bytes32,uint256,bytes32,uint256,uint256)': FunctionFragment;
+    'getCurrentRoundId(bytes32)': FunctionFragment;
+    'getLastRoundIdBeforeElapsedSecs(bytes32,uint256,uint256,uint256)': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'lastRateUpdateTimes(bytes32)': FunctionFragment;
+    'lastRateUpdateTimesForCurrencies(bytes32[])': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'rateAndInvalid(bytes32)': FunctionFragment;
+    'rateAndTimestampAtRound(bytes32,uint256)': FunctionFragment;
+    'rateAndUpdatedTime(bytes32)': FunctionFragment;
+    'rateForCurrency(bytes32)': FunctionFragment;
+    'rateIsFlagged(bytes32)': FunctionFragment;
+    'rateIsInvalid(bytes32)': FunctionFragment;
+    'rateIsStale(bytes32)': FunctionFragment;
+    'rateStalePeriod()': FunctionFragment;
+    'rateWithSafetyChecks(bytes32)': FunctionFragment;
+    'ratesAndInvalidForCurrencies(bytes32[])': FunctionFragment;
+    'ratesAndUpdatedTimeForCurrencyLastNRounds(bytes32,uint256,uint256)': FunctionFragment;
+    'ratesForCurrencies(bytes32[])': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'removeAggregator(bytes32)': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'setDexPriceAggregator(address)': FunctionFragment;
+    'synthTooVolatileForAtomicExchange(bytes32)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "acceptOwnership"
-      | "addAggregator"
-      | "aggregatorKeys"
-      | "aggregatorWarningFlags"
-      | "aggregators"
-      | "anyRateIsInvalid"
-      | "anyRateIsInvalidAtRound"
-      | "atomicEquivalentForDexPricing"
-      | "atomicTwapWindow"
-      | "atomicVolatilityConsiderationWindow"
-      | "atomicVolatilityUpdateThreshold"
-      | "currenciesUsingAggregator"
-      | "currencyKeyDecimals"
-      | "dexPriceAggregator"
-      | "effectiveAtomicValueAndRates"
-      | "effectiveValue"
-      | "effectiveValueAndRates"
-      | "effectiveValueAndRatesAtRound"
-      | "getCurrentRoundId"
-      | "getLastRoundIdBeforeElapsedSecs"
-      | "isResolverCached"
-      | "lastRateUpdateTimes"
-      | "lastRateUpdateTimesForCurrencies"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "rateAndInvalid"
-      | "rateAndTimestampAtRound"
-      | "rateAndUpdatedTime"
-      | "rateForCurrency"
-      | "rateIsFlagged"
-      | "rateIsInvalid"
-      | "rateIsStale"
-      | "rateStalePeriod"
-      | "rateWithSafetyChecks"
-      | "ratesAndInvalidForCurrencies"
-      | "ratesAndUpdatedTimeForCurrencyLastNRounds"
-      | "ratesForCurrencies"
-      | "rebuildCache"
-      | "removeAggregator"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "setDexPriceAggregator"
-      | "synthTooVolatileForAtomicExchange"
+      | 'CONTRACT_NAME'
+      | 'acceptOwnership'
+      | 'addAggregator'
+      | 'aggregatorKeys'
+      | 'aggregatorWarningFlags'
+      | 'aggregators'
+      | 'anyRateIsInvalid'
+      | 'anyRateIsInvalidAtRound'
+      | 'atomicEquivalentForDexPricing'
+      | 'atomicTwapWindow'
+      | 'atomicVolatilityConsiderationWindow'
+      | 'atomicVolatilityUpdateThreshold'
+      | 'currenciesUsingAggregator'
+      | 'currencyKeyDecimals'
+      | 'dexPriceAggregator'
+      | 'effectiveAtomicValueAndRates'
+      | 'effectiveValue'
+      | 'effectiveValueAndRates'
+      | 'effectiveValueAndRatesAtRound'
+      | 'getCurrentRoundId'
+      | 'getLastRoundIdBeforeElapsedSecs'
+      | 'isResolverCached'
+      | 'lastRateUpdateTimes'
+      | 'lastRateUpdateTimesForCurrencies'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'rateAndInvalid'
+      | 'rateAndTimestampAtRound'
+      | 'rateAndUpdatedTime'
+      | 'rateForCurrency'
+      | 'rateIsFlagged'
+      | 'rateIsInvalid'
+      | 'rateIsStale'
+      | 'rateStalePeriod'
+      | 'rateWithSafetyChecks'
+      | 'ratesAndInvalidForCurrencies'
+      | 'ratesAndUpdatedTimeForCurrencyLastNRounds'
+      | 'ratesForCurrencies'
+      | 'rebuildCache'
+      | 'removeAggregator'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'setDexPriceAggregator'
+      | 'synthTooVolatileForAtomicExchange'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addAggregator",
+    functionFragment: 'addAggregator',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "aggregatorKeys",
+    functionFragment: 'aggregatorKeys',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'aggregatorWarningFlags', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'aggregators', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "aggregatorWarningFlags",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "aggregators",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "anyRateIsInvalid",
+    functionFragment: 'anyRateIsInvalid',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "anyRateIsInvalidAtRound",
+    functionFragment: 'anyRateIsInvalidAtRound',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "atomicEquivalentForDexPricing",
+    functionFragment: 'atomicEquivalentForDexPricing',
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(functionFragment: 'atomicTwapWindow', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'atomicVolatilityConsiderationWindow',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "atomicTwapWindow",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "atomicVolatilityConsiderationWindow",
+    functionFragment: 'atomicVolatilityUpdateThreshold',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "atomicVolatilityUpdateThreshold",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "currenciesUsingAggregator",
+    functionFragment: 'currenciesUsingAggregator',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "currencyKeyDecimals",
+    functionFragment: 'currencyKeyDecimals',
     values: [PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'dexPriceAggregator', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "dexPriceAggregator",
-    values?: undefined
+    functionFragment: 'effectiveAtomicValueAndRates',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "effectiveAtomicValueAndRates",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    functionFragment: 'effectiveValue',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "effectiveValue",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    functionFragment: 'effectiveValueAndRates',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "effectiveValueAndRates",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "effectiveValueAndRatesAtRound",
+    functionFragment: 'effectiveValueAndRatesAtRound',
     values: [
       PromiseOrValue<BytesLike>,
       PromiseOrValue<BigNumberish>,
@@ -220,11 +186,11 @@ export interface ExchangeRatesAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "getCurrentRoundId",
+    functionFragment: 'getCurrentRoundId',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getLastRoundIdBeforeElapsedSecs",
+    functionFragment: 'getLastRoundIdBeforeElapsedSecs',
     values: [
       PromiseOrValue<BytesLike>,
       PromiseOrValue<BigNumberish>,
@@ -232,301 +198,165 @@ export interface ExchangeRatesAbiTypesInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastRateUpdateTimes",
+    functionFragment: 'lastRateUpdateTimes',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "lastRateUpdateTimesForCurrencies",
+    functionFragment: 'lastRateUpdateTimesForCurrencies',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rateAndInvalid",
+    functionFragment: 'rateAndInvalid',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "rateAndTimestampAtRound",
+    functionFragment: 'rateAndTimestampAtRound',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "rateAndUpdatedTime",
+    functionFragment: 'rateAndUpdatedTime',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "rateForCurrency",
+    functionFragment: 'rateForCurrency',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "rateIsFlagged",
+    functionFragment: 'rateIsFlagged',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "rateIsInvalid",
+    functionFragment: 'rateIsInvalid',
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(functionFragment: 'rateIsStale', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'rateStalePeriod', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'rateWithSafetyChecks',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "rateIsStale",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rateStalePeriod",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rateWithSafetyChecks",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "ratesAndInvalidForCurrencies",
+    functionFragment: 'ratesAndInvalidForCurrencies',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "ratesAndUpdatedTimeForCurrencyLastNRounds",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'ratesAndUpdatedTimeForCurrencyLastNRounds',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "ratesForCurrencies",
+    functionFragment: 'ratesForCurrencies',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeAggregator",
+    functionFragment: 'removeAggregator',
     values: [PromiseOrValue<BytesLike>]
   ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setDexPriceAggregator",
+    functionFragment: 'setDexPriceAggregator',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "synthTooVolatileForAtomicExchange",
+    functionFragment: 'synthTooVolatileForAtomicExchange',
     values: [PromiseOrValue<BytesLike>]
   ): string;
 
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addAggregator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'aggregatorKeys', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'aggregatorWarningFlags', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'aggregators', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'anyRateIsInvalid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'anyRateIsInvalidAtRound', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'atomicEquivalentForDexPricing', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'atomicTwapWindow', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
+    functionFragment: 'atomicVolatilityConsiderationWindow',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "acceptOwnership",
+    functionFragment: 'atomicVolatilityUpdateThreshold',
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: 'currenciesUsingAggregator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'currencyKeyDecimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'dexPriceAggregator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'effectiveAtomicValueAndRates', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'effectiveValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'effectiveValueAndRates', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'effectiveValueAndRatesAtRound', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getCurrentRoundId', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "addAggregator",
+    functionFragment: 'getLastRoundIdBeforeElapsedSecs',
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastRateUpdateTimes', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "aggregatorKeys",
+    functionFragment: 'lastRateUpdateTimesForCurrencies',
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rateAndInvalid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rateAndTimestampAtRound', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rateAndUpdatedTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rateForCurrency', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rateIsFlagged', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rateIsInvalid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rateIsStale', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rateStalePeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rateWithSafetyChecks', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'ratesAndInvalidForCurrencies', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "aggregatorWarningFlags",
+    functionFragment: 'ratesAndUpdatedTimeForCurrencyLastNRounds',
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: 'ratesForCurrencies', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeAggregator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setDexPriceAggregator', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "aggregators",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "anyRateIsInvalid",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "anyRateIsInvalidAtRound",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "atomicEquivalentForDexPricing",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "atomicTwapWindow",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "atomicVolatilityConsiderationWindow",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "atomicVolatilityUpdateThreshold",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "currenciesUsingAggregator",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "currencyKeyDecimals",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "dexPriceAggregator",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "effectiveAtomicValueAndRates",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "effectiveValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "effectiveValueAndRates",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "effectiveValueAndRatesAtRound",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getCurrentRoundId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getLastRoundIdBeforeElapsedSecs",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastRateUpdateTimes",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastRateUpdateTimesForCurrencies",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rateAndInvalid",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rateAndTimestampAtRound",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rateAndUpdatedTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rateForCurrency",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rateIsFlagged",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rateIsInvalid",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rateIsStale",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rateStalePeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rateWithSafetyChecks",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "ratesAndInvalidForCurrencies",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "ratesAndUpdatedTimeForCurrencyLastNRounds",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "ratesForCurrencies",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeAggregator",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setDexPriceAggregator",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthTooVolatileForAtomicExchange",
+    functionFragment: 'synthTooVolatileForAtomicExchange',
     data: BytesLike
   ): Result;
 
   events: {
-    "AggregatorAdded(bytes32,address)": EventFragment;
-    "AggregatorRemoved(bytes32,address)": EventFragment;
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "DexPriceAggregatorUpdated(address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'AggregatorAdded(bytes32,address)': EventFragment;
+    'AggregatorRemoved(bytes32,address)': EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'DexPriceAggregatorUpdated(address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AggregatorAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AggregatorRemoved"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DexPriceAggregatorUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AggregatorAdded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AggregatorRemoved'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'DexPriceAggregatorUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface AggregatorAddedEventObject {
   currencyKey: string;
   aggregator: string;
 }
-export type AggregatorAddedEvent = TypedEvent<
-  [string, string],
-  AggregatorAddedEventObject
->;
+export type AggregatorAddedEvent = TypedEvent<[string, string], AggregatorAddedEventObject>;
 
 export type AggregatorAddedEventFilter = TypedEventFilter<AggregatorAddedEvent>;
 
@@ -534,22 +364,15 @@ export interface AggregatorRemovedEventObject {
   currencyKey: string;
   aggregator: string;
 }
-export type AggregatorRemovedEvent = TypedEvent<
-  [string, string],
-  AggregatorRemovedEventObject
->;
+export type AggregatorRemovedEvent = TypedEvent<[string, string], AggregatorRemovedEventObject>;
 
-export type AggregatorRemovedEventFilter =
-  TypedEventFilter<AggregatorRemovedEvent>;
+export type AggregatorRemovedEventFilter = TypedEventFilter<AggregatorRemovedEvent>;
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -561,27 +384,20 @@ export type DexPriceAggregatorUpdatedEvent = TypedEvent<
   DexPriceAggregatorUpdatedEventObject
 >;
 
-export type DexPriceAggregatorUpdatedEventFilter =
-  TypedEventFilter<DexPriceAggregatorUpdatedEvent>;
+export type DexPriceAggregatorUpdatedEventFilter = TypedEventFilter<DexPriceAggregatorUpdatedEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -602,9 +418,7 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -631,10 +445,7 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
 
     aggregatorWarningFlags(overrides?: CallOverrides): Promise<[string]>;
 
-    aggregators(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    aggregators(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     anyRateIsInvalid(
       currencyKeys: PromiseOrValue<BytesLike>[],
@@ -805,18 +616,14 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
     ratesAndInvalidForCurrencies(
       currencyKeys: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber[], boolean] & { rates: BigNumber[]; anyRateInvalid: boolean }
-    >;
+    ): Promise<[BigNumber[], boolean] & { rates: BigNumber[]; anyRateInvalid: boolean }>;
 
     ratesAndUpdatedTimeForCurrencyLastNRounds(
       currencyKey: PromiseOrValue<BytesLike>,
       numRounds: PromiseOrValue<BigNumberish>,
       roundId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber[], BigNumber[]] & { rates: BigNumber[]; times: BigNumber[] }
-    >;
+    ): Promise<[BigNumber[], BigNumber[]] & { rates: BigNumber[]; times: BigNumber[] }>;
 
     ratesForCurrencies(
       currencyKeys: PromiseOrValue<BytesLike>[],
@@ -861,17 +668,11 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  aggregatorKeys(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  aggregatorKeys(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   aggregatorWarningFlags(overrides?: CallOverrides): Promise<string>;
 
-  aggregators(
-    arg0: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  aggregators(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   anyRateIsInvalid(
     currencyKeys: PromiseOrValue<BytesLike>[],
@@ -906,10 +707,7 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string[]>;
 
-  currencyKeyDecimals(
-    arg0: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<number>;
+  currencyKeyDecimals(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<number>;
 
   dexPriceAggregator(overrides?: CallOverrides): Promise<string>;
 
@@ -1027,10 +825,7 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  rateIsStale(
-    currencyKey: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  rateIsStale(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   rateStalePeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1042,18 +837,14 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
   ratesAndInvalidForCurrencies(
     currencyKeys: PromiseOrValue<BytesLike>[],
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber[], boolean] & { rates: BigNumber[]; anyRateInvalid: boolean }
-  >;
+  ): Promise<[BigNumber[], boolean] & { rates: BigNumber[]; anyRateInvalid: boolean }>;
 
   ratesAndUpdatedTimeForCurrencyLastNRounds(
     currencyKey: PromiseOrValue<BytesLike>,
     numRounds: PromiseOrValue<BigNumberish>,
     roundId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber[], BigNumber[]] & { rates: BigNumber[]; times: BigNumber[] }
-  >;
+  ): Promise<[BigNumber[], BigNumber[]] & { rates: BigNumber[]; times: BigNumber[] }>;
 
   ratesForCurrencies(
     currencyKeys: PromiseOrValue<BytesLike>[],
@@ -1094,17 +885,11 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    aggregatorKeys(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    aggregatorKeys(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     aggregatorWarningFlags(overrides?: CallOverrides): Promise<string>;
 
-    aggregators(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    aggregators(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     anyRateIsInvalid(
       currencyKeys: PromiseOrValue<BytesLike>[],
@@ -1220,10 +1005,7 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -1281,18 +1063,14 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
     ratesAndInvalidForCurrencies(
       currencyKeys: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber[], boolean] & { rates: BigNumber[]; anyRateInvalid: boolean }
-    >;
+    ): Promise<[BigNumber[], boolean] & { rates: BigNumber[]; anyRateInvalid: boolean }>;
 
     ratesAndUpdatedTimeForCurrencyLastNRounds(
       currencyKey: PromiseOrValue<BytesLike>,
       numRounds: PromiseOrValue<BigNumberish>,
       roundId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber[], BigNumber[]] & { rates: BigNumber[]; times: BigNumber[] }
-    >;
+    ): Promise<[BigNumber[], BigNumber[]] & { rates: BigNumber[]; times: BigNumber[] }>;
 
     ratesForCurrencies(
       currencyKeys: PromiseOrValue<BytesLike>[],
@@ -1322,53 +1100,37 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
   };
 
   filters: {
-    "AggregatorAdded(bytes32,address)"(
+    'AggregatorAdded(bytes32,address)'(
       currencyKey?: null,
       aggregator?: null
     ): AggregatorAddedEventFilter;
-    AggregatorAdded(
-      currencyKey?: null,
-      aggregator?: null
-    ): AggregatorAddedEventFilter;
+    AggregatorAdded(currencyKey?: null, aggregator?: null): AggregatorAddedEventFilter;
 
-    "AggregatorRemoved(bytes32,address)"(
+    'AggregatorRemoved(bytes32,address)'(
       currencyKey?: null,
       aggregator?: null
     ): AggregatorRemovedEventFilter;
-    AggregatorRemoved(
-      currencyKey?: null,
-      aggregator?: null
-    ): AggregatorRemovedEventFilter;
+    AggregatorRemoved(currencyKey?: null, aggregator?: null): AggregatorRemovedEventFilter;
 
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "DexPriceAggregatorUpdated(address)"(
+    'DexPriceAggregatorUpdated(address)'(
       newDexPriceAggregator?: null
     ): DexPriceAggregatorUpdatedEventFilter;
-    DexPriceAggregatorUpdated(
-      newDexPriceAggregator?: null
-    ): DexPriceAggregatorUpdatedEventFilter;
+    DexPriceAggregatorUpdated(newDexPriceAggregator?: null): DexPriceAggregatorUpdatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
   estimateGas: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     addAggregator(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -1383,10 +1145,7 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
 
     aggregatorWarningFlags(overrides?: CallOverrides): Promise<BigNumber>;
 
-    aggregators(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    aggregators(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     anyRateIsInvalid(
       currencyKeys: PromiseOrValue<BytesLike>[],
@@ -1552,9 +1311,7 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     removeAggregator(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -1594,9 +1351,7 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    aggregatorWarningFlags(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    aggregatorWarningFlags(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     aggregators(
       arg0: PromiseOrValue<BytesLike>,
@@ -1641,9 +1396,7 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    dexPriceAggregator(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    dexPriceAggregator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     effectiveAtomicValueAndRates(
       sourceCurrencyKey: PromiseOrValue<BytesLike>,
@@ -1780,9 +1533,7 @@ export interface ExchangeRatesAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setDexPriceAggregator(
       _dexPriceAggregator: PromiseOrValue<string>,

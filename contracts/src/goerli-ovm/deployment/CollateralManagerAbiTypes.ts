@@ -12,613 +12,396 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface CollateralManagerAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "accrueInterest(uint256,bytes32,bool)": FunctionFragment;
-    "addCollaterals(address[])": FunctionFragment;
-    "addShortableSynths(bytes32[],bytes32[])": FunctionFragment;
-    "addSynths(bytes32[],bytes32[])": FunctionFragment;
-    "areShortableSynthsSet(bytes32[],bytes32[])": FunctionFragment;
-    "areSynthsAndCurrenciesSet(bytes32[],bytes32[])": FunctionFragment;
-    "baseBorrowRate()": FunctionFragment;
-    "baseShortRate()": FunctionFragment;
-    "decrementLongs(bytes32,uint256)": FunctionFragment;
-    "decrementShorts(bytes32,uint256)": FunctionFragment;
-    "exceedsDebtLimit(uint256,bytes32)": FunctionFragment;
-    "getBorrowRate()": FunctionFragment;
-    "getNewLoanId()": FunctionFragment;
-    "getRatesAndTime(uint256)": FunctionFragment;
-    "getShortRate(bytes32)": FunctionFragment;
-    "getShortRatesAndTime(bytes32,uint256)": FunctionFragment;
-    "hasAllCollaterals(address[])": FunctionFragment;
-    "hasCollateral(address)": FunctionFragment;
-    "incrementLongs(bytes32,uint256)": FunctionFragment;
-    "incrementShorts(bytes32,uint256)": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "isSynthManaged(bytes32)": FunctionFragment;
-    "lastPauseTime()": FunctionFragment;
-    "long(bytes32)": FunctionFragment;
-    "maxDebt()": FunctionFragment;
-    "maxSkewRate()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "paused()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "removeCollaterals(address[])": FunctionFragment;
-    "removeShortableSynths(bytes32[])": FunctionFragment;
-    "removeSynths(bytes32[],bytes32[])": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "setBaseBorrowRate(uint256)": FunctionFragment;
-    "setBaseShortRate(uint256)": FunctionFragment;
-    "setMaxDebt(uint256)": FunctionFragment;
-    "setMaxSkewRate(uint256)": FunctionFragment;
-    "setPaused(bool)": FunctionFragment;
-    "setUtilisationMultiplier(uint256)": FunctionFragment;
-    "short(bytes32)": FunctionFragment;
-    "shortableSynthsByKey(bytes32)": FunctionFragment;
-    "state()": FunctionFragment;
-    "synthsByKey(bytes32)": FunctionFragment;
-    "totalLong()": FunctionFragment;
-    "totalLongAndShort()": FunctionFragment;
-    "totalShort()": FunctionFragment;
-    "updateBorrowRatesCollateral(uint256)": FunctionFragment;
-    "updateShortRatesCollateral(bytes32,uint256)": FunctionFragment;
-    "utilisationMultiplier()": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'accrueInterest(uint256,bytes32,bool)': FunctionFragment;
+    'addCollaterals(address[])': FunctionFragment;
+    'addShortableSynths(bytes32[],bytes32[])': FunctionFragment;
+    'addSynths(bytes32[],bytes32[])': FunctionFragment;
+    'areShortableSynthsSet(bytes32[],bytes32[])': FunctionFragment;
+    'areSynthsAndCurrenciesSet(bytes32[],bytes32[])': FunctionFragment;
+    'baseBorrowRate()': FunctionFragment;
+    'baseShortRate()': FunctionFragment;
+    'decrementLongs(bytes32,uint256)': FunctionFragment;
+    'decrementShorts(bytes32,uint256)': FunctionFragment;
+    'exceedsDebtLimit(uint256,bytes32)': FunctionFragment;
+    'getBorrowRate()': FunctionFragment;
+    'getNewLoanId()': FunctionFragment;
+    'getRatesAndTime(uint256)': FunctionFragment;
+    'getShortRate(bytes32)': FunctionFragment;
+    'getShortRatesAndTime(bytes32,uint256)': FunctionFragment;
+    'hasAllCollaterals(address[])': FunctionFragment;
+    'hasCollateral(address)': FunctionFragment;
+    'incrementLongs(bytes32,uint256)': FunctionFragment;
+    'incrementShorts(bytes32,uint256)': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'isSynthManaged(bytes32)': FunctionFragment;
+    'lastPauseTime()': FunctionFragment;
+    'long(bytes32)': FunctionFragment;
+    'maxDebt()': FunctionFragment;
+    'maxSkewRate()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'paused()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'removeCollaterals(address[])': FunctionFragment;
+    'removeShortableSynths(bytes32[])': FunctionFragment;
+    'removeSynths(bytes32[],bytes32[])': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'setBaseBorrowRate(uint256)': FunctionFragment;
+    'setBaseShortRate(uint256)': FunctionFragment;
+    'setMaxDebt(uint256)': FunctionFragment;
+    'setMaxSkewRate(uint256)': FunctionFragment;
+    'setPaused(bool)': FunctionFragment;
+    'setUtilisationMultiplier(uint256)': FunctionFragment;
+    'short(bytes32)': FunctionFragment;
+    'shortableSynthsByKey(bytes32)': FunctionFragment;
+    'state()': FunctionFragment;
+    'synthsByKey(bytes32)': FunctionFragment;
+    'totalLong()': FunctionFragment;
+    'totalLongAndShort()': FunctionFragment;
+    'totalShort()': FunctionFragment;
+    'updateBorrowRatesCollateral(uint256)': FunctionFragment;
+    'updateShortRatesCollateral(bytes32,uint256)': FunctionFragment;
+    'utilisationMultiplier()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "acceptOwnership"
-      | "accrueInterest"
-      | "addCollaterals"
-      | "addShortableSynths"
-      | "addSynths"
-      | "areShortableSynthsSet"
-      | "areSynthsAndCurrenciesSet"
-      | "baseBorrowRate"
-      | "baseShortRate"
-      | "decrementLongs"
-      | "decrementShorts"
-      | "exceedsDebtLimit"
-      | "getBorrowRate"
-      | "getNewLoanId"
-      | "getRatesAndTime"
-      | "getShortRate"
-      | "getShortRatesAndTime"
-      | "hasAllCollaterals"
-      | "hasCollateral"
-      | "incrementLongs"
-      | "incrementShorts"
-      | "isResolverCached"
-      | "isSynthManaged"
-      | "lastPauseTime"
-      | "long"
-      | "maxDebt"
-      | "maxSkewRate"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "paused"
-      | "rebuildCache"
-      | "removeCollaterals"
-      | "removeShortableSynths"
-      | "removeSynths"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "setBaseBorrowRate"
-      | "setBaseShortRate"
-      | "setMaxDebt"
-      | "setMaxSkewRate"
-      | "setPaused"
-      | "setUtilisationMultiplier"
-      | "short"
-      | "shortableSynthsByKey"
-      | "state"
-      | "synthsByKey"
-      | "totalLong"
-      | "totalLongAndShort"
-      | "totalShort"
-      | "updateBorrowRatesCollateral"
-      | "updateShortRatesCollateral"
-      | "utilisationMultiplier"
+      | 'CONTRACT_NAME'
+      | 'acceptOwnership'
+      | 'accrueInterest'
+      | 'addCollaterals'
+      | 'addShortableSynths'
+      | 'addSynths'
+      | 'areShortableSynthsSet'
+      | 'areSynthsAndCurrenciesSet'
+      | 'baseBorrowRate'
+      | 'baseShortRate'
+      | 'decrementLongs'
+      | 'decrementShorts'
+      | 'exceedsDebtLimit'
+      | 'getBorrowRate'
+      | 'getNewLoanId'
+      | 'getRatesAndTime'
+      | 'getShortRate'
+      | 'getShortRatesAndTime'
+      | 'hasAllCollaterals'
+      | 'hasCollateral'
+      | 'incrementLongs'
+      | 'incrementShorts'
+      | 'isResolverCached'
+      | 'isSynthManaged'
+      | 'lastPauseTime'
+      | 'long'
+      | 'maxDebt'
+      | 'maxSkewRate'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'paused'
+      | 'rebuildCache'
+      | 'removeCollaterals'
+      | 'removeShortableSynths'
+      | 'removeSynths'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'setBaseBorrowRate'
+      | 'setBaseShortRate'
+      | 'setMaxDebt'
+      | 'setMaxSkewRate'
+      | 'setPaused'
+      | 'setUtilisationMultiplier'
+      | 'short'
+      | 'shortableSynthsByKey'
+      | 'state'
+      | 'synthsByKey'
+      | 'totalLong'
+      | 'totalLongAndShort'
+      | 'totalShort'
+      | 'updateBorrowRatesCollateral'
+      | 'updateShortRatesCollateral'
+      | 'utilisationMultiplier'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
+    functionFragment: 'accrueInterest',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "accrueInterest",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<boolean>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addCollaterals",
+    functionFragment: 'addCollaterals',
     values: [PromiseOrValue<string>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "addShortableSynths",
+    functionFragment: 'addShortableSynths',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "addSynths",
+    functionFragment: 'addSynths',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "areShortableSynthsSet",
+    functionFragment: 'areShortableSynthsSet',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "areSynthsAndCurrenciesSet",
+    functionFragment: 'areSynthsAndCurrenciesSet',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>[]]
   ): string;
+  encodeFunctionData(functionFragment: 'baseBorrowRate', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'baseShortRate', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "baseBorrowRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "baseShortRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "decrementLongs",
+    functionFragment: 'decrementLongs',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "decrementShorts",
+    functionFragment: 'decrementShorts',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "exceedsDebtLimit",
+    functionFragment: 'exceedsDebtLimit',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'getBorrowRate', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getNewLoanId', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getBorrowRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNewLoanId",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getRatesAndTime",
+    functionFragment: 'getRatesAndTime',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'getShortRate', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "getShortRate",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getShortRatesAndTime",
+    functionFragment: 'getShortRatesAndTime',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "hasAllCollaterals",
+    functionFragment: 'hasAllCollaterals',
+    values: [PromiseOrValue<string>[]]
+  ): string;
+  encodeFunctionData(functionFragment: 'hasCollateral', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'incrementLongs',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'incrementShorts',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'isSynthManaged',
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(functionFragment: 'lastPauseTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'long', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'maxDebt', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'maxSkewRate', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'nominateNewOwner',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'removeCollaterals',
     values: [PromiseOrValue<string>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "hasCollateral",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "incrementLongs",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "incrementShorts",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isSynthManaged",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastPauseTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "long",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(functionFragment: "maxDebt", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "maxSkewRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "paused", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeCollaterals",
-    values: [PromiseOrValue<string>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeShortableSynths",
+    functionFragment: 'removeShortableSynths',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "removeSynths",
+    functionFragment: 'removeSynths',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>[]]
   ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setBaseBorrowRate",
+    functionFragment: 'setBaseBorrowRate',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setBaseShortRate",
+    functionFragment: 'setBaseShortRate',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMaxDebt",
+    functionFragment: 'setMaxDebt',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMaxSkewRate",
+    functionFragment: 'setMaxSkewRate',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'setPaused', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(
-    functionFragment: "setPaused",
-    values: [PromiseOrValue<boolean>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setUtilisationMultiplier",
+    functionFragment: 'setUtilisationMultiplier',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'short', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "short",
+    functionFragment: 'shortableSynthsByKey',
     values: [PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'state', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'synthsByKey', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'totalLong', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalLongAndShort', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalShort', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "shortableSynthsByKey",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(functionFragment: "state", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "synthsByKey",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(functionFragment: "totalLong", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "totalLongAndShort",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalShort",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateBorrowRatesCollateral",
+    functionFragment: 'updateBorrowRatesCollateral',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateShortRatesCollateral",
+    functionFragment: 'updateShortRatesCollateral',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "utilisationMultiplier",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'utilisationMultiplier', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "accrueInterest",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addCollaterals",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addShortableSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "addSynths", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "areShortableSynthsSet",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "areSynthsAndCurrenciesSet",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "baseBorrowRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "baseShortRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "decrementLongs",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "decrementShorts",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exceedsDebtLimit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getBorrowRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNewLoanId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRatesAndTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getShortRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getShortRatesAndTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "hasAllCollaterals",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "hasCollateral",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "incrementLongs",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "incrementShorts",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isSynthManaged",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastPauseTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "long", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "maxDebt", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "maxSkewRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeCollaterals",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeShortableSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setBaseBorrowRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setBaseShortRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setMaxDebt", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaxSkewRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setPaused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setUtilisationMultiplier",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "short", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "shortableSynthsByKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "state", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "synthsByKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "totalLong", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalLongAndShort",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "totalShort", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "updateBorrowRatesCollateral",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateShortRatesCollateral",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "utilisationMultiplier",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accrueInterest', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addCollaterals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addShortableSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'areShortableSynthsSet', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'areSynthsAndCurrenciesSet', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'baseBorrowRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'baseShortRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decrementLongs', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decrementShorts', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exceedsDebtLimit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getBorrowRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getNewLoanId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRatesAndTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getShortRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getShortRatesAndTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'hasAllCollaterals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'hasCollateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'incrementLongs', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'incrementShorts', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isSynthManaged', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastPauseTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'long', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxSkewRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeCollaterals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeShortableSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setBaseBorrowRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setBaseShortRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaxDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaxSkewRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPaused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setUtilisationMultiplier', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'short', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'shortableSynthsByKey', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'state', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthsByKey', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalLong', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalLongAndShort', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalShort', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateBorrowRatesCollateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateShortRatesCollateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'utilisationMultiplier', data: BytesLike): Result;
 
   events: {
-    "BaseBorrowRateUpdated(uint256)": EventFragment;
-    "BaseShortRateUpdated(uint256)": EventFragment;
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "CollateralAdded(address)": EventFragment;
-    "CollateralRemoved(address)": EventFragment;
-    "LiquidationPenaltyUpdated(uint256)": EventFragment;
-    "MaxDebtUpdated(uint256)": EventFragment;
-    "MaxSkewRateUpdated(uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "PauseChanged(bool)": EventFragment;
-    "ShortableSynthAdded(bytes32)": EventFragment;
-    "ShortableSynthRemoved(bytes32)": EventFragment;
-    "SynthAdded(bytes32)": EventFragment;
-    "SynthRemoved(bytes32)": EventFragment;
-    "UtilisationMultiplierUpdated(uint256)": EventFragment;
+    'BaseBorrowRateUpdated(uint256)': EventFragment;
+    'BaseShortRateUpdated(uint256)': EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'CollateralAdded(address)': EventFragment;
+    'CollateralRemoved(address)': EventFragment;
+    'LiquidationPenaltyUpdated(uint256)': EventFragment;
+    'MaxDebtUpdated(uint256)': EventFragment;
+    'MaxSkewRateUpdated(uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'PauseChanged(bool)': EventFragment;
+    'ShortableSynthAdded(bytes32)': EventFragment;
+    'ShortableSynthRemoved(bytes32)': EventFragment;
+    'SynthAdded(bytes32)': EventFragment;
+    'SynthRemoved(bytes32)': EventFragment;
+    'UtilisationMultiplierUpdated(uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "BaseBorrowRateUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "BaseShortRateUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CollateralAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CollateralRemoved"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LiquidationPenaltyUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MaxDebtUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MaxSkewRateUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PauseChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ShortableSynthAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ShortableSynthRemoved"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthRemoved"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "UtilisationMultiplierUpdated"
-  ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'BaseBorrowRateUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'BaseShortRateUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CollateralAdded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CollateralRemoved'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LiquidationPenaltyUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MaxDebtUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MaxSkewRateUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'PauseChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ShortableSynthAdded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ShortableSynthRemoved'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthAdded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthRemoved'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UtilisationMultiplierUpdated'): EventFragment;
 }
 
 export interface BaseBorrowRateUpdatedEventObject {
   baseBorrowRate: BigNumber;
 }
-export type BaseBorrowRateUpdatedEvent = TypedEvent<
-  [BigNumber],
-  BaseBorrowRateUpdatedEventObject
->;
+export type BaseBorrowRateUpdatedEvent = TypedEvent<[BigNumber], BaseBorrowRateUpdatedEventObject>;
 
-export type BaseBorrowRateUpdatedEventFilter =
-  TypedEventFilter<BaseBorrowRateUpdatedEvent>;
+export type BaseBorrowRateUpdatedEventFilter = TypedEventFilter<BaseBorrowRateUpdatedEvent>;
 
 export interface BaseShortRateUpdatedEventObject {
   baseShortRate: BigNumber;
 }
-export type BaseShortRateUpdatedEvent = TypedEvent<
-  [BigNumber],
-  BaseShortRateUpdatedEventObject
->;
+export type BaseShortRateUpdatedEvent = TypedEvent<[BigNumber], BaseShortRateUpdatedEventObject>;
 
-export type BaseShortRateUpdatedEventFilter =
-  TypedEventFilter<BaseShortRateUpdatedEvent>;
+export type BaseShortRateUpdatedEventFilter = TypedEventFilter<BaseShortRateUpdatedEvent>;
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
 export interface CollateralAddedEventObject {
   collateral: string;
 }
-export type CollateralAddedEvent = TypedEvent<
-  [string],
-  CollateralAddedEventObject
->;
+export type CollateralAddedEvent = TypedEvent<[string], CollateralAddedEventObject>;
 
 export type CollateralAddedEventFilter = TypedEventFilter<CollateralAddedEvent>;
 
 export interface CollateralRemovedEventObject {
   collateral: string;
 }
-export type CollateralRemovedEvent = TypedEvent<
-  [string],
-  CollateralRemovedEventObject
->;
+export type CollateralRemovedEvent = TypedEvent<[string], CollateralRemovedEventObject>;
 
-export type CollateralRemovedEventFilter =
-  TypedEventFilter<CollateralRemovedEvent>;
+export type CollateralRemovedEventFilter = TypedEventFilter<CollateralRemovedEvent>;
 
 export interface LiquidationPenaltyUpdatedEventObject {
   liquidationPenalty: BigNumber;
@@ -628,48 +411,34 @@ export type LiquidationPenaltyUpdatedEvent = TypedEvent<
   LiquidationPenaltyUpdatedEventObject
 >;
 
-export type LiquidationPenaltyUpdatedEventFilter =
-  TypedEventFilter<LiquidationPenaltyUpdatedEvent>;
+export type LiquidationPenaltyUpdatedEventFilter = TypedEventFilter<LiquidationPenaltyUpdatedEvent>;
 
 export interface MaxDebtUpdatedEventObject {
   maxDebt: BigNumber;
 }
-export type MaxDebtUpdatedEvent = TypedEvent<
-  [BigNumber],
-  MaxDebtUpdatedEventObject
->;
+export type MaxDebtUpdatedEvent = TypedEvent<[BigNumber], MaxDebtUpdatedEventObject>;
 
 export type MaxDebtUpdatedEventFilter = TypedEventFilter<MaxDebtUpdatedEvent>;
 
 export interface MaxSkewRateUpdatedEventObject {
   maxSkewRate: BigNumber;
 }
-export type MaxSkewRateUpdatedEvent = TypedEvent<
-  [BigNumber],
-  MaxSkewRateUpdatedEventObject
->;
+export type MaxSkewRateUpdatedEvent = TypedEvent<[BigNumber], MaxSkewRateUpdatedEventObject>;
 
-export type MaxSkewRateUpdatedEventFilter =
-  TypedEventFilter<MaxSkewRateUpdatedEvent>;
+export type MaxSkewRateUpdatedEventFilter = TypedEventFilter<MaxSkewRateUpdatedEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -683,24 +452,16 @@ export type PauseChangedEventFilter = TypedEventFilter<PauseChangedEvent>;
 export interface ShortableSynthAddedEventObject {
   synth: string;
 }
-export type ShortableSynthAddedEvent = TypedEvent<
-  [string],
-  ShortableSynthAddedEventObject
->;
+export type ShortableSynthAddedEvent = TypedEvent<[string], ShortableSynthAddedEventObject>;
 
-export type ShortableSynthAddedEventFilter =
-  TypedEventFilter<ShortableSynthAddedEvent>;
+export type ShortableSynthAddedEventFilter = TypedEventFilter<ShortableSynthAddedEvent>;
 
 export interface ShortableSynthRemovedEventObject {
   synth: string;
 }
-export type ShortableSynthRemovedEvent = TypedEvent<
-  [string],
-  ShortableSynthRemovedEventObject
->;
+export type ShortableSynthRemovedEvent = TypedEvent<[string], ShortableSynthRemovedEventObject>;
 
-export type ShortableSynthRemovedEventFilter =
-  TypedEventFilter<ShortableSynthRemovedEvent>;
+export type ShortableSynthRemovedEventFilter = TypedEventFilter<ShortableSynthRemovedEvent>;
 
 export interface SynthAddedEventObject {
   synth: string;
@@ -744,9 +505,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -816,13 +575,9 @@ export interface CollateralManagerAbiTypes extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       currency: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, boolean] & { canIssue: boolean; anyRateIsInvalid: boolean }
-    >;
+    ): Promise<[boolean, boolean] & { canIssue: boolean; anyRateIsInvalid: boolean }>;
 
-    getBorrowRate(
-      overrides?: CallOverrides
-    ): Promise<
+    getBorrowRate(overrides?: CallOverrides): Promise<
       [BigNumber, boolean] & {
         borrowRate: BigNumber;
         anyRateIsInvalid: boolean;
@@ -848,9 +603,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
     getShortRate(
       synthKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { shortRate: BigNumber; rateIsInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { shortRate: BigNumber; rateIsInvalid: boolean }>;
 
     getShortRatesAndTime(
       currency: PromiseOrValue<BytesLike>,
@@ -984,28 +737,19 @@ export interface CollateralManagerAbiTypes extends BaseContract {
 
     state(overrides?: CallOverrides): Promise<[string]>;
 
-    synthsByKey(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    synthsByKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     totalLong(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }>;
 
     totalLongAndShort(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }>;
 
     totalShort(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }>;
 
     updateBorrowRatesCollateral(
       rate: PromiseOrValue<BigNumberish>,
@@ -1083,15 +827,11 @@ export interface CollateralManagerAbiTypes extends BaseContract {
     amount: PromiseOrValue<BigNumberish>,
     currency: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
-  ): Promise<
-    [boolean, boolean] & { canIssue: boolean; anyRateIsInvalid: boolean }
-  >;
+  ): Promise<[boolean, boolean] & { canIssue: boolean; anyRateIsInvalid: boolean }>;
 
   getBorrowRate(
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { borrowRate: BigNumber; anyRateIsInvalid: boolean }
-  >;
+  ): Promise<[BigNumber, boolean] & { borrowRate: BigNumber; anyRateIsInvalid: boolean }>;
 
   getNewLoanId(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1112,9 +852,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
   getShortRate(
     synthKey: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { shortRate: BigNumber; rateIsInvalid: boolean }
-  >;
+  ): Promise<[BigNumber, boolean] & { shortRate: BigNumber; rateIsInvalid: boolean }>;
 
   getShortRatesAndTime(
     currency: PromiseOrValue<BytesLike>,
@@ -1134,10 +872,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  hasCollateral(
-    collateral: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  hasCollateral(collateral: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   incrementLongs(
     synth: PromiseOrValue<BytesLike>,
@@ -1160,10 +895,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
 
   lastPauseTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-  long(
-    synth: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  long(synth: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
   maxDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1234,40 +966,25 @@ export interface CollateralManagerAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  short(
-    synth: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  short(synth: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  shortableSynthsByKey(
-    arg0: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  shortableSynthsByKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   state(overrides?: CallOverrides): Promise<string>;
 
-  synthsByKey(
-    arg0: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  synthsByKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   totalLong(
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }
-  >;
+  ): Promise<[BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }>;
 
   totalLongAndShort(
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }
-  >;
+  ): Promise<[BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }>;
 
   totalShort(
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }
-  >;
+  ): Promise<[BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }>;
 
   updateBorrowRatesCollateral(
     rate: PromiseOrValue<BigNumberish>,
@@ -1292,14 +1009,9 @@ export interface CollateralManagerAbiTypes extends BaseContract {
       currency: PromiseOrValue<BytesLike>,
       isShort: PromiseOrValue<boolean>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { difference: BigNumber; index: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { difference: BigNumber; index: BigNumber }>;
 
-    addCollaterals(
-      collaterals: PromiseOrValue<string>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    addCollaterals(collaterals: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     addShortableSynths(
       requiredSynthNamesInResolver: PromiseOrValue<BytesLike>[],
@@ -1345,13 +1057,9 @@ export interface CollateralManagerAbiTypes extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       currency: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, boolean] & { canIssue: boolean; anyRateIsInvalid: boolean }
-    >;
+    ): Promise<[boolean, boolean] & { canIssue: boolean; anyRateIsInvalid: boolean }>;
 
-    getBorrowRate(
-      overrides?: CallOverrides
-    ): Promise<
+    getBorrowRate(overrides?: CallOverrides): Promise<
       [BigNumber, boolean] & {
         borrowRate: BigNumber;
         anyRateIsInvalid: boolean;
@@ -1375,9 +1083,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
     getShortRate(
       synthKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { shortRate: BigNumber; rateIsInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { shortRate: BigNumber; rateIsInvalid: boolean }>;
 
     getShortRatesAndTime(
       currency: PromiseOrValue<BytesLike>,
@@ -1397,10 +1103,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    hasCollateral(
-      collateral: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    hasCollateral(collateral: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     incrementLongs(
       synth: PromiseOrValue<BytesLike>,
@@ -1423,19 +1126,13 @@ export interface CollateralManagerAbiTypes extends BaseContract {
 
     lastPauseTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    long(
-      synth: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    long(synth: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
     maxSkewRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -1475,30 +1172,21 @@ export interface CollateralManagerAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setMaxDebt(
-      _maxDebt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setMaxDebt(_maxDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setMaxSkewRate(
       _maxSkewRate: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setPaused(
-      _paused: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setPaused(_paused: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     setUtilisationMultiplier(
       _utilisationMultiplier: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    short(
-      synth: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    short(synth: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     shortableSynthsByKey(
       arg0: PromiseOrValue<BytesLike>,
@@ -1507,28 +1195,19 @@ export interface CollateralManagerAbiTypes extends BaseContract {
 
     state(overrides?: CallOverrides): Promise<string>;
 
-    synthsByKey(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    synthsByKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     totalLong(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }>;
 
     totalLongAndShort(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }>;
 
     totalShort(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { susdValue: BigNumber; anyRateIsInvalid: boolean }>;
 
     updateBorrowRatesCollateral(
       rate: PromiseOrValue<BigNumberish>,
@@ -1545,76 +1224,54 @@ export interface CollateralManagerAbiTypes extends BaseContract {
   };
 
   filters: {
-    "BaseBorrowRateUpdated(uint256)"(
-      baseBorrowRate?: null
-    ): BaseBorrowRateUpdatedEventFilter;
-    BaseBorrowRateUpdated(
-      baseBorrowRate?: null
-    ): BaseBorrowRateUpdatedEventFilter;
+    'BaseBorrowRateUpdated(uint256)'(baseBorrowRate?: null): BaseBorrowRateUpdatedEventFilter;
+    BaseBorrowRateUpdated(baseBorrowRate?: null): BaseBorrowRateUpdatedEventFilter;
 
-    "BaseShortRateUpdated(uint256)"(
-      baseShortRate?: null
-    ): BaseShortRateUpdatedEventFilter;
+    'BaseShortRateUpdated(uint256)'(baseShortRate?: null): BaseShortRateUpdatedEventFilter;
     BaseShortRateUpdated(baseShortRate?: null): BaseShortRateUpdatedEventFilter;
 
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "CollateralAdded(address)"(collateral?: null): CollateralAddedEventFilter;
+    'CollateralAdded(address)'(collateral?: null): CollateralAddedEventFilter;
     CollateralAdded(collateral?: null): CollateralAddedEventFilter;
 
-    "CollateralRemoved(address)"(
-      collateral?: null
-    ): CollateralRemovedEventFilter;
+    'CollateralRemoved(address)'(collateral?: null): CollateralRemovedEventFilter;
     CollateralRemoved(collateral?: null): CollateralRemovedEventFilter;
 
-    "LiquidationPenaltyUpdated(uint256)"(
+    'LiquidationPenaltyUpdated(uint256)'(
       liquidationPenalty?: null
     ): LiquidationPenaltyUpdatedEventFilter;
-    LiquidationPenaltyUpdated(
-      liquidationPenalty?: null
-    ): LiquidationPenaltyUpdatedEventFilter;
+    LiquidationPenaltyUpdated(liquidationPenalty?: null): LiquidationPenaltyUpdatedEventFilter;
 
-    "MaxDebtUpdated(uint256)"(maxDebt?: null): MaxDebtUpdatedEventFilter;
+    'MaxDebtUpdated(uint256)'(maxDebt?: null): MaxDebtUpdatedEventFilter;
     MaxDebtUpdated(maxDebt?: null): MaxDebtUpdatedEventFilter;
 
-    "MaxSkewRateUpdated(uint256)"(
-      maxSkewRate?: null
-    ): MaxSkewRateUpdatedEventFilter;
+    'MaxSkewRateUpdated(uint256)'(maxSkewRate?: null): MaxSkewRateUpdatedEventFilter;
     MaxSkewRateUpdated(maxSkewRate?: null): MaxSkewRateUpdatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "PauseChanged(bool)"(isPaused?: null): PauseChangedEventFilter;
+    'PauseChanged(bool)'(isPaused?: null): PauseChangedEventFilter;
     PauseChanged(isPaused?: null): PauseChangedEventFilter;
 
-    "ShortableSynthAdded(bytes32)"(
-      synth?: null
-    ): ShortableSynthAddedEventFilter;
+    'ShortableSynthAdded(bytes32)'(synth?: null): ShortableSynthAddedEventFilter;
     ShortableSynthAdded(synth?: null): ShortableSynthAddedEventFilter;
 
-    "ShortableSynthRemoved(bytes32)"(
-      synth?: null
-    ): ShortableSynthRemovedEventFilter;
+    'ShortableSynthRemoved(bytes32)'(synth?: null): ShortableSynthRemovedEventFilter;
     ShortableSynthRemoved(synth?: null): ShortableSynthRemovedEventFilter;
 
-    "SynthAdded(bytes32)"(synth?: null): SynthAddedEventFilter;
+    'SynthAdded(bytes32)'(synth?: null): SynthAddedEventFilter;
     SynthAdded(synth?: null): SynthAddedEventFilter;
 
-    "SynthRemoved(bytes32)"(synth?: null): SynthRemovedEventFilter;
+    'SynthRemoved(bytes32)'(synth?: null): SynthRemovedEventFilter;
     SynthRemoved(synth?: null): SynthRemovedEventFilter;
 
-    "UtilisationMultiplierUpdated(uint256)"(
+    'UtilisationMultiplierUpdated(uint256)'(
       utilisationMultiplier?: null
     ): UtilisationMultiplierUpdatedEventFilter;
     UtilisationMultiplierUpdated(
@@ -1625,9 +1282,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
   estimateGas: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     accrueInterest(
       interestIndex: PromiseOrValue<BigNumberish>,
@@ -1689,9 +1344,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
 
     getBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getNewLoanId(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    getNewLoanId(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getRatesAndTime(
       index: PromiseOrValue<BigNumberish>,
@@ -1740,10 +1393,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
 
     lastPauseTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    long(
-      synth: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    long(synth: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1760,9 +1410,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     removeCollaterals(
       collaterals: PromiseOrValue<string>[],
@@ -1814,10 +1462,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    short(
-      synth: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    short(synth: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     shortableSynthsByKey(
       arg0: PromiseOrValue<BytesLike>,
@@ -1826,10 +1471,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
 
     state(overrides?: CallOverrides): Promise<BigNumber>;
 
-    synthsByKey(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    synthsByKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalLong(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -2011,9 +1653,7 @@ export interface CollateralManagerAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setBaseBorrowRate(
       _baseBorrowRate: PromiseOrValue<BigNumberish>,
@@ -2079,8 +1719,6 @@ export interface CollateralManagerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    utilisationMultiplier(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    utilisationMultiplier(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

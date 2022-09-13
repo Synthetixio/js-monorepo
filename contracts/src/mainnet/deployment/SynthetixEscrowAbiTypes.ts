@@ -12,268 +12,177 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface SynthetixEscrowAbiTypesInterface extends utils.Interface {
   functions: {
-    "purgeAccount(address)": FunctionFragment;
-    "withdrawHavvens(uint256)": FunctionFragment;
-    "getNextVestingIndex(address)": FunctionFragment;
-    "appendVestingEntry(address,uint256,uint256)": FunctionFragment;
-    "numVestingEntries(address)": FunctionFragment;
-    "totalVestedAccountBalance(address)": FunctionFragment;
-    "getNextVestingEntry(address)": FunctionFragment;
-    "decimals()": FunctionFragment;
-    "vest()": FunctionFragment;
-    "vestingSchedules(address,uint256,uint256)": FunctionFragment;
-    "setHavven(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "nominateOwner(address)": FunctionFragment;
-    "getNextVestingTime(address)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "getNextVestingQuantity(address)": FunctionFragment;
-    "getVestingTime(address,uint256)": FunctionFragment;
-    "havven()": FunctionFragment;
-    "UNIT()": FunctionFragment;
-    "totalVestedBalance()": FunctionFragment;
-    "addVestingSchedule(address,uint256[],uint256[])": FunctionFragment;
-    "getVestingScheduleEntry(address,uint256)": FunctionFragment;
-    "getVestingQuantity(address,uint256)": FunctionFragment;
+    'purgeAccount(address)': FunctionFragment;
+    'withdrawHavvens(uint256)': FunctionFragment;
+    'getNextVestingIndex(address)': FunctionFragment;
+    'appendVestingEntry(address,uint256,uint256)': FunctionFragment;
+    'numVestingEntries(address)': FunctionFragment;
+    'totalVestedAccountBalance(address)': FunctionFragment;
+    'getNextVestingEntry(address)': FunctionFragment;
+    'decimals()': FunctionFragment;
+    'vest()': FunctionFragment;
+    'vestingSchedules(address,uint256,uint256)': FunctionFragment;
+    'setHavven(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'nominateOwner(address)': FunctionFragment;
+    'getNextVestingTime(address)': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'getNextVestingQuantity(address)': FunctionFragment;
+    'getVestingTime(address,uint256)': FunctionFragment;
+    'havven()': FunctionFragment;
+    'UNIT()': FunctionFragment;
+    'totalVestedBalance()': FunctionFragment;
+    'addVestingSchedule(address,uint256[],uint256[])': FunctionFragment;
+    'getVestingScheduleEntry(address,uint256)': FunctionFragment;
+    'getVestingQuantity(address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "purgeAccount"
-      | "withdrawHavvens"
-      | "getNextVestingIndex"
-      | "appendVestingEntry"
-      | "numVestingEntries"
-      | "totalVestedAccountBalance"
-      | "getNextVestingEntry"
-      | "decimals"
-      | "vest"
-      | "vestingSchedules"
-      | "setHavven"
-      | "nominatedOwner"
-      | "nominateOwner"
-      | "getNextVestingTime"
-      | "balanceOf"
-      | "acceptOwnership"
-      | "owner"
-      | "getNextVestingQuantity"
-      | "getVestingTime"
-      | "havven"
-      | "UNIT"
-      | "totalVestedBalance"
-      | "addVestingSchedule"
-      | "getVestingScheduleEntry"
-      | "getVestingQuantity"
+      | 'purgeAccount'
+      | 'withdrawHavvens'
+      | 'getNextVestingIndex'
+      | 'appendVestingEntry'
+      | 'numVestingEntries'
+      | 'totalVestedAccountBalance'
+      | 'getNextVestingEntry'
+      | 'decimals'
+      | 'vest'
+      | 'vestingSchedules'
+      | 'setHavven'
+      | 'nominatedOwner'
+      | 'nominateOwner'
+      | 'getNextVestingTime'
+      | 'balanceOf'
+      | 'acceptOwnership'
+      | 'owner'
+      | 'getNextVestingQuantity'
+      | 'getVestingTime'
+      | 'havven'
+      | 'UNIT'
+      | 'totalVestedBalance'
+      | 'addVestingSchedule'
+      | 'getVestingScheduleEntry'
+      | 'getVestingQuantity'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'purgeAccount', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "purgeAccount",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawHavvens",
+    functionFragment: 'withdrawHavvens',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getNextVestingIndex",
+    functionFragment: 'getNextVestingIndex',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "appendVestingEntry",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'appendVestingEntry',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "numVestingEntries",
+    functionFragment: 'numVestingEntries',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "totalVestedAccountBalance",
+    functionFragment: 'totalVestedAccountBalance',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getNextVestingEntry",
+    functionFragment: 'getNextVestingEntry',
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(functionFragment: "vest", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'vest', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "vestingSchedules",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'vestingSchedules',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'setHavven', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'nominateOwner', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "setHavven",
+    functionFragment: 'getNextVestingTime',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getNextVestingTime",
+    functionFragment: 'getNextVestingQuantity',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getNextVestingQuantity",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getVestingTime",
+    functionFragment: 'getVestingTime',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "havven", values?: undefined): string;
-  encodeFunctionData(functionFragment: "UNIT", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'havven', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'UNIT', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalVestedBalance', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "totalVestedBalance",
-    values?: undefined
+    functionFragment: 'addVestingSchedule',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "addVestingSchedule",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BigNumberish>[]
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getVestingScheduleEntry",
+    functionFragment: 'getVestingScheduleEntry',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getVestingQuantity",
+    functionFragment: 'getVestingQuantity',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "purgeAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawHavvens",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNextVestingIndex",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "appendVestingEntry",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "numVestingEntries",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalVestedAccountBalance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNextVestingEntry",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "vest", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "vestingSchedules",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setHavven", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getNextVestingTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getNextVestingQuantity",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getVestingTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "havven", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "UNIT", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalVestedBalance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addVestingSchedule",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getVestingScheduleEntry",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getVestingQuantity",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'purgeAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawHavvens', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getNextVestingIndex', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'appendVestingEntry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'numVestingEntries', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalVestedAccountBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getNextVestingEntry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'vest', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'vestingSchedules', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setHavven', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getNextVestingTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getNextVestingQuantity', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getVestingTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'havven', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'UNIT', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalVestedBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addVestingSchedule', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getVestingScheduleEntry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getVestingQuantity', data: BytesLike): Result;
 
   events: {
-    "HavvenUpdated(address)": EventFragment;
-    "Vested(address,address,uint256,uint256)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
+    'HavvenUpdated(address)': EventFragment;
+    'Vested(address,address,uint256,uint256)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "HavvenUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Vested"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'HavvenUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Vested'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
 }
 
 export interface HavvenUpdatedEventObject {
@@ -289,20 +198,14 @@ export interface VestedEventObject {
   time: BigNumber;
   value: BigNumber;
 }
-export type VestedEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber],
-  VestedEventObject
->;
+export type VestedEvent = TypedEvent<[string, string, BigNumber, BigNumber], VestedEventObject>;
 
 export type VestedEventFilter = TypedEventFilter<VestedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -310,10 +213,7 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
@@ -334,9 +234,7 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -383,9 +281,7 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    vest(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    vest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     vestingSchedules(
       arg0: PromiseOrValue<string>,
@@ -411,10 +307,7 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     acceptOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -481,10 +374,7 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  numVestingEntries(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  numVestingEntries(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalVestedAccountBalance(
     arg0: PromiseOrValue<string>,
@@ -498,9 +388,7 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  vest(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  vest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   vestingSchedules(
     arg0: PromiseOrValue<string>,
@@ -526,10 +414,7 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  balanceOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   acceptOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -574,10 +459,7 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
   ): Promise<BigNumber>;
 
   callStatic: {
-    purgeAccount(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    purgeAccount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     withdrawHavvens(
       quantity: PromiseOrValue<BigNumberish>,
@@ -622,27 +504,18 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    setHavven(
-      _havven: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setHavven(_havven: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
-    nominateOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     getNextVestingTime(
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -686,10 +559,10 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
   };
 
   filters: {
-    "HavvenUpdated(address)"(newHavven?: null): HavvenUpdatedEventFilter;
+    'HavvenUpdated(address)'(newHavven?: null): HavvenUpdatedEventFilter;
     HavvenUpdated(newHavven?: null): HavvenUpdatedEventFilter;
 
-    "Vested(address,address,uint256,uint256)"(
+    'Vested(address,address,uint256,uint256)'(
       beneficiary?: null,
       beneficiaryIndex?: PromiseOrValue<string> | null,
       time?: null,
@@ -702,13 +575,10 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
       value?: null
     ): VestedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
   };
 
@@ -752,9 +622,7 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    vest(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    vest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     vestingSchedules(
       arg0: PromiseOrValue<string>,
@@ -780,14 +648,9 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -868,9 +731,7 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    vest(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    vest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     vestingSchedules(
       arg0: PromiseOrValue<string>,
@@ -922,9 +783,7 @@ export interface SynthetixEscrowAbiTypes extends BaseContract {
 
     UNIT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalVestedBalance(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    totalVestedBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addVestingSchedule(
       account: PromiseOrValue<string>,

@@ -11,44 +11,30 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface EtherWrapperAbiTypesInterface extends utils.Interface {
   functions: {
-    "distributeFees()": FunctionFragment;
-    "totalIssuedSynths()": FunctionFragment;
+    'distributeFees()': FunctionFragment;
+    'totalIssuedSynths()': FunctionFragment;
   };
 
-  getFunction(
-    nameOrSignatureOrTopic: "distributeFees" | "totalIssuedSynths"
-  ): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: 'distributeFees' | 'totalIssuedSynths'): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "distributeFees",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalIssuedSynths",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'distributeFees', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalIssuedSynths', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "distributeFees",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalIssuedSynths",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'distributeFees', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalIssuedSynths', data: BytesLike): Result;
 
   events: {};
 }
@@ -70,9 +56,7 @@ export interface EtherWrapperAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -102,9 +86,7 @@ export interface EtherWrapperAbiTypes extends BaseContract {
   filters: {};
 
   estimateGas: {
-    distributeFees(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    distributeFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     totalIssuedSynths(overrides?: CallOverrides): Promise<BigNumber>;
   };

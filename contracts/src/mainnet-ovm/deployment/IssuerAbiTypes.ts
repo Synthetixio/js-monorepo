@@ -12,514 +12,310 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface IssuerAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "addSynth(address)": FunctionFragment;
-    "addSynths(address[])": FunctionFragment;
-    "allNetworksDebtInfo()": FunctionFragment;
-    "anySynthOrSNXRateIsInvalid()": FunctionFragment;
-    "availableCurrencyKeys()": FunctionFragment;
-    "availableSynthCount()": FunctionFragment;
-    "availableSynths(uint256)": FunctionFragment;
-    "burnForRedemption(address,address,uint256)": FunctionFragment;
-    "burnSynths(address,uint256)": FunctionFragment;
-    "burnSynthsOnBehalf(address,address,uint256)": FunctionFragment;
-    "burnSynthsToTarget(address)": FunctionFragment;
-    "burnSynthsToTargetOnBehalf(address,address)": FunctionFragment;
-    "burnSynthsWithoutDebt(bytes32,address,uint256)": FunctionFragment;
-    "canBurnSynths(address)": FunctionFragment;
-    "collateral(address)": FunctionFragment;
-    "collateralisationRatio(address)": FunctionFragment;
-    "collateralisationRatioAndAnyRatesInvalid(address)": FunctionFragment;
-    "debtBalanceOf(address,bytes32)": FunctionFragment;
-    "getSynths(bytes32[])": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "issuanceRatio()": FunctionFragment;
-    "issueMaxSynths(address)": FunctionFragment;
-    "issueMaxSynthsOnBehalf(address,address)": FunctionFragment;
-    "issueSynths(address,uint256)": FunctionFragment;
-    "issueSynthsOnBehalf(address,address,uint256)": FunctionFragment;
-    "issueSynthsWithoutDebt(bytes32,address,uint256)": FunctionFragment;
-    "lastIssueEvent(address)": FunctionFragment;
-    "liquidateAccount(address,bool)": FunctionFragment;
-    "maxIssuableSynths(address)": FunctionFragment;
-    "minimumStakeTime()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "remainingIssuableSynths(address)": FunctionFragment;
-    "removeSynth(bytes32)": FunctionFragment;
-    "removeSynths(bytes32[])": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "setCurrentPeriodId(uint128)": FunctionFragment;
-    "synths(bytes32)": FunctionFragment;
-    "synthsByAddress(address)": FunctionFragment;
-    "totalIssuedSynths(bytes32,bool)": FunctionFragment;
-    "transferableSynthetixAndAnyRateIsInvalid(address,uint256)": FunctionFragment;
-    "upgradeCollateralShort(address,uint256)": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'addSynth(address)': FunctionFragment;
+    'addSynths(address[])': FunctionFragment;
+    'allNetworksDebtInfo()': FunctionFragment;
+    'anySynthOrSNXRateIsInvalid()': FunctionFragment;
+    'availableCurrencyKeys()': FunctionFragment;
+    'availableSynthCount()': FunctionFragment;
+    'availableSynths(uint256)': FunctionFragment;
+    'burnForRedemption(address,address,uint256)': FunctionFragment;
+    'burnSynths(address,uint256)': FunctionFragment;
+    'burnSynthsOnBehalf(address,address,uint256)': FunctionFragment;
+    'burnSynthsToTarget(address)': FunctionFragment;
+    'burnSynthsToTargetOnBehalf(address,address)': FunctionFragment;
+    'burnSynthsWithoutDebt(bytes32,address,uint256)': FunctionFragment;
+    'canBurnSynths(address)': FunctionFragment;
+    'collateral(address)': FunctionFragment;
+    'collateralisationRatio(address)': FunctionFragment;
+    'collateralisationRatioAndAnyRatesInvalid(address)': FunctionFragment;
+    'debtBalanceOf(address,bytes32)': FunctionFragment;
+    'getSynths(bytes32[])': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'issuanceRatio()': FunctionFragment;
+    'issueMaxSynths(address)': FunctionFragment;
+    'issueMaxSynthsOnBehalf(address,address)': FunctionFragment;
+    'issueSynths(address,uint256)': FunctionFragment;
+    'issueSynthsOnBehalf(address,address,uint256)': FunctionFragment;
+    'issueSynthsWithoutDebt(bytes32,address,uint256)': FunctionFragment;
+    'lastIssueEvent(address)': FunctionFragment;
+    'liquidateAccount(address,bool)': FunctionFragment;
+    'maxIssuableSynths(address)': FunctionFragment;
+    'minimumStakeTime()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'remainingIssuableSynths(address)': FunctionFragment;
+    'removeSynth(bytes32)': FunctionFragment;
+    'removeSynths(bytes32[])': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'setCurrentPeriodId(uint128)': FunctionFragment;
+    'synths(bytes32)': FunctionFragment;
+    'synthsByAddress(address)': FunctionFragment;
+    'totalIssuedSynths(bytes32,bool)': FunctionFragment;
+    'transferableSynthetixAndAnyRateIsInvalid(address,uint256)': FunctionFragment;
+    'upgradeCollateralShort(address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "acceptOwnership"
-      | "addSynth"
-      | "addSynths"
-      | "allNetworksDebtInfo"
-      | "anySynthOrSNXRateIsInvalid"
-      | "availableCurrencyKeys"
-      | "availableSynthCount"
-      | "availableSynths"
-      | "burnForRedemption"
-      | "burnSynths"
-      | "burnSynthsOnBehalf"
-      | "burnSynthsToTarget"
-      | "burnSynthsToTargetOnBehalf"
-      | "burnSynthsWithoutDebt"
-      | "canBurnSynths"
-      | "collateral"
-      | "collateralisationRatio"
-      | "collateralisationRatioAndAnyRatesInvalid"
-      | "debtBalanceOf"
-      | "getSynths"
-      | "isResolverCached"
-      | "issuanceRatio"
-      | "issueMaxSynths"
-      | "issueMaxSynthsOnBehalf"
-      | "issueSynths"
-      | "issueSynthsOnBehalf"
-      | "issueSynthsWithoutDebt"
-      | "lastIssueEvent"
-      | "liquidateAccount"
-      | "maxIssuableSynths"
-      | "minimumStakeTime"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "rebuildCache"
-      | "remainingIssuableSynths"
-      | "removeSynth"
-      | "removeSynths"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "setCurrentPeriodId"
-      | "synths"
-      | "synthsByAddress"
-      | "totalIssuedSynths"
-      | "transferableSynthetixAndAnyRateIsInvalid"
-      | "upgradeCollateralShort"
+      | 'CONTRACT_NAME'
+      | 'acceptOwnership'
+      | 'addSynth'
+      | 'addSynths'
+      | 'allNetworksDebtInfo'
+      | 'anySynthOrSNXRateIsInvalid'
+      | 'availableCurrencyKeys'
+      | 'availableSynthCount'
+      | 'availableSynths'
+      | 'burnForRedemption'
+      | 'burnSynths'
+      | 'burnSynthsOnBehalf'
+      | 'burnSynthsToTarget'
+      | 'burnSynthsToTargetOnBehalf'
+      | 'burnSynthsWithoutDebt'
+      | 'canBurnSynths'
+      | 'collateral'
+      | 'collateralisationRatio'
+      | 'collateralisationRatioAndAnyRatesInvalid'
+      | 'debtBalanceOf'
+      | 'getSynths'
+      | 'isResolverCached'
+      | 'issuanceRatio'
+      | 'issueMaxSynths'
+      | 'issueMaxSynthsOnBehalf'
+      | 'issueSynths'
+      | 'issueSynthsOnBehalf'
+      | 'issueSynthsWithoutDebt'
+      | 'lastIssueEvent'
+      | 'liquidateAccount'
+      | 'maxIssuableSynths'
+      | 'minimumStakeTime'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'rebuildCache'
+      | 'remainingIssuableSynths'
+      | 'removeSynth'
+      | 'removeSynths'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'setCurrentPeriodId'
+      | 'synths'
+      | 'synthsByAddress'
+      | 'totalIssuedSynths'
+      | 'transferableSynthetixAndAnyRateIsInvalid'
+      | 'upgradeCollateralShort'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'addSynth', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addSynths', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'allNetworksDebtInfo', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'anySynthOrSNXRateIsInvalid', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'availableCurrencyKeys', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'availableSynthCount', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addSynth",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addSynths",
-    values: [PromiseOrValue<string>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "allNetworksDebtInfo",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "anySynthOrSNXRateIsInvalid",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "availableCurrencyKeys",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "availableSynthCount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "availableSynths",
+    functionFragment: 'availableSynths',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "burnForRedemption",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'burnForRedemption',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "burnSynths",
+    functionFragment: 'burnSynths',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "burnSynthsOnBehalf",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'burnSynthsOnBehalf',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "burnSynthsToTarget",
+    functionFragment: 'burnSynthsToTarget',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "burnSynthsToTargetOnBehalf",
+    functionFragment: 'burnSynthsToTargetOnBehalf',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "burnSynthsWithoutDebt",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'burnSynthsWithoutDebt',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'canBurnSynths', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'collateral', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "canBurnSynths",
+    functionFragment: 'collateralisationRatio',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "collateral",
+    functionFragment: 'collateralisationRatioAndAnyRatesInvalid',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "collateralisationRatio",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "collateralisationRatioAndAnyRatesInvalid",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "debtBalanceOf",
+    functionFragment: 'debtBalanceOf',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'getSynths', values: [PromiseOrValue<BytesLike>[]]): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'issuanceRatio', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'issueMaxSynths', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "getSynths",
-    values: [PromiseOrValue<BytesLike>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "issuanceRatio",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "issueMaxSynths",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "issueMaxSynthsOnBehalf",
+    functionFragment: 'issueMaxSynthsOnBehalf',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "issueSynths",
+    functionFragment: 'issueSynths',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "issueSynthsOnBehalf",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'issueSynthsOnBehalf',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "issueSynthsWithoutDebt",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'issueSynthsWithoutDebt',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'lastIssueEvent', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "lastIssueEvent",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidateAccount",
+    functionFragment: 'liquidateAccount',
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
-    functionFragment: "maxIssuableSynths",
+    functionFragment: 'maxIssuableSynths',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'minimumStakeTime', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "minimumStakeTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "remainingIssuableSynths",
+    functionFragment: 'remainingIssuableSynths',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'removeSynth', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "removeSynth",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeSynths",
+    functionFragment: 'removeSynths',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setCurrentPeriodId",
+    functionFragment: 'setCurrentPeriodId',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'synths', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'synthsByAddress', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "synths",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "synthsByAddress",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalIssuedSynths",
+    functionFragment: 'totalIssuedSynths',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
-    functionFragment: "transferableSynthetixAndAnyRateIsInvalid",
+    functionFragment: 'transferableSynthetixAndAnyRateIsInvalid',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "upgradeCollateralShort",
+    functionFragment: 'upgradeCollateralShort',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
 
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addSynth', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allNetworksDebtInfo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'anySynthOrSNXRateIsInvalid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'availableCurrencyKeys', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'availableSynthCount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'availableSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnForRedemption', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnSynthsOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnSynthsToTarget', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnSynthsToTargetOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnSynthsWithoutDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'canBurnSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'collateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'collateralisationRatio', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
+    functionFragment: 'collateralisationRatioAndAnyRatesInvalid',
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: 'debtBalanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issuanceRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issueMaxSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issueMaxSynthsOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issueSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issueSynthsOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issueSynthsWithoutDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastIssueEvent', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidateAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxIssuableSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minimumStakeTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'remainingIssuableSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeSynth', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setCurrentPeriodId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthsByAddress', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalIssuedSynths', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "acceptOwnership",
+    functionFragment: 'transferableSynthetixAndAnyRateIsInvalid',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "addSynth", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "addSynths", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "allNetworksDebtInfo",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "anySynthOrSNXRateIsInvalid",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "availableCurrencyKeys",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "availableSynthCount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "availableSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "burnForRedemption",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "burnSynths", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "burnSynthsOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "burnSynthsToTarget",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "burnSynthsToTargetOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "burnSynthsWithoutDebt",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "canBurnSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "collateral", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "collateralisationRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "collateralisationRatioAndAnyRatesInvalid",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "debtBalanceOf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getSynths", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issuanceRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issueMaxSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issueMaxSynthsOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issueSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issueSynthsOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issueSynthsWithoutDebt",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastIssueEvent",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidateAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "maxIssuableSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "minimumStakeTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "remainingIssuableSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeSynth",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setCurrentPeriodId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "synths", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "synthsByAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalIssuedSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferableSynthetixAndAnyRateIsInvalid",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "upgradeCollateralShort",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'upgradeCollateralShort', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "SynthAdded(bytes32,address)": EventFragment;
-    "SynthRemoved(bytes32,address)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'SynthAdded(bytes32,address)': EventFragment;
+    'SynthRemoved(bytes32,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthAdded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthRemoved'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -527,20 +323,14 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -548,10 +338,7 @@ export interface SynthAddedEventObject {
   currencyKey: string;
   synth: string;
 }
-export type SynthAddedEvent = TypedEvent<
-  [string, string],
-  SynthAddedEventObject
->;
+export type SynthAddedEvent = TypedEvent<[string, string], SynthAddedEventObject>;
 
 export type SynthAddedEventFilter = TypedEventFilter<SynthAddedEvent>;
 
@@ -559,10 +346,7 @@ export interface SynthRemovedEventObject {
   currencyKey: string;
   synth: string;
 }
-export type SynthRemovedEvent = TypedEvent<
-  [string, string],
-  SynthRemovedEventObject
->;
+export type SynthRemovedEvent = TypedEvent<[string, string], SynthRemovedEventObject>;
 
 export type SynthRemovedEventFilter = TypedEventFilter<SynthRemovedEvent>;
 
@@ -583,9 +367,7 @@ export interface IssuerAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -609,9 +391,7 @@ export interface IssuerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    allNetworksDebtInfo(
-      overrides?: CallOverrides
-    ): Promise<
+    allNetworksDebtInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, boolean] & {
         debt: BigNumber;
         sharesSupply: BigNumber;
@@ -670,15 +450,9 @@ export interface IssuerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    canBurnSynths(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    canBurnSynths(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    collateral(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     collateralisationRatio(
       _issuer: PromiseOrValue<string>,
@@ -688,9 +462,7 @@ export interface IssuerAbiTypes extends BaseContract {
     collateralisationRatioAndAnyRatesInvalid(
       _issuer: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { cratio: BigNumber; anyRateIsInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { cratio: BigNumber; anyRateIsInvalid: boolean }>;
 
     debtBalanceOf(
       _issuer: PromiseOrValue<string>,
@@ -801,15 +573,9 @@ export interface IssuerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    synths(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    synths(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    synthsByAddress(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    synthsByAddress(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     totalIssuedSynths(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -851,9 +617,7 @@ export interface IssuerAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  allNetworksDebtInfo(
-    overrides?: CallOverrides
-  ): Promise<
+  allNetworksDebtInfo(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, boolean] & {
       debt: BigNumber;
       sharesSupply: BigNumber;
@@ -867,10 +631,7 @@ export interface IssuerAbiTypes extends BaseContract {
 
   availableSynthCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  availableSynths(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  availableSynths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   burnForRedemption(
     deprecatedSynthProxy: PromiseOrValue<string>,
@@ -910,15 +671,9 @@ export interface IssuerAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  canBurnSynths(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  canBurnSynths(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  collateral(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   collateralisationRatio(
     _issuer: PromiseOrValue<string>,
@@ -928,9 +683,7 @@ export interface IssuerAbiTypes extends BaseContract {
   collateralisationRatioAndAnyRatesInvalid(
     _issuer: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { cratio: BigNumber; anyRateIsInvalid: boolean }
-  >;
+  ): Promise<[BigNumber, boolean] & { cratio: BigNumber; anyRateIsInvalid: boolean }>;
 
   debtBalanceOf(
     _issuer: PromiseOrValue<string>,
@@ -978,10 +731,7 @@ export interface IssuerAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  lastIssueEvent(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  lastIssueEvent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   liquidateAccount(
     account: PromiseOrValue<string>,
@@ -989,10 +739,7 @@ export interface IssuerAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  maxIssuableSynths(
-    _issuer: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  maxIssuableSynths(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   minimumStakeTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1039,15 +786,9 @@ export interface IssuerAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  synths(
-    arg0: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  synths(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  synthsByAddress(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  synthsByAddress(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   totalIssuedSynths(
     currencyKey: PromiseOrValue<BytesLike>,
@@ -1077,19 +818,11 @@ export interface IssuerAbiTypes extends BaseContract {
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    addSynth(
-      synth: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    addSynth(synth: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    addSynths(
-      synthsToAdd: PromiseOrValue<string>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    addSynths(synthsToAdd: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    allNetworksDebtInfo(
-      overrides?: CallOverrides
-    ): Promise<
+    allNetworksDebtInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, boolean] & {
         debt: BigNumber;
         sharesSupply: BigNumber;
@@ -1103,10 +836,7 @@ export interface IssuerAbiTypes extends BaseContract {
 
     availableSynthCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    availableSynths(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    availableSynths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     burnForRedemption(
       deprecatedSynthProxy: PromiseOrValue<string>,
@@ -1128,10 +858,7 @@ export interface IssuerAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    burnSynthsToTarget(
-      from: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    burnSynthsToTarget(from: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     burnSynthsToTargetOnBehalf(
       burnForAddress: PromiseOrValue<string>,
@@ -1146,15 +873,9 @@ export interface IssuerAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    canBurnSynths(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    canBurnSynths(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    collateral(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     collateralisationRatio(
       _issuer: PromiseOrValue<string>,
@@ -1164,9 +885,7 @@ export interface IssuerAbiTypes extends BaseContract {
     collateralisationRatioAndAnyRatesInvalid(
       _issuer: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { cratio: BigNumber; anyRateIsInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { cratio: BigNumber; anyRateIsInvalid: boolean }>;
 
     debtBalanceOf(
       _issuer: PromiseOrValue<string>,
@@ -1183,10 +902,7 @@ export interface IssuerAbiTypes extends BaseContract {
 
     issuanceRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    issueMaxSynths(
-      from: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    issueMaxSynths(from: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     issueMaxSynthsOnBehalf(
       issueForAddress: PromiseOrValue<string>,
@@ -1214,10 +930,7 @@ export interface IssuerAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    lastIssueEvent(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    lastIssueEvent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidateAccount(
       account: PromiseOrValue<string>,
@@ -1237,10 +950,7 @@ export interface IssuerAbiTypes extends BaseContract {
 
     minimumStakeTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -1259,10 +969,7 @@ export interface IssuerAbiTypes extends BaseContract {
       }
     >;
 
-    removeSynth(
-      currencyKey: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    removeSynth(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     removeSynths(
       currencyKeys: PromiseOrValue<BytesLike>[],
@@ -1278,15 +985,9 @@ export interface IssuerAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    synths(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    synths(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    synthsByAddress(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    synthsByAddress(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     totalIssuedSynths(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -1313,40 +1014,26 @@ export interface IssuerAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "SynthAdded(bytes32,address)"(
-      currencyKey?: null,
-      synth?: null
-    ): SynthAddedEventFilter;
+    'SynthAdded(bytes32,address)'(currencyKey?: null, synth?: null): SynthAddedEventFilter;
     SynthAdded(currencyKey?: null, synth?: null): SynthAddedEventFilter;
 
-    "SynthRemoved(bytes32,address)"(
-      currencyKey?: null,
-      synth?: null
-    ): SynthRemovedEventFilter;
+    'SynthRemoved(bytes32,address)'(currencyKey?: null, synth?: null): SynthRemovedEventFilter;
     SynthRemoved(currencyKey?: null, synth?: null): SynthRemovedEventFilter;
   };
 
   estimateGas: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     addSynth(
       synth: PromiseOrValue<string>,
@@ -1409,15 +1096,9 @@ export interface IssuerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    canBurnSynths(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    canBurnSynths(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    collateral(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     collateralisationRatio(
       _issuer: PromiseOrValue<string>,
@@ -1475,10 +1156,7 @@ export interface IssuerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    lastIssueEvent(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    lastIssueEvent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidateAccount(
       account: PromiseOrValue<string>,
@@ -1502,9 +1180,7 @@ export interface IssuerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     remainingIssuableSynths(
       _issuer: PromiseOrValue<string>,
@@ -1530,15 +1206,9 @@ export interface IssuerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    synths(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    synths(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    synthsByAddress(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    synthsByAddress(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalIssuedSynths(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -1576,21 +1246,13 @@ export interface IssuerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    allNetworksDebtInfo(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    allNetworksDebtInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    anySynthOrSNXRateIsInvalid(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    anySynthOrSNXRateIsInvalid(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    availableCurrencyKeys(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    availableCurrencyKeys(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    availableSynthCount(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    availableSynthCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     availableSynths(
       arg0: PromiseOrValue<BigNumberish>,
@@ -1749,9 +1411,7 @@ export interface IssuerAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setCurrentPeriodId(
       periodId: PromiseOrValue<BigNumberish>,

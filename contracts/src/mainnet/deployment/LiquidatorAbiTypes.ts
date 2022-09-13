@@ -12,103 +12,87 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface LiquidatorAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "LIQUIDATION_CALLER()": FunctionFragment;
-    "LIQUIDATION_DEADLINE()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "calculateAmountToFixCollateral(uint256,uint256,uint256)": FunctionFragment;
-    "checkAndRemoveAccountInLiquidation(address)": FunctionFragment;
-    "flagAccountForLiquidation(address)": FunctionFragment;
-    "flagReward()": FunctionFragment;
-    "getLiquidationCallerForAccount(address)": FunctionFragment;
-    "getLiquidationDeadlineForAccount(address)": FunctionFragment;
-    "isLiquidationDeadlinePassed(address)": FunctionFragment;
-    "isLiquidationOpen(address,bool)": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "issuanceRatio()": FunctionFragment;
-    "liquidateReward()": FunctionFragment;
-    "liquidationCollateralRatio()": FunctionFragment;
-    "liquidationDelay()": FunctionFragment;
-    "liquidationEscrowDuration()": FunctionFragment;
-    "liquidationPenalty()": FunctionFragment;
-    "liquidationRatio()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "removeAccountInLiquidation(address)": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "selfLiquidationPenalty()": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'LIQUIDATION_CALLER()': FunctionFragment;
+    'LIQUIDATION_DEADLINE()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'calculateAmountToFixCollateral(uint256,uint256,uint256)': FunctionFragment;
+    'checkAndRemoveAccountInLiquidation(address)': FunctionFragment;
+    'flagAccountForLiquidation(address)': FunctionFragment;
+    'flagReward()': FunctionFragment;
+    'getLiquidationCallerForAccount(address)': FunctionFragment;
+    'getLiquidationDeadlineForAccount(address)': FunctionFragment;
+    'isLiquidationDeadlinePassed(address)': FunctionFragment;
+    'isLiquidationOpen(address,bool)': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'issuanceRatio()': FunctionFragment;
+    'liquidateReward()': FunctionFragment;
+    'liquidationCollateralRatio()': FunctionFragment;
+    'liquidationDelay()': FunctionFragment;
+    'liquidationEscrowDuration()': FunctionFragment;
+    'liquidationPenalty()': FunctionFragment;
+    'liquidationRatio()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'removeAccountInLiquidation(address)': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'selfLiquidationPenalty()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "LIQUIDATION_CALLER"
-      | "LIQUIDATION_DEADLINE"
-      | "acceptOwnership"
-      | "calculateAmountToFixCollateral"
-      | "checkAndRemoveAccountInLiquidation"
-      | "flagAccountForLiquidation"
-      | "flagReward"
-      | "getLiquidationCallerForAccount"
-      | "getLiquidationDeadlineForAccount"
-      | "isLiquidationDeadlinePassed"
-      | "isLiquidationOpen"
-      | "isResolverCached"
-      | "issuanceRatio"
-      | "liquidateReward"
-      | "liquidationCollateralRatio"
-      | "liquidationDelay"
-      | "liquidationEscrowDuration"
-      | "liquidationPenalty"
-      | "liquidationRatio"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "rebuildCache"
-      | "removeAccountInLiquidation"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "selfLiquidationPenalty"
+      | 'CONTRACT_NAME'
+      | 'LIQUIDATION_CALLER'
+      | 'LIQUIDATION_DEADLINE'
+      | 'acceptOwnership'
+      | 'calculateAmountToFixCollateral'
+      | 'checkAndRemoveAccountInLiquidation'
+      | 'flagAccountForLiquidation'
+      | 'flagReward'
+      | 'getLiquidationCallerForAccount'
+      | 'getLiquidationDeadlineForAccount'
+      | 'isLiquidationDeadlinePassed'
+      | 'isLiquidationOpen'
+      | 'isResolverCached'
+      | 'issuanceRatio'
+      | 'liquidateReward'
+      | 'liquidationCollateralRatio'
+      | 'liquidationDelay'
+      | 'liquidationEscrowDuration'
+      | 'liquidationPenalty'
+      | 'liquidationRatio'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'rebuildCache'
+      | 'removeAccountInLiquidation'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'selfLiquidationPenalty'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'LIQUIDATION_CALLER', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'LIQUIDATION_DEADLINE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "LIQUIDATION_CALLER",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "LIQUIDATION_DEADLINE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "calculateAmountToFixCollateral",
+    functionFragment: 'calculateAmountToFixCollateral',
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -116,213 +100,101 @@ export interface LiquidatorAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "checkAndRemoveAccountInLiquidation",
+    functionFragment: 'checkAndRemoveAccountInLiquidation',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "flagAccountForLiquidation",
+    functionFragment: 'flagAccountForLiquidation',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'flagReward', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'getLiquidationCallerForAccount',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "flagReward",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getLiquidationCallerForAccount",
+    functionFragment: 'getLiquidationDeadlineForAccount',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getLiquidationDeadlineForAccount",
+    functionFragment: 'isLiquidationDeadlinePassed',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "isLiquidationDeadlinePassed",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isLiquidationOpen",
+    functionFragment: 'isLiquidationOpen',
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'issuanceRatio', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'liquidateReward', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'liquidationCollateralRatio', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'liquidationDelay', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'liquidationEscrowDuration', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'liquidationPenalty', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'liquidationRatio', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "issuanceRatio",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidateReward",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidationCollateralRatio",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidationDelay",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidationEscrowDuration",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidationPenalty",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidationRatio",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeAccountInLiquidation",
+    functionFragment: 'removeAccountInLiquidation',
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "selfLiquidationPenalty",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'selfLiquidationPenalty', values?: undefined): string;
 
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'LIQUIDATION_CALLER', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'LIQUIDATION_DEADLINE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'calculateAmountToFixCollateral', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
+    functionFragment: 'checkAndRemoveAccountInLiquidation',
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: 'flagAccountForLiquidation', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'flagReward', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getLiquidationCallerForAccount', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "LIQUIDATION_CALLER",
+    functionFragment: 'getLiquidationDeadlineForAccount',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "LIQUIDATION_DEADLINE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "calculateAmountToFixCollateral",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "checkAndRemoveAccountInLiquidation",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "flagAccountForLiquidation",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "flagReward", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getLiquidationCallerForAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getLiquidationDeadlineForAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isLiquidationDeadlinePassed",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isLiquidationOpen",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issuanceRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidateReward",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidationCollateralRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidationDelay",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidationEscrowDuration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidationPenalty",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidationRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeAccountInLiquidation",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "selfLiquidationPenalty",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'isLiquidationDeadlinePassed', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isLiquidationOpen', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issuanceRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidateReward', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationCollateralRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationDelay', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationEscrowDuration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationPenalty', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeAccountInLiquidation', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'selfLiquidationPenalty', data: BytesLike): Result;
 
   events: {
-    "AccountFlaggedForLiquidation(address,uint256)": EventFragment;
-    "AccountRemovedFromLiquidation(address,uint256)": EventFragment;
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'AccountFlaggedForLiquidation(address,uint256)': EventFragment;
+    'AccountRemovedFromLiquidation(address,uint256)': EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(
-    nameOrSignatureOrTopic: "AccountFlaggedForLiquidation"
-  ): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "AccountRemovedFromLiquidation"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AccountFlaggedForLiquidation'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AccountRemovedFromLiquidation'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface AccountFlaggedForLiquidationEventObject {
@@ -353,10 +225,7 @@ export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -364,20 +233,14 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -398,9 +261,7 @@ export interface LiquidatorAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -656,10 +517,7 @@ export interface LiquidatorAbiTypes extends BaseContract {
 
     liquidationRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -680,7 +538,7 @@ export interface LiquidatorAbiTypes extends BaseContract {
   };
 
   filters: {
-    "AccountFlaggedForLiquidation(address,uint256)"(
+    'AccountFlaggedForLiquidation(address,uint256)'(
       account?: PromiseOrValue<string> | null,
       deadline?: null
     ): AccountFlaggedForLiquidationEventFilter;
@@ -689,7 +547,7 @@ export interface LiquidatorAbiTypes extends BaseContract {
       deadline?: null
     ): AccountFlaggedForLiquidationEventFilter;
 
-    "AccountRemovedFromLiquidation(address,uint256)"(
+    'AccountRemovedFromLiquidation(address,uint256)'(
       account?: PromiseOrValue<string> | null,
       time?: null
     ): AccountRemovedFromLiquidationEventFilter;
@@ -698,19 +556,13 @@ export interface LiquidatorAbiTypes extends BaseContract {
       time?: null
     ): AccountRemovedFromLiquidationEventFilter;
 
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
@@ -721,9 +573,7 @@ export interface LiquidatorAbiTypes extends BaseContract {
 
     LIQUIDATION_DEADLINE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     calculateAmountToFixCollateral(
       debtBalance: PromiseOrValue<BigNumberish>,
@@ -790,9 +640,7 @@ export interface LiquidatorAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     removeAccountInLiquidation(
       account: PromiseOrValue<string>,
@@ -809,13 +657,9 @@ export interface LiquidatorAbiTypes extends BaseContract {
   populateTransaction: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    LIQUIDATION_CALLER(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    LIQUIDATION_CALLER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    LIQUIDATION_DEADLINE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    LIQUIDATION_DEADLINE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     acceptOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -867,19 +711,13 @@ export interface LiquidatorAbiTypes extends BaseContract {
 
     liquidateReward(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    liquidationCollateralRatio(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    liquidationCollateralRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidationDelay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    liquidationEscrowDuration(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    liquidationEscrowDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    liquidationPenalty(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    liquidationPenalty(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidationRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -903,12 +741,8 @@ export interface LiquidatorAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    selfLiquidationPenalty(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    selfLiquidationPenalty(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

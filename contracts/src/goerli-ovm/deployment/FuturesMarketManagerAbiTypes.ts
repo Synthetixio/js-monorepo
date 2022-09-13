@@ -12,268 +12,177 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface FuturesMarketManagerAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "addMarkets(address[])": FunctionFragment;
-    "allMarketSummaries()": FunctionFragment;
-    "allMarkets()": FunctionFragment;
-    "burnSUSD(address,uint256)": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "issueSUSD(address,uint256)": FunctionFragment;
-    "marketForKey(bytes32)": FunctionFragment;
-    "marketSummaries(address[])": FunctionFragment;
-    "marketSummariesForKeys(bytes32[])": FunctionFragment;
-    "markets(uint256,uint256)": FunctionFragment;
-    "marketsForKeys(bytes32[])": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "numMarkets()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "payFee(uint256,bytes32)": FunctionFragment;
-    "payFee(uint256)": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "removeMarkets(address[])": FunctionFragment;
-    "removeMarketsByKey(bytes32[])": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "totalDebt()": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'addMarkets(address[])': FunctionFragment;
+    'allMarketSummaries()': FunctionFragment;
+    'allMarkets()': FunctionFragment;
+    'burnSUSD(address,uint256)': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'issueSUSD(address,uint256)': FunctionFragment;
+    'marketForKey(bytes32)': FunctionFragment;
+    'marketSummaries(address[])': FunctionFragment;
+    'marketSummariesForKeys(bytes32[])': FunctionFragment;
+    'markets(uint256,uint256)': FunctionFragment;
+    'marketsForKeys(bytes32[])': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'numMarkets()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'payFee(uint256,bytes32)': FunctionFragment;
+    'payFee(uint256)': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'removeMarkets(address[])': FunctionFragment;
+    'removeMarketsByKey(bytes32[])': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'totalDebt()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "acceptOwnership"
-      | "addMarkets"
-      | "allMarketSummaries"
-      | "allMarkets"
-      | "burnSUSD"
-      | "isResolverCached"
-      | "issueSUSD"
-      | "marketForKey"
-      | "marketSummaries"
-      | "marketSummariesForKeys"
-      | "markets"
-      | "marketsForKeys"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "numMarkets"
-      | "owner"
-      | "payFee(uint256,bytes32)"
-      | "payFee(uint256)"
-      | "rebuildCache"
-      | "removeMarkets"
-      | "removeMarketsByKey"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "totalDebt"
+      | 'CONTRACT_NAME'
+      | 'acceptOwnership'
+      | 'addMarkets'
+      | 'allMarketSummaries'
+      | 'allMarkets'
+      | 'burnSUSD'
+      | 'isResolverCached'
+      | 'issueSUSD'
+      | 'marketForKey'
+      | 'marketSummaries'
+      | 'marketSummariesForKeys'
+      | 'markets'
+      | 'marketsForKeys'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'numMarkets'
+      | 'owner'
+      | 'payFee(uint256,bytes32)'
+      | 'payFee(uint256)'
+      | 'rebuildCache'
+      | 'removeMarkets'
+      | 'removeMarketsByKey'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'totalDebt'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'addMarkets', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'allMarketSummaries', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'allMarkets', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
+    functionFragment: 'burnSUSD',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
+    functionFragment: 'issueSUSD',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'marketForKey', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "addMarkets",
+    functionFragment: 'marketSummaries',
     values: [PromiseOrValue<string>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "allMarketSummaries",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "allMarkets",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "burnSUSD",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "issueSUSD",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "marketForKey",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "marketSummaries",
-    values: [PromiseOrValue<string>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "marketSummariesForKeys",
+    functionFragment: 'marketSummariesForKeys',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "markets",
+    functionFragment: 'markets',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "marketsForKeys",
+    functionFragment: 'marketsForKeys',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'numMarkets', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "numMarkets",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "payFee(uint256,bytes32)",
+    functionFragment: 'payFee(uint256,bytes32)',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "payFee(uint256)",
+    functionFragment: 'payFee(uint256)',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'removeMarkets', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeMarkets",
-    values: [PromiseOrValue<string>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeMarketsByKey",
+    functionFragment: 'removeMarketsByKey',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "totalDebt", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalDebt', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "addMarkets", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "allMarketSummaries",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "allMarkets", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "burnSUSD", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "issueSUSD", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "marketForKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "marketSummaries",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "marketSummariesForKeys",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "markets", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "marketsForKeys",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "numMarkets", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "payFee(uint256,bytes32)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "payFee(uint256)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeMarkets",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeMarketsByKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "totalDebt", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addMarkets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allMarketSummaries', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allMarkets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnSUSD', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issueSUSD', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketForKey', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketSummaries', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketSummariesForKeys', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'markets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketsForKeys', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'numMarkets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'payFee(uint256,bytes32)', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'payFee(uint256)', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeMarkets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeMarketsByKey', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalDebt', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "MarketAdded(address,bytes32,bytes32)": EventFragment;
-    "MarketRemoved(address,bytes32,bytes32)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'MarketAdded(address,bytes32,bytes32)': EventFragment;
+    'MarketRemoved(address,bytes32,bytes32)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MarketAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MarketRemoved"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MarketAdded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MarketRemoved'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -282,10 +191,7 @@ export interface MarketAddedEventObject {
   asset: string;
   marketKey: string;
 }
-export type MarketAddedEvent = TypedEvent<
-  [string, string, string],
-  MarketAddedEventObject
->;
+export type MarketAddedEvent = TypedEvent<[string, string, string], MarketAddedEventObject>;
 
 export type MarketAddedEventFilter = TypedEventFilter<MarketAddedEvent>;
 
@@ -294,10 +200,7 @@ export interface MarketRemovedEventObject {
   asset: string;
   marketKey: string;
 }
-export type MarketRemovedEvent = TypedEvent<
-  [string, string, string],
-  MarketRemovedEventObject
->;
+export type MarketRemovedEvent = TypedEvent<[string, string, string], MarketRemovedEventObject>;
 
 export type MarketRemovedEventFilter = TypedEventFilter<MarketRemovedEvent>;
 
@@ -305,20 +208,14 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -339,9 +236,7 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -360,21 +255,9 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    allMarketSummaries(
-      overrides?: CallOverrides
-    ): Promise<
+    allMarketSummaries(overrides?: CallOverrides): Promise<
       [
-        [
-          string,
-          string,
-          string,
-          BigNumber,
-          BigNumber,
-          BigNumber,
-          BigNumber,
-          BigNumber,
-          boolean
-        ] &
+        [string, string, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean] &
           {
             market: string;
             asset: string;
@@ -405,27 +288,14 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    marketForKey(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    marketForKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     marketSummaries(
       addresses: PromiseOrValue<string>[],
       overrides?: CallOverrides
     ): Promise<
       [
-        [
-          string,
-          string,
-          string,
-          BigNumber,
-          BigNumber,
-          BigNumber,
-          BigNumber,
-          BigNumber,
-          boolean
-        ] &
+        [string, string, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean] &
           {
             market: string;
             asset: string;
@@ -445,17 +315,7 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<
       [
-        [
-          string,
-          string,
-          string,
-          BigNumber,
-          BigNumber,
-          BigNumber,
-          BigNumber,
-          BigNumber,
-          boolean
-        ] &
+        [string, string, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean] &
           {
             market: string;
             asset: string;
@@ -492,13 +352,13 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    "payFee(uint256,bytes32)"(
+    'payFee(uint256,bytes32)'(
       amount: PromiseOrValue<BigNumberish>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "payFee(uint256)"(
+    'payFee(uint256)'(
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -539,20 +399,8 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  allMarketSummaries(
-    overrides?: CallOverrides
-  ): Promise<
-    [
-      string,
-      string,
-      string,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      boolean
-    ] &
+  allMarketSummaries(overrides?: CallOverrides): Promise<
+    [string, string, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean] &
       {
         market: string;
         asset: string;
@@ -582,26 +430,13 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  marketForKey(
-    arg0: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  marketForKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   marketSummaries(
     addresses: PromiseOrValue<string>[],
     overrides?: CallOverrides
   ): Promise<
-    [
-      string,
-      string,
-      string,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      boolean
-    ] &
+    [string, string, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean] &
       {
         market: string;
         asset: string;
@@ -619,17 +454,7 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
     marketKeys: PromiseOrValue<BytesLike>[],
     overrides?: CallOverrides
   ): Promise<
-    [
-      string,
-      string,
-      string,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      boolean
-    ] &
+    [string, string, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean] &
       {
         market: string;
         asset: string;
@@ -665,13 +490,13 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  "payFee(uint256,bytes32)"(
+  'payFee(uint256,bytes32)'(
     amount: PromiseOrValue<BigNumberish>,
     trackingCode: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "payFee(uint256)"(
+  'payFee(uint256)'(
     amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -703,25 +528,10 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    addMarkets(
-      marketsToAdd: PromiseOrValue<string>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    addMarkets(marketsToAdd: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    allMarketSummaries(
-      overrides?: CallOverrides
-    ): Promise<
-      [
-        string,
-        string,
-        string,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean
-      ] &
+    allMarketSummaries(overrides?: CallOverrides): Promise<
+      [string, string, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean] &
         {
           market: string;
           asset: string;
@@ -751,26 +561,13 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    marketForKey(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    marketForKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     marketSummaries(
       addresses: PromiseOrValue<string>[],
       overrides?: CallOverrides
     ): Promise<
-      [
-        string,
-        string,
-        string,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean
-      ] &
+      [string, string, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean] &
         {
           market: string;
           asset: string;
@@ -788,17 +585,7 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
       marketKeys: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides
     ): Promise<
-      [
-        string,
-        string,
-        string,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean
-      ] &
+      [string, string, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean] &
         {
           market: string;
           asset: string;
@@ -823,10 +610,7 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string[]>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -834,13 +618,13 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    "payFee(uint256,bytes32)"(
+    'payFee(uint256,bytes32)'(
       amount: PromiseOrValue<BigNumberish>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "payFee(uint256)"(
+    'payFee(uint256)'(
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -867,13 +651,10 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "MarketAdded(address,bytes32,bytes32)"(
+    'MarketAdded(address,bytes32,bytes32)'(
       market?: null,
       asset?: PromiseOrValue<BytesLike> | null,
       marketKey?: PromiseOrValue<BytesLike> | null
@@ -884,7 +665,7 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
       marketKey?: PromiseOrValue<BytesLike> | null
     ): MarketAddedEventFilter;
 
-    "MarketRemoved(address,bytes32,bytes32)"(
+    'MarketRemoved(address,bytes32,bytes32)'(
       market?: null,
       asset?: PromiseOrValue<BytesLike> | null,
       marketKey?: PromiseOrValue<BytesLike> | null
@@ -895,22 +676,17 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
       marketKey?: PromiseOrValue<BytesLike> | null
     ): MarketRemovedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
   estimateGas: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     addMarkets(
       marketsToAdd: PromiseOrValue<string>[],
@@ -935,10 +711,7 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    marketForKey(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    marketForKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     marketSummaries(
       addresses: PromiseOrValue<string>[],
@@ -972,20 +745,18 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "payFee(uint256,bytes32)"(
+    'payFee(uint256,bytes32)'(
       amount: PromiseOrValue<BigNumberish>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "payFee(uint256)"(
+    'payFee(uint256)'(
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     removeMarkets(
       marketsToRemove: PromiseOrValue<string>[],
@@ -1016,9 +787,7 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    allMarketSummaries(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    allMarketSummaries(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     allMarkets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1073,13 +842,13 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "payFee(uint256,bytes32)"(
+    'payFee(uint256,bytes32)'(
       amount: PromiseOrValue<BigNumberish>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "payFee(uint256)"(
+    'payFee(uint256)'(
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -1100,9 +869,7 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

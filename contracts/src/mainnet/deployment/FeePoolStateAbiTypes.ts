@@ -12,91 +12,78 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface FeePoolStateAbiTypesInterface extends utils.Interface {
   functions: {
-    "nominateNewOwner(address)": FunctionFragment;
-    "initiationTime()": FunctionFragment;
-    "setFeePool(address)": FunctionFragment;
-    "setSelfDestructBeneficiary(address)": FunctionFragment;
-    "terminateSelfDestruct()": FunctionFragment;
-    "importIssuerData(address[],uint256[],uint256,uint256)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "accountIssuanceLedger(address,uint256)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "appendAccountIssuanceRecord(address,uint256,uint256,uint256)": FunctionFragment;
-    "selfDestruct()": FunctionFragment;
-    "SELFDESTRUCT_DELAY()": FunctionFragment;
-    "feePool()": FunctionFragment;
-    "getAccountsDebtEntry(address,uint256)": FunctionFragment;
-    "selfDestructInitiated()": FunctionFragment;
-    "initiateSelfDestruct()": FunctionFragment;
-    "selfDestructBeneficiary()": FunctionFragment;
-    "FEE_PERIOD_LENGTH()": FunctionFragment;
-    "applicableIssuanceData(address,uint256)": FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'initiationTime()': FunctionFragment;
+    'setFeePool(address)': FunctionFragment;
+    'setSelfDestructBeneficiary(address)': FunctionFragment;
+    'terminateSelfDestruct()': FunctionFragment;
+    'importIssuerData(address[],uint256[],uint256,uint256)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'accountIssuanceLedger(address,uint256)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'appendAccountIssuanceRecord(address,uint256,uint256,uint256)': FunctionFragment;
+    'selfDestruct()': FunctionFragment;
+    'SELFDESTRUCT_DELAY()': FunctionFragment;
+    'feePool()': FunctionFragment;
+    'getAccountsDebtEntry(address,uint256)': FunctionFragment;
+    'selfDestructInitiated()': FunctionFragment;
+    'initiateSelfDestruct()': FunctionFragment;
+    'selfDestructBeneficiary()': FunctionFragment;
+    'FEE_PERIOD_LENGTH()': FunctionFragment;
+    'applicableIssuanceData(address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "nominateNewOwner"
-      | "initiationTime"
-      | "setFeePool"
-      | "setSelfDestructBeneficiary"
-      | "terminateSelfDestruct"
-      | "importIssuerData"
-      | "nominatedOwner"
-      | "acceptOwnership"
-      | "accountIssuanceLedger"
-      | "owner"
-      | "appendAccountIssuanceRecord"
-      | "selfDestruct"
-      | "SELFDESTRUCT_DELAY"
-      | "feePool"
-      | "getAccountsDebtEntry"
-      | "selfDestructInitiated"
-      | "initiateSelfDestruct"
-      | "selfDestructBeneficiary"
-      | "FEE_PERIOD_LENGTH"
-      | "applicableIssuanceData"
+      | 'nominateNewOwner'
+      | 'initiationTime'
+      | 'setFeePool'
+      | 'setSelfDestructBeneficiary'
+      | 'terminateSelfDestruct'
+      | 'importIssuerData'
+      | 'nominatedOwner'
+      | 'acceptOwnership'
+      | 'accountIssuanceLedger'
+      | 'owner'
+      | 'appendAccountIssuanceRecord'
+      | 'selfDestruct'
+      | 'SELFDESTRUCT_DELAY'
+      | 'feePool'
+      | 'getAccountsDebtEntry'
+      | 'selfDestructInitiated'
+      | 'initiateSelfDestruct'
+      | 'selfDestructBeneficiary'
+      | 'FEE_PERIOD_LENGTH'
+      | 'applicableIssuanceData'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'initiationTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setFeePool', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "initiationTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setFeePool",
+    functionFragment: 'setSelfDestructBeneficiary',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'terminateSelfDestruct', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "setSelfDestructBeneficiary",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "terminateSelfDestruct",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "importIssuerData",
+    functionFragment: 'importIssuerData',
     values: [
       PromiseOrValue<string>[],
       PromiseOrValue<BigNumberish>[],
@@ -104,21 +91,15 @@ export interface FeePoolStateAbiTypesInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "accountIssuanceLedger",
+    functionFragment: 'accountIssuanceLedger',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "appendAccountIssuanceRecord",
+    functionFragment: 'appendAccountIssuanceRecord',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
@@ -126,131 +107,60 @@ export interface FeePoolStateAbiTypesInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
+  encodeFunctionData(functionFragment: 'selfDestruct', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'SELFDESTRUCT_DELAY', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'feePool', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "selfDestruct",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "SELFDESTRUCT_DELAY",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "feePool", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getAccountsDebtEntry",
+    functionFragment: 'getAccountsDebtEntry',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'selfDestructInitiated', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'initiateSelfDestruct', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'selfDestructBeneficiary', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'FEE_PERIOD_LENGTH', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "selfDestructInitiated",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initiateSelfDestruct",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "selfDestructBeneficiary",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "FEE_PERIOD_LENGTH",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "applicableIssuanceData",
+    functionFragment: 'applicableIssuanceData',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "initiationTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setFeePool", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setSelfDestructBeneficiary",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "terminateSelfDestruct",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "importIssuerData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "accountIssuanceLedger",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "appendAccountIssuanceRecord",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "selfDestruct",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "SELFDESTRUCT_DELAY",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "feePool", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getAccountsDebtEntry",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "selfDestructInitiated",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "initiateSelfDestruct",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "selfDestructBeneficiary",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "FEE_PERIOD_LENGTH",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "applicableIssuanceData",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initiationTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setFeePool', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSelfDestructBeneficiary', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'terminateSelfDestruct', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'importIssuerData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accountIssuanceLedger', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'appendAccountIssuanceRecord', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'selfDestruct', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'SELFDESTRUCT_DELAY', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'feePool', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAccountsDebtEntry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'selfDestructInitiated', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initiateSelfDestruct', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'selfDestructBeneficiary', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'FEE_PERIOD_LENGTH', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'applicableIssuanceData', data: BytesLike): Result;
 
   events: {
-    "IssuanceDebtRatioEntry(address,uint256,uint256)": EventFragment;
-    "SelfDestructTerminated()": EventFragment;
-    "SelfDestructed(address)": EventFragment;
-    "SelfDestructInitiated(uint256)": EventFragment;
-    "SelfDestructBeneficiaryUpdated(address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
+    'IssuanceDebtRatioEntry(address,uint256,uint256)': EventFragment;
+    'SelfDestructTerminated()': EventFragment;
+    'SelfDestructed(address)': EventFragment;
+    'SelfDestructInitiated(uint256)': EventFragment;
+    'SelfDestructBeneficiaryUpdated(address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "IssuanceDebtRatioEntry"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SelfDestructTerminated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SelfDestructed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SelfDestructInitiated"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "SelfDestructBeneficiaryUpdated"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'IssuanceDebtRatioEntry'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SelfDestructTerminated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SelfDestructed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SelfDestructInitiated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SelfDestructBeneficiaryUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
 }
 
 export interface IssuanceDebtRatioEntryEventObject {
@@ -263,38 +173,26 @@ export type IssuanceDebtRatioEntryEvent = TypedEvent<
   IssuanceDebtRatioEntryEventObject
 >;
 
-export type IssuanceDebtRatioEntryEventFilter =
-  TypedEventFilter<IssuanceDebtRatioEntryEvent>;
+export type IssuanceDebtRatioEntryEventFilter = TypedEventFilter<IssuanceDebtRatioEntryEvent>;
 
 export interface SelfDestructTerminatedEventObject {}
-export type SelfDestructTerminatedEvent = TypedEvent<
-  [],
-  SelfDestructTerminatedEventObject
->;
+export type SelfDestructTerminatedEvent = TypedEvent<[], SelfDestructTerminatedEventObject>;
 
-export type SelfDestructTerminatedEventFilter =
-  TypedEventFilter<SelfDestructTerminatedEvent>;
+export type SelfDestructTerminatedEventFilter = TypedEventFilter<SelfDestructTerminatedEvent>;
 
 export interface SelfDestructedEventObject {
   beneficiary: string;
 }
-export type SelfDestructedEvent = TypedEvent<
-  [string],
-  SelfDestructedEventObject
->;
+export type SelfDestructedEvent = TypedEvent<[string], SelfDestructedEventObject>;
 
 export type SelfDestructedEventFilter = TypedEventFilter<SelfDestructedEvent>;
 
 export interface SelfDestructInitiatedEventObject {
   selfDestructDelay: BigNumber;
 }
-export type SelfDestructInitiatedEvent = TypedEvent<
-  [BigNumber],
-  SelfDestructInitiatedEventObject
->;
+export type SelfDestructInitiatedEvent = TypedEvent<[BigNumber], SelfDestructInitiatedEventObject>;
 
-export type SelfDestructInitiatedEventFilter =
-  TypedEventFilter<SelfDestructInitiatedEvent>;
+export type SelfDestructInitiatedEventFilter = TypedEventFilter<SelfDestructInitiatedEvent>;
 
 export interface SelfDestructBeneficiaryUpdatedEventObject {
   newBeneficiary: string;
@@ -310,10 +208,7 @@ export type SelfDestructBeneficiaryUpdatedEventFilter =
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -321,10 +216,7 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
@@ -345,9 +237,7 @@ export interface FeePoolStateAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -539,17 +429,11 @@ export interface FeePoolStateAbiTypes extends BaseContract {
   ): Promise<[BigNumber, BigNumber]>;
 
   callStatic: {
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     initiationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setFeePool(
-      _feePool: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setFeePool(_feePool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setSelfDestructBeneficiary(
       _beneficiary: PromiseOrValue<string>,
@@ -624,7 +508,7 @@ export interface FeePoolStateAbiTypes extends BaseContract {
   };
 
   filters: {
-    "IssuanceDebtRatioEntry(address,uint256,uint256)"(
+    'IssuanceDebtRatioEntry(address,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       debtRatio?: null,
       feePeriodCloseIndex?: null
@@ -635,33 +519,26 @@ export interface FeePoolStateAbiTypes extends BaseContract {
       feePeriodCloseIndex?: null
     ): IssuanceDebtRatioEntryEventFilter;
 
-    "SelfDestructTerminated()"(): SelfDestructTerminatedEventFilter;
+    'SelfDestructTerminated()'(): SelfDestructTerminatedEventFilter;
     SelfDestructTerminated(): SelfDestructTerminatedEventFilter;
 
-    "SelfDestructed(address)"(beneficiary?: null): SelfDestructedEventFilter;
+    'SelfDestructed(address)'(beneficiary?: null): SelfDestructedEventFilter;
     SelfDestructed(beneficiary?: null): SelfDestructedEventFilter;
 
-    "SelfDestructInitiated(uint256)"(
-      selfDestructDelay?: null
-    ): SelfDestructInitiatedEventFilter;
-    SelfDestructInitiated(
-      selfDestructDelay?: null
-    ): SelfDestructInitiatedEventFilter;
+    'SelfDestructInitiated(uint256)'(selfDestructDelay?: null): SelfDestructInitiatedEventFilter;
+    SelfDestructInitiated(selfDestructDelay?: null): SelfDestructInitiatedEventFilter;
 
-    "SelfDestructBeneficiaryUpdated(address)"(
+    'SelfDestructBeneficiaryUpdated(address)'(
       newBeneficiary?: null
     ): SelfDestructBeneficiaryUpdatedEventFilter;
     SelfDestructBeneficiaryUpdated(
       newBeneficiary?: null
     ): SelfDestructBeneficiaryUpdatedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
   };
 
@@ -697,9 +574,7 @@ export interface FeePoolStateAbiTypes extends BaseContract {
 
     nominatedOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     accountIssuanceLedger(
       arg0: PromiseOrValue<string>,
@@ -717,9 +592,7 @@ export interface FeePoolStateAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    selfDestruct(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    selfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     SELFDESTRUCT_DELAY(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -804,9 +677,7 @@ export interface FeePoolStateAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    SELFDESTRUCT_DELAY(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    SELFDESTRUCT_DELAY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     feePool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -816,17 +687,13 @@ export interface FeePoolStateAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    selfDestructInitiated(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    selfDestructInitiated(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initiateSelfDestruct(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    selfDestructBeneficiary(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    selfDestructBeneficiary(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     FEE_PERIOD_LENGTH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

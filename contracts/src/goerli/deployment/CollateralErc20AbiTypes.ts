@@ -12,426 +12,285 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface CollateralErc20AbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "addRewardsContracts(address,bytes32)": FunctionFragment;
-    "addSynths(bytes32[],bytes32[])": FunctionFragment;
-    "areSynthsAndCurrenciesSet(bytes32[],bytes32[])": FunctionFragment;
-    "canOpenLoans()": FunctionFragment;
-    "close(uint256)": FunctionFragment;
-    "collateralKey()": FunctionFragment;
-    "collateralRatio(uint256)": FunctionFragment;
-    "deposit(address,uint256,uint256)": FunctionFragment;
-    "draw(uint256,uint256)": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "issueFeeRate()": FunctionFragment;
-    "liquidate(address,uint256,uint256)": FunctionFragment;
-    "liquidationAmount(uint256)": FunctionFragment;
-    "loans(uint256)": FunctionFragment;
-    "manager()": FunctionFragment;
-    "maxLoan(uint256,bytes32)": FunctionFragment;
-    "minCollateral()": FunctionFragment;
-    "minCratio()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "open(uint256,uint256,bytes32)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "repay(address,uint256,uint256)": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "scaleDownCollateral(uint256)": FunctionFragment;
-    "scaleUpCollateral(uint256)": FunctionFragment;
-    "setCanOpenLoans(bool)": FunctionFragment;
-    "setIssueFeeRate(uint256)": FunctionFragment;
-    "setMinCollateral(uint256)": FunctionFragment;
-    "shortingRewards(bytes32)": FunctionFragment;
-    "synths(uint256)": FunctionFragment;
-    "synthsByKey(bytes32)": FunctionFragment;
-    "underlyingContract()": FunctionFragment;
-    "underlyingContractDecimals()": FunctionFragment;
-    "withdraw(uint256,uint256)": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'addRewardsContracts(address,bytes32)': FunctionFragment;
+    'addSynths(bytes32[],bytes32[])': FunctionFragment;
+    'areSynthsAndCurrenciesSet(bytes32[],bytes32[])': FunctionFragment;
+    'canOpenLoans()': FunctionFragment;
+    'close(uint256)': FunctionFragment;
+    'collateralKey()': FunctionFragment;
+    'collateralRatio(uint256)': FunctionFragment;
+    'deposit(address,uint256,uint256)': FunctionFragment;
+    'draw(uint256,uint256)': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'issueFeeRate()': FunctionFragment;
+    'liquidate(address,uint256,uint256)': FunctionFragment;
+    'liquidationAmount(uint256)': FunctionFragment;
+    'loans(uint256)': FunctionFragment;
+    'manager()': FunctionFragment;
+    'maxLoan(uint256,bytes32)': FunctionFragment;
+    'minCollateral()': FunctionFragment;
+    'minCratio()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'open(uint256,uint256,bytes32)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'repay(address,uint256,uint256)': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'scaleDownCollateral(uint256)': FunctionFragment;
+    'scaleUpCollateral(uint256)': FunctionFragment;
+    'setCanOpenLoans(bool)': FunctionFragment;
+    'setIssueFeeRate(uint256)': FunctionFragment;
+    'setMinCollateral(uint256)': FunctionFragment;
+    'shortingRewards(bytes32)': FunctionFragment;
+    'synths(uint256)': FunctionFragment;
+    'synthsByKey(bytes32)': FunctionFragment;
+    'underlyingContract()': FunctionFragment;
+    'underlyingContractDecimals()': FunctionFragment;
+    'withdraw(uint256,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "addRewardsContracts"
-      | "addSynths"
-      | "areSynthsAndCurrenciesSet"
-      | "canOpenLoans"
-      | "close"
-      | "collateralKey"
-      | "collateralRatio"
-      | "deposit"
-      | "draw"
-      | "isResolverCached"
-      | "issueFeeRate"
-      | "liquidate"
-      | "liquidationAmount"
-      | "loans"
-      | "manager"
-      | "maxLoan"
-      | "minCollateral"
-      | "minCratio"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "open"
-      | "owner"
-      | "rebuildCache"
-      | "repay"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "scaleDownCollateral"
-      | "scaleUpCollateral"
-      | "setCanOpenLoans"
-      | "setIssueFeeRate"
-      | "setMinCollateral"
-      | "shortingRewards"
-      | "synths"
-      | "synthsByKey"
-      | "underlyingContract"
-      | "underlyingContractDecimals"
-      | "withdraw"
+      | 'acceptOwnership'
+      | 'addRewardsContracts'
+      | 'addSynths'
+      | 'areSynthsAndCurrenciesSet'
+      | 'canOpenLoans'
+      | 'close'
+      | 'collateralKey'
+      | 'collateralRatio'
+      | 'deposit'
+      | 'draw'
+      | 'isResolverCached'
+      | 'issueFeeRate'
+      | 'liquidate'
+      | 'liquidationAmount'
+      | 'loans'
+      | 'manager'
+      | 'maxLoan'
+      | 'minCollateral'
+      | 'minCratio'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'open'
+      | 'owner'
+      | 'rebuildCache'
+      | 'repay'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'scaleDownCollateral'
+      | 'scaleUpCollateral'
+      | 'setCanOpenLoans'
+      | 'setIssueFeeRate'
+      | 'setMinCollateral'
+      | 'shortingRewards'
+      | 'synths'
+      | 'synthsByKey'
+      | 'underlyingContract'
+      | 'underlyingContractDecimals'
+      | 'withdraw'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addRewardsContracts",
+    functionFragment: 'addRewardsContracts',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "addSynths",
+    functionFragment: 'addSynths',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "areSynthsAndCurrenciesSet",
+    functionFragment: 'areSynthsAndCurrenciesSet',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>[]]
   ): string;
+  encodeFunctionData(functionFragment: 'canOpenLoans', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'close', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'collateralKey', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "canOpenLoans",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "close",
+    functionFragment: 'collateralRatio',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "collateralKey",
-    values?: undefined
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "collateralRatio",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "deposit",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "draw",
+    functionFragment: 'draw',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'issueFeeRate', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
+    functionFragment: 'liquidate',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "issueFeeRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidate",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidationAmount",
+    functionFragment: 'liquidationAmount',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'loans', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'manager', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "loans",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "manager", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "maxLoan",
+    functionFragment: 'maxLoan',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'minCollateral', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'minCratio', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "minCollateral",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "minCratio", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
+    functionFragment: 'open',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "open",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    functionFragment: 'repay',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "repay",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "scaleDownCollateral",
+    functionFragment: 'scaleDownCollateral',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "scaleUpCollateral",
+    functionFragment: 'scaleUpCollateral',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setCanOpenLoans",
+    functionFragment: 'setCanOpenLoans',
     values: [PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setIssueFeeRate",
+    functionFragment: 'setIssueFeeRate',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMinCollateral",
+    functionFragment: 'setMinCollateral',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "shortingRewards",
+    functionFragment: 'shortingRewards',
     values: [PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'synths', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'synthsByKey', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'underlyingContract', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'underlyingContractDecimals', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "synths",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "synthsByKey",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "underlyingContract",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "underlyingContractDecimals",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdraw",
+    functionFragment: 'withdraw',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addRewardsContracts",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "addSynths", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "areSynthsAndCurrenciesSet",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "canOpenLoans",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "close", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "collateralKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "collateralRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "draw", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issueFeeRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "liquidate", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidationAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "loans", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "manager", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "maxLoan", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "minCollateral",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "minCratio", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "open", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "repay", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "scaleDownCollateral",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "scaleUpCollateral",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setCanOpenLoans",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setIssueFeeRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMinCollateral",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "shortingRewards",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "synths", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "synthsByKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "underlyingContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "underlyingContractDecimals",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addRewardsContracts', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'areSynthsAndCurrenciesSet', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'canOpenLoans', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'close', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'collateralKey', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'collateralRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'draw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issueFeeRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'loans', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'manager', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxLoan', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minCollateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minCratio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'open', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'repay', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'scaleDownCollateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'scaleUpCollateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setCanOpenLoans', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setIssueFeeRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMinCollateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'shortingRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthsByKey', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'underlyingContract', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'underlyingContractDecimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "CanOpenLoansUpdated(bool)": EventFragment;
-    "CollateralDeposited(address,uint256,uint256,uint256)": EventFragment;
-    "CollateralWithdrawn(address,uint256,uint256,uint256)": EventFragment;
-    "IssueFeeRateUpdated(uint256)": EventFragment;
-    "LoanClosed(address,uint256)": EventFragment;
-    "LoanClosedByLiquidation(address,uint256,address,uint256,uint256)": EventFragment;
-    "LoanClosedByRepayment(address,uint256,uint256,uint256)": EventFragment;
-    "LoanCreated(address,uint256,uint256,uint256,bytes32,uint256)": EventFragment;
-    "LoanDrawnDown(address,uint256,uint256)": EventFragment;
-    "LoanPartiallyLiquidated(address,uint256,address,uint256,uint256)": EventFragment;
-    "LoanRepaymentMade(address,address,uint256,uint256,uint256)": EventFragment;
-    "MinCollateralUpdated(uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'CanOpenLoansUpdated(bool)': EventFragment;
+    'CollateralDeposited(address,uint256,uint256,uint256)': EventFragment;
+    'CollateralWithdrawn(address,uint256,uint256,uint256)': EventFragment;
+    'IssueFeeRateUpdated(uint256)': EventFragment;
+    'LoanClosed(address,uint256)': EventFragment;
+    'LoanClosedByLiquidation(address,uint256,address,uint256,uint256)': EventFragment;
+    'LoanClosedByRepayment(address,uint256,uint256,uint256)': EventFragment;
+    'LoanCreated(address,uint256,uint256,uint256,bytes32,uint256)': EventFragment;
+    'LoanDrawnDown(address,uint256,uint256)': EventFragment;
+    'LoanPartiallyLiquidated(address,uint256,address,uint256,uint256)': EventFragment;
+    'LoanRepaymentMade(address,address,uint256,uint256,uint256)': EventFragment;
+    'MinCollateralUpdated(uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CanOpenLoansUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CollateralDeposited"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CollateralWithdrawn"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "IssueFeeRateUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LoanClosed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LoanClosedByLiquidation"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LoanClosedByRepayment"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LoanCreated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LoanDrawnDown"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LoanPartiallyLiquidated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LoanRepaymentMade"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MinCollateralUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CanOpenLoansUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CollateralDeposited'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CollateralWithdrawn'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'IssueFeeRateUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LoanClosed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LoanClosedByLiquidation'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LoanClosedByRepayment'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LoanCreated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LoanDrawnDown'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LoanPartiallyLiquidated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LoanRepaymentMade'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MinCollateralUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
 export interface CanOpenLoansUpdatedEventObject {
   canOpenLoans: boolean;
 }
-export type CanOpenLoansUpdatedEvent = TypedEvent<
-  [boolean],
-  CanOpenLoansUpdatedEventObject
->;
+export type CanOpenLoansUpdatedEvent = TypedEvent<[boolean], CanOpenLoansUpdatedEventObject>;
 
-export type CanOpenLoansUpdatedEventFilter =
-  TypedEventFilter<CanOpenLoansUpdatedEvent>;
+export type CanOpenLoansUpdatedEventFilter = TypedEventFilter<CanOpenLoansUpdatedEvent>;
 
 export interface CollateralDepositedEventObject {
   account: string;
@@ -444,8 +303,7 @@ export type CollateralDepositedEvent = TypedEvent<
   CollateralDepositedEventObject
 >;
 
-export type CollateralDepositedEventFilter =
-  TypedEventFilter<CollateralDepositedEvent>;
+export type CollateralDepositedEventFilter = TypedEventFilter<CollateralDepositedEvent>;
 
 export interface CollateralWithdrawnEventObject {
   account: string;
@@ -458,28 +316,20 @@ export type CollateralWithdrawnEvent = TypedEvent<
   CollateralWithdrawnEventObject
 >;
 
-export type CollateralWithdrawnEventFilter =
-  TypedEventFilter<CollateralWithdrawnEvent>;
+export type CollateralWithdrawnEventFilter = TypedEventFilter<CollateralWithdrawnEvent>;
 
 export interface IssueFeeRateUpdatedEventObject {
   issueFeeRate: BigNumber;
 }
-export type IssueFeeRateUpdatedEvent = TypedEvent<
-  [BigNumber],
-  IssueFeeRateUpdatedEventObject
->;
+export type IssueFeeRateUpdatedEvent = TypedEvent<[BigNumber], IssueFeeRateUpdatedEventObject>;
 
-export type IssueFeeRateUpdatedEventFilter =
-  TypedEventFilter<IssueFeeRateUpdatedEvent>;
+export type IssueFeeRateUpdatedEventFilter = TypedEventFilter<IssueFeeRateUpdatedEvent>;
 
 export interface LoanClosedEventObject {
   account: string;
   id: BigNumber;
 }
-export type LoanClosedEvent = TypedEvent<
-  [string, BigNumber],
-  LoanClosedEventObject
->;
+export type LoanClosedEvent = TypedEvent<[string, BigNumber], LoanClosedEventObject>;
 
 export type LoanClosedEventFilter = TypedEventFilter<LoanClosedEvent>;
 
@@ -495,8 +345,7 @@ export type LoanClosedByLiquidationEvent = TypedEvent<
   LoanClosedByLiquidationEventObject
 >;
 
-export type LoanClosedByLiquidationEventFilter =
-  TypedEventFilter<LoanClosedByLiquidationEvent>;
+export type LoanClosedByLiquidationEventFilter = TypedEventFilter<LoanClosedByLiquidationEvent>;
 
 export interface LoanClosedByRepaymentEventObject {
   account: string;
@@ -509,8 +358,7 @@ export type LoanClosedByRepaymentEvent = TypedEvent<
   LoanClosedByRepaymentEventObject
 >;
 
-export type LoanClosedByRepaymentEventFilter =
-  TypedEventFilter<LoanClosedByRepaymentEvent>;
+export type LoanClosedByRepaymentEventFilter = TypedEventFilter<LoanClosedByRepaymentEvent>;
 
 export interface LoanCreatedEventObject {
   account: string;
@@ -551,8 +399,7 @@ export type LoanPartiallyLiquidatedEvent = TypedEvent<
   LoanPartiallyLiquidatedEventObject
 >;
 
-export type LoanPartiallyLiquidatedEventFilter =
-  TypedEventFilter<LoanPartiallyLiquidatedEvent>;
+export type LoanPartiallyLiquidatedEventFilter = TypedEventFilter<LoanPartiallyLiquidatedEvent>;
 
 export interface LoanRepaymentMadeEventObject {
   account: string;
@@ -566,38 +413,27 @@ export type LoanRepaymentMadeEvent = TypedEvent<
   LoanRepaymentMadeEventObject
 >;
 
-export type LoanRepaymentMadeEventFilter =
-  TypedEventFilter<LoanRepaymentMadeEvent>;
+export type LoanRepaymentMadeEventFilter = TypedEventFilter<LoanRepaymentMadeEvent>;
 
 export interface MinCollateralUpdatedEventObject {
   minCollateral: BigNumber;
 }
-export type MinCollateralUpdatedEvent = TypedEvent<
-  [BigNumber],
-  MinCollateralUpdatedEventObject
->;
+export type MinCollateralUpdatedEvent = TypedEvent<[BigNumber], MinCollateralUpdatedEventObject>;
 
-export type MinCollateralUpdatedEventFilter =
-  TypedEventFilter<MinCollateralUpdatedEvent>;
+export type MinCollateralUpdatedEventFilter = TypedEventFilter<MinCollateralUpdatedEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -618,9 +454,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -790,20 +624,11 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    shortingRewards(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    shortingRewards(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    synths(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    synths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    synthsByKey(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    synthsByKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     underlyingContract(overrides?: CallOverrides): Promise<[string]>;
 
@@ -847,10 +672,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
 
   collateralKey(overrides?: CallOverrides): Promise<string>;
 
-  collateralRatio(
-    id: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  collateralRatio(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
     borrower: PromiseOrValue<string>,
@@ -885,17 +707,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [
-      BigNumber,
-      string,
-      BigNumber,
-      string,
-      BigNumber,
-      boolean,
-      BigNumber,
-      BigNumber,
-      BigNumber
-    ] & {
+    [BigNumber, string, BigNumber, string, BigNumber, boolean, BigNumber, BigNumber, BigNumber] & {
       id: BigNumber;
       account: string;
       collateral: BigNumber;
@@ -976,20 +788,11 @@ export interface CollateralErc20AbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  shortingRewards(
-    arg0: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  shortingRewards(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  synths(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  synths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  synthsByKey(
-    arg0: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  synthsByKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   underlyingContract(overrides?: CallOverrides): Promise<string>;
 
@@ -1027,9 +830,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
     close(
       id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { amount: BigNumber; collateral: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; collateral: BigNumber }>;
 
     collateralKey(overrides?: CallOverrides): Promise<string>;
 
@@ -1043,17 +844,13 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { principal: BigNumber; collateral: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { principal: BigNumber; collateral: BigNumber }>;
 
     draw(
       id: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { principal: BigNumber; collateral: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { principal: BigNumber; collateral: BigNumber }>;
 
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1110,10 +907,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
 
     minCratio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -1133,9 +927,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { principal: BigNumber; collateral: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { principal: BigNumber; collateral: BigNumber }>;
 
     resolver(overrides?: CallOverrides): Promise<string>;
 
@@ -1166,20 +958,11 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    shortingRewards(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    shortingRewards(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    synths(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    synths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    synthsByKey(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    synthsByKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     underlyingContract(overrides?: CallOverrides): Promise<string>;
 
@@ -1189,24 +972,17 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { principal: BigNumber; collateral: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { principal: BigNumber; collateral: BigNumber }>;
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "CanOpenLoansUpdated(bool)"(
-      canOpenLoans?: null
-    ): CanOpenLoansUpdatedEventFilter;
+    'CanOpenLoansUpdated(bool)'(canOpenLoans?: null): CanOpenLoansUpdatedEventFilter;
     CanOpenLoansUpdated(canOpenLoans?: null): CanOpenLoansUpdatedEventFilter;
 
-    "CollateralDeposited(address,uint256,uint256,uint256)"(
+    'CollateralDeposited(address,uint256,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       id?: null,
       amountDeposited?: null,
@@ -1219,7 +995,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       collateralAfter?: null
     ): CollateralDepositedEventFilter;
 
-    "CollateralWithdrawn(address,uint256,uint256,uint256)"(
+    'CollateralWithdrawn(address,uint256,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       id?: null,
       amountWithdrawn?: null,
@@ -1232,21 +1008,16 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       collateralAfter?: null
     ): CollateralWithdrawnEventFilter;
 
-    "IssueFeeRateUpdated(uint256)"(
-      issueFeeRate?: null
-    ): IssueFeeRateUpdatedEventFilter;
+    'IssueFeeRateUpdated(uint256)'(issueFeeRate?: null): IssueFeeRateUpdatedEventFilter;
     IssueFeeRateUpdated(issueFeeRate?: null): IssueFeeRateUpdatedEventFilter;
 
-    "LoanClosed(address,uint256)"(
+    'LoanClosed(address,uint256)'(
       account?: PromiseOrValue<string> | null,
       id?: null
     ): LoanClosedEventFilter;
-    LoanClosed(
-      account?: PromiseOrValue<string> | null,
-      id?: null
-    ): LoanClosedEventFilter;
+    LoanClosed(account?: PromiseOrValue<string> | null, id?: null): LoanClosedEventFilter;
 
-    "LoanClosedByLiquidation(address,uint256,address,uint256,uint256)"(
+    'LoanClosedByLiquidation(address,uint256,address,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       id?: null,
       liquidator?: PromiseOrValue<string> | null,
@@ -1261,7 +1032,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       collateralLiquidated?: null
     ): LoanClosedByLiquidationEventFilter;
 
-    "LoanClosedByRepayment(address,uint256,uint256,uint256)"(
+    'LoanClosedByRepayment(address,uint256,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       id?: null,
       amountRepaid?: null,
@@ -1274,7 +1045,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       collateralAfter?: null
     ): LoanClosedByRepaymentEventFilter;
 
-    "LoanCreated(address,uint256,uint256,uint256,bytes32,uint256)"(
+    'LoanCreated(address,uint256,uint256,uint256,bytes32,uint256)'(
       account?: PromiseOrValue<string> | null,
       id?: null,
       amount?: null,
@@ -1291,7 +1062,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       issuanceFee?: null
     ): LoanCreatedEventFilter;
 
-    "LoanDrawnDown(address,uint256,uint256)"(
+    'LoanDrawnDown(address,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       id?: null,
       amount?: null
@@ -1302,7 +1073,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       amount?: null
     ): LoanDrawnDownEventFilter;
 
-    "LoanPartiallyLiquidated(address,uint256,address,uint256,uint256)"(
+    'LoanPartiallyLiquidated(address,uint256,address,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       id?: null,
       liquidator?: null,
@@ -1317,7 +1088,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       collateralLiquidated?: null
     ): LoanPartiallyLiquidatedEventFilter;
 
-    "LoanRepaymentMade(address,address,uint256,uint256,uint256)"(
+    'LoanRepaymentMade(address,address,uint256,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       repayer?: PromiseOrValue<string> | null,
       id?: null,
@@ -1332,25 +1103,18 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       amountAfter?: null
     ): LoanRepaymentMadeEventFilter;
 
-    "MinCollateralUpdated(uint256)"(
-      minCollateral?: null
-    ): MinCollateralUpdatedEventFilter;
+    'MinCollateralUpdated(uint256)'(minCollateral?: null): MinCollateralUpdatedEventFilter;
     MinCollateralUpdated(minCollateral?: null): MinCollateralUpdatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     addRewardsContracts(
       rewardsContract: PromiseOrValue<string>,
@@ -1413,10 +1177,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    loans(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    loans(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     manager(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1446,9 +1207,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     repay(
       borrower: PromiseOrValue<string>,
@@ -1486,20 +1245,11 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    shortingRewards(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    shortingRewards(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    synths(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    synths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    synthsByKey(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    synthsByKey(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     underlyingContract(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1624,9 +1374,7 @@ export interface CollateralErc20AbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     scaleDownCollateral(
       collateral: PromiseOrValue<BigNumberish>,
@@ -1668,13 +1416,9 @@ export interface CollateralErc20AbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    underlyingContract(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    underlyingContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    underlyingContractDecimals(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    underlyingContractDecimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
       id: PromiseOrValue<BigNumberish>,

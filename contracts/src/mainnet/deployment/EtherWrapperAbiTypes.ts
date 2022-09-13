@@ -12,255 +12,155 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface EtherWrapperAbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "burn(uint256)": FunctionFragment;
-    "burnFeeRate()": FunctionFragment;
-    "calculateBurnFee(uint256)": FunctionFragment;
-    "calculateMintFee(uint256)": FunctionFragment;
-    "capacity()": FunctionFragment;
-    "distributeFees()": FunctionFragment;
-    "feesEscrowed()": FunctionFragment;
-    "getReserves()": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "lastPauseTime()": FunctionFragment;
-    "maxETH()": FunctionFragment;
-    "mint(uint256)": FunctionFragment;
-    "mintFeeRate()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "paused()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "sETHIssued()": FunctionFragment;
-    "sUSDIssued()": FunctionFragment;
-    "setPaused(bool)": FunctionFragment;
-    "totalIssuedSynths()": FunctionFragment;
-    "weth()": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'burn(uint256)': FunctionFragment;
+    'burnFeeRate()': FunctionFragment;
+    'calculateBurnFee(uint256)': FunctionFragment;
+    'calculateMintFee(uint256)': FunctionFragment;
+    'capacity()': FunctionFragment;
+    'distributeFees()': FunctionFragment;
+    'feesEscrowed()': FunctionFragment;
+    'getReserves()': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'lastPauseTime()': FunctionFragment;
+    'maxETH()': FunctionFragment;
+    'mint(uint256)': FunctionFragment;
+    'mintFeeRate()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'paused()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'sETHIssued()': FunctionFragment;
+    'sUSDIssued()': FunctionFragment;
+    'setPaused(bool)': FunctionFragment;
+    'totalIssuedSynths()': FunctionFragment;
+    'weth()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "burn"
-      | "burnFeeRate"
-      | "calculateBurnFee"
-      | "calculateMintFee"
-      | "capacity"
-      | "distributeFees"
-      | "feesEscrowed"
-      | "getReserves"
-      | "isResolverCached"
-      | "lastPauseTime"
-      | "maxETH"
-      | "mint"
-      | "mintFeeRate"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "paused"
-      | "rebuildCache"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "sETHIssued"
-      | "sUSDIssued"
-      | "setPaused"
-      | "totalIssuedSynths"
-      | "weth"
+      | 'acceptOwnership'
+      | 'burn'
+      | 'burnFeeRate'
+      | 'calculateBurnFee'
+      | 'calculateMintFee'
+      | 'capacity'
+      | 'distributeFees'
+      | 'feesEscrowed'
+      | 'getReserves'
+      | 'isResolverCached'
+      | 'lastPauseTime'
+      | 'maxETH'
+      | 'mint'
+      | 'mintFeeRate'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'paused'
+      | 'rebuildCache'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'sETHIssued'
+      | 'sUSDIssued'
+      | 'setPaused'
+      | 'totalIssuedSynths'
+      | 'weth'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'burnFeeRate', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "burn",
+    functionFragment: 'calculateBurnFee',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "burnFeeRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "calculateBurnFee",
+    functionFragment: 'calculateMintFee',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'capacity', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'distributeFees', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'feesEscrowed', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getReserves', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastPauseTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'maxETH', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'mintFeeRate', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "calculateMintFee",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "capacity", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "distributeFees",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "feesEscrowed",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getReserves",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastPauseTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "maxETH", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "mint",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mintFeeRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "paused", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "sETHIssued",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "sUSDIssued",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setPaused",
-    values: [PromiseOrValue<boolean>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalIssuedSynths",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "weth", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'sETHIssued', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'sUSDIssued', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setPaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'totalIssuedSynths', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'weth', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "burnFeeRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "calculateBurnFee",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "calculateMintFee",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "capacity", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "distributeFees",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "feesEscrowed",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getReserves",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastPauseTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "maxETH", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "mintFeeRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "sETHIssued", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "sUSDIssued", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setPaused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalIssuedSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "weth", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burn', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnFeeRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'calculateBurnFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'calculateMintFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'capacity', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'distributeFees', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'feesEscrowed', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getReserves', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastPauseTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxETH', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mintFeeRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'sETHIssued', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'sUSDIssued', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPaused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalIssuedSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'weth', data: BytesLike): Result;
 
   events: {
-    "Burned(address,uint256,uint256,uint256)": EventFragment;
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "Minted(address,uint256,uint256,uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "PauseChanged(bool)": EventFragment;
+    'Burned(address,uint256,uint256,uint256)': EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'Minted(address,uint256,uint256,uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'PauseChanged(bool)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Burned"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PauseChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Burned'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Minted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'PauseChanged'): EventFragment;
 }
 
 export interface BurnedEventObject {
@@ -269,10 +169,7 @@ export interface BurnedEventObject {
   fee: BigNumber;
   amountIn: BigNumber;
 }
-export type BurnedEvent = TypedEvent<
-  [string, BigNumber, BigNumber, BigNumber],
-  BurnedEventObject
->;
+export type BurnedEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber], BurnedEventObject>;
 
 export type BurnedEventFilter = TypedEventFilter<BurnedEvent>;
 
@@ -280,10 +177,7 @@ export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -293,10 +187,7 @@ export interface MintedEventObject {
   fee: BigNumber;
   amountIn: BigNumber;
 }
-export type MintedEvent = TypedEvent<
-  [string, BigNumber, BigNumber, BigNumber],
-  MintedEventObject
->;
+export type MintedEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber], MintedEventObject>;
 
 export type MintedEventFilter = TypedEventFilter<MintedEvent>;
 
@@ -304,20 +195,14 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -345,9 +230,7 @@ export interface EtherWrapperAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -376,9 +259,7 @@ export interface EtherWrapperAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    capacity(
-      overrides?: CallOverrides
-    ): Promise<[BigNumber] & { _capacity: BigNumber }>;
+    capacity(overrides?: CallOverrides): Promise<[BigNumber] & { _capacity: BigNumber }>;
 
     distributeFees(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -515,10 +396,7 @@ export interface EtherWrapperAbiTypes extends BaseContract {
   callStatic: {
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    burn(
-      amountIn: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    burn(amountIn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     burnFeeRate(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -546,17 +424,11 @@ export interface EtherWrapperAbiTypes extends BaseContract {
 
     maxETH(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(
-      amountIn: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    mint(amountIn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     mintFeeRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -574,10 +446,7 @@ export interface EtherWrapperAbiTypes extends BaseContract {
 
     sUSDIssued(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setPaused(
-      _paused: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setPaused(_paused: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     totalIssuedSynths(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -585,7 +454,7 @@ export interface EtherWrapperAbiTypes extends BaseContract {
   };
 
   filters: {
-    "Burned(address,uint256,uint256,uint256)"(
+    'Burned(address,uint256,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       principal?: null,
       fee?: null,
@@ -598,13 +467,10 @@ export interface EtherWrapperAbiTypes extends BaseContract {
       amountIn?: null
     ): BurnedEventFilter;
 
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "Minted(address,uint256,uint256,uint256)"(
+    'Minted(address,uint256,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       principal?: null,
       fee?: null,
@@ -617,23 +483,18 @@ export interface EtherWrapperAbiTypes extends BaseContract {
       amountIn?: null
     ): MintedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "PauseChanged(bool)"(isPaused?: null): PauseChangedEventFilter;
+    'PauseChanged(bool)'(isPaused?: null): PauseChangedEventFilter;
     PauseChanged(isPaused?: null): PauseChangedEventFilter;
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     burn(
       amountIn: PromiseOrValue<BigNumberish>,
@@ -654,9 +515,7 @@ export interface EtherWrapperAbiTypes extends BaseContract {
 
     capacity(overrides?: CallOverrides): Promise<BigNumber>;
 
-    distributeFees(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    distributeFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     feesEscrowed(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -686,9 +545,7 @@ export interface EtherWrapperAbiTypes extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -770,9 +627,7 @@ export interface EtherWrapperAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sETHIssued(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -12,69 +12,59 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface FeePoolStateAbiTypesInterface extends utils.Interface {
   functions: {
-    "FEE_PERIOD_LENGTH()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "accountIssuanceLedger(address,uint256)": FunctionFragment;
-    "appendAccountIssuanceRecord(address,uint256,uint256,uint256)": FunctionFragment;
-    "applicableIssuanceData(address,uint256)": FunctionFragment;
-    "feePool()": FunctionFragment;
-    "getAccountsDebtEntry(address,uint256)": FunctionFragment;
-    "importIssuerData(address[],uint256[],uint256,uint256)": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "setFeePool(address)": FunctionFragment;
-    "setupExpiryTime()": FunctionFragment;
+    'FEE_PERIOD_LENGTH()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'accountIssuanceLedger(address,uint256)': FunctionFragment;
+    'appendAccountIssuanceRecord(address,uint256,uint256,uint256)': FunctionFragment;
+    'applicableIssuanceData(address,uint256)': FunctionFragment;
+    'feePool()': FunctionFragment;
+    'getAccountsDebtEntry(address,uint256)': FunctionFragment;
+    'importIssuerData(address[],uint256[],uint256,uint256)': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'setFeePool(address)': FunctionFragment;
+    'setupExpiryTime()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "FEE_PERIOD_LENGTH"
-      | "acceptOwnership"
-      | "accountIssuanceLedger"
-      | "appendAccountIssuanceRecord"
-      | "applicableIssuanceData"
-      | "feePool"
-      | "getAccountsDebtEntry"
-      | "importIssuerData"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "setFeePool"
-      | "setupExpiryTime"
+      | 'FEE_PERIOD_LENGTH'
+      | 'acceptOwnership'
+      | 'accountIssuanceLedger'
+      | 'appendAccountIssuanceRecord'
+      | 'applicableIssuanceData'
+      | 'feePool'
+      | 'getAccountsDebtEntry'
+      | 'importIssuerData'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'setFeePool'
+      | 'setupExpiryTime'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'FEE_PERIOD_LENGTH', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "FEE_PERIOD_LENGTH",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "accountIssuanceLedger",
+    functionFragment: 'accountIssuanceLedger',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "appendAccountIssuanceRecord",
+    functionFragment: 'appendAccountIssuanceRecord',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
@@ -83,16 +73,16 @@ export interface FeePoolStateAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "applicableIssuanceData",
+    functionFragment: 'applicableIssuanceData',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "feePool", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'feePool', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getAccountsDebtEntry",
+    functionFragment: 'getAccountsDebtEntry',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "importIssuerData",
+    functionFragment: 'importIssuerData',
     values: [
       PromiseOrValue<string>[],
       PromiseOrValue<BigNumberish>[],
@@ -101,76 +91,37 @@ export interface FeePoolStateAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "setFeePool",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setupExpiryTime",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setFeePool', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setupExpiryTime', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "FEE_PERIOD_LENGTH",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "accountIssuanceLedger",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "appendAccountIssuanceRecord",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "applicableIssuanceData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "feePool", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getAccountsDebtEntry",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "importIssuerData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setFeePool", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setupExpiryTime",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'FEE_PERIOD_LENGTH', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accountIssuanceLedger', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'appendAccountIssuanceRecord', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'applicableIssuanceData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'feePool', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAccountsDebtEntry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'importIssuerData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setFeePool', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setupExpiryTime', data: BytesLike): Result;
 
   events: {
-    "IssuanceDebtRatioEntry(address,uint256,uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'IssuanceDebtRatioEntry(address,uint256,uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "IssuanceDebtRatioEntry"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'IssuanceDebtRatioEntry'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface IssuanceDebtRatioEntryEventObject {
@@ -183,27 +134,20 @@ export type IssuanceDebtRatioEntryEvent = TypedEvent<
   IssuanceDebtRatioEntryEventObject
 >;
 
-export type IssuanceDebtRatioEntryEventFilter =
-  TypedEventFilter<IssuanceDebtRatioEntryEvent>;
+export type IssuanceDebtRatioEntryEventFilter = TypedEventFilter<IssuanceDebtRatioEntryEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -224,9 +168,7 @@ export interface FeePoolStateAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -422,25 +364,19 @@ export interface FeePoolStateAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    setFeePool(
-      _feePool: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setFeePool(_feePool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setupExpiryTime(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
-    "IssuanceDebtRatioEntry(address,uint256,uint256)"(
+    'IssuanceDebtRatioEntry(address,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       debtRatio?: null,
       feePeriodCloseIndex?: null
@@ -451,22 +387,17 @@ export interface FeePoolStateAbiTypes extends BaseContract {
       feePeriodCloseIndex?: null
     ): IssuanceDebtRatioEntryEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
   estimateGas: {
     FEE_PERIOD_LENGTH(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     accountIssuanceLedger(
       arg0: PromiseOrValue<string>,

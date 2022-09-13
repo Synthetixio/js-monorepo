@@ -12,325 +12,218 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
-export interface FeePoolEternalStorageAbiTypesInterface
-  extends utils.Interface {
+export interface FeePoolEternalStorageAbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "associatedContract()": FunctionFragment;
-    "deleteAddressValue(bytes32)": FunctionFragment;
-    "deleteBooleanValue(bytes32)": FunctionFragment;
-    "deleteBytes32Value(bytes32)": FunctionFragment;
-    "deleteBytesValue(bytes32)": FunctionFragment;
-    "deleteIntValue(bytes32)": FunctionFragment;
-    "deleteStringValue(bytes32)": FunctionFragment;
-    "deleteUIntValue(bytes32)": FunctionFragment;
-    "getAddressValue(bytes32)": FunctionFragment;
-    "getBooleanValue(bytes32)": FunctionFragment;
-    "getBytes32Value(bytes32)": FunctionFragment;
-    "getBytesValue(bytes32)": FunctionFragment;
-    "getIntValue(bytes32)": FunctionFragment;
-    "getStringValue(bytes32)": FunctionFragment;
-    "getUIntValue(bytes32)": FunctionFragment;
-    "importFeeWithdrawalData(address[],uint256[])": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "setAddressValue(bytes32,address)": FunctionFragment;
-    "setAssociatedContract(address)": FunctionFragment;
-    "setBooleanValue(bytes32,bool)": FunctionFragment;
-    "setBytes32Value(bytes32,bytes32)": FunctionFragment;
-    "setBytesValue(bytes32,bytes)": FunctionFragment;
-    "setIntValue(bytes32,int256)": FunctionFragment;
-    "setStringValue(bytes32,string)": FunctionFragment;
-    "setUIntValue(bytes32,uint256)": FunctionFragment;
-    "setupExpiryTime()": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'associatedContract()': FunctionFragment;
+    'deleteAddressValue(bytes32)': FunctionFragment;
+    'deleteBooleanValue(bytes32)': FunctionFragment;
+    'deleteBytes32Value(bytes32)': FunctionFragment;
+    'deleteBytesValue(bytes32)': FunctionFragment;
+    'deleteIntValue(bytes32)': FunctionFragment;
+    'deleteStringValue(bytes32)': FunctionFragment;
+    'deleteUIntValue(bytes32)': FunctionFragment;
+    'getAddressValue(bytes32)': FunctionFragment;
+    'getBooleanValue(bytes32)': FunctionFragment;
+    'getBytes32Value(bytes32)': FunctionFragment;
+    'getBytesValue(bytes32)': FunctionFragment;
+    'getIntValue(bytes32)': FunctionFragment;
+    'getStringValue(bytes32)': FunctionFragment;
+    'getUIntValue(bytes32)': FunctionFragment;
+    'importFeeWithdrawalData(address[],uint256[])': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'setAddressValue(bytes32,address)': FunctionFragment;
+    'setAssociatedContract(address)': FunctionFragment;
+    'setBooleanValue(bytes32,bool)': FunctionFragment;
+    'setBytes32Value(bytes32,bytes32)': FunctionFragment;
+    'setBytesValue(bytes32,bytes)': FunctionFragment;
+    'setIntValue(bytes32,int256)': FunctionFragment;
+    'setStringValue(bytes32,string)': FunctionFragment;
+    'setUIntValue(bytes32,uint256)': FunctionFragment;
+    'setupExpiryTime()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "associatedContract"
-      | "deleteAddressValue"
-      | "deleteBooleanValue"
-      | "deleteBytes32Value"
-      | "deleteBytesValue"
-      | "deleteIntValue"
-      | "deleteStringValue"
-      | "deleteUIntValue"
-      | "getAddressValue"
-      | "getBooleanValue"
-      | "getBytes32Value"
-      | "getBytesValue"
-      | "getIntValue"
-      | "getStringValue"
-      | "getUIntValue"
-      | "importFeeWithdrawalData"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "setAddressValue"
-      | "setAssociatedContract"
-      | "setBooleanValue"
-      | "setBytes32Value"
-      | "setBytesValue"
-      | "setIntValue"
-      | "setStringValue"
-      | "setUIntValue"
-      | "setupExpiryTime"
+      | 'acceptOwnership'
+      | 'associatedContract'
+      | 'deleteAddressValue'
+      | 'deleteBooleanValue'
+      | 'deleteBytes32Value'
+      | 'deleteBytesValue'
+      | 'deleteIntValue'
+      | 'deleteStringValue'
+      | 'deleteUIntValue'
+      | 'getAddressValue'
+      | 'getBooleanValue'
+      | 'getBytes32Value'
+      | 'getBytesValue'
+      | 'getIntValue'
+      | 'getStringValue'
+      | 'getUIntValue'
+      | 'importFeeWithdrawalData'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'setAddressValue'
+      | 'setAssociatedContract'
+      | 'setBooleanValue'
+      | 'setBytes32Value'
+      | 'setBytesValue'
+      | 'setIntValue'
+      | 'setStringValue'
+      | 'setUIntValue'
+      | 'setupExpiryTime'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'associatedContract', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "associatedContract",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "deleteAddressValue",
+    functionFragment: 'deleteAddressValue',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "deleteBooleanValue",
+    functionFragment: 'deleteBooleanValue',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "deleteBytes32Value",
+    functionFragment: 'deleteBytes32Value',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "deleteBytesValue",
+    functionFragment: 'deleteBytesValue',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "deleteIntValue",
+    functionFragment: 'deleteIntValue',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "deleteStringValue",
+    functionFragment: 'deleteStringValue',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "deleteUIntValue",
+    functionFragment: 'deleteUIntValue',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getAddressValue",
+    functionFragment: 'getAddressValue',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getBooleanValue",
+    functionFragment: 'getBooleanValue',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getBytes32Value",
+    functionFragment: 'getBytes32Value',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getBytesValue",
+    functionFragment: 'getBytesValue',
     values: [PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'getIntValue', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "getIntValue",
+    functionFragment: 'getStringValue',
     values: [PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'getUIntValue', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "getStringValue",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getUIntValue",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "importFeeWithdrawalData",
+    functionFragment: 'importFeeWithdrawalData',
     values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "setAddressValue",
+    functionFragment: 'setAddressValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setAssociatedContract",
+    functionFragment: 'setAssociatedContract',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setBooleanValue",
+    functionFragment: 'setBooleanValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setBytes32Value",
+    functionFragment: 'setBytes32Value',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setBytesValue",
+    functionFragment: 'setBytesValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setIntValue",
+    functionFragment: 'setIntValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setStringValue",
+    functionFragment: 'setStringValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setUIntValue",
+    functionFragment: 'setUIntValue',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "setupExpiryTime",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'setupExpiryTime', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "associatedContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteAddressValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteBooleanValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteBytes32Value",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteBytesValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteIntValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteStringValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteUIntValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAddressValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getBooleanValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getBytes32Value",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getBytesValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getIntValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getStringValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getUIntValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "importFeeWithdrawalData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setAddressValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setAssociatedContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setBooleanValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setBytes32Value",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setBytesValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setIntValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setStringValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setUIntValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setupExpiryTime",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'associatedContract', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deleteAddressValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deleteBooleanValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deleteBytes32Value', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deleteBytesValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deleteIntValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deleteStringValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deleteUIntValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAddressValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getBooleanValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getBytes32Value', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getBytesValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getIntValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getStringValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getUIntValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'importFeeWithdrawalData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setAddressValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setAssociatedContract', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setBooleanValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setBytes32Value', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setBytesValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setIntValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setStringValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setUIntValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setupExpiryTime', data: BytesLike): Result;
 
   events: {
-    "AssociatedContractUpdated(address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'AssociatedContractUpdated(address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AssociatedContractUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AssociatedContractUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface AssociatedContractUpdatedEventObject {
@@ -341,27 +234,20 @@ export type AssociatedContractUpdatedEvent = TypedEvent<
   AssociatedContractUpdatedEventObject
 >;
 
-export type AssociatedContractUpdatedEventFilter =
-  TypedEventFilter<AssociatedContractUpdatedEvent>;
+export type AssociatedContractUpdatedEventFilter = TypedEventFilter<AssociatedContractUpdatedEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -382,9 +268,7 @@ export interface FeePoolEternalStorageAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -448,20 +332,11 @@ export interface FeePoolEternalStorageAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    getBytesValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    getBytesValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    getIntValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    getIntValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getStringValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    getStringValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     getUIntValue(
       record: PromiseOrValue<BytesLike>,
@@ -574,40 +449,19 @@ export interface FeePoolEternalStorageAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  getAddressValue(
-    record: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  getAddressValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  getBooleanValue(
-    record: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  getBooleanValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
-  getBytes32Value(
-    record: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  getBytes32Value(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  getBytesValue(
-    record: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  getBytesValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  getIntValue(
-    record: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  getIntValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getStringValue(
-    record: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  getStringValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  getUIntValue(
-    record: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  getUIntValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
   importFeeWithdrawalData(
     accounts: PromiseOrValue<string>[],
@@ -678,75 +532,33 @@ export interface FeePoolEternalStorageAbiTypes extends BaseContract {
 
     associatedContract(overrides?: CallOverrides): Promise<string>;
 
-    deleteAddressValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    deleteAddressValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    deleteBooleanValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    deleteBooleanValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    deleteBytes32Value(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    deleteBytes32Value(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    deleteBytesValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    deleteBytesValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    deleteIntValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    deleteIntValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    deleteStringValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    deleteStringValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    deleteUIntValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    deleteUIntValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    getAddressValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    getAddressValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    getBooleanValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    getBooleanValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
-    getBytes32Value(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    getBytes32Value(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    getBytesValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    getBytesValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    getIntValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getIntValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStringValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    getStringValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    getUIntValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getUIntValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     importFeeWithdrawalData(
       accounts: PromiseOrValue<string>[],
@@ -754,10 +566,7 @@ export interface FeePoolEternalStorageAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -814,27 +623,20 @@ export interface FeePoolEternalStorageAbiTypes extends BaseContract {
   };
 
   filters: {
-    "AssociatedContractUpdated(address)"(
+    'AssociatedContractUpdated(address)'(
       associatedContract?: null
     ): AssociatedContractUpdatedEventFilter;
-    AssociatedContractUpdated(
-      associatedContract?: null
-    ): AssociatedContractUpdatedEventFilter;
+    AssociatedContractUpdated(associatedContract?: null): AssociatedContractUpdatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     associatedContract(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -888,25 +690,16 @@ export interface FeePoolEternalStorageAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getBytesValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getBytesValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getIntValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getIntValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getStringValue(
       record: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getUIntValue(
-      record: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getUIntValue(record: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     importFeeWithdrawalData(
       accounts: PromiseOrValue<string>[],
@@ -978,9 +771,7 @@ export interface FeePoolEternalStorageAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    associatedContract(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    associatedContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deleteAddressValue(
       record: PromiseOrValue<BytesLike>,

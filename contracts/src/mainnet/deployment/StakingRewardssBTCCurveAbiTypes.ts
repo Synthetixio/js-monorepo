@@ -12,297 +12,181 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
-export interface StakingRewardssBTCCurveAbiTypesInterface
-  extends utils.Interface {
+export interface StakingRewardssBTCCurveAbiTypesInterface extends utils.Interface {
   functions: {
-    "DURATION()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "earned(address)": FunctionFragment;
-    "exit()": FunctionFragment;
-    "getReward()": FunctionFragment;
-    "getRewardForDuration()": FunctionFragment;
-    "lastTimeRewardApplicable()": FunctionFragment;
-    "lastUpdateTime()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "notifyRewardAmount(uint256)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "periodFinish()": FunctionFragment;
-    "recoverERC20(address,uint256)": FunctionFragment;
-    "rewardPerToken()": FunctionFragment;
-    "rewardPerTokenStored()": FunctionFragment;
-    "rewardRate()": FunctionFragment;
-    "rewards(address)": FunctionFragment;
-    "rewardsDistribution()": FunctionFragment;
-    "rewardsToken()": FunctionFragment;
-    "setRewardsDistribution(address)": FunctionFragment;
-    "stake(uint256)": FunctionFragment;
-    "stakingToken()": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "userRewardPerTokenPaid(address)": FunctionFragment;
-    "withdraw(uint256)": FunctionFragment;
+    'DURATION()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'earned(address)': FunctionFragment;
+    'exit()': FunctionFragment;
+    'getReward()': FunctionFragment;
+    'getRewardForDuration()': FunctionFragment;
+    'lastTimeRewardApplicable()': FunctionFragment;
+    'lastUpdateTime()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'notifyRewardAmount(uint256)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'periodFinish()': FunctionFragment;
+    'recoverERC20(address,uint256)': FunctionFragment;
+    'rewardPerToken()': FunctionFragment;
+    'rewardPerTokenStored()': FunctionFragment;
+    'rewardRate()': FunctionFragment;
+    'rewards(address)': FunctionFragment;
+    'rewardsDistribution()': FunctionFragment;
+    'rewardsToken()': FunctionFragment;
+    'setRewardsDistribution(address)': FunctionFragment;
+    'stake(uint256)': FunctionFragment;
+    'stakingToken()': FunctionFragment;
+    'totalSupply()': FunctionFragment;
+    'userRewardPerTokenPaid(address)': FunctionFragment;
+    'withdraw(uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "DURATION"
-      | "acceptOwnership"
-      | "balanceOf"
-      | "earned"
-      | "exit"
-      | "getReward"
-      | "getRewardForDuration"
-      | "lastTimeRewardApplicable"
-      | "lastUpdateTime"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "notifyRewardAmount"
-      | "owner"
-      | "periodFinish"
-      | "recoverERC20"
-      | "rewardPerToken"
-      | "rewardPerTokenStored"
-      | "rewardRate"
-      | "rewards"
-      | "rewardsDistribution"
-      | "rewardsToken"
-      | "setRewardsDistribution"
-      | "stake"
-      | "stakingToken"
-      | "totalSupply"
-      | "userRewardPerTokenPaid"
-      | "withdraw"
+      | 'DURATION'
+      | 'acceptOwnership'
+      | 'balanceOf'
+      | 'earned'
+      | 'exit'
+      | 'getReward'
+      | 'getRewardForDuration'
+      | 'lastTimeRewardApplicable'
+      | 'lastUpdateTime'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'notifyRewardAmount'
+      | 'owner'
+      | 'periodFinish'
+      | 'recoverERC20'
+      | 'rewardPerToken'
+      | 'rewardPerTokenStored'
+      | 'rewardRate'
+      | 'rewards'
+      | 'rewardsDistribution'
+      | 'rewardsToken'
+      | 'setRewardsDistribution'
+      | 'stake'
+      | 'stakingToken'
+      | 'totalSupply'
+      | 'userRewardPerTokenPaid'
+      | 'withdraw'
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "DURATION", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'DURATION', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'earned', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'exit', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getReward', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getRewardForDuration', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastUpdateTime', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "balanceOf",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "earned",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "exit", values?: undefined): string;
-  encodeFunctionData(functionFragment: "getReward", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getRewardForDuration",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastTimeRewardApplicable",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastUpdateTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "notifyRewardAmount",
+    functionFragment: 'notifyRewardAmount',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'periodFinish', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "periodFinish",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "recoverERC20",
+    functionFragment: 'recoverERC20',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'rewardPerToken', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardPerTokenStored', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardRate', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewardsDistribution', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardsToken', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "rewardPerToken",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardPerTokenStored",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewards",
+    functionFragment: 'setRewardsDistribution',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'stakingToken', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "rewardsDistribution",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardsToken",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setRewardsDistribution",
+    functionFragment: 'userRewardPerTokenPaid',
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "stake",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "stakingToken",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "userRewardPerTokenPaid",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdraw",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
 
-  decodeFunctionResult(functionFragment: "DURATION", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "earned", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "exit", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getReward", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getRewardForDuration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastTimeRewardApplicable",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastUpdateTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "notifyRewardAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "periodFinish",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "recoverERC20",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardPerToken",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardPerTokenStored",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "rewardRate", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "rewards", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardsDistribution",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardsToken",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setRewardsDistribution",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "stake", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "stakingToken",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "userRewardPerTokenPaid",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'DURATION', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'earned', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getReward', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRewardForDuration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastTimeRewardApplicable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastUpdateTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'notifyRewardAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'periodFinish', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'recoverERC20', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardPerToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardPerTokenStored', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardsDistribution', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardsToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setRewardsDistribution', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakingToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'userRewardPerTokenPaid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
 
   events: {
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "Recovered(address,uint256)": EventFragment;
-    "RewardAdded(uint256)": EventFragment;
-    "RewardPaid(address,uint256)": EventFragment;
-    "Staked(address,uint256)": EventFragment;
-    "Withdrawn(address,uint256)": EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'Recovered(address,uint256)': EventFragment;
+    'RewardAdded(uint256)': EventFragment;
+    'RewardPaid(address,uint256)': EventFragment;
+    'Staked(address,uint256)': EventFragment;
+    'Withdrawn(address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Recovered"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardPaid"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Staked"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Withdrawn"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Recovered'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardAdded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardPaid'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Staked'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Withdrawn'): EventFragment;
 }
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -310,10 +194,7 @@ export interface RecoveredEventObject {
   token: string;
   amount: BigNumber;
 }
-export type RecoveredEvent = TypedEvent<
-  [string, BigNumber],
-  RecoveredEventObject
->;
+export type RecoveredEvent = TypedEvent<[string, BigNumber], RecoveredEventObject>;
 
 export type RecoveredEventFilter = TypedEventFilter<RecoveredEvent>;
 
@@ -328,10 +209,7 @@ export interface RewardPaidEventObject {
   user: string;
   reward: BigNumber;
 }
-export type RewardPaidEvent = TypedEvent<
-  [string, BigNumber],
-  RewardPaidEventObject
->;
+export type RewardPaidEvent = TypedEvent<[string, BigNumber], RewardPaidEventObject>;
 
 export type RewardPaidEventFilter = TypedEventFilter<RewardPaidEvent>;
 
@@ -347,10 +225,7 @@ export interface WithdrawnEventObject {
   user: string;
   amount: BigNumber;
 }
-export type WithdrawnEvent = TypedEvent<
-  [string, BigNumber],
-  WithdrawnEventObject
->;
+export type WithdrawnEvent = TypedEvent<[string, BigNumber], WithdrawnEventObject>;
 
 export type WithdrawnEventFilter = TypedEventFilter<WithdrawnEvent>;
 
@@ -371,9 +246,7 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -387,19 +260,11 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    earned(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    exit(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getReward(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -439,10 +304,7 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewards(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     rewardsDistribution(overrides?: CallOverrides): Promise<[string]>;
 
@@ -479,19 +341,11 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  balanceOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  earned(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  exit(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getReward(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -531,10 +385,7 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
 
   rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewards(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   rewardsDistribution(overrides?: CallOverrides): Promise<string>;
 
@@ -569,15 +420,9 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     exit(overrides?: CallOverrides): Promise<void>;
 
@@ -589,10 +434,7 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -617,10 +459,7 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsDistribution(overrides?: CallOverrides): Promise<string>;
 
@@ -631,10 +470,7 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    stake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    stake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     stakingToken(overrides?: CallOverrides): Promise<string>;
 
@@ -645,86 +481,56 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    withdraw(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    withdraw(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "Recovered(address,uint256)"(
+    'Recovered(address,uint256)'(
       token?: PromiseOrValue<string> | null,
       amount?: null
     ): RecoveredEventFilter;
-    Recovered(
-      token?: PromiseOrValue<string> | null,
-      amount?: null
-    ): RecoveredEventFilter;
+    Recovered(token?: PromiseOrValue<string> | null, amount?: null): RecoveredEventFilter;
 
-    "RewardAdded(uint256)"(reward?: null): RewardAddedEventFilter;
+    'RewardAdded(uint256)'(reward?: null): RewardAddedEventFilter;
     RewardAdded(reward?: null): RewardAddedEventFilter;
 
-    "RewardPaid(address,uint256)"(
+    'RewardPaid(address,uint256)'(
       user?: PromiseOrValue<string> | null,
       reward?: null
     ): RewardPaidEventFilter;
-    RewardPaid(
-      user?: PromiseOrValue<string> | null,
-      reward?: null
-    ): RewardPaidEventFilter;
+    RewardPaid(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
 
-    "Staked(address,uint256)"(
+    'Staked(address,uint256)'(
       user?: PromiseOrValue<string> | null,
       amount?: null
     ): StakedEventFilter;
-    Staked(
-      user?: PromiseOrValue<string> | null,
-      amount?: null
-    ): StakedEventFilter;
+    Staked(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
 
-    "Withdrawn(address,uint256)"(
+    'Withdrawn(address,uint256)'(
       user?: PromiseOrValue<string> | null,
       amount?: null
     ): WithdrawnEventFilter;
-    Withdrawn(
-      user?: PromiseOrValue<string> | null,
-      amount?: null
-    ): WithdrawnEventFilter;
+    Withdrawn(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
   };
 
   estimateGas: {
     DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    exit(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    getReward(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getRewardForDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -760,10 +566,7 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsDistribution(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -811,21 +614,15 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    exit(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getReward(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    getRewardForDuration(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getRewardForDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastTimeRewardApplicable(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    lastTimeRewardApplicable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -853,20 +650,13 @@ export interface StakingRewardssBTCCurveAbiTypes extends BaseContract {
 
     rewardPerToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardPerTokenStored(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    rewardPerTokenStored(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardsDistribution(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    rewardsDistribution(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardsToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -12,342 +12,215 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface DebtCacheAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "cacheInfo()": FunctionFragment;
-    "cacheInvalid()": FunctionFragment;
-    "cacheStale()": FunctionFragment;
-    "cacheTimestamp()": FunctionFragment;
-    "cachedDebt()": FunctionFragment;
-    "cachedSynthDebt(bytes32)": FunctionFragment;
-    "cachedSynthDebts(bytes32[])": FunctionFragment;
-    "currentDebt()": FunctionFragment;
-    "currentSynthDebts(bytes32[])": FunctionFragment;
-    "debtSnapshotStaleTime()": FunctionFragment;
-    "excludedIssuedDebts(bytes32[])": FunctionFragment;
-    "importExcludedIssuedDebts(address,address)": FunctionFragment;
-    "isInitialized()": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "purgeCachedSynthDebt(bytes32)": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "recordExcludedDebtChange(bytes32,int256)": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "takeDebtSnapshot()": FunctionFragment;
-    "totalNonSnxBackedDebt()": FunctionFragment;
-    "updateCachedSynthDebtWithRate(bytes32,uint256)": FunctionFragment;
-    "updateCachedSynthDebts(bytes32[])": FunctionFragment;
-    "updateCachedSynthDebtsWithRates(bytes32[],uint256[])": FunctionFragment;
-    "updateCachedsUSDDebt(int256)": FunctionFragment;
-    "updateDebtCacheValidity(bool)": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'cacheInfo()': FunctionFragment;
+    'cacheInvalid()': FunctionFragment;
+    'cacheStale()': FunctionFragment;
+    'cacheTimestamp()': FunctionFragment;
+    'cachedDebt()': FunctionFragment;
+    'cachedSynthDebt(bytes32)': FunctionFragment;
+    'cachedSynthDebts(bytes32[])': FunctionFragment;
+    'currentDebt()': FunctionFragment;
+    'currentSynthDebts(bytes32[])': FunctionFragment;
+    'debtSnapshotStaleTime()': FunctionFragment;
+    'excludedIssuedDebts(bytes32[])': FunctionFragment;
+    'importExcludedIssuedDebts(address,address)': FunctionFragment;
+    'isInitialized()': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'purgeCachedSynthDebt(bytes32)': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'recordExcludedDebtChange(bytes32,int256)': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'takeDebtSnapshot()': FunctionFragment;
+    'totalNonSnxBackedDebt()': FunctionFragment;
+    'updateCachedSynthDebtWithRate(bytes32,uint256)': FunctionFragment;
+    'updateCachedSynthDebts(bytes32[])': FunctionFragment;
+    'updateCachedSynthDebtsWithRates(bytes32[],uint256[])': FunctionFragment;
+    'updateCachedsUSDDebt(int256)': FunctionFragment;
+    'updateDebtCacheValidity(bool)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "acceptOwnership"
-      | "cacheInfo"
-      | "cacheInvalid"
-      | "cacheStale"
-      | "cacheTimestamp"
-      | "cachedDebt"
-      | "cachedSynthDebt"
-      | "cachedSynthDebts"
-      | "currentDebt"
-      | "currentSynthDebts"
-      | "debtSnapshotStaleTime"
-      | "excludedIssuedDebts"
-      | "importExcludedIssuedDebts"
-      | "isInitialized"
-      | "isResolverCached"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "purgeCachedSynthDebt"
-      | "rebuildCache"
-      | "recordExcludedDebtChange"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "takeDebtSnapshot"
-      | "totalNonSnxBackedDebt"
-      | "updateCachedSynthDebtWithRate"
-      | "updateCachedSynthDebts"
-      | "updateCachedSynthDebtsWithRates"
-      | "updateCachedsUSDDebt"
-      | "updateDebtCacheValidity"
+      | 'CONTRACT_NAME'
+      | 'acceptOwnership'
+      | 'cacheInfo'
+      | 'cacheInvalid'
+      | 'cacheStale'
+      | 'cacheTimestamp'
+      | 'cachedDebt'
+      | 'cachedSynthDebt'
+      | 'cachedSynthDebts'
+      | 'currentDebt'
+      | 'currentSynthDebts'
+      | 'debtSnapshotStaleTime'
+      | 'excludedIssuedDebts'
+      | 'importExcludedIssuedDebts'
+      | 'isInitialized'
+      | 'isResolverCached'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'purgeCachedSynthDebt'
+      | 'rebuildCache'
+      | 'recordExcludedDebtChange'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'takeDebtSnapshot'
+      | 'totalNonSnxBackedDebt'
+      | 'updateCachedSynthDebtWithRate'
+      | 'updateCachedSynthDebts'
+      | 'updateCachedSynthDebtsWithRates'
+      | 'updateCachedsUSDDebt'
+      | 'updateDebtCacheValidity'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'cacheInfo', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'cacheInvalid', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'cacheStale', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'cacheTimestamp', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'cachedDebt', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "cacheInfo", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "cacheInvalid",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "cacheStale",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "cacheTimestamp",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "cachedDebt",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "cachedSynthDebt",
+    functionFragment: 'cachedSynthDebt',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "cachedSynthDebts",
+    functionFragment: 'cachedSynthDebts',
+    values: [PromiseOrValue<BytesLike>[]]
+  ): string;
+  encodeFunctionData(functionFragment: 'currentDebt', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'currentSynthDebts',
+    values: [PromiseOrValue<BytesLike>[]]
+  ): string;
+  encodeFunctionData(functionFragment: 'debtSnapshotStaleTime', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'excludedIssuedDebts',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "currentDebt",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "currentSynthDebts",
-    values: [PromiseOrValue<BytesLike>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "debtSnapshotStaleTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "excludedIssuedDebts",
-    values: [PromiseOrValue<BytesLike>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "importExcludedIssuedDebts",
+    functionFragment: 'importExcludedIssuedDebts',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'isInitialized', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isInitialized",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "purgeCachedSynthDebt",
+    functionFragment: 'purgeCachedSynthDebt',
     values: [PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "recordExcludedDebtChange",
+    functionFragment: 'recordExcludedDebtChange',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'takeDebtSnapshot', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalNonSnxBackedDebt', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "takeDebtSnapshot",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalNonSnxBackedDebt",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateCachedSynthDebtWithRate",
+    functionFragment: 'updateCachedSynthDebtWithRate',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateCachedSynthDebts",
+    functionFragment: 'updateCachedSynthDebts',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateCachedSynthDebtsWithRates",
+    functionFragment: 'updateCachedSynthDebtsWithRates',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateCachedsUSDDebt",
+    functionFragment: 'updateCachedsUSDDebt',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateDebtCacheValidity",
+    functionFragment: 'updateDebtCacheValidity',
     values: [PromiseOrValue<boolean>]
   ): string;
 
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cacheInfo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cacheInvalid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cacheStale', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cacheTimestamp', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cachedDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cachedSynthDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cachedSynthDebts', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'currentDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'currentSynthDebts', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'debtSnapshotStaleTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'excludedIssuedDebts', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'importExcludedIssuedDebts', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isInitialized', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'purgeCachedSynthDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'recordExcludedDebtChange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'takeDebtSnapshot', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalNonSnxBackedDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateCachedSynthDebtWithRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateCachedSynthDebts', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
+    functionFragment: 'updateCachedSynthDebtsWithRates',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "cacheInfo", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "cacheInvalid",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "cacheStale", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "cacheTimestamp",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "cachedDebt", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "cachedSynthDebt",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "cachedSynthDebts",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "currentDebt",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "currentSynthDebts",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "debtSnapshotStaleTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "excludedIssuedDebts",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "importExcludedIssuedDebts",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isInitialized",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "purgeCachedSynthDebt",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "recordExcludedDebtChange",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "takeDebtSnapshot",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalNonSnxBackedDebt",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateCachedSynthDebtWithRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateCachedSynthDebts",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateCachedSynthDebtsWithRates",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateCachedsUSDDebt",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateDebtCacheValidity",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'updateCachedsUSDDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateDebtCacheValidity', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "DebtCacheSnapshotTaken(uint256)": EventFragment;
-    "DebtCacheUpdated(uint256)": EventFragment;
-    "DebtCacheValidityChanged(bool)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'DebtCacheSnapshotTaken(uint256)': EventFragment;
+    'DebtCacheUpdated(uint256)': EventFragment;
+    'DebtCacheValidityChanged(bool)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DebtCacheSnapshotTaken"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DebtCacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DebtCacheValidityChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'DebtCacheSnapshotTaken'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'DebtCacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'DebtCacheValidityChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -359,19 +232,14 @@ export type DebtCacheSnapshotTakenEvent = TypedEvent<
   DebtCacheSnapshotTakenEventObject
 >;
 
-export type DebtCacheSnapshotTakenEventFilter =
-  TypedEventFilter<DebtCacheSnapshotTakenEvent>;
+export type DebtCacheSnapshotTakenEventFilter = TypedEventFilter<DebtCacheSnapshotTakenEvent>;
 
 export interface DebtCacheUpdatedEventObject {
   cachedDebt: BigNumber;
 }
-export type DebtCacheUpdatedEvent = TypedEvent<
-  [BigNumber],
-  DebtCacheUpdatedEventObject
->;
+export type DebtCacheUpdatedEvent = TypedEvent<[BigNumber], DebtCacheUpdatedEventObject>;
 
-export type DebtCacheUpdatedEventFilter =
-  TypedEventFilter<DebtCacheUpdatedEvent>;
+export type DebtCacheUpdatedEventFilter = TypedEventFilter<DebtCacheUpdatedEvent>;
 
 export interface DebtCacheValidityChangedEventObject {
   isInvalid: boolean;
@@ -381,27 +249,20 @@ export type DebtCacheValidityChangedEvent = TypedEvent<
   DebtCacheValidityChangedEventObject
 >;
 
-export type DebtCacheValidityChangedEventFilter =
-  TypedEventFilter<DebtCacheValidityChangedEvent>;
+export type DebtCacheValidityChangedEventFilter = TypedEventFilter<DebtCacheValidityChangedEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -422,9 +283,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -438,9 +297,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    cacheInfo(
-      overrides?: CallOverrides
-    ): Promise<
+    cacheInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, boolean, boolean] & {
         debt: BigNumber;
         timestamp: BigNumber;
@@ -469,9 +326,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
 
     currentDebt(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { debt: BigNumber; anyRateIsInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { debt: BigNumber; anyRateIsInvalid: boolean }>;
 
     currentSynthDebts(
       currencyKeys: PromiseOrValue<BytesLike>[],
@@ -538,9 +393,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
 
     totalNonSnxBackedDebt(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { excludedDebt: BigNumber; isInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { excludedDebt: BigNumber; isInvalid: boolean }>;
 
     updateCachedSynthDebtWithRate(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -576,9 +429,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  cacheInfo(
-    overrides?: CallOverrides
-  ): Promise<
+  cacheInfo(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, boolean, boolean] & {
       debt: BigNumber;
       timestamp: BigNumber;
@@ -607,9 +458,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
 
   currentDebt(
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { debt: BigNumber; anyRateIsInvalid: boolean }
-  >;
+  ): Promise<[BigNumber, boolean] & { debt: BigNumber; anyRateIsInvalid: boolean }>;
 
   currentSynthDebts(
     currencyKeys: PromiseOrValue<BytesLike>[],
@@ -674,9 +523,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
 
   totalNonSnxBackedDebt(
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { excludedDebt: BigNumber; isInvalid: boolean }
-  >;
+  ): Promise<[BigNumber, boolean] & { excludedDebt: BigNumber; isInvalid: boolean }>;
 
   updateCachedSynthDebtWithRate(
     currencyKey: PromiseOrValue<BytesLike>,
@@ -710,9 +557,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    cacheInfo(
-      overrides?: CallOverrides
-    ): Promise<
+    cacheInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, boolean, boolean] & {
         debt: BigNumber;
         timestamp: BigNumber;
@@ -741,9 +586,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
 
     currentDebt(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { debt: BigNumber; anyRateIsInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { debt: BigNumber; anyRateIsInvalid: boolean }>;
 
     currentSynthDebts(
       currencyKeys: PromiseOrValue<BytesLike>[],
@@ -774,10 +617,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
 
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -804,9 +644,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
 
     totalNonSnxBackedDebt(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { excludedDebt: BigNumber; isInvalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { excludedDebt: BigNumber; isInvalid: boolean }>;
 
     updateCachedSynthDebtWithRate(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -837,43 +675,33 @@ export interface DebtCacheAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "DebtCacheSnapshotTaken(uint256)"(
-      timestamp?: null
-    ): DebtCacheSnapshotTakenEventFilter;
+    'DebtCacheSnapshotTaken(uint256)'(timestamp?: null): DebtCacheSnapshotTakenEventFilter;
     DebtCacheSnapshotTaken(timestamp?: null): DebtCacheSnapshotTakenEventFilter;
 
-    "DebtCacheUpdated(uint256)"(cachedDebt?: null): DebtCacheUpdatedEventFilter;
+    'DebtCacheUpdated(uint256)'(cachedDebt?: null): DebtCacheUpdatedEventFilter;
     DebtCacheUpdated(cachedDebt?: null): DebtCacheUpdatedEventFilter;
 
-    "DebtCacheValidityChanged(bool)"(
+    'DebtCacheValidityChanged(bool)'(
       isInvalid?: PromiseOrValue<boolean> | null
     ): DebtCacheValidityChangedEventFilter;
     DebtCacheValidityChanged(
       isInvalid?: PromiseOrValue<boolean> | null
     ): DebtCacheValidityChangedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
   estimateGas: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     cacheInfo(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -933,9 +761,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     recordExcludedDebtChange(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -947,9 +773,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
-    takeDebtSnapshot(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    takeDebtSnapshot(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     totalNonSnxBackedDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1015,9 +839,7 @@ export interface DebtCacheAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    debtSnapshotStaleTime(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    debtSnapshotStaleTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     excludedIssuedDebts(
       currencyKeys: PromiseOrValue<BytesLike>[],
@@ -1060,17 +882,13 @@ export interface DebtCacheAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     takeDebtSnapshot(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    totalNonSnxBackedDebt(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    totalNonSnxBackedDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     updateCachedSynthDebtWithRate(
       currencyKey: PromiseOrValue<BytesLike>,

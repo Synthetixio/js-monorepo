@@ -12,269 +12,154 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface SupplyScheduleAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "INFLATION_START_DATE()": FunctionFragment;
-    "MAX_MINTER_REWARD()": FunctionFragment;
-    "MINT_BUFFER()": FunctionFragment;
-    "MINT_PERIOD_DURATION()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "inflationAmount()": FunctionFragment;
-    "isMintable()": FunctionFragment;
-    "lastMintEvent()": FunctionFragment;
-    "maxInflationAmount()": FunctionFragment;
-    "mintableSupply()": FunctionFragment;
-    "minterReward()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "recordMintEvent(uint256)": FunctionFragment;
-    "setInflationAmount(uint256)": FunctionFragment;
-    "setMaxInflationAmount(uint256)": FunctionFragment;
-    "setMinterReward(uint256)": FunctionFragment;
-    "setSynthetixProxy(address)": FunctionFragment;
-    "synthetixProxy()": FunctionFragment;
-    "weekCounter()": FunctionFragment;
-    "weeksSinceLastIssuance()": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'INFLATION_START_DATE()': FunctionFragment;
+    'MAX_MINTER_REWARD()': FunctionFragment;
+    'MINT_BUFFER()': FunctionFragment;
+    'MINT_PERIOD_DURATION()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'inflationAmount()': FunctionFragment;
+    'isMintable()': FunctionFragment;
+    'lastMintEvent()': FunctionFragment;
+    'maxInflationAmount()': FunctionFragment;
+    'mintableSupply()': FunctionFragment;
+    'minterReward()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'recordMintEvent(uint256)': FunctionFragment;
+    'setInflationAmount(uint256)': FunctionFragment;
+    'setMaxInflationAmount(uint256)': FunctionFragment;
+    'setMinterReward(uint256)': FunctionFragment;
+    'setSynthetixProxy(address)': FunctionFragment;
+    'synthetixProxy()': FunctionFragment;
+    'weekCounter()': FunctionFragment;
+    'weeksSinceLastIssuance()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "INFLATION_START_DATE"
-      | "MAX_MINTER_REWARD"
-      | "MINT_BUFFER"
-      | "MINT_PERIOD_DURATION"
-      | "acceptOwnership"
-      | "inflationAmount"
-      | "isMintable"
-      | "lastMintEvent"
-      | "maxInflationAmount"
-      | "mintableSupply"
-      | "minterReward"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "recordMintEvent"
-      | "setInflationAmount"
-      | "setMaxInflationAmount"
-      | "setMinterReward"
-      | "setSynthetixProxy"
-      | "synthetixProxy"
-      | "weekCounter"
-      | "weeksSinceLastIssuance"
+      | 'CONTRACT_NAME'
+      | 'INFLATION_START_DATE'
+      | 'MAX_MINTER_REWARD'
+      | 'MINT_BUFFER'
+      | 'MINT_PERIOD_DURATION'
+      | 'acceptOwnership'
+      | 'inflationAmount'
+      | 'isMintable'
+      | 'lastMintEvent'
+      | 'maxInflationAmount'
+      | 'mintableSupply'
+      | 'minterReward'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'recordMintEvent'
+      | 'setInflationAmount'
+      | 'setMaxInflationAmount'
+      | 'setMinterReward'
+      | 'setSynthetixProxy'
+      | 'synthetixProxy'
+      | 'weekCounter'
+      | 'weeksSinceLastIssuance'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'INFLATION_START_DATE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'MAX_MINTER_REWARD', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'MINT_BUFFER', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'MINT_PERIOD_DURATION', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'inflationAmount', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isMintable', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastMintEvent', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'maxInflationAmount', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'mintableSupply', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'minterReward', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "INFLATION_START_DATE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "MAX_MINTER_REWARD",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "MINT_BUFFER",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "MINT_PERIOD_DURATION",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "inflationAmount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isMintable",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastMintEvent",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "maxInflationAmount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mintableSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "minterReward",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "recordMintEvent",
+    functionFragment: 'recordMintEvent',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setInflationAmount",
+    functionFragment: 'setInflationAmount',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMaxInflationAmount",
+    functionFragment: 'setMaxInflationAmount',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMinterReward",
+    functionFragment: 'setMinterReward',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setSynthetixProxy",
+    functionFragment: 'setSynthetixProxy',
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "synthetixProxy",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "weekCounter",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "weeksSinceLastIssuance",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'synthetixProxy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'weekCounter', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'weeksSinceLastIssuance', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "INFLATION_START_DATE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "MAX_MINTER_REWARD",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "MINT_BUFFER",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "MINT_PERIOD_DURATION",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "inflationAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "isMintable", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "lastMintEvent",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "maxInflationAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "mintableSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "minterReward",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "recordMintEvent",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setInflationAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaxInflationAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMinterReward",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setSynthetixProxy",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthetixProxy",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "weekCounter",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "weeksSinceLastIssuance",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'INFLATION_START_DATE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'MAX_MINTER_REWARD', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'MINT_BUFFER', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'MINT_PERIOD_DURATION', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'inflationAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isMintable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastMintEvent', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxInflationAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mintableSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minterReward', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'recordMintEvent', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setInflationAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaxInflationAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMinterReward', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSynthetixProxy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthetixProxy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'weekCounter', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'weeksSinceLastIssuance', data: BytesLike): Result;
 
   events: {
-    "InflationAmountUpdated(uint256)": EventFragment;
-    "MaxInflationAmountUpdated(uint256)": EventFragment;
-    "MinterRewardUpdated(uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "SupplyMinted(uint256,uint256,uint256,uint256)": EventFragment;
-    "SynthetixProxyUpdated(address)": EventFragment;
+    'InflationAmountUpdated(uint256)': EventFragment;
+    'MaxInflationAmountUpdated(uint256)': EventFragment;
+    'MinterRewardUpdated(uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'SupplyMinted(uint256,uint256,uint256,uint256)': EventFragment;
+    'SynthetixProxyUpdated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "InflationAmountUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MaxInflationAmountUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MinterRewardUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SupplyMinted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthetixProxyUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'InflationAmountUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MaxInflationAmountUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MinterRewardUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SupplyMinted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthetixProxyUpdated'): EventFragment;
 }
 
 export interface InflationAmountUpdatedEventObject {
@@ -285,8 +170,7 @@ export type InflationAmountUpdatedEvent = TypedEvent<
   InflationAmountUpdatedEventObject
 >;
 
-export type InflationAmountUpdatedEventFilter =
-  TypedEventFilter<InflationAmountUpdatedEvent>;
+export type InflationAmountUpdatedEventFilter = TypedEventFilter<InflationAmountUpdatedEvent>;
 
 export interface MaxInflationAmountUpdatedEventObject {
   newInflationAmount: BigNumber;
@@ -296,38 +180,27 @@ export type MaxInflationAmountUpdatedEvent = TypedEvent<
   MaxInflationAmountUpdatedEventObject
 >;
 
-export type MaxInflationAmountUpdatedEventFilter =
-  TypedEventFilter<MaxInflationAmountUpdatedEvent>;
+export type MaxInflationAmountUpdatedEventFilter = TypedEventFilter<MaxInflationAmountUpdatedEvent>;
 
 export interface MinterRewardUpdatedEventObject {
   newRewardAmount: BigNumber;
 }
-export type MinterRewardUpdatedEvent = TypedEvent<
-  [BigNumber],
-  MinterRewardUpdatedEventObject
->;
+export type MinterRewardUpdatedEvent = TypedEvent<[BigNumber], MinterRewardUpdatedEventObject>;
 
-export type MinterRewardUpdatedEventFilter =
-  TypedEventFilter<MinterRewardUpdatedEvent>;
+export type MinterRewardUpdatedEventFilter = TypedEventFilter<MinterRewardUpdatedEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -347,13 +220,9 @@ export type SupplyMintedEventFilter = TypedEventFilter<SupplyMintedEvent>;
 export interface SynthetixProxyUpdatedEventObject {
   newAddress: string;
 }
-export type SynthetixProxyUpdatedEvent = TypedEvent<
-  [string],
-  SynthetixProxyUpdatedEventObject
->;
+export type SynthetixProxyUpdatedEvent = TypedEvent<[string], SynthetixProxyUpdatedEventObject>;
 
-export type SynthetixProxyUpdatedEventFilter =
-  TypedEventFilter<SynthetixProxyUpdatedEvent>;
+export type SynthetixProxyUpdatedEventFilter = TypedEventFilter<SynthetixProxyUpdatedEvent>;
 
 export interface SupplyScheduleAbiTypes extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -372,9 +241,7 @@ export interface SupplyScheduleAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -540,10 +407,7 @@ export interface SupplyScheduleAbiTypes extends BaseContract {
 
     minterReward(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -564,10 +428,7 @@ export interface SupplyScheduleAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setMinterReward(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setMinterReward(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setSynthetixProxy(
       _synthetixProxy: PromiseOrValue<string>,
@@ -582,35 +443,24 @@ export interface SupplyScheduleAbiTypes extends BaseContract {
   };
 
   filters: {
-    "InflationAmountUpdated(uint256)"(
-      newInflationAmount?: null
-    ): InflationAmountUpdatedEventFilter;
-    InflationAmountUpdated(
-      newInflationAmount?: null
-    ): InflationAmountUpdatedEventFilter;
+    'InflationAmountUpdated(uint256)'(newInflationAmount?: null): InflationAmountUpdatedEventFilter;
+    InflationAmountUpdated(newInflationAmount?: null): InflationAmountUpdatedEventFilter;
 
-    "MaxInflationAmountUpdated(uint256)"(
+    'MaxInflationAmountUpdated(uint256)'(
       newInflationAmount?: null
     ): MaxInflationAmountUpdatedEventFilter;
-    MaxInflationAmountUpdated(
-      newInflationAmount?: null
-    ): MaxInflationAmountUpdatedEventFilter;
+    MaxInflationAmountUpdated(newInflationAmount?: null): MaxInflationAmountUpdatedEventFilter;
 
-    "MinterRewardUpdated(uint256)"(
-      newRewardAmount?: null
-    ): MinterRewardUpdatedEventFilter;
+    'MinterRewardUpdated(uint256)'(newRewardAmount?: null): MinterRewardUpdatedEventFilter;
     MinterRewardUpdated(newRewardAmount?: null): MinterRewardUpdatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "SupplyMinted(uint256,uint256,uint256,uint256)"(
+    'SupplyMinted(uint256,uint256,uint256,uint256)'(
       supplyMinted?: null,
       numberOfWeeksIssued?: null,
       lastMintEvent?: null,
@@ -623,9 +473,7 @@ export interface SupplyScheduleAbiTypes extends BaseContract {
       timestamp?: null
     ): SupplyMintedEventFilter;
 
-    "SynthetixProxyUpdated(address)"(
-      newAddress?: null
-    ): SynthetixProxyUpdatedEventFilter;
+    'SynthetixProxyUpdated(address)'(newAddress?: null): SynthetixProxyUpdatedEventFilter;
     SynthetixProxyUpdated(newAddress?: null): SynthetixProxyUpdatedEventFilter;
   };
 
@@ -640,9 +488,7 @@ export interface SupplyScheduleAbiTypes extends BaseContract {
 
     MINT_PERIOD_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     inflationAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -700,17 +546,13 @@ export interface SupplyScheduleAbiTypes extends BaseContract {
   populateTransaction: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    INFLATION_START_DATE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    INFLATION_START_DATE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     MAX_MINTER_REWARD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     MINT_BUFFER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    MINT_PERIOD_DURATION(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    MINT_PERIOD_DURATION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     acceptOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -722,9 +564,7 @@ export interface SupplyScheduleAbiTypes extends BaseContract {
 
     lastMintEvent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxInflationAmount(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    maxInflationAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintableSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -768,8 +608,6 @@ export interface SupplyScheduleAbiTypes extends BaseContract {
 
     weekCounter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    weeksSinceLastIssuance(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    weeksSinceLastIssuance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

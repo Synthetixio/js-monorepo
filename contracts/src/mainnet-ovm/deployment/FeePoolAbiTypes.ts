@@ -12,166 +12,126 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface FeePoolAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "FEE_ADDRESS()": FunctionFragment;
-    "FEE_PERIOD_LENGTH()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "allNetworksDebtSharesSupply()": FunctionFragment;
-    "allNetworksSnxBackedDebt()": FunctionFragment;
-    "claimFees()": FunctionFragment;
-    "claimOnBehalf(address)": FunctionFragment;
-    "closeCurrentFeePeriod()": FunctionFragment;
-    "closeSecondary(uint256,uint256)": FunctionFragment;
-    "effectiveDebtRatioForPeriod(address,uint256)": FunctionFragment;
-    "feePeriodDuration()": FunctionFragment;
-    "feesAvailable(address)": FunctionFragment;
-    "feesByPeriod(address)": FunctionFragment;
-    "getLastFeeWithdrawal(address)": FunctionFragment;
-    "getPenaltyThresholdRatio()": FunctionFragment;
-    "importFeePeriod(uint256,uint256,uint256,uint256,uint256,uint256,uint256)": FunctionFragment;
-    "isFeesClaimable(address)": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "issuanceRatio()": FunctionFragment;
-    "messageSender()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "proxy()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "recentFeePeriods(uint256)": FunctionFragment;
-    "recordFeePaid(uint256)": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "setMessageSender(address)": FunctionFragment;
-    "setProxy(address)": FunctionFragment;
-    "setRewardsToDistribute(uint256)": FunctionFragment;
-    "setupExpiryTime()": FunctionFragment;
-    "targetThreshold()": FunctionFragment;
-    "totalFeesAvailable()": FunctionFragment;
-    "totalRewardsAvailable()": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'FEE_ADDRESS()': FunctionFragment;
+    'FEE_PERIOD_LENGTH()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'allNetworksDebtSharesSupply()': FunctionFragment;
+    'allNetworksSnxBackedDebt()': FunctionFragment;
+    'claimFees()': FunctionFragment;
+    'claimOnBehalf(address)': FunctionFragment;
+    'closeCurrentFeePeriod()': FunctionFragment;
+    'closeSecondary(uint256,uint256)': FunctionFragment;
+    'effectiveDebtRatioForPeriod(address,uint256)': FunctionFragment;
+    'feePeriodDuration()': FunctionFragment;
+    'feesAvailable(address)': FunctionFragment;
+    'feesByPeriod(address)': FunctionFragment;
+    'getLastFeeWithdrawal(address)': FunctionFragment;
+    'getPenaltyThresholdRatio()': FunctionFragment;
+    'importFeePeriod(uint256,uint256,uint256,uint256,uint256,uint256,uint256)': FunctionFragment;
+    'isFeesClaimable(address)': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'issuanceRatio()': FunctionFragment;
+    'messageSender()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'proxy()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'recentFeePeriods(uint256)': FunctionFragment;
+    'recordFeePaid(uint256)': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'setMessageSender(address)': FunctionFragment;
+    'setProxy(address)': FunctionFragment;
+    'setRewardsToDistribute(uint256)': FunctionFragment;
+    'setupExpiryTime()': FunctionFragment;
+    'targetThreshold()': FunctionFragment;
+    'totalFeesAvailable()': FunctionFragment;
+    'totalRewardsAvailable()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "FEE_ADDRESS"
-      | "FEE_PERIOD_LENGTH"
-      | "acceptOwnership"
-      | "allNetworksDebtSharesSupply"
-      | "allNetworksSnxBackedDebt"
-      | "claimFees"
-      | "claimOnBehalf"
-      | "closeCurrentFeePeriod"
-      | "closeSecondary"
-      | "effectiveDebtRatioForPeriod"
-      | "feePeriodDuration"
-      | "feesAvailable"
-      | "feesByPeriod"
-      | "getLastFeeWithdrawal"
-      | "getPenaltyThresholdRatio"
-      | "importFeePeriod"
-      | "isFeesClaimable"
-      | "isResolverCached"
-      | "issuanceRatio"
-      | "messageSender"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "proxy"
-      | "rebuildCache"
-      | "recentFeePeriods"
-      | "recordFeePaid"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "setMessageSender"
-      | "setProxy"
-      | "setRewardsToDistribute"
-      | "setupExpiryTime"
-      | "targetThreshold"
-      | "totalFeesAvailable"
-      | "totalRewardsAvailable"
+      | 'CONTRACT_NAME'
+      | 'FEE_ADDRESS'
+      | 'FEE_PERIOD_LENGTH'
+      | 'acceptOwnership'
+      | 'allNetworksDebtSharesSupply'
+      | 'allNetworksSnxBackedDebt'
+      | 'claimFees'
+      | 'claimOnBehalf'
+      | 'closeCurrentFeePeriod'
+      | 'closeSecondary'
+      | 'effectiveDebtRatioForPeriod'
+      | 'feePeriodDuration'
+      | 'feesAvailable'
+      | 'feesByPeriod'
+      | 'getLastFeeWithdrawal'
+      | 'getPenaltyThresholdRatio'
+      | 'importFeePeriod'
+      | 'isFeesClaimable'
+      | 'isResolverCached'
+      | 'issuanceRatio'
+      | 'messageSender'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'proxy'
+      | 'rebuildCache'
+      | 'recentFeePeriods'
+      | 'recordFeePaid'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'setMessageSender'
+      | 'setProxy'
+      | 'setRewardsToDistribute'
+      | 'setupExpiryTime'
+      | 'targetThreshold'
+      | 'totalFeesAvailable'
+      | 'totalRewardsAvailable'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'FEE_ADDRESS', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'FEE_PERIOD_LENGTH', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'allNetworksDebtSharesSupply', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'allNetworksSnxBackedDebt', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'claimFees', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'claimOnBehalf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'closeCurrentFeePeriod', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "FEE_ADDRESS",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "FEE_PERIOD_LENGTH",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "allNetworksDebtSharesSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "allNetworksSnxBackedDebt",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "claimFees", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "claimOnBehalf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "closeCurrentFeePeriod",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "closeSecondary",
+    functionFragment: 'closeSecondary',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "effectiveDebtRatioForPeriod",
+    functionFragment: 'effectiveDebtRatioForPeriod',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'feePeriodDuration', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'feesAvailable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'feesByPeriod', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "feePeriodDuration",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "feesAvailable",
+    functionFragment: 'getLastFeeWithdrawal',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'getPenaltyThresholdRatio', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "feesByPeriod",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getLastFeeWithdrawal",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getPenaltyThresholdRatio",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "importFeePeriod",
+    functionFragment: 'importFeePeriod',
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -182,247 +142,109 @@ export interface FeePoolAbiTypesInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
+  encodeFunctionData(functionFragment: 'isFeesClaimable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'issuanceRatio', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'messageSender', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isFeesClaimable",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'proxy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "issuanceRatio",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "messageSender",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "proxy", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "recentFeePeriods",
+    functionFragment: 'recentFeePeriods',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "recordFeePaid",
+    functionFragment: 'recordFeePaid',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setMessageSender",
+    functionFragment: 'setMessageSender',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'setProxy', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "setProxy",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setRewardsToDistribute",
+    functionFragment: 'setRewardsToDistribute',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "setupExpiryTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "targetThreshold",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalFeesAvailable",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalRewardsAvailable",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'setupExpiryTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'targetThreshold', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalFeesAvailable', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalRewardsAvailable', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "FEE_ADDRESS",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "FEE_PERIOD_LENGTH",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "allNetworksDebtSharesSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "allNetworksSnxBackedDebt",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "claimFees", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "claimOnBehalf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "closeCurrentFeePeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "closeSecondary",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "effectiveDebtRatioForPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "feePeriodDuration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "feesAvailable",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "feesByPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getLastFeeWithdrawal",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPenaltyThresholdRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "importFeePeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isFeesClaimable",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issuanceRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "messageSender",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "proxy", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "recentFeePeriods",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "recordFeePaid",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMessageSender",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setProxy", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setRewardsToDistribute",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setupExpiryTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "targetThreshold",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalFeesAvailable",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalRewardsAvailable",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'FEE_ADDRESS', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'FEE_PERIOD_LENGTH', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allNetworksDebtSharesSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allNetworksSnxBackedDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimFees', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimOnBehalf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'closeCurrentFeePeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'closeSecondary', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'effectiveDebtRatioForPeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'feePeriodDuration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'feesAvailable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'feesByPeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getLastFeeWithdrawal', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getPenaltyThresholdRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'importFeePeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isFeesClaimable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issuanceRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'messageSender', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'proxy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'recentFeePeriods', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'recordFeePaid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMessageSender', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setProxy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setRewardsToDistribute', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setupExpiryTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'targetThreshold', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalFeesAvailable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalRewardsAvailable', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "FeePeriodClosed(uint256)": EventFragment;
-    "FeesClaimed(address,uint256,uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "ProxyUpdated(address)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'FeePeriodClosed(uint256)': EventFragment;
+    'FeesClaimed(address,uint256,uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'ProxyUpdated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FeePeriodClosed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FeesClaimed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ProxyUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FeePeriodClosed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FeesClaimed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ProxyUpdated'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
 export interface FeePeriodClosedEventObject {
   feePeriodId: BigNumber;
 }
-export type FeePeriodClosedEvent = TypedEvent<
-  [BigNumber],
-  FeePeriodClosedEventObject
->;
+export type FeePeriodClosedEvent = TypedEvent<[BigNumber], FeePeriodClosedEventObject>;
 
 export type FeePeriodClosedEventFilter = TypedEventFilter<FeePeriodClosedEvent>;
 
@@ -431,10 +253,7 @@ export interface FeesClaimedEventObject {
   sUSDAmount: BigNumber;
   snxRewards: BigNumber;
 }
-export type FeesClaimedEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  FeesClaimedEventObject
->;
+export type FeesClaimedEvent = TypedEvent<[string, BigNumber, BigNumber], FeesClaimedEventObject>;
 
 export type FeesClaimedEventFilter = TypedEventFilter<FeesClaimedEvent>;
 
@@ -442,20 +261,14 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -483,9 +296,7 @@ export interface FeePoolAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -505,15 +316,11 @@ export interface FeePoolAbiTypes extends BaseContract {
 
     allNetworksDebtSharesSupply(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { sharesSupply: BigNumber; updatedAt: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { sharesSupply: BigNumber; updatedAt: BigNumber }>;
 
     allNetworksSnxBackedDebt(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { debt: BigNumber; updatedAt: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { debt: BigNumber; updatedAt: BigNumber }>;
 
     claimFees(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -604,15 +411,7 @@ export interface FeePoolAbiTypes extends BaseContract {
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         feePeriodId: BigNumber;
         unused: BigNumber;
         startTime: BigNumber;
@@ -670,15 +469,11 @@ export interface FeePoolAbiTypes extends BaseContract {
 
   allNetworksDebtSharesSupply(
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & { sharesSupply: BigNumber; updatedAt: BigNumber }
-  >;
+  ): Promise<[BigNumber, BigNumber] & { sharesSupply: BigNumber; updatedAt: BigNumber }>;
 
   allNetworksSnxBackedDebt(
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & { debt: BigNumber; updatedAt: BigNumber }
-  >;
+  ): Promise<[BigNumber, BigNumber] & { debt: BigNumber; updatedAt: BigNumber }>;
 
   claimFees(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -735,10 +530,7 @@ export interface FeePoolAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  isFeesClaimable(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  isFeesClaimable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
@@ -765,15 +557,7 @@ export interface FeePoolAbiTypes extends BaseContract {
     index: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber
-    ] & {
+    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
       feePeriodId: BigNumber;
       unused: BigNumber;
       startTime: BigNumber;
@@ -827,15 +611,11 @@ export interface FeePoolAbiTypes extends BaseContract {
 
     allNetworksDebtSharesSupply(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { sharesSupply: BigNumber; updatedAt: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { sharesSupply: BigNumber; updatedAt: BigNumber }>;
 
     allNetworksSnxBackedDebt(
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { debt: BigNumber; updatedAt: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { debt: BigNumber; updatedAt: BigNumber }>;
 
     claimFees(overrides?: CallOverrides): Promise<boolean>;
 
@@ -888,10 +668,7 @@ export interface FeePoolAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    isFeesClaimable(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    isFeesClaimable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
@@ -899,10 +676,7 @@ export interface FeePoolAbiTypes extends BaseContract {
 
     messageSender(overrides?: CallOverrides): Promise<string>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -916,15 +690,7 @@ export interface FeePoolAbiTypes extends BaseContract {
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         feePeriodId: BigNumber;
         unused: BigNumber;
         startTime: BigNumber;
@@ -935,24 +701,15 @@ export interface FeePoolAbiTypes extends BaseContract {
       }
     >;
 
-    recordFeePaid(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    recordFeePaid(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     resolver(overrides?: CallOverrides): Promise<string>;
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
 
-    setMessageSender(
-      sender: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setMessageSender(sender: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setProxy(
-      _proxy: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setProxy(_proxy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setRewardsToDistribute(
       amount: PromiseOrValue<BigNumberish>,
@@ -969,36 +726,26 @@ export interface FeePoolAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "FeePeriodClosed(uint256)"(feePeriodId?: null): FeePeriodClosedEventFilter;
+    'FeePeriodClosed(uint256)'(feePeriodId?: null): FeePeriodClosedEventFilter;
     FeePeriodClosed(feePeriodId?: null): FeePeriodClosedEventFilter;
 
-    "FeesClaimed(address,uint256,uint256)"(
+    'FeesClaimed(address,uint256,uint256)'(
       account?: null,
       sUSDAmount?: null,
       snxRewards?: null
     ): FeesClaimedEventFilter;
-    FeesClaimed(
-      account?: null,
-      sUSDAmount?: null,
-      snxRewards?: null
-    ): FeesClaimedEventFilter;
+    FeesClaimed(account?: null, sUSDAmount?: null, snxRewards?: null): FeesClaimedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "ProxyUpdated(address)"(proxyAddress?: null): ProxyUpdatedEventFilter;
+    'ProxyUpdated(address)'(proxyAddress?: null): ProxyUpdatedEventFilter;
     ProxyUpdated(proxyAddress?: null): ProxyUpdatedEventFilter;
   };
 
@@ -1009,17 +756,13 @@ export interface FeePoolAbiTypes extends BaseContract {
 
     FEE_PERIOD_LENGTH(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     allNetworksDebtSharesSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     allNetworksSnxBackedDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimFees(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     claimOnBehalf(
       claimingForAddress: PromiseOrValue<string>,
@@ -1044,15 +787,9 @@ export interface FeePoolAbiTypes extends BaseContract {
 
     feePeriodDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    feesAvailable(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    feesAvailable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    feesByPeriod(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    feesByPeriod(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getLastFeeWithdrawal(
       _claimingAddress: PromiseOrValue<string>,
@@ -1072,10 +809,7 @@ export interface FeePoolAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    isFeesClaimable(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    isFeesClaimable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     isResolverCached(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1094,9 +828,7 @@ export interface FeePoolAbiTypes extends BaseContract {
 
     proxy(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     recentFeePeriods(
       index: PromiseOrValue<BigNumberish>,
@@ -1147,13 +879,9 @@ export interface FeePoolAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    allNetworksDebtSharesSupply(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    allNetworksDebtSharesSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allNetworksSnxBackedDebt(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    allNetworksSnxBackedDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claimFees(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1197,9 +925,7 @@ export interface FeePoolAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getPenaltyThresholdRatio(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getPenaltyThresholdRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     importFeePeriod(
       feePeriodIndex: PromiseOrValue<BigNumberish>,
@@ -1250,9 +976,7 @@ export interface FeePoolAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setMessageSender(
       sender: PromiseOrValue<string>,
@@ -1273,12 +997,8 @@ export interface FeePoolAbiTypes extends BaseContract {
 
     targetThreshold(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalFeesAvailable(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    totalFeesAvailable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalRewardsAvailable(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    totalRewardsAvailable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

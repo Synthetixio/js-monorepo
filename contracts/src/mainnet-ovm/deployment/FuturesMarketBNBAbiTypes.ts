@@ -12,421 +12,255 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface FuturesMarketBNBAbiTypesInterface extends utils.Interface {
   functions: {
-    "accessibleMargin(address)": FunctionFragment;
-    "accruedFunding(address)": FunctionFragment;
-    "assetPrice()": FunctionFragment;
-    "baseAsset()": FunctionFragment;
-    "canLiquidate(address)": FunctionFragment;
-    "cancelNextPriceOrder(address)": FunctionFragment;
-    "closePosition()": FunctionFragment;
-    "closePositionWithTracking(bytes32)": FunctionFragment;
-    "currentFundingRate()": FunctionFragment;
-    "executeNextPriceOrder(address)": FunctionFragment;
-    "fundingLastRecomputed()": FunctionFragment;
-    "fundingSequence(uint256)": FunctionFragment;
-    "fundingSequenceLength()": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "liquidatePosition(address)": FunctionFragment;
-    "liquidationFee(address)": FunctionFragment;
-    "liquidationPrice(address)": FunctionFragment;
-    "marketDebt()": FunctionFragment;
-    "marketKey()": FunctionFragment;
-    "marketSize()": FunctionFragment;
-    "marketSizes()": FunctionFragment;
-    "marketSkew()": FunctionFragment;
-    "modifyPosition(int256)": FunctionFragment;
-    "modifyPositionWithTracking(int256,bytes32)": FunctionFragment;
-    "nextPriceOrders(address)": FunctionFragment;
-    "notionalValue(address)": FunctionFragment;
-    "orderFee(int256)": FunctionFragment;
-    "positions(address)": FunctionFragment;
-    "postTradeDetails(int256,address)": FunctionFragment;
-    "profitLoss(address)": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "recomputeFunding()": FunctionFragment;
-    "remainingMargin(address)": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "submitNextPriceOrder(int256)": FunctionFragment;
-    "submitNextPriceOrderWithTracking(int256,bytes32)": FunctionFragment;
-    "transferMargin(int256)": FunctionFragment;
-    "unrecordedFunding()": FunctionFragment;
-    "withdrawAllMargin()": FunctionFragment;
+    'accessibleMargin(address)': FunctionFragment;
+    'accruedFunding(address)': FunctionFragment;
+    'assetPrice()': FunctionFragment;
+    'baseAsset()': FunctionFragment;
+    'canLiquidate(address)': FunctionFragment;
+    'cancelNextPriceOrder(address)': FunctionFragment;
+    'closePosition()': FunctionFragment;
+    'closePositionWithTracking(bytes32)': FunctionFragment;
+    'currentFundingRate()': FunctionFragment;
+    'executeNextPriceOrder(address)': FunctionFragment;
+    'fundingLastRecomputed()': FunctionFragment;
+    'fundingSequence(uint256)': FunctionFragment;
+    'fundingSequenceLength()': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'liquidatePosition(address)': FunctionFragment;
+    'liquidationFee(address)': FunctionFragment;
+    'liquidationPrice(address)': FunctionFragment;
+    'marketDebt()': FunctionFragment;
+    'marketKey()': FunctionFragment;
+    'marketSize()': FunctionFragment;
+    'marketSizes()': FunctionFragment;
+    'marketSkew()': FunctionFragment;
+    'modifyPosition(int256)': FunctionFragment;
+    'modifyPositionWithTracking(int256,bytes32)': FunctionFragment;
+    'nextPriceOrders(address)': FunctionFragment;
+    'notionalValue(address)': FunctionFragment;
+    'orderFee(int256)': FunctionFragment;
+    'positions(address)': FunctionFragment;
+    'postTradeDetails(int256,address)': FunctionFragment;
+    'profitLoss(address)': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'recomputeFunding()': FunctionFragment;
+    'remainingMargin(address)': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'submitNextPriceOrder(int256)': FunctionFragment;
+    'submitNextPriceOrderWithTracking(int256,bytes32)': FunctionFragment;
+    'transferMargin(int256)': FunctionFragment;
+    'unrecordedFunding()': FunctionFragment;
+    'withdrawAllMargin()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "accessibleMargin"
-      | "accruedFunding"
-      | "assetPrice"
-      | "baseAsset"
-      | "canLiquidate"
-      | "cancelNextPriceOrder"
-      | "closePosition"
-      | "closePositionWithTracking"
-      | "currentFundingRate"
-      | "executeNextPriceOrder"
-      | "fundingLastRecomputed"
-      | "fundingSequence"
-      | "fundingSequenceLength"
-      | "isResolverCached"
-      | "liquidatePosition"
-      | "liquidationFee"
-      | "liquidationPrice"
-      | "marketDebt"
-      | "marketKey"
-      | "marketSize"
-      | "marketSizes"
-      | "marketSkew"
-      | "modifyPosition"
-      | "modifyPositionWithTracking"
-      | "nextPriceOrders"
-      | "notionalValue"
-      | "orderFee"
-      | "positions"
-      | "postTradeDetails"
-      | "profitLoss"
-      | "rebuildCache"
-      | "recomputeFunding"
-      | "remainingMargin"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "submitNextPriceOrder"
-      | "submitNextPriceOrderWithTracking"
-      | "transferMargin"
-      | "unrecordedFunding"
-      | "withdrawAllMargin"
+      | 'accessibleMargin'
+      | 'accruedFunding'
+      | 'assetPrice'
+      | 'baseAsset'
+      | 'canLiquidate'
+      | 'cancelNextPriceOrder'
+      | 'closePosition'
+      | 'closePositionWithTracking'
+      | 'currentFundingRate'
+      | 'executeNextPriceOrder'
+      | 'fundingLastRecomputed'
+      | 'fundingSequence'
+      | 'fundingSequenceLength'
+      | 'isResolverCached'
+      | 'liquidatePosition'
+      | 'liquidationFee'
+      | 'liquidationPrice'
+      | 'marketDebt'
+      | 'marketKey'
+      | 'marketSize'
+      | 'marketSizes'
+      | 'marketSkew'
+      | 'modifyPosition'
+      | 'modifyPositionWithTracking'
+      | 'nextPriceOrders'
+      | 'notionalValue'
+      | 'orderFee'
+      | 'positions'
+      | 'postTradeDetails'
+      | 'profitLoss'
+      | 'rebuildCache'
+      | 'recomputeFunding'
+      | 'remainingMargin'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'submitNextPriceOrder'
+      | 'submitNextPriceOrderWithTracking'
+      | 'transferMargin'
+      | 'unrecordedFunding'
+      | 'withdrawAllMargin'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "accessibleMargin",
+    functionFragment: 'accessibleMargin',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'accruedFunding', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'assetPrice', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'baseAsset', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'canLiquidate', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "accruedFunding",
+    functionFragment: 'cancelNextPriceOrder',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'closePosition', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "assetPrice",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "baseAsset", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "canLiquidate",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "cancelNextPriceOrder",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "closePosition",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "closePositionWithTracking",
+    functionFragment: 'closePositionWithTracking',
     values: [PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'currentFundingRate', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "currentFundingRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "executeNextPriceOrder",
+    functionFragment: 'executeNextPriceOrder',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'fundingLastRecomputed', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "fundingLastRecomputed",
-    values?: undefined
+    functionFragment: 'fundingSequence',
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'fundingSequenceLength', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "fundingSequence",
+    functionFragment: 'liquidatePosition',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'liquidationFee', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'liquidationPrice',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'marketDebt', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'marketKey', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'marketSize', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'marketSizes', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'marketSkew', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'modifyPosition',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "fundingSequenceLength",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidatePosition",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidationFee",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "liquidationPrice",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "marketDebt",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "marketKey", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "marketSize",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "marketSizes",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "marketSkew",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "modifyPosition",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "modifyPositionWithTracking",
+    functionFragment: 'modifyPositionWithTracking',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'nextPriceOrders', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'notionalValue', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'orderFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'positions', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "nextPriceOrders",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "notionalValue",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "orderFee",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "positions",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "postTradeDetails",
+    functionFragment: 'postTradeDetails',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'profitLoss', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'recomputeFunding', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'remainingMargin', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "profitLoss",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "recomputeFunding",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "remainingMargin",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "submitNextPriceOrder",
+    functionFragment: 'submitNextPriceOrder',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "submitNextPriceOrderWithTracking",
+    functionFragment: 'submitNextPriceOrderWithTracking',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "transferMargin",
+    functionFragment: 'transferMargin',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "unrecordedFunding",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawAllMargin",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'unrecordedFunding', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'withdrawAllMargin', values?: undefined): string;
 
+  decodeFunctionResult(functionFragment: 'accessibleMargin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accruedFunding', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'assetPrice', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'baseAsset', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'canLiquidate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cancelNextPriceOrder', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'closePosition', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'closePositionWithTracking', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'currentFundingRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'executeNextPriceOrder', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'fundingLastRecomputed', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'fundingSequence', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'fundingSequenceLength', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidatePosition', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationPrice', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketKey', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketSize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketSizes', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketSkew', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'modifyPosition', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'modifyPositionWithTracking', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nextPriceOrders', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'notionalValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'orderFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'positions', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'postTradeDetails', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'profitLoss', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'recomputeFunding', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'remainingMargin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'submitNextPriceOrder', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "accessibleMargin",
+    functionFragment: 'submitNextPriceOrderWithTracking',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "accruedFunding",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "assetPrice", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "baseAsset", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "canLiquidate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "cancelNextPriceOrder",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "closePosition",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "closePositionWithTracking",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "currentFundingRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "executeNextPriceOrder",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "fundingLastRecomputed",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "fundingSequence",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "fundingSequenceLength",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidatePosition",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidationFee",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "liquidationPrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "marketDebt", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "marketKey", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "marketSize", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "marketSizes",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "marketSkew", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "modifyPosition",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "modifyPositionWithTracking",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nextPriceOrders",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "notionalValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "orderFee", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "positions", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "postTradeDetails",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "profitLoss", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "recomputeFunding",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "remainingMargin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "submitNextPriceOrder",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "submitNextPriceOrderWithTracking",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferMargin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "unrecordedFunding",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawAllMargin",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'transferMargin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unrecordedFunding', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawAllMargin', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "FundingRecomputed(int256,uint256,uint256)": EventFragment;
-    "FuturesTracking(bytes32,bytes32,bytes32,int256,uint256)": EventFragment;
-    "MarginTransferred(address,int256)": EventFragment;
-    "NextPriceOrderRemoved(address,uint256,int256,uint256,uint256,uint256,bytes32)": EventFragment;
-    "NextPriceOrderSubmitted(address,int256,uint256,uint256,uint256,bytes32)": EventFragment;
-    "PositionLiquidated(uint256,address,address,int256,uint256,uint256)": EventFragment;
-    "PositionModified(uint256,address,uint256,int256,int256,uint256,uint256,uint256)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'FundingRecomputed(int256,uint256,uint256)': EventFragment;
+    'FuturesTracking(bytes32,bytes32,bytes32,int256,uint256)': EventFragment;
+    'MarginTransferred(address,int256)': EventFragment;
+    'NextPriceOrderRemoved(address,uint256,int256,uint256,uint256,uint256,bytes32)': EventFragment;
+    'NextPriceOrderSubmitted(address,int256,uint256,uint256,uint256,bytes32)': EventFragment;
+    'PositionLiquidated(uint256,address,address,int256,uint256,uint256)': EventFragment;
+    'PositionModified(uint256,address,uint256,int256,int256,uint256,uint256,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FundingRecomputed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FuturesTracking"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MarginTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NextPriceOrderRemoved"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NextPriceOrderSubmitted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PositionLiquidated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PositionModified"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FundingRecomputed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FuturesTracking'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MarginTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'NextPriceOrderRemoved'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'NextPriceOrderSubmitted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'PositionLiquidated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'PositionModified'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -440,8 +274,7 @@ export type FundingRecomputedEvent = TypedEvent<
   FundingRecomputedEventObject
 >;
 
-export type FundingRecomputedEventFilter =
-  TypedEventFilter<FundingRecomputedEvent>;
+export type FundingRecomputedEventFilter = TypedEventFilter<FundingRecomputedEvent>;
 
 export interface FuturesTrackingEventObject {
   trackingCode: string;
@@ -461,13 +294,9 @@ export interface MarginTransferredEventObject {
   account: string;
   marginDelta: BigNumber;
 }
-export type MarginTransferredEvent = TypedEvent<
-  [string, BigNumber],
-  MarginTransferredEventObject
->;
+export type MarginTransferredEvent = TypedEvent<[string, BigNumber], MarginTransferredEventObject>;
 
-export type MarginTransferredEventFilter =
-  TypedEventFilter<MarginTransferredEvent>;
+export type MarginTransferredEventFilter = TypedEventFilter<MarginTransferredEvent>;
 
 export interface NextPriceOrderRemovedEventObject {
   account: string;
@@ -483,8 +312,7 @@ export type NextPriceOrderRemovedEvent = TypedEvent<
   NextPriceOrderRemovedEventObject
 >;
 
-export type NextPriceOrderRemovedEventFilter =
-  TypedEventFilter<NextPriceOrderRemovedEvent>;
+export type NextPriceOrderRemovedEventFilter = TypedEventFilter<NextPriceOrderRemovedEvent>;
 
 export interface NextPriceOrderSubmittedEventObject {
   account: string;
@@ -499,8 +327,7 @@ export type NextPriceOrderSubmittedEvent = TypedEvent<
   NextPriceOrderSubmittedEventObject
 >;
 
-export type NextPriceOrderSubmittedEventFilter =
-  TypedEventFilter<NextPriceOrderSubmittedEvent>;
+export type NextPriceOrderSubmittedEventFilter = TypedEventFilter<NextPriceOrderSubmittedEvent>;
 
 export interface PositionLiquidatedEventObject {
   id: BigNumber;
@@ -515,8 +342,7 @@ export type PositionLiquidatedEvent = TypedEvent<
   PositionLiquidatedEventObject
 >;
 
-export type PositionLiquidatedEventFilter =
-  TypedEventFilter<PositionLiquidatedEvent>;
+export type PositionLiquidatedEventFilter = TypedEventFilter<PositionLiquidatedEvent>;
 
 export interface PositionModifiedEventObject {
   id: BigNumber;
@@ -529,21 +355,11 @@ export interface PositionModifiedEventObject {
   fee: BigNumber;
 }
 export type PositionModifiedEvent = TypedEvent<
-  [
-    BigNumber,
-    string,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber
-  ],
+  [BigNumber, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
   PositionModifiedEventObject
 >;
 
-export type PositionModifiedEventFilter =
-  TypedEventFilter<PositionModifiedEvent>;
+export type PositionModifiedEventFilter = TypedEventFilter<PositionModifiedEvent>;
 
 export interface FuturesMarketBNBAbiTypes extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -562,9 +378,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -575,9 +389,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
     accessibleMargin(
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { marginAccessible: BigNumber; invalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { marginAccessible: BigNumber; invalid: boolean }>;
 
     accruedFunding(
       account: PromiseOrValue<string>,
@@ -590,10 +402,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
 
     baseAsset(overrides?: CallOverrides): Promise<[string]>;
 
-    canLiquidate(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    canLiquidate(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     cancelNextPriceOrder(
       account: PromiseOrValue<string>,
@@ -734,9 +543,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
     remainingMargin(
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { marginRemaining: BigNumber; invalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { marginRemaining: BigNumber; invalid: boolean }>;
 
     resolver(overrides?: CallOverrides): Promise<[string]>;
 
@@ -772,9 +579,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
   accessibleMargin(
     account: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { marginAccessible: BigNumber; invalid: boolean }
-  >;
+  ): Promise<[BigNumber, boolean] & { marginAccessible: BigNumber; invalid: boolean }>;
 
   accruedFunding(
     account: PromiseOrValue<string>,
@@ -787,10 +592,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
 
   baseAsset(overrides?: CallOverrides): Promise<string>;
 
-  canLiquidate(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  canLiquidate(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   cancelNextPriceOrder(
     account: PromiseOrValue<string>,
@@ -829,10 +631,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  liquidationFee(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  liquidationFee(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   liquidationPrice(
     account: PromiseOrValue<string>,
@@ -931,9 +730,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
   remainingMargin(
     account: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { marginRemaining: BigNumber; invalid: boolean }
-  >;
+  ): Promise<[BigNumber, boolean] & { marginRemaining: BigNumber; invalid: boolean }>;
 
   resolver(overrides?: CallOverrides): Promise<string>;
 
@@ -967,9 +764,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
     accessibleMargin(
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { marginAccessible: BigNumber; invalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { marginAccessible: BigNumber; invalid: boolean }>;
 
     accruedFunding(
       account: PromiseOrValue<string>,
@@ -982,15 +777,9 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
 
     baseAsset(overrides?: CallOverrides): Promise<string>;
 
-    canLiquidate(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    canLiquidate(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    cancelNextPriceOrder(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    cancelNextPriceOrder(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     closePosition(overrides?: CallOverrides): Promise<void>;
 
@@ -1017,15 +806,9 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
 
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
-    liquidatePosition(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    liquidatePosition(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    liquidationFee(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    liquidationFee(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidationPrice(
       account: PromiseOrValue<string>,
@@ -1120,9 +903,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
     remainingMargin(
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { marginRemaining: BigNumber; invalid: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { marginRemaining: BigNumber; invalid: boolean }>;
 
     resolver(overrides?: CallOverrides): Promise<string>;
 
@@ -1152,24 +933,17 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "FundingRecomputed(int256,uint256,uint256)"(
+    'FundingRecomputed(int256,uint256,uint256)'(
       funding?: null,
       index?: null,
       timestamp?: null
     ): FundingRecomputedEventFilter;
-    FundingRecomputed(
-      funding?: null,
-      index?: null,
-      timestamp?: null
-    ): FundingRecomputedEventFilter;
+    FundingRecomputed(funding?: null, index?: null, timestamp?: null): FundingRecomputedEventFilter;
 
-    "FuturesTracking(bytes32,bytes32,bytes32,int256,uint256)"(
+    'FuturesTracking(bytes32,bytes32,bytes32,int256,uint256)'(
       trackingCode?: PromiseOrValue<BytesLike> | null,
       baseAsset?: null,
       marketKey?: null,
@@ -1184,7 +958,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
       fee?: null
     ): FuturesTrackingEventFilter;
 
-    "MarginTransferred(address,int256)"(
+    'MarginTransferred(address,int256)'(
       account?: PromiseOrValue<string> | null,
       marginDelta?: null
     ): MarginTransferredEventFilter;
@@ -1193,7 +967,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
       marginDelta?: null
     ): MarginTransferredEventFilter;
 
-    "NextPriceOrderRemoved(address,uint256,int256,uint256,uint256,uint256,bytes32)"(
+    'NextPriceOrderRemoved(address,uint256,int256,uint256,uint256,uint256,bytes32)'(
       account?: PromiseOrValue<string> | null,
       currentRoundId?: null,
       sizeDelta?: null,
@@ -1212,7 +986,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
       trackingCode?: null
     ): NextPriceOrderRemovedEventFilter;
 
-    "NextPriceOrderSubmitted(address,int256,uint256,uint256,uint256,bytes32)"(
+    'NextPriceOrderSubmitted(address,int256,uint256,uint256,uint256,bytes32)'(
       account?: PromiseOrValue<string> | null,
       sizeDelta?: null,
       targetRoundId?: null,
@@ -1229,7 +1003,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
       trackingCode?: null
     ): NextPriceOrderSubmittedEventFilter;
 
-    "PositionLiquidated(uint256,address,address,int256,uint256,uint256)"(
+    'PositionLiquidated(uint256,address,address,int256,uint256,uint256)'(
       id?: PromiseOrValue<BigNumberish> | null,
       account?: PromiseOrValue<string> | null,
       liquidator?: PromiseOrValue<string> | null,
@@ -1246,7 +1020,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
       fee?: null
     ): PositionLiquidatedEventFilter;
 
-    "PositionModified(uint256,address,uint256,int256,int256,uint256,uint256,uint256)"(
+    'PositionModified(uint256,address,uint256,int256,int256,uint256,uint256,uint256)'(
       id?: PromiseOrValue<BigNumberish> | null,
       account?: PromiseOrValue<string> | null,
       margin?: null,
@@ -1274,28 +1048,20 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    accruedFunding(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    accruedFunding(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     assetPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     baseAsset(overrides?: CallOverrides): Promise<BigNumber>;
 
-    canLiquidate(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    canLiquidate(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cancelNextPriceOrder(
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    closePosition(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    closePosition(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     closePositionWithTracking(
       trackingCode: PromiseOrValue<BytesLike>,
@@ -1325,10 +1091,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    liquidationFee(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    liquidationFee(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidationPrice(
       account: PromiseOrValue<string>,
@@ -1356,25 +1119,16 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    nextPriceOrders(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    nextPriceOrders(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    notionalValue(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    notionalValue(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     orderFee(
       sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    positions(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    positions(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     postTradeDetails(
       sizeDelta: PromiseOrValue<BigNumberish>,
@@ -1382,23 +1136,13 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    profitLoss(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    profitLoss(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    recomputeFunding(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    recomputeFunding(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    remainingMargin(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    remainingMargin(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1461,27 +1205,21 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    currentFundingRate(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    currentFundingRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     executeNextPriceOrder(
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    fundingLastRecomputed(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    fundingLastRecomputed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     fundingSequence(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    fundingSequenceLength(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    fundingSequenceLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isResolverCached(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1567,9 +1305,7 @@ export interface FuturesMarketBNBAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     submitNextPriceOrder(
       sizeDelta: PromiseOrValue<BigNumberish>,

@@ -12,198 +12,122 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface SynthetixStateAbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "appendDebtLedgerValue(uint256)": FunctionFragment;
-    "associatedContract()": FunctionFragment;
-    "clearIssuanceData(address)": FunctionFragment;
-    "debtLedger(uint256)": FunctionFragment;
-    "debtLedgerLength()": FunctionFragment;
-    "decrementTotalIssuerCount()": FunctionFragment;
-    "hasIssued(address)": FunctionFragment;
-    "incrementTotalIssuerCount()": FunctionFragment;
-    "issuanceData(address)": FunctionFragment;
-    "lastDebtLedgerEntry()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "setAssociatedContract(address)": FunctionFragment;
-    "setCurrentIssuanceData(address,uint256)": FunctionFragment;
-    "totalIssuerCount()": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'appendDebtLedgerValue(uint256)': FunctionFragment;
+    'associatedContract()': FunctionFragment;
+    'clearIssuanceData(address)': FunctionFragment;
+    'debtLedger(uint256)': FunctionFragment;
+    'debtLedgerLength()': FunctionFragment;
+    'decrementTotalIssuerCount()': FunctionFragment;
+    'hasIssued(address)': FunctionFragment;
+    'incrementTotalIssuerCount()': FunctionFragment;
+    'issuanceData(address)': FunctionFragment;
+    'lastDebtLedgerEntry()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'setAssociatedContract(address)': FunctionFragment;
+    'setCurrentIssuanceData(address,uint256)': FunctionFragment;
+    'totalIssuerCount()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "appendDebtLedgerValue"
-      | "associatedContract"
-      | "clearIssuanceData"
-      | "debtLedger"
-      | "debtLedgerLength"
-      | "decrementTotalIssuerCount"
-      | "hasIssued"
-      | "incrementTotalIssuerCount"
-      | "issuanceData"
-      | "lastDebtLedgerEntry"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "setAssociatedContract"
-      | "setCurrentIssuanceData"
-      | "totalIssuerCount"
+      | 'acceptOwnership'
+      | 'appendDebtLedgerValue'
+      | 'associatedContract'
+      | 'clearIssuanceData'
+      | 'debtLedger'
+      | 'debtLedgerLength'
+      | 'decrementTotalIssuerCount'
+      | 'hasIssued'
+      | 'incrementTotalIssuerCount'
+      | 'issuanceData'
+      | 'lastDebtLedgerEntry'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'setAssociatedContract'
+      | 'setCurrentIssuanceData'
+      | 'totalIssuerCount'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "appendDebtLedgerValue",
+    functionFragment: 'appendDebtLedgerValue',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'associatedContract', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "associatedContract",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "clearIssuanceData",
+    functionFragment: 'clearIssuanceData',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "debtLedger",
+    functionFragment: 'debtLedger',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'debtLedgerLength', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'decrementTotalIssuerCount', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'hasIssued', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'incrementTotalIssuerCount', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'issuanceData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lastDebtLedgerEntry', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "debtLedgerLength",
-    values?: undefined
+    functionFragment: 'nominateNewOwner',
+    values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "decrementTotalIssuerCount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "hasIssued",
+    functionFragment: 'setAssociatedContract',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "incrementTotalIssuerCount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "issuanceData",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastDebtLedgerEntry",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "setAssociatedContract",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setCurrentIssuanceData",
+    functionFragment: 'setCurrentIssuanceData',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "totalIssuerCount",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'totalIssuerCount', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "appendDebtLedgerValue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "associatedContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "clearIssuanceData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "debtLedger", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "debtLedgerLength",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "decrementTotalIssuerCount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "hasIssued", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "incrementTotalIssuerCount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issuanceData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastDebtLedgerEntry",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setAssociatedContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setCurrentIssuanceData",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalIssuerCount",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'appendDebtLedgerValue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'associatedContract', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'clearIssuanceData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'debtLedger', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'debtLedgerLength', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decrementTotalIssuerCount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'hasIssued', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'incrementTotalIssuerCount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issuanceData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastDebtLedgerEntry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setAssociatedContract', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setCurrentIssuanceData', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalIssuerCount', data: BytesLike): Result;
 
   events: {
-    "AssociatedContractUpdated(address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'AssociatedContractUpdated(address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AssociatedContractUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AssociatedContractUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface AssociatedContractUpdatedEventObject {
@@ -214,27 +138,20 @@ export type AssociatedContractUpdatedEvent = TypedEvent<
   AssociatedContractUpdatedEventObject
 >;
 
-export type AssociatedContractUpdatedEventFilter =
-  TypedEventFilter<AssociatedContractUpdatedEvent>;
+export type AssociatedContractUpdatedEventFilter = TypedEventFilter<AssociatedContractUpdatedEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -255,9 +172,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -281,10 +196,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    debtLedger(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    debtLedger(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     debtLedgerLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -292,10 +204,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    hasIssued(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    hasIssued(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     incrementTotalIssuerCount(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -352,10 +261,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  debtLedger(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  debtLedger(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   debtLedgerLength(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -363,10 +269,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  hasIssued(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  hasIssued(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   incrementTotalIssuerCount(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -416,24 +319,15 @@ export interface SynthetixStateAbiTypes extends BaseContract {
 
     associatedContract(overrides?: CallOverrides): Promise<string>;
 
-    clearIssuanceData(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    clearIssuanceData(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    debtLedger(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    debtLedger(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     debtLedgerLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     decrementTotalIssuerCount(overrides?: CallOverrides): Promise<void>;
 
-    hasIssued(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    hasIssued(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     incrementTotalIssuerCount(overrides?: CallOverrides): Promise<void>;
 
@@ -449,10 +343,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
 
     lastDebtLedgerEntry(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -473,27 +364,20 @@ export interface SynthetixStateAbiTypes extends BaseContract {
   };
 
   filters: {
-    "AssociatedContractUpdated(address)"(
+    'AssociatedContractUpdated(address)'(
       associatedContract?: null
     ): AssociatedContractUpdatedEventFilter;
-    AssociatedContractUpdated(
-      associatedContract?: null
-    ): AssociatedContractUpdatedEventFilter;
+    AssociatedContractUpdated(associatedContract?: null): AssociatedContractUpdatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     appendDebtLedgerValue(
       value: PromiseOrValue<BigNumberish>,
@@ -507,10 +391,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    debtLedger(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    debtLedger(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     debtLedgerLength(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -518,19 +399,13 @@ export interface SynthetixStateAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    hasIssued(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    hasIssued(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     incrementTotalIssuerCount(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    issuanceData(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    issuanceData(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lastDebtLedgerEntry(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -567,9 +442,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    associatedContract(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    associatedContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     clearIssuanceData(
       account: PromiseOrValue<string>,
@@ -601,9 +474,7 @@ export interface SynthetixStateAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    lastDebtLedgerEntry(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    lastDebtLedgerEntry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
       _owner: PromiseOrValue<string>,

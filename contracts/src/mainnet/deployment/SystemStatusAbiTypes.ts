@@ -12,362 +12,283 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface SystemStatusAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "SECTION_EXCHANGE()": FunctionFragment;
-    "SECTION_FUTURES()": FunctionFragment;
-    "SECTION_ISSUANCE()": FunctionFragment;
-    "SECTION_SYNTH()": FunctionFragment;
-    "SECTION_SYNTH_EXCHANGE()": FunctionFragment;
-    "SECTION_SYSTEM()": FunctionFragment;
-    "SUSPENSION_REASON_UPGRADE()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "accessControl(bytes32,address)": FunctionFragment;
-    "exchangeSuspension()": FunctionFragment;
-    "futuresMarketSuspension(bytes32)": FunctionFragment;
-    "futuresSuspension()": FunctionFragment;
-    "getFuturesMarketSuspensions(bytes32[])": FunctionFragment;
-    "getSynthExchangeSuspensions(bytes32[])": FunctionFragment;
-    "getSynthSuspensions(bytes32[])": FunctionFragment;
-    "isSystemUpgrading()": FunctionFragment;
-    "issuanceSuspension()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "requireExchangeActive()": FunctionFragment;
-    "requireExchangeBetweenSynthsAllowed(bytes32,bytes32)": FunctionFragment;
-    "requireFuturesActive()": FunctionFragment;
-    "requireFuturesMarketActive(bytes32)": FunctionFragment;
-    "requireIssuanceActive()": FunctionFragment;
-    "requireSynthActive(bytes32)": FunctionFragment;
-    "requireSynthExchangeActive(bytes32)": FunctionFragment;
-    "requireSynthsActive(bytes32,bytes32)": FunctionFragment;
-    "requireSystemActive()": FunctionFragment;
-    "resumeExchange()": FunctionFragment;
-    "resumeFutures()": FunctionFragment;
-    "resumeFuturesMarket(bytes32)": FunctionFragment;
-    "resumeFuturesMarkets(bytes32[])": FunctionFragment;
-    "resumeIssuance()": FunctionFragment;
-    "resumeSynth(bytes32)": FunctionFragment;
-    "resumeSynthExchange(bytes32)": FunctionFragment;
-    "resumeSynths(bytes32[])": FunctionFragment;
-    "resumeSynthsExchange(bytes32[])": FunctionFragment;
-    "resumeSystem()": FunctionFragment;
-    "suspendExchange(uint256)": FunctionFragment;
-    "suspendFutures(uint256)": FunctionFragment;
-    "suspendFuturesMarket(bytes32,uint256)": FunctionFragment;
-    "suspendFuturesMarkets(bytes32[],uint256)": FunctionFragment;
-    "suspendIssuance(uint256)": FunctionFragment;
-    "suspendSynth(bytes32,uint256)": FunctionFragment;
-    "suspendSynthExchange(bytes32,uint256)": FunctionFragment;
-    "suspendSynths(bytes32[],uint256)": FunctionFragment;
-    "suspendSynthsExchange(bytes32[],uint256)": FunctionFragment;
-    "suspendSystem(uint256)": FunctionFragment;
-    "synthExchangeSuspension(bytes32)": FunctionFragment;
-    "synthSuspended(bytes32)": FunctionFragment;
-    "synthSuspension(bytes32)": FunctionFragment;
-    "systemSuspended()": FunctionFragment;
-    "systemSuspension()": FunctionFragment;
-    "updateAccessControl(bytes32,address,bool,bool)": FunctionFragment;
-    "updateAccessControls(bytes32[],address[],bool[],bool[])": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'SECTION_EXCHANGE()': FunctionFragment;
+    'SECTION_FUTURES()': FunctionFragment;
+    'SECTION_ISSUANCE()': FunctionFragment;
+    'SECTION_SYNTH()': FunctionFragment;
+    'SECTION_SYNTH_EXCHANGE()': FunctionFragment;
+    'SECTION_SYSTEM()': FunctionFragment;
+    'SUSPENSION_REASON_UPGRADE()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'accessControl(bytes32,address)': FunctionFragment;
+    'exchangeSuspension()': FunctionFragment;
+    'futuresMarketSuspension(bytes32)': FunctionFragment;
+    'futuresSuspension()': FunctionFragment;
+    'getFuturesMarketSuspensions(bytes32[])': FunctionFragment;
+    'getSynthExchangeSuspensions(bytes32[])': FunctionFragment;
+    'getSynthSuspensions(bytes32[])': FunctionFragment;
+    'isSystemUpgrading()': FunctionFragment;
+    'issuanceSuspension()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'requireExchangeActive()': FunctionFragment;
+    'requireExchangeBetweenSynthsAllowed(bytes32,bytes32)': FunctionFragment;
+    'requireFuturesActive()': FunctionFragment;
+    'requireFuturesMarketActive(bytes32)': FunctionFragment;
+    'requireIssuanceActive()': FunctionFragment;
+    'requireSynthActive(bytes32)': FunctionFragment;
+    'requireSynthExchangeActive(bytes32)': FunctionFragment;
+    'requireSynthsActive(bytes32,bytes32)': FunctionFragment;
+    'requireSystemActive()': FunctionFragment;
+    'resumeExchange()': FunctionFragment;
+    'resumeFutures()': FunctionFragment;
+    'resumeFuturesMarket(bytes32)': FunctionFragment;
+    'resumeFuturesMarkets(bytes32[])': FunctionFragment;
+    'resumeIssuance()': FunctionFragment;
+    'resumeSynth(bytes32)': FunctionFragment;
+    'resumeSynthExchange(bytes32)': FunctionFragment;
+    'resumeSynths(bytes32[])': FunctionFragment;
+    'resumeSynthsExchange(bytes32[])': FunctionFragment;
+    'resumeSystem()': FunctionFragment;
+    'suspendExchange(uint256)': FunctionFragment;
+    'suspendFutures(uint256)': FunctionFragment;
+    'suspendFuturesMarket(bytes32,uint256)': FunctionFragment;
+    'suspendFuturesMarkets(bytes32[],uint256)': FunctionFragment;
+    'suspendIssuance(uint256)': FunctionFragment;
+    'suspendSynth(bytes32,uint256)': FunctionFragment;
+    'suspendSynthExchange(bytes32,uint256)': FunctionFragment;
+    'suspendSynths(bytes32[],uint256)': FunctionFragment;
+    'suspendSynthsExchange(bytes32[],uint256)': FunctionFragment;
+    'suspendSystem(uint256)': FunctionFragment;
+    'synthExchangeSuspension(bytes32)': FunctionFragment;
+    'synthSuspended(bytes32)': FunctionFragment;
+    'synthSuspension(bytes32)': FunctionFragment;
+    'systemSuspended()': FunctionFragment;
+    'systemSuspension()': FunctionFragment;
+    'updateAccessControl(bytes32,address,bool,bool)': FunctionFragment;
+    'updateAccessControls(bytes32[],address[],bool[],bool[])': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "SECTION_EXCHANGE"
-      | "SECTION_FUTURES"
-      | "SECTION_ISSUANCE"
-      | "SECTION_SYNTH"
-      | "SECTION_SYNTH_EXCHANGE"
-      | "SECTION_SYSTEM"
-      | "SUSPENSION_REASON_UPGRADE"
-      | "acceptOwnership"
-      | "accessControl"
-      | "exchangeSuspension"
-      | "futuresMarketSuspension"
-      | "futuresSuspension"
-      | "getFuturesMarketSuspensions"
-      | "getSynthExchangeSuspensions"
-      | "getSynthSuspensions"
-      | "isSystemUpgrading"
-      | "issuanceSuspension"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "requireExchangeActive"
-      | "requireExchangeBetweenSynthsAllowed"
-      | "requireFuturesActive"
-      | "requireFuturesMarketActive"
-      | "requireIssuanceActive"
-      | "requireSynthActive"
-      | "requireSynthExchangeActive"
-      | "requireSynthsActive"
-      | "requireSystemActive"
-      | "resumeExchange"
-      | "resumeFutures"
-      | "resumeFuturesMarket"
-      | "resumeFuturesMarkets"
-      | "resumeIssuance"
-      | "resumeSynth"
-      | "resumeSynthExchange"
-      | "resumeSynths"
-      | "resumeSynthsExchange"
-      | "resumeSystem"
-      | "suspendExchange"
-      | "suspendFutures"
-      | "suspendFuturesMarket"
-      | "suspendFuturesMarkets"
-      | "suspendIssuance"
-      | "suspendSynth"
-      | "suspendSynthExchange"
-      | "suspendSynths"
-      | "suspendSynthsExchange"
-      | "suspendSystem"
-      | "synthExchangeSuspension"
-      | "synthSuspended"
-      | "synthSuspension"
-      | "systemSuspended"
-      | "systemSuspension"
-      | "updateAccessControl"
-      | "updateAccessControls"
+      | 'CONTRACT_NAME'
+      | 'SECTION_EXCHANGE'
+      | 'SECTION_FUTURES'
+      | 'SECTION_ISSUANCE'
+      | 'SECTION_SYNTH'
+      | 'SECTION_SYNTH_EXCHANGE'
+      | 'SECTION_SYSTEM'
+      | 'SUSPENSION_REASON_UPGRADE'
+      | 'acceptOwnership'
+      | 'accessControl'
+      | 'exchangeSuspension'
+      | 'futuresMarketSuspension'
+      | 'futuresSuspension'
+      | 'getFuturesMarketSuspensions'
+      | 'getSynthExchangeSuspensions'
+      | 'getSynthSuspensions'
+      | 'isSystemUpgrading'
+      | 'issuanceSuspension'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'requireExchangeActive'
+      | 'requireExchangeBetweenSynthsAllowed'
+      | 'requireFuturesActive'
+      | 'requireFuturesMarketActive'
+      | 'requireIssuanceActive'
+      | 'requireSynthActive'
+      | 'requireSynthExchangeActive'
+      | 'requireSynthsActive'
+      | 'requireSystemActive'
+      | 'resumeExchange'
+      | 'resumeFutures'
+      | 'resumeFuturesMarket'
+      | 'resumeFuturesMarkets'
+      | 'resumeIssuance'
+      | 'resumeSynth'
+      | 'resumeSynthExchange'
+      | 'resumeSynths'
+      | 'resumeSynthsExchange'
+      | 'resumeSystem'
+      | 'suspendExchange'
+      | 'suspendFutures'
+      | 'suspendFuturesMarket'
+      | 'suspendFuturesMarkets'
+      | 'suspendIssuance'
+      | 'suspendSynth'
+      | 'suspendSynthExchange'
+      | 'suspendSynths'
+      | 'suspendSynthsExchange'
+      | 'suspendSystem'
+      | 'synthExchangeSuspension'
+      | 'synthSuspended'
+      | 'synthSuspension'
+      | 'systemSuspended'
+      | 'systemSuspension'
+      | 'updateAccessControl'
+      | 'updateAccessControls'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'SECTION_EXCHANGE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'SECTION_FUTURES', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'SECTION_ISSUANCE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'SECTION_SYNTH', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'SECTION_SYNTH_EXCHANGE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'SECTION_SYSTEM', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'SUSPENSION_REASON_UPGRADE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "SECTION_EXCHANGE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "SECTION_FUTURES",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "SECTION_ISSUANCE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "SECTION_SYNTH",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "SECTION_SYNTH_EXCHANGE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "SECTION_SYSTEM",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "SUSPENSION_REASON_UPGRADE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "accessControl",
+    functionFragment: 'accessControl',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'exchangeSuspension', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "exchangeSuspension",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "futuresMarketSuspension",
+    functionFragment: 'futuresMarketSuspension',
     values: [PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'futuresSuspension', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "futuresSuspension",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getFuturesMarketSuspensions",
+    functionFragment: 'getFuturesMarketSuspensions',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "getSynthExchangeSuspensions",
+    functionFragment: 'getSynthExchangeSuspensions',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "getSynthSuspensions",
+    functionFragment: 'getSynthSuspensions',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
+  encodeFunctionData(functionFragment: 'isSystemUpgrading', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'issuanceSuspension', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isSystemUpgrading",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "issuanceSuspension",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'requireExchangeActive', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "requireExchangeActive",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "requireExchangeBetweenSynthsAllowed",
+    functionFragment: 'requireExchangeBetweenSynthsAllowed',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'requireFuturesActive', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "requireFuturesActive",
-    values?: undefined
+    functionFragment: 'requireFuturesMarketActive',
+    values: [PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'requireIssuanceActive', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "requireFuturesMarketActive",
+    functionFragment: 'requireSynthActive',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "requireIssuanceActive",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "requireSynthActive",
+    functionFragment: 'requireSynthExchangeActive',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "requireSynthExchangeActive",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "requireSynthsActive",
+    functionFragment: 'requireSynthsActive',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'requireSystemActive', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resumeExchange', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resumeFutures', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "requireSystemActive",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "resumeExchange",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "resumeFutures",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "resumeFuturesMarket",
+    functionFragment: 'resumeFuturesMarket',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "resumeFuturesMarkets",
+    functionFragment: 'resumeFuturesMarkets',
+    values: [PromiseOrValue<BytesLike>[]]
+  ): string;
+  encodeFunctionData(functionFragment: 'resumeIssuance', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resumeSynth', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'resumeSynthExchange',
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'resumeSynths',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "resumeIssuance",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "resumeSynth",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "resumeSynthExchange",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "resumeSynths",
+    functionFragment: 'resumeSynthsExchange',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
+  encodeFunctionData(functionFragment: 'resumeSystem', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "resumeSynthsExchange",
-    values: [PromiseOrValue<BytesLike>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "resumeSystem",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "suspendExchange",
+    functionFragment: 'suspendExchange',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "suspendFutures",
+    functionFragment: 'suspendFutures',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "suspendFuturesMarket",
+    functionFragment: 'suspendFuturesMarket',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "suspendFuturesMarkets",
+    functionFragment: 'suspendFuturesMarkets',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "suspendIssuance",
+    functionFragment: 'suspendIssuance',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "suspendSynth",
+    functionFragment: 'suspendSynth',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "suspendSynthExchange",
+    functionFragment: 'suspendSynthExchange',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "suspendSynths",
+    functionFragment: 'suspendSynths',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "suspendSynthsExchange",
+    functionFragment: 'suspendSynthsExchange',
     values: [PromiseOrValue<BytesLike>[], PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "suspendSystem",
+    functionFragment: 'suspendSystem',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "synthExchangeSuspension",
+    functionFragment: 'synthExchangeSuspension',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "synthSuspended",
+    functionFragment: 'synthSuspended',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "synthSuspension",
+    functionFragment: 'synthSuspension',
     values: [PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'systemSuspended', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'systemSuspension', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "systemSuspended",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "systemSuspension",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateAccessControl",
+    functionFragment: 'updateAccessControl',
     values: [
       PromiseOrValue<BytesLike>,
       PromiseOrValue<string>,
@@ -376,7 +297,7 @@ export interface SystemStatusAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateAccessControls",
+    functionFragment: 'updateAccessControls',
     values: [
       PromiseOrValue<BytesLike>[],
       PromiseOrValue<string>[],
@@ -385,269 +306,104 @@ export interface SystemStatusAbiTypesInterface extends utils.Interface {
     ]
   ): string;
 
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'SECTION_EXCHANGE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'SECTION_FUTURES', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'SECTION_ISSUANCE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'SECTION_SYNTH', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'SECTION_SYNTH_EXCHANGE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'SECTION_SYSTEM', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'SUSPENSION_REASON_UPGRADE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accessControl', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeSuspension', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'futuresMarketSuspension', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'futuresSuspension', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getFuturesMarketSuspensions', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getSynthExchangeSuspensions', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getSynthSuspensions', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isSystemUpgrading', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'issuanceSuspension', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'requireExchangeActive', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
+    functionFragment: 'requireExchangeBetweenSynthsAllowed',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "SECTION_EXCHANGE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "SECTION_FUTURES",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "SECTION_ISSUANCE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "SECTION_SYNTH",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "SECTION_SYNTH_EXCHANGE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "SECTION_SYSTEM",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "SUSPENSION_REASON_UPGRADE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "accessControl",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeSuspension",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "futuresMarketSuspension",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "futuresSuspension",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getFuturesMarketSuspensions",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getSynthExchangeSuspensions",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getSynthSuspensions",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isSystemUpgrading",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "issuanceSuspension",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "requireExchangeActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "requireExchangeBetweenSynthsAllowed",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "requireFuturesActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "requireFuturesMarketActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "requireIssuanceActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "requireSynthActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "requireSynthExchangeActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "requireSynthsActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "requireSystemActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resumeExchange",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resumeFutures",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resumeFuturesMarket",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resumeFuturesMarkets",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resumeIssuance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resumeSynth",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resumeSynthExchange",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resumeSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resumeSynthsExchange",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "resumeSystem",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "suspendExchange",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "suspendFutures",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "suspendFuturesMarket",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "suspendFuturesMarkets",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "suspendIssuance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "suspendSynth",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "suspendSynthExchange",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "suspendSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "suspendSynthsExchange",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "suspendSystem",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthExchangeSuspension",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthSuspended",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthSuspension",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "systemSuspended",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "systemSuspension",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateAccessControl",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateAccessControls",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'requireFuturesActive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'requireFuturesMarketActive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'requireIssuanceActive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'requireSynthActive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'requireSynthExchangeActive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'requireSynthsActive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'requireSystemActive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resumeExchange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resumeFutures', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resumeFuturesMarket', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resumeFuturesMarkets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resumeIssuance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resumeSynth', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resumeSynthExchange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resumeSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resumeSynthsExchange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resumeSystem', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'suspendExchange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'suspendFutures', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'suspendFuturesMarket', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'suspendFuturesMarkets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'suspendIssuance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'suspendSynth', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'suspendSynthExchange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'suspendSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'suspendSynthsExchange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'suspendSystem', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthExchangeSuspension', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthSuspended', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthSuspension', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'systemSuspended', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'systemSuspension', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateAccessControl', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateAccessControls', data: BytesLike): Result;
 
   events: {
-    "AccessControlUpdated(bytes32,address,bool,bool)": EventFragment;
-    "ExchangeResumed(uint256)": EventFragment;
-    "ExchangeSuspended(uint256)": EventFragment;
-    "FuturesMarketResumed(bytes32,uint256)": EventFragment;
-    "FuturesMarketSuspended(bytes32,uint256)": EventFragment;
-    "FuturesResumed(uint256)": EventFragment;
-    "FuturesSuspended(uint256)": EventFragment;
-    "IssuanceResumed(uint256)": EventFragment;
-    "IssuanceSuspended(uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "SynthExchangeResumed(bytes32,uint256)": EventFragment;
-    "SynthExchangeSuspended(bytes32,uint256)": EventFragment;
-    "SynthResumed(bytes32,uint256)": EventFragment;
-    "SynthSuspended(bytes32,uint256)": EventFragment;
-    "SystemResumed(uint256)": EventFragment;
-    "SystemSuspended(uint256)": EventFragment;
+    'AccessControlUpdated(bytes32,address,bool,bool)': EventFragment;
+    'ExchangeResumed(uint256)': EventFragment;
+    'ExchangeSuspended(uint256)': EventFragment;
+    'FuturesMarketResumed(bytes32,uint256)': EventFragment;
+    'FuturesMarketSuspended(bytes32,uint256)': EventFragment;
+    'FuturesResumed(uint256)': EventFragment;
+    'FuturesSuspended(uint256)': EventFragment;
+    'IssuanceResumed(uint256)': EventFragment;
+    'IssuanceSuspended(uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'SynthExchangeResumed(bytes32,uint256)': EventFragment;
+    'SynthExchangeSuspended(bytes32,uint256)': EventFragment;
+    'SynthResumed(bytes32,uint256)': EventFragment;
+    'SynthSuspended(bytes32,uint256)': EventFragment;
+    'SystemResumed(uint256)': EventFragment;
+    'SystemSuspended(uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AccessControlUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ExchangeResumed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ExchangeSuspended"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FuturesMarketResumed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FuturesMarketSuspended"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FuturesResumed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FuturesSuspended"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "IssuanceResumed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "IssuanceSuspended"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthExchangeResumed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthExchangeSuspended"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthResumed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthSuspended"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SystemResumed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SystemSuspended"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AccessControlUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ExchangeResumed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ExchangeSuspended'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FuturesMarketResumed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FuturesMarketSuspended'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FuturesResumed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FuturesSuspended'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'IssuanceResumed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'IssuanceSuspended'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthExchangeResumed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthExchangeSuspended'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthResumed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthSuspended'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SystemResumed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SystemSuspended'): EventFragment;
 }
 
 export interface AccessControlUpdatedEventObject {
@@ -661,29 +417,21 @@ export type AccessControlUpdatedEvent = TypedEvent<
   AccessControlUpdatedEventObject
 >;
 
-export type AccessControlUpdatedEventFilter =
-  TypedEventFilter<AccessControlUpdatedEvent>;
+export type AccessControlUpdatedEventFilter = TypedEventFilter<AccessControlUpdatedEvent>;
 
 export interface ExchangeResumedEventObject {
   reason: BigNumber;
 }
-export type ExchangeResumedEvent = TypedEvent<
-  [BigNumber],
-  ExchangeResumedEventObject
->;
+export type ExchangeResumedEvent = TypedEvent<[BigNumber], ExchangeResumedEventObject>;
 
 export type ExchangeResumedEventFilter = TypedEventFilter<ExchangeResumedEvent>;
 
 export interface ExchangeSuspendedEventObject {
   reason: BigNumber;
 }
-export type ExchangeSuspendedEvent = TypedEvent<
-  [BigNumber],
-  ExchangeSuspendedEventObject
->;
+export type ExchangeSuspendedEvent = TypedEvent<[BigNumber], ExchangeSuspendedEventObject>;
 
-export type ExchangeSuspendedEventFilter =
-  TypedEventFilter<ExchangeSuspendedEvent>;
+export type ExchangeSuspendedEventFilter = TypedEventFilter<ExchangeSuspendedEvent>;
 
 export interface FuturesMarketResumedEventObject {
   marketKey: string;
@@ -694,8 +442,7 @@ export type FuturesMarketResumedEvent = TypedEvent<
   FuturesMarketResumedEventObject
 >;
 
-export type FuturesMarketResumedEventFilter =
-  TypedEventFilter<FuturesMarketResumedEvent>;
+export type FuturesMarketResumedEventFilter = TypedEventFilter<FuturesMarketResumedEvent>;
 
 export interface FuturesMarketSuspendedEventObject {
   marketKey: string;
@@ -706,69 +453,48 @@ export type FuturesMarketSuspendedEvent = TypedEvent<
   FuturesMarketSuspendedEventObject
 >;
 
-export type FuturesMarketSuspendedEventFilter =
-  TypedEventFilter<FuturesMarketSuspendedEvent>;
+export type FuturesMarketSuspendedEventFilter = TypedEventFilter<FuturesMarketSuspendedEvent>;
 
 export interface FuturesResumedEventObject {
   reason: BigNumber;
 }
-export type FuturesResumedEvent = TypedEvent<
-  [BigNumber],
-  FuturesResumedEventObject
->;
+export type FuturesResumedEvent = TypedEvent<[BigNumber], FuturesResumedEventObject>;
 
 export type FuturesResumedEventFilter = TypedEventFilter<FuturesResumedEvent>;
 
 export interface FuturesSuspendedEventObject {
   reason: BigNumber;
 }
-export type FuturesSuspendedEvent = TypedEvent<
-  [BigNumber],
-  FuturesSuspendedEventObject
->;
+export type FuturesSuspendedEvent = TypedEvent<[BigNumber], FuturesSuspendedEventObject>;
 
-export type FuturesSuspendedEventFilter =
-  TypedEventFilter<FuturesSuspendedEvent>;
+export type FuturesSuspendedEventFilter = TypedEventFilter<FuturesSuspendedEvent>;
 
 export interface IssuanceResumedEventObject {
   reason: BigNumber;
 }
-export type IssuanceResumedEvent = TypedEvent<
-  [BigNumber],
-  IssuanceResumedEventObject
->;
+export type IssuanceResumedEvent = TypedEvent<[BigNumber], IssuanceResumedEventObject>;
 
 export type IssuanceResumedEventFilter = TypedEventFilter<IssuanceResumedEvent>;
 
 export interface IssuanceSuspendedEventObject {
   reason: BigNumber;
 }
-export type IssuanceSuspendedEvent = TypedEvent<
-  [BigNumber],
-  IssuanceSuspendedEventObject
->;
+export type IssuanceSuspendedEvent = TypedEvent<[BigNumber], IssuanceSuspendedEventObject>;
 
-export type IssuanceSuspendedEventFilter =
-  TypedEventFilter<IssuanceSuspendedEvent>;
+export type IssuanceSuspendedEventFilter = TypedEventFilter<IssuanceSuspendedEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -781,8 +507,7 @@ export type SynthExchangeResumedEvent = TypedEvent<
   SynthExchangeResumedEventObject
 >;
 
-export type SynthExchangeResumedEventFilter =
-  TypedEventFilter<SynthExchangeResumedEvent>;
+export type SynthExchangeResumedEventFilter = TypedEventFilter<SynthExchangeResumedEvent>;
 
 export interface SynthExchangeSuspendedEventObject {
   currencyKey: string;
@@ -793,17 +518,13 @@ export type SynthExchangeSuspendedEvent = TypedEvent<
   SynthExchangeSuspendedEventObject
 >;
 
-export type SynthExchangeSuspendedEventFilter =
-  TypedEventFilter<SynthExchangeSuspendedEvent>;
+export type SynthExchangeSuspendedEventFilter = TypedEventFilter<SynthExchangeSuspendedEvent>;
 
 export interface SynthResumedEventObject {
   currencyKey: string;
   reason: BigNumber;
 }
-export type SynthResumedEvent = TypedEvent<
-  [string, BigNumber],
-  SynthResumedEventObject
->;
+export type SynthResumedEvent = TypedEvent<[string, BigNumber], SynthResumedEventObject>;
 
 export type SynthResumedEventFilter = TypedEventFilter<SynthResumedEvent>;
 
@@ -811,30 +532,21 @@ export interface SynthSuspendedEventObject {
   currencyKey: string;
   reason: BigNumber;
 }
-export type SynthSuspendedEvent = TypedEvent<
-  [string, BigNumber],
-  SynthSuspendedEventObject
->;
+export type SynthSuspendedEvent = TypedEvent<[string, BigNumber], SynthSuspendedEventObject>;
 
 export type SynthSuspendedEventFilter = TypedEventFilter<SynthSuspendedEvent>;
 
 export interface SystemResumedEventObject {
   reason: BigNumber;
 }
-export type SystemResumedEvent = TypedEvent<
-  [BigNumber],
-  SystemResumedEventObject
->;
+export type SystemResumedEvent = TypedEvent<[BigNumber], SystemResumedEventObject>;
 
 export type SystemResumedEventFilter = TypedEventFilter<SystemResumedEvent>;
 
 export interface SystemSuspendedEventObject {
   reason: BigNumber;
 }
-export type SystemSuspendedEvent = TypedEvent<
-  [BigNumber],
-  SystemSuspendedEventObject
->;
+export type SystemSuspendedEvent = TypedEvent<[BigNumber], SystemSuspendedEventObject>;
 
 export type SystemSuspendedEventFilter = TypedEventFilter<SystemSuspendedEvent>;
 
@@ -855,9 +567,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -889,28 +599,20 @@ export interface SystemStatusAbiTypes extends BaseContract {
       arg0: PromiseOrValue<BytesLike>,
       arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, boolean] & { canSuspend: boolean; canResume: boolean }
-    >;
+    ): Promise<[boolean, boolean] & { canSuspend: boolean; canResume: boolean }>;
 
     exchangeSuspension(
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     futuresMarketSuspension(
       arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     futuresSuspension(
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     getFuturesMarketSuspensions(
       marketKeys: PromiseOrValue<BytesLike>[],
@@ -946,9 +648,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
 
     issuanceSuspension(
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     nominateNewOwner(
       _owner: PromiseOrValue<string>,
@@ -1099,9 +799,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
     synthExchangeSuspension(
       arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     synthSuspended(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -1111,17 +809,13 @@ export interface SystemStatusAbiTypes extends BaseContract {
     synthSuspension(
       arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     systemSuspended(overrides?: CallOverrides): Promise<[boolean]>;
 
     systemSuspension(
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     updateAccessControl(
       section: PromiseOrValue<BytesLike>,
@@ -1182,9 +876,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
   getFuturesMarketSuspensions(
     marketKeys: PromiseOrValue<BytesLike>[],
     overrides?: CallOverrides
-  ): Promise<
-    [boolean[], BigNumber[]] & { suspensions: boolean[]; reasons: BigNumber[] }
-  >;
+  ): Promise<[boolean[], BigNumber[]] & { suspensions: boolean[]; reasons: BigNumber[] }>;
 
   getSynthExchangeSuspensions(
     synths: PromiseOrValue<BytesLike>[],
@@ -1199,9 +891,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
   getSynthSuspensions(
     synths: PromiseOrValue<BytesLike>[],
     overrides?: CallOverrides
-  ): Promise<
-    [boolean[], BigNumber[]] & { suspensions: boolean[]; reasons: BigNumber[] }
-  >;
+  ): Promise<[boolean[], BigNumber[]] & { suspensions: boolean[]; reasons: BigNumber[] }>;
 
   isSystemUpgrading(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1415,28 +1105,20 @@ export interface SystemStatusAbiTypes extends BaseContract {
       arg0: PromiseOrValue<BytesLike>,
       arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, boolean] & { canSuspend: boolean; canResume: boolean }
-    >;
+    ): Promise<[boolean, boolean] & { canSuspend: boolean; canResume: boolean }>;
 
     exchangeSuspension(
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     futuresMarketSuspension(
       arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     futuresSuspension(
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     getFuturesMarketSuspensions(
       marketKeys: PromiseOrValue<BytesLike>[],
@@ -1472,14 +1154,9 @@ export interface SystemStatusAbiTypes extends BaseContract {
 
     issuanceSuspension(
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -1536,10 +1213,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
 
     resumeIssuance(overrides?: CallOverrides): Promise<void>;
 
-    resumeSynth(
-      currencyKey: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    resumeSynth(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     resumeSynthExchange(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -1558,15 +1232,9 @@ export interface SystemStatusAbiTypes extends BaseContract {
 
     resumeSystem(overrides?: CallOverrides): Promise<void>;
 
-    suspendExchange(
-      reason: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    suspendExchange(reason: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    suspendFutures(
-      reason: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    suspendFutures(reason: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     suspendFuturesMarket(
       marketKey: PromiseOrValue<BytesLike>,
@@ -1580,10 +1248,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    suspendIssuance(
-      reason: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    suspendIssuance(reason: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     suspendSynth(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -1609,17 +1274,12 @@ export interface SystemStatusAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    suspendSystem(
-      reason: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    suspendSystem(reason: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     synthExchangeSuspension(
       arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     synthSuspended(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -1629,17 +1289,13 @@ export interface SystemStatusAbiTypes extends BaseContract {
     synthSuspension(
       arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     systemSuspended(overrides?: CallOverrides): Promise<boolean>;
 
     systemSuspension(
       overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber] & { suspended: boolean; reason: BigNumber }
-    >;
+    ): Promise<[boolean, BigNumber] & { suspended: boolean; reason: BigNumber }>;
 
     updateAccessControl(
       section: PromiseOrValue<BytesLike>,
@@ -1659,7 +1315,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
   };
 
   filters: {
-    "AccessControlUpdated(bytes32,address,bool,bool)"(
+    'AccessControlUpdated(bytes32,address,bool,bool)'(
       section?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
       canSuspend?: null,
@@ -1672,88 +1328,64 @@ export interface SystemStatusAbiTypes extends BaseContract {
       canResume?: null
     ): AccessControlUpdatedEventFilter;
 
-    "ExchangeResumed(uint256)"(reason?: null): ExchangeResumedEventFilter;
+    'ExchangeResumed(uint256)'(reason?: null): ExchangeResumedEventFilter;
     ExchangeResumed(reason?: null): ExchangeResumedEventFilter;
 
-    "ExchangeSuspended(uint256)"(reason?: null): ExchangeSuspendedEventFilter;
+    'ExchangeSuspended(uint256)'(reason?: null): ExchangeSuspendedEventFilter;
     ExchangeSuspended(reason?: null): ExchangeSuspendedEventFilter;
 
-    "FuturesMarketResumed(bytes32,uint256)"(
+    'FuturesMarketResumed(bytes32,uint256)'(
       marketKey?: null,
       reason?: null
     ): FuturesMarketResumedEventFilter;
-    FuturesMarketResumed(
-      marketKey?: null,
-      reason?: null
-    ): FuturesMarketResumedEventFilter;
+    FuturesMarketResumed(marketKey?: null, reason?: null): FuturesMarketResumedEventFilter;
 
-    "FuturesMarketSuspended(bytes32,uint256)"(
+    'FuturesMarketSuspended(bytes32,uint256)'(
       marketKey?: null,
       reason?: null
     ): FuturesMarketSuspendedEventFilter;
-    FuturesMarketSuspended(
-      marketKey?: null,
-      reason?: null
-    ): FuturesMarketSuspendedEventFilter;
+    FuturesMarketSuspended(marketKey?: null, reason?: null): FuturesMarketSuspendedEventFilter;
 
-    "FuturesResumed(uint256)"(reason?: null): FuturesResumedEventFilter;
+    'FuturesResumed(uint256)'(reason?: null): FuturesResumedEventFilter;
     FuturesResumed(reason?: null): FuturesResumedEventFilter;
 
-    "FuturesSuspended(uint256)"(reason?: null): FuturesSuspendedEventFilter;
+    'FuturesSuspended(uint256)'(reason?: null): FuturesSuspendedEventFilter;
     FuturesSuspended(reason?: null): FuturesSuspendedEventFilter;
 
-    "IssuanceResumed(uint256)"(reason?: null): IssuanceResumedEventFilter;
+    'IssuanceResumed(uint256)'(reason?: null): IssuanceResumedEventFilter;
     IssuanceResumed(reason?: null): IssuanceResumedEventFilter;
 
-    "IssuanceSuspended(uint256)"(reason?: null): IssuanceSuspendedEventFilter;
+    'IssuanceSuspended(uint256)'(reason?: null): IssuanceSuspendedEventFilter;
     IssuanceSuspended(reason?: null): IssuanceSuspendedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "SynthExchangeResumed(bytes32,uint256)"(
+    'SynthExchangeResumed(bytes32,uint256)'(
       currencyKey?: null,
       reason?: null
     ): SynthExchangeResumedEventFilter;
-    SynthExchangeResumed(
-      currencyKey?: null,
-      reason?: null
-    ): SynthExchangeResumedEventFilter;
+    SynthExchangeResumed(currencyKey?: null, reason?: null): SynthExchangeResumedEventFilter;
 
-    "SynthExchangeSuspended(bytes32,uint256)"(
+    'SynthExchangeSuspended(bytes32,uint256)'(
       currencyKey?: null,
       reason?: null
     ): SynthExchangeSuspendedEventFilter;
-    SynthExchangeSuspended(
-      currencyKey?: null,
-      reason?: null
-    ): SynthExchangeSuspendedEventFilter;
+    SynthExchangeSuspended(currencyKey?: null, reason?: null): SynthExchangeSuspendedEventFilter;
 
-    "SynthResumed(bytes32,uint256)"(
-      currencyKey?: null,
-      reason?: null
-    ): SynthResumedEventFilter;
+    'SynthResumed(bytes32,uint256)'(currencyKey?: null, reason?: null): SynthResumedEventFilter;
     SynthResumed(currencyKey?: null, reason?: null): SynthResumedEventFilter;
 
-    "SynthSuspended(bytes32,uint256)"(
-      currencyKey?: null,
-      reason?: null
-    ): SynthSuspendedEventFilter;
-    SynthSuspended(
-      currencyKey?: null,
-      reason?: null
-    ): SynthSuspendedEventFilter;
+    'SynthSuspended(bytes32,uint256)'(currencyKey?: null, reason?: null): SynthSuspendedEventFilter;
+    SynthSuspended(currencyKey?: null, reason?: null): SynthSuspendedEventFilter;
 
-    "SystemResumed(uint256)"(reason?: null): SystemResumedEventFilter;
+    'SystemResumed(uint256)'(reason?: null): SystemResumedEventFilter;
     SystemResumed(reason?: null): SystemResumedEventFilter;
 
-    "SystemSuspended(uint256)"(reason?: null): SystemSuspendedEventFilter;
+    'SystemSuspended(uint256)'(reason?: null): SystemSuspendedEventFilter;
     SystemSuspended(reason?: null): SystemSuspendedEventFilter;
   };
 
@@ -1774,9 +1406,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
 
     SUSPENSION_REASON_UPGRADE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     accessControl(
       arg0: PromiseOrValue<BytesLike>,
@@ -1856,13 +1486,9 @@ export interface SystemStatusAbiTypes extends BaseContract {
 
     requireSystemActive(overrides?: CallOverrides): Promise<BigNumber>;
 
-    resumeExchange(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    resumeExchange(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    resumeFutures(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    resumeFutures(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resumeFuturesMarket(
       marketKey: PromiseOrValue<BytesLike>,
@@ -1874,9 +1500,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    resumeIssuance(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    resumeIssuance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resumeSynth(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -1898,9 +1522,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    resumeSystem(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    resumeSystem(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     suspendExchange(
       reason: PromiseOrValue<BigNumberish>,
@@ -1968,10 +1590,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    synthSuspension(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    synthSuspension(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     systemSuspended(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -2005,15 +1624,11 @@ export interface SystemStatusAbiTypes extends BaseContract {
 
     SECTION_SYNTH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    SECTION_SYNTH_EXCHANGE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    SECTION_SYNTH_EXCHANGE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     SECTION_SYSTEM(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    SUSPENSION_REASON_UPGRADE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    SUSPENSION_REASON_UPGRADE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     acceptOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -2025,9 +1640,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    exchangeSuspension(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    exchangeSuspension(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     futuresMarketSuspension(
       arg0: PromiseOrValue<BytesLike>,
@@ -2053,9 +1666,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
 
     isSystemUpgrading(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    issuanceSuspension(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    issuanceSuspension(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
       _owner: PromiseOrValue<string>,
@@ -2066,9 +1677,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    requireExchangeActive(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    requireExchangeActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     requireExchangeBetweenSynthsAllowed(
       sourceCurrencyKey: PromiseOrValue<BytesLike>,
@@ -2076,18 +1685,14 @@ export interface SystemStatusAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    requireFuturesActive(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    requireFuturesActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     requireFuturesMarketActive(
       marketKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    requireIssuanceActive(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    requireIssuanceActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     requireSynthActive(
       currencyKey: PromiseOrValue<BytesLike>,
@@ -2105,9 +1710,7 @@ export interface SystemStatusAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    requireSystemActive(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    requireSystemActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     resumeExchange(
       overrides?: Overrides & { from?: PromiseOrValue<string> }

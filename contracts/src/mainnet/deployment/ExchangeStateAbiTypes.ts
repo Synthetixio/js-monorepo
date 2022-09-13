@@ -12,75 +12,64 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface ExchangeStateAbiTypesInterface extends utils.Interface {
   functions: {
-    "maxEntriesInQueue()": FunctionFragment;
-    "getEntryAt(address,bytes32,uint256)": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "appendExchangeEntry(address,bytes32,uint256,bytes32,uint256,uint256,uint256,uint256,uint256)": FunctionFragment;
-    "setAssociatedContract(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "exchanges(address,bytes32,uint256)": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "associatedContract()": FunctionFragment;
-    "getLengthOfEntries(address,bytes32)": FunctionFragment;
-    "setMaxEntriesInQueue(uint256)": FunctionFragment;
-    "removeEntries(address,bytes32)": FunctionFragment;
-    "getMaxTimestamp(address,bytes32)": FunctionFragment;
+    'maxEntriesInQueue()': FunctionFragment;
+    'getEntryAt(address,bytes32,uint256)': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'appendExchangeEntry(address,bytes32,uint256,bytes32,uint256,uint256,uint256,uint256,uint256)': FunctionFragment;
+    'setAssociatedContract(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'exchanges(address,bytes32,uint256)': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'associatedContract()': FunctionFragment;
+    'getLengthOfEntries(address,bytes32)': FunctionFragment;
+    'setMaxEntriesInQueue(uint256)': FunctionFragment;
+    'removeEntries(address,bytes32)': FunctionFragment;
+    'getMaxTimestamp(address,bytes32)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "maxEntriesInQueue"
-      | "getEntryAt"
-      | "nominateNewOwner"
-      | "appendExchangeEntry"
-      | "setAssociatedContract"
-      | "nominatedOwner"
-      | "exchanges"
-      | "acceptOwnership"
-      | "owner"
-      | "associatedContract"
-      | "getLengthOfEntries"
-      | "setMaxEntriesInQueue"
-      | "removeEntries"
-      | "getMaxTimestamp"
+      | 'maxEntriesInQueue'
+      | 'getEntryAt'
+      | 'nominateNewOwner'
+      | 'appendExchangeEntry'
+      | 'setAssociatedContract'
+      | 'nominatedOwner'
+      | 'exchanges'
+      | 'acceptOwnership'
+      | 'owner'
+      | 'associatedContract'
+      | 'getLengthOfEntries'
+      | 'setMaxEntriesInQueue'
+      | 'removeEntries'
+      | 'getMaxTimestamp'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'maxEntriesInQueue', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "maxEntriesInQueue",
-    values?: undefined
+    functionFragment: 'getEntryAt',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getEntryAt",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "appendExchangeEntry",
+    functionFragment: 'appendExchangeEntry',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BytesLike>,
@@ -94,104 +83,58 @@ export interface ExchangeStateAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "setAssociatedContract",
+    functionFragment: 'setAssociatedContract',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
+    functionFragment: 'exchanges',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'associatedContract', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "exchanges",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "associatedContract",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getLengthOfEntries",
+    functionFragment: 'getLengthOfEntries',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMaxEntriesInQueue",
+    functionFragment: 'setMaxEntriesInQueue',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "removeEntries",
+    functionFragment: 'removeEntries',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getMaxTimestamp",
+    functionFragment: 'getMaxTimestamp',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "maxEntriesInQueue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getEntryAt", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "appendExchangeEntry",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setAssociatedContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "exchanges", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "associatedContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getLengthOfEntries",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaxEntriesInQueue",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeEntries",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getMaxTimestamp",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'maxEntriesInQueue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getEntryAt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'appendExchangeEntry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setAssociatedContract', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchanges', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'associatedContract', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getLengthOfEntries', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaxEntriesInQueue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeEntries', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getMaxTimestamp', data: BytesLike): Result;
 
   events: {
-    "AssociatedContractUpdated(address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
+    'AssociatedContractUpdated(address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AssociatedContractUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AssociatedContractUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
 }
 
 export interface AssociatedContractUpdatedEventObject {
@@ -202,16 +145,12 @@ export type AssociatedContractUpdatedEvent = TypedEvent<
   AssociatedContractUpdatedEventObject
 >;
 
-export type AssociatedContractUpdatedEventFilter =
-  TypedEventFilter<AssociatedContractUpdatedEvent>;
+export type AssociatedContractUpdatedEventFilter = TypedEventFilter<AssociatedContractUpdatedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -219,10 +158,7 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
@@ -243,9 +179,7 @@ export interface ExchangeStateAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -261,16 +195,7 @@ export interface ExchangeStateAbiTypes extends BaseContract {
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [
-        string,
-        BigNumber,
-        string,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
+      [string, BigNumber, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         src: string;
         amount: BigNumber;
         dest: string;
@@ -313,16 +238,7 @@ export interface ExchangeStateAbiTypes extends BaseContract {
       arg2: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [
-        string,
-        BigNumber,
-        string,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
+      [string, BigNumber, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         src: string;
         amount: BigNumber;
         dest: string;
@@ -374,16 +290,7 @@ export interface ExchangeStateAbiTypes extends BaseContract {
     index: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [
-      string,
-      BigNumber,
-      string,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber
-    ] & {
+    [string, BigNumber, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
       src: string;
       amount: BigNumber;
       dest: string;
@@ -426,16 +333,7 @@ export interface ExchangeStateAbiTypes extends BaseContract {
     arg2: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [
-      string,
-      BigNumber,
-      string,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber
-    ] & {
+    [string, BigNumber, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
       src: string;
       amount: BigNumber;
       dest: string;
@@ -487,16 +385,7 @@ export interface ExchangeStateAbiTypes extends BaseContract {
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [
-        string,
-        BigNumber,
-        string,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
+      [string, BigNumber, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         src: string;
         amount: BigNumber;
         dest: string;
@@ -508,10 +397,7 @@ export interface ExchangeStateAbiTypes extends BaseContract {
       }
     >;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     appendExchangeEntry(
       account: PromiseOrValue<string>,
@@ -539,16 +425,7 @@ export interface ExchangeStateAbiTypes extends BaseContract {
       arg2: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [
-        string,
-        BigNumber,
-        string,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
+      [string, BigNumber, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         src: string;
         amount: BigNumber;
         dest: string;
@@ -591,20 +468,15 @@ export interface ExchangeStateAbiTypes extends BaseContract {
   };
 
   filters: {
-    "AssociatedContractUpdated(address)"(
+    'AssociatedContractUpdated(address)'(
       associatedContract?: null
     ): AssociatedContractUpdatedEventFilter;
-    AssociatedContractUpdated(
-      associatedContract?: null
-    ): AssociatedContractUpdatedEventFilter;
+    AssociatedContractUpdated(associatedContract?: null): AssociatedContractUpdatedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
   };
 
@@ -650,9 +522,7 @@ export interface ExchangeStateAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -730,9 +600,7 @@ export interface ExchangeStateAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    associatedContract(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    associatedContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getLengthOfEntries(
       account: PromiseOrValue<string>,

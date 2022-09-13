@@ -13,390 +13,237 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface DepotAbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "depositEndIndex()": FunctionFragment;
-    "depositStartIndex()": FunctionFragment;
-    "depositSynths(uint256)": FunctionFragment;
-    "deposits(uint256)": FunctionFragment;
-    "exchangeEtherForSNX()": FunctionFragment;
-    "exchangeEtherForSNXAtRate(uint256,uint256)": FunctionFragment;
-    "exchangeEtherForSynths()": FunctionFragment;
-    "exchangeEtherForSynthsAtRate(uint256)": FunctionFragment;
-    "exchangeSynthsForSNX(uint256)": FunctionFragment;
-    "exchangeSynthsForSNXAtRate(uint256,uint256)": FunctionFragment;
-    "fundsWallet()": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "lastPauseTime()": FunctionFragment;
-    "maxEthPurchase()": FunctionFragment;
-    "minimumDepositAmount()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "paused()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "setFundsWallet(address)": FunctionFragment;
-    "setMaxEthPurchase(uint256)": FunctionFragment;
-    "setMinimumDepositAmount(uint256)": FunctionFragment;
-    "setPaused(bool)": FunctionFragment;
-    "smallDeposits(address)": FunctionFragment;
-    "synthetixReceivedForEther(uint256)": FunctionFragment;
-    "synthetixReceivedForSynths(uint256)": FunctionFragment;
-    "synthsReceivedForEther(uint256)": FunctionFragment;
-    "totalSellableDeposits()": FunctionFragment;
-    "withdrawMyDepositedSynths()": FunctionFragment;
-    "withdrawSynthetix(uint256)": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'depositEndIndex()': FunctionFragment;
+    'depositStartIndex()': FunctionFragment;
+    'depositSynths(uint256)': FunctionFragment;
+    'deposits(uint256)': FunctionFragment;
+    'exchangeEtherForSNX()': FunctionFragment;
+    'exchangeEtherForSNXAtRate(uint256,uint256)': FunctionFragment;
+    'exchangeEtherForSynths()': FunctionFragment;
+    'exchangeEtherForSynthsAtRate(uint256)': FunctionFragment;
+    'exchangeSynthsForSNX(uint256)': FunctionFragment;
+    'exchangeSynthsForSNXAtRate(uint256,uint256)': FunctionFragment;
+    'fundsWallet()': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'lastPauseTime()': FunctionFragment;
+    'maxEthPurchase()': FunctionFragment;
+    'minimumDepositAmount()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'paused()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'setFundsWallet(address)': FunctionFragment;
+    'setMaxEthPurchase(uint256)': FunctionFragment;
+    'setMinimumDepositAmount(uint256)': FunctionFragment;
+    'setPaused(bool)': FunctionFragment;
+    'smallDeposits(address)': FunctionFragment;
+    'synthetixReceivedForEther(uint256)': FunctionFragment;
+    'synthetixReceivedForSynths(uint256)': FunctionFragment;
+    'synthsReceivedForEther(uint256)': FunctionFragment;
+    'totalSellableDeposits()': FunctionFragment;
+    'withdrawMyDepositedSynths()': FunctionFragment;
+    'withdrawSynthetix(uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "depositEndIndex"
-      | "depositStartIndex"
-      | "depositSynths"
-      | "deposits"
-      | "exchangeEtherForSNX"
-      | "exchangeEtherForSNXAtRate"
-      | "exchangeEtherForSynths"
-      | "exchangeEtherForSynthsAtRate"
-      | "exchangeSynthsForSNX"
-      | "exchangeSynthsForSNXAtRate"
-      | "fundsWallet"
-      | "isResolverCached"
-      | "lastPauseTime"
-      | "maxEthPurchase"
-      | "minimumDepositAmount"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "paused"
-      | "rebuildCache"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "setFundsWallet"
-      | "setMaxEthPurchase"
-      | "setMinimumDepositAmount"
-      | "setPaused"
-      | "smallDeposits"
-      | "synthetixReceivedForEther"
-      | "synthetixReceivedForSynths"
-      | "synthsReceivedForEther"
-      | "totalSellableDeposits"
-      | "withdrawMyDepositedSynths"
-      | "withdrawSynthetix"
+      | 'acceptOwnership'
+      | 'depositEndIndex'
+      | 'depositStartIndex'
+      | 'depositSynths'
+      | 'deposits'
+      | 'exchangeEtherForSNX'
+      | 'exchangeEtherForSNXAtRate'
+      | 'exchangeEtherForSynths'
+      | 'exchangeEtherForSynthsAtRate'
+      | 'exchangeSynthsForSNX'
+      | 'exchangeSynthsForSNXAtRate'
+      | 'fundsWallet'
+      | 'isResolverCached'
+      | 'lastPauseTime'
+      | 'maxEthPurchase'
+      | 'minimumDepositAmount'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'paused'
+      | 'rebuildCache'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'setFundsWallet'
+      | 'setMaxEthPurchase'
+      | 'setMinimumDepositAmount'
+      | 'setPaused'
+      | 'smallDeposits'
+      | 'synthetixReceivedForEther'
+      | 'synthetixReceivedForSynths'
+      | 'synthsReceivedForEther'
+      | 'totalSellableDeposits'
+      | 'withdrawMyDepositedSynths'
+      | 'withdrawSynthetix'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'depositEndIndex', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'depositStartIndex', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "depositEndIndex",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "depositStartIndex",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "depositSynths",
+    functionFragment: 'depositSynths',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'deposits', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'exchangeEtherForSNX', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "deposits",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "exchangeEtherForSNX",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "exchangeEtherForSNXAtRate",
+    functionFragment: 'exchangeEtherForSNXAtRate',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'exchangeEtherForSynths', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "exchangeEtherForSynths",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "exchangeEtherForSynthsAtRate",
+    functionFragment: 'exchangeEtherForSynthsAtRate',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "exchangeSynthsForSNX",
+    functionFragment: 'exchangeSynthsForSNX',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "exchangeSynthsForSNXAtRate",
+    functionFragment: 'exchangeSynthsForSNXAtRate',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'fundsWallet', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastPauseTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'maxEthPurchase', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'minimumDepositAmount', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "fundsWallet",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastPauseTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "maxEthPurchase",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "minimumDepositAmount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setFundsWallet', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "paused", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setFundsWallet",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setMaxEthPurchase",
+    functionFragment: 'setMaxEthPurchase',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMinimumDepositAmount",
+    functionFragment: 'setMinimumDepositAmount',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(functionFragment: 'setPaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'smallDeposits', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'synthetixReceivedForEther',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setPaused",
-    values: [PromiseOrValue<boolean>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "smallDeposits",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "synthetixReceivedForEther",
+    functionFragment: 'synthetixReceivedForSynths',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "synthetixReceivedForSynths",
+    functionFragment: 'synthsReceivedForEther',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'totalSellableDeposits', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'withdrawMyDepositedSynths', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "synthsReceivedForEther",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalSellableDeposits",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawMyDepositedSynths",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawSynthetix",
+    functionFragment: 'withdrawSynthetix',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "depositEndIndex",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "depositStartIndex",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "depositSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "deposits", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeEtherForSNX",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeEtherForSNXAtRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeEtherForSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeEtherForSynthsAtRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeSynthsForSNX",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeSynthsForSNXAtRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "fundsWallet",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastPauseTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "maxEthPurchase",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "minimumDepositAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setFundsWallet",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaxEthPurchase",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMinimumDepositAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setPaused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "smallDeposits",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthetixReceivedForEther",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthetixReceivedForSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthsReceivedForEther",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSellableDeposits",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawMyDepositedSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawSynthetix",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositEndIndex', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositStartIndex', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deposits', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeEtherForSNX', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeEtherForSNXAtRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeEtherForSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeEtherForSynthsAtRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeSynthsForSNX', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeSynthsForSNXAtRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'fundsWallet', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastPauseTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxEthPurchase', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minimumDepositAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setFundsWallet', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaxEthPurchase', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMinimumDepositAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPaused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'smallDeposits', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthetixReceivedForEther', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthetixReceivedForSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthsReceivedForEther', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSellableDeposits', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawMyDepositedSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawSynthetix', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "ClearedDeposit(address,address,uint256,uint256,uint256)": EventFragment;
-    "Exchange(string,uint256,string,uint256)": EventFragment;
-    "FundsWalletUpdated(address)": EventFragment;
-    "MaxEthPurchaseUpdated(uint256)": EventFragment;
-    "MinimumDepositAmountUpdated(uint256)": EventFragment;
-    "NonPayableContract(address,uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "PauseChanged(bool)": EventFragment;
-    "SynthDeposit(address,uint256,uint256)": EventFragment;
-    "SynthDepositNotAccepted(address,uint256,uint256)": EventFragment;
-    "SynthDepositRemoved(address,uint256,uint256)": EventFragment;
-    "SynthWithdrawal(address,uint256)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'ClearedDeposit(address,address,uint256,uint256,uint256)': EventFragment;
+    'Exchange(string,uint256,string,uint256)': EventFragment;
+    'FundsWalletUpdated(address)': EventFragment;
+    'MaxEthPurchaseUpdated(uint256)': EventFragment;
+    'MinimumDepositAmountUpdated(uint256)': EventFragment;
+    'NonPayableContract(address,uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'PauseChanged(bool)': EventFragment;
+    'SynthDeposit(address,uint256,uint256)': EventFragment;
+    'SynthDepositNotAccepted(address,uint256,uint256)': EventFragment;
+    'SynthDepositRemoved(address,uint256,uint256)': EventFragment;
+    'SynthWithdrawal(address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ClearedDeposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Exchange"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FundsWalletUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MaxEthPurchaseUpdated"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "MinimumDepositAmountUpdated"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NonPayableContract"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PauseChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthDeposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthDepositNotAccepted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthDepositRemoved"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthWithdrawal"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ClearedDeposit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Exchange'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FundsWalletUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MaxEthPurchaseUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MinimumDepositAmountUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'NonPayableContract'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'PauseChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthDeposit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthDepositNotAccepted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthDepositRemoved'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthWithdrawal'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -420,34 +267,23 @@ export interface ExchangeEventObject {
   toCurrency: string;
   toAmount: BigNumber;
 }
-export type ExchangeEvent = TypedEvent<
-  [string, BigNumber, string, BigNumber],
-  ExchangeEventObject
->;
+export type ExchangeEvent = TypedEvent<[string, BigNumber, string, BigNumber], ExchangeEventObject>;
 
 export type ExchangeEventFilter = TypedEventFilter<ExchangeEvent>;
 
 export interface FundsWalletUpdatedEventObject {
   newFundsWallet: string;
 }
-export type FundsWalletUpdatedEvent = TypedEvent<
-  [string],
-  FundsWalletUpdatedEventObject
->;
+export type FundsWalletUpdatedEvent = TypedEvent<[string], FundsWalletUpdatedEventObject>;
 
-export type FundsWalletUpdatedEventFilter =
-  TypedEventFilter<FundsWalletUpdatedEvent>;
+export type FundsWalletUpdatedEventFilter = TypedEventFilter<FundsWalletUpdatedEvent>;
 
 export interface MaxEthPurchaseUpdatedEventObject {
   amount: BigNumber;
 }
-export type MaxEthPurchaseUpdatedEvent = TypedEvent<
-  [BigNumber],
-  MaxEthPurchaseUpdatedEventObject
->;
+export type MaxEthPurchaseUpdatedEvent = TypedEvent<[BigNumber], MaxEthPurchaseUpdatedEventObject>;
 
-export type MaxEthPurchaseUpdatedEventFilter =
-  TypedEventFilter<MaxEthPurchaseUpdatedEvent>;
+export type MaxEthPurchaseUpdatedEventFilter = TypedEventFilter<MaxEthPurchaseUpdatedEvent>;
 
 export interface MinimumDepositAmountUpdatedEventObject {
   amount: BigNumber;
@@ -469,27 +305,20 @@ export type NonPayableContractEvent = TypedEvent<
   NonPayableContractEventObject
 >;
 
-export type NonPayableContractEventFilter =
-  TypedEventFilter<NonPayableContractEvent>;
+export type NonPayableContractEventFilter = TypedEventFilter<NonPayableContractEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -505,10 +334,7 @@ export interface SynthDepositEventObject {
   amount: BigNumber;
   depositIndex: BigNumber;
 }
-export type SynthDepositEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  SynthDepositEventObject
->;
+export type SynthDepositEvent = TypedEvent<[string, BigNumber, BigNumber], SynthDepositEventObject>;
 
 export type SynthDepositEventFilter = TypedEventFilter<SynthDepositEvent>;
 
@@ -522,8 +348,7 @@ export type SynthDepositNotAcceptedEvent = TypedEvent<
   SynthDepositNotAcceptedEventObject
 >;
 
-export type SynthDepositNotAcceptedEventFilter =
-  TypedEventFilter<SynthDepositNotAcceptedEvent>;
+export type SynthDepositNotAcceptedEventFilter = TypedEventFilter<SynthDepositNotAcceptedEvent>;
 
 export interface SynthDepositRemovedEventObject {
   user: string;
@@ -535,17 +360,13 @@ export type SynthDepositRemovedEvent = TypedEvent<
   SynthDepositRemovedEventObject
 >;
 
-export type SynthDepositRemovedEventFilter =
-  TypedEventFilter<SynthDepositRemovedEvent>;
+export type SynthDepositRemovedEventFilter = TypedEventFilter<SynthDepositRemovedEvent>;
 
 export interface SynthWithdrawalEventObject {
   user: string;
   amount: BigNumber;
 }
-export type SynthWithdrawalEvent = TypedEvent<
-  [string, BigNumber],
-  SynthWithdrawalEventObject
->;
+export type SynthWithdrawalEvent = TypedEvent<[string, BigNumber], SynthWithdrawalEventObject>;
 
 export type SynthWithdrawalEventFilter = TypedEventFilter<SynthWithdrawalEvent>;
 
@@ -566,9 +387,7 @@ export interface DepotAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -675,10 +494,7 @@ export interface DepotAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    smallDeposits(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    smallDeposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     synthetixReceivedForEther(
       amount: PromiseOrValue<BigNumberish>,
@@ -804,10 +620,7 @@ export interface DepotAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  smallDeposits(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  smallDeposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   synthetixReceivedForEther(
     amount: PromiseOrValue<BigNumberish>,
@@ -842,10 +655,7 @@ export interface DepotAbiTypes extends BaseContract {
 
     depositStartIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-    depositSynths(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    depositSynths(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     deposits(
       arg0: PromiseOrValue<BigNumberish>,
@@ -888,10 +698,7 @@ export interface DepotAbiTypes extends BaseContract {
 
     minimumDepositAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -905,10 +712,7 @@ export interface DepotAbiTypes extends BaseContract {
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
 
-    setFundsWallet(
-      _fundsWallet: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setFundsWallet(_fundsWallet: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setMaxEthPurchase(
       _maxEthPurchase: PromiseOrValue<BigNumberish>,
@@ -920,15 +724,9 @@ export interface DepotAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setPaused(
-      _paused: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setPaused(_paused: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    smallDeposits(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    smallDeposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     synthetixReceivedForEther(
       amount: PromiseOrValue<BigNumberish>,
@@ -956,13 +754,10 @@ export interface DepotAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "ClearedDeposit(address,address,uint256,uint256,uint256)"(
+    'ClearedDeposit(address,address,uint256,uint256,uint256)'(
       fromAddress?: PromiseOrValue<string> | null,
       toAddress?: PromiseOrValue<string> | null,
       fromETHAmount?: null,
@@ -977,7 +772,7 @@ export interface DepotAbiTypes extends BaseContract {
       depositIndex?: PromiseOrValue<BigNumberish> | null
     ): ClearedDepositEventFilter;
 
-    "Exchange(string,uint256,string,uint256)"(
+    'Exchange(string,uint256,string,uint256)'(
       fromCurrency?: null,
       fromAmount?: null,
       toCurrency?: null,
@@ -990,24 +785,16 @@ export interface DepotAbiTypes extends BaseContract {
       toAmount?: null
     ): ExchangeEventFilter;
 
-    "FundsWalletUpdated(address)"(
-      newFundsWallet?: null
-    ): FundsWalletUpdatedEventFilter;
+    'FundsWalletUpdated(address)'(newFundsWallet?: null): FundsWalletUpdatedEventFilter;
     FundsWalletUpdated(newFundsWallet?: null): FundsWalletUpdatedEventFilter;
 
-    "MaxEthPurchaseUpdated(uint256)"(
-      amount?: null
-    ): MaxEthPurchaseUpdatedEventFilter;
+    'MaxEthPurchaseUpdated(uint256)'(amount?: null): MaxEthPurchaseUpdatedEventFilter;
     MaxEthPurchaseUpdated(amount?: null): MaxEthPurchaseUpdatedEventFilter;
 
-    "MinimumDepositAmountUpdated(uint256)"(
-      amount?: null
-    ): MinimumDepositAmountUpdatedEventFilter;
-    MinimumDepositAmountUpdated(
-      amount?: null
-    ): MinimumDepositAmountUpdatedEventFilter;
+    'MinimumDepositAmountUpdated(uint256)'(amount?: null): MinimumDepositAmountUpdatedEventFilter;
+    MinimumDepositAmountUpdated(amount?: null): MinimumDepositAmountUpdatedEventFilter;
 
-    "NonPayableContract(address,uint256)"(
+    'NonPayableContract(address,uint256)'(
       receiver?: PromiseOrValue<string> | null,
       amount?: null
     ): NonPayableContractEventFilter;
@@ -1016,19 +803,16 @@ export interface DepotAbiTypes extends BaseContract {
       amount?: null
     ): NonPayableContractEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "PauseChanged(bool)"(isPaused?: null): PauseChangedEventFilter;
+    'PauseChanged(bool)'(isPaused?: null): PauseChangedEventFilter;
     PauseChanged(isPaused?: null): PauseChangedEventFilter;
 
-    "SynthDeposit(address,uint256,uint256)"(
+    'SynthDeposit(address,uint256,uint256)'(
       user?: PromiseOrValue<string> | null,
       amount?: null,
       depositIndex?: PromiseOrValue<BigNumberish> | null
@@ -1039,7 +823,7 @@ export interface DepotAbiTypes extends BaseContract {
       depositIndex?: PromiseOrValue<BigNumberish> | null
     ): SynthDepositEventFilter;
 
-    "SynthDepositNotAccepted(address,uint256,uint256)"(
+    'SynthDepositNotAccepted(address,uint256,uint256)'(
       user?: null,
       amount?: null,
       minimum?: null
@@ -1050,7 +834,7 @@ export interface DepotAbiTypes extends BaseContract {
       minimum?: null
     ): SynthDepositNotAcceptedEventFilter;
 
-    "SynthDepositRemoved(address,uint256,uint256)"(
+    'SynthDepositRemoved(address,uint256,uint256)'(
       user?: PromiseOrValue<string> | null,
       amount?: null,
       depositIndex?: PromiseOrValue<BigNumberish> | null
@@ -1061,17 +845,12 @@ export interface DepotAbiTypes extends BaseContract {
       depositIndex?: PromiseOrValue<BigNumberish> | null
     ): SynthDepositRemovedEventFilter;
 
-    "SynthWithdrawal(address,uint256)"(
-      user?: null,
-      amount?: null
-    ): SynthWithdrawalEventFilter;
+    'SynthWithdrawal(address,uint256)'(user?: null, amount?: null): SynthWithdrawalEventFilter;
     SynthWithdrawal(user?: null, amount?: null): SynthWithdrawalEventFilter;
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     depositEndIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1082,10 +861,7 @@ export interface DepotAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    deposits(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    deposits(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     exchangeEtherForSNX(
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
@@ -1138,9 +914,7 @@ export interface DepotAbiTypes extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1166,10 +940,7 @@ export interface DepotAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    smallDeposits(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    smallDeposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     synthetixReceivedForEther(
       amount: PromiseOrValue<BigNumberish>,
@@ -1255,9 +1026,7 @@ export interface DepotAbiTypes extends BaseContract {
 
     maxEthPurchase(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    minimumDepositAmount(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    minimumDepositAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
       _owner: PromiseOrValue<string>,
@@ -1276,9 +1045,7 @@ export interface DepotAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setFundsWallet(
       _fundsWallet: PromiseOrValue<string>,
@@ -1320,9 +1087,7 @@ export interface DepotAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    totalSellableDeposits(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    totalSellableDeposits(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdrawMyDepositedSynths(
       overrides?: Overrides & { from?: PromiseOrValue<string> }

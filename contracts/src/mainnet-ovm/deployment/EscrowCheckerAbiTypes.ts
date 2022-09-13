@@ -9,44 +9,35 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface EscrowCheckerAbiTypesInterface extends utils.Interface {
   functions: {
-    "checkAccountSchedule(address)": FunctionFragment;
-    "synthetix_escrow()": FunctionFragment;
+    'checkAccountSchedule(address)': FunctionFragment;
+    'synthetix_escrow()': FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "checkAccountSchedule" | "synthetix_escrow"
+    nameOrSignatureOrTopic: 'checkAccountSchedule' | 'synthetix_escrow'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "checkAccountSchedule",
+    functionFragment: 'checkAccountSchedule',
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "synthetix_escrow",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'synthetix_escrow', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "checkAccountSchedule",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthetix_escrow",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'checkAccountSchedule', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthetix_escrow', data: BytesLike): Result;
 
   events: {};
 }
@@ -68,9 +59,7 @@ export interface EscrowCheckerAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;

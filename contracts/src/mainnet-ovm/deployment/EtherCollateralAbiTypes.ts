@@ -9,33 +9,27 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface EtherCollateralAbiTypesInterface extends utils.Interface {
   functions: {
-    "totalIssuedSynths()": FunctionFragment;
+    'totalIssuedSynths()': FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "totalIssuedSynths"): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: 'totalIssuedSynths'): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "totalIssuedSynths",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'totalIssuedSynths', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "totalIssuedSynths",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'totalIssuedSynths', data: BytesLike): Result;
 
   events: {};
 }
@@ -57,9 +51,7 @@ export interface EtherCollateralAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;

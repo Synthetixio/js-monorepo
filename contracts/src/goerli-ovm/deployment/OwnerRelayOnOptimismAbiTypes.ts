@@ -12,177 +12,116 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface OwnerRelayOnOptimismAbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "directRelay(address,bytes)": FunctionFragment;
-    "expiryTime()": FunctionFragment;
-    "finalizeRelay(address,bytes)": FunctionFragment;
-    "finalizeRelayBatch(address[],bytes[])": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "setNewExpiryTime(uint256)": FunctionFragment;
-    "temporaryOwner()": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'directRelay(address,bytes)': FunctionFragment;
+    'expiryTime()': FunctionFragment;
+    'finalizeRelay(address,bytes)': FunctionFragment;
+    'finalizeRelayBatch(address[],bytes[])': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'setNewExpiryTime(uint256)': FunctionFragment;
+    'temporaryOwner()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "directRelay"
-      | "expiryTime"
-      | "finalizeRelay"
-      | "finalizeRelayBatch"
-      | "isResolverCached"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "rebuildCache"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "setNewExpiryTime"
-      | "temporaryOwner"
+      | 'acceptOwnership'
+      | 'directRelay'
+      | 'expiryTime'
+      | 'finalizeRelay'
+      | 'finalizeRelayBatch'
+      | 'isResolverCached'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'rebuildCache'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'setNewExpiryTime'
+      | 'temporaryOwner'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
+    functionFragment: 'directRelay',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'expiryTime', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "directRelay",
+    functionFragment: 'finalizeRelay',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "expiryTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "finalizeRelay",
-    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "finalizeRelayBatch",
+    functionFragment: 'finalizeRelayBatch',
     values: [PromiseOrValue<string>[], PromiseOrValue<BytesLike>[]]
   ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setNewExpiryTime",
+    functionFragment: 'setNewExpiryTime',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "temporaryOwner",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'temporaryOwner', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "directRelay",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "expiryTime", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "finalizeRelay",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "finalizeRelayBatch",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setNewExpiryTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "temporaryOwner",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'directRelay', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'expiryTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'finalizeRelay', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'finalizeRelayBatch', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setNewExpiryTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'temporaryOwner', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "DirectRelay(address,bytes)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "RelayBatchFinalized(address[],bytes[])": EventFragment;
-    "RelayFinalized(address,bytes)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'DirectRelay(address,bytes)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'RelayBatchFinalized(address[],bytes[])': EventFragment;
+    'RelayFinalized(address,bytes)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DirectRelay"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RelayBatchFinalized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RelayFinalized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'DirectRelay'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RelayBatchFinalized'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RelayFinalized'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -190,10 +129,7 @@ export interface DirectRelayEventObject {
   target: string;
   payload: string;
 }
-export type DirectRelayEvent = TypedEvent<
-  [string, string],
-  DirectRelayEventObject
->;
+export type DirectRelayEvent = TypedEvent<[string, string], DirectRelayEventObject>;
 
 export type DirectRelayEventFilter = TypedEventFilter<DirectRelayEvent>;
 
@@ -201,20 +137,14 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -227,17 +157,13 @@ export type RelayBatchFinalizedEvent = TypedEvent<
   RelayBatchFinalizedEventObject
 >;
 
-export type RelayBatchFinalizedEventFilter =
-  TypedEventFilter<RelayBatchFinalizedEvent>;
+export type RelayBatchFinalizedEventFilter = TypedEventFilter<RelayBatchFinalizedEvent>;
 
 export interface RelayFinalizedEventObject {
   target: string;
   payload: string;
 }
-export type RelayFinalizedEvent = TypedEvent<
-  [string, string],
-  RelayFinalizedEventObject
->;
+export type RelayFinalizedEvent = TypedEvent<[string, string], RelayFinalizedEventObject>;
 
 export type RelayFinalizedEventFilter = TypedEventFilter<RelayFinalizedEvent>;
 
@@ -258,9 +184,7 @@ export interface OwnerRelayOnOptimismAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -392,10 +316,7 @@ export interface OwnerRelayOnOptimismAbiTypes extends BaseContract {
 
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -414,47 +335,30 @@ export interface OwnerRelayOnOptimismAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "DirectRelay(address,bytes)"(
-      target?: null,
-      payload?: null
-    ): DirectRelayEventFilter;
+    'DirectRelay(address,bytes)'(target?: null, payload?: null): DirectRelayEventFilter;
     DirectRelay(target?: null, payload?: null): DirectRelayEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "RelayBatchFinalized(address[],bytes[])"(
+    'RelayBatchFinalized(address[],bytes[])'(
       targets?: null,
       payloads?: null
     ): RelayBatchFinalizedEventFilter;
-    RelayBatchFinalized(
-      targets?: null,
-      payloads?: null
-    ): RelayBatchFinalizedEventFilter;
+    RelayBatchFinalized(targets?: null, payloads?: null): RelayBatchFinalizedEventFilter;
 
-    "RelayFinalized(address,bytes)"(
-      target?: null,
-      payload?: null
-    ): RelayFinalizedEventFilter;
+    'RelayFinalized(address,bytes)'(target?: null, payload?: null): RelayFinalizedEventFilter;
     RelayFinalized(target?: null, payload?: null): RelayFinalizedEventFilter;
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     directRelay(
       target: PromiseOrValue<string>,
@@ -485,9 +389,7 @@ export interface OwnerRelayOnOptimismAbiTypes extends BaseContract {
 
     nominatedOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -541,9 +443,7 @@ export interface OwnerRelayOnOptimismAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setNewExpiryTime(
       _duration: PromiseOrValue<BigNumberish>,

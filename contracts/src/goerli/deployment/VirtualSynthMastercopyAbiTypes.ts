@@ -12,113 +12,99 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
-export interface VirtualSynthMastercopyAbiTypesInterface
-  extends utils.Interface {
+export interface VirtualSynthMastercopyAbiTypesInterface extends utils.Interface {
   functions: {
-    "allowance(address,address)": FunctionFragment;
-    "approve(address,uint256)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "balanceOfUnderlying(address)": FunctionFragment;
-    "currencyKey()": FunctionFragment;
-    "decimals()": FunctionFragment;
-    "decreaseAllowance(address,uint256)": FunctionFragment;
-    "increaseAllowance(address,uint256)": FunctionFragment;
-    "initialSupply()": FunctionFragment;
-    "initialize(address,address,address,uint256,bytes32)": FunctionFragment;
-    "initialized()": FunctionFragment;
-    "name()": FunctionFragment;
-    "rate()": FunctionFragment;
-    "readyToSettle()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "secsLeftInWaitingPeriod()": FunctionFragment;
-    "settle(address)": FunctionFragment;
-    "settled()": FunctionFragment;
-    "settledAmount()": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "synth()": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "transfer(address,uint256)": FunctionFragment;
-    "transferFrom(address,address,uint256)": FunctionFragment;
+    'allowance(address,address)': FunctionFragment;
+    'approve(address,uint256)': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'balanceOfUnderlying(address)': FunctionFragment;
+    'currencyKey()': FunctionFragment;
+    'decimals()': FunctionFragment;
+    'decreaseAllowance(address,uint256)': FunctionFragment;
+    'increaseAllowance(address,uint256)': FunctionFragment;
+    'initialSupply()': FunctionFragment;
+    'initialize(address,address,address,uint256,bytes32)': FunctionFragment;
+    'initialized()': FunctionFragment;
+    'name()': FunctionFragment;
+    'rate()': FunctionFragment;
+    'readyToSettle()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'secsLeftInWaitingPeriod()': FunctionFragment;
+    'settle(address)': FunctionFragment;
+    'settled()': FunctionFragment;
+    'settledAmount()': FunctionFragment;
+    'symbol()': FunctionFragment;
+    'synth()': FunctionFragment;
+    'totalSupply()': FunctionFragment;
+    'transfer(address,uint256)': FunctionFragment;
+    'transferFrom(address,address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "allowance"
-      | "approve"
-      | "balanceOf"
-      | "balanceOfUnderlying"
-      | "currencyKey"
-      | "decimals"
-      | "decreaseAllowance"
-      | "increaseAllowance"
-      | "initialSupply"
-      | "initialize"
-      | "initialized"
-      | "name"
-      | "rate"
-      | "readyToSettle"
-      | "resolver"
-      | "secsLeftInWaitingPeriod"
-      | "settle"
-      | "settled"
-      | "settledAmount"
-      | "symbol"
-      | "synth"
-      | "totalSupply"
-      | "transfer"
-      | "transferFrom"
+      | 'allowance'
+      | 'approve'
+      | 'balanceOf'
+      | 'balanceOfUnderlying'
+      | 'currencyKey'
+      | 'decimals'
+      | 'decreaseAllowance'
+      | 'increaseAllowance'
+      | 'initialSupply'
+      | 'initialize'
+      | 'initialized'
+      | 'name'
+      | 'rate'
+      | 'readyToSettle'
+      | 'resolver'
+      | 'secsLeftInWaitingPeriod'
+      | 'settle'
+      | 'settled'
+      | 'settledAmount'
+      | 'symbol'
+      | 'synth'
+      | 'totalSupply'
+      | 'transfer'
+      | 'transferFrom'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "allowance",
+    functionFragment: 'allowance',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "approve",
+    functionFragment: 'approve',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "balanceOf",
+    functionFragment: 'balanceOfUnderlying',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'currencyKey', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "balanceOfUnderlying",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "currencyKey",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "decreaseAllowance",
+    functionFragment: 'decreaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "increaseAllowance",
+    functionFragment: 'increaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'initialSupply', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "initialSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
+    functionFragment: 'initialize',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
@@ -127,116 +113,61 @@ export interface VirtualSynthMastercopyAbiTypesInterface
       PromiseOrValue<BytesLike>
     ]
   ): string;
+  encodeFunctionData(functionFragment: 'initialized', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rate', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'readyToSettle', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'secsLeftInWaitingPeriod', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'settle', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'settled', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'settledAmount', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'synth', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "initialized",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(functionFragment: "rate", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "readyToSettle",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "secsLeftInWaitingPeriod",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "settle",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "settled", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "settledAmount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(functionFragment: "synth", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transfer",
+    functionFragment: 'transfer',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "balanceOfUnderlying",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "currencyKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "decreaseAllowance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "increaseAllowance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "initialSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "initialized",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "rate", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "readyToSettle",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "secsLeftInWaitingPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "settle", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "settled", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "settledAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "synth", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOfUnderlying', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'currencyKey', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initialSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initialized', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'readyToSettle', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'secsLeftInWaitingPeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'settle', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'settled', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'settledAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synth', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
 
   events: {
-    "Approval(address,address,uint256)": EventFragment;
-    "Settled(uint256,uint256)": EventFragment;
-    "Transfer(address,address,uint256)": EventFragment;
+    'Approval(address,address,uint256)': EventFragment;
+    'Settled(uint256,uint256)': EventFragment;
+    'Transfer(address,address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Settled"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Settled'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -244,10 +175,7 @@ export interface ApprovalEventObject {
   spender: string;
   value: BigNumber;
 }
-export type ApprovalEvent = TypedEvent<
-  [string, string, BigNumber],
-  ApprovalEventObject
->;
+export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEventObject>;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
@@ -255,10 +183,7 @@ export interface SettledEventObject {
   totalSupply: BigNumber;
   amountAfterSettled: BigNumber;
 }
-export type SettledEvent = TypedEvent<
-  [BigNumber, BigNumber],
-  SettledEventObject
->;
+export type SettledEvent = TypedEvent<[BigNumber, BigNumber], SettledEventObject>;
 
 export type SettledEventFilter = TypedEventFilter<SettledEvent>;
 
@@ -267,10 +192,7 @@ export interface TransferEventObject {
   to: string;
   value: BigNumber;
 }
-export type TransferEvent = TypedEvent<
-  [string, string, BigNumber],
-  TransferEventObject
->;
+export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEventObject>;
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
@@ -291,9 +213,7 @@ export interface VirtualSynthMastercopyAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -313,10 +233,7 @@ export interface VirtualSynthMastercopyAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     balanceOfUnderlying(
       account: PromiseOrValue<string>,
@@ -403,10 +320,7 @@ export interface VirtualSynthMastercopyAbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  balanceOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   balanceOfUnderlying(
     account: PromiseOrValue<string>,
@@ -493,10 +407,7 @@ export interface VirtualSynthMastercopyAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOfUnderlying(
       account: PromiseOrValue<string>,
@@ -542,10 +453,7 @@ export interface VirtualSynthMastercopyAbiTypes extends BaseContract {
 
     secsLeftInWaitingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
-    settle(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    settle(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     settled(overrides?: CallOverrides): Promise<boolean>;
 
@@ -572,7 +480,7 @@ export interface VirtualSynthMastercopyAbiTypes extends BaseContract {
   };
 
   filters: {
-    "Approval(address,address,uint256)"(
+    'Approval(address,address,uint256)'(
       owner?: PromiseOrValue<string> | null,
       spender?: PromiseOrValue<string> | null,
       value?: null
@@ -583,13 +491,10 @@ export interface VirtualSynthMastercopyAbiTypes extends BaseContract {
       value?: null
     ): ApprovalEventFilter;
 
-    "Settled(uint256,uint256)"(
-      totalSupply?: null,
-      amountAfterSettled?: null
-    ): SettledEventFilter;
+    'Settled(uint256,uint256)'(totalSupply?: null, amountAfterSettled?: null): SettledEventFilter;
     Settled(totalSupply?: null, amountAfterSettled?: null): SettledEventFilter;
 
-    "Transfer(address,address,uint256)"(
+    'Transfer(address,address,uint256)'(
       from?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
       value?: null
@@ -614,10 +519,7 @@ export interface VirtualSynthMastercopyAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOfUnderlying(
       account: PromiseOrValue<string>,
@@ -752,9 +654,7 @@ export interface VirtualSynthMastercopyAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    secsLeftInWaitingPeriod(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    secsLeftInWaitingPeriod(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     settle(
       account: PromiseOrValue<string>,

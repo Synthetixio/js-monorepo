@@ -12,214 +12,131 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface RewardsDistributionAbiTypesInterface extends utils.Interface {
   functions: {
-    "distributionsLength()": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "distributions(uint256)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "distributeRewards(uint256)": FunctionFragment;
-    "setRewardEscrow(address)": FunctionFragment;
-    "addRewardDistribution(address,uint256)": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "setAuthority(address)": FunctionFragment;
-    "removeRewardDistribution(uint256)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "setSynthetixProxy(address)": FunctionFragment;
-    "rewardEscrow()": FunctionFragment;
-    "synthetixProxy()": FunctionFragment;
-    "authority()": FunctionFragment;
-    "feePoolProxy()": FunctionFragment;
-    "setFeePoolProxy(address)": FunctionFragment;
-    "editRewardDistribution(uint256,address,uint256)": FunctionFragment;
+    'distributionsLength()': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'distributions(uint256)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'distributeRewards(uint256)': FunctionFragment;
+    'setRewardEscrow(address)': FunctionFragment;
+    'addRewardDistribution(address,uint256)': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'setAuthority(address)': FunctionFragment;
+    'removeRewardDistribution(uint256)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'setSynthetixProxy(address)': FunctionFragment;
+    'rewardEscrow()': FunctionFragment;
+    'synthetixProxy()': FunctionFragment;
+    'authority()': FunctionFragment;
+    'feePoolProxy()': FunctionFragment;
+    'setFeePoolProxy(address)': FunctionFragment;
+    'editRewardDistribution(uint256,address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "distributionsLength"
-      | "nominateNewOwner"
-      | "distributions"
-      | "nominatedOwner"
-      | "distributeRewards"
-      | "setRewardEscrow"
-      | "addRewardDistribution"
-      | "acceptOwnership"
-      | "setAuthority"
-      | "removeRewardDistribution"
-      | "owner"
-      | "setSynthetixProxy"
-      | "rewardEscrow"
-      | "synthetixProxy"
-      | "authority"
-      | "feePoolProxy"
-      | "setFeePoolProxy"
-      | "editRewardDistribution"
+      | 'distributionsLength'
+      | 'nominateNewOwner'
+      | 'distributions'
+      | 'nominatedOwner'
+      | 'distributeRewards'
+      | 'setRewardEscrow'
+      | 'addRewardDistribution'
+      | 'acceptOwnership'
+      | 'setAuthority'
+      | 'removeRewardDistribution'
+      | 'owner'
+      | 'setSynthetixProxy'
+      | 'rewardEscrow'
+      | 'synthetixProxy'
+      | 'authority'
+      | 'feePoolProxy'
+      | 'setFeePoolProxy'
+      | 'editRewardDistribution'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'distributionsLength', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "distributionsLength",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "distributions",
+    functionFragment: 'distributions',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "distributeRewards",
+    functionFragment: 'distributeRewards',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'setRewardEscrow', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "setRewardEscrow",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addRewardDistribution",
+    functionFragment: 'addRewardDistribution',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setAuthority', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setAuthority",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeRewardDistribution",
+    functionFragment: 'removeRewardDistribution',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "setSynthetixProxy",
+    functionFragment: 'setSynthetixProxy',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'rewardEscrow', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'synthetixProxy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'authority', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'feePoolProxy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setFeePoolProxy', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "rewardEscrow",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "synthetixProxy",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "authority", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "feePoolProxy",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setFeePoolProxy",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "editRewardDistribution",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'editRewardDistribution',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "distributionsLength",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "distributions",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "distributeRewards",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setRewardEscrow",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addRewardDistribution",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setAuthority",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeRewardDistribution",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setSynthetixProxy",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardEscrow",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthetixProxy",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "authority", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "feePoolProxy",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setFeePoolProxy",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "editRewardDistribution",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'distributionsLength', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'distributions', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'distributeRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setRewardEscrow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addRewardDistribution', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setAuthority', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeRewardDistribution', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSynthetixProxy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardEscrow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthetixProxy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'authority', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'feePoolProxy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setFeePoolProxy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'editRewardDistribution', data: BytesLike): Result;
 
   events: {
-    "RewardDistributionAdded(uint256,address,uint256)": EventFragment;
-    "RewardsDistributed(uint256)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
+    'RewardDistributionAdded(uint256,address,uint256)': EventFragment;
+    'RewardsDistributed(uint256)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "RewardDistributionAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardsDistributed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardDistributionAdded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardsDistributed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
 }
 
 export interface RewardDistributionAddedEventObject {
@@ -232,27 +149,19 @@ export type RewardDistributionAddedEvent = TypedEvent<
   RewardDistributionAddedEventObject
 >;
 
-export type RewardDistributionAddedEventFilter =
-  TypedEventFilter<RewardDistributionAddedEvent>;
+export type RewardDistributionAddedEventFilter = TypedEventFilter<RewardDistributionAddedEvent>;
 
 export interface RewardsDistributedEventObject {
   amount: BigNumber;
 }
-export type RewardsDistributedEvent = TypedEvent<
-  [BigNumber],
-  RewardsDistributedEventObject
->;
+export type RewardsDistributedEvent = TypedEvent<[BigNumber], RewardsDistributedEventObject>;
 
-export type RewardsDistributedEventFilter =
-  TypedEventFilter<RewardsDistributedEvent>;
+export type RewardsDistributedEventFilter = TypedEventFilter<RewardsDistributedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -260,10 +169,7 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
@@ -284,9 +190,7 @@ export interface RewardsDistributionAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -304,9 +208,7 @@ export interface RewardsDistributionAbiTypes extends BaseContract {
     distributions(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [string, BigNumber] & { destination: string; amount: BigNumber }
-    >;
+    ): Promise<[string, BigNumber] & { destination: string; amount: BigNumber }>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -442,17 +344,12 @@ export interface RewardsDistributionAbiTypes extends BaseContract {
   callStatic: {
     distributionsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     distributions(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [string, BigNumber] & { destination: string; amount: BigNumber }
-    >;
+    ): Promise<[string, BigNumber] & { destination: string; amount: BigNumber }>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -474,10 +371,7 @@ export interface RewardsDistributionAbiTypes extends BaseContract {
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    setAuthority(
-      _authority: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setAuthority(_authority: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     removeRewardDistribution(
       index: PromiseOrValue<BigNumberish>,
@@ -513,7 +407,7 @@ export interface RewardsDistributionAbiTypes extends BaseContract {
   };
 
   filters: {
-    "RewardDistributionAdded(uint256,address,uint256)"(
+    'RewardDistributionAdded(uint256,address,uint256)'(
       index?: null,
       destination?: null,
       amount?: null
@@ -524,16 +418,13 @@ export interface RewardsDistributionAbiTypes extends BaseContract {
       amount?: null
     ): RewardDistributionAddedEventFilter;
 
-    "RewardsDistributed(uint256)"(amount?: null): RewardsDistributedEventFilter;
+    'RewardsDistributed(uint256)'(amount?: null): RewardsDistributedEventFilter;
     RewardsDistributed(amount?: null): RewardsDistributedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
   };
 
@@ -568,9 +459,7 @@ export interface RewardsDistributionAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setAuthority(
       _authority: PromiseOrValue<string>,
@@ -611,9 +500,7 @@ export interface RewardsDistributionAbiTypes extends BaseContract {
   };
 
   populateTransaction: {
-    distributionsLength(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    distributionsLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
       _owner: PromiseOrValue<string>,

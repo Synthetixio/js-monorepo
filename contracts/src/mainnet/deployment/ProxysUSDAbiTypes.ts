@@ -12,66 +12,53 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface ProxysUSDAbiTypesInterface extends utils.Interface {
   functions: {
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "setTarget(address)": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "_emit(bytes,uint256,bytes32,bytes32,bytes32,bytes32)": FunctionFragment;
-    "useDELEGATECALL()": FunctionFragment;
-    "setUseDELEGATECALL(bool)": FunctionFragment;
-    "target()": FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'setTarget(address)': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'owner()': FunctionFragment;
+    '_emit(bytes,uint256,bytes32,bytes32,bytes32,bytes32)': FunctionFragment;
+    'useDELEGATECALL()': FunctionFragment;
+    'setUseDELEGATECALL(bool)': FunctionFragment;
+    'target()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "setTarget"
-      | "acceptOwnership"
-      | "owner"
-      | "_emit"
-      | "useDELEGATECALL"
-      | "setUseDELEGATECALL"
-      | "target"
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'setTarget'
+      | 'acceptOwnership'
+      | 'owner'
+      | '_emit'
+      | 'useDELEGATECALL'
+      | 'setUseDELEGATECALL'
+      | 'target'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setTarget', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setTarget",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "_emit",
+    functionFragment: '_emit',
     values: [
       PromiseOrValue<BytesLike>,
       PromiseOrValue<BigNumberish>,
@@ -81,50 +68,32 @@ export interface ProxysUSDAbiTypesInterface extends utils.Interface {
       PromiseOrValue<BytesLike>
     ]
   ): string;
+  encodeFunctionData(functionFragment: 'useDELEGATECALL', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "useDELEGATECALL",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setUseDELEGATECALL",
+    functionFragment: 'setUseDELEGATECALL',
     values: [PromiseOrValue<boolean>]
   ): string;
-  encodeFunctionData(functionFragment: "target", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'target', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setTarget", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "_emit", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "useDELEGATECALL",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setUseDELEGATECALL",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "target", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setTarget', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: '_emit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'useDELEGATECALL', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setUseDELEGATECALL', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'target', data: BytesLike): Result;
 
   events: {
-    "TargetUpdated(address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
+    'TargetUpdated(address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "TargetUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TargetUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
 }
 
 export interface TargetUpdatedEventObject {
@@ -137,10 +106,7 @@ export type TargetUpdatedEventFilter = TypedEventFilter<TargetUpdatedEvent>;
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -148,10 +114,7 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
@@ -172,9 +135,7 @@ export interface ProxysUSDAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -258,17 +219,11 @@ export interface ProxysUSDAbiTypes extends BaseContract {
   target(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
-    setTarget(
-      _target: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setTarget(_target: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -286,25 +241,19 @@ export interface ProxysUSDAbiTypes extends BaseContract {
 
     useDELEGATECALL(overrides?: CallOverrides): Promise<boolean>;
 
-    setUseDELEGATECALL(
-      value: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setUseDELEGATECALL(value: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     target(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
-    "TargetUpdated(address)"(newTarget?: null): TargetUpdatedEventFilter;
+    'TargetUpdated(address)'(newTarget?: null): TargetUpdatedEventFilter;
     TargetUpdated(newTarget?: null): TargetUpdatedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
   };
 
@@ -321,9 +270,7 @@ export interface ProxysUSDAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 

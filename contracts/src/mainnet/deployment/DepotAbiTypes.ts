@@ -13,471 +13,278 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface DepotAbiTypesInterface extends utils.Interface {
   functions: {
-    "exchangeEtherForSNX()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "minimumDepositAmount()": FunctionFragment;
-    "exchangeEtherForSynthsAtRate(uint256)": FunctionFragment;
-    "synthsReceivedForEther(uint256)": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "setPaused(bool)": FunctionFragment;
-    "initiationTime()": FunctionFragment;
-    "exchangeEtherForSynths()": FunctionFragment;
-    "setSelfDestructBeneficiary(address)": FunctionFragment;
-    "fundsWallet()": FunctionFragment;
-    "terminateSelfDestruct()": FunctionFragment;
-    "totalSellableDeposits()": FunctionFragment;
-    "setResolver(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "paused()": FunctionFragment;
-    "setFundsWallet(address)": FunctionFragment;
-    "depositStartIndex()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "withdrawMyDepositedSynths()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "lastPauseTime()": FunctionFragment;
-    "exchangeEtherForSNXAtRate(uint256,uint256)": FunctionFragment;
-    "selfDestruct()": FunctionFragment;
-    "synthetixReceivedForSynths(uint256)": FunctionFragment;
-    "SELFDESTRUCT_DELAY()": FunctionFragment;
-    "setMinimumDepositAmount(uint256)": FunctionFragment;
-    "deposits(uint256)": FunctionFragment;
-    "exchangeSynthsForSNXAtRate(uint256,uint256)": FunctionFragment;
-    "maxEthPurchase()": FunctionFragment;
-    "selfDestructInitiated()": FunctionFragment;
-    "setMaxEthPurchase(uint256)": FunctionFragment;
-    "initiateSelfDestruct()": FunctionFragment;
-    "selfDestructBeneficiary()": FunctionFragment;
-    "smallDeposits(address)": FunctionFragment;
-    "synthetixReceivedForEther(uint256)": FunctionFragment;
-    "depositSynths(uint256)": FunctionFragment;
-    "withdrawSynthetix(uint256)": FunctionFragment;
-    "exchangeSynthsForSNX(uint256)": FunctionFragment;
-    "depositEndIndex()": FunctionFragment;
+    'exchangeEtherForSNX()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'minimumDepositAmount()': FunctionFragment;
+    'exchangeEtherForSynthsAtRate(uint256)': FunctionFragment;
+    'synthsReceivedForEther(uint256)': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'setPaused(bool)': FunctionFragment;
+    'initiationTime()': FunctionFragment;
+    'exchangeEtherForSynths()': FunctionFragment;
+    'setSelfDestructBeneficiary(address)': FunctionFragment;
+    'fundsWallet()': FunctionFragment;
+    'terminateSelfDestruct()': FunctionFragment;
+    'totalSellableDeposits()': FunctionFragment;
+    'setResolver(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'paused()': FunctionFragment;
+    'setFundsWallet(address)': FunctionFragment;
+    'depositStartIndex()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'withdrawMyDepositedSynths()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'lastPauseTime()': FunctionFragment;
+    'exchangeEtherForSNXAtRate(uint256,uint256)': FunctionFragment;
+    'selfDestruct()': FunctionFragment;
+    'synthetixReceivedForSynths(uint256)': FunctionFragment;
+    'SELFDESTRUCT_DELAY()': FunctionFragment;
+    'setMinimumDepositAmount(uint256)': FunctionFragment;
+    'deposits(uint256)': FunctionFragment;
+    'exchangeSynthsForSNXAtRate(uint256,uint256)': FunctionFragment;
+    'maxEthPurchase()': FunctionFragment;
+    'selfDestructInitiated()': FunctionFragment;
+    'setMaxEthPurchase(uint256)': FunctionFragment;
+    'initiateSelfDestruct()': FunctionFragment;
+    'selfDestructBeneficiary()': FunctionFragment;
+    'smallDeposits(address)': FunctionFragment;
+    'synthetixReceivedForEther(uint256)': FunctionFragment;
+    'depositSynths(uint256)': FunctionFragment;
+    'withdrawSynthetix(uint256)': FunctionFragment;
+    'exchangeSynthsForSNX(uint256)': FunctionFragment;
+    'depositEndIndex()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "exchangeEtherForSNX"
-      | "resolver"
-      | "minimumDepositAmount"
-      | "exchangeEtherForSynthsAtRate"
-      | "synthsReceivedForEther"
-      | "nominateNewOwner"
-      | "setPaused"
-      | "initiationTime"
-      | "exchangeEtherForSynths"
-      | "setSelfDestructBeneficiary"
-      | "fundsWallet"
-      | "terminateSelfDestruct"
-      | "totalSellableDeposits"
-      | "setResolver"
-      | "nominatedOwner"
-      | "paused"
-      | "setFundsWallet"
-      | "depositStartIndex"
-      | "acceptOwnership"
-      | "withdrawMyDepositedSynths"
-      | "owner"
-      | "lastPauseTime"
-      | "exchangeEtherForSNXAtRate"
-      | "selfDestruct"
-      | "synthetixReceivedForSynths"
-      | "SELFDESTRUCT_DELAY"
-      | "setMinimumDepositAmount"
-      | "deposits"
-      | "exchangeSynthsForSNXAtRate"
-      | "maxEthPurchase"
-      | "selfDestructInitiated"
-      | "setMaxEthPurchase"
-      | "initiateSelfDestruct"
-      | "selfDestructBeneficiary"
-      | "smallDeposits"
-      | "synthetixReceivedForEther"
-      | "depositSynths"
-      | "withdrawSynthetix"
-      | "exchangeSynthsForSNX"
-      | "depositEndIndex"
+      | 'exchangeEtherForSNX'
+      | 'resolver'
+      | 'minimumDepositAmount'
+      | 'exchangeEtherForSynthsAtRate'
+      | 'synthsReceivedForEther'
+      | 'nominateNewOwner'
+      | 'setPaused'
+      | 'initiationTime'
+      | 'exchangeEtherForSynths'
+      | 'setSelfDestructBeneficiary'
+      | 'fundsWallet'
+      | 'terminateSelfDestruct'
+      | 'totalSellableDeposits'
+      | 'setResolver'
+      | 'nominatedOwner'
+      | 'paused'
+      | 'setFundsWallet'
+      | 'depositStartIndex'
+      | 'acceptOwnership'
+      | 'withdrawMyDepositedSynths'
+      | 'owner'
+      | 'lastPauseTime'
+      | 'exchangeEtherForSNXAtRate'
+      | 'selfDestruct'
+      | 'synthetixReceivedForSynths'
+      | 'SELFDESTRUCT_DELAY'
+      | 'setMinimumDepositAmount'
+      | 'deposits'
+      | 'exchangeSynthsForSNXAtRate'
+      | 'maxEthPurchase'
+      | 'selfDestructInitiated'
+      | 'setMaxEthPurchase'
+      | 'initiateSelfDestruct'
+      | 'selfDestructBeneficiary'
+      | 'smallDeposits'
+      | 'synthetixReceivedForEther'
+      | 'depositSynths'
+      | 'withdrawSynthetix'
+      | 'exchangeSynthsForSNX'
+      | 'depositEndIndex'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'exchangeEtherForSNX', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'minimumDepositAmount', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "exchangeEtherForSNX",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "minimumDepositAmount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "exchangeEtherForSynthsAtRate",
+    functionFragment: 'exchangeEtherForSynthsAtRate',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "synthsReceivedForEther",
+    functionFragment: 'synthsReceivedForEther',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'setPaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'initiationTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'exchangeEtherForSynths', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "setPaused",
-    values: [PromiseOrValue<boolean>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initiationTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "exchangeEtherForSynths",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setSelfDestructBeneficiary",
+    functionFragment: 'setSelfDestructBeneficiary',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'fundsWallet', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'terminateSelfDestruct', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalSellableDeposits', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setResolver', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setFundsWallet', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'depositStartIndex', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'withdrawMyDepositedSynths', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastPauseTime', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "fundsWallet",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "terminateSelfDestruct",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalSellableDeposits",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setResolver",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "paused", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "setFundsWallet",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "depositStartIndex",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawMyDepositedSynths",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "lastPauseTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "exchangeEtherForSNXAtRate",
+    functionFragment: 'exchangeEtherForSNXAtRate',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'selfDestruct', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "selfDestruct",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "synthetixReceivedForSynths",
+    functionFragment: 'synthetixReceivedForSynths',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'SELFDESTRUCT_DELAY', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "SELFDESTRUCT_DELAY",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setMinimumDepositAmount",
+    functionFragment: 'setMinimumDepositAmount',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'deposits', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: "deposits",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "exchangeSynthsForSNXAtRate",
+    functionFragment: 'exchangeSynthsForSNXAtRate',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'maxEthPurchase', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'selfDestructInitiated', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "maxEthPurchase",
-    values?: undefined
+    functionFragment: 'setMaxEthPurchase',
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'initiateSelfDestruct', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'selfDestructBeneficiary', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'smallDeposits', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "selfDestructInitiated",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setMaxEthPurchase",
+    functionFragment: 'synthetixReceivedForEther',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "initiateSelfDestruct",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "selfDestructBeneficiary",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "smallDeposits",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "synthetixReceivedForEther",
+    functionFragment: 'depositSynths',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "depositSynths",
+    functionFragment: 'withdrawSynthetix',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "withdrawSynthetix",
+    functionFragment: 'exchangeSynthsForSNX',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "exchangeSynthsForSNX",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "depositEndIndex",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'depositEndIndex', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "exchangeEtherForSNX",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "minimumDepositAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeEtherForSynthsAtRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthsReceivedForEther",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setPaused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "initiationTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeEtherForSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setSelfDestructBeneficiary",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "fundsWallet",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "terminateSelfDestruct",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSellableDeposits",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setResolver",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setFundsWallet",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "depositStartIndex",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawMyDepositedSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "lastPauseTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeEtherForSNXAtRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "selfDestruct",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthetixReceivedForSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "SELFDESTRUCT_DELAY",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMinimumDepositAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "deposits", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeSynthsForSNXAtRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "maxEthPurchase",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "selfDestructInitiated",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaxEthPurchase",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "initiateSelfDestruct",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "selfDestructBeneficiary",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "smallDeposits",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "synthetixReceivedForEther",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "depositSynths",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawSynthetix",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeSynthsForSNX",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "depositEndIndex",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'exchangeEtherForSNX', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minimumDepositAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeEtherForSynthsAtRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthsReceivedForEther', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPaused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initiationTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeEtherForSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSelfDestructBeneficiary', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'fundsWallet', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'terminateSelfDestruct', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSellableDeposits', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setResolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setFundsWallet', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositStartIndex', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawMyDepositedSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastPauseTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeEtherForSNXAtRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'selfDestruct', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthetixReceivedForSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'SELFDESTRUCT_DELAY', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMinimumDepositAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deposits', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeSynthsForSNXAtRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxEthPurchase', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'selfDestructInitiated', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaxEthPurchase', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initiateSelfDestruct', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'selfDestructBeneficiary', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'smallDeposits', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthetixReceivedForEther', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositSynths', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawSynthetix', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeSynthsForSNX', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositEndIndex', data: BytesLike): Result;
 
   events: {
-    "MaxEthPurchaseUpdated(uint256)": EventFragment;
-    "FundsWalletUpdated(address)": EventFragment;
-    "Exchange(string,uint256,string,uint256)": EventFragment;
-    "SynthWithdrawal(address,uint256)": EventFragment;
-    "SynthDeposit(address,uint256,uint256)": EventFragment;
-    "SynthDepositRemoved(address,uint256,uint256)": EventFragment;
-    "SynthDepositNotAccepted(address,uint256,uint256)": EventFragment;
-    "MinimumDepositAmountUpdated(uint256)": EventFragment;
-    "NonPayableContract(address,uint256)": EventFragment;
-    "ClearedDeposit(address,address,uint256,uint256,uint256)": EventFragment;
-    "PauseChanged(bool)": EventFragment;
-    "SelfDestructTerminated()": EventFragment;
-    "SelfDestructed(address)": EventFragment;
-    "SelfDestructInitiated(uint256)": EventFragment;
-    "SelfDestructBeneficiaryUpdated(address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
+    'MaxEthPurchaseUpdated(uint256)': EventFragment;
+    'FundsWalletUpdated(address)': EventFragment;
+    'Exchange(string,uint256,string,uint256)': EventFragment;
+    'SynthWithdrawal(address,uint256)': EventFragment;
+    'SynthDeposit(address,uint256,uint256)': EventFragment;
+    'SynthDepositRemoved(address,uint256,uint256)': EventFragment;
+    'SynthDepositNotAccepted(address,uint256,uint256)': EventFragment;
+    'MinimumDepositAmountUpdated(uint256)': EventFragment;
+    'NonPayableContract(address,uint256)': EventFragment;
+    'ClearedDeposit(address,address,uint256,uint256,uint256)': EventFragment;
+    'PauseChanged(bool)': EventFragment;
+    'SelfDestructTerminated()': EventFragment;
+    'SelfDestructed(address)': EventFragment;
+    'SelfDestructInitiated(uint256)': EventFragment;
+    'SelfDestructBeneficiaryUpdated(address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "MaxEthPurchaseUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FundsWalletUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Exchange"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthWithdrawal"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthDeposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthDepositRemoved"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SynthDepositNotAccepted"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "MinimumDepositAmountUpdated"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NonPayableContract"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ClearedDeposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PauseChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SelfDestructTerminated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SelfDestructed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SelfDestructInitiated"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "SelfDestructBeneficiaryUpdated"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MaxEthPurchaseUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FundsWalletUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Exchange'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthWithdrawal'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthDeposit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthDepositRemoved'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SynthDepositNotAccepted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MinimumDepositAmountUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'NonPayableContract'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ClearedDeposit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'PauseChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SelfDestructTerminated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SelfDestructed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SelfDestructInitiated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SelfDestructBeneficiaryUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
 }
 
 export interface MaxEthPurchaseUpdatedEventObject {
   amount: BigNumber;
 }
-export type MaxEthPurchaseUpdatedEvent = TypedEvent<
-  [BigNumber],
-  MaxEthPurchaseUpdatedEventObject
->;
+export type MaxEthPurchaseUpdatedEvent = TypedEvent<[BigNumber], MaxEthPurchaseUpdatedEventObject>;
 
-export type MaxEthPurchaseUpdatedEventFilter =
-  TypedEventFilter<MaxEthPurchaseUpdatedEvent>;
+export type MaxEthPurchaseUpdatedEventFilter = TypedEventFilter<MaxEthPurchaseUpdatedEvent>;
 
 export interface FundsWalletUpdatedEventObject {
   newFundsWallet: string;
 }
-export type FundsWalletUpdatedEvent = TypedEvent<
-  [string],
-  FundsWalletUpdatedEventObject
->;
+export type FundsWalletUpdatedEvent = TypedEvent<[string], FundsWalletUpdatedEventObject>;
 
-export type FundsWalletUpdatedEventFilter =
-  TypedEventFilter<FundsWalletUpdatedEvent>;
+export type FundsWalletUpdatedEventFilter = TypedEventFilter<FundsWalletUpdatedEvent>;
 
 export interface ExchangeEventObject {
   fromCurrency: string;
@@ -485,10 +292,7 @@ export interface ExchangeEventObject {
   toCurrency: string;
   toAmount: BigNumber;
 }
-export type ExchangeEvent = TypedEvent<
-  [string, BigNumber, string, BigNumber],
-  ExchangeEventObject
->;
+export type ExchangeEvent = TypedEvent<[string, BigNumber, string, BigNumber], ExchangeEventObject>;
 
 export type ExchangeEventFilter = TypedEventFilter<ExchangeEvent>;
 
@@ -496,10 +300,7 @@ export interface SynthWithdrawalEventObject {
   user: string;
   amount: BigNumber;
 }
-export type SynthWithdrawalEvent = TypedEvent<
-  [string, BigNumber],
-  SynthWithdrawalEventObject
->;
+export type SynthWithdrawalEvent = TypedEvent<[string, BigNumber], SynthWithdrawalEventObject>;
 
 export type SynthWithdrawalEventFilter = TypedEventFilter<SynthWithdrawalEvent>;
 
@@ -508,10 +309,7 @@ export interface SynthDepositEventObject {
   amount: BigNumber;
   depositIndex: BigNumber;
 }
-export type SynthDepositEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  SynthDepositEventObject
->;
+export type SynthDepositEvent = TypedEvent<[string, BigNumber, BigNumber], SynthDepositEventObject>;
 
 export type SynthDepositEventFilter = TypedEventFilter<SynthDepositEvent>;
 
@@ -525,8 +323,7 @@ export type SynthDepositRemovedEvent = TypedEvent<
   SynthDepositRemovedEventObject
 >;
 
-export type SynthDepositRemovedEventFilter =
-  TypedEventFilter<SynthDepositRemovedEvent>;
+export type SynthDepositRemovedEventFilter = TypedEventFilter<SynthDepositRemovedEvent>;
 
 export interface SynthDepositNotAcceptedEventObject {
   user: string;
@@ -538,8 +335,7 @@ export type SynthDepositNotAcceptedEvent = TypedEvent<
   SynthDepositNotAcceptedEventObject
 >;
 
-export type SynthDepositNotAcceptedEventFilter =
-  TypedEventFilter<SynthDepositNotAcceptedEvent>;
+export type SynthDepositNotAcceptedEventFilter = TypedEventFilter<SynthDepositNotAcceptedEvent>;
 
 export interface MinimumDepositAmountUpdatedEventObject {
   amount: BigNumber;
@@ -561,8 +357,7 @@ export type NonPayableContractEvent = TypedEvent<
   NonPayableContractEventObject
 >;
 
-export type NonPayableContractEventFilter =
-  TypedEventFilter<NonPayableContractEvent>;
+export type NonPayableContractEventFilter = TypedEventFilter<NonPayableContractEvent>;
 
 export interface ClearedDepositEventObject {
   fromAddress: string;
@@ -586,34 +381,23 @@ export type PauseChangedEvent = TypedEvent<[boolean], PauseChangedEventObject>;
 export type PauseChangedEventFilter = TypedEventFilter<PauseChangedEvent>;
 
 export interface SelfDestructTerminatedEventObject {}
-export type SelfDestructTerminatedEvent = TypedEvent<
-  [],
-  SelfDestructTerminatedEventObject
->;
+export type SelfDestructTerminatedEvent = TypedEvent<[], SelfDestructTerminatedEventObject>;
 
-export type SelfDestructTerminatedEventFilter =
-  TypedEventFilter<SelfDestructTerminatedEvent>;
+export type SelfDestructTerminatedEventFilter = TypedEventFilter<SelfDestructTerminatedEvent>;
 
 export interface SelfDestructedEventObject {
   beneficiary: string;
 }
-export type SelfDestructedEvent = TypedEvent<
-  [string],
-  SelfDestructedEventObject
->;
+export type SelfDestructedEvent = TypedEvent<[string], SelfDestructedEventObject>;
 
 export type SelfDestructedEventFilter = TypedEventFilter<SelfDestructedEvent>;
 
 export interface SelfDestructInitiatedEventObject {
   selfDestructDelay: BigNumber;
 }
-export type SelfDestructInitiatedEvent = TypedEvent<
-  [BigNumber],
-  SelfDestructInitiatedEventObject
->;
+export type SelfDestructInitiatedEvent = TypedEvent<[BigNumber], SelfDestructInitiatedEventObject>;
 
-export type SelfDestructInitiatedEventFilter =
-  TypedEventFilter<SelfDestructInitiatedEvent>;
+export type SelfDestructInitiatedEventFilter = TypedEventFilter<SelfDestructInitiatedEvent>;
 
 export interface SelfDestructBeneficiaryUpdatedEventObject {
   newBeneficiary: string;
@@ -629,10 +413,7 @@ export type SelfDestructBeneficiaryUpdatedEventFilter =
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -640,10 +421,7 @@ export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
@@ -664,9 +442,7 @@ export interface DepotAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -797,10 +573,7 @@ export interface DepotAbiTypes extends BaseContract {
 
     selfDestructBeneficiary(overrides?: CallOverrides): Promise<[string]>;
 
-    smallDeposits(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    smallDeposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     synthetixReceivedForEther(
       amount: PromiseOrValue<BigNumberish>,
@@ -948,10 +721,7 @@ export interface DepotAbiTypes extends BaseContract {
 
   selfDestructBeneficiary(overrides?: CallOverrides): Promise<string>;
 
-  smallDeposits(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  smallDeposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   synthetixReceivedForEther(
     amount: PromiseOrValue<BigNumberish>,
@@ -992,15 +762,9 @@ export interface DepotAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setPaused(
-      _paused: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setPaused(_paused: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     initiationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1017,19 +781,13 @@ export interface DepotAbiTypes extends BaseContract {
 
     totalSellableDeposits(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setResolver(
-      _resolver: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setResolver(_resolver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
-    setFundsWallet(
-      _fundsWallet: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setFundsWallet(_fundsWallet: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     depositStartIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1085,20 +843,14 @@ export interface DepotAbiTypes extends BaseContract {
 
     selfDestructBeneficiary(overrides?: CallOverrides): Promise<string>;
 
-    smallDeposits(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    smallDeposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     synthetixReceivedForEther(
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    depositSynths(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    depositSynths(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawSynthetix(
       amount: PromiseOrValue<BigNumberish>,
@@ -1114,17 +866,13 @@ export interface DepotAbiTypes extends BaseContract {
   };
 
   filters: {
-    "MaxEthPurchaseUpdated(uint256)"(
-      amount?: null
-    ): MaxEthPurchaseUpdatedEventFilter;
+    'MaxEthPurchaseUpdated(uint256)'(amount?: null): MaxEthPurchaseUpdatedEventFilter;
     MaxEthPurchaseUpdated(amount?: null): MaxEthPurchaseUpdatedEventFilter;
 
-    "FundsWalletUpdated(address)"(
-      newFundsWallet?: null
-    ): FundsWalletUpdatedEventFilter;
+    'FundsWalletUpdated(address)'(newFundsWallet?: null): FundsWalletUpdatedEventFilter;
     FundsWalletUpdated(newFundsWallet?: null): FundsWalletUpdatedEventFilter;
 
-    "Exchange(string,uint256,string,uint256)"(
+    'Exchange(string,uint256,string,uint256)'(
       fromCurrency?: null,
       fromAmount?: null,
       toCurrency?: null,
@@ -1137,13 +885,10 @@ export interface DepotAbiTypes extends BaseContract {
       toAmount?: null
     ): ExchangeEventFilter;
 
-    "SynthWithdrawal(address,uint256)"(
-      user?: null,
-      amount?: null
-    ): SynthWithdrawalEventFilter;
+    'SynthWithdrawal(address,uint256)'(user?: null, amount?: null): SynthWithdrawalEventFilter;
     SynthWithdrawal(user?: null, amount?: null): SynthWithdrawalEventFilter;
 
-    "SynthDeposit(address,uint256,uint256)"(
+    'SynthDeposit(address,uint256,uint256)'(
       user?: PromiseOrValue<string> | null,
       amount?: null,
       depositIndex?: PromiseOrValue<BigNumberish> | null
@@ -1154,7 +899,7 @@ export interface DepotAbiTypes extends BaseContract {
       depositIndex?: PromiseOrValue<BigNumberish> | null
     ): SynthDepositEventFilter;
 
-    "SynthDepositRemoved(address,uint256,uint256)"(
+    'SynthDepositRemoved(address,uint256,uint256)'(
       user?: PromiseOrValue<string> | null,
       amount?: null,
       depositIndex?: PromiseOrValue<BigNumberish> | null
@@ -1165,7 +910,7 @@ export interface DepotAbiTypes extends BaseContract {
       depositIndex?: PromiseOrValue<BigNumberish> | null
     ): SynthDepositRemovedEventFilter;
 
-    "SynthDepositNotAccepted(address,uint256,uint256)"(
+    'SynthDepositNotAccepted(address,uint256,uint256)'(
       user?: null,
       amount?: null,
       minimum?: null
@@ -1176,14 +921,10 @@ export interface DepotAbiTypes extends BaseContract {
       minimum?: null
     ): SynthDepositNotAcceptedEventFilter;
 
-    "MinimumDepositAmountUpdated(uint256)"(
-      amount?: null
-    ): MinimumDepositAmountUpdatedEventFilter;
-    MinimumDepositAmountUpdated(
-      amount?: null
-    ): MinimumDepositAmountUpdatedEventFilter;
+    'MinimumDepositAmountUpdated(uint256)'(amount?: null): MinimumDepositAmountUpdatedEventFilter;
+    MinimumDepositAmountUpdated(amount?: null): MinimumDepositAmountUpdatedEventFilter;
 
-    "NonPayableContract(address,uint256)"(
+    'NonPayableContract(address,uint256)'(
       receiver?: PromiseOrValue<string> | null,
       amount?: null
     ): NonPayableContractEventFilter;
@@ -1192,7 +933,7 @@ export interface DepotAbiTypes extends BaseContract {
       amount?: null
     ): NonPayableContractEventFilter;
 
-    "ClearedDeposit(address,address,uint256,uint256,uint256)"(
+    'ClearedDeposit(address,address,uint256,uint256,uint256)'(
       fromAddress?: PromiseOrValue<string> | null,
       toAddress?: PromiseOrValue<string> | null,
       fromETHAmount?: null,
@@ -1207,36 +948,29 @@ export interface DepotAbiTypes extends BaseContract {
       depositIndex?: PromiseOrValue<BigNumberish> | null
     ): ClearedDepositEventFilter;
 
-    "PauseChanged(bool)"(isPaused?: null): PauseChangedEventFilter;
+    'PauseChanged(bool)'(isPaused?: null): PauseChangedEventFilter;
     PauseChanged(isPaused?: null): PauseChangedEventFilter;
 
-    "SelfDestructTerminated()"(): SelfDestructTerminatedEventFilter;
+    'SelfDestructTerminated()'(): SelfDestructTerminatedEventFilter;
     SelfDestructTerminated(): SelfDestructTerminatedEventFilter;
 
-    "SelfDestructed(address)"(beneficiary?: null): SelfDestructedEventFilter;
+    'SelfDestructed(address)'(beneficiary?: null): SelfDestructedEventFilter;
     SelfDestructed(beneficiary?: null): SelfDestructedEventFilter;
 
-    "SelfDestructInitiated(uint256)"(
-      selfDestructDelay?: null
-    ): SelfDestructInitiatedEventFilter;
-    SelfDestructInitiated(
-      selfDestructDelay?: null
-    ): SelfDestructInitiatedEventFilter;
+    'SelfDestructInitiated(uint256)'(selfDestructDelay?: null): SelfDestructInitiatedEventFilter;
+    SelfDestructInitiated(selfDestructDelay?: null): SelfDestructInitiatedEventFilter;
 
-    "SelfDestructBeneficiaryUpdated(address)"(
+    'SelfDestructBeneficiaryUpdated(address)'(
       newBeneficiary?: null
     ): SelfDestructBeneficiaryUpdatedEventFilter;
     SelfDestructBeneficiaryUpdated(
       newBeneficiary?: null
     ): SelfDestructBeneficiaryUpdatedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
   };
 
@@ -1304,9 +1038,7 @@ export interface DepotAbiTypes extends BaseContract {
 
     depositStartIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     withdrawMyDepositedSynths(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1322,9 +1054,7 @@ export interface DepotAbiTypes extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    selfDestruct(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    selfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     synthetixReceivedForSynths(
       amount: PromiseOrValue<BigNumberish>,
@@ -1338,10 +1068,7 @@ export interface DepotAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    deposits(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    deposits(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     exchangeSynthsForSNXAtRate(
       synthAmount: PromiseOrValue<BigNumberish>,
@@ -1364,10 +1091,7 @@ export interface DepotAbiTypes extends BaseContract {
 
     selfDestructBeneficiary(overrides?: CallOverrides): Promise<BigNumber>;
 
-    smallDeposits(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    smallDeposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     synthetixReceivedForEther(
       amount: PromiseOrValue<BigNumberish>,
@@ -1399,9 +1123,7 @@ export interface DepotAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    minimumDepositAmount(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    minimumDepositAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     exchangeEtherForSynthsAtRate(
       guaranteedRate: PromiseOrValue<BigNumberish>,
@@ -1440,9 +1162,7 @@ export interface DepotAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    totalSellableDeposits(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    totalSellableDeposits(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setResolver(
       _resolver: PromiseOrValue<string>,
@@ -1487,9 +1207,7 @@ export interface DepotAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    SELFDESTRUCT_DELAY(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    SELFDESTRUCT_DELAY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setMinimumDepositAmount(
       _amount: PromiseOrValue<BigNumberish>,
@@ -1509,9 +1227,7 @@ export interface DepotAbiTypes extends BaseContract {
 
     maxEthPurchase(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    selfDestructInitiated(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    selfDestructInitiated(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setMaxEthPurchase(
       _maxEthPurchase: PromiseOrValue<BigNumberish>,
@@ -1522,9 +1238,7 @@ export interface DepotAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    selfDestructBeneficiary(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    selfDestructBeneficiary(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     smallDeposits(
       arg0: PromiseOrValue<string>,

@@ -10,81 +10,60 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface FuturesMarketManagerAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "allMarkets()": FunctionFragment;
-    "marketForKey(bytes32)": FunctionFragment;
-    "markets(uint256,uint256)": FunctionFragment;
-    "marketsForKeys(bytes32[])": FunctionFragment;
-    "numMarkets()": FunctionFragment;
-    "totalDebt()": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'allMarkets()': FunctionFragment;
+    'marketForKey(bytes32)': FunctionFragment;
+    'markets(uint256,uint256)': FunctionFragment;
+    'marketsForKeys(bytes32[])': FunctionFragment;
+    'numMarkets()': FunctionFragment;
+    'totalDebt()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "allMarkets"
-      | "marketForKey"
-      | "markets"
-      | "marketsForKeys"
-      | "numMarkets"
-      | "totalDebt"
+      | 'CONTRACT_NAME'
+      | 'allMarkets'
+      | 'marketForKey'
+      | 'markets'
+      | 'marketsForKeys'
+      | 'numMarkets'
+      | 'totalDebt'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'allMarkets', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'marketForKey', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "allMarkets",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "marketForKey",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "markets",
+    functionFragment: 'markets',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "marketsForKeys",
+    functionFragment: 'marketsForKeys',
     values: [PromiseOrValue<BytesLike>[]]
   ): string;
-  encodeFunctionData(
-    functionFragment: "numMarkets",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "totalDebt", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'numMarkets', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalDebt', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "allMarkets", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "marketForKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "markets", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "marketsForKeys",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "numMarkets", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "totalDebt", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allMarkets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketForKey', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'markets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marketsForKeys', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'numMarkets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalDebt', data: BytesLike): Result;
 
   events: {};
 }
@@ -106,9 +85,7 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -147,10 +124,7 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
 
   allMarkets(overrides?: CallOverrides): Promise<string[]>;
 
-  marketForKey(
-    marketKey: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  marketForKey(marketKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   markets(
     index: PromiseOrValue<BigNumberish>,
@@ -174,10 +148,7 @@ export interface FuturesMarketManagerAbiTypes extends BaseContract {
 
     allMarkets(overrides?: CallOverrides): Promise<string[]>;
 
-    marketForKey(
-      marketKey: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    marketForKey(marketKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     markets(
       index: PromiseOrValue<BigNumberish>,

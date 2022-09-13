@@ -12,185 +12,150 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface RewardEscrowV2AbiTypesInterface extends utils.Interface {
   functions: {
-    "acceptOwnership()": FunctionFragment;
-    "accountMergingDuration()": FunctionFragment;
-    "accountMergingIsOpen()": FunctionFragment;
-    "accountMergingStartTime()": FunctionFragment;
-    "accountVestingEntryIDs(address,uint256)": FunctionFragment;
-    "appendVestingEntry(address,uint256,uint256)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "burnForMigration(address,uint256[])": FunctionFragment;
-    "createEscrowEntry(address,uint256,uint256)": FunctionFragment;
-    "getAccountVestingEntryIDs(address,uint256,uint256)": FunctionFragment;
-    "getVestingEntry(address,uint256)": FunctionFragment;
-    "getVestingEntryClaimable(address,uint256)": FunctionFragment;
-    "getVestingQuantity(address,uint256[])": FunctionFragment;
-    "getVestingSchedules(address,uint256,uint256)": FunctionFragment;
-    "importVestingEntries(address,uint256,(uint64,uint256)[])": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "maxAccountMergingDuration()": FunctionFragment;
-    "max_duration()": FunctionFragment;
-    "mergeAccount(address,uint256[])": FunctionFragment;
-    "migrateAccountEscrowBalances(address[],uint256[],uint256[])": FunctionFragment;
-    "migrateVestingSchedule(address)": FunctionFragment;
-    "nextEntryId()": FunctionFragment;
-    "nominateAccountToMerge(address)": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "nominatedReceiver(address)": FunctionFragment;
-    "numVestingEntries(address)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "setAccountMergingDuration(uint256)": FunctionFragment;
-    "setMaxAccountMergingWindow(uint256)": FunctionFragment;
-    "setMaxEscrowDuration(uint256)": FunctionFragment;
-    "setupExpiryTime()": FunctionFragment;
-    "startMergingWindow()": FunctionFragment;
-    "totalEscrowedAccountBalance(address)": FunctionFragment;
-    "totalEscrowedBalance()": FunctionFragment;
-    "totalVestedAccountBalance(address)": FunctionFragment;
-    "vest(uint256[])": FunctionFragment;
-    "vestingSchedules(address,uint256)": FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'accountMergingDuration()': FunctionFragment;
+    'accountMergingIsOpen()': FunctionFragment;
+    'accountMergingStartTime()': FunctionFragment;
+    'accountVestingEntryIDs(address,uint256)': FunctionFragment;
+    'appendVestingEntry(address,uint256,uint256)': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'burnForMigration(address,uint256[])': FunctionFragment;
+    'createEscrowEntry(address,uint256,uint256)': FunctionFragment;
+    'getAccountVestingEntryIDs(address,uint256,uint256)': FunctionFragment;
+    'getVestingEntry(address,uint256)': FunctionFragment;
+    'getVestingEntryClaimable(address,uint256)': FunctionFragment;
+    'getVestingQuantity(address,uint256[])': FunctionFragment;
+    'getVestingSchedules(address,uint256,uint256)': FunctionFragment;
+    'importVestingEntries(address,uint256,(uint64,uint256)[])': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'maxAccountMergingDuration()': FunctionFragment;
+    'max_duration()': FunctionFragment;
+    'mergeAccount(address,uint256[])': FunctionFragment;
+    'migrateAccountEscrowBalances(address[],uint256[],uint256[])': FunctionFragment;
+    'migrateVestingSchedule(address)': FunctionFragment;
+    'nextEntryId()': FunctionFragment;
+    'nominateAccountToMerge(address)': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'nominatedReceiver(address)': FunctionFragment;
+    'numVestingEntries(address)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'setAccountMergingDuration(uint256)': FunctionFragment;
+    'setMaxAccountMergingWindow(uint256)': FunctionFragment;
+    'setMaxEscrowDuration(uint256)': FunctionFragment;
+    'setupExpiryTime()': FunctionFragment;
+    'startMergingWindow()': FunctionFragment;
+    'totalEscrowedAccountBalance(address)': FunctionFragment;
+    'totalEscrowedBalance()': FunctionFragment;
+    'totalVestedAccountBalance(address)': FunctionFragment;
+    'vest(uint256[])': FunctionFragment;
+    'vestingSchedules(address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptOwnership"
-      | "accountMergingDuration"
-      | "accountMergingIsOpen"
-      | "accountMergingStartTime"
-      | "accountVestingEntryIDs"
-      | "appendVestingEntry"
-      | "balanceOf"
-      | "burnForMigration"
-      | "createEscrowEntry"
-      | "getAccountVestingEntryIDs"
-      | "getVestingEntry"
-      | "getVestingEntryClaimable"
-      | "getVestingQuantity"
-      | "getVestingSchedules"
-      | "importVestingEntries"
-      | "isResolverCached"
-      | "maxAccountMergingDuration"
-      | "max_duration"
-      | "mergeAccount"
-      | "migrateAccountEscrowBalances"
-      | "migrateVestingSchedule"
-      | "nextEntryId"
-      | "nominateAccountToMerge"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "nominatedReceiver"
-      | "numVestingEntries"
-      | "owner"
-      | "rebuildCache"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "setAccountMergingDuration"
-      | "setMaxAccountMergingWindow"
-      | "setMaxEscrowDuration"
-      | "setupExpiryTime"
-      | "startMergingWindow"
-      | "totalEscrowedAccountBalance"
-      | "totalEscrowedBalance"
-      | "totalVestedAccountBalance"
-      | "vest"
-      | "vestingSchedules"
+      | 'acceptOwnership'
+      | 'accountMergingDuration'
+      | 'accountMergingIsOpen'
+      | 'accountMergingStartTime'
+      | 'accountVestingEntryIDs'
+      | 'appendVestingEntry'
+      | 'balanceOf'
+      | 'burnForMigration'
+      | 'createEscrowEntry'
+      | 'getAccountVestingEntryIDs'
+      | 'getVestingEntry'
+      | 'getVestingEntryClaimable'
+      | 'getVestingQuantity'
+      | 'getVestingSchedules'
+      | 'importVestingEntries'
+      | 'isResolverCached'
+      | 'maxAccountMergingDuration'
+      | 'max_duration'
+      | 'mergeAccount'
+      | 'migrateAccountEscrowBalances'
+      | 'migrateVestingSchedule'
+      | 'nextEntryId'
+      | 'nominateAccountToMerge'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'nominatedReceiver'
+      | 'numVestingEntries'
+      | 'owner'
+      | 'rebuildCache'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'setAccountMergingDuration'
+      | 'setMaxAccountMergingWindow'
+      | 'setMaxEscrowDuration'
+      | 'setupExpiryTime'
+      | 'startMergingWindow'
+      | 'totalEscrowedAccountBalance'
+      | 'totalEscrowedBalance'
+      | 'totalVestedAccountBalance'
+      | 'vest'
+      | 'vestingSchedules'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'accountMergingDuration', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'accountMergingIsOpen', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'accountMergingStartTime', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "accountMergingDuration",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "accountMergingIsOpen",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "accountMergingStartTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "accountVestingEntryIDs",
+    functionFragment: 'accountVestingEntryIDs',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "appendVestingEntry",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'appendVestingEntry',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "burnForMigration",
+    functionFragment: 'burnForMigration',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "createEscrowEntry",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'createEscrowEntry',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getAccountVestingEntryIDs",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'getAccountVestingEntryIDs',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getVestingEntry",
+    functionFragment: 'getVestingEntry',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getVestingEntryClaimable",
+    functionFragment: 'getVestingEntryClaimable',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getVestingQuantity",
+    functionFragment: 'getVestingQuantity',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "getVestingSchedules",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'getVestingSchedules',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "importVestingEntries",
+    functionFragment: 'importVestingEntries',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
@@ -200,24 +165,15 @@ export interface RewardEscrowV2AbiTypesInterface extends utils.Interface {
       }[]
     ]
   ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'maxAccountMergingDuration', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'max_duration', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "maxAccountMergingDuration",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "max_duration",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mergeAccount",
+    functionFragment: 'mergeAccount',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "migrateAccountEscrowBalances",
+    functionFragment: 'migrateAccountEscrowBalances',
     values: [
       PromiseOrValue<string>[],
       PromiseOrValue<BigNumberish>[],
@@ -225,266 +181,127 @@ export interface RewardEscrowV2AbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "migrateVestingSchedule",
+    functionFragment: 'migrateVestingSchedule',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: 'nextEntryId', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'nominateAccountToMerge',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "nextEntryId",
-    values?: undefined
+    functionFragment: 'nominateNewOwner',
+    values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominateAccountToMerge",
+    functionFragment: 'nominatedReceiver',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'numVestingEntries',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nominatedReceiver",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "numVestingEntries",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setAccountMergingDuration",
+    functionFragment: 'setAccountMergingDuration',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMaxAccountMergingWindow",
+    functionFragment: 'setMaxAccountMergingWindow',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMaxEscrowDuration",
+    functionFragment: 'setMaxEscrowDuration',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'setupExpiryTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'startMergingWindow', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "setupExpiryTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "startMergingWindow",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalEscrowedAccountBalance",
+    functionFragment: 'totalEscrowedAccountBalance',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'totalEscrowedBalance', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "totalEscrowedBalance",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalVestedAccountBalance",
+    functionFragment: 'totalVestedAccountBalance',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'vest', values: [PromiseOrValue<BigNumberish>[]]): string;
   encodeFunctionData(
-    functionFragment: "vest",
-    values: [PromiseOrValue<BigNumberish>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "vestingSchedules",
+    functionFragment: 'vestingSchedules',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "accountMergingDuration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "accountMergingIsOpen",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "accountMergingStartTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "accountVestingEntryIDs",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "appendVestingEntry",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "burnForMigration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "createEscrowEntry",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAccountVestingEntryIDs",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getVestingEntry",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getVestingEntryClaimable",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getVestingQuantity",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getVestingSchedules",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "importVestingEntries",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "maxAccountMergingDuration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "max_duration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "mergeAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "migrateAccountEscrowBalances",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "migrateVestingSchedule",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nextEntryId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateAccountToMerge",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedReceiver",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "numVestingEntries",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setAccountMergingDuration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaxAccountMergingWindow",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaxEscrowDuration",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setupExpiryTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "startMergingWindow",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalEscrowedAccountBalance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalEscrowedBalance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalVestedAccountBalance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "vest", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "vestingSchedules",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accountMergingDuration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accountMergingIsOpen', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accountMergingStartTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accountVestingEntryIDs', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'appendVestingEntry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnForMigration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'createEscrowEntry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAccountVestingEntryIDs', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getVestingEntry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getVestingEntryClaimable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getVestingQuantity', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getVestingSchedules', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'importVestingEntries', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxAccountMergingDuration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'max_duration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mergeAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'migrateAccountEscrowBalances', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'migrateVestingSchedule', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nextEntryId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateAccountToMerge', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedReceiver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'numVestingEntries', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setAccountMergingDuration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaxAccountMergingWindow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaxEscrowDuration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setupExpiryTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'startMergingWindow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalEscrowedAccountBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalEscrowedBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalVestedAccountBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'vest', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'vestingSchedules', data: BytesLike): Result;
 
   events: {
-    "AccountMerged(address,address,uint256,uint256[],uint256)": EventFragment;
-    "AccountMergingDurationUpdated(uint256)": EventFragment;
-    "AccountMergingStarted(uint256,uint256)": EventFragment;
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "MaxAccountMergingDurationUpdated(uint256)": EventFragment;
-    "MaxEscrowDurationUpdated(uint256)": EventFragment;
-    "NominateAccountToMerge(address,address)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
-    "Vested(address,uint256,uint256)": EventFragment;
-    "VestingEntryCreated(address,uint256,uint256,uint256,uint256)": EventFragment;
+    'AccountMerged(address,address,uint256,uint256[],uint256)': EventFragment;
+    'AccountMergingDurationUpdated(uint256)': EventFragment;
+    'AccountMergingStarted(uint256,uint256)': EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'MaxAccountMergingDurationUpdated(uint256)': EventFragment;
+    'MaxEscrowDurationUpdated(uint256)': EventFragment;
+    'NominateAccountToMerge(address,address)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
+    'Vested(address,uint256,uint256)': EventFragment;
+    'VestingEntryCreated(address,uint256,uint256,uint256,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AccountMerged"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "AccountMergingDurationUpdated"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AccountMergingStarted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "MaxAccountMergingDurationUpdated"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MaxEscrowDurationUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NominateAccountToMerge"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Vested"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "VestingEntryCreated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AccountMerged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AccountMergingDurationUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AccountMergingStarted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MaxAccountMergingDurationUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MaxEscrowDurationUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'NominateAccountToMerge'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Vested'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'VestingEntryCreated'): EventFragment;
 }
 
 export interface AccountMergedEventObject {
@@ -521,17 +338,13 @@ export type AccountMergingStartedEvent = TypedEvent<
   AccountMergingStartedEventObject
 >;
 
-export type AccountMergingStartedEventFilter =
-  TypedEventFilter<AccountMergingStartedEvent>;
+export type AccountMergingStartedEventFilter = TypedEventFilter<AccountMergingStartedEvent>;
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -554,8 +367,7 @@ export type MaxEscrowDurationUpdatedEvent = TypedEvent<
   MaxEscrowDurationUpdatedEventObject
 >;
 
-export type MaxEscrowDurationUpdatedEventFilter =
-  TypedEventFilter<MaxEscrowDurationUpdatedEvent>;
+export type MaxEscrowDurationUpdatedEventFilter = TypedEventFilter<MaxEscrowDurationUpdatedEvent>;
 
 export interface NominateAccountToMergeEventObject {
   account: string;
@@ -566,27 +378,20 @@ export type NominateAccountToMergeEvent = TypedEvent<
   NominateAccountToMergeEventObject
 >;
 
-export type NominateAccountToMergeEventFilter =
-  TypedEventFilter<NominateAccountToMergeEvent>;
+export type NominateAccountToMergeEventFilter = TypedEventFilter<NominateAccountToMergeEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -595,10 +400,7 @@ export interface VestedEventObject {
   time: BigNumber;
   value: BigNumber;
 }
-export type VestedEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  VestedEventObject
->;
+export type VestedEvent = TypedEvent<[string, BigNumber, BigNumber], VestedEventObject>;
 
 export type VestedEventFilter = TypedEventFilter<VestedEvent>;
 
@@ -614,8 +416,7 @@ export type VestingEntryCreatedEvent = TypedEvent<
   VestingEntryCreatedEventObject
 >;
 
-export type VestingEntryCreatedEventFilter =
-  TypedEventFilter<VestingEntryCreatedEvent>;
+export type VestingEntryCreatedEventFilter = TypedEventFilter<VestingEntryCreatedEvent>;
 
 export interface RewardEscrowV2AbiTypes extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -634,9 +435,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -667,10 +466,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     burnForMigration(
       arg0: PromiseOrValue<string>,
@@ -696,9 +492,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       account: PromiseOrValue<string>,
       entryID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }>;
 
     getVestingEntryClaimable(
       account: PromiseOrValue<string>,
@@ -772,10 +566,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
 
     nominatedOwner(overrides?: CallOverrides): Promise<[string]>;
 
-    nominatedReceiver(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    nominatedReceiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     numVestingEntries(
       account: PromiseOrValue<string>,
@@ -836,9 +627,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }>;
   };
 
   acceptOwnership(
@@ -864,10 +653,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  balanceOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   burnForMigration(
     arg0: PromiseOrValue<string>,
@@ -893,9 +679,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
     account: PromiseOrValue<string>,
     entryID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }
-  >;
+  ): Promise<[BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }>;
 
   getVestingEntryClaimable(
     account: PromiseOrValue<string>,
@@ -967,15 +751,9 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
 
   nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
-  nominatedReceiver(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  nominatedReceiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  numVestingEntries(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  numVestingEntries(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -1029,9 +807,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
     arg0: PromiseOrValue<string>,
     arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }
-  >;
+  ): Promise<[BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }>;
 
   callStatic: {
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
@@ -1055,21 +831,14 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     burnForMigration(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<
-      [
-        BigNumber,
-        [BigNumber, BigNumber] &
-          { endTime: BigNumber; escrowAmount: BigNumber }[]
-      ]
+      [BigNumber, [BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }[]]
     >;
 
     createEscrowEntry(
@@ -1090,9 +859,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       account: PromiseOrValue<string>,
       entryID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }>;
 
     getVestingEntryClaimable(
       account: PromiseOrValue<string>,
@@ -1145,10 +912,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    migrateVestingSchedule(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    migrateVestingSchedule(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nextEntryId(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1157,17 +921,11 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
-    nominatedReceiver(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    nominatedReceiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     numVestingEntries(
       account: PromiseOrValue<string>,
@@ -1213,22 +971,17 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    vest(
-      entryIDs: PromiseOrValue<BigNumberish>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    vest(entryIDs: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
     vestingSchedules(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { endTime: BigNumber; escrowAmount: BigNumber }>;
   };
 
   filters: {
-    "AccountMerged(address,address,uint256,uint256[],uint256)"(
+    'AccountMerged(address,address,uint256,uint256[],uint256)'(
       accountToMerge?: PromiseOrValue<string> | null,
       destinationAddress?: null,
       escrowAmountMerged?: null,
@@ -1243,43 +996,31 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       time?: null
     ): AccountMergedEventFilter;
 
-    "AccountMergingDurationUpdated(uint256)"(
+    'AccountMergingDurationUpdated(uint256)'(
       newDuration?: null
     ): AccountMergingDurationUpdatedEventFilter;
-    AccountMergingDurationUpdated(
-      newDuration?: null
-    ): AccountMergingDurationUpdatedEventFilter;
+    AccountMergingDurationUpdated(newDuration?: null): AccountMergingDurationUpdatedEventFilter;
 
-    "AccountMergingStarted(uint256,uint256)"(
+    'AccountMergingStarted(uint256,uint256)'(
       time?: null,
       endTime?: null
     ): AccountMergingStartedEventFilter;
-    AccountMergingStarted(
-      time?: null,
-      endTime?: null
-    ): AccountMergingStartedEventFilter;
+    AccountMergingStarted(time?: null, endTime?: null): AccountMergingStartedEventFilter;
 
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "MaxAccountMergingDurationUpdated(uint256)"(
+    'MaxAccountMergingDurationUpdated(uint256)'(
       newDuration?: null
     ): MaxAccountMergingDurationUpdatedEventFilter;
     MaxAccountMergingDurationUpdated(
       newDuration?: null
     ): MaxAccountMergingDurationUpdatedEventFilter;
 
-    "MaxEscrowDurationUpdated(uint256)"(
-      newDuration?: null
-    ): MaxEscrowDurationUpdatedEventFilter;
-    MaxEscrowDurationUpdated(
-      newDuration?: null
-    ): MaxEscrowDurationUpdatedEventFilter;
+    'MaxEscrowDurationUpdated(uint256)'(newDuration?: null): MaxEscrowDurationUpdatedEventFilter;
+    MaxEscrowDurationUpdated(newDuration?: null): MaxEscrowDurationUpdatedEventFilter;
 
-    "NominateAccountToMerge(address,address)"(
+    'NominateAccountToMerge(address,address)'(
       account?: PromiseOrValue<string> | null,
       destination?: null
     ): NominateAccountToMergeEventFilter;
@@ -1288,16 +1029,13 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       destination?: null
     ): NominateAccountToMergeEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
 
-    "Vested(address,uint256,uint256)"(
+    'Vested(address,uint256,uint256)'(
       beneficiary?: PromiseOrValue<string> | null,
       time?: null,
       value?: null
@@ -1308,7 +1046,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       value?: null
     ): VestedEventFilter;
 
-    "VestingEntryCreated(address,uint256,uint256,uint256,uint256)"(
+    'VestingEntryCreated(address,uint256,uint256,uint256,uint256)'(
       beneficiary?: PromiseOrValue<string> | null,
       time?: null,
       value?: null,
@@ -1325,9 +1063,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
   };
 
   estimateGas: {
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     accountMergingDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1348,10 +1084,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     burnForMigration(
       arg0: PromiseOrValue<string>,
@@ -1446,10 +1179,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
 
     nominatedOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominatedReceiver(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    nominatedReceiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     numVestingEntries(
       account: PromiseOrValue<string>,
@@ -1458,9 +1188,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1516,17 +1244,11 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    accountMergingDuration(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    accountMergingDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    accountMergingIsOpen(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    accountMergingIsOpen(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    accountMergingStartTime(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    accountMergingStartTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     accountVestingEntryIDs(
       arg0: PromiseOrValue<string>,
@@ -1603,9 +1325,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
 
     isResolverCached(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxAccountMergingDuration(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    maxAccountMergingDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     max_duration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1659,9 +1379,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setAccountMergingDuration(
       duration: PromiseOrValue<BigNumberish>,
@@ -1689,9 +1407,7 @@ export interface RewardEscrowV2AbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    totalEscrowedBalance(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    totalEscrowedBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalVestedAccountBalance(
       arg0: PromiseOrValue<string>,

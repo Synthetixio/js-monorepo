@@ -12,89 +12,79 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "./common";
+} from './common';
 
 export interface ExchangerAbiTypesInterface extends utils.Interface {
   functions: {
-    "CONTRACT_NAME()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
-    "calculateAmountAfterSettlement(address,bytes32,uint256,uint256)": FunctionFragment;
-    "dynamicFeeRateForExchange(bytes32,bytes32)": FunctionFragment;
-    "exchange(address,address,bytes32,uint256,bytes32,address,bool,address,bytes32)": FunctionFragment;
-    "exchangeAtomically(address,bytes32,uint256,bytes32,address,bytes32,uint256)": FunctionFragment;
-    "feeRateForExchange(bytes32,bytes32)": FunctionFragment;
-    "getAmountsForExchange(uint256,bytes32,bytes32)": FunctionFragment;
-    "hasWaitingPeriodOrSettlementOwing(address,bytes32)": FunctionFragment;
-    "isResolverCached()": FunctionFragment;
-    "isSynthRateInvalid(bytes32)": FunctionFragment;
-    "lastExchangeRate(bytes32)": FunctionFragment;
-    "maxSecsLeftInWaitingPeriod(address,bytes32)": FunctionFragment;
-    "nominateNewOwner(address)": FunctionFragment;
-    "nominatedOwner()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "priceDeviationThresholdFactor()": FunctionFragment;
-    "rebuildCache()": FunctionFragment;
-    "resolver()": FunctionFragment;
-    "resolverAddressesRequired()": FunctionFragment;
-    "settle(address,bytes32)": FunctionFragment;
-    "settlementOwing(address,bytes32)": FunctionFragment;
-    "suspendSynthWithInvalidRate(bytes32)": FunctionFragment;
-    "tradingRewardsEnabled()": FunctionFragment;
-    "waitingPeriodSecs()": FunctionFragment;
+    'CONTRACT_NAME()': FunctionFragment;
+    'acceptOwnership()': FunctionFragment;
+    'calculateAmountAfterSettlement(address,bytes32,uint256,uint256)': FunctionFragment;
+    'dynamicFeeRateForExchange(bytes32,bytes32)': FunctionFragment;
+    'exchange(address,address,bytes32,uint256,bytes32,address,bool,address,bytes32)': FunctionFragment;
+    'exchangeAtomically(address,bytes32,uint256,bytes32,address,bytes32,uint256)': FunctionFragment;
+    'feeRateForExchange(bytes32,bytes32)': FunctionFragment;
+    'getAmountsForExchange(uint256,bytes32,bytes32)': FunctionFragment;
+    'hasWaitingPeriodOrSettlementOwing(address,bytes32)': FunctionFragment;
+    'isResolverCached()': FunctionFragment;
+    'isSynthRateInvalid(bytes32)': FunctionFragment;
+    'lastExchangeRate(bytes32)': FunctionFragment;
+    'maxSecsLeftInWaitingPeriod(address,bytes32)': FunctionFragment;
+    'nominateNewOwner(address)': FunctionFragment;
+    'nominatedOwner()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'priceDeviationThresholdFactor()': FunctionFragment;
+    'rebuildCache()': FunctionFragment;
+    'resolver()': FunctionFragment;
+    'resolverAddressesRequired()': FunctionFragment;
+    'settle(address,bytes32)': FunctionFragment;
+    'settlementOwing(address,bytes32)': FunctionFragment;
+    'suspendSynthWithInvalidRate(bytes32)': FunctionFragment;
+    'tradingRewardsEnabled()': FunctionFragment;
+    'waitingPeriodSecs()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "CONTRACT_NAME"
-      | "acceptOwnership"
-      | "calculateAmountAfterSettlement"
-      | "dynamicFeeRateForExchange"
-      | "exchange"
-      | "exchangeAtomically"
-      | "feeRateForExchange"
-      | "getAmountsForExchange"
-      | "hasWaitingPeriodOrSettlementOwing"
-      | "isResolverCached"
-      | "isSynthRateInvalid"
-      | "lastExchangeRate"
-      | "maxSecsLeftInWaitingPeriod"
-      | "nominateNewOwner"
-      | "nominatedOwner"
-      | "owner"
-      | "priceDeviationThresholdFactor"
-      | "rebuildCache"
-      | "resolver"
-      | "resolverAddressesRequired"
-      | "settle"
-      | "settlementOwing"
-      | "suspendSynthWithInvalidRate"
-      | "tradingRewardsEnabled"
-      | "waitingPeriodSecs"
+      | 'CONTRACT_NAME'
+      | 'acceptOwnership'
+      | 'calculateAmountAfterSettlement'
+      | 'dynamicFeeRateForExchange'
+      | 'exchange'
+      | 'exchangeAtomically'
+      | 'feeRateForExchange'
+      | 'getAmountsForExchange'
+      | 'hasWaitingPeriodOrSettlementOwing'
+      | 'isResolverCached'
+      | 'isSynthRateInvalid'
+      | 'lastExchangeRate'
+      | 'maxSecsLeftInWaitingPeriod'
+      | 'nominateNewOwner'
+      | 'nominatedOwner'
+      | 'owner'
+      | 'priceDeviationThresholdFactor'
+      | 'rebuildCache'
+      | 'resolver'
+      | 'resolverAddressesRequired'
+      | 'settle'
+      | 'settlementOwing'
+      | 'suspendSynthWithInvalidRate'
+      | 'tradingRewardsEnabled'
+      | 'waitingPeriodSecs'
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "CONTRACT_NAME",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "calculateAmountAfterSettlement",
+    functionFragment: 'calculateAmountAfterSettlement',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BytesLike>,
@@ -103,11 +93,11 @@ export interface ExchangerAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "dynamicFeeRateForExchange",
+    functionFragment: 'dynamicFeeRateForExchange',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "exchange",
+    functionFragment: 'exchange',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
@@ -121,7 +111,7 @@ export interface ExchangerAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "exchangeAtomically",
+    functionFragment: 'exchangeAtomically',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BytesLike>,
@@ -133,192 +123,104 @@ export interface ExchangerAbiTypesInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "feeRateForExchange",
+    functionFragment: 'feeRateForExchange',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getAmountsForExchange",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    functionFragment: 'getAmountsForExchange',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "hasWaitingPeriodOrSettlementOwing",
+    functionFragment: 'hasWaitingPeriodOrSettlementOwing',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "isResolverCached",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isSynthRateInvalid",
+    functionFragment: 'isSynthRateInvalid',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "lastExchangeRate",
+    functionFragment: 'lastExchangeRate',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "maxSecsLeftInWaitingPeriod",
+    functionFragment: 'maxSecsLeftInWaitingPeriod',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "nominateNewOwner",
+    functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'priceDeviationThresholdFactor', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "nominatedOwner",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "priceDeviationThresholdFactor",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rebuildCache",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "resolver", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "resolverAddressesRequired",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "settle",
+    functionFragment: 'settle',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "settlementOwing",
+    functionFragment: 'settlementOwing',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "suspendSynthWithInvalidRate",
+    functionFragment: 'suspendSynthWithInvalidRate',
     values: [PromiseOrValue<BytesLike>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "tradingRewardsEnabled",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "waitingPeriodSecs",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'tradingRewardsEnabled', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'waitingPeriodSecs', values?: undefined): string;
 
+  decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'calculateAmountAfterSettlement', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'dynamicFeeRateForExchange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exchangeAtomically', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'feeRateForExchange', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAmountsForExchange', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "CONTRACT_NAME",
+    functionFragment: 'hasWaitingPeriodOrSettlementOwing',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "calculateAmountAfterSettlement",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "dynamicFeeRateForExchange",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "exchange", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "exchangeAtomically",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "feeRateForExchange",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAmountsForExchange",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "hasWaitingPeriodOrSettlementOwing",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isResolverCached",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isSynthRateInvalid",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastExchangeRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "maxSecsLeftInWaitingPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominateNewOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nominatedOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "priceDeviationThresholdFactor",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rebuildCache",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "resolver", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "resolverAddressesRequired",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "settle", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "settlementOwing",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "suspendSynthWithInvalidRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "tradingRewardsEnabled",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "waitingPeriodSecs",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isSynthRateInvalid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastExchangeRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxSecsLeftInWaitingPeriod', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'priceDeviationThresholdFactor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'settle', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'settlementOwing', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'suspendSynthWithInvalidRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'tradingRewardsEnabled', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'waitingPeriodSecs', data: BytesLike): Result;
 
   events: {
-    "CacheUpdated(bytes32,address)": EventFragment;
-    "ExchangeEntryAppended(address,bytes32,uint256,bytes32,uint256,uint256,uint256,uint256)": EventFragment;
-    "ExchangeEntrySettled(address,bytes32,uint256,bytes32,uint256,uint256,uint256,uint256,uint256)": EventFragment;
-    "OwnerChanged(address,address)": EventFragment;
-    "OwnerNominated(address)": EventFragment;
+    'CacheUpdated(bytes32,address)': EventFragment;
+    'ExchangeEntryAppended(address,bytes32,uint256,bytes32,uint256,uint256,uint256,uint256)': EventFragment;
+    'ExchangeEntrySettled(address,bytes32,uint256,bytes32,uint256,uint256,uint256,uint256,uint256)': EventFragment;
+    'OwnerChanged(address,address)': EventFragment;
+    'OwnerNominated(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CacheUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ExchangeEntryAppended"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ExchangeEntrySettled"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerNominated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ExchangeEntryAppended'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ExchangeEntrySettled'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
 }
 
 export interface CacheUpdatedEventObject {
   name: string;
   destination: string;
 }
-export type CacheUpdatedEvent = TypedEvent<
-  [string, string],
-  CacheUpdatedEventObject
->;
+export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
 
@@ -333,21 +235,11 @@ export interface ExchangeEntryAppendedEventObject {
   roundIdForDest: BigNumber;
 }
 export type ExchangeEntryAppendedEvent = TypedEvent<
-  [
-    string,
-    string,
-    BigNumber,
-    string,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber
-  ],
+  [string, string, BigNumber, string, BigNumber, BigNumber, BigNumber, BigNumber],
   ExchangeEntryAppendedEventObject
 >;
 
-export type ExchangeEntryAppendedEventFilter =
-  TypedEventFilter<ExchangeEntryAppendedEvent>;
+export type ExchangeEntryAppendedEventFilter = TypedEventFilter<ExchangeEntryAppendedEvent>;
 
 export interface ExchangeEntrySettledEventObject {
   from: string;
@@ -361,41 +253,24 @@ export interface ExchangeEntrySettledEventObject {
   exchangeTimestamp: BigNumber;
 }
 export type ExchangeEntrySettledEvent = TypedEvent<
-  [
-    string,
-    string,
-    BigNumber,
-    string,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber
-  ],
+  [string, string, BigNumber, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
   ExchangeEntrySettledEventObject
 >;
 
-export type ExchangeEntrySettledEventFilter =
-  TypedEventFilter<ExchangeEntrySettledEvent>;
+export type ExchangeEntrySettledEventFilter = TypedEventFilter<ExchangeEntrySettledEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
-  [string, string],
-  OwnerChangedEventObject
->;
+export type OwnerChangedEvent = TypedEvent<[string, string], OwnerChangedEventObject>;
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
 export interface OwnerNominatedEventObject {
   newOwner: string;
 }
-export type OwnerNominatedEvent = TypedEvent<
-  [string],
-  OwnerNominatedEventObject
->;
+export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject>;
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
@@ -416,9 +291,7 @@ export interface ExchangerAbiTypes extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -444,9 +317,7 @@ export interface ExchangerAbiTypes extends BaseContract {
       sourceCurrencyKey: PromiseOrValue<BytesLike>,
       destinationCurrencyKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { feeRate: BigNumber; tooVolatile: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { feeRate: BigNumber; tooVolatile: boolean }>;
 
     exchange(
       exchangeForAddress: PromiseOrValue<string>,
@@ -524,9 +395,7 @@ export interface ExchangerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    priceDeviationThresholdFactor(
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    priceDeviationThresholdFactor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     rebuildCache(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -584,9 +453,7 @@ export interface ExchangerAbiTypes extends BaseContract {
     sourceCurrencyKey: PromiseOrValue<BytesLike>,
     destinationCurrencyKey: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, boolean] & { feeRate: BigNumber; tooVolatile: boolean }
-  >;
+  ): Promise<[BigNumber, boolean] & { feeRate: BigNumber; tooVolatile: boolean }>;
 
   exchange(
     exchangeForAddress: PromiseOrValue<string>,
@@ -718,9 +585,7 @@ export interface ExchangerAbiTypes extends BaseContract {
       sourceCurrencyKey: PromiseOrValue<BytesLike>,
       destinationCurrencyKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, boolean] & { feeRate: BigNumber; tooVolatile: boolean }
-    >;
+    ): Promise<[BigNumber, boolean] & { feeRate: BigNumber; tooVolatile: boolean }>;
 
     exchange(
       exchangeForAddress: PromiseOrValue<string>,
@@ -733,9 +598,7 @@ export interface ExchangerAbiTypes extends BaseContract {
       rewardAddress: PromiseOrValue<string>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, string] & { amountReceived: BigNumber; vSynth: string }
-    >;
+    ): Promise<[BigNumber, string] & { amountReceived: BigNumber; vSynth: string }>;
 
     exchangeAtomically(
       arg0: PromiseOrValue<string>,
@@ -791,18 +654,13 @@ export interface ExchangerAbiTypes extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    priceDeviationThresholdFactor(
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    priceDeviationThresholdFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
     rebuildCache(overrides?: CallOverrides): Promise<void>;
 
@@ -845,13 +703,10 @@ export interface ExchangerAbiTypes extends BaseContract {
   };
 
   filters: {
-    "CacheUpdated(bytes32,address)"(
-      name?: null,
-      destination?: null
-    ): CacheUpdatedEventFilter;
+    'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
 
-    "ExchangeEntryAppended(address,bytes32,uint256,bytes32,uint256,uint256,uint256,uint256)"(
+    'ExchangeEntryAppended(address,bytes32,uint256,bytes32,uint256,uint256,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       src?: null,
       amount?: null,
@@ -872,7 +727,7 @@ export interface ExchangerAbiTypes extends BaseContract {
       roundIdForDest?: null
     ): ExchangeEntryAppendedEventFilter;
 
-    "ExchangeEntrySettled(address,bytes32,uint256,bytes32,uint256,uint256,uint256,uint256,uint256)"(
+    'ExchangeEntrySettled(address,bytes32,uint256,bytes32,uint256,uint256,uint256,uint256,uint256)'(
       from?: PromiseOrValue<string> | null,
       src?: null,
       amount?: null,
@@ -895,22 +750,17 @@ export interface ExchangerAbiTypes extends BaseContract {
       exchangeTimestamp?: null
     ): ExchangeEntrySettledEventFilter;
 
-    "OwnerChanged(address,address)"(
-      oldOwner?: null,
-      newOwner?: null
-    ): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
-    "OwnerNominated(address)"(newOwner?: null): OwnerNominatedEventFilter;
+    'OwnerNominated(address)'(newOwner?: null): OwnerNominatedEventFilter;
     OwnerNominated(newOwner?: null): OwnerNominatedEventFilter;
   };
 
   estimateGas: {
     CONTRACT_NAME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     calculateAmountAfterSettlement(
       from: PromiseOrValue<string>,
@@ -996,13 +846,9 @@ export interface ExchangerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    priceDeviationThresholdFactor(
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    priceDeviationThresholdFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebuildCache(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1121,9 +967,7 @@ export interface ExchangerAbiTypes extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    priceDeviationThresholdFactor(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    priceDeviationThresholdFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rebuildCache(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1131,9 +975,7 @@ export interface ExchangerAbiTypes extends BaseContract {
 
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     settle(
       from: PromiseOrValue<string>,
@@ -1152,9 +994,7 @@ export interface ExchangerAbiTypes extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    tradingRewardsEnabled(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    tradingRewardsEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     waitingPeriodSecs(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
