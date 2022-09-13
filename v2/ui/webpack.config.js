@@ -6,6 +6,9 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const generate = require('./scripts/minify-synthetix-contract');
 
+// For depcheck to be happy
+require.resolve('webpack-dev-server');
+
 const isProd = process.env.NODE_ENV === 'production';
 
 function optimiseContracts() {

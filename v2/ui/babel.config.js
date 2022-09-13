@@ -1,3 +1,6 @@
+require.resolve('core-js');
+require.resolve('@babel/runtime-corejs3/core-js/date/now');
+
 module.exports = {
   presets: [
     require.resolve('@babel/preset-typescript'),
@@ -32,7 +35,7 @@ module.exports = {
         },
       },
     ],
-    ['@babel/transform-runtime', { corejs: 3 }],
+    [require.resolve('@babel/plugin-transform-runtime'), { corejs: 3 }],
   ],
 
   env: {

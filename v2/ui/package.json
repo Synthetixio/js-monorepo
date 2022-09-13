@@ -22,9 +22,7 @@
     "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v2-ui' run build"
   },
   "dependencies": {
-    "@babel/preset-env": "^7.18.10",
-    "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.18.6",
+    "@babel/runtime-corejs3": "^7.19.0",
     "@chakra-ui/react": "^2.2.8",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
@@ -98,6 +96,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
+    "@babel/plugin-transform-runtime": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
     "@chakra-ui/storybook-addon": "^4.0.4",
     "@mdx-js/react": "^1.6.22",
     "@metamask/providers": "^8.1.1",
@@ -110,7 +112,6 @@
     "@storybook/builder-webpack5": "^6.5.7",
     "@storybook/manager-webpack5": "^6.5.10",
     "@storybook/react": "^6.5.10",
-    "@storybook/testing-library": "^0.0.13",
     "@svgr/webpack": "^6.3.1",
     "@tanstack/react-query-devtools": "^4.3.5",
     "@testing-library/jest-dom": "^5.16.4",
@@ -136,6 +137,7 @@
     "babel-loader": "^8.2.5",
     "babel-plugin-module-resolver": "^4.1.0",
     "buffer": "^6.0.3",
+    "core-js": "3",
     "crypto-browserify": "^3.12.0",
     "eslint": "^8.22.0",
     "ethereum-blockies-base64": "^1.0.2",
@@ -167,8 +169,6 @@
       "tmp"
     ],
     "ignoreMatches": [
-      "@microsoft/eslint-formatter-sarif",
-      "jest-environment-jsdom",
       "assets",
       "components",
       "containers",
@@ -186,21 +186,8 @@
       "tests",
       "translations",
       "utils",
-      "storybook",
-      "@chakra-ui/storybook-addon",
-      "@mdx-js/react",
-      "@storybook/addon-actions",
-      "@storybook/addon-docs",
-      "@storybook/addon-essentials",
-      "@storybook/addon-interactions",
-      "@storybook/addon-links",
-      "@storybook/builder-webpack5",
-      "@storybook/manager-webpack5",
-      "@storybook/testing-library",
       "buffer",
-      "process",
-      "webpack-dev-server",
-      "babel-jest"
+      "process"
     ]
   }
 }
