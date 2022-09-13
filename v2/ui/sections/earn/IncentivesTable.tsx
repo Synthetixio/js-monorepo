@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { CellProps, Row } from 'react-table';
 import styled, { css } from 'styled-components';
 import Countdown from 'react-countdown';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 
 import Connector from 'containers/Connector';
 import Currency from 'components/Currency';
@@ -68,8 +68,8 @@ type IncentivesTableProps = {
 const IncentivesTable: FC<IncentivesTableProps> = ({ data, isLoaded, activeTab }) => {
   const { t } = useTranslation();
   const { selectedPriceCurrency, getPriceAtCurrentRate } = useSelectedPriceCurrency();
-  const router = useRouter();
-  const goToEarn = useCallback(() => router.push(ROUTES.Earn.Home), [router]);
+  const navigate = useNavigate();
+  const goToEarn = useCallback(() => navigate(ROUTES.Earn.Home), [navigate]);
 
   const leftColumns = useMemo(() => {
     return [
@@ -298,7 +298,7 @@ const IncentivesInnerTable: FC<IncentivesInnerTableProps> = ({
   activeTab,
 }) => {
   const { isWalletConnected } = Connector.useContainer();
-  const router = useRouter();
+  const navigate = useNavigate();
 
   return (
     <StyledTable
@@ -311,7 +311,7 @@ const IncentivesInnerTable: FC<IncentivesInnerTableProps> = ({
         if (row.original.externalLink) {
           window.open(row.original.externalLink, '_blank');
         } else {
-          router.push(row.original.route);
+          navigate(row.original.route);
         }
       }}
       isActiveRow={(row: Row<EarnItem>) => row.original.tab === activeTab}

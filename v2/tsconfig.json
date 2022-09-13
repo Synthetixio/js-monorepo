@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -28,16 +28,5 @@
     "**/dist/**"
   ],
 
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "../v1/**/*.ts",
-    "../v1/**/*.tsx",
-    "./ui/next-env.d.ts",
-    "./ui/typings/missing-types.d.ts",
-    "./ui/typings/styled-components.d.ts",
-    "./ui/typings/window.d.ts",
-    "./ui/additional.d.ts",
-    "./ui/next.config.js"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "../v1/**/*.ts", "../v1/**/*.tsx"]
 }

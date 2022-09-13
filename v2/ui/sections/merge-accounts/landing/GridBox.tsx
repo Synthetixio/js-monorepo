@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import media from '@snx-v1/media';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +11,7 @@ const GridBox: FC<{
   const { t } = useTranslation();
 
   return (
-    <Link href={`/merge-accounts/${name}`}>
+    <Link to={`/merge-accounts/${name}`}>
       <GridBoxContainer>
         <GridBoxIcon>
           <Icon>{step}</Icon>

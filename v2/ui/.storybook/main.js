@@ -1,3 +1,18 @@
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const isProd = process.env.NODE_ENV === 'production';
+
+// Make depcheck happy
+require.resolve('storybook');
+require.resolve('@chakra-ui/storybook-addon');
+require.resolve('@mdx-js/react');
+require.resolve('@storybook/addon-actions');
+require.resolve('@storybook/addon-docs');
+require.resolve('@storybook/addon-essentials');
+require.resolve('@storybook/addon-interactions');
+require.resolve('@storybook/addon-links');
+require.resolve('@storybook/builder-webpack5');
+require.resolve('@storybook/manager-webpack5');
+
 module.exports = {
   stories: ['../../**/**/*.stories.tsx'],
 
@@ -15,5 +30,12 @@ module.exports = {
 
   features: {
     emotionAlias: false,
+  },
+
+  webpackFinal: (config) => {
+    if (!isProd) {
+      config.plugins.push(new ReactRefreshWebpackPlugin());
+    }
+    return config;
   },
 };

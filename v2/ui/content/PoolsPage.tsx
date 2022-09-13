@@ -1,6 +1,6 @@
 import StatBox from 'components/StatBox';
 import { BigNumber, utils } from 'ethers';
-import Head from 'next/head';
+import Head from 'react-helmet';
 import { useCallback, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useGetUniswapStakingRewardsAPY } from 'sections/pool/useGetUniswapStakingRewardsAPY';

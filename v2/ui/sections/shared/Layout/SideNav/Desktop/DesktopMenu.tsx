@@ -1,6 +1,7 @@
 import { FC, useState, MouseEvent } from 'react';
 import styled, { css } from 'styled-components';
-import { useRouter } from 'next/router';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 
@@ -10,7 +11,6 @@ import CaretRightIcon from 'assets/svg/app/caret-right-small.svg';
 import ROUTES from 'constants/routes';
 import StakingLogo from 'assets/svg/app/staking-logo.svg';
 import StakingL2Logo from 'assets/svg/app/staking-l2-logo.svg';
-import Link from 'next/link';
 
 import { delegateWalletState } from 'store/wallet';
 import { MENU_LINKS, MENU_LINKS_L2, MENU_LINKS_DELEGATE } from '../../constants';
@@ -21,7 +21,7 @@ import Connector from 'containers/Connector';
 
 const DesktopMenu: FC = () => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const location = useLocation();
   const { isL2 } = Connector.useContainer();
   const delegateWallet = useRecoilValue(delegateWalletState);
   const { showAddOptimism, addOptimismNetwork } = useAddOptimism();
@@ -41,7 +41,7 @@ const DesktopMenu: FC = () => {
   return (
     <div onMouseLeave={(e) => onMouseLeave(e)}>
       <StakingLogoWrap>
-        <Link href={ROUTES.Home}>
+        <Link to={ROUTES.Home}>
           <div>{isL2 ? <StakingL2Logo width="112" /> : <StakingLogo width="112" />}</div>
         </Link>
       </StakingLogoWrap>
@@ -51,17 +51,18 @@ const DesktopMenu: FC = () => {
             if (!subMenu) return;
             setOpenMenu(link);
           };
+
           return (
             <div key={link}>
               <MenuLinkItem
-                onClick={() => router.push(link)}
+                to={link}
                 onMouseEnter={() => onMouseEnter(link)}
                 data-testid={`sidenav-${link}`}
                 isActive={
                   subMenu
-                    ? !!subMenu.find(({ subLink }) => subLink === router.asPath)
-                    : router.asPath === link ||
-                      (link !== ROUTES.Home && router.asPath.includes(link))
+                    ? !!subMenu.find(({ subLink }) => subLink === location.pathname)
+                    : location.pathname === link ||
+                      (link !== ROUTES.Home && location.pathname.includes(link))
                 }
               >
                 <div className="link">
@@ -71,21 +72,16 @@ const DesktopMenu: FC = () => {
               </MenuLinkItem>
               {subMenu && (
                 <DesktopSubMenu i={i} isActive={openMenu === link} key={link}>
-                  {subMenu.map(({ i18nLabel, subLink }, j) => {
-                    const onClick = () => {
-                      router.push(subLink);
-                    };
-                    return (
-                      <SubMenuLinkItem
-                        key={`subMenuLinkItem-${j}`}
-                        isActive={router.asPath === subLink}
-                        data-testid={`sidenav-submenu-${subLink}`}
-                        onClick={onClick}
-                      >
-                        {t(i18nLabel)}
-                      </SubMenuLinkItem>
-                    );
-                  })}
+                  {subMenu.map(({ i18nLabel, subLink }) => (
+                    <SubMenuLinkItem
+                      to={subLink}
+                      key={subLink}
+                      isActive={location.pathname === subLink}
+                      data-testid={`sidenav-submenu-${subLink}`}
+                    >
+                      {t(i18nLabel)}
+                    </SubMenuLinkItem>
+                  ))}
                 </DesktopSubMenu>
               )}
             </div>
@@ -93,6 +89,7 @@ const DesktopMenu: FC = () => {
         })}
         {showAddOptimism && (
           <MenuLinkItem
+            to="#"
             onClick={addOptimismNetwork}
             data-testid="sidenav-switch-to-l2"
             isL2Switcher
@@ -114,7 +111,7 @@ const MenuLinks = styled.div`
   position: relative;
 `;
 
-export const MenuLinkItem = styled.div<{ isActive?: boolean; isL2Switcher?: boolean }>`
+export const MenuLinkItem = styled(Link)<{ isActive?: boolean; isL2Switcher?: boolean }>`
   line-height: 40px;
   padding-bottom: 10px;
   position: relative;

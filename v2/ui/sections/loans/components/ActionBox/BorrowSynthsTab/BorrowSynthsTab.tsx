@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 
 import Connector from 'containers/Connector';
 import GasSelector from 'components/GasSelector';
@@ -54,7 +54,7 @@ const BorrowSynthsTab: FC<BorrowSynthsTabProps> = () => {
   const { synthetixjs, connectWallet, network, isL2, isWalletConnected, walletAddress } =
     Connector.useContainer();
   const [txModalOpen, setTxModalOpen] = useState<boolean>(false);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const { minCRatio } = Loans.useContainer();
   const { useExchangeRatesQuery, useSynthetixTxn, useTokensBalancesQuery } = useSynthetixQueries();
@@ -140,10 +140,10 @@ const BorrowSynthsTab: FC<BorrowSynthsTabProps> = () => {
         setCollateralAmount('0');
         setTxModalOpen(false);
         setIsBorrowing(false);
-        router.push('/loans/list');
+        navigate('/loans/list');
         break;
     }
-  }, [openTransactionStatus, router]);
+  }, [openTransactionStatus, navigate]);
 
   useEffect(() => {
     const newCollateralAssets = getCollateralAsset(debtAsset, isL2);

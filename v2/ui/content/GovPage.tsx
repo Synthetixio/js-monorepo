@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import Head from 'react-helmet';
 import { useTranslation, Trans } from 'react-i18next';
 import styled from 'styled-components';
 import { ExternalLink, LineSpacer } from '@snx-v1/styles';

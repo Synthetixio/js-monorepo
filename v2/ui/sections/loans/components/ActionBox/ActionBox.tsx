@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
+import { useNavigate, useParams } from 'react-router-dom';
 import StructuredTab from 'components/StructuredTab';
 import BorrowSynthsTab from './BorrowSynthsTab/BorrowSynthsTab';
 import ActiveBorrowsTab from './ActiveBorrowsTab/ActiveBorrowsTab';
@@ -9,26 +9,10 @@ type ActionBoxProps = {};
 
 const ActionBox: React.FC<ActionBoxProps> = () => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const navigate = useNavigate();
 
-  const action = router.query.action!;
-  const [currentTab, loanId, loanAction] = useMemo(() => {
-    let currentTab = 'list';
-    let loanType = '';
-    let loanId = '';
-    let loanAction = '';
-
-    if (action) {
-      loanType = action[0];
-    }
-    if (!loanType || loanType === 'new') {
-      currentTab = 'new';
-    } else {
-      loanId = action[1];
-      loanAction = action[2];
-    }
-    return [currentTab, loanId, loanAction];
-  }, [action]);
+  const { action, _loanType, loanId = '', loanAction = '' } = useParams();
+  const currentTab = !action || action === 'new' ? 'new' : 'list';
 
   const tabData = useMemo(
     () => [
@@ -50,7 +34,7 @@ const ActionBox: React.FC<ActionBoxProps> = () => {
     <StructuredTab
       boxPadding={20}
       tabData={tabData}
-      setActiveTab={(key: string) => router.push(`/loans/${key}`)}
+      setActiveTab={(key) => navigate(`/loans/${key}`)}
       activeTab={currentTab}
     />
   );

@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Wei, { wei } from '@synthetixio/wei';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import { delegateWalletState } from 'store/wallet';
@@ -90,7 +90,7 @@ const LiquidationTab: React.FC<LiquidationTabProps> = ({
   const { blockExplorerInstance } = Etherscan.useContainer();
   const { selectedPriceCurrency, getPriceAtCurrentRate } = useSelectedPriceCurrency();
 
-  const router = useRouter();
+  const navigate = useNavigate();
   const [gasPrice, setGasPrice] = useState<GasPrice | undefined>(undefined);
 
   const [txModalOpen, setTxModalOpen] = useState<boolean>(false);
@@ -120,7 +120,7 @@ const LiquidationTab: React.FC<LiquidationTabProps> = ({
     txn.mutate();
   };
 
-  const goToEarn = useCallback(() => router.push(ROUTES.Earn.Home), [router]);
+  const goToEarn = useCallback(() => navigate(ROUTES.Earn.Home), [navigate]);
 
   if (txn.txnStatus === 'pending') {
     return (

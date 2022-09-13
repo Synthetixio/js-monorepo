@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 import { Loan } from 'containers/Loans/types';
 import Loans from 'containers/Loans';
 import Wrapper from './Wrapper';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import ROUTES from 'constants/routes';
 import { getETHToken } from 'contracts/ethToken';
 import { wei } from '@synthetixio/wei';
@@ -15,7 +15,7 @@ type WithdrawProps = {
 };
 
 const Withdraw: React.FC<WithdrawProps> = ({ loan, loanId }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [gasPrice, setGasPrice] = useState<GasPrice | undefined>(undefined);
   const { useSynthetixTxn } = useSynthetixQueries();
 
@@ -60,7 +60,7 @@ const Withdraw: React.FC<WithdrawProps> = ({ loan, loanId }) => {
         await reloadPendingWithdrawals();
         setIsWorking('');
         setTxModalOpen(false);
-        router.push(ROUTES.Loans.List);
+        navigate(ROUTES.Loans.List);
       },
       onError: () => {
         setIsWorking('');

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ethers } from 'ethers';
 import { Loan } from 'containers/Loans/types';
 import Wrapper from './Wrapper';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import ROUTES from 'constants/routes';
 import { SYNTH_DECIMALS } from 'constants/defaults';
 import Connector from 'containers/Connector';
@@ -15,7 +15,7 @@ type RepayProps = {
 };
 
 const Repay: React.FC<RepayProps> = ({ loan, loanId }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [gasPrice, setGasPrice] = useState<GasPrice | undefined>(undefined);
   const { walletAddress } = Connector.useContainer();
   const { useSynthetixTxn } = useSynthetixQueries();
@@ -51,7 +51,7 @@ const Repay: React.FC<RepayProps> = ({ loan, loanId }) => {
       onSuccess: () => {
         setIsWorking('');
         setTxModalOpen(false);
-        router.push(ROUTES.Loans.List);
+        navigate(ROUTES.Loans.List);
       },
       onError: () => {
         setIsWorking('');
