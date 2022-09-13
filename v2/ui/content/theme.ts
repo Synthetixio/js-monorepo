@@ -1,19 +1,99 @@
 import { ChakraTheme, ComponentMultiStyleConfig, ComponentStyleConfig } from '@chakra-ui/react';
 import { theme as chakraTheme } from '@synthetixio/v3-theme';
 import merge from 'lodash/merge';
+import { singleColor, multipleColor } from '../utils/themeUtils';
+
+const Alert: ComponentMultiStyleConfig = {
+  parts: ['title', 'description', 'container', 'icon'],
+  baseStyle: ({ status }) => {
+    return {
+      container: {
+        background: singleColor(status),
+        borderLeft: 'none',
+        borderRadius: 'md',
+      },
+      title: {
+        color: 'black',
+        fontSize: 'md',
+        lineHeight: 'lg',
+      },
+      description: {
+        color: 'black',
+        fontSize: 'md',
+        lineHeight: 'lg',
+      },
+      icon: {
+        color: 'black',
+      },
+    };
+  },
+  variants: {
+    solid: ({ status }) => ({
+      container: {
+        background: multipleColor(status).backgroundColor,
+        borderRadius: 'md',
+        borderColor: multipleColor(status).borderColor,
+        borderWidth: '2px',
+        borderLeft: '2px',
+      },
+      title: {
+        color: 'white',
+      },
+      description: {
+        color: 'white',
+      },
+      icon: {
+        color: multipleColor(status).borderColor,
+      },
+    }),
+    'left-accent': ({ status }) => ({
+      container: {
+        background: multipleColor(status).backgroundColor,
+        borderRadius: 'md',
+        borderLeftColor: multipleColor(status).borderColor,
+        borderLeft: '2px',
+      },
+      title: {
+        color: 'white',
+      },
+      description: {
+        color: 'white',
+      },
+      icon: {
+        color: multipleColor(status).borderColor,
+      },
+    }),
+  },
+};
 
 const Badge: ComponentStyleConfig = {
+  baseStyle: {
+    color: 'cyan.400',
+    bg: 'whiteAlpha.300',
+    fontFamily: 'heading',
+    py: 1,
+    px: 2,
+  },
   variants: {
     mint: {
-      color: 'cyan.400',
-      bg: 'whiteAlpha.300',
-      fontFamily: 'heading',
-      py: 1,
-      px: 2,
       width: '100%',
       textAlign: 'center',
       userSelect: 'none',
       borderRadius: 'base',
+      _hover: {
+        cursor: 'pointer',
+      },
+    },
+    burn: {
+      width: '100%',
+      textAlign: 'center',
+      userSelect: 'none',
+      borderRadius: 'base',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      textTransform: 'capitalize',
+      fontWeight: 'bold',
       _hover: {
         cursor: 'pointer',
       },
@@ -56,6 +136,7 @@ const Progress: ComponentMultiStyleConfig = {
     },
   },
 };
+
 const Button: ComponentStyleConfig = {
   baseStyle: {
     fontWeight: 700,
@@ -204,6 +285,7 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
     Text,
     Stat,
     Badge,
+    Alert,
   },
   styles: {
     global: {

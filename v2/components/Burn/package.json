@@ -1,0 +1,15 @@
+{
+  "name": "@snx-v2/Burn",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.0",
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v2/formatters": "workspace:*",
+    "@snx-v2/icons": "workspace:*",
+    "@storybook/react": "^6.5.10",
+    "@synthetixio/wei": "workspace:*",
+    "react": "^18.2.0",
+    "react-i18next": "^11.18.3"
+  }
+}
