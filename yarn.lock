@@ -7833,11 +7833,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@synthetixio/contracts@workspace:contracts"
   dependencies:
-    "@typechain/ethers-v5": ^10.1.0
+    "@ethersproject/abi": ^5.6.0
+    "@ethersproject/providers": ^5.6.8
+    "@typechain/ethers-v5": ^10.0.0
     ethers: ^5.5.3
     prettier: ^2.7.1
     synthetix: ^2.76.1
-    typechain: ^8.1.0
+    typechain: ^8.0.0
     typescript: ^4.8.2
   languageName: unknown
   linkType: soft
@@ -8557,7 +8559,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typechain/ethers-v5@npm:^10.0.0, @typechain/ethers-v5@npm:^10.1.0":
+"@typechain/ethers-v5@npm:^10.0.0":
   version: 10.1.0
   resolution: "@typechain/ethers-v5@npm:10.1.0"
   dependencies:
@@ -32491,7 +32493,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typechain@npm:^8.0.0, typechain@npm:^8.1.0":
+"typechain@npm:^8.0.0":
   version: 8.1.0
   resolution: "typechain@npm:8.1.0"
   dependencies:

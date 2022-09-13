@@ -27,7 +27,7 @@ async function createTypesFromAbi(targetName, network, abi) {
     filesToProcess: allFiles,
     allFiles,
     outDir: `src/${network}/deployment`,
-    target: 'ethers-v5',
+    target: require.resolve('@typechain/ethers-v5'),
   });
   // We only care about the types so lets remove the factories
   fs.rmSync(`src/${network}/deployment/factories`, { recursive: true, force: true });
