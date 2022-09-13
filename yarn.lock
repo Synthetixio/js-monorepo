@@ -6081,6 +6081,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/Burn@workspace:*, @snx-v2/Burn@workspace:v2/components/Burn":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/Burn@workspace:v2/components/Burn"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/react": ^6.5.10
+    "@synthetixio/wei": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/CRatioHealthCard@workspace:*, @snx-v2/CRatioHealthCard@workspace:v2/components/CRatioHealthCard":
   version: 0.0.0-use.local
   resolution: "@snx-v2/CRatioHealthCard@workspace:v2/components/CRatioHealthCard"
@@ -6164,20 +6178,6 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/icons": "workspace:*"
     "@synthetixio/wei": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@snx-v2/burn@workspace:v2/components/Burn":
-  version: 0.0.0-use.local
-  resolution: "@snx-v2/burn@workspace:v2/components/Burn"
-  dependencies:
-    "@chakra-ui/react": ^2.2.8
-    "@snx-v2/formatters": "workspace:*"
-    "@snx-v2/icons": "workspace:*"
-    "@storybook/react": ^6.5.10
-    "@synthetixio/wei": "workspace:*"
-    react: ^18.2.0
-    react-i18next: ^11.18.3
   languageName: unknown
   linkType: soft
 
@@ -7998,6 +7998,7 @@ __metadata:
     "@snx-v1/styles": "workspace:*"
     "@snx-v2/BalanceBox": "workspace:*"
     "@snx-v2/Banner": "workspace:*"
+    "@snx-v2/Burn": "workspace:*"
     "@snx-v2/CRatioHealthCard": "workspace:*"
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
