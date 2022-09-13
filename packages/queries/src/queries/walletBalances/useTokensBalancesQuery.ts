@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query';
+import { useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { wei } from '@synthetixio/wei';
 import { ERC20Abi } from '../../abis/ERC20';
 import { Contract } from '@ethersproject/contracts';

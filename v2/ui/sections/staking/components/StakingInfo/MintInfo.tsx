@@ -17,7 +17,7 @@ import { delegateWalletState } from 'store/wallet';
 import { parseSafeWei } from 'utils/parse';
 import Connector from 'containers/Connector';
 import { BigNumber } from 'ethers';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import QUERY_KEYS from 'constants/queryKeys';
 
 const MintInfo: FC = () => {

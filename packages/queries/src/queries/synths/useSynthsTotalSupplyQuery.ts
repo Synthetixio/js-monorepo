@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { formatBytes32String, parseBytes32String } from '@ethersproject/strings';
 import { formatEther } from '@ethersproject/units';
 

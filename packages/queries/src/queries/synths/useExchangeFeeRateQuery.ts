@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { BigNumber } from '@ethersproject/bignumber';
 import { formatBytes32String } from '@ethersproject/strings';
 

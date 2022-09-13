@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, FC } from 'react';
 import { isAfter, addSeconds, fromUnixTime, differenceInSeconds } from 'date-fns';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
 import Button from 'components/Button';
@@ -97,7 +97,7 @@ const Wrapper: FC<WrapperProps> = ({
   setTxModalOpen,
 }) => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const navigate = useNavigate();
   const { interactionDelay, minCRatio } = Loans.useContainer();
 
   const [waitETA, setWaitETA] = useState<string>('');
@@ -106,7 +106,6 @@ const Wrapper: FC<WrapperProps> = ({
     ? minCRatio.add(getSafeMinCRatioBuffer(loan.currency, loan.collateralAsset))
     : wei(0);
 
-  const onGoBack = () => router.back();
   const onSetleftColAssetName = () => {};
   const onSetrightColAssetName = () => {};
 
@@ -153,7 +152,7 @@ const Wrapper: FC<WrapperProps> = ({
     <>
       <FormContainer>
         <Header>
-          <IconButton onClick={onGoBack}>
+          <IconButton onClick={() => navigate(-1)}>
             <NavigationBack width="16" />
           </IconButton>
         </Header>

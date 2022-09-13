@@ -1,24 +1,19 @@
 import React, { useMemo } from 'react';
-import { useRouter } from 'next/router';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
 import { SPACE_KEY } from 'constants/snapshot';
-import { PanelType } from 'store/gov';
-
 import { Grid, Col } from 'sections/gov/components/common';
-
 import UnstructuredTab from 'components/UnstructuredTab';
 import CouncilBoard from './List/CouncilBoard';
 import Proposal from './Proposal';
 import List from './List';
 import Create from './Create';
 import ROUTES from 'constants/routes';
-import useGetPanelType from '../hooks/useGetPanelType';
 
 const Panel = () => {
   const { t } = useTranslation();
-  const router = useRouter();
-  const panelType = useGetPanelType();
+  const navigate = useNavigate();
+  const { panel } = useParams();
 
   const proposalsData = useMemo(
     () => ({
@@ -28,26 +23,13 @@ const Panel = () => {
       blue: true,
       key: SPACE_KEY.PROPOSAL,
     }),
-
     [t]
   );
-  switch (panelType) {
-    case PanelType.PROPOSAL:
-      return (
-        <Proposal
-          onBack={() => {
-            router.push(ROUTES.Gov.Home);
-          }}
-        />
-      );
-    case PanelType.CREATE:
-      return (
-        <Create
-          onBack={() => {
-            router.push(ROUTES.Gov.Home);
-          }}
-        />
-      );
+  switch (true) {
+    case panel === 'create':
+      return <Create onBack={() => navigate(ROUTES.Gov.Home)} />;
+    case Boolean(panel):
+      return <Proposal onBack={() => navigate(ROUTES.Gov.Home)} />;
     default:
       return (
         <Grid>

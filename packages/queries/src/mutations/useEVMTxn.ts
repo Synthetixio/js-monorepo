@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { UseMutationOptions, useMutation } from 'react-query';
+import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 
 import Wei, { wei } from '@synthetixio/wei';
 import { BigNumber } from '@ethersproject/bignumber';

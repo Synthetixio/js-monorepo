@@ -1,5 +1,5 @@
-import { FC, useMemo } from 'react';
-import { useRouter } from 'next/router';
+import { FC } from 'react';
+import { useParams } from 'react-router-dom';
 
 import Landing from './landing';
 import Burn from './burn';
@@ -9,29 +9,19 @@ import Connector from 'containers/Connector';
 
 const Index: FC = () => {
   const { isAppReady } = Connector.useContainer();
-  const router = useRouter();
-
-  const activeTab = useMemo(
-    () =>
-      Array.isArray(router.query.action) && router.query.action.length
-        ? router.query.action[0]
-        : null,
-    [router.query.action]
-  );
-
-  return !isAppReady ? null : (
-    <>
-      {activeTab === 'burn' ? (
-        <Burn />
-      ) : activeTab === 'nominate' ? (
-        <Nominate />
-      ) : activeTab === 'merge' ? (
-        <Merge />
-      ) : (
-        <Landing />
-      )}
-    </>
-  );
+  const { action } = useParams();
+  switch (true) {
+    case isAppReady && action === 'burn':
+      return <Burn />;
+    case isAppReady && action === 'nominate':
+      return <Nominate />;
+    case isAppReady && action === 'merge':
+      return <Merge />;
+    case isAppReady:
+      return <Landing />;
+    default:
+      return null;
+  }
 };
 
 export default Index;

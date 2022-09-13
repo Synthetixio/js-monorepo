@@ -1,11 +1,10 @@
-import React from 'react';
 import { Grid, Col } from 'sections/gov/components/common';
 import Content from './Content';
 import Details from './Details';
 import Info from './Info';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { snapshotEndpoint } from 'constants/snapshot';
-import { useRouter } from 'next/router';
+import { useParams } from 'react-router-dom';
 
 type ProposalProps = {
   onBack: Function;
@@ -62,9 +61,7 @@ const useGetProposal = (hash?: string) => {
 };
 
 const Index: React.FC<ProposalProps> = ({ onBack }) => {
-  const router = useRouter();
-
-  const hash = router && router.query.panel ? router.query?.panel[1] : undefined;
+  const { panel: hash } = useParams();
   const proposalQuery = useGetProposal(hash);
   const proposal = proposalQuery.data;
 

@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { wei } from '@synthetixio/wei';
 import { QueryContext } from '../../context';
 import { TokenSaleEscrow, Schedule } from '../../types';

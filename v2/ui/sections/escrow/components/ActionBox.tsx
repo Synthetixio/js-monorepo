@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import StakingRewardsTab from './StakingRewardsTab';
 import { EscrowPanelType } from 'store/escrow';
 import TokenSaleTab from './TokenSaleTab';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 import Connector from 'containers/Connector';
 
@@ -15,7 +15,7 @@ type ActionBoxProps = {
 
 const ActionBox: React.FC<ActionBoxProps> = ({ currentTab }) => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const navigate = useNavigate();
   const { isL2 } = Connector.useContainer();
 
   const theme = useTheme();
@@ -42,7 +42,7 @@ const ActionBox: React.FC<ActionBoxProps> = ({ currentTab }) => {
     <StructuredTab
       boxPadding={20}
       tabData={tabData}
-      setActiveTab={(key) => router.push(`/escrow/${key}`)}
+      setActiveTab={(key) => navigate(`/escrow/${key}`)}
       activeTab={currentTab}
     />
   );

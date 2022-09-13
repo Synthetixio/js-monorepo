@@ -9,9 +9,8 @@ export default function Settings() {
   return (
     <>
       <MenuLinkItem
-        onClick={() => {
-          setSettingsModalOpened(!settingsModalOpened);
-        }}
+        to="#"
+        onClick={() => setSettingsModalOpened(!settingsModalOpened)}
         data-testid="sidenav-settings"
       >
         <div className="link">{t('sidenav.settings')}</div>

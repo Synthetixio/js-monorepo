@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { ethers } from 'ethers';
 
 import QUERY_KEYS from 'constants/queryKeys';

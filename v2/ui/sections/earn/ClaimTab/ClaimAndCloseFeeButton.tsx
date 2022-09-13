@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { StyledButton } from '../common';
 import { Tooltip } from '@snx-v1/styles';
@@ -26,7 +26,7 @@ const ClaimAndCloseFeeButton: React.FC<{
   hasVoted,
 }) => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const navigate = useNavigate();
 
   return (
     <PaddedButtonContainer>
@@ -38,11 +38,11 @@ const ClaimAndCloseFeeButton: React.FC<{
         disabled={!canClaim || !isBelowCRatio}
       >
         {!hasVoted ? (
-          <PaddedButton variant="primary" onClick={() => router.push(ROUTES.Gov.Home)}>
+          <PaddedButton variant="primary" onClick={() => navigate(ROUTES.Gov.Home)}>
             {t('earn.actions.claim.not-voted')}
           </PaddedButton>
         ) : isBelowCRatio ? (
-          <PaddedButton variant="primary" onClick={() => router.push(ROUTES.Staking.Burn)}>
+          <PaddedButton variant="primary" onClick={() => navigate(ROUTES.Staking.Burn)}>
             {t('earn.actions.claim.low-ratio')}
           </PaddedButton>
         ) : (

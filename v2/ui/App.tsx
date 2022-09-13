@@ -1,30 +1,30 @@
-import React, { FC, Suspense, useEffect, PropsWithChildren } from 'react';
-import { AppProps } from 'next/app';
-import Head from 'next/head';
+import { FC, useEffect, PropsWithChildren } from 'react';
+import Head from 'react-helmet';
 import { RecoilRoot } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from 'styled-components';
+import { safeLazy } from '@synthetixio/safe-import';
 
 import WithAppContainers from 'containers';
 import theme from 'styles/theme';
 
 import Layout from 'sections/shared/Layout';
-import AppLayout from 'sections/shared/Layout/AppLayout';
 import { MediaContextProvider } from '@snx-v1/media';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DEFAULT_REQUEST_REFRESH_INTERVAL } from 'constants/defaults';
 
 import { SynthetixQueryContextProvider, createQueryContext } from '@synthetixio/queries';
 
 import SystemStatus from 'sections/shared/SystemStatus';
 
-import '../i18n';
 import Connector from 'containers/Connector';
-import { isSupportedNetworkId } from '../utils/network';
-import useLocalStorage from '../hooks/useLocalStorage';
-import GlobalLoader from '../components/GlobalLoader';
-import { LOCAL_STORAGE_KEYS } from '../constants/storage';
+
+import Routes from './Routes';
+
+import { isSupportedNetworkId } from './utils/network';
+import useLocalStorage from './hooks/useLocalStorage';
+import { LOCAL_STORAGE_KEYS } from './constants/storage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,7 +35,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const InnerApp: FC<AppProps> = ({ Component, pageProps }) => {
+function InnerApp() {
   const { provider, signer, network, L1DefaultProvider, synthetixjs } = Connector.useContainer();
 
   useEffect(() => {
@@ -64,34 +64,26 @@ const InnerApp: FC<AppProps> = ({ Component, pageProps }) => {
       >
         <Layout>
           <SystemStatus>
-            <AppLayout>
-              <Component {...pageProps} />
-            </AppLayout>
+            <Routes />
           </SystemStatus>
         </Layout>
         <ReactQueryDevtools />
       </SynthetixQueryContextProvider>
     </>
   );
-};
-const ChakraProviderWithTheme: FC<PropsWithChildren> = React.lazy(
-  () =>
-    import(
-      /* webpackChunkName: "ChakraProviderWithTheme" */
-      '../components/ChakraProviderWithTheme'
-    )
+}
+
+const ChakraProviderWithTheme = safeLazy(
+  () => import(/* webpackChunkName: "app" */ './components/ChakraProviderWithTheme')
 );
 
 const LazyChakraProvider: FC<PropsWithChildren<{ enabled: boolean }>> = ({ enabled, children }) => {
   if (!enabled) return <>{children}</>;
 
-  return (
-    <Suspense fallback={<GlobalLoader />}>
-      <ChakraProviderWithTheme>{children}</ChakraProviderWithTheme>
-    </Suspense>
-  );
+  return <ChakraProviderWithTheme>{children}</ChakraProviderWithTheme>;
 };
-const App: FC<AppProps> = (props) => {
+
+function App() {
   const { t } = useTranslation();
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
   return (
@@ -118,14 +110,12 @@ const App: FC<AppProps> = (props) => {
       </Head>
       <LazyChakraProvider enabled={STAKING_V2_ENABLED}>
         <ThemeProvider theme={theme}>
-          {/* @ts-ignore TODO: update recoil */}
           <RecoilRoot>
-            {/* @ts-ignore TODO: update react-query */}
             <QueryClientProvider client={queryClient} contextSharing={true}>
               <WithAppContainers>
                 {/* @ts-ignore TODO: update styled-media-query */}
                 <MediaContextProvider>
-                  <InnerApp {...props} />
+                  <InnerApp />
                 </MediaContextProvider>
               </WithAppContainers>
             </QueryClientProvider>
@@ -134,6 +124,6 @@ const App: FC<AppProps> = (props) => {
       </LazyChakraProvider>
     </>
   );
-};
+}
 
 export default App;

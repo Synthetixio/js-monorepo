@@ -1,0 +1,1 @@
+export { CloseIcon } from './CloseIcon';

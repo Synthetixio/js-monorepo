@@ -10,7 +10,7 @@ describe('@synthetixio/queries rates', () => {
       useQuery: jest.fn(() => 'useQuery'),
     };
 
-    jest.doMock('react-query', () => reactQuery);
+    jest.doMock('@tanstack/react-query', () => reactQuery);
 
     ({ default: useExchangeRatesQuery } = await import('./useExchangeRatesQuery'));
   });

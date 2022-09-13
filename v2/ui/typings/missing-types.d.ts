@@ -4,3 +4,5 @@ declare module '@ensdomains/ensjs';
 declare module '@eth-optimism/watcher';
 declare module 'remarkable/linkify';
 declare module 'remarkable-external-link';
+declare module '@synthetixio/safe-import';
+declare module '@synthetixio/safe-import/safeImport';

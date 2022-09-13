@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chunk from 'lodash/chunk';
 import orderBy from 'lodash/orderBy';
 import flatten from 'lodash/flatten';

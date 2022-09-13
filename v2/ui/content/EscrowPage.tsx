@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import Head from 'next/head';
+import Head from 'react-helmet';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 

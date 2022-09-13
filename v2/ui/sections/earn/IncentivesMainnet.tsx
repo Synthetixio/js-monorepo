@@ -2,7 +2,7 @@ import { FC, useMemo, useState } from 'react';
 import Wei, { wei } from '@synthetixio/wei';
 import styled, { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
+import { useParams } from 'react-router-dom';
 
 import useLPData from 'hooks/useLPData';
 import ROUTES from 'constants/routes';
@@ -52,7 +52,6 @@ const Incentives: FC<IncentivesProps> = ({
   refetchAllRewards,
 }) => {
   const { t } = useTranslation();
-  const router = useRouter();
   const theme = useTheme();
   const [view, setView] = useState<View>(View.ACTIVE);
   const { isWalletConnected } = Connector.useContainer();
@@ -64,16 +63,8 @@ const Incentives: FC<IncentivesProps> = ({
 
   const now = useMemo(() => new Date().getTime(), []);
 
-  const activeTab = useMemo(
-    () =>
-      isWalletConnected &&
-      Array.isArray(router.query.pool) &&
-      router.query.pool.length &&
-      VALID_TABS.includes(router.query.pool[0] as Tab)
-        ? (router.query.pool[0] as Tab)
-        : null,
-    [router.query.pool, isWalletConnected]
-  );
+  const { pool } = useParams();
+  const activeTab = isWalletConnected && VALID_TABS.includes(pool as Tab) ? (pool as Tab) : null;
 
   const incentives = useMemo(() => {
     return isWalletConnected

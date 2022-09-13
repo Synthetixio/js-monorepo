@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import snapshot from '@snapshot-labs/snapshot.js';
 
 import request, { gql } from 'graphql-request';

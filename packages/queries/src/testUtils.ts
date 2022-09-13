@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { QueryContext } from './context';
 
 import { NetworkIdByName, SynthetixJS, NetworkId } from '@synthetixio/contracts-interface';
