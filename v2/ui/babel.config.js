@@ -64,5 +64,17 @@ module.exports = {
       ],
       plugins: [require.resolve('react-refresh/babel')],
     },
+
+    test: {
+      presets: [
+        [
+          require.resolve('@babel/preset-env'),
+          {
+            modules: 'commonjs',
+            targets: { node: 'current' },
+          },
+        ],
+      ],
+    },
   },
 };

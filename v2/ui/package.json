@@ -132,6 +132,7 @@
     "@types/react-window": "^1.8.5",
     "@types/remarkable": "^2.0.0",
     "@types/styled-components": "^5.1.2",
+    "babel-jest": "^29.0.3",
     "babel-loader": "^8.2.5",
     "babel-plugin-module-resolver": "^4.1.0",
     "buffer": "^6.0.3",
@@ -198,7 +199,8 @@
       "@storybook/testing-library",
       "buffer",
       "process",
-      "webpack-dev-server"
+      "webpack-dev-server",
+      "babel-jest"
     ]
   }
 }
