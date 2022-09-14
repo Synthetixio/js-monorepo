@@ -25,6 +25,8 @@ function prepareContracts(network) {
 }
 
 async function generateContracts({ network, contracts, prettierOptions }) {
+  await fs.mkdir(`src/${network}/deployment`, { recursive: true });
+
   for await (const contract of contracts) {
     const content =
       '// !!! DO NOT EDIT !!! Automatically generated file\n\n' +
@@ -38,12 +40,14 @@ async function generateContracts({ network, contracts, prettierOptions }) {
 }
 
 async function generateTypes({ network, contracts, prettierOptions }) {
+  await fs.mkdir(`src/${network}/types`, { recursive: true });
+
   const files = [];
   for await (const contract of contracts) {
     if (!Array.isArray(contract.jsonAbi) || contract.jsonAbi.length < 1) {
       continue;
     }
-    const json = path.resolve(`src/${network}/deployment/${contract.name}.json`);
+    const json = path.resolve(`src/${network}/types/${contract.name}Abi.json`);
     await fs.writeFile(json, JSON.stringify(contract.jsonAbi));
     files.push(json);
   }
@@ -55,31 +59,29 @@ async function generateTypes({ network, contracts, prettierOptions }) {
       filesToProcess: files,
       allFiles: files,
       prettier: prettierOptions,
-      outDir: `src/${network}/deployment`,
+      outDir: `src/${network}/types`,
       target: require.resolve('@typechain/ethers-v5'),
     });
   }
 
   // We only care about the types so let's remove the factories
-  await fs.rm(`src/${network}/deployment/factories`, { recursive: true, force: true });
-  await fs.rm(`src/${network}/deployment/index.ts`, { recursive: true, force: true });
+  await fs.rm(`src/${network}/types/factories`, { recursive: true, force: true });
+  await fs.rm(`src/${network}/types/index.ts`, { recursive: true, force: true });
   for await (const file of files) {
     const basename = path.basename(file, '.json');
-    await fs.rename(
-      `src/${network}/deployment/${basename}.ts`,
-      `src/${network}/deployment/${basename}.d.ts`
-    );
     // Looks like typechain misses prettyfying a few files, so we need to clean up after them
-    const content = await fs.readFile(`src/${network}/deployment/${basename}.d.ts`, 'utf8');
+    const content = await fs.readFile(`src/${network}/types/${basename}.ts`, 'utf8');
     const pretty = prettier.format(content, { parser: 'typescript', ...prettierOptions });
     if (pretty !== content) {
-      await fs.writeFile(`src/${network}/deployment/${basename}.d.ts`, pretty, 'utf8');
+      await fs.writeFile(`src/${network}/types/${basename}.ts`, pretty, 'utf8');
     }
     await fs.rm(file, { force: true });
   }
 }
 
 async function generateSynths({ network, prettierOptions }) {
+  await fs.mkdir(`src/${network}`, { recursive: true });
+
   const synths = JSON.parse(
     await fs.readFile(require.resolve(`synthetix/publish/deployed/${network}/synths.json`), 'utf8')
   );
@@ -131,7 +133,6 @@ async function run() {
   const prettierOptions = JSON.parse(await fs.readFile('../.prettierrc', 'utf8'));
 
   for await (const network of networks) {
-    await fs.mkdir(`src/${network}/deployment`, { recursive: true });
     const contracts = prepareContracts(network);
     await generateTypes({ network, contracts, prettierOptions });
     await generateContracts({ network, contracts, prettierOptions });
