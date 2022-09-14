@@ -1,41 +1,31 @@
 import { Box, Flex } from '@chakra-ui/react';
+import { useRecoilValue } from 'recoil';
 import { Banner } from '@snx-v2/Banner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
-import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { BalanceBox } from '@snx-v2/BalanceBox';
 import { MainActionCards } from '@snx-v2/MainActionCards';
+import { delegateWalletState } from '../store/wallet';
+import Connector from '../containers/Connector';
 
 const V2Home = () => {
-  const targetCratioPercentage = 400;
-  const currentCRatioPercentage = 400;
-  const liquidationCratioPercentage = 150;
-  const variant = getHealthVariant({
-    targetCratioPercentage,
-    currentCRatioPercentage,
-    liquidationCratioPercentage,
-  });
-  const epoch = '0D 14H 08M';
+  const delegateWallet = useRecoilValue(delegateWalletState);
+  const { walletAddress, network, provider } = Connector.useContainer();
+  const walletAddressToUse = delegateWallet?.address ?? walletAddress;
+  const propsFromConnector = {
+    walletAddress: walletAddressToUse,
+    provider,
+    networkId: network?.id,
+  };
   return (
     <Box>
       <Box height="42px" position="absolute" left="0" right="0">
-        <Banner variant={variant} text="You can collect your weekly rewards" countDown={epoch} />
+        <Banner {...propsFromConnector} />
       </Box>
       <Box height="42px" />
       <Flex mt="4" flexDirection={['column', 'column', 'column', 'row']}>
         <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
-          <CRatioHealthCard
-            targetCratioPercentage={targetCratioPercentage}
-            currentCRatioPercentage={currentCRatioPercentage}
-            liquidationCratioPercentage={liquidationCratioPercentage}
-          />
-          <MainActionCards
-            epoch={epoch}
-            isFlagged={false}
-            hasClaimed={false}
-            targetCratioPercentage={targetCratioPercentage}
-            currentCRatioPercentage={currentCRatioPercentage}
-            liquidationCratioPercentage={liquidationCratioPercentage}
-          />
+          <CRatioHealthCard {...propsFromConnector} />
+          <MainActionCards {...propsFromConnector} />
         </Box>
         <Flex
           ml="6"
@@ -43,7 +33,7 @@ const V2Home = () => {
           maxWidth="287px"
           width="full"
         >
-          <BalanceBox snxPrice={3} snxBalance={1000} stakedSnx={900} transferable={800} />
+          <BalanceBox {...propsFromConnector} />
         </Flex>
       </Flex>
     </Box>

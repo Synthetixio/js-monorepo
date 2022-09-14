@@ -1,12 +1,14 @@
-import { MainActionCards } from './MainActionCards';
+import { MainActionCardsUi } from './MainActionCards';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 export default {
-  title: 'MainActionCards',
-  component: MainActionCards,
-} as ComponentMeta<typeof MainActionCards>;
+  title: 'MainActionCardsUi',
+  component: MainActionCardsUi,
+} as ComponentMeta<typeof MainActionCardsUi>;
 
-const Template: ComponentStory<typeof MainActionCards> = (props) => <MainActionCards {...props} />;
+const Template: ComponentStory<typeof MainActionCardsUi> = (props) => (
+  <MainActionCardsUi {...props} />
+);
 
 export const Primary = Template.bind({});
 

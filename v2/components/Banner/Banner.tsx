@@ -1,14 +1,17 @@
 import { Center, Flex, Text } from '@chakra-ui/react';
+import { getHealthVariant } from '@snx-v2/getHealthVariant';
+import { useDebtData } from '@snx-v2/useDebtData';
+import { SynthetixProvider } from '@synthetixio/providers';
 import { theme } from '@synthetixio/v3-theme';
 import React, { FC, PropsWithChildren } from 'react';
 
-type Props = {
+type UiProps = {
   variant: 'success' | 'warning' | 'error';
   text: string;
   countDown?: string;
 };
 
-const VariantToBox: FC<PropsWithChildren<{ variant: Props['variant'] }>> = ({
+const VariantToBox: FC<PropsWithChildren<{ variant: UiProps['variant'] }>> = ({
   variant,
   children,
 }) => {
@@ -23,7 +26,7 @@ const VariantToBox: FC<PropsWithChildren<{ variant: Props['variant'] }>> = ({
   }
   return null;
 };
-export const Banner: FC<Props> = ({ text, variant, countDown }) => {
+export const BannerUi: FC<UiProps> = ({ text, variant, countDown }) => {
   return (
     <VariantToBox variant={variant}>
       <Flex
@@ -43,4 +46,20 @@ export const Banner: FC<Props> = ({ text, variant, countDown }) => {
       </Flex>
     </VariantToBox>
   );
+};
+
+type Props = {
+  networkId: number | undefined;
+  provider: SynthetixProvider | null;
+  walletAddress: string | null;
+};
+export const Banner: React.FC<Props> = ({ networkId, provider, walletAddress }) => {
+  const { data: debtData } = useDebtData({ networkId, provider, walletAddress });
+  if (!debtData) return <p>Skeleton</p>;
+  const variant = getHealthVariant({
+    currentCRatioPercentage: debtData.currentCRatioPercentage.toNumber(),
+    targetCratioPercentage: debtData.targetCRatioPercentage.toNumber(),
+    liquidationCratioPercentage: debtData.liquidationRatioPercentage.toNumber(),
+  });
+  return <BannerUi countDown="todo" variant={variant} text="todo" />;
 };

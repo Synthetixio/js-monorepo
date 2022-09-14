@@ -1,12 +1,12 @@
-import { Banner } from './Banner';
+import { BannerUi } from './Banner';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 export default {
-  title: 'Banner',
-  component: Banner,
-} as ComponentMeta<typeof Banner>;
+  title: 'BannerUi',
+  component: BannerUi,
+} as ComponentMeta<typeof BannerUi>;
 
-const Template: ComponentStory<typeof Banner> = (props) => <Banner {...props} />;
+const Template: ComponentStory<typeof BannerUi> = (props) => <BannerUi {...props} />;
 
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args

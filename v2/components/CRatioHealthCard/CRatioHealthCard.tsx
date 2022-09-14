@@ -1,15 +1,17 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
+import { useDebtData } from '@snx-v2/useDebtData';
+import { SynthetixProvider } from '@synthetixio/providers';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CRatioProgressBar } from './CRatioProgressBar';
 
-type Props = {
+type UiProps = {
   liquidationCratioPercentage: number;
   targetCratioPercentage: number;
   currentCRatioPercentage: number;
 };
-export const CRatioHealthCard: React.FC<Props> = ({
+export const CRatioHealthCardUi: React.FC<UiProps> = ({
   targetCratioPercentage,
   liquidationCratioPercentage,
   currentCRatioPercentage,
@@ -40,7 +42,7 @@ export const CRatioHealthCard: React.FC<Props> = ({
             align="center"
             fontFamily="mono"
           >
-            {currentCRatioPercentage}%
+            {Math.round(currentCRatioPercentage)}%
           </Text>
         </Flex>
       </Flex>
@@ -50,5 +52,23 @@ export const CRatioHealthCard: React.FC<Props> = ({
         currentCRatioPercentage={currentCRatioPercentage}
       />
     </Box>
+  );
+};
+
+type Props = {
+  networkId: number | undefined;
+  provider: SynthetixProvider | null;
+  walletAddress: string | null;
+};
+export const CRatioHealthCard: React.FC<Props> = ({ networkId, provider, walletAddress }) => {
+  const { data: debtData } = useDebtData({ networkId, provider, walletAddress });
+  if (!debtData) return <p>Skeleton</p>;
+
+  return (
+    <CRatioHealthCardUi
+      currentCRatioPercentage={debtData.currentCRatioPercentage.mul(100).toNumber()}
+      targetCratioPercentage={debtData.targetCRatioPercentage.mul(100).toNumber()}
+      liquidationCratioPercentage={debtData.liquidationRatioPercentage.mul(100).toNumber()}
+    />
   );
 };
