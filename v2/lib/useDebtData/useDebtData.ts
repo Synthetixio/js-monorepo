@@ -4,9 +4,9 @@ import { formatBytes32String } from '@ethersproject/strings';
 import { useGetSynthetixContracts, NetworkId } from '@snx-v2/useSynthetixContracts';
 import { SynthetixProvider } from '@synthetixio/providers';
 import { BigNumber } from 'ethers';
-import type { SynthetixAbiTypes } from '@synthetixio/contracts/build/mainnet/deployment/SynthetixAbiTypes';
-import type { SystemSettingsAbiTypes } from '@synthetixio/contracts/build/mainnet/deployment/SystemSettingsAbiTypes';
-import type { LiquidatorAbiTypes } from '@synthetixio/contracts/build/mainnet/deployment/LiquidatorAbiTypes';
+import type { SynthetixAbi } from '@synthetixio/contracts/build/mainnet/types/SynthetixAbi';
+import type { SystemSettingsAbi } from '@synthetixio/contracts/build/mainnet/types/SystemSettingsAbi';
+import type { LiquidatorAbi } from '@synthetixio/contracts/build/mainnet/types/LiquidatorAbi';
 
 const processQueryData = (
   result: [
@@ -65,9 +65,9 @@ const useGetDebtDataQuery = (
         throw Error('Query should not be enable is contracts missing');
 
       const [Synthetix, SystemSettings, Liquidator] = contracts as [
-        SynthetixAbiTypes,
-        SystemSettingsAbiTypes,
-        LiquidatorAbiTypes
+        SynthetixAbi,
+        SystemSettingsAbi,
+        LiquidatorAbi
       ];
       const sUSDBytes = formatBytes32String('sUSD');
       return Promise.all([
