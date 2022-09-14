@@ -391,9 +391,7 @@ export interface Issuer extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    allNetworksDebtInfo(
-      overrides?: CallOverrides
-    ): Promise<
+    allNetworksDebtInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, boolean] & {
         debt: BigNumber;
         sharesSupply: BigNumber;
@@ -812,9 +810,7 @@ export interface Issuer extends BaseContract {
 
     addSynths(synthsToAdd: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    allNetworksDebtInfo(
-      overrides?: CallOverrides
-    ): Promise<
+    allNetworksDebtInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, boolean] & {
         debt: BigNumber;
         sharesSupply: BigNumber;

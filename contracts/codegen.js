@@ -69,16 +69,22 @@ async function generateTypes({ network, contracts, prettierOptions }) {
       `src/${network}/deployment/${basename}.ts`,
       `src/${network}/deployment/${basename}.d.ts`
     );
+    // Looks like typechain misses prettyfying a few files, so we need to clean up after them
+    const content = await fs.readFile(`src/${network}/deployment/${basename}.d.ts`, 'utf8');
+    const pretty = prettier.format(content, { parser: 'typescript', ...prettierOptions });
+    if (pretty !== content) {
+      await fs.writeFile(`src/${network}/deployment/${basename}.d.ts`, pretty, 'utf8');
+    }
     await fs.rm(file, { force: true });
   }
 }
 
 async function generateSynths({ network, prettierOptions }) {
   const synths = JSON.parse(
-    await fs.readFile(require.resolve(`synthetix/publish/deployed/${network}/synths.json`), 'utf-8')
+    await fs.readFile(require.resolve(`synthetix/publish/deployed/${network}/synths.json`), 'utf8')
   );
   const assets = JSON.parse(
-    await fs.readFile(require.resolve('synthetix/publish/assets.json'), 'utf-8')
+    await fs.readFile(require.resolve('synthetix/publish/assets.json'), 'utf8')
   );
   const synthsWithAssetData = synths.map((synth) => Object.assign({}, assets[synth.asset], synth));
   const synthsByName = synthsWithAssetData.reduce((acc, val) => {

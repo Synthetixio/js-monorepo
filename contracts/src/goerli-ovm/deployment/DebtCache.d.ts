@@ -297,9 +297,7 @@ export interface DebtCache extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    cacheInfo(
-      overrides?: CallOverrides
-    ): Promise<
+    cacheInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, boolean, boolean] & {
         debt: BigNumber;
         timestamp: BigNumber;
@@ -431,9 +429,7 @@ export interface DebtCache extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  cacheInfo(
-    overrides?: CallOverrides
-  ): Promise<
+  cacheInfo(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, boolean, boolean] & {
       debt: BigNumber;
       timestamp: BigNumber;
@@ -561,9 +557,7 @@ export interface DebtCache extends BaseContract {
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    cacheInfo(
-      overrides?: CallOverrides
-    ): Promise<
+    cacheInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, boolean, boolean] & {
         debt: BigNumber;
         timestamp: BigNumber;
