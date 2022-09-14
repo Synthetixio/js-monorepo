@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const generate = require('./scripts/minify-synthetix-contract');
 
@@ -113,7 +114,7 @@ const devServer = {
 };
 
 module.exports = {
-  devtool: 'eval',
+  devtool: isProd ? 'source-map' : 'eval',
   devServer,
   mode: isProd ? 'production' : 'development',
   entry: './index.ts',
@@ -131,10 +132,16 @@ module.exports = {
     runtimeChunk: false,
     splitChunks: {
       chunks: 'async',
+      maxAsyncRequests: 10,
+      maxInitialRequests: 10,
+      hidePathInfo: true,
+      automaticNameDelimiter: '--',
+      name: false,
     },
-    moduleIds: 'deterministic',
-    chunkIds: 'deterministic',
+    moduleIds: isProd ? 'deterministic' : 'named',
+    chunkIds: isProd ? 'deterministic' : 'named',
     minimize: isProd,
+    minimizer: [new TerserPlugin()],
     innerGraph: true,
     emitOnErrors: false,
   },

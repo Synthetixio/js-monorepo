@@ -192,7 +192,7 @@ const Text: ComponentStyleConfig = {
       fontSize: '14px',
       fontFamily: 'heading',
       lineHeight: '20px',
-      letterSpacing: 0.55,
+      letterSpacing: 0,
     },
   },
 };
@@ -245,8 +245,11 @@ const Menu: ComponentMultiStyleConfig = {
     },
     item: {
       bgColor: 'blackAlpha.300',
-      color: 'white',
+      color: 'whiteAlpha.900',
       p: 3,
+      _hover: {
+        bgColor: 'whiteAlpha.400',
+      },
       _active: {
         bgColor: 'navy.900',
       },
@@ -260,12 +263,6 @@ const Menu: ComponentMultiStyleConfig = {
       },
       _focus: {
         bgColor: 'blackAlpha.400',
-      },
-      _even: {
-        bgColor: 'whiteAlpha.300',
-        _hover: {
-          bgColor: 'whiteAlpha.400',
-        },
       },
     },
   },

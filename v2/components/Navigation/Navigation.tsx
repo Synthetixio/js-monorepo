@@ -175,7 +175,7 @@ export const Navigation = ({
             cursor: 'pointer',
           }}
         >
-          <NotificationsIcon />
+          <NotificationsIcon color="white" />
         </Center>
         <>
           <Center
@@ -190,10 +190,9 @@ export const Navigation = ({
               cursor: 'pointer',
             }}
           >
-            <SettingsIcon />
+            <SettingsIcon color="white" />
           </Center>
         </>
-
         <Menu>
           <Center
             ml={2}

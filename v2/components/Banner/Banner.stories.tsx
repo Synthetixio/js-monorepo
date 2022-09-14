@@ -15,3 +15,7 @@ Primary.args = {
   text: 'You can now collect your weekly rewards',
   countDown: '0D 14H 08M',
 };
+
+Primary.parameters = {
+  layout: 'fullscreen',
+};

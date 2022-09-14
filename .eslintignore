@@ -6,6 +6,8 @@ dist
 .yarn
 packages/queries/subgraphs
 .docusaurus
+**/tmp/
+**/.next/
+**/out/
+**/storybook-static/
 
-v2/ui/.next/
-v2/ui/out/
