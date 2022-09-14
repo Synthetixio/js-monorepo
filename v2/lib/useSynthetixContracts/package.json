@@ -1,0 +1,12 @@
+{
+  "name": "@snx-v2/useSynthetixContracts",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.0",
+  "dependencies": {
+    "@synthetixio/contracts": "workspace:*",
+    "@synthetixio/providers": "workspace:*",
+    "ethers": "^5.5.3",
+    "react-query": "3.16.0"
+  }
+}

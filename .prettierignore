@@ -10,6 +10,7 @@ artifacts
 .docusaurus
 v3/contracts/src
 v3/contracts/deployments
-v2/ui/.next
-v2/ui/out
-v2/ui/tmp
+**/tmp/
+**/.next/
+**/out/
+**/storybook-static/

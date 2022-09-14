@@ -1,26 +1,12 @@
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs/promises');
 const ethers = require('ethers');
 const prettier = require('prettier');
+const { runTypeChain } = require('typechain');
 
-const prettierOptions = JSON.parse(fs.readFileSync('../.prettierrc', 'utf8'));
-
-const synthetixPath = path.dirname(require.resolve('synthetix'));
-
-const deployed = path.join(synthetixPath, 'publish/deployed');
-const networks = fs
-  .readdirSync(deployed, { withFileTypes: true })
-  .filter((dirent) => dirent.isDirectory())
-  .map((dirent) => dirent.name);
-
-function generateTargets(network) {
+function prepareContracts(network) {
   const deployment = require(`synthetix/publish/deployed/${network}/deployment.json`);
-  fs.mkdirSync(`src/${network}/deployment/targets`, { recursive: true });
   const { targets, sources } = deployment;
-
-  if (!targets || !sources) {
-    return;
-  }
 
   return Object.values(targets).map((target) => {
     if (target.name === 'Synthetix') {
@@ -32,26 +18,74 @@ function generateTargets(network) {
       target.address = targets[newTarget].address;
     }
     const iface = new ethers.utils.Interface(sources[target.source].abi);
+    target.jsonAbi = sources[target.source].abi;
     target.abi = iface.format(ethers.utils.FormatTypes.full);
-
-    fs.writeFileSync(
-      `src/${network}/deployment/${target.name}.ts`,
-      prettier.format(
-        '// !!! DO NOT EDIT !!! Automatically generated file\n\n' +
-          Object.entries(target)
-            .filter(([name]) => ['name', 'source', 'address', 'abi'].includes(name))
-            .map(([name, value]) => `export const ${name} = ${JSON.stringify(value, null, 2)};`)
-            .join('\n'),
-        { parser: 'typescript', ...prettierOptions }
-      ),
-      'utf8'
-    );
+    return target;
   });
 }
 
-function generateSynths(network) {
-  const synths = require(`synthetix/publish/deployed/${network}/synths.json`);
-  const assets = require('synthetix/publish/assets.json');
+async function generateContracts({ network, contracts, prettierOptions }) {
+  for await (const contract of contracts) {
+    const content =
+      '// !!! DO NOT EDIT !!! Automatically generated file\n\n' +
+      Object.entries(contract)
+        .filter(([name]) => ['name', 'source', 'address', 'abi'].includes(name))
+        .map(([name, value]) => `export const ${name} = ${JSON.stringify(value, null, 2)};`)
+        .join('\n');
+    const pretty = prettier.format(content, { parser: 'typescript', ...prettierOptions });
+    await fs.writeFile(`src/${network}/deployment/${contract.name}.ts`, pretty, 'utf8');
+  }
+}
+
+async function generateTypes({ network, contracts, prettierOptions }) {
+  const files = [];
+  for await (const contract of contracts) {
+    if (!Array.isArray(contract.jsonAbi) || contract.jsonAbi.length < 1) {
+      continue;
+    }
+    const json = path.resolve(`src/${network}/deployment/${contract.name}.json`);
+    await fs.writeFile(json, JSON.stringify(contract.jsonAbi));
+    files.push(json);
+  }
+  //
+  if (files.length > 0) {
+    // This will create a ts file with types named <targetName>.ts (ie. Synthetix.ts)
+    await runTypeChain({
+      cwd: process.cwd(),
+      filesToProcess: files,
+      allFiles: files,
+      prettier: prettierOptions,
+      outDir: `src/${network}/deployment`,
+      target: require.resolve('@typechain/ethers-v5'),
+    });
+  }
+
+  // We only care about the types so let's remove the factories
+  await fs.rm(`src/${network}/deployment/factories`, { recursive: true, force: true });
+  await fs.rm(`src/${network}/deployment/index.ts`, { recursive: true, force: true });
+  for await (const file of files) {
+    const basename = path.basename(file, '.json');
+    await fs.rename(
+      `src/${network}/deployment/${basename}.ts`,
+      `src/${network}/deployment/${basename}.d.ts`
+    );
+    // Looks like typechain misses prettyfying a few files, so we need to clean up after them
+    const content = await fs.readFile(`src/${network}/deployment/${basename}.d.ts`, 'utf8');
+    const pretty = prettier.format(content, { parser: 'typescript', ...prettierOptions });
+    if (pretty !== content) {
+      await fs.writeFile(`src/${network}/deployment/${basename}.d.ts`, pretty, 'utf8');
+    }
+    await fs.rm(file, { force: true });
+  }
+}
+
+async function generateSynths({ network, prettierOptions }) {
+  const synths = JSON.parse(
+    await fs.readFile(require.resolve(`synthetix/publish/deployed/${network}/synths.json`), 'utf8')
+  );
+  const assets = JSON.parse(
+    await fs.readFile(require.resolve('synthetix/publish/assets.json'), 'utf8')
+  );
   const synthsWithAssetData = synths.map((synth) => Object.assign({}, assets[synth.asset], synth));
   const synthsByName = synthsWithAssetData.reduce((acc, val) => {
     acc[val.name] = val;
@@ -74,8 +108,7 @@ function generateSynths(network) {
     }
   >
 >`;
-  fs.mkdirSync(`src/${network}`, { recursive: true });
-  fs.writeFileSync(
+  await fs.writeFile(
     `src/${network}/synths.ts`,
     prettier.format(
       '// !!! DO NOT EDIT !!! Automatically generated file\n\n' +
@@ -89,7 +122,21 @@ function generateSynths(network) {
   );
 }
 
-networks.forEach((network) => {
-  generateTargets(network);
-  generateSynths(network);
-});
+async function run() {
+  const synthetixPath = path.dirname(require.resolve('synthetix'));
+  const deployed = path.join(synthetixPath, 'publish/deployed');
+  const networks = (await fs.readdir(deployed, { withFileTypes: true }))
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name);
+  const prettierOptions = JSON.parse(await fs.readFile('../.prettierrc', 'utf8'));
+
+  for await (const network of networks) {
+    await fs.mkdir(`src/${network}/deployment`, { recursive: true });
+    const contracts = prepareContracts(network);
+    await generateTypes({ network, contracts, prettierOptions });
+    await generateContracts({ network, contracts, prettierOptions });
+    await generateSynths({ network, prettierOptions });
+  }
+}
+
+run();
