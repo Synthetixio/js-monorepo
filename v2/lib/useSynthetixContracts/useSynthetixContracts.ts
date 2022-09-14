@@ -1,6 +1,6 @@
 import { SynthetixProvider } from '@synthetixio/providers';
 import { ethers } from 'ethers';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { contracts } from './contracts';
 
 export const NetworkIdByName = {

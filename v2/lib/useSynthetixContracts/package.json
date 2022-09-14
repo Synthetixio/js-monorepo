@@ -6,7 +6,7 @@
   "dependencies": {
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/providers": "workspace:*",
-    "ethers": "^5.5.3",
-    "react-query": "3.16.0"
+    "@tanstack/react-query": "^4.3.4",
+    "ethers": "^5.5.3"
   }
 }

@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { wei } from '@synthetixio/wei';
 import { formatBytes32String } from '@ethersproject/strings';
 import { useGetSynthetixContracts, NetworkId } from '@snx-v2/useSynthetixContracts';
