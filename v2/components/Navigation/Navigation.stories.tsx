@@ -9,6 +9,7 @@ export default {
 const Template: ComponentStory<typeof Navigation> = (_args) => <Navigation {..._args} />;
 
 export const Primary = Template.bind({});
+
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   currentNetwork: 1,
@@ -16,4 +17,8 @@ Primary.args = {
   isWalletConnected: true,
   walletAddress: '0xada3f268965c7410dfa0d74b928D950D94fAa554',
   switchNetwork: () => {},
+};
+
+Primary.parameters = {
+  layout: 'fullscreen',
 };
