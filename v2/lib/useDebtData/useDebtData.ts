@@ -48,11 +48,12 @@ const processQueryData = (
   };
 };
 
-const useGetDebtDataQuery = (
-  networkId: NetworkId,
-  provider: SynthetixProvider,
-  walletAddress: string | null
-) => {
+export const useDebtData = (args: {
+  networkId: number | undefined;
+  provider: SynthetixProvider | null;
+  walletAddress: string | null;
+}) => {
+  const { networkId, provider, walletAddress } = args;
   const { data: contracts } = useGetSynthetixContracts({
     contractNames: ['Synthetix', 'SystemSettings', 'Liquidator'],
     provider: provider,
@@ -89,5 +90,3 @@ const useGetDebtDataQuery = (
     }
   );
 };
-
-export default useGetDebtDataQuery;

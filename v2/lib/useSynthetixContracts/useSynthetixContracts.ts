@@ -18,29 +18,45 @@ export const NetworkNameById = {
 } as const;
 export type NetworkId = typeof NetworkIdByName[keyof typeof NetworkIdByName];
 
+function isSupportedNetworkId(id: number | string): id is NetworkId {
+  return id in NetworkNameById;
+}
+
 type ContractName = Array<keyof typeof contracts>;
 type Args =
-  | { networkId: NetworkId; contractNames: ContractName; signer: ethers.Signer }
+  | { networkId: number | undefined; contractNames: ContractName; signer: ethers.Signer | null }
   | {
-      networkId: NetworkId;
+      networkId: number | undefined;
       contractNames: ContractName;
-      provider: SynthetixProvider;
+      provider: SynthetixProvider | null;
     };
 export function useGetSynthetixContracts(args: Args) {
   const { networkId, contractNames } = args;
   const signerOrProvider = 'signer' in args ? args.signer : args.provider;
-  const networkName = NetworkNameById[networkId];
 
   return useQuery(
-    [contractNames, networkName, networkId],
+    [contractNames, networkId],
     async () => {
+      if (!networkId) throw Error('query should not be enabled when networkId is missing');
+      if (!signerOrProvider) {
+        throw Error('query should not be enabled when signer and Provider is missing');
+      }
+      const supportedNetworkId = isSupportedNetworkId(networkId);
+      if (!supportedNetworkId) {
+        throw Error(`${networkId} is not supported`);
+      }
+      const networkName = NetworkNameById[networkId];
+
       const contractsData = await Promise.all(
-        contractNames.map((contractName) => contracts[contractName][networkName]())
+        contractNames.map((contractName) => {
+          const contract = contracts[contractName][networkName]();
+          return contract;
+        })
       );
       return contractsData.map(
         ({ address, abi }) => new ethers.Contract(address, abi, signerOrProvider)
       );
     },
-    { enabled: Boolean(networkId), staleTime: Infinity }
+    { enabled: Boolean(networkId && signerOrProvider), staleTime: Infinity }
   );
 }
