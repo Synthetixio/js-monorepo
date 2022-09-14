@@ -42,7 +42,7 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
             align="center"
             fontFamily="mono"
           >
-            {Math.round(currentCRatioPercentage)}%
+            {Math.floor(currentCRatioPercentage)}%
           </Text>
         </Flex>
       </Flex>
