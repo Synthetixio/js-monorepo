@@ -17,8 +17,8 @@ export const useCollateralTypes = () => {
   // Get this list of collateral types from a network request, use deployments data for now
   // TODO: Rename this function on chain to getCollateralTypesId, getCollateralTypes can return an array of structs and we can skip the calls in the useContractReads call below
   useSynthetixRead({
-    functionName: 'getCollateralTypes',
-    args: true,
+    functionName: 'getCollateralConfigurations',
+    args: [true],
     onError() {
       // TODO: throw up a toast
       // report to sentry or some other tool

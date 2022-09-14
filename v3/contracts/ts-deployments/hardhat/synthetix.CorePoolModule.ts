@@ -1,7 +1,7 @@
 export const address = '0x94597307C9549c5BB03d1434dBb2301611ACaaB1';
 export const abi = [
   'error InsufficientAccountCollateral(uint256 accountId, address collateralType, uint256 requestedAmount)',
-  'error InvalidCollateralType(address collateralType)',
+  'error InvalidCollateral(address collateralType)',
   'error InvalidParameters(string incorrectParameter, string help)',
   'error InvalidParameters(string incorrectParameter, string help)',
   'error MarketNotFound(uint256 marketId)',

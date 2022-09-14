@@ -3,7 +3,7 @@ export const abi = [
   'error InsufficientAccountCollateral(uint256 accountId, address collateralType, uint256 requestedAmount)',
   'error InsufficientCollateralRatio(uint256 collateralValue, uint256 debt, uint256 ratio, uint256 minRatio)',
   'error InsufficientDebt(int256 currentDebt)',
-  'error InvalidCollateralType(address collateralType)',
+  'error InvalidCollateral(address collateralType)',
   'error InvalidLeverage(uint256 leverage)',
   'error InvalidParameters(string incorrectParameter, string help)',
   'error InvalidParameters(string incorrectParameter, string help)',

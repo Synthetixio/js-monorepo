@@ -1,12 +1,13 @@
 export const address = '0xD1e696E7Fbe6871EA6C2DEd979fC6BDd821522d9';
 export const abi = [
   'error InsufficientAccountCollateral(uint256 accountId, address collateralType, uint256 requestedAmount)',
-  'error InvalidCollateralType(address collateralType)',
+  'error InvalidCollateral(address collateralType)',
   'error MarketNotFound(uint256 marketId)',
   'error MaxDebtPerShareTooLow(uint256 marketId, int256 requestedMaxDebtPerShare, int256 maximumMaxDebtPerShare)',
-  'error PoolAlreadyApproved(uint256 poolId)',
   'error PoolNotFound(uint256 poolId)',
   'error Unauthorized(address addr)',
+  'error ValueAlreadyInSet()',
+  'error ValueNotInSet()',
   'event PoolApprovedAdded(uint256 poolId)',
   'event PoolApprovedRemoved(uint256 poolId)',
   'event PreferredPoolSet(uint256 poolId)',

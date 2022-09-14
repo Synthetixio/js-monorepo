@@ -1,7 +1,7 @@
 import { StakingStats } from './StakingStats';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Spinner } from '@chakra-ui/react';
 import Manage from './Manage';
-import Rewards from './Rewards';
+import { Rewards } from './Rewards';
 import { Pool } from './Pool';
 import { FC } from 'react';
 import { CollateralType } from '../../../utils/types';
@@ -41,7 +41,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
         cRatio={cRatio}
       />
 
-      <Tabs isFitted>
+      <Tabs isFitted isLazy>
         <TabList>
           <Tab>Manage Position</Tab>
           <Tab>Pool Liquidity</Tab>
@@ -72,7 +72,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
             />
           </TabPanel>
           <TabPanel>
-            <Rewards />
+            <Rewards accountId={accountId} poolId={poolId} collateral={collateral} />
           </TabPanel>
         </TabPanels>
       </Tabs>

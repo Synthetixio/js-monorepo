@@ -3,7 +3,7 @@ export const abi = [
   'error FailedTransfer(address from, address to, uint256 value)',
   'error IneligibleForLiquidation(uint256 collateralValue, uint256 debt, uint256 currentCRatio, uint256 cratio)',
   'error InsufficientAccountCollateral(uint256 accountId, address collateralType, uint256 requestedAmount)',
-  'error InvalidCollateralType(address collateralType)',
+  'error InvalidCollateral(address collateralType)',
   'error InvalidParameters(string incorrectParameter, string help)',
   'error InvalidParameters(string incorrectParameter, string help)',
   'error MarketNotFound(uint256 marketId)',
