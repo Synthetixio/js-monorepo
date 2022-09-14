@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { wei } from '@synthetixio/wei';
 import { formatBytes32String } from '@ethersproject/strings';
-import { useGetSynthetixContracts, NetworkId } from '@snx-v2/useSynthetixContracts';
+import { useGetSynthetixContracts } from '@snx-v2/useSynthetixContracts';
 import { SynthetixProvider } from '@synthetixio/providers';
 import { BigNumber } from 'ethers';
 import type { Synthetix } from '@synthetixio/contracts/build/mainnet/deployment/Synthetix';
@@ -32,6 +32,7 @@ const processQueryData = (
     targetThreshold,
     liquidationRatio,
   ] = result.map((item) => wei(item));
+  const liquidationDeadlineForAccountBN = result[result.length - 1];
   return {
     targetCRatio,
     currentCRatio,
@@ -45,6 +46,7 @@ const processQueryData = (
     targetThreshold,
     liquidationRatio,
     liquidationRatioPercentage: wei(1).div(currentCRatio).mul(100),
+    liquidationDeadlineForAccount: wei(liquidationDeadlineForAccountBN, 0),
   };
 };
 

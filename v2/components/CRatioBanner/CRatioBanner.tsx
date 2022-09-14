@@ -64,7 +64,7 @@ export const CRatioBanner: React.FC<Props> = ({ networkId, provider, walletAddre
     targetCratioPercentage: debtData.targetCRatioPercentage.toNumber(),
     liquidationCratioPercentage: debtData.liquidationRatioPercentage.toNumber(),
   });
-  const isFlagged = false; // todo
+  const isFlagged = debtData.liquidationDeadlineForAccount.gt(0);
 
   return <CRatioBannerUi countDown="todo" variant={variant} isFlagged={isFlagged} />;
 };

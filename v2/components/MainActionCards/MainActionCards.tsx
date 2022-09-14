@@ -5,6 +5,7 @@ import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { CollectIcon, InfoIcon, MaintainIcon, StakeIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { SynthetixProvider } from '@synthetixio/providers';
+import debt from '../../ui/sections/debt';
 
 const CardHeader = ({
   step,
@@ -266,7 +267,7 @@ export const MainActionCards: React.FC<Props> = ({ networkId, provider, walletAd
       currentCRatioPercentage={debtData.currentCRatioPercentage.mul(100).toNumber()}
       targetCratioPercentage={debtData.targetCRatioPercentage.mul(100).toNumber()}
       liquidationCratioPercentage={debtData.liquidationRatioPercentage.mul(100).toNumber()}
-      isFlagged={false} // TODO
+      isFlagged={debtData.liquidationDeadlineForAccount.gt(0)}
       hasClaimed={false} // TODO
       epoch="TODO"
     />
