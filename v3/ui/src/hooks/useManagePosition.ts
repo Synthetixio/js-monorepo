@@ -1,8 +1,8 @@
 import { utils } from 'ethers';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { CollateralType, contracts } from '../utils/constants';
 import { parseUnits } from '../utils/helpers';
-import { useApprove } from './useApprove';
+import { useApproveCall } from './useApproveCall';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall2';
 
@@ -107,19 +107,13 @@ export const useManagePosition = (
   const multiTxn = useMulticall(calls, undefined, {
     onSuccess: refetch,
   });
-  const { approve, isLoading } = useApprove(
+  const { exec, isLoading } = useApproveCall(
     position.collateral.address,
-    collateralChangeBN,
-    snxProxy?.address
+    collateralAmount > 0 ? collateralChangeBN : 0,
+    snxProxy?.address,
+    multiTxn.exec
   );
-  const exec = useCallback(async () => {
-    try {
-      if (collateralChange > 0) {
-        await approve();
-      }
-      multiTxn.exec();
-    } catch (error) {}
-  }, [approve, collateralChange, multiTxn]);
+
   return {
     isLoading,
     exec,

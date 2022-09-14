@@ -15,7 +15,7 @@ export const useUpdatePool = (
   position: IPosition,
   amount: string | number,
   newPoolId: string,
-  refetch?: () => void
+  onSuccess?: () => void
 ) => {
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
 
@@ -58,6 +58,6 @@ export const useUpdatePool = (
   ]);
 
   return useMulticall(calls, undefined, {
-    onSuccess: refetch,
+    onSuccess,
   });
 };
