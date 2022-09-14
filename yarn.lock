@@ -6064,20 +6064,11 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
+    "@synthetixio/providers": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
-  languageName: unknown
-  linkType: soft
-
-"@snx-v2/Banner@workspace:*, @snx-v2/Banner@workspace:v2/components/Banner":
-  version: 0.0.0-use.local
-  resolution: "@snx-v2/Banner@workspace:v2/components/Banner"
-  dependencies:
-    "@chakra-ui/react": ^2.2.8
-    "@storybook/react": ^6.5.10
-    "@synthetixio/v3-theme": "workspace:*"
-    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -6095,6 +6086,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/CRatioBanner@workspace:*, @snx-v2/CRatioBanner@workspace:v2/components/CRatioBanner":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/CRatioBanner@workspace:v2/components/CRatioBanner"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/getHealthVariant": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@storybook/react": ^6.5.10
+    "@synthetixio/providers": "workspace:*"
+    "@synthetixio/v3-theme": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/CRatioHealthCard@workspace:*, @snx-v2/CRatioHealthCard@workspace:v2/components/CRatioHealthCard":
   version: 0.0.0-use.local
   resolution: "@snx-v2/CRatioHealthCard@workspace:v2/components/CRatioHealthCard"
@@ -6102,7 +6108,9 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
+    "@synthetixio/providers": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
@@ -6126,7 +6134,9 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
+    "@synthetixio/providers": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
@@ -6219,7 +6229,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useDebtData@workspace:v2/lib/useDebtData":
+"@snx-v2/useDebtData@workspace:*, @snx-v2/useDebtData@workspace:v2/lib/useDebtData":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useDebtData@workspace:v2/lib/useDebtData"
   dependencies:
@@ -8026,13 +8036,12 @@ __metadata:
     "@snx-v1/media": "workspace:*"
     "@snx-v1/styles": "workspace:*"
     "@snx-v2/BalanceBox": "workspace:*"
-    "@snx-v2/Banner": "workspace:*"
     "@snx-v2/Burn": "workspace:*"
+    "@snx-v2/CRatioBanner": "workspace:*"
     "@snx-v2/CRatioHealthCard": "workspace:*"
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
-    "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
