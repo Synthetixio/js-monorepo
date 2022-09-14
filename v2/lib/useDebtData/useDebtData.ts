@@ -1,12 +1,12 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { wei } from '@synthetixio/wei';
 import { formatBytes32String } from '@ethersproject/strings';
 import { useGetSynthetixContracts, NetworkId } from '@snx-v2/useSynthetixContracts';
 import { SynthetixProvider } from '@synthetixio/providers';
 import { BigNumber } from 'ethers';
-import type { SynthetixAbiTypes } from '@synthetixio/contracts/build/mainnet/deployment/SynthetixAbiTypes';
-import type { SystemSettingsAbiTypes } from '@synthetixio/contracts/build/mainnet/deployment/SystemSettingsAbiTypes';
-import type { LiquidatorAbiTypes } from '@synthetixio/contracts/build/mainnet/deployment/LiquidatorAbiTypes';
+import type { Synthetix } from '@synthetixio/contracts/build/mainnet/deployment/Synthetix';
+import type { SystemSettings } from '@synthetixio/contracts/build/mainnet/deployment/SystemSettings';
+import type { Liquidator } from '@synthetixio/contracts/build/mainnet/deployment/Liquidator';
 
 const processQueryData = (
   result: [
@@ -65,9 +65,9 @@ const useGetDebtDataQuery = (
         throw Error('Query should not be enable is contracts missing');
 
       const [Synthetix, SystemSettings, Liquidator] = contracts as [
-        SynthetixAbiTypes,
-        SystemSettingsAbiTypes,
-        LiquidatorAbiTypes
+        Synthetix,
+        SystemSettings,
+        Liquidator
       ];
       const sUSDBytes = formatBytes32String('sUSD');
       return Promise.all([
