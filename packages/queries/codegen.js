@@ -10,11 +10,17 @@ fs.mkdirSync(__dirname + '/src/subgraph/', { recursive: true });
 const imports = [];
 const funcsDef = [];
 
+const blacklist = [
+  'useProposalQuery.ts', // included directly to avoid pulling snapshot dependency into the main bundle
+  'useHasVotedForElectionsQuery.ts', // no longer used
+  'useVotingWeightQuery.ts', // no longer used
+];
+
 function findQueries(p, requireSoFar) {
   for (const f of fs.readdirSync(p)) {
     if (fs.statSync(`${p}/${f}`).isDirectory()) {
       findQueries(`${p}/${f}`, `${requireSoFar}/${f}`);
-    } else if (f.startsWith('use') && !f.endsWith('.test.ts')) {
+    } else if (f.startsWith('use') && !f.endsWith('.test.ts') && !blacklist.includes(f)) {
       // remove extension
       const name = f.slice(0, f.length - 3);
 
