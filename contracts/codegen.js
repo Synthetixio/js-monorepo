@@ -25,14 +25,19 @@ function prepareContracts(network) {
 }
 
 async function generateContracts({ network, contracts, prettierOptions }) {
-  await fs.mkdir(`src/${network}/deployment`, { recursive: true });
-
+  await fs
+    .cp(`src/${network}/types/common.ts`, `src/${network}/deployment/common.ts`)
+    .catch(() => null);
   for await (const contract of contracts) {
+    const types = await fs
+      .readFile(`src/${network}/types/${contract.name}.ts`, 'utf8')
+      .catch(() => ''); // for empty abi or skipped types for any other reason
     const content =
       '// !!! DO NOT EDIT !!! Automatically generated file\n\n' +
       Object.entries(contract)
         .filter(([name]) => ['name', 'source', 'address', 'abi'].includes(name))
         .map(([name, value]) => `export const ${name} = ${JSON.stringify(value, null, 2)};`)
+        .concat([types])
         .join('\n');
     const pretty = prettier.format(content, { parser: 'typescript', ...prettierOptions });
     await fs.writeFile(`src/${network}/deployment/${contract.name}.ts`, pretty, 'utf8');
@@ -40,14 +45,12 @@ async function generateContracts({ network, contracts, prettierOptions }) {
 }
 
 async function generateTypes({ network, contracts, prettierOptions }) {
-  await fs.mkdir(`src/${network}/types`, { recursive: true });
-
   const files = [];
   for await (const contract of contracts) {
     if (!Array.isArray(contract.jsonAbi) || contract.jsonAbi.length < 1) {
       continue;
     }
-    const json = path.resolve(`src/${network}/types/${contract.name}Abi.json`);
+    const json = path.resolve(`src/${network}/types/${contract.name}.json`);
     await fs.writeFile(json, JSON.stringify(contract.jsonAbi));
     files.push(json);
   }
@@ -65,23 +68,21 @@ async function generateTypes({ network, contracts, prettierOptions }) {
   }
 
   // We only care about the types so let's remove the factories
-  await fs.rm(`src/${network}/types/factories`, { recursive: true, force: true });
-  await fs.rm(`src/${network}/types/index.ts`, { recursive: true, force: true });
-  for await (const file of files) {
-    const basename = path.basename(file, '.json');
-    // Looks like typechain misses prettyfying a few files, so we need to clean up after them
-    const content = await fs.readFile(`src/${network}/types/${basename}.ts`, 'utf8');
-    const pretty = prettier.format(content, { parser: 'typescript', ...prettierOptions });
-    if (pretty !== content) {
-      await fs.writeFile(`src/${network}/types/${basename}.ts`, pretty, 'utf8');
-    }
-    await fs.rm(file, { force: true });
-  }
+  //  await fs.rm(`src/${network}/types/factories`, { recursive: true, force: true });
+  //  await fs.rm(`src/${network}/types/index.ts`, { recursive: true, force: true });
+  //  for await (const file of files) {
+  //    const basename = path.basename(file, '.json');
+  //    // Looks like typechain misses prettyfying a few files, so we need to clean up after them
+  //    const content = await fs.readFile(`src/${network}/types/${basename}.ts`, 'utf8');
+  //    const pretty = prettier.format(content, { parser: 'typescript', ...prettierOptions });
+  //    if (pretty !== content) {
+  //      await fs.writeFile(`src/${network}/types/${basename}.ts`, pretty, 'utf8');
+  //    }
+  //    await fs.rm(file, { force: true });
+  //  }
 }
 
 async function generateSynths({ network, prettierOptions }) {
-  await fs.mkdir(`src/${network}`, { recursive: true });
-
   const synths = JSON.parse(
     await fs.readFile(require.resolve(`synthetix/publish/deployed/${network}/synths.json`), 'utf8')
   );
@@ -134,8 +135,11 @@ async function run() {
 
   for await (const network of networks) {
     const contracts = prepareContracts(network);
+    await fs.mkdir(`src/${network}/types`, { recursive: true });
     await generateTypes({ network, contracts, prettierOptions });
+    await fs.mkdir(`src/${network}/deployment`, { recursive: true });
     await generateContracts({ network, contracts, prettierOptions });
+    await fs.rm(`src/${network}/types`, { recursive: true, force: true });
     await generateSynths({ network, prettierOptions });
   }
 }
