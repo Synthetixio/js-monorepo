@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { Remarkable } from 'remarkable';
 import { linkify } from 'remarkable/linkify';
@@ -47,6 +47,9 @@ import { expired, pending } from '../helper';
 import { snapshotEndpoint, SPACE_KEY } from 'constants/snapshot';
 import Connector from '../../../../containers/Connector';
 
+import { SynthetixQueryContext } from '@synthetixio/queries';
+import { default as useProposalQuery } from '@synthetixio/queries/build/queries/gov/useProposalQuery';
+
 type ContentProps = {
   proposal?: Proposal;
   onBack: Function;
@@ -66,9 +69,10 @@ const Content: React.FC<ContentProps> = ({ proposal, onBack }) => {
     Transaction.PRESUBMIT
   );
 
-  const { useProposalQuery, useGetSpartanCouncil } = useSynthetixQueries();
-
+  const { useGetSpartanCouncil } = useSynthetixQueries();
+  const ctx = useContext(SynthetixQueryContext);
   const proposalQuery = useProposalQuery(
+    ctx.context,
     snapshotEndpoint,
     SPACE_KEY.PROPOSAL,
     proposal?.id ?? null,
@@ -89,7 +93,7 @@ const Content: React.FC<ContentProps> = ({ proposal, onBack }) => {
       proposalQuery.refetch();
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
       setSignError(error);
       setSignTransactionState(Transaction.PRESUBMIT);
     },
