@@ -9,6 +9,7 @@ export default {
 const Template: ComponentStory<typeof Navigation> = (_args) => <Navigation {..._args} />;
 
 export const Primary = Template.bind({});
+
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   currentNetwork: 1,

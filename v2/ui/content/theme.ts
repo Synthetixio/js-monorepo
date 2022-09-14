@@ -164,8 +164,11 @@ const Menu: ComponentMultiStyleConfig = {
     },
     item: {
       bgColor: 'blackAlpha.300',
-      color: 'white',
+      color: 'whiteAlpha.900',
       p: 3,
+      _hover: {
+        bgColor: 'whiteAlpha.400',
+      },
       _active: {
         bgColor: 'navy.900',
       },
@@ -179,12 +182,6 @@ const Menu: ComponentMultiStyleConfig = {
       },
       _focus: {
         bgColor: 'blackAlpha.400',
-      },
-      _even: {
-        bgColor: 'whiteAlpha.300',
-        _hover: {
-          bgColor: 'whiteAlpha.400',
-        },
       },
     },
   },
