@@ -4,10 +4,11 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { SynthetixProvider } from '@synthetixio/providers';
 import { theme } from '@synthetixio/v3-theme';
 import React, { FC, PropsWithChildren } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type UiProps = {
   variant: 'success' | 'warning' | 'error';
-  text: string;
+  isFlagged: boolean;
   countDown?: string;
 };
 
@@ -26,9 +27,11 @@ const VariantToBox: FC<PropsWithChildren<{ variant: UiProps['variant'] }>> = ({
   }
   return null;
 };
-export const BannerUi: FC<UiProps> = ({ text, variant, countDown }) => {
+export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, countDown }) => {
+  const { t } = useTranslation();
+  const translationKey = isFlagged ? 'error-flagged' : variant;
   return (
-    <VariantToBox variant={variant}>
+    <VariantToBox variant={isFlagged ? 'error' : variant}>
       <Flex
         margin="2"
         paddingTop="1"
@@ -39,7 +42,7 @@ export const BannerUi: FC<UiProps> = ({ text, variant, countDown }) => {
         borderRadius="5"
         width="fit-content"
       >
-        <Text fontSize="xs">{text}</Text>{' '}
+        <Text fontSize="xs">{t(`staking-v2.c-ratio-banner.${translationKey}`)}</Text>{' '}
         <Text fontSize="xs" fontFamily="mono" fontWeight="700" marginLeft="2" as="b">
           {countDown}
         </Text>
@@ -53,13 +56,15 @@ type Props = {
   provider: SynthetixProvider | null;
   walletAddress: string | null;
 };
-export const Banner: React.FC<Props> = ({ networkId, provider, walletAddress }) => {
+export const CRatioBanner: React.FC<Props> = ({ networkId, provider, walletAddress }) => {
   const { data: debtData } = useDebtData({ networkId, provider, walletAddress });
-  if (!debtData) return <p>Skeleton</p>;
+  if (!debtData) return null;
   const variant = getHealthVariant({
     currentCRatioPercentage: debtData.currentCRatioPercentage.toNumber(),
     targetCratioPercentage: debtData.targetCRatioPercentage.toNumber(),
     liquidationCratioPercentage: debtData.liquidationRatioPercentage.toNumber(),
   });
-  return <BannerUi countDown="todo" variant={variant} text="todo" />;
+  const isFlagged = false; // todo
+
+  return <CRatioBannerUi countDown="todo" variant={variant} isFlagged={isFlagged} />;
 };

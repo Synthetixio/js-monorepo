@@ -1,6 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { useRecoilValue } from 'recoil';
-import { Banner } from '@snx-v2/Banner';
+import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
 import { BalanceBox } from '@snx-v2/BalanceBox';
 import { MainActionCards } from '@snx-v2/MainActionCards';
@@ -19,7 +19,7 @@ const V2Home = () => {
   return (
     <Box>
       <Box height="42px" position="absolute" left="0" right="0">
-        <Banner {...propsFromConnector} />
+        <CRatioBanner {...propsFromConnector} />
       </Box>
       <Box height="42px" />
       <Flex mt="4" flexDirection={['column', 'column', 'column', 'row']}>
