@@ -8,7 +8,7 @@
   "scripts": {
     "start": "webpack-cli serve",
     "dev": "webpack-cli serve",
-    "build": "NODE_ENV=production webpack-cli",
+    "build": "tsc --noEmit && NODE_ENV=production webpack-cli",
     "build:report": "GENERATE_BUNDLE_REPORT=true NODE_ENV=production webpack-cli",
     "format": "prettier --write .",
     "pretty:check": "prettier --check .",
