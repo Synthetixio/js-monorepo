@@ -39,6 +39,7 @@
     "@snx-v2/Navigation": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/getHealthVariant": "workspace:*",
+    "@snx-v2/useSynthetixContracts": "workspace:*",
     "@socket.tech/widget": "^0.1.1",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/contracts-interface": "workspace:*",
