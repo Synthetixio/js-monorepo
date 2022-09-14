@@ -26,8 +26,15 @@ import { formatValue } from '../../../utils/helpers';
 import { currency } from '../../../utils/currency';
 import { StakingPositionType } from '../../../utils/types';
 import { poolsData } from '../../../utils/constants';
+import { PoolDialog } from '../Position/PoolDialog';
+import { FC } from 'react';
 
-export default function StakingPosition({ position }: { position: StakingPositionType }) {
+interface Props {
+  position: StakingPositionType;
+  refetch: () => void;
+}
+
+export const StakingPosition: FC<Props> = ({ position, refetch }) => {
   // If the connected wallet doesn’t own this account token, remove/disable the interactivity
 
   const { isOpen: isOpenFund, onOpen: onOpenFund, onClose: onCloseFund } = useDisclosure();
@@ -248,47 +255,22 @@ export default function StakingPosition({ position }: { position: StakingPositio
           display="inline"
           borderBottom="1px dotted rgba(255,255,255,0.5)"
         >
-          {poolsData[position.poolId.toString()].name}
+          {poolsData[position.poolId.toString()]?.name}
         </Link>
         <Link color="blue.400" ml="1">
           <EditIcon onClick={onOpenFund} style={{ transform: 'translateY(-2px)' }} />
         </Link>
-        {/*
-        For 0 fund:
-        <Text opacity="0.66">None
-          <Link color="blue.400" ml="1">
-            <EditIcon onClick={onOpenFund} style={{ transform: 'translateY(-2px)' }} />
-          </Link>
-              */}
-        {/*<Text fontSize="xs" opacity="0.66" mt="1'">&times;1 Leverage</Text>*/}
 
-        <Modal size="2xl" isOpen={isOpenFund} onClose={onCloseFund}>
-          <ModalOverlay />
-          <ModalContent bg="black" color="white">
-            <ModalHeader>Select Fund</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              {/* <EditPosition /> */}
-              {/*
-              <Heading size="sm" mb="3">Leverage</Heading>
-              <Grid templateColumns='repeat(12, 1fr)' gap={6} alignItems="center" mb="6">
-                <GridItem colSpan="3">
-                  <InputGroup>
-                    <InputLeftAddon bg="black">&times;</InputLeftAddon>
-                    <Input id='amount' type='amount' borderLeft="none" value="1" />
-                  </InputGroup>
-                </GridItem>
-                <GridItem colSpan="9">
-                  <Text fontSize="sm">Leveraging your staking position allows you to earn more rewards, but your c-ratio is subject to greater volatiity. <em>Use leverage with caution.</em></Text>
-                </GridItem>
-              </Grid>
-            */}
-              <Button w="100%" colorScheme="blue">
-                Update
-              </Button>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
+        <PoolDialog
+          collateralAmount={collateralAmount}
+          accountId={position.accountId}
+          poolId={position.poolId}
+          collateral={position.collateralType}
+          refetch={refetch}
+          isOpen={isOpenFund}
+          debt={position.debt.toNumber()}
+          onClose={onCloseFund}
+        />
       </Td>
       <Td>
         <Link
@@ -303,4 +285,4 @@ export default function StakingPosition({ position }: { position: StakingPositio
       </Td>
     </Tr>
   );
-}
+};

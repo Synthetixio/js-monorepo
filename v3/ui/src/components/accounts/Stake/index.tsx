@@ -329,7 +329,7 @@ export default function Stake({
                   Pool:{' '}
                   {selectedPoolId
                     ? poolsData[selectedPoolId]
-                      ? poolsData[selectedPoolId].name
+                      ? poolsData[selectedPoolId]?.name
                       : 'Unknown Pool'
                     : 'None'}{' '}
                   <Link color="blue.400">

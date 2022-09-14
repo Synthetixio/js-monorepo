@@ -47,7 +47,7 @@ export const PoolDialog: FC<Props> = ({
   const navigate = useNavigate();
   const pools = useRecoilValue(poolsState);
   const [pool, setPool] = useState(poolId);
-  const { exec, isValid } = useUpdatePool(
+  const { exec, isValid, isLoading } = useUpdatePool(
     {
       collateral,
       poolId,
@@ -136,7 +136,14 @@ export const PoolDialog: FC<Props> = ({
             )}
           </Text>
 
-          <Button disabled={!isValid || debt > 0} onClick={exec} colorScheme="blue" w="100%" my="5">
+          <Button
+            isLoading={isLoading}
+            disabled={!isValid || debt > 0}
+            onClick={exec}
+            colorScheme="blue"
+            w="100%"
+            my="5"
+          >
             Update Pool
           </Button>
         </ModalBody>

@@ -136,6 +136,7 @@ export const useMulticall = (
     exec,
     status,
     currentTxn,
+    isLoading: status === 'pending',
     isValid: !!calls.length,
   };
 };

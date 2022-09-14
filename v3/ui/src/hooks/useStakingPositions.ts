@@ -69,7 +69,7 @@ export const useStakingPositions = (accountId: string) => {
         positions[key] = {
           id: key,
           poolId,
-          poolName: poolsData[poolId.toString()].name,
+          poolName: poolsData[poolId.toString()]?.name,
           collateralType: coolateral,
           accountId,
           collateralAmount: c.value.amount,

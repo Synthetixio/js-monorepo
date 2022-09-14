@@ -39,7 +39,7 @@ export const useStakingPosition = (
     poolId,
     collateralType: collateral,
     accountId,
-    poolName: poolsData[poolId].name,
+    poolName: poolsData[poolId]?.name,
     collateralAmount: data?.collateralAmount || 0,
     cRatio: data?.cRatio || 0,
     debt: data?.debt || 0,
