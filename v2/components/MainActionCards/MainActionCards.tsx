@@ -252,13 +252,8 @@ export const MainActionCardsUi: React.FC<UiProps> = (props) => {
   );
 };
 
-type Props = {
-  networkId: number | undefined;
-  provider: SynthetixProvider | null;
-  walletAddress: string | null;
-};
-export const MainActionCards: React.FC<Props> = ({ networkId, provider, walletAddress }) => {
-  const { data: debtData } = useDebtData({ networkId, provider, walletAddress });
+export const MainActionCards: React.FC = () => {
+  const { data: debtData } = useDebtData();
   if (!debtData) return <p>Skeleton</p>;
 
   return (

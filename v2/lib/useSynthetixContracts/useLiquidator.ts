@@ -1,16 +1,12 @@
-import { SynthetixProvider } from '@synthetixio/providers';
+import { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ethers } from 'ethers';
 import { isSupportedNetworkId, NetworkNameById } from './common';
+import { ContractContext } from '@snx-v2/ContractContext';
+
 import type { Liquidator } from '@synthetixio/contracts/build/mainnet/deployment/Liquidator';
 import type { Liquidator as LiquidatorOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/Liquidator';
-
-type Args =
-  | { networkId: number | undefined; signer: ethers.Signer | null }
-  | {
-      networkId: number | undefined;
-      provider: SynthetixProvider | null;
-    };
+import { SynthetixProvider } from '@synthetixio/providers';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/Liquidator'),
@@ -19,11 +15,17 @@ const contracts = {
   'goerli-ovm': () => import('@synthetixio/contracts/build/goerli-ovm/deployment/Liquidator'),
 };
 
-export const getLiquidator = async (args: Args) => {
-  const { networkId } = args;
-  const signerOrProvider = 'signer' in args ? args.signer : args.provider;
+export const getLiquidator = async ({
+  networkId,
+  signer,
+  provider,
+}: {
+  networkId: number;
+  signer: ethers.Signer | null;
+  provider: SynthetixProvider;
+}) => {
+  const signerOrProvider = signer || provider;
 
-  if (!signerOrProvider) throw Error('Provider is missing');
   const supportedNetworkId = isSupportedNetworkId(networkId);
   if (!supportedNetworkId) {
     throw Error(`${networkId} is not supported`);
@@ -35,11 +37,12 @@ export const getLiquidator = async (args: Args) => {
     | LiquidatorOvm;
   return contract;
 };
-export const useLiquidator = (args: Args) => {
-  const signerOrProvider = 'signer' in args ? args.signer : args.provider;
+export const useLiquidator = () => {
+  const { networkId, signer, provider } = useContext(ContractContext);
 
-  return useQuery([args.networkId, 'useLiquidator'], async () => getLiquidator(args), {
-    enabled: Boolean(args.networkId && signerOrProvider),
-    staleTime: Infinity,
-  });
+  return useQuery(
+    [networkId, Boolean(signer), 'useLiquidator'],
+    async () => getLiquidator({ networkId, signer, provider }),
+    { staleTime: Infinity }
+  );
 };

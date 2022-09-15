@@ -49,13 +49,8 @@ export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, countDown }) =
   );
 };
 
-type Props = {
-  networkId: number | undefined;
-  provider: SynthetixProvider | null;
-  walletAddress: string | null;
-};
-export const CRatioBanner: React.FC<Props> = ({ networkId, provider, walletAddress }) => {
-  const { data: debtData } = useDebtData({ networkId, provider, walletAddress });
+export const CRatioBanner: React.FC = () => {
+  const { data: debtData } = useDebtData();
   if (!debtData) return null;
   const variant = getHealthVariant({
     currentCRatioPercentage: debtData.currentCRatioPercentage.toNumber(),

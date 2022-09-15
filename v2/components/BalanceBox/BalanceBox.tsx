@@ -61,13 +61,8 @@ export const BalanceBoxUi = ({
   );
 };
 
-type Props = {
-  networkId: number | undefined;
-  provider: SynthetixProvider | null;
-  walletAddress: string | null;
-};
-export const BalanceBox: React.FC<Props> = ({ networkId, provider, walletAddress }) => {
-  const { data: debtData } = useDebtData({ networkId, provider, walletAddress });
+export const BalanceBox: React.FC = () => {
+  const { data: debtData } = useDebtData();
   if (!debtData) return <p>Skeleton</p>;
 
   return (

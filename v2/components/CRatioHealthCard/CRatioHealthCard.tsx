@@ -55,13 +55,8 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
   );
 };
 
-type Props = {
-  networkId: number | undefined;
-  provider: SynthetixProvider | null;
-  walletAddress: string | null;
-};
-export const CRatioHealthCard: React.FC<Props> = ({ networkId, provider, walletAddress }) => {
-  const { data: debtData } = useDebtData({ networkId, provider, walletAddress });
+export const CRatioHealthCard: React.FC = () => {
+  const { data: debtData } = useDebtData();
   if (!debtData) return <p>Skeleton</p>;
 
   return (

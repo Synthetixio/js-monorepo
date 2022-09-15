@@ -1,9 +1,11 @@
+import { useContext } from 'react';
 import { useQuery, useQueries } from '@tanstack/react-query';
 import { wei } from '@synthetixio/wei';
 import { formatBytes32String } from '@ethersproject/strings';
 import { getSynthetix, getLiquidator, getSystemSettings } from '@snx-v2/useSynthetixContracts';
 import { SynthetixProvider } from '@synthetixio/providers';
 import { BigNumber } from 'ethers';
+import { ContractContext } from '@snx-v2/ContractContext';
 
 const processQueryData = (
   result: [
@@ -35,7 +37,7 @@ const processQueryData = (
     targetCRatio,
     currentCRatio,
     targetCRatioPercentage: wei(1).div(targetCRatio).mul(100),
-    currentCRatioPercentage: wei(1).div(currentCRatio).mul(100),
+    currentCRatioPercentage: currentCRatio.gt(0) ? wei(1).div(currentCRatio).mul(100) : wei(0),
     transferable,
     debtBalance,
     collateral,
@@ -48,27 +50,23 @@ const processQueryData = (
   };
 };
 
-export const useDebtData = (args: {
-  networkId: number | undefined;
-  provider: SynthetixProvider | null;
-  walletAddress: string | null;
-}) => {
-  const { networkId, provider, walletAddress } = args;
+export const useDebtData = () => {
+  const { provider, networkId, walletAddress, signer } = useContext(ContractContext);
   const [{ data: Synthetix }, { data: Liquidator }, { data: SystemSettings }] = useQueries({
     queries: [
       {
         queryKey: ['getSynthetix', networkId],
-        queryFn: () => getSynthetix({ networkId, provider }),
+        queryFn: () => getSynthetix({ networkId, provider, signer }),
         staleTime: Infinity,
       },
       {
         queryKey: ['getLiquidator', networkId],
-        queryFn: () => getLiquidator({ networkId, provider }),
+        queryFn: () => getLiquidator({ networkId, provider, signer }),
         staleTime: Infinity,
       },
       {
         queryKey: ['getSystemSettings', networkId],
-        queryFn: () => getSystemSettings({ networkId, provider }),
+        queryFn: () => getSystemSettings({ networkId, provider, signer }),
         staleTime: Infinity,
       },
     ],

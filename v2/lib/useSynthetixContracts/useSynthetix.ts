@@ -1,16 +1,12 @@
-import { SynthetixProvider } from '@synthetixio/providers';
+import { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ethers } from 'ethers';
 import { isSupportedNetworkId, NetworkNameById } from './common';
+import { ContractContext } from '@snx-v2/ContractContext';
+
 import type { Synthetix } from '@synthetixio/contracts/build/mainnet/deployment/Synthetix';
 import type { Synthetix as SynthetixOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/Synthetix';
-
-type Args =
-  | { networkId: number | undefined; signer: ethers.Signer | null }
-  | {
-      networkId: number | undefined;
-      provider: SynthetixProvider | null;
-    };
+import { SynthetixProvider } from '@synthetixio/providers';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/Synthetix'),
@@ -19,11 +15,16 @@ const contracts = {
   'goerli-ovm': () => import('@synthetixio/contracts/build/goerli-ovm/deployment/Synthetix'),
 };
 
-export const getSynthetix = async (args: Args) => {
-  const { networkId } = args;
-  const signerOrProvider = 'signer' in args ? args.signer : args.provider;
-
-  if (!signerOrProvider) throw Error('Provider is missing');
+export const getSynthetix = async ({
+  networkId,
+  signer,
+  provider,
+}: {
+  networkId: number;
+  signer: ethers.Signer | null;
+  provider: SynthetixProvider;
+}) => {
+  const signerOrProvider = signer || provider;
   const supportedNetworkId = isSupportedNetworkId(networkId);
   if (!supportedNetworkId) {
     throw Error(`${networkId} is not supported`);
@@ -33,11 +34,12 @@ export const getSynthetix = async (args: Args) => {
   const contract = new ethers.Contract(address, abi, signerOrProvider) as SynthetixOvm | Synthetix;
   return contract;
 };
-export const useSynthetix = (args: Args) => {
-  const signerOrProvider = 'signer' in args ? args.signer : args.provider;
+export const useSynthetix = () => {
+  const { networkId, signer, provider } = useContext(ContractContext);
 
-  return useQuery([args.networkId, 'useSynthetix'], () => getSynthetix(args), {
-    enabled: Boolean(args.networkId && signerOrProvider),
-    staleTime: Infinity,
-  });
+  return useQuery(
+    [networkId, Boolean(signer), 'useSynthetix'],
+    () => getSynthetix({ networkId, signer, provider }),
+    { staleTime: Infinity }
+  );
 };

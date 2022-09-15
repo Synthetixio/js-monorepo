@@ -66,7 +66,7 @@ function InnerApp() {
       >
         <ContractContext.Provider
           value={{
-            networkId: networkId || 1,
+            networkId: isSupportedNetworkId(networkId) ? networkId : 1,
             provider: provider || L1DefaultProvider,
             signer: signer || null,
             walletAddress,

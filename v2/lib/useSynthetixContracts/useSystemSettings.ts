@@ -4,13 +4,8 @@ import { ethers } from 'ethers';
 import { isSupportedNetworkId, NetworkNameById } from './common';
 import type { SystemSettings } from '@synthetixio/contracts/build/mainnet/deployment/SystemSettings';
 import type { SystemSettings as SystemSettingsOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SystemSettings';
-
-type Args =
-  | { networkId: number | undefined; signer: ethers.Signer | null }
-  | {
-      networkId: number | undefined;
-      provider: SynthetixProvider | null;
-    };
+import { useContext } from 'react';
+import { ContractContext } from '@snx-v2/ContractContext';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/SystemSettings'),
@@ -19,11 +14,17 @@ const contracts = {
   'goerli-ovm': () => import('@synthetixio/contracts/build/goerli-ovm/deployment/SystemSettings'),
 };
 
-export const getSystemSettings = async (args: Args) => {
-  const { networkId } = args;
-  const signerOrProvider = 'signer' in args ? args.signer : args.provider;
+export const getSystemSettings = async ({
+  networkId,
+  signer,
+  provider,
+}: {
+  networkId: number;
+  signer: ethers.Signer | null;
+  provider: SynthetixProvider;
+}) => {
+  const signerOrProvider = signer || provider;
 
-  if (!signerOrProvider) throw Error('Provider is missing');
   const supportedNetworkId = isSupportedNetworkId(networkId);
   if (!supportedNetworkId) {
     throw Error(`${networkId} is not supported`);
@@ -35,11 +36,11 @@ export const getSystemSettings = async (args: Args) => {
     | SystemSettingsOvm;
   return contract;
 };
-export const useSystemSettings = (args: Args) => {
-  const signerOrProvider = 'signer' in args ? args.signer : args.provider;
-
-  return useQuery([args.networkId, 'useSystemSettings'], () => getSystemSettings(args), {
-    enabled: Boolean(args.networkId && signerOrProvider),
-    staleTime: Infinity,
-  });
+export const useSystemSettings = () => {
+  const { networkId, signer, provider } = useContext(ContractContext);
+  return useQuery(
+    [networkId, 'useSystemSettings'],
+    () => getSystemSettings({ networkId, signer, provider }),
+    { staleTime: Infinity }
+  );
 };
