@@ -6235,7 +6235,6 @@ __metadata:
   dependencies:
     "@ethersproject/strings": ^5.6.1
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/contracts": "workspace:*"
     "@synthetixio/providers": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
