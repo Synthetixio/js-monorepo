@@ -12,8 +12,10 @@ export const ContractContext = createContext<{
   networkId: number;
   provider: SynthetixProvider;
   signer: Signer | null;
+  walletAddress: string | null;
 }>({
   networkId: defaultNetworkId,
   provider: defaultProvider,
   signer: null,
+  walletAddress: null,
 });

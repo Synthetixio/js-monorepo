@@ -37,7 +37,8 @@ const queryClient = new QueryClient({
 });
 
 function InnerApp() {
-  const { provider, signer, network, L1DefaultProvider, synthetixjs } = Connector.useContainer();
+  const { provider, signer, network, L1DefaultProvider, synthetixjs, walletAddress } =
+    Connector.useContainer();
 
   useEffect(() => {
     try {
@@ -68,6 +69,7 @@ function InnerApp() {
             networkId: networkId || 1,
             provider: provider || L1DefaultProvider,
             signer: signer || null,
+            walletAddress,
           }}
         >
           <Layout>
