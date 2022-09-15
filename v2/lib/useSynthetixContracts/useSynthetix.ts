@@ -34,5 +34,10 @@ export const getSynthetix = async (args: Args) => {
   return contract;
 };
 export const useSynthetix = (args: Args) => {
-  return useQuery([args.networkId, 'useSynthetix'], () => getSynthetix(args));
+  const signerOrProvider = 'signer' in args ? args.signer : args.provider;
+
+  return useQuery([args.networkId, 'useSynthetix'], () => getSynthetix(args), {
+    enabled: Boolean(args.networkId && signerOrProvider),
+    staleTime: Infinity,
+  });
 };

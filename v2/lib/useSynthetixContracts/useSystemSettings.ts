@@ -36,5 +36,10 @@ export const getSystemSettings = async (args: Args) => {
   return contract;
 };
 export const useSystemSettings = (args: Args) => {
-  return useQuery([args.networkId, 'useSystemSettings'], () => getSystemSettings(args));
+  const signerOrProvider = 'signer' in args ? args.signer : args.provider;
+
+  return useQuery([args.networkId, 'useSystemSettings'], () => getSystemSettings(args), {
+    enabled: Boolean(args.networkId && signerOrProvider),
+    staleTime: Infinity,
+  });
 };

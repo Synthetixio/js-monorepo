@@ -36,5 +36,10 @@ export const getLiquidator = async (args: Args) => {
   return contract;
 };
 export const useLiquidator = (args: Args) => {
-  return useQuery([args.networkId, 'useLiquidator'], async () => getLiquidator(args));
+  const signerOrProvider = 'signer' in args ? args.signer : args.provider;
+
+  return useQuery([args.networkId, 'useLiquidator'], async () => getLiquidator(args), {
+    enabled: Boolean(args.networkId && signerOrProvider),
+    staleTime: Infinity,
+  });
 };
