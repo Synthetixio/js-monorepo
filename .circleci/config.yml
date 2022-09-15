@@ -24,7 +24,7 @@ commands:
               exit 0
             else
               echo "node_modules could not be restored from cache, activating fallback installation"
-              yarn install --immutable --immutable-cache
+              yarn install --immutable
             fi
 
       - save_cache:
@@ -45,6 +45,7 @@ commands:
 
       - run:
           name: cypress install
+          working_directory: ~/app/v2/ui
           command: |-
             # Check if we restored cache and have node_modules already
             if yarn cypress verify ; then
@@ -64,20 +65,19 @@ jobs:
   v2-ui:
     working_directory: ~/app
     docker:
-      - image: cimg/node:16.17.0
-
+      - image: cimg/node:16.17.0-browsers
+    resource_class: large
     environment:
       CYPRESS_CRASH_REPORTS: 0
       CYPRESS_INSTALL_BINARY: 0
       CYPRESS_CACHE_FOLDER: ~/cypress
-
     steps:
       - checkout
       - yarn-install
       - cypress-install
       - browser-tools/install-chrome
-      - run: yarn workspace @synthetixio/v2-ui run cy:check
-      - run: yarn workspace @synthetixio/v2-ui exec webpack-cli --node-env production
+      # - run: yarn workspace @synthetixio/v2-ui run cy:check
+      - run: yarn workspace @synthetixio/v2-ui run standalone-build
       - run:
           name: Run server localhost:3000
           working_directory: ~/app/v2/ui/out
