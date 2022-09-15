@@ -1,12 +1,13 @@
 import { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { ethers, providers } from 'ethers';
 import { isSupportedNetworkId, NetworkNameById } from './common';
 import { ContractContext } from '@snx-v2/ContractContext';
 
 import type { Synthetix } from '@synthetixio/contracts/build/mainnet/deployment/Synthetix';
 import type { Synthetix as SynthetixOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/Synthetix';
 import { SynthetixProvider } from '@synthetixio/providers';
+import { SignerContext } from '@snx-v2/SignerContext';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/Synthetix'),
@@ -35,11 +36,21 @@ export const getSynthetix = async ({
   return contract;
 };
 export const useSynthetix = () => {
-  const { networkId, signer, provider } = useContext(ContractContext);
+  const { networkId, walletAddress } = useContext(ContractContext);
+  const signer = useContext(SignerContext);
 
   return useQuery(
-    [networkId, Boolean(signer), 'useSynthetix'],
-    () => getSynthetix({ networkId, signer, provider }),
-    { staleTime: Infinity }
+    [networkId, walletAddress, 'useSynthetix'],
+    () => {
+      if (!networkId) throw Error('Network id required');
+
+      const provider = new providers.InfuraProvider(
+        networkId,
+        process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
+      );
+
+      return getSynthetix({ networkId, signer, provider });
+    },
+    { staleTime: Infinity, enabled: Boolean(networkId) }
   );
 };

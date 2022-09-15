@@ -1,12 +1,13 @@
 import { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { ethers, providers } from 'ethers';
 import { isSupportedNetworkId, NetworkNameById } from './common';
 import { ContractContext } from '@snx-v2/ContractContext';
 
 import type { Liquidator } from '@synthetixio/contracts/build/mainnet/deployment/Liquidator';
 import type { Liquidator as LiquidatorOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/Liquidator';
 import { SynthetixProvider } from '@synthetixio/providers';
+import { SignerContext } from '@snx-v2/SignerContext';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/Liquidator'),
@@ -38,11 +39,21 @@ export const getLiquidator = async ({
   return contract;
 };
 export const useLiquidator = () => {
-  const { networkId, signer, provider } = useContext(ContractContext);
+  const { networkId, walletAddress } = useContext(ContractContext);
+  const signer = useContext(SignerContext);
 
   return useQuery(
-    [networkId, Boolean(signer), 'useLiquidator'],
-    async () => getLiquidator({ networkId, signer, provider }),
-    { staleTime: Infinity }
+    [networkId, walletAddress, 'useLiquidator'],
+    async () => {
+      if (!networkId) throw Error('Network id required');
+
+      const provider = new providers.InfuraProvider(
+        networkId,
+        process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
+      );
+
+      return getLiquidator({ networkId, signer, provider });
+    },
+    { staleTime: Infinity, enabled: Boolean(networkId) }
   );
 };

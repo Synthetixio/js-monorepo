@@ -38,6 +38,7 @@
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/MainActionCards": "workspace:*",
     "@snx-v2/Navigation": "workspace:*",
+    "@snx-v2/SignerContext": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "@socket.tech/widget": "^0.1.1",

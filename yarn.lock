@@ -6120,8 +6120,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/ContractContext@workspace:v2/lib/ContractContext"
   dependencies:
-    "@synthetixio/providers": "workspace:*"
-    ethers: ^5.5.3
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -6164,6 +6162,15 @@ __metadata:
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/SignerContext@workspace:*, @snx-v2/SignerContext@workspace:v2/lib/SignerContext":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/SignerContext@workspace:v2/lib/SignerContext"
+  dependencies:
+    ethers: ^5.5.3
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -6259,6 +6266,7 @@ __metadata:
   resolution: "@snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/SignerContext": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/providers": "workspace:*"
     "@tanstack/react-query": ^4.3.4
@@ -8055,6 +8063,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
+    "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@socket.tech/widget": ^0.1.1
