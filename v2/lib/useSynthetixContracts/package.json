@@ -5,6 +5,7 @@
   "version": "0.0.0",
   "dependencies": {
     "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/SignerContext": "workspace:*",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/providers": "workspace:*",
     "@tanstack/react-query": "^4.3.4",
