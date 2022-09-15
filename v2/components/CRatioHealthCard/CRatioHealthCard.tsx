@@ -66,9 +66,9 @@ export const CRatioHealthCard: React.FC<Props> = ({ networkId, provider, walletA
 
   return (
     <CRatioHealthCardUi
-      currentCRatioPercentage={debtData.currentCRatioPercentage.mul(100).toNumber()}
-      targetCratioPercentage={debtData.targetCRatioPercentage.mul(100).toNumber()}
-      liquidationCratioPercentage={debtData.liquidationRatioPercentage.mul(100).toNumber()}
+      currentCRatioPercentage={debtData.currentCRatioPercentage.toNumber()}
+      targetCratioPercentage={debtData.targetCRatioPercentage.toNumber()}
+      liquidationCratioPercentage={debtData.liquidationRatioPercentage.toNumber()}
     />
   );
 };
