@@ -64,20 +64,8 @@ function InnerApp() {
               })
         }
       >
-        <ContractContext.Provider
-          value={{
-            networkId: isSupportedNetworkId(networkId) ? networkId : 1,
-            provider: provider || L1DefaultProvider,
-            signer: signer || null,
-            walletAddress,
-          }}
-        >
-          <Layout>
-            <SystemStatus>
-              <Routes />
-            </SystemStatus>
-          </Layout>
-        </ContractContext.Provider>
+          <ContractContext.Provider value={contractContextData}>
+            <Layout>
         <ReactQueryDevtools />
       </SynthetixQueryContextProvider>
     </>

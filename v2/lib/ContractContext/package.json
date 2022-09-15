@@ -4,8 +4,6 @@
   "main": "index.ts",
   "version": "0.0.0",
   "dependencies": {
-    "@synthetixio/providers": "workspace:*",
-    "ethers": "^5.5.3",
     "react": "^18.2.0"
   }
 }
