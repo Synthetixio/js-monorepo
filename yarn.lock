@@ -6116,6 +6116,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/ContractContext@workspace:*, @snx-v2/ContractContext@workspace:v2/lib/ContractContext":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/ContractContext@workspace:v2/lib/ContractContext"
+  dependencies:
+    "@synthetixio/providers": "workspace:*"
+    ethers: ^5.5.3
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/ExternalLink@workspace:v2/components/ExternalLink":
   version: 0.0.0-use.local
   resolution: "@snx-v2/ExternalLink@workspace:v2/components/ExternalLink"
@@ -8038,6 +8048,7 @@ __metadata:
     "@snx-v2/Burn": "workspace:*"
     "@snx-v2/CRatioBanner": "workspace:*"
     "@snx-v2/CRatioHealthCard": "workspace:*"
+    "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
     "@snx-v2/formatters": "workspace:*"

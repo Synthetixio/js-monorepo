@@ -25,6 +25,7 @@ import Routes from './Routes';
 import { isSupportedNetworkId } from './utils/network';
 import useLocalStorage from './hooks/useLocalStorage';
 import { LOCAL_STORAGE_KEYS } from './constants/storage';
+import { ContractContext } from '@snx-v2/ContractContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -62,11 +63,19 @@ function InnerApp() {
               })
         }
       >
-        <Layout>
-          <SystemStatus>
-            <Routes />
-          </SystemStatus>
-        </Layout>
+        <ContractContext.Provider
+          value={{
+            networkId: networkId || 1,
+            provider: provider || L1DefaultProvider,
+            signer: signer || null,
+          }}
+        >
+          <Layout>
+            <SystemStatus>
+              <Routes />
+            </SystemStatus>
+          </Layout>
+        </ContractContext.Provider>
         <ReactQueryDevtools />
       </SynthetixQueryContextProvider>
     </>
