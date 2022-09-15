@@ -78,7 +78,7 @@ export const useDebtData = (args: {
     ['debt', 'data', networkId, walletAddress],
     async () => {
       if (!walletAddress || !Synthetix || !Liquidator || !SystemSettings)
-        throw Error('Query should not be enable is contracts missing');
+        throw Error('Query should not be enabled if contracts are missing');
 
       const sUSDBytes = formatBytes32String('sUSD');
       return Promise.all([
