@@ -5,7 +5,6 @@ import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { CollectIcon, InfoIcon, MaintainIcon, StakeIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { SynthetixProvider } from '@synthetixio/providers';
-import debt from '../../ui/sections/debt';
 
 const CardHeader = ({
   step,
