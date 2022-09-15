@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { safeLazy } from '@synthetixio/safe-import';
 import AppLayout from './sections/shared/Layout/AppLayout';
+import { LOCAL_STORAGE_KEYS } from 'constants/storage';
+import useLocalStorage from 'hooks/useLocalStorage';
 
 const DashboardPage = safeLazy(
   () => import(/* webpackChunkName: "dashboard" */ './content/DashboardPage')
@@ -31,18 +33,23 @@ const BridgePage = safeLazy(() => import(/* webpackChunkName: "bridge" */ './con
 const NotFound = safeLazy(() => import(/* webpackChunkName: "404" */ './content/404'));
 
 const V2HomePage = safeLazy(() => import(/* webpackChunkName: "v2-home" */ './content/V2Home'));
+const V2MintPage = safeLazy(() => import(/* webpackChunkName: "v2-mint" */ './content/V2Mint'));
 
 export default function AppRoutes() {
+  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
   return (
     <BrowserRouter>
       <AppLayout>
         <Routes>
-          <Route path="/" element={<DashboardPage />} />
-          <Route path="/v2-home" element={<V2HomePage />} />
+          <Route path="/" element={STAKING_V2_ENABLED ? <V2HomePage /> : <DashboardPage />} />
 
-          <Route path="/staking" element={<StakingPage />}>
-            <Route path=":action" element={<StakingPage />} />
-          </Route>
+          {STAKING_V2_ENABLED ? (
+            <Route path="/staking/mint" element={<V2MintPage />} />
+          ) : (
+            <Route path="/staking" element={<StakingPage />}>
+              <Route path=":action" element={<StakingPage />} />
+            </Route>
+          )}
 
           <Route path="/loans" element={<LoansPage />}>
             <Route path=":action" element={<LoansPage />} />
