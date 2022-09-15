@@ -3,7 +3,7 @@ import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { SynthetixProvider } from '@synthetixio/providers';
 import { theme } from '@synthetixio/v3-theme';
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type UiProps = {
@@ -12,26 +12,24 @@ type UiProps = {
   countDown?: string;
 };
 
-const VariantToBox: FC<PropsWithChildren<{ variant: UiProps['variant'] }>> = ({
-  variant,
-  children,
-}) => {
+const getWrapperStyles = (variant: UiProps['variant']) => {
   if (variant === 'success') {
-    return <Center bgGradient={theme.gradients['green-cyan'][500]}>{children}</Center>;
+    return { bgGradient: theme.gradients['green-cyan'][500] };
   }
   if (variant === 'warning') {
-    return <Center bgGradient={theme.gradients['orange'][500]}>{children}</Center>;
+    return { bgGradient: theme.gradients['orange'][500] };
   }
   if (variant === 'error') {
-    return <Center bg="red.400">{children}</Center>;
+    return { bg: 'red.400' };
   }
   return null;
 };
 export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, countDown }) => {
   const { t } = useTranslation();
   const translationKey = isFlagged ? 'error-flagged' : variant;
+  const wrapperStyles = getWrapperStyles(variant);
   return (
-    <VariantToBox variant={isFlagged ? 'error' : variant}>
+    <Center {...wrapperStyles}>
       <Flex
         margin="2"
         paddingTop="1"
@@ -47,7 +45,7 @@ export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, countDown }) =
           {countDown}
         </Text>
       </Flex>
-    </VariantToBox>
+    </Center>
   );
 };
 
