@@ -60,9 +60,9 @@ interface ContentProps {
 }
 
 const Content = styled.div<ContentProps>`
+  margin: 0 auto;
   ${({ STAKING_V2_ENABLED }) => `
-    max-width: ${STAKING_V2_ENABLED ? 'unset' : `1200px`};
-    margin: ${STAKING_V2_ENABLED ? 'auto' : '0 auto'};
+    max-width: ${STAKING_V2_ENABLED ? 'unset' : '1200px'};
   `};
 
   ${({ STAKING_V2_ENABLED }) => media.greaterThan('mdUp')`
