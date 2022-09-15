@@ -15,6 +15,7 @@ const processQueryData = (
     BigNumber,
     BigNumber,
     BigNumber,
+    BigNumber,
     BigNumber
   ]
 ) => {
@@ -42,7 +43,7 @@ const processQueryData = (
     balance,
     targetThreshold,
     liquidationRatio,
-    liquidationRatioPercentage: wei(1).div(currentCRatio).mul(100),
+    liquidationRatioPercentage: wei(1).div(liquidationRatio).mul(100),
     liquidationDeadlineForAccount: wei(liquidationDeadlineForAccountBN, 0),
   };
 };
@@ -90,11 +91,12 @@ export const useDebtData = (args: {
         Synthetix.balanceOf(walletAddress),
         SystemSettings.targetThreshold(),
         Liquidator.liquidationRatio(),
+        Liquidator.getLiquidationDeadlineForAccount(walletAddress),
       ]);
     },
     {
       enabled: Boolean(
-        networkId !== null && walletAddress !== null && Synthetix && Liquidator && SystemSettings
+        networkId && provider && walletAddress !== null && Synthetix && Liquidator && SystemSettings
       ),
       select: processQueryData,
       staleTime: 10000,
