@@ -1,15 +1,16 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
+import { useDebtData } from '@snx-v2/useDebtData';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CRatioProgressBar } from './CRatioProgressBar';
 
-type Props = {
+type UiProps = {
   liquidationCratioPercentage: number;
   targetCratioPercentage: number;
   currentCRatioPercentage: number;
 };
-export const CRatioHealthCard: React.FC<Props> = ({
+export const CRatioHealthCardUi: React.FC<UiProps> = ({
   targetCratioPercentage,
   liquidationCratioPercentage,
   currentCRatioPercentage,
@@ -40,7 +41,7 @@ export const CRatioHealthCard: React.FC<Props> = ({
             align="center"
             fontFamily="mono"
           >
-            {currentCRatioPercentage}%
+            {Math.floor(currentCRatioPercentage)}%
           </Text>
         </Flex>
       </Flex>
@@ -50,5 +51,18 @@ export const CRatioHealthCard: React.FC<Props> = ({
         currentCRatioPercentage={currentCRatioPercentage}
       />
     </Box>
+  );
+};
+
+export const CRatioHealthCard: React.FC = () => {
+  const { data: debtData } = useDebtData();
+  if (!debtData) return <p>Skeleton</p>;
+
+  return (
+    <CRatioHealthCardUi
+      currentCRatioPercentage={debtData.currentCRatioPercentage.toNumber()}
+      targetCratioPercentage={debtData.targetCRatioPercentage.toNumber()}
+      liquidationCratioPercentage={debtData.liquidationRatioPercentage.toNumber()}
+    />
   );
 };

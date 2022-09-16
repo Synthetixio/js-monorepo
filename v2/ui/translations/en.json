@@ -64,6 +64,12 @@
       "box-heading": "SNX Total",
       "staked": "Staked",
       "transferable": "Transferable"
+    },
+    "c-ratio-banner": {
+      "success": "You can now collect your weekly rewards",
+      "warning": "You're below target C-Ratio. Fix it now to collect your weekly rewards",
+      "error": "You're below the liquidation C-Ratio. Fix it now to avoid getting flagged for liquidation",
+      "error-flagged": "Your Account Has Been Flagged. Unflag your account within the time to avoid Liquidation"
     }
   },
   "meta": {

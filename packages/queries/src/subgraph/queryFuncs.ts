@@ -11,11 +11,8 @@ import useTokenSaleEscrowQuery from '../queries/escrow/useTokenSaleEscrowQuery';
 import useActiveProposalsQuery from '../queries/gov/useActiveProposalsQuery';
 import useGetElectionsPeriodStatus from '../queries/gov/useGetElectionsPeriodStatus';
 import useGetSpartanCouncil from '../queries/gov/useGetSpartanCouncil';
-import useHasVotedForElectionsQuery from '../queries/gov/useHasVotedForElectionsQuery';
-import useProposalQuery from '../queries/gov/useProposalQuery';
 import useProposalsQuery from '../queries/gov/useProposalsQuery';
 import useSnapshotSpaceQuery from '../queries/gov/useSnapshotSpaceQuery';
-import useVotingWeightQuery from '../queries/gov/useVotingWeightQuery';
 import useGetLiquidationDataQuery from '../queries/liquidations/useGetLiquidationDataQuery';
 import useTokenListQuery from '../queries/misc/useTokenListQuery';
 import useEthGasPriceQuery from '../queries/network/useEthGasPriceQuery';
@@ -56,11 +53,8 @@ export {
   useActiveProposalsQuery,
   useGetElectionsPeriodStatus,
   useGetSpartanCouncil,
-  useHasVotedForElectionsQuery,
-  useProposalQuery,
   useProposalsQuery,
   useSnapshotSpaceQuery,
-  useVotingWeightQuery,
   useGetLiquidationDataQuery,
   useTokenListQuery,
   useEthGasPriceQuery,
