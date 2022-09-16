@@ -1,0 +1,17 @@
+version: 2.1
+
+jobs:
+  v2-ui:
+    working_directory: ~/app
+    docker:
+      - image: cimg/node:16.17.0
+    steps:
+      - checkout
+      - run: echo "Hello, World!"
+
+workflows:
+  version: 2.1
+
+  v2-ui:
+    jobs:
+      - v2-ui
