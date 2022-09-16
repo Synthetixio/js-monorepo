@@ -4,9 +4,12 @@
   "main": "index.ts",
   "version": "0.0.0",
   "dependencies": {
+    "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/SignerContext": "workspace:*",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/providers": "workspace:*",
     "@tanstack/react-query": "^4.3.4",
-    "ethers": "^5.5.3"
+    "ethers": "^5.5.3",
+    "react": "^18.2.0"
   }
 }

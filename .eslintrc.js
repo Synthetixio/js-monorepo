@@ -129,5 +129,18 @@ module.exports = {
         cy: true,
       },
     },
+
+    {
+      files: ['v2/ui/cypress/**/*.js', 'v2/**/*.cy.js'],
+      env: {
+        mocha: true,
+      },
+      globals: {
+        cy: true,
+        Cypress: true,
+        expect: true,
+      },
+      rules: {},
+    },
   ],
 };

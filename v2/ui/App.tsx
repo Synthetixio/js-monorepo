@@ -1,4 +1,4 @@
-import { FC, useEffect, PropsWithChildren } from 'react';
+import { FC, useEffect, PropsWithChildren, useMemo } from 'react';
 import Head from 'react-helmet';
 import { RecoilRoot } from 'recoil';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +25,8 @@ import Routes from './Routes';
 import { isSupportedNetworkId } from './utils/network';
 import useLocalStorage from './hooks/useLocalStorage';
 import { LOCAL_STORAGE_KEYS } from './constants/storage';
+import { ContractContext } from '@snx-v2/ContractContext';
+import { SignerContext } from '@snx-v2/SignerContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,7 +38,8 @@ const queryClient = new QueryClient({
 });
 
 function InnerApp() {
-  const { provider, signer, network, L1DefaultProvider, synthetixjs } = Connector.useContainer();
+  const { provider, signer, network, L1DefaultProvider, synthetixjs, walletAddress } =
+    Connector.useContainer();
 
   useEffect(() => {
     try {
@@ -44,6 +47,12 @@ function InnerApp() {
     } catch (_e) {}
   }, []);
   const networkId = network?.id ? Number(network?.id) : -1;
+  const contractContextData = useMemo(() => {
+    return {
+      networkId: isSupportedNetworkId(networkId) ? networkId : 1,
+      walletAddress,
+    };
+  }, [networkId, walletAddress]);
   return (
     <>
       <SynthetixQueryContextProvider
@@ -62,11 +71,15 @@ function InnerApp() {
               })
         }
       >
-        <Layout>
-          <SystemStatus>
-            <Routes />
-          </SystemStatus>
-        </Layout>
+        <SignerContext.Provider value={signer}>
+          <ContractContext.Provider value={contractContextData}>
+            <Layout>
+              <SystemStatus>
+                <Routes />
+              </SystemStatus>
+            </Layout>
+          </ContractContext.Provider>
+        </SignerContext.Provider>
         <ReactQueryDevtools />
       </SynthetixQueryContextProvider>
     </>

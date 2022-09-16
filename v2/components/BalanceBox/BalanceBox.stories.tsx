@@ -1,13 +1,13 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { BalanceBox } from './BalanceBox';
+import { BalanceBoxUi } from './BalanceBox';
 
 export default {
-  title: 'BalanceBox',
-  component: BalanceBox,
-} as ComponentMeta<typeof BalanceBox>;
+  title: 'BalanceBoxUi',
+  component: BalanceBoxUi,
+} as ComponentMeta<typeof BalanceBoxUi>;
 
-const Template: ComponentStory<typeof BalanceBox> = (props) => <BalanceBox {...props} />;
+const Template: ComponentStory<typeof BalanceBoxUi> = (props) => <BalanceBoxUi {...props} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

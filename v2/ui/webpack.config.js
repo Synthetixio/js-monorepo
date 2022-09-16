@@ -1,6 +1,7 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(process.cwd(), '.env.local') });
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -153,6 +154,7 @@ module.exports = {
         /^@tanstack\/react-query$/,
         require.resolve('@tanstack/react-query')
       ),
+      new webpack.NormalModuleReplacementPlugin(/^bn.js$/, require.resolve('bn.js')),
     ])
     .concat([
       new webpack.ProvidePlugin({

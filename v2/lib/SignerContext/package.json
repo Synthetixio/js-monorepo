@@ -1,0 +1,10 @@
+{
+  "name": "@snx-v2/SignerContext",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.0",
+  "dependencies": {
+    "ethers": "^5.5.3",
+    "react": "^18.2.0"
+  }
+}

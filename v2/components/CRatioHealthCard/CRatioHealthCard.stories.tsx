@@ -1,13 +1,13 @@
-import { CRatioHealthCard } from './CRatioHealthCard';
+import { CRatioHealthCardUi } from './CRatioHealthCard';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 export default {
-  title: 'CRatioHealthCard',
-  component: CRatioHealthCard,
-} as ComponentMeta<typeof CRatioHealthCard>;
+  title: 'CRatioHealthCardUi',
+  component: CRatioHealthCardUi,
+} as ComponentMeta<typeof CRatioHealthCardUi>;
 
-const Template: ComponentStory<typeof CRatioHealthCard> = (props) => (
-  <CRatioHealthCard {...props} />
+const Template: ComponentStory<typeof CRatioHealthCardUi> = (props) => (
+  <CRatioHealthCardUi {...props} />
 );
 
 export const Primary = Template.bind({});
