@@ -12,8 +12,7 @@ export const FormContainer = styled(FlexDivColCentered)`
 `;
 
 export const InputsContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1px 1fr;
+  display: flex;
   align-items: center;
 
   ${media.lessThan('mdUp')`
