@@ -1,7 +1,6 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { SynthetixProvider } from '@synthetixio/providers';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CRatioProgressBar } from './CRatioProgressBar';

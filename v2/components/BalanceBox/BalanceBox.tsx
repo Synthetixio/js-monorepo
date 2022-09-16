@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { InfoIcon } from '@snx-v2/icons';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { SynthetixProvider } from '@synthetixio/providers';
 
 type UiProps = { snxBalance: number; snxPrice: number; transferable: number; stakedSnx: number };
 

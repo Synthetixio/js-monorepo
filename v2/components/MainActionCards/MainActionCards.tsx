@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { CollectIcon, InfoIcon, MaintainIcon, StakeIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { SynthetixProvider } from '@synthetixio/providers';
 
 const CardHeader = ({
   step,

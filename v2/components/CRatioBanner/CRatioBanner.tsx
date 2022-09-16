@@ -1,7 +1,6 @@
 import { Center, Flex, Text } from '@chakra-ui/react';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { SynthetixProvider } from '@synthetixio/providers';
 import { theme } from '@synthetixio/v3-theme';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';

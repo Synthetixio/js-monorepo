@@ -6066,7 +6066,6 @@ __metadata:
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
-    "@synthetixio/providers": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
@@ -6094,7 +6093,6 @@ __metadata:
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
-    "@synthetixio/providers": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
@@ -6110,7 +6108,6 @@ __metadata:
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
-    "@synthetixio/providers": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
@@ -6144,7 +6141,6 @@ __metadata:
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
-    "@synthetixio/providers": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
@@ -6253,7 +6249,6 @@ __metadata:
     "@ethersproject/strings": ^5.6.1
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/providers": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.5.3
