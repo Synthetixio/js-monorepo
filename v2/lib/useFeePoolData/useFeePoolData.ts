@@ -4,7 +4,7 @@ import { useFeePool } from '@snx-v2/useSynthetixContracts';
 import { ContractContext } from '@snx-v2/ContractContext';
 
 export const useFeePoolData = (period = 0) => {
-  const { networkId, walletAddress } = useContext(ContractContext);
+  const { networkId } = useContext(ContractContext);
   const { data: FeePool } = useFeePool();
 
   return useQuery(
@@ -26,7 +26,7 @@ export const useFeePoolData = (period = 0) => {
       };
     },
     {
-      enabled: Boolean(networkId && FeePool && walletAddress),
+      enabled: Boolean(networkId && FeePool),
       staleTime: 1000,
     }
   );
