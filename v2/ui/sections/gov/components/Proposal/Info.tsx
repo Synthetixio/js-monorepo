@@ -1,12 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ProposalInfoType } from 'store/gov';
 import StructuredTab from 'components/StructuredTab';
 import Results from './Results';
 import History from './History';
-import useSynthetixQueries from '@synthetixio/queries';
 import { snapshotEndpoint, SPACE_KEY } from 'constants/snapshot';
 import Connector from 'containers/Connector';
+
+import { SynthetixQueryContext } from '@synthetixio/queries';
+import { default as useProposalQuery } from '@synthetixio/queries/build/queries/gov/useProposalQuery';
 
 type InfoProps = {
   proposalId: string;
@@ -16,8 +18,9 @@ const Info: React.FC<InfoProps> = ({ proposalId }) => {
   const { t } = useTranslation();
   const { walletAddress } = Connector.useContainer();
 
-  const { useProposalQuery } = useSynthetixQueries();
+  const ctx = useContext(SynthetixQueryContext);
   const proposalResults = useProposalQuery(
+    ctx.context,
     snapshotEndpoint,
     SPACE_KEY.PROPOSAL,
     proposalId,

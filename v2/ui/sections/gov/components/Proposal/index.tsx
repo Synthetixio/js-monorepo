@@ -1,10 +1,12 @@
 import { Grid, Col } from 'sections/gov/components/common';
-import Content from './Content';
 import Details from './Details';
-import Info from './Info';
 import { useQuery } from '@tanstack/react-query';
+import { safeLazy } from '@synthetixio/safe-import';
 import { snapshotEndpoint } from 'constants/snapshot';
 import { useParams } from 'react-router-dom';
+
+const Info = safeLazy(() => import(/* webpackChunkName: "gov-info" */ './Info'));
+const Content = safeLazy(() => import(/* webpackChunkName: "gov-proposal" */ './Content'));
 
 type ProposalProps = {
   onBack: Function;

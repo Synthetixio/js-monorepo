@@ -154,6 +154,7 @@ module.exports = {
         /^@tanstack\/react-query$/,
         require.resolve('@tanstack/react-query')
       ),
+      new webpack.NormalModuleReplacementPlugin(/^bn.js$/, require.resolve('bn.js')),
     ])
     .concat([
       new webpack.ProvidePlugin({
