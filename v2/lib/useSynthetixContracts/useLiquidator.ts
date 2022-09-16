@@ -39,11 +39,11 @@ export const getLiquidator = async ({
   return contract;
 };
 export const useLiquidator = () => {
-  const { networkId, walletAddress } = useContext(ContractContext);
+  const { networkId } = useContext(ContractContext);
   const signer = useContext(SignerContext);
 
   return useQuery(
-    [networkId, walletAddress, 'useLiquidator'],
+    [networkId, 'useLiquidator'],
     async () => {
       if (!networkId) throw Error('Network id required');
 

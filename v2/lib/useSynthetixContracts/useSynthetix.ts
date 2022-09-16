@@ -36,11 +36,11 @@ export const getSynthetix = async ({
   return contract;
 };
 export const useSynthetix = () => {
-  const { networkId, walletAddress } = useContext(ContractContext);
+  const { networkId } = useContext(ContractContext);
   const signer = useContext(SignerContext);
 
   return useQuery(
-    [networkId, walletAddress, 'useSynthetix'],
+    [networkId, 'useSynthetix'],
     () => {
       if (!networkId) throw Error('Network id required');
 
