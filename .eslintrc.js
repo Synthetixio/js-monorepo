@@ -131,7 +131,15 @@ module.exports = {
     },
 
     {
-      files: ['v2/ui/cypress/**/*.js', 'v2/**/*.cy.js'],
+      files: [
+        '**/cypress/**/*.js',
+        '**/*.cy.js',
+        '**/*.cy.ts',
+        '**/*.cy.tsx',
+        '**/*.e2e.js',
+        '**/*.e2e.ts',
+        '**/*.e2e.tsx',
+      ],
       env: {
         mocha: true,
       },

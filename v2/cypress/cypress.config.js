@@ -1,8 +1,10 @@
 const { defineConfig } = require('cypress');
 const webpack = require('webpack');
+const path = require('path');
 
 module.exports = defineConfig({
   component: {
+    specPattern: ['../**/*.cy.{js,jsx,ts,tsx}'],
     devServer: {
       framework: 'react',
       bundler: 'webpack',
@@ -10,13 +12,13 @@ module.exports = defineConfig({
         devtool: false,
         mode: 'development',
         entry: './index.ts',
-        optimization: false,
+        output: {
+          publicPath: '',
+          filename: '[name].js',
+          chunkFilename: '[name].js',
+          assetModuleFilename: '[name].[contenthash:8][ext]',
+        },
         plugins: [
-          new webpack.NormalModuleReplacementPlugin(
-            /^@tanstack\/react-query$/,
-            require.resolve('@tanstack/react-query')
-          ),
-          new webpack.NormalModuleReplacementPlugin(/^bn.js$/, require.resolve('bn.js')),
           new webpack.ProvidePlugin({
             Buffer: ['buffer', 'Buffer'],
             process: 'process/browser.js',
@@ -41,7 +43,14 @@ module.exports = defineConfig({
           rules: [
             {
               test: /\.(ts|tsx|js|jsx)$/,
-              include: [/v1\/lib/, /v1\/components/, /v2\/lib/, /v2\/components/, /v2\/ui/],
+              include: [
+                /v1\/lib/,
+                /v1\/components/,
+                /v2\/lib/,
+                /v2\/components/,
+                /v2\/ui/,
+                /v2\/cypress/,
+              ],
               resolve: {
                 fullySpecified: false,
               },
@@ -51,7 +60,6 @@ module.exports = defineConfig({
                   babelrc: false,
                   presets: [
                     require.resolve('@babel/preset-typescript'),
-
                     [require.resolve('@babel/preset-react'), { runtime: 'automatic' }],
                     [
                       require.resolve('@babel/preset-env'),
@@ -67,25 +75,25 @@ module.exports = defineConfig({
                       {
                         root: ['.'],
                         alias: {
-                          i18n: './i18n.ts',
-                          assets: './assets',
-                          components: './components',
-                          constants: './constants',
-                          containers: './containers',
-                          content: './content',
-                          contracts: './contracts',
-                          hoc: './hoc',
-                          hooks: './hooks',
-                          lib: './lib',
-                          mutations: './mutations',
-                          queries: './queries',
-                          scripts: './scripts',
-                          sections: './sections',
-                          store: './store',
-                          styles: './styles',
-                          translations: './translations',
-                          typings: './typings',
-                          utils: './utils',
+                          i18n: path.resolve('../ui/i18n.ts'),
+                          assets: path.resolve('../ui/assets'),
+                          components: path.resolve('../ui/components'),
+                          constants: path.resolve('../ui/constants'),
+                          containers: path.resolve('../ui/containers'),
+                          content: path.resolve('../ui/content'),
+                          contracts: path.resolve('../ui/contracts'),
+                          hoc: path.resolve('/../ui/hoc'),
+                          hooks: path.resolve('../ui/hooks'),
+                          lib: path.resolve('/../ui/lib'),
+                          mutations: path.resolve('../ui/mutations'),
+                          queries: path.resolve('../ui/queries'),
+                          scripts: path.resolve('../ui/scripts'),
+                          sections: path.resolve('../ui/sections'),
+                          store: path.resolve('../ui/store'),
+                          styles: path.resolve('../ui/styles'),
+                          translations: path.resolve('../ui/translations'),
+                          typings: path.resolve('../ui/typings'),
+                          utils: path.resolve('../ui/utils'),
                         },
                       },
                     ],
@@ -112,6 +120,8 @@ module.exports = defineConfig({
   },
 
   e2e: {
+    specPattern: ['../**/*.e2e.{js,jsx,ts,tsx}'],
+    baseUrl: 'http://localhost:3000',
     setupNodeEvents(_on, _config) {
       // implement node event listeners here
     },
