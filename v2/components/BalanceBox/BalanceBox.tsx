@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { InfoIcon } from '@snx-v2/icons';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
 import { useDebtData } from '@snx-v2/useDebtData';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 
 type UiProps = { snxBalance: number; snxPrice: number; transferable: number; stakedSnx: number };
 
@@ -62,11 +63,12 @@ export const BalanceBoxUi = ({
 
 export const BalanceBox: React.FC = () => {
   const { data: debtData } = useDebtData();
-  if (!debtData) return <p>Skeleton</p>;
+  const { data: exchangeRateData } = useExchangeRatesData();
+  if (!debtData || !exchangeRateData) return <p>Skeleton</p>;
 
   return (
     <BalanceBoxUi
-      snxPrice={3} // TODO
+      snxPrice={Number(exchangeRateData.SNX?.toString())}
       snxBalance={debtData.balance.toNumber()}
       stakedSnx={debtData.collateral.toNumber()}
       transferable={debtData.transferable.toNumber()}
