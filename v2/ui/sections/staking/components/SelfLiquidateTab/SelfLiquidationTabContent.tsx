@@ -114,7 +114,7 @@ const SelfLiquidationTabContent: React.FC<{
       </InfoText>
       <InfoText data-testid="liq-burn-amount">
         {t('staking.self-liquidation.info.burn-amount', {
-          targetCratio: formatPercent(percentageTargetCRatio),
+          targetCRatio: formatPercent(percentageTargetCRatio),
           burnAmountToFixCRatio: formatSUSD(burnAmountToFixCRatio),
           balance: formatSUSD(sUSDBalance),
         })}
