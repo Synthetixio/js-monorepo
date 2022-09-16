@@ -6189,6 +6189,7 @@ __metadata:
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useRewardsAvailable": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
     react-i18next: ^11.18.3
@@ -6308,6 +6309,17 @@ __metadata:
 "@snx-v2/useFeePoolData@workspace:*, @snx-v2/useFeePoolData@workspace:v2/lib/useFeePoolData":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useFeePoolData@workspace:v2/lib/useFeePoolData"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useRewardsAvailable@workspace:*, @snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"

@@ -6,6 +6,7 @@ import { CollectIcon, InfoIcon, MaintainIcon, StakeIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { CountDown } from '@snx-v2/CountDown';
+import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
 
 const CardHeader = ({
   step,
@@ -256,7 +257,8 @@ export const MainActionCardsUi: React.FC<UiProps> = (props) => {
 export const MainActionCards: React.FC = () => {
   const { data: debtData } = useDebtData();
   const { data: feePoolData } = useFeePoolData();
-  if (!debtData || !feePoolData) return <p>Skeleton</p>;
+  const { data: rewardsData } = useRewardsAvailable();
+  if (!debtData || !feePoolData || !rewardsData) return <p>Skeleton</p>;
 
   return (
     <MainActionCardsUi
@@ -264,7 +266,7 @@ export const MainActionCards: React.FC = () => {
       targetCratioPercentage={debtData.targetCRatioPercentage.mul(100).toNumber()}
       liquidationCratioPercentage={debtData.liquidationRatioPercentage.mul(100).toNumber()}
       isFlagged={debtData.liquidationDeadlineForAccount.gt(0)}
-      hasClaimed={feePoolData?.feesClaimed.gt(0) || false} // TODO
+      hasClaimed={rewardsData.hasClaimed}
       nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
     />
   );
