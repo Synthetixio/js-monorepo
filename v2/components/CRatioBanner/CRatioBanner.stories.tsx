@@ -1,18 +1,18 @@
-import { Banner } from './Banner';
+import { CRatioBannerUi } from './CRatioBanner';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 export default {
-  title: 'Banner',
-  component: Banner,
-} as ComponentMeta<typeof Banner>;
+  title: 'CRatioBannerUi',
+  component: CRatioBannerUi,
+} as ComponentMeta<typeof CRatioBannerUi>;
 
-const Template: ComponentStory<typeof Banner> = (props) => <Banner {...props} />;
+const Template: ComponentStory<typeof CRatioBannerUi> = (props) => <CRatioBannerUi {...props} />;
 
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   variant: 'success',
-  text: 'You can now collect your weekly rewards',
+  isFlagged: false,
   countDown: '0D 14H 08M',
 };
 

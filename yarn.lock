@@ -6064,20 +6064,10 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
     react-i18next: ^11.18.3
-  languageName: unknown
-  linkType: soft
-
-"@snx-v2/Banner@workspace:*, @snx-v2/Banner@workspace:v2/components/Banner":
-  version: 0.0.0-use.local
-  resolution: "@snx-v2/Banner@workspace:v2/components/Banner"
-  dependencies:
-    "@chakra-ui/react": ^2.2.8
-    "@storybook/react": ^6.5.10
-    "@synthetixio/v3-theme": "workspace:*"
-    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -6095,6 +6085,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/CRatioBanner@workspace:*, @snx-v2/CRatioBanner@workspace:v2/components/CRatioBanner":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/CRatioBanner@workspace:v2/components/CRatioBanner"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/getHealthVariant": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@storybook/react": ^6.5.10
+    "@synthetixio/v3-theme": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/CRatioHealthCard@workspace:*, @snx-v2/CRatioHealthCard@workspace:v2/components/CRatioHealthCard":
   version: 0.0.0-use.local
   resolution: "@snx-v2/CRatioHealthCard@workspace:v2/components/CRatioHealthCard"
@@ -6102,9 +6106,18 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
     react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/ContractContext@workspace:*, @snx-v2/ContractContext@workspace:v2/lib/ContractContext":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/ContractContext@workspace:v2/lib/ContractContext"
+  dependencies:
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -6126,6 +6139,7 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
     react-i18next: ^11.18.3
@@ -6144,6 +6158,15 @@ __metadata:
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/SignerContext@workspace:*, @snx-v2/SignerContext@workspace:v2/lib/SignerContext":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/SignerContext@workspace:v2/lib/SignerContext"
+  dependencies:
+    ethers: ^5.5.3
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -6219,17 +6242,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useDebtData@workspace:v2/lib/useDebtData":
+"@snx-v2/useDebtData@workspace:*, @snx-v2/useDebtData@workspace:v2/lib/useDebtData":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useDebtData@workspace:v2/lib/useDebtData"
   dependencies:
     "@ethersproject/strings": ^5.6.1
+    "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/contracts": "workspace:*"
-    "@synthetixio/providers": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.5.3
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -6237,10 +6260,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts"
   dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/SignerContext": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/providers": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.5.3
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -8026,13 +8052,14 @@ __metadata:
     "@snx-v1/media": "workspace:*"
     "@snx-v1/styles": "workspace:*"
     "@snx-v2/BalanceBox": "workspace:*"
-    "@snx-v2/Banner": "workspace:*"
     "@snx-v2/Burn": "workspace:*"
+    "@snx-v2/CRatioBanner": "workspace:*"
     "@snx-v2/CRatioHealthCard": "workspace:*"
+    "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
+    "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
-    "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
@@ -8097,6 +8124,7 @@ __metadata:
     core-js: 3
     crypto-browserify: ^3.12.0
     date-fns: ^2.19.0
+    dotenv: ^16.0.0
     eslint: ^8.22.0
     ethereum-blockies-base64: ^1.0.2
     ethers: ^5.5.3

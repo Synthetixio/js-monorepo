@@ -3,6 +3,7 @@ import React, { PropsWithChildren, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { CollectIcon, InfoIcon, MaintainIcon, StakeIcon } from '@snx-v2/icons';
+import { useDebtData } from '@snx-v2/useDebtData';
 
 const CardHeader = ({
   step,
@@ -45,7 +46,7 @@ const Container = ({ children }: PropsWithChildren<{}>) => {
   );
 };
 
-const StakeActionCard: React.FC<Props> = ({ currentCRatioPercentage }) => {
+const StakeActionCard: React.FC<UiProps> = ({ currentCRatioPercentage }) => {
   const isStaking = currentCRatioPercentage > 0;
 
   const { t } = useTranslation();
@@ -80,7 +81,7 @@ const StakeActionCard: React.FC<Props> = ({ currentCRatioPercentage }) => {
     </Container>
   );
 };
-const MaintainActionCard: React.FC<Props & { isFlagged: boolean }> = ({
+const MaintainActionCard: React.FC<UiProps> = ({
   liquidationCratioPercentage,
   targetCratioPercentage,
   currentCRatioPercentage,
@@ -151,7 +152,7 @@ const MaintainActionCard: React.FC<Props & { isFlagged: boolean }> = ({
     </Container>
   );
 };
-const CollectActionCard: React.FC<Props> = ({
+const CollectActionCard: React.FC<UiProps> = ({
   liquidationCratioPercentage,
   targetCratioPercentage,
   currentCRatioPercentage,
@@ -232,7 +233,7 @@ const CollectActionCard: React.FC<Props> = ({
   );
 };
 
-type Props = {
+type UiProps = {
   liquidationCratioPercentage: number;
   targetCratioPercentage: number;
   currentCRatioPercentage: number;
@@ -240,12 +241,28 @@ type Props = {
   epoch: string;
   hasClaimed: boolean;
 };
-export const MainActionCards: React.FC<Props> = (props) => {
+export const MainActionCardsUi: React.FC<UiProps> = (props) => {
   return (
     <Stack direction={['column', 'column', 'row']} align="center" spacing="14px">
       <StakeActionCard {...props}></StakeActionCard>
       <MaintainActionCard {...props}></MaintainActionCard>
       <CollectActionCard {...props}></CollectActionCard>
     </Stack>
+  );
+};
+
+export const MainActionCards: React.FC = () => {
+  const { data: debtData } = useDebtData();
+  if (!debtData) return <p>Skeleton</p>;
+
+  return (
+    <MainActionCardsUi
+      currentCRatioPercentage={debtData.currentCRatioPercentage.mul(100).toNumber()}
+      targetCratioPercentage={debtData.targetCRatioPercentage.mul(100).toNumber()}
+      liquidationCratioPercentage={debtData.liquidationRatioPercentage.mul(100).toNumber()}
+      isFlagged={debtData.liquidationDeadlineForAccount.gt(0)}
+      hasClaimed={false} // TODO
+      epoch="TODO"
+    />
   );
 };

@@ -3,15 +3,16 @@ import { Box, Center, Flex, Text, Tooltip, Progress } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { InfoIcon } from '@snx-v2/icons';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
+import { useDebtData } from '@snx-v2/useDebtData';
 
-type Props = { snxBalance: number; snxPrice: number; transferable: number; stakedSnx: number };
+type UiProps = { snxBalance: number; snxPrice: number; transferable: number; stakedSnx: number };
 
-export const BalanceBox = ({
+export const BalanceBoxUi = ({
   snxBalance,
   snxPrice,
   transferable,
   stakedSnx,
-}: PropsWithChildren<Props>) => {
+}: PropsWithChildren<UiProps>) => {
   const { t } = useTranslation();
   return (
     <Box width="full">
@@ -56,5 +57,19 @@ export const BalanceBox = ({
         </Flex>
       </Box>
     </Box>
+  );
+};
+
+export const BalanceBox: React.FC = () => {
+  const { data: debtData } = useDebtData();
+  if (!debtData) return <p>Skeleton</p>;
+
+  return (
+    <BalanceBoxUi
+      snxPrice={3} // TODO
+      snxBalance={debtData.balance.toNumber()}
+      stakedSnx={debtData.collateral.toNumber()}
+      transferable={debtData.transferable.toNumber()}
+    />
   );
 };
