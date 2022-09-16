@@ -36,16 +36,14 @@ pids
 /build/stats.json
 
 .yarn/*
+!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
 .yarn/versions
-# For Yarn Zero Installs uncomment this line and keep deps in GIT
-# !.yarn/cache
 
 **/artifacts
-**/cache
 **/coverage
 **/.coverage_artifacts
 **/.coverage_cache
@@ -57,5 +55,6 @@ staged-txns.txt
 
 tsconfig.tsbuildinfo
 
+v3/contracts/cache
 v3/ui/ts-deployments/hardhat
 v3/contracts/deployments/hardhat
