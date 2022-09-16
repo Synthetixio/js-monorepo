@@ -76,7 +76,6 @@ jobs:
       - yarn-install
       - cypress-install
       - browser-tools/install-chrome
-      - run: yarn workspace @snx-v2/cypress run cy:check
       - run: yarn workspace @synthetixio/v2-ui run standalone-build
       - run:
           name: Run server localhost:3000
@@ -84,6 +83,7 @@ jobs:
           command: python3 -m http.server 3000
           background: true
       - run: yarn workspace @snx-v2/cypress run e2e:check
+      - run: yarn workspace @snx-v2/cypress run cy:check
 
 workflows:
   version: 2.1
