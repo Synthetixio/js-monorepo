@@ -23,7 +23,6 @@
     "cypress": "^10.8.0",
     "process": "^0.11.10",
     "stream-browserify": "^3.0.0",
-    "styled-components": "^5.3.5",
     "webpack": "^5.74.0"
   },
   "depcheck": {
