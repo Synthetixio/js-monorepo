@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { CollectIcon, InfoIcon, MaintainIcon, StakeIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
+import { useFeePoolData } from '@snx-v2/useFeePoolData';
+import { CountDown } from '@snx-v2/CountDown';
 
 const CardHeader = ({
   step,
@@ -152,12 +154,12 @@ const MaintainActionCard: React.FC<UiProps> = ({
     </Container>
   );
 };
+
 const CollectActionCard: React.FC<UiProps> = ({
   liquidationCratioPercentage,
   targetCratioPercentage,
   currentCRatioPercentage,
-
-  epoch,
+  nextEpochStartDate,
   hasClaimed,
 }) => {
   const { t } = useTranslation();
@@ -192,7 +194,7 @@ const CollectActionCard: React.FC<UiProps> = ({
               <InfoIcon width="10px" height="10px" />
             </Flex>
             <Text color="success" fontSize="md" fontFamily="mono">
-              {epoch}
+              <CountDown toDate={nextEpochStartDate} />
             </Text>
           </Flex>
           {canClaim && (
@@ -238,7 +240,7 @@ type UiProps = {
   targetCratioPercentage: number;
   currentCRatioPercentage: number;
   isFlagged: boolean;
-  epoch: string;
+  nextEpochStartDate: Date;
   hasClaimed: boolean;
 };
 export const MainActionCardsUi: React.FC<UiProps> = (props) => {
@@ -253,7 +255,8 @@ export const MainActionCardsUi: React.FC<UiProps> = (props) => {
 
 export const MainActionCards: React.FC = () => {
   const { data: debtData } = useDebtData();
-  if (!debtData) return <p>Skeleton</p>;
+  const { data: feePoolData } = useFeePoolData();
+  if (!debtData || !feePoolData) return <p>Skeleton</p>;
 
   return (
     <MainActionCardsUi
@@ -261,8 +264,8 @@ export const MainActionCards: React.FC = () => {
       targetCratioPercentage={debtData.targetCRatioPercentage.mul(100).toNumber()}
       liquidationCratioPercentage={debtData.liquidationRatioPercentage.mul(100).toNumber()}
       isFlagged={debtData.liquidationDeadlineForAccount.gt(0)}
-      hasClaimed={false} // TODO
-      epoch="TODO"
+      hasClaimed={feePoolData?.feesClaimed.gt(0) || false} // TODO
+      nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
     />
   );
 };
