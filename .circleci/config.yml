@@ -85,7 +85,6 @@ jobs:
           background: true
       - run: yarn workspace @synthetixio/v2-ui run e2e:check
 
-
 workflows:
   version: 2.1
 
