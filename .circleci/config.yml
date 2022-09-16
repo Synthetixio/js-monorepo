@@ -1,13 +1,89 @@
 version: 2.1
 
+orbs:
+  browser-tools: circleci/browser-tools@1.4.0
+
+commands:
+  yarn-install:
+    steps:
+      - restore_cache:
+          keys:
+            - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+
+      # yarn's state of installation
+      - restore_cache:
+          keys:
+            - yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: yarn install
+          command: |-
+            # Check if we restored cache and have node_modules already
+            if [ -f "node_modules/.yarn-state.yml" ] && [ -f ".yarn/install-state.gz" ]; then
+              echo "node_modules restored from cache"
+              exit 0
+            else
+              echo "node_modules could not be restored from cache, activating fallback installation"
+              yarn install --immutable
+            fi
+
+      - save_cache:
+          key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          paths:
+            - 'node_modules'
+
+      - save_cache:
+          key: yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          paths:
+            - '.yarn/install-state.gz'
+
+  cypress-install:
+    steps:
+      - restore_cache:
+          keys:
+            - cypress-{{ .Environment.CACHE_VERSION }}-{{ checksum "node_modules/cypress/package.json" }}
+
+      - run:
+          name: cypress install
+          working_directory: ~/app/v2/ui
+          command: |-
+            # Check if we restored cache and have node_modules already
+            if yarn cypress verify ; then
+              echo "Cypress restored from cache"
+              exit 0
+            else
+              echo "Cypress could not be restored from cache, activating fallback installation"
+              CYPRESS_INSTALL_BINARY= yarn cypress install
+            fi
+
+      - save_cache:
+          key: cypress-{{ .Environment.CACHE_VERSION }}-{{ checksum "node_modules/cypress/package.json" }}
+          paths:
+            - '~/cypress'
+
 jobs:
   v2-ui:
     working_directory: ~/app
     docker:
-      - image: cimg/node:16.17.0
+      - image: cimg/node:16.17.0-browsers
+    resource_class: large
+    environment:
+      CYPRESS_CRASH_REPORTS: 0
+      CYPRESS_INSTALL_BINARY: 0
+      CYPRESS_CACHE_FOLDER: ~/cypress
     steps:
       - checkout
-      - run: echo "Hello, World!"
+      - yarn-install
+      - cypress-install
+      - browser-tools/install-chrome
+      # - run: yarn workspace @synthetixio/v2-ui run cy:check
+      - run: yarn workspace @synthetixio/v2-ui run standalone-build
+      - run:
+          name: Run server localhost:3000
+          working_directory: ~/app/v2/ui/out
+          command: python3 -m http.server 3000
+          background: true
+      - run: yarn workspace @synthetixio/v2-ui run e2e:check
 
 workflows:
   version: 2.1
