@@ -27,8 +27,9 @@
       "sub-heading": "In order to keep gathering rewards you must keep you C-Ratio above Target"
     },
     "mint": {
-      "title": "Stake SNX By Minting sUSD",
-      "description": "Mint sUSD by staking your SNX. SNX stakers earn weekly staking rewards in exchange for managing their Collateralization Ratio and debt. Your staked SNX will be locked for 7 days.",
+      "title-new": "Stake SNX By Minting sUSD",
+      "title-existing": "Stake and Borrow More",
+      "description": "Mint sUSD by staking your SNX. SNX stakers earn weekly staking rewards in exchange for managing their Collateralization Ratio and debt. <0>Your staked SNX will be locked for 7 days.<0>",
       "heading": "How much SNX do you want to stake?",
       "heading-tooltip": "Choose how much SNX you would like to stake. You can use the presets available or enter custom amount.",
       "borrowing": "Borrowing",
