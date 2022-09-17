@@ -8689,7 +8689,7 @@ __metadata:
     "@types/react-chartjs-2": ^2.5.7
     "@types/react-helmet": ^6.1.5
     babel-loader: ^8.2.5
-    big.js: ^6.2.1
+    big.js: ^6.1.1
     chart.js: ^3.9.1
     css-loader: ^6.7.1
     css-minimizer-webpack-plugin: ^4.0.0
