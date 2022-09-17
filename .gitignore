@@ -35,7 +35,7 @@ pids
 
 /build/stats.json
 
-.yarn/*
+.yarn/**
 !.yarn/cache
 !.yarn/patches
 !.yarn/plugins
