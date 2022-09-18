@@ -57,6 +57,7 @@ const DesktopMenu: FC = () => {
               <MenuLinkItem
                 to={link}
                 onMouseEnter={() => onMouseEnter(link)}
+                onClick={() => setOpenMenu(null)}
                 data-testid={`sidenav-${link}`}
                 isActive={
                   subMenu
