@@ -1531,7 +1531,8 @@
         "nominate": "nominate",
         "merge": "merge vested snx",
         "dest-account-is-self": "Cannot nominate self",
-        "nominating": "Nominating"
+        "nominating": "Nominating",
+        "invalid-dest-address": "Address is invalid"
       },
       "info": {
         "title": "Merge Escrowed SNX To Nominated Account",
@@ -1557,7 +1558,7 @@
         "enter-address": "enter address",
         "merge": "merge vested snx",
         "source-account-is-self": "Cannot merge into self",
-        "not-nominated": "Adress is not nominated",
+        "not-nominated": "Address is not nominated",
         "invalid-dest-address": "Address is invalid"
       },
       "info": {
