@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import { safeLazy } from '@synthetixio/safe-import';
 import AppLayout from './sections/shared/Layout/AppLayout';
@@ -44,7 +44,10 @@ export default function AppRoutes() {
           <Route path="/" element={STAKING_V2_ENABLED ? <V2HomePage /> : <DashboardPage />} />
 
           {STAKING_V2_ENABLED ? (
-            <Route path="/staking/mint" element={<V2MintPage />} />
+            <>
+              <Route path="/staking" element={<Navigate to="/staking/mint" />} />
+              <Route path="/staking/mint" element={<V2MintPage />} />
+            </>
           ) : (
             <Route path="/staking" element={<StakingPage />}>
               <Route path=":action" element={<StakingPage />} />

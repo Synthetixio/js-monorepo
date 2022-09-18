@@ -293,6 +293,11 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
         backgroundSize: '8px 8px',
         paddingBottom: '0px',
       },
+      '#app': {
+        display: 'flex',
+        flexFlow: 'column',
+        height: '100%',
+      },
       '::-webkit-scrollbar': {
         width: '8px',
         height: '3px',

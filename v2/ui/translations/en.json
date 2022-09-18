@@ -30,6 +30,7 @@
       "title-new": "Stake SNX By Minting sUSD",
       "title-existing": "Stake and Borrow More",
       "description": "Mint sUSD by staking your SNX. SNX stakers earn weekly staking rewards in exchange for managing their Collateralization Ratio and debt. <0>Your staked SNX will be locked for 7 days.<0>",
+      "description-existing": "Minting more carries risks. Only do this if you are an experienced SNX Trader and understand the risks.",
       "heading": "How much SNX do you want to stake?",
       "heading-tooltip": "Choose how much SNX you would like to stake. You can use the presets available or enter custom amount.",
       "borrowing": "Borrowing",
@@ -39,7 +40,9 @@
       "snx-balance": "SNX Balance: {{snxBalance}}",
       "susd-balance": "sUSD Balance: {{susdBalance}}",
       "enter-amount": "Enter Amount",
-      "tx-cost": "Tx cost: {{txCost}}"
+      "tx-cost": "Tx cost: {{txCost}}",
+      "epoch": "EPOCH",
+      "snx-price": "SNX PRICE"
     },
     "burn": {
       "heading": "Burn sUSD",
