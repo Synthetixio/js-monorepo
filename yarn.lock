@@ -6163,6 +6163,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/CountDown@workspace:v2/components/CountDown"
   dependencies:
+    "@snx-v2/useInterval": "workspace:*"
     date-fns: ^2.19.0
     react: ^18.2.0
   languageName: unknown
@@ -6314,6 +6315,14 @@ __metadata:
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     date-fns: ^2.19.0
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useInterval@workspace:*, @snx-v2/useInterval@workspace:v2/lib/useInterval":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useInterval@workspace:v2/lib/useInterval"
+  dependencies:
     react: ^18.2.0
   languageName: unknown
   linkType: soft

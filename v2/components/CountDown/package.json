@@ -4,6 +4,7 @@
   "main": "index.tsx",
   "version": "0.0.0",
   "dependencies": {
+    "@snx-v2/useInterval": "workspace:*",
     "date-fns": "^2.19.0",
     "react": "^18.2.0"
   }
