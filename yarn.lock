@@ -6126,8 +6126,10 @@ __metadata:
   resolution: "@snx-v2/CRatioBanner@workspace:v2/components/CRatioBanner"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/CountDown": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useFeePoolData": "workspace:*"
     "@storybook/react": ^6.5.10
     "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
@@ -6157,6 +6159,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/CountDown@workspace:*, @snx-v2/CountDown@workspace:v2/components/CountDown":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/CountDown@workspace:v2/components/CountDown"
+  dependencies:
+    "@snx-v2/useInterval": "workspace:*"
+    date-fns: ^2.19.0
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/ExternalLink@workspace:v2/components/ExternalLink":
   version: 0.0.0-use.local
   resolution: "@snx-v2/ExternalLink@workspace:v2/components/ExternalLink"
@@ -6173,9 +6185,12 @@ __metadata:
   resolution: "@snx-v2/MainActionCards@workspace:v2/components/MainActionCards"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/CountDown": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useRewardsAvailable": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
     react-i18next: ^11.18.3
@@ -6308,6 +6323,38 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.5.3
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useFeePoolData@workspace:*, @snx-v2/useFeePoolData@workspace:v2/lib/useFeePoolData":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useFeePoolData@workspace:v2/lib/useFeePoolData"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    date-fns: ^2.19.0
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useInterval@workspace:*, @snx-v2/useInterval@workspace:v2/lib/useInterval":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useInterval@workspace:v2/lib/useInterval"
+  dependencies:
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useRewardsAvailable@workspace:*, @snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
