@@ -42,6 +42,7 @@ export const useSystemSettings = () => {
   const signer = useContext(SignerContext);
 
   return useQuery(
+    // We add walletAddress as a query key to make sure the signer is up to date, we cant use signer directly since it cant be stringified
     [networkId, 'useSystemSettings', walletAddress],
     () => {
       if (!networkId) throw Error('Network id required');
