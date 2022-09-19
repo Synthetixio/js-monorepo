@@ -8,7 +8,7 @@ export const useRewardsAvailable = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const { data: FeePool } = useFeePool();
   return useQuery(
-    ['staking', 'useFeesAvailable', networkId],
+    ['staking', 'useFeesAvailable', networkId, walletAddress],
     async () => {
       if (!FeePool || !walletAddress) {
         throw Error('Query should not be enabled if contracts are missing');
