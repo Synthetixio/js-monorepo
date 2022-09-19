@@ -11,8 +11,8 @@ const ActionBox: React.FC<ActionBoxProps> = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const { action, _loanType, loanId = '', loanAction = '' } = useParams();
-  const currentTab = !action || action === 'new' ? 'new' : 'list';
+  const { action, loanId = '', loanAction = '' } = useParams();
+  const currentTab = (!action || action === 'new') && loanId === '' ? 'new' : 'list';
 
   const tabData = useMemo(
     () => [
