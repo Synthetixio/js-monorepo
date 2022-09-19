@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const TerserPlugin = require('terser-webpack-plugin');
-
+const CopyPlugin = require('copy-webpack-plugin');
 const generate = require('./scripts/minify-synthetix-contract');
 
 // For depcheck to be happy
@@ -149,6 +149,7 @@ module.exports = {
 
   plugins: [htmlPlugin]
     .concat(contractPlugins)
+    .concat(isProd ? [new CopyPlugin({ patterns: [path.resolve('./public')] })] : [])
     .concat([
       new webpack.NormalModuleReplacementPlugin(
         /^@tanstack\/react-query$/,

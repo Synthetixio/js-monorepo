@@ -40,6 +40,7 @@ import {
 import { EXTERNAL_LINKS } from 'constants/links';
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';
 import WarningIcon from 'assets/svg/app/warning.svg';
+import TorosWhite from './toros-white.png';
 
 const BuyHedgeTabOptimism = () => {
   const { t } = useTranslation();
@@ -221,7 +222,7 @@ const BuyHedgeTabOptimism = () => {
       <PoweredByContainer>
         {t('debt.actions.manage.powered-by')}{' '}
         <ExternalLink href={EXTERNAL_LINKS.Toros.dSNXPool}>
-          <TorosLogo alt="toros logo" src="/images/toros-white.png" />
+          <TorosLogo alt="toros logo" src={TorosWhite} />
         </ExternalLink>
       </PoweredByContainer>
       {txModalOpen && (
