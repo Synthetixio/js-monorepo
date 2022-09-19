@@ -44,7 +44,13 @@ const V2Mint = () => {
         <Text textAlign="center" color="gray.600" mb={4}>
           <Trans
             i18nKey="staking-v2.mint.description"
-            components={[<Link color="cyan.400" href={EXTERNAL_LINKS.Synthetix.StakingGuide} />]}
+            components={[
+              <Link
+                color="cyan.400"
+                target="_blank"
+                href={EXTERNAL_LINKS.Synthetix.StakingGuide}
+              />,
+            ]}
           />
         </Text>
         {isCurrentStaker ? (
