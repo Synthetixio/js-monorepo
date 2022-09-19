@@ -65,7 +65,7 @@ export default function AppRoutes() {
 
           <Route path="/migrate-escrow" element={<MigrateEscrowPage />} />
 
-          <Route path="/escrow" element={<LoansPage />}>
+          <Route path="/escrow" element={<EscrowPage />}>
             <Route path=":action" element={<EscrowPage />} />
           </Route>
 
