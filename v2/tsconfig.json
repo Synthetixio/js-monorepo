@@ -23,6 +23,8 @@
     "**/tests/**",
     "**/*.test.ts",
     "**/*.test.tsx",
+    "**/*.cy.ts",
+    "**/*.cy.tsx",
     "**/stories/**",
     "**/build/**",
     "**/dist/**"

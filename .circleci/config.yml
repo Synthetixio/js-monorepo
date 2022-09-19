@@ -45,7 +45,7 @@ commands:
 
       - run:
           name: cypress install
-          working_directory: ~/app/v2/ui
+          working_directory: ~/app/v2/cypress
           command: |-
             # Check if we restored cache and have node_modules already
             if yarn cypress verify ; then
@@ -76,14 +76,14 @@ jobs:
       - yarn-install
       - cypress-install
       - browser-tools/install-chrome
-      # - run: yarn workspace @synthetixio/v2-ui run cy:check
       - run: yarn workspace @synthetixio/v2-ui run standalone-build
       - run:
           name: Run server localhost:3000
           working_directory: ~/app/v2/ui/out
           command: python3 -m http.server 3000
           background: true
-      - run: yarn workspace @synthetixio/v2-ui run e2e:check
+      - run: yarn workspace @snx-v2/cypress run e2e:check
+      - run: yarn workspace @snx-v2/cypress run cy:check
 
 workflows:
   version: 2.1
