@@ -1,7 +1,6 @@
 import { Text, Box, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
 import { CollateralType } from '../../../../utils/types';
-import { currency } from '../../../../utils/currency';
 import { useValidatePosition } from '../../../../hooks/useValidatePosition';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { CRatio } from './CRatio';
@@ -16,7 +15,8 @@ interface Props {
   debtChange: number;
 }
 
-const getColor = (v1, v2) => (v1 === v2 ? 'gray.400' : v1 > v2 ? 'green.400' : 'red.400');
+const getColor = (v1: number, v2: number) =>
+  v1 === v2 ? 'gray.400' : v1 > v2 ? 'green.400' : 'red.400';
 
 export const Preview: FC<Props> = ({
   collateral,

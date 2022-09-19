@@ -7,7 +7,6 @@ import {
   Flex,
   Link,
   Input,
-  Badge,
   Checkbox,
   SimpleGrid,
   Slider,
