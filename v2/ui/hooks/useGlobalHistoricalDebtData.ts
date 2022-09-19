@@ -25,7 +25,7 @@ type HistoricalGlobalDebtAndIssuance = {
 
 interface DHedgePerformanceResponse {
   data: {
-    performanceHistory: {
+    tokenPriceHistory: {
       history: {
         performance: string;
         timestamp: string;
@@ -58,7 +58,7 @@ const useGlobalHistoricalDebtData = (): HistoricalGlobalDebtAndIssuance => {
         },
         data: {
           query: `{
-              performanceHistory (address:"${poolAddress}", period:"1m") {
+              tokenPriceHistory (address:"${poolAddress}", period:"1m") {
                 history {
                   performance,
                   timestamp
@@ -95,7 +95,7 @@ const useGlobalHistoricalDebtData = (): HistoricalGlobalDebtAndIssuance => {
   }
 
   const dhedgeHistory =
-    dHedgeData.data?.data.performanceHistory.history
+    dHedgeData.data?.data.tokenPriceHistory.history
       .map((history) => ({
         type: EvenBlockType.DHEDGE_ITEM,
         value: wei(Number(history.performance) * 100),
