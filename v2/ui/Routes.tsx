@@ -33,6 +33,7 @@ const BridgePage = safeLazy(() => import(/* webpackChunkName: "bridge" */ './con
 const NotFound = safeLazy(() => import(/* webpackChunkName: "404" */ './content/404'));
 
 const V2HomePage = safeLazy(() => import(/* webpackChunkName: "v2-home" */ './content/V2Home'));
+const V2MintPage = safeLazy(() => import(/* webpackChunkName: "v2-mint" */ './content/V2Mint'));
 const V2BurnPage = safeLazy(() => import(/* webpackChunkName: "v2-home" */ './content/V2Burn'));
 
 export default function AppRoutes() {
@@ -46,7 +47,8 @@ export default function AppRoutes() {
 
           {STAKING_V2_ENABLED ? (
             <>
-              <Route path="/staking" element={<Navigate to="/staking/burn" />} />
+              <Route path="/staking" element={<Navigate to="/staking/mint" />} />
+              <Route path="/staking/mint" element={<V2MintPage />} />
               <Route path="/staking/burn" element={<V2BurnPage />} />
             </>
           ) : (

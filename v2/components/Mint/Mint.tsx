@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Input, Box, Text, Flex, Badge, Tooltip, Button } from '@chakra-ui/react';
+import { Input, Box, Text, Flex, Badge, Tooltip, Button, BoxProps } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { InfoIcon, TokensIcon } from '@snx-v2/icons';
 import { numberWithCommas } from '@snx-v2/formatters';
 import { ChangeEvent } from 'react';
 
-interface MintProps {
+interface MintProps extends BoxProps {
   snxBalance: Wei;
   susdBalance: Wei;
   gasPrice: Wei;
@@ -18,6 +18,7 @@ export const Mint = ({
   susdBalance = wei(0),
   gasPrice = wei(0),
   exchangeRate = 0.25,
+  ...props
 }: MintProps) => {
   const { t } = useTranslation();
   const [val, setVal] = useState('');
@@ -48,7 +49,7 @@ export const Mint = ({
   };
 
   return (
-    <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="md" p={5}>
+    <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="md" p={5} {...props}>
       <Flex alignItems="center">
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
           {t('staking-v2.mint.heading')}

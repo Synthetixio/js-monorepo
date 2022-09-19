@@ -11,14 +11,14 @@ import {
   Heading,
   Badge,
 } from '@chakra-ui/react';
-import { Burn } from '@snx-v2/Burn';
 import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
 import { InfoIcon } from '@snx-v2/icons';
 import { wei } from '@synthetixio/wei';
 import { EXTERNAL_LINKS } from 'constants/links';
 import { useTranslation, Trans } from 'react-i18next';
+import { Mint } from '../../components/Mint';
 
-const V2Burn = () => {
+const V2Mint = () => {
   const { t } = useTranslation();
 
   // TODO: Logic for mint (include getVariant)
@@ -165,7 +165,7 @@ const V2Burn = () => {
             </Flex>
           </Flex>
         )}
-        <Burn
+        <Mint
           snxBalance={wei(1000)}
           susdBalance={wei(1000)}
           gasPrice={wei(20)}
@@ -176,4 +176,4 @@ const V2Burn = () => {
   );
 };
 
-export default V2Burn;
+export default V2Mint;
