@@ -239,11 +239,7 @@ export const StakingPosition: FC<Props> = ({ position, refetch }) => {
         ${currency(cRatio.toString())}
         <Text fontSize="xs" opacity="0.66" mt="1'">
           {/*target here as well?*/}
-          {formatValue(
-            collateralType!.minimumCRatio!.mul(BigNumber.from(100)),
-            6
-          ).toFixed(0)}
-          % Min.
+          {formatValue(collateralType!.minimumCRatio!.mul(BigNumber.from(100)), 6).toFixed(0)}% Min.
         </Text>
       </Td>
 
