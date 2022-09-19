@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import intervalToDuration from 'date-fns/intervalToDuration';
 import { useInterval } from '@snx-v2/useInterval';
 
@@ -10,14 +10,7 @@ export const CountDown: React.FC<{ toDate: Date; intervalMs?: number }> = ({
   useInterval(() => {
     setNow(new Date());
   }, intervalMs);
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setNow(new Date());
-    }, intervalMs);
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [intervalMs]);
+
   const duration = intervalToDuration({
     start: now,
     end: toDate,
