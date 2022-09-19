@@ -57,6 +57,7 @@ const DesktopMenu: FC = () => {
               <MenuLinkItem
                 to={link}
                 onMouseEnter={() => onMouseEnter(link)}
+                onClick={() => setOpenMenu(null)}
                 data-testid={`sidenav-${link}`}
                 isActive={
                   subMenu
@@ -78,6 +79,7 @@ const DesktopMenu: FC = () => {
                       key={subLink}
                       isActive={location.pathname === subLink}
                       data-testid={`sidenav-submenu-${subLink}`}
+                      onClick={() => setOpenMenu(null)}
                     >
                       {t(i18nLabel)}
                     </SubMenuLinkItem>
@@ -113,7 +115,7 @@ const MenuLinks = styled.div`
 
 export const MenuLinkItem = styled(Link)<{ isActive?: boolean; isL2Switcher?: boolean }>`
   line-height: 40px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   position: relative;
 
   svg {
@@ -122,6 +124,7 @@ export const MenuLinkItem = styled(Link)<{ isActive?: boolean; isL2Switcher?: bo
 
   .link {
     padding-left: 24px;
+    padding-bottom: 10px;
     display: flex;
     align-items: center;
     ${linkCSS};
