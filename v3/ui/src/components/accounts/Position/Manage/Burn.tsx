@@ -1,6 +1,22 @@
-import { Text, Box, Link, Input, Button, Flex, Heading, Badge } from '@chakra-ui/react';
+import { Text, Box, Link, Flex, Heading } from '@chakra-ui/react';
+import { FC } from 'react';
+import { useContract } from '../../../../hooks';
+import { useTokenBalance } from '../../../../hooks/useTokenBalance';
+import { contracts } from '../../../../utils/constants';
 
-export default function Burn() {
+import { Balance } from '../../Stake/Balance';
+import { NumberInput } from './NumberInput';
+
+interface Props {
+  onChange: (value: number) => void;
+  value: number;
+  debt: number;
+}
+
+export const Burn: FC<Props> = ({ onChange, value, debt }) => {
+  const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
+  const balance = useTokenBalance(snxUsdProxy?.address);
+
   return (
     <Box mb="4">
       <Heading fontSize="md" mb="1">
@@ -20,46 +36,22 @@ export default function Burn() {
       </Text>
 
       <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
-        <form>
-          <Flex mb="3">
-            <Input
-              flex="1"
-              type="number"
-              border="none"
-              placeholder="0.0"
-              // value={null}
-              onChange={() => null}
-            />
-            <Button
-              display="none"
-              // isLoading={null}
-              // isDisabled={null}
-              colorScheme="blue"
-              ml="4"
-              px="8"
-              type="submit"
-            >
-              Burn
-            </Button>
-          </Flex>
-        </form>
+        <Flex mb="3">
+          <NumberInput
+            value={value}
+            onChange={onChange}
+            max={Math.min(balance.formatedValue, debt)}
+          />
+        </Flex>
         <Flex alignItems="center">
-          <Box>
-            <Text fontSize="xs">Balance: $2,000</Text>
-          </Box>
-          <Link>
-            <Badge
-              as="button"
-              ml="3"
-              variant="outline"
-              colorScheme="blue"
-              transform="translateY(-2px)"
-            >
-              Use Max
-            </Badge>
-          </Link>
+          <Balance
+            balance={balance.value}
+            onMax={() => onChange(Math.min(balance.formatedValue, debt) || 0)}
+            decimals={balance.decimals}
+            symbol="snxUsd"
+          />
         </Flex>
       </Box>
     </Box>
   );
-}
+};

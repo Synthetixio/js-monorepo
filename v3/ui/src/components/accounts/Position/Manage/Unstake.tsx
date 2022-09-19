@@ -1,6 +1,18 @@
-import { Text, Box, Link, Input, Button, Flex, Heading, Badge } from '@chakra-ui/react';
+import { Text, Box, Flex, Heading } from '@chakra-ui/react';
+import { FC } from 'react';
+import { parseUnits } from '../../../../utils/helpers';
+import { CollateralType } from '../../../../utils/types';
+import { Balance } from '../../Stake/Balance';
+import { NumberInput } from './NumberInput';
 
-export default function Unstake() {
+interface Props {
+  collateral: CollateralType;
+  onChange: (value: number) => void;
+  value: number;
+  collateralAmount: number;
+}
+
+export const Unstake: FC<Props> = ({ collateral, collateralAmount, value, onChange }) => {
   return (
     <Box mb="4">
       <Heading fontSize="md" mb="1">
@@ -14,44 +26,18 @@ export default function Unstake() {
       <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
         <form>
           <Flex mb="3">
-            <Input
-              flex="1"
-              type="number"
-              border="none"
-              placeholder="0.0"
-              // value={null}
-              onChange={() => null}
-            />
-            <Button
-              display="none"
-              // isLoading={null}
-              // isDisabled={null}
-              colorScheme="blue"
-              ml="4"
-              px="8"
-              type="submit"
-            >
-              Mint
-            </Button>
+            <NumberInput value={value} onChange={onChange} max={collateralAmount} />
           </Flex>
         </form>
         <Flex alignItems="center">
-          <Box>
-            <Text fontSize="xs">Max: 100 SNX</Text>
-          </Box>
-          <Link>
-            <Badge
-              as="button"
-              ml="3"
-              variant="outline"
-              colorScheme="blue"
-              transform="translateY(-2px)"
-            >
-              Use Max
-            </Badge>
-          </Link>
+          <Balance
+            onMax={(balance) => onChange(parseFloat(balance) || 0)}
+            balance={parseUnits(collateralAmount, collateral.decimals)}
+            decimals={collateral.decimals}
+            symbol={collateral.symbol}
+          />
         </Flex>
       </Box>
     </Box>
   );
-}
+};

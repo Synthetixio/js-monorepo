@@ -1,20 +1,20 @@
 import { Badge, Link, Text } from '@chakra-ui/react';
 import { BigNumber, utils } from 'ethers';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { FC } from 'react';
 
-export default function Balance({ balance }: { balance: BigNumber }) {
-  // Needs a special case for ETH/wETH?
-  const collateralType = useWatch({
-    name: 'collateralType',
-  });
+interface Props {
+  balance: BigNumber;
+  decimals: number;
+  symbol: string;
+  onMax?: (balance: string) => void;
+}
 
-  const { setValue } = useFormContext();
-
+export const Balance: FC<Props> = ({ balance, decimals, symbol, onMax }) => {
   return (
     <Text fontSize="xs">
-      Balance: {parseFloat(utils.formatUnits(balance, collateralType.decimals)).toLocaleString()}{' '}
-      {collateralType.symbol.toUpperCase()}
-      {balance.eq(0) ? (
+      Balance: {parseFloat(utils.formatUnits(balance, decimals)).toLocaleString()}{' '}
+      {symbol.toUpperCase()}
+      {balance.eq(0) && (
         <Link>
           <Badge
             as="button"
@@ -23,10 +23,11 @@ export default function Balance({ balance }: { balance: BigNumber }) {
             colorScheme="blue"
             transform="translateY(-2px)"
           >
-            Buy {collateralType.symbol}
+            Buy {symbol}
           </Badge>
         </Link>
-      ) : (
+      )}
+      {onMax && !balance.eq(0) && (
         <Badge
           as="button"
           ml="2"
@@ -35,9 +36,8 @@ export default function Balance({ balance }: { balance: BigNumber }) {
           transform="translateY(-2px)"
           onClick={(e) => {
             e.preventDefault();
-            const balanceValue = utils.formatUnits(balance, collateralType.decimals);
-
-            setValue('amount', balanceValue);
+            const balanceValue = utils.formatUnits(balance, decimals);
+            onMax(balanceValue);
           }}
         >
           Use Max
@@ -45,4 +45,4 @@ export default function Balance({ balance }: { balance: BigNumber }) {
       )}
     </Text>
   );
-}
+};

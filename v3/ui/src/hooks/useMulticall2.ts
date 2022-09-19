@@ -1,7 +1,7 @@
 import { contracts } from '../utils/constants';
 import { useContract } from './useContract';
 import ethers, { Contract } from 'ethers';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
 
 // contact, funcion name, arguments
@@ -114,8 +114,7 @@ export const useMulticall = (
     timeout: 300000,
     enabled: !!currentTxn,
     onSuccess: (_data) => {
-      setStatus('success');
-      reset();
+      setStatus('idle');
       config?.onSuccess && config.onSuccess();
     },
     onError: (e) => {
@@ -124,21 +123,20 @@ export const useMulticall = (
     },
   });
 
-  function reset() {
-    setStatus('idle');
-  }
-
-  async function exec() {
-    if (status === 'idle') {
+  const exec = useCallback(async () => {
+    try {
       setStatus('pending');
       await currentTxn.writeAsync();
+    } catch (error) {
+      setStatus('error');
     }
-  }
+  }, [currentTxn]);
 
   return {
-    reset,
     exec,
     status,
     currentTxn,
+    isLoading: status === 'pending',
+    isValid: !!calls.length,
   };
 };
