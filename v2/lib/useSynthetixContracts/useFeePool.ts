@@ -37,11 +37,11 @@ export const getFeePool = async ({
   return contract;
 };
 export const useFeePool = () => {
-  const { networkId } = useContext(ContractContext);
+  const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);
 
   return useQuery(
-    [networkId, 'useFeePool'],
+    [networkId, 'useFeePool', walletAddress],
     async () => {
       if (!networkId) throw Error('Network id required');
 

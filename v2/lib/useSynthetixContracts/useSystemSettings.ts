@@ -38,11 +38,11 @@ export const getSystemSettings = async ({
   return contract;
 };
 export const useSystemSettings = () => {
-  const { networkId } = useContext(ContractContext);
+  const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);
 
   return useQuery(
-    [networkId, 'useSystemSettings'],
+    [networkId, 'useSystemSettings', walletAddress],
     () => {
       if (!networkId) throw Error('Network id required');
 
