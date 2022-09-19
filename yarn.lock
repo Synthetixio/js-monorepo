@@ -6354,6 +6354,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useGasPrice@workspace:v2/lib/useGasPrice":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useGasPrice@workspace:v2/lib/useGasPrice"
+  dependencies:
+    "@ethersproject/bignumber": ^5.6.2
+    "@ethersproject/providers": ^5.6.8
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useInterval@workspace:*, @snx-v2/useInterval@workspace:v2/lib/useInterval":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useInterval@workspace:v2/lib/useInterval"
