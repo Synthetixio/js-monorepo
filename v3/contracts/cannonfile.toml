@@ -71,8 +71,8 @@ func = "configureCollateral"
 args = [
     "<%= imports.lusd.contracts.token.address %>",
     "<%= imports.aggregator_lusd.contracts.aggregator.address %>",
-    "1500000000000000000",
-    "1100000000000000000",
+ "1500000",
+    "1100000",
     "1000000000000000000",
     true,
 ]
@@ -85,8 +85,8 @@ func = "configureCollateral"
 args = [
     "<%= imports.snx.contracts.token.address %>",
     "<%= imports.aggregator_snx.contracts.aggregator.address %>",
-    "4000000000000000000",
-    "2000000000000000000",
+    "4000000",
+    "2000000",
     "1000000000000000000",
     true,
 ]
@@ -99,8 +99,8 @@ func = "configureCollateral"
 args = [
     "<%= contracts.WETH.address %>",
     "<%= imports.aggregator_weth.contracts.aggregator.address %>",
-    "3000000000000000000",
-    "1500000000000000000",
+    "3000000",
+    "1500000",
     "1000000000000000000",
     true,
 ]
