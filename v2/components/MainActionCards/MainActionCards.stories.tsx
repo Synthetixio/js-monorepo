@@ -16,7 +16,7 @@ Primary.args = {
   targetCratioPercentage: 400,
   liquidationCratioPercentage: 150,
   currentCRatioPercentage: 440,
-  epoch: '07:14:55',
+  nextEpochStartDate: new Date(Date.now() + 100000000),
   isFlagged: false,
   hasClaimed: false,
 };

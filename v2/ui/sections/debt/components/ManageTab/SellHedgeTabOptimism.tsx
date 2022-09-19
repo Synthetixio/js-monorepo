@@ -44,6 +44,7 @@ import GasSelector from 'components/GasSelector';
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';
 import { EXTERNAL_LINKS } from 'constants/links';
 import { useTranslation } from 'react-i18next';
+import TorosWhite from './toros-white.png';
 
 export default function SellHedgeTabOptimism() {
   const { useContractTxn, useSynthsBalancesQuery } = useSynthetixQueries();
@@ -231,7 +232,7 @@ export default function SellHedgeTabOptimism() {
       <PoweredByContainer>
         {t('debt.actions.manage.powered-by')}{' '}
         <ExternalLink href={EXTERNAL_LINKS.Toros.dSNXPool}>
-          <TorosLogo alt="toros logo" src="/images/toros-white.png" />
+          <TorosLogo alt="toros logo" src={TorosWhite} />
         </ExternalLink>
       </PoweredByContainer>
       {txModalOpen && (

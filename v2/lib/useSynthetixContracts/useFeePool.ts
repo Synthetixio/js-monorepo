@@ -4,19 +4,19 @@ import { ethers, providers } from 'ethers';
 import { isSupportedNetworkId, NetworkNameById } from './common';
 import { ContractContext } from '@snx-v2/ContractContext';
 
-import type { Synthetix } from '@synthetixio/contracts/build/mainnet/deployment/Synthetix';
-import type { Synthetix as SynthetixOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/Synthetix';
+import type { FeePool } from '@synthetixio/contracts/build/mainnet/deployment/FeePool';
+import type { FeePool as FeePoolOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/FeePool';
 import { SynthetixProvider } from '@synthetixio/providers';
 import { SignerContext } from '@snx-v2/SignerContext';
 
 const contracts = {
-  mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/Synthetix'),
-  'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/Synthetix'),
-  goerli: () => import('@synthetixio/contracts/build/goerli/deployment/Synthetix'),
-  'goerli-ovm': () => import('@synthetixio/contracts/build/goerli-ovm/deployment/Synthetix'),
+  mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/FeePool'),
+  'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/FeePool'),
+  goerli: () => import('@synthetixio/contracts/build/goerli/deployment/FeePool'),
+  'goerli-ovm': () => import('@synthetixio/contracts/build/goerli-ovm/deployment/FeePool'),
 };
 
-export const getSynthetix = async ({
+export const getFeePool = async ({
   networkId,
   signer,
   provider,
@@ -26,23 +26,24 @@ export const getSynthetix = async ({
   provider: SynthetixProvider;
 }) => {
   const signerOrProvider = signer || provider;
+
   const supportedNetworkId = isSupportedNetworkId(networkId);
   if (!supportedNetworkId) {
     throw Error(`${networkId} is not supported`);
   }
   const networkName = NetworkNameById[networkId];
   const { address, abi } = await contracts[networkName]();
-  const contract = new ethers.Contract(address, abi, signerOrProvider) as SynthetixOvm | Synthetix;
+  const contract = new ethers.Contract(address, abi, signerOrProvider) as FeePool | FeePoolOvm;
   return contract;
 };
-export const useSynthetix = () => {
+export const useFeePool = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);
 
   return useQuery(
     // We add walletAddress as a query key to make sure the signer is up to date, we cant use signer directly since it cant be stringified
-    [networkId, 'useSynthetix', walletAddress],
-    () => {
+    [networkId, 'useFeePool', walletAddress],
+    async () => {
       if (!networkId) throw Error('Network id required');
 
       const provider = new providers.InfuraProvider(
@@ -50,7 +51,7 @@ export const useSynthetix = () => {
         process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
       );
 
-      return getSynthetix({ networkId, signer, provider });
+      return getFeePool({ networkId, signer, provider });
     },
     { staleTime: Infinity, enabled: Boolean(networkId) }
   );

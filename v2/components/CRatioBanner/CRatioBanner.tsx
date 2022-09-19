@@ -1,6 +1,8 @@
 import { Center, Flex, Text } from '@chakra-ui/react';
+import { CountDown } from '@snx-v2/CountDown';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
+import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { theme } from '@synthetixio/v3-theme';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 type UiProps = {
   variant: 'success' | 'warning' | 'error';
   isFlagged: boolean;
-  countDown?: string;
+  nextEpochStartDate: Date;
 };
 
 const getWrapperStyles = (variant: UiProps['variant']) => {
@@ -23,7 +25,7 @@ const getWrapperStyles = (variant: UiProps['variant']) => {
   }
   return null;
 };
-export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, countDown }) => {
+export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, nextEpochStartDate }) => {
   const { t } = useTranslation();
   const translationKey = isFlagged ? 'error-flagged' : variant;
   const wrapperStyles = getWrapperStyles(variant);
@@ -41,7 +43,7 @@ export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, countDown }) =
       >
         <Text fontSize="xs">{t(`staking-v2.c-ratio-banner.${translationKey}`)}</Text>{' '}
         <Text fontSize="xs" fontFamily="mono" fontWeight="700" marginLeft="2" as="b">
-          {countDown}
+          <CountDown toDate={nextEpochStartDate} />
         </Text>
       </Flex>
     </Center>
@@ -50,7 +52,8 @@ export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, countDown }) =
 
 export const CRatioBanner: React.FC = () => {
   const { data: debtData } = useDebtData();
-  if (!debtData) return null;
+  const { data: feePoolData } = useFeePoolData();
+  if (!debtData || !feePoolData) return null;
   const variant = getHealthVariant({
     currentCRatioPercentage: debtData.currentCRatioPercentage.toNumber(),
     targetCratioPercentage: debtData.targetCRatioPercentage.toNumber(),
@@ -58,5 +61,11 @@ export const CRatioBanner: React.FC = () => {
   });
   const isFlagged = debtData.liquidationDeadlineForAccount.gt(0);
 
-  return <CRatioBannerUi countDown="todo" variant={variant} isFlagged={isFlagged} />;
+  return (
+    <CRatioBannerUi
+      nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
+      variant={variant}
+      isFlagged={isFlagged}
+    />
+  );
 };
