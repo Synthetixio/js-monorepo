@@ -7,6 +7,7 @@
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "@tanstack/react-query": "^4.3.4",
+    "date-fns": "^2.19.0",
     "react": "^18.2.0"
   }
 }

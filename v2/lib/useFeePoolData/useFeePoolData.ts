@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useFeePool } from '@snx-v2/useSynthetixContracts';
 import { ContractContext } from '@snx-v2/ContractContext';
+import add from 'date-fns/add';
 
 export const useFeePoolData = (period = 0) => {
   const { networkId } = useContext(ContractContext);
@@ -22,7 +23,7 @@ export const useFeePoolData = (period = 0) => {
       return {
         feePeriodDuration,
         startTime,
-        nextFeePeriodStartDate: new Date((startTime + feePeriodDuration) * 1000),
+        nextFeePeriodStartDate: add(new Date(startTime * 1000), { seconds: feePeriodDuration }),
       };
     },
     {
