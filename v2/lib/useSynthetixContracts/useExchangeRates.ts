@@ -39,11 +39,12 @@ export const getExchangeRates = async ({
   return contract;
 };
 export const useExchangeRates = () => {
-  const { networkId } = useContext(ContractContext);
+  const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);
 
   return useQuery(
-    [networkId, 'useExchangeRates'],
+    // We add walletAddress as a query key to make sure the signer is up to date, we cant use signer directly since it cant be stringified
+    [networkId, 'useExchangeRates', walletAddress],
     async () => {
       if (!networkId) throw Error('Network id required');
 

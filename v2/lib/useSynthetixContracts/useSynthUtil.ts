@@ -37,11 +37,13 @@ export const getSynthUtil = async ({
   return contract;
 };
 export const useSynthUtil = () => {
-  const { networkId } = useContext(ContractContext);
+  const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);
 
   return useQuery(
-    [networkId, 'useSynthUtil'],
+    // We add walletAddress as a query key to make sure the signer is up to date, we cant use signer directly since it cant be stringified
+    // This contract doesn't have any mutative functions, but for consistency I think it make sense to keep it consistent
+    [networkId, 'useSynthUtil', walletAddress],
     async () => {
       if (!networkId) throw Error('Network id required');
 
