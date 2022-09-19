@@ -1,5 +1,5 @@
 import { Badge, Box, Button, Flex, Heading, Stack, Text } from '@chakra-ui/react';
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { PropsWithChildren, ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { CollectIcon, InfoIcon, MaintainIcon, StakeIcon } from '@snx-v2/icons';
@@ -7,6 +7,8 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { CountDown } from '@snx-v2/CountDown';
 import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
+import { useSynthetix } from '@snx-v2/useSynthetixContracts';
+import { EthGasPriceEstimator, GasOption } from '@snx-v2/EthGasPriceEstimator';
 
 const CardHeader = ({
   step,
@@ -255,19 +257,35 @@ export const MainActionCardsUi: React.FC<UiProps> = (props) => {
 };
 
 export const MainActionCards: React.FC = () => {
+  const [gasOptions, setGasOption] = useState<GasOption | null>(null);
   const { data: debtData } = useDebtData();
   const { data: feePoolData } = useFeePoolData();
   const { data: rewardsData } = useRewardsAvailable();
-  if (!debtData || !feePoolData || !rewardsData) return <p>Skeleton</p>;
-
+  const { data: Synthetix } = useSynthetix();
+  if (!debtData || !feePoolData || !rewardsData || !Synthetix) return <p>Skeleton</p>;
+  console.log({ gasOptions });
   return (
-    <MainActionCardsUi
-      currentCRatioPercentage={debtData.currentCRatioPercentage.mul(100).toNumber()}
-      targetCratioPercentage={debtData.targetCRatioPercentage.mul(100).toNumber()}
-      liquidationCratioPercentage={debtData.liquidationRatioPercentage.mul(100).toNumber()}
-      isFlagged={debtData.liquidationDeadlineForAccount.gt(0)}
-      hasClaimed={rewardsData.hasClaimed}
-      nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
-    />
+    <>
+      <Button
+        onClick={() => {
+          Synthetix.burnSynthsToTarget({ ...gasOptions });
+        }}
+      >
+        Burn Max
+      </Button>
+      <EthGasPriceEstimator
+        onGasOptionChange={(x) => setGasOption(x)}
+        getGasLimit={() => Synthetix.estimateGas.burnSynthsToTarget()}
+        populateTransaction={() => Synthetix.populateTransaction.burnSynthsToTarget()}
+      />
+      <MainActionCardsUi
+        currentCRatioPercentage={debtData.currentCRatioPercentage.mul(100).toNumber()}
+        targetCratioPercentage={debtData.targetCRatioPercentage.mul(100).toNumber()}
+        liquidationCratioPercentage={debtData.liquidationRatioPercentage.mul(100).toNumber()}
+        isFlagged={debtData.liquidationDeadlineForAccount.gt(0)}
+        hasClaimed={rewardsData.hasClaimed}
+        nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
+      />
+    </>
   );
 };
