@@ -13,7 +13,7 @@ export const Primary = Template.bind({});
 Primary.args = {
   variant: 'success',
   isFlagged: false,
-  countDown: '0D 14H 08M',
+  nextEpochStartDate: new Date(Date.now() + 100000000),
 };
 
 Primary.parameters = {

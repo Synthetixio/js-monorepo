@@ -15,6 +15,7 @@ import { Blockie, StyledTooltip } from '../common';
 import { Card } from 'sections/gov/components/common';
 import useSynthetixQueries from '@synthetixio/queries';
 import Connector from '../../../../containers/Connector';
+import scGif from './SC-NFT.gif';
 
 const CouncilBoard: React.FC = () => {
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ const CouncilBoard: React.FC = () => {
 
   return (
     <StyledCard>
-      <img width="100%" src="/gifs/SC-NFT.gif" alt="sc-nft" />
+      <img width="100%" src={scGif} alt="sc-nft" />
       <Title>{t('gov.council.title')}</Title>
 
       {councilMembers ? (
