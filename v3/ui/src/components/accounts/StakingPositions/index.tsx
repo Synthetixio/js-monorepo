@@ -1,12 +1,14 @@
-import StakingPosition from './StakingPosition';
-import { StakingPositionType } from './types';
+import { StakingPosition } from './StakingPosition';
 import { Box, Heading, Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+import { StakingPositionType } from '../../../utils/types';
+import { FC } from 'react';
 
-export default function StakingPositions({
-  positions,
-}: {
+interface Props {
   positions: Record<string, StakingPositionType>;
-}) {
+  refetch: () => void;
+}
+
+export const StakingPositions: FC<Props> = ({ positions, refetch }) => {
   return (
     <Box>
       <Heading size="md" mb="2">
@@ -33,26 +35,16 @@ export default function StakingPositions({
         </Thead>
         <Tbody>
           {Object.keys(positions).map((positionId) => {
-            return <StakingPosition key={positionId} position={positions[positionId]} />;
+            return (
+              <StakingPosition
+                key={positionId}
+                position={positions[positionId]}
+                refetch={refetch}
+              />
+            );
           })}
-          {/*
-            <Tr>
-              <Td py="4">
-                <Text fontSize="xs" mb="1">Total Staked Value</Text>
-                $6,264.32
-              </Td>
-              <Td>
-              </Td>
-              <Td>
-                <Text fontSize="xs" mb="1">Total Voting Power</Text>
-                17,000
-              </Td>
-              <Td isNumeric>
-              </Td>
-            </Tr>
-            */}
         </Tbody>
       </Table>
     </Box>
   );
-}
+};

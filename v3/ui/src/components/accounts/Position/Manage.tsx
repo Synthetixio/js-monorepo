@@ -1,55 +1,147 @@
-import Burn from './Manage/Burn';
-import Custom from './Manage/Custom';
-import Mint from './Manage/Mint';
-import Preview from './Manage/Preview';
-import Stake from './Manage/Stake';
-import Unstake from './Manage/Unstake';
-import { Text, Box, Button, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
+import { Custom } from './Manage/Custom';
+import { Mint } from './Manage/Mint';
+import { Preview } from './Manage/Preview';
+import { Unstake } from './Manage/Unstake';
+import { Text, Box, Tabs, TabList, Tab, TabPanels, TabPanel, Button } from '@chakra-ui/react';
+import { CollateralType } from '../../../utils/constants';
+import { MaintainCRatio } from './Manage/MaintainCRatio';
+import { useCallback, useState } from 'react';
+import { useManagePosition } from '../../../hooks/useManagePosition';
+import { Stake } from './Manage/Stake';
+import { Burn } from './Manage/Burn';
+import { useValidatePosition } from '../../../hooks/useValidatePosition';
+import { useTranslation } from 'react-i18next';
 
-export default function Manage() {
+interface Props {
+  accountId: string;
+  poolId: string;
+  collateral: CollateralType;
+  collateralAmount: number;
+  collateralValue: number;
+  debt: number;
+  cRatio: number;
+  refetch: () => void;
+}
+
+export default function Manage({
+  collateral,
+  accountId,
+  poolId,
+  collateralAmount,
+  collateralValue,
+  debt,
+  cRatio,
+  refetch,
+}: Props) {
+  const { t } = useTranslation();
+  const [collateralChange, setCollateralChange] = useState(0);
+  const [debtChange, setDebtChange] = useState(0);
+
+  const reset = useCallback(() => {
+    setCollateralChange(0);
+    setDebtChange(0);
+  }, []);
+
+  const { exec } = useManagePosition(
+    {
+      collateral,
+      accountId,
+      poolId,
+    },
+    collateralChange,
+    debtChange,
+    collateralAmount,
+    () => {
+      reset();
+      refetch();
+    }
+  );
+
+  const { isValid, noChange, maxDebt } = useValidatePosition(
+    {
+      collateral,
+      collateralAmount,
+      collateralValue,
+      debt,
+    },
+    collateralChange,
+    debtChange
+  );
+
   return (
     <Box mb="2">
       <Text mt="2" mb="6">
-        Manage your staking position by adjusting your collateral and debt.
+        {t('position.manage.title')}
       </Text>
 
-      <Tabs size="sm" variant="soft-rounded" colorScheme="blue">
+      <Tabs isLazy onChange={reset} size="sm" variant="soft-rounded" colorScheme="blue">
         <TabList justifyContent="space-between">
-          <Tab>Maintain C-Ratio</Tab>
-          <Tab>Borrow snxUSD</Tab>
-          <Tab>Repay snxUSD</Tab>
-          <Tab>Custom</Tab>
+          <Tab>{t('position.manage.maintain')}</Tab>
+          <Tab>{t('position.manage.borrow')}</Tab>
+          <Tab>{t('position.manage.repay')}</Tab>
+          <Tab>{t('position.manage.custom')}</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Text fontSize="sm" mb="4">
-              <strong>
-                If your C-Ratio drops below the minimum (150%), you may be liquidated and lose your
-                collateral.
-              </strong>{' '}
-              There are two ways to increase your C-Ratio:
-            </Text>
-            <Stake />
-            <Burn />
+            <MaintainCRatio
+              collateral={collateral}
+              setCollateralChange={setCollateralChange}
+              collateralChange={collateralChange}
+              setDebtChange={setDebtChange}
+              debtChange={debtChange}
+              debt={debt}
+            />
           </TabPanel>
           <TabPanel>
-            <Stake />
-            <Mint />
+            <Stake
+              onChange={setCollateralChange}
+              value={collateralChange}
+              collateral={collateral}
+            />
+            <Mint onChange={setDebtChange} value={debtChange} max={maxDebt} />
           </TabPanel>
           <TabPanel>
-            <Burn />
-            <Unstake />
+            <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
+            <Unstake
+              collateral={collateral}
+              collateralAmount={collateralAmount}
+              onChange={(val) => setCollateralChange(-val)}
+              value={-collateralChange}
+            />
           </TabPanel>
           <TabPanel>
-            <Custom />
+            <Custom
+              collateral={collateral}
+              setCollateralChange={setCollateralChange}
+              collateralAmount={collateralAmount}
+              collateralChange={collateralChange}
+              setDebtChange={setDebtChange}
+              debtChange={debtChange}
+              debt={debt}
+              maxDebt={maxDebt}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>
 
-      <Preview />
-
+      <Preview
+        collateral={collateral}
+        collateralAmount={collateralAmount}
+        collateralValue={collateralValue}
+        debt={debt}
+        cRatio={cRatio}
+        collateralChange={collateralChange}
+        debtChange={debtChange}
+      />
       <Box px="4">
-        <Button colorScheme="blue" size="lg" width="100%" mb="2">
+        <Button
+          disabled={!isValid || noChange}
+          onClick={exec}
+          colorScheme="blue"
+          size="lg"
+          width="100%"
+          mb="2"
+        >
           Update Position
         </Button>
       </Box>

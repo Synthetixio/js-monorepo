@@ -2,7 +2,7 @@ import { accountsState, chainIdState, collateralTypesState } from '../../../util
 import { contracts, poolsData, getChainById } from '../../../utils/constants';
 import { useContract, useSynthetixRead } from '../../../hooks';
 import EditPosition from '../EditPosition';
-import Balance from './Balance';
+import { Balance } from './Balance';
 import CollateralTypeSelector from './CollateralTypeSelector';
 import HowItWorks from './HowItWorks';
 import { EditIcon, InfoOutlineIcon, LockIcon } from '@chakra-ui/icons';
@@ -29,11 +29,12 @@ import { BigNumber, CallOverrides, ethers, utils } from 'ethers';
 import { useMemo } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
-import { useAccount, useBalance, useNetwork } from 'wagmi';
+import { useNetwork } from 'wagmi';
 import { CollateralType, StakingPositionType } from '../../../utils/types';
 import { useNavigate } from 'react-router-dom';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall2';
 import { useApproveCall } from '../../../hooks/useApproveCall';
+import { useTokenBalance } from '../../../hooks/useTokenBalance';
 
 type FormType = {
   collateralType: CollateralType;
@@ -67,7 +68,7 @@ export default function Stake({
       poolId: poolId?.toString() ?? '0',
     },
   });
-  const { handleSubmit, register, formState, reset, control } = methods;
+  const { handleSubmit, register, formState, reset, control, setValue } = methods;
 
   const collateralContract = useContract(contracts.SNX_TOKEN);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
@@ -92,14 +93,11 @@ export default function Stake({
   });
 
   const isNativeCurrency = selectedCollateralType.symbol === chain?.nativeCurrency?.symbol;
-
-  const { address: accountAddress } = useAccount();
   const [{ refetchAccounts }] = useRecoilState(accountsState);
-  const { data: balanceData } = useBalance({
-    addressOrName: accountAddress,
-    token: isNativeCurrency ? undefined : selectedCollateralType.address,
-    enabled: hasWalletConnected,
-  });
+
+  const balanceData = useTokenBalance(
+    isNativeCurrency ? undefined : selectedCollateralType.address
+  );
 
   const amountBN = Boolean(amount)
     ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
@@ -317,7 +315,12 @@ export default function Stake({
             <Flex alignItems="center">
               {hasWalletConnected && (
                 <Box>
-                  <Balance balance={balanceData?.value || ethers.BigNumber.from(0)} />
+                  <Balance
+                    balance={balanceData?.value}
+                    decimals={selectedCollateralType.decimals}
+                    symbol={selectedCollateralType.symbol}
+                    onMax={(balance) => setValue('amount', balance)}
+                  />
                 </Box>
               )}
 
@@ -326,7 +329,7 @@ export default function Stake({
                   Pool:{' '}
                   {selectedPoolId
                     ? poolsData[selectedPoolId]
-                      ? poolsData[selectedPoolId].name
+                      ? poolsData[selectedPoolId]?.name
                       : 'Unknown Pool'
                     : 'None'}{' '}
                   <Link color="blue.400">

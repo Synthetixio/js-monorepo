@@ -7,7 +7,6 @@ import {
   Flex,
   Link,
   Input,
-  Badge,
   Checkbox,
   SimpleGrid,
   Slider,
@@ -17,11 +16,39 @@ import {
   Tooltip,
   SliderThumb,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { BigNumber, utils } from 'ethers';
+import { FC, useState } from 'react';
+import { useContractWrite } from 'wagmi';
+import { useContract, useSnxProxy } from '../../../hooks';
+import { useGetStakingRewards } from '../../../hooks/useStakingReward';
+import { useTokenBalance } from '../../../hooks/useTokenBalance';
+import { contracts } from '../../../utils/constants';
+import { CollateralType } from '../../../utils/types';
+import { Balance } from '../Stake/Balance';
 
-export default function Rewards() {
+interface Props {
+  accountId: string;
+  poolId: string;
+  collateral: CollateralType;
+}
+
+export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
   const [sliderValue, setSliderValue] = useState(5);
   const [showTooltip, setShowTooltip] = useState(false);
+  const { data: rewards } = useGetStakingRewards(accountId, poolId, collateral);
+  const snxProxy = useSnxProxy();
+  const eSnxProxy = useContract(contracts.ESNX_PROXY);
+  const balance = useTokenBalance(eSnxProxy?.address);
+
+  const total = (rewards || []).reduce((prv, curr) => curr.add(prv), BigNumber.from(0));
+
+  const { writeAsync: claim, isLoading: claimLoading } = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    addressOrName: snxProxy?.address,
+    contractInterface: snxProxy?.abi,
+    functionName: 'claimRewards',
+    args: [poolId, collateral.address, accountId],
+  });
 
   return (
     <Box>
@@ -38,7 +65,14 @@ export default function Rewards() {
           staking additional SNX or increasing your staking leverage.
         </Text>
         <Flex alignItems="center">
-          <Button colorScheme="blue">Claim 534.23 eSNX</Button>
+          <Button
+            disabled={total.isZero()}
+            onClick={() => claim()}
+            isLoading={claimLoading}
+            colorScheme="blue"
+          >
+            Claim {Number(utils.formatUnits(total, 18)).toFixed(2)} eSNX
+          </Button>
           <Text ml="5" fontWeight="semibold" fontSize="sm">
             <Link color="blue.400">
               <QuestionOutlineIcon mr="1.5" transform="translateY(-1px)" />
@@ -71,20 +105,7 @@ export default function Rewards() {
                 </Flex>
               </form>
               <Flex alignItems="center">
-                <Box>
-                  <Text fontSize="xs">Balance: 100 eSNX</Text>
-                </Box>
-                <Link>
-                  <Badge
-                    as="button"
-                    ml="3"
-                    variant="outline"
-                    colorScheme="blue"
-                    transform="translateY(-2px)"
-                  >
-                    Use Max
-                  </Badge>
-                </Link>
+                <Balance balance={balance.value} decimals={balance.decimals} symbol="eSNX" />
               </Flex>
             </Box>
             <Checkbox defaultChecked>Claim and stake 534.23 eSNX</Checkbox>
@@ -153,4 +174,4 @@ export default function Rewards() {
       </Box>
     </Box>
   );
-}
+};
