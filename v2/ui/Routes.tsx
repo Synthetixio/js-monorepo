@@ -34,6 +34,7 @@ const NotFound = safeLazy(() => import(/* webpackChunkName: "404" */ './content/
 
 const V2HomePage = safeLazy(() => import(/* webpackChunkName: "v2-home" */ './content/V2Home'));
 const V2MintPage = safeLazy(() => import(/* webpackChunkName: "v2-mint" */ './content/V2Mint'));
+const V2BurnPage = safeLazy(() => import(/* webpackChunkName: "v2-home" */ './content/V2Burn'));
 
 export default function AppRoutes() {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
@@ -47,6 +48,7 @@ export default function AppRoutes() {
             <>
               <Route path="/staking" element={<Navigate to="/staking/mint" />} />
               <Route path="/staking/mint" element={<V2MintPage />} />
+              <Route path="/staking/burn" element={<V2BurnPage />} />
             </>
           ) : (
             <Route path="/staking" element={<StakingPage />}>
