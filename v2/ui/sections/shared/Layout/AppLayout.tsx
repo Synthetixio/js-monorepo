@@ -16,6 +16,7 @@ import useSynthetixQueries from '@synthetixio/queries';
 import Connector from 'containers/Connector';
 import useLocalStorage from 'hooks/useLocalStorage';
 import { LOCAL_STORAGE_KEYS } from 'constants/storage';
+import { Box } from '@chakra-ui/react';
 
 type AppLayoutProps = {
   children: ReactNode;
@@ -49,26 +50,17 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
           <Header />
         </>
       )}
-      <Content STAKING_V2_ENABLED={STAKING_V2_ENABLED}>{children}</Content>
+      {STAKING_V2_ENABLED ? <Box flex="1 1 auto">{children}</Box> : <Content>{children}</Content>}
       <NotificationContainer />
     </>
   );
 };
 
-interface ContentProps {
-  readonly STAKING_V2_ENABLED: boolean;
-}
-
-const Content = styled.div<ContentProps>`
+const Content = styled.div`
   margin: 0 auto;
-  ${({ STAKING_V2_ENABLED }) => `
-    max-width: ${STAKING_V2_ENABLED ? 'unset' : '1200px'};
-  `};
-
-  ${({ STAKING_V2_ENABLED }) => media.greaterThan('mdUp')`
-    padding-left: ${
-      STAKING_V2_ENABLED ? '0px' : `calc(${DESKTOP_SIDE_NAV_WIDTH + DESKTOP_BODY_PADDING}px)`
-    };
+  max-width: 1200px;
+  ${media.greaterThan('mdUp')`
+    padding-left: ${`calc(${DESKTOP_SIDE_NAV_WIDTH + DESKTOP_BODY_PADDING}px)`};
  `};
 `;
 

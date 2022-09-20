@@ -19,7 +19,6 @@ import {
   FailedIcon,
   GovIcon,
   GuideIcon,
-  InfoIcon,
   KebabMenu,
   LoansIcon,
   NotificationsIcon,
@@ -28,6 +27,7 @@ import {
   StakingIcon,
   WalletIcon,
   StakingLogo,
+  InfoOutline,
 } from '@snx-v2/icons';
 import { useTranslation } from 'react-i18next';
 import { truncateAddress } from '@snx-v2/formatters';
@@ -209,7 +209,7 @@ export const Navigation = ({
           <MenuList>
             <MenuItem>
               <Center>
-                <InfoIcon ml={0.5} mr={1.5} />
+                <InfoOutline />
                 <Text ml={2}>{t('common.wallet.menu.help')}</Text>
               </Center>
             </MenuItem>
