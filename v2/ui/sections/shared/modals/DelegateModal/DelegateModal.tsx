@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 
 import { delegateWalletState } from 'store/wallet';
 import { truncateAddress } from 'utils/formatters/string';
@@ -12,6 +13,7 @@ import { Tooltip } from '@snx-v1/styles';
 
 import SpinnerIcon from 'assets/svg/app/loader.svg';
 import Connector from 'containers/Connector';
+import ROUTES from 'constants/routes';
 
 type DelegateModalProps = {
   onDismiss: () => void;
@@ -19,7 +21,7 @@ type DelegateModalProps = {
 
 const DelegateModal: FC<DelegateModalProps> = ({ onDismiss }) => {
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
   const { walletAddress } = Connector.useContainer();
 
   const { useGetAuthoriserWallets } = useSynthetixQueries();
@@ -33,6 +35,7 @@ const DelegateModal: FC<DelegateModalProps> = ({ onDismiss }) => {
 
   const handleWalletSelect = (wallet: DelegationWallet) => {
     setDelegateWallet(wallet);
+    navigate(ROUTES.Home);
     onDismiss();
   };
   return (
