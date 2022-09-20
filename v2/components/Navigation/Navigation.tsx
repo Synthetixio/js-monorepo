@@ -79,7 +79,7 @@ export const Navigation = ({
       justifyContent="space-between"
       bg={['transparent', 'transparent', 'navy.900']}
       px={[4, 4, 10]}
-      py={4}
+      py={2.5}
       borderBottom="1px"
       borderBottomColor={['transparent', 'transparent', 'gray.900']}
     >

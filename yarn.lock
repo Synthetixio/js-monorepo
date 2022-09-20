@@ -6374,7 +6374,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useSynthetixContracts@workspace:*, @snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts":
+"@snx-v2/useSynthetixContracts@workspace:*, @snx-v2/useSynthetixContracts@workspace:^, @snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts"
   dependencies:
@@ -6384,6 +6384,20 @@ __metadata:
     "@synthetixio/providers": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.5.3
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useSynthsBalances@workspace:^, @snx-v2/useSynthsBalances@workspace:v2/lib/useSynthsBalances":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useSynthsBalances@workspace:v2/lib/useSynthsBalances"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@ethersproject/strings": ^5.7.0
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:^"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -8180,6 +8194,7 @@ __metadata:
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v2/useSynthsBalances": "workspace:^"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
     "@storybook/addon-docs": ^6.5.10

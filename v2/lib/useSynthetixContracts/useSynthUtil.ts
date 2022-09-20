@@ -36,6 +36,7 @@ export const getSynthUtil = async ({
   const contract = new ethers.Contract(address, abi, signerOrProvider) as SynthUtil | SynthUtilOvm;
   return contract;
 };
+
 export const useSynthUtil = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);

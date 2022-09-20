@@ -42,6 +42,7 @@
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
+    "@snx-v2/useSynthsBalances": "workspace:^",
     "@socket.tech/widget": "^0.1.1",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/contracts-interface": "workspace:*",
