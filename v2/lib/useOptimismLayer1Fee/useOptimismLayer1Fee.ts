@@ -30,27 +30,21 @@ export const useOptimismLayer1Fee = ({
   populateTransaction?: () => Promise<PopulatedTransaction>;
 }) => {
   const { networkId } = useContext(ContractContext);
-  const serializedTransactionQuery = useQuery(
+
+  return useQuery(
     [networkId, populateTransaction],
     async () => {
       if (!populateTransaction) {
         throw Error('populateTransaction missing, query should not be enabled');
       }
       const tx = await populateTransaction();
+
       // serialize will throw if from is set on the transaction..
       const { from: _from, ...txWithoutFrom } = tx;
-      return serialize(txWithoutFrom);
+      const serializedTxn = serialize(txWithoutFrom);
+
+      return await getOptimismLayerOneFees(serializedTxn, networkId);
     },
     { enabled: Boolean(populateTransaction && isNetworkIdOvm(networkId)) }
-  );
-  return useQuery(
-    [networkId, serializedTransactionQuery.data],
-    async () => {
-      if (!serializedTransactionQuery.data) {
-        throw Error('Query should not be enable when serializedTransactionQuery.data is missing');
-      }
-      return await getOptimismLayerOneFees(serializedTransactionQuery.data, networkId);
-    },
-    { enabled: Boolean(serializedTransactionQuery.data && isNetworkIdOvm(networkId)) }
   );
 };

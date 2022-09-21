@@ -7,6 +7,7 @@ describe('useOptimismLayer1Fee', () => {
   let ContractContext;
   let synthetixContracts;
   let getL1Fee;
+  let serialize;
 
   beforeEach(async () => {
     react = {
@@ -15,7 +16,7 @@ describe('useOptimismLayer1Fee', () => {
       })),
     };
     getL1Fee = jest.fn(() => BigNumber.from(1));
-
+    serialize = jest.fn(() => 'serialized txn');
     ContractContext = jest.fn();
     // needed to mock this since this module relies on SignerContext
     synthetixContracts = {
@@ -33,6 +34,7 @@ describe('useOptimismLayer1Fee', () => {
     jest.doMock('@snx-v2/ContractContext', () => ContractContext);
     jest.doMock('@snx-v2/useSynthetixContracts', () => synthetixContracts);
     jest.doMock('@ethersproject/contracts', () => ({ Contract: EthersContract }));
+    jest.doMock('@ethersproject/transactions', () => ({ serialize }));
 
     ({ useOptimismLayer1Fee } = await import('./useOptimismLayer1Fee'));
   });
@@ -44,14 +46,8 @@ describe('useOptimismLayer1Fee', () => {
   test('Returns undefined when populateTransaction is undefined', async () => {
     const populateTransaction = undefined;
     const result = useOptimismLayer1Fee({ populateTransaction });
-    // Assert serialize query call is not enabled
-    expect(reactQuery.useQuery.mock.calls[0]).toEqual([
-      [10, undefined],
-      expect.any(Function),
-      { enabled: false },
-    ]);
     // Assert return query call is not enabled
-    expect(reactQuery.useQuery.mock.calls[1]).toEqual([
+    expect(reactQuery.useQuery.mock.lastCall).toEqual([
       [10, undefined],
       expect.any(Function),
       { enabled: false },
@@ -62,41 +58,38 @@ describe('useOptimismLayer1Fee', () => {
     const populateTransaction = jest.fn();
     react.useContext.mockReturnValue({ networkId: 1 });
     const result = useOptimismLayer1Fee({ populateTransaction });
-    // Assert serialize query call is not enabled
-    expect(reactQuery.useQuery.mock.calls[0]).toEqual([
-      [1, expect.any(Function)],
-      expect.any(Function),
-      { enabled: false },
-    ]);
+
     // Assert return query call is not enabled
-    expect(reactQuery.useQuery.mock.calls[1]).toEqual([
-      [1, undefined],
+    expect(reactQuery.useQuery.mock.lastCall).toEqual([
+      [1, expect.any(Function)],
       expect.any(Function),
       { enabled: false },
     ]);
     expect(result).toEqual({ data: undefined });
   });
   test('Queries are enabled and called correctly', async () => {
-    const populateTransaction = jest.fn();
-    reactQuery.useQuery
-      .mockReturnValueOnce({ data: 'serialized transaction' })
-      .mockReturnValueOnce({ data: BigNumber.from(1) });
+    const populateTransaction = jest
+      .fn()
+      .mockReturnValue({ from: 'vitalik', to: 'joey', data: 'lots of eth' });
+    reactQuery.useQuery.mockReturnValueOnce({ data: BigNumber.from(1) });
 
     const result = useOptimismLayer1Fee({ populateTransaction });
     // Assert serialize query call is enabled
-    expect(reactQuery.useQuery.mock.calls[0]).toEqual([
+    expect(reactQuery.useQuery.mock.lastCall).toEqual([
       [10, expect.any(Function)],
       expect.any(Function),
       { enabled: true },
     ]);
     const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
     // Assert last query call has correct query key
-    expect(cacheKey).toEqual([10, 'serialized transaction']);
+    expect(cacheKey).toEqual([10, expect.any(Function)]);
     // Assert last query call is enabled
     expect(options).toEqual({ enabled: true });
+
     await query();
-    // Assert getL1Fee is called with serialized transaction
-    expect(getL1Fee).toBeCalledWith('serialized transaction');
+
+    expect(serialize).toBeCalledWith({ to: 'joey', data: 'lots of eth' });
+    expect(getL1Fee).toBeCalledWith('serialized txn');
     expect(result).toEqual({ data: BigNumber.from(1) });
   });
 });
