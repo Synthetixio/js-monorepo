@@ -4,6 +4,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import Wei, { wei } from '@synthetixio/wei';
 import { Flex, Text } from '@chakra-ui/react';
 import { formatNumberToUsd } from '@snx-v2/formatters';
+import { GWEI_DECIMALS } from '@snx-v2/Constants';
 
 type GasPrice = {
   baseFeePerGas?: BigNumber; // Note that this is used for estimating price and should not be included in the transaction
@@ -16,8 +17,6 @@ type GasPrices = {
   fast: GasPrice;
   fastest: GasPrice;
 };
-
-const GWEI_DECIMALS = 9;
 
 const getTotalGasPrice = (gasPrice?: GasPrice | null) => {
   if (!gasPrice) return wei(0);

@@ -6,9 +6,10 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import { useQuery } from '@tanstack/react-query';
 import { useOptimismLayer1Fee } from '@snx-v2/useOptimismLayer1Fee';
 import { wei } from '@synthetixio/wei';
+import { GWEI_DECIMALS } from '@snx-v2/Constants';
 
 const GAS_LIMIT_BUFFER = 1.2;
-const GWEI_DECIMALS = 9;
+
 export const useGasOptions = ({
   getGasLimit,
   populateTransaction,
