@@ -6,6 +6,7 @@
   "dependencies": {
     "@ethersproject/bignumber": "^5.6.2",
     "@ethersproject/providers": "^5.6.8",
+    "@snx-v2/Constants": "workspace:*",
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "@synthetixio/wei": "workspace:*",

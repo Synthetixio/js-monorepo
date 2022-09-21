@@ -88,7 +88,7 @@ describe('useGasOptions', () => {
     ]);
     expect(options).toEqual({ enabled: false });
   });
-  test('Returns correct values for mainnet', async () => {
+  test('Returns gas options mainnet', async () => {
     const populateTransaction = jest.fn();
     const getGasLimit = jest.fn(() => BigNumber.from(20));
 
@@ -117,7 +117,7 @@ describe('useGasOptions', () => {
       optimismLayerOneFees: undefined,
     });
   });
-  test('Returns correct values for optimism', async () => {
+  test('Returns gas options for optimism', async () => {
     const populateTransaction = jest.fn();
     const getGasLimit = jest.fn().mockReturnValue(BigNumber.from(20));
     react.useContext.mockReturnValue({ networkId: 10 });
