@@ -46,8 +46,6 @@ beforeEach(() => {
                   case 'eth_accounts':
                   case 'eth_requestAccounts':
                     return [Cypress.env('WALLET_ADDRESS')];
-                  case 'eth_chainId':
-                    return '0x1';
                   default:
                     return await target.send(method, params);
                 }
