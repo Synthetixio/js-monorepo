@@ -1,5 +1,5 @@
 import { Badge, Box, Button, Flex, Heading, Stack, Text } from '@chakra-ui/react';
-import React, { PropsWithChildren, ReactNode, useState } from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { CollectIcon, InfoIcon, MaintainIcon, StakeIcon } from '@snx-v2/icons';
@@ -8,7 +8,8 @@ import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { CountDown } from '@snx-v2/CountDown';
 import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
 import { useSynthetix } from '@snx-v2/useSynthetixContracts';
-import { EthGasPriceEstimator, GasOption } from '@snx-v2/EthGasPriceEstimator';
+import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
+import { useGasOptions } from '@snx-v2/useGasOptions';
 
 const CardHeader = ({
   step,
@@ -257,26 +258,39 @@ export const MainActionCardsUi: React.FC<UiProps> = (props) => {
 };
 
 export const MainActionCards: React.FC = () => {
-  const [gasOptions, setGasOption] = useState<GasOption | null>(null);
   const { data: debtData } = useDebtData();
   const { data: feePoolData } = useFeePoolData();
   const { data: rewardsData } = useRewardsAvailable();
   const { data: Synthetix } = useSynthetix();
+
+  const getGasLimit = Synthetix?.signer
+    ? () => Synthetix.estimateGas.burnSynthsToTarget()
+    : undefined;
+  const populateTransaction = Synthetix
+    ? () => Synthetix.populateTransaction.burnSynthsToTarget()
+    : undefined;
+  const gasOptionsQuery = useGasOptions({
+    getGasLimit,
+    populateTransaction,
+  });
+  const { gasLimit, gasPrices, optimismLayerOneFees, gasPriceForTransaction } =
+    gasOptionsQuery.data || {};
+
   if (!debtData || !feePoolData || !rewardsData || !Synthetix) return <p>Skeleton</p>;
-  console.log({ gasOptions });
+
   return (
     <>
       <Button
         onClick={() => {
-          Synthetix.burnSynthsToTarget({ ...gasOptions });
+          Synthetix.burnSynthsToTarget({ ...gasPriceForTransaction, gasLimit });
         }}
       >
         Burn Max
       </Button>
       <EthGasPriceEstimator
-        onGasOptionChange={(x) => setGasOption(x)}
-        getGasLimit={() => Synthetix.estimateGas.burnSynthsToTarget()}
-        populateTransaction={() => Synthetix.populateTransaction.burnSynthsToTarget()}
+        gasLimit={gasLimit}
+        optimismLayerOneFees={optimismLayerOneFees}
+        gasPrices={gasPrices}
       />
       <MainActionCardsUi
         currentCRatioPercentage={debtData.currentCRatioPercentage.mul(100).toNumber()}
