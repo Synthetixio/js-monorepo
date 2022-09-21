@@ -44,16 +44,16 @@ export const useGasOptions = ({
         const gasPrice = gasPrices[gasSpeed];
         if ('baseFeePerGas' in gasPrice) {
           const { baseFeePerGas: _baseFeePerGas, ...gasPriceToReturn } = gasPrice;
-          return gasPriceToReturn;
+          return { ...gasPriceToReturn, gasLimit };
         }
-        return gasPrice;
+        return { ...gasPrice, gasLimit };
       };
       return {
         gasPrices,
         gasLimit,
         optimismLayerOneFees,
         gasSpeed,
-        gasPriceForTransaction: formatGasPriceForTransaction(),
+        gasOptionsForTransaction: formatGasPriceForTransaction(),
       };
     },
     { enabled: Boolean(getGasLimit && populateTransaction && networkId) }

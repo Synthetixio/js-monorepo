@@ -107,9 +107,10 @@ describe('useGasOptions', () => {
     const queryResult = await query();
     expect(queryResult).toEqual({
       gasLimit: BigNumber.from(24),
-      gasPriceForTransaction: {
+      gasOptionsForTransaction: {
         maxFeePerGas: BigNumber.from(14),
         maxPriorityFeePerGas: BigNumber.from(4),
+        gasLimit: BigNumber.from(24),
       },
       gasPrices: gasPricesMainnetMockData,
       gasSpeed: 'average',
@@ -138,8 +139,9 @@ describe('useGasOptions', () => {
     const queryResult = await query();
     expect(queryResult).toEqual({
       gasLimit: BigNumber.from(24),
-      gasPriceForTransaction: {
+      gasOptionsForTransaction: {
         gasPrice: BigNumber.from(10),
+        gasLimit: BigNumber.from(24),
       },
       gasPrices: gasPricesOptimismMockData,
       gasSpeed: 'average',

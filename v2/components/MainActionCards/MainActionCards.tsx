@@ -273,7 +273,7 @@ export const MainActionCards: React.FC = () => {
     getGasLimit,
     populateTransaction,
   });
-  const { gasLimit, gasPrices, optimismLayerOneFees, gasPriceForTransaction } =
+  const { gasLimit, gasPrices, optimismLayerOneFees, gasOptionsForTransaction } =
     gasOptionsQuery.data || {};
 
   if (!debtData || !feePoolData || !rewardsData || !Synthetix) return <p>Skeleton</p>;
@@ -282,7 +282,7 @@ export const MainActionCards: React.FC = () => {
     <>
       <Button
         onClick={() => {
-          Synthetix.burnSynthsToTarget({ ...gasPriceForTransaction, gasLimit });
+          Synthetix.burnSynthsToTarget(gasOptionsForTransaction);
         }}
       >
         Burn Max
