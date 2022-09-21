@@ -5,20 +5,17 @@ import { InfuraProvider } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
+import { GWEI_DECIMALS } from '@snx-v2/Constants';
 
-const MULTIPLIER = wei(2);
+const MULTIPLIER = wei(2, GWEI_DECIMALS);
 
-export const computeGasFee = (
-  baseFeePerGas: BigNumber,
-  maxPriorityFeePerGas: number
-): {
-  maxPriorityFeePerGas: BigNumber;
-  maxFeePerGas: BigNumber;
-  baseFeePerGas: BigNumber;
-} => {
+export const computeGasFee = (baseFeePerGas: BigNumber, maxPriorityFeePerGas: number) => {
   return {
-    maxPriorityFeePerGas: wei(maxPriorityFeePerGas, 9).toBN(),
-    maxFeePerGas: wei(baseFeePerGas, 9).mul(MULTIPLIER).add(wei(maxPriorityFeePerGas, 9)).toBN(),
+    maxPriorityFeePerGas: wei(maxPriorityFeePerGas, GWEI_DECIMALS).toBN(),
+    maxFeePerGas: wei(baseFeePerGas, GWEI_DECIMALS)
+      .mul(MULTIPLIER)
+      .add(wei(maxPriorityFeePerGas, GWEI_DECIMALS))
+      .toBN(),
     baseFeePerGas: baseFeePerGas,
   };
 };
