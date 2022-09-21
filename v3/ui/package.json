@@ -21,6 +21,7 @@
     "@rainbow-me/rainbowkit": "^0.4.5",
     "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
+    "big.js": "^6.1.1",
     "chart.js": "^3.9.1",
     "ethers": "^5.5.3",
     "framer-motion": "^7.0.0",

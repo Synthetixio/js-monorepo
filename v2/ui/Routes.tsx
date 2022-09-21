@@ -42,8 +42,7 @@ export default function AppRoutes() {
     <BrowserRouter>
       <AppLayout>
         <Routes>
-          <Route path="/" element={<DashboardPage />} />
-          <Route path="/v2-home" element={<V2HomePage />} />
+          <Route path="/" element={STAKING_V2_ENABLED ? <V2HomePage /> : <DashboardPage />} />
 
           {STAKING_V2_ENABLED ? (
             <>

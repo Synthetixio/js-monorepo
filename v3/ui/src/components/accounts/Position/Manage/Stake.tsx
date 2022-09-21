@@ -1,6 +1,18 @@
-import { Text, Box, Link, Input, Button, Flex, Heading, Badge } from '@chakra-ui/react';
+import { Text, Box, Flex, Heading } from '@chakra-ui/react';
+import { FC } from 'react';
+import { useTokenBalance } from '../../../../hooks/useTokenBalance';
+import { CollateralType } from '../../../../utils/types';
+import { Balance } from '../../Stake/Balance';
+import { NumberInput } from './NumberInput';
 
-export default function Stake() {
+interface Props {
+  collateral: CollateralType;
+  onChange: (value: number) => void;
+  value: number;
+}
+
+export const Stake: FC<Props> = ({ collateral, value, onChange }) => {
+  const balance = useTokenBalance(collateral.address);
   return (
     <Box mb="4">
       <Heading fontSize="md" mb="1">
@@ -12,46 +24,18 @@ export default function Stake() {
       </Text>
 
       <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
-        <form>
-          <Flex mb="3">
-            <Input
-              flex="1"
-              type="number"
-              border="none"
-              placeholder="0.0"
-              // value={null}
-              onChange={() => null}
-            />
-            <Button
-              display="none"
-              // isLoading={null}
-              // isDisabled={null}
-              colorScheme="blue"
-              ml="4"
-              px="8"
-              type="submit"
-            >
-              Mint
-            </Button>
-          </Flex>
-        </form>
+        <Flex mb="3">
+          <NumberInput value={value} onChange={onChange} max={balance.formatedValue} />
+        </Flex>
         <Flex alignItems="center">
-          <Box>
-            <Text fontSize="xs">Balance: 100 SNX</Text>
-          </Box>
-          <Link>
-            <Badge
-              as="button"
-              ml="3"
-              variant="outline"
-              colorScheme="blue"
-              transform="translateY(-2px)"
-            >
-              Use Max
-            </Badge>
-          </Link>
+          <Balance
+            onMax={(balance) => onChange(parseFloat(balance) || 0)}
+            balance={balance.value}
+            decimals={collateral.decimals}
+            symbol={collateral.symbol}
+          />
         </Flex>
       </Box>
     </Box>
   );
-}
+};

@@ -1,5 +1,4 @@
-import { StakingPositionType } from './types';
-import { EditIcon, ExternalLinkIcon, InfoIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
+import { EditIcon, ExternalLinkIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
   Badge,
   Box,
@@ -21,13 +20,21 @@ import {
   Tr,
   useDisclosure,
 } from '@chakra-ui/react';
-import { BigNumber, utils } from 'ethers';
+import { BigNumber } from 'ethers';
 import { Link as RouterLink } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
 import { formatValue } from '../../../utils/helpers';
 import { currency } from '../../../utils/currency';
+import { StakingPositionType } from '../../../utils/types';
+import { poolsData } from '../../../utils/constants';
+import { PoolDialog } from '../Position/PoolDialog';
+import { FC } from 'react';
 
-export default function StakingPosition({ position }: { position: StakingPositionType }) {
+interface Props {
+  position: StakingPositionType;
+  refetch: () => void;
+}
+
+export const StakingPosition: FC<Props> = ({ position, refetch }) => {
   // If the connected wallet doesn’t own this account token, remove/disable the interactivity
 
   const { isOpen: isOpenFund, onOpen: onOpenFund, onClose: onCloseFund } = useDisclosure();
@@ -52,7 +59,7 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </>
       </Td>
       <Td py="4">
-        ${currency(utils.formatEther(debt))}
+        ${currency(debt.toString())}
         <Text fontSize="xs" mt="1'">
           <Link
             as={RouterLink}
@@ -229,25 +236,10 @@ export default function StakingPosition({ position }: { position: StakingPositio
         </Text>
       </Td>
       <Td py="4">
-        {debt.gte('0') ? (
-          <Text fontWeight="bold" color="green">
-            {cRatio.toString()} <InfoIcon transform="translateY(-1px)" />
-          </Text>
-        ) : (
-          <>0%</>
-        )}
-        {/* collateralValue / debt * 100 */}
-        {/* <Text fontWeight="bold" color="red">
-          232% <WarningIcon transform="translateY(-1px)" />
-        </Text> */}
-
+        ${currency(cRatio.toString())}
         <Text fontSize="xs" opacity="0.66" mt="1'">
           {/*target here as well?*/}
-          {formatValue(
-            collateralType!.minimumCRatio!.mul(BigNumber.from(100)),
-            collateralType.decimals
-          ).toFixed(0)}
-          % Min.
+          {formatValue(collateralType!.minimumCRatio!.mul(BigNumber.from(100)), 6).toFixed(0)}% Min.
         </Text>
       </Td>
 
@@ -259,60 +251,34 @@ export default function StakingPosition({ position }: { position: StakingPositio
           display="inline"
           borderBottom="1px dotted rgba(255,255,255,0.5)"
         >
-          Spartan Council
+          {poolsData[position.poolId.toString()]?.name}
         </Link>
         <Link color="blue.400" ml="1">
           <EditIcon onClick={onOpenFund} style={{ transform: 'translateY(-2px)' }} />
         </Link>
-        {/*
-        For 0 fund:
-        <Text opacity="0.66">None
-          <Link color="blue.400" ml="1">
-            <EditIcon onClick={onOpenFund} style={{ transform: 'translateY(-2px)' }} />
-          </Link>
-              */}
-        {/*<Text fontSize="xs" opacity="0.66" mt="1'">&times;1 Leverage</Text>*/}
 
-        <Modal size="2xl" isOpen={isOpenFund} onClose={onCloseFund}>
-          <ModalOverlay />
-          <ModalContent bg="black" color="white">
-            <ModalHeader>Select Fund</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              {/* <EditPosition /> */}
-              {/*
-              <Heading size="sm" mb="3">Leverage</Heading>
-              <Grid templateColumns='repeat(12, 1fr)' gap={6} alignItems="center" mb="6">
-                <GridItem colSpan="3">
-                  <InputGroup>
-                    <InputLeftAddon bg="black">&times;</InputLeftAddon>
-                    <Input id='amount' type='amount' borderLeft="none" value="1" />
-                  </InputGroup>
-                </GridItem>
-                <GridItem colSpan="9">
-                  <Text fontSize="sm">Leveraging your staking position allows you to earn more rewards, but your c-ratio is subject to greater volatiity. <em>Use leverage with caution.</em></Text>
-                </GridItem>
-              </Grid>
-            */}
-              <Button w="100%" colorScheme="blue">
-                Update
-              </Button>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
+        <PoolDialog
+          collateralAmount={collateralAmount}
+          accountId={position.accountId}
+          poolId={position.poolId}
+          collateral={position.collateralType}
+          refetch={refetch}
+          isOpen={isOpenFund}
+          debt={position.debt.toNumber()}
+          onClose={onCloseFund}
+        />
       </Td>
       <Td>
         <Link
-          as={NavLink}
-          to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.fundId}`}
+          as={RouterLink}
+          to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.poolId}`}
           color="blue.400"
           display="inline-block"
           transform="translateY(-1.5px)"
-          target="_blank"
         >
           <ExternalLinkIcon />
         </Link>
       </Td>
     </Tr>
   );
-}
+};

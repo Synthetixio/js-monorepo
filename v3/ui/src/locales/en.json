@@ -1,3 +1,61 @@
 {
-  "home": "Home Page"
+  "common": {
+    "learnMore": "Learn more",
+    "none": "None",
+    "fund": "Fund",
+    "connectWallet": "Connect Wallet",
+    "unknownFund": "Unknown Fund",
+    "stake": "Stake",
+    "insufficientFunds": "Insufficient Funds",
+    "name": "Name",
+    "ticker": "Ticker",
+    "category": "Category",
+    "fees": "Fees",
+    "verified": "Verified",
+    "crypto": "Crypto",
+    "price": "Price"
+  },
+  "home": {
+    "createAccount": {
+      "description": "Stake with Synthetix to enable the creation of synthetic assets on-chain. You earn yield but must also maintain your C-Ratio."
+    },
+    "stake": {
+      "selectFund": "Select Fund",
+      "receiveToken": "Receive an snxAccount token",
+      "receiveTokenTooltip": "You will be minted an NFT that represents your account. You can easily transfer it between wallets.",
+      "howItWorks": {
+        "title": "How it works",
+        "goVote": "Go vote"
+      }
+    }
+  },
+  "synths": {
+    "createSynth": {
+      "title": "Create a Synth",
+      "deploySynth": "Deploy a New Synth",
+      "iconURI": "Icon URI",
+      "priceFeedAddress": "Price Feed Contract Address",
+      "priceFeedAddressHelp": "This contract must implement the Synthetix Price Feed Interface. <0>Review the documentation</0>",
+      "cta": "Create Synth",
+      "feesInfo": "No fees will be applied when this synth is minted or burned.",
+      "addFee": "Add a Fee",
+      "flat": "Flat",
+      "dynamicExchange": "Dynamic Exchange",
+      "simulatedLiquidity": "Simulated Liquidity",
+      "custom": "Custom"
+    },
+    "synth": {
+      "title": "Synth",
+      "description": "Synth"
+    }
+  },
+  "position": {
+    "manage": {
+      "title": "Manage your staking position by adjusting your collateral and debt.",
+      "maintain": "Maintain C-Ratio",
+      "borrow": "Borrow snxUSD",
+      "repay": "Repay snxUSD",
+      "custom": "Custom"
+    }
+  }
 }
