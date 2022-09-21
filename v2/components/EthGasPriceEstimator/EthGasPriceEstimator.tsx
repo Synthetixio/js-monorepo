@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BigNumber } from '@ethersproject/bignumber';
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { Flex, Text } from '@chakra-ui/react';
 import { formatNumberToUsd } from '@snx-v2/formatters';
@@ -50,11 +50,10 @@ export const EthGasPriceEstimator: React.FC<{
   gasPrices?: GasPrices;
   optimismLayerOneFees?: Wei;
 }> = ({ gasLimit, gasPrices, optimismLayerOneFees }) => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
 
-  const [gasSpeed, _setGasSpeed /*Will be used when we have a UI for picking speed*/] = useState<
-    'average' | 'fast' | 'fastest'
-  >('average');
+  const [gasSpeed, _setGasSpeed /*TODO Will be used when we have a UI for picking speed*/] =
+    useState<'average' | 'fast' | 'fastest'>('average');
 
   if (!gasLimit || !gasPrices) {
     return <Text>Skeleton</Text>;
@@ -70,7 +69,7 @@ export const EthGasPriceEstimator: React.FC<{
 
   return (
     <Flex justifyContent="space-between">
-      <Text>Gas price</Text>
+      <Text>{t('staking-v2.eth-gas-price-estimator.gas-price-label')}</Text>
       <Text>
         {transactionFee
           ? formatNumberToUsd(transactionFee.toString(), { maximumFractionDigits: 4 })

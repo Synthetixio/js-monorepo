@@ -6188,6 +6188,7 @@ __metadata:
     "@snx-v2/formatters": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     react: ^18.2.0
+    react-i18next: ^11.18.3
   languageName: unknown
   linkType: soft
 
