@@ -64,7 +64,13 @@ describe('useGasOptions', () => {
     const result = useGasOptions({ populateTransaction, getGasLimit });
     const [cacheKey, _query, options] = reactQuery.useQuery.mock.lastCall;
     expect(result.data).toEqual(undefined);
-    expect(cacheKey).toEqual([getGasLimit.toString(), undefined, 1]);
+    expect(cacheKey).toEqual([
+      getGasLimit.toString(),
+      undefined,
+      undefined,
+      gasPricesMainnetMockData,
+      1,
+    ]);
     expect(options).toEqual({ enabled: false });
   });
   test('Returns undefined values when populate transaction is undefined', async () => {
@@ -73,7 +79,13 @@ describe('useGasOptions', () => {
     const result = useGasOptions({ populateTransaction, getGasLimit });
     const [cacheKey, _query, options] = reactQuery.useQuery.mock.lastCall;
     expect(result.data).toEqual(undefined);
-    expect(cacheKey).toEqual([undefined, populateTransaction.toString(), 1]);
+    expect(cacheKey).toEqual([
+      undefined,
+      populateTransaction.toString(),
+      undefined,
+      gasPricesMainnetMockData,
+      1,
+    ]);
     expect(options).toEqual({ enabled: false });
   });
   test('Returns correct values for mainnet', async () => {
@@ -83,7 +95,13 @@ describe('useGasOptions', () => {
     useGasOptions({ populateTransaction, getGasLimit });
 
     const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual([getGasLimit.toString(), populateTransaction.toString(), 1]);
+    expect(cacheKey).toEqual([
+      getGasLimit.toString(),
+      populateTransaction.toString(),
+      undefined,
+      gasPricesMainnetMockData,
+      1,
+    ]);
     expect(options).toEqual({ enabled: true });
 
     const queryResult = await query();
@@ -108,7 +126,13 @@ describe('useGasOptions', () => {
     useGasOptions({ populateTransaction, getGasLimit });
 
     const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual([getGasLimit.toString(), populateTransaction.toString(), 10]);
+    expect(cacheKey).toEqual([
+      getGasLimit.toString(),
+      populateTransaction.toString(),
+      BigNumber.from(1),
+      gasPricesOptimismMockData,
+      10,
+    ]);
     expect(options).toEqual({ enabled: true });
 
     const queryResult = await query();
