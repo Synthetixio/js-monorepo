@@ -43,7 +43,7 @@ export default function HowItWorks({
               C-Ratio of at least{' '}
               {formatValue(
                 BigNumber.from(selectedCollateralType!.minimumCRatio!).mul(BigNumber.from(100)),
-                selectedCollateralType.decimals
+                6
               ).toFixed(0)}
               %.
             </>
