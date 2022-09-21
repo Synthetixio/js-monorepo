@@ -43,7 +43,6 @@ export const useOptimismLayer1Fee = ({
     },
     { enabled: Boolean(populateTransaction && isNetworkIdOvm(networkId)) }
   );
-  // TODO maybe move these out to seperate hooks to make testing easier
   return useQuery(
     [networkId, serializedTransactionQuery.data],
     async () => {
