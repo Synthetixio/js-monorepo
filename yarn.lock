@@ -6176,15 +6176,8 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@ethersproject/bignumber": ^5.6.2
-    "@ethersproject/contracts": ^5.6.2
-    "@ethersproject/providers": ^5.6.8
-    "@ethersproject/transactions": ^5.6.2
-    "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
-    "@snx-v2/useGasPrice": "workspace:*"
-    "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
-    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -6205,7 +6198,6 @@ __metadata:
   resolution: "@snx-v2/MainActionCards@workspace:v2/components/MainActionCards"
   dependencies:
     "@chakra-ui/react": ^2.2.8
-    "@ethersproject/bignumber": ^5.6.2
     "@snx-v2/CountDown": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
@@ -6376,6 +6368,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useGasOptions@workspace:v2/lib/useGasOptions":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useGasOptions@workspace:v2/lib/useGasOptions"
+  dependencies:
+    "@ethersproject/bignumber": ^5.6.2
+    "@ethersproject/contracts": ^5.6.2
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useGasPrice": "workspace:*"
+    "@snx-v2/useOptimismLayer1Fee": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useGasPrice@workspace:*, @snx-v2/useGasPrice@workspace:v2/lib/useGasPrice":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useGasPrice@workspace:v2/lib/useGasPrice"
@@ -6394,6 +6400,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useInterval@workspace:v2/lib/useInterval"
   dependencies:
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useOptimismLayer1Fee@workspace:*, @snx-v2/useOptimismLayer1Fee@workspace:v2/lib/useOptimismLayer1Fee":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useOptimismLayer1Fee@workspace:v2/lib/useOptimismLayer1Fee"
+  dependencies:
+    "@ethersproject/contracts": ^5.6.2
+    "@ethersproject/providers": ^5.6.8
+    "@ethersproject/transactions": ^5.6.2
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
