@@ -6,9 +6,9 @@
   "version": "2.74.4",
   "description": "Convenient BigNumber library for web3",
   "source": "./src/index.ts",
-  "main": "./build/node/index.js",
-  "module": "./build/node/index.js",
-  "browser": "./build/node/index.js",
+  "main": "./build/index.js",
+  "module": "./build/index.js",
+  "browser": "./build/index.js",
   "types": "./build/index.d.ts",
   "files": [
     "build",
