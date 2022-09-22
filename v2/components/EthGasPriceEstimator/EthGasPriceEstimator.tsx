@@ -5,6 +5,7 @@ import Wei, { wei } from '@synthetixio/wei';
 import { Flex, Text } from '@chakra-ui/react';
 import { formatNumberToUsd } from '@snx-v2/formatters';
 import { GWEI_DECIMALS } from '@snx-v2/Constants';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 
 type GasPrice = {
   baseFeePerGas?: BigNumber; // Note that this is used for estimating price and should not be included in the transaction
@@ -30,7 +31,7 @@ const getTotalGasPrice = (gasPrice?: GasPrice | null) => {
 const getTransactionPrice = (
   gasPrice: GasPrice | null,
   gasLimit: BigNumber | undefined,
-  ethPrice: Wei | null,
+  ethPrice: Wei | undefined,
   optimismLayerOneFee: Wei | undefined
 ) => {
   if (!gasPrice || !gasLimit || !ethPrice) return null;
@@ -51,7 +52,7 @@ export const EthGasPriceEstimator: React.FC<{
   optimismLayerOneFees?: Wei;
 }> = ({ gasLimit, gasPrices, optimismLayerOneFees }) => {
   const { t } = useTranslation();
-
+  const { data: exchangeRatesData } = useExchangeRatesData();
   const [gasSpeed, _setGasSpeed /*TODO Will be used when we have a UI for picking speed*/] =
     useState<'average' | 'fast' | 'fastest'>('average');
 
@@ -59,7 +60,7 @@ export const EthGasPriceEstimator: React.FC<{
     return <Text>Skeleton</Text>;
   }
   const gasPrice = gasPrices[gasSpeed];
-  const ethPriceRate = wei(1500); // todo
+  const ethPriceRate = exchangeRatesData?.ETH;
   const transactionFee = getTransactionPrice(
     gasPrice,
     gasLimit,
