@@ -1,0 +1,15 @@
+{
+  "name": "@snx-v2/EthGasPriceEstimator",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.0",
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.8",
+    "@ethersproject/bignumber": "^5.6.2",
+    "@snx-v2/Constants": "workspace:*",
+    "@snx-v2/formatters": "workspace:*",
+    "@synthetixio/wei": "workspace:*",
+    "react": "^18.2.0",
+    "react-i18next": "^11.18.3"
+  }
+}
