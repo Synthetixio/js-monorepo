@@ -6270,6 +6270,7 @@ __metadata:
     buffer: ^6.0.3
     crypto-browserify: ^3.12.0
     cypress: ^10.8.0
+    ethers: ^5.5.3
     process: ^0.11.10
     stream-browserify: ^3.0.0
     webpack: ^5.74.0
@@ -8178,6 +8179,7 @@ __metadata:
     "@snx-v2/Navigation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
@@ -8392,6 +8394,7 @@ __metadata:
     "@types/react-chartjs-2": ^2.5.7
     "@types/react-helmet": ^6.1.5
     babel-loader: ^8.2.5
+    big.js: ^6.1.1
     chart.js: ^3.9.1
     css-loader: ^6.7.1
     css-minimizer-webpack-plugin: ^4.0.0

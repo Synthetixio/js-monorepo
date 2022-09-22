@@ -1,17 +1,34 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Input,
-  Heading,
-  SimpleGrid,
-  Flex,
-  Tooltip,
-  Link,
-  Badge,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Heading, SimpleGrid, Flex, Tooltip, Text } from '@chakra-ui/react';
+import { FC } from 'react';
+import { useTokenBalance } from '../../../../hooks/useTokenBalance';
+import { currency } from '../../../../utils/currency';
+import { CollateralType } from '../../../../utils/types';
+import { Balance } from '../../Stake/Balance';
+import { NumberInput } from './NumberInput';
+interface Props {
+  collateral: CollateralType;
+  setCollateralChange: (value: number) => void;
+  collateralChange: number;
+  collateralAmount: number;
+  setDebtChange: (value: number) => void;
+  debtChange: number;
+  debt: number;
+  maxDebt: number;
+}
 
-export default function Custom() {
+export const Custom: FC<Props> = ({
+  collateral,
+  collateralChange,
+  collateralAmount,
+  setCollateralChange,
+  setDebtChange,
+  debtChange,
+  debt,
+  maxDebt,
+}) => {
+  const balance = useTokenBalance(collateral.address);
+
   return (
     <Box mb="4">
       <SimpleGrid columns={2} spacing={6} mb="4">
@@ -21,34 +38,22 @@ export default function Custom() {
           </Heading>
 
           <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
-            <form>
-              <Flex mb="3">
-                <Input
-                  flex="1"
-                  type="number"
-                  border="none"
-                  placeholder="0.0"
-                  // value={null}
-                  onChange={() => null}
-                  value="100"
-                />
-              </Flex>
-            </form>
+            <Flex mb="3">
+              <NumberInput
+                value={collateralAmount + collateralChange}
+                onChange={(val) => {
+                  setCollateralChange(val - collateralAmount);
+                }}
+                max={balance.formatedValue + collateralAmount}
+              />
+            </Flex>
             <Flex alignItems="center">
-              <Box mr="auto">
-                <Text fontSize="xs">Balance: 100 SNX</Text>
-              </Box>
-              <Link>
-                <Badge
-                  as="button"
-                  ml="3"
-                  variant="outline"
-                  colorScheme="blue"
-                  transform="translateY(-2px)"
-                >
-                  Use Max
-                </Badge>
-              </Link>
+              <Balance
+                onMax={(balance) => setCollateralChange(parseFloat(balance) || 0)}
+                balance={balance.value}
+                decimals={collateral.decimals}
+                symbol={collateral.symbol}
+              />
             </Flex>
           </Box>
         </Box>
@@ -60,45 +65,40 @@ export default function Custom() {
           <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
             <form>
               <Flex mb="3">
-                <Input
-                  flex="1"
-                  type="number"
-                  border="none"
-                  placeholder="0.0"
-                  // value={null}
-                  onChange={() => null}
-                  value="100"
+                <NumberInput
+                  value={debt + debtChange}
+                  onChange={(val) => {
+                    setDebtChange(val - debt);
+                  }}
+                  max={maxDebt + debt}
                 />
               </Flex>
             </form>
             <Flex alignItems="center">
-              <Box mr="auto">
+              <Box>
                 <Text fontSize="xs">
-                  Max Mint: $1,200
+                  Max Mint: ${currency(maxDebt)}
                   <Tooltip label="You can't mint snxUSD that takes your C-Ratio below the target c-ratio of 300%.">
                     <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
                   </Tooltip>
                 </Text>
               </Box>
-              <Link>
-                <Badge
-                  as="button"
-                  ml="3"
-                  variant="outline"
-                  colorScheme="blue"
-                  transform="translateY(-2px)"
-                >
-                  Use Max
-                </Badge>
-              </Link>
             </Flex>
           </Box>
         </Box>
       </SimpleGrid>
       <Text>
-        This adjustment will <strong>stake 10 additional SNX</strong> and{' '}
-        <strong>mint 300 additional snxUSD</strong>.
+        This adjustment will{' '}
+        <strong>
+          {collateralChange > 0 ? 'stake' : 'un-stake'} {Math.abs(collateralChange)}{' '}
+          {collateral.symbol}
+        </strong>{' '}
+        and{' '}
+        <strong>
+          {debtChange > 0 ? 'mint' : 'burn'} {Math.abs(debtChange)} snxUSD
+        </strong>
+        .
       </Text>
     </Box>
   );
-}
+};
