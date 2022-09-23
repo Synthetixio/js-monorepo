@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from 'react';
 import { NetworkIdByName, NetworkId } from '@synthetixio/contracts-interface';
 import { Navigation } from '@snx-v2/Navigation';
 import Connector from 'containers/Connector';
-import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 
 export const Header: FC = () => {
   const { isWalletConnected, walletAddress, connectWallet, switchNetwork, network } =
@@ -11,9 +10,6 @@ export const Header: FC = () => {
   const [localNetwork, setLocalNetwork] = useState<NetworkId>(
     network?.id ? (network.id as NetworkId) : (NetworkIdByName.mainnet as NetworkId)
   );
-
-  const { data, isLoading } = useSynthsBalances();
-  console.log('Thing is', data, isLoading);
 
   useEffect(() => {
     setLocalNetwork(

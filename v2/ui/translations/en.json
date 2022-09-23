@@ -42,11 +42,15 @@
       "enter-amount": "Enter Amount",
       "tx-cost": "Tx cost: {{txCost}}",
       "epoch": "EPOCH",
-      "snx-price": "SNX PRICE"
+      "snx-price": "SNX PRICE",
+      "info": "Info",
+      "success": "HEALTHY",
+      "warning": "UNHEALTHY",
+      "error": "UNHEALTHY"
     },
     "burn": {
       "title": "Burn Debt",
-      "description": "Burn your sUSD debt to unlock your staked SNX. This will increase your Collateralization Ratio andreduce your debt. <0>Learn more.<0>",
+      "description": "Burn your sUSD debt to unlock your staked SNX. This will increase your Collateralization Ratio and reduce your debt. <0>Learn more.<0>",
       "heading": "Burn sUSD",
       "heading-tooltip": "Choose how much SNX you would like to stake. You can use the presets available or enter custom amount.",
       "unstaking": "Unstaking",

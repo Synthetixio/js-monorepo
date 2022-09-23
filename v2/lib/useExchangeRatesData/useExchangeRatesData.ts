@@ -17,6 +17,7 @@ const processQueryData = (result: [[string[], BigNumber[]], BigNumber[]]) => {
   );
   return ratesByName;
 };
+
 export const useExchangeRatesData = () => {
   const { networkId } = useContext(ContractContext);
   const { data: SynthUtil } = useSynthUtil();

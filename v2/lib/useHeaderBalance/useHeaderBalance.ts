@@ -2,10 +2,9 @@ import { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { parseBytes32String } from '@ethersproject/strings';
 import { BigNumber } from '@ethersproject/bignumber';
-import orderBy from 'lodash/orderBy';
 import { ContractContext } from '@snx-v2/ContractContext';
-import { useSynthUtil } from '@snx-v2/useSynthetixContracts';
-import { CurrencyKey } from '@snx-v2/currency';
+import { useSynthetix, useSynthUtil } from '@snx-v2/useSynthetixContracts';
+import { CurrencyKey, Synths } from '@snx-v2/currency';
 import Wei, { wei } from '@synthetixio/wei';
 
 export type SynthBalance = {
@@ -18,8 +17,8 @@ export type SynthBalancesMap = Partial<{ [key: string]: SynthBalance }>;
 
 type SynthBalancesTuple = [string[], BigNumber[], BigNumber[]];
 
-export const processSynthsBalances = (balances: SynthBalancesTuple) => {
-  const [currencyKeys, synthsBalances, synthsUSDBalances] = balances;
+export const processBalances = (balances: [SynthBalancesTuple, BigNumber]) => {
+  const [currencyKeys, synthsBalances, synthsUSDBalances] = balances[0];
   const balancesMap: SynthBalancesMap = {};
   let totalUSDBalance = wei(0);
 
@@ -41,35 +40,34 @@ export const processSynthsBalances = (balances: SynthBalancesTuple) => {
   });
 
   return {
-    balancesMap: balancesMap,
-    balances: orderBy(
-      Object.values(balancesMap).filter((val) => val !== null && val !== undefined),
-      (balance) => balance?.usdBalance.toNumber(),
-      'desc'
-    ),
-    totalUSDBalance,
+    sUSD: balancesMap[Synths.sUSD]?.balance,
+    SNX: wei(balances[1]),
   };
 };
 
-export const useSynthsBalances = () => {
+export const useHeaderBalance = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const { data: SynthUtil } = useSynthUtil();
+  const { data: Synthetix } = useSynthetix();
 
   return useQuery(
-    ['walletBalances', 'synths', networkId],
+    ['walletBalances', 'header', networkId],
     async () => {
-      if (!SynthUtil || !walletAddress) {
+      if (!SynthUtil || !Synthetix || !walletAddress) {
         throw Error('Query should not be enabled if contracts are missing');
       }
 
-      return await SynthUtil.synthsBalances(walletAddress);
+      return Promise.all([
+        SynthUtil.synthsBalances(walletAddress),
+        Synthetix.collateral(walletAddress),
+      ]);
     },
     {
-      select: processSynthsBalances,
+      select: processBalances,
       enabled: Boolean(networkId && SynthUtil),
       staleTime: 1000,
     }
   );
 };
 
-export default useSynthsBalances;
+export default useHeaderBalance;

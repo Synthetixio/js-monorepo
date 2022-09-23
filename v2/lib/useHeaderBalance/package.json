@@ -1,18 +1,15 @@
 {
-  "name": "@snx-v2/useSynthsBalances",
+  "name": "@snx-v2/useHeaderBalance",
   "private": true,
   "main": "index.ts",
   "version": "0.0.0",
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",
-    "@ethersproject/strings": "^5.7.0",
+    "@ethersproject/strings": "^5.6.1",
     "@snx-v2/ContractContext": "workspace:*",
-    "@snx-v2/currency": "workspace:^",
     "@snx-v2/useSynthetixContracts": "workspace:^",
-    "@synthetixio/contracts-interface": "workspace:^",
     "@synthetixio/wei": "workspace:*",
     "@tanstack/react-query": "^4.3.4",
-    "lodash": "^4.17.21",
     "react": "^18.2.0"
   }
 }

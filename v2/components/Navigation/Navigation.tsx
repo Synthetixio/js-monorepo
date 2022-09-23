@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react';
 
 import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface';
-import { wei } from '@synthetixio/wei';
 import {
   ChevronDown,
   ChevronUp,
@@ -87,14 +86,7 @@ export const Navigation = ({
       <Flex alignItems="center">
         {isWalletConnected && walletAddress ? (
           <>
-            {size === 'desktop' && (
-              <UserBalances
-                snxBalance={wei(10000.0)}
-                susdBalance={wei(9999.0)}
-                isSnxLoading={false}
-                isSusdLoading={false}
-              />
-            )}
+            {size === 'desktop' && <UserBalances />}
             <Center
               ml={2}
               borderColor="gray.900"

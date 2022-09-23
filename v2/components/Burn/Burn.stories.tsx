@@ -10,9 +10,14 @@ export default {
 const Template: ComponentStory<typeof Burn> = (_args) => <Burn {..._args} />;
 
 export const Primary = Template.bind({});
+
 Primary.args = {
   snxBalance: wei(2000),
   susdBalance: wei(2000),
   exchangeRate: 0.25,
   gasPrice: wei(0.01),
+  activeDebt: wei(0),
+  currentCRatio: 0,
+  targetCRatio: 0,
+  isLoading: false,
 };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Input, Box, Text, Flex, Badge, Tooltip, Button } from '@chakra-ui/react';
+import { Input, Box, Text, Flex, Badge, Tooltip, Button, Skeleton } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { InfoIcon, TokensIcon } from '@snx-v2/icons';
@@ -11,6 +11,10 @@ interface BurnProps {
   susdBalance?: Wei;
   gasPrice?: Wei;
   exchangeRate?: number;
+  activeDebt?: Wei;
+  currentCRatio?: number;
+  targetCRatio?: number;
+  isLoading: boolean;
 }
 
 enum ActiveBadge {
@@ -19,12 +23,15 @@ enum ActiveBadge {
   debt,
 }
 
-// TODO: Logic for calculation
 export const Burn = ({
   snxBalance = wei(0),
   susdBalance = wei(0),
   gasPrice = wei(0),
-  exchangeRate = 0.25,
+  activeDebt = wei(0),
+  exchangeRate = 0,
+  currentCRatio = 0,
+  targetCRatio = 0,
+  isLoading = false,
 }: BurnProps) => {
   const { t } = useTranslation();
   const [val, setVal] = useState('');
@@ -38,8 +45,25 @@ export const Burn = ({
     }
   };
 
-  // TODO: Calculate c-ratio/debt clearing calcs
   const onBadgePress = (amount: ActiveBadge) => {
+    switch (amount) {
+      case ActiveBadge.max:
+        setVal(susdBalance.toString(2));
+        break;
+
+      case ActiveBadge.cRatio:
+        // TODO Figure out the logic for this
+        console.log('Burn c', targetCRatio, currentCRatio);
+        break;
+
+      case ActiveBadge.debt:
+        // TODO: Banner with 'not enough'
+        setVal(susdBalance.gte(activeDebt) ? activeDebt.toString(2) : susdBalance.toString(2));
+        break;
+
+      default:
+        break;
+    }
     setActiveBadge(amount);
   };
 
@@ -93,9 +117,11 @@ export const Burn = ({
               _focus={{ boxShadow: 'none !important' }}
               _placeholder={{ color: 'whiteAlpha.700' }}
             />
-            <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-              {t('staking-v2.burn.susd-balance', { susdBalance: susdBalance.toString(2) })}
-            </Text>
+            <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
+              <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
+                {t('staking-v2.burn.susd-balance', { susdBalance: susdBalance.toString(2) })}
+              </Text>
+            </Skeleton>
           </Flex>
         </Flex>
         <Flex w="100%" justifyContent="space-between" mt={1}>
@@ -192,9 +218,11 @@ export const Burn = ({
             >
               {numberWithCommas(convert(val))}
             </Text>
-            <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-              {t('staking-v2.burn.snx-balance', { snxBalance: snxBalance.toString(2) })}
-            </Text>
+            <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
+              <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
+                {t('staking-v2.burn.snx-balance', { snxBalance: snxBalance.toString(2) })}
+              </Text>
+            </Skeleton>
           </Flex>
         </Flex>
       </Box>

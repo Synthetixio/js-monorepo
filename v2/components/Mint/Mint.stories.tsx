@@ -15,4 +15,5 @@ Primary.args = {
   susdBalance: wei(2000),
   exchangeRate: 0.25,
   gasPrice: wei(0.01),
+  isLoading: false,
 };
