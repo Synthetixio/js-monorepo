@@ -2,16 +2,7 @@ import { Dispatch, SetStateAction, useContext } from 'react';
 import { BigNumber } from '@ethersproject/bignumber';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import {
-  Flex,
-  Text,
-  Skeleton,
-  Menu,
-  Button,
-  MenuItem,
-  MenuList,
-  MenuButton,
-} from '@chakra-ui/react';
+import { Flex, Text, Skeleton, Menu, MenuItem, MenuList, MenuButton } from '@chakra-ui/react';
 import { formatNumberToUsd } from '@snx-v2/formatters';
 import { GWEI_DECIMALS } from '@snx-v2/Constants';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
