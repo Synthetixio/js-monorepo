@@ -129,7 +129,6 @@ export const EthGasPriceEstimator: React.FC<{
   const { data: exchangeRatesData } = useExchangeRatesData();
 
   const gasPrice = gasPrices?.[gasSpeed];
-  console.log({ gasSpeed, gasPrice: gasPrice?.gasPrice?.toString() });
   const ethPriceRate = exchangeRatesData?.ETH;
   return (
     <EthGasPriceEstimatorUi
