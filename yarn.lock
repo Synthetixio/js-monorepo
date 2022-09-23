@@ -6185,7 +6185,9 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@ethersproject/bignumber": ^5.6.2
     "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/GasSpeedContext": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     react: ^18.2.0
@@ -6200,6 +6202,14 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/icons": "workspace:*"
     "@storybook/react": ^6.5.10
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/GasSpeedContext@workspace:*, @snx-v2/GasSpeedContext@workspace:v2/lib/GasSpeedContext":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/GasSpeedContext@workspace:v2/lib/GasSpeedContext"
+  dependencies:
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -6389,6 +6399,7 @@ __metadata:
     "@ethersproject/contracts": ^5.6.2
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/GasSpeedContext": "workspace:*"
     "@snx-v2/useGasPrice": "workspace:*"
     "@snx-v2/useOptimismLayer1Fee": "workspace:*"
     "@synthetixio/wei": "workspace:*"
@@ -8248,6 +8259,7 @@ __metadata:
     "@snx-v2/CRatioBanner": "workspace:*"
     "@snx-v2/CRatioHealthCard": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/GasSpeedContext": "workspace:*"
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"

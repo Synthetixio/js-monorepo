@@ -36,6 +36,7 @@
     "@snx-v2/CRatioBanner": "workspace:*",
     "@snx-v2/CRatioHealthCard": "workspace:*",
     "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/GasSpeedContext": "workspace:*",
     "@snx-v2/MainActionCards": "workspace:*",
     "@snx-v2/Navigation": "workspace:*",
     "@snx-v2/SignerContext": "workspace:*",

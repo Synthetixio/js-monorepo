@@ -78,7 +78,12 @@
       "error-flagged": "Your Account Has Been Flagged. Unflag your account within the time to avoid Liquidation"
     },
     "eth-gas-price-estimator": {
-      "gas-price-label": "Gas Price"
+      "gas-price-label": "Gas Price",
+      "gas-speed": {
+        "average": "Average",
+        "fast": "Fast",
+        "fastest": "Fastest"
+      }
     }
   },
   "meta": {
