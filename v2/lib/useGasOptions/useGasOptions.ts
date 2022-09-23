@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useOptimismLayer1Fee } from '@snx-v2/useOptimismLayer1Fee';
 import { wei } from '@synthetixio/wei';
 import { GWEI_DECIMALS } from '@snx-v2/Constants';
+import { GasSpeedContext } from '@snx-v2/GasSpeedContext';
 
 const GAS_LIMIT_BUFFER = 1.2;
 
@@ -18,6 +19,7 @@ export const useGasOptions = ({
   populateTransaction?: () => Promise<PopulatedTransaction>;
 }) => {
   const { networkId } = useContext(ContractContext);
+  const { gasSpeed } = useContext(GasSpeedContext);
   const gasPriceQuery = useGasPrice();
   const optimismLayerOneFeesQuery = useOptimismLayer1Fee({ populateTransaction });
 
@@ -38,7 +40,6 @@ export const useGasOptions = ({
       const gasLimit = wei(gasLimitRaw, GWEI_DECIMALS).mul(GAS_LIMIT_BUFFER).toBN();
       const gasPrices = gasPriceQuery.data;
       const optimismLayerOneFees = optimismLayerOneFeesQuery.data || undefined;
-      const gasSpeed = 'average' as const; // todo look up from context
       const formatGasPriceForTransaction = () => {
         if (!gasPrices) return undefined;
         const gasPrice = gasPrices[gasSpeed];
