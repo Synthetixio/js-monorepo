@@ -2,8 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber';
 
 const gasPricesMainnetMockData = {
   fastest: {
-    maxPriorityFeePerGas: BigNumber.from(4),
-    maxFeePerGas: BigNumber.from(14),
+    maxPriorityFeePerGas: BigNumber.from(8),
+    maxFeePerGas: BigNumber.from(18),
     baseFeePerGas: BigNumber.from(10),
   },
   fast: {
@@ -34,6 +34,7 @@ describe('useGasOptions', () => {
     react = {
       useContext: jest.fn(() => ({
         networkId: 1,
+        gasSpeed: 'average',
       })),
     };
     ContractContext = jest.fn();
@@ -49,6 +50,7 @@ describe('useGasOptions', () => {
     jest.doMock('@tanstack/react-query', () => reactQuery);
     jest.doMock('@snx-v2/ContractContext', () => ContractContext);
     jest.doMock('@snx-v2/useGasPrice', () => ({ useGasPrice }));
+    jest.doMock('@snx-v2/GasSpeedContext', () => ({ gasSpeed: 'average' }));
     jest.doMock('@snx-v2//useOptimismLayer1Fee', () => ({ useOptimismLayer1Fee }));
 
     ({ useGasOptions } = await import('./useGasOptions'));
@@ -117,10 +119,40 @@ describe('useGasOptions', () => {
       optimismLayerOneFees: undefined,
     });
   });
+  test('Returns gas options mainnet when gasSpeed is fastest', async () => {
+    react.useContext.mockReturnValue({ networkId: 1, gasSpeed: 'fastest' });
+    const populateTransaction = jest.fn();
+    const getGasLimit = jest.fn(() => BigNumber.from(20));
+
+    useGasOptions({ populateTransaction, getGasLimit });
+
+    const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
+    expect(cacheKey).toEqual([
+      getGasLimit.toString(),
+      populateTransaction.toString(),
+      undefined,
+      gasPricesMainnetMockData,
+      1,
+    ]);
+    expect(options).toEqual({ enabled: true });
+
+    const queryResult = await query();
+    expect(queryResult).toEqual({
+      gasLimit: BigNumber.from(24),
+      gasOptionsForTransaction: {
+        maxFeePerGas: BigNumber.from(18),
+        maxPriorityFeePerGas: BigNumber.from(8),
+        gasLimit: BigNumber.from(24),
+      },
+      gasPrices: gasPricesMainnetMockData,
+      gasSpeed: 'fastest',
+      optimismLayerOneFees: undefined,
+    });
+  });
   test('Returns gas options for optimism', async () => {
     const populateTransaction = jest.fn();
     const getGasLimit = jest.fn().mockReturnValue(BigNumber.from(20));
-    react.useContext.mockReturnValue({ networkId: 10 });
+    react.useContext.mockReturnValue({ networkId: 10, gasSpeed: 'average' });
     useGasPrice.mockReturnValue({ data: gasPricesOptimismMockData });
     useOptimismLayer1Fee.mockReturnValue({ data: BigNumber.from(1) });
 
