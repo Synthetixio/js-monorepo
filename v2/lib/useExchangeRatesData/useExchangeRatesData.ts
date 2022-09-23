@@ -7,13 +7,13 @@ import Wei, { wei } from '@synthetixio/wei';
 import { BigNumber } from 'ethers';
 
 const processQueryData = (result: [[string[], BigNumber[]], BigNumber[]]) => {
-  const [[synthNames, synthRates], [snxRate]] = result;
+  const [[synthNames, synthRates], [snxRate, ETHRate]] = result;
   const ratesByName = synthNames.reduce(
     (acc: Record<string, Wei | undefined>, synthName, index) => {
       acc[parseBytes32String(synthName)] = wei(synthRates[index]);
       return acc;
     },
-    { SNX: wei(snxRate) }
+    { SNX: wei(snxRate), ETH: wei(ETHRate) }
   );
   return ratesByName;
 };
@@ -29,7 +29,8 @@ export const useExchangeRatesData = () => {
         throw Error('Query should not be enabled if contracts are missing');
       }
       const SNX = formatBytes32String('SNX');
-      const nonSynthRates = [SNX];
+      const ETH = formatBytes32String('ETH');
+      const nonSynthRates = [SNX, ETH];
 
       return await Promise.all([
         SynthUtil.synthsRates(),

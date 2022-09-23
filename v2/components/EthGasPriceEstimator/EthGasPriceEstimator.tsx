@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { BigNumber } from '@ethersproject/bignumber';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex, Text, Skeleton } from '@chakra-ui/react';
 import { formatNumberToUsd } from '@snx-v2/formatters';
 import { GWEI_DECIMALS } from '@snx-v2/Constants';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 
 type GasPrice = {
   baseFeePerGas?: BigNumber; // Note that this is used for estimating price and should not be included in the transaction
@@ -28,9 +29,9 @@ const getTotalGasPrice = (gasPrice?: GasPrice | null) => {
 };
 
 const getTransactionPrice = (
-  gasPrice: GasPrice | null,
+  gasPrice: GasPrice | undefined,
   gasLimit: BigNumber | undefined,
-  ethPrice: Wei | null,
+  ethPrice: Wei | undefined,
   optimismLayerOneFee: Wei | undefined
 ) => {
   if (!gasPrice || !gasLimit || !ethPrice) return null;
@@ -45,21 +46,13 @@ const getTransactionPrice = (
   return txPrice;
 };
 
-export const EthGasPriceEstimator: React.FC<{
+export const EthGasPriceEstimatorUi: React.FC<{
   gasLimit?: BigNumber;
-  gasPrices?: GasPrices;
   optimismLayerOneFees?: Wei;
-}> = ({ gasLimit, gasPrices, optimismLayerOneFees }) => {
+  ethPriceRate?: Wei;
+  gasPrice?: GasPrice;
+}> = ({ gasLimit, gasPrice, ethPriceRate, optimismLayerOneFees }) => {
   const { t } = useTranslation();
-
-  const [gasSpeed, _setGasSpeed /*TODO Will be used when we have a UI for picking speed*/] =
-    useState<'average' | 'fast' | 'fastest'>('average');
-
-  if (!gasLimit || !gasPrices) {
-    return <Text>Skeleton</Text>;
-  }
-  const gasPrice = gasPrices[gasSpeed];
-  const ethPriceRate = wei(1500); // todo
   const transactionFee = getTransactionPrice(
     gasPrice,
     gasLimit,
@@ -68,13 +61,36 @@ export const EthGasPriceEstimator: React.FC<{
   );
 
   return (
-    <Flex justifyContent="space-between">
+    <Flex width="full" justifyContent="space-between" alignItems="center">
       <Text>{t('staking-v2.eth-gas-price-estimator.gas-price-label')}</Text>
       <Text>
-        {transactionFee
-          ? formatNumberToUsd(transactionFee.toString(), { maximumFractionDigits: 4 })
-          : 'Skeleton'}
+        {transactionFee ? (
+          formatNumberToUsd(transactionFee.toString(), { maximumFractionDigits: 4 })
+        ) : (
+          <Skeleton width={8} height={3} />
+        )}
       </Text>
     </Flex>
+  );
+};
+
+export const EthGasPriceEstimator: React.FC<{
+  gasLimit?: BigNumber;
+  gasPrices?: GasPrices;
+  optimismLayerOneFees?: Wei;
+}> = ({ gasLimit, gasPrices, optimismLayerOneFees }) => {
+  const { data: exchangeRatesData } = useExchangeRatesData();
+  const [gasSpeed, _setGasSpeed /*TODO Will be used when we have a UI for picking speed*/] =
+    useState<'average' | 'fast' | 'fastest'>('average');
+
+  const gasPrice = gasPrices?.[gasSpeed];
+  const ethPriceRate = exchangeRatesData?.ETH;
+  return (
+    <EthGasPriceEstimatorUi
+      gasLimit={gasLimit}
+      gasPrice={gasPrice}
+      ethPriceRate={ethPriceRate}
+      optimismLayerOneFees={optimismLayerOneFees}
+    />
   );
 };
