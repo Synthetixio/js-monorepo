@@ -19,14 +19,14 @@ describe('CRatioHealthCard.cy.tsx', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <EthGasPriceEstimatorUi
-          ethPriceRate={wei(1300)}
-          gasPrice={{ gasPrice: BigNumber.from(1001550) }}
-          gasLimit={BigNumber.from(1001550)}
-          optimismLayerOneFees={wei(0.000019461241517328)}
+          ethPriceRate={wei(1000)}
+          gasPrice={{ gasPrice: BigNumber.from(1000000) }}
+          gasLimit={BigNumber.from(2000000)}
+          optimismLayerOneFees={wei(0.000001)}
         />
       </Box>
     );
-    cy.contains('p', '$0.0266').should('be.visible');
+    cy.contains('p', '$0.003').should('be.visible');
     cy.contains('p', 'Gas Price').should('be.visible');
   });
 });
