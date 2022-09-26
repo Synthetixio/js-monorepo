@@ -6206,7 +6206,8 @@ __metadata:
     "@snx-v2/UserBalances": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
-    "@snx-v2/useHeaderBalance": "workspace:^"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.10
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/wei": "workspace:*"
@@ -6254,12 +6255,6 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/icons": "workspace:*"
     "@synthetixio/wei": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@snx-v2/currency@workspace:^, @snx-v2/currency@workspace:v2/lib/currency":
-  version: 0.0.0-use.local
-  resolution: "@snx-v2/currency@workspace:v2/lib/currency"
   languageName: unknown
   linkType: soft
 
@@ -6361,20 +6356,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useHeaderBalance@workspace:^, @snx-v2/useHeaderBalance@workspace:v2/lib/useHeaderBalance":
-  version: 0.0.0-use.local
-  resolution: "@snx-v2/useHeaderBalance@workspace:v2/lib/useHeaderBalance"
-  dependencies:
-    "@ethersproject/bignumber": ^5.7.0
-    "@ethersproject/strings": ^5.6.1
-    "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/useSynthetixContracts": "workspace:^"
-    "@synthetixio/wei": "workspace:*"
-    "@tanstack/react-query": ^4.3.4
-    react: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
 "@snx-v2/useInterval@workspace:*, @snx-v2/useInterval@workspace:v2/lib/useInterval":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useInterval@workspace:v2/lib/useInterval"
@@ -6409,16 +6390,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useSynthsBalances@workspace:^, @snx-v2/useSynthsBalances@workspace:v2/lib/useSynthsBalances":
+"@snx-v2/useSynthsBalances@workspace:*, @snx-v2/useSynthsBalances@workspace:^, @snx-v2/useSynthsBalances@workspace:v2/lib/useSynthsBalances":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSynthsBalances@workspace:v2/lib/useSynthsBalances"
   dependencies:
     "@ethersproject/bignumber": ^5.7.0
     "@ethersproject/strings": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/currency": "workspace:^"
     "@snx-v2/useSynthetixContracts": "workspace:^"
-    "@synthetixio/contracts-interface": "workspace:^"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     lodash: ^4.17.21
@@ -8012,7 +7991,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/contracts-interface@workspace:*, @synthetixio/contracts-interface@workspace:^, @synthetixio/contracts-interface@workspace:packages/contracts-interface":
+"@synthetixio/contracts-interface@workspace:*, @synthetixio/contracts-interface@workspace:packages/contracts-interface":
   version: 0.0.0-use.local
   resolution: "@synthetixio/contracts-interface@workspace:packages/contracts-interface"
   dependencies:
@@ -8216,7 +8195,10 @@ __metadata:
     "@snx-v2/Navigation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:^"
     "@socket.tech/widget": ^0.1.1
