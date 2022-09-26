@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { UnflagOptionsUi } from './UnflagOptions';
 
-describe('CRatioHealthCard.cy.tsx', () => {
+describe('UnflagOptionsUi.cy.tsx', () => {
   it('Render skeleton when missing data', () => {
     cy.viewport(600, 500);
     cy.mount(
