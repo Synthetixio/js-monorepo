@@ -63,7 +63,7 @@ const activeIcon = (currentNetwork: NetworkId) => {
   }
 };
 
-export const Navigation = ({
+export const NavigationUI = ({
   currentNetwork,
   switchNetwork,
   connectWallet,
@@ -256,7 +256,7 @@ export const Navigation = ({
   );
 };
 
-export const NavigationUI = ({
+export const Navigation = ({
   currentNetwork,
   switchNetwork,
   connectWallet,
@@ -268,7 +268,7 @@ export const NavigationUI = ({
 
   const isLoading = isSynthsLoading || isDebtLoading;
   return (
-    <Navigation
+    <NavigationUI
       currentNetwork={currentNetwork}
       switchNetwork={switchNetwork}
       connectWallet={connectWallet}

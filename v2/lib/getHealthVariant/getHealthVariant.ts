@@ -8,7 +8,7 @@ export const getHealthVariant = ({
   currentCRatioPercentage: number | undefined;
 }) => {
   if (!liquidationCratioPercentage || !targetCratioPercentage || !currentCRatioPercentage)
-    return 'info';
+    return 'success';
   if (currentCRatioPercentage === 0) return 'success';
   if (currentCRatioPercentage < liquidationCratioPercentage) return 'error';
   if (currentCRatioPercentage < targetCratioPercentage) return 'warning';
