@@ -1,5 +1,6 @@
 import { Navigation } from '.';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { wei } from '@synthetixio/wei';
 
 export default {
   title: 'Navigation',
@@ -17,6 +18,9 @@ Primary.args = {
   isWalletConnected: true,
   walletAddress: '0xada3f268965c7410dfa0d74b928D950D94fAa554',
   switchNetwork: () => {},
+  isLoading: false,
+  snxBalance: wei(12345),
+  sUSDBalance: wei(12033),
 };
 
 Primary.parameters = {

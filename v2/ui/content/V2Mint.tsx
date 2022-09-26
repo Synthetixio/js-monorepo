@@ -16,8 +16,7 @@ import {
   Fade,
 } from '@chakra-ui/react';
 import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
-import { Synths } from '@snx-v2/currency';
-import { getHealthVariant } from '@snx-v2/getHealthVariant';
+import { getHealthVariant, badgeColor } from '@snx-v2/getHealthVariant';
 import { InfoIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
@@ -115,21 +114,22 @@ const V2Mint = () => {
                 </AlertDescription>
               </Alert>
               <Flex mt={2} mb={6} justifyContent="space-between">
-                <Box
+                <Flex
                   bg="black"
                   w="62.5%"
-                  pt={4}
+                  pt={3}
                   px={4}
                   borderRadius="md"
                   borderWidth="1px"
                   borderColor="gray.900"
+                  alignItems="center"
                 >
                   <CRatioProgressBar
                     liquidationCratioPercentage={liquidationCRatio || 0}
                     currentCRatioPercentage={currentCRatio || 0}
                     targetCratioPercentage={targetCRatio || 0}
                   />
-                </Box>
+                </Flex>
                 <Flex
                   bg="black"
                   w="34%"
@@ -156,13 +156,18 @@ const V2Mint = () => {
                       </Tooltip>
                     </Heading>
                     <Box>
-                      <Text color="green.400" fontFamily="mono" fontSize="lg" textAlign="end">
+                      <Text
+                        color={badgeColor(healthVariant).color}
+                        fontFamily="mono"
+                        fontSize="lg"
+                        textAlign="end"
+                      >
                         {`${currentCRatio?.toFixed(0)}%`}
                       </Text>
                       <Badge
-                        color="green.400"
-                        bg="green.900"
-                        borderColor="green.400"
+                        color={badgeColor(healthVariant).color}
+                        bg={badgeColor(healthVariant).border}
+                        borderColor={badgeColor(healthVariant).color}
                         borderWidth="1px"
                         py={0}
                         px={1}
@@ -173,7 +178,7 @@ const V2Mint = () => {
                             <InfoIcon
                               mr={1}
                               mb={0.5}
-                              color="green.400"
+                              color={badgeColor(healthVariant)}
                               width="12px"
                               height="12px"
                             />
@@ -233,7 +238,7 @@ const V2Mint = () => {
         )}
         <Mint
           snxBalance={debtData?.collateral || wei(0)}
-          susdBalance={synthsData?.balancesMap[Synths.sUSD]?.balance || wei(0)}
+          susdBalance={synthsData?.balancesMap['sUSD']?.balance || wei(0)}
           gasPrice={wei(20)}
           exchangeRate={exchangeRate}
           isLoading={isLoading}

@@ -1,12 +1,20 @@
 import { Flex, Skeleton, Text } from '@chakra-ui/react';
-import { wei } from '@synthetixio/wei';
+import Wei, { wei } from '@synthetixio/wei';
 import { SNXIcon, SUSDIcon } from '@snx-v2/icons';
-import { useHeaderBalance } from '@snx-v2/useHeaderBalance';
+
 import { formatFiatCurrency } from '../../ui/utils/formatters/number';
 
-export const UserBalances = () => {
-  const { data, isLoading } = useHeaderBalance();
+interface UserBalancesProps {
+  isLoading: boolean;
+  snxBalance: Wei;
+  sUSDBalance: Wei;
+}
 
+export const UserBalances = ({
+  isLoading = false,
+  snxBalance = wei(0),
+  sUSDBalance = wei(0),
+}: UserBalancesProps) => {
   return (
     <>
       <Flex
@@ -29,7 +37,7 @@ export const UserBalances = () => {
           fadeDuration={2}
           width={isLoading ? '100px' : 'unset'}
         >
-          <Text variant="nav" mr={2}>{`${formatFiatCurrency(data?.SNX || wei(0))}`}</Text>
+          <Text variant="nav" mr={2}>{`${formatFiatCurrency(snxBalance)}`}</Text>
         </Skeleton>
       </Flex>
       <Flex
@@ -52,7 +60,7 @@ export const UserBalances = () => {
           fadeDuration={2}
           width={isLoading ? '100px' : 'unset'}
         >
-          <Text variant="nav" mr={2}>{`${formatFiatCurrency(data?.sUSD || wei(0))}`}</Text>
+          <Text variant="nav" mr={2}>{`${formatFiatCurrency(sUSDBalance)}`}</Text>
         </Skeleton>
       </Flex>
     </>

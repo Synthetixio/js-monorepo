@@ -6206,6 +6206,7 @@ __metadata:
     "@snx-v2/UserBalances": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useHeaderBalance": "workspace:^"
     "@storybook/react": ^6.5.10
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/wei": "workspace:*"
@@ -6360,7 +6361,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useHeaderBalance@workspace:v2/lib/useHeaderBalance":
+"@snx-v2/useHeaderBalance@workspace:^, @snx-v2/useHeaderBalance@workspace:v2/lib/useHeaderBalance":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useHeaderBalance@workspace:v2/lib/useHeaderBalance"
   dependencies:

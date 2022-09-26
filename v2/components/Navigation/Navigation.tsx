@@ -28,9 +28,13 @@ import {
   StakingLogo,
   InfoOutline,
 } from '@snx-v2/icons';
+
 import { useTranslation } from 'react-i18next';
 import { truncateAddress } from '@snx-v2/formatters';
 import { UserBalances } from '@snx-v2/UserBalances';
+import Wei, { wei } from '@synthetixio/wei';
+import { useDebtData } from '@snx-v2/useDebtData';
+import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -38,6 +42,9 @@ interface NavigationProps {
   connectWallet: () => void;
   isWalletConnected: boolean;
   walletAddress: string | null;
+  isLoading: boolean;
+  snxBalance: Wei;
+  sUSDBalance: Wei;
 }
 
 const activeIcon = (currentNetwork: NetworkId) => {
@@ -62,6 +69,9 @@ export const Navigation = ({
   connectWallet,
   isWalletConnected,
   walletAddress,
+  isLoading,
+  snxBalance,
+  sUSDBalance,
 }: NavigationProps) => {
   const { t } = useTranslation();
 
@@ -86,7 +96,13 @@ export const Navigation = ({
       <Flex alignItems="center">
         {isWalletConnected && walletAddress ? (
           <>
-            {size === 'desktop' && <UserBalances />}
+            {size === 'desktop' && (
+              <UserBalances
+                isLoading={isLoading}
+                snxBalance={snxBalance}
+                sUSDBalance={sUSDBalance}
+              />
+            )}
             <Center
               ml={2}
               borderColor="gray.900"
@@ -237,5 +253,30 @@ export const Navigation = ({
         </Menu>
       </Flex>
     </Flex>
+  );
+};
+
+export const NavigationUI = ({
+  currentNetwork,
+  switchNetwork,
+  connectWallet,
+  isWalletConnected,
+  walletAddress,
+}: Omit<NavigationProps, 'snxBalance' | 'sUSDBalance' | 'isLoading'>) => {
+  const { data: synthsBalances, isLoading: isSynthsLoading } = useSynthsBalances();
+  const { data: debtData, isLoading: isDebtLoading } = useDebtData();
+
+  const isLoading = isSynthsLoading || isDebtLoading;
+  return (
+    <Navigation
+      currentNetwork={currentNetwork}
+      switchNetwork={switchNetwork}
+      connectWallet={connectWallet}
+      isWalletConnected={isWalletConnected}
+      walletAddress={walletAddress}
+      isLoading={isLoading}
+      snxBalance={debtData?.collateral || wei(0)}
+      sUSDBalance={synthsBalances?.balancesMap['sUSD']?.balance || wei(0)}
+    />
   );
 };

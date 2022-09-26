@@ -5,11 +5,10 @@ import { BigNumber } from '@ethersproject/bignumber';
 import orderBy from 'lodash/orderBy';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useSynthUtil } from '@snx-v2/useSynthetixContracts';
-import { CurrencyKey } from '@snx-v2/currency';
 import Wei, { wei } from '@synthetixio/wei';
 
 export type SynthBalance = {
-  currencyKey: CurrencyKey;
+  currencyKey: string;
   balance: Wei;
   usdBalance: Wei;
 };
@@ -27,7 +26,7 @@ export const processSynthsBalances = (balances: SynthBalancesTuple) => {
     const balance = wei(synthsBalances[idx]);
 
     if (balance.gt(0)) {
-      const synthName = parseBytes32String(currencyKeyBytes32) as CurrencyKey;
+      const synthName = parseBytes32String(currencyKeyBytes32);
       const usdBalance = wei(synthsUSDBalances[idx]);
 
       balancesMap[synthName] = {
