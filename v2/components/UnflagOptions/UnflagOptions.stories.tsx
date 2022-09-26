@@ -12,4 +12,5 @@ export const Primary = Template.bind({});
 Primary.args = {
   sUSDBalance: 100,
   sUSDToGetBackToTarget: 100,
+  selfLiquidationPenalty: '20%',
 };

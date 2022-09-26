@@ -16,7 +16,8 @@ const RadioItemContent: React.FC<{
   option: 'unflag' | 'swap' | 'self-liquidate';
   recommended: boolean;
   disabled: boolean;
-}> = ({ radioProps, option, disabled, recommended }) => {
+  selfLiquidationPenalty: string;
+}> = ({ radioProps, option, disabled, recommended, selfLiquidationPenalty }) => {
   const { t } = useTranslation();
 
   const { getCheckboxProps, getInputProps, state } = useRadio(radioProps);
@@ -34,9 +35,10 @@ const RadioItemContent: React.FC<{
       marginBottom="4"
       background={disabled ? 'gray.900' : 'none'}
       cursor={disabled ? 'not-allowed' : 'pointer'}
+      {...checkbox}
     >
       <input {...input} disabled={disabled} />
-      <Box {...checkbox}>
+      <Box>
         <Flex alignItems="center" justifyContent="space-between">
           <Flex alignItems="center">
             {option === 'unflag' ? (
@@ -66,10 +68,10 @@ const RadioItemContent: React.FC<{
                 </Badge>
               )}
               <Heading size="sm" color={disabled ? 'gray.9600' : 'white'}>
-                {t(`staking-v2.unflag-options.${option}.heading`, { selfLiquidationPenalty: 20 })}
+                {t(`staking-v2.unflag-options.${option}.heading`, { selfLiquidationPenalty })}
               </Heading>
               <Text fontSize="xs" color={disabled ? 'gray.600' : 'whiteAlpha.800'}>
-                {t(`staking-v2.unflag-options.${option}.text`, { selfLiquidationPenalty: 20 })}
+                {t(`staking-v2.unflag-options.${option}.text`, { selfLiquidationPenalty })}
               </Text>
             </Box>
           </Flex>
@@ -87,7 +89,8 @@ const RadioItemContent: React.FC<{
 export const UnflagOptionsUi: React.FC<{
   sUSDBalance: number;
   sUSDToGetBackToTarget: number;
-}> = ({ sUSDBalance, sUSDToGetBackToTarget }) => {
+  selfLiquidationPenalty: string;
+}> = ({ sUSDBalance, sUSDToGetBackToTarget, selfLiquidationPenalty }) => {
   const options = ['unflag', 'swap', 'self-liquidate'] as const;
 
   const { getRootProps, getRadioProps } = useRadioGroup({
@@ -111,6 +114,7 @@ export const UnflagOptionsUi: React.FC<{
             disabled={option === 'unflag' && !enoughSUsd}
             key={option}
             option={option}
+            selfLiquidationPenalty={selfLiquidationPenalty}
             radioProps={getRadioProps({ value: option })}
           />
         );

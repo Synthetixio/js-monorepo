@@ -89,7 +89,7 @@
       "recommended": "Recommended",
       "unflag": {
         "heading": "Unflag my account by burning sUSD in order to meet target ratio",
-        "text": "In order to avoid liquidation and the penalty I want to buy sUSD."
+        "text": "Burn sUSD to unflag."
       },
       "swap": {
         "heading": "Buy or Swap for sUSD in-order to burn to a healthy Collateralization Ratio",
