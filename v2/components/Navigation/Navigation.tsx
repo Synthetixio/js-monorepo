@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react';
 
 import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface';
-import { wei } from '@synthetixio/wei';
 import {
   ChevronDown,
   ChevronUp,
@@ -29,9 +28,13 @@ import {
   StakingLogo,
   InfoOutline,
 } from '@snx-v2/icons';
+
 import { useTranslation } from 'react-i18next';
 import { truncateAddress } from '@snx-v2/formatters';
 import { UserBalances } from '@snx-v2/UserBalances';
+import Wei, { wei } from '@synthetixio/wei';
+import { useDebtData } from '@snx-v2/useDebtData';
+import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -39,6 +42,9 @@ interface NavigationProps {
   connectWallet: () => void;
   isWalletConnected: boolean;
   walletAddress: string | null;
+  isLoading: boolean;
+  snxBalance: Wei;
+  sUSDBalance: Wei;
 }
 
 const activeIcon = (currentNetwork: NetworkId) => {
@@ -57,12 +63,15 @@ const activeIcon = (currentNetwork: NetworkId) => {
   }
 };
 
-export const Navigation = ({
+export const NavigationUI = ({
   currentNetwork,
   switchNetwork,
   connectWallet,
   isWalletConnected,
   walletAddress,
+  isLoading,
+  snxBalance,
+  sUSDBalance,
 }: NavigationProps) => {
   const { t } = useTranslation();
 
@@ -79,7 +88,7 @@ export const Navigation = ({
       justifyContent="space-between"
       bg={['transparent', 'transparent', 'navy.900']}
       px={[4, 4, 10]}
-      py={4}
+      py={2.5}
       borderBottom="1px"
       borderBottomColor={['transparent', 'transparent', 'gray.900']}
     >
@@ -89,10 +98,9 @@ export const Navigation = ({
           <>
             {size === 'desktop' && (
               <UserBalances
-                snxBalance={wei(10000.0)}
-                susdBalance={wei(9999.0)}
-                isSnxLoading={false}
-                isSusdLoading={false}
+                isLoading={isLoading}
+                snxBalance={snxBalance}
+                sUSDBalance={sUSDBalance}
               />
             )}
             <Center
@@ -245,5 +253,30 @@ export const Navigation = ({
         </Menu>
       </Flex>
     </Flex>
+  );
+};
+
+export const Navigation = ({
+  currentNetwork,
+  switchNetwork,
+  connectWallet,
+  isWalletConnected,
+  walletAddress,
+}: Omit<NavigationProps, 'snxBalance' | 'sUSDBalance' | 'isLoading'>) => {
+  const { data: synthsBalances, isLoading: isSynthsLoading } = useSynthsBalances();
+  const { data: debtData, isLoading: isDebtLoading } = useDebtData();
+
+  const isLoading = isSynthsLoading || isDebtLoading;
+  return (
+    <NavigationUI
+      currentNetwork={currentNetwork}
+      switchNetwork={switchNetwork}
+      connectWallet={connectWallet}
+      isWalletConnected={isWalletConnected}
+      walletAddress={walletAddress}
+      isLoading={isLoading}
+      snxBalance={debtData?.collateral || wei(0)}
+      sUSDBalance={synthsBalances?.balancesMap['sUSD']?.balance || wei(0)}
+    />
   );
 };

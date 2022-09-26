@@ -1,12 +1,13 @@
-import { Navigation } from '.';
+import { NavigationUI } from '.';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { wei } from '@synthetixio/wei';
 
 export default {
   title: 'Navigation',
-  component: Navigation,
-} as ComponentMeta<typeof Navigation>;
+  component: NavigationUI,
+} as ComponentMeta<typeof NavigationUI>;
 
-const Template: ComponentStory<typeof Navigation> = (_args) => <Navigation {..._args} />;
+const Template: ComponentStory<typeof NavigationUI> = (_args) => <NavigationUI {..._args} />;
 
 export const Primary = Template.bind({});
 
@@ -17,6 +18,9 @@ Primary.args = {
   isWalletConnected: true,
   walletAddress: '0xada3f268965c7410dfa0d74b928D950D94fAa554',
   switchNetwork: () => {},
+  isLoading: false,
+  snxBalance: wei(12345),
+  sUSDBalance: wei(12033),
 };
 
 Primary.parameters = {

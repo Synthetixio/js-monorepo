@@ -1,5 +1,15 @@
 import { useState } from 'react';
-import { Input, Box, Text, Flex, Badge, Tooltip, Button, BoxProps } from '@chakra-ui/react';
+import {
+  Input,
+  Box,
+  Text,
+  Flex,
+  Badge,
+  Tooltip,
+  Button,
+  BoxProps,
+  Skeleton,
+} from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { InfoIcon, TokensIcon } from '@snx-v2/icons';
@@ -11,6 +21,7 @@ interface MintProps extends BoxProps {
   susdBalance: Wei;
   gasPrice: Wei;
   exchangeRate: number;
+  isLoading: boolean;
 }
 
 export const Mint = ({
@@ -18,6 +29,7 @@ export const Mint = ({
   susdBalance = wei(0),
   gasPrice = wei(0),
   exchangeRate = 0.25,
+  isLoading = false,
   ...props
 }: MintProps) => {
   const { t } = useTranslation();
@@ -89,9 +101,11 @@ export const Mint = ({
               _focus={{ boxShadow: 'none !important' }}
               _placeholder={{ color: 'whiteAlpha.700' }}
             />
-            <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-              {t('staking-v2.mint.snx-balance', { snxBalance: snxBalance.toString(2) })}
-            </Text>
+            <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
+              <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
+                {t('staking-v2.mint.snx-balance', { snxBalance: snxBalance.toString(2) })}
+              </Text>
+            </Skeleton>
           </Flex>
         </Flex>
         <Flex w="100%" justifyContent="space-between" mt={1}>
@@ -173,9 +187,11 @@ export const Mint = ({
             >
               {numberWithCommas(convert(val))}
             </Text>
-            <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-              {t('staking-v2.mint.susd-balance', { susdBalance: susdBalance.toString(2) })}
-            </Text>
+            <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
+              <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
+                {t('staking-v2.mint.susd-balance', { susdBalance: susdBalance.toString(2) })}
+              </Text>
+            </Skeleton>
           </Flex>
         </Flex>
       </Box>

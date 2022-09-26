@@ -65,12 +65,12 @@ export const CRatioProgressBar: FC<Props> = ({
     <Box position="relative" height="100px" width="full">
       <LineWithText
         left={liquidationCratioPercentage / scaleFactor}
-        text={`Liquidated < ${liquidationCratioPercentage}%`}
+        text={`Liquidated < ${liquidationCratioPercentage.toFixed(0)}%`}
         tooltipText="You may be flagged for liquidation"
       />
       <LineWithText
         left={targetCratioPercentage / scaleFactor}
-        text={`Target ${targetCratioPercentage}%`}
+        text={`Target ${targetCratioPercentage.toFixed(0)}%`}
         tooltipText="Required to claim rewards"
       />
       <Progress

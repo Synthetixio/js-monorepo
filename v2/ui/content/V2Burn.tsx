@@ -1,7 +1,20 @@
-import { Container, Text, Box, Flex, Tooltip, Link, Heading, Badge } from '@chakra-ui/react';
+import {
+  Container,
+  Text,
+  Box,
+  Flex,
+  Tooltip,
+  Link,
+  Heading,
+  Badge,
+  Skeleton,
+} from '@chakra-ui/react';
 import { Burn } from '@snx-v2/Burn';
 import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
+import { getHealthVariant, badgeColor } from '@snx-v2/getHealthVariant';
 import { InfoIcon } from '@snx-v2/icons';
+import { useDebtData } from '@snx-v2/useDebtData';
+import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { wei } from '@synthetixio/wei';
 import { EXTERNAL_LINKS } from 'constants/links';
 import { useTranslation, Trans } from 'react-i18next';
@@ -9,12 +22,22 @@ import { useTranslation, Trans } from 'react-i18next';
 const V2Burn = () => {
   const { t } = useTranslation();
 
-  // TODO: Logic for burn (include getVariant)
+  const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
+  const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
 
-  const liquidationCRatio = 150;
-  const targetCRatio = 500;
-  const currentCRatio = 250;
-  const cRatioHealth = 'Healthy';
+  const liquidationCRatio = debtData?.liquidationRatioPercentage.toNumber();
+  const targetCRatio = debtData?.targetCRatioPercentage.toNumber();
+  const currentCRatio = debtData?.currentCRatioPercentage.toNumber();
+
+  const healthVariant = getHealthVariant({
+    currentCRatioPercentage: currentCRatio,
+    targetCratioPercentage: targetCRatio,
+    liquidationCratioPercentage: liquidationCRatio,
+  });
+
+  const cRatioHealth = t(`staking-v2.mint.${healthVariant}`);
+
+  const isLoading = isDebtDataLoading || isSynthsLoading;
 
   return (
     <Box bg="navy.900" height="100%">
@@ -29,7 +52,8 @@ const V2Burn = () => {
         >
           {t('staking-v2.burn.title')}
         </Text>
-        <Text textAlign="center" color="gray.600" mb={4}>
+
+        <Text textAlign="center" color="gray.600" mb={4} mx={6}>
           <Trans
             i18nKey="staking-v2.burn.description"
             components={[
@@ -42,22 +66,31 @@ const V2Burn = () => {
           />
         </Text>
         <Flex mt={2} mb={6} justifyContent="space-between">
-          <Box
+          <Skeleton
+            display="flex"
+            alignItems="center"
+            startColor="gray.900"
+            endColor="gray.700"
+            isLoaded={!isLoading}
             bg="black"
             w="62.5%"
-            pt={4}
+            pt={3}
             px={4}
             borderRadius="md"
             borderWidth="1px"
             borderColor="gray.900"
+            fadeDuration={1}
           >
             <CRatioProgressBar
-              liquidationCratioPercentage={liquidationCRatio}
-              currentCRatioPercentage={currentCRatio}
-              targetCratioPercentage={targetCRatio}
+              liquidationCratioPercentage={liquidationCRatio || 0}
+              currentCRatioPercentage={currentCRatio || 0}
+              targetCratioPercentage={targetCRatio || 0}
             />
-          </Box>
-          <Flex
+          </Skeleton>
+          <Skeleton
+            startColor="gray.900"
+            endColor="gray.700"
+            isLoaded={!isLoading}
             bg="black"
             w="34%"
             borderRadius="md"
@@ -65,6 +98,7 @@ const V2Burn = () => {
             borderColor="gray.900"
             flexDirection="column"
             justifyContent="space-between"
+            fadeDuration={1}
           >
             <Flex
               borderBottomColor="gray.900"
@@ -83,13 +117,18 @@ const V2Burn = () => {
                 </Tooltip>
               </Heading>
               <Box>
-                <Text color="green.400" fontFamily="mono" fontSize="lg" textAlign="end">
-                  {`${currentCRatio}%`}
+                <Text
+                  color={badgeColor(healthVariant).color}
+                  fontFamily="mono"
+                  fontSize="lg"
+                  textAlign="end"
+                >
+                  {`${currentCRatio?.toFixed(0) || 0}%`}
                 </Text>
                 <Badge
-                  color="green.400"
-                  bg="green.900"
-                  borderColor="green.400"
+                  color={badgeColor(healthVariant).color}
+                  bg={badgeColor(healthVariant).border}
+                  borderColor={badgeColor(healthVariant).color}
                   borderWidth="1px"
                   py={0}
                   px={1}
@@ -97,7 +136,13 @@ const V2Burn = () => {
                 >
                   <Tooltip hasArrow label="Soonthetix">
                     <span>
-                      <InfoIcon mr={1} mb={0.5} color="green.400" width="12px" height="12px" />
+                      <InfoIcon
+                        mr={1}
+                        mb={0.5}
+                        color={badgeColor(healthVariant).color}
+                        width="12px"
+                        height="12px"
+                      />
                     </span>
                   </Tooltip>
                   {cRatioHealth}
@@ -114,17 +159,18 @@ const V2Burn = () => {
                 </Tooltip>
               </Heading>
               <Text color="green.400" fontFamily="mono" fontSize="lg">
-                {`${targetCRatio}%`}
+                {`${targetCRatio?.toFixed(0) || 0}%`}
               </Text>
             </Flex>
-          </Flex>
+          </Skeleton>
         </Flex>
-
         <Burn
-          snxBalance={wei(1000)}
-          susdBalance={wei(1000)}
+          snxBalance={debtData?.collateral || wei(0)}
+          susdBalance={synthsData?.balancesMap['sUSD']?.balance || wei(0)}
+          activeDebt={debtData?.debtBalance || wei(0)}
           gasPrice={wei(20)}
           exchangeRate={0.25}
+          isLoading={isLoading}
         />
       </Container>
     </Box>
