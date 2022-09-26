@@ -14,7 +14,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": "./ui",
-    "incremental": true
+    "incremental": true,
+    "types": ["cypress"]
   },
 
   "exclude": [
@@ -23,8 +24,6 @@
     "**/tests/**",
     "**/*.test.ts",
     "**/*.test.tsx",
-    "**/*.cy.ts",
-    "**/*.cy.tsx",
     "**/stories/**",
     "**/build/**",
     "**/dist/**"
