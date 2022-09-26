@@ -6282,9 +6282,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/UnflagOptions@workspace:v2/components/UnflagOptions":
+"@snx-v2/UnflagOptions@workspace:*, @snx-v2/UnflagOptions@workspace:v2/components/UnflagOptions":
   version: 0.0.0-use.local
   resolution: "@snx-v2/UnflagOptions@workspace:v2/components/UnflagOptions"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useLiquidationData": "workspace:*"
+    "@storybook/react": ^6.5.10
+    react-i18next: ^11.18.3
   languageName: unknown
   linkType: soft
 
@@ -6433,6 +6440,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useInterval@workspace:v2/lib/useInterval"
   dependencies:
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useLiquidationData@workspace:*, @snx-v2/useLiquidationData@workspace:v2/lib/useLiquidationData":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useLiquidationData@workspace:v2/lib/useLiquidationData"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -8269,9 +8288,9 @@ __metadata:
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
+    "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
-    "@snx-v2/useSynthetixContracts": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
     "@storybook/addon-docs": ^6.5.10
