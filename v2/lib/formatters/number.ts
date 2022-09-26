@@ -23,3 +23,16 @@ export const formatNumber = (value: number | string, options?: Options) => {
     Number(value)
   );
 };
+
+export const formatPercent = (value: number | string, options?: Options) => {
+  const optionsWithDefault = {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+    locales: 'en-EN',
+    style: 'percent',
+    ...options,
+  };
+  return new Intl.NumberFormat(optionsWithDefault.locales, optionsWithDefault).format(
+    Number(value)
+  );
+};
