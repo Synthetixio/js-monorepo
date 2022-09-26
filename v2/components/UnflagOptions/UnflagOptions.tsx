@@ -9,7 +9,10 @@ import {
   Badge,
 } from '@chakra-ui/react';
 import { CollectIcon, InfoIcon, MaintainIcon } from '@snx-v2/icons';
+import { useDebtData } from '@snx-v2/useDebtData';
 import { useTranslation } from 'react-i18next';
+import { useLiquidationData } from '@snx-v2/useLiquidationData';
+import { formatPercent } from '../../ui/utils/formatters/number';
 
 const RadioItemContent: React.FC<{
   radioProps: UseRadioProps;
@@ -120,5 +123,27 @@ export const UnflagOptionsUi: React.FC<{
         );
       })}
     </Flex>
+  );
+};
+
+export const UnflagOptions = () => {
+  const { data: debtData } = useDebtData();
+  const { data: liquidationData } = useLiquidationData();
+
+  if (!debtData || !liquidationData) return <p>skeleton</p>; // TODO
+
+  const sUSDToGetBackToTarget = Math.max(
+    debtData.debtBalance.sub(debtData.issuableSynths).toNumber(),
+    0
+  );
+  const sUSDBalance = 100; // TODO, use james balance query that's coming
+  const selfLiquidationPenalty = formatPercent(liquidationData.selfLiquidationPenalty);
+
+  return (
+    <UnflagOptionsUi
+      selfLiquidationPenalty={selfLiquidationPenalty}
+      sUSDToGetBackToTarget={sUSDToGetBackToTarget}
+      sUSDBalance={sUSDBalance}
+    />
   );
 };
