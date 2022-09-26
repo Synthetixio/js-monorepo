@@ -80,6 +80,29 @@
       "warning": "You're below target C-Ratio. Fix it now to collect your weekly rewards",
       "error": "You're below the liquidation C-Ratio. Fix it now to avoid getting flagged for liquidation",
       "error-flagged": "Your Account Has Been Flagged. Unflag your account within the time to avoid Liquidation"
+    },
+    "eth-gas-price-estimator": {
+      "gas-price-label": "Gas Price",
+      "gas-speed": {
+        "average": "Average",
+        "fast": "Fast",
+        "fastest": "Fastest"
+      }
+    },
+    "unflag-options": {
+      "recommended": "Recommended",
+      "unflag": {
+        "heading": "Unflag my account by burning sUSD in order to meet target ratio",
+        "text": "Burn sUSD to unflag."
+      },
+      "swap": {
+        "heading": "Buy or Swap for sUSD in-order to burn to a healthy Collateralization Ratio",
+        "text": "In order to avoid liquidation and the penalty I want to buy sUSD."
+      },
+      "self-liquidate": {
+        "heading": "Self Liquidate ({{selfLiquidationPenalty}} Penalty)",
+        "text": "Use the new Self Liquidation feature to clear your debt and unflag your account. Going down this route will incur a penalty of {{selfLiquidationPenalty}}"
+      }
     }
   },
   "meta": {

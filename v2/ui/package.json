@@ -1,7 +1,7 @@
 {
   "name": "@synthetixio/v2-ui",
   "private": true,
-  "version": "2.45.3",
+  "version": "2.45.4",
   "engines": {
     "node": "16.x"
   },
@@ -36,9 +36,11 @@
     "@snx-v2/CRatioBanner": "workspace:*",
     "@snx-v2/CRatioHealthCard": "workspace:*",
     "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/GasSpeedContext": "workspace:*",
     "@snx-v2/MainActionCards": "workspace:*",
     "@snx-v2/Navigation": "workspace:*",
     "@snx-v2/SignerContext": "workspace:*",
+    "@snx-v2/UnflagOptions": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/getHealthVariant": "workspace:*",
     "@snx-v2/icons": "workspace:*",

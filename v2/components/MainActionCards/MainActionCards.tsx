@@ -7,6 +7,9 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { CountDown } from '@snx-v2/CountDown';
 import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
+import { useSynthetix } from '@snx-v2/useSynthetixContracts';
+import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
+import { useGasOptions } from '@snx-v2/useGasOptions';
 
 const CardHeader = ({
   step,
@@ -258,16 +261,45 @@ export const MainActionCards: React.FC = () => {
   const { data: debtData } = useDebtData();
   const { data: feePoolData } = useFeePoolData();
   const { data: rewardsData } = useRewardsAvailable();
-  if (!debtData || !feePoolData || !rewardsData) return <p>Skeleton</p>;
+  const { data: Synthetix } = useSynthetix();
+
+  const getGasLimit = Synthetix?.signer
+    ? () => Synthetix.estimateGas.burnSynthsToTarget()
+    : undefined;
+  const populateTransaction = Synthetix
+    ? () => Synthetix.populateTransaction.burnSynthsToTarget()
+    : undefined;
+  const gasOptionsQuery = useGasOptions({
+    getGasLimit,
+    populateTransaction,
+  });
+  const { gasLimit, gasPrices, optimismLayerOneFees, gasOptionsForTransaction } =
+    gasOptionsQuery.data || {};
+
+  if (!debtData || !feePoolData || !rewardsData || !Synthetix) return <p>Skeleton</p>;
 
   return (
-    <MainActionCardsUi
-      currentCRatioPercentage={debtData.currentCRatioPercentage.mul(100).toNumber()}
-      targetCratioPercentage={debtData.targetCRatioPercentage.mul(100).toNumber()}
-      liquidationCratioPercentage={debtData.liquidationRatioPercentage.mul(100).toNumber()}
-      isFlagged={debtData.liquidationDeadlineForAccount.gt(0)}
-      hasClaimed={rewardsData.hasClaimed}
-      nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
-    />
+    <>
+      <Button
+        onClick={() => {
+          Synthetix.burnSynthsToTarget(gasOptionsForTransaction);
+        }}
+      >
+        Burn Max
+      </Button>
+      <EthGasPriceEstimator
+        gasLimit={gasLimit}
+        optimismLayerOneFees={optimismLayerOneFees}
+        gasPrices={gasPrices}
+      />
+      <MainActionCardsUi
+        currentCRatioPercentage={debtData.currentCRatioPercentage.mul(100).toNumber()}
+        targetCratioPercentage={debtData.targetCRatioPercentage.mul(100).toNumber()}
+        liquidationCratioPercentage={debtData.liquidationRatioPercentage.mul(100).toNumber()}
+        isFlagged={debtData.liquidationDeadlineForAccount.gt(0)}
+        hasClaimed={rewardsData.hasClaimed}
+        nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
+      />
+    </>
   );
 };

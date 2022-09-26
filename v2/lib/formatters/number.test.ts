@@ -1,4 +1,4 @@
-import { formatNumber, formatNumberToUsd, numberWithCommas } from './number';
+import { formatNumber, formatNumberToUsd, formatPercent, numberWithCommas } from './number';
 
 describe('number', () => {
   test('numbersWithCommas', () => {
@@ -42,5 +42,12 @@ describe('number', () => {
     expect(
       formatNumberToUsd(100000000.123456, { minimumFractionDigits: 2, maximumFractionDigits: 4 })
     ).toBe('$100,000,000.1235');
+  });
+  test('formatPercent', () => {
+    expect(formatPercent(0.01)).toBe('1%');
+    expect(formatPercent(0.1)).toBe('10%');
+    expect(formatPercent(1)).toBe('100%');
+    expect(formatPercent(2)).toBe('200%');
+    expect(formatPercent(2.2341)).toBe('223.41%');
   });
 });
