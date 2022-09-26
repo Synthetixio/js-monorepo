@@ -6282,6 +6282,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/UnflagOptions@workspace:v2/components/UnflagOptions":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/UnflagOptions@workspace:v2/components/UnflagOptions"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/UserBalances@workspace:*, @snx-v2/UserBalances@workspace:v2/components/UserBalances":
   version: 0.0.0-use.local
   resolution: "@snx-v2/UserBalances@workspace:v2/components/UserBalances"

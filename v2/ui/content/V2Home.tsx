@@ -3,10 +3,12 @@ import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
 import { BalanceBox } from '@snx-v2/BalanceBox';
 import { MainActionCards } from '@snx-v2/MainActionCards';
+import { UnflagOptionsUi } from '../../components/UnflagOptions';
 
 const V2Home = () => {
   return (
     <Container maxW="1200px">
+      <UnflagOptionsUi sUSDBalance={90} sUSDToGetBackToTarget={100} />
       <Box height="42px" position="absolute" left="0" right="0">
         <CRatioBanner />
       </Box>

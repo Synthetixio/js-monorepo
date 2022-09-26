@@ -84,6 +84,21 @@
         "fast": "Fast",
         "fastest": "Fastest"
       }
+    },
+    "unflag-options": {
+      "recommended": "Recommended",
+      "unflag": {
+        "heading": "Unflag my account by burning sUSD in order to meet target ratio",
+        "text": "In order to avoid liquidation and the penalty I want to buy sUSD."
+      },
+      "swap": {
+        "heading": "Buy or Swap for sUSD in-order to burn to a healthy Collateralization Ratio",
+        "text": "In order to avoid liquidation and the penalty I want to buy sUSD."
+      },
+      "self-liquidate": {
+        "heading": "Self Liquidate ({{selfLiquidationPenalty}} Penalty)",
+        "text": "Use the new Self Liquidation feature to clear your debt and unflag your account. Going down this route will incur a penalty of {{selfLiquidationPenalty}}"
+      }
     }
   },
   "meta": {
