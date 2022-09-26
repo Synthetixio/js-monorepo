@@ -2,6 +2,19 @@ import { Box } from '@chakra-ui/react';
 import { UnflagOptionsUi } from './UnflagOptions';
 
 describe('CRatioHealthCard.cy.tsx', () => {
+  it('Render skeleton when missing data', () => {
+    cy.viewport(600, 500);
+    cy.mount(
+      <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
+        <UnflagOptionsUi
+          selfLiquidationPenalty="20%"
+          sUSDBalance={undefined}
+          sUSDToGetBackToTarget={undefined}
+        />
+      </Box>
+    );
+    cy.get('.chakra-skeleton').should('be.visible');
+  });
   it('Render option with correct content', () => {
     cy.viewport(600, 500);
     cy.mount(

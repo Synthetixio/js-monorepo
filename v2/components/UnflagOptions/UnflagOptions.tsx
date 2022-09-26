@@ -7,6 +7,7 @@ import {
   UseRadioProps,
   Flex,
   Badge,
+  Skeleton,
 } from '@chakra-ui/react';
 import { CollectIcon, InfoIcon, MaintainIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
@@ -90,9 +91,9 @@ const RadioItemContent: React.FC<{
   );
 };
 export const UnflagOptionsUi: React.FC<{
-  sUSDBalance: number;
-  sUSDToGetBackToTarget: number;
-  selfLiquidationPenalty: string;
+  sUSDBalance?: number;
+  sUSDToGetBackToTarget?: number;
+  selfLiquidationPenalty?: string;
 }> = ({ sUSDBalance, sUSDToGetBackToTarget, selfLiquidationPenalty }) => {
   const options = ['unflag', 'swap', 'self-liquidate'] as const;
 
@@ -104,6 +105,19 @@ export const UnflagOptionsUi: React.FC<{
       console.log(x);
     },
   });
+  if (
+    sUSDBalance === undefined ||
+    sUSDToGetBackToTarget === undefined ||
+    selfLiquidationPenalty === undefined
+  ) {
+    return (
+      <Box>
+        <Skeleton height="50px" mb={4} width="full" />
+        <Skeleton height="50px" mb={4} width="full" />
+        <Skeleton height="50px" mb={4} width="full" />
+      </Box>
+    );
+  }
 
   const group = getRootProps();
   const enoughSUsd = sUSDBalance >= sUSDToGetBackToTarget;
@@ -130,14 +144,14 @@ export const UnflagOptions = () => {
   const { data: debtData } = useDebtData();
   const { data: liquidationData } = useLiquidationData();
 
-  if (!debtData || !liquidationData) return <p>skeleton</p>; // TODO
+  const sUSDToGetBackToTarget = debtData
+    ? debtData.debtBalance.sub(debtData.issuableSynths).toNumber()
+    : undefined;
 
-  const sUSDToGetBackToTarget = Math.max(
-    debtData.debtBalance.sub(debtData.issuableSynths).toNumber(),
-    0
-  );
   const sUSDBalance = 100; // TODO, use james balance query that's coming
-  const selfLiquidationPenalty = formatPercent(liquidationData.selfLiquidationPenalty);
+  const selfLiquidationPenalty = liquidationData
+    ? formatPercent(liquidationData.selfLiquidationPenalty)
+    : undefined;
 
   return (
     <UnflagOptionsUi
