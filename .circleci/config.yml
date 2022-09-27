@@ -78,12 +78,21 @@ jobs:
       - browser-tools/install-chrome
       - run: yarn workspace @synthetixio/v2-ui run standalone-build
       - run:
-          name: Run server localhost:3000
-          working_directory: ~/app/v2/ui/out
-          command: python3 -m http.server 3000
-          background: true
+          name: Prepare Tenderly fork
+          command: |-
+            ./node_modules/.bin/tenderly-fork | jq
+            # Pick the first wallet
+            WALLET_ADDRESS=$(./node_modules/.bin/tenderly-fork | jq -r '.simulation_fork.accounts | keys[0])
+            ./node_modules/.bin/tenderly-getsnx $WALLET_ADDRESS
+
       - run: yarn workspace @snx-v2/cypress run e2e:check
       - run: yarn workspace @snx-v2/cypress run cy:check
+
+      - run:
+          when: always
+          name: Remove Tenderly fork
+          command: |-
+            ./node_modules/.bin/tenderly-unfork 
 
 workflows:
   version: 2.1
