@@ -6178,7 +6178,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/EthGasPriceEstimator@workspace:*, @snx-v2/EthGasPriceEstimator@workspace:v2/components/EthGasPriceEstimator":
+"@snx-v2/EthGasPriceEstimator@workspace:v2/components/EthGasPriceEstimator":
   version: 0.0.0-use.local
   resolution: "@snx-v2/EthGasPriceEstimator@workspace:v2/components/EthGasPriceEstimator"
   dependencies:
@@ -6220,16 +6220,13 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/CountDown": "workspace:*"
-    "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
-    "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
-    "@snx-v2/useSynthetixContracts": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
     react-i18next: ^11.18.3
@@ -6413,7 +6410,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useGasOptions@workspace:*, @snx-v2/useGasOptions@workspace:v2/lib/useGasOptions":
+"@snx-v2/useGasOptions@workspace:v2/lib/useGasOptions":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useGasOptions@workspace:v2/lib/useGasOptions"
   dependencies:
