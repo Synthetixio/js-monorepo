@@ -6178,7 +6178,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/EthGasPriceEstimator@workspace:v2/components/EthGasPriceEstimator":
+"@snx-v2/EthGasPriceEstimator@workspace:*, @snx-v2/EthGasPriceEstimator@workspace:v2/components/EthGasPriceEstimator":
   version: 0.0.0-use.local
   resolution: "@snx-v2/EthGasPriceEstimator@workspace:v2/components/EthGasPriceEstimator"
   dependencies:
@@ -8323,6 +8323,7 @@ __metadata:
     "@snx-v2/CRatioBanner": "workspace:*"
     "@snx-v2/CRatioHealthCard": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/GasSpeedContext": "workspace:*"
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
