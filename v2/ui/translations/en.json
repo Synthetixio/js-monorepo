@@ -102,7 +102,9 @@
       "self-liquidate": {
         "heading": "Self Liquidate ({{selfLiquidationPenalty}} Penalty)",
         "text": "Use the new Self Liquidation feature to clear your debt and unflag your account. Going down this route will incur a penalty of {{selfLiquidationPenalty}}"
-      }
+      },
+      "cancel-link": "Cancel",
+      "continue-link": "Continue to next step"
     }
   },
   "meta": {
