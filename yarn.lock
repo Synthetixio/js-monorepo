@@ -6221,9 +6221,11 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/CountDown": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
@@ -6231,6 +6233,7 @@ __metadata:
     "@storybook/react": ^6.5.10
     react: ^18.2.0
     react-i18next: ^11.18.3
+    react-router-dom: ^6.3.0
   languageName: unknown
   linkType: soft
 
@@ -6294,6 +6297,7 @@ __metadata:
     "@snx-v2/useLiquidationData": "workspace:*"
     "@storybook/react": ^6.5.10
     react-i18next: ^11.18.3
+    react-router-dom: ^6.3.0
   languageName: unknown
   linkType: soft
 
