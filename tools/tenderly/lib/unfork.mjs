@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 
-import url from 'node:url';
 import fetch from 'node-fetch';
-import { env } from './lib/env.mjs';
-import { rmCachedFork, loadCachedFork } from './lib/cache.mjs';
+import { rmCachedFork, loadCachedFork } from './cache.mjs';
 
 export async function rmFork({
   TENDERLY_ACCESS_KEY,
@@ -57,12 +55,4 @@ export async function unfork({ TENDERLY_FORK_ID, ...envs }) {
   const result = await rmFork({ TENDERLY_FORK_ID: forkId, ...envs });
   await rmCachedFork();
   return result;
-}
-
-if (import.meta.url === url.pathToFileURL(process.argv[1]).href) {
-  Promise.resolve()
-    .then(env)
-    .then(unfork)
-    .then((forkInfo) => console.log(JSON.stringify(forkInfo, null, 2)))
-    .catch(console.error);
 }

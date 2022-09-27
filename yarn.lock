@@ -8260,14 +8260,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@synthetixio/tenderly@workspace:tools/tenderly"
   dependencies:
+    dotenv: ^16.0.0
     node-fetch: ^3.2.10
   bin:
-    tenderly-fork: ./fork.mjs
-    tenderly-geteth: ./geteth.mjs
-    tenderly-getsnx: ./getsnx.mjs
-    tenderly-load: ./load.mjs
-    tenderly-save: ./save.mjs
-    tenderly-unfork: ./unfork.mjs
+    tenderly-fork: ./bin/tenderly-fork.mjs
+    tenderly-geteth: ./bin/tenderly-geteth.mjs
+    tenderly-getsnx: ./bin/tenderly-getsnx.mjs
+    tenderly-load: ./bin/tenderly-load.mjs
+    tenderly-save: ./bin/tenderly-save.mjs
+    tenderly-unfork: ./bin/tenderly-unfork.mjs
   languageName: unknown
   linkType: soft
 
