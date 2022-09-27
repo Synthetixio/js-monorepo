@@ -85,6 +85,12 @@ jobs:
             WALLET_ADDRESS=$(./node_modules/.bin/tenderly-fork | jq -r '.simulation_fork.accounts | keys[0]')
             ./node_modules/.bin/tenderly-getsnx $WALLET_ADDRESS
 
+      - run:
+          name: Run server localhost:3000
+          working_directory: ~/app/v2/ui/out
+          command: python3 -m http.server 3000
+          background: true
+
       - run: yarn workspace @snx-v2/cypress run e2e:check
       - run: yarn workspace @snx-v2/cypress run cy:check
 
