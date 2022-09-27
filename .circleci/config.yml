@@ -82,7 +82,7 @@ jobs:
           command: |-
             ./node_modules/.bin/tenderly-fork | jq
             # Pick the first wallet
-            WALLET_ADDRESS=$(./node_modules/.bin/tenderly-fork | jq -r '.simulation_fork.accounts | keys[0])
+            WALLET_ADDRESS=$(./node_modules/.bin/tenderly-fork | jq -r '.simulation_fork.accounts | keys[0]')
             ./node_modules/.bin/tenderly-getsnx $WALLET_ADDRESS
 
       - run: yarn workspace @snx-v2/cypress run e2e:check
@@ -92,7 +92,7 @@ jobs:
           when: always
           name: Remove Tenderly fork
           command: |-
-            ./node_modules/.bin/tenderly-unfork 
+            ./node_modules/.bin/tenderly-unfork
 
 workflows:
   version: 2.1

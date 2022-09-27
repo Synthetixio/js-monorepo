@@ -2,15 +2,13 @@
 
 CLI and libraries for common operations with Tenderly, primarily for local testing and testing in CI
 
-
 ## ENV config
 
 For the most up-to-date template look at `.env.local.example`. Copy to `.env.local` and fill the blanks
 
-
 ```sh
 # Required ENVs:
-export TENDERLY_ACCESS_KEY="***TENDERLY_ACCESS_KEY***" 
+export TENDERLY_ACCESS_KEY="***TENDERLY_ACCESS_KEY***"
 export TENDERLY_USER="synthetix"
 export TENDERLY_PROJECT="mainnet"
 
@@ -26,8 +24,6 @@ export TENDERLY_SNX_WHALE_ADDRESS="0xeb3107117fead7de89cd14d463d340a2e6917769"
 # Checkpoint UUID to restore fork state from (used in `tenderly-load`)
 export TENDERLY_CHECKPOINT=""
 ```
-
-
 
 ## CLI usage
 
@@ -72,56 +68,48 @@ export TENDERLY_CHECKPOINT=""
 ➜ tenderly-getsnx
 0xTXN_ID
 # Alternatively:
-➜ tenderly-getsnx <TO_ADDRESS> <FROM_WHALE_ADDRESS> 
+➜ tenderly-getsnx <TO_ADDRESS> <FROM_WHALE_ADDRESS>
 # Or:
 ➜ TENDERLY_WALLET_ADDRESS=<TO_ADDRESS> TENDERLY_SNX_WHALE_ADDRESS=<FROM_WHALE_ADDRESS> tenderly-getsnx
 ```
 
-
 ## Programmatic usage
 
 ```js
-import {
-  fork,
-  unfork,
-  save,
-  load,
-  geteth,
-  getsnx,
-} from '@synthetixio/tenderly'
+import { fork, unfork, save, load, geteth, getsnx } from '@synthetixio/tenderly';
 
 const forkInfo = await fork({
-  TENDERLY_ACCESS_KEY, 
-  TENDERLY_USER, 
-  TENDERLY_PROJECT, 
+  TENDERLY_ACCESS_KEY,
+  TENDERLY_USER,
+  TENDERLY_PROJECT,
   // optional:
   // TENDERLY_FORK_ID
-})
+});
 
 const deteletedForkTx = await unfork({
-  TENDERLY_ACCESS_KEY, 
-  TENDERLY_USER, 
-  TENDERLY_PROJECT, 
-  TENDERLY_FORK_ID: forkInfo.simulation_fork.id
-})
+  TENDERLY_ACCESS_KEY,
+  TENDERLY_USER,
+  TENDERLY_PROJECT,
+  TENDERLY_FORK_ID: forkInfo.simulation_fork.id,
+});
 
 const checkpoint = await save({
-  TENDERLY_FORK_ID: forkInfo.simulation_fork.id
-})
+  TENDERLY_FORK_ID: forkInfo.simulation_fork.id,
+});
 
 const isRestored = await load({
   TENDERLY_FORK_ID: forkInfo.simulation_fork.id,
-  TENDERLY_CHECKPOINT: checkpoint
-})
+  TENDERLY_CHECKPOINT: checkpoint,
+});
 
 const getEthTx = await geteth({
   TENDERLY_FORK_ID: forkInfo.simulation_fork.id,
-  TENDERLY_WALLET_ADDRESS
-})
+  TENDERLY_WALLET_ADDRESS,
+});
 
 const getSnxTx = await getsnx({
   TENDERLY_FORK_ID: forkInfo.simulation_fork.id,
   TENDERLY_WALLET_ADDRESS,
-  TENDERLY_SNX_WHALE_ADDRESS
-})
+  TENDERLY_SNX_WHALE_ADDRESS,
+});
 ```
