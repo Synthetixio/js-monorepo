@@ -25,6 +25,7 @@ export function env() {
     TENDERLY_PROJECT = 'mainnet',
     TENDERLY_FORK_ID = '',
     TENDERLY_WALLET_ADDRESS = '',
+    TENDERLY_SNX_WHALE_ADDRESS = '',
   } = process.env;
 
   const [forkId = TENDERLY_FORK_ID] = process.argv.slice(2);
@@ -39,5 +40,6 @@ export function env() {
     TENDERLY_PROJECT,
     TENDERLY_FORK_ID: forkId,
     TENDERLY_WALLET_ADDRESS,
+    TENDERLY_SNX_WHALE_ADDRESS,
   };
 }
