@@ -90,6 +90,8 @@
       }
     },
     "unflag-options": {
+      "heading": "Unflag Account",
+      "text": "To unflag your account, buying SNX isn’t enough. You can either burn to target or self liquidate. Learn about the new self liquidation mechanism.",
       "recommended": "Recommended",
       "unflag": {
         "heading": "Unflag my account by burning sUSD in order to meet target ratio",
