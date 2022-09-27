@@ -11,8 +11,10 @@ const prettierOptions = JSON.parse(fs.readFileSync(`${__dirname}/../../.prettier
 const isFix = process.argv.includes('--fix');
 
 // ignore certain deps that are explicitly mismatched versions
-function ignored({ parent, name, _version, _location }) {
-  return parent === '@synthetixio/<PACKAGE_NAME>' && ['<DEPENDENCY>'].includes(name);
+function ignored({ parent, name, _version, absolutePath }) {
+  const packageJson = require(`${absolutePath}/package.json`);
+  const ignoreMismatched = packageJson?.depcheck?.ignoreMismatched ?? [];
+  return parent === packageJson.name && ignoreMismatched.includes(name);
 }
 
 async function run() {
@@ -37,6 +39,7 @@ async function run() {
           result.mismatched.push({
             parent: context.name,
             location: context.location,
+            absolutePath: path.join(ROOT, context.location),
             name,
             version,
             expected: '^<EXACT VERSION>',
@@ -52,6 +55,7 @@ async function run() {
           result.mismatched.push({
             parent: context.name,
             location: context.location,
+            absolutePath: path.join(ROOT, context.location),
             name,
             version,
             expected: result.unique[name],

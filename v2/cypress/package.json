@@ -27,7 +27,6 @@
     "webpack": "^5.74.0"
   },
   "depcheck": {
-    "ignorePatterns": [],
     "ignoreMatches": [
       "assets",
       "components",

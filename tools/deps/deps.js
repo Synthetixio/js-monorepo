@@ -19,6 +19,10 @@ const options = {
     // files matching these patterns will be ignored
     'build',
     'coverage',
+    'node_modules',
+    'dist',
+    'out',
+    'tmp',
   ],
   ignoreMatches: [
     // Must keep ts dependency so depcheck works over Typescript files
@@ -26,9 +30,16 @@ const options = {
     '@types/jest',
     'webpack-dev-server',
   ],
+  parsers: {
+    '**/*.js': [depcheck.parser.es6, depcheck.parser.jsx],
+    '**/*.jsx': depcheck.parser.jsx,
+    '**/*.mjs': depcheck.parser.es6,
+    '**/*.ts': depcheck.parser.typescript,
+    '**/*.tsx': depcheck.parser.typescript,
+  },
 };
 
-const ignoredPackages = [];
+const ignoredPackages = ['root'];
 
 let updatedPackages = 0;
 
