@@ -5,7 +5,8 @@
   "author": "Nikita <noisekit@btnk.au>",
   "repository": "github:Synthetixio/js-monorepo",
   "license": "MIT",
-  "module": "index.mjs",
+  "type": "module",
+  "main": "index.mjs",
   "bin": {
     "tenderly-fork": "./bin/tenderly-fork.mjs",
     "tenderly-geteth": "./bin/tenderly-geteth.mjs",
