@@ -10,7 +10,7 @@ import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
 import { useSynthetix } from '@snx-v2/useSynthetixContracts';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import { useGasOptions } from '@snx-v2/useGasOptions';
-
+import { useNavigate } from 'react-router-dom';
 const CardHeader = ({
   step,
   headingText,
@@ -54,6 +54,7 @@ const Container = ({ children }: PropsWithChildren<{}>) => {
 
 const StakeActionCard: React.FC<UiProps> = ({ currentCRatioPercentage }) => {
   const isStaking = currentCRatioPercentage > 0;
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
   return (
@@ -67,7 +68,7 @@ const StakeActionCard: React.FC<UiProps> = ({ currentCRatioPercentage }) => {
       {isStaking ? (
         <Button
           onClick={() => {
-            console.log('navigate to stake and borrow more');
+            navigate('/staking/mint');
           }}
           mb="2"
           variant="link"
@@ -77,7 +78,7 @@ const StakeActionCard: React.FC<UiProps> = ({ currentCRatioPercentage }) => {
       ) : (
         <Button
           onClick={() => {
-            console.log('navigate to stake and borrow more');
+            navigate('/staking/mint');
           }}
           variant="solid"
         >
@@ -93,6 +94,7 @@ const MaintainActionCard: React.FC<UiProps> = ({
   currentCRatioPercentage,
   isFlagged,
 }) => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const variant = getHealthVariant({
     liquidationCratioPercentage,
@@ -136,7 +138,11 @@ const MaintainActionCard: React.FC<UiProps> = ({
           mb="2"
           variant="link"
           onClick={() => {
-            isStaking ? console.log('navigate to maintain page') : console.log('C-Ratio explained');
+            if (isStaking) {
+              navigate('/staking/burn');
+            } else {
+              console.log('C-Ratio explained');
+            }
           }}
         >
           {isStaking
@@ -146,7 +152,11 @@ const MaintainActionCard: React.FC<UiProps> = ({
       ) : (
         <Button
           onClick={() => {
-            console.log('navigate to maintain page');
+            if (isFlagged) {
+              navigate('/staking/unflag');
+            } else {
+              navigate('/staking/burn');
+            }
           }}
           variant={variant}
         >
