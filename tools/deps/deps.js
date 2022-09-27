@@ -19,6 +19,10 @@ const options = {
     // files matching these patterns will be ignored
     'build',
     'coverage',
+    'node_modules',
+    'dist',
+    'out',
+    'tmp',
   ],
   ignoreMatches: [
     // Must keep ts dependency so depcheck works over Typescript files
@@ -26,6 +30,13 @@ const options = {
     '@types/jest',
     'webpack-dev-server',
   ],
+  parsers: {
+    '**/*.js': depcheck.parser.es6,
+    '**/*.jsx': depcheck.parser.jsx,
+    '**/*.mjs': depcheck.parser.es6,
+    '**/*.ts': depcheck.parser.typescript,
+    '**/*.tsx': depcheck.parser.typescript,
+  },
 };
 
 const ignoredPackages = [];
@@ -55,7 +66,8 @@ async function run() {
 
   const deps = Object.fromEntries([].concat(existingDeps).concat(workspaceDeps));
 
-  await workspacePackages.reduce(async (promise, { location, name }) => {
+  // Ignore root package (comes 1st)
+  await workspacePackages.slice(1).reduce(async (promise, { location, name }) => {
     await promise;
 
     const packageJson = JSON.parse(await fs.readFile(`${location}/package.json`, 'utf-8'));
