@@ -31,7 +31,7 @@ const options = {
     'webpack-dev-server',
   ],
   parsers: {
-    '**/*.js': depcheck.parser.es6,
+    '**/*.js': [depcheck.parser.es6, depcheck.parser.jsx],
     '**/*.jsx': depcheck.parser.jsx,
     '**/*.mjs': depcheck.parser.es6,
     '**/*.ts': depcheck.parser.typescript,
@@ -39,7 +39,7 @@ const options = {
   },
 };
 
-const ignoredPackages = [];
+const ignoredPackages = ['root'];
 
 let updatedPackages = 0;
 
@@ -66,8 +66,7 @@ async function run() {
 
   const deps = Object.fromEntries([].concat(existingDeps).concat(workspaceDeps));
 
-  // Ignore root package (comes 1st)
-  await workspacePackages.slice(1).reduce(async (promise, { location, name }) => {
+  await workspacePackages.reduce(async (promise, { location, name }) => {
     await promise;
 
     const packageJson = JSON.parse(await fs.readFile(`${location}/package.json`, 'utf-8'));
