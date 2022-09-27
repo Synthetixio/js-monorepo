@@ -15,6 +15,7 @@
     "tenderly-unfork": "./unfork.mjs"
   },
   "dependencies": {
+    "dotenv": "^16.0.0",
     "node-fetch": "^3.2.10"
   },
   "depcheck": {

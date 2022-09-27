@@ -1,3 +1,12 @@
+import path from 'node:path';
+import url from 'node:url';
+import { config } from 'dotenv';
+
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+config({ path: path.resolve(__dirname, '..', '.env.local') });
+
 export function required(env) {
   throw new Error(`${env} is required`);
 }
