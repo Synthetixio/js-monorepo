@@ -1,0 +1,29 @@
+{
+  "name": "@synthetixio/tenderly",
+  "private": true,
+  "version": "1.0.0",
+  "author": "Nikita <noisekit@btnk.au>",
+  "repository": "github:Synthetixio/js-monorepo",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.mjs",
+  "bin": {
+    "tenderly-fork": "./bin/tenderly-fork.mjs",
+    "tenderly-geteth": "./bin/tenderly-geteth.mjs",
+    "tenderly-getsnx": "./bin/tenderly-getsnx.mjs",
+    "tenderly-load": "./bin/tenderly-load.mjs",
+    "tenderly-save": "./bin/tenderly-save.mjs",
+    "tenderly-unfork": "./bin/tenderly-unfork.mjs"
+  },
+  "dependencies": {
+    "@synthetixio/contracts": "workspace:*",
+    "dotenv": "^16.0.0",
+    "ethers": "^5.5.3",
+    "node-fetch": "^3.2.10"
+  },
+  "depcheck": {
+    "ignoreMismatched": [
+      "node-fetch"
+    ]
+  }
+}
