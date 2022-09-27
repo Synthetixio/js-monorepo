@@ -16,7 +16,9 @@
     "tenderly-unfork": "./bin/tenderly-unfork.mjs"
   },
   "dependencies": {
+    "@synthetixio/contracts": "workspace:*",
     "dotenv": "^16.0.0",
+    "ethers": "^5.5.3",
     "node-fetch": "^3.2.10"
   },
   "depcheck": {

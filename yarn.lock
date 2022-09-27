@@ -8260,7 +8260,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@synthetixio/tenderly@workspace:tools/tenderly"
   dependencies:
+    "@synthetixio/contracts": "workspace:*"
     dotenv: ^16.0.0
+    ethers: ^5.5.3
     node-fetch: ^3.2.10
   bin:
     tenderly-fork: ./bin/tenderly-fork.mjs
