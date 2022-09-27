@@ -26,20 +26,16 @@ export function env() {
     TENDERLY_FORK_ID = '',
     TENDERLY_WALLET_ADDRESS = '',
     TENDERLY_SNX_WHALE_ADDRESS = '',
+    TENDERLY_CHECKPOINT = '',
   } = process.env;
-
-  const [forkId = TENDERLY_FORK_ID] = process.argv.slice(2);
-
-  if (forkId?.length > 0 && !UUID_REGEX.test(forkId)) {
-    throw new Error(`TENDERLY_FORK_ID must be correct UUID`);
-  }
 
   return {
     TENDERLY_ACCESS_KEY,
     TENDERLY_USER,
     TENDERLY_PROJECT,
-    TENDERLY_FORK_ID: forkId,
+    TENDERLY_FORK_ID,
     TENDERLY_WALLET_ADDRESS,
     TENDERLY_SNX_WHALE_ADDRESS,
+    TENDERLY_CHECKPOINT,
   };
 }

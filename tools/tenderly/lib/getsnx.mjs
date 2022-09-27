@@ -11,6 +11,7 @@ export async function getsnx(envs) {
   const provider = new providers.JsonRpcProvider(RPC_URL);
 
   const { TENDERLY_WALLET_ADDRESS, TENDERLY_SNX_WHALE_ADDRESS } = envs;
+
   if (!TENDERLY_WALLET_ADDRESS) {
     throw new Error('TENDERLY_WALLET_ADDRESS is required');
   }

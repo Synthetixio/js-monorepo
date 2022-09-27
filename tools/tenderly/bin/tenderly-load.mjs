@@ -1,10 +1,20 @@
 #!/usr/bin/env node
 
-import { env } from '../lib/env.mjs';
-// import { load } from '../lib/load.mjs';
+import { env, UUID_REGEX } from '../lib/env.mjs';
+import { load } from '../lib/load.mjs';
 
 Promise.resolve()
   .then(env)
-  //  .then(load)
-  //  .then((forkInfo) => console.log(JSON.stringify(forkInfo, null, 2)))
+  .then((envs) => {
+    // augment with CLI arguments
+    const { TENDERLY_CHECKPOINT = '' } = envs;
+    const [checkpoint = TENDERLY_CHECKPOINT] = process.argv.slice(2);
+
+    if (checkpoint?.length > 0 && !UUID_REGEX.test(checkpoint)) {
+      throw new Error(`TENDERLY_CHECKPOINT must be correct UUID`);
+    }
+    return { ...envs, TENDERLY_CHECKPOINT: checkpoint };
+  })
+  .then(load)
+  .then((result) => console.log(result))
   .catch(console.error);
