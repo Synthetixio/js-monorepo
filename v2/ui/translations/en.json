@@ -1568,7 +1568,9 @@
         "merge": "merge vested snx",
         "dest-account-is-self": "Cannot nominate self",
         "nominating": "Nominating",
-        "invalid-dest-address": "Address is invalid"
+        "invalid-dest-address": "Address is invalid",
+        "source-is-a-burn-address": "Cannot merge from burn address",
+        "dest-is-a-burn-address": "Cannot merge into burn address"
       },
       "info": {
         "title": "Merge Escrowed SNX To Nominated Account",
@@ -1591,9 +1593,11 @@
       "title": "ENTER SOURCE ACCOUNT",
       "input-placeholder": "e.g. 0x3b18a4...",
       "button-labels": {
+        "merging": "merging",
         "enter-address": "enter address",
         "merge": "merge vested snx",
         "source-account-is-self": "Cannot merge into self",
+        "source-is-a-burn-address": "Cannot merge from burn address",
         "not-nominated": "Address is not nominated",
         "invalid-dest-address": "Address is invalid"
       },
