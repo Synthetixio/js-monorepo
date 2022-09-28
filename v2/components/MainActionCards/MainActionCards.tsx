@@ -174,18 +174,14 @@ const MaintainActionCard: React.FC<
   );
 };
 
-const CollectActionCard: React.FC<
-  Required<
-    Pick<
-      UiProps,
-      | 'liquidationCratioPercentage'
-      | 'targetCratioPercentage'
-      | 'currentCRatioPercentage'
-      | 'nextEpochStartDate'
-      | 'hasClaimed'
-    >
-  > & { snxPrice?: string }
-> = ({
+const CollectActionCard: React.FC<{
+  liquidationCratioPercentage: number;
+  targetCratioPercentage: number;
+  currentCRatioPercentage: number;
+  nextEpochStartDate: Date;
+  hasClaimed: boolean;
+  snxPrice?: string;
+}> = ({
   liquidationCratioPercentage,
   targetCratioPercentage,
   currentCRatioPercentage,
