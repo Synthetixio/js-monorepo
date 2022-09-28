@@ -1,0 +1,1 @@
+export { CowSwapIcon } from './CowSwapIcon';

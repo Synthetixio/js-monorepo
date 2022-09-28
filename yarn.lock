@@ -6270,6 +6270,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/SwapLinks@workspace:*, @snx-v2/SwapLinks@workspace:v2/components/SwapLinks":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/SwapLinks@workspace:v2/components/SwapLinks"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@storybook/react": ^6.5.10
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/TransactionModal@workspace:v2/components/TransactionModal":
   version: 0.0.0-use.local
   resolution: "@snx-v2/TransactionModal@workspace:v2/components/TransactionModal"
@@ -8329,6 +8342,7 @@ __metadata:
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
+    "@snx-v2/SwapLinks": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"

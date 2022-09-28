@@ -31,3 +31,7 @@ export * from './TokensIcon';
 export * from './StakingLogo';
 export * from './CloseIcon';
 export * from './InfoOutline';
+export * from './OneInchIcon';
+export * from './CurveIcon';
+export * from './CowSwapIcon';
+export * from './SushiSwapLogo';
