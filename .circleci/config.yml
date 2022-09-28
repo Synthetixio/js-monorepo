@@ -48,30 +48,6 @@ commands:
           paths:
             - '.yarn/install-state.gz'
 
-  cypress-install:
-    steps:
-      - restore_cache:
-          keys:
-            - cypress-{{ .Environment.CACHE_VERSION }}-{{ checksum "node_modules/cypress/package.json" }}
-
-      - run:
-          name: cypress install
-          working_directory: /tmp/app/v2/cypress
-          command: |-
-            # Check if we restored cache and have node_modules already
-            if yarn cypress verify ; then
-              echo "Cypress restored from cache"
-              exit 0
-            else
-              echo "Cypress could not be restored from cache, activating fallback installation"
-              CYPRESS_INSTALL_BINARY= yarn cypress install
-            fi
-
-      - save_cache:
-          key: cypress-{{ .Environment.CACHE_VERSION }}-{{ checksum "node_modules/cypress/package.json" }}
-          paths:
-            - '/tmp/cypress'
-
   tenderly-prepare:
     steps:
       - run:
@@ -236,15 +212,9 @@ jobs:
     working_directory: /tmp/app
     docker:
       - image: cypress/included:10.9.0
-#    environment:
-#      CYPRESS_CRASH_REPORTS: 0
-#      CYPRESS_INSTALL_BINARY: 0
-#      CYPRESS_CACHE_FOLDER: /tmp/cypress
     steps:
       - checkout
       - yarn-install
-      #      - cypress-install
-      #      - browser-tools/install-chrome
       - build-restore
 
       - run:
@@ -254,7 +224,11 @@ jobs:
           background: true
 
       - tenderly-prepare
-      - run: yarn workspace @snx-v2/cypress run e2e:check
+
+      - run:
+          working_directory: /tmp/app/v2/cypress
+          command: cypress run --e2e --browser chrome
+
       - tenderly-cleanup
 
       - store_artifacts:
@@ -267,18 +241,14 @@ jobs:
     working_directory: /tmp/app
     docker:
       - image: cypress/included:10.9.0
-#    environment:
-#      CYPRESS_CRASH_REPORTS: 0
-#      CYPRESS_INSTALL_BINARY: 0
-#      CYPRESS_CACHE_FOLDER: /tmp/cypress
     steps:
       - checkout
       - yarn-install
-      #      - cypress-install
-      #      - browser-tools/install-chrome
       - build-restore
 
-      - run: yarn workspace @snx-v2/cypress run cy:check
+      - run:
+          working_directory: /tmp/app/v2/cypress
+          command: cypress run --component --browser chrome
 
       - store_artifacts:
           path: /tmp/app/v2/cypress/cypress/screenshots
