@@ -24,12 +24,22 @@ const MobileTabletMenu: FC = () => {
       <Title onClick={() => dispatch({ type: 'open' })}>
         <TitleIcon width="18" />
         {headerTitle && (
-          <TitleText hasSubTitle={!!headerSubtitle}>{t(`header.${headerTitle}`)}</TitleText>
+          <TitleText hasSubTitle={!!headerSubtitle}>
+            <>
+              {/* @ts-ignore */}
+              {t(`header.${headerTitle}`)}
+            </>
+          </TitleText>
         )}
         {headerSubtitle && (
           <>
             <TitleSep>|</TitleSep>
-            <SubtitleText>{t(`header.${headerTitle}/${headerSubtitle}`)}</SubtitleText>
+            <SubtitleText>
+              <>
+                {/* @ts-ignore */}
+                {t(`header.${headerTitle}/${headerSubtitle}`)}
+              </>
+            </SubtitleText>
           </>
         )}
       </Title>

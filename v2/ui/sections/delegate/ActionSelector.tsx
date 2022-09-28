@@ -19,12 +19,14 @@ const Selector: FC<SelectorProps> = ({ action, setAction }) => {
         <ActionButton
           key={actionId}
           variant="solid"
+          // @ts-ignore
           data-testid={`action-${t(`common.delegate-actions.actions.${actionId}`)}`}
           onClick={() => {
             setAction(actionId);
           }}
           isActive={actionId === action}
         >
+          {/* @ts-ignore */}
           {t(`common.delegate-actions.actions.${actionId}`)}
         </ActionButton>
       ))}

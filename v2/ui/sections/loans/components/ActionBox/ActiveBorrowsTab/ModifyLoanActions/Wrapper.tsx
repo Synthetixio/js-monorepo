@@ -211,6 +211,7 @@ const Wrapper: FC<WrapperProps> = ({
         disabled={!!waitETA || buttonIsDisabled}
       >
         <Trans
+          // @ts-ignore
           i18nKey={waitETA ? 'loans.modify-loan.loan-interation-delay' : buttonLabel}
           values={{ waitETA }}
           components={[<NoTextTransform />]}
@@ -227,14 +228,24 @@ const Wrapper: FC<WrapperProps> = ({
           content={
             <TxModalContent>
               <TxModalItem>
-                <TxModalItemTitle>{t(leftColLabel)}</TxModalItemTitle>
+                <TxModalItemTitle>
+                  <>
+                    {/* @ts-ignore */}
+                    {t(leftColLabel)}
+                  </>
+                </TxModalItemTitle>
                 <TxModalItemText>
                   {wei(leftColAmount || 0).toString(2)} {leftColAssetName}
                 </TxModalItemText>
               </TxModalItem>
               <TxModalItemSeperator />
               <TxModalItem>
-                <TxModalItemTitle>{t(rightColLabel)}</TxModalItemTitle>
+                <TxModalItemTitle>
+                  <>
+                    {/* @ts-ignore */}
+                    {t(rightColLabel)}
+                  </>
+                </TxModalItemTitle>
                 <TxModalItemText>
                   {wei(rightColAmount).toString(2)} {rightColAssetName}
                 </TxModalItemText>

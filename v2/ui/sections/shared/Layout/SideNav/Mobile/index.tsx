@@ -59,7 +59,12 @@ const MobileSideNav: FC = () => {
                   data-testid={`sidenav-submenu-${subLink}`}
                   onClick={onClick}
                 >
-                  <div className="link">{t(i18nLabel)}</div>
+                  <div className="link">
+                    <>
+                      {/* @ts-ignore */}
+                      {t(i18nLabel)}
+                    </>
+                  </div>
                 </MenuLinkItem>
               );
             })}

@@ -58,7 +58,12 @@ const DelegateTable: FC = () => {
         },
       },
       ...Array.from(DELEGATE_ENTITY_ATTRS.entries()).map(([action, attr]) => ({
-        Header: <>{t(`delegate.list.cols.${attr}`)}</>,
+        Header: (
+          <>
+            {/* @ts-ignore */}
+            {t(`delegate.list.cols.${attr}`)}
+          </>
+        ),
         accessor: attr,
         width: isSM ? 40 : 50,
         sortable: true,

@@ -67,8 +67,11 @@ const DesktopMenu: FC = () => {
                 }
               >
                 <div className="link">
-                  {t(i18nLabel)}
-                  {subMenu && <CaretRightIcon width="5" />}
+                  <>
+                    {/* @ts-ignore */}
+                    {t(i18nLabel)}
+                    {subMenu && <CaretRightIcon width="5" />}
+                  </>
                 </div>
               </MenuLinkItem>
               {subMenu && (
@@ -81,7 +84,10 @@ const DesktopMenu: FC = () => {
                       data-testid={`sidenav-submenu-${subLink}`}
                       onClick={() => setOpenMenu(null)}
                     >
-                      {t(i18nLabel)}
+                      <>
+                        {/* @ts-ignore */}
+                        {t(i18nLabel)}
+                      </>
                     </SubMenuLinkItem>
                   ))}
                 </DesktopSubMenu>

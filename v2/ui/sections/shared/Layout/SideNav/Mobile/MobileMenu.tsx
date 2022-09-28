@@ -54,8 +54,11 @@ const MobileMenu: FC<MobileMenuProps> = ({ dispatch }) => {
           }
         >
           <div className="link">
-            {t(i18nLabel)}
-            {subMenu && <CaretRightIcon width="5" />}
+            <>
+              {/* @ts-ignore */}
+              {t(i18nLabel)}
+              {subMenu && <CaretRightIcon width="5" />}
+            </>
           </div>
         </MenuLinkItem>
       ))}

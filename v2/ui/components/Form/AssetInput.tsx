@@ -44,7 +44,10 @@ const Balance: FC<MaxBalanceProps> = ({
   return (
     <BalanceContainer>
       <BalanceAmount>
-        {t(label)} {formatNumber(balance)}
+        <>
+          {/* @ts-ignore */}
+          {t(label)} {formatNumber(balance)}
+        </>
       </BalanceAmount>
       <MaxButton onClick={onSetMaxAmount}>{t('balance.max')}</MaxButton>
     </BalanceContainer>
@@ -78,7 +81,12 @@ const AssetInput: FC<AssetInputProps> = ({
   return (
     <Container>
       <SelectContainer>
-        <SelectLabel>{t(label)}</SelectLabel>
+        <SelectLabel>
+          <>
+            {/* @ts-ignore */}
+            {t(label)}
+          </>
+        </SelectLabel>
         <SelectInput data-testid="select">
           <Select
             inputId={`${label}-asset-options`}
