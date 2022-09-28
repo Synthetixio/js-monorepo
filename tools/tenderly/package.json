@@ -8,6 +8,7 @@
   "type": "module",
   "main": "index.mjs",
   "bin": {
+    "tenderly-cci": "./bin/tenderly-cci.mjs",
     "tenderly-fork": "./bin/tenderly-fork.mjs",
     "tenderly-geteth": "./bin/tenderly-geteth.mjs",
     "tenderly-getsnx": "./bin/tenderly-getsnx.mjs",

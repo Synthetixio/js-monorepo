@@ -70,25 +70,14 @@ commands:
       - save_cache:
           key: cypress-{{ .Environment.CACHE_VERSION }}-{{ checksum "node_modules/cypress/package.json" }}
           paths:
-            - '~/cypress'
+            - '/tmp/cypress'
 
   tenderly-prepare:
     steps:
       - run:
           name: Prepare Tenderly fork
           command: |-
-            ./node_modules/.bin/tenderly-fork | jq
-            # Pick the first wallet
-            WALLET_ADDRESS=$(./node_modules/.bin/tenderly-fork | jq -r '.simulation_fork.accounts | keys[0]')
-            WALLET_MNEMONIC=$(./node_modules/.bin/tenderly-fork | jq -r '.simulation_fork.accounts | first(values[])')
-            TENDERLY_FORK_ID=$(./node_modules/.bin/tenderly-fork | jq -r '.simulation_fork.id')
-
-            ./node_modules/.bin/tenderly-getsnx $WALLET_ADDRESS
-
-            echo 'export WALLET_ADDRESS="'$WALLET_ADDRESS'"' >> "$BASH_ENV"
-            echo 'export WALLET_MNEMONIC="'$WALLET_MNEMONIC'"' >> "$BASH_ENV"
-            echo 'export TENDERLY_RPC_URL="https://rpc.tenderly.co/fork/'$TENDERLY_FORK_ID'"' >> "$BASH_ENV"
-
+            ./node_modules/.bin/tenderly-cci
             cat $BASH_ENV
 
   tenderly-cleanup:
@@ -246,12 +235,11 @@ jobs:
   v2-e2e:
     working_directory: /tmp/app
     docker:
-      - image: 'cypress/browsers:node16.16.0-chrome105-ff99-edge'
-    #      - image: cimg/node:<< pipeline.parameters.node-version >>-browsers
-    #    environment:
-    #      CYPRESS_CRASH_REPORTS: 0
-    #      CYPRESS_INSTALL_BINARY: 0
-    #      CYPRESS_CACHE_FOLDER: ~/cypress
+      - image: cypress/included:10.9.0
+#    environment:
+#      CYPRESS_CRASH_REPORTS: 0
+#      CYPRESS_INSTALL_BINARY: 0
+#      CYPRESS_CACHE_FOLDER: /tmp/cypress
     steps:
       - checkout
       - yarn-install
@@ -278,12 +266,11 @@ jobs:
   v2-cy:
     working_directory: /tmp/app
     docker:
-      - image: 'cypress/browsers:node16.16.0-chrome105-ff99-edge'
-    #      - image: cimg/node:<< pipeline.parameters.node-version >>-browsers
-    #    environment:
-    #      CYPRESS_CRASH_REPORTS: 0
-    #      CYPRESS_INSTALL_BINARY: 0
-    #      CYPRESS_CACHE_FOLDER: ~/cypress
+      - image: cypress/included:10.9.0
+#    environment:
+#      CYPRESS_CRASH_REPORTS: 0
+#      CYPRESS_INSTALL_BINARY: 0
+#      CYPRESS_CACHE_FOLDER: /tmp/cypress
     steps:
       - checkout
       - yarn-install
