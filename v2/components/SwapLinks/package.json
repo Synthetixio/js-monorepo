@@ -1,0 +1,14 @@
+{
+  "name": "@snx-v2/SwapLinks",
+  "private": true,
+  "main": "index.tsx",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/icons": "workspace:*",
+    "@snx-v2/useSynthetixContracts": "workspace:*",
+    "@storybook/react": "^6.5.10",
+    "react": "^18.2.0"
+  }
+}

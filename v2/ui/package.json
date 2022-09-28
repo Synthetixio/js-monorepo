@@ -41,6 +41,7 @@
     "@snx-v2/MainActionCards": "workspace:*",
     "@snx-v2/Navigation": "workspace:*",
     "@snx-v2/SignerContext": "workspace:*",
+    "@snx-v2/SwapLinks": "workspace:*",
     "@snx-v2/UnflagOptions": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/getHealthVariant": "workspace:*",
