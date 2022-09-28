@@ -1,0 +1,1 @@
+export { SushiSwapLogo } from './SushiSwapLogo';

@@ -1,0 +1,1 @@
+export { OneInchIcon } from './OneInchIcon';
