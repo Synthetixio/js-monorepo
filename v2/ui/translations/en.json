@@ -107,6 +107,10 @@
       },
       "cancel-link": "Cancel",
       "continue-link": "Continue to next step"
+    },
+    "swap-links": {
+      "heading": "Buy sUSD",
+      "text": "Buy more sUSD on any of this DAPPS."
     }
   },
   "meta": {
