@@ -10,6 +10,7 @@
     "dev": "webpack-cli serve",
     "build": "NODE_ENV=production webpack-cli",
     "build:report": "GENERATE_BUNDLE_REPORT=true NODE_ENV=production webpack-cli",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "pretty:check": "prettier --check .",
     "lint": "eslint --ext ts,tsx . && tsc",
