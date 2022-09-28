@@ -54,9 +54,9 @@ export const SwapLinksUi: FC<{
   if (!networkId || !outputCurrencyAddress) {
     return (
       <Box>
-        <Skeleton height="50px" mb={4} width="full" />
-        <Skeleton height="50px" mb={4} width="full" />
-        <Skeleton height="50px" mb={4} width="full" />
+        <Skeleton height="82px" mb={2} width="full" borderRadius="10px" />
+        <Skeleton height="82px" mb={2} width="full" borderRadius="10px" />
+        <Skeleton height="82px" mb={2} width="full" borderRadius="10px" />
       </Box>
     );
   }
