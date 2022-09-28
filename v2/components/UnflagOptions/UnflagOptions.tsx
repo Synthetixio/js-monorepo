@@ -18,6 +18,8 @@ import { useTranslation } from 'react-i18next';
 import { useLiquidationData } from '@snx-v2/useLiquidationData';
 import { formatPercent } from '../../ui/utils/formatters/number';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
+import useCryptoBalances from '../../ui/hooks/useCryptoBalances';
+import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 
 const RadioItemContent: React.FC<{
   radioProps: UseRadioProps;
@@ -174,12 +176,12 @@ export const UnflagOptionsUi: React.FC<{
 export const UnflagOptions = () => {
   const { data: debtData } = useDebtData();
   const { data: liquidationData } = useLiquidationData();
-
+  const { data: balanceData } = useSynthsBalances();
   const sUSDToGetBackToTarget = debtData
     ? debtData.debtBalance.sub(debtData.issuableSynths).toNumber()
     : undefined;
 
-  const sUSDBalance = 100; // TODO, use james balance query that's coming
+  const sUSDBalance = balanceData?.balancesMap.sUSD?.balance.toNumber();
   const selfLiquidationPenalty = liquidationData
     ? formatPercent(liquidationData.selfLiquidationPenalty)
     : undefined;
