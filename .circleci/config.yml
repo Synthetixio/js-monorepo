@@ -91,6 +91,9 @@ jobs:
     working_directory: /tmp/app
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
+    environment:
+      CYPRESS_CRASH_REPORTS: 0
+      CYPRESS_INSTALL_BINARY: 0
     steps:
       - checkout
 
