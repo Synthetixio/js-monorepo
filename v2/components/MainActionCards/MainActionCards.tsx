@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Badge, Box, Button, Flex, Heading, Skeleton, Stack, Text } from '@chakra-ui/react';
 import React, { PropsWithChildren, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
@@ -10,7 +10,9 @@ import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
 import { useSynthetix } from '@snx-v2/useSynthetixContracts';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import { useGasOptions } from '@snx-v2/useGasOptions';
-
+import { useNavigate } from 'react-router-dom';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
+import { formatNumberToUsd } from '@snx-v2/formatters';
 const CardHeader = ({
   step,
   headingText,
@@ -54,6 +56,7 @@ const Container = ({ children }: PropsWithChildren<{}>) => {
 
 const StakeActionCard: React.FC<UiProps> = ({ currentCRatioPercentage }) => {
   const isStaking = currentCRatioPercentage > 0;
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
   return (
@@ -65,19 +68,13 @@ const StakeActionCard: React.FC<UiProps> = ({ currentCRatioPercentage }) => {
         icon={<StakeIcon />}
       />
       {isStaking ? (
-        <Button
-          onClick={() => {
-            console.log('navigate to stake and borrow more');
-          }}
-          mb="2"
-          variant="link"
-        >
+        <Button onClick={() => navigate('/staking/mint')} mb="2" variant="link">
           {t('staking-v2.main-action-cards.stake-link-button')}
         </Button>
       ) : (
         <Button
           onClick={() => {
-            console.log('navigate to stake and borrow more');
+            navigate('/staking/mint');
           }}
           variant="solid"
         >
@@ -93,6 +90,7 @@ const MaintainActionCard: React.FC<UiProps> = ({
   currentCRatioPercentage,
   isFlagged,
 }) => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const variant = getHealthVariant({
     liquidationCratioPercentage,
@@ -136,7 +134,11 @@ const MaintainActionCard: React.FC<UiProps> = ({
           mb="2"
           variant="link"
           onClick={() => {
-            isStaking ? console.log('navigate to maintain page') : console.log('C-Ratio explained');
+            if (isStaking) {
+              navigate('/staking/burn');
+            } else {
+              console.log('C-Ratio explained');
+            }
           }}
         >
           {isStaking
@@ -146,7 +148,11 @@ const MaintainActionCard: React.FC<UiProps> = ({
       ) : (
         <Button
           onClick={() => {
-            console.log('navigate to maintain page');
+            if (isFlagged) {
+              navigate('/staking/unflag');
+            } else {
+              navigate('/staking/burn');
+            }
           }}
           variant={variant}
         >
@@ -165,6 +171,7 @@ const CollectActionCard: React.FC<UiProps> = ({
   currentCRatioPercentage,
   nextEpochStartDate,
   hasClaimed,
+  snxPrice,
 }) => {
   const { t } = useTranslation();
   const variant = getHealthVariant({
@@ -206,10 +213,11 @@ const CollectActionCard: React.FC<UiProps> = ({
               <Text color="whiteAlpha.700" fontSize="xs" mr="1" fontWeight="700">
                 {t('staking-v2.main-action-cards.collect-price')}
               </Text>
-
-              <Text color="success" fontSize="md" fontFamily="mono">
-                $6.00
-              </Text>
+              <Skeleton isLoaded={snxPrice !== undefined}>
+                <Text color="success" fontSize="md" fontFamily="mono">
+                  {snxPrice && formatNumberToUsd(snxPrice)}
+                </Text>
+              </Skeleton>
             </Flex>
           )}
         </Flex>
@@ -246,6 +254,7 @@ type UiProps = {
   isFlagged: boolean;
   nextEpochStartDate: Date;
   hasClaimed: boolean;
+  snxPrice?: string;
 };
 export const MainActionCardsUi: React.FC<UiProps> = (props) => {
   return (
@@ -262,6 +271,7 @@ export const MainActionCards: React.FC = () => {
   const { data: feePoolData } = useFeePoolData();
   const { data: rewardsData } = useRewardsAvailable();
   const { data: Synthetix } = useSynthetix();
+  const { data: exchangeRateData } = useExchangeRatesData();
 
   const getGasLimit = Synthetix?.signer
     ? () => Synthetix.estimateGas.burnSynthsToTarget()
@@ -299,6 +309,7 @@ export const MainActionCards: React.FC = () => {
         isFlagged={debtData.liquidationDeadlineForAccount.gt(0)}
         hasClaimed={rewardsData.hasClaimed}
         nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
+        snxPrice={exchangeRateData?.SNX?.toString()}
       />
     </>
   );
