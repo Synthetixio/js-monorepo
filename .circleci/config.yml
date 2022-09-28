@@ -3,7 +3,18 @@ version: 2.1
 orbs:
   browser-tools: circleci/browser-tools@1.4.0
 
+parameters:
+  node-version:
+    type: string
+    default: '16.17.0'
+
 commands:
+  checksum:
+    steps:
+      - run: |-
+          git ls-files -s contracts packages tools v1 v2 v3 > "/tmp/checksum.txt"
+          cat "/tmp/checksum.txt"
+
   yarn-install:
     steps:
       - restore_cache:
@@ -37,81 +48,230 @@ commands:
           paths:
             - '.yarn/install-state.gz'
 
-  cypress-install:
+  tenderly-prepare:
     steps:
-      - restore_cache:
-          keys:
-            - cypress-{{ .Environment.CACHE_VERSION }}-{{ checksum "node_modules/cypress/package.json" }}
-
-      - run:
-          name: cypress install
-          working_directory: ~/app/v2/cypress
-          command: |-
-            # Check if we restored cache and have node_modules already
-            if yarn cypress verify ; then
-              echo "Cypress restored from cache"
-              exit 0
-            else
-              echo "Cypress could not be restored from cache, activating fallback installation"
-              CYPRESS_INSTALL_BINARY= yarn cypress install
-            fi
-
-      - save_cache:
-          key: cypress-{{ .Environment.CACHE_VERSION }}-{{ checksum "node_modules/cypress/package.json" }}
-          paths:
-            - '~/cypress'
-
-jobs:
-  v2-ui:
-    working_directory: ~/app
-    docker:
-      - image: cimg/node:16.17.0-browsers
-    resource_class: large
-    environment:
-      CYPRESS_CRASH_REPORTS: 0
-      CYPRESS_INSTALL_BINARY: 0
-      CYPRESS_CACHE_FOLDER: ~/cypress
-    steps:
-      - checkout
-      - yarn-install
-      - cypress-install
-      - browser-tools/install-chrome
-      - run: yarn workspace @synthetixio/v2-ui run standalone-build
       - run:
           name: Prepare Tenderly fork
           command: |-
-            ./node_modules/.bin/tenderly-fork | jq
-            # Pick the first wallet
-            WALLET_ADDRESS=$(./node_modules/.bin/tenderly-fork | jq -r '.simulation_fork.accounts | keys[0]')
-            WALLET_MNEMONIC=$(./node_modules/.bin/tenderly-fork | jq -r '.simulation_fork.accounts | first(values[])')
-            TENDERLY_FORK_ID=$(./node_modules/.bin/tenderly-fork | jq -r '.simulation_fork.id')
-
-            ./node_modules/.bin/tenderly-getsnx $WALLET_ADDRESS
-
-            echo 'export WALLET_ADDRESS="'$WALLET_ADDRESS'"' >> "$BASH_ENV"
-            echo 'export WALLET_MNEMONIC="'$WALLET_MNEMONIC'"' >> "$BASH_ENV"
-            echo 'export TENDERLY_RPC_URL="https://rpc.tenderly.co/fork/'$TENDERLY_FORK_ID'"' >> "$BASH_ENV"
-
+            ./node_modules/.bin/tenderly-cci
             cat $BASH_ENV
 
-      - run:
-          name: Run server localhost:3000
-          working_directory: ~/app/v2/ui/out
-          command: python3 -m http.server 3000
-          background: true
-
-      - run: yarn workspace @snx-v2/cypress run e2e:check
-      - run: yarn workspace @snx-v2/cypress run cy:check
-
+  tenderly-cleanup:
+    steps:
       - run:
           when: always
           name: Remove Tenderly fork
           command: |-
             ./node_modules/.bin/tenderly-unfork
 
+  build-save:
+    steps:
+      - checksum
+      - run: cp "/tmp/checksum.txt" "/tmp/build-cache.txt"
+      - save_cache:
+          key: build-{{ .Environment.CACHE_VERSION }}-{{ checksum "/tmp/checksum.txt" }}
+          paths:
+            - './contracts'
+            - './packages'
+            - './tools'
+            - './v1'
+            - './v2'
+            - './v3'
+            - '/tmp/build-cache.txt'
+
+  build-restore:
+    steps:
+      - checksum
+      - restore_cache:
+          keys:
+            - build-{{ .Environment.CACHE_VERSION }}-{{ checksum "/tmp/checksum.txt" }}
+
+jobs:
+  yarn-install:
+    working_directory: /tmp/app
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    environment:
+      CYPRESS_CRASH_REPORTS: 0
+      CYPRESS_INSTALL_BINARY: 0
+    steps:
+      - checkout
+
+      # yarn's state of installation
+      - restore_cache:
+          keys:
+            - yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+
+      # yarn's own state of node_modules
+      - restore_cache:
+          keys:
+            - yarn-state-node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Halt if node_modules exist in cache
+          command: |-
+            # Check if we restored cache and have node_modules already
+            if [ -f "node_modules/.yarn-state.yml" ]; then
+              echo "SKIP, no changes detected"
+              circleci-agent step halt
+            fi
+
+      #
+      # Proceed with installing node modules, but to speed things up, restore caches
+      #
+
+      # Restore system-wide caches "~/.cache"
+      - restore_cache:
+          keys:
+            - caches-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+            - caches-{{ .Environment.CACHE_VERSION }}-
+
+      # Restore yarn's project-specific caches ".yarn/cache"
+      - restore_cache:
+          keys:
+            - yarn-cache-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+            - yarn-cache-{{ .Environment.CACHE_VERSION }}-
+
+      # node_modules cache
+      - restore_cache:
+          keys:
+            - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+
+      - run: yarn install --immutable --immutable-cache
+
+      - save_cache:
+          key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          paths:
+            - 'node_modules'
+
+      - save_cache:
+          key: caches-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          paths:
+            - '~/.cache'
+
+      - save_cache:
+          key: yarn-cache-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          paths:
+            - '.yarn/cache'
+
+      - save_cache:
+          key: yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          paths:
+            - '.yarn/install-state.gz'
+
+      - save_cache:
+          key: yarn-state-node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          paths:
+            - 'node_modules/.yarn-state.yml'
+
+  checks:
+    working_directory: /tmp/app
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - yarn-install
+      - run: yarn npm audit --recursive --severity=critical
+      - run: yarn deps
+      - run: yarn deps:mismatched
+      - run: yarn deps:circular
+      - run: yarn pretty
+      - run: yarn lint
+
+  build:
+    working_directory: /tmp/app
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    resource_class: large
+    steps:
+      - checkout
+      - yarn-install
+      - build-restore
+      - run:
+          name: Halt if build was restored
+          command: |-
+            # Check if we restored build cache already
+            if [ -f "/tmp/build-cache.txt" ]; then
+              echo "SKIP, no changes detected"
+              circleci-agent step halt
+            fi
+      - run: yarn build
+      - build-save
+
+  tests:
+    working_directory: /tmp/app
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - yarn-install
+      - build-restore
+      # codegen is part of build, so ensure we have all the autogenerated code committed
+      - run: git diff --name-only --exit-code
+      - run: yarn typecheck
+      - run: yarn test
+
+  v2-e2e:
+    working_directory: /tmp/app
+    docker:
+      - image: cypress/included:10.9.0
+    steps:
+      - checkout
+      - yarn-install
+      - build-restore
+
+      - run:
+          name: Run server localhost:3000
+          working_directory: /tmp/app/v2/ui/out
+          command: python3 -m http.server 3000
+          background: true
+
+      - tenderly-prepare
+
+      - run:
+          working_directory: /tmp/app/v2/cypress
+          command: cypress run --e2e --browser chrome
+
+      - tenderly-cleanup
+
+      - store_artifacts:
+          path: /tmp/app/v2/cypress/cypress/screenshots
+
+      - store_artifacts:
+          path: /tmp/app/v2/cypress/cypress/videos
+
+  v2-cy:
+    working_directory: /tmp/app
+    docker:
+      - image: cypress/included:10.9.0
+    steps:
+      - checkout
+      - yarn-install
+      - build-restore
+
+      - run:
+          working_directory: /tmp/app/v2/cypress
+          command: cypress run --component --browser chrome
+
+      - store_artifacts:
+          path: /tmp/app/v2/cypress/cypress/screenshots
+
+      - store_artifacts:
+          path: /tmp/app/v2/cypress/cypress/videos
+
 workflows:
   version: 2.1
 
-  v2-ui:
+  ui:
     jobs:
-      - v2-ui
+      - yarn-install
+      - checks:
+          requires: [yarn-install]
+      - build:
+          requires: [yarn-install]
+      - tests:
+          requires: [build]
+      - v2-e2e:
+          requires: [build]
+      - v2-cy:
+          requires: [build]
