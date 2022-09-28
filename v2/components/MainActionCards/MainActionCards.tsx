@@ -68,13 +68,7 @@ const StakeActionCard: React.FC<UiProps> = ({ currentCRatioPercentage }) => {
         icon={<StakeIcon />}
       />
       {isStaking ? (
-        <Button
-          onClick={() => {
-            navigate('/staking/mint');
-          }}
-          mb="2"
-          variant="link"
-        >
+        <Button onClick={() => navigate('/staking/mint')} mb="2" variant="link">
           {t('staking-v2.main-action-cards.stake-link-button')}
         </Button>
       ) : (

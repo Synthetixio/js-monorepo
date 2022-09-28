@@ -16,9 +16,8 @@ import { CollectIcon, InfoIcon, MaintainIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useTranslation } from 'react-i18next';
 import { useLiquidationData } from '@snx-v2/useLiquidationData';
-import { formatPercent } from '../../ui/utils/formatters/number';
+import { formatPercent } from '@snx-v2/formatters/number';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
-import useCryptoBalances from '../../ui/hooks/useCryptoBalances';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 
 const RadioItemContent: React.FC<{

@@ -1,5 +1,5 @@
 import { mount } from 'cypress/react18';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 import 'i18n';
 
@@ -14,9 +14,9 @@ import { stakingTheme } from 'content/theme';
 function Container(props) {
   return (
     <ChakraProvider theme={extendTheme(stakingTheme)}>
-      <BrowserRouter>
+      <MemoryRouter>
         <div id="app" {...props} />
-      </BrowserRouter>
+      </MemoryRouter>
     </ChakraProvider>
   );
 }

@@ -6292,6 +6292,7 @@ __metadata:
   resolution: "@snx-v2/UnflagOptions@workspace:v2/components/UnflagOptions"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
