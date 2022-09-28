@@ -182,7 +182,7 @@ export const UnflagOptions = () => {
 
   const sUSDBalance = balanceData?.balancesMap.sUSD?.balance.toNumber();
   const selfLiquidationPenalty = liquidationData
-    ? formatPercent(liquidationData.selfLiquidationPenalty)
+    ? formatPercent(liquidationData.selfLiquidationPenalty.toNumber())
     : undefined;
 
   return (
