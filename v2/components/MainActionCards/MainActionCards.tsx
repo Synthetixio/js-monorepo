@@ -7,9 +7,6 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { CountDown } from '@snx-v2/CountDown';
 import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
-import { useSynthetix } from '@snx-v2/useSynthetixContracts';
-import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
-import { useGasOptions } from '@snx-v2/useGasOptions';
 import { useNavigate } from 'react-router-dom';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { formatNumberToUsd } from '@snx-v2/formatters';
@@ -54,7 +51,9 @@ const Container = ({ children }: PropsWithChildren<{}>) => {
   );
 };
 
-const StakeActionCard: React.FC<UiProps> = ({ currentCRatioPercentage }) => {
+const StakeActionCard: React.FC<Required<Pick<UiProps, 'currentCRatioPercentage'>>> = ({
+  currentCRatioPercentage,
+}) => {
   const isStaking = currentCRatioPercentage > 0;
   const navigate = useNavigate();
 
@@ -84,7 +83,17 @@ const StakeActionCard: React.FC<UiProps> = ({ currentCRatioPercentage }) => {
     </Container>
   );
 };
-const MaintainActionCard: React.FC<UiProps> = ({
+const MaintainActionCard: React.FC<
+  Required<
+    Pick<
+      UiProps,
+      | 'liquidationCratioPercentage'
+      | 'targetCratioPercentage'
+      | 'currentCRatioPercentage'
+      | 'isFlagged'
+    >
+  >
+> = ({
   liquidationCratioPercentage,
   targetCratioPercentage,
   currentCRatioPercentage,
@@ -165,7 +174,14 @@ const MaintainActionCard: React.FC<UiProps> = ({
   );
 };
 
-const CollectActionCard: React.FC<UiProps> = ({
+const CollectActionCard: React.FC<{
+  liquidationCratioPercentage: number;
+  targetCratioPercentage: number;
+  currentCRatioPercentage: number;
+  nextEpochStartDate: Date;
+  hasClaimed: boolean;
+  snxPrice?: string;
+}> = ({
   liquidationCratioPercentage,
   targetCratioPercentage,
   currentCRatioPercentage,
@@ -248,20 +264,63 @@ const CollectActionCard: React.FC<UiProps> = ({
 };
 
 type UiProps = {
-  liquidationCratioPercentage: number;
-  targetCratioPercentage: number;
-  currentCRatioPercentage: number;
-  isFlagged: boolean;
-  nextEpochStartDate: Date;
-  hasClaimed: boolean;
+  liquidationCratioPercentage?: number;
+  targetCratioPercentage?: number;
+  currentCRatioPercentage?: number;
+  isFlagged?: boolean;
+  nextEpochStartDate?: Date;
+  hasClaimed?: boolean;
   snxPrice?: string;
 };
-export const MainActionCardsUi: React.FC<UiProps> = (props) => {
+export const MainActionCardsUi: React.FC<UiProps> = ({
+  liquidationCratioPercentage,
+  currentCRatioPercentage,
+  targetCratioPercentage,
+  isFlagged,
+  nextEpochStartDate,
+  hasClaimed,
+}) => {
   return (
     <Stack direction={['column', 'column', 'row']} align="center" spacing="14px">
-      <StakeActionCard {...props}></StakeActionCard>
-      <MaintainActionCard {...props}></MaintainActionCard>
-      <CollectActionCard {...props}></CollectActionCard>
+      {currentCRatioPercentage !== undefined ? (
+        <StakeActionCard currentCRatioPercentage={currentCRatioPercentage} />
+      ) : (
+        <Skeleton flexGrow={1}>
+          <Container />
+        </Skeleton>
+      )}
+      {liquidationCratioPercentage !== undefined &&
+      targetCratioPercentage !== undefined &&
+      currentCRatioPercentage !== undefined &&
+      isFlagged !== undefined ? (
+        <MaintainActionCard
+          liquidationCratioPercentage={liquidationCratioPercentage}
+          targetCratioPercentage={targetCratioPercentage}
+          currentCRatioPercentage={currentCRatioPercentage}
+          isFlagged={isFlagged}
+        />
+      ) : (
+        <Skeleton flexGrow={1}>
+          <Container />
+        </Skeleton>
+      )}
+      {currentCRatioPercentage !== undefined &&
+      liquidationCratioPercentage !== undefined &&
+      targetCratioPercentage !== undefined &&
+      nextEpochStartDate !== undefined &&
+      hasClaimed !== undefined ? (
+        <CollectActionCard
+          liquidationCratioPercentage={liquidationCratioPercentage}
+          targetCratioPercentage={targetCratioPercentage}
+          currentCRatioPercentage={currentCRatioPercentage}
+          hasClaimed={hasClaimed}
+          nextEpochStartDate={nextEpochStartDate}
+        />
+      ) : (
+        <Skeleton flexGrow={1}>
+          <Container />
+        </Skeleton>
+      )}
     </Stack>
   );
 };
@@ -270,47 +329,17 @@ export const MainActionCards: React.FC = () => {
   const { data: debtData } = useDebtData();
   const { data: feePoolData } = useFeePoolData();
   const { data: rewardsData } = useRewardsAvailable();
-  const { data: Synthetix } = useSynthetix();
   const { data: exchangeRateData } = useExchangeRatesData();
 
-  const getGasLimit = Synthetix?.signer
-    ? () => Synthetix.estimateGas.burnSynthsToTarget()
-    : undefined;
-  const populateTransaction = Synthetix
-    ? () => Synthetix.populateTransaction.burnSynthsToTarget()
-    : undefined;
-  const gasOptionsQuery = useGasOptions({
-    getGasLimit,
-    populateTransaction,
-  });
-  const { gasLimit, gasPrices, optimismLayerOneFees, gasOptionsForTransaction } =
-    gasOptionsQuery.data || {};
-
-  if (!debtData || !feePoolData || !rewardsData || !Synthetix) return <p>Skeleton</p>;
-
   return (
-    <>
-      <Button
-        onClick={() => {
-          Synthetix.burnSynthsToTarget(gasOptionsForTransaction);
-        }}
-      >
-        Burn Max
-      </Button>
-      <EthGasPriceEstimator
-        gasLimit={gasLimit}
-        optimismLayerOneFees={optimismLayerOneFees}
-        gasPrices={gasPrices}
-      />
-      <MainActionCardsUi
-        currentCRatioPercentage={debtData.currentCRatioPercentage.mul(100).toNumber()}
-        targetCratioPercentage={debtData.targetCRatioPercentage.mul(100).toNumber()}
-        liquidationCratioPercentage={debtData.liquidationRatioPercentage.mul(100).toNumber()}
-        isFlagged={debtData.liquidationDeadlineForAccount.gt(0)}
-        hasClaimed={rewardsData.hasClaimed}
-        nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
-        snxPrice={exchangeRateData?.SNX?.toString()}
-      />
-    </>
+    <MainActionCardsUi
+      currentCRatioPercentage={debtData?.currentCRatioPercentage.mul(100).toNumber()}
+      targetCratioPercentage={debtData?.targetCRatioPercentage.mul(100).toNumber()}
+      liquidationCratioPercentage={debtData?.liquidationRatioPercentage.mul(100).toNumber()}
+      isFlagged={debtData?.liquidationDeadlineForAccount.gt(0)}
+      hasClaimed={rewardsData?.hasClaimed}
+      nextEpochStartDate={feePoolData?.nextFeePeriodStartDate}
+      snxPrice={exchangeRateData?.SNX?.toString()}
+    />
   );
 };

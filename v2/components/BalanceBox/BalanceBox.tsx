@@ -1,12 +1,17 @@
 import React, { PropsWithChildren } from 'react';
-import { Box, Center, Flex, Text, Tooltip, Progress } from '@chakra-ui/react';
+import { Box, Center, Flex, Text, Tooltip, Progress, Skeleton } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { InfoIcon } from '@snx-v2/icons';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 
-type UiProps = { snxBalance: number; snxPrice: number; transferable: number; stakedSnx: number };
+type UiProps = {
+  snxBalance?: number;
+  snxPrice?: number;
+  transferable?: number;
+  stakedSnx?: number;
+};
 
 export const BalanceBoxUi = ({
   snxBalance,
@@ -31,30 +36,54 @@ export const BalanceBoxUi = ({
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="4" fontSize="xs">
           {t('staking-v2.balance-box.box-heading')}
         </Text>
-        <Text fontFamily="mono" fontWeight="extrabold" fontSize="sm" lineHeight="5">
-          {formatNumber(snxBalance)}
-        </Text>
-        <Text lineHeight="4" fontSize="xs" color="gray.500">
-          {formatNumberToUsd(snxBalance * snxPrice)}
-        </Text>
-        <Progress
-          mt="4"
-          mb="4"
-          height="1"
-          value={(transferable / snxBalance) * 100}
-          variant="white"
-        />
+        {snxBalance !== undefined ? (
+          <Text fontFamily="mono" fontWeight="extrabold" fontSize="sm" lineHeight="5">
+            {formatNumber(snxBalance)}
+          </Text>
+        ) : (
+          <Skeleton my={1} width={8} height={4} />
+        )}
+
+        {snxBalance !== undefined && snxPrice !== undefined ? (
+          <Text lineHeight="4" fontSize="xs" color="gray.500">
+            {formatNumberToUsd(snxBalance * snxPrice)}
+          </Text>
+        ) : (
+          <Skeleton my={1} width={8} height={4} />
+        )}
+
+        {transferable !== undefined && snxBalance !== undefined ? (
+          <Progress
+            mt="4"
+            mb="4"
+            height="1"
+            value={(transferable / snxBalance) * 100}
+            variant="white"
+          />
+        ) : (
+          <Skeleton my={1} width="full" height={4} />
+        )}
+
         <Flex justifyContent="space-between">
           <Text size="sm" fontWeight={700}>
             {t('staking-v2.balance-box.staked')}
           </Text>
-          <Text size="sm" fontWeight={700}>
-            {formatNumber(stakedSnx)}
-          </Text>
+
+          {stakedSnx !== undefined ? (
+            <Text size="sm" fontWeight={700}>
+              {formatNumber(stakedSnx)}
+            </Text>
+          ) : (
+            <Skeleton my={1} width={8} height={4} />
+          )}
         </Flex>
         <Flex color="gray.500" justifyContent="space-between">
           <Text>{t('staking-v2.balance-box.transferable')}</Text>
-          <Text>{formatNumber(transferable)}</Text>
+          {transferable !== undefined ? (
+            <Text>{formatNumber(transferable)}</Text>
+          ) : (
+            <Skeleton my={1} width={8} height={4} />
+          )}
         </Flex>
       </Box>
     </Box>
@@ -64,14 +93,13 @@ export const BalanceBoxUi = ({
 export const BalanceBox: React.FC = () => {
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
-  if (!debtData || !exchangeRateData) return <p>Skeleton</p>;
 
   return (
     <BalanceBoxUi
-      snxPrice={Number(exchangeRateData.SNX?.toString())}
-      snxBalance={debtData.balance.toNumber()}
-      stakedSnx={debtData.collateral.toNumber()}
-      transferable={debtData.transferable.toNumber()}
+      snxPrice={exchangeRateData?.SNX?.toNumber()}
+      snxBalance={debtData?.balance.toNumber()}
+      stakedSnx={debtData?.collateral.toNumber()}
+      transferable={debtData?.transferable.toNumber()}
     />
   );
 };
