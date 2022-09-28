@@ -1,5 +1,5 @@
-name: Main Workflow
-on: push
+name: Publish dev version of all packages
+on: workflow_dispatch
 
 jobs:
   build:
