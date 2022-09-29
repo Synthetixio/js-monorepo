@@ -1,8 +1,12 @@
 import { useContext, FC, PropsWithChildren } from 'react';
-import { Box, Skeleton, Link, Flex, LinkProps } from '@chakra-ui/react';
+import { Box, Skeleton, Link, Flex, LinkProps, Text } from '@chakra-ui/react';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useProxyERC20sUSD, NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 import { ArrowTopRight, CowSwapIcon, CurveIcon, OneInchIcon, SushiSwapLogo } from '@snx-v2/icons';
+import { Link as ReactRouterLink } from 'react-router-dom';
+import { Trans } from 'react-i18next';
+import { useDebtData } from '@snx-v2/useDebtData';
+import { formatNumber } from '@snx-v2/formatters';
 
 export const SWAP_LINKS = {
   oneInch: (networkId: number) => `https://app.1inch.io/#/${networkId}/unified/swap/ETH/sUSD`,
@@ -50,8 +54,9 @@ const StyledArrow = () => <ArrowTopRight width="17px" height="20px" ml={6} color
 export const SwapLinksUi: FC<{
   outputCurrencyAddress?: string;
   networkId?: number;
-}> = ({ outputCurrencyAddress, networkId }) => {
-  if (!networkId || !outputCurrencyAddress) {
+  sUSDToGetBackToTarget?: number;
+}> = ({ outputCurrencyAddress, networkId, sUSDToGetBackToTarget }) => {
+  if (!networkId || !outputCurrencyAddress || !sUSDToGetBackToTarget) {
     return (
       <Box>
         <Skeleton height="82px" mb={2} width="full" borderRadius="10px" />
@@ -96,12 +101,38 @@ export const SwapLinksUi: FC<{
         </IconWrapper>
         SushiSwap <StyledArrow />
       </StyledLink>
+
+      <Text>
+        <Trans
+          i18nKey="staking-v2.swap-links.back-to-target-text"
+          components={[
+            <Text data-testid="sUSDToGetBackToTarget" display="inline" fontWeight="bold" />,
+          ]}
+          values={{ sUSDToGetBackToTarget: formatNumber(sUSDToGetBackToTarget) }}
+        />
+      </Text>
+      <Text>
+        <Trans
+          i18nKey="staking-v2.swap-links.once-purchased-text"
+          components={[<Link color="cyan.400" as={ReactRouterLink} to="/staking/burn" />]}
+        />
+      </Text>
     </Flex>
   );
 };
 export const SwapLinks = () => {
   const { networkId } = useContext(ContractContext);
   const { data } = useProxyERC20sUSD();
+  const { data: debtData } = useDebtData();
+  const sUSDToGetBackToTarget = debtData
+    ? debtData.debtBalance.sub(debtData.issuableSynths).toNumber()
+    : undefined;
 
-  return <SwapLinksUi networkId={networkId ?? undefined} outputCurrencyAddress={data?.address} />;
+  return (
+    <SwapLinksUi
+      networkId={networkId ?? undefined}
+      sUSDToGetBackToTarget={sUSDToGetBackToTarget}
+      outputCurrencyAddress={data?.address}
+    />
+  );
 };

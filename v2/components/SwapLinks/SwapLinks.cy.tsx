@@ -15,7 +15,11 @@ describe('UnflagOptionsUi.cy.tsx', () => {
     cy.viewport(600, 500);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
-        <SwapLinksUi networkId={1} outputCurrencyAddress="susdAddressMainnet" />
+        <SwapLinksUi
+          networkId={1}
+          outputCurrencyAddress="susdAddressMainnet"
+          sUSDToGetBackToTarget={100.2222222}
+        />
       </Box>
     );
     cy.get(`[data-testid=oneInchLink]`)
@@ -36,12 +40,18 @@ describe('UnflagOptionsUi.cy.tsx', () => {
         'eq',
         'https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=susdAddressMainnet'
       );
+
+    cy.get('[data-testid=sUSDToGetBackToTarget]').should('have.text', '100.22 sUSD');
   });
   it('Render correct links for optimism', () => {
     cy.viewport(600, 500);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
-        <SwapLinksUi networkId={10} outputCurrencyAddress="susdAddressOptimism" />
+        <SwapLinksUi
+          networkId={10}
+          outputCurrencyAddress="susdAddressOptimism"
+          sUSDToGetBackToTarget={100.2222222}
+        />
       </Box>
     );
     cy.get(`[data-testid=oneInchLink]`)
@@ -58,5 +68,6 @@ describe('UnflagOptionsUi.cy.tsx', () => {
         'eq',
         'https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=susdAddressOptimism'
       );
+    cy.get('[data-testid=sUSDToGetBackToTarget]').should('have.text', '100.22 sUSD');
   });
 });
