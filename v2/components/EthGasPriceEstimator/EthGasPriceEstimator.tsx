@@ -30,7 +30,7 @@ const getTotalGasPrice = (gasPrice?: GasPrice | null) => {
   return wei(baseFeePerGas || 0, GWEI_DECIMALS).add(wei(maxPriorityFeePerGas || 0, GWEI_DECIMALS));
 };
 
-const getTransactionPrice = (
+export const getTransactionPrice = (
   gasPrice: GasPrice | undefined,
   gasLimit: BigNumber | undefined,
   ethPrice: Wei | undefined,

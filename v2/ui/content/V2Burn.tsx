@@ -13,10 +13,13 @@ import { Burn } from '@snx-v2/Burn';
 import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
 import { getHealthVariant, badgeColor } from '@snx-v2/getHealthVariant';
 import { InfoIcon } from '@snx-v2/icons';
+import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { useDebtData } from '@snx-v2/useDebtData';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { wei } from '@synthetixio/wei';
 import { EXTERNAL_LINKS } from 'constants/links';
+import { BigNumber } from 'ethers';
 import { useTranslation, Trans } from 'react-i18next';
 
 const V2Burn = () => {
@@ -24,6 +27,7 @@ const V2Burn = () => {
 
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
   const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
+  const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
 
   const liquidationCRatio = debtData?.liquidationRatioPercentage.toNumber();
   const targetCRatio = debtData?.targetCRatioPercentage.toNumber();
@@ -37,7 +41,23 @@ const V2Burn = () => {
 
   const cRatioHealth = t(`staking-v2.mint.${healthVariant}`);
 
-  const isLoading = isDebtDataLoading || isSynthsLoading;
+  const { mutate, transactionFee } = useBurnMutation();
+
+  const onSubmit = async (amount: BigNumber, toTarget = false) => {
+    await mutate(
+      { amount, toTarget },
+      {
+        onSuccess: () => {
+          console.log('Success');
+        },
+        onError: (e: any) => {
+          console.log('Error', e);
+        },
+      }
+    );
+  };
+
+  const isLoading = isDebtDataLoading || isSynthsLoading || isExchangeRateLoading;
 
   return (
     <Box bg="navy.900" height="100%">
@@ -168,9 +188,11 @@ const V2Burn = () => {
           snxBalance={debtData?.collateral || wei(0)}
           susdBalance={synthsData?.balancesMap['sUSD']?.balance || wei(0)}
           activeDebt={debtData?.debtBalance || wei(0)}
-          gasPrice={wei(20)}
-          exchangeRate={0.25}
+          issuableSynths={debtData?.issuableSynths || wei(0)}
+          exchangeRate={exchangeRateData?.SNX ? exchangeRateData?.SNX?.toNumber() : 0.25}
           isLoading={isLoading}
+          onSubmit={onSubmit}
+          gasPrice={transactionFee}
         />
       </Container>
     </Box>

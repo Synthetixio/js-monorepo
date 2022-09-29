@@ -6113,6 +6113,7 @@ __metadata:
   resolution: "@snx-v2/Burn@workspace:v2/components/Burn"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@ethersproject/bignumber": ^5.7.0
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@storybook/react": ^6.5.10
@@ -6206,7 +6207,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/GasSpeedContext@workspace:*, @snx-v2/GasSpeedContext@workspace:v2/lib/GasSpeedContext":
+"@snx-v2/GasSpeedContext@workspace:*, @snx-v2/GasSpeedContext@workspace:^, @snx-v2/GasSpeedContext@workspace:v2/lib/GasSpeedContext":
   version: 0.0.0-use.local
   resolution: "@snx-v2/GasSpeedContext@workspace:v2/lib/GasSpeedContext"
   dependencies:
@@ -6363,6 +6364,19 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useBurnMutation@workspace:^, @snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@snx-v2/GasSpeedContext": "workspace:^"
+    "@snx-v2/useGasOptions": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -8288,6 +8302,7 @@ __metadata:
     "@chakra-ui/storybook-addon": ^4.0.4
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
+    "@ethersproject/bignumber": ^5.7.0
     "@mdx-js/react": ^1.6.22
     "@metamask/providers": ^8.1.1
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.7
@@ -8309,6 +8324,7 @@ __metadata:
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useBurnMutation": "workspace:^"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"

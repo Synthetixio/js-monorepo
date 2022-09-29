@@ -1,20 +1,21 @@
+import { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { Input, Box, Text, Flex, Badge, Tooltip, Button, Skeleton } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { InfoIcon, TokensIcon } from '@snx-v2/icons';
 import { numberWithCommas } from '@snx-v2/formatters';
-import { ChangeEvent } from 'react';
+import { BigNumber } from '@ethersproject/bignumber';
 
 interface BurnProps {
   snxBalance?: Wei;
   susdBalance?: Wei;
-  gasPrice?: Wei;
-  exchangeRate?: number;
+  gasPrice: Wei | null;
+  issuableSynths?: Wei;
   activeDebt?: Wei;
-  currentCRatio?: number;
-  targetCRatio?: number;
+  exchangeRate: number;
   isLoading: boolean;
+  onSubmit: (amount: BigNumber, toTarget?: boolean) => void;
 }
 
 enum ActiveBadge {
@@ -28,43 +29,45 @@ export const Burn = ({
   susdBalance = wei(0),
   gasPrice = wei(0),
   activeDebt = wei(0),
-  exchangeRate = 0,
-  currentCRatio = 0,
-  targetCRatio = 0,
+  issuableSynths = wei(0),
+  exchangeRate = 0.25,
   isLoading = false,
+  onSubmit = () => {},
 }: BurnProps) => {
   const { t } = useTranslation();
   const [val, setVal] = useState('');
+  const [toTarget, setToTarget] = useState(false);
   const [activeBadge, setActiveBadge] = useState<ActiveBadge | null>(null);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
+    setActiveBadge(null);
+    setToTarget(false);
     if (/^[0-9]*(\.[0-9]{0,2})?$/.test(value)) {
-      setActiveBadge(0);
       setVal(value);
     }
   };
 
-  const onBadgePress = (amount: ActiveBadge) => {
-    switch (amount) {
+  const onBadgePress = (badgeType: ActiveBadge) => {
+    setToTarget(false);
+    switch (badgeType) {
       case ActiveBadge.max:
         setVal(susdBalance.toString(2));
         break;
 
       case ActiveBadge.cRatio:
-        // TODO Figure out the logic for this
-        console.log('Burn c', targetCRatio, currentCRatio);
+        setVal(activeDebt.sub(issuableSynths).toString(2));
+        setToTarget(true);
         break;
 
       case ActiveBadge.debt:
-        // TODO: Banner with 'not enough'
         setVal(susdBalance.gte(activeDebt) ? activeDebt.toString(2) : susdBalance.toString(2));
         break;
 
       default:
         break;
     }
-    setActiveBadge(amount);
+    setActiveBadge(badgeType);
   };
 
   const convert = (value: string) => {
@@ -237,17 +240,23 @@ export const Burn = ({
             </Flex>
           </Tooltip>
         </Flex>
-        <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs">
+        <Skeleton
+          fontFamily="heading"
+          fontWeight="extrabold"
+          lineHeight="md"
+          fontSize="xs"
+          isLoaded={!isLoading}
+        >
           {/* TODO: Logic on calculating local currency based on gas fee */}
-          {`${t('staking-v2.burn.tx-cost', { txCost: gasPrice.toString(4) })} Ξ ≈ 8.00`}
-        </Text>
+          {`${gasPrice ? t('staking-v2.burn.tx-cost', { txCost: gasPrice }) : 0} Ξ`}
+        </Skeleton>
       </Flex>
       <Button
         fontFamily="heading"
         fontWeight="black"
         mt={4}
         w="100%"
-        onClick={() => console.log('burn')}
+        onClick={() => onSubmit(wei(val).toBN(), toTarget)}
         disabled={val === ''}
       >
         Burn
