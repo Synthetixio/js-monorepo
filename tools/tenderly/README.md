@@ -18,9 +18,6 @@ export TENDERLY_FORK_ID=""
 # Custom wallet address (used in `tenderly-getsnx`, `tenderly-geteth`)
 export TENDERLY_WALLET_ADDRESS=""
 
-# Address with lots of SNX available to transfer from (used in `tenderly-getsnx`)
-export TENDERLY_SNX_WHALE_ADDRESS="0xeb3107117fead7de89cd14d463d340a2e6917769"
-
 # Checkpoint UUID to restore fork state from (used in `tenderly-load`)
 export TENDERLY_CHECKPOINT=""
 ```
@@ -64,13 +61,13 @@ export TENDERLY_CHECKPOINT=""
 ➜ TENDERLY_WALLET_ADDRESS=<WALLET_ADDRESS> tenderly-geteth
 
 
-# Add 100 SNX to the waller (when TENDERLY_WALLET_ADDRESS  and TENDERLY_SNX_WHALE_ADDRESS are set)
+# Add 100 SNX to the waller (when TENDERLY_WALLET_ADDRESS are set)
 ➜ tenderly-getsnx
 0xTXN_ID
 # Alternatively:
-➜ tenderly-getsnx <TO_ADDRESS> <FROM_WHALE_ADDRESS>
+➜ tenderly-getsnx <WALLET_ADDRESS>
 # Or:
-➜ TENDERLY_WALLET_ADDRESS=<TO_ADDRESS> TENDERLY_SNX_WHALE_ADDRESS=<FROM_WHALE_ADDRESS> tenderly-getsnx
+➜ TENDERLY_WALLET_ADDRESS=<WALLET_ADDRESS> tenderly-getsnx
 ```
 
 ## Programmatic usage
@@ -110,6 +107,5 @@ const getEthTx = await geteth({
 const getSnxTx = await getsnx({
   TENDERLY_FORK_ID: forkInfo.simulation_fork.id,
   TENDERLY_WALLET_ADDRESS,
-  TENDERLY_SNX_WHALE_ADDRESS,
 });
 ```

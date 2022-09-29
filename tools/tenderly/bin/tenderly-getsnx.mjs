@@ -9,19 +9,18 @@ Promise.resolve()
   .then(env)
   .then(async (envs) => {
     // augment with CLI arguments
-    const { TENDERLY_FORK_ID, TENDERLY_WALLET_ADDRESS, TENDERLY_SNX_WHALE_ADDRESS } = envs;
+    const { TENDERLY_FORK_ID, TENDERLY_WALLET_ADDRESS } = envs;
     const forkId = TENDERLY_FORK_ID ? TENDERLY_FORK_ID : (await fork(envs))?.simulation_fork?.id;
 
-    const [toAddress = TENDERLY_WALLET_ADDRESS, fromAddress = TENDERLY_SNX_WHALE_ADDRESS] =
-      process.argv.slice(2);
+    const [walletAddress = TENDERLY_WALLET_ADDRESS] = process.argv.slice(2);
 
-    if (!utils.isAddress(toAddress) || !utils.isAddress(fromAddress)) {
+    if (!utils.isAddress(walletAddress)) {
       throw new Error(
         [
           'Correct wallet address is required',
           'Usage:',
-          '  - TENDERLY_WALLET_ADDRESS=<TO_ADDRESS> TENDERLY_SNX_WHALE_ADDRESS=<FROM_WHALE_ADDRESS> tenderly-getsnx',
-          '  - tenderly-getsnx <TO_ADDRESS> <FROM_WHALE_ADDRESS>',
+          '  - TENDERLY_WALLET_ADDRESS=<WALLET_ADDRESS> tenderly-getsnx',
+          '  - tenderly-getsnx <WALLET_ADDRESS>',
           '',
           'Or with ".env.local" present',
           '  - tenderly-getsnx',
@@ -32,8 +31,7 @@ Promise.resolve()
 
     return {
       TENDERLY_FORK_ID: forkId,
-      TENDERLY_WALLET_ADDRESS: toAddress,
-      TENDERLY_SNX_WHALE_ADDRESS: fromAddress,
+      TENDERLY_WALLET_ADDRESS: walletAddress,
     };
   })
   .then(getsnx)
