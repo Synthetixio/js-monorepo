@@ -1,16 +1,19 @@
 import { ethers, providers, utils } from 'ethers';
-import { address, abi } from '@synthetixio/contracts/build/mainnet/deployment/ProxyERC20.js';
+import {
+  address,
+  abi,
+} from '@synthetixio/contracts/build/mainnet/deployment/RewardsDistribution.js';
 
 export async function getsnx(envs) {
-  const { TENDERLY_FORK_ID, TENDERLY_WALLET_ADDRESS, TENDERLY_SNX_WHALE_ADDRESS } = envs;
+  const { TENDERLY_FORK_ID, TENDERLY_WALLET_ADDRESS, TENDERLY_SNX_OWNER_ADDRESS } = envs;
   if (!TENDERLY_FORK_ID) {
     throw new Error('TENDERLY_FORK_ID is required');
   }
   if (!TENDERLY_WALLET_ADDRESS) {
     throw new Error('TENDERLY_WALLET_ADDRESS is required');
   }
-  if (!TENDERLY_SNX_WHALE_ADDRESS) {
-    throw new Error('TENDERLY_SNX_WHALE_ADDRESS is required');
+  if (!TENDERLY_SNX_OWNER_ADDRESS) {
+    throw new Error('TENDERLY_SNX_OWNER_ADDRESS is required');
   }
 
   const RPC_URL = `https://rpc.tenderly.co/fork/${TENDERLY_FORK_ID}`;
@@ -22,7 +25,7 @@ export async function getsnx(envs) {
   // converts 1 ether into wei, stripping the leading zeros
   const tokenAmount = utils.hexValue(utils.parseEther('100').toHexString());
 
-  const unsignedTx = await contract.populateTransaction.transfer(
+  const unsignedTx = await contract.populateTransaction.addRewardDistribution(
     await signer.getAddress(),
     tokenAmount
   );
@@ -30,7 +33,7 @@ export async function getsnx(envs) {
   return await provider.send('eth_sendTransaction', [
     {
       to: contract.address,
-      from: TENDERLY_SNX_WHALE_ADDRESS,
+      from: TENDERLY_SNX_OWNER_ADDRESS,
       data: unsignedTx.data,
       gas: utils.hexValue(3000000),
       gasPrice: utils.hexValue(1),
