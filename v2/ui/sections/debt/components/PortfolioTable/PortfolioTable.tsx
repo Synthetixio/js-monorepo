@@ -158,9 +158,12 @@ const ResponsiveDebtPoolTable: FC<ResponsiveDebtPoolTableProps> = ({
           return (
             <Legend>
               <Currency.Name currencyKey={displayName} showIcon={true} />
-              {(displayName === CryptoCurrency.ETH || displayName === CryptoCurrency.BTC) && (
-                <PortfolioTableTooltip currencyKey={cellProps.value} />
-              )}
+              {cellProps.value === Synths.sETH ? (
+                <PortfolioTableTooltip currencyKey={Synths.sETH} />
+              ) : null}
+              {displayName === Synths.sBTC ? (
+                <PortfolioTableTooltip currencyKey={Synths.sBTC} />
+              ) : null}
             </Legend>
           );
         },
@@ -289,7 +292,7 @@ const ResponsiveDebtPoolTable: FC<ResponsiveDebtPoolTableProps> = ({
 };
 
 type PortfolioTableTooptipProps = {
-  currencyKey: string;
+  currencyKey: Synths.sBTC | Synths.sETH;
 };
 
 const PortfolioTableTooltip: FC<PortfolioTableTooptipProps> = ({ currencyKey }) => {

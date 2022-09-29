@@ -12,4 +12,4 @@ export const OPTIONS = [
     label: 'modals.settings.options.language',
     SelectComponent: LanguageSelect,
   },
-];
+] as const;

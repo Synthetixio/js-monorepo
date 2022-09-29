@@ -72,9 +72,6 @@ const ToggleDelegateApproval: FC<ToggleDelegateApprovalProps> = ({
       <Container>
         <input
           name={action}
-          data-testid={`checkbox-${account.address}-${t(
-            `common.delegate-actions.actions.${action}`
-          )}`}
           type="checkbox"
           disabled={disabled}
           onChange={onChange}

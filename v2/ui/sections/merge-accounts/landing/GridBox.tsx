@@ -5,7 +5,7 @@ import media from '@snx-v1/media';
 import { useTranslation } from 'react-i18next';
 
 const GridBox: FC<{
-  step: number;
+  step: 1 | 2;
   name: string;
 }> = ({ step, name }) => {
   const { t } = useTranslation();

@@ -51,7 +51,8 @@ const DesktopMenu: FC = () => {
             if (!subMenu) return;
             setOpenMenu(link);
           };
-
+          // @ts-ignore
+          const linkText = `${t(i18nLabel)}`;
           return (
             <div key={link}>
               <MenuLinkItem
@@ -67,23 +68,27 @@ const DesktopMenu: FC = () => {
                 }
               >
                 <div className="link">
-                  {t(i18nLabel)}
+                  {linkText}
                   {subMenu && <CaretRightIcon width="5" />}
                 </div>
               </MenuLinkItem>
               {subMenu && (
                 <DesktopSubMenu i={i} isActive={openMenu === link} key={link}>
-                  {subMenu.map(({ i18nLabel, subLink }) => (
-                    <SubMenuLinkItem
-                      to={subLink}
-                      key={subLink}
-                      isActive={location.pathname === subLink}
-                      data-testid={`sidenav-submenu-${subLink}`}
-                      onClick={() => setOpenMenu(null)}
-                    >
-                      {t(i18nLabel)}
-                    </SubMenuLinkItem>
-                  ))}
+                  {subMenu.map(({ i18nLabel, subLink }) => {
+                    // @ts-ignore
+                    const subMenuText = `${t(i18nLabel)}`;
+                    return (
+                      <SubMenuLinkItem
+                        to={subLink}
+                        key={subLink}
+                        isActive={location.pathname === subLink}
+                        data-testid={`sidenav-submenu-${subLink}`}
+                        onClick={() => setOpenMenu(null)}
+                      >
+                        {subMenuText}
+                      </SubMenuLinkItem>
+                    );
+                  })}
                 </DesktopSubMenu>
               )}
             </div>

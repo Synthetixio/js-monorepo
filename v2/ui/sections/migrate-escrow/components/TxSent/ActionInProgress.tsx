@@ -18,7 +18,7 @@ import { formatCurrency } from 'utils/formatters/number';
 
 type ActionInProgressProps = {
   amount: string;
-  action: string;
+  action: 'migrate';
   hash: string;
   currencyKey: string;
 };

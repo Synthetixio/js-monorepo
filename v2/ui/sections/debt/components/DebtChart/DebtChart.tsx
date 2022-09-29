@@ -25,7 +25,7 @@ import ConnectOrSwitchNetwork from 'components/ConnectOrSwitchNetwork';
 const LEGEND_LABELS = {
   actualDebt: 'debt.actions.track.chart.tooltip.actualDebt',
   issuanceDebt: 'debt.actions.track.chart.tooltip.issuedDebt',
-};
+} as const;
 
 type Payload = {
   color: string;
