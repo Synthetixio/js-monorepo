@@ -18,28 +18,19 @@ const MobileTabletMenu: FC = () => {
   );
 
   const { dispatch } = UIContainer.useContainer();
-
+  //@ts-ignore
+  const titleText = `${t(`header.${headerTitle}`)}`;
+  //@ts-ignore
+  const subTitleText = `${t(`header.${headerTitle}/${headerSubtitle}`)}`;
   return (
     <>
       <Title onClick={() => dispatch({ type: 'open' })}>
         <TitleIcon width="18" />
-        {headerTitle && (
-          <TitleText hasSubTitle={!!headerSubtitle}>
-            <>
-              {/* @ts-ignore */}
-              {t(`header.${headerTitle}`)}
-            </>
-          </TitleText>
-        )}
+        {headerTitle && <TitleText hasSubTitle={!!headerSubtitle}>{titleText}</TitleText>}
         {headerSubtitle && (
           <>
             <TitleSep>|</TitleSep>
-            <SubtitleText>
-              <>
-                {/* @ts-ignore */}
-                {t(`header.${headerTitle}/${headerSubtitle}`)}
-              </>
-            </SubtitleText>
+            <SubtitleText>{subTitleText}</SubtitleText>
           </>
         )}
       </Title>

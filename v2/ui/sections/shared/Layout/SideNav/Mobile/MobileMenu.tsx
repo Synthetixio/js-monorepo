@@ -38,30 +38,30 @@ const MobileMenu: FC<MobileMenuProps> = ({ dispatch }) => {
       navigate(link);
     }
   };
-
   return (
     <MenuLinks>
-      {menuLinks.map(({ i18nLabel, link, subMenu }) => (
-        <MenuLinkItem
-          onClick={() => navigateTo(subMenu, link)}
-          key={link}
-          data-testid={`sidenav-${link}`}
-          isActive={
-            subMenu
-              ? !!subMenu.find(({ subLink }) => subLink === location.pathname)
-              : location.pathname === link ||
-                (link !== ROUTES.Home && location.pathname.includes(link))
-          }
-        >
-          <div className="link">
-            <>
-              {/* @ts-ignore */}
-              {t(i18nLabel)}
+      {menuLinks.map(({ i18nLabel, link, subMenu }) => {
+        // @ts-ignore
+        const linkText = `${t(i18nLabel)}`;
+        return (
+          <MenuLinkItem
+            onClick={() => navigateTo(subMenu, link)}
+            key={link}
+            data-testid={`sidenav-${link}`}
+            isActive={
+              subMenu
+                ? !!subMenu.find(({ subLink }) => subLink === location.pathname)
+                : location.pathname === link ||
+                  (link !== ROUTES.Home && location.pathname.includes(link))
+            }
+          >
+            <div className="link">
+              {linkText}
               {subMenu && <CaretRightIcon width="5" />}
-            </>
-          </div>
-        </MenuLinkItem>
-      ))}
+            </div>
+          </MenuLinkItem>
+        );
+      })}
       {showAddOptimism && (
         <MenuLinkItem onClick={addOptimismNetwork} data-testid="sidenav-switch-to-l2" isL2Switcher>
           <div className="link">{t('sidenav.switch-to-l2')}</div>

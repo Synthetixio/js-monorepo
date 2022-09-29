@@ -41,14 +41,11 @@ const Balance: FC<MaxBalanceProps> = ({
   label = 'balance.input-label',
 }) => {
   const { t } = useTranslation();
+  // @ts-ignore
+  const amount = `${t(label)} ${formatNumber(balance)}`;
   return (
     <BalanceContainer>
-      <BalanceAmount>
-        <>
-          {/* @ts-ignore */}
-          {t(label)} {formatNumber(balance)}
-        </>
-      </BalanceAmount>
+      <BalanceAmount>{amount}</BalanceAmount>
       <MaxButton onClick={onSetMaxAmount}>{t('balance.max')}</MaxButton>
     </BalanceContainer>
   );
@@ -77,16 +74,12 @@ const AssetInput: FC<AssetInputProps> = ({
   );
 
   const balance = useMemo(() => asset?.balance ?? wei(0), [asset]);
-
+  // @ts-ignore
+  const selectLabel = `${t(label)}`;
   return (
     <Container>
       <SelectContainer>
-        <SelectLabel>
-          <>
-            {/* @ts-ignore */}
-            {t(label)}
-          </>
-        </SelectLabel>
+        <SelectLabel>{selectLabel}</SelectLabel>
         <SelectInput data-testid="select">
           <Select
             inputId={`${label}-asset-options`}
