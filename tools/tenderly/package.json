@@ -13,6 +13,7 @@
     "tenderly-geteth": "./bin/tenderly-geteth.mjs",
     "tenderly-getsnx": "./bin/tenderly-getsnx.mjs",
     "tenderly-load": "./bin/tenderly-load.mjs",
+    "tenderly-removeMinimumStakeTime": "./bin/tenderly-removeMinimumStakeTime.mjs",
     "tenderly-save": "./bin/tenderly-save.mjs",
     "tenderly-unfork": "./bin/tenderly-unfork.mjs"
   },

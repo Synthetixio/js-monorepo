@@ -68,6 +68,13 @@ export TENDERLY_CHECKPOINT=""
 ➜ tenderly-getsnx <WALLET_ADDRESS>
 # Or:
 ➜ TENDERLY_WALLET_ADDRESS=<WALLET_ADDRESS> tenderly-getsnx
+
+
+# Remove minimumStakeTime (set it to 0 from current 7 days)
+➜ tenderly-removeMinimumStakeTime
+{ minimumStakeTimePre: 604800 }
+#...
+{ minimumStakeTimePost: 0 }
 ```
 
 ## Programmatic usage
@@ -107,5 +114,9 @@ const getEthTx = await geteth({
 const getSnxTx = await getsnx({
   TENDERLY_FORK_ID: forkInfo.simulation_fork.id,
   TENDERLY_WALLET_ADDRESS,
+});
+
+await removeMinimumStakeTime({
+  TENDERLY_FORK_ID: forkInfo.simulation_fork.id,
 });
 ```
