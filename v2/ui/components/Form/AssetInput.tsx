@@ -74,16 +74,12 @@ const AssetInput: FC<AssetInputProps> = ({
   );
 
   const balance = useMemo(() => asset?.balance ?? wei(0), [asset]);
-
+  // @ts-ignore
+  const selectLabel = `${t(label)}`;
   return (
     <Container>
       <SelectContainer>
-        <SelectLabel>
-          <>
-            {/* @ts-ignore */}
-            {t(label)}
-          </>
-        </SelectLabel>
+        <SelectLabel>{selectLabel}</SelectLabel>
         <SelectInput data-testid="select">
           <Select
             inputId={`${label}-asset-options`}

@@ -17,7 +17,7 @@ const Selector: FC<SelectorProps> = ({ action, setAction }) => {
     <Container>
       {ACTIONS.map((actionId) => {
         // @ts-ignore
-        const content = t(`common.delegate-actions.actions.${actionId}`) as string;
+        const content = `${t(`common.delegate-actions.actions.${actionId}`)}`;
         return (
           <ActionButton
             key={actionId}
