@@ -4,8 +4,8 @@ import { ethers, providers, utils } from 'ethers';
 import * as RewardsDistribution from '@synthetixio/contracts/build/mainnet/deployment/RewardsDistribution.js';
 import * as ProxyERC20 from '@synthetixio/contracts/build/mainnet/deployment/ProxyERC20.js';
 import * as Synthetix from '@synthetixio/contracts/build/mainnet/deployment/Synthetix.js';
-import { env } from './lib/env.mjs';
-import { fork } from './lib/fork.mjs';
+import { env } from '../lib/env.mjs';
+import { fork } from '../lib/fork.mjs';
 
 async function run(envs) {
   const { TENDERLY_FORK_ID } = envs;

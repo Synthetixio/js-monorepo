@@ -56,6 +56,8 @@ commands:
             ./node_modules/.bin/tenderly-cci
             cat $BASH_ENV
 
+      - run: ./node_modules/.bin/tenderly-removeMinimumStakeTime
+
   tenderly-cleanup:
     steps:
       - run:
