@@ -99,7 +99,7 @@ const RadioItemContent: React.FC<{
 const options = ['unflag', 'swap', 'self-liquidate'] as const;
 const optionToLink: Record<string, string | undefined> = {
   unflag: '/staking/burn',
-  swap: '/swap-links',
+  swap: '/staking/swap-links',
   'self-liquidate': '/self-liquidate',
 };
 export const UnflagOptionsUi: React.FC<{

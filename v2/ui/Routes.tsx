@@ -38,6 +38,9 @@ const V2BurnPage = safeLazy(() => import(/* webpackChunkName: "v2-burn" */ './co
 const V2UnflagPage = safeLazy(
   () => import(/* webpackChunkName: "v2-unflag" */ './content/V2Unflag')
 );
+const V2SwapLinksPage = safeLazy(
+  () => import(/* webpackChunkName: "v2-swap-links" */ './content/V2SwapLinks')
+);
 
 export default function AppRoutes() {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
@@ -53,6 +56,7 @@ export default function AppRoutes() {
               <Route path="/staking/mint" element={<V2MintPage />} />
               <Route path="/staking/burn" element={<V2BurnPage />} />
               <Route path="/staking/unflag" element={<V2UnflagPage />} />
+              <Route path="/staking/swap-links" element={<V2SwapLinksPage />} />
             </>
           ) : (
             <Route path="/staking" element={<StakingPage />}>

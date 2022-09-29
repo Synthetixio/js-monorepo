@@ -301,6 +301,7 @@ const PortfolioTableTooltip: FC<PortfolioTableTooptipProps> = ({ currencyKey }) 
       arrow={false}
       content={
         <Trans
+          // @ts-ignore
           i18nKey={`debt.actions.hedge.info.portfolio-table.${currencyKey}-tooltip`}
           components={[<Strong />, <Strong />]}
         ></Trans>

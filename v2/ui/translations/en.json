@@ -91,7 +91,7 @@
     },
     "unflag-options": {
       "heading": "Unflag Account",
-      "text": "To unflag your account, buying SNX isn’t enough. You can either burn to target or self liquidate. Learn about the new self liquidation mechanism.",
+      "text": "To unflag your account, buying SNX isn't enough. You can either burn to target or self liquidate. Learn about the new self liquidation mechanism.",
       "recommended": "Recommended",
       "unflag": {
         "heading": "Unflag my account by burning sUSD in order to meet target ratio",
@@ -107,6 +107,12 @@
       },
       "cancel-link": "Cancel",
       "continue-link": "Continue to next step"
+    },
+    "swap-links": {
+      "heading": "Buy sUSD",
+      "text": "Buy more sUSD on any of this DAPPS.",
+      "back-to-target-text": "To get back to target c-ration you need to buy <0>{{sUSDToGetBackToTarget}} sUSD</0>.",
+      "once-purchased-text": "Once purchased go to the <0>Burn Page</0> to burn and remove the flag."
     }
   },
   "meta": {
