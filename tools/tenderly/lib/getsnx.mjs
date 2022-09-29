@@ -1,18 +1,17 @@
 import { ethers, providers, utils } from 'ethers';
 import * as RewardsDistribution from '@synthetixio/contracts/build/mainnet/deployment/RewardsDistribution.js';
 import * as ProxyERC20 from '@synthetixio/contracts/build/mainnet/deployment/ProxyERC20.js';
-import * as Synthetix from '@synthetixio/contracts/build/mainnet/deployment/Synthetix.js';
 
 export async function getsnx(envs) {
-  const { TENDERLY_FORK_ID, TENDERLY_WALLET_ADDRESS } = envs;
-  if (!TENDERLY_FORK_ID) {
+  const { TENDERLY_FORK_ID: forkId, TENDERLY_WALLET_ADDRESS: wallet } = envs;
+  if (!forkId) {
     throw new Error('TENDERLY_FORK_ID is required');
   }
-  if (!TENDERLY_WALLET_ADDRESS) {
+  if (!wallet) {
     throw new Error('TENDERLY_WALLET_ADDRESS is required');
   }
 
-  const RPC_URL = `https://rpc.tenderly.co/fork/${TENDERLY_FORK_ID}`;
+  const RPC_URL = `https://rpc.tenderly.co/fork/${forkId}`;
   const provider = new providers.JsonRpcProvider(RPC_URL);
 
   const RewardsDistributionContract = new ethers.Contract(
@@ -21,46 +20,29 @@ export async function getsnx(envs) {
     provider
   );
   const ProxyERC20Contract = new ethers.Contract(ProxyERC20.address, ProxyERC20.abi, provider);
-  const SynthetixContract = new ethers.Contract(Synthetix.address, Synthetix.abi, provider);
-
-  const balancePreMint = utils.formatUnits(
-    await ProxyERC20Contract.balanceOf(TENDERLY_WALLET_ADDRESS)
-  );
 
   const rewardsOwner = await RewardsDistributionContract.owner();
-  const RewardsDistributionContractConnected = RewardsDistributionContract.connect(
-    provider.getSigner(rewardsOwner)
-  );
-  const distributionsLength = await RewardsDistributionContract.distributionsLength();
 
-  // Cleanup all the pending rewards
-  await new Array(distributionsLength.toNumber()).fill(0).reduce(async (previous) => {
-    await previous;
-    const tx = await RewardsDistributionContractConnected.removeRewardDistribution(0);
-    await tx.wait();
-  }, Promise.resolve);
+  const balancesPre = {
+    [wallet]: utils.formatUnits(await ProxyERC20Contract.balanceOf(wallet)),
+    [rewardsOwner]: utils.formatUnits(await ProxyERC20Contract.balanceOf(rewardsOwner)),
+  };
 
-  const rewardDistributionTx = await RewardsDistributionContractConnected.addRewardDistribution(
-    TENDERLY_WALLET_ADDRESS,
+  const transferTx = await ProxyERC20Contract.connect(provider.getSigner(rewardsOwner)).transfer(
+    wallet,
     utils.hexValue(utils.parseEther('100').toHexString())
   );
-  const rewardDistributionTxReceipt = await rewardDistributionTx.wait();
+  const transferTxReceipt = await transferTx.wait();
 
-  const synthetixOwner = await SynthetixContract.owner();
-  const SynthetixContractConnected = SynthetixContract.connect(provider.getSigner(synthetixOwner));
-  const mintTx = await SynthetixContractConnected.mint({ gasLimit: utils.hexValue(30000000) });
-  const mintTxReceipt = await mintTx.wait();
-
-  const balancePostMint = utils.formatUnits(
-    await ProxyERC20Contract.balanceOf(TENDERLY_WALLET_ADDRESS)
-  );
+  const balancesPost = {
+    [wallet]: utils.formatUnits(await ProxyERC20Contract.balanceOf(wallet)),
+    [rewardsOwner]: utils.formatUnits(await ProxyERC20Contract.balanceOf(rewardsOwner)),
+  };
 
   return {
-    balancePreMint,
-    balancePostMint,
-    rewardDistributionTx,
-    rewardDistributionTxReceipt,
-    mintTx,
-    mintTxReceipt,
+    balancesPre,
+    balancesPost,
+    transferTx,
+    transferTxReceipt,
   };
 }
