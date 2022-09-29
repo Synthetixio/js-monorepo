@@ -25,7 +25,6 @@ export function env() {
     TENDERLY_PROJECT = 'mainnet',
     TENDERLY_FORK_ID = '',
     TENDERLY_WALLET_ADDRESS = '',
-    TENDERLY_SNX_OWNER_ADDRESS = '',
     TENDERLY_CHECKPOINT = '',
   } = process.env;
 
@@ -35,7 +34,6 @@ export function env() {
     TENDERLY_PROJECT,
     TENDERLY_FORK_ID,
     TENDERLY_WALLET_ADDRESS,
-    TENDERLY_SNX_OWNER_ADDRESS,
     TENDERLY_CHECKPOINT,
   };
 }
