@@ -2,7 +2,7 @@
   "name": "@snx-v2/useSynthsBalances",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "@ethersproject/bignumber": "^5.6.2",
     "@ethersproject/strings": "^5.6.1",
