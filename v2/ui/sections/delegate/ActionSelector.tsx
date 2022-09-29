@@ -15,21 +15,20 @@ const Selector: FC<SelectorProps> = ({ action, setAction }) => {
   const { t } = useTranslation();
   return (
     <Container>
-      {ACTIONS.map((actionId) => (
-        <ActionButton
-          key={actionId}
-          variant="solid"
-          // @ts-ignore
-          data-testid={`action-${t(`common.delegate-actions.actions.${actionId}`)}`}
-          onClick={() => {
-            setAction(actionId);
-          }}
-          isActive={actionId === action}
-        >
-          {/* @ts-ignore */}
-          {t(`common.delegate-actions.actions.${actionId}`)}
-        </ActionButton>
-      ))}
+      {ACTIONS.map((actionId) => {
+        // @ts-ignore
+        const content = t(`common.delegate-actions.actions.${actionId}`) as string;
+        return (
+          <ActionButton
+            key={actionId}
+            variant="solid"
+            onClick={() => setAction(actionId)}
+            isActive={actionId === action}
+          >
+            {content}
+          </ActionButton>
+        );
+      })}
     </Container>
   );
 };

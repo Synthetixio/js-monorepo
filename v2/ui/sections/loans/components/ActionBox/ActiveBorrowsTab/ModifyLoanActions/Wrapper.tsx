@@ -228,24 +228,16 @@ const Wrapper: FC<WrapperProps> = ({
           content={
             <TxModalContent>
               <TxModalItem>
-                <TxModalItemTitle>
-                  <>
-                    {/* @ts-ignore */}
-                    {t(leftColLabel)}
-                  </>
-                </TxModalItemTitle>
+                {/* @ts-ignore */}
+                <TxModalItemTitle>{t(leftColLabel)}</TxModalItemTitle>
                 <TxModalItemText>
                   {wei(leftColAmount || 0).toString(2)} {leftColAssetName}
                 </TxModalItemText>
               </TxModalItem>
               <TxModalItemSeperator />
               <TxModalItem>
-                <TxModalItemTitle>
-                  <>
-                    {/* @ts-ignore */}
-                    {t(rightColLabel)}
-                  </>
-                </TxModalItemTitle>
+                {/* @ts-ignore */}
+                <TxModalItemTitle>{t(rightColLabel)}</TxModalItemTitle>
                 <TxModalItemText>
                   {wei(rightColAmount).toString(2)} {rightColAssetName}
                 </TxModalItemText>
