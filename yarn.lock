@@ -6252,6 +6252,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/SelfLiquidation@workspace:*, @snx-v2/SelfLiquidation@workspace:v2/components/SelfLiquidation":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/SelfLiquidation@workspace:v2/components/SelfLiquidation"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/SignerContext@workspace:*, @snx-v2/SignerContext@workspace:v2/lib/SignerContext":
   version: 0.0.0-use.local
   resolution: "@snx-v2/SignerContext@workspace:v2/lib/SignerContext"
@@ -6501,6 +6513,21 @@ __metadata:
   resolution: "@snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useSelfLiquidationData@workspace:v2/lib/useSelfLiquidationData":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useSelfLiquidationData@workspace:v2/lib/useSelfLiquidationData"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useLiquidationData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
@@ -8347,6 +8374,7 @@ __metadata:
     "@snx-v2/GasSpeedContext": "workspace:*"
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
+    "@snx-v2/SelfLiquidation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"
