@@ -41,7 +41,7 @@ describe('useSelfLiquidationData', () => {
     jest.resetModules();
   });
 
-  test('Returns undefined values when exchangeRateData data is undefined', async () => {
+  test('Returns undefined values when useDebtData data is undefined', async () => {
     useDebtData.mockReturnValue({ data: undefined });
     useExchangeRatesData.mockReturnValue({ data: { SNX: wei(3) } });
     useLiquidationData.mockReturnValue({ data: { selfLiquidationPenalty: wei(0.2) } });
@@ -105,7 +105,7 @@ describe('useSelfLiquidationData', () => {
     expect(options).toEqual({ enabled: false, staleTime: 10000 });
   });
 
-  test('Returns correct data when dependent query have returned data', async () => {
+  test('Returns self liquidation data when dependent query have returned data', async () => {
     useDebtData.mockReturnValue({ data: { collateral: wei(50), debtBalance: wei(200) } });
     useExchangeRatesData.mockReturnValue({ data: { SNX: wei(3) } });
     useLiquidationData.mockReturnValue({ data: { selfLiquidationPenalty: wei(0.2) } });
