@@ -292,6 +292,7 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
         backgroundImage: `repeating-linear-gradient(135deg, ${chakraTheme.colors.gray['900']} 0, ${chakraTheme.colors.navy['900']} 1px, transparent 0, transparent 50%)`,
         backgroundSize: '8px 8px',
         paddingBottom: '0px',
+        minHeight: '100vh',
       },
       '#app': {
         display: 'flex',
