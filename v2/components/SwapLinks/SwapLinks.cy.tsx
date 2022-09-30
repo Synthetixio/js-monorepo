@@ -41,7 +41,7 @@ describe('UnflagOptionsUi.cy.tsx', () => {
         'https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=susdAddressMainnet'
       );
 
-    cy.get('[data-testid=sUSDToGetBackToTarget]').should('have.text', '100.22 sUSD');
+    cy.get('[data-testid=sUSDToGetBackToTarget]').should('have.text', '101.00');
   });
   it('Render correct links for optimism', () => {
     cy.viewport(600, 500);
@@ -68,6 +68,6 @@ describe('UnflagOptionsUi.cy.tsx', () => {
         'eq',
         'https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=susdAddressOptimism'
       );
-    cy.get('[data-testid=sUSDToGetBackToTarget]').should('have.text', '100.22 sUSD');
+    cy.get('[data-testid=sUSDToGetBackToTarget]').should('have.text', '101.00');
   });
 });
