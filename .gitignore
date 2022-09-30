@@ -35,6 +35,9 @@ pids
 
 /build/stats.json
 
+checksum.txt
+build-checksum.txt
+
 .yarn/*
 !.yarn/cache
 !.yarn/patches

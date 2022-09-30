@@ -16,19 +16,19 @@ commands:
   checksum:
     steps:
       - run: |-
-          git ls-files -s contracts packages tools v1 v2 v3 > "/tmp/checksum.txt"
-          cat "/tmp/checksum.txt"
+          git ls-files -s contracts packages tools v1 v2 v3 > "<< pipeline.parameters.root >>/checksum.txt"
+          cat "<< pipeline.parameters.root >>/checksum.txt"
 
   yarn-install:
     steps:
       - restore_cache:
           keys:
-            - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+            - node-modules-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
 
       # yarn's state of installation
       - restore_cache:
           keys:
-            - yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+            - yarn-install-state-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
 
       - run:
           name: yarn install
@@ -43,12 +43,12 @@ commands:
             fi
 
       - save_cache:
-          key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          key: node-modules-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
           paths:
             - 'node_modules'
 
       - save_cache:
-          key: yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          key: yarn-install-state-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
           paths:
             - '.yarn/install-state.gz'
 
@@ -73,9 +73,9 @@ commands:
   build-save:
     steps:
       - checksum
-      - run: cp "/tmp/checksum.txt" "/tmp/build-cache.txt"
+      - run: cp "<< pipeline.parameters.root >>/checksum.txt" "<< pipeline.parameters.root >>/build-checksum.txt"
       - save_cache:
-          key: build-{{ .Environment.CACHE_VERSION }}-{{ checksum "/tmp/checksum.txt" }}
+          key: build-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "<< pipeline.parameters.root >>/checksum.txt" }}
           paths:
             - './contracts'
             - './packages'
@@ -83,14 +83,14 @@ commands:
             - './v1'
             - './v2'
             - './v3'
-            - '/tmp/build-cache.txt'
+            - '<< pipeline.parameters.root >>/build-checksum.txt'
 
   build-restore:
     steps:
       - checksum
       - restore_cache:
           keys:
-            - build-{{ .Environment.CACHE_VERSION }}-{{ checksum "/tmp/checksum.txt" }}
+            - build-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "<< pipeline.parameters.root >>/checksum.txt" }}
 
 jobs:
   yarn-install:
@@ -106,12 +106,12 @@ jobs:
       # yarn's state of installation
       - restore_cache:
           keys:
-            - yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+            - yarn-install-state-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
 
       # yarn's own state of node_modules
       - restore_cache:
           keys:
-            - yarn-state-node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+            - yarn-state-node-modules-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
 
       - run:
           name: Halt if node_modules exist in cache
@@ -129,44 +129,44 @@ jobs:
       # Restore system-wide caches "~/.cache"
       - restore_cache:
           keys:
-            - caches-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-            - caches-{{ .Environment.CACHE_VERSION }}-
+            - caches-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+            - caches-v2.{{ .Environment.CACHE_VERSION }}-
 
       # Restore yarn's project-specific caches ".yarn/cache"
       - restore_cache:
           keys:
-            - yarn-cache-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-            - yarn-cache-{{ .Environment.CACHE_VERSION }}-
+            - yarn-cache-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+            - yarn-cache-v2.{{ .Environment.CACHE_VERSION }}-
 
       # node_modules cache
       - restore_cache:
           keys:
-            - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+            - node-modules-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
 
       - run: yarn install --immutable --immutable-cache
 
       - save_cache:
-          key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          key: node-modules-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
           paths:
             - 'node_modules'
 
       - save_cache:
-          key: caches-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          key: caches-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
           paths:
             - '~/.cache'
 
       - save_cache:
-          key: yarn-cache-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          key: yarn-cache-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
           paths:
             - '.yarn/cache'
 
       - save_cache:
-          key: yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          key: yarn-install-state-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
           paths:
             - '.yarn/install-state.gz'
 
       - save_cache:
-          key: yarn-state-node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          key: yarn-state-node-modules-v2.{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
           paths:
             - 'node_modules/.yarn-state.yml'
 
@@ -197,7 +197,7 @@ jobs:
           name: Halt if build was restored
           command: |-
             # Check if we restored build cache already
-            if [ -f "/tmp/build-cache.txt" ]; then
+            if [ -f "<< pipeline.parameters.root >>/build-checksum.txt" ]; then
               echo "SKIP, no changes detected"
               circleci-agent step halt
             fi
