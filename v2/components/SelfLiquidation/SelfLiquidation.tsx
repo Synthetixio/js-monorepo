@@ -4,7 +4,7 @@ import { formatNumber, formatPercent } from '@snx-v2/formatters';
 import { FC } from 'react';
 import { Text, Box, SkeletonText, Heading, Flex } from '@chakra-ui/react';
 import { InfoIcon } from '@snx-v2/icons';
-import { useSelfLiquidationData } from '../../lib/useSelfLiquidationData';
+import { useSelfLiquidationData } from '@snx-v2/useSelfLiquidationData';
 import { useDebtData } from '@snx-v2/useDebtData';
 
 export const SelfLiquidationUi: FC<{

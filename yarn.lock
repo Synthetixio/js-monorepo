@@ -6260,6 +6260,7 @@ __metadata:
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useSelfLiquidationData": "workspace:*"
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -6520,7 +6521,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useSelfLiquidationData@workspace:v2/lib/useSelfLiquidationData":
+"@snx-v2/useSelfLiquidationData@workspace:*, @snx-v2/useSelfLiquidationData@workspace:v2/lib/useSelfLiquidationData":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSelfLiquidationData@workspace:v2/lib/useSelfLiquidationData"
   dependencies:

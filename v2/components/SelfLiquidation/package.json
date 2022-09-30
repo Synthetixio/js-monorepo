@@ -8,6 +8,7 @@
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
+    "@snx-v2/useSelfLiquidationData": "workspace:*",
     "react": "^18.2.0"
   }
 }
