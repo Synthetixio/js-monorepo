@@ -9,7 +9,7 @@ export const useFeePoolData = (period = 0) => {
   const { data: FeePool } = useFeePool();
 
   return useQuery(
-    ['staking', 'feePool', networkId, period],
+    ['stakingV2', 'feePool', networkId, period],
     async () => {
       if (!FeePool) throw Error('Query should not be enabled if contracts are missing');
 
