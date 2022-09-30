@@ -8,6 +8,10 @@ parameters:
     type: string
     default: '16.17.0'
 
+  root:
+    type: string
+    default: '/mnt/ramdisk'
+
 commands:
   checksum:
     steps:
@@ -90,7 +94,7 @@ commands:
 
 jobs:
   yarn-install:
-    working_directory: /tmp/app
+    working_directory: << pipeline.parameters.root >>
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
@@ -167,7 +171,7 @@ jobs:
             - 'node_modules/.yarn-state.yml'
 
   checks:
-    working_directory: /tmp/app
+    working_directory: << pipeline.parameters.root >>
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     steps:
@@ -181,7 +185,7 @@ jobs:
       - run: yarn lint
 
   build:
-    working_directory: /tmp/app
+    working_directory: << pipeline.parameters.root >>
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     resource_class: large
@@ -201,7 +205,7 @@ jobs:
       - build-save
 
   tests:
-    working_directory: /tmp/app
+    working_directory: << pipeline.parameters.root >>
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     steps:
@@ -214,7 +218,7 @@ jobs:
       - run: yarn test
 
   v2-e2e:
-    working_directory: /tmp/app
+    working_directory: << pipeline.parameters.root >>
     docker:
       - image: cypress/included:10.9.0
     steps:
@@ -224,26 +228,26 @@ jobs:
 
       - run:
           name: Run server localhost:3000
-          working_directory: /tmp/app/v2/ui/out
+          working_directory: << pipeline.parameters.root >>/v2/ui/out
           command: python3 -m http.server 3000
           background: true
 
       - tenderly-prepare
 
       - run:
-          working_directory: /tmp/app/v2/cypress
+          working_directory: << pipeline.parameters.root >>/v2/cypress
           command: cypress run --e2e --browser chrome
 
       - tenderly-cleanup
 
       - store_artifacts:
-          path: /tmp/app/v2/cypress/cypress/screenshots
+          path: << pipeline.parameters.root >>/v2/cypress/cypress/screenshots
 
       - store_artifacts:
-          path: /tmp/app/v2/cypress/cypress/videos
+          path: << pipeline.parameters.root >>/v2/cypress/cypress/videos
 
   v2-cy:
-    working_directory: /tmp/app
+    working_directory: << pipeline.parameters.root >>
     docker:
       - image: cypress/included:10.9.0
     steps:
@@ -252,14 +256,14 @@ jobs:
       - build-restore
 
       - run:
-          working_directory: /tmp/app/v2/cypress
+          working_directory: << pipeline.parameters.root >>/v2/cypress
           command: cypress run --component --browser chrome
 
       - store_artifacts:
-          path: /tmp/app/v2/cypress/cypress/screenshots
+          path: << pipeline.parameters.root >>/v2/cypress/cypress/screenshots
 
       - store_artifacts:
-          path: /tmp/app/v2/cypress/cypress/videos
+          path: << pipeline.parameters.root >>/v2/cypress/cypress/videos
 
 workflows:
   version: 2.1
