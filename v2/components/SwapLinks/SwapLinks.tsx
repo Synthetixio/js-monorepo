@@ -2,9 +2,16 @@ import { useContext, FC, PropsWithChildren } from 'react';
 import { Box, Skeleton, Link, Flex, LinkProps, Text } from '@chakra-ui/react';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useProxyERC20sUSD, NetworkIdByName } from '@snx-v2/useSynthetixContracts';
-import { ArrowTopRight, CowSwapIcon, CurveIcon, OneInchIcon, SushiSwapLogo } from '@snx-v2/icons';
+import {
+  ArrowTopRight,
+  CowSwapIcon,
+  CurveIcon,
+  OneInchIcon,
+  SUSDIcon,
+  SushiSwapLogo,
+} from '@snx-v2/icons';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { formatNumber } from '@snx-v2/formatters';
 
@@ -29,9 +36,6 @@ const StyledLink: FC<LinkProps> = (props) => (
     border="1px"
     borderColor="gray.900"
     mb={2}
-    display="flex"
-    justifyContent="flex-start"
-    alignItems="center"
   />
 );
 
@@ -49,13 +53,14 @@ const IconWrapper: FC<PropsWithChildren> = ({ children }) => (
   </Flex>
 );
 
-const StyledArrow = () => <ArrowTopRight width="17px" height="20px" ml={6} color="white" />;
+const StyledArrow = () => <ArrowTopRight width="17px" height="20px" mr={2} color="white" />;
 
 export const SwapLinksUi: FC<{
   outputCurrencyAddress?: string;
   networkId?: number;
   sUSDToGetBackToTarget?: number;
 }> = ({ outputCurrencyAddress, networkId, sUSDToGetBackToTarget }) => {
+  const { t } = useTranslation();
   if (!networkId || !outputCurrencyAddress || !sUSDToGetBackToTarget) {
     return (
       <Box>
@@ -67,17 +72,38 @@ export const SwapLinksUi: FC<{
   }
   return (
     <Flex bg="navy.900" flexDirection="column">
+      <Box mb={2} padding={4} borderRadius="10px" border="1px" borderColor="gray.900">
+        <Text fontWeight="500" color="gray.500" fontSize="sm">
+          {t('staking-v2.swap-links.susd-needed')}
+        </Text>
+        <Flex alignItems="center">
+          <SUSDIcon />
+          <Text data-testid="sUSDToGetBackToTarget" ml={2} fontSize="2xl">
+            {formatNumber(Math.ceil(sUSDToGetBackToTarget))}
+          </Text>
+        </Flex>
+      </Box>
       <StyledLink data-testid="oneInchLink" isExternal={true} href={SWAP_LINKS.oneInch(networkId)}>
-        <IconWrapper>
-          <OneInchIcon />
-        </IconWrapper>
-        1inch Network <StyledArrow />
+        <Flex justifyContent="space-between" width="full" alignItems="center">
+          <Flex alignItems="center">
+            <IconWrapper>
+              <OneInchIcon />
+            </IconWrapper>
+            1inch Network
+          </Flex>
+          <StyledArrow />
+        </Flex>
       </StyledLink>
       <StyledLink data-testid="curveLink" isExternal={true} href={SWAP_LINKS.curve(networkId)}>
-        <IconWrapper>
-          <CurveIcon />
-        </IconWrapper>
-        Curve Finance <StyledArrow />
+        <Flex justifyContent="space-between" width="full" alignItems="center">
+          <Flex alignItems="center">
+            <IconWrapper>
+              <CurveIcon />
+            </IconWrapper>
+            Curve Finance
+          </Flex>
+          <StyledArrow />
+        </Flex>
       </StyledLink>
       {NetworkIdByName.mainnet === networkId && (
         <StyledLink
@@ -85,10 +111,15 @@ export const SwapLinksUi: FC<{
           isExternal={true}
           href={SWAP_LINKS.cowSwap(outputCurrencyAddress)}
         >
-          <IconWrapper>
-            <CowSwapIcon />
-          </IconWrapper>
-          CowSwap <StyledArrow />
+          <Flex justifyContent="space-between" width="full" alignItems="center">
+            <Flex alignItems="center">
+              <IconWrapper>
+                <CowSwapIcon />
+              </IconWrapper>
+              CowSwap
+            </Flex>
+            <StyledArrow />
+          </Flex>
         </StyledLink>
       )}
       <StyledLink
@@ -96,21 +127,17 @@ export const SwapLinksUi: FC<{
         isExternal={true}
         href={SWAP_LINKS.sushiSwap(outputCurrencyAddress)}
       >
-        <IconWrapper>
-          <SushiSwapLogo />
-        </IconWrapper>
-        SushiSwap <StyledArrow />
+        <Flex justifyContent="space-between" width="full" alignItems="center">
+          <Flex alignItems="center">
+            <IconWrapper>
+              <SushiSwapLogo />
+            </IconWrapper>
+            SushiSwap
+          </Flex>
+          <StyledArrow />
+        </Flex>
       </StyledLink>
 
-      <Text>
-        <Trans
-          i18nKey="staking-v2.swap-links.back-to-target-text"
-          components={[
-            <Text data-testid="sUSDToGetBackToTarget" display="inline" fontWeight="bold" />,
-          ]}
-          values={{ sUSDToGetBackToTarget: formatNumber(sUSDToGetBackToTarget) }}
-        />
-      </Text>
       <Text>
         <Trans
           i18nKey="staking-v2.swap-links.once-purchased-text"

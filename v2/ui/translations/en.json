@@ -111,7 +111,7 @@
     "swap-links": {
       "heading": "Buy sUSD",
       "text": "Buy more sUSD on any of this DAPPS.",
-      "back-to-target-text": "To get back to target c-ration you need to buy <0>{{sUSDToGetBackToTarget}} sUSD</0>.",
+      "susd-needed": "sUSD Needed",
       "once-purchased-text": "Once purchased go to the <0>Burn Page</0> to burn and remove the flag."
     }
   },
