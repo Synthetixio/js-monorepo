@@ -6248,6 +6248,7 @@ __metadata:
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     react-i18next: ^11.18.3
+    react-router-dom: ^6.3.0
   languageName: unknown
   linkType: soft
 
