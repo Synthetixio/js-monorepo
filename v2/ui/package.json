@@ -41,6 +41,7 @@
     "@snx-v2/GasSpeedContext": "workspace:*",
     "@snx-v2/MainActionCards": "workspace:*",
     "@snx-v2/Navigation": "workspace:*",
+    "@snx-v2/SelfLiquidation": "workspace:*",
     "@snx-v2/SignerContext": "workspace:*",
     "@snx-v2/SwapLinks": "workspace:*",
     "@snx-v2/UnflagOptions": "workspace:*",
