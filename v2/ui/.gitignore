@@ -8,3 +8,6 @@
 storybook-static
 tmp/
 out/
+
+graphql.schema.json
+graphql.schema.clean.json

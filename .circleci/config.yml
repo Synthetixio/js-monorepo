@@ -122,18 +122,6 @@ jobs:
       # Proceed with installing node modules, but to speed things up, restore caches
       #
 
-      # Restore system-wide caches "~/.cache"
-      - restore_cache:
-          keys:
-            - caches-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-            - caches-{{ .Environment.CACHE_VERSION }}-
-
-      # Restore yarn's project-specific caches ".yarn/cache"
-      - restore_cache:
-          keys:
-            - yarn-cache-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-            - yarn-cache-{{ .Environment.CACHE_VERSION }}-
-
       # node_modules cache
       - restore_cache:
           keys:
@@ -145,16 +133,6 @@ jobs:
           key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
           paths:
             - 'node_modules'
-
-      - save_cache:
-          key: caches-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-          paths:
-            - '~/.cache'
-
-      - save_cache:
-          key: yarn-cache-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-          paths:
-            - '.yarn/cache'
 
       - save_cache:
           key: yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
