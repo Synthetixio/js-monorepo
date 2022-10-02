@@ -96,6 +96,8 @@
       }
     },
     "unflag-options": {
+      "heading": "Unflag Account",
+      "text": "To unflag your account, buying SNX isn't enough. You can either burn to target or self liquidate. Learn about the new self liquidation mechanism.",
       "recommended": "Recommended",
       "unflag": {
         "heading": "Unflag my account by burning sUSD in order to meet target ratio",
@@ -108,7 +110,15 @@
       "self-liquidate": {
         "heading": "Self Liquidate ({{selfLiquidationPenalty}} Penalty)",
         "text": "Use the new Self Liquidation feature to clear your debt and unflag your account. Going down this route will incur a penalty of {{selfLiquidationPenalty}}"
-      }
+      },
+      "cancel-link": "Cancel",
+      "continue-link": "Continue to next step"
+    },
+    "swap-links": {
+      "heading": "Buy sUSD",
+      "text": "Buy more sUSD on any of this DAPPS.",
+      "susd-needed": "sUSD Needed",
+      "once-purchased-text": "Once purchased go to the <0>Burn Page</0> to burn and remove the flag."
     }
   },
   "meta": {
@@ -1570,7 +1580,9 @@
         "merge": "merge vested snx",
         "dest-account-is-self": "Cannot nominate self",
         "nominating": "Nominating",
-        "invalid-dest-address": "Address is invalid"
+        "invalid-dest-address": "Address is invalid",
+        "source-is-a-burn-address": "Cannot merge from burn address",
+        "dest-is-a-burn-address": "Cannot merge into burn address"
       },
       "info": {
         "title": "Merge Escrowed SNX To Nominated Account",
@@ -1593,9 +1605,11 @@
       "title": "ENTER SOURCE ACCOUNT",
       "input-placeholder": "e.g. 0x3b18a4...",
       "button-labels": {
+        "merging": "merging",
         "enter-address": "enter address",
         "merge": "merge vested snx",
         "source-account-is-self": "Cannot merge into self",
+        "source-is-a-burn-address": "Cannot merge from burn address",
         "not-nominated": "Address is not nominated",
         "invalid-dest-address": "Address is invalid"
       },

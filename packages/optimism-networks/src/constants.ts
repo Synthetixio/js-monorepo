@@ -19,9 +19,14 @@ export const L2_TO_L1_NETWORK_MAPPER: NetworkMapper = {
 export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
   10: {
     chainId: '0xA',
-    chainName: 'Optimism Mainnet',
+    chainName: 'Optimism',
     rpcUrls: ['https://mainnet.optimism.io'],
     blockExplorerUrls: ['https://optimistic.etherscan.io'],
+    nativeCurrency: {
+      name: 'ETHER',
+      symbol: 'ETH',
+      decimals: 18,
+    },
     iconUrls: [
       'https://optimism.io/images/metamask_icon.svg',
       'https://optimism.io/images/metamask_icon.png',
@@ -37,6 +42,11 @@ export const OPTIMISM_NETWORKS: Record<number, OptimismNetwork> = {
       'https://optimism.io/images/metamask_icon.svg',
       'https://optimism.io/images/metamask_icon.png',
     ],
+    nativeCurrency: {
+      name: 'ETHER',
+      symbol: 'ETH',
+      decimals: 18,
+    },
   },
 };
 

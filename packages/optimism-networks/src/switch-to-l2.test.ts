@@ -96,7 +96,12 @@ describe('switchToL2', () => {
         {
           blockExplorerUrls: ['https://optimistic.etherscan.io'],
           chainId: '0xA',
-          chainName: 'Optimism Mainnet',
+          chainName: 'Optimism',
+          nativeCurrency: {
+            name: 'ETHER',
+            symbol: 'ETH',
+            decimals: 18,
+          },
           iconUrls: [
             'https://optimism.io/images/metamask_icon.svg',
             'https://optimism.io/images/metamask_icon.png',
@@ -136,6 +141,11 @@ describe('switchToL2', () => {
             'https://optimism.io/images/metamask_icon.svg',
             'https://optimism.io/images/metamask_icon.png',
           ],
+          nativeCurrency: {
+            name: 'ETHER',
+            symbol: 'ETH',
+            decimals: 18,
+          },
           rpcUrls: ['https://goerli.optimism.io/'],
         },
       ],

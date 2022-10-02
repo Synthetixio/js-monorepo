@@ -34,14 +34,16 @@ export function useAddOptimism() {
       if (e?.code === 4001) return; // Exit if user has cancelled
       try {
         // metamask mobile throws if iconUrls is included
-        const { chainId, chainName, rpcUrls, blockExplorerUrls } = getOptimismNetwork({
-          layerOneNetworkId: Number(network?.id) || 1,
-        });
+        const { chainId, chainName, rpcUrls, blockExplorerUrls, nativeCurrency } =
+          getOptimismNetwork({
+            layerOneNetworkId: Number(network?.id) || 1,
+          });
         await (window.ethereum as any).request({
           method: 'wallet_addEthereumChain',
           params: [
             {
               chainId,
+              nativeCurrency,
               chainName,
               rpcUrls,
               blockExplorerUrls,

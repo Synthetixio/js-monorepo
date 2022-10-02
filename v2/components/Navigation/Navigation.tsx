@@ -28,7 +28,7 @@ import {
   StakingLogo,
   InfoOutline,
 } from '@snx-v2/icons';
-
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { formatNumberToUsd, truncateAddress } from '@snx-v2/formatters';
 import { UserBalances } from '@snx-v2/UserBalances';
@@ -95,7 +95,7 @@ export const NavigationUI = ({
       borderBottom="1px"
       borderBottomColor={['transparent', 'transparent', 'gray.900']}
     >
-      {size === 'desktop' ? <StakingLogo /> : <StakingIcon />}
+      <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
       <Flex alignItems="center">
         {isWalletConnected && walletAddress ? (
           <>

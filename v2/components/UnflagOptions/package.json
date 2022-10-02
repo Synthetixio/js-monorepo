@@ -2,13 +2,16 @@
   "name": "@snx-v2/UnflagOptions",
   "private": true,
   "main": "index.tsx",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "@chakra-ui/react": "^2.2.8",
+    "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
     "@snx-v2/useLiquidationData": "workspace:*",
+    "@snx-v2/useSynthsBalances": "workspace:*",
     "@storybook/react": "^6.5.10",
-    "react-i18next": "^11.18.3"
+    "react-i18next": "^11.18.3",
+    "react-router-dom": "^6.3.0"
   }
 }

@@ -67,7 +67,7 @@ const Tab: FC = () => {
 
   const [error, setError] = useState<string | null>(null);
   const [txModalOpen, setTxModalOpen] = useState<boolean>(false);
-  const [buttonState, setButtonState] = useState<string | null>(null);
+  const [buttonState, setButtonState] = useState<'delegating' | null>(null);
   const [alreadyDelegated, setAlreadyDelegated] = useState<boolean>(false);
 
   const properDelegateAddress =

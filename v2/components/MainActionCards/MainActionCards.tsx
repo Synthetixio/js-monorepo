@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Badge, Box, Button, Flex, Heading, Skeleton, Stack, Text } from '@chakra-ui/react';
 import React, { PropsWithChildren, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
@@ -7,10 +7,9 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { CountDown } from '@snx-v2/CountDown';
 import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
-import { useSynthetix } from '@snx-v2/useSynthetixContracts';
-import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
-import { useGasOptions } from '@snx-v2/useGasOptions';
-
+import { useNavigate } from 'react-router-dom';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
+import { formatNumberToUsd } from '@snx-v2/formatters';
 const CardHeader = ({
   step,
   headingText,
@@ -52,8 +51,11 @@ const Container = ({ children }: PropsWithChildren<{}>) => {
   );
 };
 
-const StakeActionCard: React.FC<UiProps> = ({ currentCRatioPercentage }) => {
+const StakeActionCard: React.FC<Required<Pick<UiProps, 'currentCRatioPercentage'>>> = ({
+  currentCRatioPercentage,
+}) => {
   const isStaking = currentCRatioPercentage > 0;
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
   return (
@@ -65,19 +67,13 @@ const StakeActionCard: React.FC<UiProps> = ({ currentCRatioPercentage }) => {
         icon={<StakeIcon />}
       />
       {isStaking ? (
-        <Button
-          onClick={() => {
-            console.log('navigate to stake and borrow more');
-          }}
-          mb="2"
-          variant="link"
-        >
+        <Button onClick={() => navigate('/staking/mint')} mb="2" variant="link">
           {t('staking-v2.main-action-cards.stake-link-button')}
         </Button>
       ) : (
         <Button
           onClick={() => {
-            console.log('navigate to stake and borrow more');
+            navigate('/staking/mint');
           }}
           variant="solid"
         >
@@ -87,12 +83,23 @@ const StakeActionCard: React.FC<UiProps> = ({ currentCRatioPercentage }) => {
     </Container>
   );
 };
-const MaintainActionCard: React.FC<UiProps> = ({
+const MaintainActionCard: React.FC<
+  Required<
+    Pick<
+      UiProps,
+      | 'liquidationCratioPercentage'
+      | 'targetCratioPercentage'
+      | 'currentCRatioPercentage'
+      | 'isFlagged'
+    >
+  >
+> = ({
   liquidationCratioPercentage,
   targetCratioPercentage,
   currentCRatioPercentage,
   isFlagged,
 }) => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const variant = getHealthVariant({
     liquidationCratioPercentage,
@@ -136,7 +143,11 @@ const MaintainActionCard: React.FC<UiProps> = ({
           mb="2"
           variant="link"
           onClick={() => {
-            isStaking ? console.log('navigate to maintain page') : console.log('C-Ratio explained');
+            if (isStaking) {
+              navigate('/staking/burn');
+            } else {
+              console.log('C-Ratio explained');
+            }
           }}
         >
           {isStaking
@@ -146,7 +157,11 @@ const MaintainActionCard: React.FC<UiProps> = ({
       ) : (
         <Button
           onClick={() => {
-            console.log('navigate to maintain page');
+            if (isFlagged) {
+              navigate('/staking/unflag');
+            } else {
+              navigate('/staking/burn');
+            }
           }}
           variant={variant}
         >
@@ -159,12 +174,20 @@ const MaintainActionCard: React.FC<UiProps> = ({
   );
 };
 
-const CollectActionCard: React.FC<UiProps> = ({
+const CollectActionCard: React.FC<{
+  liquidationCratioPercentage: number;
+  targetCratioPercentage: number;
+  currentCRatioPercentage: number;
+  nextEpochStartDate: Date;
+  hasClaimed: boolean;
+  snxPrice?: string;
+}> = ({
   liquidationCratioPercentage,
   targetCratioPercentage,
   currentCRatioPercentage,
   nextEpochStartDate,
   hasClaimed,
+  snxPrice,
 }) => {
   const { t } = useTranslation();
   const variant = getHealthVariant({
@@ -206,10 +229,11 @@ const CollectActionCard: React.FC<UiProps> = ({
               <Text color="whiteAlpha.700" fontSize="xs" mr="1" fontWeight="700">
                 {t('staking-v2.main-action-cards.collect-price')}
               </Text>
-
-              <Text color="success" fontSize="md" fontFamily="mono">
-                $6.00
-              </Text>
+              <Skeleton isLoaded={snxPrice !== undefined}>
+                <Text color="success" fontSize="md" fontFamily="mono">
+                  {snxPrice && formatNumberToUsd(snxPrice)}
+                </Text>
+              </Skeleton>
             </Flex>
           )}
         </Flex>
@@ -240,19 +264,63 @@ const CollectActionCard: React.FC<UiProps> = ({
 };
 
 type UiProps = {
-  liquidationCratioPercentage: number;
-  targetCratioPercentage: number;
-  currentCRatioPercentage: number;
-  isFlagged: boolean;
-  nextEpochStartDate: Date;
-  hasClaimed: boolean;
+  liquidationCratioPercentage?: number;
+  targetCratioPercentage?: number;
+  currentCRatioPercentage?: number;
+  isFlagged?: boolean;
+  nextEpochStartDate?: Date;
+  hasClaimed?: boolean;
+  snxPrice?: string;
 };
-export const MainActionCardsUi: React.FC<UiProps> = (props) => {
+export const MainActionCardsUi: React.FC<UiProps> = ({
+  liquidationCratioPercentage,
+  currentCRatioPercentage,
+  targetCratioPercentage,
+  isFlagged,
+  nextEpochStartDate,
+  hasClaimed,
+}) => {
   return (
     <Stack direction={['column', 'column', 'row']} align="center" spacing="14px">
-      <StakeActionCard {...props}></StakeActionCard>
-      <MaintainActionCard {...props}></MaintainActionCard>
-      <CollectActionCard {...props}></CollectActionCard>
+      {currentCRatioPercentage !== undefined ? (
+        <StakeActionCard currentCRatioPercentage={currentCRatioPercentage} />
+      ) : (
+        <Skeleton flexGrow={1}>
+          <Container />
+        </Skeleton>
+      )}
+      {liquidationCratioPercentage !== undefined &&
+      targetCratioPercentage !== undefined &&
+      currentCRatioPercentage !== undefined &&
+      isFlagged !== undefined ? (
+        <MaintainActionCard
+          liquidationCratioPercentage={liquidationCratioPercentage}
+          targetCratioPercentage={targetCratioPercentage}
+          currentCRatioPercentage={currentCRatioPercentage}
+          isFlagged={isFlagged}
+        />
+      ) : (
+        <Skeleton flexGrow={1}>
+          <Container />
+        </Skeleton>
+      )}
+      {currentCRatioPercentage !== undefined &&
+      liquidationCratioPercentage !== undefined &&
+      targetCratioPercentage !== undefined &&
+      nextEpochStartDate !== undefined &&
+      hasClaimed !== undefined ? (
+        <CollectActionCard
+          liquidationCratioPercentage={liquidationCratioPercentage}
+          targetCratioPercentage={targetCratioPercentage}
+          currentCRatioPercentage={currentCRatioPercentage}
+          hasClaimed={hasClaimed}
+          nextEpochStartDate={nextEpochStartDate}
+        />
+      ) : (
+        <Skeleton flexGrow={1}>
+          <Container />
+        </Skeleton>
+      )}
     </Stack>
   );
 };
@@ -261,45 +329,17 @@ export const MainActionCards: React.FC = () => {
   const { data: debtData } = useDebtData();
   const { data: feePoolData } = useFeePoolData();
   const { data: rewardsData } = useRewardsAvailable();
-  const { data: Synthetix } = useSynthetix();
-
-  const getGasLimit = Synthetix?.signer
-    ? () => Synthetix.estimateGas.burnSynthsToTarget()
-    : undefined;
-  const populateTransaction = Synthetix
-    ? () => Synthetix.populateTransaction.burnSynthsToTarget()
-    : undefined;
-  const gasOptionsQuery = useGasOptions({
-    getGasLimit,
-    populateTransaction,
-  });
-  const { gasLimit, gasPrices, optimismLayerOneFees, gasOptionsForTransaction } =
-    gasOptionsQuery.data || {};
-
-  if (!debtData || !feePoolData || !rewardsData || !Synthetix) return <p>Skeleton</p>;
+  const { data: exchangeRateData } = useExchangeRatesData();
 
   return (
-    <>
-      <Button
-        onClick={() => {
-          Synthetix.burnSynthsToTarget(gasOptionsForTransaction);
-        }}
-      >
-        Burn Max
-      </Button>
-      <EthGasPriceEstimator
-        gasLimit={gasLimit}
-        optimismLayerOneFees={optimismLayerOneFees}
-        gasPrices={gasPrices}
-      />
-      <MainActionCardsUi
-        currentCRatioPercentage={debtData.currentCRatioPercentage.mul(100).toNumber()}
-        targetCratioPercentage={debtData.targetCRatioPercentage.mul(100).toNumber()}
-        liquidationCratioPercentage={debtData.liquidationRatioPercentage.mul(100).toNumber()}
-        isFlagged={debtData.liquidationDeadlineForAccount.gt(0)}
-        hasClaimed={rewardsData.hasClaimed}
-        nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
-      />
-    </>
+    <MainActionCardsUi
+      currentCRatioPercentage={debtData?.currentCRatioPercentage.mul(100).toNumber()}
+      targetCratioPercentage={debtData?.targetCRatioPercentage.mul(100).toNumber()}
+      liquidationCratioPercentage={debtData?.liquidationRatioPercentage.mul(100).toNumber()}
+      isFlagged={debtData?.liquidationDeadlineForAccount.gt(0)}
+      hasClaimed={rewardsData?.hasClaimed}
+      nextEpochStartDate={feePoolData?.nextFeePeriodStartDate}
+      snxPrice={exchangeRateData?.SNX?.toString()}
+    />
   );
 };

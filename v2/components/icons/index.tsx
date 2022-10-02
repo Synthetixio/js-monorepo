@@ -36,3 +36,6 @@ export * from './DHedgeIcon';
 export * from './KwentaIcon';
 export * from './LyraIcon';
 export * from './ThalesIcon';
+export * from './OneInchIcon';
+export * from './CowSwapIcon';
+export * from './SushiSwapLogo';

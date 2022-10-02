@@ -1,0 +1,16 @@
+{
+  "name": "@snx-v2/useSelfLiquidationData",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.0",
+  "dependencies": {
+    "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/useDebtData": "workspace:*",
+    "@snx-v2/useExchangeRatesData": "workspace:*",
+    "@snx-v2/useLiquidationData": "workspace:*",
+    "@snx-v2/useSynthetixContracts": "workspace:*",
+    "@synthetixio/wei": "workspace:*",
+    "@tanstack/react-query": "^4.3.4",
+    "react": "^18.2.0"
+  }
+}

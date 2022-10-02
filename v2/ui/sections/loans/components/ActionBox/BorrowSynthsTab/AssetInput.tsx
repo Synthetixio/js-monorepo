@@ -39,8 +39,9 @@ const AssetInput: React.FC<AssetInputProps> = ({
   const { t } = useTranslation();
   const options = React.useMemo(() => assets.map((value) => ({ label: value, value })), [assets]);
   const value = React.useMemo(() => options.find(({ value }) => value === asset), [options, asset]);
-
-  const selectLabel = <SelectLabel>{t(label)}</SelectLabel>;
+  // @ts-ignore
+  const labelText = `${t(label)}`;
+  const selectLabel = <SelectLabel>{labelText}</SelectLabel>;
 
   const selectInput = (
     <SelectInput data-testid="select">

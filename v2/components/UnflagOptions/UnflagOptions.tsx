@@ -8,12 +8,17 @@ import {
   Flex,
   Badge,
   Skeleton,
+  Divider,
+  Link,
+  Button,
 } from '@chakra-ui/react';
 import { CollectIcon, InfoIcon, MaintainIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useTranslation } from 'react-i18next';
 import { useLiquidationData } from '@snx-v2/useLiquidationData';
-import { formatPercent } from '../../ui/utils/formatters/number';
+import { formatPercent } from '@snx-v2/formatters/number';
+import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
+import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 
 const RadioItemContent: React.FC<{
   radioProps: UseRadioProps;
@@ -80,6 +85,7 @@ const RadioItemContent: React.FC<{
             </Box>
           </Flex>
           <Box
+            flexShrink={0}
             boxSize="5"
             borderRadius="100%"
             borderColor={disabled ? 'gray.800' : 'cyan.400'}
@@ -90,21 +96,26 @@ const RadioItemContent: React.FC<{
     </Box>
   );
 };
+const options = ['unflag', 'swap', 'self-liquidate'] as const;
+const optionToLink: Record<string, string | undefined> = {
+  unflag: '/staking/burn',
+  swap: '/staking/swap-links',
+  'self-liquidate': '/self-liquidate',
+};
 export const UnflagOptionsUi: React.FC<{
   sUSDBalance?: number;
   sUSDToGetBackToTarget?: number;
   selfLiquidationPenalty?: string;
 }> = ({ sUSDBalance, sUSDToGetBackToTarget, selfLiquidationPenalty }) => {
-  const options = ['unflag', 'swap', 'self-liquidate'] as const;
+  const { t } = useTranslation();
 
-  const { getRootProps, getRadioProps } = useRadioGroup({
+  const { getRootProps, getRadioProps, value } = useRadioGroup({
     name: 'UnflagOptions',
-    defaultValue: 'unflag',
-
     onChange: (x) => {
       console.log(x);
     },
   });
+  const navigate = useNavigate();
   if (
     sUSDBalance === undefined ||
     sUSDToGetBackToTarget === undefined ||
@@ -122,6 +133,8 @@ export const UnflagOptionsUi: React.FC<{
   const group = getRootProps();
   const enoughSUsd = sUSDBalance >= sUSDToGetBackToTarget;
   const recommended = enoughSUsd ? 'unflag' : 'swap';
+  const continueLink = optionToLink[String(value)];
+
   return (
     <Flex flexDirection="column" {...group}>
       {options.map((option) => {
@@ -136,6 +149,25 @@ export const UnflagOptionsUi: React.FC<{
           />
         );
       })}
+      <Divider mt={4} />
+      <Flex alignItems="center" mt={8} justifyContent="space-between">
+        <Link as={ReactRouterLink} to="/">
+          {t('staking-v2.unflag-options.cancel-link')}
+        </Link>
+        <Button
+          variant="outline"
+          disabled={!continueLink}
+          _disabled={{ color: 'gray.600', borderColor: 'gray.600', cursor: 'not-allowed' }}
+          _hover={{ bg: 'none' }}
+          onClick={() => {
+            if (continueLink) {
+              navigate(continueLink);
+            }
+          }}
+        >
+          {t('staking-v2.unflag-options.continue-link')}
+        </Button>
+      </Flex>
     </Flex>
   );
 };
@@ -143,14 +175,14 @@ export const UnflagOptionsUi: React.FC<{
 export const UnflagOptions = () => {
   const { data: debtData } = useDebtData();
   const { data: liquidationData } = useLiquidationData();
-
+  const { data: balanceData } = useSynthsBalances();
   const sUSDToGetBackToTarget = debtData
     ? debtData.debtBalance.sub(debtData.issuableSynths).toNumber()
     : undefined;
 
-  const sUSDBalance = 100; // TODO, use james balance query that's coming
+  const sUSDBalance = balanceData?.balancesMap.sUSD?.balance.toNumber();
   const selfLiquidationPenalty = liquidationData
-    ? formatPercent(liquidationData.selfLiquidationPenalty)
+    ? formatPercent(liquidationData.selfLiquidationPenalty.toNumber())
     : undefined;
 
   return (

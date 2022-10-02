@@ -2,7 +2,7 @@
   "name": "@snx-v2/useDebtData",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "@ethersproject/strings": "^5.6.1",
     "@snx-v2/ContractContext": "workspace:*",

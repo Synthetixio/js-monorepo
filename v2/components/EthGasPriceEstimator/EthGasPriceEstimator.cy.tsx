@@ -8,7 +8,7 @@ describe('CRatioHealthCard.cy.tsx', () => {
     cy.viewport(500, 300);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
-        <EthGasPriceEstimatorUi />
+        <EthGasPriceEstimatorUi gasSpeed="average" setGasSpeed={() => {}} />
       </Box>
     );
     cy.get('.chakra-skeleton').should('be.visible');
@@ -19,6 +19,8 @@ describe('CRatioHealthCard.cy.tsx', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <EthGasPriceEstimatorUi
+          gasSpeed="average"
+          setGasSpeed={() => {}}
           ethPriceRate={wei(1000)}
           gasPrice={{ gasPrice: BigNumber.from(1000000) }}
           gasLimit={BigNumber.from(2000000)}

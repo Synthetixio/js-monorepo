@@ -58,14 +58,14 @@ export const useSynthsBalances = () => {
     ['walletBalances', 'synths', networkId, walletAddress],
     async () => {
       if (!SynthUtil || !walletAddress) {
-        throw Error('Query should not be enabled if contracts are missing');
+        throw Error('Query should not be enabled if contracts or walletAddress are missing');
       }
 
       return await SynthUtil.synthsBalances(walletAddress);
     },
     {
       select: processSynthsBalances,
-      enabled: Boolean(networkId && SynthUtil),
+      enabled: Boolean(networkId && SynthUtil && walletAddress),
       staleTime: 1000,
     }
   );

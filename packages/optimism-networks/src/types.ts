@@ -5,6 +5,11 @@ export type OptimismNetwork = {
   blockExplorerUrls: string[];
   iconUrls: string[];
   fraudProofWindow?: number;
+  nativeCurrency: {
+    name: string;
+    symbol: string;
+    decimals: 18;
+  };
 };
 
 export enum NetworkId {

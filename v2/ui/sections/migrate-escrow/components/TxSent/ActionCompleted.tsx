@@ -12,7 +12,7 @@ import Etherscan from 'containers/BlockExplorer';
 type ActionCompletedProps = {
   resetTransaction: () => void;
   amount: string;
-  action: string;
+  action: 'migrate';
   currencyKey: string;
   hash: string;
 };

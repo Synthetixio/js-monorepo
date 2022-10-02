@@ -52,6 +52,8 @@ const MobileSideNav: FC = () => {
                 navigate(subLink);
                 dispatch({ type: 'close' });
               };
+              // @ts-ignore
+              const linkText = `${t(i18nLabel)}`;
               return (
                 <MenuLinkItem
                   key={`subMenuLinkItem-${i}`}
@@ -59,7 +61,7 @@ const MobileSideNav: FC = () => {
                   data-testid={`sidenav-submenu-${subLink}`}
                   onClick={onClick}
                 >
-                  <div className="link">{t(i18nLabel)}</div>
+                  <div className="link">{linkText}</div>
                 </MenuLinkItem>
               );
             })}
