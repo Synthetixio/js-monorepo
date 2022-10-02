@@ -31,3 +31,8 @@ export * from './TokensIcon';
 export * from './StakingLogo';
 export * from './CloseIcon';
 export * from './InfoOutline';
+export * from './CurveIcon';
+export * from './DHedgeIcon';
+export * from './KwentaIcon';
+export * from './LyraIcon';
+export * from './ThalesIcon';

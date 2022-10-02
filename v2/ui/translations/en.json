@@ -3,6 +3,12 @@
     "en": "English"
   },
   "staking-v2": {
+    "epochprice": {
+      "epoch-mobile": "EPOCH",
+      "epoch-desktop": "Epoch",
+      "price-mobile": "SNX Price",
+      "price-desktop": "SNX:"
+    },
     "main-action-cards": {
       "stake-headline": "Stake & borrow",
       "stake-body": "Mint sUSD by staking your SNX.",

@@ -7,6 +7,7 @@ export const CountDown: React.FC<{ toDate: Date; intervalMs?: number }> = ({
   intervalMs = 1000,
 }) => {
   const [now, setNow] = useState(new Date());
+
   useInterval(() => {
     setNow(new Date());
   }, intervalMs);
@@ -15,6 +16,7 @@ export const CountDown: React.FC<{ toDate: Date; intervalMs?: number }> = ({
     start: now,
     end: toDate,
   });
+
   return (
     <span>
       {String(duration.days).padStart(2, '0')}:{String(duration.hours).padStart(2, '0')}:

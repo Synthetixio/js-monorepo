@@ -44,14 +44,14 @@ const V2Burn = () => {
   const { mutate, transactionFee } = useBurnMutation();
 
   const onSubmit = async (amount: BigNumber, toTarget = false) => {
-    await mutate(
+    mutate(
       { amount, toTarget },
       {
         onSuccess: () => {
-          console.log('Success');
+          console.log('Success man');
         },
         onError: (e: any) => {
-          console.log('Error', e);
+          console.log('Error man', e);
         },
       }
     );

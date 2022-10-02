@@ -30,11 +30,14 @@ import {
 } from '@snx-v2/icons';
 
 import { useTranslation } from 'react-i18next';
-import { truncateAddress } from '@snx-v2/formatters';
+import { formatNumberToUsd, truncateAddress } from '@snx-v2/formatters';
 import { UserBalances } from '@snx-v2/UserBalances';
 import Wei, { wei } from '@synthetixio/wei';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
+import { EpochPrice } from '../EpochPrice';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
+import { useFeePoolData } from '@snx-v2/useFeePoolData';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -265,18 +268,46 @@ export const Navigation = ({
 }: Omit<NavigationProps, 'snxBalance' | 'sUSDBalance' | 'isLoading'>) => {
   const { data: synthsBalances, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: debtData, isLoading: isDebtLoading } = useDebtData();
+  const { data: exchangeRateData, isLoading: isExchangeRatesLoading } = useExchangeRatesData();
+  const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
+
+  const size = useBreakpointValue({
+    base: 'mobile',
+    md: 'desktop',
+  });
 
   const isLoading = isSynthsLoading || isDebtLoading;
+  const isEpochPriceLoading = isExchangeRatesLoading || isFeePoolDataLoading;
+
+  const snxPrice = exchangeRateData?.SNX && formatNumberToUsd(exchangeRateData?.SNX.toString(2));
+  console.log('Fee pool data', feePoolData);
+
   return (
-    <NavigationUI
-      currentNetwork={currentNetwork}
-      switchNetwork={switchNetwork}
-      connectWallet={connectWallet}
-      isWalletConnected={isWalletConnected}
-      walletAddress={walletAddress}
-      isLoading={isLoading}
-      snxBalance={debtData?.collateral || wei(0)}
-      sUSDBalance={synthsBalances?.balancesMap['sUSD']?.balance || wei(0)}
-    />
+    <>
+      {size === 'desktop' && (
+        <EpochPrice
+          isLoading={isEpochPriceLoading}
+          epochEnd={feePoolData?.nextFeePeriodStartDate}
+          snxPrice={snxPrice}
+        />
+      )}
+      <NavigationUI
+        currentNetwork={currentNetwork}
+        switchNetwork={switchNetwork}
+        connectWallet={connectWallet}
+        isWalletConnected={isWalletConnected}
+        walletAddress={walletAddress}
+        isLoading={isLoading}
+        snxBalance={debtData?.collateral || wei(0)}
+        sUSDBalance={synthsBalances?.balancesMap['sUSD']?.balance || wei(0)}
+      />
+      {size === 'mobile' && (
+        <EpochPrice
+          isLoading={isEpochPriceLoading}
+          epochEnd={feePoolData?.nextFeePeriodStartDate}
+          snxPrice={snxPrice}
+        />
+      )}
+    </>
   );
 };

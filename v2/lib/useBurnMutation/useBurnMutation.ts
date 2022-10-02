@@ -18,7 +18,7 @@ export function useBurnMutation() {
   const { data: exchangeRatesData, isLoading: isExchangeRatesDataLoading } = useExchangeRatesData();
 
   const [txModalOpen, setTxModalOpen] = useState<boolean>(false);
-  const [error, setError] = useState(null);
+  const [err, setError] = useState(null);
 
   const getGasLimit = Synthetix?.signer ? () => Synthetix.estimateGas.burnSynths(0) : undefined;
 
@@ -26,12 +26,16 @@ export function useBurnMutation() {
     ? () => Synthetix.populateTransaction.burnSynths(0)
     : undefined;
 
-  const { data, isLoading: isGasLoading } = useGasOptions({
+  const {
+    data,
+    isLoading: isGasLoading,
+    error,
+  } = useGasOptions({
     getGasLimit,
     populateTransaction,
   });
 
-  const { gasLimit, gasPrices, optimismLayerOneFees } = data || {};
+  const { gasLimit, gasPrices, optimismLayerOneFees, gasOptionsForTransaction } = data || {};
 
   const gasPrice = gasPrices?.[gasSpeed];
 
@@ -42,6 +46,8 @@ export function useBurnMutation() {
     optimismLayerOneFees
   );
 
+  console.log(transactionFee?.toString(), 'gas error', error);
+
   const isLoading = isGasLoading || isExchangeRatesDataLoading;
 
   return {
@@ -51,11 +57,13 @@ export function useBurnMutation() {
         setTxModalOpen(true);
         const { amount, toTarget } = variables;
         if (toTarget) {
+          // eslint-disable-next-line no-console
           console.log('Burning synths to target');
-          await Synthetix.burnSynthsToTarget();
+          await Synthetix.burnSynthsToTarget(gasOptionsForTransaction);
         } else {
+          // eslint-disable-next-line no-console
           console.log('Burning synths', amount.toString());
-          await Synthetix.burnSynths(amount);
+          await Synthetix.burnSynths(amount, gasOptionsForTransaction);
         }
         setTxModalOpen(false);
       } catch (error: any) {

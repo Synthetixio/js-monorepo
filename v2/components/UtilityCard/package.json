@@ -1,0 +1,12 @@
+{
+  "name": "@snx-v2/UtilityCard",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.0",
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v2/icons": "workspace:*",
+    "@storybook/react": "^6.5.10",
+    "react-i18next": "^11.18.3"
+  }
+}
