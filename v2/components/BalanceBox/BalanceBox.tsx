@@ -145,7 +145,7 @@ export const BalanceBox: React.FC = () => {
       transferable={debtData?.transferable.toNumber()}
       debtBalance={debtData?.debtBalance.toNumber()}
       issuedDebt={0} // TODO
-      dSNXBalance={dSNXBalance}
+      dSNXBalance={dSNXBalance?.toNumber()}
     />
   );
 };
