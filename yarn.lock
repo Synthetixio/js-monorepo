@@ -7173,6 +7173,7 @@ __metadata:
   resolution: "@snx-v2/mint@workspace:v2/components/Mint"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@ethersproject/bignumber": ^5.7.0
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@storybook/react": ^6.5.10
@@ -7235,7 +7236,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useGasOptions@workspace:v2/lib/useGasOptions":
+"@snx-v2/useGasOptions@workspace:*, @snx-v2/useGasOptions@workspace:v2/lib/useGasOptions":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useGasOptions@workspace:v2/lib/useGasOptions"
   dependencies:
@@ -7282,6 +7283,19 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useMintMutation@workspace:^, @snx-v2/useMintMutation@workspace:v2/lib/useMintMutation":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useMintMutation@workspace:v2/lib/useMintMutation"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@snx-v2/GasSpeedContext": "workspace:^"
+    "@snx-v2/useGasOptions": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -9183,6 +9197,7 @@ __metadata:
     "@snx-v2/useBurnMutation": "workspace:^"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useMintMutation": "workspace:^"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10

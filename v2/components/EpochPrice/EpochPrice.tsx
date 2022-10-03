@@ -17,10 +17,10 @@ export const EpochPrice = ({ epochEnd, snxPrice, isLoading = false }: EpochPrice
       md: 'desktop',
     },
     { fallback: 'md' }
-  );
+  ) as 'mobile' | 'desktop';
 
   return (
-    <Box bg="navy.900">
+    <Box bg="navy.900" overflow="fixed">
       <Flex bg="whiteAlpha.200" justifyContent="space-between" px={[4, 4, 10]} py={2}>
         <Flex
           alignItems={['flex-start', 'flex-start', 'center']}

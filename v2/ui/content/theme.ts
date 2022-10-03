@@ -286,10 +286,39 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
   },
   styles: {
     global: {
+      ':root': {
+        // Backgrounds
+        '--onboard-main-scroll-container-background':
+          'linear-gradient(73.6deg, #171923 2.11%, #141414 100%);',
+        '--onboard-connect-content-background':
+          'linear-gradient(73.6deg, #171923 2.11%, #141414 100%);',
+        '--onboard-connect-sidebar-background':
+          'linear-gradient(73.6deg, #171923 2.11%, #141414 100%);',
+        '--onboard-connect-header-background':
+          'linear-gradient(73.6deg, #171923 2.11%, #141414 100%);',
+        '--onboard-wallet-button-background': '#2D2D3880',
+        '--onboard-wallet-button-background-hover': '#2D2D3850',
+        '--onboard-wallet-app-icon-border-color': '#FFFFFF29',
+        // Colors
+        '--onboard-connect-header-color': 'transparent',
+        '--onboard-connect-sidebar-color': 'white',
+        '--onboard-close-button-background': 'transparent',
+        '--onboard-close-button-color': 'white',
+        '--onboard-checkbox-background': '#0b0b22',
+        '--onboard-checkbox-color': 'white',
+        '--onboard-connect-sidebar-progress-background': '#FFFFFF',
+        '--onboard-connect-sidebar-progress-color': '#00d1ff',
+        '--onboard-wallet-button-color': 'white',
+        '--onboard-wallet-button-border-color': '#2D2D38',
+        // Fonts
+        '--account-select-modal-font-family-normal': 'Inter',
+        // Radius
+        '--onboard-wallet-button-border-radius': '10px',
+      },
       body: {
         bg: 'navy.900',
         color: 'white',
-        backgroundImage: `repeating-linear-gradient(135deg, ${chakraTheme.colors.gray['900']} 0, ${chakraTheme.colors.navy['900']} 1px, transparent 0, transparent 50%)`,
+        backgroundImage: `repeating-linear-gradient(135deg, ${chakraTheme.colors.gray['900']}70 0, ${chakraTheme.colors.navy['900']} 1px, transparent 0, transparent 50%)`,
         backgroundSize: '8px 8px',
         paddingBottom: '0px',
         minHeight: '100vh',
@@ -299,28 +328,6 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
         flexFlow: 'column',
         height: '100%',
       },
-      '::-webkit-scrollbar': {
-        width: '8px',
-        height: '3px',
-      },
-      '::-webkit-scrollbar-thumb': {
-        height: '50px',
-        borderRadius: '3px',
-        bg: 'cyan.500',
-      },
-      scrollbarFaceColor: 'pink.400',
-      scrollbarBaseColor: 'pink.400',
-      scrollbar3dlightColor: 'pink.400',
-      scrollbarHighlightColor: 'pink.400',
-      scrollbarShadowColor: 'pink.400',
-      scrollbarDarkShadowColor: 'pink.400',
-      scrollbarTrackColor: 'blue.900',
-      scrollbarArrowColor: 'blue.900',
-      '::-webkit-scrollbar-button': { bg: 'blue.900' },
-      '::-webkit-scrollbar-track-piece': { bg: 'blue.900' },
-      '::-webkit-resizer': { bg: 'cyan.500' },
-      '::-webkit-scrollbar-track': { bg: 'pink.400' },
-      '::-webkit-scrollbar-corner': { bg: 'pink.400' },
 
       // TODO: Update this once styled components removed
       '@media screen and (max-width: 768px)': {

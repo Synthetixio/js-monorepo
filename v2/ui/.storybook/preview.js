@@ -21,4 +21,5 @@ export const parameters = {
     },
   },
 };
+
 addDecorator((story) => <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>);

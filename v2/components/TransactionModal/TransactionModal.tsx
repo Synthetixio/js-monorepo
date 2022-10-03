@@ -11,11 +11,11 @@ import {
 import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
 
-type Props = { isOpen: boolean; onClose: () => void; title: string; icon: ReactNode };
+type Props = { isOpen: boolean; onClose?: () => void; title: string; icon?: ReactNode };
 
 export const TransactionModal = ({
   isOpen,
-  onClose,
+  onClose = () => {},
   title,
   children,
   icon,
@@ -26,7 +26,7 @@ export const TransactionModal = ({
       <ModalOverlay />
       <ModalContent bgGradient={theme.gradients['dark'][500]} pt="10" pb="3">
         <ModalCloseButton />
-        <Box alignSelf="center">{icon}</Box>
+        {icon && <Box alignSelf="center">{icon}</Box>}
         <ModalHeader pb="1" textAlign="center">
           {title}
         </ModalHeader>

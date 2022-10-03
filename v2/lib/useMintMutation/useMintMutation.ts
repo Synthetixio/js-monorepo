@@ -9,12 +9,12 @@ import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { initialState, reducer } from './reducer';
 import { DelegationWallet } from '@synthetixio/queries';
 
-type BurnVariables = {
+type MintVariables = {
   amount: BigNumber;
-  toTarget?: boolean;
+  toMax?: boolean;
 };
 
-export function useBurnMutation(delegateAddress: DelegationWallet | null) {
+export function useMintMutation(delegateAddress?: DelegationWallet | null) {
   const { data: Synthetix } = useSynthetix();
   const { gasSpeed } = useContext(GasSpeedContext);
 
@@ -22,10 +22,10 @@ export function useBurnMutation(delegateAddress: DelegationWallet | null) {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const getGasLimit = Synthetix?.signer ? () => Synthetix.estimateGas.burnSynths(0) : undefined;
+  const getGasLimit = Synthetix?.signer ? () => Synthetix.estimateGas.issueSynths(0) : undefined;
 
   const populateTransaction = Synthetix
-    ? () => Synthetix.populateTransaction.burnSynths(0)
+    ? () => Synthetix.populateTransaction.issueSynths(0)
     : undefined;
 
   const {
@@ -53,33 +53,34 @@ export function useBurnMutation(delegateAddress: DelegationWallet | null) {
   const { modalOpen, txnStatus } = state;
 
   return {
-    ...useMutation(async (variables: BurnVariables) => {
+    ...useMutation(async (variables: MintVariables) => {
       if (!Synthetix) return;
       let txn;
       try {
         dispatch({ type: 'prompting' });
-        const { amount, toTarget } = variables;
-        if (toTarget) {
+        const { amount, toMax } = variables;
+        if (toMax) {
           txn = delegateAddress
-            ? await Synthetix.burnSynthsToTargetOnBehalf(
+            ? await Synthetix.issueMaxSynthsOnBehalf(
                 delegateAddress.address,
                 gasOptionsForTransaction
               )
-            : await Synthetix.burnSynthsToTarget(gasOptionsForTransaction);
+            : await Synthetix.issueMaxSynths(gasOptionsForTransaction);
         } else {
           txn = delegateAddress
-            ? await Synthetix.burnSynthsOnBehalf(
+            ? await Synthetix.issueSynthsOnBehalf(
                 delegateAddress.address,
                 amount,
                 gasOptionsForTransaction
               )
-            : await Synthetix.burnSynths(amount, gasOptionsForTransaction);
+            : await Synthetix.issueSynths(amount, gasOptionsForTransaction);
         }
         dispatch({ type: 'pending' });
         await txn.wait();
         dispatch({ type: 'success' });
         setTimeout(() => dispatch({ type: 'settled' }), 1000);
       } catch (error: any) {
+        console.log('Error', error);
         dispatch({ type: 'error' });
         setTimeout(() => dispatch({ type: 'settled' }), 1000);
       }

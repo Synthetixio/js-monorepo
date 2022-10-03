@@ -20,10 +20,14 @@ import { getHealthVariant, badgeColor } from '@snx-v2/getHealthVariant';
 import { InfoIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
+import { useMintMutation } from '@snx-v2/useMintMutation';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { wei } from '@synthetixio/wei';
 import { EXTERNAL_LINKS } from 'constants/links';
+import { BigNumber } from 'ethers';
 import { useTranslation, Trans } from 'react-i18next';
+import { useRecoilValue } from 'recoil';
+import { delegateWalletState } from 'store/wallet';
 import { Mint } from '../../components/Mint';
 
 const V2Mint = () => {
@@ -32,6 +36,8 @@ const V2Mint = () => {
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
   const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
+
+  const delegateWallet = useRecoilValue(delegateWalletState);
 
   const isCurrentStaker = debtData?.currentCRatio.gt(0);
   const liquidationCRatio = debtData?.liquidationRatioPercentage.toNumber();
@@ -49,8 +55,16 @@ const V2Mint = () => {
   const exchangeRate =
     (targetCRatio && exchangeRateData?.SNX?.div(targetCRatio / 100).toNumber()) || 0;
 
+  const { modalOpen, mutate, txnStatus } = useMintMutation(delegateWallet);
+
+  const onSubmit = async (amount: BigNumber, toMax = false) => {
+    console.log('Amount', amount.toString(), 'toMax', toMax);
+    await mutate({ amount, toMax });
+  };
+
   const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
 
+  console.log('Modal open', modalOpen, 'txnStatus', txnStatus);
   return (
     <Box bg="navy.900" height="100%">
       <Container pt={12} pb={16} bg="navy.900" maxW="4xl">
@@ -242,6 +256,7 @@ const V2Mint = () => {
           gasPrice={wei(20)}
           exchangeRate={exchangeRate}
           isLoading={isLoading}
+          onSubmit={onSubmit}
         />
       </Container>
     </Box>

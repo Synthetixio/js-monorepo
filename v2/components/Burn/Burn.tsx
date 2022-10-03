@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { useState } from 'react';
 import { Input, Box, Text, Flex, Badge, Tooltip, Button, Skeleton } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
@@ -6,6 +6,7 @@ import Wei, { wei } from '@synthetixio/wei';
 import { InfoIcon, TokensIcon } from '@snx-v2/icons';
 import { numberWithCommas } from '@snx-v2/formatters';
 import { BigNumber } from '@ethersproject/bignumber';
+import { TransactionStatus } from '@snx-v2/useBurnMutation';
 
 interface BurnProps {
   snxBalance?: Wei;
@@ -16,6 +17,7 @@ interface BurnProps {
   exchangeRate: number;
   isLoading: boolean;
   onSubmit: (amount: BigNumber, toTarget?: boolean) => void;
+  txnStatus: TransactionStatus;
 }
 
 enum ActiveBadge {
@@ -33,11 +35,19 @@ export const Burn = ({
   exchangeRate = 0.25,
   isLoading = false,
   onSubmit = () => {},
+  txnStatus = 'unsent',
 }: BurnProps) => {
   const { t } = useTranslation();
   const [val, setVal] = useState('');
   const [toTarget, setToTarget] = useState(false);
   const [activeBadge, setActiveBadge] = useState<ActiveBadge | null>(null);
+
+  // Reset form
+  useEffect(() => {
+    if (txnStatus === 'unsent') {
+      setVal('');
+    }
+  }, [txnStatus]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');

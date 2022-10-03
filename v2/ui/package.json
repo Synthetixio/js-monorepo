@@ -54,6 +54,7 @@
     "@snx-v2/useBurnMutation": "workspace:^",
     "@snx-v2/useDebtData": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
+    "@snx-v2/useMintMutation": "workspace:^",
     "@snx-v2/useSynthsBalances": "workspace:*",
     "@socket.tech/widget": "^0.1.1",
     "@synthetixio/contracts": "workspace:*",
