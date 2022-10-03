@@ -51,7 +51,7 @@
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/getHealthVariant": "workspace:*",
     "@snx-v2/icons": "workspace:*",
-    "@snx-v2/useBurnMutation": "workspace:^",
+    "@snx-v2/useBurnMutation": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useMintMutation": "workspace:^",
