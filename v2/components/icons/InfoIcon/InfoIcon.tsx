@@ -1,8 +1,8 @@
 import { Icon, IconProps } from '@chakra-ui/react';
 
 export const InfoIcon = ({
-  width = '20px',
-  height = '20px',
+  width = '10px',
+  height = '10px',
   color = 'white',
   fillRule = 'evenodd',
   ...props

@@ -86,11 +86,16 @@
       "metamask-note": "Follow the Metamask prompts to authorize the transaction."
     },
     "balance-box": {
-      "heading": "My Balances",
-      "heading-tooltip": "Here you can find you SNX balance. How much you have staked and much is available to your disposal",
       "box-heading": "SNX Total",
       "staked": "Staked",
-      "transferable": "Transferable"
+      "transferable": "Transferable",
+      "debt": "Debt",
+      "hedged-debt": "Hedge debt",
+      "active": "Active",
+      "issued": "Issued",
+      "assets": "Assets",
+      "see-all-synths": "See all synths",
+      "show-all-balances": "Show all balances"
     },
     "c-ratio-banner": {
       "success": "You can now collect your weekly rewards",

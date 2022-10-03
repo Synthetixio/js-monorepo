@@ -147,6 +147,7 @@ const MaintainActionCard: React.FC<
             if (isStaking) {
               navigate('/staking/burn');
             } else {
+              //TODO
               console.log('C-Ratio explained');
             }
           }}
@@ -190,6 +191,8 @@ const CollectActionCard: React.FC<{
   hasClaimed,
   snxPrice,
 }) => {
+  const navigate = useNavigate();
+
   const { t } = useTranslation();
   const variant = getHealthVariant({
     liquidationCratioPercentage,
@@ -242,7 +245,7 @@ const CollectActionCard: React.FC<{
       {isStaking ? (
         <Button
           onClick={() => {
-            console.log('navigate to claim page');
+            navigate('/earn');
           }}
           variant={canClaim ? variant : 'disabled'}
           disabled={!canClaim}
@@ -252,6 +255,7 @@ const CollectActionCard: React.FC<{
       ) : (
         <Button
           onClick={() => {
+            // TODO
             console.log('navigate to Rewards explained');
           }}
           mb="2"
