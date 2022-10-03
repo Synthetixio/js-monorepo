@@ -83,7 +83,7 @@ export const formatCurrency = (
     : formatCryptoCurrency(value, options);
 
 export function convertCurrency(value: WeiSource, conversionRate?: WeiSource): WeiSource {
-  if (conversionRate !== undefined) {
+  if (conversionRate !== undefined && wei(conversionRate).gt(0)) {
     return wei(value).div(conversionRate);
   }
   return value;

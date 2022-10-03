@@ -55,7 +55,7 @@ export const useSynthsBalances = () => {
   const { data: SynthUtil } = useSynthUtil();
 
   return useQuery(
-    ['walletBalances', 'synths', networkId, walletAddress],
+    ['v2walletBalances', 'synths', networkId, walletAddress],
     async () => {
       if (!SynthUtil || !walletAddress) {
         throw Error('Query should not be enabled if contracts or walletAddress are missing');

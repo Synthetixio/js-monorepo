@@ -55,7 +55,7 @@ export const useDebtData = () => {
   const { data: Liquidator } = useLiquidator();
   const { data: SystemSettings } = useSystemSettings();
   return useQuery(
-    ['debt', 'data', networkId, walletAddress],
+    ['v2debt', 'data', networkId, walletAddress],
     async () => {
       if (!walletAddress || !Synthetix || !Liquidator || !SystemSettings)
         throw Error('Query should not be enabled if contracts are missing');

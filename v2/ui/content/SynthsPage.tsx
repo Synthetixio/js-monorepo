@@ -29,26 +29,33 @@ const SynthsPage: FC = () => {
       <Head>
         <title>{t('synths.page-title')}</title>
       </Head>
-      <StatsSection>
-        <div />
-        <TotalSynthValue
-          title={t('common.stat-box.synth-value')}
-          value={formatCurrency(
-            selectedPriceCurrency.name,
-            getPriceAtCurrentRate(totalSynthValue),
-            {
-              sign: selectedPriceCurrency.sign,
-            }
-          )}
-          size="lg"
-        />
-        <div />
-      </StatsSection>
-      <LineSpacer />
-      <Main />
+      <Content>
+        <StatsSection>
+          <div />
+          <TotalSynthValue
+            title={t('common.stat-box.synth-value')}
+            value={formatCurrency(
+              selectedPriceCurrency.name,
+              getPriceAtCurrentRate(totalSynthValue),
+              {
+                sign: selectedPriceCurrency.sign,
+              }
+            )}
+            size="lg"
+          />
+          <div />
+        </StatsSection>
+        <LineSpacer />
+        <Main />
+      </Content>
     </>
   );
 };
+const Content = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+`;
 
 const TotalSynthValue = styled(StatBox)`
   .value {

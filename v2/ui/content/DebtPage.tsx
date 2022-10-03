@@ -77,6 +77,7 @@ const DebtPage: FC = () => {
 const Content = styled(FlexDivCol)`
   width: 100%;
   max-width: 1200px;
+  margin: 0 auto;
 `;
 
 const IssuedDebt = styled(StatBox)`
