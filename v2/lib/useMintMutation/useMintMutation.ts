@@ -80,7 +80,6 @@ export function useMintMutation(delegateAddress?: DelegationWallet | null) {
         dispatch({ type: 'success' });
         setTimeout(() => dispatch({ type: 'settled' }), 1000);
       } catch (error: any) {
-        console.log('Error', error);
         dispatch({ type: 'error' });
         setTimeout(() => dispatch({ type: 'settled' }), 1000);
       }

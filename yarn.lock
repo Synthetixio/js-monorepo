@@ -6868,6 +6868,7 @@ __metadata:
     "@ethersproject/bignumber": ^5.7.0
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useBurnMutation": "workspace:*"
     "@storybook/react": ^6.5.10
     "@synthetixio/wei": "workspace:*"
     react: ^18.2.0
@@ -6938,7 +6939,6 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/CountDown": "workspace:^"
     "@snx-v2/icons": "workspace:*"
-    "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
     date-fns: ^2.19.0
     react: ^18.2.0
@@ -6946,7 +6946,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/EthGasPriceEstimator@workspace:*, @snx-v2/EthGasPriceEstimator@workspace:v2/components/EthGasPriceEstimator":
+"@snx-v2/EthGasPriceEstimator@workspace:*, @snx-v2/EthGasPriceEstimator@workspace:^, @snx-v2/EthGasPriceEstimator@workspace:v2/components/EthGasPriceEstimator":
   version: 0.0.0-use.local
   resolution: "@snx-v2/EthGasPriceEstimator@workspace:v2/components/EthGasPriceEstimator"
   dependencies:
@@ -7012,6 +7012,7 @@ __metadata:
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:^"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.10
@@ -7071,7 +7072,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/TransactionModal@workspace:v2/components/TransactionModal":
+"@snx-v2/TransactionModal@workspace:^, @snx-v2/TransactionModal@workspace:v2/components/TransactionModal":
   version: 0.0.0-use.local
   resolution: "@snx-v2/TransactionModal@workspace:v2/components/TransactionModal"
   dependencies:
@@ -7118,7 +7119,7 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/icons": "workspace:*"
     "@storybook/react": ^6.5.10
-    react-i18next: ^11.18.3
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -7183,14 +7184,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useBurnMutation@workspace:^, @snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation":
+"@snx-v2/useBurnMutation@workspace:*, @snx-v2/useBurnMutation@workspace:^, @snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation"
   dependencies:
     "@ethersproject/bignumber": ^5.7.0
+    "@snx-v2/EthGasPriceEstimator": "workspace:^"
     "@snx-v2/GasSpeedContext": "workspace:^"
+    "@snx-v2/useExchangeRatesData": "workspace:^"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/queries": "workspace:^"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -7210,7 +7214,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useExchangeRatesData@workspace:*, @snx-v2/useExchangeRatesData@workspace:v2/lib/useExchangeRatesData":
+"@snx-v2/useExchangeRatesData@workspace:*, @snx-v2/useExchangeRatesData@workspace:^, @snx-v2/useExchangeRatesData@workspace:v2/lib/useExchangeRatesData":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useExchangeRatesData@workspace:v2/lib/useExchangeRatesData"
   dependencies:
@@ -7293,9 +7297,12 @@ __metadata:
   resolution: "@snx-v2/useMintMutation@workspace:v2/lib/useMintMutation"
   dependencies:
     "@ethersproject/bignumber": ^5.7.0
+    "@snx-v2/EthGasPriceEstimator": "workspace:^"
     "@snx-v2/GasSpeedContext": "workspace:^"
+    "@snx-v2/useExchangeRatesData": "workspace:^"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/queries": "workspace:^"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -9061,7 +9068,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/queries@workspace:*, @synthetixio/queries@workspace:packages/queries":
+"@synthetixio/queries@workspace:*, @synthetixio/queries@workspace:^, @synthetixio/queries@workspace:packages/queries":
   version: 0.0.0-use.local
   resolution: "@synthetixio/queries@workspace:packages/queries"
   dependencies:
@@ -9166,7 +9173,6 @@ __metadata:
     "@chakra-ui/storybook-addon": ^4.0.4
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
-    "@ethersproject/bignumber": ^5.7.0
     "@graphql-cli/introspect": ^2.1.0
     "@graphql-inspector/graphql-cli-common": ^2.9.0
     "@mdx-js/react": ^1.6.22
@@ -9189,6 +9195,7 @@ __metadata:
     "@snx-v2/SelfLiquidation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"
+    "@snx-v2/TransactionModal": "workspace:^"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/UtilityCard": "workspace:^"
     "@snx-v2/formatters": "workspace:*"

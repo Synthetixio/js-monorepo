@@ -26,7 +26,8 @@ export const Mint = ({
   const { t } = useTranslation();
   const [val, setVal] = useState('');
   const [activeBadge, setActiveBadge] = useState(0);
-  const [toMax, setToMax] = useState(false);
+  // const [toMax, setToMax] = useState(false); TODO: IssueMaxSynths logic
+  const toMax = false;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');

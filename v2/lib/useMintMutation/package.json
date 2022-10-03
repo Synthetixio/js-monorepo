@@ -5,9 +5,12 @@
   "version": "0.0.0",
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",
+    "@snx-v2/EthGasPriceEstimator": "workspace:^",
     "@snx-v2/GasSpeedContext": "workspace:^",
+    "@snx-v2/useExchangeRatesData": "workspace:^",
     "@snx-v2/useGasOptions": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
+    "@synthetixio/queries": "workspace:^",
     "@tanstack/react-query": "^4.3.4",
     "react": "^18.2.0"
   }

@@ -7,6 +7,6 @@
     "@chakra-ui/react": "^2.2.8",
     "@snx-v2/icons": "workspace:*",
     "@storybook/react": "^6.5.10",
-    "react-i18next": "^11.18.3"
+    "react": "^18.2.0"
   }
 }

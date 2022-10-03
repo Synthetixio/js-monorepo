@@ -35,7 +35,7 @@ import { UserBalances } from '@snx-v2/UserBalances';
 import Wei, { wei } from '@synthetixio/wei';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
-import { EpochPrice } from '../EpochPrice';
+import { EpochPrice } from '@snx-v2/EpochPrice';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 
