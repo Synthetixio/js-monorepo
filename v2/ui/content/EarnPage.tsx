@@ -74,40 +74,47 @@ const EarnPage: FC = () => {
       <Head>
         <title>{t('earn.page-title')}</title>
       </Head>
-      <StatsSection>
-        <UpcomingRewards
-          title={t('common.stat-box.upcoming-rewards')}
-          value={formatFiatCurrency(getPriceAtCurrentRate(totalRewards), {
-            sign: selectedPriceCurrency.sign,
-          })}
+      <Content>
+        <StatsSection>
+          <UpcomingRewards
+            title={t('common.stat-box.upcoming-rewards')}
+            value={formatFiatCurrency(getPriceAtCurrentRate(totalRewards), {
+              sign: selectedPriceCurrency.sign,
+            })}
+          />
+          <APR
+            title={t('common.stat-box.earning')}
+            value={formatPercent(stakingAPR ? stakingAPR : 0)}
+            size="lg"
+          />
+          <LifetimeRewards
+            title={t('common.stat-box.lifetime-rewards')}
+            value={formatFiatCurrency(getPriceAtCurrentRate(totalFees), {
+              sign: selectedPriceCurrency.sign,
+            })}
+          />
+        </StatsSection>
+        <LineSpacer />
+        <Incentives
+          tradingRewards={tradingRewards}
+          stakingRewards={stakingRewards}
+          totalRewards={totalRewards}
+          stakingAPR={stakingAPR}
+          liquidationRewards={liquidationData || wei(0)}
+          stakedAmount={SNXRate.eq(0) ? wei(0) : stakedValue.div(SNXRate)}
+          hasClaimed={hasClaimed}
+          refetchAllRewards={refetchAllRewards}
         />
-        <APR
-          title={t('common.stat-box.earning')}
-          value={formatPercent(stakingAPR ? stakingAPR : 0)}
-          size="lg"
-        />
-        <LifetimeRewards
-          title={t('common.stat-box.lifetime-rewards')}
-          value={formatFiatCurrency(getPriceAtCurrentRate(totalFees), {
-            sign: selectedPriceCurrency.sign,
-          })}
-        />
-      </StatsSection>
-      <LineSpacer />
-      <Incentives
-        tradingRewards={tradingRewards}
-        stakingRewards={stakingRewards}
-        totalRewards={totalRewards}
-        stakingAPR={stakingAPR}
-        liquidationRewards={liquidationData || wei(0)}
-        stakedAmount={SNXRate.eq(0) ? wei(0) : stakedValue.div(SNXRate)}
-        hasClaimed={hasClaimed}
-        refetchAllRewards={refetchAllRewards}
-      />
+      </Content>
     </>
   );
 };
 
+const Content = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+`;
 const UpcomingRewards = styled(StatBox)`
   .title {
     color: ${(props) => props.theme.colors.green};
