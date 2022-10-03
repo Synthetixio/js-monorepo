@@ -35,3 +35,5 @@ export * from './OneInchIcon';
 export * from './CurveIcon';
 export * from './CowSwapIcon';
 export * from './SushiSwapLogo';
+export * from './BridgeIcon';
+export * from './DebtPoolIcon';
