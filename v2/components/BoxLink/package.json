@@ -1,0 +1,13 @@
+{
+  "name": "@snx-v2/BoxLink",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v2/icons": "workspace:*",
+    "@storybook/react": "^6.5.10",
+    "react": "^18.2.0",
+    "react-router-dom": "^6.3.0"
+  }
+}

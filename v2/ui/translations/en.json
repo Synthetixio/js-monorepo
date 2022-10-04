@@ -20,6 +20,22 @@
       "price-mobile": "SNX Price",
       "price-desktop": "SNX:"
     },
+    "v2-home": {
+      "box-links": {
+        "bridge": {
+          "headline": "SNX Bridge",
+          "subHeadline": "Transfer Asset between blockchains"
+        },
+        "debt-pool": {
+          "headline": "Debt Pool",
+          "subHeadline": "Explore the debt pool"
+        },
+        "help": {
+          "headline": "Help",
+          "subHeadline": "Learn more about Synthetix"
+        }
+      }
+    },
     "main-action-cards": {
       "stake-headline": "Stake & borrow",
       "stake-body": "Mint sUSD by staking your SNX.",
