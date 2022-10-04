@@ -10,7 +10,9 @@ import { GWEI_DECIMALS } from '@snx-v2/Constants';
 import { GasSpeedContext } from '@snx-v2/GasSpeedContext';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 
-const GAS_LIMIT_BUFFER = 1.2;
+// Note it looks like gas limit estimation is coming in higher slightly higher than what gets used according to etherscan
+// Will try without a buffer, if we get user report of out of gas we can increase it again.
+const GAS_LIMIT_BUFFER = wei(1, GWEI_DECIMALS);
 type GasPrice = {
   baseFeePerGas?: BigNumber; // Note that this is used for estimating price and should not be included in the transaction
   maxPriorityFeePerGas?: BigNumber;
