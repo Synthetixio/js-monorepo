@@ -11,7 +11,7 @@ const Template: ComponentStory<typeof MintUi> = (_args) => <MintUi {..._args} />
 
 export const Primary = Template.bind({});
 Primary.args = {
-  snxBalance: 2000,
+  unstakedSnx: 2000,
   susdBalance: 2000,
   exchangeRate: 0.25,
   transactionFee: wei(0.01),

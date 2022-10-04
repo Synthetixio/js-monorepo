@@ -11,9 +11,10 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { TransactionModal } from '@snx-v2/TransactionModal';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
+import { calculateUnstakedStakedSnx } from '@snx-v2/stakingCalculations';
 
 interface MintProps {
-  snxBalance?: number;
+  unstakedSnx?: number;
   susdBalance?: number;
   exchangeRate: number;
   isLoading: boolean;
@@ -32,7 +33,7 @@ const convert = (value: string, exchangeRate: number) => {
 };
 
 export const MintUi = ({
-  snxBalance = 0,
+  unstakedSnx = 0,
   susdBalance = 0,
   exchangeRate = 0.25,
   isLoading = false,
@@ -53,9 +54,9 @@ export const MintUi = ({
   };
 
   const onBadgePress = (amount: number) => {
-    if (snxBalance > 0) {
+    if (unstakedSnx > 0) {
       setActiveBadge(amount);
-      const newAmount = Math.ceil(snxBalance * amount);
+      const newAmount = unstakedSnx * amount;
       onMintAmountSNXChange(formatNumber(newAmount));
     }
   };
@@ -109,10 +110,10 @@ export const MintUi = ({
                 fontFamily="heading"
                 cursor="pointer"
                 onClick={() => {
-                  onMintAmountSNXChange(formatNumber(snxBalance));
+                    onMintAmountSNXChange(formatNumber(unstakedSnx));
                 }}
               >
-                {t('staking-v2.mint.snx-balance', { snxBalance: formatNumber(snxBalance) })}
+                  {t('staking-v2.mint.snx-balance', { snxBalance: formatNumber(unstakedSnx) })}
               </Text>
             </Skeleton>
           </Flex>
@@ -187,17 +188,20 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
   const { data: debtData, isLoading: isDebtDataLoading, refetch: refetchDebtData } = useDebtData();
 
-  const targetCRatio = debtData?.targetCRatioPercentage.toNumber();
+  const targetCRatioPercent = debtData?.targetCRatioPercentage.toNumber();
 
   const exchangeRate =
-    (targetCRatio && exchangeRateData?.SNX?.div(targetCRatio / 100).toNumber()) || 0;
-  const snxBalance = debtData?.collateral;
+    (targetCRatioPercent && exchangeRateData?.SNX?.div(targetCRatioPercent / 100).toNumber()) || 0;
   // const debouncedSearchTerm = useDebounce(mintAmount, 500);
+  const mintAmountSUSD = convert(mintAmountSNX, exchangeRate);
+  const { targetCRatio, currentCRatio, collateral } = debtData || {};
+  const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
 
-  const { mutate, transactionFee } = useMintMutation({
-    amount: wei(convert(mintAmountSNX, exchangeRate) || 0).toBN(),
+  const unstakedSnx = calculateUnstakedStakedSnx({ targetCRatio, currentCRatio, collateral });
+  const { mutate, transactionFee, modalOpen, txnStatus } = useMintMutation({
+    amount: wei(mintAmountSUSD || 0).toBN(),
     delegateAddress: delegateWalletAddress,
-    toMax: wei(mintAmountSNX || 0).gte(snxBalance || 0),
+    toMax: wei(mintAmountSNX || 0).gte(formatNumber(unstakedSnx.toNumber())),
   });
   const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
   return (
@@ -207,7 +211,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         exchangeRate={exchangeRate}
         mintAmountSNX={mintAmountSNX}
         onMintAmountSNXChange={setMintAmountSNX}
-        snxBalance={snxBalance?.toNumber()}
+        unstakedSnx={unstakedSnx.toNumber()}
         susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
         onSubmit={() => {
           mutate(undefined, {
