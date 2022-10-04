@@ -1,16 +1,49 @@
 import { useContext } from 'react';
-import { BigNumber } from '@ethersproject/bignumber';
 import { useGasPrice } from '@snx-v2/useGasPrice';
 import { PopulatedTransaction } from '@ethersproject/contracts';
+import { BigNumber } from '@ethersproject/bignumber';
 import { ContractContext } from '@snx-v2/ContractContext';
-import { useQuery } from '@tanstack/react-query';
+import { QueryKey, useQuery } from '@tanstack/react-query';
 import { useOptimismLayer1Fee } from '@snx-v2/useOptimismLayer1Fee';
-import { wei } from '@synthetixio/wei';
+import Wei, { wei } from '@synthetixio/wei';
 import { GWEI_DECIMALS } from '@snx-v2/Constants';
 import { GasSpeedContext } from '@snx-v2/GasSpeedContext';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 
 const GAS_LIMIT_BUFFER = 1.2;
+type GasPrice = {
+  baseFeePerGas?: BigNumber; // Note that this is used for estimating price and should not be included in the transaction
+  maxPriorityFeePerGas?: BigNumber;
+  maxFeePerGas?: BigNumber;
+  gasPrice?: BigNumber;
+};
 
+const getTotalGasPrice = (gasPrice?: GasPrice | null) => {
+  if (!gasPrice) return wei(0);
+  const { gasPrice: ovmGasPrice, baseFeePerGas, maxPriorityFeePerGas } = gasPrice;
+  if (ovmGasPrice) {
+    return wei(ovmGasPrice, GWEI_DECIMALS);
+  }
+  return wei(baseFeePerGas || 0, GWEI_DECIMALS).add(wei(maxPriorityFeePerGas || 0, GWEI_DECIMALS));
+};
+
+const getTransactionPrice = (
+  gasPrice: GasPrice | undefined,
+  gasLimit: BigNumber | undefined,
+  ethPrice: Wei | undefined,
+  optimismLayerOneFee: Wei | undefined
+) => {
+  if (!gasPrice || !gasLimit || !ethPrice) return null;
+  const totalGasPrice = getTotalGasPrice(gasPrice);
+
+  const extraLayer1Fees = optimismLayerOneFee;
+  const gasPriceCost = totalGasPrice.mul(wei(gasLimit, GWEI_DECIMALS)).mul(ethPrice);
+  const l1Cost = ethPrice.mul(extraLayer1Fees || 0);
+
+  const txPrice = gasPriceCost.add(l1Cost);
+
+  return txPrice;
+};
 export const useGasOptions = ({
   populateTransaction,
   queryKeys = [],
@@ -22,7 +55,7 @@ export const useGasOptions = ({
   const { gasSpeed } = useContext(GasSpeedContext);
   const gasPriceQuery = useGasPrice();
   const optimismLayerOneFeesQuery = useOptimismLayer1Fee({ populateTransaction });
-
+  const { data: exchangeRatesData } = useExchangeRatesData();
   return useQuery(
     [...queryKeys, optimismLayerOneFeesQuery.data, gasPriceQuery.data, networkId],
     async () => {
@@ -51,8 +84,14 @@ export const useGasOptions = ({
         optimismLayerOneFees,
         gasSpeed,
         gasOptionsForTransaction: formatGasPriceForTransaction(),
+        transactionPrice: getTransactionPrice(
+          gasPrices?.[gasSpeed],
+          gasLimit,
+          exchangeRatesData?.ETH,
+          optimismLayerOneFees
+        ),
       };
     },
-    { enabled: Boolean(getGasLimit && populateTransaction && networkId) }
+    { enabled: Boolean(populateTransaction && networkId), staleTime: 10000 }
   );
 };
