@@ -6867,6 +6867,8 @@ __metadata:
   resolution: "@snx-v2/BoxLink@workspace:v2/components/BoxLink"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/react": ^6.5.10
     react: ^18.2.0
     react-router-dom: ^6.3.0
   languageName: unknown
