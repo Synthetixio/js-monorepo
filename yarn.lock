@@ -4655,35 +4655,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-codegen/introspection@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "@graphql-codegen/introspection@npm:2.2.1"
-  dependencies:
-    "@graphql-codegen/plugin-helpers": ^2.6.2
-    "@graphql-codegen/visitor-plugin-common": ^2.12.1
-    tslib: ~2.4.0
-  peerDependencies:
-    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: 5de373889e9bd0f64ff622cecb92e92921ea01ee45e6edae713c4b9eb7aa70be6f18c125d4bd6d67af3abd26e8e4fbaa0a0268adcf71634b4ff9561df34883e8
-  languageName: node
-  linkType: hard
-
-"@graphql-codegen/near-operation-file-preset@npm:^2.4.1":
-  version: 2.4.1
-  resolution: "@graphql-codegen/near-operation-file-preset@npm:2.4.1"
-  dependencies:
-    "@graphql-codegen/add": ^3.2.1
-    "@graphql-codegen/plugin-helpers": ^2.6.2
-    "@graphql-codegen/visitor-plugin-common": 2.12.1
-    "@graphql-tools/utils": ^8.8.0
-    parse-filepath: ^1.0.2
-    tslib: ~2.4.0
-  peerDependencies:
-    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: 82457b31161cb6ac612873ee5f00eafe6d667c76cf7ec83f23b970e69f636ca6be566b9193d18b7793a4a16c698577d040ad41f2593054475b74a9abbf12295c
-  languageName: node
-  linkType: hard
-
 "@graphql-codegen/plugin-helpers@npm:^2.6.2":
   version: 2.7.1
   resolution: "@graphql-codegen/plugin-helpers@npm:2.7.1"
@@ -4713,36 +4684,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-codegen/typescript-operations@npm:^2.5.3":
-  version: 2.5.3
-  resolution: "@graphql-codegen/typescript-operations@npm:2.5.3"
-  dependencies:
-    "@graphql-codegen/plugin-helpers": ^2.6.2
-    "@graphql-codegen/typescript": ^2.7.3
-    "@graphql-codegen/visitor-plugin-common": 2.12.1
-    auto-bind: ~4.0.0
-    tslib: ~2.4.0
-  peerDependencies:
-    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: b91ca8c994705c881226cb36095ef8707f24bcb07d0862a434ab02ff609787ea53ee7589cd5200190b8ad90a2d73a575088c4924feff525b559e1af8305bd57b
-  languageName: node
-  linkType: hard
-
-"@graphql-codegen/typescript-react-query@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "@graphql-codegen/typescript-react-query@npm:4.0.1"
-  dependencies:
-    "@graphql-codegen/plugin-helpers": ^2.6.2
-    "@graphql-codegen/visitor-plugin-common": 2.12.1
-    auto-bind: ~4.0.0
-    change-case-all: 1.0.14
-    tslib: ~2.4.0
-  peerDependencies:
-    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: b5f2f7d76a1af344239825409460c09f58e96e60574796605423d3579aaa62a3169815fa34a40243164ec765826e28e2668106109c28eaad6fe7994ff9ebafbc
-  languageName: node
-  linkType: hard
-
 "@graphql-codegen/typescript@npm:^2.7.3":
   version: 2.7.3
   resolution: "@graphql-codegen/typescript@npm:2.7.3"
@@ -4758,7 +4699,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-codegen/visitor-plugin-common@npm:2.12.1, @graphql-codegen/visitor-plugin-common@npm:^2.12.1":
+"@graphql-codegen/visitor-plugin-common@npm:2.12.1":
   version: 2.12.1
   resolution: "@graphql-codegen/visitor-plugin-common@npm:2.12.1"
   dependencies:
@@ -7014,6 +6955,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/subgraph@workspace:*, @snx-v2/subgraph@workspace:v2/lib/subgraph":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/subgraph@workspace:v2/lib/subgraph"
+  dependencies:
+    "@graphql-codegen/add": ^3.2.1
+    "@graphql-codegen/cli": ^2.13.2
+    "@graphql-codegen/schema-ast": ^2.5.1
+    "@graphql-codegen/typescript": ^2.7.3
+    graphql: ^16.6.0
+    typescript: ^4.8.2
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useBurnMutation@workspace:*, @snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation"
@@ -7120,6 +7074,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useInterval@workspace:v2/lib/useInterval"
   dependencies:
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useIssuedsQuery@workspace:v2/lib/useIssuedsQuery":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useIssuedsQuery@workspace:v2/lib/useIssuedsQuery"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/subgraph": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -9017,13 +8982,6 @@ __metadata:
     "@chakra-ui/storybook-addon": ^4.0.4
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
-    "@graphql-codegen/cli": ^2.13.2
-    "@graphql-codegen/introspection": ^2.2.1
-    "@graphql-codegen/near-operation-file-preset": ^2.4.1
-    "@graphql-codegen/schema-ast": ^2.5.1
-    "@graphql-codegen/typescript": ^2.7.3
-    "@graphql-codegen/typescript-operations": ^2.5.3
-    "@graphql-codegen/typescript-react-query": ^4.0.1
     "@mdx-js/react": ^1.6.22
     "@metamask/providers": ^8.1.1
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.7

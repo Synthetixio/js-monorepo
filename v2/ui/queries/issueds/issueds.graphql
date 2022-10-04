@@ -1,7 +1,0 @@
-query issueds($account: Bytes) {
-  issueds(where: { account: $account }) {
-    account
-    value
-    timestamp
-  }
-}
