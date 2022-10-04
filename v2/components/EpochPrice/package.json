@@ -1,15 +1,14 @@
 {
-  "name": "@snx-v2/mint",
+  "name": "@snx-v2/EpochPrice",
   "private": true,
   "main": "index.ts",
   "version": "0.0.0",
   "dependencies": {
     "@chakra-ui/react": "^2.2.8",
-    "@ethersproject/bignumber": "^5.6.2",
-    "@snx-v2/formatters": "workspace:*",
+    "@snx-v2/CountDown": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@storybook/react": "^6.5.10",
-    "@synthetixio/wei": "workspace:*",
+    "date-fns": "^2.19.0",
     "react": "^18.2.0",
     "react-i18next": "^11.18.3"
   }

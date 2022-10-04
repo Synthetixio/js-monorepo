@@ -31,7 +31,13 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
           <Header />
         </>
       )}
-      {STAKING_V2_ENABLED ? <Box flex="1 1 auto">{children}</Box> : <Content>{children}</Content>}
+      {STAKING_V2_ENABLED ? (
+        <Box overflow="auto" flex="1 1 auto">
+          {children}
+        </Box>
+      ) : (
+        <Content>{children}</Content>
+      )}
       <NotificationContainer />
     </>
   );

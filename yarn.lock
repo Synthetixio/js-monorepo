@@ -6879,8 +6879,10 @@ __metadata:
   resolution: "@snx-v2/Burn@workspace:v2/components/Burn"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@ethersproject/bignumber": ^5.6.2
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useBurnMutation": "workspace:*"
     "@storybook/react": ^6.5.10
     "@synthetixio/wei": "workspace:*"
     react: ^18.2.0
@@ -6941,6 +6943,20 @@ __metadata:
     "@snx-v2/useInterval": "workspace:*"
     date-fns: ^2.19.0
     react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/EpochPrice@workspace:^, @snx-v2/EpochPrice@workspace:v2/components/EpochPrice":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/EpochPrice@workspace:v2/components/EpochPrice"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/CountDown": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/react": ^6.5.10
+    date-fns: ^2.19.0
+    react: ^18.2.0
+    react-i18next: ^11.18.3
   languageName: unknown
   linkType: soft
 
@@ -7005,10 +7021,13 @@ __metadata:
   resolution: "@snx-v2/Navigation@workspace:v2/components/Navigation"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/EpochPrice": "workspace:^"
     "@snx-v2/UserBalances": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.10
     "@synthetixio/contracts-interface": "workspace:*"
@@ -7067,7 +7086,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/TransactionModal@workspace:v2/components/TransactionModal":
+"@snx-v2/TransactionModal@workspace:^, @snx-v2/TransactionModal@workspace:v2/components/TransactionModal":
   version: 0.0.0-use.local
   resolution: "@snx-v2/TransactionModal@workspace:v2/components/TransactionModal"
   dependencies:
@@ -7104,6 +7123,17 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/icons": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/UtilityCard@workspace:^, @snx-v2/UtilityCard@workspace:v2/components/UtilityCard":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/UtilityCard@workspace:v2/components/UtilityCard"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/react": ^6.5.10
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -7158,12 +7188,29 @@ __metadata:
   resolution: "@snx-v2/mint@workspace:v2/components/Mint"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@ethersproject/bignumber": ^5.6.2
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@storybook/react": ^6.5.10
     "@synthetixio/wei": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useBurnMutation@workspace:*, @snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation"
+  dependencies:
+    "@ethersproject/bignumber": ^5.6.2
+    "@snx-v2/EthGasPriceEstimator": "workspace:*"
+    "@snx-v2/GasSpeedContext": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useGasOptions": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/queries": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -7221,7 +7268,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useGasOptions@workspace:v2/lib/useGasOptions":
+"@snx-v2/useGasOptions@workspace:*, @snx-v2/useGasOptions@workspace:v2/lib/useGasOptions":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useGasOptions@workspace:v2/lib/useGasOptions"
   dependencies:
@@ -7268,6 +7315,22 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useMintMutation@workspace:^, @snx-v2/useMintMutation@workspace:v2/lib/useMintMutation":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useMintMutation@workspace:v2/lib/useMintMutation"
+  dependencies:
+    "@ethersproject/bignumber": ^5.6.2
+    "@snx-v2/EthGasPriceEstimator": "workspace:*"
+    "@snx-v2/GasSpeedContext": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useGasOptions": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/queries": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -9161,12 +9224,16 @@ __metadata:
     "@snx-v2/SelfLiquidation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"
+    "@snx-v2/TransactionModal": "workspace:^"
     "@snx-v2/UnflagOptions": "workspace:*"
+    "@snx-v2/UtilityCard": "workspace:^"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useBurnMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useMintMutation": "workspace:^"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10

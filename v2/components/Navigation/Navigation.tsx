@@ -18,7 +18,7 @@ import {
   FailedIcon,
   GovIcon,
   GuideIcon,
-  KebabMenu,
+  NineDots,
   LoansIcon,
   NotificationsIcon,
   OptimismIcon,
@@ -28,13 +28,16 @@ import {
   StakingLogo,
   InfoOutline,
 } from '@snx-v2/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { truncateAddress } from '@snx-v2/formatters';
+import { formatNumberToUsd, truncateAddress } from '@snx-v2/formatters';
 import { UserBalances } from '@snx-v2/UserBalances';
 import Wei, { wei } from '@synthetixio/wei';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
+import { EpochPrice } from '@snx-v2/EpochPrice';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
+import { useFeePoolData } from '@snx-v2/useFeePoolData';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -76,6 +79,7 @@ export const NavigationUI = ({
   const { t } = useTranslation();
 
   const { name, icon } = activeIcon(currentNetwork);
+  const navigate = useNavigate();
 
   const size = useBreakpointValue({
     base: 'mobile',
@@ -211,41 +215,41 @@ export const NavigationUI = ({
             borderRadius="4px"
           >
             <MenuButton>
-              <KebabMenu />
+              <NineDots />
             </MenuButton>
           </Center>
           <MenuList>
-            <MenuItem>
+            <MenuItem onClick={() => navigate('/')}>
               <Center>
                 <InfoOutline />
                 <Text ml={2}>{t('common.wallet.menu.help')}</Text>
               </Center>
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => navigate('/loans')}>
               <Center>
                 <LoansIcon />
                 <Text ml={2}>{t('common.wallet.menu.loans')}</Text>
               </Center>
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => window.open('https://governance.synthetix.io/', '_newtab')}>
               <Center>
                 <GovIcon />
                 <Text ml={2}>{t('common.wallet.menu.gov')}</Text>
               </Center>
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => navigate('/')}>
               <Center>
                 <WalletIcon color="white" />
                 <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>
               </Center>
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => navigate('/')}>
               <Center>
                 <SettingsIcon color="white" />
                 <Text ml={2}>{t('common.wallet.menu.settings')}</Text>
               </Center>
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => navigate('/')}>
               <GuideIcon />
               <Text ml={2}>{t('common.wallet.menu.guide')}</Text>
             </MenuItem>
@@ -265,18 +269,45 @@ export const Navigation = ({
 }: Omit<NavigationProps, 'snxBalance' | 'sUSDBalance' | 'isLoading'>) => {
   const { data: synthsBalances, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: debtData, isLoading: isDebtLoading } = useDebtData();
+  const { data: exchangeRateData, isLoading: isExchangeRatesLoading } = useExchangeRatesData();
+  const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
+
+  const size = useBreakpointValue({
+    base: 'mobile',
+    md: 'desktop',
+  });
 
   const isLoading = isSynthsLoading || isDebtLoading;
+  const isEpochPriceLoading = isExchangeRatesLoading || isFeePoolDataLoading;
+
+  const snxPrice = exchangeRateData?.SNX && formatNumberToUsd(exchangeRateData?.SNX.toString(2));
+
   return (
-    <NavigationUI
-      currentNetwork={currentNetwork}
-      switchNetwork={switchNetwork}
-      connectWallet={connectWallet}
-      isWalletConnected={isWalletConnected}
-      walletAddress={walletAddress}
-      isLoading={isLoading}
-      snxBalance={debtData?.collateral || wei(0)}
-      sUSDBalance={synthsBalances?.balancesMap['sUSD']?.balance || wei(0)}
-    />
+    <>
+      {size === 'desktop' && (
+        <EpochPrice
+          isLoading={isEpochPriceLoading}
+          epochEnd={feePoolData?.nextFeePeriodStartDate}
+          snxPrice={snxPrice}
+        />
+      )}
+      <NavigationUI
+        currentNetwork={currentNetwork}
+        switchNetwork={switchNetwork}
+        connectWallet={connectWallet}
+        isWalletConnected={isWalletConnected}
+        walletAddress={walletAddress}
+        isLoading={isLoading}
+        snxBalance={debtData?.collateral || wei(0)}
+        sUSDBalance={synthsBalances?.balancesMap['sUSD']?.balance || wei(0)}
+      />
+      {size === 'mobile' && (
+        <EpochPrice
+          isLoading={isEpochPriceLoading}
+          epochEnd={feePoolData?.nextFeePeriodStartDate}
+          snxPrice={snxPrice}
+        />
+      )}
+    </>
   );
 };

@@ -10,6 +10,7 @@ import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
 import { useNavigate } from 'react-router-dom';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { formatNumberToUsd } from '@snx-v2/formatters';
+
 const CardHeader = ({
   step,
   headingText,

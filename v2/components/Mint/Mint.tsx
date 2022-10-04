@@ -1,27 +1,18 @@
-import { useState } from 'react';
-import {
-  Input,
-  Box,
-  Text,
-  Flex,
-  Badge,
-  Tooltip,
-  Button,
-  BoxProps,
-  Skeleton,
-} from '@chakra-ui/react';
+import { useState, ChangeEvent } from 'react';
+import { Input, Box, Text, Flex, Badge, Tooltip, Button, Skeleton } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { InfoIcon, TokensIcon } from '@snx-v2/icons';
 import { numberWithCommas } from '@snx-v2/formatters';
-import { ChangeEvent } from 'react';
+import { BigNumber } from '@ethersproject/bignumber';
 
-interface MintProps extends BoxProps {
+interface MintProps {
   snxBalance: Wei;
   susdBalance: Wei;
   gasPrice: Wei;
   exchangeRate: number;
   isLoading: boolean;
+  onSubmit: (amount: BigNumber, toMax?: boolean) => void;
 }
 
 export const Mint = ({
@@ -30,11 +21,13 @@ export const Mint = ({
   gasPrice = wei(0),
   exchangeRate = 0.25,
   isLoading = false,
-  ...props
+  onSubmit = () => {},
 }: MintProps) => {
   const { t } = useTranslation();
   const [val, setVal] = useState('');
   const [activeBadge, setActiveBadge] = useState(0);
+  // const [toMax, setToMax] = useState(false); TODO: IssueMaxSynths logic
+  const toMax = false;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
@@ -60,8 +53,10 @@ export const Mint = ({
     return Number(0).toFixed(2).toString();
   };
 
+  console.log('Val is', val);
+
   return (
-    <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="md" p={5} {...props}>
+    <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="md" p={5}>
       <Flex alignItems="center">
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
           {t('staking-v2.mint.heading')}
@@ -216,7 +211,7 @@ export const Mint = ({
         fontWeight="black"
         mt={4}
         w="100%"
-        onClick={() => console.log('mint')}
+        onClick={() => onSubmit(wei(val).toBN(), toMax)}
         disabled={val === ''}
       >
         Mint
