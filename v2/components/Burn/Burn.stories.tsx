@@ -17,7 +17,6 @@ Primary.args = {
   exchangeRate: 0.25,
   gasPrice: wei(0.01),
   activeDebt: wei(0),
-  currentCRatio: 0,
-  targetCRatio: 0,
   isLoading: false,
+  txnStatus: 'unsent',
 };
