@@ -1,60 +1,65 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, FC } from 'react';
 import { Input, Box, Text, Flex, Tooltip, Button, Skeleton } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { InfoIcon, TokensIcon } from '@snx-v2/icons';
-import { numberWithCommas } from '@snx-v2/formatters';
-import { BigNumber } from '@ethersproject/bignumber';
+import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
+import { useMintMutation } from '@snx-v2/useMintMutation';
+import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
+import { useDebtData } from '@snx-v2/useDebtData';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
+import { TransactionModal } from '@snx-v2/TransactionModal';
+import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 
 interface MintProps {
-  snxBalance: Wei;
-  susdBalance: Wei;
-  gasPrice: Wei;
+  snxBalance?: number;
+  susdBalance?: number;
   exchangeRate: number;
   isLoading: boolean;
-  onSubmit: (amount: BigNumber, toMax?: boolean) => void;
+  onSubmit: () => void;
+  onMintAmountSNXChange: (amount: string) => void;
+  mintAmountSNX: string;
+  transactionFee: Wei;
 }
+const convert = (value: string, exchangeRate: number) => {
+  const num = parseFloat(value);
+  if (!isNaN(num)) {
+    return formatNumber(num * exchangeRate);
+  }
 
-export const Mint = ({
-  snxBalance = wei(0),
-  susdBalance = wei(0),
-  gasPrice = wei(0),
+  return formatNumber(0);
+};
+
+export const MintUi = ({
+  snxBalance = 0,
+  susdBalance = 0,
   exchangeRate = 0.25,
   isLoading = false,
-  onSubmit = () => {},
+  onSubmit,
+  onMintAmountSNXChange,
+  mintAmountSNX,
+  transactionFee,
 }: MintProps) => {
   const { t } = useTranslation();
-  const [val, setVal] = useState('');
   const [activeBadge, setActiveBadge] = useState(0);
-  // const [toMax, setToMax] = useState(false); TODO: IssueMaxSynths logic
-  const toMax = false;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
     if (/^[0-9]*(\.[0-9]{0,2})?$/.test(value)) {
       setActiveBadge(0);
-      setVal(value);
+      onMintAmountSNXChange(value);
     }
   };
 
   const onBadgePress = (amount: number) => {
-    if (snxBalance.gt(0)) {
+    if (snxBalance > 0) {
       setActiveBadge(amount);
-      setVal(snxBalance.mul(amount).toString(2));
+      const newAmount = Math.ceil(snxBalance * amount);
+      onMintAmountSNXChange(formatNumber(newAmount));
     }
   };
-
-  const convert = (value: string) => {
-    const num = parseFloat(value);
-    if (!isNaN(num)) {
-      return (num * exchangeRate).toFixed(2).toString();
-    }
-
-    return Number(0).toFixed(2).toString();
-  };
-
-  console.log('Val is', val);
+  const mintAmountsUSD = convert(mintAmountSNX, exchangeRate);
 
   return (
     <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="md" p={5}>
@@ -83,7 +88,7 @@ export const Mint = ({
               onChange={onChange}
               type="text"
               inputMode="decimal"
-              value={numberWithCommas(val)}
+              value={numberWithCommas(mintAmountSNX)}
               maxLength={14}
               textAlign="end"
               p={0}
@@ -98,8 +103,16 @@ export const Mint = ({
               _placeholder={{ color: 'whiteAlpha.700' }}
             />
             <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
-              <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-                {t('staking-v2.mint.snx-balance', { snxBalance: snxBalance.toString(2) })}
+              <Text
+                color="whiteAlpha.700"
+                fontSize="xs"
+                fontFamily="heading"
+                cursor="pointer"
+                onClick={() => {
+                  onMintAmountSNXChange(formatNumber(snxBalance));
+                }}
+              >
+                {t('staking-v2.mint.snx-balance', { snxBalance: formatNumber(snxBalance) })}
               </Text>
             </Skeleton>
           </Flex>
@@ -130,48 +143,73 @@ export const Mint = ({
               fontSize="xl"
               fontWeight="black"
               lineHeight="2xl"
-              color={numberWithCommas(convert(val)) === '0.00' ? 'whiteAlpha.700' : 'white'}
+              color={numberWithCommas(mintAmountsUSD) === '0.00' ? 'whiteAlpha.700' : 'white'}
               height="unset"
               _focus={{ boxShadow: 'none !important' }}
               _placeholder={{ color: 'whiteAlpha.700' }}
               borderWidth="0px"
             >
-              {numberWithCommas(convert(val))}
+              {numberWithCommas(mintAmountsUSD)}
             </Text>
             <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
               <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-                {t('staking-v2.mint.susd-balance', { susdBalance: susdBalance.toString(2) })}
+                {t('staking-v2.mint.susd-balance', { susdBalance: formatNumber(susdBalance) })}
               </Text>
             </Skeleton>
           </Flex>
         </Flex>
       </Box>
       <Flex mt={3} alignItems="center" justifyContent="space-between">
-        <Flex alignItems="center">
-          <Text mr={1} fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs">
-            {t('staking-v2.mint.gas')}
-          </Text>
-          <Tooltip label={t('staking-v2.mint.gas-tooltip')} hasArrow>
-            <Flex>
-              <InfoIcon width="16px" height="16px" />
-            </Flex>
-          </Tooltip>
-        </Flex>
-        <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs">
-          {/* TODO: Logic on calculating local currency based on gas fee */}
-          {`${t('staking-v2.mint.tx-cost', { txCost: gasPrice.toString(4) })} Ξ ≈ 8.00`}
-        </Text>
+        <EthGasPriceEstimator transactionFee={transactionFee} />
       </Flex>
       <Button
         fontFamily="heading"
         fontWeight="black"
         mt={4}
         w="100%"
-        onClick={() => onSubmit(wei(val).toBN(), toMax)}
-        disabled={val === ''}
+        onClick={() => onSubmit()}
+        disabled={mintAmountSNX === ''}
       >
         Mint
       </Button>
     </Box>
+  );
+};
+
+export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
+  const [mintAmountSNX, setMintAmountSNX] = useState('');
+
+  const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
+  const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
+  const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
+
+  const targetCRatio = debtData?.targetCRatioPercentage.toNumber();
+
+  const exchangeRate =
+    (targetCRatio && exchangeRateData?.SNX?.div(targetCRatio / 100).toNumber()) || 0;
+  const snxBalance = debtData?.collateral;
+  // const debouncedSearchTerm = useDebounce(mintAmount, 500);
+
+  const { mutate, transactionFee } = useMintMutation({
+    amount: wei(convert(mintAmountSNX, exchangeRate) || 0).toBN(),
+    delegateAddress: delegateWalletAddress,
+    toMax: wei(mintAmountSNX || 0).gte(snxBalance || 0),
+  });
+  const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
+  return (
+    <>
+      <MintUi
+        isLoading={isLoading}
+        exchangeRate={exchangeRate}
+        mintAmountSNX={mintAmountSNX}
+        onMintAmountSNXChange={setMintAmountSNX}
+        snxBalance={snxBalance?.toNumber()}
+        susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
+        onSubmit={() => {
+          mutate();
+        }}
+        transactionFee={transactionFee || wei(0)}
+      />
+    </>
   );
 };

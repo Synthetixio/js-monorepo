@@ -1,19 +1,19 @@
-import { Mint } from '.';
+import { MintUi } from './Mint';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { wei } from '@synthetixio/wei';
 
 export default {
-  title: 'Mint',
-  component: Mint,
-} as ComponentMeta<typeof Mint>;
+  title: 'MintUi',
+  component: MintUi,
+} as ComponentMeta<typeof MintUi>;
 
-const Template: ComponentStory<typeof Mint> = (_args) => <Mint {..._args} />;
+const Template: ComponentStory<typeof MintUi> = (_args) => <MintUi {..._args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
-  snxBalance: wei(2000),
-  susdBalance: wei(2000),
+  snxBalance: 2000,
+  susdBalance: 2000,
   exchangeRate: 0.25,
-  gasPrice: wei(0.01),
+  transactionFee: wei(0.01),
   isLoading: false,
 };
