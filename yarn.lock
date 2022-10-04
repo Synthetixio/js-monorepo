@@ -6862,6 +6862,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/BoxLink@workspace:*, @snx-v2/BoxLink@workspace:v2/components/BoxLink":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/BoxLink@workspace:v2/components/BoxLink"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/react": ^6.5.10
+    react: ^18.2.0
+    react-router-dom: ^6.3.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/Burn@workspace:*, @snx-v2/Burn@workspace:v2/components/Burn":
   version: 0.0.0-use.local
   resolution: "@snx-v2/Burn@workspace:v2/components/Burn"
@@ -9137,6 +9149,7 @@ __metadata:
     "@snx-v1/media": "workspace:*"
     "@snx-v1/styles": "workspace:*"
     "@snx-v2/BalanceBox": "workspace:*"
+    "@snx-v2/BoxLink": "workspace:*"
     "@snx-v2/Burn": "workspace:*"
     "@snx-v2/CRatioBanner": "workspace:*"
     "@snx-v2/CRatioHealthCard": "workspace:*"

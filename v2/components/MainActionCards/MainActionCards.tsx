@@ -44,7 +44,7 @@ const Container = ({ children }: PropsWithChildren<{}>) => {
       border="1px"
       borderColor="gray.800"
       padding="2"
-      borderRadius="sm"
+      borderRadius="base"
     >
       {children}
     </Flex>

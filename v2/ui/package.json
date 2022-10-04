@@ -34,6 +34,7 @@
     "@snx-v1/media": "workspace:*",
     "@snx-v1/styles": "workspace:*",
     "@snx-v2/BalanceBox": "workspace:*",
+    "@snx-v2/BoxLink": "workspace:*",
     "@snx-v2/Burn": "workspace:*",
     "@snx-v2/CRatioBanner": "workspace:*",
     "@snx-v2/CRatioHealthCard": "workspace:*",

@@ -31,7 +31,7 @@ export const BalanceBoxUi: React.FC<{
   const [show, setShow] = React.useState(false);
   return (
     <Box fontSize="xs" width="full">
-      <Box bg="navy.900" padding="2" border="1px" borderColor="gray.800" borderRadius="sm">
+      <Box bg="navy.900" padding="2" border="1px" borderColor="gray.800" borderRadius="base">
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="4">
           {t('staking-v2.balance-box.box-heading')}
         </Text>
