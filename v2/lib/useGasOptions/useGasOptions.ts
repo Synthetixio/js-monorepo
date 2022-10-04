@@ -57,7 +57,7 @@ export const useGasOptions = ({
   const optimismLayerOneFeesQuery = useOptimismLayer1Fee({ populateTransaction });
   const { data: exchangeRatesData } = useExchangeRatesData();
   return useQuery(
-    [...queryKeys, optimismLayerOneFeesQuery.data, gasPriceQuery.data, networkId],
+    [...queryKeys, optimismLayerOneFeesQuery.data, gasPriceQuery.data, networkId, gasSpeed],
     async () => {
       if (!populateTransaction) {
         throw Error('Query should not be enable when getGasLimit is missing');
