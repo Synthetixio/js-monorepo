@@ -13,9 +13,10 @@ const GAS_LIMIT_BUFFER = 1.2;
 
 export const useGasOptions = ({
   populateTransaction,
+  queryKeys = [],
 }: {
-  getGasLimit?: () => Promise<BigNumber>;
   populateTransaction?: () => Promise<PopulatedTransaction>;
+  queryKeys: QueryKey;
 }) => {
   const { networkId } = useContext(ContractContext);
   const { gasSpeed } = useContext(GasSpeedContext);
@@ -23,15 +24,8 @@ export const useGasOptions = ({
   const optimismLayerOneFeesQuery = useOptimismLayer1Fee({ populateTransaction });
 
   return useQuery(
-    [
-      getGasLimit?.toString(),
-      populateTransaction?.toString(),
-      optimismLayerOneFeesQuery.data,
-      gasPriceQuery.data,
-      networkId,
-    ],
+    [...queryKeys, optimismLayerOneFeesQuery.data, gasPriceQuery.data, networkId],
     async () => {
-      if (!getGasLimit) throw Error('Query should not be enable when getGasLimit is missing');
       if (!populateTransaction) {
         throw Error('Query should not be enable when getGasLimit is missing');
       }
