@@ -1,10 +1,11 @@
 import { useState, ChangeEvent } from 'react';
-import { Input, Box, Text, Flex, Badge, Tooltip, Button, Skeleton } from '@chakra-ui/react';
+import { Input, Box, Text, Flex, Tooltip, Button, Skeleton } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { InfoIcon, TokensIcon } from '@snx-v2/icons';
 import { numberWithCommas } from '@snx-v2/formatters';
 import { BigNumber } from '@ethersproject/bignumber';
+import { PercentBadges } from './PercentBadges';
 
 interface MintProps {
   snxBalance: Wei;
@@ -103,52 +104,7 @@ export const Mint = ({
             </Skeleton>
           </Flex>
         </Flex>
-        <Flex w="100%" justifyContent="space-between" mt={1}>
-          <Badge
-            variant="mint"
-            sx={{
-              bg: activeBadge >= 0.25 ? 'cyan.500' : 'whiteAlpha.300',
-              color: activeBadge >= 0.25 ? 'black' : 'cyan.500',
-            }}
-            mr={1}
-            onClick={() => onBadgePress(0.25)}
-          >
-            25%
-          </Badge>
-          <Badge
-            variant="mint"
-            sx={{
-              bg: activeBadge >= 0.5 ? 'cyan.500' : 'whiteAlpha.300',
-              color: activeBadge >= 0.5 ? 'black' : 'cyan.500',
-            }}
-            mx={1}
-            onClick={() => onBadgePress(0.5)}
-          >
-            50%
-          </Badge>
-          <Badge
-            variant="mint"
-            sx={{
-              bg: activeBadge >= 0.75 ? 'cyan.500' : 'whiteAlpha.300',
-              color: activeBadge >= 0.75 ? 'black' : 'cyan.500',
-            }}
-            mx={1}
-            onClick={() => onBadgePress(0.75)}
-          >
-            75%
-          </Badge>
-          <Badge
-            variant="mint"
-            sx={{
-              bg: activeBadge === 1 ? 'cyan.500' : 'whiteAlpha.300',
-              color: activeBadge === 1 ? 'black' : 'cyan.500',
-            }}
-            ml={1}
-            onClick={() => onBadgePress(1)}
-          >
-            100%
-          </Badge>
-        </Flex>
+        <PercentBadges onBadgePress={onBadgePress} activeBadge={activeBadge} />
       </Box>
       <Flex alignItems="center">
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
