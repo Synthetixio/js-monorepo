@@ -62,43 +62,20 @@ describe('useGasOptions', () => {
 
   test('Returns undefined values when populateTransaction is undefined', async () => {
     const populateTransaction = undefined;
-    const getGasLimit = jest.fn();
-    const result = useGasOptions({ populateTransaction, getGasLimit });
+    const result = useGasOptions({ populateTransaction });
     const [cacheKey, _query, options] = reactQuery.useQuery.mock.lastCall;
     expect(result.data).toEqual(undefined);
-    expect(cacheKey).toEqual([
-      getGasLimit.toString(),
-      undefined,
-      undefined,
-      gasPricesMainnetMockData,
-      1,
-    ]);
+    expect(cacheKey).toEqual([undefined, undefined, gasPricesMainnetMockData, 1]);
     expect(options).toEqual({ enabled: false });
   });
-  test('Returns undefined values when populate transaction is undefined', async () => {
-    const populateTransaction = jest.fn();
-    const getGasLimit = undefined;
-    const result = useGasOptions({ populateTransaction, getGasLimit });
-    const [cacheKey, _query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(result.data).toEqual(undefined);
-    expect(cacheKey).toEqual([
-      undefined,
-      populateTransaction.toString(),
-      undefined,
-      gasPricesMainnetMockData,
-      1,
-    ]);
-    expect(options).toEqual({ enabled: false });
-  });
-  test('Returns gas options mainnet', async () => {
-    const populateTransaction = jest.fn();
-    const getGasLimit = jest.fn(() => BigNumber.from(20));
 
-    useGasOptions({ populateTransaction, getGasLimit });
+  test('Returns gas options mainnet', async () => {
+    const populateTransaction = jest.fn().mockResolvedValue({ gasLimit: BigNumber.from(20) });
+
+    useGasOptions({ populateTransaction });
 
     const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
     expect(cacheKey).toEqual([
-      getGasLimit.toString(),
       populateTransaction.toString(),
       undefined,
       gasPricesMainnetMockData,
@@ -121,14 +98,12 @@ describe('useGasOptions', () => {
   });
   test('Returns gas options mainnet when gasSpeed is fastest', async () => {
     react.useContext.mockReturnValue({ networkId: 1, gasSpeed: 'fastest' });
-    const populateTransaction = jest.fn();
-    const getGasLimit = jest.fn(() => BigNumber.from(20));
+    const populateTransaction = jest.fn().mockResolvedValue({ gasLimit: BigNumber.from(20) });
 
-    useGasOptions({ populateTransaction, getGasLimit });
+    useGasOptions({ populateTransaction });
 
     const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
     expect(cacheKey).toEqual([
-      getGasLimit.toString(),
       populateTransaction.toString(),
       undefined,
       gasPricesMainnetMockData,
@@ -150,17 +125,15 @@ describe('useGasOptions', () => {
     });
   });
   test('Returns gas options for optimism', async () => {
-    const populateTransaction = jest.fn();
-    const getGasLimit = jest.fn().mockReturnValue(BigNumber.from(20));
+    const populateTransaction = jest.fn().mockResolvedValue({ gasLimit: BigNumber.from(20) });
     react.useContext.mockReturnValue({ networkId: 10, gasSpeed: 'average' });
     useGasPrice.mockReturnValue({ data: gasPricesOptimismMockData });
     useOptimismLayer1Fee.mockReturnValue({ data: BigNumber.from(1) });
 
-    useGasOptions({ populateTransaction, getGasLimit });
+    useGasOptions({ populateTransaction });
 
     const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
     expect(cacheKey).toEqual([
-      getGasLimit.toString(),
       populateTransaction.toString(),
       BigNumber.from(1),
       gasPricesOptimismMockData,

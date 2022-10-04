@@ -12,7 +12,6 @@ import { GasSpeedContext } from '@snx-v2/GasSpeedContext';
 const GAS_LIMIT_BUFFER = 1.2;
 
 export const useGasOptions = ({
-  getGasLimit,
   populateTransaction,
 }: {
   getGasLimit?: () => Promise<BigNumber>;
@@ -36,8 +35,11 @@ export const useGasOptions = ({
       if (!populateTransaction) {
         throw Error('Query should not be enable when getGasLimit is missing');
       }
-      const gasLimitRaw = await getGasLimit();
-      const gasLimit = wei(gasLimitRaw, GWEI_DECIMALS).mul(GAS_LIMIT_BUFFER).toBN();
+      const populatedTransaction = await populateTransaction();
+      const gasLimitRaw = populatedTransaction.gasLimit;
+      const gasLimit = wei(gasLimitRaw ?? 0, GWEI_DECIMALS)
+        .mul(GAS_LIMIT_BUFFER)
+        .toBN();
       const gasPrices = gasPriceQuery.data;
       const optimismLayerOneFees = optimismLayerOneFeesQuery.data || undefined;
       const formatGasPriceForTransaction = () => {
