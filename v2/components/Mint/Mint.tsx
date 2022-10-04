@@ -179,9 +179,13 @@ export const MintUi = ({
 export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
   const [mintAmountSNX, setMintAmountSNX] = useState('');
 
-  const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
+  const {
+    data: synthsData,
+    isLoading: isSynthsLoading,
+    refetch: refetchSynthBalances,
+  } = useSynthsBalances();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
-  const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
+  const { data: debtData, isLoading: isDebtDataLoading, refetch: refetchDebtData } = useDebtData();
 
   const targetCRatio = debtData?.targetCRatioPercentage.toNumber();
 
@@ -206,7 +210,12 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         snxBalance={snxBalance?.toNumber()}
         susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
         onSubmit={() => {
-          mutate();
+          mutate(undefined, {
+            onSuccess: () => {
+              refetchSynthBalances();
+              refetchDebtData();
+            },
+          });
         }}
         transactionFee={transactionFee || wei(0)}
       />
