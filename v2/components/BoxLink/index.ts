@@ -1,1 +1,1 @@
-export * from './BoxLink'
+export * from './BoxLink';
