@@ -1,9 +1,8 @@
 import { Box } from '@chakra-ui/react';
 import { EthGasPriceEstimatorUi } from './EthGasPriceEstimator';
 import { wei } from '@synthetixio/wei';
-import { BigNumber } from '@ethersproject/bignumber';
 
-describe('CRatioHealthCard.cy.tsx', () => {
+describe('EthGasPriceEstimator', () => {
   it('renders skeleton when missing data', () => {
     cy.viewport(500, 300);
     cy.mount(
@@ -21,14 +20,11 @@ describe('CRatioHealthCard.cy.tsx', () => {
         <EthGasPriceEstimatorUi
           gasSpeed="average"
           setGasSpeed={() => {}}
-          ethPriceRate={wei(1000)}
-          gasPrice={{ gasPrice: BigNumber.from(1000000) }}
-          gasLimit={BigNumber.from(2000000)}
-          optimismLayerOneFees={wei(0.000001)}
+          transactionFee={wei(0.003)}
         />
       </Box>
     );
-    cy.contains('p', '$0.003').should('be.visible');
+    cy.contains('[data-testid="transaction price"]', '$0.003').should('be.visible');
     cy.contains('p', 'Gas Price').should('be.visible');
   });
 });
