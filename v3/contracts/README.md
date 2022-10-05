@@ -6,6 +6,19 @@
    -- \_Note: use `-- --network ${network}` to build for specific networks. This will deploy contracts to the network if they are not already deployed and add it to the `deployments` folder. (See [cannon](https://usecannon.com/))
 4. Run `yarn run write-ts` in the `@synthetixio/v3-ui` workspace to create `generated` directory of TS files. Move these over to `v3/ui` (TODO: will automate this)
 
+#### Publishing a package
+
+Add the following configuration to `hardhat.config.ts` when publishing this Cannon package.
+
+```
+cannon: {
+  ipfsEndpoint: 'https://ipfs.infura.io:5001',
+  ipfsAuthorizationHeader: `Basic ${Buffer.from(
+    process.env.INFURA_IPFS_ID + ':' + process.env.INFURA_IPFS_SECRET
+  ).toString('base64')}`,
+}
+```
+
 ##### Troubleshooting
 
 - You might need to install Foundry:

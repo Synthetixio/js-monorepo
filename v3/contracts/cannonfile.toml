@@ -9,10 +9,10 @@ defaultValue = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
 defaultValue = "latest"
 
 [setting.synthetix_version]
-defaultValue = "1.0.0"
+defaultValue = "3"
 
 [setting.chainlink_version]
-defaultValue = "0.1.0"
+defaultValue = "0.7-mock"
 
 [setting.rate_decimals]
 defaultValue = "6"
@@ -41,7 +41,7 @@ options.decimals = "<%= settings.rate_decimals %>"
 options.rate = "<%= settings.weth_rate %>"
 
 [import.synthetix]
-source = "synthetix-main:<%= settings.synthetix_version %>"
+source = "synthetix:<%= settings.synthetix_version %>"
 options.owner = "<%= settings.owner %>"
 
 [contract.Multicall]
