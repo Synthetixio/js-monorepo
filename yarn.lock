@@ -7030,6 +7030,7 @@ __metadata:
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.10
     "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
