@@ -6610,10 +6610,11 @@ __metadata:
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
+    "@snx-v2/sumBy": "workspace:*"
     "@snx-v2/useDSnxBalance": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
-    "@snx-v2/useTotalIssuedDebt": "workspace:*"
+    "@snx-v2/useIssuedDebt": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
     react-i18next: ^11.18.3
@@ -6983,6 +6984,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/sumBy@workspace:*, @snx-v2/sumBy@workspace:v2/lib/sumBy":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/sumBy@workspace:v2/lib/sumBy"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useBurnMutation@workspace:*, @snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation"
@@ -7091,6 +7098,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useIssuedDebt@workspace:*, @snx-v2/useIssuedDebt@workspace:v2/lib/useIssuedDebt":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useIssuedDebt@workspace:v2/lib/useIssuedDebt"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useLiquidationData@workspace:*, @snx-v2/useLiquidationData@workspace:v2/lib/useLiquidationData":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useLiquidationData@workspace:v2/lib/useLiquidationData"
@@ -7183,16 +7200,6 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     lodash: ^4.17.21
-    react: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
-"@snx-v2/useTotalIssuedDebt@workspace:*, @snx-v2/useTotalIssuedDebt@workspace:v2/lib/useTotalIssuedDebt":
-  version: 0.0.0-use.local
-  resolution: "@snx-v2/useTotalIssuedDebt@workspace:v2/lib/useTotalIssuedDebt"
-  dependencies:
-    "@snx-v2/ContractContext": "workspace:*"
-    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft

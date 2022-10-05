@@ -18,7 +18,8 @@ import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
 import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
-import { useTotalIssuedDebt } from '@snx-v2/useTotalIssuedDebt';
+import { useIssuedDebt } from '@snx-v2/useIssuedDebt';
+import { sumBy } from '@snx-v2/sumBy';
 
 export const BalanceBoxUi: React.FC<{
   snxBalance?: number;
@@ -139,7 +140,7 @@ export const BalanceBox: React.FC = () => {
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: dSNXBalance } = useGetDSnxBalance();
-  const { data: totalIssuedDebt } = useTotalIssuedDebt();
+  const { data } = useIssuedDebt();
 
   const stakedSnx = calculateStakedSnx({
     targetCRatio: debtData?.targetCRatio,
@@ -154,7 +155,7 @@ export const BalanceBox: React.FC = () => {
       stakedSnx={stakedSnx.toNumber()}
       transferable={debtData?.transferable.toNumber()}
       debtBalance={debtData?.debtBalance.toNumber()}
-      issuedDebt={totalIssuedDebt}
+      issuedDebt={sumBy('value', data || [])}
       dSNXBalance={dSNXBalance?.toNumber()}
     />
   );
