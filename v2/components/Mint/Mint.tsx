@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { InfoIcon, TokensIcon } from '@snx-v2/icons';
+import { InfoIcon, TokensIcon, TransactionCompleted, TransactionPending } from '@snx-v2/icons';
 import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
 import { TransactionStatus, useMintMutation } from '@snx-v2/useMintMutation';
@@ -196,6 +196,7 @@ export const MintUi = ({
         </Button>
       </Box>
       <TransactionModal
+        icon={transactionLoading ? <TransactionPending /> : <TransactionCompleted />}
         title={
           transactionLoading
             ? t('staking-v2.mint.txn-modal.pending')
@@ -228,7 +229,7 @@ export const MintUi = ({
         <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
         <Flex justifyContent="center">
           {/* TODO create something that can generate etherscan links based in network and tx id */}
-          <ExternalLink fontSize="sm"> {t('staking-v2.mint.txn-modal.minting')}</ExternalLink>
+          <ExternalLink fontSize="sm"> {t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
         </Flex>
       </TransactionModal>
     </>
@@ -257,27 +258,25 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   });
   const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
   return (
-    <>
-      <MintUi
-        isLoading={isLoading}
-        exchangeRate={exchangeRate}
-        mintAmountSNX={mintAmountSNX}
-        onMintAmountSNXChange={setMintAmountSNX}
-        unstakedSnx={unstakedSnx.toNumber()}
-        susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
-        onSubmit={() => {
-          mutate(undefined, {
-            onSuccess: () => {
-              queryClient.refetchQueries(['synths'], { type: 'active' });
-              queryClient.refetchQueries(['v2debt'], { type: 'active' });
-              setMintAmountSNX('');
-            },
-          });
-        }}
-        transactionFee={transactionFee || wei(0)}
-        txnStatus={txnStatus}
-        modalOpen={modalOpen}
-      />
-    </>
+    <MintUi
+      isLoading={isLoading}
+      exchangeRate={exchangeRate}
+      mintAmountSNX={mintAmountSNX}
+      onMintAmountSNXChange={setMintAmountSNX}
+      unstakedSnx={unstakedSnx.toNumber()}
+      susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
+      onSubmit={() => {
+        mutate(undefined, {
+          onSuccess: () => {
+            queryClient.refetchQueries(['synths'], { type: 'active' });
+            queryClient.refetchQueries(['v2debt'], { type: 'active' });
+            setMintAmountSNX('');
+          },
+        });
+      }}
+      transactionFee={transactionFee || wei(0)}
+      txnStatus={txnStatus}
+      modalOpen={modalOpen}
+    />
   );
 };
