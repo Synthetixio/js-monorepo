@@ -11,44 +11,33 @@ type MintArgs = {
   delegateAddress?: string;
 };
 
-const getMethod = (toMax: boolean, delegateAddress?: string) => {
-  if (delegateAddress) {
-    return toMax ? 'issueMaxSynthsOnBehalf' : 'issueSynthsOnBehalf';
-  }
-  return toMax ? 'issueMaxSynths' : 'issueSynths';
-};
 const createPopulateTransaction = (
   Synthetix: ReturnType<typeof useSynthetix>['data'],
   mintArgs?: MintArgs
 ) => {
   if (!Synthetix?.signer || !mintArgs) return undefined;
-  const { delegateAddress, amount } = mintArgs;
+  const { delegateAddress, amount, toMax } = mintArgs;
   if (amount?.eq(0)) return undefined;
-  const method = getMethod(mintArgs.toMax ?? false, delegateAddress);
   return () => {
-    if (method === 'issueSynths') {
-      return Synthetix.populateTransaction[method](mintArgs.amount, {
-        gasLimit: Synthetix.estimateGas[method](mintArgs.amount),
+    if (delegateAddress && !toMax) {
+      return Synthetix.populateTransaction.issueSynthsOnBehalf(delegateAddress, amount, {
+        gasLimit: Synthetix.estimateGas.issueSynthsOnBehalf(delegateAddress, amount),
       });
     }
-    if (method === 'issueMaxSynths') {
-      return Synthetix.populateTransaction[method]({
-        gasLimit: Synthetix.estimateGas[method](),
+    if (delegateAddress && toMax) {
+      return Synthetix.populateTransaction.issueMaxSynthsOnBehalf(delegateAddress, {
+        gasLimit: Synthetix.estimateGas.issueMaxSynthsOnBehalf(delegateAddress),
       });
     }
-    if (delegateAddress && method === 'issueSynthsOnBehalf') {
-      return Synthetix.populateTransaction[method](delegateAddress, mintArgs.amount, {
-        gasLimit: Synthetix.estimateGas[method](delegateAddress, mintArgs.amount),
+    if (toMax) {
+      return Synthetix.populateTransaction.issueMaxSynths({
+        gasLimit: Synthetix.estimateGas.issueMaxSynths(),
       });
     }
-    if (delegateAddress && method === 'issueMaxSynthsOnBehalf') {
-      return Synthetix.populateTransaction[method](delegateAddress, {
-        gasLimit: Synthetix.estimateGas[method](delegateAddress),
-      });
-    }
-    throw Error(
-      `Programmatic error for creating mint call, method is: ${method}, delegateWallet:${delegateAddress}`
-    );
+
+    return Synthetix.populateTransaction.issueSynths(mintArgs.amount, {
+      gasLimit: Synthetix.estimateGas.issueSynths(mintArgs.amount),
+    });
   };
 };
 export function useMintMutation(mintArgs: MintArgs) {
