@@ -137,11 +137,16 @@ export const BalanceBox: React.FC = () => {
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: dSNXBalance } = useGetDSnxBalance();
+  const stakedSnx = calculateStakedSnx({
+    targetCRatio: debtData?.targetCRatio,
+    currentCRatio: debtData?.currentCRatio,
+    collateral: debtData?.collateral,
+  });
   return (
     <BalanceBoxUi
       snxPrice={exchangeRateData?.SNX?.toNumber()}
       snxBalance={debtData?.balance.toNumber()}
-      stakedSnx={debtData?.collateral.toNumber()}
+      stakedSnx={stakedSnx.toNumber()}
       transferable={debtData?.transferable.toNumber()}
       debtBalance={debtData?.debtBalance.toNumber()}
       issuedDebt={0} // TODO
