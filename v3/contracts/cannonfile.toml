@@ -17,19 +17,11 @@ defaultValue = "0.1.0"
 [setting.rate_decimals]
 defaultValue = "6"
 
-[setting.lusd_rate]
-defaultValue = "1000000"
-
 [setting.snx_rate]
 defaultValue = "10000000"
 
 [setting.weth_rate]
 defaultValue = "100000000"
-
-[import.lusd]
-source = "mintableerc20:<%= settings.erc20_version %>"
-options.name = "Liquity USD"
-options.symbol = "LUSD"
 
 [import.snx]
 source = "mintableerc20:<%= settings.erc20_version %>"
@@ -41,12 +33,6 @@ source = "chainlink:<%= settings.chainlink_version %>"
 options.salt = "snx"
 options.decimals = "<%= settings.rate_decimals %>"
 options.rate = "<%= settings.snx_rate %>"
-
-[import.aggregator_lusd]
-source = "chainlink:<%= settings.chainlink_version %>"
-options.salt = "lusd"
-options.decimals = "<%= settings.rate_decimals %>"
-options.rate = "<%= settings.lusd_rate %>"
 
 [import.aggregator_weth]
 source = "chainlink:<%= settings.chainlink_version %>"
@@ -63,20 +49,6 @@ artifact = "Multicall3"
 
 [contract.WETH]
 artifact = "WETH9"
-
-[invoke.register_lusd_collateral]
-target = ["synthetix.CoreProxy"]
-fromCall.func = "owner"
-func = "configureCollateral"
-args = [
-    "<%= imports.lusd.contracts.token.address %>",
-    "<%= imports.aggregator_lusd.contracts.aggregator.address %>",
- "1500000",
-    "1100000",
-    "1000000000000000000",
-    true,
-]
-depends = ["import.synthetix", "import.lusd", "import.aggregator_lusd"]
 
 [invoke.register_snx_collateral]
 target = ["synthetix.CoreProxy"]

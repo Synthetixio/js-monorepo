@@ -14,7 +14,7 @@ export default function Home() {
             <a
               target="_blank"
               style={{ float: 'right' }}
-              href="https://snx-v3-prototype.netlify.app"
+              href="https://v3.synthetix.io"
               class="button button--outline button--primary"
             >
               Go to App

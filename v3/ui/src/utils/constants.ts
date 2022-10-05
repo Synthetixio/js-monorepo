@@ -56,13 +56,6 @@ export const localCollateralTypes = (chainId: number) => {
       decimals: 18,
     },
     {
-      address: require(`../../ts-deployments/${chainName}/lusd.token.ts`).address,
-      symbol: 'LUSD',
-      logoURI:
-        'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0x5f98805A4E8be255a32880FDeC7F6728C6568bA0/logo.png',
-      decimals: 18,
-    },
-    {
       address: require(`../../ts-deployments/${chainName}/WETH.ts`).address,
       symbol: 'ETH',
       logoURI:
