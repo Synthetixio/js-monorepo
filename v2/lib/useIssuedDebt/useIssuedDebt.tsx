@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 type IssuedsQuery = {
   __typename?: 'Query';
-  issueds: Array<{ __typename?: 'Issued'; account: string; value: string }>;
+  issueds: Array<{ __typename?: 'Issued'; account: string; value: string; timestamp: string }>;
 };
 
 const gql = (data: any) => data[0];
@@ -13,11 +13,12 @@ const IssuedsDocument = gql`
     issueds(where: { account: $account }) {
       account
       value
+      timestamp
     }
   }
 `;
 
-export const useTotalIssuedDebt = () => {
+export const useIssuedDebt = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const url =
     networkId === 1
@@ -25,7 +26,7 @@ export const useTotalIssuedDebt = () => {
       : 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main';
 
   return useQuery(
-    ['useTotalIssuedDebt', networkId, walletAddress],
+    ['useIssuedDebt', networkId, walletAddress],
     async () => {
       const res = await fetch(url, {
         method: 'POST',
@@ -36,11 +37,12 @@ export const useTotalIssuedDebt = () => {
         const { message } = json.errors[0];
         throw new Error(message);
       }
-      return json.data.issueds.reduce((acc, val) => {
-        acc = acc + parseFloat(val.value);
-        return acc;
-      }, 0);
+      return json.data.issueds.map((x) => ({
+        ...x,
+        value: parseFloat(x.value),
+        timestamp: parseFloat(x.timestamp),
+      }));
     },
-    { enabled: Boolean(networkId && walletAddress) }
+    { enabled: Boolean(networkId && walletAddress), staleTime: 10000 }
   );
 };
