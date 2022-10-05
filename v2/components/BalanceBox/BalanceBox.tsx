@@ -18,7 +18,7 @@ import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
 import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
-import { useTotalIssuedDebt } from '@snx-v2/useIssuedsQuery';
+import { useTotalIssuedDebt } from '@snx-v2/useTotalIssuedDebt';
 
 export const BalanceBoxUi: React.FC<{
   snxBalance?: number;
