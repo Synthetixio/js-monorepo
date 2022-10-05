@@ -1,5 +1,5 @@
 {
-  "name": "@snx-v2/useIssuedsQuery",
+  "name": "@snx-v2/useTotalIssuedDebt",
   "private": true,
   "main": "index.ts",
   "version": "0.0.0",
