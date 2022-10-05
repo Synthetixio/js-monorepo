@@ -24,8 +24,7 @@ describe('EthGasPriceEstimator.cy.tsx', () => {
         />
       </Box>
     );
-    cy.get('[data-testid=transactionPrice]').should('have.text', '$0.003');
-
+    cy.contains('[data-testid="transaction price"]', '$0.003').should('be.visible');
     cy.contains('p', 'Gas Price').should('be.visible');
   });
 });

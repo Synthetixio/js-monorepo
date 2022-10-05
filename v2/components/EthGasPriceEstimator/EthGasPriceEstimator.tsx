@@ -21,7 +21,7 @@ export const EthGasPriceEstimatorUi: React.FC<{
         <Menu closeOnSelect={true}>
           {() => (
             <>
-              <MenuButton data-testid="transactionPrice">
+              <MenuButton  data-testid="transaction price">
                 {transactionFee ? (
                   formatNumberToUsd(transactionFee.toString(), { maximumFractionDigits: 4 })
                 ) : (
