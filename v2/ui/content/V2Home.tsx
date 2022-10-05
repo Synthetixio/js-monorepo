@@ -15,12 +15,16 @@ import {
 } from '@snx-v2/icons';
 import { BoxLink } from '@snx-v2/BoxLink';
 import { useTranslation } from 'react-i18next';
+import Connector from 'containers/Connector';
+import { Welcome } from '@snx-v2/Welcome';
 
 const V2Home = () => {
   const { t } = useTranslation();
+  const { walletAddress } = Connector.useContainer();
   return (
     <>
       <Container maxW="1200px">
+        {!walletAddress && <Welcome mt={8} />}
         <Box height="42px" position="absolute" left="0" right="0">
           <CRatioBanner />
         </Box>
