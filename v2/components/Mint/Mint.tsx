@@ -194,7 +194,7 @@ export const MintUi = ({
       <TransactionModal
         title={
           transactionLoading
-            ? t('staking-v2.mint.txn-modal.completed')
+            ? t('staking-v2.mint.txn-modal.pending')
             : txnStatus === 'success'
             ? t('staking-v2.mint.txn-modal.completed')
             : 'TODO Error'
