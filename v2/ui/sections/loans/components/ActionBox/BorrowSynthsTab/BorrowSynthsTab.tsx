@@ -154,7 +154,7 @@ const BorrowSynthsTab: FC<BorrowSynthsTabProps> = () => {
   }, [collateralAsset, debtAsset, isL2]);
   return (
     <>
-      <FormContainer data-testid="loans-form">
+      <FormContainer data-testid="loans form">
         <InputsContainer>
           <AssetInput
             label="loans.tabs.new.debt.label"
@@ -163,7 +163,7 @@ const BorrowSynthsTab: FC<BorrowSynthsTabProps> = () => {
             amount={debtAmountNumber}
             setAmount={setDebtAmount}
             assets={isL2 ? DEBT_ASSETS_L2 : DEBT_ASSETS}
-            testId="loans-form-left-input"
+            data-testid="loans input for debt asset"
           />
           <InputsDivider />
           <AssetInput
@@ -174,7 +174,7 @@ const BorrowSynthsTab: FC<BorrowSynthsTabProps> = () => {
             setAmount={setCollateralAmount}
             assets={getCollateralAsset(debtAsset, isL2)}
             onSetMaxAmount={setCollateralAmount}
-            testId="loans-form-right-input"
+            data-testid="loans input for collateral asset"
           />
         </InputsContainer>
 
