@@ -145,7 +145,7 @@ export const BalanceBox: React.FC = () => {
   return (
     <BalanceBoxUi
       snxPrice={exchangeRateData?.SNX?.toNumber()}
-      snxBalance={debtData?.balance.toNumber()}
+      snxBalance={debtData?.collateral.toNumber()}
       stakedSnx={stakedSnx.toNumber()}
       transferable={debtData?.transferable.toNumber()}
       debtBalance={debtData?.debtBalance.toNumber()}
