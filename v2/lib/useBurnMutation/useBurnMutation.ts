@@ -1,11 +1,8 @@
-import { useContext, useReducer } from 'react';
+import { useReducer } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSynthetix } from '@snx-v2/useSynthetixContracts';
 import { useGasOptions } from '@snx-v2/useGasOptions';
 import { BigNumber } from '@ethersproject/bignumber';
-import { getTransactionPrice } from '@snx-v2/EthGasPriceEstimator';
-import { GasSpeedContext } from '@snx-v2/GasSpeedContext';
-import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { initialState, reducer } from './reducer';
 import { DelegationWallet } from '@synthetixio/queries';
 
@@ -16,14 +13,9 @@ type BurnVariables = {
 
 export function useBurnMutation(delegateAddress: DelegationWallet | null) {
   const { data: Synthetix } = useSynthetix();
-  const { gasSpeed } = useContext(GasSpeedContext);
-
-  const { data: exchangeRatesData, isLoading: isExchangeRatesDataLoading } = useExchangeRatesData();
 
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  const getGasLimit = Synthetix?.signer ? () => Synthetix.estimateGas.burnSynths(0) : undefined;
-
+  // TODO this needs some love
   const populateTransaction = Synthetix
     ? () => Synthetix.populateTransaction.burnSynths(0)
     : undefined;
@@ -33,22 +25,13 @@ export function useBurnMutation(delegateAddress: DelegationWallet | null) {
     isLoading: isGasLoading,
     error,
   } = useGasOptions({
-    getGasLimit,
     populateTransaction,
+    queryKeys: [],
   });
 
-  const { gasLimit, gasPrices, optimismLayerOneFees, gasOptionsForTransaction } = data || {};
+  const { gasOptionsForTransaction, transactionPrice: transactionFee } = data || {};
 
-  const gasPrice = gasPrices?.[gasSpeed];
-
-  const transactionFee = getTransactionPrice(
-    gasPrice,
-    gasLimit,
-    exchangeRatesData?.ETH,
-    optimismLayerOneFees
-  );
-
-  const isLoading = isGasLoading || isExchangeRatesDataLoading;
+  const isLoading = isGasLoading;
 
   const { modalOpen, txnStatus } = state;
 

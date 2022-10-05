@@ -5,9 +5,6 @@
   "version": "0.0.0",
   "dependencies": {
     "@ethersproject/bignumber": "^5.6.2",
-    "@snx-v2/EthGasPriceEstimator": "workspace:*",
-    "@snx-v2/GasSpeedContext": "workspace:*",
-    "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useGasOptions": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "@synthetixio/queries": "workspace:*",

@@ -1,80 +1,75 @@
-import { useContext, useReducer } from 'react';
+import { useReducer } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSynthetix } from '@snx-v2/useSynthetixContracts';
 import { useGasOptions } from '@snx-v2/useGasOptions';
 import { BigNumber } from '@ethersproject/bignumber';
-import { getTransactionPrice } from '@snx-v2/EthGasPriceEstimator';
-import { GasSpeedContext } from '@snx-v2/GasSpeedContext';
-import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { initialState, reducer } from './reducer';
-import { DelegationWallet } from '@synthetixio/queries';
 
-type MintVariables = {
+type MintArgs = {
   amount: BigNumber;
-  toMax?: boolean;
+  toMax: boolean;
+  delegateAddress?: string;
 };
 
-export function useMintMutation(delegateAddress?: DelegationWallet | null) {
-  const { data: Synthetix } = useSynthetix();
-  const { gasSpeed } = useContext(GasSpeedContext);
+const createPopulateTransaction = (
+  Synthetix: ReturnType<typeof useSynthetix>['data'],
+  mintArgs?: MintArgs
+) => {
+  if (!Synthetix?.signer || !mintArgs) return undefined;
+  const { delegateAddress, amount, toMax } = mintArgs;
+  if (amount?.eq(0)) return undefined;
+  return () => {
+    if (delegateAddress && !toMax) {
+      return Synthetix.populateTransaction.issueSynthsOnBehalf(delegateAddress, amount, {
+        gasLimit: Synthetix.estimateGas.issueSynthsOnBehalf(delegateAddress, amount),
+      });
+    }
+    if (delegateAddress && toMax) {
+      return Synthetix.populateTransaction.issueMaxSynthsOnBehalf(delegateAddress, {
+        gasLimit: Synthetix.estimateGas.issueMaxSynthsOnBehalf(delegateAddress),
+      });
+    }
+    if (toMax) {
+      return Synthetix.populateTransaction.issueMaxSynths({
+        gasLimit: Synthetix.estimateGas.issueMaxSynths(),
+      });
+    }
 
-  const { data: exchangeRatesData, isLoading: isExchangeRatesDataLoading } = useExchangeRatesData();
+    return Synthetix.populateTransaction.issueSynths(mintArgs.amount, {
+      gasLimit: Synthetix.estimateGas.issueSynths(mintArgs.amount),
+    });
+  };
+};
+export function useMintMutation(mintArgs: MintArgs) {
+  const { data: Synthetix } = useSynthetix();
 
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  const getGasLimit = Synthetix?.signer ? () => Synthetix.estimateGas.issueSynths(0) : undefined;
-
-  const populateTransaction = Synthetix
-    ? () => Synthetix.populateTransaction.issueSynths(0)
-    : undefined;
-
+  const populateTransaction = createPopulateTransaction(Synthetix, mintArgs);
   const {
     data,
     isLoading: isGasLoading,
-    error,
+    error: gasError,
   } = useGasOptions({
-    getGasLimit,
     populateTransaction,
+    queryKeys: [mintArgs, populateTransaction],
   });
+  const { gasOptionsForTransaction, transactionPrice } = data || {};
 
-  const { gasLimit, gasPrices, optimismLayerOneFees, gasOptionsForTransaction } = data || {};
+  const isLoading = isGasLoading;
 
-  const gasPrice = gasPrices?.[gasSpeed];
-
-  const transactionFee = getTransactionPrice(
-    gasPrice,
-    gasLimit,
-    exchangeRatesData?.ETH,
-    optimismLayerOneFees
-  );
-
-  const isLoading = isGasLoading || isExchangeRatesDataLoading;
-
-  const { modalOpen, txnStatus } = state;
+  const { modalOpen, txnStatus, error } = state;
 
   return {
-    ...useMutation(async (variables: MintVariables) => {
-      if (!Synthetix) return;
-      let txn;
+    ...useMutation(async () => {
+      if (!Synthetix?.signer || !populateTransaction) return;
+
       try {
         dispatch({ type: 'prompting' });
-        const { amount, toMax } = variables;
-        if (toMax) {
-          txn = delegateAddress
-            ? await Synthetix.issueMaxSynthsOnBehalf(
-                delegateAddress.address,
-                gasOptionsForTransaction
-              )
-            : await Synthetix.issueMaxSynths(gasOptionsForTransaction);
-        } else {
-          txn = delegateAddress
-            ? await Synthetix.issueSynthsOnBehalf(
-                delegateAddress.address,
-                amount,
-                gasOptionsForTransaction
-              )
-            : await Synthetix.issueSynths(amount, gasOptionsForTransaction);
-        }
+        const populatedTxn = await populateTransaction();
+        const txn = await Synthetix.signer.sendTransaction({
+          ...populatedTxn,
+          ...gasOptionsForTransaction,
+        });
         dispatch({ type: 'pending' });
         await txn.wait();
         dispatch({ type: 'success' });
@@ -84,10 +79,10 @@ export function useMintMutation(delegateAddress?: DelegationWallet | null) {
         setTimeout(() => dispatch({ type: 'settled' }), 1000);
       }
     }),
-    transactionFee,
+    transactionFee: transactionPrice,
     isLoading,
     modalOpen,
     txnStatus,
-    error,
+    error: error || gasError,
   };
 }
