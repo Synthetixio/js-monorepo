@@ -23,6 +23,7 @@ import { TransactionModal } from '@snx-v2/TransactionModal';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import { ExternalLink } from '@snx-v2/ExternalLink';
 import { calculateUnstakedStakedSnx } from '@snx-v2/stakingCalculations';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -185,7 +186,10 @@ export const MintUi = ({
           fontWeight="black"
           mt={4}
           w="100%"
-          onClick={() => onSubmit()}
+          onClick={() => {
+            setActiveBadge(0);
+            return onSubmit();
+          }}
           disabled={mintAmountSNX === ''}
         >
           Mint
@@ -233,15 +237,10 @@ export const MintUi = ({
 
 export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
   const [mintAmountSNX, setMintAmountSNX] = useState('');
-
-  const {
-    data: synthsData,
-    isLoading: isSynthsLoading,
-    refetch: refetchSynthBalances,
-  } = useSynthsBalances();
+  const queryClient = useQueryClient();
+  const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
-  const { data: debtData, isLoading: isDebtDataLoading, refetch: refetchDebtData } = useDebtData();
-
+  const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
   const targetCRatioPercent = debtData?.targetCRatioPercentage.toNumber();
 
   const exchangeRate =
@@ -269,8 +268,9 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         onSubmit={() => {
           mutate(undefined, {
             onSuccess: () => {
-              refetchSynthBalances();
-              refetchDebtData();
+              queryClient.refetchQueries(['synths'], { type: 'active' });
+              queryClient.refetchQueries(['v2debt'], { type: 'active' });
+              setMintAmountSNX('');
             },
           });
         }}
