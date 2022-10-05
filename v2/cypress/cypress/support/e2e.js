@@ -24,7 +24,7 @@ beforeEach(() => {
         this._isSigner = true;
         this.getAddress = async () => Cypress.env('WALLET_ADDRESS');
         this.provider = provider;
-        this.wallet = ethers.Wallet.fromMnemonic(Cypress.env('WALLET_MNEMONIC'));
+        this.wallet = new ethers.Wallet(Cypress.env('WALLET_PK'));
         this.signMessage = (message) => this.wallet.signMessage(message);
       }
     }
