@@ -74,12 +74,6 @@ const config: HardhatUserConfig = {
     outDir: 'src/types',
     target: 'ethers-v5',
   },
-  cannon: {
-    ipfsEndpoint: 'https://ipfs.infura.io:5001',
-    ipfsAuthorizationHeader: `Basic ${Buffer.from(
-      process.env.INFURA_IPFS_ID + ':' + process.env.INFURA_IPFS_SECRET
-    ).toString('base64')}`,
-  },
 };
 
 export default config;
