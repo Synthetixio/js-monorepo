@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { EthGasPriceEstimatorUi } from './EthGasPriceEstimator';
 import { wei } from '@synthetixio/wei';
 
-describe('CRatioHealthCard.cy.tsx', () => {
+describe('EthGasPriceEstimator.cy.tsx', () => {
   it('renders skeleton when missing data', () => {
     cy.viewport(500, 300);
     cy.mount(
@@ -24,7 +24,8 @@ describe('CRatioHealthCard.cy.tsx', () => {
         />
       </Box>
     );
-    cy.contains('p', '$0.003').should('be.visible');
+    cy.get('[data-testid=transactionPrice]').should('have.text', '$0.003');
+
     cy.contains('p', 'Gas Price').should('be.visible');
   });
 });
