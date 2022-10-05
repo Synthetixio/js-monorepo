@@ -1,0 +1,12 @@
+{
+  "name": "@snx-v2/useIssuedsQuery",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.0",
+  "dependencies": {
+    "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/subgraph": "workspace:*",
+    "@tanstack/react-query": "^4.3.4",
+    "react": "^18.2.0"
+  }
+}
