@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { EthGasPriceEstimatorUi } from './EthGasPriceEstimator';
 import { wei } from '@synthetixio/wei';
 
-describe('EthGasPriceEstimator.cy.tsx', () => {
+describe(require('path').basename(__filename), () => {
   it('renders skeleton when missing data', () => {
     cy.viewport(500, 300);
     cy.mount(
