@@ -41,7 +41,7 @@ interface MintProps {
   onSubmit: () => void;
   onMintAmountSNXChange: (amount: string) => void;
   mintAmountSNX: string;
-  transactionFee: Wei;
+  transactionFee?: Wei | null;
   txnStatus: TransactionStatus;
   modalOpen: boolean;
   error: Error | null;
@@ -205,7 +205,7 @@ export const MintUi = ({
           </Center>
         ) : (
           <Flex mt={3} alignItems="center" justifyContent="space-between">
-            <EthGasPriceEstimator transactionFee={transactionFee} />
+            <EthGasPriceEstimator transactionFee={mintAmountSNX === '' ? wei(0) : transactionFee} />
           </Flex>
         )}
 
@@ -344,7 +344,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
           },
         });
       }}
-      transactionFee={transactionFee || wei(0)}
+      transactionFee={transactionFee}
       txnStatus={txnStatus}
       modalOpen={modalOpen}
       error={error}

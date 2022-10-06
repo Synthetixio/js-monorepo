@@ -9,7 +9,7 @@ import { ChevronDown } from '@snx-v2/icons';
 
 export const EthGasPriceEstimatorUi: React.FC<{
   gasSpeed: GasSpeed;
-  transactionFee?: Wei;
+  transactionFee?: Wei | null;
   setGasSpeed: Dispatch<SetStateAction<GasSpeed>>;
 }> = ({ transactionFee, setGasSpeed, gasSpeed }) => {
   const { t } = useTranslation();
@@ -58,7 +58,7 @@ export const EthGasPriceEstimatorUi: React.FC<{
 };
 
 export const EthGasPriceEstimator: React.FC<{
-  transactionFee?: Wei;
+  transactionFee?: Wei | null;
 }> = ({ transactionFee }) => {
   const { setGasSpeed, gasSpeed } = useContext(GasSpeedContext);
 
