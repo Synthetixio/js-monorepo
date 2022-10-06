@@ -64,7 +64,7 @@ const ETH: React.FC<ETHProps> = ({ onSetMaxAmount }) => {
 
   return (
     balance && (
-      <Container>
+      <Container data-testid="loans current balance" data-balance={wei(balance).toString(2)}>
         {t('balance.input-label')} {wei(balance).toString(2)}{' '}
         {!onSetMaxAmount ? null : <MaxButton onClick={handleSetMaxAmount} />}
       </Container>

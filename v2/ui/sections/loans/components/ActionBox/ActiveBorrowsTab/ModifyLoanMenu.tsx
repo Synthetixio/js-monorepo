@@ -44,7 +44,7 @@ const BorrowModifyModal: FC<BorrowModifyModalProps> = ({ actions, loan }) => {
         </ul>
       }
     >
-      <Button onClick={openMenu}>
+      <Button onClick={openMenu} data-testid="loan actions button">
         {t('loans.tabs.list.actions-menu-label')}{' '}
         <svg
           width="12"

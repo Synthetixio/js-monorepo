@@ -3,10 +3,15 @@ describe('loans', () => {
     cy.visit('http://localhost:3000/loans');
     cy.get('[id="Borrow Synths-tab"]').should('be.visible');
 
+    cy.get('[data-testid="loans current balance"]')
+      .invoke('attr', 'data-balance')
+      .should('be.gte', 2);
+
     // input for the debt asset
     cy.get('[data-testid="loans form"] input[type="number"]').eq(0).type(100);
     // input for the collateral asset
     cy.get('[data-testid="loans form"] input[type="number"]').eq(1).type(2);
+
     cy.get('[data-testid="loans form submit button"]').should('not.be.disabled').click();
 
     cy.get('[role="dialog"]')
@@ -24,6 +29,6 @@ describe('loans', () => {
 
     cy.get('[id="Active Borrows-tab"][aria-selected="true"]').should('exist');
     cy.get('[id="Active Borrows-tabpanel"]').should('exist');
-    cy.get('[id="Active Borrows-tabpanel"] [role="row"]').its('length').should('be.gte', 1);
+    cy.get('[id="Active Borrows-tabpanel"] [data-testid="loan actions button"]').should('exist');
   });
 });
