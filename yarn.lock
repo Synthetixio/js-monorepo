@@ -6609,9 +6609,12 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/stakingCalculations": "workspace:*"
+    "@snx-v2/sumBy": "workspace:*"
     "@snx-v2/useDSnxBalance": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useIssuedDebt": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
     react-i18next: ^11.18.3
@@ -6968,7 +6971,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/subgraph@workspace:*, @snx-v2/subgraph@workspace:v2/lib/subgraph":
+"@snx-v2/subgraph@workspace:v2/lib/subgraph":
   version: 0.0.0-use.local
   resolution: "@snx-v2/subgraph@workspace:v2/lib/subgraph"
   dependencies:
@@ -6978,6 +6981,12 @@ __metadata:
     "@graphql-codegen/typescript": ^2.7.3
     graphql: ^16.6.0
     typescript: ^4.8.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/sumBy@workspace:*, @snx-v2/sumBy@workspace:v2/lib/sumBy":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/sumBy@workspace:v2/lib/sumBy"
   languageName: unknown
   linkType: soft
 
@@ -7089,12 +7098,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useIssuedsQuery@workspace:v2/lib/useIssuedsQuery":
+"@snx-v2/useIssuedDebt@workspace:*, @snx-v2/useIssuedDebt@workspace:v2/lib/useIssuedDebt":
   version: 0.0.0-use.local
-  resolution: "@snx-v2/useIssuedsQuery@workspace:v2/lib/useIssuedsQuery"
+  resolution: "@snx-v2/useIssuedDebt@workspace:v2/lib/useIssuedDebt"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/subgraph": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
