@@ -1900,6 +1900,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chakra-ui/anatomy@npm:2.0.7":
+  version: 2.0.7
+  resolution: "@chakra-ui/anatomy@npm:2.0.7"
+  checksum: 3f75782e7fd7e4b52c4a719a6869953cdf37da799386c02c6eec00f52a1307a4be22a18c25ec4fb46159251bb5cc7dc5d3f6d61087dbdc42133ae2893f16e2b7
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/avatar@npm:2.1.0":
   version: 2.1.0
   resolution: "@chakra-ui/avatar@npm:2.1.0"
@@ -2913,6 +2920,18 @@ __metadata:
   peerDependencies:
     "@chakra-ui/styled-system": ">=2.0.0"
   checksum: 59e9e515c6baba8efe1496b5f6b52398d06395a2132a5dbab001f44f49fd8edbc7d5fb367c861585ec46c55b87d9396e71e0f35e27c9034d79483ac50da8b0ff
+  languageName: node
+  linkType: hard
+
+"@chakra-ui/theme-tools@npm:^2.0.12":
+  version: 2.0.12
+  resolution: "@chakra-ui/theme-tools@npm:2.0.12"
+  dependencies:
+    "@chakra-ui/anatomy": 2.0.7
+    "@ctrl/tinycolor": ^3.4.0
+  peerDependencies:
+    "@chakra-ui/styled-system": ">=2.0.0"
+  checksum: 8ee0db748566930c7d92b2fef737af5d9ad9598e32b1fdac20074ba02a5f24660f0b39556a3e54f838d07d7762595665772fbfbbb3ac1c7f27288849746adf6c
   languageName: node
   linkType: hard
 
@@ -9197,6 +9216,7 @@ __metadata:
     "@chakra-ui/icons": ^2.0.9
     "@chakra-ui/react": ^2.2.8
     "@chakra-ui/storybook-addon": ^4.0.4
+    "@chakra-ui/theme-tools": ^2.0.12
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@storybook/addon-essentials": ^6.5.7
