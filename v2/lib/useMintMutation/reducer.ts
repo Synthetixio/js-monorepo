@@ -1,36 +1,36 @@
+//  TODO this should be a generic transaction reducer that used elsewhere too
 export type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'success' | 'error';
 
 type MintMutationState = {
   error: Error | null;
+  errorType: 'transaction' | 'gasEstimate' | null;
   modalOpen: boolean;
   txnStatus: TransactionStatus;
-  gasPrice: any;
 };
 
 export const initialState: MintMutationState = {
   error: null,
+  errorType: null,
   modalOpen: false,
   txnStatus: 'unsent',
-  gasPrice: null,
 };
 
 export type Actions =
-  | { type: 'gas_estimate'; payload: { gasPrice: number } }
   | { type: 'prompting' }
   | { type: 'pending' }
   | { type: 'success' }
-  | { type: 'error' }
+  | { type: 'error'; payload: { error: Error; errorType: 'transaction' | 'gasEstimate' } }
   | { type: 'settled' };
 
 export function reducer(state: MintMutationState, action: Actions): MintMutationState {
   switch (action.type) {
-    case 'gas_estimate':
-      return { ...state };
     case 'prompting':
       return {
         ...state,
         txnStatus: 'prompting',
         modalOpen: true,
+        error: null,
+        errorType: null,
       };
 
     case 'pending':
@@ -49,6 +49,8 @@ export function reducer(state: MintMutationState, action: Actions): MintMutation
       return {
         ...state,
         txnStatus: 'error',
+        error: action.payload.error,
+        errorType: action.payload.errorType,
       };
 
     case 'settled':
@@ -56,6 +58,8 @@ export function reducer(state: MintMutationState, action: Actions): MintMutation
         ...state,
         modalOpen: false,
         txnStatus: 'unsent',
+        error: null,
+        errorType: null,
       };
 
     default:
