@@ -238,7 +238,7 @@ export default function Stake({
   return (
     <>
       <FormProvider {...methods}>
-        <Box bg="gray.900" mb="8" p="6" pb="4" borderRadius="12px">
+        <Box bg="whiteAlpha.200" mb="8" p="6" pb="4" borderRadius="12px">
           <form
             onSubmit={handleSubmit((_data) => {
               createAccount();
