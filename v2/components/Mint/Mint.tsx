@@ -212,9 +212,11 @@ export const MintUi = ({
             setActiveBadge(0);
             return onSubmit();
           }}
-          disabled={mintAmountSNX === ''}
+          disabled={
+            mintAmountSNX === '' || errorType === 'gasEstimate' || isGasEnabledAndNotFetched
+          }
         >
-          Mint
+          {isGasEnabledAndNotFetched ? t('staking-v2.mint.estimating-gas') : 'Mint'}
         </Button>
       </Box>
       <TransactionModal
