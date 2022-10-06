@@ -9,10 +9,17 @@ import {
   Skeleton,
   Spinner,
   Divider,
+  Center,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { InfoIcon, TokensIcon, TransactionCompleted, TransactionPending } from '@snx-v2/icons';
+import {
+  FailedIcon,
+  InfoIcon,
+  TokensIcon,
+  TransactionCompleted,
+  TransactionPending,
+} from '@snx-v2/icons';
 import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
 import { TransactionStatus, useMintMutation } from '@snx-v2/useMintMutation';
@@ -24,6 +31,7 @@ import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import { ExternalLink } from '@snx-v2/ExternalLink';
 import { calculateUnstakedStakedSnx } from '@snx-v2/stakingCalculations';
 import { useQueryClient } from '@tanstack/react-query';
+import { parseTxnError } from '@snx-v2/parseTxnError';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -197,9 +205,9 @@ export const MintUi = ({
           </Center>
         ) : (
           transactionFee.gt(0) && (
-        <Flex mt={3} alignItems="center" justifyContent="space-between">
-          <EthGasPriceEstimator transactionFee={transactionFee} />
-        </Flex>
+            <Flex mt={3} alignItems="center" justifyContent="space-between">
+              <EthGasPriceEstimator transactionFee={transactionFee} />
+            </Flex>
           )
         )}
 
@@ -220,13 +228,22 @@ export const MintUi = ({
         </Button>
       </Box>
       <TransactionModal
-        icon={transactionLoading ? <TransactionPending /> : <TransactionCompleted />}
+        onClose={settle}
+        icon={
+          error ? (
+            <FailedIcon />
+          ) : transactionLoading ? (
+            <TransactionPending />
+          ) : (
+            <TransactionCompleted />
+          )
+        }
         title={
           transactionLoading
             ? t('staking-v2.mint.txn-modal.pending')
             : txnStatus === 'success'
             ? t('staking-v2.mint.txn-modal.completed')
-            : 'TODO Error'
+            : t('staking-v2.mint.txn-modal.error-headline')
         }
         isOpen={modalOpen}
       >
@@ -250,11 +267,27 @@ export const MintUi = ({
             </Text>
           </Flex>
         )}
+        {error && (
+          <Flex alignItems="center" justifyContent="center" bg="black" pt="4" pb="4" mt="4">
+            {parseTxnError(error)}
+          </Flex>
+        )}
         <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
-        <Flex justifyContent="center">
-          {/* TODO create something that can generate etherscan links based in network and tx id */}
-          <ExternalLink fontSize="sm"> {t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
-        </Flex>
+        {!error ? (
+          <Center flexDirection="column">
+            {/* TODO create something that can generate etherscan links based in network and tx id */}
+            <ExternalLink fontSize="sm"> {t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
+            <Button onClick={settle}>{t('staking-v2.mint.txn-modal.close')}</Button>
+          </Center>
+        ) : (
+          <Center>
+            <Button onClick={errorType === 'gasEstimate' ? settle : retry}>
+              {errorType === 'gasEstimate'
+                ? t('staking-v2.mint.txn-modal.close')
+                : t('staking-v2.mint.txn-modal.retry')}
+            </Button>
+          </Center>
+        )}
       </TransactionModal>
     </>
   );
