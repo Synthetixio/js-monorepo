@@ -188,9 +188,21 @@ export const MintUi = ({
             </Flex>
           </Flex>
         </Box>
+        {error && errorType === 'gasEstimate' ? (
+          <Center>
+            <FailedIcon width="40px" height="40px" />
+            <Text>
+              {t('staking-v2.mint.gas-estimation-error')}: {parseTxnError(error)}
+            </Text>
+          </Center>
+        ) : (
+          transactionFee.gt(0) && (
         <Flex mt={3} alignItems="center" justifyContent="space-between">
           <EthGasPriceEstimator transactionFee={transactionFee} />
         </Flex>
+          )
+        )}
+
         <Button
           fontFamily="heading"
           fontWeight="black"
