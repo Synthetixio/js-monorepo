@@ -238,7 +238,7 @@ export default function Stake({
   return (
     <>
       <FormProvider {...methods}>
-        <Box bg="gray.900" mb="8" p="6" pb="4" borderRadius="12px">
+        <Box bg="whiteAlpha.200" mb="8" p="6" pb="4" borderRadius="12px">
           <form
             onSubmit={handleSubmit((_data) => {
               createAccount();
@@ -289,7 +289,6 @@ export default function Stake({
                   isLoading={multiTxn.status === 'pending' || isLoading}
                   isDisabled={!formState.isValid}
                   size="lg"
-                  colorScheme="blue"
                   ml="4"
                   px="8"
                   type="submit"
@@ -302,7 +301,6 @@ export default function Stake({
               ) : (
                 <Button
                   size="lg"
-                  colorScheme="blue"
                   ml="4"
                   px="8"
                   onClick={() => openConnectModal && openConnectModal()}
@@ -432,7 +430,7 @@ export default function Stake({
                   <ButtonGroup
                     size="sm"
                     isAttached
-                    colorScheme="blue"
+                    
                     variant="outline"
                   >
                     <Button mr="-px">1W</Button>
@@ -446,7 +444,7 @@ export default function Stake({
                 </FormControl>
               </GridItem>
               <GridItem mb="4">
-                <Button size="sm" colorScheme="blue" w="100%" mt="8">
+                <Button size="sm"  w="100%" mt="8">
                   Lock
                 </Button>
               </GridItem>

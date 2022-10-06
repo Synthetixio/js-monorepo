@@ -111,13 +111,7 @@ export function CreateSynth() {
             </MenuItem>
           </MenuList>
         </Menu>
-        <Button
-          w="100%"
-          size="lg"
-          colorScheme="blue"
-          mb="1"
-          onClick={() => navigate('/synths/example')}
-        >
+        <Button w="100%" size="lg" mb="1" onClick={() => navigate('/synths/example')}>
           Create Synth
         </Button>
       </Box>

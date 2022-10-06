@@ -132,7 +132,7 @@ export const StakingPosition: FC<Props> = ({ position, refetch }) => {
                             <Button
                               // isLoading={null}
                               // isDisabled={null}
-                              colorScheme="blue"
+
                               ml="4"
                               px="8"
                               type="submit"
@@ -155,7 +155,6 @@ export const StakingPosition: FC<Props> = ({ position, refetch }) => {
                               as="button"
                               ml="3"
                               variant="outline"
-                              colorScheme="blue"
                               transform="translateY(-2px)"
                             >
                               Use Max
@@ -190,7 +189,7 @@ export const StakingPosition: FC<Props> = ({ position, refetch }) => {
                             <Button
                               // isLoading={null}
                               // isDisabled={null}
-                              colorScheme="blue"
+
                               ml="4"
                               px="8"
                               type="submit"
@@ -208,7 +207,6 @@ export const StakingPosition: FC<Props> = ({ position, refetch }) => {
                               as="button"
                               ml="3"
                               variant="outline"
-                              colorScheme="blue"
                               transform="translateY(-2px)"
                             >
                               Use Max
