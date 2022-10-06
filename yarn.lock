@@ -6783,6 +6783,7 @@ __metadata:
     "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
@@ -6960,6 +6961,12 @@ __metadata:
   peerDependencies:
     "@chakra-ui/react": 2
     react: 18
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/parseTxnError@workspace:*, @snx-v2/parseTxnError@workspace:v2/lib/parseTxnError":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/parseTxnError@workspace:v2/lib/parseTxnError"
   languageName: unknown
   linkType: soft
 
