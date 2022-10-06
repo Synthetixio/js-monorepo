@@ -269,7 +269,7 @@ export const MintUi = ({
           <Center pt="4" pb="4" mt="4">
             <FailedIcon width="40px" height="40px" />
 
-            <Text> {parseTxnError(error)}</Text>
+            <Text>{parseTxnError(error)}</Text>
           </Center>
         )}
         <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
