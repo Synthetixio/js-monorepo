@@ -36,6 +36,11 @@ interface MintProps {
   transactionFee: Wei;
   txnStatus: TransactionStatus;
   modalOpen: boolean;
+  error: Error | null;
+  errorType: 'transaction' | 'gasEstimate' | null;
+  settle: () => void;
+  retry: () => void;
+  isGasEnabledAndNotFetched: boolean;
 }
 const convert = (value: string, exchangeRate: number) => {
   const num = parseFloat(value);
@@ -57,6 +62,11 @@ export const MintUi = ({
   transactionFee,
   txnStatus,
   modalOpen,
+  error,
+  errorType,
+  settle,
+  retry,
+  isGasEnabledAndNotFetched,
 }: MintProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState(0);
@@ -246,12 +256,21 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
 
   const exchangeRate =
     (targetCRatioPercent && exchangeRateData?.SNX?.div(targetCRatioPercent / 100).toNumber()) || 0;
-  // const debouncedSearchTerm = useDebounce(mintAmount, 500);
+  // const debouncedSearchTerm = useDebounce(mintAmountSNX, 500);
   const mintAmountSUSD = convert(mintAmountSNX, exchangeRate);
   const { targetCRatio, currentCRatio, collateral } = debtData || {};
 
   const unstakedSnx = calculateUnstakedStakedSnx({ targetCRatio, currentCRatio, collateral });
-  const { mutate, transactionFee, modalOpen, txnStatus } = useMintMutation({
+  const {
+    mutate,
+    transactionFee,
+    modalOpen,
+    txnStatus,
+    error,
+    errorType,
+    settle,
+    isGasEnabledAndNotFetched,
+  } = useMintMutation({
     amount: wei(mintAmountSUSD || 0).toBN(),
     delegateAddress: delegateWalletAddress,
     toMax: wei(mintAmountSNX || 0).gte(formatNumber(unstakedSnx.toNumber())),
@@ -277,6 +296,11 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       transactionFee={transactionFee || wei(0)}
       txnStatus={txnStatus}
       modalOpen={modalOpen}
+      error={error}
+      errorType={errorType}
+      settle={settle}
+      retry={() => mutate()}
+      isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
     />
   );
 };
