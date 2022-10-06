@@ -276,7 +276,7 @@ export const MintUi = ({
         {!error ? (
           <Center flexDirection="column">
             {/* TODO create something that can generate etherscan links based in network and tx id */}
-            <ExternalLink fontSize="sm"> {t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
+            <ExternalLink fontSize="sm">{t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
             {txnStatus === 'success' && (
               <Button mt={2} onClick={settle}>
                 {t('staking-v2.mint.txn-modal.close')}
