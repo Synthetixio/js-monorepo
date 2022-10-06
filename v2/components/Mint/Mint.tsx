@@ -204,11 +204,9 @@ export const MintUi = ({
             </Text>
           </Center>
         ) : (
-          transactionFee.gt(0) && (
-            <Flex mt={3} alignItems="center" justifyContent="space-between">
-              <EthGasPriceEstimator transactionFee={transactionFee} />
-            </Flex>
-          )
+          <Flex mt={3} alignItems="center" justifyContent="space-between">
+            <EthGasPriceEstimator transactionFee={transactionFee} />
+          </Flex>
         )}
 
         <Button
@@ -270,6 +268,7 @@ export const MintUi = ({
         {error && (
           <Center pt="4" pb="4" mt="4">
             <FailedIcon width="40px" height="40px" />
+
             <Text> {parseTxnError(error)}</Text>
           </Center>
         )}
