@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSynthetix } from '@snx-v2/useSynthetixContracts';
 import { useGasOptions } from '@snx-v2/useGasOptions';
@@ -47,18 +47,29 @@ export function useMintMutation(mintArgs: MintArgs) {
   const populateTransaction = createPopulateTransaction(Synthetix, mintArgs);
   const {
     data,
-    isLoading: isGasLoading,
+    isFetched: isGasFetched,
+    isFetching: gasFetching,
     error: gasError,
   } = useGasOptions({
     populateTransaction,
     queryKeys: [mintArgs, populateTransaction],
   });
+  useEffect(() => {
+    if (gasError) {
+      dispatch({
+        type: 'error',
+        payload: { error: gasError as Error, errorType: 'gasEstimate' },
+      });
+      return;
+    }
+    if (!gasError && state.errorType === 'gasEstimate') {
+      dispatch({ type: 'settled' });
+      return;
+    }
+  }, [gasError]);
   const { gasOptionsForTransaction, transactionPrice } = data || {};
 
-  const isLoading = isGasLoading;
-
-  const { modalOpen, txnStatus, error } = state;
-
+  const { modalOpen, txnStatus, error, errorType } = state;
   return {
     ...useMutation(async () => {
       if (!Synthetix?.signer || !populateTransaction) return;
@@ -73,16 +84,17 @@ export function useMintMutation(mintArgs: MintArgs) {
         dispatch({ type: 'pending' });
         await txn.wait();
         dispatch({ type: 'success' });
-        setTimeout(() => dispatch({ type: 'settled' }), 1000);
       } catch (error: any) {
-        dispatch({ type: 'error' });
-        setTimeout(() => dispatch({ type: 'settled' }), 1000);
+        dispatch({ type: 'error', payload: { error, errorType: 'transaction' } });
+        throw error;
       }
     }),
     transactionFee: transactionPrice,
-    isLoading,
+    isGasEnabledAndNotFetched: gasFetching && !isGasFetched,
     modalOpen,
     txnStatus,
-    error: error || gasError,
+    error,
+    errorType,
+    settle: () => dispatch({ type: 'settled' }),
   };
 }
