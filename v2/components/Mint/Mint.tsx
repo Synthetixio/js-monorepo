@@ -182,6 +182,7 @@ export const MintUi = ({
           <EthGasPriceEstimator transactionFee={transactionFee} />
         </Flex>
         <Button
+          variant="gradient"
           fontFamily="heading"
           fontWeight="black"
           mt={4}

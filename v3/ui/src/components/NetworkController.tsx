@@ -71,9 +71,7 @@ export function NetworkController() {
                 <MenuButton
                   as={Button}
                   textAlign="left"
-                  bg="gray.800"
-                  _hover={{ bg: 'gray.700' }}
-                  _active={{ bg: 'gray.700' }}
+                  colorScheme="gray"
                   mr="4"
                   style={{ display: 'flex', alignItems: 'center' }}
                   size={['sm', 'sm', 'sm', 'md']}
@@ -110,9 +108,9 @@ export function NetworkController() {
                         alignItems="left"
                         mb={1}
                         flexDirection="column"
-                        _hover={{ bg: 'gray.800' }}
-                        _focus={{ bg: 'gray.800' }}
-                        _active={{ bg: 'gray.800' }}
+                        _hover={{ bg: 'gray.900' }}
+                        _focus={{ bg: 'gray.900' }}
+                        _active={{ bg: 'gray.900' }}
                         onClick={() => {
                           routeToChain(location.pathname, chainOption.id);
                         }}
@@ -147,12 +145,7 @@ export function NetworkController() {
             {(() => {
               if (!mounted || !account || !chain) {
                 return (
-                  <Button
-                    colorScheme="blue"
-                    onClick={openConnectModal}
-                    type="button"
-                    size={['sm', 'sm', 'sm', 'md']}
-                  >
+                  <Button onClick={openConnectModal} type="button" size={['sm', 'sm', 'sm', 'md']}>
                     Connect Wallet
                   </Button>
                 );
@@ -165,12 +158,7 @@ export function NetworkController() {
                 );
               }
               return (
-                <Button
-                  bg="gray.800"
-                  _hover={{ bg: 'gray.700' }}
-                  onClick={openAccountModal}
-                  type="button"
-                >
+                <Button colorScheme="gray" onClick={openAccountModal} type="button">
                   {account.displayName}
                   {false && account?.displayBalance ? ` (${account?.displayBalance})` : ''}
                 </Button>

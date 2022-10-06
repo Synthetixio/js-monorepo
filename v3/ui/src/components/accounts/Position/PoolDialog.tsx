@@ -140,7 +140,6 @@ export const PoolDialog: FC<Props> = ({
             isLoading={isLoading}
             disabled={!isValid || debt > 0}
             onClick={exec}
-            colorScheme="blue"
             w="100%"
             my="5"
           >

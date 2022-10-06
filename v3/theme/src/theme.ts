@@ -1,4 +1,5 @@
-import { ComponentStyleConfig, cssVar, extendTheme } from '@chakra-ui/react';
+import { ComponentStyleConfig, cssVar, defineStyle, extendTheme } from '@chakra-ui/react';
+import { mode } from '@chakra-ui/theme-tools';
 
 const gradients = {
   'green-cyan': {
@@ -38,12 +39,52 @@ const gradients = {
   },
 };
 
+// adapted from https://github.com/chakra-ui/chakra-ui/blob/main/packages/components/theme/src/components/button.ts#L90
+const variantSolid = defineStyle((props) => {
+  const { colorScheme: c } = props;
+
+  if (c === 'gray') {
+    const bg = mode(`gray.100`, `whiteAlpha.200`)(props);
+
+    return {
+      color: mode(`black`, `whiteAlpha.900`)(props),
+      bg,
+      _hover: {
+        bg: mode(`gray.200`, `whiteAlpha.300`)(props),
+        _disabled: {
+          bg,
+        },
+      },
+      _active: { bg: mode(`gray.300`, `whiteAlpha.400`)(props) },
+    };
+  }
+
+  const bg = `${c}.500`;
+  const color = 'white';
+  const hoverBg = `${c}.600`;
+  const activeBg = `${c}.700`;
+  const background = mode(bg, `${c}.600`)(props);
+
+  return {
+    bg: background,
+    color: mode(color, `white`)(props),
+    _hover: {
+      bg: mode(hoverBg, `${c}.500`)(props),
+      _disabled: {
+        bg: background,
+      },
+    },
+    _active: { bg: mode(activeBg, `${c}.400`)(props) },
+  };
+});
+
 const Button: ComponentStyleConfig = {
   defaultProps: {
     colorScheme: 'cyan',
   },
   variants: {
-    solid: {
+    solid: variantSolid,
+    gradient: {
       bgGradient: gradients['green-cyan'][500],
       color: 'black',
       _hover: {

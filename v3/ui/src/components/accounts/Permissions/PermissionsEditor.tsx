@@ -72,7 +72,7 @@ export const PermissionsEditor: FC<Props> = ({
           />
         </Flex>
       ) : (
-        <Button size="xs" colorScheme="blue" onClick={onOpen}>
+        <Button size="xs" onClick={onOpen}>
           <AddIcon mr="1.5" />
           Add Address
         </Button>
@@ -147,7 +147,6 @@ export const PermissionsEditor: FC<Props> = ({
               isLoading={isExecuting}
               mt="6"
               mb="4"
-              colorScheme="blue"
               onClick={async () => {
                 await exec();
                 onClose();
