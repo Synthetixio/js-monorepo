@@ -6,9 +6,6 @@ beforeEach(() => {
   // Because we are working with tenderly fork, subgraph becomes irrelevant
   cy.intercept('https://api.thegraph.com/subgraphs/name/synthetixio-team/mainnet-main', {
     statusCode: 204,
-    //    body: JSON.stringify({
-    //      data: null,
-    //    }),
   }).as('subgraph');
 
   // Because we are working with tenderly fork, infura calls should not even happen!

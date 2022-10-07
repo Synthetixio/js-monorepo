@@ -1,5 +1,5 @@
 describe('loans', () => {
-  it('Can borrow SNX with ETH collateral', () => {
+  it('Can borrow sUSD with ETH collateral', () => {
     // TX confirmation can take a while
     const TIMEOUT_TX = 120000;
     // Data fetching from tenderly can take some extra time
