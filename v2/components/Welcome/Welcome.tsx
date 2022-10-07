@@ -1,5 +1,5 @@
 import { Text, Link, Flex, Box, Button, BoxProps } from '@chakra-ui/react';
-import { EXTERNAL_LINKS } from 'constants/links';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { Trans, useTranslation } from 'react-i18next';
 
 export const Welcome = ({ ...props }: BoxProps) => {

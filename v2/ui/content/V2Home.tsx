@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Box, Container, Flex, Text, Center } from '@chakra-ui/react';
 import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
@@ -15,12 +16,12 @@ import {
 } from '@snx-v2/icons';
 import { BoxLink } from '@snx-v2/BoxLink';
 import { useTranslation } from 'react-i18next';
-import Connector from 'containers/Connector';
 import { Welcome } from '@snx-v2/Welcome';
+import { ContractContext } from '@snx-v2/ContractContext';
 
 const V2Home = () => {
   const { t } = useTranslation();
-  const { walletAddress } = Connector.useContainer();
+  const { walletAddress } = useContext(ContractContext);
   return (
     <>
       <Container maxW="1200px">
