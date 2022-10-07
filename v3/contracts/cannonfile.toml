@@ -9,27 +9,19 @@ defaultValue = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
 defaultValue = "latest"
 
 [setting.synthetix_version]
-defaultValue = "1.0.0"
+defaultValue = "3"
 
 [setting.chainlink_version]
-defaultValue = "0.1.0"
+defaultValue = "0.7-mock"
 
 [setting.rate_decimals]
 defaultValue = "6"
-
-[setting.lusd_rate]
-defaultValue = "1000000"
 
 [setting.snx_rate]
 defaultValue = "10000000"
 
 [setting.weth_rate]
 defaultValue = "100000000"
-
-[import.lusd]
-source = "mintableerc20:<%= settings.erc20_version %>"
-options.name = "Liquity USD"
-options.symbol = "LUSD"
 
 [import.snx]
 source = "mintableerc20:<%= settings.erc20_version %>"
@@ -42,12 +34,6 @@ options.salt = "snx"
 options.decimals = "<%= settings.rate_decimals %>"
 options.rate = "<%= settings.snx_rate %>"
 
-[import.aggregator_lusd]
-source = "chainlink:<%= settings.chainlink_version %>"
-options.salt = "lusd"
-options.decimals = "<%= settings.rate_decimals %>"
-options.rate = "<%= settings.lusd_rate %>"
-
 [import.aggregator_weth]
 source = "chainlink:<%= settings.chainlink_version %>"
 options.salt = "weth"
@@ -55,7 +41,7 @@ options.decimals = "<%= settings.rate_decimals %>"
 options.rate = "<%= settings.weth_rate %>"
 
 [import.synthetix]
-source = "synthetix-main:<%= settings.synthetix_version %>"
+source = "synthetix:<%= settings.synthetix_version %>"
 options.owner = "<%= settings.owner %>"
 
 [contract.Multicall]
@@ -63,20 +49,6 @@ artifact = "Multicall3"
 
 [contract.WETH]
 artifact = "WETH9"
-
-[invoke.register_lusd_collateral]
-target = ["synthetix.CoreProxy"]
-fromCall.func = "owner"
-func = "configureCollateral"
-args = [
-    "<%= imports.lusd.contracts.token.address %>",
-    "<%= imports.aggregator_lusd.contracts.aggregator.address %>",
- "1500000",
-    "1100000",
-    "1000000000000000000",
-    true,
-]
-depends = ["import.synthetix", "import.lusd", "import.aggregator_lusd"]
 
 [invoke.register_snx_collateral]
 target = ["synthetix.CoreProxy"]

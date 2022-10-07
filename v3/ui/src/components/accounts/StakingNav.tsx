@@ -23,7 +23,6 @@ export function StakingNav() {
       <Menu>
         <MenuButton
           as={Button}
-          colorScheme="blue"
           _hover={{ bg: 'gray.300' }}
           _active={{ bg: 'gray.300' }}
           variant="outline"

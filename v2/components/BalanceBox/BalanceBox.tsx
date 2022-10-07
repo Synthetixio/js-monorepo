@@ -17,6 +17,9 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
+import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
+import { useIssuedDebt } from '@snx-v2/useIssuedDebt';
+import { sumBy } from '@snx-v2/sumBy';
 
 export const BalanceBoxUi: React.FC<{
   snxBalance?: number;
@@ -26,7 +29,7 @@ export const BalanceBoxUi: React.FC<{
   debtBalance?: number;
   issuedDebt?: number;
   dSNXBalance?: number;
-}> = ({ snxBalance, snxPrice, transferable, stakedSnx, debtBalance, dSNXBalance }) => {
+}> = ({ snxBalance, snxPrice, transferable, stakedSnx, debtBalance, dSNXBalance, issuedDebt }) => {
   const { t } = useTranslation();
   const [show, setShow] = React.useState(false);
   return (
@@ -101,8 +104,8 @@ export const BalanceBoxUi: React.FC<{
           </Flex>
           <Flex justifyContent="space-between">
             <Text>{t('staking-v2.balance-box.issued')}</Text>
-            {debtBalance !== undefined ? (
-              <Text>Todo</Text>
+            {issuedDebt !== undefined ? (
+              <Text>{formatNumber(issuedDebt)}</Text>
             ) : (
               <Skeleton my={1} width={8} height={4} />
             )}
@@ -137,14 +140,22 @@ export const BalanceBox: React.FC = () => {
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: dSNXBalance } = useGetDSnxBalance();
+  const { data } = useIssuedDebt();
+
+  const stakedSnx = calculateStakedSnx({
+    targetCRatio: debtData?.targetCRatio,
+    currentCRatio: debtData?.currentCRatio,
+    collateral: debtData?.collateral,
+  });
+
   return (
     <BalanceBoxUi
       snxPrice={exchangeRateData?.SNX?.toNumber()}
-      snxBalance={debtData?.balance.toNumber()}
-      stakedSnx={debtData?.collateral.toNumber()}
+      snxBalance={debtData?.collateral.toNumber()}
+      stakedSnx={stakedSnx.toNumber()}
       transferable={debtData?.transferable.toNumber()}
       debtBalance={debtData?.debtBalance.toNumber()}
-      issuedDebt={0} // TODO
+      issuedDebt={sumBy('value', data || [])}
       dSNXBalance={dSNXBalance?.toNumber()}
     />
   );

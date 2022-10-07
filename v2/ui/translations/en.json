@@ -71,9 +71,7 @@
       "heading-tooltip": "Choose how much SNX you would like to stake. You can use the presets available or enter custom amount.",
       "borrowing": "Borrowing",
       "borrowing-tooltip": "By staking SNX you're effectively borrowing sUSD.",
-      "gas": "Gas Price (GWEI)",
-      "gas-tooltip": "Is how much it costs to perform a transaction on the blockchain & GWEI is a denomination of Ether",
-      "snx-balance": "SNX Balance: {{snxBalance}}",
+      "unstaked-snx": "Unstaked SNX: {{unstakedSnx}}",
       "susd-balance": "sUSD Balance: {{susdBalance}}",
       "enter-amount": "Enter Amount",
       "tx-cost": "Tx cost: {{txCost}}",
@@ -82,7 +80,15 @@
       "info": "Info",
       "success": "HEALTHY",
       "warning": "UNHEALTHY",
-      "error": "UNHEALTHY"
+      "error": "UNHEALTHY",
+      "txn-modal": {
+        "pending": "Transaction Pending",
+        "completed": "Transaction completed",
+        "staking": "Staking",
+        "minting": "Minting",
+        "loading": "Loading",
+        "etherscan": "View Etherscan"
+      }
     },
     "burn": {
       "title": "Burn Debt",

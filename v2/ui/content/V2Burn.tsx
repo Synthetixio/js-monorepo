@@ -197,7 +197,7 @@ const V2Burn = () => {
             exchangeRate={exchangeRateData?.SNX ? exchangeRateData?.SNX?.toNumber() : 0.25}
             isLoading={isLoading}
             onSubmit={onSubmit}
-            gasPrice={transactionFee}
+            gasPrice={transactionFee ?? null}
             txnStatus={txnStatus}
           />
         </Container>

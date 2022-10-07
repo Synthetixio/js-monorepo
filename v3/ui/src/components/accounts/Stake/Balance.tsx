@@ -16,13 +16,7 @@ export const Balance: FC<Props> = ({ balance, decimals, symbol, onMax }) => {
       {symbol.toUpperCase()}
       {balance.eq(0) && (
         <Link>
-          <Badge
-            as="button"
-            ml="2"
-            variant="outline"
-            colorScheme="blue"
-            transform="translateY(-2px)"
-          >
+          <Badge as="button" ml="2" variant="outline" transform="translateY(-2px)">
             Buy {symbol}
           </Badge>
         </Link>
@@ -32,7 +26,6 @@ export const Balance: FC<Props> = ({ balance, decimals, symbol, onMax }) => {
           as="button"
           ml="2"
           variant="outline"
-          colorScheme="blue"
           transform="translateY(-2px)"
           onClick={(e) => {
             e.preventDefault();

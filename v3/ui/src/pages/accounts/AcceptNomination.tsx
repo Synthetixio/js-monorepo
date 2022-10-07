@@ -31,14 +31,7 @@ export const AcceptNomination = () => {
   return (
     <Box>
       {address === nominatedOwner && (
-        <Button
-          isLoading={isLoading}
-          size="lg"
-          colorScheme="blue"
-          ml="4"
-          px="8"
-          onClick={() => write()}
-        >
+        <Button isLoading={isLoading} size="lg" ml="4" px="8" onClick={() => write()}>
           {/* @ts-ignore */}
           Accept Ownership of {accountId}
         </Button>

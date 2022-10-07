@@ -1,26 +1,28 @@
 import { BigNumber } from '@ethersproject/bignumber';
+import { wei } from '@synthetixio/wei';
+import { GWEI_DECIMALS } from '@snx-v2/Constants';
 
 const gasPricesMainnetMockData = {
   fastest: {
-    maxPriorityFeePerGas: BigNumber.from(8),
-    maxFeePerGas: BigNumber.from(18),
-    baseFeePerGas: BigNumber.from(10),
+    maxPriorityFeePerGas: wei(8, GWEI_DECIMALS, true).toBN(),
+    maxFeePerGas: wei(18, GWEI_DECIMALS, true).toBN(),
+    baseFeePerGas: wei(10, GWEI_DECIMALS, true).toBN(),
   },
   fast: {
-    maxPriorityFeePerGas: BigNumber.from(4),
-    maxFeePerGas: BigNumber.from(14),
-    baseFeePerGas: BigNumber.from(10),
+    maxPriorityFeePerGas: wei(4, GWEI_DECIMALS, true).toBN(),
+    maxFeePerGas: wei(14, GWEI_DECIMALS, true).toBN(),
+    baseFeePerGas: wei(10, GWEI_DECIMALS, true).toBN(),
   },
   average: {
-    maxPriorityFeePerGas: BigNumber.from(4),
-    maxFeePerGas: BigNumber.from(14),
-    baseFeePerGas: BigNumber.from(10),
+    maxPriorityFeePerGas: wei(4, GWEI_DECIMALS, true).toBN(),
+    maxFeePerGas: wei(14, GWEI_DECIMALS, true).toBN(),
+    baseFeePerGas: wei(10, GWEI_DECIMALS, true).toBN(),
   },
 };
 const gasPricesOptimismMockData = {
-  fastest: { gasPrice: BigNumber.from(10) },
-  fast: { gasPrice: BigNumber.from(10) },
-  average: { gasPrice: BigNumber.from(10) },
+  fastest: { gasPrice: wei(10, GWEI_DECIMALS, true).toBN() },
+  fast: { gasPrice: wei(10, GWEI_DECIMALS, true).toBN() },
+  average: { gasPrice: wei(10, GWEI_DECIMALS, true).toBN() },
 };
 describe('useGasOptions', () => {
   let useGasOptions;
@@ -29,6 +31,7 @@ describe('useGasOptions', () => {
   let reactQuery;
   let ContractContext;
   let useOptimismLayer1Fee;
+  let useExchangeRatesData;
 
   beforeEach(async () => {
     react = {
@@ -46,12 +49,14 @@ describe('useGasOptions', () => {
     useGasPrice = jest.fn(() => ({
       data: gasPricesMainnetMockData,
     }));
+    useExchangeRatesData = jest.fn(() => ({ data: { ETH: wei(1000) } }));
     jest.doMock('react', () => react);
     jest.doMock('@tanstack/react-query', () => reactQuery);
     jest.doMock('@snx-v2/ContractContext', () => ContractContext);
     jest.doMock('@snx-v2/useGasPrice', () => ({ useGasPrice }));
     jest.doMock('@snx-v2/GasSpeedContext', () => ({ gasSpeed: 'average' }));
-    jest.doMock('@snx-v2//useOptimismLayer1Fee', () => ({ useOptimismLayer1Fee }));
+    jest.doMock('@snx-v2/useOptimismLayer1Fee', () => ({ useOptimismLayer1Fee }));
+    jest.doMock('@snx-v2/useExchangeRatesData', () => ({ useExchangeRatesData }));
 
     ({ useGasOptions } = await import('./useGasOptions'));
   });
@@ -62,122 +67,89 @@ describe('useGasOptions', () => {
 
   test('Returns undefined values when populateTransaction is undefined', async () => {
     const populateTransaction = undefined;
-    const getGasLimit = jest.fn();
-    const result = useGasOptions({ populateTransaction, getGasLimit });
+    const result = useGasOptions({ populateTransaction });
     const [cacheKey, _query, options] = reactQuery.useQuery.mock.lastCall;
     expect(result.data).toEqual(undefined);
-    expect(cacheKey).toEqual([
-      getGasLimit.toString(),
-      undefined,
-      undefined,
-      gasPricesMainnetMockData,
-      1,
-    ]);
-    expect(options).toEqual({ enabled: false });
+    expect(cacheKey).toEqual([undefined, gasPricesMainnetMockData, 1, 'average']);
+    expect(options).toEqual({ enabled: false, staleTime: 10000 });
   });
-  test('Returns undefined values when populate transaction is undefined', async () => {
-    const populateTransaction = jest.fn();
-    const getGasLimit = undefined;
-    const result = useGasOptions({ populateTransaction, getGasLimit });
-    const [cacheKey, _query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(result.data).toEqual(undefined);
-    expect(cacheKey).toEqual([
-      undefined,
-      populateTransaction.toString(),
-      undefined,
-      gasPricesMainnetMockData,
-      1,
-    ]);
-    expect(options).toEqual({ enabled: false });
-  });
-  test('Returns gas options mainnet', async () => {
-    const populateTransaction = jest.fn();
-    const getGasLimit = jest.fn(() => BigNumber.from(20));
 
-    useGasOptions({ populateTransaction, getGasLimit });
+  test('Returns gas options mainnet', async () => {
+    const populateTransaction = jest
+      .fn()
+      .mockResolvedValue({ gasLimit: wei(500000, GWEI_DECIMALS).toBN() });
+
+    useGasOptions({ populateTransaction, queryKeys: ['mykey'] });
 
     const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual([
-      getGasLimit.toString(),
-      populateTransaction.toString(),
-      undefined,
-      gasPricesMainnetMockData,
-      1,
-    ]);
-    expect(options).toEqual({ enabled: true });
+    expect(cacheKey).toEqual(['mykey', undefined, gasPricesMainnetMockData, 1, 'average']);
+    expect(options).toEqual({ enabled: true, staleTime: 10000 });
 
     const queryResult = await query();
     expect(queryResult).toEqual({
-      gasLimit: BigNumber.from(24),
+      gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
       gasOptionsForTransaction: {
-        maxFeePerGas: BigNumber.from(14),
-        maxPriorityFeePerGas: BigNumber.from(4),
-        gasLimit: BigNumber.from(24),
+        maxFeePerGas: wei(14, GWEI_DECIMALS, true).toBN(),
+        maxPriorityFeePerGas: wei(4, GWEI_DECIMALS, true).toBN(),
+        gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
       },
       gasPrices: gasPricesMainnetMockData,
       gasSpeed: 'average',
       optimismLayerOneFees: undefined,
+      transactionPrice: wei(7, GWEI_DECIMALS),
     });
   });
   test('Returns gas options mainnet when gasSpeed is fastest', async () => {
     react.useContext.mockReturnValue({ networkId: 1, gasSpeed: 'fastest' });
-    const populateTransaction = jest.fn();
-    const getGasLimit = jest.fn(() => BigNumber.from(20));
+    const populateTransaction = jest
+      .fn()
+      .mockResolvedValue({ gasLimit: wei(500000, GWEI_DECIMALS).toBN() });
 
-    useGasOptions({ populateTransaction, getGasLimit });
+    useGasOptions({ populateTransaction });
 
     const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual([
-      getGasLimit.toString(),
-      populateTransaction.toString(),
-      undefined,
-      gasPricesMainnetMockData,
-      1,
-    ]);
-    expect(options).toEqual({ enabled: true });
+    expect(cacheKey).toEqual([undefined, gasPricesMainnetMockData, 1, 'fastest']);
+    expect(options).toEqual({ enabled: true, staleTime: 10000 });
 
     const queryResult = await query();
     expect(queryResult).toEqual({
-      gasLimit: BigNumber.from(24),
+      gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
       gasOptionsForTransaction: {
         maxFeePerGas: BigNumber.from(18),
         maxPriorityFeePerGas: BigNumber.from(8),
-        gasLimit: BigNumber.from(24),
+        gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
       },
       gasPrices: gasPricesMainnetMockData,
       gasSpeed: 'fastest',
       optimismLayerOneFees: undefined,
+      transactionPrice: wei(9, GWEI_DECIMALS),
     });
   });
   test('Returns gas options for optimism', async () => {
-    const populateTransaction = jest.fn();
-    const getGasLimit = jest.fn().mockReturnValue(BigNumber.from(20));
+    const populateTransaction = jest
+      .fn()
+      .mockResolvedValue({ gasLimit: wei(500000, GWEI_DECIMALS).toBN() });
     react.useContext.mockReturnValue({ networkId: 10, gasSpeed: 'average' });
     useGasPrice.mockReturnValue({ data: gasPricesOptimismMockData });
-    useOptimismLayer1Fee.mockReturnValue({ data: BigNumber.from(1) });
+    useOptimismLayer1Fee.mockReturnValue({ data: wei(0.00000001) });
 
-    useGasOptions({ populateTransaction, getGasLimit });
+    useGasOptions({ populateTransaction });
 
     const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual([
-      getGasLimit.toString(),
-      populateTransaction.toString(),
-      BigNumber.from(1),
-      gasPricesOptimismMockData,
-      10,
-    ]);
-    expect(options).toEqual({ enabled: true });
+    expect(cacheKey).toEqual([wei(0.00000001), gasPricesOptimismMockData, 10, 'average']);
+    expect(options).toEqual({ enabled: true, staleTime: 10000 });
 
     const queryResult = await query();
     expect(queryResult).toEqual({
-      gasLimit: BigNumber.from(24),
+      gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
       gasOptionsForTransaction: {
         gasPrice: BigNumber.from(10),
-        gasLimit: BigNumber.from(24),
+        gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
       },
       gasPrices: gasPricesOptimismMockData,
       gasSpeed: 'average',
-      optimismLayerOneFees: BigNumber.from(1),
+      optimismLayerOneFees: wei(0.00000001),
+      transactionPrice: wei(5.00001, GWEI_DECIMALS),
     });
   });
 });

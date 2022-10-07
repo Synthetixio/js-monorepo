@@ -138,7 +138,7 @@ export default function EditPosition({ onClose }: PropsType) {
             </Heading>
             <Flex mb="6">
               <Input placeholder="0x00000000000000000000000000000000" />
-              <Button colorScheme="blue" ml="4">
+              <Button  ml="4">
                 Add Synth
               </Button>
             </Flex>
@@ -171,7 +171,6 @@ export default function EditPosition({ onClose }: PropsType) {
       </Box>
       <Button
         w="100%"
-        colorScheme="blue"
         onClick={() => {
           selectedPool && setValue('poolId', selectedPool);
           onClose();

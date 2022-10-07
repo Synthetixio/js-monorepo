@@ -92,7 +92,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://snx-v3-prototype.vercel.app/',
+            href: 'https://v3.synthetix.io',
             label: 'Go to App',
             className: 'button--header button button--primary button--outline',
             position: 'right',
