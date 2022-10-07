@@ -4,6 +4,9 @@
   },
   "staking-v2": {
     "home": {
+      "title": "Welcome to Synthetix",
+      "description": "Stake your SNX to borrow sUSD and contribute to the network collateral. If you’ve never staked before please read through this <0>quick introduction</0> first. Follow the steps below to get started.",
+      "action": "Read Introduction",
       "utilities": {
         "title": "sUSD Utilities",
         "description": "Put your sUSD loan to work buy utilizing one or more protocols embedded in the Synthetix ecosystem. Be sure to check out our user guides and understand the risks.",

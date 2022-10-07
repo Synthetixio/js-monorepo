@@ -6936,6 +6936,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/Welcome@workspace:^, @snx-v2/Welcome@workspace:v2/components/Welcome":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/Welcome@workspace:v2/components/Welcome"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/Constants": "workspace:*"
+    "@storybook/react": ^6.5.10
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/cypress@workspace:v2/cypress":
   version: 0.0.0-use.local
   resolution: "@snx-v2/cypress@workspace:v2/cypress"
@@ -9041,6 +9053,7 @@ __metadata:
     "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/UtilityCard": "workspace:^"
+    "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
