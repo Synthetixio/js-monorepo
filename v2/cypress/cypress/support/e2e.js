@@ -28,6 +28,8 @@ beforeEach(() => {
   }).as('graphql');
 
   cy.on('window:before:load', (win) => {
+    win.__caches = {};
+    win.__timers = {};
     win.localStorage.setItem('UNSAFE_IMPORT', 'true');
     win.localStorage.setItem('selectedWallet', '["MetaMask"]');
 
@@ -55,9 +57,35 @@ beforeEach(() => {
             case 'request':
               return async ({ method, params }) => {
                 switch (method) {
+                  case 'eth_chainId':
+                  case 'eth_blockNumber': {
+                    const key = `${method}`;
+                    if (key in win.__caches) {
+                      return win.__caches[key];
+                    }
+                    win.__caches[key] = await target.send(method, params);
+                    return win.__caches[key];
+                  }
+
+                  case 'eth_getBalance': {
+                    const walletAddress = params[0];
+                    const key = `${method}/${walletAddress}`;
+                    if (key in win.__caches) {
+                      return win.__caches[key];
+                    }
+                    clearTimeout(win.__timers[key]);
+                    win.__caches[key] = await target.send(method, params);
+                    // debounce ETH balance checks a bit
+                    win.__timers[key] = setTimeout(() => {
+                      delete win.__caches[key];
+                    }, 10000);
+                    return win.__caches[key];
+                  }
+
                   case 'eth_accounts':
                   case 'eth_requestAccounts':
                     return [Cypress.env('WALLET_ADDRESS')];
+
                   default:
                     return await target.send(method, params);
                 }
