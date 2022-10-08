@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useReducer } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSynthetix } from '@snx-v2/useSynthetixContracts';
 import { useGasOptions } from '@snx-v2/useGasOptions';
@@ -54,22 +54,10 @@ export function useMintMutation(mintArgs: MintArgs) {
     populateTransaction,
     queryKeys: [mintArgs, populateTransaction],
   });
-  useEffect(() => {
-    if (gasError) {
-      dispatch({
-        type: 'error',
-        payload: { error: gasError as Error, errorType: 'gasEstimate' },
-      });
-      return;
-    }
-    if (!gasError && state.errorType === 'gasEstimate') {
-      dispatch({ type: 'settled' });
-      return;
-    }
-  }, [gasError]);
-  const { gasOptionsForTransaction, transactionPrice } = data || {};
 
-  const { modalOpen, txnStatus, error, errorType } = state;
+  const { gasOptionsForTransaction, transactionPrice } = data || {};
+  const { modalOpen, txnStatus, error } = state;
+
   return {
     ...useMutation(async () => {
       if (!Synthetix?.signer || !populateTransaction) return;
@@ -85,7 +73,7 @@ export function useMintMutation(mintArgs: MintArgs) {
         await txn.wait();
         dispatch({ type: 'success' });
       } catch (error: any) {
-        dispatch({ type: 'error', payload: { error, errorType: 'transaction' } });
+        dispatch({ type: 'error', payload: { error } });
         throw error;
       }
     }),
@@ -94,7 +82,7 @@ export function useMintMutation(mintArgs: MintArgs) {
     modalOpen,
     txnStatus,
     error,
-    errorType,
+    gasError: gasError as Error | null,
     settle: () => dispatch({ type: 'settled' }),
   };
 }

@@ -3,14 +3,12 @@ export type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'success' |
 
 type MintMutationState = {
   error: Error | null;
-  errorType: 'transaction' | 'gasEstimate' | null;
   modalOpen: boolean;
   txnStatus: TransactionStatus;
 };
 
 export const initialState: MintMutationState = {
   error: null,
-  errorType: null,
   modalOpen: false,
   txnStatus: 'unsent',
 };
@@ -19,7 +17,7 @@ export type Actions =
   | { type: 'prompting' }
   | { type: 'pending' }
   | { type: 'success' }
-  | { type: 'error'; payload: { error: Error; errorType: 'transaction' | 'gasEstimate' } }
+  | { type: 'error'; payload: { error: Error } }
   | { type: 'settled' };
 
 export function reducer(state: MintMutationState, action: Actions): MintMutationState {
@@ -30,7 +28,6 @@ export function reducer(state: MintMutationState, action: Actions): MintMutation
         txnStatus: 'prompting',
         modalOpen: true,
         error: null,
-        errorType: null,
       };
 
     case 'pending':
@@ -50,7 +47,6 @@ export function reducer(state: MintMutationState, action: Actions): MintMutation
         ...state,
         txnStatus: 'error',
         error: action.payload.error,
-        errorType: action.payload.errorType,
       };
 
     case 'settled':
@@ -59,10 +55,9 @@ export function reducer(state: MintMutationState, action: Actions): MintMutation
         modalOpen: false,
         txnStatus: 'unsent',
         error: null,
-        errorType: null,
       };
 
     default:
-      return { ...state };
+      return state;
   }
 }

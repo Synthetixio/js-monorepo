@@ -45,7 +45,7 @@ interface MintProps {
   txnStatus: TransactionStatus;
   modalOpen: boolean;
   error: Error | null;
-  errorType: 'transaction' | 'gasEstimate' | null;
+  gasError: Error | null;
   settle: () => void;
   retry: () => void;
   isGasEnabledAndNotFetched: boolean;
@@ -71,7 +71,7 @@ export const MintUi = ({
   txnStatus,
   modalOpen,
   error,
-  errorType,
+  gasError,
   settle,
   retry,
   isGasEnabledAndNotFetched,
@@ -196,11 +196,11 @@ export const MintUi = ({
             </Flex>
           </Flex>
         </Box>
-        {error && errorType === 'gasEstimate' ? (
+        {gasError ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
             <Text>
-              {t('staking-v2.mint.gas-estimation-error')}: {parseTxnError(error)}
+              {t('staking-v2.mint.gas-estimation-error')}: {parseTxnError(gasError)}
             </Text>
           </Center>
         ) : (
@@ -218,9 +218,7 @@ export const MintUi = ({
             setActiveBadge(0);
             return onSubmit();
           }}
-          disabled={
-            mintAmountSNX === '' || errorType === 'gasEstimate' || isGasEnabledAndNotFetched
-          }
+          disabled={mintAmountSNX === '' || Boolean(gasError) || isGasEnabledAndNotFetched}
         >
           {isGasEnabledAndNotFetched ? t('staking-v2.mint.estimating-gas') : 'Mint'}
         </Button>
@@ -285,8 +283,8 @@ export const MintUi = ({
           </Center>
         ) : (
           <Center>
-            <Button onClick={errorType === 'gasEstimate' ? settle : retry}>
-              {errorType === 'gasEstimate'
+            <Button onClick={gasError ? settle : retry}>
+              {gasError
                 ? t('staking-v2.mint.txn-modal.close')
                 : t('staking-v2.mint.txn-modal.retry')}
             </Button>
@@ -318,7 +316,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     modalOpen,
     txnStatus,
     error,
-    errorType,
+    gasError,
     settle,
     isGasEnabledAndNotFetched,
   } = useMintMutation({
@@ -348,7 +346,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       txnStatus={txnStatus}
       modalOpen={modalOpen}
       error={error}
-      errorType={errorType}
+      gasError={gasError}
       settle={settle}
       retry={() => mutate()}
       isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
