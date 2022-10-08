@@ -24,7 +24,7 @@ export const Burn: FC<Props> = ({ onChange, value, debt }) => {
       </Heading>
       <Text fontSize="sm" mb="2">
         Reduce your debt and improve your C-Ratio. You can purchase snxUSD from most major
-        exchanges.
+        decentralized exchanges.
       </Text>
 
       <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">

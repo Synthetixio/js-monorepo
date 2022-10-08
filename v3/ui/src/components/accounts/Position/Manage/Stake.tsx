@@ -18,10 +18,10 @@ export const Stake: FC<Props> = ({ collateral, value, onChange }) => {
   return (
     <Box mb="6">
       <Heading fontSize="md" mb="1">
-        Stake SNX
+        Deposit SNX
       </Heading>
       <Text fontSize="sm" mb="2">
-        Provide collateral to improve your C-ratio. This decreases your risk of liquidation and
+        Provide collateral to improve your C-Ratio. This decreases your risk of liquidation and
         increases the amount of snxUSD you can borrow.
       </Text>
 

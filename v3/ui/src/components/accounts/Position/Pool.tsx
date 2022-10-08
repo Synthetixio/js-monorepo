@@ -45,7 +45,7 @@ export const Pool: FC<Props> = ({
       <Alert status="info" mt="3" mb="6">
         <AlertIcon />
         By pooling liquidity for markets, you’re backing synthetic assets on-chain. You can earn
-        yield and rewards, but your debt may increase.
+        yield and rewards, but your debt may increase and harm your C-Ratio.
       </Alert>
       <Box mb="6">
         <Text fontSize="sm" fontWeight="semibold">

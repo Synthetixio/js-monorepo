@@ -16,10 +16,10 @@ export function StakingNav() {
   const [search] = useSearchParams();
   const routingSearchParams = `?chain=${search.get('chain')}`;
 
-  const settingsPage = useMatch('/accounts/:id/settings');
+  const innerPage = !useMatch('/accounts/:id');
 
   return (
-    <Flex alignItems="center">
+    <Flex alignItems="center" mb="10">
       <Menu>
         <MenuButton size="sm" as={Button} variant="outline" rightIcon={<ChevronDownIcon />}>
           {id ? `Account #${id}` : 'Create Account'}
@@ -67,7 +67,7 @@ export function StakingNav() {
           </MenuItem>
         </MenuList>
       </Menu>
-      {Boolean(settingsPage) ? (
+      {Boolean(innerPage) ? (
         <Link
           as={RouterLink}
           to={generatePath('/accounts/:id/*', {
@@ -80,7 +80,7 @@ export function StakingNav() {
           color="cyan.500"
           _hover={{ textDecoration: 'none' }}
         >
-          <ChevronLeftIcon transform="translateY(-1px)" /> Return to overview
+          <ChevronLeftIcon transform="translateY(-1px)" /> Account Overview
         </Link>
       ) : (
         <Link

@@ -59,7 +59,7 @@ export const Custom: FC<Props> = ({
         </Box>
         <Box>
           <Heading fontSize="md" mb="2">
-            Adjust snxUSD Debt
+            Adjust Debt
           </Heading>
 
           <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">

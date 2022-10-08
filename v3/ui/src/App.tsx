@@ -11,8 +11,8 @@ import {
   StakingPosition,
   AcceptNomination,
 } from './pages/accounts';
-import { CreateSynth } from './pages/synths/CreateSynth';
-import { Synth } from './pages/synths/Synth';
+import { CreateMarket } from './pages/markets/CreateMarket';
+import { Market } from './pages/markets/Market';
 import { Pool } from './pages/pools/pool';
 
 export const Synthetix: React.FC = () => {
@@ -26,8 +26,8 @@ export const Synthetix: React.FC = () => {
           <Route path="/accounts/:id/settings" element={<Settings />} />
           <Route path="/accounts/:id" element={<Account />} />
           <Route path="/accounts/create" element={<CreateAccount />} />
-          <Route path="/synths/create" element={<CreateSynth />} />
-          <Route path="/synths/:address" element={<Synth />} />
+          <Route path="/markets/create" element={<CreateMarket />} />
+          <Route path="/markets/:address" element={<Market />} />
           <Route path="/pools/:id" element={<Pool />} />
           <Route path="/" element={<Home />} />
         </Route>

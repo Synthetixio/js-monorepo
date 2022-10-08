@@ -16,7 +16,7 @@ export const Unstake: FC<Props> = ({ collateral, collateralAmount, value, onChan
   return (
     <Box mb="6">
       <Heading fontSize="md" mb="1">
-        Unstake SNX
+        Withdraw SNX
       </Heading>
       <Text fontSize="sm" mb="2">
         Retrieve your collateral from the protocol. This decreases your C-Ratio and increases your

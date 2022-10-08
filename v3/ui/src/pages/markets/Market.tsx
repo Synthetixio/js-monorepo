@@ -2,14 +2,14 @@ import { Flex, Box, Stack, Skeleton, Heading, Container } from '@chakra-ui/react
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
-export function Pool() {
+export function Market() {
   const { id } = useParams();
 
   return (
     <>
       <Helmet>
-        <title>Pool</title>
-        <meta name="description" content="Pool" />
+        <title>Market</title>
+        <meta name="description" content="Market" />
       </Helmet>
       <Flex position="relative" flex="1">
         <Box
