@@ -81,14 +81,20 @@
       "success": "HEALTHY",
       "warning": "UNHEALTHY",
       "error": "UNHEALTHY",
+      "gas-estimation-error": "Error estimating gas",
       "txn-modal": {
         "pending": "Transaction Pending",
         "completed": "Transaction completed",
         "staking": "Staking",
         "minting": "Minting",
         "loading": "Loading",
-        "etherscan": "View Etherscan"
-      }
+        "etherscan": "View Etherscan",
+        "error-headline": "Error",
+        "retry": "Retry",
+        "close": "Close"
+      },
+
+      "estimating-gas": "Estimating gas..."
     },
     "burn": {
       "title": "Burn Debt",
