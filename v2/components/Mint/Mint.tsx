@@ -224,7 +224,10 @@ export const MintUi = ({
         </Button>
       </Box>
       <TransactionModal
-        onClose={settle}
+        onClose={() => {
+          onMintAmountSNXChange('');
+          settle();
+        }}
         icon={
           error ? (
             <FailedIcon />
@@ -338,7 +341,6 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
           onSuccess: () => {
             queryClient.refetchQueries(['synths'], { type: 'active' });
             queryClient.refetchQueries(['v2debt'], { type: 'active' });
-            setMintAmountSNX('');
           },
         });
       }}
