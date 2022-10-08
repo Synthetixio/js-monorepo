@@ -26,7 +26,7 @@ export function StakingPosition() {
           <Link
             fontSize="xs"
             fontWeight="normal"
-            color="blue.400"
+            color="cyan.500"
             _hover={{ textDecoration: 'none' }}
           >
             <ChevronLeftIcon transform="translateY(-1px)" /> View all staking positions

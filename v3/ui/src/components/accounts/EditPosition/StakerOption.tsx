@@ -23,7 +23,7 @@ export default function StakerOption({ name, value, checked = false }: PropsType
           <Link
             as={NavLink}
             to="/pools/example"
-            color="blue.400"
+            color="cyan.500"
             display="inline-block"
             transform="translateY(-1.5px)"
             target="_blank"

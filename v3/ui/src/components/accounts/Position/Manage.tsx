@@ -69,11 +69,7 @@ export default function Manage({
   );
 
   return (
-    <Box mb="2">
-      <Text mt="2" mb="6">
-        {t('position.manage.title')}
-      </Text>
-
+    <Box mt="6" mb="2">
       <Tabs isLazy onChange={reset} size="sm" variant="soft-rounded">
         <TabList justifyContent="space-between">
           <Tab>{t('position.manage.maintain')}</Tab>

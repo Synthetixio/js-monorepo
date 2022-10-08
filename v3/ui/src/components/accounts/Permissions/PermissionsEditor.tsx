@@ -61,9 +61,9 @@ export const PermissionsEditor: FC<Props> = ({
     <>
       {existingAddress ? (
         <Flex>
-          <EditIcon color="blue.400" onClick={onOpen} mx="2" />
+          <EditIcon color="cyan.500" onClick={onOpen} mx="2" />
           <SmallCloseIcon
-            color="blue.400"
+            color="cyan.500"
             cursor="pointer"
             onClick={() => {
               setPermissions([]);

@@ -59,6 +59,24 @@ const variantSolid = defineStyle((props) => {
     };
   }
 
+  if (c === 'cyan') {
+    const bg = mode(`gray.100`, `whiteAlpha.200`)(props);
+
+    return {
+      bgGradient: gradients['green-cyan'][500],
+      color: 'black',
+      _hover: {
+        bgGradient: gradients['green-cyan'][600],
+        _disabled: {
+          background: gradients['green-cyan'][500],
+        },
+      },
+      _active: {
+        bgGradient: gradients['green-cyan'][700],
+      },
+    };
+  }
+
   const bg = `${c}.500`;
   const color = 'white';
   const hoverBg = `${c}.600`;
@@ -84,19 +102,6 @@ const Button: ComponentStyleConfig = {
   },
   variants: {
     solid: variantSolid,
-    gradient: {
-      bgGradient: gradients['green-cyan'][500],
-      color: 'black',
-      _hover: {
-        bgGradient: gradients['green-cyan'][600],
-        _disabled: {
-          background: gradients['green-cyan'][500],
-        },
-      },
-      _active: {
-        bgGradient: gradients['green-cyan'][700],
-      },
-    },
     outline: (props) => {
       if (props.colorScheme === 'gray') {
         return {
@@ -339,6 +344,7 @@ const Spinner: ComponentStyleConfig = {
 };
 
 export const theme = extendTheme({
+  useSystemColorMode: false,
   initialColorMode: 'dark',
   colors: {
     gray: {

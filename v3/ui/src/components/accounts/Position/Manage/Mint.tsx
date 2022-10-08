@@ -12,16 +12,16 @@ interface Props {
 
 export const Mint: FC<Props> = ({ onChange, value, max }) => {
   return (
-    <Box mb="4">
+    <Box mb="6">
       <Heading fontSize="md" mb="1">
         Mint snxUSD
       </Heading>
-      <Text fontSize="sm" mb="1">
+      <Text fontSize="sm" mb="2">
         Take an interest-free loan against your collateral. This increases your debt and decreases
         your C-Ratio.
       </Text>
 
-      <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
+      <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
           <NumberInput value={value} onChange={onChange} max={max} />
         </Flex>

@@ -19,15 +19,9 @@ export function StakingNav() {
   const settingsPage = useMatch('/accounts/:id/settings');
 
   return (
-    <Flex mb="6" alignItems="center">
+    <Flex alignItems="center">
       <Menu>
-        <MenuButton
-          as={Button}
-          _hover={{ bg: 'gray.300' }}
-          _active={{ bg: 'gray.300' }}
-          variant="outline"
-          rightIcon={<ChevronDownIcon />}
-        >
+        <MenuButton size="sm" as={Button} variant="outline" rightIcon={<ChevronDownIcon />}>
           {id ? `Account #${id}` : 'Create Account'}
         </MenuButton>
         <MenuList fontSize="xs" px="2" bg="black" border="1px solid rgba(255,255,255,0.33)">
@@ -36,9 +30,9 @@ export function StakingNav() {
             const menuItem = (
               <MenuItem
                 key={account}
-                _hover={{ bg: 'gray.800' }}
-                _focus={{ bg: 'gray.800' }}
-                _active={{ bg: 'gray.800' }}
+                _hover={{ bg: 'whiteAlpha.200' }}
+                _focus={{ bg: 'whiteAlpha.200' }}
+                _active={{ bg: 'whiteAlpha.200' }}
               >
                 <Flex alignItems="center">
                   {isCurrentAccount && <CheckIcon marginRight={1} />}
@@ -57,9 +51,9 @@ export function StakingNav() {
             );
           })}
           <MenuItem
-            _hover={{ bg: 'gray.800' }}
-            _focus={{ bg: 'gray.800' }}
-            _active={{ bg: 'gray.800' }}
+            _hover={{ bg: 'whiteAlpha.200' }}
+            _focus={{ bg: 'whiteAlpha.200' }}
+            _active={{ bg: 'whiteAlpha.200' }}
           >
             <Link
               as={RouterLink}
@@ -83,7 +77,7 @@ export function StakingNav() {
           ml="auto"
           fontSize="xs"
           fontWeight="normal"
-          color="blue.400"
+          color="cyan.500"
           _hover={{ textDecoration: 'none' }}
         >
           <ChevronLeftIcon transform="translateY(-1px)" /> Return to overview
@@ -98,7 +92,7 @@ export function StakingNav() {
           ml="auto"
           fontSize="xs"
           fontWeight="normal"
-          color="blue.400"
+          color="cyan.500"
           _hover={{ textDecoration: 'none' }}
         >
           <SettingsIcon transform="translateY(-1px)" />
@@ -112,7 +106,7 @@ export function StakingNav() {
             ml="auto"
             fontSize="xs"
             fontWeight="normal"
-            color="blue.400"
+            color="cyan.500"
             _hover={{ textDecoration: 'none' }}
           >
             <SettingsIcon transform="translateY(-1px)" />
@@ -126,7 +120,7 @@ export function StakingNav() {
             ml="auto"
             fontSize="xs"
             fontWeight="normal"
-            color="blue.400"
+            color="cyan.500"
             _hover={{ textDecoration: 'none' }}
           >
             <ChevronLeftIcon transform="translateY(-1px)" /> Return to overview

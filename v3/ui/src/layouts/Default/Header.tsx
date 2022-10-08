@@ -124,8 +124,7 @@ export default function Header() {
           display={['inline-block', 'inline-block', 'inline-block', 'none']}
           aria-label="Open Menu"
           icon={<HamburgerIcon />}
-          bg="gray.800"
-          _hover={{ bg: 'gray.700' }}
+          colorScheme="gray"
           onClick={toggleMobileMenu}
           ml="4"
           size="sm"

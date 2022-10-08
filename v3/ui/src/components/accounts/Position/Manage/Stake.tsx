@@ -11,19 +11,21 @@ interface Props {
   value: number;
 }
 
+// TODO: This needs to change based on collateral type? At least heading
+
 export const Stake: FC<Props> = ({ collateral, value, onChange }) => {
   const balance = useTokenBalance(collateral.address);
   return (
-    <Box mb="4">
+    <Box mb="6">
       <Heading fontSize="md" mb="1">
         Stake SNX
       </Heading>
-      <Text fontSize="sm" mb="1">
+      <Text fontSize="sm" mb="2">
         Provide collateral to improve your C-ratio. This decreases your risk of liquidation and
         increases the amount of snxUSD you can borrow.
       </Text>
 
-      <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
+      <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
           <NumberInput value={value} onChange={onChange} max={balance.formatedValue} />
         </Flex>

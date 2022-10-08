@@ -1,6 +1,6 @@
 import { Burn } from '../Manage/Burn';
 import { Stake } from '../Manage/Stake';
-import { Text } from '@chakra-ui/react';
+import { Heading, Alert, AlertIcon } from '@chakra-ui/react';
 import { CollateralType } from '../../../../utils/constants';
 import { formatValue } from '../../../../utils/helpers';
 import { FC } from 'react';
@@ -23,14 +23,15 @@ export const MaintainCRatio: FC<Props> = ({
   debt,
 }) => (
   <>
-    <Text fontSize="sm" mb="4">
-      <strong>
-        If your C-Ratio drops below the minimum (
-        {formatValue(collateral.minimumCRatio!.mul(100), 6).toFixed(0)}%), you may be liquidated and
-        lose your collateral.
-      </strong>{' '}
-      There are two ways to increase your C-Ratio:
-    </Text>
+    <Alert mt={4} mb={10} status="warning">
+      <AlertIcon />
+      If your C-Ratio drops below the minimum (
+      {formatValue(collateral.minimumCRatio!.mul(100), 6).toFixed(0)}%), you may be liquidated and
+      lose your collateral.
+    </Alert>
+    <Heading size="md" mb="5">
+      There are two ways to increase your C-Ratio...
+    </Heading>
     <Stake collateral={collateral} value={collateralChange} onChange={setCollateralChange} />
     <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
   </>

@@ -330,7 +330,7 @@ export default function Stake({
                       ? poolsData[selectedPoolId]?.name
                       : 'Unknown Pool'
                     : 'None'}{' '}
-                  <Link color="blue.400">
+                  <Link color="cyan.500">
                     <EditIcon onClick={onOpenPool} style={{ transform: 'translateY(-2px)' }} />
                   </Link>
                 </Text>

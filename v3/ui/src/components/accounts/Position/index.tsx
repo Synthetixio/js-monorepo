@@ -84,7 +84,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
     //       <InfoOutlineIcon display="inline-block" transform="translateY(-1px)" /> Your staking
     //       position is currently managed by{' '}
     //       <NavLink to="/dao">
-    //         <Link fontWeight="semibold" color="blue.400">
+    //         <Link fontWeight="semibold" color="cyan.500">
     //           The Spartan Council
     //         </Link>
     //       </NavLink>{' '}
@@ -113,7 +113,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
     //           <Text mt="1" fontSize="xs">
     //             <span style={{ opacity: 0.8 }}>sBTC</span>
     //             <NavLink to="/synths/example">
-    //               <Link color="blue.400" ml="1" display="inline-block" transform="translateY(-1px)">
+    //               <Link color="cyan.500" ml="1" display="inline-block" transform="translateY(-1px)">
     //                 <ExternalLinkIcon />
     //               </Link>
     //             </NavLink>

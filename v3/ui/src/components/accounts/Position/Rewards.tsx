@@ -53,9 +53,10 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
   return (
     <Box>
       <Text mt="2" mb="6">
-        In addition to fees, you’re earning eSNX rewards by backing synthetic assets with SNX tokens
-        through the Spartan Council pool.
+        Your pool may have a rewards distributor for the type of collateral you’ve staked. Claim
+        your rewards below.
       </Text>
+      {/*
       <Box mb="10">
         <Heading size="md" mb="1">
           Claim eSNX
@@ -69,7 +70,7 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
             Claim {Number(utils.formatUnits(total, 18)).toFixed(2)} eSNX
           </Button>
           <Text ml="5" fontWeight="semibold" fontSize="sm">
-            <Link color="blue.400">
+            <Link color="cyan.500">
               <QuestionOutlineIcon mr="1.5" transform="translateY(-1px)" />
               How are eSNX rewards calculated?
             </Link>
@@ -163,7 +164,7 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
           Your escrowed SNX cannot be unstaked until it vests. Staking additional eSNX will merge
           the new schedule into the schedule above.
         </Text>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

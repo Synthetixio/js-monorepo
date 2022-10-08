@@ -18,24 +18,16 @@ export const Burn: FC<Props> = ({ onChange, value, debt }) => {
   const balance = useTokenBalance(snxUsdProxy?.address);
 
   return (
-    <Box mb="4">
+    <Box mb="6">
       <Heading fontSize="md" mb="1">
         Burn snxUSD
       </Heading>
-      <Text fontSize="sm" mb="1">
-        Reduce your debt and improve your C-Ratio. You can purchase snxUSD from most major exchanges
-        like{' '}
-        <Link
-          display="inline"
-          _hover={{ textDecoration: 'none' }}
-          borderBottom="1px dotted rgba(255,255,255,0.5)"
-        >
-          one we like
-        </Link>
-        .
+      <Text fontSize="sm" mb="2">
+        Reduce your debt and improve your C-Ratio. You can purchase snxUSD from most major
+        exchanges.
       </Text>
 
-      <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
+      <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
           <NumberInput
             value={value}
