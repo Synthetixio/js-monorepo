@@ -44,7 +44,7 @@ export const StakingStats: FC<Props> = ({
           <Heading size="md">${currency(debt.toString())}</Heading>
         </Skeleton>
         <Text opacity="0.6" fontSize="sm">
-          ${currency(0)} net snxUSD minted {/* or burned */}
+          $X snxUSD minted {/* or burned */}
         </Text>
       </GridItem>
       <GridItem mb="3">
