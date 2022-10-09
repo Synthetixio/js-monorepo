@@ -6699,7 +6699,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/Constants@workspace:*, @snx-v2/Constants@workspace:v2/lib/Constants":
+"@snx-v2/Constants@workspace:*, @snx-v2/Constants@workspace:^, @snx-v2/Constants@workspace:v2/lib/Constants":
   version: 0.0.0-use.local
   resolution: "@snx-v2/Constants@workspace:v2/lib/Constants"
   dependencies:
@@ -9048,6 +9048,7 @@ __metadata:
     "@snx-v2/Burn": "workspace:*"
     "@snx-v2/CRatioBanner": "workspace:*"
     "@snx-v2/CRatioHealthCard": "workspace:*"
+    "@snx-v2/Constants": "workspace:^"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/GasSpeedContext": "workspace:*"
