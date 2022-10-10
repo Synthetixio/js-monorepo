@@ -29,8 +29,8 @@ export default function CollateralTypeSelector({ collateralTypes }: Props) {
           <Box w="24px" h="24px" borderRadius="12px" overflow="hidden" ml="3.5" mr="2">
             <Image
               alt="collateral image"
-              width="24"
-              height="24"
+              width="24px"
+              height="24px"
               src={selectedCollateralType?.logoURI}
             />
           </Box>
@@ -59,8 +59,8 @@ export default function CollateralTypeSelector({ collateralTypes }: Props) {
               <Box w="24px" h="24px" borderRadius="12px" overflow="hidden" mr="2">
                 <Image
                   alt="collateral image"
-                  width="24"
-                  height="24"
+                  width="24px"
+                  height="24px"
                   src={collateralType?.logoURI}
                 />
               </Box>

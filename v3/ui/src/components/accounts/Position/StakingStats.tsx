@@ -44,7 +44,10 @@ export const StakingStats: FC<Props> = ({
           <Heading size="md">${currency(debt.toString())}</Heading>
         </Skeleton>
         <Text opacity="0.6" fontSize="sm">
-          $X snxUSD minted {/* or burned */}
+          $X net issuance
+          <Tooltip label="This is the amount of snxUSD that you have minted, minus the amount that you have burned.">
+            <InfoIcon fontSize="sm" ml={2} transform="translateY(-1.5px)" />
+          </Tooltip>
         </Text>
       </GridItem>
       <GridItem mb="3">
@@ -58,7 +61,7 @@ export const StakingStats: FC<Props> = ({
                 <>
                   <Text>No Debt</Text>
                   <Tooltip label="You will have a C-Ratio once you’ve accrued some debt. You are not currently at risk of liquidation.">
-                    <InfoIcon fontSize="sm" ml={2} />
+                    <InfoIcon fontSize="sm" ml={2} transform="translateY(-1.5px)" />
                   </Tooltip>
                 </>
               ) : (
