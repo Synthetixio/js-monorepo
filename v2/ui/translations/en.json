@@ -1012,7 +1012,7 @@
       "total": "TOTAL"
     },
     "modify-loan": {
-      "loan-interation-delay": "Please wait <0>{{waitETA}}</0> before reinteracting with the loan",
+      "loan-interaction-delay": "Please wait <0>{{waitETA}}</0> before reinteracting with the loan",
       "close": {
         "left-col-label": "REPAY",
         "right-col-label": "RECEIVE",

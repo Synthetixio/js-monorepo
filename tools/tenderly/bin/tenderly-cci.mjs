@@ -9,11 +9,11 @@ Promise.resolve()
   .then(fork)
   .then(async (forkInfo) => {
     const TENDERLY_FORK_ID = forkInfo.simulation_fork.id;
-    const [[WALLET_ADDRESS, WALLET_MNEMONIC]] = Object.entries(forkInfo.simulation_fork.accounts);
+    const [[WALLET_ADDRESS, WALLET_PK]] = Object.entries(forkInfo.simulation_fork.accounts);
     const content = [
-      `export WALLET_ADDRESS="${WALLET_ADDRESS}"`,
-      `export WALLET_MNEMONIC="${WALLET_MNEMONIC}"`,
-      `export TENDERLY_RPC_URL="https://rpc.tenderly.co/fork/${TENDERLY_FORK_ID}"`,
+      `export CYPRESS_WALLET_ADDRESS="${WALLET_ADDRESS}"`,
+      `export CYPRESS_WALLET_PK="${WALLET_PK}"`,
+      `export CYPRESS_TENDERLY_RPC_URL="https://rpc.tenderly.co/fork/${TENDERLY_FORK_ID}"`,
     ].join('\n');
     await fs.promises.writeFile(process.env.BASH_ENV, content, { flag: 'a' });
   })

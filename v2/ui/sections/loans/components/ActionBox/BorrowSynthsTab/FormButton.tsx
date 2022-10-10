@@ -44,7 +44,7 @@ const FormButton: React.FC<FormButtonProps> = ({
         isBorrowing ||
         hasInsufficientCollateral
       }
-      data-testid="loans-form-button"
+      data-testid="loans form submit button"
       {...{ onClick }}
     >
       {isBorrowing ? (
