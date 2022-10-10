@@ -12,7 +12,7 @@ interface Props {
 
 export const Mint: FC<Props> = ({ onChange, value, max }) => {
   return (
-    <Box mb="6">
+    <>
       <Heading fontSize="md" mb="1">
         Mint snxUSD
       </Heading>
@@ -39,6 +39,6 @@ export const Mint: FC<Props> = ({ onChange, value, max }) => {
           </Box>
         </Flex>
       </Box>
-    </Box>
+    </>
   );
 };

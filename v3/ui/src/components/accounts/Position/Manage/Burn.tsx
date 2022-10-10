@@ -18,7 +18,7 @@ export const Burn: FC<Props> = ({ onChange, value, debt }) => {
   const balance = useTokenBalance(snxUsdProxy?.address);
 
   return (
-    <Box mb="6">
+    <>
       <Heading fontSize="md" mb="1">
         Burn snxUSD
       </Heading>
@@ -44,6 +44,6 @@ export const Burn: FC<Props> = ({ onChange, value, debt }) => {
           />
         </Flex>
       </Box>
-    </Box>
+    </>
   );
 };

@@ -89,21 +89,29 @@ export default function Manage({
             />
           </TabPanel>
           <TabPanel>
-            <Stake
-              onChange={setCollateralChange}
-              value={collateralChange}
-              collateral={collateral}
-            />
-            <Mint onChange={setDebtChange} value={debtChange} max={maxDebt} />
+            <Box mb="6">
+              <Stake
+                onChange={setCollateralChange}
+                value={collateralChange}
+                collateral={collateral}
+              />
+            </Box>
+            <Box mb="6">
+              <Mint onChange={setDebtChange} value={debtChange} max={maxDebt} />
+            </Box>
           </TabPanel>
           <TabPanel>
-            <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
-            <Unstake
-              collateral={collateral}
-              collateralAmount={collateralAmount}
-              onChange={(val) => setCollateralChange(-val)}
-              value={-collateralChange}
-            />
+            <Box mb="6">
+              <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
+            </Box>
+            <Box mb="6">
+              <Unstake
+                collateral={collateral}
+                collateralAmount={collateralAmount}
+                onChange={(val) => setCollateralChange(-val)}
+                value={-collateralChange}
+              />
+            </Box>
           </TabPanel>
           <TabPanel>
             <Custom

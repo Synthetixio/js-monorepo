@@ -1,6 +1,6 @@
 import { Burn } from '../Manage/Burn';
 import { Stake } from '../Manage/Stake';
-import { Heading, Alert, AlertIcon } from '@chakra-ui/react';
+import { Heading, Alert, AlertIcon, Box } from '@chakra-ui/react';
 import { CollateralType } from '../../../../utils/constants';
 import { formatValue } from '../../../../utils/helpers';
 import { FC } from 'react';
@@ -32,7 +32,11 @@ export const MaintainCRatio: FC<Props> = ({
     <Heading size="md" mb="5">
       There are two ways to increase your C-Ratio...
     </Heading>
-    <Stake collateral={collateral} value={collateralChange} onChange={setCollateralChange} />
-    <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
+    <Box mb="6">
+      <Stake collateral={collateral} value={collateralChange} onChange={setCollateralChange} />
+    </Box>
+    <Box mb="6">
+      <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
+    </Box>
   </>
 );

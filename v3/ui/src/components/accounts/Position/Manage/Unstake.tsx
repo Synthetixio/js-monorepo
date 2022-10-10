@@ -14,7 +14,7 @@ interface Props {
 
 export const Unstake: FC<Props> = ({ collateral, collateralAmount, value, onChange }) => {
   return (
-    <Box mb="6">
+    <>
       <Heading fontSize="md" mb="1">
         Withdraw SNX
       </Heading>
@@ -38,6 +38,6 @@ export const Unstake: FC<Props> = ({ collateral, collateralAmount, value, onChan
           />
         </Flex>
       </Box>
-    </Box>
+    </>
   );
 };

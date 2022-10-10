@@ -16,7 +16,7 @@ interface Props {
 export const Stake: FC<Props> = ({ collateral, value, onChange }) => {
   const balance = useTokenBalance(collateral.address);
   return (
-    <Box mb="6">
+    <>
       <Heading fontSize="md" mb="1">
         Deposit SNX
       </Heading>
@@ -38,6 +38,6 @@ export const Stake: FC<Props> = ({ collateral, value, onChange }) => {
           />
         </Flex>
       </Box>
-    </Box>
+    </>
   );
 };
