@@ -320,6 +320,7 @@ const Tabs: ComponentStyleConfig = {
 const $arrowBg = cssVar('popper-arrow-bg');
 const Tooltip: ComponentStyleConfig = {
   baseStyle: {
+    textAlign: 'center',
     bg: 'gray.900',
     color: 'white.500',
     // https://github.com/chakra-ui/chakra-ui/issues/4695#issuecomment-991023319 Bug in Chakra UI

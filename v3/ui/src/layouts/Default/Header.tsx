@@ -35,7 +35,7 @@ export default function Header() {
             <Image src={logo} alt="Synthetix" width={200} height={14.5} />
           </Link>
         </Box>
-        <Box display={['inline-block', 'inline-block', 'none']} pt={1.5}>
+        <Box display={['inline-block', 'inline-block', 'none']}>
           <Link to="/" as={RouterLink} _focus={{ boxShadow: 'none' }}>
             <Image src={logomark} alt="Synthetix" height="20px" />
           </Link>
@@ -84,8 +84,8 @@ export default function Header() {
                 p="5"
               >
                 <a href="https://kwenta.io" target="_blank" rel="noreferrer">
-                  <Flex mb="3" cursor="pointer">
-                    <Image src={kwenta} alt="Kwenta" width="36px" height="36px" />
+                  <Flex mb="3" cursor="pointer" alignItems="center">
+                    <Image src={kwenta} alt="Kwenta" width="28px" height="28px" />
                     <Box pl="3">
                       <Text fontWeight="500">Kwenta</Text>
                       <Text fontSize="xs">Trade perpetual futures with up to 10x leverage.</Text>
@@ -93,8 +93,8 @@ export default function Header() {
                   </Flex>
                 </a>
                 <a href="https://lyra.finance" target="_blank" rel="noreferrer">
-                  <Flex mb="3" cursor="pointer">
-                    <Image src={lyra} alt="Lyra" width="36px" height="36px" />
+                  <Flex mb="3" cursor="pointer" alignItems="center">
+                    <Image src={lyra} alt="Lyra" mx="1" width="21px" height="21px" />
                     <Box pl="3">
                       <Text fontWeight="500">Lyra</Text>
                       <Text fontSize="xs">
@@ -104,8 +104,8 @@ export default function Header() {
                   </Flex>
                 </a>
                 <a href="https://thalesmarket.io" target="_blank" rel="noreferrer">
-                  <Flex cursor="pointer">
-                    <Image src={thales} alt="Thales" width="36px" height="36px" />
+                  <Flex cursor="pointer" alignItems="center">
+                    <Image src={thales} alt="Thales" width="28px" height="28px" />
                     <Box pl="3">
                       <Text fontWeight="500">Thales</Text>
                       <Text fontSize="xs">
