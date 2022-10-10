@@ -3,74 +3,86 @@ import { useMutation } from '@tanstack/react-query';
 import { useSynthetix } from '@snx-v2/useSynthetixContracts';
 import { useGasOptions } from '@snx-v2/useGasOptions';
 import { BigNumber } from '@ethersproject/bignumber';
-import { initialState, reducer } from './reducer';
-import { DelegationWallet } from '@synthetixio/queries';
+import { initialState, reducer } from '@snx-v2/txnReducer';
 
-type BurnVariables = {
+type BurnArgs = {
   amount: BigNumber;
   toTarget?: boolean;
+  delegateAddress?: string;
 };
 
-export function useBurnMutation(delegateAddress: DelegationWallet | null) {
+const createPopulateTransaction = (
+  Synthetix: ReturnType<typeof useSynthetix>['data'],
+  burnArgs?: BurnArgs
+) => {
+  if (!Synthetix?.signer || !burnArgs) return undefined;
+  const { delegateAddress, amount, toTarget } = burnArgs;
+  if (amount?.eq(0)) return undefined;
+  return () => {
+    if (delegateAddress && !toTarget) {
+      return Synthetix.populateTransaction.burnSynthsOnBehalf(delegateAddress, amount, {
+        gasLimit: Synthetix.estimateGas.burnSynthsOnBehalf(delegateAddress, amount),
+      });
+    }
+    if (delegateAddress && toTarget) {
+      return Synthetix.populateTransaction.burnSynthsToTargetOnBehalf(delegateAddress, {
+        gasLimit: Synthetix.estimateGas.burnSynthsToTargetOnBehalf(delegateAddress),
+      });
+    }
+    if (toTarget) {
+      return Synthetix.populateTransaction.burnSynthsToTarget({
+        gasLimit: Synthetix.estimateGas.burnSynthsToTarget(),
+      });
+    }
+
+    return Synthetix.populateTransaction.burnSynths(amount, {
+      gasLimit: Synthetix.estimateGas.burnSynths(amount),
+    });
+  };
+};
+export function useBurnMutation(mintArgs: BurnArgs) {
   const { data: Synthetix } = useSynthetix();
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  // TODO this needs some love
-  const populateTransaction = Synthetix
-    ? () => Synthetix.populateTransaction.burnSynths(0)
-    : undefined;
-
+  const populateTransaction = createPopulateTransaction(Synthetix, mintArgs);
   const {
     data,
-    isLoading: isGasLoading,
-    error,
+    isFetched: isGasFetched,
+    isFetching: gasFetching,
+    error: gasError,
   } = useGasOptions({
     populateTransaction,
-    queryKeys: [],
+    queryKeys: [mintArgs, populateTransaction],
   });
 
-  const { gasOptionsForTransaction, transactionPrice: transactionFee } = data || {};
-
-  const isLoading = isGasLoading;
-
-  const { modalOpen, txnStatus } = state;
+  const { gasOptionsForTransaction, transactionPrice } = data || {};
+  const { modalOpen, txnStatus, error } = state;
 
   return {
-    ...useMutation(async (variables: BurnVariables) => {
-      if (!Synthetix) return;
-      let txn;
+    ...useMutation(async () => {
+      if (!Synthetix?.signer || !populateTransaction) return;
+
       try {
         dispatch({ type: 'prompting' });
-        const { amount, toTarget } = variables;
-        if (toTarget) {
-          txn = delegateAddress
-            ? await Synthetix.burnSynthsToTargetOnBehalf(
-                delegateAddress.address,
-                gasOptionsForTransaction
-              )
-            : await Synthetix.burnSynthsToTarget(gasOptionsForTransaction);
-        } else {
-          txn = delegateAddress
-            ? await Synthetix.burnSynthsOnBehalf(
-                delegateAddress.address,
-                amount,
-                gasOptionsForTransaction
-              )
-            : await Synthetix.burnSynths(amount, gasOptionsForTransaction);
-        }
+        const populatedTxn = await populateTransaction();
+        const txn = await Synthetix.signer.sendTransaction({
+          ...populatedTxn,
+          ...gasOptionsForTransaction,
+        });
         dispatch({ type: 'pending' });
         await txn.wait();
         dispatch({ type: 'success' });
-        setTimeout(() => dispatch({ type: 'settled' }), 1000);
       } catch (error: any) {
-        dispatch({ type: 'error' });
-        setTimeout(() => dispatch({ type: 'settled' }), 1000);
+        dispatch({ type: 'error', payload: { error } });
+        throw error;
       }
     }),
-    transactionFee,
-    isLoading,
+    transactionFee: transactionPrice,
+    isGasEnabledAndNotFetched: gasFetching && !isGasFetched,
     modalOpen,
     txnStatus,
     error,
+    gasError: gasError as Error | null,
+    settle: () => dispatch({ type: 'settled' }),
   };
 }
