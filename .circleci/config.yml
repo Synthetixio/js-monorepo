@@ -57,6 +57,7 @@ commands:
             cat $BASH_ENV
 
       - run: ./node_modules/.bin/tenderly-removeMinimumStakeTime
+      - run: ./node_modules/.bin/tenderly-removeEthCollateralInteractionDelay
 
   tenderly-cleanup:
     steps:
