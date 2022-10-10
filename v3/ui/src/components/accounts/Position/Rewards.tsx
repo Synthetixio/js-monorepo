@@ -1,21 +1,4 @@
-import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Heading,
-  Text,
-  Button,
-  Flex,
-  Link,
-  Input,
-  Checkbox,
-  SimpleGrid,
-  Slider,
-  SliderMark,
-  SliderTrack,
-  SliderFilledTrack,
-  Tooltip,
-  SliderThumb,
-} from '@chakra-ui/react';
+import { Box, Text, Button, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
 import { BigNumber, utils } from 'ethers';
 import { FC, useState } from 'react';
 import { useContractWrite } from 'wagmi';
@@ -53,7 +36,42 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
   const hasRewards = false;
 
   return hasRewards ? (
-    <Box>List of Rewards Distributors t.c.</Box>
+    <Box>
+      <Text my="6">
+        The following rewards distributors are connected to the <strong>Spartan Council</strong>{' '}
+        pool for users who have deposited <strong>SNX</strong>.
+      </Text>
+      <Table size="sm" variant="simple" mb="6">
+        <Thead>
+          <Tr>
+            <Th color="white" />
+            <Th color="white" />
+            <Th color="white" />
+          </Tr>
+        </Thead>
+        <Tbody>
+          <Tr>
+            <Td py="4">
+              SNX Rewards
+              <Text fontSize="xs" opacity="0.66" mt="1'">
+                ID: {poolId}
+              </Text>
+            </Td>
+            <Td py="4">
+              X available
+              <Text fontSize="xs" opacity="0.66" mt="1'">
+                accruing X per week
+              </Text>
+            </Td>
+            <Td isNumeric>
+              <Button size="sm" colorScheme="green">
+                Claim X
+              </Button>
+            </Td>
+          </Tr>
+        </Tbody>
+      </Table>
+    </Box>
   ) : (
     <Box m="12">
       <Text textAlign="center" opacity="0.66">

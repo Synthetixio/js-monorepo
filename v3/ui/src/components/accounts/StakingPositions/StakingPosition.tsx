@@ -41,16 +41,7 @@ export const StakingPosition: FC<Props> = ({ position, refetch }) => {
         </Text>
       </Td>
       <Td py="4">
-        {cRatio.eq(0) ? (
-          <>
-            No Debt&nbsp;
-            <Tooltip label="You will have a C-Ratio once you’ve accrued some debt. You are not currently at risk of liquidation.">
-              <InfoIcon fontSize="sm" ml={1} transform="translateY(-1.5px)" />
-            </Tooltip>
-          </>
-        ) : (
-          cRatio.toString() + `%`
-        )}
+        {cRatio.eq(0) ? <>No Debt</> : cRatio.toString() + `%`}
         <Text fontSize="xs" opacity="0.66" mt="1'">
           {formatValue(collateralType!.minimumCRatio!.mul(BigNumber.from(100)), 6).toFixed(0)}% Min.
         </Text>
