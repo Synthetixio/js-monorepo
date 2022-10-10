@@ -160,7 +160,10 @@ const Alert: ComponentStyleConfig = {
       };
     },
     solid: (props) => {
-      return { container: { bg: `${props.colorScheme}.500`, color: 'black' } };
+      return {
+        icon: { color: 'white' },
+        container: { bg: `${props.colorScheme}.500`, color: 'white' },
+      };
     },
   },
 };
