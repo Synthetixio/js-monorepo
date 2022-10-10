@@ -50,13 +50,19 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
     args: [poolId, collateral.address, accountId],
   });
 
-  return (
-    <Box>
-      <Text mt="2" mb="6">
-        Your pool may have a rewards distributor for the type of collateral you’ve staked. Claim
-        your rewards below.
+  const hasRewards = false;
+
+  return hasRewards ? (
+    <Box>List of Rewards Distributors t.c.</Box>
+  ) : (
+    <Box m="12">
+      <Text textAlign="center" opacity="0.66">
+        This pool does not have any rewards distributors connected for this collateral type.
       </Text>
-      {/*
+    </Box>
+  );
+};
+/*
       <Box mb="10">
         <Heading size="md" mb="1">
           Claim eSNX
@@ -164,7 +170,4 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
           Your escrowed SNX cannot be unstaked until it vests. Staking additional eSNX will merge
           the new schedule into the schedule above.
         </Text>
-      </Box> */}
-    </Box>
-  );
-};
+      </Box> */

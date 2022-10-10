@@ -46,7 +46,7 @@ export const StakingStats: FC<Props> = ({
         <Text opacity="0.6" fontSize="sm">
           $X net issuance
           <Tooltip label="This is the amount of snxUSD that you have minted, minus the amount that you have burned.">
-            <InfoIcon fontSize="sm" ml={2} transform="translateY(-1.5px)" />
+            <InfoOutlineIcon fontSize="sm" ml={1} transform="translateY(-1.5px)" />
           </Tooltip>
         </Text>
       </GridItem>
