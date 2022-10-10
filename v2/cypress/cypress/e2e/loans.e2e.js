@@ -23,20 +23,45 @@ describe('loans', () => {
 
     cy.get('[role="dialog"]')
       .should('exist')
-      .should(($dialog) => {
-        expect($dialog).to.contain('Confirm Transaction');
-        expect($dialog).to.contain('BORROWING');
-        expect($dialog).to.contain('100.00 sUSD');
-        expect($dialog).to.contain('POSTING');
-        expect($dialog).to.contain('2.00 ETH');
-      });
+      .should('include.text', 'Confirm Transaction')
+      .should('include.text', 'BORROWING')
+      .should('include.text', '100.00 sUSD')
+      .should('include.text', 'POSTING')
+      .should('include.text', '2.00 ETH');
 
     cy.get('[role="dialog"]', { timeout: TIMEOUT_TX }).should('not.exist');
 
     cy.get('[id="Active Borrows-tab"][aria-selected="true"]').should('exist');
     cy.get('[id="Active Borrows-tabpanel"]').should('exist');
-    cy.get('[id="Active Borrows-tabpanel"] [data-testid="loan actions button"]', {
-      timeout: TIMEOUT_DATA_FETCH,
-    }).should('exist');
+    cy.get('[data-testid="loan actions button"]', { timeout: TIMEOUT_DATA_FETCH })
+      .should('exist')
+      .then(($0) => cy.wrap($0.data('id')).as('loanId'));
+
+    cy.get('@loanId').then((id) => {
+      cy.get(`[data-testid="loan actions button"][data-id="${id}"]`).click();
+      cy.get('[data-testid="loan action"][data-action="close"]').should('be.visible').click();
+    });
+    cy.get('[data-testid="loans submit loan modification"]')
+      .should('exist')
+      .should('not.be.disabled')
+      .click();
+
+    cy.get('[role="dialog"]')
+      .should('exist')
+      .should('include.text', 'Confirm Transaction')
+      .should('include.text', 'REPAY')
+      .should('include.text', '100.00 sUSD')
+      .should('include.text', 'RECEIVE')
+      .should('include.text', '2.00 ETH');
+
+    cy.get('[role="dialog"]', { timeout: TIMEOUT_TX }).should('not.exist');
+
+    cy.get('[id="Active Borrows-tab"][aria-selected="true"]').should('exist');
+    cy.get('[id="Active Borrows-tabpanel"]').should('exist');
+    cy.get('@loanId').then((id) => {
+      cy.get(`[data-testid="loan actions button"][data-id="${id}"]`).should('not.exist');
+    });
+
+    cy.get('[data-testid="loans claim pending withdrawals"]').should('exist');
   });
 });

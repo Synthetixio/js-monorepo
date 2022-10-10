@@ -209,6 +209,7 @@ const Wrapper: FC<WrapperProps> = ({
         variant="primary"
         size="lg"
         disabled={!!waitETA || buttonIsDisabled}
+        data-testid="loans submit loan modification"
       >
         <Trans
           // @ts-ignore
