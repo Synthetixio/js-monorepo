@@ -1,4 +1,4 @@
-import { InfoIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+import { InfoIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import { Link, Td, Text, Tooltip, Tr, useDisclosure } from '@chakra-ui/react';
 import { BigNumber } from 'ethers';
 import { Link as RouterLink } from 'react-router-dom';
@@ -70,7 +70,7 @@ export const StakingPosition: FC<Props> = ({ position, refetch }) => {
           display="inline-block"
           transform="translateY(-1.5px)"
         >
-          <ExternalLinkIcon />
+          <ArrowRightIcon />
         </Link>
       </Td>
     </Tr>

@@ -1,5 +1,5 @@
 import { StakingStats } from './StakingStats';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Spinner } from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Spinner, Box } from '@chakra-ui/react';
 import Manage from './Manage';
 import { Rewards } from './Rewards';
 import { Pool } from './Pool';
@@ -23,7 +23,12 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
     refetch,
   } = useStakingPosition(accountId, poolId, collateral);
 
-  if (isLoading) return <Spinner />;
+  if (isLoading)
+    return (
+      <Box my="8" textAlign="center">
+        <Spinner />
+      </Box>
+    );
 
   const { decimals, price: priceBN, priceDecimals } = collateral;
 

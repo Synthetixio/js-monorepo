@@ -1,4 +1,4 @@
-import { ExternalLinkIcon, EditIcon } from '@chakra-ui/icons';
+import { ExternalLinkIcon, EditIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import {
   Text,
   Box,
@@ -45,7 +45,7 @@ export const Pool: FC<Props> = ({
       <Alert status="info" mt="3" mb="6">
         <AlertIcon />
         By pooling liquidity for markets, you’re backing synthetic assets on-chain. You can earn
-        yield and rewards, but your debt may increase and harm your C-Ratio.
+        fees and rewards, but your debt may increase and harm your C-Ratio.
       </Alert>
       <Box mb="6">
         <Text fontSize="sm" fontWeight="semibold">
@@ -84,17 +84,9 @@ export const Pool: FC<Props> = ({
         onClose={onClose}
       />
       <Heading size="md" mb="1">
-        Market Exposure
+        Markets
       </Heading>
-      <Text mb="4">
-        You’re currently backing the following markets. Your exposure can change based on market
-        conditions.
-        {/* To customize the markets you’re exposed to,{' '} 
-         <Link fontWeight="semibold" color="cyan.500">
-          create your own pool
-        </Link> 
-        .*/}
-      </Text>
+      <Text mb="4">This pool is currently backing the assets in the following markets.</Text>
       <Table size="sm" variant="simple" mb="6">
         <Thead>
           <Tr>
@@ -105,7 +97,7 @@ export const Pool: FC<Props> = ({
               Liquidity
             </Th>
             <Th color="white" pb="2">
-              Yield
+              Projected Fees
             </Th>
             <Th color="white" pb="2"></Th>
           </Tr>
@@ -113,17 +105,29 @@ export const Pool: FC<Props> = ({
         <Tbody>
           <Tr>
             <Td py="4">
-              <Heading size="sm">Synthetic&nbsp;Bitcoin</Heading>
+              Synthetic&nbsp;Bitcoin
               <Text fontSize="xs" opacity="0.66" mt="1'">
                 ID: {poolId}
               </Text>
             </Td>
-            <Td>total credit, issuance, reported debt</Td>
-            <Td>
-              25.4% APY Projects Fees
-              <Badge>2 Rewards Distributors</Badge>
+            <Td py="4">
+              50% allocation
+              <Text fontSize="xs" opacity="0.66" mt="1'">
+                Max Debt: $2,000
+              </Text>
             </Td>
-            <Td>right chevron</Td>
+            <Td py="4">X% APY</Td>
+            <Td>
+              <Link
+                as={RouterLink}
+                to={`/markets/${0}`}
+                color="cyan.500"
+                display="inline-block"
+                transform="translateY(-1.5px)"
+              >
+                <ArrowRightIcon />
+              </Link>
+            </Td>
           </Tr>
         </Tbody>
       </Table>
