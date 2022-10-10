@@ -7028,6 +7028,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/txnReducer@workspace:*, @snx-v2/txnReducer@workspace:v2/lib/txnReducer":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/txnReducer@workspace:v2/lib/txnReducer"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useBurnMutation@workspace:*, @snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation"
@@ -7163,6 +7169,7 @@ __metadata:
   resolution: "@snx-v2/useMintMutation@workspace:v2/lib/useMintMutation"
   dependencies:
     "@ethersproject/bignumber": ^5.6.2
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@tanstack/react-query": ^4.3.4
