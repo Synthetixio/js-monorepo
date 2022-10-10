@@ -212,7 +212,7 @@ const Wrapper: FC<WrapperProps> = ({
       >
         <Trans
           // @ts-ignore
-          i18nKey={waitETA ? 'loans.modify-loan.loan-interation-delay' : buttonLabel}
+          i18nKey={waitETA ? 'loans.modify-loan.loan-interaction-delay' : buttonLabel}
           values={{ waitETA }}
           components={[<NoTextTransform />]}
         />
