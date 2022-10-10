@@ -191,7 +191,9 @@ export default function Stake({
       });
       await Promise.all([refetchAccounts!({ cancelRefetch: Boolean(accountId) })]);
       if (!Boolean(accountId)) {
-        navigate(`/accounts/${newAccountId}?chain=${chain?.network}`);
+        navigate(
+          `/accounts/${newAccountId}/positions/${selectedCollateralType.symbol}/${selectedPoolId}?chain=${chain?.network}`
+        );
       } else {
         // TODO: get language from noah
         toast({
@@ -318,6 +320,7 @@ export default function Stake({
                     decimals={selectedCollateralType.decimals}
                     symbol={selectedCollateralType.symbol}
                     onMax={(balance) => setValue('amount', balance)}
+                    address={selectedCollateralType.address}
                   />
                 </Box>
               )}

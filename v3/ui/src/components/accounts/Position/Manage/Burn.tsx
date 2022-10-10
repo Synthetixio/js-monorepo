@@ -41,6 +41,7 @@ export const Burn: FC<Props> = ({ onChange, value, debt }) => {
             onMax={() => onChange(Math.min(balance.formatedValue, debt) || 0)}
             decimals={balance.decimals}
             symbol="snxUsd"
+            address={snxUsdProxy?.address}
           />
         </Flex>
       </Box>

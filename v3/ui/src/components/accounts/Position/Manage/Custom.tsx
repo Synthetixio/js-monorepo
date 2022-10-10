@@ -53,6 +53,7 @@ export const Custom: FC<Props> = ({
                 balance={balance.value}
                 decimals={collateral.decimals}
                 symbol={collateral.symbol}
+                address={collateral.address}
               />
             </Flex>
           </Box>

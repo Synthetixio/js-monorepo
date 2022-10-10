@@ -35,6 +35,7 @@ export const Stake: FC<Props> = ({ collateral, value, onChange }) => {
             balance={balance.value}
             decimals={collateral.decimals}
             symbol={collateral.symbol}
+            address={collateral.address}
           />
         </Flex>
       </Box>

@@ -35,6 +35,7 @@ export const Unstake: FC<Props> = ({ collateral, collateralAmount, value, onChan
             balance={parseUnits(collateralAmount, collateral.decimals)}
             decimals={collateral.decimals}
             symbol={collateral.symbol}
+            address={collateral.address}
           />
         </Flex>
       </Box>
