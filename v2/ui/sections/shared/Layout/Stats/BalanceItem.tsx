@@ -11,8 +11,9 @@ type BalanceItemProps = {
 };
 
 const BalanceItem: FC<BalanceItemProps> = ({ amount, currencyKey }) => {
+  const formattedAmount = amount.gte(0) ? formatFiatCurrency(amount) : '-';
   return (
-    <Container>
+    <Container data-testid="balance item" data-currency={currencyKey} data-amount={formattedAmount}>
       <Title>
         <Trans
           i18nKey="common.currency.currency-balance"
@@ -20,7 +21,7 @@ const BalanceItem: FC<BalanceItemProps> = ({ amount, currencyKey }) => {
           components={[<NoTextTransform />]}
         />
       </Title>
-      <Balance>{formatFiatCurrency(amount)}</Balance>
+      <Balance>{formattedAmount}</Balance>
     </Container>
   );
 };

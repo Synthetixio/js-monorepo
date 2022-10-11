@@ -57,6 +57,7 @@ commands:
             cat $BASH_ENV
 
       - run: ./node_modules/.bin/tenderly-removeMinimumStakeTime
+      - run: ./node_modules/.bin/tenderly-removeEthCollateralInteractionDelay
 
   tenderly-cleanup:
     steps:
@@ -202,8 +203,8 @@ jobs:
 
       - run:
           name: Run server localhost:3000
-          working_directory: /tmp/app/v2/ui/out
-          command: python3 -m http.server 3000
+          working_directory: /tmp/app/v2/ui
+          command: ./server.js
           background: true
 
       - tenderly-prepare

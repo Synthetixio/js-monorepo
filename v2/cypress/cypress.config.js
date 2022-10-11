@@ -4,6 +4,7 @@ const path = require('path');
 
 module.exports = defineConfig({
   component: {
+    watchForFileChanges: false,
     specPattern: ['../**/*.cy.{js,jsx,ts,tsx}'],
     devServer: {
       framework: 'react',
@@ -120,6 +121,7 @@ module.exports = defineConfig({
   },
 
   e2e: {
+    watchForFileChanges: false,
     specPattern: ['../**/*.e2e.{js,jsx,ts,tsx}'],
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(_on, _config) {

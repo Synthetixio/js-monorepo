@@ -34,7 +34,6 @@ const AssetInput: React.FC<AssetInputProps> = ({
   selectDisabled,
   inputDisabled,
   onSetMaxAmount,
-  testId,
 }) => {
   const { t } = useTranslation();
   const options = React.useMemo(() => assets.map((value) => ({ label: value, value })), [assets]);
@@ -44,7 +43,7 @@ const AssetInput: React.FC<AssetInputProps> = ({
   const selectLabel = <SelectLabel>{labelText}</SelectLabel>;
 
   const selectInput = (
-    <SelectInput data-testid="select">
+    <SelectInput>
       <Select
         hideArrow={true}
         inputId={`${label}-asset-options`}
@@ -69,7 +68,6 @@ const AssetInput: React.FC<AssetInputProps> = ({
         placeholder="0.00"
         onChange={(e) => setAmount(e.target.value)}
         disabled={!!inputDisabled}
-        data-testid="input"
       />
     </AmountContainer>
   );
@@ -83,7 +81,7 @@ const AssetInput: React.FC<AssetInputProps> = ({
   return (
     <>
       <DesktopOnlyView>
-        <Container data-testid={testId}>
+        <Container>
           <SelectContainer>
             {selectLabel}
             {selectInput}
@@ -94,7 +92,7 @@ const AssetInput: React.FC<AssetInputProps> = ({
         </Container>
       </DesktopOnlyView>
       <MobileOrTabletView>
-        <Container data-testid={testId}>
+        <Container>
           {selectLabel}
           {amountInput}
           {selectInput}

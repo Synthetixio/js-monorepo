@@ -28,10 +28,10 @@ type ETHProps = {
 const ETH: React.FC<ETHProps> = ({ onSetMaxAmount }) => {
   const { t } = useTranslation();
   const { provider, signer } = Connector.useContainer();
-  const [balance, setBalance] = useState(ethers.BigNumber.from('0'));
+  const [balance, setBalance] = useState(ethers.BigNumber.from('-1'));
 
   const handleSetMaxAmount = () => {
-    if (onSetMaxAmount && balance) {
+    if (onSetMaxAmount && balance.gte(0)) {
       onSetMaxAmount(ethers.utils.formatUnits(balance, 18));
     }
   };
@@ -62,14 +62,12 @@ const ETH: React.FC<ETHProps> = ({ onSetMaxAmount }) => {
     };
   }, [signer, provider]);
 
-  return (
-    balance && (
-      <Container>
-        {t('balance.input-label')} {wei(balance).toString(2)}{' '}
-        {!onSetMaxAmount ? null : <MaxButton onClick={handleSetMaxAmount} />}
-      </Container>
-    )
-  );
+  return balance.gte(0) ? (
+    <Container data-testid="loans current eth balance" data-balance={wei(balance).toString(2)}>
+      {t('balance.input-label')} {wei(balance).toString(2)}{' '}
+      {!onSetMaxAmount ? null : <MaxButton onClick={handleSetMaxAmount} />}
+    </Container>
+  ) : null;
 };
 
 type ERC20Props = {
@@ -81,11 +79,11 @@ const ERC20: React.FC<ERC20Props> = ({ asset, onSetMaxAmount }) => {
   const { t } = useTranslation();
   const { synthetixjs, walletAddress } = Connector.useContainer();
 
-  const [balance, setBalance] = useState<ethers.BigNumber>(ethers.BigNumber.from('0'));
+  const [balance, setBalance] = useState(ethers.BigNumber.from('-1'));
   const [decimals, setDecimals] = useState<number>(0);
 
   const handleSetMaxAmount = () => {
-    if (onSetMaxAmount && balance && decimals) {
+    if (onSetMaxAmount && balance.gte(0) && decimals) {
       onSetMaxAmount(ethers.utils.formatUnits(balance, decimals));
     }
   };
@@ -139,12 +137,15 @@ const ERC20: React.FC<ERC20Props> = ({ asset, onSetMaxAmount }) => {
     };
   }, [contract, walletAddress]);
 
-  return !(decimals && balance) ? null : (
-    <Container>
+  return decimals && balance.gte(0) ? (
+    <Container
+      data-testid="loans current erc20 balance"
+      data-balance={wei(balance, decimals).toString(2)}
+    >
       {t('balance.input-label')} {wei(balance, decimals).toString(2)}{' '}
       {!onSetMaxAmount ? null : <MaxButton onClick={handleSetMaxAmount} />}
     </Container>
-  );
+  ) : null;
 };
 
 type MaxButtonProps = {

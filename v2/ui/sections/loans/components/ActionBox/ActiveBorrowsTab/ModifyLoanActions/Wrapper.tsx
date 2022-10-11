@@ -209,10 +209,11 @@ const Wrapper: FC<WrapperProps> = ({
         variant="primary"
         size="lg"
         disabled={!!waitETA || buttonIsDisabled}
+        data-testid="loans submit loan modification"
       >
         <Trans
           // @ts-ignore
-          i18nKey={waitETA ? 'loans.modify-loan.loan-interation-delay' : buttonLabel}
+          i18nKey={waitETA ? 'loans.modify-loan.loan-interaction-delay' : buttonLabel}
           values={{ waitETA }}
           components={[<NoTextTransform />]}
         />

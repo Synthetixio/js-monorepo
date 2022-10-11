@@ -47,16 +47,15 @@ export function useMintMutation(mintArgs: MintArgs) {
   const populateTransaction = createPopulateTransaction(Synthetix, mintArgs);
   const {
     data,
-    isLoading: isGasLoading,
+    isFetched: isGasFetched,
+    isFetching: gasFetching,
     error: gasError,
   } = useGasOptions({
     populateTransaction,
     queryKeys: [mintArgs, populateTransaction],
   });
+
   const { gasOptionsForTransaction, transactionPrice } = data || {};
-
-  const isLoading = isGasLoading;
-
   const { modalOpen, txnStatus, error } = state;
 
   return {
@@ -73,16 +72,17 @@ export function useMintMutation(mintArgs: MintArgs) {
         dispatch({ type: 'pending' });
         await txn.wait();
         dispatch({ type: 'success' });
-        setTimeout(() => dispatch({ type: 'settled' }), 1000);
       } catch (error: any) {
-        dispatch({ type: 'error' });
-        setTimeout(() => dispatch({ type: 'settled' }), 1000);
+        dispatch({ type: 'error', payload: { error } });
+        throw error;
       }
     }),
     transactionFee: transactionPrice,
-    isLoading,
+    isGasEnabledAndNotFetched: gasFetching && !isGasFetched,
     modalOpen,
     txnStatus,
-    error: error || gasError,
+    error,
+    gasError: gasError as Error | null,
+    settle: () => dispatch({ type: 'settled' }),
   };
 }

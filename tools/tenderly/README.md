@@ -75,6 +75,13 @@ export TENDERLY_CHECKPOINT=""
 { minimumStakeTimePre: 604800 }
 #...
 { minimumStakeTimePost: 0 }
+
+
+# Remove interactionDelay for ETH collateral (set it to 0 from current 300 seconds)
+➜ tenderly-removeEthCollateralInteractionDelay
+{ interactionDelayPre: 300 }
+#...
+{ interactionDelayPost: 0 }
 ```
 
 ## Programmatic usage
@@ -117,6 +124,10 @@ const getSnxTx = await getsnx({
 });
 
 await removeMinimumStakeTime({
+  TENDERLY_FORK_ID: forkInfo.simulation_fork.id,
+});
+
+await removeEthCollateralInteractionDelay({
   TENDERLY_FORK_ID: forkInfo.simulation_fork.id,
 });
 ```
