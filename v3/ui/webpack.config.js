@@ -31,7 +31,7 @@ const svgUrlRule = {
   test: /\.svg$/i,
   type: 'asset',
   resourceQuery: /url/, // *.svg?url
-}
+};
 
 const imgRule = {
   test: /\.(png|jpg|ico|gif|woff|woff2|ttf|eot|doc|pdf|zip|wav|avi|txt|webp)$/,
