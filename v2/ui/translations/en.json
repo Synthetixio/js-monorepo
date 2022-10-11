@@ -4,6 +4,9 @@
   },
   "staking-v2": {
     "home": {
+      "title": "Welcome to Synthetix",
+      "description": "Stake your SNX to borrow sUSD and contribute to the network collateral. If you’ve never staked before please read through this <0>quick introduction</0> first. Follow the steps below to get started.",
+      "action": "Read Introduction",
       "utilities": {
         "title": "sUSD Utilities",
         "description": "Put your sUSD loan to work buy utilizing one or more protocols embedded in the Synthetix ecosystem. Be sure to check out our user guides and understand the risks.",
@@ -37,12 +40,12 @@
       }
     },
     "main-action-cards": {
-      "stake-headline": "Stake & borrow",
-      "stake-body": "Mint sUSD by staking your SNX.",
+      "stake-headline": "Stake & Borrow",
+      "stake-body": "Borrow sUSD by staking your SNX.",
       "stake-link-button": "Stake & Borrow More",
       "stake-main-button": "Start Staking",
       "maintain-headline": "Maintain Collateralization Ratio",
-      "maintain-body": "Maintain Collateralization Ratio Health",
+      "maintain-body": "Use the burn feature to maintain your c-ratio or completely pay off debt and unstake your SNX.",
       "maintain-badge-success": "Adjust to collect weekly rewards",
       "maintain-badge-warning": "Your ratio is looking healthy!",
       "maintain-main-button": "Maintain",
@@ -57,17 +60,17 @@
     },
     "cratio-health-card": {
       "heading": "Collateralization Ratio Health",
-      "sub-heading": "In order to keep gathering rewards you must keep you C-Ratio above Target"
+      "sub-heading": "In order to claim weekly rewards, your C-Ratio must be at or above the target."
     },
     "mint": {
       "title-new": "Stake SNX By Minting sUSD",
       "title-existing": "Stake and Borrow More",
       "description": "Mint sUSD by staking your SNX. SNX stakers earn weekly staking rewards in exchange for managing their Collateralization Ratio and debt. <0>Your staked SNX will be locked for 7 days.<0>",
-      "description-existing": "Minting more carries risks. Only do this if you are an experienced SNX Trader and understand the risks.",
+      "description-existing": "Borrowing more carries risks. Only do this if you are an experienced SNX Staker and understand the risks.",
       "heading": "How much SNX do you want to stake?",
-      "heading-tooltip": "Choose how much SNX you would like to stake. You can use the presets available or enter custom amount.",
+      "heading-tooltip": "Chose the amount of SNX you want to Stake. Simply input a custom amount or use the preset selector",
       "borrowing": "Borrowing",
-      "borrowing-tooltip": "By staking SNX you're effectively borrowing sUSD.",
+      "borrowing-tooltip": "Based on much you SNX you stake will determine how much sUSD you can borrow",
       "unstaked-snx": "Unstaked SNX: {{unstakedSnx}}",
       "susd-balance": "sUSD Balance: {{susdBalance}}",
       "enter-amount": "Enter Amount",
@@ -78,14 +81,20 @@
       "success": "HEALTHY",
       "warning": "UNHEALTHY",
       "error": "UNHEALTHY",
+      "gas-estimation-error": "Error estimating gas",
       "txn-modal": {
         "pending": "Transaction Pending",
         "completed": "Transaction completed",
         "staking": "Staking",
         "minting": "Minting",
         "loading": "Loading",
-        "etherscan": "View Etherscan"
-      }
+        "etherscan": "View Etherscan",
+        "error-headline": "Error",
+        "retry": "Retry",
+        "close": "Close"
+      },
+
+      "estimating-gas": "Estimating gas..."
     },
     "burn": {
       "title": "Burn Debt",
@@ -127,6 +136,7 @@
     },
     "eth-gas-price-estimator": {
       "gas-price-label": "Gas Price",
+      "gas-price-tooltip": "Value required to conduct a transaction",
       "gas-speed": {
         "average": "Average",
         "fast": "Fast",
@@ -1003,7 +1013,7 @@
       "total": "TOTAL"
     },
     "modify-loan": {
-      "loan-interation-delay": "Please wait <0>{{waitETA}}</0> before reinteracting with the loan",
+      "loan-interaction-delay": "Please wait <0>{{waitETA}}</0> before reinteracting with the loan",
       "close": {
         "left-col-label": "REPAY",
         "right-col-label": "RECEIVE",

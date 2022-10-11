@@ -1919,6 +1919,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chakra-ui/anatomy@npm:2.0.7":
+  version: 2.0.7
+  resolution: "@chakra-ui/anatomy@npm:2.0.7"
+  checksum: 3f75782e7fd7e4b52c4a719a6869953cdf37da799386c02c6eec00f52a1307a4be22a18c25ec4fb46159251bb5cc7dc5d3f6d61087dbdc42133ae2893f16e2b7
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/avatar@npm:2.1.0":
   version: 2.1.0
   resolution: "@chakra-ui/avatar@npm:2.1.0"
@@ -2932,6 +2939,18 @@ __metadata:
   peerDependencies:
     "@chakra-ui/styled-system": ">=2.0.0"
   checksum: 59e9e515c6baba8efe1496b5f6b52398d06395a2132a5dbab001f44f49fd8edbc7d5fb367c861585ec46c55b87d9396e71e0f35e27c9034d79483ac50da8b0ff
+  languageName: node
+  linkType: hard
+
+"@chakra-ui/theme-tools@npm:^2.0.12":
+  version: 2.0.12
+  resolution: "@chakra-ui/theme-tools@npm:2.0.12"
+  dependencies:
+    "@chakra-ui/anatomy": 2.0.7
+    "@ctrl/tinycolor": ^3.4.0
+  peerDependencies:
+    "@chakra-ui/styled-system": ">=2.0.0"
+  checksum: 8ee0db748566930c7d92b2fef737af5d9ad9598e32b1fdac20074ba02a5f24660f0b39556a3e54f838d07d7762595665772fbfbbb3ac1c7f27288849746adf6c
   languageName: node
   linkType: hard
 
@@ -6418,13 +6437,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rainbow-me/rainbowkit@npm:^0.4.5":
-  version: 0.4.5
-  resolution: "@rainbow-me/rainbowkit@npm:0.4.5"
+"@rainbow-me/rainbowkit@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "@rainbow-me/rainbowkit@npm:0.7.1"
   dependencies:
-    "@vanilla-extract/css": 1.7.0
+    "@vanilla-extract/css": 1.9.1
     "@vanilla-extract/dynamic": 2.0.2
-    "@vanilla-extract/sprinkles": 1.4.1
+    "@vanilla-extract/sprinkles": 1.5.0
     clsx: 1.1.1
     qrcode: 1.5.0
     react-remove-scroll: 2.5.4
@@ -6433,7 +6452,7 @@ __metadata:
     react: ">=17"
     react-dom: ">=17"
     wagmi: 0.5.x || 0.6.x
-  checksum: f956f9a440494404205de251ba89e45d1c5090ce9419a05e90025b1d83251ba707ca7fbc97a861cf52c5009d044035b9690dc31c4e14812650d9dc6233c0a3d5
+  checksum: ac159b611f60a199992e37f706943729a5672d623604dc7ad69bac368aa48f46393ab55456d1b2c3e04e334a57e746eef6c9cc08ff4a04880219be9ead8bb51b
   languageName: node
   linkType: hard
 
@@ -7041,6 +7060,7 @@ __metadata:
     "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
@@ -7175,6 +7195,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/Welcome@workspace:^, @snx-v2/Welcome@workspace:v2/components/Welcome":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/Welcome@workspace:v2/components/Welcome"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/Constants": "workspace:*"
+    "@storybook/react": ^6.5.10
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/cypress@workspace:v2/cypress":
   version: 0.0.0-use.local
   resolution: "@snx-v2/cypress@workspace:v2/cypress"
@@ -7218,6 +7250,12 @@ __metadata:
   peerDependencies:
     "@chakra-ui/react": 2
     react: 18
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/parseTxnError@workspace:*, @snx-v2/parseTxnError@workspace:v2/lib/parseTxnError":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/parseTxnError@workspace:v2/lib/parseTxnError"
   languageName: unknown
   linkType: soft
 
@@ -9281,6 +9319,7 @@ __metadata:
     tenderly-geteth: ./bin/tenderly-geteth.mjs
     tenderly-getsnx: ./bin/tenderly-getsnx.mjs
     tenderly-load: ./bin/tenderly-load.mjs
+    tenderly-removeEthCollateralInteractionDelay: ./bin/tenderly-removeEthCollateralInteractionDelay.mjs
     tenderly-removeMinimumStakeTime: ./bin/tenderly-removeMinimumStakeTime.mjs
     tenderly-save: ./bin/tenderly-save.mjs
     tenderly-unfork: ./bin/tenderly-unfork.mjs
@@ -9344,6 +9383,7 @@ __metadata:
     "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/UtilityCard": "workspace:^"
+    "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
@@ -9527,6 +9567,7 @@ __metadata:
     "@chakra-ui/icons": ^2.0.9
     "@chakra-ui/react": ^2.2.8
     "@chakra-ui/storybook-addon": ^4.0.4
+    "@chakra-ui/theme-tools": ^2.0.12
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@storybook/addon-essentials": ^6.5.7
@@ -9565,7 +9606,7 @@ __metadata:
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@faker-js/faker": ^7.4.0
-    "@rainbow-me/rainbowkit": ^0.4.5
+    "@rainbow-me/rainbowkit": ^0.7.1
     "@svgr/webpack": ^6.3.1
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
@@ -11489,22 +11530,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/css@npm:1.7.0":
-  version: 1.7.0
-  resolution: "@vanilla-extract/css@npm:1.7.0"
+"@vanilla-extract/css@npm:1.9.1":
+  version: 1.9.1
+  resolution: "@vanilla-extract/css@npm:1.9.1"
   dependencies:
     "@emotion/hash": ^0.8.0
     "@vanilla-extract/private": ^1.0.3
+    ahocorasick: 1.0.2
     chalk: ^4.1.1
-    css-mediaquery: ^0.1.2
     css-what: ^5.0.1
     cssesc: ^3.0.0
     csstype: ^3.0.7
     deep-object-diff: ^1.1.0
     deepmerge: ^4.2.2
-    escape-string-regexp: ^4.0.0
+    media-query-parser: ^2.0.2
     outdent: ^0.8.0
-  checksum: 2ecebcc25febfb4d97360a36122886f073ef1ee5e064f2e8b81bc32515ffc759265f4b698fe96cfbfba201ccd050020d139ebb33a7290b82737556968494381a
+  checksum: 91127d8e2eaaf521b155a39fb6a93e0fbfe5ddd5a8bdf1c732aba278cfdb9505cba24c755a982bc47682b9ff582a06d11e51e6f8d810404164ba098799ce6800
   languageName: node
   linkType: hard
 
@@ -11524,12 +11565,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/sprinkles@npm:1.4.1":
-  version: 1.4.1
-  resolution: "@vanilla-extract/sprinkles@npm:1.4.1"
+"@vanilla-extract/sprinkles@npm:1.5.0":
+  version: 1.5.0
+  resolution: "@vanilla-extract/sprinkles@npm:1.5.0"
   peerDependencies:
     "@vanilla-extract/css": ^1.0.0
-  checksum: e72407ca6afad27c9e609ec3b23f8216c17374f40728ed8f8fc4decc0ea65216d9fb0f74daf31b846dffc7a90c0fe8f40a16d0b468c8f81a0600eea570a437bf
+  checksum: 522b96afe856a72d76072ab41453edc35117772a6ac829c8a5ad09cddd69152e152b1cbda0b4344d50dbde59d0effa39301beb7acf319ef88f485966c89c80fd
   languageName: node
   linkType: hard
 
@@ -12713,6 +12754,13 @@ __metadata:
     clean-stack: ^2.0.0
     indent-string: ^4.0.0
   checksum: 1101a33f21baa27a2fa8e04b698271e64616b886795fd43c31068c07533c7b3facfcaf4e9e0cab3624bd88f729a592f1c901a1a229c9e490eafce411a8644b79
+  languageName: node
+  linkType: hard
+
+"ahocorasick@npm:1.0.2":
+  version: 1.0.2
+  resolution: "ahocorasick@npm:1.0.2"
+  checksum: a13ce4403554ae782cf5e28d468a732acf1fd3d0bff251f5dcfddfa5497b6cc343948d69cd94dfdbe8d4dfdb81e2b34cb1c92079e6301f38b0143d314fb95bd6
   languageName: node
   linkType: hard
 
@@ -27624,6 +27672,15 @@ __metadata:
   version: 1.0.1
   resolution: "mdurl@npm:1.0.1"
   checksum: 71731ecba943926bfbf9f9b51e28b5945f9411c4eda80894221b47cc105afa43ba2da820732b436f0798fd3edbbffcd1fc1415843c41a87fea08a41cc1e3d02b
+  languageName: node
+  linkType: hard
+
+"media-query-parser@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "media-query-parser@npm:2.0.2"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+  checksum: 8ef956d9e63fe6f4041988beda69843b3a6bb48228ea2923a066f6e7c8f7c5dba75fae357318c48a97ed5beae840b8425cb7e727fc1bb77acc65f2005f8945ab
   languageName: node
   linkType: hard
 

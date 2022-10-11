@@ -65,12 +65,7 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
           staking additional SNX or increasing your staking leverage.
         </Text>
         <Flex alignItems="center">
-          <Button
-            disabled={total.isZero()}
-            onClick={() => claim()}
-            isLoading={claimLoading}
-            colorScheme="blue"
-          >
+          <Button disabled={total.isZero()} onClick={() => claim()} isLoading={claimLoading}>
             Claim {Number(utils.formatUnits(total, 18)).toFixed(2)} eSNX
           </Button>
           <Text ml="5" fontWeight="semibold" fontSize="sm">
@@ -120,7 +115,6 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
               defaultValue={5}
               min={0}
               max={100}
-              colorScheme="blue"
               onChange={(v) => setSliderValue(v)}
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
@@ -156,9 +150,7 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
           </Box>
         </SimpleGrid>
 
-        <Button colorScheme="blue" w="100%">
-          Stake 600 eSNX as 400 SNX
-        </Button>
+        <Button w="100%">Stake 600 eSNX as 400 SNX</Button>
       </Box>
       <Box mb="10">
         <Heading size="md" mb="3">

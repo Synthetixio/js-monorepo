@@ -18,7 +18,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@faker-js/faker": "^7.4.0",
-    "@rainbow-me/rainbowkit": "^0.4.5",
+    "@rainbow-me/rainbowkit": "^0.7.1",
     "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "big.js": "^6.1.1",

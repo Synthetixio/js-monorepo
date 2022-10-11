@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Box, Container, Flex, Text, Center } from '@chakra-ui/react';
 import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
@@ -15,12 +16,16 @@ import {
 } from '@snx-v2/icons';
 import { BoxLink } from '@snx-v2/BoxLink';
 import { useTranslation } from 'react-i18next';
+import { Welcome } from '@snx-v2/Welcome';
+import { ContractContext } from '@snx-v2/ContractContext';
 
 const V2Home = () => {
   const { t } = useTranslation();
+  const { walletAddress } = useContext(ContractContext);
   return (
     <>
       <Container maxW="1200px">
+        {!walletAddress && <Welcome mt={8} />}
         <Box height="42px" position="absolute" left="0" right="0">
           <CRatioBanner />
         </Box>

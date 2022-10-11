@@ -41,9 +41,9 @@ const StatsSection: FC<PropsWithChildren> = ({ children }) => {
 
   const snxBalance =
     cryptoBalances?.balances?.find((balance) => balance.currencyKey === CryptoCurrency.SNX)
-      ?.balance ?? wei(0);
+      ?.balance ?? wei(-1);
 
-  const sUSDBalance = synthsBalancesQuery?.data?.balancesMap[Synths.sUSD]?.balance ?? wei(0);
+  const sUSDBalance = synthsBalancesQuery?.data?.balancesMap[Synths.sUSD]?.balance ?? wei(-1);
 
   const toggleMobileStatsSection = () =>
     setMobileStatsSectionIsOpen((mobileStatsSectionIsOpen) => !mobileStatsSectionIsOpen);

@@ -131,6 +131,7 @@ const InfoBox: React.FC = () => {
                   size="sm"
                   onClick={claimPendingWithdrawals}
                   disabled={isClaimingPendingWithdrawals}
+                  data-testid="loans claim pending withdrawals"
                 >
                   {t(
                     `loans.pending-withdrawals.${

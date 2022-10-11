@@ -74,7 +74,7 @@ export default function Manage({
         {t('position.manage.title')}
       </Text>
 
-      <Tabs isLazy onChange={reset} size="sm" variant="soft-rounded" colorScheme="blue">
+      <Tabs isLazy onChange={reset} size="sm" variant="soft-rounded">
         <TabList justifyContent="space-between">
           <Tab>{t('position.manage.maintain')}</Tab>
           <Tab>{t('position.manage.borrow')}</Tab>
@@ -134,14 +134,7 @@ export default function Manage({
         debtChange={debtChange}
       />
       <Box px="4">
-        <Button
-          disabled={!isValid || noChange}
-          onClick={exec}
-          colorScheme="blue"
-          size="lg"
-          width="100%"
-          mb="2"
-        >
+        <Button disabled={!isValid || noChange} onClick={exec} size="lg" width="100%" mb="2">
           Update Position
         </Button>
       </Box>

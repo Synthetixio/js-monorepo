@@ -9,10 +9,17 @@ import {
   Skeleton,
   Spinner,
   Divider,
+  Center,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { InfoIcon, TokensIcon, TransactionCompleted, TransactionPending } from '@snx-v2/icons';
+import {
+  FailedIcon,
+  InfoIcon,
+  TokensIcon,
+  TransactionCompleted,
+  TransactionPending,
+} from '@snx-v2/icons';
 import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
 import { TransactionStatus, useMintMutation } from '@snx-v2/useMintMutation';
@@ -24,6 +31,7 @@ import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import { ExternalLink } from '@snx-v2/ExternalLink';
 import { calculateUnstakedStakedSnx } from '@snx-v2/stakingCalculations';
 import { useQueryClient } from '@tanstack/react-query';
+import { parseTxnError } from '@snx-v2/parseTxnError';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -33,9 +41,14 @@ interface MintProps {
   onSubmit: () => void;
   onMintAmountSNXChange: (amount: string) => void;
   mintAmountSNX: string;
-  transactionFee: Wei;
+  transactionFee?: Wei | null;
   txnStatus: TransactionStatus;
   modalOpen: boolean;
+  error: Error | null;
+  gasError: Error | null;
+  settle: () => void;
+  retry: () => void;
+  isGasEnabledAndNotFetched: boolean;
 }
 const convert = (value: string, exchangeRate: number) => {
   const num = parseFloat(value);
@@ -57,6 +70,11 @@ export const MintUi = ({
   transactionFee,
   txnStatus,
   modalOpen,
+  error,
+  gasError,
+  settle,
+  retry,
+  isGasEnabledAndNotFetched,
 }: MintProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState(0);
@@ -178,10 +196,21 @@ export const MintUi = ({
             </Flex>
           </Flex>
         </Box>
-        <Flex mt={3} alignItems="center" justifyContent="space-between">
-          <EthGasPriceEstimator transactionFee={transactionFee} />
-        </Flex>
+        {gasError ? (
+          <Center>
+            <FailedIcon width="40px" height="40px" />
+            <Text>
+              {t('staking-v2.mint.gas-estimation-error')}: {parseTxnError(gasError)}
+            </Text>
+          </Center>
+        ) : (
+          <Flex mt={3} alignItems="center" justifyContent="space-between">
+            <EthGasPriceEstimator transactionFee={mintAmountSNX === '' ? wei(0) : transactionFee} />
+          </Flex>
+        )}
+
         <Button
+          variant="gradient"
           fontFamily="heading"
           fontWeight="black"
           mt={4}
@@ -190,19 +219,31 @@ export const MintUi = ({
             setActiveBadge(0);
             return onSubmit();
           }}
-          disabled={mintAmountSNX === ''}
+          disabled={mintAmountSNX === '' || Boolean(gasError) || isGasEnabledAndNotFetched}
         >
-          Mint
+          {isGasEnabledAndNotFetched ? t('staking-v2.mint.estimating-gas') : 'Mint'}
         </Button>
       </Box>
       <TransactionModal
-        icon={transactionLoading ? <TransactionPending /> : <TransactionCompleted />}
+        onClose={() => {
+          onMintAmountSNXChange('');
+          settle();
+        }}
+        icon={
+          error ? (
+            <FailedIcon />
+          ) : transactionLoading ? (
+            <TransactionPending />
+          ) : (
+            <TransactionCompleted />
+          )
+        }
         title={
           transactionLoading
             ? t('staking-v2.mint.txn-modal.pending')
             : txnStatus === 'success'
             ? t('staking-v2.mint.txn-modal.completed')
-            : 'TODO Error'
+            : t('staking-v2.mint.txn-modal.error-headline')
         }
         isOpen={modalOpen}
       >
@@ -226,11 +267,33 @@ export const MintUi = ({
             </Text>
           </Flex>
         )}
+        {error && (
+          <Center pt="4" pb="4" mt="4">
+            <FailedIcon width="40px" height="40px" />
+
+            <Text>{parseTxnError(error)}</Text>
+          </Center>
+        )}
         <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
-        <Flex justifyContent="center">
-          {/* TODO create something that can generate etherscan links based in network and tx id */}
-          <ExternalLink fontSize="sm"> {t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
-        </Flex>
+        {!error ? (
+          <Center flexDirection="column">
+            {/* TODO create something that can generate etherscan links based in network and tx id */}
+            <ExternalLink fontSize="sm">{t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
+            {txnStatus === 'success' && (
+              <Button mt={2} onClick={settle}>
+                {t('staking-v2.mint.txn-modal.close')}
+              </Button>
+            )}
+          </Center>
+        ) : (
+          <Center>
+            <Button onClick={gasError ? settle : retry}>
+              {gasError
+                ? t('staking-v2.mint.txn-modal.close')
+                : t('staking-v2.mint.txn-modal.retry')}
+            </Button>
+          </Center>
+        )}
       </TransactionModal>
     </>
   );
@@ -246,12 +309,21 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
 
   const exchangeRate =
     (targetCRatioPercent && exchangeRateData?.SNX?.div(targetCRatioPercent / 100).toNumber()) || 0;
-  // const debouncedSearchTerm = useDebounce(mintAmount, 500);
+  // const debouncedSearchTerm = useDebounce(mintAmountSNX, 500);
   const mintAmountSUSD = convert(mintAmountSNX, exchangeRate);
   const { targetCRatio, currentCRatio, collateral } = debtData || {};
 
   const unstakedSnx = calculateUnstakedStakedSnx({ targetCRatio, currentCRatio, collateral });
-  const { mutate, transactionFee, modalOpen, txnStatus } = useMintMutation({
+  const {
+    mutate,
+    transactionFee,
+    modalOpen,
+    txnStatus,
+    error,
+    gasError,
+    settle,
+    isGasEnabledAndNotFetched,
+  } = useMintMutation({
     amount: wei(mintAmountSUSD || 0).toBN(),
     delegateAddress: delegateWalletAddress,
     toMax: wei(mintAmountSNX || 0).gte(formatNumber(unstakedSnx.toNumber())),
@@ -270,13 +342,17 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
           onSuccess: () => {
             queryClient.refetchQueries(['synths'], { type: 'active' });
             queryClient.refetchQueries(['v2debt'], { type: 'active' });
-            setMintAmountSNX('');
           },
         });
       }}
-      transactionFee={transactionFee || wei(0)}
+      transactionFee={transactionFee}
       txnStatus={txnStatus}
       modalOpen={modalOpen}
+      error={error}
+      gasError={gasError}
+      settle={settle}
+      retry={() => mutate()}
+      isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
     />
   );
 };
