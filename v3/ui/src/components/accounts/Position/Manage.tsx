@@ -2,7 +2,7 @@ import { Custom } from './Manage/Custom';
 import { Mint } from './Manage/Mint';
 import { Preview } from './Manage/Preview';
 import { Unstake } from './Manage/Unstake';
-import { Text, Box, Tabs, TabList, Tab, TabPanels, TabPanel, Button } from '@chakra-ui/react';
+import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Button } from '@chakra-ui/react';
 import { CollateralType } from '../../../utils/constants';
 import { MaintainCRatio } from './Manage/MaintainCRatio';
 import { useCallback, useState } from 'react';

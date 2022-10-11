@@ -1,9 +1,8 @@
-import { Flex, Box, Stack, Skeleton, Heading, Container } from '@chakra-ui/react';
+import { Flex, Box, Stack, Skeleton, Heading } from '@chakra-ui/react';
 import { Helmet } from 'react-helmet';
-import { useParams } from 'react-router-dom';
 
 export function Pool() {
-  const { id } = useParams();
+  //const { id } = useParams();
 
   return (
     <>

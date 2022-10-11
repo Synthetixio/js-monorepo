@@ -1,13 +1,6 @@
 import { Box, Text, Button, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
-import { BigNumber, utils } from 'ethers';
-import { FC, useState } from 'react';
-import { useContractWrite } from 'wagmi';
-import { useContract, useSnxProxy } from '../../../hooks';
-import { useGetStakingRewards } from '../../../hooks/useStakingReward';
-import { useTokenBalance } from '../../../hooks/useTokenBalance';
-import { contracts } from '../../../utils/constants';
+import { FC } from 'react';
 import { CollateralType } from '../../../utils/types';
-import { Balance } from '../Stake/Balance';
 
 interface Props {
   accountId: string;
@@ -15,14 +8,12 @@ interface Props {
   collateral: CollateralType;
 }
 
-export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
-  const [sliderValue, setSliderValue] = useState(5);
-  const [showTooltip, setShowTooltip] = useState(false);
+export const Rewards: FC<Props> = ({ poolId }) => {
+  /*
   const { data: rewards } = useGetStakingRewards(accountId, poolId, collateral);
   const snxProxy = useSnxProxy();
   const eSnxProxy = useContract(contracts.ESNX_PROXY);
   const balance = useTokenBalance(eSnxProxy?.address);
-
   const total = (rewards || []).reduce((prv, curr) => curr.add(prv), BigNumber.from(0));
 
   const { writeAsync: claim, isLoading: claimLoading } = useContractWrite({
@@ -32,7 +23,7 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
     functionName: 'claimRewards',
     args: [poolId, collateral.address, accountId],
   });
-
+*/
   const hasRewards = false;
 
   return hasRewards ? (

@@ -1,5 +1,5 @@
-import { InfoIcon, ArrowRightIcon } from '@chakra-ui/icons';
-import { Link, Td, Text, Tooltip, Tr, useDisclosure } from '@chakra-ui/react';
+import { ArrowRightIcon } from '@chakra-ui/icons';
+import { Link, Td, Text, Tr } from '@chakra-ui/react';
 import { BigNumber } from 'ethers';
 import { Link as RouterLink } from 'react-router-dom';
 import { formatValue } from '../../../utils/helpers';
@@ -13,7 +13,7 @@ interface Props {
   refetch: () => void;
 }
 
-export const StakingPosition: FC<Props> = ({ position, refetch }) => {
+export const StakingPosition: FC<Props> = ({ position }) => {
   // If the connected wallet doesn’t own this account token, remove/disable the interactivity
 
   const { collateralAmount: collateralAmountBN, collateralType, cRatio, debt, poolId } = position;

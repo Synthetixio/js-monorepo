@@ -10,7 +10,6 @@ import {
   Tbody,
   Td,
   Heading,
-  Badge,
   useDisclosure,
   Alert,
   AlertIcon,

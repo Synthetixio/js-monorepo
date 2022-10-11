@@ -60,8 +60,6 @@ const variantSolid = defineStyle((props) => {
   }
 
   if (c === 'cyan') {
-    const bg = mode(`gray.100`, `whiteAlpha.200`)(props);
-
     return {
       bgGradient: gradients['green-cyan'][500],
       color: 'black',

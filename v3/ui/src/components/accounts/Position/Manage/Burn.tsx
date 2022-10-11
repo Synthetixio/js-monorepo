@@ -1,4 +1,4 @@
-import { Text, Box, Link, Flex, Heading } from '@chakra-ui/react';
+import { Text, Box, Flex, Heading } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useContract } from '../../../../hooks';
 import { useTokenBalance } from '../../../../hooks/useTokenBalance';

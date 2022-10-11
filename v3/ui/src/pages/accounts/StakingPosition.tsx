@@ -1,6 +1,5 @@
-import { Container, Link, Box } from '@chakra-ui/react';
-import { ChevronLeftIcon } from '@chakra-ui/icons';
-import { useParams, Link as NavLink } from 'react-router-dom';
+import { Container } from '@chakra-ui/react';
+import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { collateralTypesState } from '../../utils/state';
 import { useMemo } from 'react';
