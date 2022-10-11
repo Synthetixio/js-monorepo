@@ -1,11 +1,21 @@
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import Wei from '@synthetixio/wei';
-import { Flex, Text, Box, Skeleton, Menu, MenuItem, MenuList, MenuButton } from '@chakra-ui/react';
+import {
+  Flex,
+  Text,
+  Box,
+  Skeleton,
+  Menu,
+  MenuItem,
+  MenuList,
+  MenuButton,
+  Tooltip,
+} from '@chakra-ui/react';
 import { formatNumberToUsd } from '@snx-v2/formatters';
 
 import { GasSpeedContext, GasSpeed } from '@snx-v2/GasSpeedContext';
-import { ChevronDown } from '@snx-v2/icons';
+import { ChevronDown, InfoIcon } from '@snx-v2/icons';
 
 export const EthGasPriceEstimatorUi: React.FC<{
   gasSpeed: GasSpeed;
@@ -16,7 +26,14 @@ export const EthGasPriceEstimatorUi: React.FC<{
 
   return (
     <Flex width="full" justifyContent="space-between" alignItems="center">
-      <Text>{t('staking-v2.eth-gas-price-estimator.gas-price-label')}</Text>
+      <Flex>
+        <Text mr={1}>{t('staking-v2.eth-gas-price-estimator.gas-price-label')}</Text>
+        <Tooltip label={t('staking-v2.eth-gas-price-estimator.gas-price-tooltip')} hasArrow>
+          <Flex alignItems="center">
+            <InfoIcon width="16px" height="16px" />
+          </Flex>
+        </Tooltip>
+      </Flex>
       <Box>
         <Menu closeOnSelect={true}>
           {() => (
