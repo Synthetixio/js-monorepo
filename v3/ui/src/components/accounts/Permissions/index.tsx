@@ -36,9 +36,9 @@ export default function Permissions() {
     enabled: Boolean(accountId),
     select: (data) => {
       return data.reduce(
-        (acc, { target, permissions }) => ({
+        (acc, { user, permissions }) => ({
           ...acc,
-          [target]: permissions.map((r: string) => utils.parseBytes32String(r)),
+          [user]: permissions.map((r: string) => utils.parseBytes32String(r)),
         }),
         {}
       );
@@ -144,11 +144,13 @@ export default function Permissions() {
                 <Td>{accountAddress == accountOwner && <TransferOwnership />}</Td>
               </Tr>
 
-              {Object.keys(accountPermissions).map((target) => {
-                return (
-                  <Item key={target} address={target} permissions={accountPermissions[target]} />
-                );
-              })}
+              {Object.keys(accountPermissions)
+                .filter((target) => accountPermissions[target].length > 0)
+                .map((target) => {
+                  return (
+                    <Item key={target} address={target} permissions={accountPermissions[target]} />
+                  );
+                })}
             </Tbody>
           </Table>
         </Stack>
