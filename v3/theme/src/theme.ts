@@ -61,16 +61,19 @@ const variantSolid = defineStyle((props) => {
 
   if (c === 'cyan') {
     return {
-      bgGradient: gradients['green-cyan'][500],
-      color: 'black',
+      color: 'white',
+      bgGradient: 'linear(to-tr, cyan.700, cyan.600)',
       _hover: {
-        bgGradient: gradients['green-cyan'][600],
+        bgGradient: 'linear(to-tr, cyan.600, cyan.600)',
         _disabled: {
-          background: gradients['green-cyan'][500],
+          bgGradient: 'linear(to-tr, cyan.800, cyan.700)',
         },
       },
+      _disabled: {
+        bgGradient: 'linear(to-tr, cyan.800, cyan.700)',
+      },
       _active: {
-        bgGradient: gradients['green-cyan'][700],
+        bgGradient: 'linear(to-tr, cyan.600, cyan.700)',
       },
     };
   }
