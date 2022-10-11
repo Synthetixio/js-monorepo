@@ -65,7 +65,7 @@ export const TabPanel = ({
     </TabPanelContainer>
   ) : null;
 
-const isV2 = localStore.get(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED) === 'true';
+const isV2 = localStore.get(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED) === true;
 
 export const TabPanelContainer = styled.div<{ height?: number; padding: number }>`
   outline: none;
