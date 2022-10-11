@@ -99,9 +99,10 @@ export default function Stake({
     isNativeCurrency ? undefined : selectedCollateralType.address
   );
 
-  const amountBN = Boolean(amount)
-    ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
-    : BigNumber.from(0);
+  const amountBN =
+    Boolean(amount) && Number(amount) > 0
+      ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
+      : BigNumber.from(0);
 
   const generateAccountId = () => {
     return Math.floor(Math.random() * 10000000000);
@@ -255,6 +256,7 @@ export default function Stake({
                 placeholder="0.0"
                 mr="4"
                 id="amount"
+                min="0"
                 {...register('amount', {
                   validate: {
                     sufficientPools: (v) => {
