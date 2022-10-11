@@ -1,4 +1,4 @@
-import { ComponentStyleConfig, cssVar, defineStyle, extendTheme } from '@chakra-ui/react';
+import { ComponentStyleConfig, defineStyle, extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 
 const gradients = {
