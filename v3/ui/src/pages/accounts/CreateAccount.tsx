@@ -1,5 +1,5 @@
 import { Text, Link } from '@chakra-ui/react';
-import Stake from '../../components/accounts/Stake';
+import { Stake } from '../../components/accounts/Stake';
 
 export function CreateAccount() {
   return (

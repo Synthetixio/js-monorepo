@@ -1,4 +1,4 @@
-import Stake from './Stake';
+import { Stake } from './Stake';
 import { Text, Link } from '@chakra-ui/react';
 
 export default function CreateAccount() {
