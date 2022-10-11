@@ -1,4 +1,4 @@
-import { ComponentStyleConfig, cssVar, defineStyle, extendTheme } from '@chakra-ui/react';
+import { ComponentStyleConfig, defineStyle, extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 
 const gradients = {
@@ -59,6 +59,22 @@ const variantSolid = defineStyle((props) => {
     };
   }
 
+  if (c === 'cyan') {
+    return {
+      bgGradient: gradients['green-cyan'][500],
+      color: 'black',
+      _hover: {
+        bgGradient: gradients['green-cyan'][600],
+        _disabled: {
+          background: gradients['green-cyan'][500],
+        },
+      },
+      _active: {
+        bgGradient: gradients['green-cyan'][700],
+      },
+    };
+  }
+
   const bg = `${c}.500`;
   const color = 'white';
   const hoverBg = `${c}.600`;
@@ -84,19 +100,6 @@ const Button: ComponentStyleConfig = {
   },
   variants: {
     solid: variantSolid,
-    gradient: {
-      bgGradient: gradients['green-cyan'][500],
-      color: 'black',
-      _hover: {
-        bgGradient: gradients['green-cyan'][600],
-        _disabled: {
-          background: gradients['green-cyan'][500],
-        },
-      },
-      _active: {
-        bgGradient: gradients['green-cyan'][700],
-      },
-    },
     outline: (props) => {
       if (props.colorScheme === 'gray') {
         return {
@@ -155,7 +158,10 @@ const Alert: ComponentStyleConfig = {
       };
     },
     solid: (props) => {
-      return { container: { bg: `${props.colorScheme}.500`, color: 'black' } };
+      return {
+        icon: { color: 'white' },
+        container: { bg: `${props.colorScheme}.500`, color: 'white' },
+      };
     },
   },
 };
@@ -309,13 +315,12 @@ const Tabs: ComponentStyleConfig = {
     },
   },
 };
-const $arrowBg = cssVar('popper-arrow-bg');
+
 const Tooltip: ComponentStyleConfig = {
   baseStyle: {
+    textAlign: 'center',
     bg: 'gray.900',
     color: 'white.500',
-    // https://github.com/chakra-ui/chakra-ui/issues/4695#issuecomment-991023319 Bug in Chakra UI
-    [$arrowBg.variable]: 'colors.gray.900',
   },
 };
 
@@ -339,6 +344,7 @@ const Spinner: ComponentStyleConfig = {
 };
 
 export const theme = extendTheme({
+  useSystemColorMode: false,
   initialColorMode: 'dark',
   colors: {
     gray: {

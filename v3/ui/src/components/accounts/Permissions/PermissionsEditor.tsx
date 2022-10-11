@@ -61,9 +61,9 @@ export const PermissionsEditor: FC<Props> = ({
     <>
       {existingAddress ? (
         <Flex>
-          <EditIcon color="blue.400" onClick={onOpen} mx="2" />
+          <EditIcon cursor="pointer" color="cyan.500" onClick={onOpen} mx="2" />
           <SmallCloseIcon
-            color="blue.400"
+            color="cyan.500"
             cursor="pointer"
             onClick={() => {
               setPermissions([]);
@@ -106,38 +106,27 @@ export const PermissionsEditor: FC<Props> = ({
             >
               <Grid gap={3} templateColumns="repeat(2, 1fr)">
                 <GridItem>
-                  <Checkbox value="stake" mb="2">
-                    Stake
+                  <Checkbox value="DEPOSIT" mb="2">
+                    Deposit
                   </Checkbox>
                   <br />
-                  <Checkbox value="unstake" mb="2">
-                    Unstake
+                  <Checkbox value="WITHDRAW" mb="2">
+                    Withdraw
                   </Checkbox>
                   <br />
-                  <Checkbox value="claim" mb="2">
-                    Claim Rewards
+                  <Checkbox value="ADMIN" mb="2">
+                    Admin
                   </Checkbox>
-                  <br />
-                  <Checkbox value="burn" mb="2">
-                    Burn
-                  </Checkbox>
-                  <br />
                 </GridItem>
 
                 <GridItem>
-                  <Checkbox value="mint" mb="2">
+                  <Checkbox value="DELEGATE" mb="2">
+                    Delegate
+                  </Checkbox>
+                  <br />
+                  <Checkbox value="MINT" mb="2">
                     Mint
                   </Checkbox>
-                  <br />
-                  <Checkbox value="manage-locks" mb="2">
-                    Manage Locks
-                  </Checkbox>
-                  <br />
-                  <Checkbox value="manage-staking-position" mb="2">
-                    Manage Staking Position
-                  </Checkbox>
-                  <br />
-                  <Checkbox value="modify">Modify Permissions</Checkbox>
                   <br />
                 </GridItem>
               </Grid>

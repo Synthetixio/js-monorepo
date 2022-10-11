@@ -1,6 +1,6 @@
-import { accountsState, chainIdState, collateralTypesState } from '../../../utils/state';
-import { contracts, poolsData, getChainById } from '../../../utils/constants';
-import { useContract, useSynthetixRead } from '../../../hooks';
+import { chainIdState, collateralTypesState } from '../../../utils/state';
+import { poolsData, getChainById } from '../../../utils/constants';
+import { useSynthetixRead } from '../../../hooks';
 import EditPosition from '../EditPosition';
 import { Balance } from './Balance';
 import CollateralTypeSelector from './CollateralTypeSelector';
@@ -22,19 +22,16 @@ import {
   Text,
   Tooltip,
   useDisclosure,
-  useToast,
 } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { BigNumber, CallOverrides, ethers, utils } from 'ethers';
-import { useMemo } from 'react';
+import { BigNumber, ethers } from 'ethers';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { useNetwork } from 'wagmi';
 import { CollateralType, StakingPositionType } from '../../../utils/types';
-import { useNavigate } from 'react-router-dom';
-import { MulticallCall, useMulticall } from '../../../hooks/useMulticall2';
-import { useApproveCall } from '../../../hooks/useApproveCall';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
+import { FC } from 'react';
+import { useStake } from '../../../hooks/useStake';
 
 type FormType = {
   collateralType: CollateralType;
@@ -42,13 +39,12 @@ type FormType = {
   poolId: string;
 };
 
-export default function Stake({
-  accountId,
-  stakingPositions = {},
-}: {
+interface Props {
   accountId?: string;
   stakingPositions?: Record<string, StakingPositionType>;
-}) {
+}
+
+export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
   const [collateralTypes] = useRecoilState(collateralTypesState);
@@ -57,10 +53,7 @@ export default function Stake({
     functionName: 'getPreferredPool',
   });
   // on loading dropdown and token amount maybe use https://chakra-ui.com/docs/components/feedback/skeleton
-  const toast = useToast({
-    isClosable: true,
-    duration: 9000,
-  });
+
   const methods = useForm<FormType>({
     mode: 'onChange',
     defaultValues: {
@@ -70,11 +63,8 @@ export default function Stake({
   });
   const { handleSubmit, register, formState, reset, control, setValue } = methods;
 
-  const collateralContract = useContract(contracts.SNX_TOKEN);
-  const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   const { isOpen: isOpenPool, onOpen: onOpenPool, onClose: onClosePool } = useDisclosure();
 
-  const navigate = useNavigate();
   const { openConnectModal } = useConnectModal();
 
   const [localChainId] = useRecoilState(chainIdState);
@@ -93,72 +83,10 @@ export default function Stake({
   });
 
   const isNativeCurrency = selectedCollateralType.symbol === chain?.nativeCurrency?.symbol;
-  const [{ refetchAccounts }] = useRecoilState(accountsState);
 
   const balanceData = useTokenBalance(
     isNativeCurrency ? undefined : selectedCollateralType.address
   );
-
-  const amountBN = Boolean(amount)
-    ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
-    : BigNumber.from(0);
-
-  const generateAccountId = () => {
-    return Math.floor(Math.random() * 10000000000);
-  }; // ten digit numberf
-  const newAccountId = useMemo(() => generateAccountId(), []);
-
-  const calls: MulticallCall[] = useMemo(() => {
-    const id = accountId ?? newAccountId;
-    const key = `${selectedPoolId}-${selectedCollateralType.symbol}`;
-    const currentStakingPosition = stakingPositions[key];
-
-    const amountToDelegate = Boolean(accountId)
-      ? currentStakingPosition?.collateralAmount.add(amountBN)
-      : amountBN;
-
-    if (!snxProxy) return [];
-
-    const createAccountCall: MulticallCall[] = [
-      {
-        contract: snxProxy.contract,
-        functionName: 'createAccount',
-        callArgs: [newAccountId],
-      },
-    ];
-    const stakingCalls: MulticallCall[] = [
-      {
-        contract: snxProxy.contract,
-        functionName: 'depositCollateral',
-        callArgs: [id, selectedCollateralType.address, amountBN],
-      },
-      {
-        contract: snxProxy.contract,
-        functionName: 'delegateCollateral',
-        callArgs: [
-          id,
-          Boolean(accountId) ? selectedPoolId : poolId || 0,
-          selectedCollateralType.address,
-          amountToDelegate || 0,
-          utils.parseEther('1'),
-        ],
-      },
-    ];
-
-    return Boolean(accountId) ? stakingCalls : [...createAccountCall, ...stakingCalls];
-  }, [
-    accountId,
-    amountBN,
-    poolId,
-    newAccountId,
-    selectedCollateralType.address,
-    selectedCollateralType.symbol,
-    selectedPoolId,
-    snxProxy,
-    stakingPositions,
-  ]);
-
-  const overrides: CallOverrides = {};
 
   // add extra step to convert to wrapped token if native (ex. ETH)
   // if (isNativeCurrency) {
@@ -171,70 +99,20 @@ export default function Stake({
   //   overrides.value = amount!;
   // }
 
-  const multiTxn = useMulticall(calls, overrides, {
-    onMutate: () => {
-      toast.closeAll();
-      toast({
-        title: 'Create your account',
-        description: "You'll be redirected once your account is created.",
-        status: 'info',
-        isClosable: true,
-        duration: 9000,
-      });
-    },
-    onSuccess: async () => {
-      toast.closeAll();
+  const { createAccount, isLoading, multiTxn } = useStake({
+    accountId,
+    stakingPositions,
+    amount,
+    selectedCollateralType,
+    selectedPoolId,
+    poolId: poolId?.toString(),
+    reset: () =>
       reset({
         collateralType: selectedCollateralType,
         poolId: selectedPoolId,
         amount: '',
-      });
-      await Promise.all([refetchAccounts!({ cancelRefetch: Boolean(accountId) })]);
-      if (!Boolean(accountId)) {
-        navigate(`/accounts/${newAccountId}?chain=${chain?.network}`);
-      } else {
-        // TODO: get language from noah
-        toast({
-          title: 'Success',
-          description: 'Your staked collateral amounts have been updated.',
-          status: 'success',
-          duration: 5000,
-        });
-      }
-    },
-    onError: () => {
-      toast({
-        title: 'Could not complete account creation',
-        description: 'Please try again.',
-        status: 'error',
-      });
-    },
+      }),
   });
-
-  const { exec: createAccount, isLoading } = useApproveCall(
-    collateralContract!.contract.address,
-    amountBN,
-    snxProxy?.address,
-    multiTxn.exec,
-    {
-      onMutate: () => {
-        toast({
-          title: 'Approve collateral for transfer',
-          description: 'The next transaction will create your account and stake this collateral.',
-          status: 'info',
-        });
-      },
-      onError: () => {
-        toast.closeAll();
-        toast({
-          title: 'Approval failed',
-          description: 'Please try again.',
-          status: 'error',
-        });
-      },
-    }
-  );
-
   return (
     <>
       <FormProvider {...methods}>
@@ -253,6 +131,7 @@ export default function Stake({
                 placeholder="0.0"
                 mr="4"
                 id="amount"
+                min="0"
                 {...register('amount', {
                   validate: {
                     sufficientPools: (v) => {
@@ -318,6 +197,7 @@ export default function Stake({
                     decimals={selectedCollateralType.decimals}
                     symbol={selectedCollateralType.symbol}
                     onMax={(balance) => setValue('amount', balance)}
+                    address={selectedCollateralType.address}
                   />
                 </Box>
               )}
@@ -330,7 +210,7 @@ export default function Stake({
                       ? poolsData[selectedPoolId]?.name
                       : 'Unknown Pool'
                     : 'None'}{' '}
-                  <Link color="blue.400">
+                  <Link color="cyan.500">
                     <EditIcon onClick={onOpenPool} style={{ transform: 'translateY(-2px)' }} />
                   </Link>
                 </Text>
@@ -465,4 +345,4 @@ export default function Stake({
       */}
     </>
   );
-}
+};

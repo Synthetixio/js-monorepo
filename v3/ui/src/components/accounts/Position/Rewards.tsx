@@ -1,30 +1,6 @@
-import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Heading,
-  Text,
-  Button,
-  Flex,
-  Link,
-  Input,
-  Checkbox,
-  SimpleGrid,
-  Slider,
-  SliderMark,
-  SliderTrack,
-  SliderFilledTrack,
-  Tooltip,
-  SliderThumb,
-} from '@chakra-ui/react';
-import { BigNumber, utils } from 'ethers';
-import { FC, useState } from 'react';
-import { useContractWrite } from 'wagmi';
-import { useContract, useSnxProxy } from '../../../hooks';
-import { useGetStakingRewards } from '../../../hooks/useStakingReward';
-import { useTokenBalance } from '../../../hooks/useTokenBalance';
-import { contracts } from '../../../utils/constants';
+import { Box, Text, Button, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
+import { FC } from 'react';
 import { CollateralType } from '../../../utils/types';
-import { Balance } from '../Stake/Balance';
 
 interface Props {
   accountId: string;
@@ -32,14 +8,12 @@ interface Props {
   collateral: CollateralType;
 }
 
-export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
-  const [sliderValue, setSliderValue] = useState(5);
-  const [showTooltip, setShowTooltip] = useState(false);
+export const Rewards: FC<Props> = ({ poolId }) => {
+  /*
   const { data: rewards } = useGetStakingRewards(accountId, poolId, collateral);
   const snxProxy = useSnxProxy();
   const eSnxProxy = useContract(contracts.ESNX_PROXY);
   const balance = useTokenBalance(eSnxProxy?.address);
-
   const total = (rewards || []).reduce((prv, curr) => curr.add(prv), BigNumber.from(0));
 
   const { writeAsync: claim, isLoading: claimLoading } = useContractWrite({
@@ -49,13 +23,55 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
     functionName: 'claimRewards',
     args: [poolId, collateral.address, accountId],
   });
+*/
+  const hasRewards = false;
 
-  return (
+  return hasRewards ? (
     <Box>
-      <Text mt="2" mb="6">
-        In addition to fees, you’re earning eSNX rewards by backing synthetic assets with SNX tokens
-        through the Spartan Council pool.
+      <Text my="6">
+        The following rewards distributors are connected to the <strong>Spartan Council</strong>{' '}
+        pool for users who have deposited <strong>SNX</strong>.
       </Text>
+      <Table size="sm" variant="simple" mb="6">
+        <Thead>
+          <Tr>
+            <Th color="white" />
+            <Th color="white" />
+            <Th color="white" />
+          </Tr>
+        </Thead>
+        <Tbody>
+          <Tr>
+            <Td py="4">
+              SNX Rewards
+              <Text fontSize="xs" opacity="0.66" mt="1'">
+                ID: {poolId}
+              </Text>
+            </Td>
+            <Td py="4">
+              X available
+              <Text fontSize="xs" opacity="0.66" mt="1'">
+                accruing X per week
+              </Text>
+            </Td>
+            <Td isNumeric>
+              <Button size="sm" colorScheme="green">
+                Claim X
+              </Button>
+            </Td>
+          </Tr>
+        </Tbody>
+      </Table>
+    </Box>
+  ) : (
+    <Box m="12">
+      <Text textAlign="center" opacity="0.66">
+        This pool does not have any rewards distributors connected for this collateral type.
+      </Text>
+    </Box>
+  );
+};
+/*
       <Box mb="10">
         <Heading size="md" mb="1">
           Claim eSNX
@@ -69,7 +85,7 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
             Claim {Number(utils.formatUnits(total, 18)).toFixed(2)} eSNX
           </Button>
           <Text ml="5" fontWeight="semibold" fontSize="sm">
-            <Link color="blue.400">
+            <Link color="cyan.500">
               <QuestionOutlineIcon mr="1.5" transform="translateY(-1px)" />
               How are eSNX rewards calculated?
             </Link>
@@ -163,7 +179,4 @@ export const Rewards: FC<Props> = ({ accountId, poolId, collateral }) => {
           Your escrowed SNX cannot be unstaked until it vests. Staking additional eSNX will merge
           the new schedule into the schedule above.
         </Text>
-      </Box>
-    </Box>
-  );
-};
+      </Box> */

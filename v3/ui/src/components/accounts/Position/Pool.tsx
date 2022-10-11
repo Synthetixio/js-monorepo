@@ -1,4 +1,4 @@
-import { ExternalLinkIcon, EditIcon } from '@chakra-ui/icons';
+import { ExternalLinkIcon, EditIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import {
   Text,
   Box,
@@ -11,6 +11,8 @@ import {
   Td,
   Heading,
   useDisclosure,
+  Alert,
+  AlertIcon,
 } from '@chakra-ui/react';
 import { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -39,11 +41,11 @@ export const Pool: FC<Props> = ({
   const pool = poolsData[poolId.toString()];
   return (
     <Box mb="2">
-      <Text mt="2" mb="6">
-        By pooling liquidity for markets, you’re enabling the creation synthetic assets on-chain.
-        You can earn fees and rewards, but your debt may increase. See{' '}
-        <em>Hedging Your Staking Position</em> for information on how to protect your C-Ratio.
-      </Text>
+      <Alert status="info" mt="3" mb="6">
+        <AlertIcon />
+        By pooling liquidity for markets, you’re backing synthetic assets on-chain. You can earn
+        fees and rewards, but your debt may increase and harm your C-Ratio.
+      </Alert>
       <Box mb="6">
         <Text fontSize="sm" fontWeight="semibold">
           Current Pool
@@ -51,7 +53,7 @@ export const Pool: FC<Props> = ({
         <Heading size="lg" mb="1">
           {pool?.name}
           <Link
-            color="blue.400"
+            color="cyan.500"
             ml="1.5"
             display="inline-block"
             transform="translateY(-2px)"
@@ -63,7 +65,7 @@ export const Pool: FC<Props> = ({
         <Text fontSize="sm">
           <span style={{ opacity: 0.8 }}>Pool #{poolId}</span>
           <RouterLink to={`/pools/${poolId}`}>
-            <Link color="blue.400" ml="1" display="inline-block" transform="translateY(-2px)">
+            <Link color="cyan.500" ml="1" display="inline-block" transform="translateY(-2px)">
               <ExternalLinkIcon />
             </Link>
           </RouterLink>
@@ -81,68 +83,53 @@ export const Pool: FC<Props> = ({
         onClose={onClose}
       />
       <Heading size="md" mb="1">
-        Market Exposure
+        Markets
       </Heading>
-      <Text mb="4">
-        You’re currently backing the following markets. Your exposure can change based on market
-        conditions.
-        {/* To customize the markets you’re exposed to,{' '} 
-         <Link fontWeight="semibold" color="blue.400">
-          create your own pool
-        </Link> 
-        .*/}
-      </Text>
+      <Text mb="4">This pool is currently backing the assets in the following markets.</Text>
       <Table size="sm" variant="simple" mb="6">
         <Thead>
           <Tr>
             <Th color="white" pb="2">
-              Asset
+              Market
             </Th>
             <Th color="white" pb="2">
-              Fees APY
+              Liquidity
             </Th>
             <Th color="white" pb="2">
-              Exposure
+              Projected Fees
             </Th>
+            <Th color="white" pb="2"></Th>
           </Tr>
         </Thead>
         <Tbody>
           <Tr>
             <Td py="4">
-              <Heading size="sm">Synthetic&nbsp;Bitcoin</Heading>
-              <Text mt="1" fontSize="xs">
-                <span style={{ opacity: 0.8 }}>sBTC</span>
-                <RouterLink to="/synths/example">
-                  <Link color="blue.400" ml="1" display="inline-block" transform="translateY(-1px)">
-                    <ExternalLinkIcon />
-                  </Link>
-                </RouterLink>
+              Synthetic&nbsp;Bitcoin
+              <Text fontSize="xs" opacity="0.66" mt="1'">
+                ID: {poolId}
               </Text>
             </Td>
-            <Td>
-              25.4%
-              <Text fontSize="xs" opacity="0.8">
-                sUSD
+            <Td py="4">
+              50% allocation
+              <Text fontSize="xs" opacity="0.66" mt="1'">
+                Max Debt: $2,000
               </Text>
             </Td>
+            <Td py="4">X% APY</Td>
             <Td>
-              0.2 sBTC
-              <Text fontSize="xs" opacity="0.8">
-                Max: 0.4 sBTC
-              </Text>
+              <Link
+                as={RouterLink}
+                to={`/markets/${0}`}
+                color="cyan.500"
+                display="inline-block"
+                transform="translateY(-1.5px)"
+              >
+                <ArrowRightIcon />
+              </Link>
             </Td>
           </Tr>
         </Tbody>
       </Table>
-      <Heading size="sm" mb="1">
-        Hedging Your Staking Position
-      </Heading>
-      <Text fontSize="sm" mb="12">
-        If you’re concerned about maintaining your C-Ratio, you can hedge your staking position. To
-        become fully hedged, make sure you’re always holding your exposure to each of the assets
-        above (or their non-synthetic equivalents). These assets will change in value by the amount
-        that you would need to restore your C-Ratio to its current value.
-      </Text>
     </Box>
   );
 };

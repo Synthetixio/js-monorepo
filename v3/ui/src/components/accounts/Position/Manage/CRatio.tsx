@@ -12,6 +12,6 @@ export const CRatio: FC<Props> = ({ CRatio, debt }) =>
     <>{currency(CRatio.toString())}%</>
   ) : (
     <Tooltip color="white" label="You Don't have a C-Ratio if you have no Debt.">
-      <Badge bg="green.400">No Debt</Badge>
+      <Badge>No Debt</Badge>
     </Tooltip>
   );

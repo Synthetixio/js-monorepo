@@ -1,5 +1,5 @@
 import { Heading, Text } from '@chakra-ui/react';
-import Stake from '../../components/accounts/Stake/index';
+import { Stake } from '../../components/accounts/Stake/index';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 

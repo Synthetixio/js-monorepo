@@ -1,5 +1,5 @@
-import { ExternalLinkIcon } from '@chakra-ui/icons';
-import { Heading, Box, Text, Flex, Radio, Link } from '@chakra-ui/react';
+import { ExternalLinkIcon, InfoIcon } from '@chakra-ui/icons';
+import { Heading, Box, Text, Flex, Radio, Link, Tooltip } from '@chakra-ui/react';
 import { Link as NavLink } from 'react-router-dom';
 
 type PropsType = {
@@ -20,16 +20,26 @@ export default function StakerOption({ name, value, checked = false }: PropsType
         </Heading>
         <Text fontSize="xs" display="block" color="gray.400">
           Pool #{value}{' '}
-          <Link
-            as={NavLink}
-            to="/pools/example"
-            color="blue.400"
-            display="inline-block"
-            transform="translateY(-1.5px)"
-            target="_blank"
-          >
-            <ExternalLinkIcon />
-          </Link>
+          {value == '0' ? (
+            <Tooltip
+              label="This is typically used to take out a loan of snxUSD against your collateral. Your
+              C-Ratio is only subject to fluctuations based on the value of your collateral, but you
+              receive no fees or rewards."
+            >
+              <InfoIcon fontSize="sm" ml={1} />
+            </Tooltip>
+          ) : (
+            <Link
+              as={NavLink}
+              to={`/pools/${value}`}
+              color="cyan.500"
+              display="inline-block"
+              transform="translateY(-1.5px)"
+              target="_blank"
+            >
+              <ExternalLinkIcon />
+            </Link>
+          )}
         </Text>
       </Box>
       {/*

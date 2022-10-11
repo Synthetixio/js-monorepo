@@ -28,7 +28,7 @@ export default function HowItWorks({
           DAO elected by stakers of SNX.{' '}
           <Link
             fontWeight="semibold"
-            color="blue.400"
+            color="cyan.500"
             isExternal
             href="https://governance.synthetix.io"
           >
@@ -39,7 +39,7 @@ export default function HowItWorks({
           <ListItem mb="2">
             <>
               Currently, your projected rewards are{' '}
-              <strong>X% APY in sUSD plus Y% APY in SNX</strong> and you’ll need to maintain a
+              <strong>X% APY in snxUSD plus Y% APY in SNX</strong> and you’ll need to maintain a
               C-Ratio of at least{' '}
               {formatValue(
                 BigNumber.from(selectedCollateralType!.minimumCRatio!).mul(BigNumber.from(100)),

@@ -262,7 +262,6 @@ export const Burn = ({
         </Skeleton>
       </Flex>
       <Button
-        variant="gradient"
         fontFamily="heading"
         fontWeight="black"
         mt={4}

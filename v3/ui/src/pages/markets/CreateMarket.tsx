@@ -17,14 +17,14 @@ import {
 import { AddIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 
-export function CreateSynth() {
+export function CreateMarket() {
   const navigate = useNavigate();
 
   return (
     <Box>
       <Helmet>
-        <title>Create a Synth</title>
-        <meta name="description" content="Create a Synth" />
+        <title>Create a Market</title>
+        <meta name="description" content="Create a Market" />
       </Helmet>
       <Box>
         <Heading size="lg" mb="8" mr="auto">

@@ -4,7 +4,7 @@ import { CollateralType, contracts } from '../utils/constants';
 import { parseUnits } from '../utils/helpers';
 import { useApproveCall } from './useApproveCall';
 import { useContract } from './useContract';
-import { MulticallCall, useMulticall } from './useMulticall2';
+import { MulticallCall, useMulticall } from './useMulticall';
 
 interface IPosition {
   accountId: string;

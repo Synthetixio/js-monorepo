@@ -20,7 +20,7 @@ export const DefaultLayout: React.FC = () => {
         <NetworkChain>
           <Initializer>
             <Header />
-            <Container width="container.lg" py="8">
+            <Container display="flex" flexDir="column" width="container.lg" flex="1">
               <Outlet />
             </Container>
           </Initializer>

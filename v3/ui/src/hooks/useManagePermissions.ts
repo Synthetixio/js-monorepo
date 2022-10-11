@@ -36,19 +36,20 @@ export const useManagePermissions = (
   const { grants, revokes } = getPermissionDiff(existing, selected);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
 
-  const multicalls: MulticallCall[][] = useMemo(() => {
-    const grantCalls: MulticallCall[] = grants.map((permission) => [
-      snxProxy!.contract,
-      'grantPermission',
-      [accountId, utils.formatBytes32String(permission), target],
-    ]);
-    const revokeCalls: MulticallCall[] = revokes.map((permission) => [
-      snxProxy!.contract,
-      'revokePermission',
-      [accountId, utils.formatBytes32String(permission), target],
-    ]);
+  const multicalls: MulticallCall[] = useMemo(() => {
+    const grantCalls: MulticallCall[] = grants.map((permission) => ({
+      contract: snxProxy!.contract,
+      functionName: 'grantPermission',
+      callArgs: [accountId, utils.formatBytes32String(permission), target],
+    }));
 
-    return [[...grantCalls, ...revokeCalls]];
+    const revokeCalls: MulticallCall[] = revokes.map((permission) => ({
+      contract: snxProxy!.contract,
+      functionName: 'revokePermission',
+      callArgs: [accountId, utils.formatBytes32String(permission), target],
+    }));
+
+    return [...grantCalls, ...revokeCalls];
   }, [accountId, grants, revokes, snxProxy, target]);
 
   return useMulticall(multicalls);

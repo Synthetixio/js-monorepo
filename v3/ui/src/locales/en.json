@@ -51,7 +51,6 @@
   },
   "position": {
     "manage": {
-      "title": "Manage your staking position by adjusting your collateral and debt.",
       "maintain": "Maintain C-Ratio",
       "borrow": "Borrow snxUSD",
       "repay": "Repay snxUSD",
