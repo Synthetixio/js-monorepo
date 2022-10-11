@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Spinner } from '@chakra-ui/react';
+import { Spinner, useColorMode } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
 import { DefaultLayout } from './layouts/Default';
 import { Home } from './pages';
@@ -16,6 +16,11 @@ import { Market } from './pages/markets/Market';
 import { Pool } from './pages/pools/pool';
 
 export const Synthetix: React.FC = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
+  if (colorMode == 'light') {
+    toggleColorMode();
+  }
+
   return (
     <Suspense fallback={<Spinner />}>
       <Routes>
