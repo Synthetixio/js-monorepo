@@ -37,7 +37,7 @@ export const Custom: FC<Props> = ({
             Adjust Collateral
           </Heading>
 
-          <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
+          <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
             <Flex mb="3">
               <NumberInput
                 value={collateralAmount + collateralChange}
@@ -53,16 +53,17 @@ export const Custom: FC<Props> = ({
                 balance={balance.value}
                 decimals={collateral.decimals}
                 symbol={collateral.symbol}
+                address={collateral.address}
               />
             </Flex>
           </Box>
         </Box>
         <Box>
           <Heading fontSize="md" mb="2">
-            Adjust snxUSD Debt
+            Adjust Debt
           </Heading>
 
-          <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
+          <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
             <form>
               <Flex mb="3">
                 <NumberInput
@@ -90,8 +91,8 @@ export const Custom: FC<Props> = ({
       <Text>
         This adjustment will{' '}
         <strong>
-          {collateralChange > 0 ? 'stake' : 'un-stake'} {Math.abs(collateralChange)}{' '}
-          {collateral.symbol}
+          {collateralChange > 0 ? 'stake' : 'unstake'} {Math.abs(collateralChange)}{' '}
+          {collateral.symbol.toUpperCase()}
         </strong>{' '}
         and{' '}
         <strong>

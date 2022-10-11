@@ -22,7 +22,15 @@ const tsxRule = {
 
 const svgRule = {
   test: /\.svg$/,
+  issuer: /\.[jt]sx?$/,
+  resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
   use: require.resolve('@svgr/webpack'),
+};
+
+const svgUrlRule = {
+  test: /\.svg$/i,
+  type: 'asset',
+  resourceQuery: /url/, // *.svg?url
 };
 
 const imgRule = {
@@ -107,7 +115,7 @@ module.exports = {
   },
 
   module: {
-    rules: [tsxRule, svgRule, imgRule, cssRule],
+    rules: [tsxRule, svgRule, svgUrlRule, imgRule, cssRule],
   },
 
   optimization,

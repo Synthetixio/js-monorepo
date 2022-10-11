@@ -2,7 +2,7 @@ import { Custom } from './Manage/Custom';
 import { Mint } from './Manage/Mint';
 import { Preview } from './Manage/Preview';
 import { Unstake } from './Manage/Unstake';
-import { Text, Box, Tabs, TabList, Tab, TabPanels, TabPanel, Button } from '@chakra-ui/react';
+import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Button } from '@chakra-ui/react';
 import { CollateralType } from '../../../utils/constants';
 import { MaintainCRatio } from './Manage/MaintainCRatio';
 import { useCallback, useState } from 'react';
@@ -69,11 +69,7 @@ export default function Manage({
   );
 
   return (
-    <Box mb="2">
-      <Text mt="2" mb="6">
-        {t('position.manage.title')}
-      </Text>
-
+    <Box mt="6" mb="2">
       <Tabs isLazy onChange={reset} size="sm" variant="soft-rounded">
         <TabList justifyContent="space-between">
           <Tab>{t('position.manage.maintain')}</Tab>
@@ -93,21 +89,29 @@ export default function Manage({
             />
           </TabPanel>
           <TabPanel>
-            <Stake
-              onChange={setCollateralChange}
-              value={collateralChange}
-              collateral={collateral}
-            />
-            <Mint onChange={setDebtChange} value={debtChange} max={maxDebt} />
+            <Box mb="6">
+              <Stake
+                onChange={setCollateralChange}
+                value={collateralChange}
+                collateral={collateral}
+              />
+            </Box>
+            <Box mb="6">
+              <Mint onChange={setDebtChange} value={debtChange} max={maxDebt} />
+            </Box>
           </TabPanel>
           <TabPanel>
-            <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
-            <Unstake
-              collateral={collateral}
-              collateralAmount={collateralAmount}
-              onChange={(val) => setCollateralChange(-val)}
-              value={-collateralChange}
-            />
+            <Box mb="6">
+              <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
+            </Box>
+            <Box mb="6">
+              <Unstake
+                collateral={collateral}
+                collateralAmount={collateralAmount}
+                onChange={(val) => setCollateralChange(-val)}
+                value={-collateralChange}
+              />
+            </Box>
           </TabPanel>
           <TabPanel>
             <Custom

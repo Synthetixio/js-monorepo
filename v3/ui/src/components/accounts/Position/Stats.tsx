@@ -20,7 +20,7 @@ export default function Stats() {
           </Text>
           <Heading size="md">$2,400</Heading>
           <Text opacity="0.6" fontSize="sm">
-            $400 snxUSD minted {/* or burned */}
+            $X net issuance
           </Text>
         </GridItem>
         <GridItem mb="3">

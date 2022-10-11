@@ -40,9 +40,14 @@ export const StakingStats: FC<Props> = ({
         <Text fontSize="sm" fontWeight="semibold">
           Debt
         </Text>
-        <Skeleton isLoaded={debt !== undefined}>${currency(debt.toString())}</Skeleton>
+        <Skeleton isLoaded={debt !== undefined}>
+          <Heading size="md">${currency(debt.toString())}</Heading>
+        </Skeleton>
         <Text opacity="0.6" fontSize="sm">
-          snxUSD minted {/* or burned */}
+          $X net issuance
+          <Tooltip label="This is the amount of snxUSD that you have minted minus the amount that you have burned.">
+            <InfoOutlineIcon fontSize="sm" ml={1} transform="translateY(-1.5px)" />
+          </Tooltip>
         </Text>
       </GridItem>
       <GridItem mb="3">
@@ -50,14 +55,20 @@ export const StakingStats: FC<Props> = ({
           C-Ratio
         </Text>
         <Skeleton isLoaded={true}>
-          <Flex alignItems="center" justify="center">
-            {currency(cRatio?.toString())}%
-            {Number(debt?.toString() || 0) === 0 && (
-              <Tooltip label="You Don't have a C-Ratio if you have no Debt.">
-                <InfoIcon fontSize="sm" ml={1} />
-              </Tooltip>
-            )}
-          </Flex>
+          <Heading size="md">
+            <Flex alignItems="center" justify="center">
+              {Number(debt?.toString() || 0) === 0 ? (
+                <>
+                  <Text>No Debt</Text>
+                  <Tooltip label="You will have a C-Ratio once you’ve accrued some debt. You are not currently at risk of liquidation.">
+                    <InfoIcon fontSize="sm" ml={2} transform="translateY(-1.5px)" />
+                  </Tooltip>
+                </>
+              ) : (
+                currency(cRatio?.toString()) + '%'
+              )}
+            </Flex>
+          </Heading>
         </Skeleton>
         <Text opacity="0.6" fontSize="sm">
           Minimum {formatValue(collateral!.minimumCRatio!.mul(BigNumber.from(100)), 6).toFixed(0)}%
@@ -68,10 +79,10 @@ export const StakingStats: FC<Props> = ({
           Projected Fees
         </Text>
         {/* TODO: when subgraph is ready */}
-        <Heading size="md">25% APY</Heading>
+        <Heading size="md">X% APY</Heading>
         <Text opacity="0.6" fontSize="sm">
-          ${currency(1000)} earned
-          <Tooltip label="Your fees, earned when the synths in your staking position are exchanged, are automatically deducted from your debt. You can retrieve the earned fees by minting sUSD.">
+          ${currency(0)} earned
+          <Tooltip label="Your yield is automatically deducted from your debt. You can retrieve the earned fees by minting snxUSD.">
             <InfoOutlineIcon ml="1" transform="translateY(-1.5px)" />
           </Tooltip>
         </Text>

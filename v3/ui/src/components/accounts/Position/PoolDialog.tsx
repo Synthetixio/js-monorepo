@@ -102,7 +102,7 @@ export const PoolDialog: FC<Props> = ({
                     Pool #{poolId}{' '}
                     <RouterLink to={`/pools/${poolId}`}>
                       <Link
-                        color="blue.400"
+                        color="cyan.500"
                         ml="1"
                         display="inline-block"
                         transform="translateY(-2px)"

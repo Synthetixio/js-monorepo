@@ -14,16 +14,16 @@ interface Props {
 
 export const Unstake: FC<Props> = ({ collateral, collateralAmount, value, onChange }) => {
   return (
-    <Box mb="4">
+    <>
       <Heading fontSize="md" mb="1">
-        Unstake SNX
+        Withdraw SNX
       </Heading>
-      <Text fontSize="sm" mb="1">
+      <Text fontSize="sm" mb="2">
         Retrieve your collateral from the protocol. This decreases your C-Ratio and increases your
         risk of liquidation.
       </Text>
 
-      <Box bg="gray.900" mb="2" p="6" pb="4" borderRadius="12px">
+      <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <form>
           <Flex mb="3">
             <NumberInput value={value} onChange={onChange} max={collateralAmount} />
@@ -35,9 +35,10 @@ export const Unstake: FC<Props> = ({ collateral, collateralAmount, value, onChan
             balance={parseUnits(collateralAmount, collateral.decimals)}
             decimals={collateral.decimals}
             symbol={collateral.symbol}
+            address={collateral.address}
           />
         </Flex>
       </Box>
-    </Box>
+    </>
   );
 };

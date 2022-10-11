@@ -1,6 +1,6 @@
 import { Box, Heading, Skeleton, Stack } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import Stake from '../../components/accounts/Stake';
+import { Stake } from '../../components/accounts/Stake';
 import { StakingNav } from '../../components/accounts/StakingNav';
 import { StakingPositions } from '../../components/accounts/StakingPositions';
 import { useStakingPositions } from '../../hooks';
@@ -12,11 +12,13 @@ export function Account() {
   return (
     <Box>
       <StakingNav />
-      <Stack>
-        <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-        <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-        <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-      </Stack>
+      <Box position="relative">
+        <Stack position="absolute" top="0" left="0" width="100%">
+          <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+          <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+          <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+        </Stack>
+      </Box>
       {stakingPositions && (
         <StakingPositions positions={stakingPositions ?? {}} refetch={refetch} />
       )}

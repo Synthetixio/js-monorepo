@@ -9,7 +9,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { supportedChains } from './utils/constants';
 
-import './app.css';
 import './i18n';
 
 // We have to import into *VAR* and *USE* it so webpack does not remove unused library import

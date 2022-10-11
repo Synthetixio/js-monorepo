@@ -34,7 +34,7 @@ export const TransferOwnership = () => {
 
   return (
     <>
-      <EditIcon color="blue.400" onClick={onOwnerOpen} mx="2" />
+      <EditIcon color="cyan.500" onClick={onOwnerOpen} mx="2" />
       <Modal size="lg" isOpen={isOwnerOpen} onClose={onOwnerClose}>
         <ModalOverlay />
         <ModalContent

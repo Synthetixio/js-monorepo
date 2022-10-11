@@ -1,5 +1,5 @@
 import { StakingStats } from './StakingStats';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Spinner } from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Spinner, Box } from '@chakra-ui/react';
 import Manage from './Manage';
 import { Rewards } from './Rewards';
 import { Pool } from './Pool';
@@ -23,7 +23,12 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
     refetch,
   } = useStakingPosition(accountId, poolId, collateral);
 
-  if (isLoading) return <Spinner />;
+  if (isLoading)
+    return (
+      <Box my="8" textAlign="center">
+        <Spinner />
+      </Box>
+    );
 
   const { decimals, price: priceBN, priceDecimals } = collateral;
 
@@ -84,7 +89,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
     //       <InfoOutlineIcon display="inline-block" transform="translateY(-1px)" /> Your staking
     //       position is currently managed by{' '}
     //       <NavLink to="/dao">
-    //         <Link fontWeight="semibold" color="blue.400">
+    //         <Link fontWeight="semibold" color="cyan.500">
     //           The Spartan Council
     //         </Link>
     //       </NavLink>{' '}
@@ -113,7 +118,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
     //           <Text mt="1" fontSize="xs">
     //             <span style={{ opacity: 0.8 }}>sBTC</span>
     //             <NavLink to="/synths/example">
-    //               <Link color="blue.400" ml="1" display="inline-block" transform="translateY(-1px)">
+    //               <Link color="cyan.500" ml="1" display="inline-block" transform="translateY(-1px)">
     //                 <ExternalLinkIcon />
     //               </Link>
     //             </NavLink>

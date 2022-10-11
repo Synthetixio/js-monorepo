@@ -35,8 +35,8 @@ export function NetworkController() {
           >
             {connector ? (
               <Button
-                bg="gray.800"
-                _hover={{ bg: 'gray.700' }}
+                variant="outline"
+                colorScheme="gray"
                 onClick={openChainModal}
                 style={{ display: 'flex', alignItems: 'center' }}
                 type="button"
@@ -152,13 +152,23 @@ export function NetworkController() {
               }
               if (chain.unsupported) {
                 return (
-                  <Button colorScheme="red" onClick={openChainModal} type="button">
+                  <Button
+                    colorScheme="red"
+                    onClick={openChainModal}
+                    type="button"
+                    size={['sm', 'sm', 'sm', 'md']}
+                  >
                     Wrong network
                   </Button>
                 );
               }
               return (
-                <Button colorScheme="gray" onClick={openAccountModal} type="button">
+                <Button
+                  colorScheme="gray"
+                  onClick={openAccountModal}
+                  type="button"
+                  size={['sm', 'sm', 'sm', 'md']}
+                >
                   {account.displayName}
                   {false && account?.displayBalance ? ` (${account?.displayBalance})` : ''}
                 </Button>

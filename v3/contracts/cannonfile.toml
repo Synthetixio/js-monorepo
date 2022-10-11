@@ -88,7 +88,7 @@ args = [
 ]
 depends=["import.snx", "import.synthetix"]
 
-[invoke.createPreferredPool]
+[invoke.create_preferred_pool]
 target = ["synthetix.CoreProxy"]
 func = "createPool"
 args = [
@@ -97,11 +97,30 @@ args = [
 ]
 depends=["import.synthetix"]
 
-[invoke.setPreferredPool]
+[invoke.set_preferred_pool]
 target = ["synthetix.CoreProxy"]
 func = "setPreferredPool"
 from = "<%= settings.owner %>"
 args = [
     1,
 ]
-depends=["invoke.createPreferredPool"]
+depends=["invoke.create_preferred_pool"]
+
+# [contract.snx_rewards]
+# artifact = "RewardDistributor"
+# depends=["import.snx"]
+# 
+# [invoke.register_snx_rewards]
+# target = ["synthetix.CoreProxy"]
+# func = "distributeRewards"
+# from = "<%= settings.owner %>"
+# args = [
+#     1,
+#     "<%= imports.snx.contracts.token.address %>",
+#     0,
+#     "<%= contracts.snx_rewards.address %>",
+#     "10000000000000000000000000", # amount
+#     "1664582400", # start
+#     "1696118400", # end
+# ]
+# depends=["contract.snx_rewards", "invoke.create_preferred_pool"]

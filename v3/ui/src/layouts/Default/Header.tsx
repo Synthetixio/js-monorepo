@@ -1,8 +1,8 @@
-import Kwenta from '../../assets/svgs/kwenta.svg';
 import logo from '../../assets/svgs/logo.png';
-import Logomark from '../../assets/svgs/logomark.svg';
-import Lyra from '../../assets/svgs/lyra.svg';
-import Thales from '../../assets/svgs/thales.svg';
+import logomark from '../../assets/svgs/logomark.svg?url';
+import kwenta from '../../assets/svgs/kwenta.svg?url';
+import lyra from '../../assets/svgs/lyra.svg?url';
+import thales from '../../assets/svgs/thales.svg?url';
 import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
   Container,
@@ -13,7 +13,7 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverArrow,
+  Image,
   PopoverBody,
   Text,
   IconButton,
@@ -32,13 +32,12 @@ export default function Header() {
       <Flex alignItems="center">
         <Box display={['none', 'none', 'inline-block']}>
           <Link to="/" as={RouterLink} _focus={{ boxShadow: 'none' }}>
-            <img src={logo} alt="Synthetix" width={200} height={14.5} />
+            <Image src={logo} alt="Synthetix" width={200} height={14.5} />
           </Link>
         </Box>
-        <Box display={['inline-block', 'inline-block', 'none']} pt={1.5}>
+        <Box display={['inline-block', 'inline-block', 'none']}>
           <Link to="/" as={RouterLink} _focus={{ boxShadow: 'none' }}>
-            <Logomark height={24} />
-            {/* <img src={logomark} alt="Synthetix" height={24} /> */}
+            <Image src={logomark} alt="Synthetix" height="20px" />
           </Link>
         </Box>
         <Spacer />
@@ -76,12 +75,17 @@ export default function Header() {
               </Link>
             </PopoverTrigger>
             <PopoverContent border="none" maxWidth="260px">
-              <PopoverArrow bg="gray.800" />
-              <PopoverBody bg="gray.800" color="white" p="5">
+              <PopoverBody
+                bg="black"
+                color="white"
+                border="1px solid"
+                borderColor="gray.900"
+                borderRadius="md"
+                p="5"
+              >
                 <a href="https://kwenta.io" target="_blank" rel="noreferrer">
-                  <Flex mb="3" cursor="pointer">
-                    <Kwenta width={36} height={36} />
-                    {/* <img src={kwenta} alt="Kwenta" width={36} height={36} /> */}
+                  <Flex mb="3" cursor="pointer" alignItems="center">
+                    <Image src={kwenta} alt="Kwenta" width="28px" height="28px" />
                     <Box pl="3">
                       <Text fontWeight="500">Kwenta</Text>
                       <Text fontSize="xs">Trade perpetual futures with up to 10x leverage.</Text>
@@ -89,9 +93,8 @@ export default function Header() {
                   </Flex>
                 </a>
                 <a href="https://lyra.finance" target="_blank" rel="noreferrer">
-                  <Flex mb="3" cursor="pointer">
-                    <Lyra width={36} height={36} />
-                    {/* <img src={lyra} alt="Lyra" width={36} height={36} /> */}
+                  <Flex mb="3" cursor="pointer" alignItems="center">
+                    <Image src={lyra} alt="Lyra" mx="1" width="21px" height="21px" />
                     <Box pl="3">
                       <Text fontWeight="500">Lyra</Text>
                       <Text fontSize="xs">
@@ -101,9 +104,8 @@ export default function Header() {
                   </Flex>
                 </a>
                 <a href="https://thalesmarket.io" target="_blank" rel="noreferrer">
-                  <Flex cursor="pointer">
-                    <Thales width={36} height={36} />
-                    {/* <img src={thales} alt="Thales" width={36} height={36} /> */}
+                  <Flex cursor="pointer" alignItems="center">
+                    <Image src={thales} alt="Thales" width="28px" height="28px" />
                     <Box pl="3">
                       <Text fontWeight="500">Thales</Text>
                       <Text fontSize="xs">
@@ -124,8 +126,7 @@ export default function Header() {
           display={['inline-block', 'inline-block', 'inline-block', 'none']}
           aria-label="Open Menu"
           icon={<HamburgerIcon />}
-          bg="gray.800"
-          _hover={{ bg: 'gray.700' }}
+          colorScheme="gray"
           onClick={toggleMobileMenu}
           ml="4"
           size="sm"

@@ -11,7 +11,7 @@ interface Props {
 export const StakingPositions: FC<Props> = ({ positions, refetch }) => {
   return (
     <Box>
-      <Heading size="md" mb="2">
+      <Heading size="md" mb="3">
         Staking Positions
       </Heading>
 

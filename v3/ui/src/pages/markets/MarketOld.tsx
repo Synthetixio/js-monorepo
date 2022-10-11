@@ -104,12 +104,12 @@ const data3 = {
   ],
 };
 
-export function Synth() {
+export function Market() {
   return (
     <Box>
       <Helmet>
-        <title>Synth</title>
-        <meta name="description" content="Synth" />
+        <title>Market</title>
+        <meta name="description" content="Market" />
       </Helmet>
       <Box>
         <Tooltip label="This synth has been verified by the Spartan Council">

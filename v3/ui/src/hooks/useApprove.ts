@@ -1,7 +1,7 @@
 import { BigNumberish } from 'ethers';
 import { useCallback, useMemo } from 'react';
 import { erc20ABI, useAccount, useContractRead, useContractWrite, useNetwork } from 'wagmi';
-import { TxConfig } from './useMulticall2';
+import { TxConfig } from './useMulticall';
 
 export const useApprove = (
   contractAddress: string,

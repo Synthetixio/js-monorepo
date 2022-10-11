@@ -210,7 +210,6 @@ export const MintUi = ({
         )}
 
         <Button
-          variant="gradient"
           fontFamily="heading"
           fontWeight="black"
           mt={4}
