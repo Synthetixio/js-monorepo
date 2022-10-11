@@ -315,7 +315,7 @@ const Tabs: ComponentStyleConfig = {
     },
   },
 };
-const $arrowBg = cssVar('popper-arrow-bg');
+
 const Tooltip: ComponentStyleConfig = {
   baseStyle: {
     textAlign: 'center',
