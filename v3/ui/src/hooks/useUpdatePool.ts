@@ -3,7 +3,7 @@ import { parseUnits } from 'ethers/lib/utils';
 import { useMemo } from 'react';
 import { CollateralType, contracts } from '../utils/constants';
 import { useContract } from './useContract';
-import { MulticallCall, useMulticall } from './useMulticall2';
+import { MulticallCall, useMulticall } from './useMulticall';
 
 interface IPosition {
   accountId: string;

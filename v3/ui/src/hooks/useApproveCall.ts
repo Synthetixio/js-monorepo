@@ -1,7 +1,7 @@
 import { BigNumberish } from 'ethers';
 import { useCallback } from 'react';
 import { useApprove } from './useApprove';
-import { TxConfig } from './useMulticall2';
+import { TxConfig } from './useMulticall';
 
 export const useApproveCall = (
   contractAddress: string,

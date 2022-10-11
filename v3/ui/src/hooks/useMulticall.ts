@@ -1,18 +1,21 @@
 import { contracts } from '../utils/constants';
 import { useContract } from './useContract';
-import ethers, { CallOverrides, Contract } from 'ethers';
-import { useEffect, useState } from 'react';
+import ethers, { Contract } from 'ethers';
+import { useCallback, useState } from 'react';
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
 
 // contact, funcion name, arguments
-// [ethers.Contract, functionName, arguments, overrides (i.e value, gasLimit, gasPrice)]
-export type MulticallCall = [Contract, string, any[], CallOverrides?];
+export type MulticallCall = {
+  contract: Contract;
+  functionName: string;
+  callArgs: any[];
+};
 
-type ContractWriteParams = Parameters<typeof useContractWrite>;
+export type ContractWriteParams = Parameters<typeof useContractWrite>;
 
-type MulticallConfigType = {
+export type TxConfig = {
   onSuccess: () => void;
-  onStepSuccess: (stepNumber: number) => void;
+  onMutate: () => void;
   onError: (e: Error) => void;
 };
 
@@ -33,19 +36,14 @@ type MulticallStatusType = 'idle' | 'pending' | 'success' | 'error';
  * @returns a lot of stuff
  */
 export const useMulticall = (
-  calls: MulticallCall[][],
+  calls: MulticallCall[],
   overrides: ContractWriteParams[0]['overrides'] = {},
-  config?: Partial<MulticallConfigType>
+  config?: Partial<TxConfig>
 ) => {
-  const [step, setStep] = useState(0);
-  const [lastExecutedStep, setLastExecutedStep] = useState(0);
   const [status, setStatus] = useState<MulticallStatusType>('idle');
-
-  const [receipts, setReceipts] = useState<ethers.providers.TransactionReceipt[]>([]);
 
   // for synthetix multicall
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
-
   // for regular multicall
   const multicall = useContract(contracts.MULTICALL);
 
@@ -53,20 +51,25 @@ export const useMulticall = (
     callFunc: string | undefined,
     callArgs: any[] | undefined;
   if (calls.length && snxProxy && multicall) {
-    if (calls[step].length === 1) {
+    if (calls.length === 1) {
       // direct call
-      [callContract, callFunc, callArgs] = calls[step][0];
-    } else if (calls[step].length > 1) {
-      if (calls[step].find((c) => c[0].address !== snxProxy?.address)) {
+      callContract = calls[0].contract;
+      callFunc = calls[0].functionName;
+      callArgs = calls[0].callArgs;
+    } else if (calls.length > 1) {
+      if (calls.find((c) => c.contract.address !== snxProxy?.address)) {
         // Multicall3
         callContract = multicall.contract;
         callFunc = 'aggregate3Value';
 
         callArgs = [
-          calls[step].map((c) => {
-            const callData = c[0].interface.encodeFunctionData(c[1], c[2] || []);
+          calls.map((call) => {
+            const callData = call.contract.interface.encodeFunctionData(
+              call.functionName,
+              call.callArgs || []
+            );
             return {
-              target: c[0].address,
+              target: call.contract.address,
               callData,
               allowFailure: false,
               value: 0,
@@ -78,8 +81,11 @@ export const useMulticall = (
         callContract = snxProxy.contract;
         callFunc = 'multicall';
         callArgs = [
-          calls[step].map((c) => {
-            const callData = c[0].interface.encodeFunctionData(c[1], c[2] || []);
+          calls.map((call) => {
+            const callData = call.contract.interface.encodeFunctionData(
+              call.functionName,
+              call.callArgs || []
+            );
             return callData;
           }),
         ];
@@ -94,6 +100,9 @@ export const useMulticall = (
     functionName: callFunc!,
     args: callArgs,
     overrides,
+    onMutate: () => {
+      config?.onMutate && config.onMutate();
+    },
     onError: (e) => {
       setStatus('error');
       config?.onError && config.onError(e);
@@ -105,45 +114,29 @@ export const useMulticall = (
     timeout: 300000,
     enabled: !!currentTxn,
     onSuccess: (_data) => {
-      const newStep = step + 1;
-      config?.onStepSuccess && config.onStepSuccess(step);
-      if (newStep !== calls.length) {
-        setStep(newStep);
-      } else {
-        setStatus('success');
-        reset();
-        config?.onSuccess && config.onSuccess();
-      }
+      setStatus('idle');
+      config?.onSuccess && config.onSuccess();
+    },
+    onError: (e) => {
+      setStatus('error');
+      config?.onError && config.onError(e);
     },
   });
 
-  function reset() {
-    setStatus('idle');
-    setStep(0);
-    setLastExecutedStep(0);
-    setReceipts([]);
-  }
-
-  async function exec() {
-    if (status === 'idle') {
+  const exec = useCallback(async () => {
+    try {
       setStatus('pending');
       await currentTxn.writeAsync();
+    } catch (error) {
+      setStatus('error');
     }
-  }
-
-  useEffect(() => {
-    if (step !== 0 && lastExecutedStep !== step) {
-      currentTxn.write();
-      setLastExecutedStep((s) => s + 1);
-    }
-  }, [step, currentTxn, lastExecutedStep]);
+  }, [currentTxn]);
 
   return {
-    step,
-    receipts,
-    reset,
     exec,
     status,
     currentTxn,
+    isLoading: status === 'pending',
+    isValid: !!calls.length,
   };
 };

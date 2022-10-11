@@ -8,7 +8,7 @@ import { accountsState, chainIdState } from '../utils/state';
 import { CollateralType, StakingPositionType } from '../utils/types';
 import { useApproveCall } from './useApproveCall';
 import { useContract } from './useContract';
-import { MulticallCall, useMulticall } from './useMulticall2';
+import { MulticallCall, useMulticall } from './useMulticall';
 
 interface Props {
   accountId?: string;
