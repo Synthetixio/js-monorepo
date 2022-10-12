@@ -17,24 +17,21 @@ describe('mint', () => {
 
     cy.get('[data-testid="mint snx amount input"]').type(10);
 
-    cy.get('[data-testid="mint submit"]').click();
-    cy.get('[data-testid="transaction modal"]')
+    cy.get('[data-testid="mint submit"]').should('be.visible').should('not.be.disabled').click();
+
+    cy.get('[data-testid="transaction modal"]', { timeout: TIMEOUT_TX })
       .should('be.visible')
-      .should('include.text', 'Transaction pending')
+      .should('include.text', 'Transaction completed')
       .should('include.text', 'Staking')
       .should('include.text', '10 SNX')
       .should('include.text', 'Minting')
       .should('include.text', 'sUSD');
-
-    cy.get('[data-testid="transaction modal"]', {
-      timeout: TIMEOUT_TX,
-    }).should('include.text', 'Transaction completed');
 
     cy.contains('[data-testid="transaction modal"] button', 'Close')
       .should('be.visible')
       .should('not.be.disabled')
       .click();
 
-    cy.get('[data-testid="transaction modal"]').should('not.be.visible');
+    cy.get('[data-testid="transaction modal"]').should('not.exist');
   });
 });
