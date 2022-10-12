@@ -55,7 +55,7 @@ export function useMintMutation(mintArgs: MintArgs) {
     queryKeys: [mintArgs, populateTransaction],
   });
 
-  const { gasOptionsForTransaction, transactionPrice } = data || {};
+  const { populatedTransaction, gasOptionsForTransaction, transactionPrice } = data || {};
   const { modalOpen, txnStatus, error } = state;
 
   return {
@@ -64,9 +64,8 @@ export function useMintMutation(mintArgs: MintArgs) {
 
       try {
         dispatch({ type: 'prompting' });
-        const populatedTxn = await populateTransaction();
         const txn = await Synthetix.signer.sendTransaction({
-          ...populatedTxn,
+          ...populatedTransaction,
           ...gasOptionsForTransaction,
         });
         dispatch({ type: 'pending' });
