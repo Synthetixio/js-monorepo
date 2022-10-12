@@ -1,5 +1,5 @@
-import { chainIdState, collateralTypesState } from '../../../utils/state';
-import { poolsData, getChainById } from '../../../utils/constants';
+import { collateralTypesState } from '../../../utils/state';
+import { poolsData } from '../../../utils/constants';
 import { useSynthetixRead } from '../../../hooks';
 import EditPosition from '../EditPosition';
 import { Balance } from './Balance';
@@ -67,8 +67,6 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
 
   const { openConnectModal } = useConnectModal();
 
-  const [localChainId] = useRecoilState(chainIdState);
-  const chain = getChainById(localChainId);
   const selectedCollateralType = useWatch({
     control,
     name: 'collateralType',
@@ -82,7 +80,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
     name: 'amount',
   });
 
-  const isNativeCurrency = selectedCollateralType.symbol === chain?.nativeCurrency?.symbol;
+  const isNativeCurrency = selectedCollateralType.symbol === 'eth';
 
   const balanceData = useTokenBalance(
     isNativeCurrency ? undefined : selectedCollateralType.address
@@ -106,6 +104,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
     selectedCollateralType,
     selectedPoolId,
     poolId: poolId?.toString(),
+    isNativeCurrency,
     reset: () =>
       reset({
         collateralType: selectedCollateralType,
@@ -131,6 +130,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
                 placeholder="0.0"
                 mr="4"
                 id="amount"
+                step="any"
                 min="0"
                 {...register('amount', {
                   validate: {

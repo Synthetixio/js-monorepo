@@ -18,7 +18,7 @@ export const Stake: FC<Props> = ({ collateral, value, onChange }) => {
   return (
     <>
       <Heading fontSize="md" mb="1">
-        Deposit SNX
+        Deposit {collateral.symbol.toUpperCase()}
       </Heading>
       <Text fontSize="sm" mb="2">
         Provide collateral to improve your C-Ratio. This decreases your risk of liquidation and
