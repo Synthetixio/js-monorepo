@@ -9,9 +9,7 @@ describe('mint', () => {
 
     cy.visit('http://localhost:3000/staking/mint');
 
-    cy.get('[data-testid="mint header"]', { timeout: TIMEOUT_DATA_FETCH })
-      .should('be.visible')
-      .should('include.text', 'Stake SNX By Minting sUSD');
+    cy.get('[data-testid="mint header"]', { timeout: TIMEOUT_DATA_FETCH }).should('be.visible');
 
     cy.get('[data-testid="mint available snx balance"]', { timeout: TIMEOUT_DATA_FETCH })
       .should('be.visible')
