@@ -22,22 +22,28 @@ export async function getsnx(envs) {
   const ProxyERC20Contract = new ethers.Contract(ProxyERC20.address, ProxyERC20.abi, provider);
 
   const rewardsOwner = await RewardsDistributionContract.owner();
+  console.log({ rewardsOwner });
 
   const balancesPre = {
     [wallet]: utils.formatUnits(await ProxyERC20Contract.balanceOf(wallet)),
     [rewardsOwner]: utils.formatUnits(await ProxyERC20Contract.balanceOf(rewardsOwner)),
   };
+  console.log({ balancesPre });
 
   const transferTx = await ProxyERC20Contract.connect(provider.getSigner(rewardsOwner)).transfer(
     wallet,
     utils.hexValue(utils.parseEther('100').toHexString())
   );
+  console.log({ transferTx });
+
   const transferTxReceipt = await transferTx.wait();
+  console.log({ transferTxReceipt });
 
   const balancesPost = {
     [wallet]: utils.formatUnits(await ProxyERC20Contract.balanceOf(wallet)),
     [rewardsOwner]: utils.formatUnits(await ProxyERC20Contract.balanceOf(rewardsOwner)),
   };
+  console.log({ balancesPost });
 
   return {
     balancesPre,
