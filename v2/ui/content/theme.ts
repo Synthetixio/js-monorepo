@@ -161,7 +161,6 @@ const Button: ComponentStyleConfig = {
     warning: {
       bg: 'warning',
     },
-
     success: {
       bg: 'success',
     },
