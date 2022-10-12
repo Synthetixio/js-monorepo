@@ -24,7 +24,12 @@ export const TransactionModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent bgGradient={theme.gradients['dark'][500]} pt="10" pb="3">
+      <ModalContent
+        bgGradient={theme.gradients['dark'][500]}
+        pt="10"
+        pb="3"
+        data-testid="transaction modal"
+      >
         <ModalCloseButton />
         {icon && <Box alignSelf="center">{icon}</Box>}
         <ModalHeader pb="1" textAlign="center">
