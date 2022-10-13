@@ -4,9 +4,11 @@
   "main": "index.ts",
   "version": "0.0.0",
   "scripts": {
+    "start": "SECRET_WORDS='test test test test test test test test test test test junk' synpress open",
     "test:e2e": "SECRET_WORDS='test test test test test test test test test test test junk' synpress run"
   },
   "devDependencies": {
-    "@synthetixio/synpress": "^2.4.0"
+    "@synthetixio/synpress": "^2.4.0",
+    "cypress": "^10.9.0"
   }
 }
