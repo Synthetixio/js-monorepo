@@ -111,7 +111,9 @@
       "tx-cost": "Tx cost: {{txCost}}",
       "burn-max": "Burn Max",
       "burn-cratio": "Burn to C-Ratio",
-      "burn-debt": "Clear Debt"
+      "burn-debt": "Clear Debt",
+      "active-debt": "Active debt",
+      "staked-snx": "Staked SNX"
     },
     "transaction-modal": {
       "metamask-note": "Follow the Metamask prompts to authorize the transaction."

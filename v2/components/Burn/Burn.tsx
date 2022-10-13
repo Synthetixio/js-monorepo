@@ -1,92 +1,68 @@
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, FC } from 'react';
 import { useState } from 'react';
 import { Input, Box, Text, Flex, Badge, Tooltip, Button, Skeleton } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { InfoIcon, TokensIcon } from '@snx-v2/icons';
-import { numberWithCommas } from '@snx-v2/formatters';
-import { BigNumber } from '@ethersproject/bignumber';
-import { TransactionStatus } from '@snx-v2/useBurnMutation';
+import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
+import { TransactionStatus, useBurnMutation } from '@snx-v2/useBurnMutation';
+import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
+import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
+import { useDebtData } from '@snx-v2/useDebtData';
+import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface BurnProps {
-  snxBalance?: Wei;
-  susdBalance?: Wei;
-  gasPrice: Wei | null;
-  issuableSynths?: Wei;
-  activeDebt?: Wei;
-  exchangeRate: number;
+  snxBalance?: number;
+  susdBalance?: number;
   isLoading: boolean;
-  onSubmit: (amount: BigNumber, toTarget?: boolean) => void;
+  onSubmit: () => void;
+  onBurnAmountSusdChange: (amount: string) => void;
+  burnAmountSusd: string;
+  snxUnstakingAmount: string;
+  transactionFee?: Wei | null;
   txnStatus: TransactionStatus;
+  modalOpen: boolean;
+  error: Error | null;
+  gasError: Error | null;
+  settle: () => void;
+  isGasEnabledAndNotFetched: boolean;
+  onBadgeClick: (badge: ActiveBadge) => void;
+  stakedSnx: number;
+  debtBalance?: number;
 }
 
-enum ActiveBadge {
-  max,
-  cRatio,
-  debt,
-}
+type ActiveBadge = 'max' | 'toTarget';
 
-export const Burn = ({
-  snxBalance = wei(0),
-  susdBalance = wei(0),
-  gasPrice = wei(0),
-  activeDebt = wei(0),
-  issuableSynths = wei(0),
-  exchangeRate = 0.25,
-  isLoading = false,
-  onSubmit = () => {},
-  txnStatus = 'unsent',
+export const BurnUi = ({
+  snxBalance = 0,
+  susdBalance = 0,
+  isLoading,
+  onSubmit,
+  snxUnstakingAmount,
+  // txnStatus = 'unsent', TODO will add transaction modal in seperate commit
+  burnAmountSusd,
+  onBurnAmountSusdChange,
+  transactionFee,
+  onBadgeClick,
+  stakedSnx,
+  debtBalance,
 }: BurnProps) => {
   const { t } = useTranslation();
-  const [val, setVal] = useState('');
-  const [toTarget, setToTarget] = useState(false);
-  const [activeBadge, setActiveBadge] = useState<ActiveBadge | null>(null);
 
-  // Reset form
-  useEffect(() => {
-    if (txnStatus === 'unsent') {
-      setVal('');
-    }
-  }, [txnStatus]);
+  const [activeBadge, setActiveBadge] = useState<ActiveBadge | null>(null);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
     setActiveBadge(null);
-    setToTarget(false);
     if (/^[0-9]*(\.[0-9]{0,2})?$/.test(value)) {
-      setVal(value);
+      onBurnAmountSusdChange(value);
     }
   };
-
-  const onBadgePress = (badgeType: ActiveBadge) => {
-    setToTarget(false);
-    switch (badgeType) {
-      case ActiveBadge.max:
-        setVal(susdBalance.toString(2));
-        break;
-
-      case ActiveBadge.cRatio:
-        setVal(activeDebt.sub(issuableSynths).toString(2));
-        setToTarget(true);
-        break;
-
-      case ActiveBadge.debt:
-        setVal(susdBalance.gte(activeDebt) ? activeDebt.toString(2) : susdBalance.toString(2));
-        break;
-
-      default:
-        break;
-    }
+  const handleBadgePress = (badgeType: ActiveBadge) => {
     setActiveBadge(badgeType);
-  };
-
-  const convert = (value: string) => {
-    const num = parseFloat(value);
-    if (!isNaN(num)) {
-      return (num * (1 / exchangeRate)).toFixed(2).toString();
-    }
-
-    return Number(0).toFixed(2).toString();
+    onBadgeClick(badgeType);
   };
 
   return (
@@ -109,14 +85,14 @@ export const Burn = ({
               sUSD
             </Text>
           </Flex>
-          <Flex flexDir="column" alignItems="flex-end" w="30%">
+          <Flex flexDir="column" alignItems="flex-end">
             <Input
               borderWidth="0px"
               placeholder={t('staking-v2.burn.enter-amount')}
               onChange={onChange}
               type="text"
               inputMode="decimal"
-              value={numberWithCommas(val)}
+              value={numberWithCommas(burnAmountSusd)}
               maxLength={14}
               textAlign="end"
               p={0}
@@ -131,9 +107,14 @@ export const Burn = ({
               _placeholder={{ color: 'whiteAlpha.700' }}
             />
             <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
-              <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-                {t('staking-v2.burn.susd-balance', { susdBalance: susdBalance.toString(2) })}
-              </Text>
+              <Flex>
+                <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={4}>
+                  {t('staking-v2.burn.active-debt')}: {formatNumber(debtBalance || 0)}
+                </Text>
+                <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
+                  {t('staking-v2.burn.susd-balance', { susdBalance: formatNumber(susdBalance) })}
+                </Text>
+              </Flex>
             </Skeleton>
           </Flex>
         </Flex>
@@ -141,11 +122,11 @@ export const Burn = ({
           <Badge
             variant="burn"
             sx={{
-              bg: activeBadge === ActiveBadge.max ? 'cyan.500' : 'whiteAlpha.300',
-              color: activeBadge === ActiveBadge.max ? 'black' : 'cyan.500',
+              bg: activeBadge === 'max' ? 'cyan.500' : 'whiteAlpha.300',
+              color: activeBadge === 'max' ? 'black' : 'cyan.500',
             }}
             mr={1}
-            onClick={() => onBadgePress(ActiveBadge.max)}
+            onClick={() => handleBadgePress('max')}
           >
             {t('staking-v2.burn.burn-max')}
             <Tooltip label="Soonthetix" hasArrow>
@@ -153,7 +134,7 @@ export const Burn = ({
                 <InfoIcon
                   width="16px"
                   height="16px"
-                  color={activeBadge === ActiveBadge.max ? 'blue.900' : 'cyan.400'}
+                  color={activeBadge === 'max' ? 'blue.900' : 'cyan.400'}
                 />
               </Flex>
             </Tooltip>
@@ -161,11 +142,11 @@ export const Burn = ({
           <Badge
             variant="burn"
             sx={{
-              bg: activeBadge === ActiveBadge.cRatio ? 'cyan.500' : 'whiteAlpha.300',
-              color: activeBadge === ActiveBadge.cRatio ? 'black' : 'cyan.500',
+              bg: activeBadge === 'toTarget' ? 'cyan.500' : 'whiteAlpha.300',
+              color: activeBadge === 'toTarget' ? 'black' : 'cyan.500',
             }}
             mr={1}
-            onClick={() => onBadgePress(ActiveBadge.cRatio)}
+            onClick={() => handleBadgePress('toTarget')}
           >
             {t('staking-v2.burn.burn-cratio')}
             <Tooltip label="Soonthetix" hasArrow>
@@ -173,26 +154,7 @@ export const Burn = ({
                 <InfoIcon
                   width="16px"
                   height="16px"
-                  color={activeBadge === ActiveBadge.cRatio ? 'blue.900' : 'cyan.400'}
-                />
-              </Flex>
-            </Tooltip>
-          </Badge>
-          <Badge
-            variant="burn"
-            sx={{
-              bg: activeBadge === ActiveBadge.debt ? 'cyan.500' : 'whiteAlpha.300',
-              color: activeBadge === ActiveBadge.debt ? 'black' : 'cyan.500',
-            }}
-            onClick={() => onBadgePress(ActiveBadge.debt)}
-          >
-            {t('staking-v2.burn.burn-debt')}
-            <Tooltip label="Soonthetix" hasArrow>
-              <Flex alignItems="center">
-                <InfoIcon
-                  width="16px"
-                  height="16px"
-                  color={activeBadge === ActiveBadge.debt ? 'blue.900' : 'cyan.400'}
+                  color={activeBadge === 'toTarget' ? 'blue.900' : 'cyan.400'}
                 />
               </Flex>
             </Tooltip>
@@ -223,54 +185,136 @@ export const Burn = ({
               fontSize="xl"
               fontWeight="black"
               lineHeight="2xl"
-              color={numberWithCommas(convert(val)) === '0.00' ? 'whiteAlpha.700' : 'white'}
+              color={snxUnstakingAmount === '0.00' ? 'whiteAlpha.700' : 'white'}
               height="unset"
               _focus={{ boxShadow: 'none !important' }}
               _placeholder={{ color: 'whiteAlpha.700' }}
               borderWidth="0px"
             >
-              {numberWithCommas(convert(val))}
+              {snxUnstakingAmount}
             </Text>
             <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
-              <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-                {t('staking-v2.burn.snx-balance', { snxBalance: snxBalance.toString(2) })}
-              </Text>
+              <Flex>
+                <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={4}>
+                  {t('staking-v2.burn.staked-snx')}: {formatNumber(stakedSnx)}
+                </Text>
+                <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
+                  {t('staking-v2.burn.snx-balance', { snxBalance: formatNumber(snxBalance) })}
+                </Text>
+              </Flex>
             </Skeleton>
           </Flex>
         </Flex>
       </Box>
       <Flex mt={3} alignItems="center" justifyContent="space-between">
-        <Flex alignItems="center">
-          <Text mr={1} fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs">
-            {t('staking-v2.burn.gas')}
-          </Text>
-          <Tooltip label="Soonthetix" hasArrow>
-            <Flex>
-              <InfoIcon width="16px" height="16px" />
-            </Flex>
-          </Tooltip>
-        </Flex>
-        <Skeleton
-          fontFamily="heading"
-          fontWeight="extrabold"
-          lineHeight="md"
-          fontSize="xs"
-          isLoaded={!isLoading}
-        >
-          {/* TODO: Logic on calculating local currency based on gas fee */}
-          {`${gasPrice ? t('staking-v2.burn.tx-cost', { txCost: gasPrice }) : 0} Ξ`}
-        </Skeleton>
+        <EthGasPriceEstimator transactionFee={transactionFee} />
       </Flex>
       <Button
         fontFamily="heading"
         fontWeight="black"
         mt={4}
         w="100%"
-        onClick={() => onSubmit(wei(val).toBN(), toTarget)}
-        disabled={val === ''}
+        onClick={() => onSubmit()}
+        disabled={burnAmountSusd === '' || burnAmountSusd === '0.00'}
       >
         Burn
       </Button>
     </Box>
+  );
+};
+
+const calculateUnStakingAmount = (susdToBurn: string, targetCRatio?: number, SNXPrice?: number) => {
+  const num = parseFloat(susdToBurn);
+  if (isNaN(num)) return formatNumber(0);
+  if (!targetCRatio || !SNXPrice) return formatNumber(0);
+
+  return formatNumber(num / targetCRatio / SNXPrice);
+};
+
+export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
+  const [burnAmountSusd, setBurnAmountSusd] = useState('');
+  const [activeBadge, setActiveBadge] = useState<ActiveBadge | undefined>(undefined);
+  const queryClient = useQueryClient();
+
+  const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
+  const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
+  const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
+  const stakedSnx = calculateStakedSnx({
+    targetCRatio: debtData?.targetCRatio,
+    currentCRatio: debtData?.currentCRatio,
+    collateral: debtData?.collateral,
+  });
+  const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
+  const susdBalance = synthsData?.balancesMap.sUSD?.balance;
+  const {
+    mutate,
+    transactionFee,
+    modalOpen,
+    txnStatus,
+    error,
+    gasError,
+    settle,
+    isGasEnabledAndNotFetched,
+  } = useBurnMutation({
+    // Even if the sUSD balance might be bigger than the users debt we still send the complete balance to the contract
+    // We do this to avoid users having sUSD dust incase the debt fluctuates.
+    // The contract will only burn whats needed to clear the debt.
+    amount: activeBadge === 'max' ? wei(susdBalance || 0).toBN() : wei(burnAmountSusd || 0).toBN(),
+    delegateAddress: delegateWalletAddress,
+    toTarget: activeBadge === 'toTarget',
+  });
+
+  const handleBadgeClick = (badgeType: ActiveBadge) => {
+    if (!debtData || !susdBalance) return;
+    switch (badgeType) {
+      case 'toTarget':
+        const burnAmount = Wei.max(debtData.debtBalance.sub(debtData.issuableSynths), wei(0));
+        setActiveBadge('toTarget');
+        setBurnAmountSusd(formatNumber(burnAmount.toNumber()));
+        return;
+
+      case 'max':
+        setActiveBadge('max');
+        setBurnAmountSusd(formatNumber(susdBalance.toNumber()));
+        return;
+
+      default:
+        console.error('unhandled badgeType: ' + badgeType);
+    }
+  };
+  return (
+    <BurnUi
+      stakedSnx={stakedSnx.toNumber()}
+      debtBalance={debtData?.debtBalance.toNumber()}
+      snxUnstakingAmount={calculateUnStakingAmount(
+        burnAmountSusd,
+        debtData?.targetCRatio.toNumber(),
+        exchangeRateData?.SNX?.toNumber()
+      )}
+      snxBalance={debtData?.collateral.toNumber()}
+      isLoading={isLoading}
+      susdBalance={susdBalance?.toNumber()}
+      burnAmountSusd={burnAmountSusd}
+      onBurnAmountSusdChange={(val) => {
+        setActiveBadge(undefined);
+        setBurnAmountSusd(val);
+      }}
+      onBadgeClick={handleBadgeClick}
+      gasError={gasError}
+      txnStatus={txnStatus}
+      error={error}
+      settle={settle}
+      isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
+      transactionFee={transactionFee}
+      modalOpen={modalOpen}
+      onSubmit={() =>
+        mutate(undefined, {
+          onSuccess: () => {
+            queryClient.refetchQueries(['synths'], { type: 'active' });
+            queryClient.refetchQueries(['v2debt'], { type: 'active' });
+          },
+        })
+      }
+    />
   );
 };
