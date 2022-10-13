@@ -1,12 +1,12 @@
 export type TransactionStatus = 'unsent' | 'prompting' | 'pending' | 'success' | 'error';
 
-type MintMutationState = {
+type TxnState = {
   error: Error | null;
   modalOpen: boolean;
   txnStatus: TransactionStatus;
 };
 
-export const initialState: MintMutationState = {
+export const initialState: TxnState = {
   error: null,
   modalOpen: false,
   txnStatus: 'unsent',
@@ -19,7 +19,7 @@ export type Actions =
   | { type: 'error'; payload: { error: Error } }
   | { type: 'settled' };
 
-export function reducer(state: MintMutationState, action: Actions): MintMutationState {
+export function reducer(state: TxnState, action: Actions): TxnState {
   switch (action.type) {
     case 'prompting':
       return {
