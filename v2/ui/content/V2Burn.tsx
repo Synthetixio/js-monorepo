@@ -13,15 +13,9 @@ import { Burn } from '@snx-v2/Burn';
 import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
 import { getHealthVariant, badgeColor } from '@snx-v2/getHealthVariant';
 import { InfoIcon } from '@snx-v2/icons';
-import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { delegateWalletState } from 'store/wallet';
-import { TransactionModal } from '@snx-v2/TransactionModal';
-import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
-import { wei } from '@synthetixio/wei';
 import { EXTERNAL_LINKS } from 'constants/links';
-import { BigNumber } from 'ethers';
 import { useTranslation, Trans } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 
@@ -30,8 +24,6 @@ const V2Burn = () => {
   const delegateWallet = useRecoilValue(delegateWalletState);
 
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
-  const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
-  const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
 
   const liquidationCRatio = debtData?.liquidationRatioPercentage.toNumber();
   const targetCRatio = debtData?.targetCRatioPercentage.toNumber();
@@ -45,26 +37,10 @@ const V2Burn = () => {
 
   const cRatioHealth = t(`staking-v2.mint.${healthVariant}`);
 
-  const { mutate, transactionFee, txnStatus, modalOpen } = useBurnMutation(delegateWallet);
-
-  console.log(
-    'txnStatus',
-    txnStatus,
-    'modalOpen',
-    modalOpen,
-    'delegateWallet State',
-    delegateWallet
-  );
-
-  const onSubmit = async (amount: BigNumber, toTarget = false) => {
-    mutate({ amount, toTarget });
-  };
-
-  const isLoading = isDebtDataLoading || isSynthsLoading || isExchangeRateLoading;
+  const isLoading = isDebtDataLoading;
 
   return (
     <>
-      <TransactionModal isOpen={modalOpen} title="Burn Synths" />
       <Box bg="navy.900" height="100%">
         <Container pt={12} pb={16} bg="navy.900" maxW="4xl">
           <Text
@@ -189,17 +165,7 @@ const V2Burn = () => {
               </Flex>
             </Skeleton>
           </Flex>
-          <Burn
-            snxBalance={debtData?.collateral || wei(0)}
-            susdBalance={synthsData?.balancesMap['sUSD']?.balance || wei(0)}
-            activeDebt={debtData?.debtBalance || wei(0)}
-            issuableSynths={debtData?.issuableSynths || wei(0)}
-            exchangeRate={exchangeRateData?.SNX ? exchangeRateData?.SNX?.toNumber() : 0.25}
-            isLoading={isLoading}
-            onSubmit={onSubmit}
-            gasPrice={transactionFee ?? null}
-            txnStatus={txnStatus}
-          />
+          <Burn delegateWalletAddress={delegateWallet?.address} />
         </Container>
       </Box>
     </>
