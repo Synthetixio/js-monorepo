@@ -120,6 +120,7 @@ export const MintUi = ({
             </Flex>
             <Flex flexDir="column" alignItems="flex-end" w="30%">
               <Input
+                data-testid="mint snx amount input"
                 borderWidth="0px"
                 placeholder={t('staking-v2.mint.enter-amount')}
                 onChange={onChange}
@@ -141,13 +142,13 @@ export const MintUi = ({
               />
               <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
                 <Text
+                  data-testid="mint available snx balance"
+                  data-balance={formatNumber(unstakedSnx)}
                   color="whiteAlpha.700"
                   fontSize="xs"
                   fontFamily="heading"
                   cursor="pointer"
-                  onClick={() => {
-                    onMintAmountSNXChange(formatNumber(unstakedSnx));
-                  }}
+                  onClick={() => onMintAmountSNXChange(formatNumber(unstakedSnx))}
                 >
                   {t('staking-v2.mint.unstaked-snx', { unstakedSnx: formatNumber(unstakedSnx) })}
                 </Text>
@@ -210,6 +211,7 @@ export const MintUi = ({
         )}
 
         <Button
+          data-testid="mint submit"
           fontFamily="heading"
           fontWeight="black"
           mt={4}
@@ -256,7 +258,7 @@ export const MintUi = ({
           <Text fontWeight={500} color="gray.600">
             {t('staking-v2.mint.txn-modal.minting')}
           </Text>
-          <Text fontWeight={500}>{mintAmountsUSD} SNX</Text>
+          <Text fontWeight={500}>{mintAmountsUSD} sUSD</Text>
         </Flex>
         {transactionLoading && (
           <Flex alignItems="center" justifyContent="center" bg="black" pt="4" pb="4" mt="4">
