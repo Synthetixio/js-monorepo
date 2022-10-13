@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useSynthetix } from '@snx-v2/useSynthetixContracts';
 import { useGasOptions } from '@snx-v2/useGasOptions';
 import { BigNumber } from '@ethersproject/bignumber';
-import { initialState, reducer } from './reducer';
+import { initialState, reducer } from '@snx-v2/txnReducer';
 
 type MintArgs = {
   amount: BigNumber;
@@ -35,8 +35,8 @@ const createPopulateTransaction = (
       });
     }
 
-    return Synthetix.populateTransaction.issueSynths(mintArgs.amount, {
-      gasLimit: Synthetix.estimateGas.issueSynths(mintArgs.amount),
+    return Synthetix.populateTransaction.issueSynths(amount, {
+      gasLimit: Synthetix.estimateGas.issueSynths(amount),
     });
   };
 };
