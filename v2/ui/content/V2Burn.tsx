@@ -50,6 +50,7 @@ const V2Burn = () => {
             textAlign="center"
             mb={3}
             lineHeight="base"
+            data-testid="burn header"
           >
             {t('staking-v2.burn.title')}
           </Text>
