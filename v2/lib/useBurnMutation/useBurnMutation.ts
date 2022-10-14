@@ -40,11 +40,11 @@ const createPopulateTransaction = (
     });
   };
 };
-export function useBurnMutation(mintArgs: BurnArgs) {
+export function useBurnMutation(burnArgs: BurnArgs) {
   const { data: Synthetix } = useSynthetix();
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const populateTransaction = createPopulateTransaction(Synthetix, mintArgs);
+  const populateTransaction = createPopulateTransaction(Synthetix, burnArgs);
   const {
     data,
     isFetched: isGasFetched,
@@ -52,7 +52,7 @@ export function useBurnMutation(mintArgs: BurnArgs) {
     error: gasError,
   } = useGasOptions({
     populateTransaction,
-    queryKeys: [mintArgs, populateTransaction],
+    queryKeys: [burnArgs, populateTransaction],
   });
 
   const { gasOptionsForTransaction, transactionPrice } = data || {};
