@@ -12,6 +12,7 @@
     "tenderly-fork": "./bin/tenderly-fork.mjs",
     "tenderly-geteth": "./bin/tenderly-geteth.mjs",
     "tenderly-getsnx": "./bin/tenderly-getsnx.mjs",
+    "tenderly-mintsusd": "./bin/tenderly-mintsusd.mjs",
     "tenderly-load": "./bin/tenderly-load.mjs",
     "tenderly-removeEthCollateralInteractionDelay": "./bin/tenderly-removeEthCollateralInteractionDelay.mjs",
     "tenderly-removeMinimumStakeTime": "./bin/tenderly-removeMinimumStakeTime.mjs",
