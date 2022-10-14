@@ -52,7 +52,7 @@ export function useBurnMutation(burnArgs: BurnArgs) {
     error: gasError,
   } = useGasOptions({
     populateTransaction,
-    queryKeys: [burnArgs, populateTransaction],
+    queryKeys: [burnArgs],
   });
 
   const { gasOptionsForTransaction, transactionPrice } = data || {};
