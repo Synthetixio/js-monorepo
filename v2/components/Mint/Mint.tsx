@@ -208,7 +208,6 @@ export const MintUi = ({
             <EthGasPriceEstimator transactionFee={mintAmountSNX === '' ? wei(0) : transactionFee} />
           </Flex>
         )}
-
         <Button
           fontFamily="heading"
           fontWeight="black"
@@ -269,7 +268,6 @@ export const MintUi = ({
         {error && (
           <Center pt="4" pb="4" mt="4">
             <FailedIcon width="40px" height="40px" />
-
             <Text>{parseTxnError(error)}</Text>
           </Center>
         )}
@@ -301,18 +299,20 @@ export const MintUi = ({
 export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
   const [mintAmountSNX, setMintAmountSNX] = useState('');
   const queryClient = useQueryClient();
+
   const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
-  const targetCRatioPercent = debtData?.targetCRatioPercentage.toNumber();
 
+  const targetCRatioPercent = debtData?.targetCRatioPercentage.toNumber();
   const exchangeRate =
     (targetCRatioPercent && exchangeRateData?.SNX?.div(targetCRatioPercent / 100).toNumber()) || 0;
   // const debouncedSearchTerm = useDebounce(mintAmountSNX, 500);
   const mintAmountSUSD = convert(mintAmountSNX, exchangeRate);
-  const { targetCRatio, currentCRatio, collateral } = debtData || {};
 
+  const { targetCRatio, currentCRatio, collateral } = debtData || {};
   const unstakedSnx = calculateUnstakedStakedSnx({ targetCRatio, currentCRatio, collateral });
+
   const {
     mutate,
     transactionFee,
@@ -327,6 +327,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     delegateAddress: delegateWalletAddress,
     toMax: wei(mintAmountSNX || 0).gte(formatNumber(unstakedSnx.toNumber())),
   });
+
   const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
   return (
     <MintUi

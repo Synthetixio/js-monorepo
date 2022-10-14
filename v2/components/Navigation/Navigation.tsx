@@ -115,9 +115,14 @@ export const NavigationUI = ({
               height={10}
               py="6px"
               px="9.5px"
+              onClick={() => console.log('Open wallet')}
+              _hover={{
+                bg: 'blackAlpha.400',
+                cursor: 'pointer',
+              }}
             >
               <WalletIcon />
-              <Text ml={1} variant="nav" fontWeight={700} fontSize="12">
+              <Text ml={1} variant="nav" fontWeight={700} fontSize="12" userSelect="none">
                 {truncateAddress(walletAddress, 4, 4)}
               </Text>
             </Center>
@@ -146,7 +151,13 @@ export const NavigationUI = ({
           <Menu>
             {({ isOpen }) => (
               <>
-                <MenuButton borderRadius="4px" bg="navy.900">
+                <MenuButton
+                  borderRadius="4px"
+                  bg="navy.900"
+                  _hover={{
+                    bg: 'blackAlpha.400',
+                  }}
+                >
                   {icon}
                   {size === 'desktop' && (
                     <>
@@ -184,6 +195,7 @@ export const NavigationUI = ({
           borderWidth="1px"
           borderRadius="4px"
           _hover={{
+            bg: 'blackAlpha.400',
             cursor: 'pointer',
           }}
         >
@@ -199,6 +211,7 @@ export const NavigationUI = ({
             borderWidth="1px"
             borderRadius="4px"
             _hover={{
+              bg: 'blackAlpha.400',
               cursor: 'pointer',
             }}
           >
@@ -213,6 +226,10 @@ export const NavigationUI = ({
             borderColor="gray.900"
             borderWidth="1px"
             borderRadius="4px"
+            _hover={{
+              bg: 'blackAlpha.400',
+              cursor: 'pointer',
+            }}
           >
             <MenuButton>
               <NineDots />

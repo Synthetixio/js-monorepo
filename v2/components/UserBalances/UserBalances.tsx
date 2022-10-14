@@ -28,6 +28,9 @@ export const UserBalances = ({
         px="9.5px"
         height={10}
         alignItems="center"
+        _hover={{
+          bg: 'blackAlpha.400',
+        }}
       >
         <SNXIcon />
         <Skeleton
@@ -51,6 +54,9 @@ export const UserBalances = ({
         px="9.5px"
         height={10}
         alignItems="center"
+        _hover={{
+          bg: 'blackAlpha.400',
+        }}
       >
         <SUSDIcon />
         <Skeleton
