@@ -277,9 +277,6 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         setActiveBadge('max');
         setBurnAmountSusd(formatNumber(susdBalance.toNumber()));
         return;
-
-      default:
-        console.error('unhandled badgeType: ' + badgeType);
     }
   };
   return (
