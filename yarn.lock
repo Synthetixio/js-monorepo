@@ -9243,9 +9243,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/synpress@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "@synthetixio/synpress@npm:2.4.0"
+"@synthetixio/synpress@npm:^2.4.1-beta.2":
+  version: 2.4.1-beta.2
+  resolution: "@synthetixio/synpress@npm:2.4.1-beta.2"
   dependencies:
     "@cypress/code-coverage": ^3.10.0
     "@cypress/react": ^6.2.0
@@ -9266,6 +9266,7 @@ __metadata:
     commander: ^9.4.1
     cypress: ^10.9.0
     cypress-wait-until: ^1.7.2
+    debug: ^4.3.4
     dotenv: ^16.0.3
     dotenv-parse-variables: ^2.0.0
     download: ^8.0.0
@@ -9291,7 +9292,7 @@ __metadata:
     synthetix-js: ^2.74.1
   bin:
     synpress: synpress.js
-  checksum: 5eba011164f2dcbae49f664378aaad3f2f9c8b21296dbf761839610e1cdeed656bedf0009035dd7a7dea01e25ccbf83d794424fae5781f0f4a64d385ab168cfb
+  checksum: 7ad20aaa8e7c19ba812bba96a21a163072f477aae5b28e2734fe9568f0154c2c8f10239ca779952967cded9061599aec2f3f5e69a1c1de1f6caedbfa43e45abf
   languageName: node
   linkType: hard
 
@@ -9541,8 +9542,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@synthetixio/v3-synpress@workspace:v3/synpress"
   dependencies:
-    "@synthetixio/synpress": ^2.4.0
-    cypress: ^10.9.0
+    "@synthetixio/synpress": ^2.4.1-beta.2
   languageName: unknown
   linkType: soft
 
