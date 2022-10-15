@@ -1,9 +1,11 @@
+import { ReactNode, FC } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { safeLazy } from '@synthetixio/safe-import';
 import AppLayout from './sections/shared/Layout/AppLayout';
 import { LOCAL_STORAGE_KEYS } from 'constants/storage';
 import useLocalStorage from 'hooks/useLocalStorage';
+import { BoxProps, Box } from '@chakra-ui/react';
 
 const DashboardPage = safeLazy(
   () => import(/* webpackChunkName: "dashboard" */ './content/DashboardPage')
@@ -42,6 +44,21 @@ const V2SwapLinksPage = safeLazy(
   () => import(/* webpackChunkName: "v2-swap-links" */ './content/V2SwapLinks')
 );
 
+interface WrapperProps extends BoxProps {
+  children: ReactNode;
+}
+
+const Wrapper: FC<WrapperProps> = ({ children, ...props }) => {
+  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
+  return STAKING_V2_ENABLED ? (
+    <Box {...props} m={12}>
+      {children}
+    </Box>
+  ) : (
+    <>{children}</>
+  );
+};
+
 export default function AppRoutes() {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
   return (
@@ -64,42 +81,175 @@ export default function AppRoutes() {
             </Route>
           )}
 
-          <Route path="/loans" element={<LoansPage />}>
-            <Route path=":action" element={<LoansPage />} />
-            <Route path=":loanType/:loanId/:loanAction" element={<LoansPage />} />
+          <Route
+            path="/loans"
+            element={
+              <Wrapper>
+                <LoansPage />
+              </Wrapper>
+            }
+          >
+            <Route
+              path=":action"
+              element={
+                <Wrapper>
+                  <LoansPage />
+                </Wrapper>
+              }
+            />
+            <Route
+              path=":loanType/:loanId/:loanAction"
+              element={
+                <Wrapper>
+                  <LoansPage />
+                </Wrapper>
+              }
+            />
           </Route>
 
-          <Route path="/synths" element={<SynthsPage />} />
+          <Route
+            path="/synths"
+            element={
+              <Wrapper pb={4}>
+                <SynthsPage />
+              </Wrapper>
+            }
+          />
 
-          <Route path="/gov" element={<GovPage />}>
-            <Route path=":spaceKey/:panel" element={<GovPage />} />
+          <Route
+            path="/gov"
+            element={
+              <Wrapper>
+                <GovPage />
+              </Wrapper>
+            }
+          >
+            <Route
+              path=":spaceKey/:panel"
+              element={
+                <Wrapper>
+                  <GovPage />
+                </Wrapper>
+              }
+            />
           </Route>
 
-          <Route path="/earn" element={<EarnPage />}>
-            <Route path=":pool" element={<EarnPage />}>
-              <Route path=":action" element={<EarnPage />} />
+          <Route
+            path="/earn"
+            element={
+              <Wrapper>
+                <EarnPage />
+              </Wrapper>
+            }
+          >
+            <Route
+              path=":pool"
+              element={
+                <Wrapper>
+                  <EarnPage />
+                </Wrapper>
+              }
+            >
+              <Route
+                path=":action"
+                element={
+                  <Wrapper>
+                    <EarnPage />
+                  </Wrapper>
+                }
+              />
             </Route>
           </Route>
 
-          <Route path="/debt" element={<DebtPage />} />
+          <Route
+            path="/debt"
+            element={
+              <Wrapper>
+                <DebtPage />
+              </Wrapper>
+            }
+          />
 
-          <Route path="/migrate-escrow" element={<MigrateEscrowPage />} />
+          <Route
+            path="/migrate-escrow"
+            element={
+              <Wrapper>
+                <MigrateEscrowPage />
+              </Wrapper>
+            }
+          />
 
-          <Route path="/escrow" element={<EscrowPage />}>
-            <Route path=":action" element={<EscrowPage />} />
+          <Route
+            path="/escrow"
+            element={
+              <Wrapper>
+                <EscrowPage />
+              </Wrapper>
+            }
+          >
+            <Route
+              path=":action"
+              element={
+                <Wrapper>
+                  <EscrowPage />
+                </Wrapper>
+              }
+            />
           </Route>
 
-          <Route path="/history" element={<HistoryPage />} />
+          <Route
+            path="/history"
+            element={
+              <Wrapper>
+                <HistoryPage />
+              </Wrapper>
+            }
+          />
 
-          <Route path="/delegate" element={<DelegatePage />} />
+          <Route
+            path="/delegate"
+            element={
+              <Wrapper>
+                <DelegatePage />
+              </Wrapper>
+            }
+          />
 
-          <Route path="/merge-accounts" element={<MergeAccountsPage />}>
-            <Route path=":action" element={<MergeAccountsPage />} />
+          <Route
+            path="/merge-accounts"
+            element={
+              <Wrapper>
+                <MergeAccountsPage />
+              </Wrapper>
+            }
+          >
+            <Route
+              path=":action"
+              element={
+                <Wrapper>
+                  <MergeAccountsPage />
+                </Wrapper>
+              }
+            />
           </Route>
 
-          <Route path="/bridge" element={<BridgePage />} />
+          <Route
+            path="/bridge"
+            element={
+              <Wrapper>
+                <BridgePage />
+              </Wrapper>
+            }
+          />
 
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="*"
+            element={
+              <Wrapper>
+                <NotFound />
+              </Wrapper>
+            }
+          />
         </Routes>
       </AppLayout>
     </BrowserRouter>

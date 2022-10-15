@@ -1,7 +1,9 @@
 import { ReactNode } from 'react';
 import styled, { css, useTheme } from 'styled-components';
-
+import { theme as chakraTheme } from '@synthetixio/v3-theme';
 import { resetButtonCSS } from '@snx-v1/styles';
+import localStore from 'utils/localStore';
+import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
 
 type TabButtonProps = {
   name: string;
@@ -63,6 +65,8 @@ export const TabPanel = ({
     </TabPanelContainer>
   ) : null;
 
+const isV2 = localStore.get(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED) === true;
+
 export const TabPanelContainer = styled.div<{ height?: number; padding: number }>`
   outline: none;
   background: ${(props) => props.theme.colors.navy};
@@ -82,25 +86,40 @@ export const StyledTabButton = styled.button<TabButtonProps>`
   padding: 0;
   background: ${(props) =>
     props.active
-      ? props.inverseTabColor
+      ? isV2
+        ? chakraTheme.colors.navy['900']
+        : props.inverseTabColor
         ? props.theme.colors.black
         : props.theme.colors.backgroundBlue
+      : isV2
+      ? chakraTheme.colors.blackAlpha['300']
       : props.inverseTabColor
       ? props.theme.colors.backgroundBlue
       : props.theme.colors.black};
   color: ${(props) => (props.active ? props.theme.colors.white : props.theme.colors.gray)};
-
   ${(props) =>
     props.active
       ? css`
-          border-top: ${`2px solid ${props.color || props.theme.colors.blue}`};
-          border-right: ${`1px solid ${props.theme.colors.grayBlue}`};
-          border-left: ${`1px solid ${props.theme.colors.backgroundBlue}`};
-          border-bottom: ${`1px solid ${props.theme.colors.backgroundBlue}`};
+          border-top: ${`2px solid ${
+            props.color || isV2 ? chakraTheme.colors.cyan['500'] : props.theme.colors.blue
+          }`};
+          border-right: ${`1px solid ${
+            isV2 ? chakraTheme.colors.navy['900'] : props.theme.colors.grayBlue
+          }`};
+          border-left: ${`1px solid ${
+            isV2 ? chakraTheme.colors.navy['900'] : props.theme.colors.backgroundBlue
+          }`};
+          border-bottom: ${`1px solid ${
+            isV2 ? chakraTheme.colors.navy['900'] : props.theme.colors.backgroundBlue
+          }`};
         `
       : css`
-          border-top: ${`2px solid ${props.theme.colors.black}`};
-          border-bottom: ${`1px solid ${props.theme.colors.grayBlue}`};
+          border-top: ${`2px solid ${
+            isV2 ? chakraTheme.colors.navy['900'] : props.theme.colors.black
+          }`};
+          border-bottom: ${`1px solid ${
+            isV2 ? chakraTheme.colors.navy['900'] : props.theme.colors.grayBlue
+          }`};
         `}
 
   ${(props) =>
@@ -121,7 +140,11 @@ export const StyledTabButton = styled.button<TabButtonProps>`
   &:hover {
     color: ${(props) => (props.active ? props.theme.colors.white : props.color)};
     background: ${(props) =>
-      props.inverseTabColor ? props.theme.colors.black : props.theme.colors.backgroundBlue};
+      props.inverseTabColor
+        ? props.theme.colors.black
+        : isV2
+        ? chakraTheme.colors.navy['900']
+        : props.theme.colors.backgroundBlue};
     border-top: 2px solid ${(props) => (props.active ? 'none' : props.color)};
   }
 

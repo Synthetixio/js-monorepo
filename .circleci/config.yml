@@ -58,6 +58,7 @@ commands:
 
       - run: ./node_modules/.bin/tenderly-removeMinimumStakeTime
       - run: ./node_modules/.bin/tenderly-removeEthCollateralInteractionDelay
+      - run: ./node_modules/.bin/tenderly-getsnx $CYPRESS_WALLET_ADDRESS
 
   tenderly-cleanup:
     steps:

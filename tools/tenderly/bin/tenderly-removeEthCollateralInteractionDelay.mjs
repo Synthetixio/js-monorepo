@@ -16,5 +16,4 @@ Promise.resolve()
     };
   })
   .then(removeEthCollateralInteractionDelay)
-  .then((txn) => console.log(txn))
   .catch(console.error);

@@ -81,6 +81,7 @@ export const useGasOptions = ({
         return { ...gasPrice, gasLimit };
       };
       return {
+        populatedTransaction,
         gasPrices,
         gasLimit,
         optimismLayerOneFees,

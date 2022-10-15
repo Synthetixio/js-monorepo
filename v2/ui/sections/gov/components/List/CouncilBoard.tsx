@@ -16,6 +16,11 @@ import { Card } from 'sections/gov/components/common';
 import useSynthetixQueries from '@synthetixio/queries';
 import Connector from '../../../../containers/Connector';
 import scGif from './SC-NFT.gif';
+import { theme as chakraTheme } from '@synthetixio/v3-theme';
+import localStore from 'utils/localStore';
+import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
+
+const isV2 = localStore.get(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED) === true;
 
 const CouncilBoard: React.FC = () => {
   const { t } = useTranslation();
@@ -94,7 +99,8 @@ const Title = styled.p`
 `;
 
 const MemberRow = styled(FlexDivRowCentered)`
-  border-bottom: 1px solid ${(props) => props.theme.colors.grayBlue};
+  border-bottom: 1px solid
+    ${(props) => (isV2 ? chakraTheme.colors.blackAlpha['500'] : props.theme.colors.grayBlue)};
   justify-content: space-between;
   margin: 8px 0px;
   padding: 4px 16px;

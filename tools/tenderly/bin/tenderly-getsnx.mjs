@@ -35,5 +35,4 @@ Promise.resolve()
     };
   })
   .then(getsnx)
-  .then((txn) => console.log(txn))
   .catch(console.error);
