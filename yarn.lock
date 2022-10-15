@@ -3117,21 +3117,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/react@npm:^6.2.0":
-  version: 6.2.0
-  resolution: "@cypress/react@npm:6.2.0"
-  peerDependencies:
-    "@types/react": ^16.9.16 || ^17.0.0
-    cypress: "*"
-    react: ^=16.x || ^=17.x
-    react-dom: ^=16.x || ^=17.x
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: ba9d68c09b25ae5fcde18344ff5fa457aecaa516217b79bc9eb3f63eec8d9ee57a81e169de4b00eb6c318cd880041c12f1f269fb0700a598a78c80844f6ba30a
-  languageName: node
-  linkType: hard
-
 "@cypress/request@npm:^2.88.10":
   version: 2.88.10
   resolution: "@cypress/request@npm:2.88.10"
@@ -6235,7 +6220,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.26.1":
+"@playwright/test@npm:^1.27.1":
   version: 1.27.1
   resolution: "@playwright/test@npm:1.27.1"
   dependencies:
@@ -9250,20 +9235,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/synpress@npm:^2.4.1-beta.2":
-  version: 2.4.1-beta.2
-  resolution: "@synthetixio/synpress@npm:2.4.1-beta.2"
+"@synthetixio/synpress@npm:^2.4.1-beta.3":
+  version: 2.4.1-beta.3
+  resolution: "@synthetixio/synpress@npm:2.4.1-beta.3"
   dependencies:
     "@cypress/code-coverage": ^3.10.0
-    "@cypress/react": ^6.2.0
     "@cypress/webpack-dev-server": ^2.3.0
     "@drptbl/gremlins.js": ^2.2.1
-    "@playwright/test": ^1.26.1
+    "@playwright/test": ^1.27.1
     "@synthetixio/js": ^2.41.0
     "@testing-library/cypress": ^8.0.3
     "@testing-library/react": ^13.4.0
     "@types/testing-library__cypress": ^5.0.9
-    axios: ^1.0.0
+    axios: ^1.1.2
     babel-plugin-istanbul: ^6.1.1
     babel-plugin-react-generate-property: ^1.1.2
     babel-plugin-react-remove-properties: ^0.3.0
@@ -9271,7 +9255,7 @@ __metadata:
     babel-plugin-transform-react-styled-components-qa: ^2.1.0
     bytes32: ^0.0.3
     commander: ^9.4.1
-    cypress: ^10.9.0
+    cypress: ^10.10.0
     cypress-wait-until: ^1.7.2
     debug: ^4.3.4
     dotenv: ^16.0.3
@@ -9289,7 +9273,7 @@ __metadata:
     eslint-plugin-standard: ^4.1.0
     eslint-plugin-testing-library: ^5.7.2
     eslint-plugin-ui-testing: ^2.0.1
-    eslint-plugin-unicorn: ^44.0.1
+    eslint-plugin-unicorn: ^44.0.2
     etherscan-api: ^10.2.0
     find-config: ^1.0.0
     node-fetch: ^2.6.1
@@ -9299,7 +9283,7 @@ __metadata:
     synthetix-js: ^2.74.1
   bin:
     synpress: synpress.js
-  checksum: 7ad20aaa8e7c19ba812bba96a21a163072f477aae5b28e2734fe9568f0154c2c8f10239ca779952967cded9061599aec2f3f5e69a1c1de1f6caedbfa43e45abf
+  checksum: e9e94b38efb387eb9c7d46d6db3486c4a6fb0a13384c845cc24957054425f7c839222309c893ef817a302ac538cb5cc8936ff183befff35819902c30de987242
   languageName: node
   linkType: hard
 
@@ -9550,7 +9534,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@synthetixio/v3-synpress@workspace:v3/synpress"
   dependencies:
-    "@synthetixio/synpress": ^2.4.1-beta.2
+    "@synthetixio/synpress": ^2.4.1-beta.3
   languageName: unknown
   linkType: soft
 
@@ -13649,7 +13633,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.0.0":
+"axios@npm:^1.1.2":
   version: 1.1.3
   resolution: "axios@npm:1.1.3"
   dependencies:
@@ -17558,7 +17542,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:*, cypress@npm:^10.10.0, cypress@npm:^10.9.0":
+"cypress@npm:*, cypress@npm:^10.10.0":
   version: 10.10.0
   resolution: "cypress@npm:10.10.0"
   dependencies:
@@ -19421,7 +19405,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-unicorn@npm:^44.0.1":
+"eslint-plugin-unicorn@npm:^44.0.2":
   version: 44.0.2
   resolution: "eslint-plugin-unicorn@npm:44.0.2"
   dependencies:
