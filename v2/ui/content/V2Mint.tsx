@@ -69,6 +69,7 @@ const V2Mint = () => {
             textAlign="center"
             mb={3}
             lineHeight="base"
+            data-testid="mint header"
           >
             {isCurrentStaker ? t('staking-v2.mint.title-existing') : t('staking-v2.mint.title-new')}
           </Text>

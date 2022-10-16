@@ -19,11 +19,17 @@ const gasPricesMainnetMockData = {
     baseFeePerGas: wei(10, GWEI_DECIMALS, true).toBN(),
   },
 };
+
 const gasPricesOptimismMockData = {
   fastest: { gasPrice: wei(10, GWEI_DECIMALS, true).toBN() },
   fast: { gasPrice: wei(10, GWEI_DECIMALS, true).toBN() },
   average: { gasPrice: wei(10, GWEI_DECIMALS, true).toBN() },
 };
+
+const populatedTransaction = {
+  gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
+};
+
 describe('useGasOptions', () => {
   let useGasOptions;
   let useGasPrice;
@@ -32,6 +38,7 @@ describe('useGasOptions', () => {
   let ContractContext;
   let useOptimismLayer1Fee;
   let useExchangeRatesData;
+  let populateTransaction;
 
   beforeEach(async () => {
     react = {
@@ -58,6 +65,8 @@ describe('useGasOptions', () => {
     jest.doMock('@snx-v2/useOptimismLayer1Fee', () => ({ useOptimismLayer1Fee }));
     jest.doMock('@snx-v2/useExchangeRatesData', () => ({ useExchangeRatesData }));
 
+    populateTransaction = jest.fn(() => Promise.resolve(populatedTransaction));
+
     ({ useGasOptions } = await import('./useGasOptions'));
   });
 
@@ -75,10 +84,6 @@ describe('useGasOptions', () => {
   });
 
   test('Returns gas options mainnet', async () => {
-    const populateTransaction = jest
-      .fn()
-      .mockResolvedValue({ gasLimit: wei(500000, GWEI_DECIMALS).toBN() });
-
     useGasOptions({ populateTransaction, queryKeys: ['mykey'] });
 
     const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
@@ -97,13 +102,12 @@ describe('useGasOptions', () => {
       gasSpeed: 'average',
       optimismLayerOneFees: undefined,
       transactionPrice: wei(7, GWEI_DECIMALS),
+      populatedTransaction,
     });
   });
+
   test('Returns gas options mainnet when gasSpeed is fastest', async () => {
     react.useContext.mockReturnValue({ networkId: 1, gasSpeed: 'fastest' });
-    const populateTransaction = jest
-      .fn()
-      .mockResolvedValue({ gasLimit: wei(500000, GWEI_DECIMALS).toBN() });
 
     useGasOptions({ populateTransaction });
 
@@ -123,12 +127,11 @@ describe('useGasOptions', () => {
       gasSpeed: 'fastest',
       optimismLayerOneFees: undefined,
       transactionPrice: wei(9, GWEI_DECIMALS),
+      populatedTransaction,
     });
   });
+
   test('Returns gas options for optimism', async () => {
-    const populateTransaction = jest
-      .fn()
-      .mockResolvedValue({ gasLimit: wei(500000, GWEI_DECIMALS).toBN() });
     react.useContext.mockReturnValue({ networkId: 10, gasSpeed: 'average' });
     useGasPrice.mockReturnValue({ data: gasPricesOptimismMockData });
     useOptimismLayer1Fee.mockReturnValue({ data: wei(0.00000001) });
@@ -150,6 +153,7 @@ describe('useGasOptions', () => {
       gasSpeed: 'average',
       optimismLayerOneFees: wei(0.00000001),
       transactionPrice: wei(5.00001, GWEI_DECIMALS),
+      populatedTransaction,
     });
   });
 });

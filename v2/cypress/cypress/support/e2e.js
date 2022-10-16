@@ -8,9 +8,10 @@ beforeEach(() => {
     statusCode: 204,
   }).as('subgraph');
 
+  // UPD: we still use infura as a generic provider to get general data not related to the wallet, like gas price
   // Because we are working with tenderly fork, infura calls should not even happen!
-  cy.intercept('https://mainnet.infura.io/**', { statusCode: 204 }).as('infura-mainnet');
-  cy.intercept('https://optimism-mainnet.infura.io/**', { statusCode: 204 }).as('infura-optimism');
+  // cy.intercept('https://mainnet.infura.io/**', { statusCode: 204 }).as('infura-mainnet');
+  // cy.intercept('https://optimism-mainnet.infura.io/**', { statusCode: 204 }).as('infura-optimism');
 
   cy.intercept('POST', '/graphql', (req) => {
     req?.body?.forEach((gql) => {
@@ -36,7 +37,11 @@ beforeEach(() => {
         this.getAddress = async () => Cypress.env('WALLET_ADDRESS');
         this.provider = provider;
         this.wallet = new ethers.Wallet(Cypress.env('WALLET_PK'));
-        this.signMessage = (message) => this.wallet.signMessage(message);
+        this.signMessage = async (message) => {
+          // don't sign instantly, wait for a bit
+          await new Promise((ok) => setTimeout(ok, 500));
+          return await this.wallet.signMessage(message);
+        };
       }
     }
 
