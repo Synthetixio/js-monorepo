@@ -6,6 +6,7 @@ let metamaskWalletAddress;
 
 describe('Wallet tests', () => {
   before(() => {
+    cy.disconnectMetamaskWalletFromAllDapps();
     home.getMetamaskWalletAddress().then((address) => {
       metamaskWalletAddress = address;
     });
@@ -19,7 +20,7 @@ describe('Wallet tests', () => {
       home.getLoggedInWalletAddress().then((stakingWalletAddress) => {
         const formattedMetamaskWalletAddress =
           metamaskWalletAddress.slice(0, 4) + '…' + metamaskWalletAddress.slice(-4);
-        expect(stakingWalletAddress).to.equal(formattedMetamaskWalletAddress.toLowerCase());
+        expect(stakingWalletAddress).to.equal(formattedMetamaskWalletAddress);
       });
     });
   });
