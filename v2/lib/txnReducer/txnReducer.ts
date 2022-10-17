@@ -4,17 +4,19 @@ type TxnState = {
   error: Error | null;
   modalOpen: boolean;
   txnStatus: TransactionStatus;
+  txnHash: string | null;
 };
 
 export const initialState: TxnState = {
   error: null,
   modalOpen: false,
   txnStatus: 'unsent',
+  txnHash: null,
 };
 
 export type Actions =
   | { type: 'prompting' }
-  | { type: 'pending' }
+  | { type: 'pending'; payload: { txnHash: string } }
   | { type: 'success' }
   | { type: 'error'; payload: { error: Error } }
   | { type: 'settled' };
@@ -33,6 +35,7 @@ export function reducer(state: TxnState, action: Actions): TxnState {
       return {
         ...state,
         txnStatus: 'pending',
+        txnHash: action.payload.txnHash,
       };
 
     case 'success':
@@ -54,6 +57,7 @@ export function reducer(state: TxnState, action: Actions): TxnState {
         modalOpen: false,
         txnStatus: 'unsent',
         error: null,
+        txnHash: null,
       };
 
     default:
