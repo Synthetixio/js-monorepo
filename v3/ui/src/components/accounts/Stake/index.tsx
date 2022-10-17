@@ -137,7 +137,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
                 min="0"
                 {...register('amount', {
                   validate: {
-                    sufficientPools: (v) => {
+                    insufficientBalance: (v) => {
                       const amountBN = Boolean(v)
                         ? ethers.utils.parseUnits(v, selectedCollateralType.decimals)
                         : BigNumber.from(0);
@@ -176,8 +176,8 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
                   type="submit"
                 >
                   {/* @ts-ignore */}
-                  {formState.errors.amount?.type === 'sufficientPools'
-                    ? 'Insufficient Pools'
+                  {formState.errors.amount?.type === 'insufficientBalance'
+                    ? 'Insufficient Balance'
                     : 'Stake'}
                 </Button>
               ) : (
