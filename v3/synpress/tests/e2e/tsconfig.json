@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "noEmit": true,
+    "types": [
+      "cypress",
+      "@synthetixio/synpress/support",
+      "cypress-wait-until",
+      "@testing-library/cypress"
+    ],
+    "outDir": "./output"
+  },
+  "include": ["**/*.*"]
+}
