@@ -52,7 +52,6 @@
   },
   "dependencies": {
     "@synthetixio/core-utils": "^1.1.2",
-    "@usecannon/builder": "latest",
     "prettier": "^2.7.1"
   }
 }

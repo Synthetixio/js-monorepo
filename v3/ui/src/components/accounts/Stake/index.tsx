@@ -42,7 +42,7 @@ type FormType = {
 interface Props {
   accountId?: string;
   stakingPositions?: Record<string, StakingPositionType>;
-  refetch: () => void;
+  refetch?: () => void;
 }
 
 export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) => {
@@ -102,7 +102,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
       poolId: selectedPoolId,
       amount: '',
     });
-    refetch();
+    refetch?.();
     balanceData.refetch();
   };
   const { createAccount, isLoading, multiTxn } = useStake({

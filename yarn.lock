@@ -9513,7 +9513,6 @@ __metadata:
     "@typechain/ethers-v5": ^10.0.0
     "@typechain/hardhat": ^6.0.0
     "@types/node": ^18.8.5
-    "@usecannon/builder": latest
     cross-env: ^7.0.3
     dotenv: ^16.0.0
     ethereum-waffle: ^3.4.4
@@ -11413,7 +11412,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^1.1.7, @usecannon/builder@npm:latest":
+"@usecannon/builder@npm:^1.1.7":
   version: 1.1.7
   resolution: "@usecannon/builder@npm:1.1.7"
   dependencies:
