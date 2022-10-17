@@ -5,7 +5,7 @@ import { compareAddress, parseUnits } from '../utils/helpers';
 import { useApproveCall } from './useApproveCall';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
-import { useWrapEth } from './useWrapEth';
+import { useUnWrapEth, useWrapEth } from './useWrapEth';
 
 interface IPosition {
   accountId: string;
@@ -26,7 +26,7 @@ export const useManagePosition = (
   const isNativeCurrency = compareAddress(wethContract?.address, position.collateral.address);
 
   const { wrap } = useWrapEth();
-  // const { unWrap } = useUnWrapEth();
+  const { unWrap } = useUnWrapEth();
 
   const calls: MulticallCall[] = useMemo(() => {
     const list: MulticallCall[] = [];
@@ -123,12 +123,11 @@ export const useManagePosition = (
       await wrap(collateralChangeBN);
     }
     await approve();
-    // if (isNativeCurrency && collateralChange < 0) {
-    //   console.log(collateralChangeBN.toString());
-    //   await unWrap(collateralChangeBN);
-    // }
+    if (isNativeCurrency && collateralChange < 0) {
+      await unWrap(collateralChangeBN);
+    }
     refetch?.();
-  }, [approve, collateralChange, collateralChangeBN, isNativeCurrency, refetch, wrap]);
+  }, [approve, collateralChange, collateralChangeBN, isNativeCurrency, refetch, unWrap, wrap]);
 
   return {
     isLoading,

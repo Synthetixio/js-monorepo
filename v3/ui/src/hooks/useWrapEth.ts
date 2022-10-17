@@ -49,7 +49,6 @@ export const useUnWrapEth = (config?: Partial<TxConfig>) => {
     addressOrName: wethContract?.address,
     contractInterface: wethContract?.abi,
     functionName: 'withdraw',
-    args: [],
     onError: (e) => {
       config?.onError && config.onError(e);
     },
@@ -61,9 +60,7 @@ export const useUnWrapEth = (config?: Partial<TxConfig>) => {
   const unWrap = useCallback(
     async (amount: BigNumberish) => {
       const txReceipt = await writeAsync({
-        recklesslySetUnpreparedOverrides: {
-          value: amount,
-        },
+        recklesslySetUnpreparedArgs: [amount],
       });
       await txReceipt.wait();
       config?.onSuccess && config.onSuccess();

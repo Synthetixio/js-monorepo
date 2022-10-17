@@ -24,7 +24,7 @@ export const Balance: FC<Props> = ({ balance, decimals, symbol, address, onMax }
   }, [address, localChainId, symbol]);
 
   return (
-    <Text fontSize="xs">
+    <Text display="flex" gap={2} alignItems="center" fontSize="xs">
       Balance: {parseFloat(utils.formatUnits(balance, decimals)).toLocaleString()}{' '}
       {symbol.toUpperCase()}
       {balance.eq(0) && buyAssetLink && (
@@ -37,9 +37,7 @@ export const Balance: FC<Props> = ({ balance, decimals, symbol, address, onMax }
       {onMax && !balance.eq(0) && (
         <Badge
           as="button"
-          ml="2"
           variant="outline"
-          transform="translateY(-2px)"
           onClick={(e) => {
             e.preventDefault();
             const balanceValue = utils.formatUnits(balance, decimals);
