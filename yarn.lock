@@ -9235,9 +9235,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/synpress@npm:^2.4.1-beta.3":
-  version: 2.4.1-beta.3
-  resolution: "@synthetixio/synpress@npm:2.4.1-beta.3"
+"@synthetixio/synpress@npm:^2.4.1-beta.4":
+  version: 2.4.1-beta.4
+  resolution: "@synthetixio/synpress@npm:2.4.1-beta.4"
   dependencies:
     "@cypress/code-coverage": ^3.10.0
     "@cypress/webpack-dev-server": ^2.3.0
@@ -9283,7 +9283,7 @@ __metadata:
     synthetix-js: ^2.74.1
   bin:
     synpress: synpress.js
-  checksum: e9e94b38efb387eb9c7d46d6db3486c4a6fb0a13384c845cc24957054425f7c839222309c893ef817a302ac538cb5cc8936ff183befff35819902c30de987242
+  checksum: 46a19d291aabe9351ea35d9a8569388bc0a6fb1a517aa13e833bc8de8130d5db05d582504c7f01448fdb73349f441c12d3b2a253b3bf87e6af930db48c53f106
   languageName: node
   linkType: hard
 
@@ -9534,7 +9534,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@synthetixio/v3-synpress@workspace:v3/synpress"
   dependencies:
-    "@synthetixio/synpress": ^2.4.1-beta.3
+    "@synthetixio/synpress": ^2.4.1-beta.4
   languageName: unknown
   linkType: soft
 

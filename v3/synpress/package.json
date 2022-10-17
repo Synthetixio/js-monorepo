@@ -7,6 +7,6 @@
     "test:e2e": "synpress run"
   },
   "devDependencies": {
-    "@synthetixio/synpress": "^2.4.1-beta.3"
+    "@synthetixio/synpress": "^2.4.1-beta.4"
   }
 }
