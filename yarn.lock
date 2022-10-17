@@ -7270,6 +7270,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/txnLink@workspace:v2/lib/txnLink":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/txnLink@workspace:v2/lib/txnLink"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/txnReducer@workspace:*, @snx-v2/txnReducer@workspace:v2/lib/txnReducer":
   version: 0.0.0-use.local
   resolution: "@snx-v2/txnReducer@workspace:v2/lib/txnReducer"
