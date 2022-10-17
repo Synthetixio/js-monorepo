@@ -10,7 +10,7 @@ export const useTokenBalance = (token: string | undefined) => {
   const hasWalletConnected = Boolean(activeChain);
   const wethContract = useContract(contracts.WETH);
 
-  const { data: balanceData } = useBalance({
+  const { data: balanceData, refetch } = useBalance({
     addressOrName: accountAddress,
     token: compareAddress(token, wethContract?.address) ? undefined : token,
     enabled: hasWalletConnected,
@@ -20,5 +20,6 @@ export const useTokenBalance = (token: string | undefined) => {
     value: balanceData?.value || ethers.BigNumber.from(0),
     decimals: balanceData?.decimals || 18,
     formatedValue: formatValue(balanceData?.value || 0, balanceData?.decimals || 18),
+    refetch,
   };
 };

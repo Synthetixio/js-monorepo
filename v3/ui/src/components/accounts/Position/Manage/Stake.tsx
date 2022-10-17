@@ -15,6 +15,7 @@ interface Props {
 
 export const Stake: FC<Props> = ({ collateral, value, onChange }) => {
   const balance = useTokenBalance(collateral.address);
+
   return (
     <>
       <Heading fontSize="md" mb="1">

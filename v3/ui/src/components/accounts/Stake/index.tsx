@@ -103,6 +103,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
       amount: '',
     });
     refetch();
+    balanceData.refetch();
   };
   const { createAccount, isLoading, multiTxn } = useStake({
     accountId,
