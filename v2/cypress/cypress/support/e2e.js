@@ -1,10 +1,7 @@
 import { ethers } from 'ethers';
 
-before(async () => {
-  const provider = new ethers.providers.JsonRpcProvider(Cypress.env('TENDERLY_RPC_URL'));
-  const tenderlySnapshot = await provider.send('evm_snapshot', []);
-  cy.log(`Created snapshot: ${tenderlySnapshot}`);
-  cy.wrap(tenderlySnapshot).as('tenderlySnapshot');
+before(() => {
+  cy.task('snapshotSave').as('tenderlySnapshot');
 });
 
 beforeEach(() => {
@@ -110,9 +107,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  cy.get('@tenderlySnapshot').then(async (tenderlySnapshot) => {
-    cy.log(`Loading snapshot: ${tenderlySnapshot}`);
-    const provider = new ethers.providers.JsonRpcProvider(Cypress.env('TENDERLY_RPC_URL'));
-    await provider.send('evm_revert', [tenderlySnapshot]);
+  cy.get('@tenderlySnapshot').then((tenderlySnapshot) => {
+    cy.task('snapshotLoad', tenderlySnapshot);
   });
 });

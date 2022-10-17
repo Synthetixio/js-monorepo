@@ -129,6 +129,7 @@ module.exports = defineConfig({
         ...require('./cypress/tasks/removeMinimumStakeTime'),
         ...require('./cypress/tasks/getSnx'),
         ...require('./cypress/tasks/mintSusd'),
+        ...require('./cypress/tasks/snapshot'),
       });
     },
   },
