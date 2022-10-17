@@ -42,9 +42,10 @@ type FormType = {
 interface Props {
   accountId?: string;
   stakingPositions?: Record<string, StakingPositionType>;
+  refetch: () => void;
 }
 
-export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
+export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) => {
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
   const [collateralTypes] = useRecoilState(collateralTypesState);
@@ -82,9 +83,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
 
   const isNativeCurrency = selectedCollateralType.symbol === 'eth';
 
-  const balanceData = useTokenBalance(
-    isNativeCurrency ? undefined : selectedCollateralType.address
-  );
+  const balanceData = useTokenBalance(selectedCollateralType.address);
 
   // add extra step to convert to wrapped token if native (ex. ETH)
   // if (isNativeCurrency) {
@@ -97,6 +96,14 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
   //   overrides.value = amount!;
   // }
 
+  const onSuccess = () => {
+    reset({
+      collateralType: selectedCollateralType,
+      poolId: selectedPoolId,
+      amount: '',
+    });
+    refetch();
+  };
   const { createAccount, isLoading, multiTxn } = useStake({
     accountId,
     stakingPositions,
@@ -105,12 +112,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
     selectedPoolId,
     poolId: poolId?.toString(),
     isNativeCurrency,
-    reset: () =>
-      reset({
-        collateralType: selectedCollateralType,
-        poolId: selectedPoolId,
-        amount: '',
-      }),
+    onSuccess,
   });
   return (
     <>

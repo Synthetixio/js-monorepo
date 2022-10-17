@@ -53,7 +53,7 @@ before(async function () {
     {
       ...cannonInfo.outputs.contracts,
       ...cannonInfo.outputs.imports.synthetix.contracts,
-      ...cannonInfo.outputs.imports.aggregator_weth.contracts,
+      ...cannonInfo.outputs.imports.snx.contracts,
     },
     provider
   );

@@ -1,15 +1,18 @@
 import { ethers } from 'ethers';
 import { useAccount, useBalance, useNetwork } from 'wagmi';
-import { formatValue } from '../utils/helpers';
+import { contracts } from '../utils/constants';
+import { compareAddress, formatValue } from '../utils/helpers';
+import { useContract } from './useContract';
 
 export const useTokenBalance = (token: string | undefined) => {
   const { address: accountAddress } = useAccount();
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
+  const wethContract = useContract(contracts.WETH);
 
   const { data: balanceData } = useBalance({
     addressOrName: accountAddress,
-    token: token,
+    token: compareAddress(token, wethContract?.address) ? undefined : token,
     enabled: hasWalletConnected,
   });
 

@@ -19,7 +19,7 @@ interface Props {
   selectedPoolId: string;
   poolId?: string;
   isNativeCurrency: boolean;
-  reset: () => void;
+  onSuccess: () => void;
 }
 
 export const useStake = ({
@@ -30,7 +30,7 @@ export const useStake = ({
   selectedPoolId,
   isNativeCurrency,
   poolId,
-  reset,
+  onSuccess,
 }: Props) => {
   const [localChainId] = useRecoilState(chainIdState);
   const chain = getChainById(localChainId);
@@ -50,7 +50,7 @@ export const useStake = ({
       ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
       : BigNumber.from(0);
 
-  const { wrap } = useWrapEth(amountBN);
+  const { wrap } = useWrapEth();
 
   const newAccountId = useMemo(() => Math.floor(Math.random() * 10000000000), []);
 
@@ -60,7 +60,7 @@ export const useStake = ({
     const currentStakingPosition = stakingPositions[key];
 
     const amountToDelegate = Boolean(accountId)
-      ? currentStakingPosition?.collateralAmount.add(amountBN)
+      ? (currentStakingPosition?.collateralAmount || BigNumber.from(0)).add(amountBN)
       : amountBN;
 
     if (!snxProxy) return [];
@@ -122,7 +122,7 @@ export const useStake = ({
     },
     onSuccess: async () => {
       toast.closeAll();
-      reset();
+      onSuccess();
       await Promise.all([refetchAccounts!({ cancelRefetch: Boolean(accountId) })]);
       if (!Boolean(accountId)) {
         navigate(
@@ -174,12 +174,12 @@ export const useStake = ({
     try {
       //  add extra step to convert to wrapped token if native (ex. ETH)
       if (isNativeCurrency) {
-        await wrap();
+        await wrap(amountBN);
       }
 
       exec();
     } catch (error) {}
-  }, [exec, isNativeCurrency, wrap]);
+  }, [exec, isNativeCurrency, amountBN, wrap]);
 
   return { createAccount, isLoading, multiTxn };
 };
