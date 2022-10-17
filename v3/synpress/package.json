@@ -1,0 +1,12 @@
+{
+  "name": "@synthetixio/v3-synpress",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.0",
+  "scripts": {
+    "test:e2e": "synpress run"
+  },
+  "devDependencies": {
+    "@synthetixio/synpress": "^2.4.1-beta.4"
+  }
+}

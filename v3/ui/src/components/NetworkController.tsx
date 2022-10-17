@@ -145,7 +145,12 @@ export function NetworkController() {
             {(() => {
               if (!mounted || !account || !chain) {
                 return (
-                  <Button onClick={openConnectModal} type="button" size={['sm', 'sm', 'sm', 'md']}>
+                  <Button
+                    onClick={openConnectModal}
+                    type="button"
+                    size={['sm', 'sm', 'sm', 'md']}
+                    data-testid="connect-wallet-button"
+                  >
                     Connect Wallet
                   </Button>
                 );
@@ -168,6 +173,7 @@ export function NetworkController() {
                   onClick={openAccountModal}
                   type="button"
                   size={['sm', 'sm', 'sm', 'md']}
+                  data-testid="account-button"
                 >
                   {account.displayName}
                   {false && account?.displayBalance ? ` (${account?.displayBalance})` : ''}
