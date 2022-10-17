@@ -139,6 +139,7 @@ module.exports = {
         '**/*.e2e.js',
         '**/*.e2e.ts',
         '**/*.e2e.tsx',
+        'v3/synpress/tests/e2e/**/*',
       ],
       env: {
         mocha: true,
