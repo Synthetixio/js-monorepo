@@ -32,6 +32,7 @@ import { ExternalLink } from '@snx-v2/ExternalLink';
 import { calculateUnstakedStakedSnx } from '@snx-v2/stakingCalculations';
 import { useQueryClient } from '@tanstack/react-query';
 import { parseTxnError } from '@snx-v2/parseTxnError';
+import { useGetTxnLink } from '@snx-v2/txnLink';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -48,6 +49,7 @@ interface MintProps {
   gasError: Error | null;
   settle: () => void;
   isGasEnabledAndNotFetched: boolean;
+  txnHash: string | null;
 }
 const convert = (value: string, exchangeRate: number) => {
   const num = parseFloat(value);
@@ -73,10 +75,11 @@ export const MintUi = ({
   gasError,
   settle,
   isGasEnabledAndNotFetched,
+  txnHash,
 }: MintProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState(0);
-
+  const txnLink = useGetTxnLink(txnHash);
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
     if (/^[0-9]*(\.[0-9]{0,2})?$/.test(value)) {
@@ -276,8 +279,11 @@ export const MintUi = ({
         <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
         {!error ? (
           <Center flexDirection="column">
-            {/* TODO create something that can generate etherscan links based in network and tx id */}
-            <ExternalLink fontSize="sm">{t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
+            {txnLink && (
+              <ExternalLink href={txnLink} fontSize="sm">
+                {t('staking-v2.mint.txn-modal.etherscan')}
+              </ExternalLink>
+            )}
             {txnStatus === 'success' && (
               <Button mt={2} onClick={settle}>
                 {t('staking-v2.mint.txn-modal.close')}
@@ -322,6 +328,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     gasError,
     settle,
     isGasEnabledAndNotFetched,
+    txnHash,
   } = useMintMutation({
     amount: wei(mintAmountSUSD || 0).toBN(),
     delegateAddress: delegateWalletAddress,
@@ -352,6 +359,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       gasError={gasError}
       settle={settle}
       isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
+      txnHash={txnHash}
     />
   );
 };
