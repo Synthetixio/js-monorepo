@@ -124,8 +124,12 @@ module.exports = defineConfig({
     watchForFileChanges: false,
     specPattern: ['../**/*.e2e.{js,jsx,ts,tsx}'],
     baseUrl: 'http://localhost:3000',
-    setupNodeEvents(_on, _config) {
-      // implement node event listeners here
+    setupNodeEvents(on, _config) {
+      on('task', {
+        ...require('./cypress/tasks/removeMinimumStakeTime'),
+        ...require('./cypress/tasks/getSnx'),
+        ...require('./cypress/tasks/mintSusd'),
+      });
     },
   },
 });

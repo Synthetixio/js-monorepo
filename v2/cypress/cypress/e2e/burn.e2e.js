@@ -4,31 +4,9 @@ describe('burn', () => {
       win.localStorage.STAKING_V2_ENABLED = 'true';
     });
 
-    cy.window().then(async () => {
-      const Synthetix = await import(
-        '@synthetixio/contracts/build/mainnet/deployment/Synthetix.js'
-      );
-      const { ethers } = await import('ethers');
-
-      const wallet = Cypress.env('WALLET_ADDRESS');
-      const provider = new ethers.providers.JsonRpcProvider(Cypress.env('TENDERLY_RPC_URL'));
-      const signer = provider.getSigner(wallet);
-      const SynthetixContract = new ethers.Contract(Synthetix.address, Synthetix.abi, signer);
-      const debt = parseFloat(
-        ethers.utils.formatUnits(
-          await SynthetixContract.debtBalanceOf(wallet, ethers.utils.formatBytes32String('sUSD'))
-        )
-      );
-      cy.log(`Debt sUSD: ${debt}`);
-      if (debt < 1) {
-        cy.log('Not enough debt to burn, minting 1 sUSD');
-        const mintTx = await SynthetixContract.issueSynths(
-          ethers.utils.hexValue(ethers.utils.parseEther('1').toHexString())
-        );
-        const receipt = await mintTx.wait();
-        cy.log(`Mint TX ${receipt.transactionHash}`);
-      }
-    });
+    cy.task('getSnx');
+    cy.task('mintSusd');
+    cy.task('removeMinimumStakeTime');
 
     const TIMEOUT_TX = 120000;
     const TIMEOUT_DATA_FETCH = 30000;

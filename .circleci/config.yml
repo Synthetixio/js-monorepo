@@ -56,11 +56,6 @@ commands:
             ./node_modules/.bin/tenderly-cci
             cat $BASH_ENV
 
-      - run: ./node_modules/.bin/tenderly-removeMinimumStakeTime
-      - run: ./node_modules/.bin/tenderly-removeEthCollateralInteractionDelay
-      - run: ./node_modules/.bin/tenderly-getsnx
-      - run: ./node_modules/.bin/tenderly-mintsusd
-
   tenderly-cleanup:
     steps:
       - run:
