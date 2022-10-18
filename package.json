@@ -21,7 +21,8 @@
     "deps:mismatched": "deps-mismatched",
     "deps:circular": "deps-circular",
     "deps:version": "deps-version",
-    "upgrade-browsers": "yarn up browserslist caniuse-lite --recursive"
+    "upgrade-browsers": "yarn up browserslist caniuse-lite --recursive",
+    "svg": "svgo  --config ./svgo.json"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
