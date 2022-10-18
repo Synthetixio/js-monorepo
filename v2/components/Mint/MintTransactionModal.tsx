@@ -15,7 +15,7 @@ export const MintTransactionModal: FC<{
   gasError: Error | null;
   txnStatus: TransactionStatus;
   modalOpen: boolean;
-  mintAmountSNX: string;
+  stakeAmountSNX: string;
   mintAmountsUSD: string;
   txnHash: string | null;
   onClose: () => void;
@@ -24,7 +24,7 @@ export const MintTransactionModal: FC<{
   error,
   txnStatus,
   modalOpen,
-  mintAmountSNX,
+  stakeAmountSNX,
   mintAmountsUSD,
   txnHash,
   gasError,
@@ -60,7 +60,7 @@ export const MintTransactionModal: FC<{
         <Text fontWeight={500} color="gray.600">
           {t('staking-v2.mint.txn-modal.staking')}
         </Text>
-        <Text fontWeight={500}>{mintAmountSNX} SNX</Text>
+        <Text fontWeight={500}>{stakeAmountSNX} SNX</Text>
       </Flex>
       <Flex flexDirection="column" alignItems="center" bg="black" pt="4" pb="4" mt="4">
         <Text fontWeight={500} color="gray.600">
