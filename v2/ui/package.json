@@ -169,6 +169,7 @@
     "jest-environment-jsdom": "^29.1.2",
     "prettier": "^2.7.1",
     "process": "^0.11.10",
+    "raw-loader": "^4.0.2",
     "react-refresh": "^0.14.0",
     "remarkable-external-link": "^1.1.0",
     "stream-browserify": "^3.0.0",

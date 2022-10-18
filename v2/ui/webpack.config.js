@@ -72,13 +72,19 @@ const svgRule = {
 };
 
 const imgRule = {
-  test: /\.(png|jpg|ico|gif|woff|woff2|ttf|eot|doc|pdf|zip|wav|avi|txt|webp|svg)$/,
+  test: /\.(png|jpg|ico|gif|woff|woff2|ttf|eot|doc|pdf|zip|wav|avi|txt|webp)$/,
   type: 'asset',
   parser: {
     dataUrlCondition: {
       maxSize: 4 * 1024, // 4kb
     },
   },
+};
+
+const rawRule = {
+  test: /\.(svg)$/,
+  type: require.resolve('raw-loader'),
+  include: [/node_modules\/@web3-onboard\/injected-wallets/],
 };
 
 const cssRule = {
@@ -215,6 +221,6 @@ module.exports = {
   },
 
   module: {
-    rules: [tsxRule, svgRule, imgRule, cssRule],
+    rules: [tsxRule, svgRule, imgRule, cssRule, rawRule],
   },
 };
