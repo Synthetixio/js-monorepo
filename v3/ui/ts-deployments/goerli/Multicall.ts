@@ -1,4 +1,4 @@
-export const address = '0xe6B4023F62cd0642b697E57C4e74CceC20664C32';
+export const address = '0xDfBb25c54a2bbe605BFD452f9846ae152486dae9';
 export const abi = [
   'function aggregate(tuple(address target, bytes callData)[] calls) payable returns (uint256 blockNumber, bytes[] returnData)',
   'function aggregate3(tuple(address target, bool allowFailure, bytes callData)[] calls) payable returns (tuple(bool success, bytes returnData)[] returnData)',

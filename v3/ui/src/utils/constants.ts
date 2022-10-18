@@ -9,6 +9,7 @@ const hardhatMulticallConfig = {
 
 export const chains = {
   goerli: chain.goerli,
+  'optimism-goerli': chain.optimismGoerli,
   hardhat: { ...chain.hardhat, multicall: hardhatMulticallConfig },
 };
 

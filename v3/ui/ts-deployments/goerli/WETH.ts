@@ -1,4 +1,4 @@
-export const address = '0x961244D6597130aFa4eED27E12599B43ac90E813';
+export const address = '0xf7968E6e5ddE5682534992398d7f392709b79C8b';
 export const abi = [
   'event Approval(address indexed src, address indexed guy, uint256 wad)',
   'event Deposit(address indexed dst, uint256 wad)',

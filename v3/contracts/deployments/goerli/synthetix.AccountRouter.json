@@ -1,5 +1,5 @@
 {
-  "address": "0x65bE3FF3DEA70bE313003e6D5462Ce5d35EC1676",
+  "address": "0x770c5954A208867cf102C313C714c9667F15718A",
   "abi": [
     {
       "inputs": [],
@@ -20,6 +20,11 @@
     {
       "inputs": [],
       "name": "IndexOutOfBounds",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidParameters",
       "type": "error"
     },
     {
@@ -737,6 +742,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x452a2b4ebde5374317768c4154991d62c230289a7f7cb86823ab50a3d6fb21ca",
+  "deployTxnHash": "0x17cbe1343490b7c64394054a0ee300756c882aa21a2e809527692f18dbc4a049",
   "deployedOn": "run.deploy_account"
 }

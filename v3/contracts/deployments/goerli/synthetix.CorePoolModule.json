@@ -1,41 +1,9 @@
 {
-  "address": "0x82483D8f455fb521266233e14Fa1f8Fcb6fDc732",
+  "address": "0x2a2627B86b06CD057779E11c7Bdf2A4077648E44",
   "abi": [
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "requestedAmount",
-          "type": "uint256"
-        }
-      ],
-      "name": "InsufficientAccountCollateral",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        }
-      ],
-      "name": "InvalidCollateral",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "string",
           "name": "incorrectParameter",
           "type": "string"
@@ -68,9 +36,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "MarketNotFound",
@@ -79,51 +47,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "marketId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "int256",
-          "name": "requestedMaxDebtPerShare",
-          "type": "int256"
-        },
-        {
-          "internalType": "int256",
-          "name": "maximumMaxDebtPerShare",
-          "type": "int256"
-        }
-      ],
-      "name": "MaxDebtPerShareTooLow",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "permission",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "address",
-          "name": "target",
-          "type": "address"
-        }
-      ],
-      "name": "PermissionDenied",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "PoolAlreadyExists",
@@ -132,9 +58,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "PoolNotFound",
@@ -161,9 +87,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -180,15 +106,15 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
-          "internalType": "uint256[]",
+          "internalType": "uint128[]",
           "name": "markets",
-          "type": "uint256[]"
+          "type": "uint128[]"
         },
         {
           "indexed": true,
@@ -211,9 +137,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -230,9 +156,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -255,9 +181,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -274,9 +200,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -293,9 +219,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -312,9 +238,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -329,9 +255,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "acceptPoolOwnership",
@@ -342,9 +268,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "requestedPoolId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "address",
@@ -373,9 +299,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "getNominatedPoolOwner",
@@ -392,9 +318,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "getPoolConfiguration",
@@ -421,9 +347,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "getPoolName",
@@ -440,9 +366,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "getPoolOwner",
@@ -464,9 +390,9 @@
           "type": "address"
         },
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "nominatePoolOwner",
@@ -477,9 +403,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "renouncePoolNomination",
@@ -490,9 +416,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "renouncePoolOwnership",
@@ -516,14 +442,14 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
-          "internalType": "uint256[]",
+          "internalType": "uint128[]",
           "name": "markets",
-          "type": "uint256[]"
+          "type": "uint128[]"
         },
         {
           "internalType": "uint256[]",
@@ -544,9 +470,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "string",
@@ -560,6 +486,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x1f6802aa6f533e77565a6977235d27526827a1aed1ee487a25a102ec13057c72",
+  "deployTxnHash": "0x6598ecc216712c1b0720351c738d096556b249a220b5ceb8c9ee2d14f72a7de9",
   "deployedOn": "run.deploy_core"
 }

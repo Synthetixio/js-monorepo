@@ -1,5 +1,5 @@
 {
-  "address": "0x71199f9BC1429ECA9174ef91462c8ab94Aa5De3c",
+  "address": "0xdFF429361B28C7F41c400A1EAA172E8A17fD4752",
   "abi": [
     {
       "inputs": [
@@ -15,22 +15,6 @@
         }
       ],
       "name": "InvalidParameters",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "market",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "existingMarketId",
-          "type": "uint256"
-        }
-      ],
-      "name": "MarketAlreadyRegistered",
       "type": "error"
     },
     {
@@ -62,38 +46,6 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "marketId",
-          "type": "uint256"
-        }
-      ],
-      "name": "MarketNotFound",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "marketId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "int256",
-          "name": "requestedMaxDebtPerShare",
-          "type": "int256"
-        },
-        {
-          "internalType": "int256",
-          "name": "maximumMaxDebtPerShare",
-          "type": "int256"
-        }
-      ],
-      "name": "MaxDebtPerShareTooLow",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "bytes32",
           "name": "expected",
           "type": "bytes32"
@@ -110,9 +62,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "uint256",
@@ -145,9 +97,9 @@
         },
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "MarketRegistered",
@@ -158,9 +110,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -189,9 +141,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -218,9 +170,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "address",
@@ -241,9 +193,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "getMarketCollateral",
@@ -260,9 +212,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "getMarketDebtPerShare",
@@ -279,9 +231,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "getMarketIssuance",
@@ -298,12 +250,12 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
-      "name": "getMarketReportedBalance",
+      "name": "getMarketReportedDebt",
       "outputs": [
         {
           "internalType": "uint256",
@@ -317,9 +269,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "getMarketTotalBalance",
@@ -336,9 +288,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "getWithdrawableUsd",
@@ -363,9 +315,9 @@
       "name": "registerMarket",
       "outputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "stateMutability": "nonpayable",
@@ -374,9 +326,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "marketId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "address",
@@ -395,6 +347,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x50e00945e9a640fa2e2a1d0ba902ac0bc840e578c7c9d19fdbbf8e12471c92d5",
+  "deployTxnHash": "0x3cb92f5508088208cbc3ce1e5d3e486e70abec559823a5f4a2040b07b5c39f51",
   "deployedOn": "run.deploy_core"
 }

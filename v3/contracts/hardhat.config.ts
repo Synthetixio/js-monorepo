@@ -47,6 +47,11 @@ const config: HardhatUserConfig = {
       url: `https://goerli.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
+    'optimism-goerli': {
+      chainId: 420,
+      url: `https://optimism-goerli.infura.io/v3/${process.env.INFURA_API_KEY}`,
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    },
   },
   paths: {
     artifacts: './artifacts',

@@ -1,5 +1,5 @@
 {
-  "address": "0x26000383dfd4287983E94d7E4F132879c5e22574",
+  "address": "0xf7968E6e5ddE5682534992398d7f392709b79C8b",
   "abi": [
     {
       "type": "event",
@@ -259,7 +259,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xb260f3a8fa318eb2379f8e0279248567d3a0cbf1d5e559a2f0d0a47912396ff3",
+  "deployTxnHash": "0x02cb3836bc12c5c26c20f78fa25b8f77c05fa705413cbdab571137b2aeb38d2c",
   "sourceName": "contracts/WETH9.sol",
   "contractName": "WETH9",
   "deployedOn": "contract.WETH"
