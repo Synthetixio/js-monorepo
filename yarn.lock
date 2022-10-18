@@ -6892,8 +6892,11 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
+    "@snx-v2/ExternalLink": "workspace:*"
+    "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/useBurnMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"

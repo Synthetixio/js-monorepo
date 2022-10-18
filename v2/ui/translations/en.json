@@ -113,7 +113,18 @@
       "burn-cratio": "Burn to C-Ratio",
       "burn-debt": "Clear Debt",
       "active-debt": "Active debt",
-      "staked-snx": "Staked SNX"
+      "staked-snx": "Staked SNX",
+      "txn-modal": {
+        "pending": "Transaction Pending",
+        "completed": "Transaction completed",
+        "unstaking": "Unstaking",
+        "burning": "Burning",
+        "loading": "Loading",
+        "etherscan": "View Etherscan",
+        "error-headline": "Error",
+        "retry": "Retry",
+        "close": "Close"
+      }
     },
     "transaction-modal": {
       "metamask-note": "Follow the Metamask prompts to authorize the transaction."
