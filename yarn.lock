@@ -9124,6 +9124,7 @@ __metadata:
     "@uniswap/v3-periphery": ^1.0.0
     "@uniswap/v3-sdk": ^3.6.3
     "@web3-onboard/coinbase": ^2.0.9
+    "@web3-onboard/common": ^2.2.3
     "@web3-onboard/core": ^2.5.0
     "@web3-onboard/gnosis": ^2.0.7
     "@web3-onboard/injected-wallets": ^2.0.14
@@ -11455,6 +11456,17 @@ __metadata:
     ethers: 5.5.4
     joi: ^17.4.2
   checksum: c4bed268a78d979907400a889d1c3b72b56f8816418ff952eaead36acf44274789c1fa3cda0f31d0e5bb78e42590d51fb7a46dd17baa8e3d3910b596cf2356f2
+  languageName: node
+  linkType: hard
+
+"@web3-onboard/common@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "@web3-onboard/common@npm:2.2.3"
+  dependencies:
+    bignumber.js: ^9.1.0
+    ethers: 5.5.4
+    joi: ^17.6.1
+  checksum: bce5080e5947308a1e89dea307fc255fc34b9b0446c08dcbb97afdce539ee0373ef28fbb0681a69ecbd6e9fecd0466a3a0bbab16f6229d8d71f89fc042762fee
   languageName: node
   linkType: hard
 
@@ -24349,6 +24361,19 @@ __metadata:
     "@sideway/formula": ^3.0.0
     "@sideway/pinpoint": ^2.0.0
   checksum: eaf62f6c02f2edb1042f1ab04fc23a5918a2cb8f54bec84c6e1033624d8a462c10ae9518af55a3ba84f1793960450d58094eda308e7ef93c17edd4e3c8ef31d5
+  languageName: node
+  linkType: hard
+
+"joi@npm:^17.6.1":
+  version: 17.6.3
+  resolution: "joi@npm:17.6.3"
+  dependencies:
+    "@hapi/hoek": ^9.0.0
+    "@hapi/topo": ^5.0.0
+    "@sideway/address": ^4.1.3
+    "@sideway/formula": ^3.0.0
+    "@sideway/pinpoint": ^2.0.0
+  checksum: a4cd53a83e68de7727ba48daa79047183d65a9bb6c2ad4f3028cb56a7526d113860c8189e95371d8d3a8315c344a478547f875daf3856f2d9477a995ca1ef05a
   languageName: node
   linkType: hard
 
