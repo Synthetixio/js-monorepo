@@ -6081,13 +6081,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nomiclabs/hardhat-ethers@npm:^2.0.6":
-  version: 2.1.0
-  resolution: "@nomiclabs/hardhat-ethers@npm:2.1.0"
+"@nomiclabs/hardhat-ethers@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@nomiclabs/hardhat-ethers@npm:2.2.0"
   peerDependencies:
     ethers: ^5.0.0
     hardhat: ^2.0.0
-  checksum: 16fcde7fbce0b953daa3520148b0054d4951434d39d454b13dedb795d10b89893b199f1c3ed2856c196a229fc470c6cbd3ceff5895a94f52996b99a55515525d
+  checksum: 5ad702c2b784eb446882278abdba2c284eb27d09740c2161f9336f27d607f17fff3ad7cf7f814835302efefb6869322d0e69c87a08164f2d4743181d2fd6d6b0
   languageName: node
   linkType: hard
 
@@ -9127,6 +9127,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@synthetixio/core-utils@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@synthetixio/core-utils@npm:1.1.2"
+  dependencies:
+    chalk: 4.1.2
+    prompts: 2.4.2
+  peerDependencies:
+    ethers: ^5.0.0
+  checksum: 5e44aaf9452d498faf12689790e94a71d344509631f71b856de67749958b4f9e02802ff26c498c2e4d6d2501627683a9f7e54a22c01af3f76674134999ccd17e
+  languageName: node
+  linkType: hard
+
 "@synthetixio/deps@workspace:*, @synthetixio/deps@workspace:tools/deps":
   version: 0.0.0-use.local
   resolution: "@synthetixio/deps@workspace:tools/deps"
@@ -9513,9 +9525,10 @@ __metadata:
   dependencies:
     "@ethersproject/abi": ^5.6.0
     "@ethersproject/providers": ^5.6.8
-    "@nomiclabs/hardhat-ethers": ^2.0.6
+    "@nomiclabs/hardhat-ethers": ^2.2.0
     "@nomiclabs/hardhat-etherscan": ^3.0.3
     "@nomiclabs/hardhat-waffle": ^2.0.3
+    "@synthetixio/core-utils": ^1.1.2
     "@typechain/ethers-v5": ^10.0.0
     "@typechain/hardhat": ^6.0.0
     "@types/node": ^18.8.5
@@ -31057,7 +31070,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prompts@npm:^2.0.1, prompts@npm:^2.4.0, prompts@npm:^2.4.2":
+"prompts@npm:2.4.2, prompts@npm:^2.0.1, prompts@npm:^2.4.0, prompts@npm:^2.4.2":
   version: 2.4.2
   resolution: "prompts@npm:2.4.2"
   dependencies:

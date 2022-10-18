@@ -56,5 +56,10 @@
       "repay": "Repay snxUSD",
       "custom": "Custom"
     }
+  },
+  "not-found": {
+    "page-title": "Not Found | Synthetix Staking",
+    "title": "404",
+    "subtitle": "Page not found"
   }
 }

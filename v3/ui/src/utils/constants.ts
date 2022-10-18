@@ -72,6 +72,7 @@ export const contracts = {
   ACCOUNT_PROXY: 'synthetix.AccountProxy',
   MULTICALL: 'Multicall',
   SNX_TOKEN: 'snx.token',
+  WETH: 'WETH',
 };
 
 export const poolsData: Record<string, { name: string }> = {

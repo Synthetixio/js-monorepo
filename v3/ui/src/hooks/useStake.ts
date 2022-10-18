@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import { BigNumber, CallOverrides, ethers, utils } from 'ethers';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { contracts, getChainById } from '../utils/constants';
@@ -9,6 +9,7 @@ import { CollateralType, StakingPositionType } from '../utils/types';
 import { useApproveCall } from './useApproveCall';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
+import { useWrapEth } from './useWrapEth';
 
 interface Props {
   accountId?: string;
@@ -17,7 +18,8 @@ interface Props {
   selectedCollateralType: CollateralType;
   selectedPoolId: string;
   poolId?: string;
-  reset: () => void;
+  isNativeCurrency: boolean;
+  onSuccess: () => void;
 }
 
 export const useStake = ({
@@ -26,8 +28,9 @@ export const useStake = ({
   amount,
   selectedCollateralType,
   selectedPoolId,
+  isNativeCurrency,
   poolId,
-  reset,
+  onSuccess,
 }: Props) => {
   const [localChainId] = useRecoilState(chainIdState);
   const chain = getChainById(localChainId);
@@ -38,15 +41,16 @@ export const useStake = ({
     isClosable: true,
     duration: 9000,
   });
-  const collateralContract = useContract(contracts.SNX_TOKEN);
-  const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
 
+  const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   const [{ refetchAccounts }] = useRecoilState(accountsState);
 
   const amountBN =
     Boolean(amount) && Number(amount) > 0
       ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
       : BigNumber.from(0);
+
+  const { wrap } = useWrapEth();
 
   const newAccountId = useMemo(() => Math.floor(Math.random() * 10000000000), []);
 
@@ -56,18 +60,11 @@ export const useStake = ({
     const currentStakingPosition = stakingPositions[key];
 
     const amountToDelegate = Boolean(accountId)
-      ? currentStakingPosition?.collateralAmount.add(amountBN)
+      ? (currentStakingPosition?.collateralAmount || BigNumber.from(0)).add(amountBN)
       : amountBN;
 
     if (!snxProxy) return [];
 
-    const createAccountCall: MulticallCall[] = [
-      {
-        contract: snxProxy.contract,
-        functionName: 'createAccount',
-        callArgs: [newAccountId],
-      },
-    ];
     const stakingCalls: MulticallCall[] = [
       {
         contract: snxProxy.contract,
@@ -87,17 +84,27 @@ export const useStake = ({
       },
     ];
 
-    return Boolean(accountId) ? stakingCalls : [...createAccountCall, ...stakingCalls];
+    const initialCalls: MulticallCall[] = [];
+
+    if (!Boolean(accountId)) {
+      initialCalls.push({
+        contract: snxProxy.contract,
+        functionName: 'createAccount',
+        callArgs: [newAccountId],
+      });
+    }
+
+    return [...initialCalls, ...stakingCalls];
   }, [
     accountId,
-    amountBN,
-    poolId,
     newAccountId,
-    selectedCollateralType.address,
-    selectedCollateralType.symbol,
     selectedPoolId,
-    snxProxy,
+    selectedCollateralType.symbol,
+    selectedCollateralType.address,
     stakingPositions,
+    amountBN,
+    snxProxy,
+    poolId,
   ]);
 
   const overrides: CallOverrides = {};
@@ -115,7 +122,7 @@ export const useStake = ({
     },
     onSuccess: async () => {
       toast.closeAll();
-      reset();
+      onSuccess();
       await Promise.all([refetchAccounts!({ cancelRefetch: Boolean(accountId) })]);
       if (!Boolean(accountId)) {
         navigate(
@@ -140,8 +147,8 @@ export const useStake = ({
     },
   });
 
-  const { exec: createAccount, isLoading } = useApproveCall(
-    collateralContract!.contract.address,
+  const { exec, isLoading } = useApproveCall(
+    selectedCollateralType.address,
     amountBN,
     snxProxy?.address,
     multiTxn.exec,
@@ -163,6 +170,16 @@ export const useStake = ({
       },
     }
   );
+  const createAccount = useCallback(async () => {
+    try {
+      //  add extra step to convert to wrapped token if native (ex. ETH)
+      if (isNativeCurrency) {
+        await wrap(amountBN);
+      }
+
+      exec();
+    } catch (error) {}
+  }, [exec, isNativeCurrency, amountBN, wrap]);
 
   return { createAccount, isLoading, multiTxn };
 };
