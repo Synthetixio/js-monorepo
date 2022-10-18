@@ -14,7 +14,6 @@ import torusModule from '@web3-onboard/torus';
 
 import { SynthetixIcon, SynthetixLogo } from 'components/WalletComponents';
 import { customBrave, customMetaMask, customDetected } from './customInjected';
-import { initCustomBrave } from './customBrave';
 
 const injected = injectedModule({ custom: [customMetaMask, customBrave, customDetected] });
 
@@ -26,7 +25,7 @@ const ledger = ledgerModule();
 const gnosis = gnosisModule();
 const portis = portisModule({ apiKey: `${process.env.NEXT_PUBLIC_PORTIS_APP_ID}` });
 const torus = torusModule();
-const brave = initCustomBrave();
+const brave = () => customBrave;
 
 const supportedChains = [
   // Mainnet
