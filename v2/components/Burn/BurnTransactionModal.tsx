@@ -6,6 +6,7 @@ import { Button, Center, Divider, Flex, Spinner, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { parseTxnError } from '@snx-v2/parseTxnError';
 import { ExternalLink } from '@snx-v2/ExternalLink';
+import { useGetTxnLink } from '@snx-v2/txnLink';
 
 export const BurnTransactionModal: FC<{
   settle: () => void;
@@ -32,6 +33,7 @@ export const BurnTransactionModal: FC<{
 }) => {
   const transactionLoading = txnStatus === 'pending' || txnStatus === 'prompting';
   const { t } = useTranslation();
+  const txnLink = useGetTxnLink(txnHash);
 
   return (
     <TransactionModal
@@ -83,8 +85,10 @@ export const BurnTransactionModal: FC<{
       <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
       {!error ? (
         <Center flexDirection="column">
-          {txnHash && (
-            <ExternalLink fontSize="sm">{t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
+          {txnLink && (
+            <ExternalLink href={txnLink} fontSize="sm">
+              {t('staking-v2.mint.txn-modal.etherscan')}
+            </ExternalLink>
           )}
           {txnStatus === 'success' && (
             <Button mt={2} onClick={onClose}>
