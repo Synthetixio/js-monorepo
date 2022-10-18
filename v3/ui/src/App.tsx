@@ -14,6 +14,7 @@ import {
 import { CreateMarket } from './pages/markets/CreateMarket';
 import { Market } from './pages/markets/Market';
 import { Pool } from './pages/pools/pool';
+import { NotFoundPage } from './pages/404';
 
 export const Synthetix: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -35,6 +36,7 @@ export const Synthetix: React.FC = () => {
           <Route path="/markets/:address" element={<Market />} />
           <Route path="/pools/:id" element={<Pool />} />
           <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </Suspense>
