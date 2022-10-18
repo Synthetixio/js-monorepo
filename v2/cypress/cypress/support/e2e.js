@@ -1,5 +1,9 @@
 import { ethers } from 'ethers';
 
+before(() => {
+  cy.task('snapshotSave').as('tenderlySnapshot');
+});
+
 beforeEach(() => {
   cy.intercept('https://analytics.synthetix.io/matomo.js', { statusCode: 204 }).as('matomo');
 
@@ -12,18 +16,6 @@ beforeEach(() => {
   // Because we are working with tenderly fork, infura calls should not even happen!
   // cy.intercept('https://mainnet.infura.io/**', { statusCode: 204 }).as('infura-mainnet');
   // cy.intercept('https://optimism-mainnet.infura.io/**', { statusCode: 204 }).as('infura-optimism');
-
-  cy.intercept('POST', '/graphql', (req) => {
-    req?.body?.forEach((gql) => {
-      if (gql?.operationName && gql?.variables) {
-        Cypress.log({
-          name: 'graphql',
-          message: `${gql.operationName}: ${JSON.stringify(gql.variables)}`,
-          consoleProps: () => gql,
-        });
-      }
-    });
-  }).as('graphql');
 
   cy.on('window:before:load', (win) => {
     win.__caches = {};
@@ -111,5 +103,11 @@ beforeEach(() => {
         },
       }
     );
+  });
+});
+
+afterEach(() => {
+  cy.get('@tenderlySnapshot').then((tenderlySnapshot) => {
+    cy.task('snapshotLoad', tenderlySnapshot);
   });
 });

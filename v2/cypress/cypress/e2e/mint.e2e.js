@@ -4,6 +4,8 @@ describe('mint', () => {
       win.localStorage.STAKING_V2_ENABLED = 'true';
     });
 
+    cy.task('getSnx');
+
     const TIMEOUT_TX = 120000;
     const TIMEOUT_DATA_FETCH = 30000;
 
