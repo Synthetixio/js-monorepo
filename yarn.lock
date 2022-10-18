@@ -6891,12 +6891,20 @@ __metadata:
   resolution: "@snx-v2/Burn@workspace:v2/components/Burn"
   dependencies:
     "@chakra-ui/react": ^2.2.8
-    "@ethersproject/bignumber": ^5.6.2
+    "@snx-v2/EthGasPriceEstimator": "workspace:*"
+    "@snx-v2/ExternalLink": "workspace:*"
+    "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/parseTxnError": "workspace:*"
+    "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/useBurnMutation": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.10
     "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
@@ -7272,9 +7280,9 @@ __metadata:
   resolution: "@snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation"
   dependencies:
     "@ethersproject/bignumber": ^5.6.2
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/queries": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -9363,17 +9371,14 @@ __metadata:
     "@snx-v2/SelfLiquidation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"
-    "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/UtilityCard": "workspace:^"
     "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
-    "@snx-v2/useBurnMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
-    "@snx-v2/useSynthsBalances": "workspace:*"
     "@socket.tech/widget": ^0.1.1
     "@storybook/addon-actions": ^6.5.10
     "@storybook/addon-docs": ^6.5.10

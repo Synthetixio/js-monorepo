@@ -47,7 +47,6 @@ interface MintProps {
   error: Error | null;
   gasError: Error | null;
   settle: () => void;
-  retry: () => void;
   isGasEnabledAndNotFetched: boolean;
 }
 const convert = (value: string, exchangeRate: number) => {
@@ -62,8 +61,8 @@ const convert = (value: string, exchangeRate: number) => {
 export const MintUi = ({
   unstakedSnx = 0,
   susdBalance = 0,
-  exchangeRate = 0.25,
-  isLoading = false,
+  exchangeRate,
+  isLoading,
   onSubmit,
   onMintAmountSNXChange,
   mintAmountSNX,
@@ -73,7 +72,6 @@ export const MintUi = ({
   error,
   gasError,
   settle,
-  retry,
   isGasEnabledAndNotFetched,
 }: MintProps) => {
   const { t } = useTranslation();
@@ -288,7 +286,7 @@ export const MintUi = ({
           </Center>
         ) : (
           <Center>
-            <Button onClick={gasError ? settle : retry}>
+            <Button onClick={gasError ? settle : onSubmit}>
               {gasError
                 ? t('staking-v2.mint.txn-modal.close')
                 : t('staking-v2.mint.txn-modal.retry')}
@@ -330,6 +328,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     toMax: wei(mintAmountSNX || 0).gte(formatNumber(unstakedSnx.toNumber())),
   });
   const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
+
   return (
     <MintUi
       isLoading={isLoading}
@@ -352,7 +351,6 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       error={error}
       gasError={gasError}
       settle={settle}
-      retry={() => mutate()}
       isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
     />
   );

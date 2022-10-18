@@ -1,22 +1,32 @@
-import { Burn } from './Burn';
+import { BurnUi } from './Burn';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { wei } from '@synthetixio/wei';
 
 export default {
-  title: 'Burn',
-  component: Burn,
-} as ComponentMeta<typeof Burn>;
+  title: 'BurnUi',
+  component: BurnUi,
+} as ComponentMeta<typeof BurnUi>;
 
-const Template: ComponentStory<typeof Burn> = (_args) => <Burn {..._args} />;
+const Template: ComponentStory<typeof BurnUi> = (_args) => <BurnUi {..._args} />;
 
 export const Primary = Template.bind({});
 
 Primary.args = {
-  snxBalance: wei(2000),
-  susdBalance: wei(2000),
-  exchangeRate: 0.25,
-  gasPrice: wei(0.01),
-  activeDebt: wei(0),
+  snxBalance: 2000,
+  susdBalance: 2000,
+  debtBalance: 100,
   isLoading: false,
   txnStatus: 'unsent',
+  onSubmit: () => {},
+  onBurnAmountSusdChange: () => {},
+  burnAmountSusd: '',
+  snxUnstakingAmount: '',
+  transactionFee: wei(0),
+  modalOpen: false,
+  error: null,
+  gasError: null,
+  settle: () => {},
+  isGasEnabledAndNotFetched: true,
+  onBadgeClick: () => {},
+  stakedSnx: 100,
 };
