@@ -119,6 +119,7 @@ export const MintUi = ({
             </Flex>
             <Flex flexDir="column" alignItems="flex-end" w="30%">
               <StyledInput
+                autoFocus
                 data-testid="mint snx amount input"
                 placeholder={t('staking-v2.mint.enter-amount')}
                 onChange={onChange('snx')}

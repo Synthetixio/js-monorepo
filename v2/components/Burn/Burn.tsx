@@ -126,6 +126,7 @@ export const BurnUi = ({
             </Flex>
             <Flex flexDir="column" alignItems="flex-end">
               <StyledInput
+                autoFocus
                 data-testid="burn susd amount input"
                 placeholder={t('staking-v2.burn.enter-amount')}
                 onChange={onChange('susd')}
