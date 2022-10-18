@@ -6,7 +6,7 @@ export function initCustomBrave(): WalletInit {
   return () => {
     return {
       label: ProviderLabel.Brave,
-      getIcon: async () => (await import('./walletIcons/braveIcon')).default,
+      getIcon: async () => (await import('../../public/images/brave.svg')).default,
       getInterface: async () => {
         let provider = {} as EIP1193Provider;
         if (

@@ -55,7 +55,7 @@ export const customMetaMask: InjectedWalletModule = {
   },
 
   // A method that returns a string of the wallet icon which will be displayed
-  getIcon: async () => (await import('./walletIcons/metaMaskIcon')).default,
+  getIcon: async () => (await import('../../public/images/metamask.svg')).default,
   // Returns a valid EIP1193 provider. In some cases the provider will need to be patched to satisfy the EIP1193 Provider interface
   getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask, false),
   // A list of platforms that this wallet supports
@@ -73,7 +73,7 @@ export const customBrave: InjectedWalletModule = {
   checkProviderIdentity: ({}) => false,
 
   // A method that returns a string of the wallet icon which will be displayed
-  getIcon: async () => (await import('./walletIcons/braveIcon')).default,
+  getIcon: async () => (await import('../../public/images/brave.svg')).default,
   // Returns a valid EIP1193 provider. In some cases the provider will need to be patched to satisfy the EIP1193 Provider interface
   getInterface: getInjectedInterface(ProviderIdentityFlag.BraveWallet, false),
   // A list of platforms that this wallet supports
@@ -93,7 +93,7 @@ export const customDetected: InjectedWalletModule = {
 
     return result;
   },
-  getIcon: async () => (await import('./walletIcons/detectedIcon')).default,
+  getIcon: async () => (await import('../../public/images/detectedWallet.svg')).default,
   getInterface: async () => ({
     provider: window.ethereum as EIP1193Provider,
   }),
