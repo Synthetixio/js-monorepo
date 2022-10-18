@@ -11,7 +11,11 @@ export const getContract = (
 ) => {
   const chain = getChainById(localChainId);
   if (!chain) return null;
-  const chainName = chain.name.toLowerCase() == 'localhost' ? 'hardhat' : chain.name.toLowerCase();
+  const chainName =
+    chain.name.toLowerCase() == 'localhost'
+      ? 'hardhat'
+      : chain.name.toLowerCase().replaceAll(' ', '-');
+
   let contractInfo;
   try {
     contractInfo = require(`../../ts-deployments/${chainName}/${name}.ts`);

@@ -20,8 +20,11 @@ export const getChainById = (chainId: number) =>
 
 export const getChainNameById = (chainId: number) => {
   const chain = Object.entries(chainMapping).find((entry) => entry[1] === chainId);
-
-  return chain ? chain[0] : '';
+  let chainName = chain ? chain[0] : '';
+  if (chainName == 'optimismGoerli') {
+    chainName = 'optimism-goerli';
+  }
+  return chainName;
 };
 
 // TODO: Retrieve from on chain data
