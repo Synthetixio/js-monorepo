@@ -29,7 +29,7 @@ export const StakingStats: FC<Props> = ({
         </Text>
         <Heading size="md">
           <Skeleton isLoaded={collateralAmount !== undefined}>
-            {collateralAmount?.toString()} SNX
+            {collateralAmount?.toString()} {collateral.symbol.toUpperCase()}
           </Skeleton>
         </Heading>
         <Text opacity="0.6" fontSize="sm">

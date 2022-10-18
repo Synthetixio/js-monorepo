@@ -30,7 +30,7 @@ export const StakingPosition: FC<Props> = ({ position }) => {
         <>
           ${currency(collateralValue)}
           <Text fontSize="xs" opacity="0.66" mt="1'">
-            {currency(collateralAmount)} SNX
+            {currency(collateralAmount)} {collateralType.symbol.toUpperCase()}
           </Text>
         </>
       </Td>
