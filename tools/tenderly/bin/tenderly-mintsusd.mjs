@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import { env } from '../lib/env.mjs';
-import { getsnx } from '../lib/getsnx.mjs';
 import { utils } from 'ethers';
 import { fork } from '../lib/fork.mjs';
+import { mintsusd } from '../lib/mintsusd.mjs';
 
 Promise.resolve()
   .then(env)
@@ -23,11 +23,11 @@ Promise.resolve()
         [
           'Correct wallet address is required',
           'Usage:',
-          '  - TENDERLY_WALLET_ADDRESS=<WALLET_ADDRESS> tenderly-getsnx',
-          '  - tenderly-getsnx <WALLET_ADDRESS>',
+          '  - TENDERLY_WALLET_ADDRESS=<WALLET_ADDRESS> tenderly-mintsusd',
+          '  - tenderly-mintsusd <WALLET_ADDRESS>',
           '',
           'Or with ".env.local" present',
-          '  - tenderly-getsnx',
+          '  - tenderly-mintsusd',
           '',
         ].join('\n')
       );
@@ -38,5 +38,5 @@ Promise.resolve()
       TENDERLY_WALLET_ADDRESS: walletAddress,
     };
   })
-  .then(getsnx)
+  .then(mintsusd)
   .catch(console.error);

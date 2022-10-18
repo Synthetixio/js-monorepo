@@ -115,6 +115,7 @@ export const BurnUi = ({
             </Flex>
             <Flex flexDir="column" alignItems="flex-end">
               <Input
+                data-testid="burn susd amount input"
                 borderWidth="0px"
                 placeholder={t('staking-v2.burn.enter-amount')}
                 onChange={onChange}
@@ -139,7 +140,13 @@ export const BurnUi = ({
                   <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={4}>
                     {t('staking-v2.burn.active-debt')}: {formatNumber(debtBalance || 0)}
                   </Text>
-                  <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
+                  <Text
+                    data-testid="burn available susd balance"
+                    data-balance={formatNumber(susdBalance)}
+                    color="whiteAlpha.700"
+                    fontSize="xs"
+                    fontFamily="heading"
+                  >
                     {t('staking-v2.burn.susd-balance', { susdBalance: formatNumber(susdBalance) })}
                   </Text>
                 </Flex>
@@ -249,6 +256,7 @@ export const BurnUi = ({
           </Flex>
         )}
         <Button
+          data-testid="burn submit"
           fontFamily="heading"
           fontWeight="black"
           mt={4}
