@@ -25826,7 +25826,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:^17.6.1":
+"joi@npm:^17.4.0, joi@npm:^17.6.1":
   version: 17.6.3
   resolution: "joi@npm:17.6.3"
   dependencies:
