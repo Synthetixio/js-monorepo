@@ -1,3 +1,4 @@
+import { formatNumber } from '@snx-v2/formatters';
 import Wei, { wei } from '@synthetixio/wei';
 
 export const calculateStakedSnx = ({
@@ -26,3 +27,27 @@ export const calculateUnstakedStakedSnx = ({
   collateral
     ? collateral.sub(calculateStakedSnx({ targetCRatio, currentCRatio, collateral }))
     : wei(0);
+
+export const calculateUnstakingAmountFromBurn = (
+  susdToBurn: string,
+  targetCRatio?: number,
+  SNXPrice?: number
+) => {
+  const num = parseFloat(susdToBurn);
+  if (isNaN(num)) return '';
+  if (!targetCRatio || !SNXPrice) return '';
+
+  return formatNumber(num / targetCRatio / SNXPrice);
+};
+
+export const calculateBurnAmountFromUnstaking = (
+  snxToUnstake: string,
+  targetCRatio?: number,
+  SNXPrice?: number
+) => {
+  const num = parseFloat(snxToUnstake);
+  if (isNaN(num)) return '';
+  if (!targetCRatio || !SNXPrice) return '';
+
+  return formatNumber(num * targetCRatio * SNXPrice);
+};

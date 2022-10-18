@@ -1,6 +1,17 @@
 import { ChangeEvent, FC } from 'react';
 import { useState } from 'react';
-import { Input, Box, Text, Flex, Badge, Tooltip, Button, Skeleton, Center } from '@chakra-ui/react';
+import {
+  Input,
+  Box,
+  Text,
+  Flex,
+  Badge,
+  Tooltip,
+  Button,
+  Skeleton,
+  Center,
+  InputProps,
+} from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { FailedIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
@@ -8,7 +19,11 @@ import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
-import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
+import {
+  calculateBurnAmountFromUnstaking,
+  calculateStakedSnx,
+  calculateUnstakingAmountFromBurn,
+} from '@snx-v2/stakingCalculations';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { useQueryClient } from '@tanstack/react-query';
@@ -21,6 +36,7 @@ interface BurnProps {
   isLoading: boolean;
   onSubmit: () => void;
   onBurnAmountSusdChange: (amount: string) => void;
+  onUnstakeAmountChange: (amount: string) => void;
   burnAmountSusd: string;
   snxUnstakingAmount: string;
   transactionFee?: Wei | null;
@@ -33,6 +49,29 @@ interface BurnProps {
 
 type ActiveBadge = 'max' | 'toTarget';
 
+const StyledInput: FC<InputProps> = (props) => {
+  return (
+    <Input
+      {...props}
+      borderWidth="0px"
+      type="text"
+      inputMode="decimal"
+      maxLength={14}
+      textAlign="end"
+      p={0}
+      outline="none"
+      fontFamily="heading"
+      fontSize="xl"
+      fontWeight="black"
+      lineHeight="2xl"
+      color="white"
+      height="unset"
+      _focus={{ boxShadow: 'none !important' }}
+      _placeholder={{ color: 'whiteAlpha.700' }}
+    />
+  );
+};
+
 export const BurnUi = ({
   snxBalance = 0,
   susdBalance = 0,
@@ -41,6 +80,7 @@ export const BurnUi = ({
   snxUnstakingAmount,
   burnAmountSusd,
   onBurnAmountSusdChange,
+  onUnstakeAmountChange,
   transactionFee,
   onBadgeClick,
   stakedSnx,
@@ -49,14 +89,13 @@ export const BurnUi = ({
   isGasEnabledAndNotFetched,
 }: BurnProps) => {
   const { t } = useTranslation();
-
   const [activeBadge, setActiveBadge] = useState<ActiveBadge | null>(null);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (currency: 'susd' | 'snx') => (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
     setActiveBadge(null);
     if (/^[0-9]*(\.[0-9]{0,2})?$/.test(value)) {
-      onBurnAmountSusdChange(value);
+      return currency === 'susd' ? onBurnAmountSusdChange(value) : onUnstakeAmountChange(value);
     }
   };
   const handleBadgePress = (badgeType: ActiveBadge) => {
@@ -86,26 +125,11 @@ export const BurnUi = ({
               </Text>
             </Flex>
             <Flex flexDir="column" alignItems="flex-end">
-              <Input
+              <StyledInput
                 data-testid="burn susd amount input"
-                borderWidth="0px"
                 placeholder={t('staking-v2.burn.enter-amount')}
-                onChange={onChange}
-                type="text"
-                inputMode="decimal"
+                onChange={onChange('susd')}
                 value={numberWithCommas(burnAmountSusd)}
-                maxLength={14}
-                textAlign="end"
-                p={0}
-                outline="none"
-                fontFamily="heading"
-                fontSize="xl"
-                fontWeight="black"
-                lineHeight="2xl"
-                color="white"
-                height="unset"
-                _focus={{ boxShadow: 'none !important' }}
-                _placeholder={{ color: 'whiteAlpha.700' }}
               />
               <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
                 <Flex>
@@ -187,19 +211,12 @@ export const BurnUi = ({
               </Text>
             </Flex>
             <Flex flexDir="column" alignItems="flex-end">
-              <Text
-                fontFamily="heading"
-                fontSize="xl"
-                fontWeight="black"
-                lineHeight="2xl"
-                color={snxUnstakingAmount === '0.00' ? 'whiteAlpha.700' : 'white'}
-                height="unset"
-                _focus={{ boxShadow: 'none !important' }}
-                _placeholder={{ color: 'whiteAlpha.700' }}
-                borderWidth="0px"
-              >
-                {snxUnstakingAmount}
-              </Text>
+              <StyledInput
+                data-testid="burn snx amount input"
+                placeholder={t('staking-v2.burn.enter-amount')}
+                onChange={onChange('snx')}
+                value={numberWithCommas(snxUnstakingAmount)}
+              />
               <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
                 <Flex>
                   <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={4}>
@@ -248,16 +265,9 @@ export const BurnUi = ({
   );
 };
 
-const calculateUnStakingAmount = (susdToBurn: string, targetCRatio?: number, SNXPrice?: number) => {
-  const num = parseFloat(susdToBurn);
-  if (isNaN(num)) return formatNumber(0);
-  if (!targetCRatio || !SNXPrice) return formatNumber(0);
-
-  return formatNumber(num / targetCRatio / SNXPrice);
-};
-
 export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
   const [burnAmountSusd, setBurnAmountSusd] = useState('');
+  const [snxUnstakingAmount, setSnxUnstakingAmount] = useState('');
   const [activeBadge, setActiveBadge] = useState<ActiveBadge | undefined>(undefined);
   const queryClient = useQueryClient();
 
@@ -305,11 +315,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         return;
     }
   };
-  const snxUnstakingAmount = calculateUnStakingAmount(
-    burnAmountSusd,
-    debtData?.targetCRatio.toNumber(),
-    exchangeRateData?.SNX?.toNumber()
-  );
+
   const handleSubmit = () => {
     mutate(undefined, {
       onSuccess: () => {
@@ -323,14 +329,30 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       <BurnUi
         stakedSnx={stakedSnx.toNumber()}
         debtBalance={debtData?.debtBalance.toNumber()}
-        snxUnstakingAmount={snxUnstakingAmount}
         snxBalance={debtData?.collateral.toNumber()}
         isLoading={isLoading}
         susdBalance={susdBalance?.toNumber()}
+        snxUnstakingAmount={snxUnstakingAmount}
         burnAmountSusd={burnAmountSusd}
         onBurnAmountSusdChange={(val) => {
+          const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
+            val,
+            debtData?.targetCRatio.toNumber(),
+            exchangeRateData?.SNX?.toNumber()
+          );
           setActiveBadge(undefined);
           setBurnAmountSusd(val);
+          setSnxUnstakingAmount(snxUnstakingAmount);
+        }}
+        onUnstakeAmountChange={(val) => {
+          const burnAmount = calculateBurnAmountFromUnstaking(
+            val,
+            debtData?.targetCRatio.toNumber(),
+            exchangeRateData?.SNX?.toNumber()
+          );
+          setActiveBadge(undefined);
+          setSnxUnstakingAmount(val);
+          setBurnAmountSusd(burnAmount);
         }}
         onBadgeClick={handleBadgeClick}
         gasError={gasError}

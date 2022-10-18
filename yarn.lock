@@ -7251,6 +7251,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/stakingCalculations@workspace:v2/lib/stakingCalculations"
   dependencies:
+    "@snx-v2/formatters": "workspace:*"
     "@synthetixio/wei": "workspace:*"
   languageName: unknown
   linkType: soft
