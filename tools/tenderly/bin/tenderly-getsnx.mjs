@@ -12,7 +12,11 @@ Promise.resolve()
     const { TENDERLY_FORK_ID, TENDERLY_WALLET_ADDRESS } = envs;
     const forkId = TENDERLY_FORK_ID ? TENDERLY_FORK_ID : (await fork(envs))?.simulation_fork?.id;
 
-    const [walletAddress = TENDERLY_WALLET_ADDRESS] = process.argv.slice(2);
+    const [argWalletAddress = TENDERLY_WALLET_ADDRESS] = process.argv.slice(2);
+    const walletAddress = argWalletAddress
+      ? argWalletAddress
+      : // Default to the first random wallet Tenderly gives us
+        Object.keys((await fork(envs))?.simulation_fork?.accounts)[0];
 
     if (!utils.isAddress(walletAddress)) {
       throw new Error(
@@ -35,5 +39,4 @@ Promise.resolve()
     };
   })
   .then(getsnx)
-  .then((txn) => console.log(txn))
   .catch(console.error);

@@ -47,7 +47,6 @@ interface MintProps {
   error: Error | null;
   gasError: Error | null;
   settle: () => void;
-  retry: () => void;
   isGasEnabledAndNotFetched: boolean;
 }
 const convert = (value: string, exchangeRate: number) => {
@@ -62,8 +61,8 @@ const convert = (value: string, exchangeRate: number) => {
 export const MintUi = ({
   unstakedSnx = 0,
   susdBalance = 0,
-  exchangeRate = 0.25,
-  isLoading = false,
+  exchangeRate,
+  isLoading,
   onSubmit,
   onMintAmountSNXChange,
   mintAmountSNX,
@@ -73,7 +72,6 @@ export const MintUi = ({
   error,
   gasError,
   settle,
-  retry,
   isGasEnabledAndNotFetched,
 }: MintProps) => {
   const { t } = useTranslation();
@@ -120,6 +118,7 @@ export const MintUi = ({
             </Flex>
             <Flex flexDir="column" alignItems="flex-end" w="30%">
               <Input
+                data-testid="mint snx amount input"
                 borderWidth="0px"
                 placeholder={t('staking-v2.mint.enter-amount')}
                 onChange={onChange}
@@ -141,13 +140,13 @@ export const MintUi = ({
               />
               <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
                 <Text
+                  data-testid="mint available snx balance"
+                  data-balance={formatNumber(unstakedSnx)}
                   color="whiteAlpha.700"
                   fontSize="xs"
                   fontFamily="heading"
                   cursor="pointer"
-                  onClick={() => {
-                    onMintAmountSNXChange(formatNumber(unstakedSnx));
-                  }}
+                  onClick={() => onMintAmountSNXChange(formatNumber(unstakedSnx))}
                 >
                   {t('staking-v2.mint.unstaked-snx', { unstakedSnx: formatNumber(unstakedSnx) })}
                 </Text>
@@ -209,6 +208,7 @@ export const MintUi = ({
           </Flex>
         )}
         <Button
+          data-testid="mint submit"
           fontFamily="heading"
           fontWeight="black"
           mt={4}
@@ -255,7 +255,7 @@ export const MintUi = ({
           <Text fontWeight={500} color="gray.600">
             {t('staking-v2.mint.txn-modal.minting')}
           </Text>
-          <Text fontWeight={500}>{mintAmountsUSD} SNX</Text>
+          <Text fontWeight={500}>{mintAmountsUSD} sUSD</Text>
         </Flex>
         {transactionLoading && (
           <Flex alignItems="center" justifyContent="center" bg="black" pt="4" pb="4" mt="4">
@@ -284,7 +284,7 @@ export const MintUi = ({
           </Center>
         ) : (
           <Center>
-            <Button onClick={gasError ? settle : retry}>
+            <Button onClick={gasError ? settle : onSubmit}>
               {gasError
                 ? t('staking-v2.mint.txn-modal.close')
                 : t('staking-v2.mint.txn-modal.retry')}
@@ -329,6 +329,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   });
 
   const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
+
   return (
     <MintUi
       isLoading={isLoading}
@@ -351,7 +352,6 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       error={error}
       gasError={gasError}
       settle={settle}
-      retry={() => mutate()}
       isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
     />
   );

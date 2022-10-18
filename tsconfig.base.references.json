@@ -19,6 +19,7 @@
     { "path": "./packages/transaction-notifier" },
     { "path": "./packages/wei" },
 
-    { "path": "./tools/codegen-graph-ts" }
+    { "path": "./tools/codegen-graph-ts" },
+    { "path": "./v3/synpress/tests/e2e" }
   ]
 }

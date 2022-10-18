@@ -61,7 +61,7 @@ export TENDERLY_CHECKPOINT=""
 ➜ TENDERLY_WALLET_ADDRESS=<WALLET_ADDRESS> tenderly-geteth
 
 
-# Add 100 SNX to the waller (when TENDERLY_WALLET_ADDRESS are set)
+# Add 100 SNX to the wallet (when TENDERLY_WALLET_ADDRESS are set)
 ➜ tenderly-getsnx
 0xTXN_ID
 # Alternatively:
@@ -69,6 +69,16 @@ export TENDERLY_CHECKPOINT=""
 # Or:
 ➜ TENDERLY_WALLET_ADDRESS=<WALLET_ADDRESS> tenderly-getsnx
 
+
+# Mint 10 sUSD to the wallet (when TENDERLY_WALLET_ADDRESS are set)
+➜ tenderly-mintsusd
+{ debtPre: { sUSD: 39.14, collateral: 100, transferable: 38.65203767890282 } }
+...
+{ debtPost: { sUSD: 49.14, collateral: 100, transferable: 22.97805650335423 } }
+# Alternatively:
+➜ tenderly-mintsusd <WALLET_ADDRESS>
+# Or:
+➜ TENDERLY_WALLET_ADDRESS=<WALLET_ADDRESS> tenderly-mintsusd
 
 # Remove minimumStakeTime (set it to 0 from current 7 days)
 ➜ tenderly-removeMinimumStakeTime
@@ -119,6 +129,11 @@ const getEthTx = await geteth({
 });
 
 const getSnxTx = await getsnx({
+  TENDERLY_FORK_ID: forkInfo.simulation_fork.id,
+  TENDERLY_WALLET_ADDRESS,
+});
+
+const debtData = await mintsusd({
   TENDERLY_FORK_ID: forkInfo.simulation_fork.id,
   TENDERLY_WALLET_ADDRESS,
 });

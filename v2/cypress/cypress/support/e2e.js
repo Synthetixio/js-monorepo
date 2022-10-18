@@ -1,5 +1,9 @@
 import { ethers } from 'ethers';
 
+before(() => {
+  cy.task('snapshotSave').as('tenderlySnapshot');
+});
+
 beforeEach(() => {
   cy.intercept('https://analytics.synthetix.io/matomo.js', { statusCode: 204 }).as('matomo');
 
@@ -8,21 +12,10 @@ beforeEach(() => {
     statusCode: 204,
   }).as('subgraph');
 
+  // UPD: we still use infura as a generic provider to get general data not related to the wallet, like gas price
   // Because we are working with tenderly fork, infura calls should not even happen!
-  cy.intercept('https://mainnet.infura.io/**', { statusCode: 204 }).as('infura-mainnet');
-  cy.intercept('https://optimism-mainnet.infura.io/**', { statusCode: 204 }).as('infura-optimism');
-
-  cy.intercept('POST', '/graphql', (req) => {
-    req?.body?.forEach((gql) => {
-      if (gql?.operationName && gql?.variables) {
-        Cypress.log({
-          name: 'graphql',
-          message: `${gql.operationName}: ${JSON.stringify(gql.variables)}`,
-          consoleProps: () => gql,
-        });
-      }
-    });
-  }).as('graphql');
+  // cy.intercept('https://mainnet.infura.io/**', { statusCode: 204 }).as('infura-mainnet');
+  // cy.intercept('https://optimism-mainnet.infura.io/**', { statusCode: 204 }).as('infura-optimism');
 
   cy.on('window:before:load', (win) => {
     win.__caches = {};
@@ -36,7 +29,11 @@ beforeEach(() => {
         this.getAddress = async () => Cypress.env('WALLET_ADDRESS');
         this.provider = provider;
         this.wallet = new ethers.Wallet(Cypress.env('WALLET_PK'));
-        this.signMessage = (message) => this.wallet.signMessage(message);
+        this.signMessage = async (message) => {
+          // don't sign instantly, wait for a bit
+          await new Promise((ok) => setTimeout(ok, 500));
+          return await this.wallet.signMessage(message);
+        };
       }
     }
 
@@ -106,5 +103,11 @@ beforeEach(() => {
         },
       }
     );
+  });
+});
+
+afterEach(() => {
+  cy.get('@tenderlySnapshot').then((tenderlySnapshot) => {
+    cy.task('snapshotLoad', tenderlySnapshot);
   });
 });
