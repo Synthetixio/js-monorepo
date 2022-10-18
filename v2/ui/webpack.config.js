@@ -68,10 +68,11 @@ const tsxRule = {
 const svgRule = {
   test: /\.svg$/,
   use: '@svgr/webpack',
+  include: [/v1\/lib/, /v1\/components/, /v2\/lib/, /v2\/components/, /v2\/ui\/assets/],
 };
 
 const imgRule = {
-  test: /\.(png|jpg|ico|gif|woff|woff2|ttf|eot|doc|pdf|zip|wav|avi|txt|webp)$/,
+  test: /\.(png|jpg|ico|gif|woff|woff2|ttf|eot|doc|pdf|zip|wav|avi|txt|webp|svg)$/,
   type: 'asset',
   parser: {
     dataUrlCondition: {
