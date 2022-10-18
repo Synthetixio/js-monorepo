@@ -7045,6 +7045,7 @@ __metadata:
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
+    "@snx-v2/txnLink": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useMintMutation": "workspace:*"
@@ -7267,6 +7268,16 @@ __metadata:
 "@snx-v2/sumBy@workspace:*, @snx-v2/sumBy@workspace:v2/lib/sumBy":
   version: 0.0.0-use.local
   resolution: "@snx-v2/sumBy@workspace:v2/lib/sumBy"
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/txnLink@workspace:*, @snx-v2/txnLink@workspace:v2/lib/txnLink":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/txnLink@workspace:v2/lib/txnLink"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 

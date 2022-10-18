@@ -43,7 +43,7 @@ const createPopulateTransaction = (
 export function useBurnMutation(burnArgs: BurnArgs) {
   const { data: Synthetix } = useSynthetix();
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [txnState, dispatch] = useReducer(reducer, initialState);
   const populateTransaction = createPopulateTransaction(Synthetix, burnArgs);
   const {
     data,
@@ -56,7 +56,6 @@ export function useBurnMutation(burnArgs: BurnArgs) {
   });
 
   const { gasOptionsForTransaction, transactionPrice } = data || {};
-  const { modalOpen, txnStatus, error } = state;
 
   return {
     ...useMutation(async () => {
@@ -69,7 +68,7 @@ export function useBurnMutation(burnArgs: BurnArgs) {
           ...populatedTxn,
           ...gasOptionsForTransaction,
         });
-        dispatch({ type: 'pending' });
+        dispatch({ type: 'pending', payload: { txnHash: txn.hash } });
         await txn.wait();
         dispatch({ type: 'success' });
       } catch (error: any) {
@@ -77,11 +76,9 @@ export function useBurnMutation(burnArgs: BurnArgs) {
         throw error;
       }
     }),
+    ...txnState,
     transactionFee: transactionPrice,
     isGasEnabledAndNotFetched: gasFetching && !isGasFetched,
-    modalOpen,
-    txnStatus,
-    error,
     gasError: gasError as Error | null,
     settle: () => dispatch({ type: 'settled' }),
   };
