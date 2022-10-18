@@ -1,6 +1,8 @@
 import { wei } from '@synthetixio/wei';
 import {
   calculateBurnAmountFromUnstaking,
+  calculateMintAmountFromStaking,
+  calculateStakeAmountFromMint,
   calculateStakedSnx,
   calculateUnstakedStakedSnx,
   calculateUnstakingAmountFromBurn,
@@ -96,6 +98,16 @@ describe('stakingCalculation', () => {
   describe('calculateBurnAmountFromUnstaking', () => {
     test('when target 400% (0.25%) and snx price 2', () => {
       expect(calculateBurnAmountFromUnstaking('20', 0.25, 2)).toBe('10.00');
+    });
+  });
+  describe('calculateStakeAmountFromMint', () => {
+    test('when target 400% (0.25%) and snx price 2', () => {
+      expect(calculateStakeAmountFromMint('10', 0.25, 2)).toBe('20.00');
+    });
+  });
+  describe('calculateMintAmountFromStaking', () => {
+    test('when target 400% (0.25%) and snx price 2', () => {
+      expect(calculateMintAmountFromStaking('20', 0.25, 2)).toBe('10.00');
     });
   });
 });
