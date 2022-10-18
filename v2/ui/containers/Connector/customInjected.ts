@@ -55,7 +55,7 @@ export const customMetaMask: InjectedWalletModule = {
   },
 
   // A method that returns a string of the wallet icon which will be displayed
-  getIcon: async () => (await import('../../public/images/metamask.svg')).default,
+  getIcon: async () => (await import('@web3-onboard/injected-wallets/dist/icons/metamask')).default,
   // Returns a valid EIP1193 provider. In some cases the provider will need to be patched to satisfy the EIP1193 Provider interface
   getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask, false),
   // A list of platforms that this wallet supports
@@ -73,9 +73,24 @@ export const customBrave: InjectedWalletModule = {
   checkProviderIdentity: ({}) => false,
 
   // A method that returns a string of the wallet icon which will be displayed
-  getIcon: async () => (await import('../../public/images/brave.svg')).default,
+  getIcon: async () => (await import('@web3-onboard/injected-wallets/dist/icons/brave')).default,
   // Returns a valid EIP1193 provider. In some cases the provider will need to be patched to satisfy the EIP1193 Provider interface
-  getInterface: getInjectedInterface(ProviderIdentityFlag.BraveWallet, false),
+  getInterface: async () => {
+    let provider = {} as EIP1193Provider;
+    if (
+      (window?.ethereum && window.ethereum.isMetaMask && !window.ethereum?.isBraveWallet) ||
+      !window?.ethereum
+    ) {
+      window.open('https://brave.com/wallet/', '_blank');
+    } else {
+      provider = window?.ethereum;
+    }
+
+    return {
+      provider,
+      instance: {},
+    };
+  },
   // A list of platforms that this wallet supports
   platforms: ['all'],
 };
@@ -93,7 +108,7 @@ export const customDetected: InjectedWalletModule = {
 
     return result;
   },
-  getIcon: async () => (await import('../../public/images/detectedWallet.svg')).default,
+  getIcon: async () => (await import('@web3-onboard/injected-wallets/dist/icons/detected')).default,
   getInterface: async () => ({
     provider: window.ethereum as EIP1193Provider,
   }),
