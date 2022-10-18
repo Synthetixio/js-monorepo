@@ -52,6 +52,7 @@ interface BurnProps {
   onBadgeClick: (badge: ActiveBadge) => void;
   stakedSnx: number;
   debtBalance?: number;
+  txnHash: string | null;
 }
 
 type ActiveBadge = 'max' | 'toTarget';
@@ -74,6 +75,7 @@ export const BurnUi = ({
   gasError,
   modalOpen,
   isGasEnabledAndNotFetched,
+  txnHash,
 }: BurnProps) => {
   const { t } = useTranslation();
 
@@ -318,15 +320,15 @@ export const BurnUi = ({
         {error && (
           <Center pt="4" pb="4" mt="4">
             <FailedIcon width="40px" height="40px" />
-
             <Text>{parseTxnError(error)}</Text>
           </Center>
         )}
         <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
         {!error ? (
           <Center flexDirection="column">
-            {/* TODO create something that can generate etherscan links based in network and tx id */}
-            <ExternalLink fontSize="sm">{t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
+            {txnHash && (
+              <ExternalLink fontSize="sm">{t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
+            )}
             {txnStatus === 'success' && (
               <Button mt={2} onClick={settle}>
                 {t('staking-v2.mint.txn-modal.close')}
@@ -379,6 +381,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     gasError,
     settle,
     isGasEnabledAndNotFetched,
+    txnHash,
   } = useBurnMutation({
     // Even if the sUSD balance might be bigger than the users debt we still send the complete balance to the contract
     // We do this to avoid users having sUSD dust incase the debt fluctuates.
@@ -428,6 +431,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
       transactionFee={transactionFee}
       modalOpen={modalOpen}
+      txnHash={txnHash}
       onSubmit={() =>
         mutate(undefined, {
           onSuccess: () => {
