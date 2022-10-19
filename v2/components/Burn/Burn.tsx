@@ -30,6 +30,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { parseTxnError } from '@snx-v2/parseTxnError';
 import { BurnTransactionModal } from './BurnTransactionModal';
 import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
+import { BurnHeader } from './BurnHeader';
 
 interface BurnProps {
   snxBalance?: number;
@@ -337,6 +338,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   };
   return (
     <>
+      <BurnHeader burnAmountSusd={parseFloat(burnAmountSusd)} />
       <BurnUi
         stakedSnx={stakedSnx.toNumber()}
         debtBalance={debtData?.debtBalance.toNumber()}
