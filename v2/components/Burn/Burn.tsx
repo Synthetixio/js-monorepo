@@ -105,9 +105,15 @@ export const BurnUi = ({
 
   return (
     <>
-      <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="md" p={5}>
+      <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="base" p={5}>
         <Flex alignItems="center">
-          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
+          <Text
+            fontFamily="heading"
+            fontWeight="extrabold"
+            lineHeight="base"
+            fontSize="xs"
+            mr={1.5}
+          >
             {t('staking-v2.burn.heading')}
           </Text>
           <Tooltip label="Soonthetix" hasArrow>
@@ -116,7 +122,7 @@ export const BurnUi = ({
             </Flex>
           </Tooltip>
         </Flex>
-        <Box borderWidth="1px" borderColor="gray.900" borderRadius="md" p={2} my={3}>
+        <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2} my={3}>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
               <TokensIcon />
@@ -194,7 +200,13 @@ export const BurnUi = ({
           </Flex>
         </Box>
         <Flex alignItems="center">
-          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
+          <Text
+            fontFamily="heading"
+            fontWeight="extrabold"
+            lineHeight="base"
+            fontSize="xs"
+            mr={1.5}
+          >
             {t('staking-v2.burn.unstaking')}
           </Text>
           <Tooltip label="Soonthetix" hasArrow>
@@ -203,7 +215,7 @@ export const BurnUi = ({
             </Flex>
           </Tooltip>
         </Flex>
-        <Box borderWidth="1px" borderColor="gray.900" borderRadius="md" p={2} mt={3}>
+        <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2} mt={3}>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
               <TokensIcon />

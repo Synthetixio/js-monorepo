@@ -72,7 +72,7 @@ export const MintOrBurnChangesUi: FC<{
 }) => {
   const { t } = useTranslation();
   return (
-    <Box bg="whiteAlpha.200" p={4} mt={4} mb={4}>
+    <Box bg="whiteAlpha.200" p={4} mt={4} mb={4} borderRadius="base">
       <Flex justifyContent="space-between" fontSize="xs">
         <Tooltip label="Soonthetix" hasArrow>
           <Flex alignItems="center">
