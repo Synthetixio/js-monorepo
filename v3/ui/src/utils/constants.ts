@@ -47,6 +47,7 @@ export const localCollateralTypes = (chainId: number) => {
     setSupportedCollateralTypes(enrichedCollateralTypes);
   }
   */
+
   return [
     {
       address: require(`../../ts-deployments/${chainName}/snx.token.ts`).address,
