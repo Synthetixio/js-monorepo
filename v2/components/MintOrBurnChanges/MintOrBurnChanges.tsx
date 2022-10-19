@@ -18,27 +18,30 @@ const Row = ({
   label,
   oldVal,
   newVal,
-  textColor = 'white',
+
   tooltipText = 'Soonthetix',
+  secondary = false,
 }: {
   label: string;
   oldVal: string;
   newVal: string;
-  textColor?: string;
+  secondary?: boolean;
   tooltipText?: string;
 }) => {
+  const color = secondary ? 'whiteAlpha.700' : 'white';
+  const fontWeight = secondary ? 'normal' : 700;
   return (
-    <Flex color={textColor} justifyContent="space-between" fontSize="xs" mt={4}>
+    <Flex color={color} justifyContent="space-between" fontSize="xs" mt={secondary ? 1 : 4}>
       <Tooltip label={tooltipText} hasArrow>
         <Flex alignItems="center">
-          <Text fontWeight={700}>{label}</Text>
-          <InfoIcon ml="1" />
+          <Text fontWeight={fontWeight}>{label}</Text>
+          <InfoIcon color="currentcolor" ml="1" />
         </Flex>
       </Tooltip>
       <Flex alignItems="center">
-        <Text fontWeight={700}>{oldVal}</Text>
+        <Text fontWeight={fontWeight}>{oldVal}</Text>
         <ArrowRight ml={2} mr={2} color="currentColor" />
-        <Text fontWeight={700}>{newVal}</Text>
+        <Text fontWeight={fontWeight}>{newVal}</Text>
       </Flex>
     </Flex>
   );
@@ -83,13 +86,13 @@ export const MintOrBurnChangesUi: FC<{
         label={t('staking-v2.mint-or-burn-changes.staked')}
         oldVal={formatNumber(stakedSnx)}
         newVal={formatNumber(changedValues.newStakedAmountSnx)}
-        textColor="whiteAlpha.700"
+        secondary={true}
       />
       <Row
         label={t('staking-v2.mint-or-burn-changes.transferable')}
         oldVal={formatNumber(transferable)}
         newVal={formatNumber(changedValues.newTransferable)}
-        textColor="whiteAlpha.700"
+        secondary={true}
       />
       <Row
         label={t('staking-v2.mint-or-burn-changes.c-ratio')}
