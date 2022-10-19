@@ -114,7 +114,7 @@ const V2Burn = () => {
                   Current Health
                   <Tooltip hasArrow label="Soonthetix">
                     <span>
-                      <InfoIcon ml={1} mb={0.5} width="16px" height="16px" />
+                      <InfoIcon ml={1} mb={0.5} />
                     </span>
                   </Tooltip>
                 </Heading>
@@ -156,7 +156,7 @@ const V2Burn = () => {
                   Target Health
                   <Tooltip hasArrow label="Soonthetix">
                     <span>
-                      <InfoIcon ml={1} mb={0.5} width="16px" height="16px" />
+                      <InfoIcon ml={1} mb={0.5} />
                     </span>
                   </Tooltip>
                 </Heading>
