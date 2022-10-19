@@ -53,7 +53,7 @@ export const useStakingPositions = (accountId: string) => {
       const positions: Record<string, StakingPositionType> = {};
 
       collaterals.forEach((c, i) => {
-        if (c.value.amount.eq(0)) {
+        if (!c.value || c.value.amount.eq(0)) {
           return;
         }
         const { poolId, collateral } = calls[c.index];
