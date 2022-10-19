@@ -9,7 +9,7 @@ const hardhatMulticallConfig = {
 
 export const chains = {
   goerli: chain.goerli,
-  'optimism-goerli': chain.optimismGoerli,
+  optimismGoerli: chain.optimismGoerli,
   hardhat: { ...chain.hardhat, multicall: hardhatMulticallConfig },
 };
 
@@ -19,12 +19,8 @@ export const getChainById = (chainId: number) =>
   supportedChains.find((chain) => chain.id === chainId);
 
 export const getChainNameById = (chainId: number) => {
-  const chain = Object.entries(chainMapping).find((entry) => entry[1] === chainId);
-  let chainName = chain ? chain[0] : '';
-  if (chainName == 'optimismGoerli') {
-    chainName = 'optimism-goerli';
-  }
-  return chainName;
+  const chain = getChainById(chainId);
+  return chain?.name.toLowerCase() == 'localhost' ? 'hardhat' : chain?.network;
 };
 
 // TODO: Retrieve from on chain data
