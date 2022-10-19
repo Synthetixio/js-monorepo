@@ -171,6 +171,7 @@ export const MintUi = ({
           </Flex>
         )}
         <Button
+          variant="solid"
           data-testid="mint submit"
           fontFamily="heading"
           fontWeight="black"

@@ -228,6 +228,7 @@ export const BurnUi = ({
           </Flex>
         )}
         <Button
+          variant="solid"
           data-testid="burn submit"
           fontFamily="heading"
           fontWeight="black"
