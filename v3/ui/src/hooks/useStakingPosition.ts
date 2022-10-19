@@ -1,8 +1,9 @@
 import { useContractReads } from 'wagmi';
 import { useSnxProxy } from './useContract';
-import { CollateralType, poolsData } from '../utils/constants';
+import { poolsData } from '../utils/constants';
 import { formatValue } from '../utils/helpers';
-import { BigNumber } from 'ethers';
+import Big from 'big.js';
+import { CollateralType } from '../utils/types';
 
 export const useStakingPosition = (
   accountId: string,
@@ -25,7 +26,7 @@ export const useStakingPosition = (
     select: (data) => {
       const debt = formatValue(data[1], 18) || 0;
       const collateralValue = formatValue(data[0]?.value || 0, collateral.priceDecimals);
-      const cRatio = debt !== 0 ? BigNumber.from(collateralValue).mul(100).div(debt).toNumber() : 0;
+      const cRatio = debt !== 0 ? Big(collateralValue).mul(100).div(debt).toNumber() : 0;
       return {
         collateralAmount: data[0].amount || 0,
         cRatio,

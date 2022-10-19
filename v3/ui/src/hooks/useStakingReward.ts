@@ -1,7 +1,7 @@
 import { useQuery } from 'wagmi';
 import { useSnxProxy } from './useContract';
-import { CollateralType } from '../utils/constants';
 import { BigNumber } from 'ethers';
+import { CollateralType } from '../utils/types';
 
 export const useGetStakingRewards = (
   accountId: string,
