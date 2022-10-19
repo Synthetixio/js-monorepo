@@ -25479,6 +25479,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jest-junit@npm:^14.0.1":
+  version: 14.0.1
+  resolution: "jest-junit@npm:14.0.1"
+  dependencies:
+    mkdirp: ^1.0.4
+    strip-ansi: ^6.0.1
+    uuid: ^8.3.2
+    xml: ^1.0.1
+  checksum: 2a9ccfecbe4c0df1be24e64b3e12a260356db999b3d821578c325bd34367d2f54b27e9560a8d5abe6c19412400268bf55dd41473565903cb8f616d998f7eb9ac
+  languageName: node
+  linkType: hard
+
 "jest-leak-detector@npm:^29.1.2":
   version: 29.1.2
   resolution: "jest-leak-detector@npm:29.1.2"
@@ -33503,6 +33515,7 @@ __metadata:
     eslint-plugin-react: ^7.31.10
     eslint-plugin-react-hooks: ^4.6.0
     husky: ^8.0.1
+    jest-junit: ^14.0.1
     lint-staged: ^13.0.3
     nyc: ^15.1.0
     prettier: ^2.7.1
@@ -39275,6 +39288,13 @@ __metadata:
   version: 4.0.0
   resolution: "xml-name-validator@npm:4.0.0"
   checksum: af100b79c29804f05fa35aa3683e29a321db9b9685d5e5febda3fa1e40f13f85abc40f45a6b2bf7bee33f68a1dc5e8eaef4cec100a304a9db565e6061d4cb5ad
+  languageName: node
+  linkType: hard
+
+"xml@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "xml@npm:1.0.1"
+  checksum: 11b5545ef3f8fec3fa29ce251f50ad7b6c97c103ed4d851306ec23366f5fa4699dd6a942262df52313a0cd1840ab26256da253c023bad3309d8ce46fe6020ca0
   languageName: node
   linkType: hard
 

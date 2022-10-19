@@ -178,11 +178,33 @@ jobs:
             fi
       - build-save
       - run: yarn typecheck
-      - run: NODE_ENV=test yarn test
+      - run: NODE_ENV=test yarn test --coverage --coverageReporters=json --reporters=default --reporters=jest-junit
+      - run:
+          name: Combine test reports
+          command: |-
+            mkdir -p /tmp/reports
+            _i=0
+            for _file in $(find . -type f -name 'junit.xml' -prune -not -path './node_modules/*'); do
+              mkdir -p /tmp/reports/$_i
+              cp "$_file" /tmp/reports/$_i/junit.xml
+              let _i=$_i+1
+            done
+      - run:
+          name: Combine test coverage
+          command: |-
+            mkdir -p /tmp/coverage
+            _i=0
+            for _file in $(find . -type f -name 'coverage-final.json' -prune -not -path './node_modules/*'); do
+              cp "$_file" /tmp/coverage/chunk-$_i.json
+              let _i=$_i+1
+            done
+
       - store_test_results:
-          path: 'tmp'
+          path: '/tmp/reports'
+
       - store_artifacts:
-          path: 'coverage'
+          path: '/tmp/coverage'
+          destination: 'coverage'
 
   v2-e2e:
     working_directory: /tmp/app
