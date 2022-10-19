@@ -121,6 +121,7 @@ describe('stakingCalculation', () => {
       const debtBalance = 0;
       const transferable = 50;
       const sUSDBalance = 0;
+      const collateralUsdValue = 10;
 
       expect(
         calculateChangesFromMint({
@@ -130,6 +131,7 @@ describe('stakingCalculation', () => {
           debtBalance,
           transferable,
           sUSDBalance,
+          collateralUsdValue,
         })
       ).toEqual({
         newCratio: 0.5,
@@ -146,6 +148,7 @@ describe('stakingCalculation', () => {
       const debtBalance = 2;
       const transferable = 50;
       const sUSDBalance = 10;
+      const collateralUsdValue = 60;
 
       expect(
         calculateChangesFromMint({
@@ -155,9 +158,10 @@ describe('stakingCalculation', () => {
           debtBalance,
           transferable,
           sUSDBalance,
+          collateralUsdValue,
         })
       ).toEqual({
-        newCratio: 7 / 15,
+        newCratio: 7 / collateralUsdValue,
         newDebtBalance: 7,
         newStakedAmountSnx: 15,
         newTransferable: 40,
@@ -173,6 +177,7 @@ describe('stakingCalculation', () => {
       const debtBalance = 10;
       const transferable = 50;
       const sUSDBalance = 10;
+      const collateralUsdValue = 100;
 
       expect(
         calculateChangesFromBurn({
@@ -182,9 +187,10 @@ describe('stakingCalculation', () => {
           debtBalance,
           transferable,
           sUSDBalance,
+          collateralUsdValue,
         })
       ).toEqual({
-        newCratio: 0.5,
+        newCratio: 5 / collateralUsdValue,
         newDebtBalance: 5,
         newStakedAmountSnx: 10,
         newTransferable: 60,
