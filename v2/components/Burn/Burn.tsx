@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { FailedIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
+import { FailedIcon, GuideIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
 import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
@@ -31,6 +31,8 @@ import { parseTxnError } from '@snx-v2/parseTxnError';
 import { BurnTransactionModal } from './BurnTransactionModal';
 import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 import { BurnHeader } from './BurnHeader';
+import { leftColWidth, rightColWidth } from './layout';
+import { BoxLink } from '@snx-v2/BoxLink';
 
 interface BurnProps {
   snxBalance?: number;
@@ -339,39 +341,52 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   return (
     <>
       <BurnHeader burnAmountSusd={parseFloat(burnAmountSusd)} />
-      <BurnUi
-        stakedSnx={stakedSnx.toNumber()}
-        debtBalance={debtData?.debtBalance.toNumber()}
-        isLoading={isLoading}
-        susdBalance={susdBalance?.toNumber()}
-        snxUnstakingAmount={snxUnstakingAmount}
-        burnAmountSusd={burnAmountSusd}
-        onBurnAmountSusdChange={(val) => {
-          const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
-            val,
-            debtData?.targetCRatio.toNumber(),
-            exchangeRateData?.SNX?.toNumber()
-          );
-          setActiveBadge(undefined);
-          setBurnAmountSusd(val);
-          setSnxUnstakingAmount(snxUnstakingAmount);
-        }}
-        onUnstakeAmountChange={(val) => {
-          const burnAmount = calculateBurnAmountFromUnstaking(
-            val,
-            debtData?.targetCRatio.toNumber(),
-            exchangeRateData?.SNX?.toNumber()
-          );
-          setActiveBadge(undefined);
-          setSnxUnstakingAmount(val);
-          setBurnAmountSusd(burnAmount);
-        }}
-        onBadgeClick={handleBadgeClick}
-        gasError={gasError}
-        isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
-        transactionFee={transactionFee}
-        onSubmit={handleSubmit}
-      />
+      <Flex justifyContent="space-between" alignItems="flex-start">
+        <Box width={leftColWidth}>
+          <BurnUi
+            stakedSnx={stakedSnx.toNumber()}
+            debtBalance={debtData?.debtBalance.toNumber()}
+            isLoading={isLoading}
+            susdBalance={susdBalance?.toNumber()}
+            snxUnstakingAmount={snxUnstakingAmount}
+            burnAmountSusd={burnAmountSusd}
+            onBurnAmountSusdChange={(val) => {
+              const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
+                val,
+                debtData?.targetCRatio.toNumber(),
+                exchangeRateData?.SNX?.toNumber()
+              );
+              setActiveBadge(undefined);
+              setBurnAmountSusd(val);
+              setSnxUnstakingAmount(snxUnstakingAmount);
+            }}
+            onUnstakeAmountChange={(val) => {
+              const burnAmount = calculateBurnAmountFromUnstaking(
+                val,
+                debtData?.targetCRatio.toNumber(),
+                exchangeRateData?.SNX?.toNumber()
+              );
+              setActiveBadge(undefined);
+              setSnxUnstakingAmount(val);
+              setBurnAmountSusd(burnAmount);
+            }}
+            onBadgeClick={handleBadgeClick}
+            gasError={gasError}
+            isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
+            transactionFee={transactionFee}
+            onSubmit={handleSubmit}
+          />
+        </Box>
+        <Box width={rightColWidth}>
+          <BoxLink
+            icon={<GuideIcon />}
+            href="https://blog.synthetix.io/basics-of-staking-snx-2022/"
+            isExternal
+            subHeadline=""
+            headline="Staking guide"
+          />
+        </Box>
+      </Flex>
       <BurnTransactionModal
         txnHash={txnHash}
         settle={settle}

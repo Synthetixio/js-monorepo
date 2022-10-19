@@ -18,6 +18,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { formatPercent } from '@snx-v2/formatters';
+import { leftColWidth, rightColWidth } from './layout';
 
 const calcNewCratioPercentage = (
   collateral?: number,
@@ -92,7 +93,7 @@ export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) =
           endColor="gray.700"
           isLoaded={!isLoading}
           bg="black"
-          w="58%"
+          w={leftColWidth}
           pt={3}
           px={4}
           borderRadius="base"
@@ -111,7 +112,7 @@ export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) =
           endColor="gray.700"
           isLoaded={!isLoading}
           bg="black"
-          w="40%"
+          w={rightColWidth}
           borderRadius="base"
           borderWidth="1px"
           borderColor="gray.900"
