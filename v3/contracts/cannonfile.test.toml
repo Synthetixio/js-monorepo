@@ -1,0 +1,79 @@
+name = "synthetix-periphery-test"
+version = "1.0.0"
+description = "Synthetix system supplemental contracts for testnet"
+
+[setting.owner]
+defaultValue = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
+
+[setting.synthetix_version]
+defaultValue = "3.0.0-alpha.1"
+
+[setting.weth_address]
+defaultValue = "0x4200000000000000000000000000000000000006"
+
+[setting.snx_aggregator_address]
+defaultValue = "0x89A7630f46B8c35A7fBBC4f6e4783f1E2DC715c6"
+
+[setting.weth_aggregator_address]
+defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
+
+[import.snx]
+source = "mintableerc20:latest"
+options.name = "Synthetix Token"
+options.symbol = "SNX"
+
+[import.synthetix]
+source = "synthetix:<%= settings.synthetix_version %>"
+options.owner = "<%= settings.owner %>"
+
+[contract.Multicall]
+artifact = "Multicall3"
+
+[contract.WETH]
+artifact = "WETH9"
+
+[invoke.register_snx_collateral]
+target = ["synthetix.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+    "<%= imports.snx.contracts.token.address %>",
+    "<%= settings.snx_aggregator_address %>",
+    "4000000",
+    "2000000",
+    "1000000000000000000",
+    true,
+]
+depends = ["import.synthetix", "import.snx"]
+
+[invoke.register_weth_collateral]
+target = ["synthetix.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+    "<%= settings.weth_address %>",
+    "<%= settings.weth_aggregator_address %>",
+    "3000000",
+    "1500000",
+    "1000000000000000000",
+    true,
+]
+depends = ["import.synthetix", "contract.WETH"]
+
+[invoke.create_preferred_pool]
+target = ["synthetix.CoreProxy"]
+func = "createPool"
+args = [
+    1,
+    "<%= settings.owner %>",
+]
+depends=["import.synthetix"]
+
+[invoke.set_preferred_pool]
+target = ["synthetix.CoreProxy"]
+func = "setPreferredPool"
+from = "<%= settings.owner %>"
+args = [
+    1,
+]
+depends=["invoke.create_preferred_pool"]

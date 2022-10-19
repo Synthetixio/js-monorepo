@@ -224,7 +224,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
                     textAlign="center"
                     label="You will be minted an NFT that represents your account. You can easily transfer it between wallets."
                   >
-                    <InfoOutlineIcon transform="translateY(-1.5px)" />
+                    <InfoOutlineIcon transform="translateY(-1px)" />
                   </Tooltip>
                 </Text>
               )}

@@ -1,5 +1,5 @@
 {
-  "address": "0x65D4DDF5197cdA8Cc3b326D760A00B9d23B41151",
+  "address": "0x9AB8508bBF71bA4f40292527ca8ABEB6770c4C1B",
   "abi": [
     {
       "inputs": [
@@ -26,17 +26,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "requestedAmount",
+          "name": "amount",
           "type": "uint256"
         }
       ],
@@ -78,9 +68,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "bytes32",
@@ -153,7 +143,7 @@
         {
           "indexed": true,
           "internalType": "bool",
-          "name": "enabled",
+          "name": "stakingEnabled",
           "type": "bool"
         }
       ],
@@ -165,9 +155,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -196,9 +186,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -221,6 +211,34 @@
       ],
       "name": "CollateralWithdrawn",
       "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "offset",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "items",
+          "type": "uint256"
+        }
+      ],
+      "name": "cleanExpiredLocks",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
       "inputs": [
@@ -251,7 +269,7 @@
         },
         {
           "internalType": "bool",
-          "name": "enabled",
+          "name": "stakingEnabled",
           "type": "bool"
         }
       ],
@@ -263,9 +281,37 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
           "type": "uint256"
+        },
+        {
+          "internalType": "uint64",
+          "name": "expireTimestamp",
+          "type": "uint64"
+        }
+      ],
+      "name": "createLock",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
         },
         {
           "internalType": "address",
@@ -286,9 +332,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "address",
@@ -310,9 +356,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "address",
@@ -324,12 +370,17 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "totalStaked",
+          "name": "totalDeposited",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
           "name": "totalAssigned",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalLocked",
           "type": "uint256"
         }
       ],
@@ -350,7 +401,7 @@
           "components": [
             {
               "internalType": "bool",
-              "name": "enabled",
+              "name": "stakingEnabled",
               "type": "bool"
             },
             {
@@ -379,7 +430,7 @@
               "type": "address"
             }
           ],
-          "internalType": "struct CollateralStorage.CollateralConfiguration",
+          "internalType": "struct CollateralConfiguration.Data",
           "name": "",
           "type": "tuple"
         }
@@ -401,7 +452,7 @@
           "components": [
             {
               "internalType": "bool",
-              "name": "enabled",
+              "name": "stakingEnabled",
               "type": "bool"
             },
             {
@@ -430,7 +481,7 @@
               "type": "address"
             }
           ],
-          "internalType": "struct CollateralStorage.CollateralConfiguration[]",
+          "internalType": "struct CollateralConfiguration.Data[]",
           "name": "",
           "type": "tuple[]"
         }
@@ -441,9 +492,28 @@
     {
       "inputs": [
         {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "getCollateralPrice",
+      "outputs": [
+        {
           "internalType": "uint256",
-          "name": "accountId",
+          "name": "",
           "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
         },
         {
           "internalType": "address",
@@ -462,6 +532,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x32aa3ada04b1191c60e41a750a7296ed34773788dfcd7fe3f74504737536b1a3",
+  "deployTxnHash": "0xe8771cebf35107218998248b4f347912931d6f853dc890f4398cddf565cd6aaf",
   "deployedOn": "run.deploy_core"
 }

@@ -10,6 +10,7 @@ export type CollateralType = {
   minimumCRatio?: BigNumber;
   price?: BigNumber;
   priceDecimals?: number;
+  priceFeed?: string;
 };
 
 export type ChainName = keyof typeof chains;

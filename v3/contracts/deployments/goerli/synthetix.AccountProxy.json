@@ -1,5 +1,5 @@
 {
-  "address": "0x646d491B00Fa92C036F2f02634603D8B3C4FE2f6",
+  "address": "0xAA7e61a54a72CD26dd28426B23DcF7e699e7FEaf",
   "abi": [
     {
       "type": "error",
@@ -18,6 +18,11 @@
     {
       "type": "error",
       "name": "IndexOutOfBounds",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "InvalidParameters",
       "inputs": []
     },
     {
@@ -690,7 +695,7 @@
       "outputs": []
     }
   ],
-  "deployTxnHash": "0x7dde17063e40f2e215ec6003caaf3a498f19b8908f1d9cbb702a945cf4723058",
+  "deployTxnHash": "0x3d842dcf16082eb966f422eee8225fa7784526a039defa3e18fb608702cc398d",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_account"

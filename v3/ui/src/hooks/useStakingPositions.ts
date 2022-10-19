@@ -10,7 +10,7 @@ import { formatValue } from '../utils/helpers';
 
 interface StakingCall {
   poolId: string;
-  coolateral: CollateralType;
+  collateral: CollateralType;
   functionName: string;
 }
 
@@ -23,10 +23,10 @@ export const useStakingPositions = (accountId: string) => {
   const functionNames = ['getPositionCollateral', 'getPositionDebt'];
   functionNames.forEach((functionName) => {
     pools.forEach((poolId) => {
-      supportedCollateralTypes.forEach((coolateral) => {
+      supportedCollateralTypes.forEach((collateral) => {
         calls.push({
           poolId,
-          coolateral,
+          collateral,
           functionName,
         });
       });
@@ -39,7 +39,7 @@ export const useStakingPositions = (accountId: string) => {
       addressOrName: snxProxy?.address,
       contractInterface: snxProxy?.abi,
       functionName: call.functionName,
-      args: [accountId, call.poolId, call.coolateral.address],
+      args: [accountId, call.poolId, call.collateral.address],
     })),
     select: (data) => {
       const results = data.map((value, index) => ({
@@ -53,14 +53,14 @@ export const useStakingPositions = (accountId: string) => {
       const positions: Record<string, StakingPositionType> = {};
 
       collaterals.forEach((c, i) => {
-        if (c.value.amount.eq(0)) {
+        if (!c.value || c.value.amount.eq(0)) {
           return;
         }
-        const { poolId, coolateral } = calls[c.index];
-        const key = `${poolId}-${coolateral.symbol}`;
+        const { poolId, collateral } = calls[c.index];
+        const key = `${poolId}-${collateral.symbol}`;
 
         const debt = BigNumber.from(formatValue(debts[i].value || 0, 18) || 0);
-        const collateralValue = formatValue(c.value.value || 0, coolateral.priceDecimals);
+        const collateralValue = formatValue(c.value.value || 0, collateral.priceDecimals);
 
         const cRatio = !debt.isZero()
           ? BigNumber.from(collateralValue).mul(100).div(debt)
@@ -70,7 +70,7 @@ export const useStakingPositions = (accountId: string) => {
           id: key,
           poolId,
           poolName: poolsData[poolId.toString()]?.name,
-          collateralType: coolateral,
+          collateralType: collateral,
           accountId,
           collateralAmount: c.value.amount,
           cRatio,

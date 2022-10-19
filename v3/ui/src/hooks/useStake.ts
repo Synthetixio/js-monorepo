@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import { BigNumber, CallOverrides, ethers, utils } from 'ethers';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { contracts, getChainById } from '../utils/constants';
@@ -32,6 +32,7 @@ export const useStake = ({
   poolId,
   onSuccess,
 }: Props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [localChainId] = useRecoilState(chainIdState);
   const chain = getChainById(localChainId);
 
@@ -147,7 +148,7 @@ export const useStake = ({
     },
   });
 
-  const { exec, isLoading } = useApproveCall(
+  const { exec } = useApproveCall(
     selectedCollateralType.address,
     amountBN,
     snxProxy?.address,
@@ -172,13 +173,18 @@ export const useStake = ({
   );
   const createAccount = useCallback(async () => {
     try {
+      setIsLoading(true);
       //  add extra step to convert to wrapped token if native (ex. ETH)
       if (isNativeCurrency) {
         await wrap(amountBN);
       }
 
-      exec();
-    } catch (error) {}
+      await exec();
+    } catch (error) {
+      //console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   }, [exec, isNativeCurrency, amountBN, wrap]);
 
   return { createAccount, isLoading, multiTxn };

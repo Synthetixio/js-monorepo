@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers';
-import { chain, chainId as chainMapping } from 'wagmi';
+import { chain } from 'wagmi';
 import { ChainName } from './types';
 
 const hardhatMulticallConfig = {
@@ -9,6 +9,7 @@ const hardhatMulticallConfig = {
 
 export const chains = {
   goerli: chain.goerli,
+  optimismGoerli: chain.optimismGoerli,
   hardhat: { ...chain.hardhat, multicall: hardhatMulticallConfig },
 };
 
@@ -18,9 +19,8 @@ export const getChainById = (chainId: number) =>
   supportedChains.find((chain) => chain.id === chainId);
 
 export const getChainNameById = (chainId: number) => {
-  const chain = Object.entries(chainMapping).find((entry) => entry[1] === chainId);
-
-  return chain ? chain[0] : '';
+  const chain = getChainById(chainId);
+  return chain?.name.toLowerCase() == 'localhost' ? 'hardhat' : chain?.network;
 };
 
 // TODO: Retrieve from on chain data
@@ -47,6 +47,7 @@ export const localCollateralTypes = (chainId: number) => {
     setSupportedCollateralTypes(enrichedCollateralTypes);
   }
   */
+
   return [
     {
       address: require(`../../ts-deployments/${chainName}/snx.token.ts`).address,

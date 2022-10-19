@@ -1,4 +1,4 @@
-export const address = '0x37D9F2a0A1D9947e87715d035eA93F9443F29B52';
+export const address = '0x8875029207487284Bd3348C993FA4544D5a583cD';
 export const abi = [
   'error AlreadyInitialized()',
   'error InsufficientAllowance(uint256 required, uint256 existing)',

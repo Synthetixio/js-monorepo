@@ -16,10 +16,14 @@ export const Balance: FC<Props> = ({ balance, decimals, symbol, address, onMax }
   const [localChainId] = useRecoilState(chainIdState);
 
   const buyAssetLink = useMemo(() => {
-    if (localChainId === 10) {
+    if (localChainId === 1) {
+      return `https://app.1inch.io/#/1/unified/swap/ETH/${symbol.toUpperCase()}`;
+    } else if (localChainId === 10) {
       return `https://app.1inch.io/#/10/unified/swap/ETH/${symbol.toUpperCase()}`;
+    } else if (localChainId === 5) {
+      return `https://goerli.etherscan.io/address/${address}#writeContract`;
     } else if (localChainId === 420) {
-      return `https://goerli.etherscan.io/address/${address}`;
+      return `https://goerli-optimism.etherscan.io/address/${address}#writeContract`;
     }
   }, [address, localChainId, symbol]);
 
@@ -28,11 +32,11 @@ export const Balance: FC<Props> = ({ balance, decimals, symbol, address, onMax }
       Balance: {parseFloat(utils.formatUnits(balance, decimals)).toLocaleString()}{' '}
       {symbol.toUpperCase()}
       {balance.eq(0) && buyAssetLink && (
-        <Badge as="button" ml="2" variant="outline">
-          <Link href={buyAssetLink} target="_blank">
+        <Link href={buyAssetLink} isExternal>
+          <Badge ml="1" variant="outline" transform="translateY(-1px)">
             Buy {symbol}
-          </Link>
-        </Badge>
+          </Badge>
+        </Link>
       )}
       {onMax && !balance.eq(0) && (
         <Badge
