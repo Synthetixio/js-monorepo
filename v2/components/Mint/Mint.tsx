@@ -28,6 +28,7 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { parseTxnError } from '@snx-v2/parseTxnError';
 import { MintTransactionModal } from './MintTransactionModal';
+import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -105,7 +106,7 @@ export const MintUi = ({
           </Text>
           <Tooltip label={t('staking-v2.mint.heading-tooltip')} hasArrow>
             <Flex alignItems="center">
-              <InfoIcon width="16px" height="16px" />
+              <InfoIcon />
             </Flex>
           </Tooltip>
         </Flex>
@@ -148,7 +149,7 @@ export const MintUi = ({
           </Text>
           <Tooltip label={t('staking-v2.mint.borrowing-tooltip')} hasArrow>
             <Flex>
-              <InfoIcon width="16px" height="16px" />
+              <InfoIcon />
             </Flex>
           </Tooltip>
         </Flex>
@@ -175,6 +176,7 @@ export const MintUi = ({
             </Flex>
           </Flex>
         </Box>
+        <MintOrBurnChanges collateralChange={parseFloat(stakeAmountSNX)} action="mint" />
         {gasError ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
@@ -284,6 +286,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         gasError={gasError}
         onClose={() => {
           setStakeAmountSNX('');
+          setMintAmountSUSD('');
           settle();
         }}
         onSubmit={handleSubmit}

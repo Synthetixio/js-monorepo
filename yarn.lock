@@ -7042,6 +7042,7 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/ExternalLink": "workspace:*"
+    "@snx-v2/MintOrBurnChanges": "workspace:*"
     "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
@@ -7056,6 +7057,22 @@ __metadata:
     "@storybook/react": ^6.5.10
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/MintOrBurnChanges@workspace:*, @snx-v2/MintOrBurnChanges@workspace:v2/components/MintOrBurnChanges":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/MintOrBurnChanges@workspace:v2/components/MintOrBurnChanges"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/stakingCalculations": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useSynthsBalances": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
