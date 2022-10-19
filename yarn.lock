@@ -7240,6 +7240,7 @@ __metadata:
   resolution: "@snx-v2/cypress@workspace:v2/cypress"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@cypress/code-coverage": ^3.10.0
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/v2-ui": "workspace:*"
     cypress: ^10.10.0

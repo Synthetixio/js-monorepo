@@ -9,7 +9,8 @@ module.exports = defineConfig({
       bundler: 'webpack',
       webpackConfig: require('@synthetixio/v2-ui/webpack.config'),
     },
-    setupNodeEvents(_on, config) {
+    setupNodeEvents(on, config) {
+      require('@cypress/code-coverage/task')(on, config);
       return config;
     },
   },
