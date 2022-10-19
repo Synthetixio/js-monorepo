@@ -1,0 +1,126 @@
+{
+  "address": "0x59bd355dd9A853b345434474341178DbC27dC7a6",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "collateralValue",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "debt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "ratio",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "minRatio",
+          "type": "uint256"
+        }
+      ],
+      "name": "InsufficientCollateralRatio",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "incorrectParameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "help",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameters",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
+      "name": "MarketNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "poolId",
+          "type": "uint256"
+        }
+      ],
+      "name": "NotFundedByPool",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "actual",
+          "type": "address"
+        }
+      ],
+      "name": "Unauthorized",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "associateDebt",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "deployTxnHash": "0x4d2d531485e44893d0e8fe7cd3778b35c4fa77416705d3ea703a56593791af65",
+  "deployedOn": "run.deploy_core"
+}

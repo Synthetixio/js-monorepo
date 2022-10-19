@@ -1,4 +1,4 @@
-import { ExternalLinkIcon, InfoIcon } from '@chakra-ui/icons';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 import {
   Text,
   Box,
@@ -14,7 +14,6 @@ import {
   Radio,
   Button,
   RadioGroup,
-  Tooltip,
 } from '@chakra-ui/react';
 import { FC, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -57,6 +56,10 @@ export const PoolDialog: FC<Props> = ({
     pool,
     () => navigate(`/accounts/${accountId}`)
   );
+  const updatePool = (newPool: string) => {
+    if (debt <= 0) setPool(newPool);
+  };
+
   return (
     <Modal size="lg" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -71,10 +74,10 @@ export const PoolDialog: FC<Props> = ({
               mb="2.5"
               pb="2.5"
               borderBottom="1px solid rgba(255,255,255,0.3)"
-              onClick={() => setPool('0')}
+              onClick={() => updatePool('0')}
             >
               <Box>
-                <Radio value="0" size="lg" colorScheme="orange" />
+                <Radio disabled={debt > 0} value="0" size="lg" colorScheme="orange" />
               </Box>
               <Box flex="1" pl="3">
                 <Heading size="sm" mb="0.5">
@@ -89,10 +92,10 @@ export const PoolDialog: FC<Props> = ({
                 mb="2.5"
                 pb="2.5"
                 borderBottom="1px solid rgba(255,255,255,0.3)"
-                onClick={() => setPool(poolId)}
+                onClick={() => updatePool(poolId)}
               >
                 <Box>
-                  <Radio value={poolId} size="lg" colorScheme="orange" />
+                  <Radio disabled={debt > 0} value={poolId} size="lg" colorScheme="orange" />
                 </Box>
                 <Box flex="1" pl="3">
                   <Heading size="sm" mb="0.5">
@@ -114,27 +117,126 @@ export const PoolDialog: FC<Props> = ({
                 </Box>
                 <Box ml="auto" textAlign="right">
                   <Text fontSize="xs" display="block" color="gray.400">
-                    20% Projected Fees APY
+                    X% Projected Fees APY
                   </Text>
                   <Text fontSize="xs" display="block" color="gray.400">
-                    70% Projected Rewards APY
+                    X% Projected Rewards APY
                   </Text>
                 </Box>
               </Flex>
             ))}
+
+            <Flex
+              alignItems="center"
+              mb="2.5"
+              pb="2.5"
+              borderBottom="1px solid rgba(255,255,255,0.3)"
+            >
+              <Box>
+                <Radio value={poolId} size="lg" colorScheme="orange" />
+              </Box>
+              <Box flex="1" pl="3">
+                <Heading size="sm" mb="0.5">
+                  Perpetual Futures
+                </Heading>
+                <Text fontSize="xs" display="block" color="gray.400">
+                  Pool #2
+                  <RouterLink to={`/pools/${poolId}`}>
+                    <Link
+                      color="cyan.500"
+                      ml="1"
+                      display="inline-block"
+                      transform="translateY(-2px)"
+                    >
+                      <ExternalLinkIcon />
+                    </Link>
+                  </RouterLink>
+                </Text>
+              </Box>
+              <Box ml="auto" textAlign="right">
+                <Text fontSize="xs" display="block" color="gray.400">
+                  X% Projected Fees APY
+                </Text>
+                <Text fontSize="xs" display="block" color="gray.400">
+                  X% Projected Rewards APY
+                </Text>
+              </Box>
+            </Flex>
+
+            <Flex
+              alignItems="center"
+              mb="2.5"
+              pb="2.5"
+              borderBottom="1px solid rgba(255,255,255,0.3)"
+            >
+              <Box>
+                <Radio value={poolId} size="lg" colorScheme="orange" />
+              </Box>
+              <Box flex="1" pl="3">
+                <Heading size="sm" mb="0.5">
+                  Spot Synths
+                </Heading>
+                <Text fontSize="xs" display="block" color="gray.400">
+                  Pool #3
+                  <RouterLink to={`/pools/${poolId}`}>
+                    <Link
+                      color="cyan.500"
+                      ml="1"
+                      display="inline-block"
+                      transform="translateY(-2px)"
+                    >
+                      <ExternalLinkIcon />
+                    </Link>
+                  </RouterLink>
+                </Text>
+              </Box>
+              <Box ml="auto" textAlign="right">
+                <Text fontSize="xs" display="block" color="gray.400">
+                  X% Projected Fees APY
+                </Text>
+                <Text fontSize="xs" display="block" color="gray.400">
+                  X% Projected Rewards APY
+                </Text>
+              </Box>
+            </Flex>
+
+            <Flex
+              alignItems="center"
+              mb="2.5"
+              pb="2.5"
+              borderBottom="1px solid rgba(255,255,255,0.3)"
+            >
+              <Box>
+                <Radio value={poolId} size="lg" colorScheme="orange" />
+              </Box>
+              <Box flex="1" pl="3">
+                <Heading size="sm" mb="0.5">
+                  Forex
+                </Heading>
+                <Text fontSize="xs" display="block" color="gray.400">
+                  Pool #4
+                  <RouterLink to={`/pools/${poolId}`}>
+                    <Link
+                      color="cyan.500"
+                      ml="1"
+                      display="inline-block"
+                      transform="translateY(-2px)"
+                    >
+                      <ExternalLinkIcon />
+                    </Link>
+                  </RouterLink>
+                </Text>
+              </Box>
+              <Box ml="auto" textAlign="right">
+                <Text fontSize="xs" display="block" color="gray.400">
+                  X% Projected Fees APY
+                </Text>
+                <Text fontSize="xs" display="block" color="gray.400">
+                  X% Projected Rewards APY
+                </Text>
+              </Box>
+            </Flex>
           </RadioGroup>
-          <Heading size="sm" mb="2" mt="6">
-            Burn Pool Shares
-          </Heading>
-          <Text>
-            To leave the pool you’re currently in, you need to burn your pool shares.{' '}
-            <em>t.b.d.</em>
-            {debt > 0 && (
-              <Tooltip color="white" label="You Can't leave a pool if you have debt">
-                <InfoIcon ml="2" transform="translateY(-1px)" color="red.400" />
-              </Tooltip>
-            )}
-          </Text>
 
           <Button
             isLoading={isLoading}

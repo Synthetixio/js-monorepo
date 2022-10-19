@@ -5,7 +5,8 @@ import { useRecoilState } from 'recoil';
 import { useContractReads, useProvider } from 'wagmi';
 import { chainIdState, collateralTypesState } from '../utils/state';
 import { localCollateralTypes } from '../utils/constants';
-import { getContract } from './useContract';
+import { abi as AggregatorABI } from '../../ts-deployments/aggregator';
+import { compareAddress } from '../utils/helpers';
 
 export const useCollateralTypes = () => {
   const [supportedCollateralTypes, setSupportedCollateralTypes] =
@@ -25,12 +26,13 @@ export const useCollateralTypes = () => {
     },
     onSuccess(data) {
       const mappedCollateralTypes = localCollateralTypes(localChainId).map((coll) => {
-        const onChainCollType = data.find((d) => d.tokenAddress === coll.address);
+        const onChainCollType = data.find((d) => compareAddress(d.tokenAddress, coll.address));
         return {
           ...coll,
           symbol: coll.symbol.toLowerCase(),
           targetCRatio: onChainCollType?.targetCRatio,
           minimumCRatio: onChainCollType?.minimumCRatio,
+          priceFeed: onChainCollType?.priceFeed,
         };
       });
       setSupportedCollateralTypes(mappedCollateralTypes);
@@ -44,34 +46,18 @@ export const useCollateralTypes = () => {
     }
 
     const latestRoundData = supportedCollateralTypes.map((ct) => {
-      const symbol = ct.symbol === 'eth' ? 'weth' : ct.symbol;
-
-      const aggregatorContract = getContract(
-        `aggregator_${symbol}.aggregator`,
-        provider,
-        localChainId
-      );
       return {
-        addressOrName: aggregatorContract?.address,
-        contractInterface: aggregatorContract?.abi,
+        addressOrName: ct?.priceFeed || '',
+        contractInterface: AggregatorABI,
         functionName: 'latestRoundData',
-        chainId: aggregatorContract?.chainId,
       };
     });
 
     const priceDecimals = supportedCollateralTypes.map((ct) => {
-      let symbol = ct.symbol.toLowerCase();
-      if (symbol === 'eth') symbol = 'weth';
-      const aggregatorContract = getContract(
-        `aggregator_${symbol}.aggregator`,
-        provider,
-        localChainId
-      );
       return {
-        addressOrName: aggregatorContract?.address,
-        contractInterface: aggregatorContract?.abi,
+        addressOrName: ct.priceFeed || '',
+        contractInterface: AggregatorABI,
         functionName: 'decimals',
-        chainId: aggregatorContract?.chainId,
       };
     });
 

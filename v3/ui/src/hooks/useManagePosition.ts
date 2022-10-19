@@ -1,7 +1,8 @@
 import { utils } from 'ethers';
-import { useCallback, useMemo } from 'react';
-import { CollateralType, contracts } from '../utils/constants';
+import { useCallback, useMemo, useState } from 'react';
+import { contracts } from '../utils/constants';
 import { compareAddress, parseUnits } from '../utils/helpers';
+import { CollateralType } from '../utils/types';
 import { useApproveCall } from './useApproveCall';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
@@ -20,13 +21,14 @@ export const useManagePosition = (
   collateralAmount: number,
   refetch?: () => void
 ) => {
+  const [isLoading, setIsLoading] = useState(false);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   const collateralChangeBN = parseUnits(Math.abs(collateralChange), position.collateral.decimals);
   const wethContract = useContract(contracts.WETH);
   const isNativeCurrency = compareAddress(wethContract?.address, position.collateral.address);
 
-  const { wrap } = useWrapEth();
-  const { unWrap } = useUnWrapEth();
+  const { wrap, isLoading: isWrapping } = useWrapEth();
+  const { unWrap, isLoading: isUnWrapping } = useUnWrapEth();
 
   const calls: MulticallCall[] = useMemo(() => {
     const list: MulticallCall[] = [];
@@ -111,7 +113,7 @@ export const useManagePosition = (
   ]);
 
   const multiTxn = useMulticall(calls);
-  const { exec: approve, isLoading } = useApproveCall(
+  const { exec: approve } = useApproveCall(
     position.collateral.address,
     collateralAmount > 0 ? collateralChangeBN : 0,
     snxProxy?.address,
@@ -119,18 +121,25 @@ export const useManagePosition = (
   );
 
   const exec = useCallback(async () => {
-    if (isNativeCurrency && collateralChange > 0) {
-      await wrap(collateralChangeBN);
+    try {
+      setIsLoading(true);
+      if (isNativeCurrency && collateralChange > 0) {
+        await wrap(collateralChangeBN);
+      }
+      await approve();
+      if (isNativeCurrency && collateralChange < 0) {
+        await unWrap(collateralChangeBN);
+      }
+      refetch?.();
+    } catch (error) {
+      //console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-    await approve();
-    if (isNativeCurrency && collateralChange < 0) {
-      await unWrap(collateralChangeBN);
-    }
-    refetch?.();
   }, [approve, collateralChange, collateralChangeBN, isNativeCurrency, refetch, unWrap, wrap]);
 
   return {
-    isLoading,
+    isLoading: isLoading || isWrapping || isUnWrapping,
     exec,
   };
 };

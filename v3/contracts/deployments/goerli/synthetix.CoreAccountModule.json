@@ -1,6 +1,17 @@
 {
-  "address": "0x4841ee3EfC63DDE73C1C7D0dCefd3396EaC1D5aE",
+  "address": "0x164724726608622b6e5Fa1aF8932b45A7Bd1a94D",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "permission",
+          "type": "bytes32"
+        }
+      ],
+      "name": "InvalidPermission",
+      "type": "error"
+    },
     {
       "inputs": [],
       "name": "InvalidPermission",
@@ -36,9 +47,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "bytes32",
@@ -47,7 +58,7 @@
         },
         {
           "internalType": "address",
-          "name": "target",
+          "name": "user",
           "type": "address"
         }
       ],
@@ -57,9 +68,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "bytes32",
@@ -68,7 +79,7 @@
         },
         {
           "internalType": "address",
-          "name": "target",
+          "name": "user",
           "type": "address"
         }
       ],
@@ -106,9 +117,9 @@
         },
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "AccountCreated",
@@ -119,9 +130,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -132,7 +143,7 @@
         {
           "indexed": true,
           "internalType": "address",
-          "name": "target",
+          "name": "user",
           "type": "address"
         },
         {
@@ -150,9 +161,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": true,
@@ -163,7 +174,7 @@
         {
           "indexed": true,
           "internalType": "address",
-          "name": "target",
+          "name": "user",
           "type": "address"
         },
         {
@@ -179,9 +190,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "requestedAccountId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "createAccount",
@@ -192,9 +203,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "getAccountOwner",
@@ -211,9 +222,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "getAccountPermissions",
@@ -222,7 +233,7 @@
           "components": [
             {
               "internalType": "address",
-              "name": "target",
+              "name": "user",
               "type": "address"
             },
             {
@@ -255,9 +266,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "bytes32",
@@ -266,7 +277,7 @@
         },
         {
           "internalType": "address",
-          "name": "target",
+          "name": "user",
           "type": "address"
         }
       ],
@@ -278,9 +289,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "bytes32",
@@ -289,11 +300,40 @@
         },
         {
           "internalType": "address",
-          "name": "target",
+          "name": "user",
           "type": "address"
         }
       ],
       "name": "hasPermission",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "permission",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "isAuthorized",
       "outputs": [
         {
           "internalType": "bool",
@@ -312,9 +352,9 @@
           "type": "address"
         },
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "notifyAccountTransfer",
@@ -325,9 +365,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "bytes32",
@@ -343,9 +383,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "accountId",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "internalType": "bytes32",
@@ -354,7 +394,7 @@
         },
         {
           "internalType": "address",
-          "name": "target",
+          "name": "user",
           "type": "address"
         }
       ],
@@ -364,6 +404,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x34be99d1f79802e188e3f7fdf2b702750bfb2afdb19fb2cd8e4bc13a46f1bef7",
+  "deployTxnHash": "0x0539a8704cfd9c982146f30c85aa66e475f7690ae255c7cf82b5be8c2c290eae",
   "deployedOn": "run.deploy_core"
 }

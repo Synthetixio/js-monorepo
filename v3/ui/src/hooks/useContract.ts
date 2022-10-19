@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { useRecoilState } from 'recoil';
 import { useProvider } from 'wagmi';
-import { contracts, getChainById } from '../utils/constants';
+import { contracts, getChainNameById } from '../utils/constants';
 import { chainIdState } from '../utils/state';
 
 export const getContract = (
@@ -9,9 +9,9 @@ export const getContract = (
   provider: ethers.providers.BaseProvider,
   localChainId: number
 ) => {
-  const chain = getChainById(localChainId);
-  if (!chain) return null;
-  const chainName = chain.name.toLowerCase() == 'localhost' ? 'hardhat' : chain.name.toLowerCase();
+  const chainName = getChainNameById(localChainId);
+  if (!chainName) return null;
+
   let contractInfo;
   try {
     contractInfo = require(`../../ts-deployments/${chainName}/${name}.ts`);

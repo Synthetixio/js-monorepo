@@ -1,76 +1,12 @@
 {
-  "address": "0x65E62d7293F64d6C7887733D1B375851C3f9B08a",
+  "address": "0x0988aAA4b7469d5E7B173Ed8701C961832C4a132",
   "abi": [
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "accountId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "requestedAmount",
-          "type": "uint256"
-        }
-      ],
-      "name": "InsufficientAccountCollateral",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "collateralType",
-          "type": "address"
-        }
-      ],
-      "name": "InvalidCollateral",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "marketId",
-          "type": "uint256"
-        }
-      ],
-      "name": "MarketNotFound",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "marketId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "int256",
-          "name": "requestedMaxDebtPerShare",
-          "type": "int256"
-        },
-        {
-          "internalType": "int256",
-          "name": "maximumMaxDebtPerShare",
-          "type": "int256"
-        }
-      ],
-      "name": "MaxDebtPerShareTooLow",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "PoolNotFound",
@@ -139,9 +75,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "addApprovedPool",
@@ -178,9 +114,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "removeApprovedPool",
@@ -191,9 +127,9 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "poolId",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "name": "setPreferredPool",
@@ -202,6 +138,6 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xb85d347d0272f2c4bc3fe6a4109eb2750034f511c4251e118df564cd11ad16a4",
+  "deployTxnHash": "0xd8ec29424e0d46c65080ececf1b0fbc91d7800cda79f8025fd49a0f6c8c7ccec",
   "deployedOn": "run.deploy_core"
 }

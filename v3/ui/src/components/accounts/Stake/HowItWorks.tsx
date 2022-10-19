@@ -1,15 +1,13 @@
 import { CollateralType } from '../../../utils/types';
 import { Heading, Link, UnorderedList, ListItem } from '@chakra-ui/react';
-import { BigNumber, utils } from 'ethers';
+import { BigNumber } from 'ethers';
+import { formatValue } from '../../../utils/helpers';
 
 export default function HowItWorks({
   selectedCollateralType,
 }: {
   selectedCollateralType: CollateralType;
 }) {
-  const formatValue = (value: BigNumber, decimals: number) =>
-    parseInt(utils.formatUnits(value, decimals));
-
   return (
     <>
       <Heading
@@ -42,7 +40,9 @@ export default function HowItWorks({
               <strong>X% APY in snxUSD plus Y% APY in SNX</strong> and you’ll need to maintain a
               C-Ratio of at least{' '}
               {formatValue(
-                BigNumber.from(selectedCollateralType!.minimumCRatio!).mul(BigNumber.from(100)),
+                BigNumber.from(selectedCollateralType!.minimumCRatio! || 0).mul(
+                  BigNumber.from(100)
+                ),
                 6
               ).toFixed(0)}
               %.

@@ -27,8 +27,7 @@ async function getSnx(amount = 100) {
   if (parseFloat(balancesPre[wallet]) < amount) {
     const transferTx = await ProxyERC20Contract.connect(provider.getSigner(rewardsOwner)).transfer(
       wallet,
-      ethers.utils.hexValue(ethers.utils.parseEther(`${amount}`).toHexString()),
-      { gasLimit: 1000000 }
+      ethers.utils.hexValue(ethers.utils.parseEther(`${amount}`).toHexString())
     );
     const transferTxReceipt = await transferTx.wait();
     console.log('getSnx', { tx: transferTxReceipt.transactionHash });

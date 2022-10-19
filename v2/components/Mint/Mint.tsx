@@ -1,5 +1,15 @@
 import { useState, ChangeEvent, FC } from 'react';
-import { Input, Box, Text, Flex, Tooltip, Button, Skeleton, Center } from '@chakra-ui/react';
+import {
+  Input,
+  Box,
+  Text,
+  Flex,
+  Tooltip,
+  Button,
+  Skeleton,
+  Center,
+  InputProps,
+} from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { FailedIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
@@ -10,7 +20,11 @@ import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
-import { calculateUnstakedStakedSnx } from '@snx-v2/stakingCalculations';
+import {
+  calculateMintAmountFromStaking,
+  calculateStakeAmountFromMint,
+  calculateUnstakedStakedSnx,
+} from '@snx-v2/stakingCalculations';
 import { useQueryClient } from '@tanstack/react-query';
 import { parseTxnError } from '@snx-v2/parseTxnError';
 import { MintTransactionModal } from './MintTransactionModal';
@@ -20,21 +34,45 @@ interface MintProps {
   susdBalance?: number;
   isLoading: boolean;
   onSubmit: () => void;
-  onMintAmountSNXChange: (amount: string) => void;
-  mintAmountSNX: string;
+  onStakeAmountSNXChange: (amount: string) => void;
+  onMintAmountSUSDChange: (amount: string) => void;
+  stakeAmountSNX: string;
   mintAmountsUSD: string;
   transactionFee?: Wei | null;
   gasError: Error | null;
   isGasEnabledAndNotFetched: boolean;
 }
+const StyledInput: FC<InputProps> = (props) => {
+  return (
+    <Input
+      {...props}
+      borderWidth="0px"
+      type="text"
+      inputMode="decimal"
+      maxLength={14}
+      textAlign="end"
+      p={0}
+      outline="none"
+      fontFamily="heading"
+      fontSize="xl"
+      fontWeight="black"
+      lineHeight="2xl"
+      color="white"
+      height="unset"
+      _focus={{ boxShadow: 'none !important' }}
+      _placeholder={{ color: 'whiteAlpha.700' }}
+    />
+  );
+};
 
 export const MintUi = ({
   unstakedSnx = 0,
   susdBalance = 0,
   isLoading,
   onSubmit,
-  onMintAmountSNXChange,
-  mintAmountSNX,
+  onStakeAmountSNXChange,
+  onMintAmountSUSDChange,
+  stakeAmountSNX,
   mintAmountsUSD,
   transactionFee,
   gasError,
@@ -42,11 +80,11 @@ export const MintUi = ({
 }: MintProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState(0);
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (currency: 'snx' | 'susd') => (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
     if (/^[0-9]*(\.[0-9]{0,2})?$/.test(value)) {
       setActiveBadge(0);
-      onMintAmountSNXChange(value);
+      currency === 'snx' ? onStakeAmountSNXChange(value) : onMintAmountSUSDChange(value);
     }
   };
 
@@ -54,7 +92,7 @@ export const MintUi = ({
     if (unstakedSnx > 0) {
       setActiveBadge(amount);
       const newAmount = unstakedSnx * amount;
-      onMintAmountSNXChange(formatNumber(newAmount));
+      onStakeAmountSNXChange(formatNumber(newAmount));
     }
   };
 
@@ -80,26 +118,12 @@ export const MintUi = ({
               </Text>
             </Flex>
             <Flex flexDir="column" alignItems="flex-end" w="30%">
-              <Input
+              <StyledInput
+                autoFocus
                 data-testid="mint snx amount input"
-                borderWidth="0px"
                 placeholder={t('staking-v2.mint.enter-amount')}
-                onChange={onChange}
-                type="text"
-                inputMode="decimal"
-                value={numberWithCommas(mintAmountSNX)}
-                maxLength={14}
-                textAlign="end"
-                p={0}
-                outline="none"
-                fontFamily="heading"
-                fontSize="xl"
-                fontWeight="black"
-                lineHeight="2xl"
-                color="white"
-                height="unset"
-                _focus={{ boxShadow: 'none !important' }}
-                _placeholder={{ color: 'whiteAlpha.700' }}
+                onChange={onChange('snx')}
+                value={numberWithCommas(stakeAmountSNX)}
               />
               <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
                 <Text
@@ -109,7 +133,7 @@ export const MintUi = ({
                   fontSize="xs"
                   fontFamily="heading"
                   cursor="pointer"
-                  onClick={() => onMintAmountSNXChange(formatNumber(unstakedSnx))}
+                  onClick={() => onStakeAmountSNXChange(formatNumber(unstakedSnx))}
                 >
                   {t('staking-v2.mint.unstaked-snx', { unstakedSnx: formatNumber(unstakedSnx) })}
                 </Text>
@@ -137,19 +161,12 @@ export const MintUi = ({
               </Text>
             </Flex>
             <Flex flexDir="column" alignItems="flex-end">
-              <Text
-                fontFamily="heading"
-                fontSize="xl"
-                fontWeight="black"
-                lineHeight="2xl"
-                color={numberWithCommas(mintAmountsUSD) === '0.00' ? 'whiteAlpha.700' : 'white'}
-                height="unset"
-                _focus={{ boxShadow: 'none !important' }}
-                _placeholder={{ color: 'whiteAlpha.700' }}
-                borderWidth="0px"
-              >
-                {numberWithCommas(mintAmountsUSD)}
-              </Text>
+              <StyledInput
+                data-testid="mint susd amount input"
+                placeholder={t('staking-v2.mint.enter-amount')}
+                onChange={onChange('susd')}
+                value={numberWithCommas(mintAmountsUSD)}
+              />
               <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
                 <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
                   {t('staking-v2.mint.susd-balance', { susdBalance: formatNumber(susdBalance) })}
@@ -167,7 +184,9 @@ export const MintUi = ({
           </Center>
         ) : (
           <Flex mt={3} alignItems="center" justifyContent="space-between">
-            <EthGasPriceEstimator transactionFee={mintAmountSNX === '' ? wei(0) : transactionFee} />
+            <EthGasPriceEstimator
+              transactionFee={stakeAmountSNX === '' ? wei(0) : transactionFee}
+            />
           </Flex>
         )}
         <Button
@@ -181,7 +200,7 @@ export const MintUi = ({
             setActiveBadge(0);
             onSubmit();
           }}
-          disabled={mintAmountSNX === '' || Boolean(gasError) || isGasEnabledAndNotFetched}
+          disabled={stakeAmountSNX === '' || Boolean(gasError) || isGasEnabledAndNotFetched}
         >
           {isGasEnabledAndNotFetched ? t('staking-v2.mint.estimating-gas') : 'Mint'}
         </Button>
@@ -190,29 +209,18 @@ export const MintUi = ({
   );
 };
 
-const convert = (value: string, exchangeRate: number) => {
-  const num = parseFloat(value);
-  if (!isNaN(num)) {
-    return formatNumber(num * exchangeRate);
-  }
-
-  return formatNumber(0);
-};
 export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
-  const [mintAmountSNX, setMintAmountSNX] = useState('');
+  const [stakeAmountSNX, setStakeAmountSNX] = useState('');
+  const [mintAmountSUSD, setMintAmountSUSD] = useState('');
   const queryClient = useQueryClient();
 
   const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
 
-  const targetCRatioPercent = debtData?.targetCRatioPercentage.toNumber();
-  const exchangeRate =
-    (targetCRatioPercent && exchangeRateData?.SNX?.div(targetCRatioPercent / 100).toNumber()) || 0;
-  // const debouncedSearchTerm = useDebounce(mintAmountSNX, 500);
-  const mintAmountSUSD = convert(mintAmountSNX, exchangeRate);
-
+  // const debouncedSearchTerm = useDebounce(stakeAmountSNX, 500);
   const { targetCRatio, currentCRatio, collateral } = debtData || {};
+
   const unstakedSnx = calculateUnstakedStakedSnx({ targetCRatio, currentCRatio, collateral });
 
   const {
@@ -228,11 +236,11 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   } = useMintMutation({
     amount: wei(mintAmountSUSD || 0).toBN(),
     delegateAddress: delegateWalletAddress,
-    toMax: wei(mintAmountSNX || 0).gte(formatNumber(unstakedSnx.toNumber())),
+    toMax: wei(stakeAmountSNX || 0).gte(formatNumber(unstakedSnx.toNumber())),
   });
 
   const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
-  const mintAmountsUSD = convert(mintAmountSNX, exchangeRate);
+
   const handleSubmit = () => {
     mutate(undefined, {
       onSuccess: () => {
@@ -245,9 +253,26 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     <>
       <MintUi
         isLoading={isLoading}
-        mintAmountSNX={mintAmountSNX}
-        mintAmountsUSD={mintAmountsUSD}
-        onMintAmountSNXChange={setMintAmountSNX}
+        stakeAmountSNX={stakeAmountSNX}
+        mintAmountsUSD={mintAmountSUSD}
+        onStakeAmountSNXChange={(val) => {
+          const mintAmountSUSD = calculateMintAmountFromStaking(
+            val,
+            targetCRatio?.toNumber(),
+            exchangeRateData?.SNX?.toNumber()
+          );
+          setStakeAmountSNX(val);
+          setMintAmountSUSD(mintAmountSUSD);
+        }}
+        onMintAmountSUSDChange={(val) => {
+          const stakeAmountSNX = calculateStakeAmountFromMint(
+            val,
+            targetCRatio?.toNumber(),
+            exchangeRateData?.SNX?.toNumber()
+          );
+          setMintAmountSUSD(val);
+          setStakeAmountSNX(stakeAmountSNX);
+        }}
         unstakedSnx={unstakedSnx.toNumber()}
         susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
         onSubmit={handleSubmit}
@@ -261,13 +286,13 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         error={error}
         gasError={gasError}
         onClose={() => {
-          setMintAmountSNX('');
+          setStakeAmountSNX('');
           settle();
         }}
         onSubmit={handleSubmit}
         txnStatus={txnStatus}
         modalOpen={modalOpen}
-        mintAmountSNX={mintAmountSNX}
+        stakeAmountSNX={stakeAmountSNX}
         mintAmountsUSD={mintAmountSUSD}
       />
     </>

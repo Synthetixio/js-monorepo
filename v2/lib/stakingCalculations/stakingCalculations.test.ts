@@ -1,5 +1,12 @@
 import { wei } from '@synthetixio/wei';
-import { calculateStakedSnx, calculateUnstakedStakedSnx } from './stakingCalculations';
+import {
+  calculateBurnAmountFromUnstaking,
+  calculateMintAmountFromStaking,
+  calculateStakeAmountFromMint,
+  calculateStakedSnx,
+  calculateUnstakedStakedSnx,
+  calculateUnstakingAmountFromBurn,
+} from './stakingCalculations';
 describe('stakingCalculation', () => {
   describe('calculateStakedSnx', () => {
     test('returns zero when no data', () => {
@@ -81,6 +88,26 @@ describe('stakingCalculation', () => {
           collateral: wei(100),
         })
       ).toEqual(wei(0));
+    });
+  });
+  describe('calculateUnstakingAmountFromBurn', () => {
+    test('when target 400% (0.25%) and snx price 2', () => {
+      expect(calculateUnstakingAmountFromBurn('10', 0.25, 2)).toBe('20.00');
+    });
+  });
+  describe('calculateBurnAmountFromUnstaking', () => {
+    test('when target 400% (0.25%) and snx price 2', () => {
+      expect(calculateBurnAmountFromUnstaking('20', 0.25, 2)).toBe('10.00');
+    });
+  });
+  describe('calculateStakeAmountFromMint', () => {
+    test('when target 400% (0.25%) and snx price 2', () => {
+      expect(calculateStakeAmountFromMint('10', 0.25, 2)).toBe('20.00');
+    });
+  });
+  describe('calculateMintAmountFromStaking', () => {
+    test('when target 400% (0.25%) and snx price 2', () => {
+      expect(calculateMintAmountFromStaking('20', 0.25, 2)).toBe('10.00');
     });
   });
 });

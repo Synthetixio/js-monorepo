@@ -1,9 +1,9 @@
 import { Burn } from '../Manage/Burn';
 import { Stake } from '../Manage/Stake';
 import { Heading, Alert, AlertIcon, Box } from '@chakra-ui/react';
-import { CollateralType } from '../../../../utils/constants';
 import { formatValue } from '../../../../utils/helpers';
 import { FC } from 'react';
+import { CollateralType } from '../../../../utils/types';
 
 interface Props {
   collateral: CollateralType;

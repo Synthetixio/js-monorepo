@@ -1,0 +1,277 @@
+{
+  "address": "0xe8f8109d0A46574FD2d2359a4Aed69e9247ED15A",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "incorrectParameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "help",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameters",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "incorrectParameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "help",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameters",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "expected",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "actual",
+          "type": "bytes32"
+        }
+      ],
+      "name": "MismatchAssociatedSystemKind",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "Unauthorized",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "distributor",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "totalRewarded",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "start",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "duration",
+          "type": "uint256"
+        }
+      ],
+      "name": "RewardDistributed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amountClaimed",
+          "type": "uint256"
+        }
+      ],
+      "name": "RewardsClaimed",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "claimRewards",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "getAvailableRewards",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "getCurrentRewardAccumulation",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "distributor",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "start",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "duration",
+          "type": "uint256"
+        }
+      ],
+      "name": "setRewardsDistribution",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "deployTxnHash": "0x117682be84bf1f67d4047c6ebf93b1a43c6206ba6600466b4e720ef3d7eaa859",
+  "deployedOn": "run.deploy_core"
+}
