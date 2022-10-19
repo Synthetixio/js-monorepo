@@ -89,6 +89,7 @@ module.exports = {
             include: ['v1/lib', 'v1/components', 'v2/lib', 'v2/components', 'v2/ui'],
             exclude: ['**/*.test.*', '**/*.cy.*', '**/*.e2e.*'],
           },
+          'istanbul',
         ],
       ],
     },

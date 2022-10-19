@@ -1,5 +1,6 @@
 require.resolve('babel-jest');
 require.resolve('jest-environment-jsdom');
+
 module.exports = {
   roots: ['<rootDir>/../../v2', '<rootDir>/../../v1'],
   modulePaths: ['<rootDir>'],

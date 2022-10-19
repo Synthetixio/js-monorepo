@@ -179,6 +179,10 @@ jobs:
       - build-save
       - run: yarn typecheck
       - run: NODE_ENV=test yarn test
+      - store_test_results:
+          path: 'tmp'
+      - store_artifacts:
+          path: 'coverage'
 
   v2-e2e:
     working_directory: /tmp/app
@@ -215,6 +219,13 @@ jobs:
           path: 'v2/cypress/cypress/videos'
           destination: 'videos'
 
+      - store_test_results:
+          path: 'cypress/reports'
+
+      - store_artifacts:
+          path: '.nyc_output'
+          destination: 'coverage'
+
   v2-cy:
     working_directory: /tmp/app
     docker:
@@ -234,6 +245,13 @@ jobs:
       - store_artifacts:
           path: 'v2/cypress/cypress/videos'
           destination: 'videos'
+
+      - store_test_results:
+          path: 'cypress/reports'
+
+      - store_artifacts:
+          path: '.nyc_output'
+          destination: 'coverage'
 
 workflows:
   version: 2.1
