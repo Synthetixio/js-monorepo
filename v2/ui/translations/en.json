@@ -180,6 +180,14 @@
       "text": "Buy more sUSD on any of this DAPPS.",
       "susd-needed": "sUSD Needed",
       "once-purchased-text": "Once purchased go to the <0>Burn Page</0> to burn and remove the flag."
+    },
+    "mint-or-burn-changes": {
+      "total-snx": "Total SNX",
+      "staked": "Staked",
+      "transferable": "Transferable",
+      "c-ratio": "C-Ratio",
+      "susd-balance": "sUSD Balance",
+      "active-debt": "Active Debt"
     }
   },
   "meta": {
