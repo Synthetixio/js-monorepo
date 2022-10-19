@@ -56,6 +56,10 @@ export const PoolDialog: FC<Props> = ({
     pool,
     () => navigate(`/accounts/${accountId}`)
   );
+  const updatePool = (newPool: string) => {
+    if (debt <= 0) setPool(newPool);
+  };
+
   return (
     <Modal size="lg" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -70,10 +74,10 @@ export const PoolDialog: FC<Props> = ({
               mb="2.5"
               pb="2.5"
               borderBottom="1px solid rgba(255,255,255,0.3)"
-              onClick={() => setPool('0')}
+              onClick={() => updatePool('0')}
             >
               <Box>
-                <Radio value="0" size="lg" colorScheme="orange" />
+                <Radio disabled={debt > 0} value="0" size="lg" colorScheme="orange" />
               </Box>
               <Box flex="1" pl="3">
                 <Heading size="sm" mb="0.5">
@@ -88,10 +92,10 @@ export const PoolDialog: FC<Props> = ({
                 mb="2.5"
                 pb="2.5"
                 borderBottom="1px solid rgba(255,255,255,0.3)"
-                onClick={() => setPool(poolId)}
+                onClick={() => updatePool(poolId)}
               >
                 <Box>
-                  <Radio value={poolId} size="lg" colorScheme="orange" />
+                  <Radio disabled={debt > 0} value={poolId} size="lg" colorScheme="orange" />
                 </Box>
                 <Box flex="1" pl="3">
                   <Heading size="sm" mb="0.5">

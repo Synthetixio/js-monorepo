@@ -51,7 +51,7 @@ export const useStake = ({
       ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
       : BigNumber.from(0);
 
-  const { wrap } = useWrapEth();
+  const { wrap, isLoading: isWrapping } = useWrapEth();
 
   const newAccountId = useMemo(() => Math.floor(Math.random() * 10000000000), []);
 
@@ -187,5 +187,5 @@ export const useStake = ({
     }
   }, [exec, isNativeCurrency, amountBN, wrap]);
 
-  return { createAccount, isLoading, multiTxn };
+  return { createAccount, isLoading: isLoading || isWrapping, multiTxn };
 };

@@ -27,8 +27,8 @@ export const useManagePosition = (
   const wethContract = useContract(contracts.WETH);
   const isNativeCurrency = compareAddress(wethContract?.address, position.collateral.address);
 
-  const { wrap } = useWrapEth();
-  const { unWrap } = useUnWrapEth();
+  const { wrap, isLoading: isWrapping } = useWrapEth();
+  const { unWrap, isLoading: isUnWrapping } = useUnWrapEth();
 
   const calls: MulticallCall[] = useMemo(() => {
     const list: MulticallCall[] = [];
@@ -139,7 +139,7 @@ export const useManagePosition = (
   }, [approve, collateralChange, collateralChangeBN, isNativeCurrency, refetch, unWrap, wrap]);
 
   return {
-    isLoading,
+    isLoading: isLoading || isWrapping || isUnWrapping,
     exec,
   };
 };

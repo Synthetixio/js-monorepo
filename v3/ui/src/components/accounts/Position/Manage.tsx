@@ -43,7 +43,7 @@ export default function Manage({
     setDebtChange(0);
   }, []);
 
-  const { exec } = useManagePosition(
+  const { exec, isLoading } = useManagePosition(
     {
       collateral,
       accountId,
@@ -139,7 +139,14 @@ export default function Manage({
         debtChange={debtChange}
       />
       <Box px="4">
-        <Button disabled={!isValid || noChange} onClick={exec} size="lg" width="100%" mb="2">
+        <Button
+          isLoading={isLoading}
+          disabled={!isValid || noChange || isLoading}
+          onClick={exec}
+          size="lg"
+          width="100%"
+          mb="2"
+        >
           Update Position
         </Button>
       </Box>
