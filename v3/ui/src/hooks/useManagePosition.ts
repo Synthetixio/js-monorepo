@@ -1,7 +1,8 @@
 import { utils } from 'ethers';
 import { useCallback, useMemo, useState } from 'react';
-import { CollateralType, contracts } from '../utils/constants';
+import { contracts } from '../utils/constants';
 import { compareAddress, parseUnits } from '../utils/helpers';
+import { CollateralType } from '../utils/types';
 import { useApproveCall } from './useApproveCall';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';

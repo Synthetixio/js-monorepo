@@ -1,7 +1,7 @@
 import Big from 'big.js';
 import { useMemo } from 'react';
-import { CollateralType } from '../utils/constants';
 import { formatValue } from '../utils/helpers';
+import { CollateralType } from '../utils/types';
 
 interface IPosition {
   collateral: CollateralType;

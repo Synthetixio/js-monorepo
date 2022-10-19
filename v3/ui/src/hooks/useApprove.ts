@@ -36,7 +36,7 @@ export const useApprove = (
   });
 
   const sufficientAllowance = useMemo(() => {
-    return allowance && allowance.gt(0) && allowance.gte(amount);
+    return allowance && allowance.gte(amount);
   }, [allowance, amount]);
 
   const approve = useCallback(async () => {

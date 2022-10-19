@@ -4,9 +4,9 @@ import { collateralTypesState, poolsState } from '../utils/state';
 import { useSnxProxy } from './useContract';
 import { poolsData } from '../utils/constants';
 import { useSynthetixProxyEvent } from './useContractEvent';
-import { BigNumber } from 'ethers';
 import { CollateralType, StakingPositionType } from '../utils/types';
 import { formatValue } from '../utils/helpers';
+import Big from 'big.js';
 
 interface StakingCall {
   poolId: string;
@@ -59,12 +59,10 @@ export const useStakingPositions = (accountId: string) => {
         const { poolId, collateral } = calls[c.index];
         const key = `${poolId}-${collateral.symbol}`;
 
-        const debt = BigNumber.from(formatValue(debts[i].value || 0, 18) || 0);
+        const debt = Big(formatValue(debts[i].value || 0, 18) || 0);
         const collateralValue = formatValue(c.value.value || 0, collateral.priceDecimals);
 
-        const cRatio = !debt.isZero()
-          ? BigNumber.from(collateralValue).mul(100).div(debt)
-          : BigNumber.from(0);
+        const cRatio = !debt.eq(0) ? Big(collateralValue).mul(100).div(debt) : Big(0);
 
         positions[key] = {
           id: key,

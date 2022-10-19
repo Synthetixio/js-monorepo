@@ -34,7 +34,7 @@ export function StakingNav() {
                 _focus={{ bg: 'whiteAlpha.200' }}
                 _active={{ bg: 'whiteAlpha.200' }}
               >
-                <Flex alignItems="center">
+                <Flex width="100%" alignItems="center">
                   {isCurrentAccount && <CheckIcon marginRight={1} />}
 
                   {account}

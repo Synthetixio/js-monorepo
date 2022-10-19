@@ -1,7 +1,8 @@
 import { utils } from 'ethers';
 import { parseUnits } from 'ethers/lib/utils';
 import { useMemo } from 'react';
-import { CollateralType, contracts } from '../utils/constants';
+import { contracts } from '../utils/constants';
+import { CollateralType } from '../utils/types';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
 

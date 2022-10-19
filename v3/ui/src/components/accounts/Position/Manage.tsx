@@ -3,7 +3,7 @@ import { Mint } from './Manage/Mint';
 import { Preview } from './Manage/Preview';
 import { Unstake } from './Manage/Unstake';
 import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Button } from '@chakra-ui/react';
-import { CollateralType } from '../../../utils/constants';
+
 import { MaintainCRatio } from './Manage/MaintainCRatio';
 import { useCallback, useState } from 'react';
 import { useManagePosition } from '../../../hooks/useManagePosition';
@@ -11,6 +11,7 @@ import { Stake } from './Manage/Stake';
 import { Burn } from './Manage/Burn';
 import { useValidatePosition } from '../../../hooks/useValidatePosition';
 import { useTranslation } from 'react-i18next';
+import { CollateralType } from '../../../utils/types';
 
 interface Props {
   accountId: string;

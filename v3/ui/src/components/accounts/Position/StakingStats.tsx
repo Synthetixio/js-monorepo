@@ -1,10 +1,10 @@
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { Box, Heading, Text, Grid, GridItem, Tooltip, Skeleton, Flex } from '@chakra-ui/react';
 import { FC } from 'react';
-import { CollateralType } from '../../../utils/constants';
 import { formatValue } from '../../../utils/helpers';
 import { BigNumber } from 'ethers';
 import { currency } from '../../../utils/currency';
+import { CollateralType } from '../../../utils/types';
 
 interface Props {
   collateral: CollateralType;
