@@ -114,6 +114,7 @@
       "burn-debt": "Clear Debt",
       "active-debt": "Active debt",
       "staked-snx": "Staked SNX",
+      "description-cratio": "Burn to C-Ratio - Burn sUSD required to reach target C-Ratio",
       "txn-modal": {
         "pending": "Transaction Pending",
         "completed": "Transaction completed",

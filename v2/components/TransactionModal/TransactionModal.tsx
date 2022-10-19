@@ -28,11 +28,13 @@ export const TransactionModal = ({
         bgGradient={theme.gradients['dark'][500]}
         pt="10"
         pb="3"
+        borderWidth="1px"
+        borderColor="gray.900"
         data-testid="transaction modal"
       >
         <ModalCloseButton />
         {icon && <Box alignSelf="center">{icon}</Box>}
-        <ModalHeader pb="1" textAlign="center">
+        <ModalHeader pb={0} textAlign="center">
           {title}
         </ModalHeader>
         <ModalBody textAlign="center" fontSize="xs" color="gray.600">

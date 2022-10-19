@@ -31,7 +31,7 @@ export const UtilityCard = ({ Icon, link, title, description, ...props }: Utilit
           {title}
         </Text>
       </LinkOverlay>
-      <Text fontFamily="heading" fontSize="sm" lineHeight="md" color="whiteAlpha.600">
+      <Text fontFamily="heading" mt={1} fontSize="xs" lineHeight="md" color="whiteAlpha.600">
         {description}
       </Text>
     </LinkBox>

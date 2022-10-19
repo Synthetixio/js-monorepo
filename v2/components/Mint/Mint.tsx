@@ -67,7 +67,7 @@ export const MintUi = ({
           </Text>
           <Tooltip label={t('staking-v2.mint.heading-tooltip')} hasArrow>
             <Flex alignItems="center">
-              <InfoIcon width="16px" height="16px" />
+              <InfoIcon width="12px" height="12px" />
             </Flex>
           </Tooltip>
         </Flex>
@@ -124,7 +124,7 @@ export const MintUi = ({
           </Text>
           <Tooltip label={t('staking-v2.mint.borrowing-tooltip')} hasArrow>
             <Flex>
-              <InfoIcon width="16px" height="16px" />
+              <InfoIcon width="12px" height="12px" />
             </Flex>
           </Tooltip>
         </Flex>

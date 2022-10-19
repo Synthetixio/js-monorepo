@@ -51,7 +51,7 @@ const Alert: ComponentMultiStyleConfig = {
         background: multipleColor(status).backgroundColor,
         borderRadius: 'md',
         borderLeftColor: multipleColor(status).borderColor,
-        borderLeft: '2px',
+        borderLeft: '4px',
       },
       title: {
         color: 'white',
@@ -310,6 +310,9 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
   },
   styles: {
     global: {
+      '::-webkit-scrollbar': {
+        display: 'none',
+      },
       ':root': {
         // Backgrounds
         '--onboard-main-scroll-container-background':
@@ -333,12 +336,14 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
         '--onboard-connect-sidebar-progress-background': '#FFFFFF',
         '--onboard-connect-sidebar-progress-color': '#00d1ff',
         '--onboard-wallet-button-color': 'white',
+        '--onboard-wallet-button-color-hover': 'white',
         '--onboard-wallet-button-border-color': '#2D2D38',
         // Fonts
         '--account-select-modal-font-family-normal': 'Inter',
         // Radius
         '--onboard-wallet-button-border-radius': '10px',
       },
+
       body: {
         bg: 'navy.900',
         color: 'white',

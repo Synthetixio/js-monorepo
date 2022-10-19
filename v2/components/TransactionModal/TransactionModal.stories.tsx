@@ -29,7 +29,7 @@ CollectRewards.args = {
   title: 'Collect Rewards',
   children: (
     <div>
-      <Progress mt="2" value={80} variant="white" />
+      <Progress height={2} my={2} value={80} variant="white" />
       <Flex mt="1" justifyContent="space-between">
         <Text fontSize="xs" color="whiteAlpha.600" fontWeight={700}>
           Time Remaining
@@ -38,7 +38,7 @@ CollectRewards.args = {
           07:12:35
         </Text>
       </Flex>
-      <Flex flexDirection="column" alignItems="center" bg="black" pt="4" pb="4" mt="4">
+      <Flex flexDirection="column" alignItems="center" bg="black" py="3" mt="4">
         <Text fontWeight={500} color="success">
           Claimable
         </Text>
@@ -99,9 +99,9 @@ CollectRewardsCompleted.args = {
         </Text>
         <Text fontWeight={500}>100 SNX</Text>
       </Flex>
-      <Flex alignItems="center" justifyContent="center" mt="2">
-        <Button>Done</Button>
-      </Flex>
+      <Button variant="solid" w="100%" my={4}>
+        Done
+      </Button>
       <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
       <Flex justifyContent="center">
         <ExternalLink fontSize="sm">View Etherscan</ExternalLink>
