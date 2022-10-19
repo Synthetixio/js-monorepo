@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { useRecoilState } from 'recoil';
 import { useProvider } from 'wagmi';
-import { contracts, getChainById, getChainNameById } from '../utils/constants';
+import { contracts, getChainNameById } from '../utils/constants';
 import { chainIdState } from '../utils/state';
 
 export const getContract = (

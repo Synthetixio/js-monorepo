@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers';
-import { chain, chainId as chainMapping } from 'wagmi';
+import { chain } from 'wagmi';
 import { ChainName } from './types';
 
 const hardhatMulticallConfig = {
