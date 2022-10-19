@@ -1,38 +1,19 @@
 import { ChangeEvent, FC } from 'react';
 import { useState } from 'react';
-import {
-  Input,
-  Box,
-  Text,
-  Flex,
-  Badge,
-  Tooltip,
-  Button,
-  Skeleton,
-  Spinner,
-  Center,
-  Divider,
-} from '@chakra-ui/react';
+import { Input, Box, Text, Flex, Badge, Tooltip, Button, Skeleton, Center } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import {
-  FailedIcon,
-  InfoIcon,
-  TokensIcon,
-  TransactionCompleted,
-  TransactionPending,
-} from '@snx-v2/icons';
+import { FailedIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
 import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
-import { TransactionStatus, useBurnMutation } from '@snx-v2/useBurnMutation';
+import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { useQueryClient } from '@tanstack/react-query';
-import { TransactionModal } from '@snx-v2/TransactionModal';
 import { parseTxnError } from '@snx-v2/parseTxnError';
-import { ExternalLink } from '@snx-v2/ExternalLink';
+import { BurnTransactionModal } from './BurnTransactionModal';
 
 interface BurnProps {
   snxBalance?: number;
@@ -43,11 +24,7 @@ interface BurnProps {
   burnAmountSusd: string;
   snxUnstakingAmount: string;
   transactionFee?: Wei | null;
-  txnStatus: TransactionStatus;
-  modalOpen: boolean;
-  error: Error | null;
   gasError: Error | null;
-  settle: () => void;
   isGasEnabledAndNotFetched: boolean;
   onBadgeClick: (badge: ActiveBadge) => void;
   stakedSnx: number;
@@ -62,17 +39,13 @@ export const BurnUi = ({
   isLoading,
   onSubmit,
   snxUnstakingAmount,
-  txnStatus,
   burnAmountSusd,
   onBurnAmountSusdChange,
   transactionFee,
   onBadgeClick,
   stakedSnx,
   debtBalance,
-  settle,
-  error,
   gasError,
-  modalOpen,
   isGasEnabledAndNotFetched,
 }: BurnProps) => {
   const { t } = useTranslation();
@@ -90,7 +63,6 @@ export const BurnUi = ({
     setActiveBadge(badgeType);
     onBadgeClick(badgeType);
   };
-  const transactionLoading = txnStatus === 'pending' || txnStatus === 'prompting';
 
   return (
     <>
@@ -272,77 +244,6 @@ export const BurnUi = ({
           Burn
         </Button>
       </Box>
-      <TransactionModal
-        onClose={() => {
-          onBurnAmountSusdChange('');
-          settle();
-        }}
-        icon={
-          error ? (
-            <FailedIcon />
-          ) : transactionLoading ? (
-            <TransactionPending />
-          ) : (
-            <TransactionCompleted />
-          )
-        }
-        title={
-          transactionLoading
-            ? t('staking-v2.burn.txn-modal.pending')
-            : txnStatus === 'success'
-            ? t('staking-v2.burn.txn-modal.completed')
-            : t('staking-v2.burn.txn-modal.error-headline')
-        }
-        isOpen={modalOpen}
-      >
-        <Flex flexDirection="column" alignItems="center" bg="black" pt="4" pb="4" mt="4">
-          <Text fontWeight={500} color="gray.600">
-            {t('staking-v2.burn.txn-modal.unstaking')}
-          </Text>
-          <Text fontWeight={500}>{snxUnstakingAmount} SNX</Text>
-        </Flex>
-        <Flex flexDirection="column" alignItems="center" bg="black" pt="4" pb="4" mt="4">
-          <Text fontWeight={500} color="gray.600">
-            {t('staking-v2.burn.txn-modal.burning')}
-          </Text>
-          <Text fontWeight={500}>{burnAmountSusd} sUSD</Text>
-        </Flex>
-        {transactionLoading && (
-          <Flex alignItems="center" justifyContent="center" bg="black" pt="4" pb="4" mt="4">
-            <Spinner size="sm" mr="3" />
-            <Text color="cyan.500" fontWeight={500}>
-              {t('staking-v2.burn.txn-modal.loading')}
-            </Text>
-          </Flex>
-        )}
-        {error && (
-          <Center pt="4" pb="4" mt="4">
-            <FailedIcon width="40px" height="40px" />
-
-            <Text>{parseTxnError(error)}</Text>
-          </Center>
-        )}
-        <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
-        {!error ? (
-          <Center flexDirection="column">
-            {/* TODO create something that can generate etherscan links based in network and tx id */}
-            <ExternalLink fontSize="sm">{t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
-            {txnStatus === 'success' && (
-              <Button mt={2} onClick={settle}>
-                {t('staking-v2.mint.txn-modal.close')}
-              </Button>
-            )}
-          </Center>
-        ) : (
-          <Center>
-            <Button onClick={gasError ? settle : onSubmit}>
-              {gasError
-                ? t('staking-v2.mint.txn-modal.close')
-                : t('staking-v2.mint.txn-modal.retry')}
-            </Button>
-          </Center>
-        )}
-      </TransactionModal>
     </>
   );
 };
@@ -379,6 +280,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     gasError,
     settle,
     isGasEnabledAndNotFetched,
+    txnHash,
   } = useBurnMutation({
     // Even if the sUSD balance might be bigger than the users debt we still send the complete balance to the contract
     // We do this to avoid users having sUSD dust incase the debt fluctuates.
@@ -403,39 +305,55 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         return;
     }
   };
+  const snxUnstakingAmount = calculateUnStakingAmount(
+    burnAmountSusd,
+    debtData?.targetCRatio.toNumber(),
+    exchangeRateData?.SNX?.toNumber()
+  );
+  const handleSubmit = () => {
+    mutate(undefined, {
+      onSuccess: () => {
+        queryClient.refetchQueries(['synths'], { type: 'active' });
+        queryClient.refetchQueries(['v2debt'], { type: 'active' });
+      },
+    });
+  };
   return (
-    <BurnUi
-      stakedSnx={stakedSnx.toNumber()}
-      debtBalance={debtData?.debtBalance.toNumber()}
-      snxUnstakingAmount={calculateUnStakingAmount(
-        burnAmountSusd,
-        debtData?.targetCRatio.toNumber(),
-        exchangeRateData?.SNX?.toNumber()
-      )}
-      snxBalance={debtData?.collateral.toNumber()}
-      isLoading={isLoading}
-      susdBalance={susdBalance?.toNumber()}
-      burnAmountSusd={burnAmountSusd}
-      onBurnAmountSusdChange={(val) => {
-        setActiveBadge(undefined);
-        setBurnAmountSusd(val);
-      }}
-      onBadgeClick={handleBadgeClick}
-      gasError={gasError}
-      txnStatus={txnStatus}
-      error={error}
-      settle={settle}
-      isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
-      transactionFee={transactionFee}
-      modalOpen={modalOpen}
-      onSubmit={() =>
-        mutate(undefined, {
-          onSuccess: () => {
-            queryClient.refetchQueries(['synths'], { type: 'active' });
-            queryClient.refetchQueries(['v2debt'], { type: 'active' });
-          },
-        })
-      }
-    />
+    <>
+      <BurnUi
+        stakedSnx={stakedSnx.toNumber()}
+        debtBalance={debtData?.debtBalance.toNumber()}
+        snxUnstakingAmount={snxUnstakingAmount}
+        snxBalance={debtData?.collateral.toNumber()}
+        isLoading={isLoading}
+        susdBalance={susdBalance?.toNumber()}
+        burnAmountSusd={burnAmountSusd}
+        onBurnAmountSusdChange={(val) => {
+          setActiveBadge(undefined);
+          setBurnAmountSusd(val);
+        }}
+        onBadgeClick={handleBadgeClick}
+        gasError={gasError}
+        isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
+        transactionFee={transactionFee}
+        onSubmit={handleSubmit}
+      />
+      <BurnTransactionModal
+        txnHash={txnHash}
+        settle={settle}
+        error={error}
+        gasError={gasError}
+        onClose={() => {
+          setActiveBadge(undefined);
+          setBurnAmountSusd('');
+          settle();
+        }}
+        onSubmit={handleSubmit}
+        txnStatus={txnStatus}
+        modalOpen={modalOpen}
+        snxUnstakingAmount={snxUnstakingAmount}
+        burnAmountSusd={burnAmountSusd}
+      />
+    </>
   );
 };

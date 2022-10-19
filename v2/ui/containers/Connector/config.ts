@@ -13,8 +13,10 @@ import portisModule from '@web3-onboard/portis';
 import torusModule from '@web3-onboard/torus';
 
 import { SynthetixIcon, SynthetixLogo } from 'components/WalletComponents';
+import { customBrave, customMetaMask, customDetected } from './customInjected';
 
-const injected = injectedModule();
+const injected = injectedModule({ custom: [customMetaMask, customBrave, customDetected] });
+
 const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
 const walletConnect = walletConnectModule();
 const ledger = ledgerModule();
@@ -23,6 +25,7 @@ const ledger = ledgerModule();
 const gnosis = gnosisModule();
 const portis = portisModule({ apiKey: `${process.env.NEXT_PUBLIC_PORTIS_APP_ID}` });
 const torus = torusModule();
+const brave = () => customBrave;
 
 const supportedChains = [
   // Mainnet
@@ -68,12 +71,22 @@ export const onboard: OnboardAPI = Onboard({
     recommendedInjectedWallets: [
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' },
       { name: 'MetaMask', url: 'https://metamask.io' },
+      { name: 'Brave Wallet', url: 'https://brave.com/wallet/' },
     ],
     gettingStartedGuide: 'https://synthetix.io',
     explore: 'https://blog.synthetix.io/',
   },
   apiKey: process.env.NEXT_PUBLIC_BN_ONBOARD_API_KEY,
-  wallets: [injected, ledger /*trezor,*/, coinbaseWalletSdk, walletConnect, gnosis, portis, torus],
+  wallets: [
+    injected,
+    brave,
+    ledger /*trezor,*/,
+    coinbaseWalletSdk,
+    walletConnect,
+    gnosis,
+    portis,
+    torus,
+  ],
   chains: [...supportedChains],
   accountCenter: {
     desktop: {

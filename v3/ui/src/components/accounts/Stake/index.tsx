@@ -1,5 +1,5 @@
-import { chainIdState, collateralTypesState } from '../../../utils/state';
-import { poolsData, getChainById } from '../../../utils/constants';
+import { collateralTypesState } from '../../../utils/state';
+import { poolsData } from '../../../utils/constants';
 import { useSynthetixRead } from '../../../hooks';
 import EditPosition from '../EditPosition';
 import { Balance } from './Balance';
@@ -42,9 +42,10 @@ type FormType = {
 interface Props {
   accountId?: string;
   stakingPositions?: Record<string, StakingPositionType>;
+  refetch?: () => void;
 }
 
-export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
+export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) => {
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
   const [collateralTypes] = useRecoilState(collateralTypesState);
@@ -67,8 +68,6 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
 
   const { openConnectModal } = useConnectModal();
 
-  const [localChainId] = useRecoilState(chainIdState);
-  const chain = getChainById(localChainId);
   const selectedCollateralType = useWatch({
     control,
     name: 'collateralType',
@@ -82,11 +81,9 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
     name: 'amount',
   });
 
-  const isNativeCurrency = selectedCollateralType.symbol === chain?.nativeCurrency?.symbol;
+  const isNativeCurrency = selectedCollateralType.symbol === 'eth';
 
-  const balanceData = useTokenBalance(
-    isNativeCurrency ? undefined : selectedCollateralType.address
-  );
+  const balanceData = useTokenBalance(selectedCollateralType.address);
 
   // add extra step to convert to wrapped token if native (ex. ETH)
   // if (isNativeCurrency) {
@@ -99,6 +96,15 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
   //   overrides.value = amount!;
   // }
 
+  const onSuccess = () => {
+    reset({
+      collateralType: selectedCollateralType,
+      poolId: selectedPoolId,
+      amount: '',
+    });
+    refetch?.();
+    balanceData.refetch();
+  };
   const { createAccount, isLoading, multiTxn } = useStake({
     accountId,
     stakingPositions,
@@ -106,12 +112,8 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
     selectedCollateralType,
     selectedPoolId,
     poolId: poolId?.toString(),
-    reset: () =>
-      reset({
-        collateralType: selectedCollateralType,
-        poolId: selectedPoolId,
-        amount: '',
-      }),
+    isNativeCurrency,
+    onSuccess,
   });
   return (
     <>
@@ -131,6 +133,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {} }) => {
                 placeholder="0.0"
                 mr="4"
                 id="amount"
+                step="any"
                 min="0"
                 {...register('amount', {
                   validate: {

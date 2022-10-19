@@ -1,0 +1,19 @@
+{
+  "multipass": true,
+  "js2svg": {
+    "finalNewline": true,
+    "eol": "lf",
+    "indent": 2,
+    "pretty": true
+  },
+  "plugins": [
+    "preset-default",
+    "convertStyleToAttrs",
+    {
+      "name": "sortAttrs",
+      "params": {
+        "xmlnsOrder": "alphabetical"
+      }
+    }
+  ]
+}

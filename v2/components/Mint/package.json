@@ -12,6 +12,8 @@
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/parseTxnError": "workspace:*",
     "@snx-v2/stakingCalculations": "workspace:*",
+    "@snx-v2/txnLink": "workspace:*",
+    "@snx-v2/txnReducer": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useMintMutation": "workspace:*",

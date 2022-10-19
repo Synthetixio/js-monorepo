@@ -68,6 +68,7 @@ const tsxRule = {
 const svgRule = {
   test: /\.svg$/,
   use: '@svgr/webpack',
+  include: [/v1\/lib/, /v1\/components/, /v2\/lib/, /v2\/components/, /v2\/ui\/assets/],
 };
 
 const imgRule = {
@@ -78,6 +79,12 @@ const imgRule = {
       maxSize: 4 * 1024, // 4kb
     },
   },
+};
+
+const rawRule = {
+  test: /\.(svg)$/,
+  type: require.resolve('raw-loader'),
+  include: [/node_modules\/@web3-onboard\/injected-wallets/],
 };
 
 const cssRule = {
@@ -214,6 +221,6 @@ module.exports = {
   },
 
   module: {
-    rules: [tsxRule, svgRule, imgRule, cssRule],
+    rules: [tsxRule, svgRule, imgRule, cssRule, rawRule],
   },
 };

@@ -1,10 +1,11 @@
 import { utils } from 'ethers';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { CollateralType, contracts } from '../utils/constants';
-import { parseUnits } from '../utils/helpers';
+import { compareAddress, parseUnits } from '../utils/helpers';
 import { useApproveCall } from './useApproveCall';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
+import { useUnWrapEth, useWrapEth } from './useWrapEth';
 
 interface IPosition {
   accountId: string;
@@ -20,7 +21,12 @@ export const useManagePosition = (
   refetch?: () => void
 ) => {
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
-  const collateralChangeBN = parseUnits(collateralChange, position.collateral.decimals);
+  const collateralChangeBN = parseUnits(Math.abs(collateralChange), position.collateral.decimals);
+  const wethContract = useContract(contracts.WETH);
+  const isNativeCurrency = compareAddress(wethContract?.address, position.collateral.address);
+
+  const { wrap } = useWrapEth();
+  const { unWrap } = useUnWrapEth();
 
   const calls: MulticallCall[] = useMemo(() => {
     const list: MulticallCall[] = [];
@@ -79,14 +85,14 @@ export const useManagePosition = (
             position.accountId,
             position.poolId,
             position.collateral.address,
-            currentAmount.add(collateralChangeBN),
+            currentAmount.sub(collateralChangeBN),
             utils.parseEther('1'),
           ],
         },
         {
           contract: snxProxy.contract,
           functionName: 'withdrawCollateral',
-          callArgs: [position.accountId, position.collateral.address, collateralChangeBN.abs()],
+          callArgs: [position.accountId, position.collateral.address, collateralChangeBN],
         }
       );
     }
@@ -104,15 +110,24 @@ export const useManagePosition = (
     collateralChangeBN,
   ]);
 
-  const multiTxn = useMulticall(calls, undefined, {
-    onSuccess: refetch,
-  });
-  const { exec, isLoading } = useApproveCall(
+  const multiTxn = useMulticall(calls);
+  const { exec: approve, isLoading } = useApproveCall(
     position.collateral.address,
     collateralAmount > 0 ? collateralChangeBN : 0,
     snxProxy?.address,
     multiTxn.exec
   );
+
+  const exec = useCallback(async () => {
+    if (isNativeCurrency && collateralChange > 0) {
+      await wrap(collateralChangeBN);
+    }
+    await approve();
+    if (isNativeCurrency && collateralChange < 0) {
+      await unWrap(collateralChangeBN);
+    }
+    refetch?.();
+  }, [approve, collateralChange, collateralChangeBN, isNativeCurrency, refetch, unWrap, wrap]);
 
   return {
     isLoading,

@@ -1,5 +1,5 @@
 import { NetworkId } from '@synthetixio/contracts-interface';
-import type { MetaMaskInpageProvider } from '@metamask/providers';
+import { providers } from 'ethers';
 
 declare global {
   interface Window {
@@ -14,6 +14,6 @@ declare global {
         network: NetworkId;
       };
     };
-    ethereum?: MetaMaskInpageProvider;
+    ethereum?: providers;
   }
 }

@@ -1,82 +1,47 @@
 import { useState, ChangeEvent, FC } from 'react';
-import {
-  Input,
-  Box,
-  Text,
-  Flex,
-  Tooltip,
-  Button,
-  Skeleton,
-  Spinner,
-  Divider,
-  Center,
-} from '@chakra-ui/react';
+import { Input, Box, Text, Flex, Tooltip, Button, Skeleton, Center } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import {
-  FailedIcon,
-  InfoIcon,
-  TokensIcon,
-  TransactionCompleted,
-  TransactionPending,
-} from '@snx-v2/icons';
+import { FailedIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
 import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
-import { TransactionStatus, useMintMutation } from '@snx-v2/useMintMutation';
+import { useMintMutation } from '@snx-v2/useMintMutation';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
-import { TransactionModal } from '@snx-v2/TransactionModal';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
-import { ExternalLink } from '@snx-v2/ExternalLink';
 import { calculateUnstakedStakedSnx } from '@snx-v2/stakingCalculations';
 import { useQueryClient } from '@tanstack/react-query';
 import { parseTxnError } from '@snx-v2/parseTxnError';
+import { MintTransactionModal } from './MintTransactionModal';
 
 interface MintProps {
   unstakedSnx?: number;
   susdBalance?: number;
-  exchangeRate: number;
   isLoading: boolean;
   onSubmit: () => void;
   onMintAmountSNXChange: (amount: string) => void;
   mintAmountSNX: string;
+  mintAmountsUSD: string;
   transactionFee?: Wei | null;
-  txnStatus: TransactionStatus;
-  modalOpen: boolean;
-  error: Error | null;
   gasError: Error | null;
-  settle: () => void;
   isGasEnabledAndNotFetched: boolean;
 }
-const convert = (value: string, exchangeRate: number) => {
-  const num = parseFloat(value);
-  if (!isNaN(num)) {
-    return formatNumber(num * exchangeRate);
-  }
-
-  return formatNumber(0);
-};
 
 export const MintUi = ({
   unstakedSnx = 0,
   susdBalance = 0,
-  exchangeRate,
   isLoading,
   onSubmit,
   onMintAmountSNXChange,
   mintAmountSNX,
+  mintAmountsUSD,
   transactionFee,
-  txnStatus,
-  modalOpen,
-  error,
   gasError,
-  settle,
   isGasEnabledAndNotFetched,
 }: MintProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState(0);
-
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
     if (/^[0-9]*(\.[0-9]{0,2})?$/.test(value)) {
@@ -92,8 +57,6 @@ export const MintUi = ({
       onMintAmountSNXChange(formatNumber(newAmount));
     }
   };
-  const mintAmountsUSD = convert(mintAmountSNX, exchangeRate);
-  const transactionLoading = txnStatus === 'pending' || txnStatus === 'prompting';
 
   return (
     <>
@@ -215,87 +178,25 @@ export const MintUi = ({
           w="100%"
           onClick={() => {
             setActiveBadge(0);
-            return onSubmit();
+            onSubmit();
           }}
           disabled={mintAmountSNX === '' || Boolean(gasError) || isGasEnabledAndNotFetched}
         >
           {isGasEnabledAndNotFetched ? t('staking-v2.mint.estimating-gas') : 'Mint'}
         </Button>
       </Box>
-      <TransactionModal
-        onClose={() => {
-          onMintAmountSNXChange('');
-          settle();
-        }}
-        icon={
-          error ? (
-            <FailedIcon />
-          ) : transactionLoading ? (
-            <TransactionPending />
-          ) : (
-            <TransactionCompleted />
-          )
-        }
-        title={
-          transactionLoading
-            ? t('staking-v2.mint.txn-modal.pending')
-            : txnStatus === 'success'
-            ? t('staking-v2.mint.txn-modal.completed')
-            : t('staking-v2.mint.txn-modal.error-headline')
-        }
-        isOpen={modalOpen}
-      >
-        <Flex flexDirection="column" alignItems="center" bg="black" pt="4" pb="4" mt="4">
-          <Text fontWeight={500} color="gray.600">
-            {t('staking-v2.mint.txn-modal.staking')}
-          </Text>
-          <Text fontWeight={500}>{mintAmountSNX} SNX</Text>
-        </Flex>
-        <Flex flexDirection="column" alignItems="center" bg="black" pt="4" pb="4" mt="4">
-          <Text fontWeight={500} color="gray.600">
-            {t('staking-v2.mint.txn-modal.minting')}
-          </Text>
-          <Text fontWeight={500}>{mintAmountsUSD} sUSD</Text>
-        </Flex>
-        {transactionLoading && (
-          <Flex alignItems="center" justifyContent="center" bg="black" pt="4" pb="4" mt="4">
-            <Spinner size="sm" mr="3" />
-            <Text color="cyan.500" fontWeight={500}>
-              {t('staking-v2.mint.txn-modal.loading')}
-            </Text>
-          </Flex>
-        )}
-        {error && (
-          <Center pt="4" pb="4" mt="4">
-            <FailedIcon width="40px" height="40px" />
-            <Text>{parseTxnError(error)}</Text>
-          </Center>
-        )}
-        <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
-        {!error ? (
-          <Center flexDirection="column">
-            {/* TODO create something that can generate etherscan links based in network and tx id */}
-            <ExternalLink fontSize="sm">{t('staking-v2.mint.txn-modal.etherscan')}</ExternalLink>
-            {txnStatus === 'success' && (
-              <Button mt={2} onClick={settle}>
-                {t('staking-v2.mint.txn-modal.close')}
-              </Button>
-            )}
-          </Center>
-        ) : (
-          <Center>
-            <Button onClick={gasError ? settle : onSubmit}>
-              {gasError
-                ? t('staking-v2.mint.txn-modal.close')
-                : t('staking-v2.mint.txn-modal.retry')}
-            </Button>
-          </Center>
-        )}
-      </TransactionModal>
     </>
   );
 };
 
+const convert = (value: string, exchangeRate: number) => {
+  const num = parseFloat(value);
+  if (!isNaN(num)) {
+    return formatNumber(num * exchangeRate);
+  }
+
+  return formatNumber(0);
+};
 export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
   const [mintAmountSNX, setMintAmountSNX] = useState('');
   const queryClient = useQueryClient();
@@ -322,6 +223,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     gasError,
     settle,
     isGasEnabledAndNotFetched,
+    txnHash,
   } = useMintMutation({
     amount: wei(mintAmountSUSD || 0).toBN(),
     delegateAddress: delegateWalletAddress,
@@ -329,30 +231,44 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   });
 
   const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
-
+  const mintAmountsUSD = convert(mintAmountSNX, exchangeRate);
+  const handleSubmit = () => {
+    mutate(undefined, {
+      onSuccess: () => {
+        queryClient.refetchQueries(['synths'], { type: 'active' });
+        queryClient.refetchQueries(['v2debt'], { type: 'active' });
+      },
+    });
+  };
   return (
-    <MintUi
-      isLoading={isLoading}
-      exchangeRate={exchangeRate}
-      mintAmountSNX={mintAmountSNX}
-      onMintAmountSNXChange={setMintAmountSNX}
-      unstakedSnx={unstakedSnx.toNumber()}
-      susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
-      onSubmit={() => {
-        mutate(undefined, {
-          onSuccess: () => {
-            queryClient.refetchQueries(['synths'], { type: 'active' });
-            queryClient.refetchQueries(['v2debt'], { type: 'active' });
-          },
-        });
-      }}
-      transactionFee={transactionFee}
-      txnStatus={txnStatus}
-      modalOpen={modalOpen}
-      error={error}
-      gasError={gasError}
-      settle={settle}
-      isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
-    />
+    <>
+      <MintUi
+        isLoading={isLoading}
+        mintAmountSNX={mintAmountSNX}
+        mintAmountsUSD={mintAmountsUSD}
+        onMintAmountSNXChange={setMintAmountSNX}
+        unstakedSnx={unstakedSnx.toNumber()}
+        susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
+        onSubmit={handleSubmit}
+        transactionFee={transactionFee}
+        gasError={gasError}
+        isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
+      />
+      <MintTransactionModal
+        txnHash={txnHash}
+        settle={settle}
+        error={error}
+        gasError={gasError}
+        onClose={() => {
+          setMintAmountSNX('');
+          settle();
+        }}
+        onSubmit={handleSubmit}
+        txnStatus={txnStatus}
+        modalOpen={modalOpen}
+        mintAmountSNX={mintAmountSNX}
+        mintAmountsUSD={mintAmountSUSD}
+      />
+    </>
   );
 };
