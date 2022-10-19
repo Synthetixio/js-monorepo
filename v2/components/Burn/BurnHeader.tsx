@@ -1,22 +1,60 @@
 import { FC } from 'react';
-import { Text, Box, Flex, Tooltip, Link, Heading, Badge, Skeleton } from '@chakra-ui/react';
+import {
+  Text,
+  Box,
+  Flex,
+  Tooltip,
+  Link,
+  Heading,
+  Badge,
+  Skeleton,
+  Divider,
+} from '@chakra-ui/react';
 import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
 import { getHealthVariant, badgeColor } from '@snx-v2/getHealthVariant';
-import { InfoIcon } from '@snx-v2/icons';
+import { ArrowRight, InfoIcon } from '@snx-v2/icons';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { useTranslation, Trans } from 'react-i18next';
 import { useDebtData } from '@snx-v2/useDebtData';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
+import { formatPercent } from '@snx-v2/formatters';
 
+const calcNewCratioPercentage = (
+  collateral?: number,
+  SNXRate?: number,
+  debtBalance?: number,
+  burnAmountSusd?: number
+) => {
+  if (!collateral || !SNXRate || !debtBalance || !burnAmountSusd) return undefined;
+  const collateralValue = SNXRate * collateral;
+  const newDebtBalance = debtBalance - burnAmountSusd;
+  return 1 / (newDebtBalance / collateralValue);
+};
 export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) => {
   const { t } = useTranslation();
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
+  const { data: exchangeRateData } = useExchangeRatesData();
 
   const liquidationCratioPercentage = debtData?.liquidationRatioPercentage.toNumber();
   const targetCratioPercentage = debtData?.targetCRatioPercentage.toNumber();
   const currentCRatioPercentage = debtData?.currentCRatioPercentage.toNumber();
+  const newCratioPercentage = calcNewCratioPercentage(
+    debtData?.collateral.toNumber(),
+    exchangeRateData?.SNX?.toNumber(),
+    debtData?.debtBalance.toNumber(),
+    burnAmountSusd
+  );
 
   const healthVariant = getHealthVariant({
     currentCRatioPercentage,
+    targetCratioPercentage,
+    liquidationCratioPercentage,
+  });
+
+  const badgeHealthVariant = getHealthVariant({
+    currentCRatioPercentage: newCratioPercentage
+      ? newCratioPercentage * 100
+      : currentCRatioPercentage,
     targetCratioPercentage,
     liquidationCratioPercentage,
   });
@@ -54,10 +92,10 @@ export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) =
           endColor="gray.700"
           isLoaded={!isLoading}
           bg="black"
-          w="62.5%"
+          w="58%"
           pt={3}
           px={4}
-          borderRadius="md"
+          borderRadius="base"
           borderWidth="1px"
           borderColor="gray.900"
           fadeDuration={1}
@@ -73,22 +111,15 @@ export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) =
           endColor="gray.700"
           isLoaded={!isLoading}
           bg="black"
-          w="34%"
-          borderRadius="md"
+          w="40%"
+          borderRadius="base"
           borderWidth="1px"
           borderColor="gray.900"
           flexDirection="column"
           justifyContent="space-between"
           fadeDuration={1}
         >
-          <Flex
-            borderBottomColor="gray.900"
-            borderBottomWidth="1px"
-            height="50%"
-            p={4}
-            justifyContent="space-between"
-            alignItems="center"
-          >
+          <Flex px={4} pt={4} justifyContent="space-between" alignItems="center" flexWrap="wrap">
             <Heading fontSize="xs" lineHeight="4">
               Current Health
               <Tooltip hasArrow label="Soonthetix">
@@ -98,39 +129,59 @@ export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) =
               </Tooltip>
             </Heading>
             <Box>
-              <Text
-                color={badgeColor(healthVariant).color}
-                fontFamily="mono"
-                fontSize="lg"
-                textAlign="end"
-              >
-                {`${currentCRatioPercentage?.toFixed(0) || 0}%`}
-              </Text>
-              <Badge
-                color={badgeColor(healthVariant).color}
-                bg={badgeColor(healthVariant).border}
-                borderColor={badgeColor(healthVariant).color}
-                borderWidth="1px"
-                py={0}
-                px={1}
-                borderRadius="md"
-              >
-                <Tooltip hasArrow label="Soonthetix">
-                  <span>
-                    <InfoIcon
-                      mr={1}
-                      mb={0.5}
-                      color={badgeColor(healthVariant).color}
-                      width="12px"
-                      height="12px"
-                    />
-                  </span>
-                </Tooltip>
-                {cRatioHealth}
-              </Badge>
+              <Flex alignItems="center">
+                <Text
+                  color={badgeColor(healthVariant).color}
+                  fontFamily="mono"
+                  fontSize="lg"
+                  textAlign="end"
+                >
+                  {currentCRatioPercentage ? formatPercent(currentCRatioPercentage / 100) : '0%'}
+                </Text>
+                {newCratioPercentage ? (
+                  <>
+                    <ArrowRight mx={1} color="white" />
+                    <Text
+                      color={
+                        badgeColor(
+                          getHealthVariant({
+                            targetCratioPercentage,
+                            liquidationCratioPercentage,
+                            currentCRatioPercentage: newCratioPercentage * 100,
+                          })
+                        ).color
+                      }
+                      fontFamily="mono"
+                      fontSize="lg"
+                      textAlign="end"
+                    >
+                      {formatPercent(newCratioPercentage)}
+                    </Text>
+                  </>
+                ) : null}
+              </Flex>
             </Box>
           </Flex>
-          <Flex height="50%" p={4} justifyContent="space-between" alignItems="center">
+          <Flex justifyContent="flex-end" px={4} mb={4} mt={1}>
+            <Badge
+              color={badgeColor(badgeHealthVariant).color}
+              bg={badgeColor(badgeHealthVariant).border}
+              borderColor={badgeColor(badgeHealthVariant).color}
+              borderWidth="1px"
+              py={0}
+              px={1}
+              borderRadius="base"
+            >
+              <Tooltip hasArrow label="Soonthetix">
+                <span>
+                  <InfoIcon mr={1} mb={0.5} color="currentcolor" width="12px" height="12px" />
+                </span>
+              </Tooltip>
+              {cRatioHealth}
+            </Badge>
+          </Flex>
+          <Divider />
+          <Flex py={2} px={4} justifyContent="space-between" alignItems="center">
             <Heading fontSize="xs" lineHeight="4">
               Target Health
               <Tooltip hasArrow label="Soonthetix">
