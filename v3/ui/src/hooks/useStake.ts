@@ -181,7 +181,7 @@ export const useStake = ({
 
       await exec();
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     } finally {
       setIsLoading(false);
     }

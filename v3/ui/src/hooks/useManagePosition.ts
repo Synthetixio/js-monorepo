@@ -131,7 +131,7 @@ export const useManagePosition = (
       }
       refetch?.();
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     } finally {
       setIsLoading(false);
     }
