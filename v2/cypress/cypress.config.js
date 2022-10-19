@@ -20,6 +20,7 @@ module.exports = defineConfig({
     specPattern: ['../**/*.e2e.{js,jsx,ts,tsx}'],
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
+      require('@cypress/code-coverage/task')(on, config);
       on('task', {
         ...require('./cypress/tasks/removeMinimumStakeTime'),
         ...require('./cypress/tasks/getSnx'),
