@@ -211,6 +211,13 @@ jobs:
 
       - tenderly-cleanup
 
+      - store_test_results:
+          path: 'v2/cypress/cypress/reports'
+
+      - store_artifacts:
+          path: 'v2/cypress/.nyc_output'
+          destination: 'coverage'
+
       - store_artifacts:
           path: 'v2/cypress/cypress/screenshots'
           destination: 'screenshots'
@@ -218,13 +225,6 @@ jobs:
       - store_artifacts:
           path: 'v2/cypress/cypress/videos'
           destination: 'videos'
-
-      - store_test_results:
-          path: 'cypress/reports'
-
-      - store_artifacts:
-          path: '.nyc_output'
-          destination: 'coverage'
 
   v2-cy:
     working_directory: /tmp/app
@@ -238,6 +238,13 @@ jobs:
           working_directory: /tmp/app/v2/cypress
           command: NODE_ENV=test cypress run --component --browser chrome
 
+      - store_test_results:
+          path: 'v2/cypress/cypress/reports'
+
+      - store_artifacts:
+          path: 'v2/cypress/.nyc_output'
+          destination: 'coverage'
+
       - store_artifacts:
           path: 'v2/cypress/cypress/screenshots'
           destination: 'screenshots'
@@ -245,13 +252,6 @@ jobs:
       - store_artifacts:
           path: 'v2/cypress/cypress/videos'
           destination: 'videos'
-
-      - store_test_results:
-          path: 'cypress/reports'
-
-      - store_artifacts:
-          path: '.nyc_output'
-          destination: 'coverage'
 
 workflows:
   version: 2.1

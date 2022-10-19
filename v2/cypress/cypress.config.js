@@ -1,6 +1,12 @@
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
+  reporter: 'junit',
+  reporterOptions: {
+    mochaFile: './cypress/reports/junit-results.[hash].xml',
+    toConsole: true,
+  },
+
   component: {
     watchForFileChanges: false,
     specPattern: ['../**/*.cy.{js,jsx,ts,tsx}'],
