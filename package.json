@@ -49,18 +49,18 @@
   ],
   "resolutions": {
     "@emotion/is-prop-valid": "^1.2.0",
-    "@ethersproject/abi": "^5.6.4",
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/bytes": "^5.7.0",
     "@uniswap/sdk-core": "^3.0.0",
     "@uniswap/v3-core": "^1.0.0",
     "@uniswap/v3-periphery": "^1.0.0",
     "big.js": "^6.1.1",
     "bn.js": "^5.2.1",
-    "@ethersproject/bignumber": "^5.6.2",
-    "@ethersproject/bytes": "^5.6.1",
     "browserslist": "4",
     "caniuse-lite": "1",
-    "ethers": "^5.6.4",
-    "synthetix": "^2.76.1"
+    "ethers": "^5.7.2",
+    "synthetix": "2.77.0-alpha"
   },
   "husky": {
     "hooks": {
