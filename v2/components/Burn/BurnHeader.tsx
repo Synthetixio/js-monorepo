@@ -39,7 +39,7 @@ export const BurnHeaderUi: FC<{
   collateral?: number;
   debtBalance?: number;
   SNXRate?: number;
-  isDebtDataLoading: boolean;
+  isDebtDataLoading?: boolean;
 }> = ({
   burnAmountSusd,
   liquidationRatioPercentage,
@@ -143,17 +143,21 @@ export const BurnHeaderUi: FC<{
             <Box>
               <Flex alignItems="center">
                 <Text
+                  data-testid="current c-ratio badge"
                   color={badgeColor(healthVariant).color}
                   fontFamily="mono"
                   fontSize="lg"
                   textAlign="end"
                 >
-                  {currentCRatioPercentage ? formatPercent(currentCRatioPercentage / 100) : '0%'}
+                  {currentCRatioPercentage
+                    ? formatPercent(currentCRatioPercentage / 100, { maximumFractionDigits: 0 })
+                    : '0%'}
                 </Text>
                 {newCratioPercentage ? (
                   <>
                     <ArrowRight mx={1} color="white" />
                     <Text
+                      data-testid="new c-ratio badge"
                       color={
                         badgeColor(
                           getHealthVariant({
@@ -167,7 +171,7 @@ export const BurnHeaderUi: FC<{
                       fontSize="lg"
                       textAlign="end"
                     >
-                      {formatPercent(newCratioPercentage)}
+                      {formatPercent(newCratioPercentage, { maximumFractionDigits: 0 })}
                     </Text>
                   </>
                 ) : null}
@@ -202,8 +206,15 @@ export const BurnHeaderUi: FC<{
                 </span>
               </Tooltip>
             </Heading>
-            <Text color="green.400" fontFamily="mono" fontSize="lg">
-              {`${targetCRatioPercentage?.toFixed(0) || 0}%`}
+            <Text
+              data-testid="target-ratio badge"
+              color="green.400"
+              fontFamily="mono"
+              fontSize="lg"
+            >
+              {targetCRatioPercentage
+                ? formatPercent(targetCRatioPercentage / 100, { maximumFractionDigits: 0 })
+                : '0%'}
             </Text>
           </Flex>
         </Skeleton>
