@@ -19,7 +19,7 @@ export const getChainById = (chainId: number) =>
 
 export const getChainNameById = (chainId: number) => {
   const chain = getChainById(chainId);
-  return chain?.name.toLowerCase() == 'localhost' ? 'hardhat' : chain?.network;
+  return chain?.network.toLowerCase() == 'localhost' ? 'hardhat' : chain?.network;
 };
 
 // TODO: Retrieve from on chain data
