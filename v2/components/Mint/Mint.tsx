@@ -28,6 +28,7 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { parseTxnError } from '@snx-v2/parseTxnError';
 import { MintTransactionModal } from './MintTransactionModal';
+import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -98,7 +99,7 @@ export const MintUi = ({
 
   return (
     <>
-      <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="md" p={5}>
+      <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="base" p={5}>
         <Flex alignItems="center">
           <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
             {t('staking-v2.mint.heading')}
@@ -109,7 +110,7 @@ export const MintUi = ({
             </Flex>
           </Tooltip>
         </Flex>
-        <Box borderWidth="1px" borderColor="gray.900" borderRadius="md" p={2} my={3}>
+        <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2} my={3}>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
               <TokensIcon />
@@ -152,7 +153,7 @@ export const MintUi = ({
             </Flex>
           </Tooltip>
         </Flex>
-        <Box borderWidth="1px" borderColor="gray.900" borderRadius="md" p={2} mt={3}>
+        <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2} mt={3}>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
               <TokensIcon />
@@ -175,6 +176,7 @@ export const MintUi = ({
             </Flex>
           </Flex>
         </Box>
+        <MintOrBurnChanges collateralChange={parseFloat(stakeAmountSNX)} action="mint" />
         {gasError ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
@@ -287,6 +289,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         gasError={gasError}
         onClose={() => {
           setStakeAmountSNX('');
+          setMintAmountSUSD('');
           settle();
         }}
         onSubmit={handleSubmit}

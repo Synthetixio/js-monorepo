@@ -12,7 +12,6 @@ const Template: ComponentStory<typeof BurnUi> = (_args) => <BurnUi {..._args} />
 export const Primary = Template.bind({});
 
 Primary.args = {
-  snxBalance: 2000,
   susdBalance: 2000,
   debtBalance: 100,
   isLoading: false,

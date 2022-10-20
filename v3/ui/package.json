@@ -20,7 +20,7 @@
     "@synthetixio/v3-theme": "workspace:*",
     "big.js": "^6.1.1",
     "chart.js": "^3.9.1",
-    "ethers": "^5.5.3",
+    "ethers": "^5.7.2",
     "framer-motion": "^7.0.0",
     "i18next": "^21.9.0",
     "i18next-browser-languagedetector": "^6.1.4",

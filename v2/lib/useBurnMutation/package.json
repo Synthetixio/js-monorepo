@@ -4,7 +4,7 @@
   "main": "index.ts",
   "version": "0.0.0",
   "dependencies": {
-    "@ethersproject/bignumber": "^5.6.2",
+    "@ethersproject/bignumber": "^5.7.0",
     "@snx-v2/txnReducer": "workspace:*",
     "@snx-v2/useGasOptions": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",

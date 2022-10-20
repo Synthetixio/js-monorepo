@@ -151,7 +151,7 @@ const V2Mint = () => {
                       Current Health
                       <Tooltip hasArrow label="Soonthetix">
                         <span>
-                          <InfoIcon ml={1} mb={0.5} width="16px" height="16px" />
+                          <InfoIcon ml={1} mb={0.5} />
                         </span>
                       </Tooltip>
                     </Heading>
@@ -175,13 +175,7 @@ const V2Mint = () => {
                       >
                         <Tooltip hasArrow label="Soonthetix">
                           <span>
-                            <InfoIcon
-                              mr={1}
-                              mb={0.5}
-                              color={badgeColor(healthVariant)}
-                              width="12px"
-                              height="12px"
-                            />
+                            <InfoIcon mr={1} mb={0.5} color={badgeColor(healthVariant)} />
                           </span>
                         </Tooltip>
                         {cRatioHealth}
@@ -193,7 +187,7 @@ const V2Mint = () => {
                       Target Health
                       <Tooltip hasArrow label="Soonthetix">
                         <span>
-                          <InfoIcon ml={1} mb={0.5} width="16px" height="16px" />
+                          <InfoIcon ml={1} mb={0.5} />
                         </span>
                       </Tooltip>
                     </Heading>

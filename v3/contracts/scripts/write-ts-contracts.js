@@ -4,7 +4,7 @@ const ethers = require('ethers');
 const prettier = require('prettier');
 
 const prettierOptions = JSON.parse(fs.readFileSync('../../.prettierrc', 'utf8'));
-const networks = ['goerli', 'optimism-goerli'];
+const networks = ['hardhat', 'goerli', 'optimism-goerli'];
 
 function generateTS(network) {
   const deploymentFiles = fs.readdirSync(path.resolve(__dirname, `../deployments/${network}`));

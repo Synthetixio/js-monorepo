@@ -32,6 +32,7 @@ import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { useQueryClient } from '@tanstack/react-query';
 import { parseTxnError } from '@snx-v2/parseTxnError';
 import { BurnTransactionModal } from './BurnTransactionModal';
+import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 
 interface BurnProps {
   snxBalance?: number;
@@ -76,7 +77,6 @@ const StyledInput: FC<InputProps> = (props) => {
 };
 
 export const BurnUi = ({
-  snxBalance = 0,
   susdBalance = 0,
   isLoading,
   onSubmit,
@@ -108,9 +108,15 @@ export const BurnUi = ({
 
   return (
     <>
-      <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="md" p={5}>
+      <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="base" p={5}>
         <Flex alignItems="center">
-          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
+          <Text
+            fontFamily="heading"
+            fontWeight="extrabold"
+            lineHeight="base"
+            fontSize="xs"
+            mr={1.5}
+          >
             {t('staking-v2.burn.heading')}
           </Text>
           <Tooltip label="Soonthetix" hasArrow>
@@ -119,7 +125,7 @@ export const BurnUi = ({
             </Flex>
           </Tooltip>
         </Flex>
-        <Box borderWidth="1px" borderColor="gray.900" borderRadius="md" p={2} my={3}>
+        <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2} my={3}>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
               <TokensIcon />
@@ -206,7 +212,13 @@ export const BurnUi = ({
           </Alert>
         )}
         <Flex alignItems="center">
-          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
+          <Text
+            fontFamily="heading"
+            fontWeight="extrabold"
+            lineHeight="base"
+            fontSize="xs"
+            mr={1.5}
+          >
             {t('staking-v2.burn.unstaking')}
           </Text>
           <Tooltip label="Soonthetix" hasArrow>
@@ -215,7 +227,7 @@ export const BurnUi = ({
             </Flex>
           </Tooltip>
         </Flex>
-        <Box borderWidth="1px" borderColor="gray.900" borderRadius="md" p={2} mt={3}>
+        <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2} mt={3}>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
               <TokensIcon />
@@ -232,17 +244,15 @@ export const BurnUi = ({
               />
               <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
                 <Flex>
-                  <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={4}>
-                    {t('staking-v2.burn.staked-snx')}: {formatNumber(stakedSnx)}
-                  </Text>
                   <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-                    {t('staking-v2.burn.snx-balance', { snxBalance: formatNumber(snxBalance) })}
+                    {t('staking-v2.burn.staked-snx')}: {formatNumber(stakedSnx)}
                   </Text>
                 </Flex>
               </Skeleton>
             </Flex>
           </Flex>
         </Box>
+        <MintOrBurnChanges collateralChange={parseFloat(snxUnstakingAmount)} action="burn" />
         {gasError ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
@@ -343,7 +353,6 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       <BurnUi
         stakedSnx={stakedSnx.toNumber()}
         debtBalance={debtData?.debtBalance.toNumber()}
-        snxBalance={debtData?.collateral.toNumber()}
         isLoading={isLoading}
         susdBalance={susdBalance?.toNumber()}
         snxUnstakingAmount={snxUnstakingAmount}
@@ -382,6 +391,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         onClose={() => {
           setActiveBadge(undefined);
           setBurnAmountSusd('');
+          setSnxUnstakingAmount('');
           settle();
         }}
         onSubmit={handleSubmit}

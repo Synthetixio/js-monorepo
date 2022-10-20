@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Spinner } from '@chakra-ui/react';
-import { ethers } from 'ethers';
 import { useEffect, useRef, FC } from 'react';
 import { useRecoilState } from 'recoil';
-import { useNetwork, chainId as chainMapping, useSwitchNetwork } from 'wagmi';
+import { useNetwork, useSwitchNetwork, chain } from 'wagmi';
 import { getChainNameById, supportedChains } from '../utils/constants';
 import { chainIdState } from '../utils/state';
 import { useLocation, useSearchParams } from 'react-router-dom';
@@ -12,7 +11,7 @@ type Props = {
   children?: React.ReactElement | React.ReactElement[];
 };
 
-type ChainName = 'goerli' | 'hardhat';
+const DEFAULT_CHAIN = chain.goerli;
 
 export const routeToChain = (basePath: string, chainId: number) => {
   const chain = getChainNameById(chainId);
@@ -39,25 +38,10 @@ export const NetworkChain: FC<Props> = ({ children }) => {
     },
   });
 
-  useEffect(() => {
-    if (window.ethereum) {
-      const web3Provider = new ethers.providers.Web3Provider(
-        window.ethereum as ethers.providers.ExternalProvider,
-        'any'
-      );
-
-      web3Provider.on('network', (newNetwork, oldNetwork) => {
-        if (oldNetwork) {
-          routeToChain(location.pathname, newNetwork.chainId);
-          setLocalChainId(newNetwork.chainId);
-        }
-      });
-    }
-  }, [location.pathname, setLocalChainId]);
-
   const chainParam = search.get('chain');
   const chainIdParamExists = Boolean(chainParam);
-  const chainId = chainMapping[chainParam as ChainName];
+  const chain = supportedChains.find((c) => c.network === chainParam);
+  const chainId = Boolean(chain) ? chain!.id : DEFAULT_CHAIN.id;
   const hasWalletConnected = Boolean(switchNetwork);
 
   // MOUNT
@@ -69,9 +53,14 @@ export const NetworkChain: FC<Props> = ({ children }) => {
     if (!onInitialMount.current) {
       return;
     }
+
+    // 1. if query param is invalid, route to default chain
+    if (chainIdParamExists && activeChain && !chain) {
+      routeToChain(location.pathname, activeChain.id);
+    }
+
     if (chainIdParamExists) {
       if (activeChain) {
-        // TODO: when chainId not supported, route to activeChain
         if (activeChain.id !== chainId) {
           if (hasWalletConnected) {
             onInitialMount.current = false;
@@ -97,6 +86,7 @@ export const NetworkChain: FC<Props> = ({ children }) => {
     }
   }, [
     activeChain,
+    chain,
     chainId,
     chainIdParamExists,
     hasWalletConnected,
@@ -104,6 +94,20 @@ export const NetworkChain: FC<Props> = ({ children }) => {
     setLocalChainId,
     switchNetwork,
   ]);
+
+  // ONCHANGE
+  // If network is switched via wallet or button on page, then route to that new active chain
+  // and keep local chain id in sync
+  useEffect(() => {
+    if (onInitialMount.current) {
+      return;
+    }
+
+    if (activeChain && chainId !== activeChain.id) {
+      routeToChain(location.pathname, activeChain.id);
+      setLocalChainId(activeChain.id);
+    }
+  }, [activeChain, chainId, location.pathname, setLocalChainId]);
 
   return Boolean(localChainId) ? <>{children}</> : <Spinner mx="auto" my="auto" />;
 };
