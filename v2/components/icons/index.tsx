@@ -43,3 +43,4 @@ export * from './CurveWhiteIcon';
 export * from './NineDots';
 export * from './BridgeIcon';
 export * from './DebtPoolIcon';
+export * from './ArrowRight';
