@@ -23,7 +23,7 @@ export const Synthetix: React.FC = () => {
     if (colorMode === 'dark') {
       toggleColorMode();
     }
-  });
+  }, [colorMode, toggleColorMode]);
 
   return (
     <Suspense fallback={<Spinner />}>
