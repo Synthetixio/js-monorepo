@@ -20,7 +20,7 @@ export const Synthetix: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
-    if (colorMode === 'dark') {
+    if (colorMode === 'light') {
       toggleColorMode();
     }
   }, [colorMode, toggleColorMode]);

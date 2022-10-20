@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers';
 import { chain } from 'wagmi';
 import { ChainName } from './types';
 
