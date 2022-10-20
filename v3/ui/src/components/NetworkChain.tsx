@@ -98,8 +98,6 @@ export const NetworkChain: FC<Props> = ({ children }) => {
       return;
     }
 
-    console.log('blah', activeChain.id, chainId);
-
     if (activeChain && (chainId !== activeChain.id || !chainId)) {
       routeToChain(location.pathname, activeChain.id);
     }
