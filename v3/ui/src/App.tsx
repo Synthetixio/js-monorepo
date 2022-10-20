@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Spinner, useColorMode } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
 import { DefaultLayout } from './layouts/Default';
@@ -18,9 +18,12 @@ import { NotFoundPage } from './pages/404';
 
 export const Synthetix: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  if (colorMode == 'light') {
-    toggleColorMode();
-  }
+
+  useEffect(() => {
+    if (colorMode === 'light') {
+      toggleColorMode();
+    }
+  }, [colorMode, toggleColorMode]);
 
   return (
     <Suspense fallback={<Spinner />}>
