@@ -12,22 +12,45 @@ import {
   InputGroup,
   InputRightAddon,
   Container,
-  Badge,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react';
-import { BigNumber, utils } from 'ethers';
+import { useMemo, useState } from 'react';
 import Head from 'react-helmet';
 import { useNetwork } from 'wagmi';
+import { NumberInput } from '../../components/accounts/Position/Manage/NumberInput';
+import { Balance } from '../../components/accounts/Stake/Balance';
+import { useContract } from '../../hooks';
+import { useTokenBalance } from '../../hooks/useTokenBalance';
+import { contracts } from '../../utils/constants';
+
+const teleportChains = [
+  {
+    id: 5,
+    logo: 'testnet.png',
+    label: 'Goerli',
+  },
+  {
+    id: 420,
+    logo: 'testnet.png',
+    label: 'Optimism Goerli',
+  },
+];
 
 export const Teleporter = () => {
+  const [amount, setAmount] = useState(0);
+
+  const [from, setFrom] = useState(teleportChains[0].id);
+  const [to, setTo] = useState(teleportChains[1].id);
+
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
 
-  const balance = BigNumber.from(10);
-  const decimals = 18;
+  const snxProxy = useContract(contracts.SNX_USD_PROXY, from);
+  const balance = useTokenBalance(snxProxy?.address, from);
 
-  // import snxUSD addresses per network?
-  // const balanceData = useTokenBalance(selectedCollateralType.address); // This needs to receive a network param?
-  // read fee from contract?
+  const fromChain = useMemo(() => teleportChains.find((chain) => chain.id === from), [from]);
+  const toChain = useMemo(() => teleportChains.find((chain) => chain.id === to), [to]);
 
   return (
     <>
@@ -51,7 +74,7 @@ export const Teleporter = () => {
               <Flex mb="3">
                 <Menu>
                   <MenuButton
-                    minWidth="170px"
+                    minWidth="200px"
                     borderWidth="1px"
                     borderColor="gray.800"
                     borderRadius="6px"
@@ -59,23 +82,53 @@ export const Teleporter = () => {
                     cursor="pointer"
                     type="button"
                   >
-                    <Flex>
-                      <Box w="24px" h="24px" borderRadius="12px" overflow="hidden" ml="3.5" mr="2">
+                    <Flex alignItems="center" justify="space-between" mx={2}>
+                      <Flex>
                         <Image
-                          alt="collateral image"
+                          alt={fromChain?.label}
                           width="24px"
                           height="24px"
-                          src={'https://www.placecage.com/c/24/24'}
+                          mr={2}
+                          src={`/images/${fromChain?.logo}`}
                         />
-                      </Box>
-                      <Text fontWeight="600">Optimism</Text>
-                      <ChevronDownIcon opacity="0.66" w="5" h="5" ml="4" mr="2" />
+                        <Text fontWeight="600">{fromChain?.label}</Text>
+                      </Flex>
+                      <ChevronDownIcon opacity="0.66" w="5" h="5" />
                     </Flex>
                   </MenuButton>
+                  <MenuList background="black">
+                    {teleportChains.map((chain) => (
+                      <MenuItem
+                        onClick={() => {
+                          if (to === chain.id) {
+                            const id = teleportChains.find((item) => item.id !== to)?.id;
+                            if (!id) {
+                              return;
+                            }
+                            setTo(id);
+                          }
+                          setFrom(chain.id);
+                        }}
+                        display="flex"
+                        alignItems="center"
+                        key={chain.id}
+                      >
+                        <Image
+                          alt={chain.label}
+                          width="24px"
+                          height="24px"
+                          mr={2}
+                          src={`/images/${chain.logo}`}
+                        />
+
+                        <Text fontWeight="600">{chain.label}</Text>
+                      </MenuItem>
+                    ))}
+                  </MenuList>
                 </Menu>
 
                 <InputGroup size="lg" ml="6">
-                  <Input
+                  <NumberInput
                     flex="1"
                     type="number"
                     placeholder="0.0"
@@ -84,23 +137,25 @@ export const Teleporter = () => {
                     min="0"
                     textAlign="right"
                     borderColor="gray.800"
+                    value={amount}
+                    onChange={setAmount}
+                    border="1px"
+                    max={balance.formatedValue}
+                    borderRightRadius="none"
                   />
-                  <InputRightAddon borderColor="gray.800" bg="whiteAlpha.100" children="snxUSD" />
+                  <InputRightAddon borderColor="gray.800" bg="whiteAlpha.100">
+                    snxUSD
+                  </InputRightAddon>
                 </InputGroup>
               </Flex>
 
-              <Flex alignItems="center">
-                <Text fontSize="xs" textAlign="right" ml="auto">
-                  <Text display="flex" gap={2} alignItems="center" fontSize="xs">
-                    Balance: {parseFloat(utils.formatUnits(balance, decimals)).toLocaleString()}{' '}
-                    snxUSD
-                    {!balance.eq(0) && (
-                      <Badge as="button" variant="outline" transform="translateY(-1px)">
-                        Use Max
-                      </Badge>
-                    )}
-                  </Text>
-                </Text>
+              <Flex alignItems="center" justifyContent="flex-end">
+                <Balance
+                  balance={balance.value}
+                  decimals={balance.decimals}
+                  symbol="snxUsd"
+                  address={snxProxy?.address}
+                />
               </Flex>
             </form>
           </Box>
@@ -115,7 +170,7 @@ export const Teleporter = () => {
               <Flex mb="3">
                 <Menu>
                   <MenuButton
-                    minWidth="170px"
+                    minWidth="200px"
                     borderWidth="1px"
                     borderColor="gray.800"
                     borderRadius="6px"
@@ -123,19 +178,49 @@ export const Teleporter = () => {
                     cursor="pointer"
                     type="button"
                   >
-                    <Flex>
-                      <Box w="24px" h="24px" borderRadius="12px" overflow="hidden" ml="3.5" mr="2">
+                    <Flex alignItems="center" justify="space-between" mx={2}>
+                      <Flex>
                         <Image
-                          alt="collateral image"
+                          alt={toChain?.label}
                           width="24px"
                           height="24px"
-                          src={'https://www.placecage.com/c/24/24'}
+                          mr={2}
+                          src={`/images/${toChain?.logo}`}
                         />
-                      </Box>
-                      <Text fontWeight="600">Ethereum</Text>
-                      <ChevronDownIcon opacity="0.66" w="5" h="5" ml="4" mr="2" />
+                        <Text fontWeight="600">{toChain?.label}</Text>
+                      </Flex>
+                      <ChevronDownIcon opacity="0.66" w="5" h="5" />
                     </Flex>
                   </MenuButton>
+                  <MenuList background="black">
+                    {teleportChains.map((chain) => (
+                      <MenuItem
+                        onClick={() => {
+                          if (from === chain.id) {
+                            const id = teleportChains.find((item) => item.id !== from)?.id;
+                            if (!id) {
+                              return;
+                            }
+                            setFrom(id);
+                          }
+                          setTo(chain.id);
+                        }}
+                        display="flex"
+                        alignItems="center"
+                        key={chain.id}
+                      >
+                        <Image
+                          alt={chain.label}
+                          width="24px"
+                          height="24px"
+                          mr={2}
+                          src={`/images/${chain.logo}`}
+                        />
+
+                        <Text fontWeight="600">{chain.label}</Text>
+                      </MenuItem>
+                    ))}
+                  </MenuList>
                 </Menu>
 
                 <InputGroup size="lg" ml="6">
@@ -151,10 +236,12 @@ export const Teleporter = () => {
                     isReadOnly
                     pointerEvents="none"
                     bg="whiteAlpha.50"
-                    value="0"
                     borderRight="1px solid #262626"
+                    value={amount}
                   />
-                  <InputRightAddon border="none" bg="whiteAlpha.100" children="snxUSD" />
+                  <InputRightAddon border="none" bg="whiteAlpha.100">
+                    snxUSD
+                  </InputRightAddon>
                 </InputGroup>
               </Flex>
 
