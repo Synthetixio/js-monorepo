@@ -55,7 +55,8 @@ export const NetworkChain: FC<Props> = ({ children }) => {
     }
 
     if (chainIdParamExists && activeChain && !chain) {
-      routeToChain(location.pathname, chainId);
+      const isActiveChainSupported = supportedChains.find((c) => c.id === activeChain.id);
+      routeToChain(location.pathname, isActiveChainSupported ? activeChain.id : chainId);
     }
 
     if (chainIdParamExists) {
