@@ -14,7 +14,9 @@ import {
   Container,
   MenuList,
   MenuItem,
+  useToast,
 } from '@chakra-ui/react';
+import { useConnectModal, useChainModal } from '@rainbow-me/rainbowkit';
 import { useMemo, useState } from 'react';
 import Head from 'react-helmet';
 import { useNetwork } from 'wagmi';
@@ -38,6 +40,9 @@ const teleportChains = [
 ];
 
 export const Teleporter = () => {
+  const toast = useToast();
+  const { openChainModal } = useChainModal();
+  const { openConnectModal } = useConnectModal();
   const [amount, setAmount] = useState(0);
 
   const [from, setFrom] = useState(teleportChains[0].id);
@@ -254,11 +259,29 @@ export const Teleporter = () => {
           </Box>
 
           {hasWalletConnected ? (
-            <Button size="lg" px="8" type="submit">
+            <Button
+              onClick={() => {
+                toast.closeAll();
+
+                if (activeChain?.id !== from) {
+                  toast({
+                    title: 'Connect to ' + fromChain?.label,
+                    description: `Please connect to ${fromChain?.label} network`,
+                    status: 'info',
+                    isClosable: true,
+                  });
+
+                  openChainModal?.();
+                }
+              }}
+              size="lg"
+              px="8"
+              type="submit"
+            >
               Transfer
             </Button>
           ) : (
-            <Button size="lg" px="8">
+            <Button onClick={openConnectModal} size="lg" px="8">
               Connect Wallet
             </Button>
           )}
