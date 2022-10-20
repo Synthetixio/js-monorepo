@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from '@chakra-ui/icons';
 import { Link, Td, Text, Tr } from '@chakra-ui/react';
 import { BigNumber } from 'ethers';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import { formatValue } from '../../../utils/helpers';
 import { currency } from '../../../utils/currency';
 import { StakingPositionType } from '../../../utils/types';
@@ -23,6 +23,9 @@ export const StakingPosition: FC<Props> = ({ position }) => {
   const collateralAmount = formatValue(collateralAmountBN, decimals);
   const price = formatValue(priceBN!, priceDecimals!);
   const collateralValue = collateralAmount * price;
+
+  const [search] = useSearchParams();
+  const routingSearchParams = `?chain=${search.get('chain')}`;
 
   return (
     <Tr>
@@ -56,7 +59,7 @@ export const StakingPosition: FC<Props> = ({ position }) => {
       <Td>
         <Link
           as={RouterLink}
-          to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.poolId}`}
+          to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.poolId}${routingSearchParams}`}
           color="cyan.500"
           display="inline-block"
           transform="translateY(-1.5px)"
