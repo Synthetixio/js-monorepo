@@ -31,36 +31,47 @@ const calcNewCratioPercentage = (
   const newDebtBalance = debtBalance - burnAmountSusd;
   return 1 / (newDebtBalance / collateralValue);
 };
-export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) => {
+export const BurnHeaderUi: FC<{
+  burnAmountSusd?: number;
+  liquidationRatioPercentage?: number;
+  targetCRatioPercentage?: number;
+  currentCRatioPercentage?: number;
+  collateral?: number;
+  debtBalance?: number;
+  SNXRate?: number;
+  isDebtDataLoading: boolean;
+}> = ({
+  burnAmountSusd,
+  liquidationRatioPercentage,
+  targetCRatioPercentage,
+  currentCRatioPercentage,
+  collateral,
+  debtBalance,
+  SNXRate,
+  isDebtDataLoading,
+}) => {
   const { t } = useTranslation();
-  const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
-  const { data: exchangeRateData } = useExchangeRatesData();
 
-  const liquidationCratioPercentage = debtData?.liquidationRatioPercentage.toNumber();
-  const targetCratioPercentage = debtData?.targetCRatioPercentage.toNumber();
-  const currentCRatioPercentage = debtData?.currentCRatioPercentage.toNumber();
   const newCratioPercentage = calcNewCratioPercentage(
-    debtData?.collateral.toNumber(),
-    exchangeRateData?.SNX?.toNumber(),
-    debtData?.debtBalance.toNumber(),
+    collateral,
+    SNXRate,
+    debtBalance,
     burnAmountSusd
   );
 
   const healthVariant = getHealthVariant({
     currentCRatioPercentage,
-    targetCratioPercentage,
-    liquidationCratioPercentage,
+    targetCratioPercentage: targetCRatioPercentage,
+    liquidationCratioPercentage: liquidationRatioPercentage,
   });
 
   const badgeHealthVariant = getHealthVariant({
     currentCRatioPercentage: newCratioPercentage
       ? newCratioPercentage * 100
       : currentCRatioPercentage,
-    targetCratioPercentage,
-    liquidationCratioPercentage,
+    targetCratioPercentage: targetCRatioPercentage,
+    liquidationCratioPercentage: liquidationRatioPercentage,
   });
-
-  const isLoading = isDebtDataLoading;
 
   const cRatioHealth = t(`staking-v2.mint.${healthVariant}`);
   return (
@@ -91,7 +102,7 @@ export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) =
           alignItems="center"
           startColor="gray.900"
           endColor="gray.700"
-          isLoaded={!isLoading}
+          isLoaded={!isDebtDataLoading}
           bg="black"
           w={leftColWidth}
           pt={3}
@@ -102,15 +113,15 @@ export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) =
           fadeDuration={1}
         >
           <CRatioProgressBar
-            liquidationCratioPercentage={liquidationCratioPercentage || 0}
+            liquidationCratioPercentage={liquidationRatioPercentage || 0}
             currentCRatioPercentage={currentCRatioPercentage || 0}
-            targetCratioPercentage={targetCratioPercentage || 0}
+            targetCratioPercentage={targetCRatioPercentage || 0}
           />
         </Skeleton>
         <Skeleton
           startColor="gray.900"
           endColor="gray.700"
-          isLoaded={!isLoading}
+          isLoaded={!isDebtDataLoading}
           bg="black"
           w={rightColWidth}
           borderRadius="base"
@@ -146,8 +157,8 @@ export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) =
                       color={
                         badgeColor(
                           getHealthVariant({
-                            targetCratioPercentage,
-                            liquidationCratioPercentage,
+                            targetCratioPercentage: targetCRatioPercentage,
+                            liquidationCratioPercentage: liquidationRatioPercentage,
                             currentCRatioPercentage: newCratioPercentage * 100,
                           })
                         ).color
@@ -192,11 +203,29 @@ export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) =
               </Tooltip>
             </Heading>
             <Text color="green.400" fontFamily="mono" fontSize="lg">
-              {`${targetCratioPercentage?.toFixed(0) || 0}%`}
+              {`${targetCRatioPercentage?.toFixed(0) || 0}%`}
             </Text>
           </Flex>
         </Skeleton>
       </Flex>
     </>
+  );
+};
+
+export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) => {
+  const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
+  const { data: exchangeRateData } = useExchangeRatesData();
+
+  return (
+    <BurnHeaderUi
+      burnAmountSusd={burnAmountSusd}
+      liquidationRatioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
+      targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
+      currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
+      collateral={debtData?.collateral.toNumber()}
+      debtBalance={debtData?.debtBalance.toNumber()}
+      SNXRate={exchangeRateData?.SNX?.toNumber()}
+      isDebtDataLoading={isDebtDataLoading}
+    />
   );
 };
