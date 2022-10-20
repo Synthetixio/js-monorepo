@@ -54,6 +54,10 @@ export const NetworkChain: FC<Props> = ({ children }) => {
       return;
     }
 
+    if (chainIdParamExists && activeChain && !chain) {
+      routeToChain(location.pathname, chainId);
+    }
+
     if (chainIdParamExists) {
       if (activeChain) {
         if (activeChain.id !== chainId) {
