@@ -34,7 +34,7 @@ export const NetworkChain: FC<Props> = ({ children }) => {
 
   const { switchNetwork } = useSwitchNetwork({
     onSuccess: (data) => {
-      setLocalChainId(data.id);
+      routeToChain(location.pathname, data.id);
     },
   });
 
@@ -54,9 +54,9 @@ export const NetworkChain: FC<Props> = ({ children }) => {
       return;
     }
 
-    // 1. if query param is invalid, route to default chain
     if (chainIdParamExists && activeChain && !chain) {
-      routeToChain(location.pathname, activeChain.id);
+      const isActiveChainSupported = supportedChains.find((c) => c.id === activeChain.id);
+      routeToChain(location.pathname, isActiveChainSupported ? activeChain.id : chainId);
     }
 
     if (chainIdParamExists) {
@@ -103,9 +103,8 @@ export const NetworkChain: FC<Props> = ({ children }) => {
       return;
     }
 
-    if (activeChain && chainId !== activeChain.id) {
+    if (activeChain && (chainId !== activeChain.id || !chainId)) {
       routeToChain(location.pathname, activeChain.id);
-      setLocalChainId(activeChain.id);
     }
   }, [activeChain, chainId, location.pathname, setLocalChainId]);
 
