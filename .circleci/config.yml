@@ -253,6 +253,26 @@ jobs:
           path: 'v2/cypress/cypress/videos'
           destination: 'videos'
 
+  combine-coverage:
+    working_directory: /tmp/app
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - yarn-install
+      - run: rm -rf /tmp/cov
+      - run: yarn download-cci-coverage tests /tmp/cov || true
+      - run: yarn download-cci-coverage v2-cy /tmp/cov || true
+      - run: yarn download-cci-coverage v2-e2e /tmp/cov || true
+      - run: ls -alR /tmp/cov
+      - run: mkdir -p /tmp/cov/combined
+      - run: yarn nyc merge /tmp/cov /tmp/cov/combined/coverage.json || true
+      - run: mkdir -p /tmp/cov/report
+      - run: yarn nyc report --temp-dir=/tmp/cov/combined --reporter=html --report-dir=/tmp/cov/report || true
+      - store_artifacts:
+          path: '/tmp/cov/report'
+          destination: 'coverage'
+
 workflows:
   version: 2.1
 
@@ -267,3 +287,5 @@ workflows:
           requires: [yarn-install]
       - v2-e2e:
           requires: [yarn-install]
+      - combine-coverage:
+          requires: [tests, v2-cy, v2-e2e]

@@ -9178,6 +9178,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@synthetixio/download-cci-coverage@workspace:*, @synthetixio/download-cci-coverage@workspace:tools/download-cci-coverage":
+  version: 0.0.0-use.local
+  resolution: "@synthetixio/download-cci-coverage@workspace:tools/download-cci-coverage"
+  dependencies:
+    node-fetch: ^2.6.7
+  bin:
+    download-cci-coverage: ./download-cci-coverage.js
+  languageName: unknown
+  linkType: soft
+
 "@synthetixio/generate-subgraph-query@workspace:*, @synthetixio/generate-subgraph-query@workspace:tools/generate-subgraph-query":
   version: 0.0.0-use.local
   resolution: "@synthetixio/generate-subgraph-query@workspace:tools/generate-subgraph-query"
@@ -28951,7 +28961,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nyc@npm:15.1.0":
+"nyc@npm:15.1.0, nyc@npm:^15.1.0":
   version: 15.1.0
   resolution: "nyc@npm:15.1.0"
   dependencies:
@@ -33484,6 +33494,7 @@ __metadata:
     "@babel/preset-env": ^7.19.4
     "@babel/preset-typescript": ^7.18.6
     "@synthetixio/deps": "workspace:*"
+    "@synthetixio/download-cci-coverage": "workspace:*"
     "@types/jest": ^29.1.2
     "@typescript-eslint/eslint-plugin": ^5.40.0
     "@typescript-eslint/parser": ^5.40.0
@@ -33493,6 +33504,7 @@ __metadata:
     eslint-plugin-react-hooks: ^4.6.0
     husky: ^8.0.1
     lint-staged: ^13.0.3
+    nyc: ^15.1.0
     prettier: ^2.7.1
     typescript: ^4.8.2
   languageName: unknown
