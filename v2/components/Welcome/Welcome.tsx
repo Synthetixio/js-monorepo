@@ -18,6 +18,7 @@ export const Welcome = ({ ...props }: BoxProps) => {
             ]}
           />
         </Text>
+        {/* TODO Link to introduction */}
         <Button variant="outline" onClick={() => console.log('To introduction')}>
           {t('staking-v2.home.action')}
         </Button>
