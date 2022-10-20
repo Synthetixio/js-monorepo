@@ -9106,7 +9106,7 @@ __metadata:
     ethers: ^5.5.3
     html-webpack-plugin: ^5.5.0
     jest: ^29.1.2
-    synthetix: ^2.76.1
+    synthetix: ^2.77.0-alpha
     ts-loader: ^9.3.1
     ts-node: ^10.9.1
     typescript: ^4.8.2
@@ -9125,7 +9125,7 @@ __metadata:
     "@typechain/ethers-v5": ^10.0.0
     ethers: ^5.5.3
     prettier: ^2.7.1
-    synthetix: ^2.76.1
+    synthetix: ^2.77.0-alpha
     typechain: ^8.0.0
     typescript: ^4.8.2
   languageName: unknown
@@ -9499,7 +9499,7 @@ __metadata:
     stream-browserify: ^3.0.0
     styled-components: ^5.3.5
     styled-media-query: ^2.1.2
-    synthetix: ^2.76.1
+    synthetix: ^2.77.0-alpha
     terser-webpack-plugin: ^5.3.6
     tippy.js: ^6.3.1
     typescript: ^4.8.2
@@ -35735,9 +35735,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synthetix@npm:^2.76.1":
-  version: 2.76.1
-  resolution: "synthetix@npm:2.76.1"
+"synthetix@npm:2.77.0-alpha":
+  version: 2.77.0-alpha
+  resolution: "synthetix@npm:2.77.0-alpha"
   dependencies:
     "@nomiclabs/hardhat-etherscan": ^3.1.0
     abi-decoder: ^2.3.0
@@ -35750,7 +35750,7 @@ __metadata:
     web3-utils: ^1.2.2
   bin:
     snx: bin.js
-  checksum: 17d1afae688d9b15477f63bb02826e3b1b5006d8774ecb50005faac89c9c28ba30e384a08e36b2105ff462ca3d9b10874de09bb3180ea8ad74038dc94607fa01
+  checksum: 10a60ca3300011461acf1ac6c0e85cd3da1c744af2c0deeea18fcdb0baa1b4b9caf74703ac67f77b55705c4d2bfac97f77eeea5cfdf1c75cad7438bbd7f22eaf
   languageName: node
   linkType: hard
 

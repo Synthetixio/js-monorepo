@@ -108,7 +108,7 @@
     "storybook": "^6.5.10",
     "styled-components": "^5.3.5",
     "styled-media-query": "^2.1.2",
-    "synthetix": "^2.76.1",
+    "synthetix": "^2.77.0-alpha",
     "tippy.js": "^6.3.1",
     "unstated-next": "^1.1.0"
   },
