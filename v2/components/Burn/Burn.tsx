@@ -206,7 +206,7 @@ export const BurnUi = ({
         {activeBadge === 'toTarget' && (
           <Alert my={4} status="info" variant="left-accent" py={2} px={3}>
             <AlertIcon width="20px" height="20px" />
-            <AlertDescription pl={2} pr={[0, 0, 24]} fontSize="sm" heading>
+            <AlertDescription pl={2} pr={[0, 0, 24]} fontSize="sm" fontFamily="heading">
               {t('staking-v2.burn.description-cratio')}
             </AlertDescription>
           </Alert>
