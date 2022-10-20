@@ -29,6 +29,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { parseTxnError } from '@snx-v2/parseTxnError';
 import { MintTransactionModal } from './MintTransactionModal';
 import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
+import { MintHeader } from './MintHeader';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -250,6 +251,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   };
   return (
     <>
+      <MintHeader mintAmountSUSD={parseFloat(mintAmountSUSD)} />
       <MintUi
         isLoading={isLoading}
         stakeAmountSNX={stakeAmountSNX}
