@@ -16,7 +16,7 @@ async function mintSusd(amount = 1) {
   if (debt < 1) {
     const mintTx = await SynthetixContract.issueSynths(
       ethers.utils.hexValue(ethers.utils.parseEther(`${amount}`).toHexString()),
-      { gasLimit: 1000000 }
+      { gasLimit: 100_000_000 }
     );
     const receipt = await mintTx.wait();
     console.log('mintSusd', { tx: receipt.transactionHash });

@@ -18,7 +18,7 @@ async function removeMinimumStakeTime() {
 
     const txMinimumStatkeTime = await SystemSettingsContract.connect(
       provider.getSigner(owner)
-    ).setMinimumStakeTime(0, { gasLimit: 1000000 });
+    ).setMinimumStakeTime(0, { gasLimit: 100_000_000 });
     const receipt = await txMinimumStatkeTime.wait();
     console.log('removeMinimumStakeTime', { tx: receipt.transactionHash });
     console.log('removeMinimumStakeTime', { result: 'OK' });
