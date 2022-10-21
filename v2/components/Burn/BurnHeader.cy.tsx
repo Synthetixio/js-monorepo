@@ -87,9 +87,6 @@ describe('BurnHeader.cy', () => {
           targetCRatioPercentage={350}
           currentCRatioPercentage={200}
           isDebtDataLoading={false}
-          collateral={100}
-          SNXRate={2}
-          debtBalance={50}
           burnAmountSusd={10}
         />
       </Box>
