@@ -14,19 +14,75 @@ import {
   SkeletonText,
   Center,
   Fade,
+  Divider,
 } from '@chakra-ui/react';
 import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
 import { getHealthVariant, badgeColor } from '@snx-v2/getHealthVariant';
-import { InfoIcon } from '@snx-v2/icons';
+import { ArrowRight, InfoIcon } from '@snx-v2/icons';
 
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useTranslation, Trans } from 'react-i18next';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber, formatPercent } from '@snx-v2/formatters';
 import { CountDown } from '@snx-v2/CountDown';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
+import { leftColWidth, rightColWidth } from './layout';
 
+const calcNewCratioPercentage = (
+  collateral?: number,
+  SNXRate?: number,
+  debtBalance?: number,
+  mintAmountsUSD?: number
+) => {
+  if (!collateral || !SNXRate || !debtBalance || !mintAmountsUSD) return undefined;
+  const collateralValue = SNXRate * collateral;
+  const newDebtBalance = debtBalance + mintAmountsUSD;
+  return 1 / (newDebtBalance / collateralValue);
+};
+
+const NewStakerHeader: FC<{ nextEpochStartDate?: Date; SNXRate?: number }> = ({
+  nextEpochStartDate,
+  SNXRate,
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <Flex justifyContent="space-between" mx={6} my={2}>
+      <Flex flexDirection="column" alignItems="flex-start">
+        <Text
+          color="whiteAlpha.700"
+          verticalAlign="middle"
+          fontWeight="bold"
+          fontSize="xs"
+          lineHeight="4"
+        >
+          {t('staking-v2.mint.epoch')}
+          <Tooltip hasArrow label="Soonthetix">
+            <Box as="span" ml={1}>
+              <InfoIcon color="whiteAlpha.700" width="12px" height="12px" mb={0.5} />
+            </Box>
+          </Tooltip>
+        </Text>
+        {nextEpochStartDate ? (
+          <Text color="green.400" fontFamily="mono" fontSize="md">
+            <CountDown toDate={nextEpochStartDate} />
+          </Text>
+        ) : (
+          <Skeleton />
+        )}
+      </Flex>
+      <Flex flexDirection="column" alignItems="flex-end">
+        <Text color="whiteAlpha.700" fontWeight="bold" fontSize="xs" lineHeight="4">
+          {t('staking-v2.mint.snx-price')}
+        </Text>
+        <Text color="green.400" fontFamily="mono" fontSize="md">
+          ${formatNumber(SNXRate || 0)}
+        </Text>
+      </Flex>
+    </Flex>
+  );
+};
 export const MintHeaderUi: FC<{
   mintAmountSUSD: number;
   liquidationRatioPercentage?: number;
@@ -39,12 +95,12 @@ export const MintHeaderUi: FC<{
   isExchangeRateLoading?: boolean;
   nextEpochStartDate?: Date;
 }> = ({
-  //   mintAmountSUSD,
+  mintAmountSUSD,
   liquidationRatioPercentage,
   targetCRatioPercentage,
   currentCRatioPercentage,
-  //   collateral,
-  //   debtBalance,
+  collateral,
+  debtBalance,
   SNXRate,
   isDebtDataLoading,
   isExchangeRateLoading,
@@ -53,6 +109,19 @@ export const MintHeaderUi: FC<{
   const { t } = useTranslation();
   const healthVariant = getHealthVariant({
     currentCRatioPercentage,
+    targetCratioPercentage: targetCRatioPercentage,
+    liquidationCratioPercentage: liquidationRatioPercentage,
+  });
+  const newCratioPercentage = calcNewCratioPercentage(
+    collateral,
+    SNXRate,
+    debtBalance,
+    mintAmountSUSD
+  );
+  const badgeHealthVariant = getHealthVariant({
+    currentCRatioPercentage: newCratioPercentage
+      ? newCratioPercentage * 100
+      : currentCRatioPercentage,
     targetCratioPercentage: targetCRatioPercentage,
     liquidationCratioPercentage: liquidationRatioPercentage,
   });
@@ -116,22 +185,17 @@ export const MintHeaderUi: FC<{
       {isCurrentStaker ? (
         <>
           <Fade in={!isLoading}>
-            <Alert my={6} status="warning">
-              <AlertIcon />
-              <AlertDescription pl={2} pr={[0, 0, 24]}>
-                {t('staking-v2.mint.description-existing')}
-              </AlertDescription>
-            </Alert>
-            <Flex mt={2} mb={6} justifyContent="space-between">
+            <Flex justifyContent="space-between" mb={8}>
               <Flex
+                display="flex"
+                alignItems="center"
                 bg="black"
-                w="62.5%"
+                w={leftColWidth}
                 pt={3}
                 px={4}
-                borderRadius="md"
+                borderRadius="base"
                 borderWidth="1px"
                 borderColor="gray.900"
-                alignItems="center"
               >
                 <CRatioProgressBar
                   liquidationCratioPercentage={liquidationRatioPercentage || 0}
@@ -141,20 +205,19 @@ export const MintHeaderUi: FC<{
               </Flex>
               <Flex
                 bg="black"
-                w="34%"
-                borderRadius="md"
+                w={rightColWidth}
+                borderRadius="base"
                 borderWidth="1px"
                 borderColor="gray.900"
                 flexDirection="column"
                 justifyContent="space-between"
               >
                 <Flex
-                  borderBottomColor="gray.900"
-                  borderBottomWidth="1px"
-                  height="50%"
-                  p={4}
+                  px={4}
+                  pt={4}
                   justifyContent="space-between"
                   alignItems="center"
+                  flexWrap="wrap"
                 >
                   <Heading fontSize="xs" lineHeight="4">
                     Current Health
@@ -165,33 +228,66 @@ export const MintHeaderUi: FC<{
                     </Tooltip>
                   </Heading>
                   <Box>
-                    <Text
-                      color={badgeColor(healthVariant).color}
-                      fontFamily="mono"
-                      fontSize="lg"
-                      textAlign="end"
-                    >
-                      {`${currentCRatioPercentage?.toFixed(0)}%`}
-                    </Text>
-                    <Badge
-                      color={badgeColor(healthVariant).color}
-                      bg={badgeColor(healthVariant).border}
-                      borderColor={badgeColor(healthVariant).color}
-                      borderWidth="1px"
-                      py={0}
-                      px={1}
-                      borderRadius="md"
-                    >
-                      <Tooltip hasArrow label="Soonthetix">
-                        <span>
-                          <InfoIcon mr={1} mb={0.5} color={badgeColor(healthVariant)} />
-                        </span>
-                      </Tooltip>
-                      {cRatioHealth}
-                    </Badge>
+                    <Flex alignItems="center">
+                      <Text
+                        data-testid="current c-ratio badge"
+                        color={badgeColor(healthVariant).color}
+                        fontFamily="mono"
+                        fontSize="lg"
+                        textAlign="end"
+                      >
+                        {currentCRatioPercentage
+                          ? formatPercent(currentCRatioPercentage / 100, {
+                              maximumFractionDigits: 0,
+                            })
+                          : '0%'}
+                      </Text>
+                      {newCratioPercentage ? (
+                        <>
+                          <ArrowRight mx={1} color="white" />
+                          <Text
+                            data-testid="new c-ratio badge"
+                            color={
+                              badgeColor(
+                                getHealthVariant({
+                                  targetCratioPercentage: targetCRatioPercentage,
+                                  liquidationCratioPercentage: liquidationRatioPercentage,
+                                  currentCRatioPercentage: newCratioPercentage * 100,
+                                })
+                              ).color
+                            }
+                            fontFamily="mono"
+                            fontSize="lg"
+                            textAlign="end"
+                          >
+                            {formatPercent(newCratioPercentage, { maximumFractionDigits: 0 })}
+                          </Text>
+                        </>
+                      ) : null}
+                    </Flex>
                   </Box>
                 </Flex>
-                <Flex height="50%" p={4} justifyContent="space-between" alignItems="center">
+
+                <Flex justifyContent="flex-end" px={4} mb={4} mt={1}>
+                  <Badge
+                    color={badgeColor(badgeHealthVariant).color}
+                    bg={badgeColor(badgeHealthVariant).border}
+                    borderColor={badgeColor(badgeHealthVariant).color}
+                    borderWidth="1px"
+                    py={0}
+                    px={1}
+                    borderRadius="base"
+                  >
+                    <Tooltip hasArrow label="Soonthetix">
+                      <span>
+                        <InfoIcon mr={1} mb={0.5} color="currentcolor" width="12px" height="12px" />
+                      </span>
+                    </Tooltip>
+                    {cRatioHealth}
+                  </Badge>
+                </Flex>
+                <Divider />
+                <Flex py={2} px={4} justifyContent="space-between" alignItems="center">
                   <Heading fontSize="xs" lineHeight="4">
                     Target Health
                     <Tooltip hasArrow label="Soonthetix">
@@ -200,8 +296,15 @@ export const MintHeaderUi: FC<{
                       </span>
                     </Tooltip>
                   </Heading>
-                  <Text color="green.400" fontFamily="mono" fontSize="lg">
-                    {`${targetCRatioPercentage?.toFixed(0)}%`}
+                  <Text
+                    data-testid="target-ratio badge"
+                    color="green.400"
+                    fontFamily="mono"
+                    fontSize="lg"
+                  >
+                    {targetCRatioPercentage
+                      ? formatPercent(targetCRatioPercentage / 100, { maximumFractionDigits: 0 })
+                      : '0%'}
                   </Text>
                 </Flex>
               </Flex>
@@ -209,39 +312,7 @@ export const MintHeaderUi: FC<{
           </Fade>
         </>
       ) : (
-        <Flex justifyContent="space-between" mx={6} my={2}>
-          <Flex flexDirection="column" alignItems="flex-start">
-            <Text
-              color="whiteAlpha.700"
-              verticalAlign="middle"
-              fontWeight="bold"
-              fontSize="xs"
-              lineHeight="4"
-            >
-              {t('staking-v2.mint.epoch')}
-              <Tooltip hasArrow label="Soonthetix">
-                <Box as="span" ml={1}>
-                  <InfoIcon color="whiteAlpha.700" width="12px" height="12px" mb={0.5} />
-                </Box>
-              </Tooltip>
-            </Text>
-            {nextEpochStartDate ? (
-              <Text color="green.400" fontFamily="mono" fontSize="md">
-                <CountDown toDate={nextEpochStartDate} />
-              </Text>
-            ) : (
-              <Skeleton />
-            )}
-          </Flex>
-          <Flex flexDirection="column" alignItems="flex-end">
-            <Text color="whiteAlpha.700" fontWeight="bold" fontSize="xs" lineHeight="4">
-              {t('staking-v2.mint.snx-price')}
-            </Text>
-            <Text color="green.400" fontFamily="mono" fontSize="md">
-              ${formatNumber(SNXRate || 0)}
-            </Text>
-          </Flex>
-        </Flex>
+        <NewStakerHeader nextEpochStartDate={nextEpochStartDate} SNXRate={SNXRate} />
       )}
     </>
   );
