@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'Issuer';
-export const address = '0x01da457Aa57abc0dBa3fc26d6C350899F04E8417';
+export const address = '0x12120AcBE7d6402104b68a2e86C071Fcdd1034Fe';
 export const source = 'Issuer';
 export const abi = [
   'constructor(address _owner, address _resolver)',
@@ -39,7 +39,8 @@ export const abi = [
   'function issueSynthsOnBehalf(address issueForAddress, address from, uint256 amount)',
   'function issueSynthsWithoutDebt(bytes32 currencyKey, address to, uint256 amount) returns (bool rateInvalid)',
   'function lastIssueEvent(address account) view returns (uint256)',
-  'function liquidateAccount(address account, bool isSelfLiquidation) returns (uint256 totalRedeemed, uint256 amountToLiquidate)',
+  'function liquidateAccount(address account, bool isSelfLiquidation) returns (uint256 totalRedeemed, uint256 debtRemoved, uint256 escrowToLiquidate)',
+  'function liquidationAmounts(address account, bool isSelfLiquidation) view returns (uint256 totalRedeemed, uint256 debtToRemove, uint256 escrowToLiquidate, uint256 initialDebtBalance)',
   'function maxIssuableSynths(address _issuer) view returns (uint256)',
   'function minimumStakeTime() view returns (uint256)',
   'function nominateNewOwner(address _owner)',
@@ -115,6 +116,7 @@ export interface IssuerInterface extends utils.Interface {
     'issueSynthsWithoutDebt(bytes32,address,uint256)': FunctionFragment;
     'lastIssueEvent(address)': FunctionFragment;
     'liquidateAccount(address,bool)': FunctionFragment;
+    'liquidationAmounts(address,bool)': FunctionFragment;
     'maxIssuableSynths(address)': FunctionFragment;
     'minimumStakeTime()': FunctionFragment;
     'nominateNewOwner(address)': FunctionFragment;
@@ -166,6 +168,7 @@ export interface IssuerInterface extends utils.Interface {
       | 'issueSynthsWithoutDebt'
       | 'lastIssueEvent'
       | 'liquidateAccount'
+      | 'liquidationAmounts'
       | 'maxIssuableSynths'
       | 'minimumStakeTime'
       | 'nominateNewOwner'
@@ -261,6 +264,10 @@ export interface IssuerInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
+    functionFragment: 'liquidationAmounts',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
     functionFragment: 'maxIssuableSynths',
     values: [PromiseOrValue<string>]
   ): string;
@@ -335,6 +342,7 @@ export interface IssuerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'issueSynthsWithoutDebt', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'lastIssueEvent', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'liquidateAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationAmounts', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxIssuableSynths', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'minimumStakeTime', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
@@ -581,6 +589,19 @@ export interface Issuer extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    liquidationAmounts(
+      account: PromiseOrValue<string>,
+      isSelfLiquidation: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+        totalRedeemed: BigNumber;
+        debtToRemove: BigNumber;
+        escrowToLiquidate: BigNumber;
+        initialDebtBalance: BigNumber;
+      }
+    >;
+
     maxIssuableSynths(
       _issuer: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -792,6 +813,19 @@ export interface Issuer extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  liquidationAmounts(
+    account: PromiseOrValue<string>,
+    isSelfLiquidation: PromiseOrValue<boolean>,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber, BigNumber, BigNumber] & {
+      totalRedeemed: BigNumber;
+      debtToRemove: BigNumber;
+      escrowToLiquidate: BigNumber;
+      initialDebtBalance: BigNumber;
+    }
+  >;
+
   maxIssuableSynths(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   minimumStakeTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -984,7 +1018,26 @@ export interface Issuer extends BaseContract {
       account: PromiseOrValue<string>,
       isSelfLiquidation: PromiseOrValue<boolean>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber] & { totalRedeemed: BigNumber; amountToLiquidate: BigNumber }>;
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber] & {
+        totalRedeemed: BigNumber;
+        debtRemoved: BigNumber;
+        escrowToLiquidate: BigNumber;
+      }
+    >;
+
+    liquidationAmounts(
+      account: PromiseOrValue<string>,
+      isSelfLiquidation: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+        totalRedeemed: BigNumber;
+        debtToRemove: BigNumber;
+        escrowToLiquidate: BigNumber;
+        initialDebtBalance: BigNumber;
+      }
+    >;
 
     maxIssuableSynths(
       _issuer: PromiseOrValue<string>,
@@ -1202,6 +1255,12 @@ export interface Issuer extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    liquidationAmounts(
+      account: PromiseOrValue<string>,
+      isSelfLiquidation: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     maxIssuableSynths(
       _issuer: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1410,6 +1469,12 @@ export interface Issuer extends BaseContract {
       account: PromiseOrValue<string>,
       isSelfLiquidation: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    liquidationAmounts(
+      account: PromiseOrValue<string>,
+      isSelfLiquidation: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     maxIssuableSynths(

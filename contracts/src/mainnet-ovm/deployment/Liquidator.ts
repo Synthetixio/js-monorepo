@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'Liquidator';
-export const address = '0x68a8b098967Ae077dcFf5cC8E29B7cb15f1A3cC8';
+export const address = '0x61C7BC9b335e083c30C8a81b93575c361cdE93E2';
 export const source = 'Liquidator';
 export const abi = [
   'constructor(address _owner, address _resolver)',
@@ -25,6 +25,7 @@ export const abi = [
   'function isResolverCached() view returns (bool)',
   'function issuanceRatio() view returns (uint256)',
   'function liquidateReward() view returns (uint256)',
+  'function liquidationAmounts(address account, bool isSelfLiquidation) view returns (uint256 totalRedeemed, uint256 debtToRemove, uint256 escrowToLiquidate, uint256 initialDebtBalance)',
   'function liquidationCollateralRatio() view returns (uint256)',
   'function liquidationDelay() view returns (uint256)',
   'function liquidationEscrowDuration() view returns (uint256)',
@@ -81,6 +82,7 @@ export interface LiquidatorInterface extends utils.Interface {
     'isResolverCached()': FunctionFragment;
     'issuanceRatio()': FunctionFragment;
     'liquidateReward()': FunctionFragment;
+    'liquidationAmounts(address,bool)': FunctionFragment;
     'liquidationCollateralRatio()': FunctionFragment;
     'liquidationDelay()': FunctionFragment;
     'liquidationEscrowDuration()': FunctionFragment;
@@ -113,6 +115,7 @@ export interface LiquidatorInterface extends utils.Interface {
       | 'isResolverCached'
       | 'issuanceRatio'
       | 'liquidateReward'
+      | 'liquidationAmounts'
       | 'liquidationCollateralRatio'
       | 'liquidationDelay'
       | 'liquidationEscrowDuration'
@@ -168,6 +171,10 @@ export interface LiquidatorInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(functionFragment: 'issuanceRatio', values?: undefined): string;
   encodeFunctionData(functionFragment: 'liquidateReward', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'liquidationAmounts',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+  ): string;
   encodeFunctionData(functionFragment: 'liquidationCollateralRatio', values?: undefined): string;
   encodeFunctionData(functionFragment: 'liquidationDelay', values?: undefined): string;
   encodeFunctionData(functionFragment: 'liquidationEscrowDuration', values?: undefined): string;
@@ -209,6 +216,7 @@ export interface LiquidatorInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'issuanceRatio', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'liquidateReward', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidationAmounts', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'liquidationCollateralRatio', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'liquidationDelay', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'liquidationEscrowDuration', data: BytesLike): Result;
@@ -366,6 +374,19 @@ export interface Liquidator extends BaseContract {
 
     liquidateReward(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    liquidationAmounts(
+      account: PromiseOrValue<string>,
+      isSelfLiquidation: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+        totalRedeemed: BigNumber;
+        debtToRemove: BigNumber;
+        escrowToLiquidate: BigNumber;
+        initialDebtBalance: BigNumber;
+      }
+    >;
+
     liquidationCollateralRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     liquidationDelay(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -459,6 +480,19 @@ export interface Liquidator extends BaseContract {
 
   liquidateReward(overrides?: CallOverrides): Promise<BigNumber>;
 
+  liquidationAmounts(
+    account: PromiseOrValue<string>,
+    isSelfLiquidation: PromiseOrValue<boolean>,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber, BigNumber, BigNumber] & {
+      totalRedeemed: BigNumber;
+      debtToRemove: BigNumber;
+      escrowToLiquidate: BigNumber;
+      initialDebtBalance: BigNumber;
+    }
+  >;
+
   liquidationCollateralRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
   liquidationDelay(overrides?: CallOverrides): Promise<BigNumber>;
@@ -547,6 +581,19 @@ export interface Liquidator extends BaseContract {
     issuanceRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidateReward(overrides?: CallOverrides): Promise<BigNumber>;
+
+    liquidationAmounts(
+      account: PromiseOrValue<string>,
+      isSelfLiquidation: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+        totalRedeemed: BigNumber;
+        debtToRemove: BigNumber;
+        escrowToLiquidate: BigNumber;
+        initialDebtBalance: BigNumber;
+      }
+    >;
 
     liquidationCollateralRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -662,6 +709,12 @@ export interface Liquidator extends BaseContract {
 
     liquidateReward(overrides?: CallOverrides): Promise<BigNumber>;
 
+    liquidationAmounts(
+      account: PromiseOrValue<string>,
+      isSelfLiquidation: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     liquidationCollateralRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidationDelay(overrides?: CallOverrides): Promise<BigNumber>;
@@ -751,6 +804,12 @@ export interface Liquidator extends BaseContract {
     issuanceRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidateReward(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    liquidationAmounts(
+      account: PromiseOrValue<string>,
+      isSelfLiquidation: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     liquidationCollateralRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

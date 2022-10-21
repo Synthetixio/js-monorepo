@@ -51,7 +51,7 @@ export const abi = [
   'function exchangeWithTracking(bytes32 sourceCurrencyKey, uint256 sourceAmount, bytes32 destinationCurrencyKey, address rewardAddress, bytes32 trackingCode) returns (uint256 amountReceived)',
   'function exchangeWithTrackingForInitiator(bytes32 sourceCurrencyKey, uint256 sourceAmount, bytes32 destinationCurrencyKey, address rewardAddress, bytes32 trackingCode) returns (uint256 amountReceived)',
   'function exchangeWithVirtual(bytes32 sourceCurrencyKey, uint256 sourceAmount, bytes32 destinationCurrencyKey, bytes32 trackingCode) returns (uint256 amountReceived, address vSynth)',
-  'function initializeLiquidatorRewardsRestitution(uint256 amount)',
+  'function getFirstNonZeroEscrowIndex(address account) view returns (uint256)',
   'function isResolverCached() view returns (bool)',
   'function isWaitingPeriod(bytes32 currencyKey) view returns (bool)',
   'function issueMaxSynths()',
@@ -59,10 +59,12 @@ export const abi = [
   'function issueSynths(uint256 amount)',
   'function issueSynthsOnBehalf(address issueForAddress, uint256 amount)',
   'function liquidateDelinquentAccount(address account) returns (bool)',
+  'function liquidateDelinquentAccountEscrowIndex(address account, uint256 escrowStartIndex) returns (bool)',
   'function liquidateSelf() returns (bool)',
   'function maxIssuableSynths(address account) view returns (uint256 maxIssuable)',
   'function messageSender() view returns (address)',
   'function migrateEscrowBalanceToRewardEscrowV2()',
+  'function migrateEscrowContractBalance()',
   'function mint() returns (bool)',
   'function mintSecondary(address, uint256)',
   'function mintSecondaryRewards(uint256)',
@@ -75,7 +77,6 @@ export const abi = [
   'function remainingIssuableSynths(address account) view returns (uint256 maxIssuable, uint256 alreadyIssued, uint256 totalSystemDebt)',
   'function resolver() view returns (address)',
   'function resolverAddressesRequired() view returns (bytes32[] addresses)',
-  'function restituted() view returns (bool)',
   'function sUSD() view returns (bytes32)',
   'function setMessageSender(address sender)',
   'function setProxy(address _proxy)',
@@ -152,7 +153,7 @@ export interface SynthetixInterface extends utils.Interface {
     'exchangeWithTracking(bytes32,uint256,bytes32,address,bytes32)': FunctionFragment;
     'exchangeWithTrackingForInitiator(bytes32,uint256,bytes32,address,bytes32)': FunctionFragment;
     'exchangeWithVirtual(bytes32,uint256,bytes32,bytes32)': FunctionFragment;
-    'initializeLiquidatorRewardsRestitution(uint256)': FunctionFragment;
+    'getFirstNonZeroEscrowIndex(address)': FunctionFragment;
     'isResolverCached()': FunctionFragment;
     'isWaitingPeriod(bytes32)': FunctionFragment;
     'issueMaxSynths()': FunctionFragment;
@@ -160,10 +161,12 @@ export interface SynthetixInterface extends utils.Interface {
     'issueSynths(uint256)': FunctionFragment;
     'issueSynthsOnBehalf(address,uint256)': FunctionFragment;
     'liquidateDelinquentAccount(address)': FunctionFragment;
+    'liquidateDelinquentAccountEscrowIndex(address,uint256)': FunctionFragment;
     'liquidateSelf()': FunctionFragment;
     'maxIssuableSynths(address)': FunctionFragment;
     'messageSender()': FunctionFragment;
     'migrateEscrowBalanceToRewardEscrowV2()': FunctionFragment;
+    'migrateEscrowContractBalance()': FunctionFragment;
     'mint()': FunctionFragment;
     'mintSecondary(address,uint256)': FunctionFragment;
     'mintSecondaryRewards(uint256)': FunctionFragment;
@@ -176,7 +179,6 @@ export interface SynthetixInterface extends utils.Interface {
     'remainingIssuableSynths(address)': FunctionFragment;
     'resolver()': FunctionFragment;
     'resolverAddressesRequired()': FunctionFragment;
-    'restituted()': FunctionFragment;
     'sUSD()': FunctionFragment;
     'setMessageSender(address)': FunctionFragment;
     'setProxy(address)': FunctionFragment;
@@ -229,7 +231,7 @@ export interface SynthetixInterface extends utils.Interface {
       | 'exchangeWithTracking'
       | 'exchangeWithTrackingForInitiator'
       | 'exchangeWithVirtual'
-      | 'initializeLiquidatorRewardsRestitution'
+      | 'getFirstNonZeroEscrowIndex'
       | 'isResolverCached'
       | 'isWaitingPeriod'
       | 'issueMaxSynths'
@@ -237,10 +239,12 @@ export interface SynthetixInterface extends utils.Interface {
       | 'issueSynths'
       | 'issueSynthsOnBehalf'
       | 'liquidateDelinquentAccount'
+      | 'liquidateDelinquentAccountEscrowIndex'
       | 'liquidateSelf'
       | 'maxIssuableSynths'
       | 'messageSender'
       | 'migrateEscrowBalanceToRewardEscrowV2'
+      | 'migrateEscrowContractBalance'
       | 'mint'
       | 'mintSecondary'
       | 'mintSecondaryRewards'
@@ -253,7 +257,6 @@ export interface SynthetixInterface extends utils.Interface {
       | 'remainingIssuableSynths'
       | 'resolver'
       | 'resolverAddressesRequired'
-      | 'restituted'
       | 'sUSD'
       | 'setMessageSender'
       | 'setProxy'
@@ -422,8 +425,8 @@ export interface SynthetixInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: 'initializeLiquidatorRewardsRestitution',
-    values: [PromiseOrValue<BigNumberish>]
+    functionFragment: 'getFirstNonZeroEscrowIndex',
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
@@ -447,6 +450,10 @@ export interface SynthetixInterface extends utils.Interface {
     functionFragment: 'liquidateDelinquentAccount',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(
+    functionFragment: 'liquidateDelinquentAccountEscrowIndex',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(functionFragment: 'liquidateSelf', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'maxIssuableSynths',
@@ -457,6 +464,7 @@ export interface SynthetixInterface extends utils.Interface {
     functionFragment: 'migrateEscrowBalanceToRewardEscrowV2',
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: 'migrateEscrowContractBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'mint', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'mintSecondary',
@@ -481,7 +489,6 @@ export interface SynthetixInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
   encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'restituted', values?: undefined): string;
   encodeFunctionData(functionFragment: 'sUSD', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'setMessageSender',
@@ -552,10 +559,7 @@ export interface SynthetixInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: 'exchangeWithVirtual', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'initializeLiquidatorRewardsRestitution',
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'getFirstNonZeroEscrowIndex', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isWaitingPeriod', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'issueMaxSynths', data: BytesLike): Result;
@@ -563,6 +567,10 @@ export interface SynthetixInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'issueSynths', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'issueSynthsOnBehalf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'liquidateDelinquentAccount', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'liquidateDelinquentAccountEscrowIndex',
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: 'liquidateSelf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxIssuableSynths', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'messageSender', data: BytesLike): Result;
@@ -570,6 +578,7 @@ export interface SynthetixInterface extends utils.Interface {
     functionFragment: 'migrateEscrowBalanceToRewardEscrowV2',
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: 'migrateEscrowContractBalance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mintSecondary', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mintSecondaryRewards', data: BytesLike): Result;
@@ -582,7 +591,6 @@ export interface SynthetixInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'remainingIssuableSynths', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'restituted', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'sUSD', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setMessageSender', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setProxy', data: BytesLike): Result;
@@ -975,10 +983,10 @@ export interface Synthetix extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    initializeLiquidatorRewardsRestitution(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    getFirstNonZeroEscrowIndex(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     isResolverCached(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -1012,6 +1020,12 @@ export interface Synthetix extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    liquidateDelinquentAccountEscrowIndex(
+      account: PromiseOrValue<string>,
+      escrowStartIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     liquidateSelf(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -1024,6 +1038,10 @@ export interface Synthetix extends BaseContract {
     messageSender(overrides?: CallOverrides): Promise<[string]>;
 
     migrateEscrowBalanceToRewardEscrowV2(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    migrateEscrowContractBalance(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1073,8 +1091,6 @@ export interface Synthetix extends BaseContract {
     resolverAddressesRequired(
       overrides?: CallOverrides
     ): Promise<[string[]] & { addresses: string[] }>;
-
-    restituted(overrides?: CallOverrides): Promise<[boolean]>;
 
     sUSD(overrides?: CallOverrides): Promise<[string]>;
 
@@ -1317,10 +1333,10 @@ export interface Synthetix extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  initializeLiquidatorRewardsRestitution(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  getFirstNonZeroEscrowIndex(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1354,6 +1370,12 @@ export interface Synthetix extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  liquidateDelinquentAccountEscrowIndex(
+    account: PromiseOrValue<string>,
+    escrowStartIndex: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   liquidateSelf(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -1363,6 +1385,10 @@ export interface Synthetix extends BaseContract {
   messageSender(overrides?: CallOverrides): Promise<string>;
 
   migrateEscrowBalanceToRewardEscrowV2(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  migrateEscrowContractBalance(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1410,8 +1436,6 @@ export interface Synthetix extends BaseContract {
   resolver(overrides?: CallOverrides): Promise<string>;
 
   resolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
-
-  restituted(overrides?: CallOverrides): Promise<boolean>;
 
   sUSD(overrides?: CallOverrides): Promise<string>;
 
@@ -1647,10 +1671,10 @@ export interface Synthetix extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber, string] & { amountReceived: BigNumber; vSynth: string }>;
 
-    initializeLiquidatorRewardsRestitution(
-      amount: PromiseOrValue<BigNumberish>,
+    getFirstNonZeroEscrowIndex(
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1679,6 +1703,12 @@ export interface Synthetix extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    liquidateDelinquentAccountEscrowIndex(
+      account: PromiseOrValue<string>,
+      escrowStartIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     liquidateSelf(overrides?: CallOverrides): Promise<boolean>;
 
     maxIssuableSynths(
@@ -1689,6 +1719,8 @@ export interface Synthetix extends BaseContract {
     messageSender(overrides?: CallOverrides): Promise<string>;
 
     migrateEscrowBalanceToRewardEscrowV2(overrides?: CallOverrides): Promise<void>;
+
+    migrateEscrowContractBalance(overrides?: CallOverrides): Promise<void>;
 
     mint(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1729,8 +1761,6 @@ export interface Synthetix extends BaseContract {
     resolver(overrides?: CallOverrides): Promise<string>;
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
-
-    restituted(overrides?: CallOverrides): Promise<boolean>;
 
     sUSD(overrides?: CallOverrides): Promise<string>;
 
@@ -2093,9 +2123,9 @@ export interface Synthetix extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    initializeLiquidatorRewardsRestitution(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    getFirstNonZeroEscrowIndex(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isResolverCached(overrides?: CallOverrides): Promise<BigNumber>;
@@ -2128,6 +2158,12 @@ export interface Synthetix extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    liquidateDelinquentAccountEscrowIndex(
+      account: PromiseOrValue<string>,
+      escrowStartIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     liquidateSelf(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     maxIssuableSynths(
@@ -2138,6 +2174,10 @@ export interface Synthetix extends BaseContract {
     messageSender(overrides?: CallOverrides): Promise<BigNumber>;
 
     migrateEscrowBalanceToRewardEscrowV2(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    migrateEscrowContractBalance(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2177,8 +2217,6 @@ export interface Synthetix extends BaseContract {
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<BigNumber>;
-
-    restituted(overrides?: CallOverrides): Promise<BigNumber>;
 
     sUSD(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -2431,9 +2469,9 @@ export interface Synthetix extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    initializeLiquidatorRewardsRestitution(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    getFirstNonZeroEscrowIndex(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isResolverCached(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -2468,6 +2506,12 @@ export interface Synthetix extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    liquidateDelinquentAccountEscrowIndex(
+      account: PromiseOrValue<string>,
+      escrowStartIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     liquidateSelf(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -2480,6 +2524,10 @@ export interface Synthetix extends BaseContract {
     messageSender(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     migrateEscrowBalanceToRewardEscrowV2(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    migrateEscrowContractBalance(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2521,8 +2569,6 @@ export interface Synthetix extends BaseContract {
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    restituted(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sUSD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

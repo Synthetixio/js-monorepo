@@ -30,7 +30,7 @@ function optimiseContracts() {
     )
     .concat([
       new webpack.NormalModuleReplacementPlugin(
-        new RegExp('/synthetix/publish/deployed/(kovan|local)'),
+        new RegExp('/synthetix/publish/deployed/(local)'),
         require.resolve('./scripts/noop')
       ),
       new webpack.NormalModuleReplacementPlugin(
