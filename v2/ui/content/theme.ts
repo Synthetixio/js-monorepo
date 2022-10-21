@@ -51,7 +51,7 @@ const Alert: ComponentMultiStyleConfig = {
         background: multipleColor(status).backgroundColor,
         borderRadius: 'md',
         borderLeftColor: multipleColor(status).borderColor,
-        borderLeft: '2px',
+        borderLeft: '4px',
       },
       title: {
         color: 'white',
@@ -155,6 +155,47 @@ const Button: ComponentStyleConfig = {
         bgGradient: chakraTheme.gradients['green-cyan']['700'],
       },
     },
+    // Variant used for mint/burn
+    solid: {
+      bgGradient: chakraTheme.gradients['green-cyan']['500'],
+      _hover: {
+        bgGradient: chakraTheme.gradients['green-cyan']['600'],
+      },
+      _active: {
+        bgGradient: chakraTheme.gradients['green-cyan']['700'],
+      },
+      _disabled: {
+        bgGradient: 'unset',
+        bg: 'gray.900',
+        color: 'gray.600',
+        _hover: {
+          bg: 'gray.900',
+          _disabled: {
+            bg: 'gray.900',
+          },
+        },
+      },
+    },
+    outline: {
+      bgColor: 'rgba(0, 209, 255, 0.12)',
+      bgOpacity: '0.2',
+      bgImage: 'none',
+      color: 'cyan.400',
+      borderWidth: 1,
+      borderColor: 'cyan.400',
+      _hover: {
+        bgColor: 'rgba(0, 209, 255, 0.24)',
+      },
+      _active: {
+        bgColor: 'rgba(0, 209, 255, 0.24)',
+      },
+      _disabled: {
+        color: 'gray.900',
+        bgColor: 'transparent',
+        borderWidth: 1,
+        borderColor: 'gray.900',
+      },
+    },
     error: {
       bg: 'error',
     },
@@ -163,22 +204,6 @@ const Button: ComponentStyleConfig = {
     },
     success: {
       bg: 'success',
-    },
-    disabled: {
-      bg: 'gray.900',
-      color: 'gray.600',
-      opacity: 0.5,
-      _disabled: {
-        opacity: 0.5,
-      },
-      _hover: {
-        bg: 'gray.900',
-        opacity: 0.5,
-        _disabled: {
-          bg: 'gray.900',
-          opacity: 0.5,
-        },
-      },
     },
   },
 };
@@ -285,6 +310,9 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
   },
   styles: {
     global: {
+      '::-webkit-scrollbar': {
+        display: 'none',
+      },
       ':root': {
         // Backgrounds
         '--onboard-main-scroll-container-background':
@@ -308,12 +336,14 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
         '--onboard-connect-sidebar-progress-background': '#FFFFFF',
         '--onboard-connect-sidebar-progress-color': '#00d1ff',
         '--onboard-wallet-button-color': 'white',
+        '--onboard-wallet-button-color-hover': 'white',
         '--onboard-wallet-button-border-color': '#2D2D38',
         // Fonts
         '--account-select-modal-font-family-normal': 'Inter',
         // Radius
         '--onboard-wallet-button-border-radius': '10px',
       },
+
       body: {
         bg: 'navy.900',
         color: 'white',

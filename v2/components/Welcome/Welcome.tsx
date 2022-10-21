@@ -18,14 +18,8 @@ export const Welcome = ({ ...props }: BoxProps) => {
             ]}
           />
         </Text>
-        <Button
-          bg="transparent"
-          bgImage="none"
-          color="cyan.400"
-          borderWidth={1}
-          borderColor="cyan.400"
-          onClick={() => console.log('To introduction')}
-        >
+        {/* TODO Link to introduction */}
+        <Button variant="outline" onClick={() => console.log('To introduction')}>
           {t('staking-v2.home.action')}
         </Button>
       </Flex>

@@ -10,6 +10,9 @@ import {
   Button,
   Skeleton,
   Center,
+  Alert,
+  AlertDescription,
+  AlertIcon,
   InputProps,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
@@ -121,7 +124,7 @@ export const BurnUi = ({
           </Text>
           <Tooltip label="Soonthetix" hasArrow>
             <Flex alignItems="center">
-              <InfoIcon />
+              <InfoIcon width="12px" height="12px" />
             </Flex>
           </Tooltip>
         </Flex>
@@ -159,6 +162,7 @@ export const BurnUi = ({
               </Skeleton>
             </Flex>
           </Flex>
+
           <Flex w="100%" justifyContent="space-between" mt={1}>
             <Badge
               variant="burn"
@@ -173,8 +177,8 @@ export const BurnUi = ({
               <Tooltip label="Soonthetix" hasArrow>
                 <Flex alignItems="center">
                   <InfoIcon
-                    width="16px"
-                    height="16px"
+                    width="12px"
+                    height="12px"
                     color={activeBadge === 'max' ? 'blue.900' : 'cyan.400'}
                   />
                 </Flex>
@@ -193,8 +197,8 @@ export const BurnUi = ({
               <Tooltip label="Soonthetix" hasArrow>
                 <Flex alignItems="center">
                   <InfoIcon
-                    width="16px"
-                    height="16px"
+                    width="12px"
+                    height="12px"
                     color={activeBadge === 'toTarget' ? 'blue.900' : 'cyan.400'}
                   />
                 </Flex>
@@ -202,6 +206,14 @@ export const BurnUi = ({
             </Badge>
           </Flex>
         </Box>
+        {activeBadge === 'toTarget' && (
+          <Alert my={4} status="info" variant="left-accent" py={2} px={3}>
+            <AlertIcon width="20px" height="20px" />
+            <AlertDescription pl={2} pr={[0, 0, 24]} fontSize="sm" fontFamily="heading">
+              {t('staking-v2.burn.description-cratio')}
+            </AlertDescription>
+          </Alert>
+        )}
         <Flex alignItems="center">
           <Text
             fontFamily="heading"
@@ -214,7 +226,7 @@ export const BurnUi = ({
           </Text>
           <Tooltip label="Soonthetix" hasArrow>
             <Flex>
-              <InfoIcon />
+              <InfoIcon width="12px" height="12px" />
             </Flex>
           </Tooltip>
         </Flex>
@@ -259,6 +271,7 @@ export const BurnUi = ({
           </Flex>
         )}
         <Button
+          variant="solid"
           data-testid="burn submit"
           fontFamily="heading"
           fontWeight="black"
