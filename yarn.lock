@@ -6933,6 +6933,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/CRatioBox@workspace:v2/components/CRatioBox":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/CRatioBox@workspace:v2/components/CRatioBox"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/CRatioHealthCard@workspace:*, @snx-v2/CRatioHealthCard@workspace:v2/components/CRatioHealthCard":
   version: 0.0.0-use.local
   resolution: "@snx-v2/CRatioHealthCard@workspace:v2/components/CRatioHealthCard"

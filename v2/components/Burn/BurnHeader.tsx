@@ -1,79 +1,27 @@
 import { FC } from 'react';
-import {
-  Text,
-  Box,
-  Flex,
-  Tooltip,
-  Link,
-  Heading,
-  Badge,
-  Skeleton,
-  Divider,
-} from '@chakra-ui/react';
+import { Text, Flex, Link, Skeleton } from '@chakra-ui/react';
 import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
-import { getHealthVariant, badgeColor } from '@snx-v2/getHealthVariant';
-import { ArrowRight, InfoIcon } from '@snx-v2/icons';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { useTranslation, Trans } from 'react-i18next';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
-import { formatPercent } from '@snx-v2/formatters';
 import { leftColWidth, rightColWidth } from './layout';
+import { CRatioBox } from '../CRatioBox';
 
-const calcNewCratioPercentage = (
-  collateral?: number,
-  SNXRate?: number,
-  debtBalance?: number,
-  burnAmountSusd?: number
-) => {
-  if (!collateral || !SNXRate || !debtBalance || !burnAmountSusd) return undefined;
-  const collateralValue = SNXRate * collateral;
-  const newDebtBalance = debtBalance - burnAmountSusd;
-  return 1 / (newDebtBalance / collateralValue);
-};
 export const BurnHeaderUi: FC<{
   burnAmountSusd?: number;
   liquidationRatioPercentage?: number;
   targetCRatioPercentage?: number;
   currentCRatioPercentage?: number;
-  collateral?: number;
-  debtBalance?: number;
-  SNXRate?: number;
   isDebtDataLoading?: boolean;
 }> = ({
   burnAmountSusd,
   liquidationRatioPercentage,
   targetCRatioPercentage,
   currentCRatioPercentage,
-  collateral,
-  debtBalance,
-  SNXRate,
   isDebtDataLoading,
 }) => {
   const { t } = useTranslation();
 
-  const newCratioPercentage = calcNewCratioPercentage(
-    collateral,
-    SNXRate,
-    debtBalance,
-    burnAmountSusd
-  );
-
-  const healthVariant = getHealthVariant({
-    currentCRatioPercentage,
-    targetCratioPercentage: targetCRatioPercentage,
-    liquidationCratioPercentage: liquidationRatioPercentage,
-  });
-
-  const badgeHealthVariant = getHealthVariant({
-    currentCRatioPercentage: newCratioPercentage
-      ? newCratioPercentage * 100
-      : currentCRatioPercentage,
-    targetCratioPercentage: targetCRatioPercentage,
-    liquidationCratioPercentage: liquidationRatioPercentage,
-  });
-
-  const cRatioHealth = t(`staking-v2.mint.${healthVariant}`);
   return (
     <>
       <Text
@@ -131,92 +79,7 @@ export const BurnHeaderUi: FC<{
           justifyContent="space-between"
           fadeDuration={1}
         >
-          <Flex px={4} pt={4} justifyContent="space-between" alignItems="center" flexWrap="wrap">
-            <Heading fontSize="xs" lineHeight="4">
-              Current Health
-              <Tooltip hasArrow label="Soonthetix">
-                <span>
-                  <InfoIcon ml={1} mb={0.5} />
-                </span>
-              </Tooltip>
-            </Heading>
-            <Box>
-              <Flex alignItems="center">
-                <Text
-                  data-testid="current c-ratio badge"
-                  color={badgeColor(healthVariant).color}
-                  fontFamily="mono"
-                  fontSize="lg"
-                  textAlign="end"
-                >
-                  {currentCRatioPercentage
-                    ? formatPercent(currentCRatioPercentage / 100, { maximumFractionDigits: 0 })
-                    : '0%'}
-                </Text>
-                {newCratioPercentage ? (
-                  <>
-                    <ArrowRight mx={1} color="white" />
-                    <Text
-                      data-testid="new c-ratio badge"
-                      color={
-                        badgeColor(
-                          getHealthVariant({
-                            targetCratioPercentage: targetCRatioPercentage,
-                            liquidationCratioPercentage: liquidationRatioPercentage,
-                            currentCRatioPercentage: newCratioPercentage * 100,
-                          })
-                        ).color
-                      }
-                      fontFamily="mono"
-                      fontSize="lg"
-                      textAlign="end"
-                    >
-                      {formatPercent(newCratioPercentage, { maximumFractionDigits: 0 })}
-                    </Text>
-                  </>
-                ) : null}
-              </Flex>
-            </Box>
-          </Flex>
-          <Flex justifyContent="flex-end" px={4} mb={4} mt={1}>
-            <Badge
-              color={badgeColor(badgeHealthVariant).color}
-              bg={badgeColor(badgeHealthVariant).border}
-              borderColor={badgeColor(badgeHealthVariant).color}
-              borderWidth="1px"
-              py={0}
-              px={1}
-              borderRadius="base"
-            >
-              <Tooltip hasArrow label="Soonthetix">
-                <span>
-                  <InfoIcon mr={1} mb={0.5} color="currentcolor" width="12px" height="12px" />
-                </span>
-              </Tooltip>
-              {cRatioHealth}
-            </Badge>
-          </Flex>
-          <Divider />
-          <Flex py={2} px={4} justifyContent="space-between" alignItems="center">
-            <Heading fontSize="xs" lineHeight="4">
-              Target Health
-              <Tooltip hasArrow label="Soonthetix">
-                <span>
-                  <InfoIcon ml={1} mb={0.5} />
-                </span>
-              </Tooltip>
-            </Heading>
-            <Text
-              data-testid="target-ratio badge"
-              color="green.400"
-              fontFamily="mono"
-              fontSize="lg"
-            >
-              {targetCRatioPercentage
-                ? formatPercent(targetCRatioPercentage / 100, { maximumFractionDigits: 0 })
-                : '0%'}
-            </Text>
-          </Flex>
+          <CRatioBox amount={burnAmountSusd} actionType="burn" />
         </Skeleton>
       </Flex>
     </>
@@ -225,17 +88,12 @@ export const BurnHeaderUi: FC<{
 
 export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) => {
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
-  const { data: exchangeRateData } = useExchangeRatesData();
-
   return (
     <BurnHeaderUi
       burnAmountSusd={burnAmountSusd}
       liquidationRatioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
       targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
       currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
-      collateral={debtData?.collateral.toNumber()}
-      debtBalance={debtData?.debtBalance.toNumber()}
-      SNXRate={exchangeRateData?.SNX?.toNumber()}
       isDebtDataLoading={isDebtDataLoading}
     />
   );
