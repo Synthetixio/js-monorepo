@@ -13,7 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { FailedIcon, GuideIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
-import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
+import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
 import { useMintMutation } from '@snx-v2/useMintMutation';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
@@ -179,7 +179,7 @@ export const MintUi = ({
             </Flex>
           </Flex>
         </Box>
-        <MintOrBurnChanges collateralChange={parseFloat(stakeAmountSNX)} action="mint" />
+        <MintOrBurnChanges collateralChange={parseFloatWithCommas(stakeAmountSNX)} action="mint" />
         {gasError ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
@@ -256,7 +256,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   };
   return (
     <>
-      <MintHeader mintAmountSUSD={parseFloat(mintAmountSUSD)} />
+      <MintHeader mintAmountSUSD={parseFloatWithCommas(mintAmountSUSD)} />
       <Flex justifyContent="space-between" alignItems="flex-start">
         <Box width={leftColWidth}>
           <MintUi

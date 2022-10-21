@@ -18,7 +18,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { FailedIcon, GuideIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
-import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
+import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
@@ -255,7 +255,10 @@ export const BurnUi = ({
             </Flex>
           </Flex>
         </Box>
-        <MintOrBurnChanges collateralChange={parseFloat(snxUnstakingAmount)} action="burn" />
+        <MintOrBurnChanges
+          collateralChange={parseFloatWithCommas(snxUnstakingAmount)}
+          action="burn"
+        />
         {gasError ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
@@ -353,7 +356,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   };
   return (
     <>
-      <BurnHeader burnAmountSusd={parseFloat(burnAmountSusd)} />
+      <BurnHeader burnAmountSusd={parseFloatWithCommas(burnAmountSusd)} />
       <Flex justifyContent="space-between" alignItems="flex-start">
         <Box width={leftColWidth}>
           <BurnUi

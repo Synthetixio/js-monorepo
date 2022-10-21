@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Box, Flex, Text, Tooltip } from '@chakra-ui/react';
-import { formatNumber, formatPercent } from '@snx-v2/formatters';
+import { formatNumber, formatPercent, parseFloatWithCommas } from '@snx-v2/formatters';
 import { ArrowRight, InfoIcon } from '@snx-v2/icons';
 import {
   calculateBurnAmountFromUnstaking,
@@ -144,7 +144,7 @@ export const MintOrBurnChanges: FC<{ collateralChange: number; action: 'mint' | 
       ? calculateChangesFromMint({
           ...args,
           stakeAmountSNX: collateralChange,
-          mintAmountsUSD: parseFloat(
+          mintAmountsUSD: parseFloatWithCommas(
             calculateMintAmountFromStaking(
               String(collateralChange),
               debtData.targetCRatio.toNumber(),
@@ -155,7 +155,7 @@ export const MintOrBurnChanges: FC<{ collateralChange: number; action: 'mint' | 
       : calculateChangesFromBurn({
           ...args,
           snxUnstakingAmount: collateralChange,
-          burnAmountSusd: parseFloat(
+          burnAmountSusd: parseFloatWithCommas(
             calculateBurnAmountFromUnstaking(
               String(collateralChange),
               debtData.targetCRatio.toNumber(),
