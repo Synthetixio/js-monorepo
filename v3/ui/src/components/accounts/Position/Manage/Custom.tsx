@@ -1,14 +1,5 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Heading,
-  SimpleGrid,
-  Flex,
-  Tooltip,
-  Text,
-  Badge,
-  NumberInputStepper,
-} from '@chakra-ui/react';
+import { Box, Heading, SimpleGrid, Flex, Tooltip, Text, Badge } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useTokenBalance } from '../../../../hooks/useTokenBalance';
 import { currency } from '../../../../utils/currency';

@@ -3,7 +3,6 @@ import { Synthetix } from './App';
 import { createClient, WagmiConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { infuraProvider } from 'wagmi/providers/infura';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { ChakraProvider } from '@chakra-ui/react';
 import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
