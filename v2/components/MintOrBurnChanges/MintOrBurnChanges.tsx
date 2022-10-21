@@ -155,6 +155,7 @@ export const MintOrBurnChanges: FC<{ collateralChange: number; action: 'mint' | 
       : calculateChangesFromBurn({
           ...args,
           snxUnstakingAmount: collateralChange,
+          collateral: debtData.collateral.toNumber(),
           burnAmountSusd: parseFloatWithCommas(
             calculateBurnAmountFromUnstaking(
               String(collateralChange),
