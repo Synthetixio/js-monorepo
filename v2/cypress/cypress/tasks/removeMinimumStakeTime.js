@@ -1,7 +1,7 @@
-async function removeMinimumStakeTime() {
-  const { ethers } = require('ethers');
-  const SystemSettings = require('@synthetixio/contracts/build/mainnet/deployment/SystemSettings.js');
+import { ethers } from 'ethers';
+import * as SystemSettings from '@synthetixio/contracts/src/mainnet/deployment/SystemSettings';
 
+export async function removeMinimumStakeTime() {
   const provider = new ethers.providers.JsonRpcProvider(process.env.CYPRESS_TENDERLY_RPC_URL);
   const SystemSettingsContract = new ethers.Contract(
     SystemSettings.address,
@@ -13,6 +13,7 @@ async function removeMinimumStakeTime() {
   console.log('removeMinimumStakeTime', { minimumStakeTime: minimumStakeTime.toNumber() });
 
   if (minimumStakeTime > 0) {
+    await new Promise((ok) => setTimeout(ok, 1000));
     const owner = await SystemSettingsContract.owner();
     console.log('removeMinimumStakeTime', { owner });
 
@@ -28,5 +29,3 @@ async function removeMinimumStakeTime() {
 
   return null;
 }
-
-module.exports = { removeMinimumStakeTime };
