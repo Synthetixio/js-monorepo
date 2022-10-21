@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Flex, Box, Heading, Badge, Divider, Text, Tooltip } from '@chakra-ui/react';
+import { Flex, Box, Heading, Badge, Divider, Text, Tooltip, Skeleton } from '@chakra-ui/react';
 import { ArrowRight, InfoIcon } from '@snx-v2/icons';
 import { formatPercent } from '@snx-v2/formatters';
 import { badgeColor, getHealthVariant } from '@snx-v2/getHealthVariant';
@@ -82,11 +82,13 @@ export const CRatioBoxUi: FC<{
               fontSize="lg"
               textAlign="end"
             >
-              {currentCRatioPercentage
-                ? formatPercent(currentCRatioPercentage / 100, {
-                    maximumFractionDigits: 0,
-                  })
-                : '0%'}
+              {currentCRatioPercentage ? (
+                formatPercent(currentCRatioPercentage / 100, {
+                  maximumFractionDigits: 0,
+                })
+              ) : (
+                <Skeleton width={12} h={5} />
+              )}
             </Text>
             {newCratioPercentage ? (
               <>
@@ -115,22 +117,24 @@ export const CRatioBoxUi: FC<{
       </Flex>
 
       <Flex justifyContent="flex-end" px={4} mb={4} mt={1}>
-        <Badge
-          color={badgeColor(badgeHealthVariant).color}
-          bg={badgeColor(badgeHealthVariant).border}
-          borderColor={badgeColor(badgeHealthVariant).color}
-          borderWidth="1px"
-          py={0}
-          px={1}
-          borderRadius="base"
-        >
-          <Tooltip hasArrow label="Soonthetix">
-            <span>
-              <InfoIcon mr={1} mb={0.5} color="currentcolor" width="12px" height="12px" />
-            </span>
-          </Tooltip>
-          {cRatioHealth}
-        </Badge>
+        {currentCRatioPercentage ? (
+          <Badge
+            color={badgeColor(badgeHealthVariant).color}
+            bg={badgeColor(badgeHealthVariant).border}
+            borderColor={badgeColor(badgeHealthVariant).color}
+            borderWidth="1px"
+            py={0}
+            px={1}
+            borderRadius="base"
+          >
+            <Tooltip hasArrow label="Soonthetix">
+              <span>
+                <InfoIcon mr={1} mb={0.5} color="currentcolor" width="12px" height="12px" />
+              </span>
+            </Tooltip>
+            {cRatioHealth}
+          </Badge>
+        ) : null}
       </Flex>
       <Divider />
       <Flex py={2} px={4} justifyContent="space-between" alignItems="center">
@@ -144,9 +148,11 @@ export const CRatioBoxUi: FC<{
           </Tooltip>
         </Heading>
         <Text data-testid="target-ratio badge" color="green.400" fontFamily="mono" fontSize="lg">
-          {targetCRatioPercentage
-            ? formatPercent(targetCRatioPercentage / 100, { maximumFractionDigits: 0 })
-            : '0%'}
+          {targetCRatioPercentage ? (
+            formatPercent(targetCRatioPercentage / 100, { maximumFractionDigits: 0 })
+          ) : (
+            <Skeleton width={12} h={5} />
+          )}
         </Text>
       </Flex>
     </Box>

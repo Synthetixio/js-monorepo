@@ -2,15 +2,15 @@ import { Box } from '@chakra-ui/react';
 import { CRatioBoxUi } from './CRatioBox';
 
 describe('CratioBox', () => {
-  //   it('Render skeleton when missing data', () => {
-  //     cy.viewport(600, 500);
-  //     cy.mount(
-  //       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
-  //         <CRatioBoxUi actionType="mint" />
-  //       </Box>
-  //     );
-  //     cy.get('.chakra-skeleton').should('be.visible');
-  //   });
+  it('Render skeleton when missing data', () => {
+    cy.viewport(600, 500);
+    cy.mount(
+      <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
+        <CRatioBoxUi actionType="mint" />
+      </Box>
+    );
+    cy.get('.chakra-skeleton').should('be.visible');
+  });
   it('Renders current c ratio healthy', () => {
     cy.viewport(600, 500);
     cy.mount(
