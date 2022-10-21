@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { FailedIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
+import { FailedIcon, GuideIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
 import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
 import { useMintMutation } from '@snx-v2/useMintMutation';
@@ -30,6 +30,8 @@ import { parseTxnError } from '@snx-v2/parseTxnError';
 import { MintTransactionModal } from './MintTransactionModal';
 import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 import { MintHeader } from './MintHeader';
+import { BoxLink } from '@snx-v2/BoxLink';
+import { leftColWidth, rightColWidth } from './layout';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -252,35 +254,48 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   return (
     <>
       <MintHeader mintAmountSUSD={parseFloat(mintAmountSUSD)} />
-      <MintUi
-        isLoading={isLoading}
-        stakeAmountSNX={stakeAmountSNX}
-        mintAmountsUSD={mintAmountSUSD}
-        onStakeAmountSNXChange={(val) => {
-          const mintAmountSUSD = calculateMintAmountFromStaking(
-            val,
-            targetCRatio?.toNumber(),
-            exchangeRateData?.SNX?.toNumber()
-          );
-          setStakeAmountSNX(val);
-          setMintAmountSUSD(mintAmountSUSD);
-        }}
-        onMintAmountSUSDChange={(val) => {
-          const stakeAmountSNX = calculateStakeAmountFromMint(
-            val,
-            targetCRatio?.toNumber(),
-            exchangeRateData?.SNX?.toNumber()
-          );
-          setMintAmountSUSD(val);
-          setStakeAmountSNX(stakeAmountSNX);
-        }}
-        unstakedSnx={unstakedSnx.toNumber()}
-        susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
-        onSubmit={handleSubmit}
-        transactionFee={transactionFee}
-        gasError={gasError}
-        isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
-      />
+      <Flex justifyContent="space-between" alignItems="flex-start">
+        <Box width={leftColWidth}>
+          <MintUi
+            isLoading={isLoading}
+            stakeAmountSNX={stakeAmountSNX}
+            mintAmountsUSD={mintAmountSUSD}
+            onStakeAmountSNXChange={(val) => {
+              const mintAmountSUSD = calculateMintAmountFromStaking(
+                val,
+                targetCRatio?.toNumber(),
+                exchangeRateData?.SNX?.toNumber()
+              );
+              setStakeAmountSNX(val);
+              setMintAmountSUSD(mintAmountSUSD);
+            }}
+            onMintAmountSUSDChange={(val) => {
+              const stakeAmountSNX = calculateStakeAmountFromMint(
+                val,
+                targetCRatio?.toNumber(),
+                exchangeRateData?.SNX?.toNumber()
+              );
+              setMintAmountSUSD(val);
+              setStakeAmountSNX(stakeAmountSNX);
+            }}
+            unstakedSnx={unstakedSnx.toNumber()}
+            susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
+            onSubmit={handleSubmit}
+            transactionFee={transactionFee}
+            gasError={gasError}
+            isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
+          />
+        </Box>
+        <Box width={rightColWidth}>
+          <BoxLink
+            icon={<GuideIcon />}
+            href="https://blog.synthetix.io/basics-of-staking-snx-2022/"
+            isExternal
+            subHeadline=""
+            headline="Staking guide"
+          />
+        </Box>
+      </Flex>
       <MintTransactionModal
         txnHash={txnHash}
         settle={settle}
