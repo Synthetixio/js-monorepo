@@ -1,10 +1,10 @@
 import { mount } from 'cypress/react18';
 import { MemoryRouter } from 'react-router-dom';
 
-import 'i18n';
+import '@synthetixio/v2-ui/i18n';
 
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import { stakingTheme } from 'content/theme';
+import { stakingTheme } from '@synthetixio/v2-ui/content/theme';
 
 // TODO: uncomment if we will test anything with StyledComponents
 // import { ThemeProvider } from 'styled-components';
