@@ -84,7 +84,7 @@ const NewStakerHeader: FC<{ nextEpochStartDate?: Date; SNXRate?: number }> = ({
   );
 };
 export const MintHeaderUi: FC<{
-  mintAmountSUSD: number;
+  mintAmountSUSD?: number;
   liquidationRatioPercentage?: number;
   targetCRatioPercentage?: number;
   currentCRatioPercentage?: number;
@@ -318,7 +318,7 @@ export const MintHeaderUi: FC<{
   );
 };
 
-export const MintHeader: FC<{ mintAmountSUSD: number }> = ({ mintAmountSUSD }) => {
+export const MintHeader: FC<{ mintAmountSUSD?: number }> = ({ mintAmountSUSD }) => {
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
   const { data: feePoolData } = useFeePoolData();
