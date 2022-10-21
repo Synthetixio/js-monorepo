@@ -9104,18 +9104,13 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     "@types/commander": ^2.12.2
-    "@types/lodash": ^4.14.169
     "@types/node": ^18.8.5
-    "@types/node-fetch": ^2.6.2
     axios: ^0.21.4
     commander: ^8.1.0
     eslint: ^8.25.0
-    eval: ^0.1.6
     graphql: ^16.6.0
     graphql-request: ^5.0.0
     jest: ^29.1.2
-    lodash: ^4.17.21
-    node-fetch: ^2.6.7
     prettier: ^2.7.1
     ts-node: ^10.9.1
     typescript: ^4.8.2
@@ -10614,7 +10609,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node-fetch@npm:^2.5.5, @types/node-fetch@npm:^2.5.7, @types/node-fetch@npm:^2.6.2":
+"@types/node-fetch@npm:^2.5.5, @types/node-fetch@npm:^2.5.7":
   version: 2.6.2
   resolution: "@types/node-fetch@npm:2.6.2"
   dependencies:
@@ -20427,7 +20422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eval@npm:^0.1.6, eval@npm:^0.1.8":
+"eval@npm:^0.1.8":
   version: 0.1.8
   resolution: "eval@npm:0.1.8"
   dependencies:
@@ -33515,6 +33510,7 @@ __metadata:
     eslint-plugin-react: ^7.31.10
     eslint-plugin-react-hooks: ^4.6.0
     husky: ^8.0.1
+    jest: ^29.1.2
     jest-junit: ^14.0.1
     lint-staged: ^13.0.3
     nyc: ^15.1.0
