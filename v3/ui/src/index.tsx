@@ -28,9 +28,9 @@ const { chains, provider } = configureChains(supportedChains, [
           }
         : null;
     },
-    priority: 2,
+    priority: 1,
   }),
-  publicProvider({ priority: 3 }),
+  publicProvider({ priority: 2 }),
 ]);
 
 const { connectors } = getDefaultWallets({
