@@ -3,12 +3,14 @@ import { Synthetix } from './App';
 import { createClient, WagmiConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { infuraProvider } from 'wagmi/providers/infura';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { ChakraProvider } from '@chakra-ui/react';
 import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import { theme, Fonts } from '@synthetixio/v3-theme';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { supportedChains } from './utils/constants';
+import { supportedChains, INFURA_KEY, ALCHEMY_KEY_MAPPING } from './utils/constants';
 
 import './i18n';
 
@@ -16,13 +18,20 @@ import './i18n';
 import * as rainbowkitStyles from '@rainbow-me/rainbowkit/styles.css';
 
 const { chains, provider } = configureChains(supportedChains, [
-  infuraProvider({ apiKey: '23087ce9f88c44d1b1c54fd7c07c65fb', priority: 0 }),
-  publicProvider({ priority: 1 }),
+  infuraProvider({ apiKey: INFURA_KEY, priority: 0 }),
+  jsonRpcProvider({
+    rpc: (chain) => {
+      const alchemyKey = ALCHEMY_KEY_MAPPING[chain.id];
+      return Boolean(alchemyKey)
+        ? {
+            http: `${chain.rpcUrls.alchemy}/${ALCHEMY_KEY_MAPPING}`,
+          }
+        : null;
+    },
+    priority: 2,
+  }),
+  publicProvider({ priority: 3 }),
 ]);
-
-//   [
-//   infuraProvider({ apiKey: '23087ce9f88c44d1b1c54fd7c07c65fb' }),
-// ]);
 
 const { connectors } = getDefaultWallets({
   appName: 'Synthetix',
