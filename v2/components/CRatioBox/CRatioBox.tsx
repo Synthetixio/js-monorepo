@@ -12,7 +12,8 @@ const calcNewCratioPercentage = (
   SNXRate?: number,
   newDebtBalance?: number
 ) => {
-  if (!collateral || !SNXRate || !newDebtBalance) return undefined;
+  if (!collateral || !SNXRate || newDebtBalance == undefined) return undefined;
+  if (newDebtBalance === 0) return 0;
   const collateralValue = SNXRate * collateral;
   return 1 / (newDebtBalance / collateralValue);
 };
@@ -23,7 +24,7 @@ const calculateNewDebtBalance = (
   amount?: number
 ) => {
   if (!debtBalance || !amount) return 0;
-  return actionType === 'burn' ? debtBalance - amount : debtBalance + amount;
+  return actionType === 'burn' ? Math.max(debtBalance - amount, 0) : debtBalance + amount;
 };
 
 export const CRatioBoxUi: FC<{
@@ -55,9 +56,8 @@ export const CRatioBoxUi: FC<{
   const newDebtBalance = calculateNewDebtBalance(actionType, debtBalance, amount);
   const newCratioPercentage = calcNewCratioPercentage(collateral, SNXRate, newDebtBalance);
   const badgeHealthVariant = getHealthVariant({
-    currentCRatioPercentage: newCratioPercentage
-      ? newCratioPercentage * 100
-      : currentCRatioPercentage,
+    currentCRatioPercentage:
+      newCratioPercentage !== undefined ? newCratioPercentage * 100 : currentCRatioPercentage,
     targetCratioPercentage: targetCRatioPercentage,
     liquidationCratioPercentage: liquidationRatioPercentage,
   });
@@ -91,7 +91,7 @@ export const CRatioBoxUi: FC<{
                 <Skeleton width={12} h={5} />
               )}
             </Text>
-            {newCratioPercentage ? (
+            {newCratioPercentage !== undefined ? (
               <>
                 <ArrowRight mx={1} color="white" />
                 <Text
