@@ -61,12 +61,12 @@ export const CRatioBoxUi: FC<{
     targetCratioPercentage: targetCRatioPercentage,
     liquidationCratioPercentage: liquidationRatioPercentage,
   });
-  const cRatioHealth = t(`staking-v2.mint.${healthVariant}`);
+  const cRatioHealth = t(`staking-v2.cratio-box.${healthVariant}`);
   return (
     <Box>
       <Flex px={4} pt={4} justifyContent="space-between" alignItems="center" flexWrap="wrap">
         <Heading fontSize="xs" lineHeight="4">
-          Current Health
+          {t('staking-v2.cratio-box.current-health')}
           <Tooltip hasArrow label="Soonthetix">
             <span>
               <InfoIcon ml={1} mb={0.5} />
@@ -135,7 +135,8 @@ export const CRatioBoxUi: FC<{
       <Divider />
       <Flex py={2} px={4} justifyContent="space-between" alignItems="center">
         <Heading fontSize="xs" lineHeight="4">
-          Target Health
+          {t('staking-v2.cratio-box.target-health')}
+
           <Tooltip hasArrow label="Soonthetix">
             <span>
               <InfoIcon ml={1} mb={0.5} />
