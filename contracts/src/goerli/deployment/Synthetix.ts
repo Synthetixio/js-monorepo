@@ -52,7 +52,6 @@ export const abi = [
   'function exchangeWithTrackingForInitiator(bytes32 sourceCurrencyKey, uint256 sourceAmount, bytes32 destinationCurrencyKey, address rewardAddress, bytes32 trackingCode) returns (uint256 amountReceived)',
   'function exchangeWithVirtual(bytes32 sourceCurrencyKey, uint256 sourceAmount, bytes32 destinationCurrencyKey, bytes32 trackingCode) returns (uint256 amountReceived, address vSynth)',
   'function getFirstNonZeroEscrowIndex(address account) view returns (uint256)',
-  'function initializeLiquidatorRewardsRestitution(uint256 amount)',
   'function isResolverCached() view returns (bool)',
   'function isWaitingPeriod(bytes32 currencyKey) view returns (bool)',
   'function issueMaxSynths()',
@@ -78,7 +77,6 @@ export const abi = [
   'function remainingIssuableSynths(address account) view returns (uint256 maxIssuable, uint256 alreadyIssued, uint256 totalSystemDebt)',
   'function resolver() view returns (address)',
   'function resolverAddressesRequired() view returns (bytes32[] addresses)',
-  'function restituted() view returns (bool)',
   'function sUSD() view returns (bytes32)',
   'function setMessageSender(address sender)',
   'function setProxy(address _proxy)',
@@ -156,7 +154,6 @@ export interface SynthetixInterface extends utils.Interface {
     'exchangeWithTrackingForInitiator(bytes32,uint256,bytes32,address,bytes32)': FunctionFragment;
     'exchangeWithVirtual(bytes32,uint256,bytes32,bytes32)': FunctionFragment;
     'getFirstNonZeroEscrowIndex(address)': FunctionFragment;
-    'initializeLiquidatorRewardsRestitution(uint256)': FunctionFragment;
     'isResolverCached()': FunctionFragment;
     'isWaitingPeriod(bytes32)': FunctionFragment;
     'issueMaxSynths()': FunctionFragment;
@@ -182,7 +179,6 @@ export interface SynthetixInterface extends utils.Interface {
     'remainingIssuableSynths(address)': FunctionFragment;
     'resolver()': FunctionFragment;
     'resolverAddressesRequired()': FunctionFragment;
-    'restituted()': FunctionFragment;
     'sUSD()': FunctionFragment;
     'setMessageSender(address)': FunctionFragment;
     'setProxy(address)': FunctionFragment;
@@ -236,7 +232,6 @@ export interface SynthetixInterface extends utils.Interface {
       | 'exchangeWithTrackingForInitiator'
       | 'exchangeWithVirtual'
       | 'getFirstNonZeroEscrowIndex'
-      | 'initializeLiquidatorRewardsRestitution'
       | 'isResolverCached'
       | 'isWaitingPeriod'
       | 'issueMaxSynths'
@@ -262,7 +257,6 @@ export interface SynthetixInterface extends utils.Interface {
       | 'remainingIssuableSynths'
       | 'resolver'
       | 'resolverAddressesRequired'
-      | 'restituted'
       | 'sUSD'
       | 'setMessageSender'
       | 'setProxy'
@@ -434,10 +428,6 @@ export interface SynthetixInterface extends utils.Interface {
     functionFragment: 'getFirstNonZeroEscrowIndex',
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: 'initializeLiquidatorRewardsRestitution',
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
   encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'isWaitingPeriod',
@@ -499,7 +489,6 @@ export interface SynthetixInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
   encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'restituted', values?: undefined): string;
   encodeFunctionData(functionFragment: 'sUSD', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'setMessageSender',
@@ -571,10 +560,6 @@ export interface SynthetixInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: 'exchangeWithVirtual', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getFirstNonZeroEscrowIndex', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'initializeLiquidatorRewardsRestitution',
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isWaitingPeriod', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'issueMaxSynths', data: BytesLike): Result;
@@ -606,7 +591,6 @@ export interface SynthetixInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'remainingIssuableSynths', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'restituted', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'sUSD', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setMessageSender', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setProxy', data: BytesLike): Result;
@@ -1004,11 +988,6 @@ export interface Synthetix extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    initializeLiquidatorRewardsRestitution(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     isResolverCached(overrides?: CallOverrides): Promise<[boolean]>;
 
     isWaitingPeriod(
@@ -1112,8 +1091,6 @@ export interface Synthetix extends BaseContract {
     resolverAddressesRequired(
       overrides?: CallOverrides
     ): Promise<[string[]] & { addresses: string[] }>;
-
-    restituted(overrides?: CallOverrides): Promise<[boolean]>;
 
     sUSD(overrides?: CallOverrides): Promise<[string]>;
 
@@ -1361,11 +1338,6 @@ export interface Synthetix extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  initializeLiquidatorRewardsRestitution(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
   isWaitingPeriod(
@@ -1464,8 +1436,6 @@ export interface Synthetix extends BaseContract {
   resolver(overrides?: CallOverrides): Promise<string>;
 
   resolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
-
-  restituted(overrides?: CallOverrides): Promise<boolean>;
 
   sUSD(overrides?: CallOverrides): Promise<string>;
 
@@ -1706,11 +1676,6 @@ export interface Synthetix extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    initializeLiquidatorRewardsRestitution(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
     isWaitingPeriod(
@@ -1796,8 +1761,6 @@ export interface Synthetix extends BaseContract {
     resolver(overrides?: CallOverrides): Promise<string>;
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
-
-    restituted(overrides?: CallOverrides): Promise<boolean>;
 
     sUSD(overrides?: CallOverrides): Promise<string>;
 
@@ -2165,11 +2128,6 @@ export interface Synthetix extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    initializeLiquidatorRewardsRestitution(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     isResolverCached(overrides?: CallOverrides): Promise<BigNumber>;
 
     isWaitingPeriod(
@@ -2259,8 +2217,6 @@ export interface Synthetix extends BaseContract {
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<BigNumber>;
-
-    restituted(overrides?: CallOverrides): Promise<BigNumber>;
 
     sUSD(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -2518,11 +2474,6 @@ export interface Synthetix extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    initializeLiquidatorRewardsRestitution(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     isResolverCached(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isWaitingPeriod(
@@ -2618,8 +2569,6 @@ export interface Synthetix extends BaseContract {
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    restituted(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sUSD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
