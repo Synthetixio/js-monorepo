@@ -106,7 +106,7 @@ export const MintUi = ({
           </Text>
           <Tooltip label={t('staking-v2.mint.heading-tooltip')} hasArrow>
             <Flex alignItems="center">
-              <InfoIcon />
+              <InfoIcon width="12px" height="12px" />
             </Flex>
           </Tooltip>
         </Flex>
@@ -149,7 +149,7 @@ export const MintUi = ({
           </Text>
           <Tooltip label={t('staking-v2.mint.borrowing-tooltip')} hasArrow>
             <Flex>
-              <InfoIcon />
+              <InfoIcon width="12px" height="12px" />
             </Flex>
           </Tooltip>
         </Flex>
@@ -191,8 +191,8 @@ export const MintUi = ({
             />
           </Flex>
         )}
-
         <Button
+          variant="solid"
           data-testid="mint submit"
           fontFamily="heading"
           fontWeight="black"
@@ -215,6 +215,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   const [stakeAmountSNX, setStakeAmountSNX] = useState('');
   const [mintAmountSUSD, setMintAmountSUSD] = useState('');
   const queryClient = useQueryClient();
+
   const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
@@ -223,6 +224,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   const { targetCRatio, currentCRatio, collateral } = debtData || {};
 
   const unstakedSnx = calculateUnstakedStakedSnx({ targetCRatio, currentCRatio, collateral });
+
   const {
     mutate,
     transactionFee,
@@ -238,6 +240,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     delegateAddress: delegateWalletAddress,
     toMax: wei(stakeAmountSNX || 0).gte(formatNumber(unstakedSnx.toNumber())),
   });
+
   const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
 
   const handleSubmit = () => {
