@@ -132,5 +132,13 @@ module.exports = defineConfig({
         ...require('./cypress/tasks/snapshot'),
       });
     },
+
+    retries: {
+      runMode: 3,
+      openMode: 0,
+    },
+    defaultCommandTimeout: 60_000,
+    execTimeout: 120_000,
+    taskTimeout: 120_000,
   },
 });
