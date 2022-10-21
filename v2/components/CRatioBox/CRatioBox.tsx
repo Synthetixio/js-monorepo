@@ -61,7 +61,8 @@ export const CRatioBoxUi: FC<{
     targetCratioPercentage: targetCRatioPercentage,
     liquidationCratioPercentage: liquidationRatioPercentage,
   });
-  const cRatioHealth = t(`staking-v2.cratio-box.${healthVariant}`);
+
+  const cRatioHealth = t(`staking-v2.cratio-box.${badgeHealthVariant}`);
   return (
     <Box>
       <Flex px={4} pt={4} justifyContent="space-between" alignItems="center" flexWrap="wrap">
@@ -119,6 +120,7 @@ export const CRatioBoxUi: FC<{
       <Flex justifyContent="flex-end" px={4} mb={4} mt={1}>
         {currentCRatioPercentage ? (
           <Badge
+            data-testid="healthy badge"
             color={badgeColor(badgeHealthVariant).color}
             bg={badgeColor(badgeHealthVariant).border}
             borderColor={badgeColor(badgeHealthVariant).color}

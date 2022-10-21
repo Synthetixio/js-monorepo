@@ -31,6 +31,8 @@ describe('CratioBox', () => {
       .should('be.visible')
       .should('include.text', '350%')
       .should('have.css', 'color', 'rgb(71, 250, 194)');
+    cy.get('[data-testid="healthy badge"]').should('be.visible').should('include.text', 'HEALTHY');
+
     cy.get('[data-testid="new c-ratio badge"]').should('not.exist');
   });
   it('Renders current c ratio below current c-ratio', () => {
@@ -49,10 +51,16 @@ describe('CratioBox', () => {
       .should('be.visible')
       .should('include.text', '300%')
       .should('have.css', 'color', 'rgb(255, 154, 84)');
+
     cy.get('[data-testid="target-ratio badge"]')
       .should('be.visible')
       .should('include.text', '350%')
       .should('have.css', 'color', 'rgb(71, 250, 194)');
+
+    cy.get('[data-testid="healthy badge"]')
+      .should('be.visible')
+      .should('include.text', 'UNHEALTHY');
+
     cy.get('[data-testid="new c-ratio badge"]').should('not.exist');
   });
 
@@ -72,10 +80,16 @@ describe('CratioBox', () => {
       .should('be.visible')
       .should('include.text', '140%')
       .should('have.css', 'color', 'rgb(255, 74, 96)');
+
     cy.get('[data-testid="target-ratio badge"]')
       .should('be.visible')
       .should('include.text', '350%')
       .should('have.css', 'color', 'rgb(71, 250, 194)');
+
+    cy.get('[data-testid="healthy badge"]')
+      .should('be.visible')
+      .should('include.text', 'UNHEALTHY');
+
     cy.get('[data-testid="new c-ratio badge"]').should('not.exist');
   });
   describe('Burn', () => {
