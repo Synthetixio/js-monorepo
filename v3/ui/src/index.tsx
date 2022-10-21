@@ -18,13 +18,13 @@ import './i18n';
 import * as rainbowkitStyles from '@rainbow-me/rainbowkit/styles.css';
 
 const { chains, provider } = configureChains(supportedChains, [
-  infuraProvider({ apiKey: INFURA_KEY, priority: 0 }),
+  // infuraProvider({ apiKey: INFURA_KEY, priority: 0 }),
   jsonRpcProvider({
     rpc: (chain) => {
       const alchemyKey = ALCHEMY_KEY_MAPPING[chain.id];
       return Boolean(alchemyKey)
         ? {
-            http: `${chain.rpcUrls.alchemy}/${ALCHEMY_KEY_MAPPING}`,
+            http: `${chain.rpcUrls.alchemy}/${alchemyKey}`,
           }
         : null;
     },
