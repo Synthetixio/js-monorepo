@@ -5,9 +5,6 @@ import {
   Flex,
   Tooltip,
   Link,
-  Alert,
-  AlertIcon,
-  AlertDescription,
   Heading,
   Badge,
   Skeleton,
@@ -19,7 +16,6 @@ import {
 import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
 import { getHealthVariant, badgeColor } from '@snx-v2/getHealthVariant';
 import { ArrowRight, InfoIcon } from '@snx-v2/icons';
-
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useTranslation, Trans } from 'react-i18next';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
