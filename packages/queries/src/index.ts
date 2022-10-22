@@ -1,4 +1,3 @@
-import clone from 'lodash/clone';
 import partial from 'lodash/partial';
 
 import { Signer } from '@ethersproject/abstract-signer';
@@ -92,7 +91,7 @@ export function createQueryContext({
     }
   }
 
-  const modFuncs: { [i: string]: unknown } = clone(FUNCS);
+  const modFuncs: { [i: string]: unknown } = { ...FUNCS };
 
   for (const f in modFuncs) {
     modFuncs[f] = partial(modFuncs[f] as UseQueryFunction, ctx);
