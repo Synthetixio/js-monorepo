@@ -106,7 +106,9 @@ export const calculateChangesFromBurn = ({
   const newDebtBalance = Math.max(debtBalance - burnAmountSusd, 0);
   const newStakedAmountSnx = Math.max(stakedSnx - snxUnstakingAmount, 0);
   const newCratio = newDebtBalance / collateralUsdValue || 0;
-  const newTransferable = Math.max(transferable + snxUnstakingAmount, collateral); // TODO to accurately display this we need to fetch escrow and deduct that from collateral
-  const newSUSDBalance = sUSDBalance - burnAmountSusd;
+  const escrowedSnx = collateral - stakedSnx - transferable;
+  const maxTransferable = collateral - escrowedSnx;
+  const newTransferable = Math.min(transferable + snxUnstakingAmount, maxTransferable);
+  const newSUSDBalance = Math.max(sUSDBalance - burnAmountSusd, 0);
   return { newDebtBalance, newStakedAmountSnx, newCratio, newTransferable, newSUSDBalance };
 };
