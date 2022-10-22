@@ -6899,7 +6899,6 @@ __metadata:
     "@snx-v2/MintOrBurnChanges": "workspace:*"
     "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
-    "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
@@ -6928,6 +6927,21 @@ __metadata:
     "@snx-v2/useFeePoolData": "workspace:*"
     "@storybook/react": ^6.5.10
     "@synthetixio/v3-theme": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/CRatioBox@workspace:v2/components/CRatioBox":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/CRatioBox@workspace:v2/components/CRatioBox"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/getHealthVariant": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
@@ -7054,7 +7068,6 @@ __metadata:
     "@snx-v2/MintOrBurnChanges": "workspace:*"
     "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
-    "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"

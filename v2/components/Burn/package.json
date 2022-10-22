@@ -13,7 +13,6 @@
     "@snx-v2/MintOrBurnChanges": "workspace:*",
     "@snx-v2/TransactionModal": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
-    "@snx-v2/getHealthVariant": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/parseTxnError": "workspace:*",
     "@snx-v2/stakingCalculations": "workspace:*",
