@@ -134,7 +134,7 @@ export const BurnHeaderUi: FC<{
           <Flex px={4} pt={4} justifyContent="space-between" alignItems="center" flexWrap="wrap">
             <Heading fontSize="xs" lineHeight="4">
               Current Health
-              <Tooltip hasArrow label="Soonthetix">
+              <Tooltip hasArrow label="Soonthetix" bg="gray.900">
                 <span>
                   <InfoIcon ml={1} mb={0.5} />
                 </span>
@@ -188,7 +188,7 @@ export const BurnHeaderUi: FC<{
               px={1}
               borderRadius="base"
             >
-              <Tooltip hasArrow label="Soonthetix">
+              <Tooltip hasArrow label="Soonthetix" bg="gray.900">
                 <span>
                   <InfoIcon mr={1} mb={0.5} color="currentcolor" width="12px" height="12px" />
                 </span>
@@ -200,7 +200,7 @@ export const BurnHeaderUi: FC<{
           <Flex py={2} px={4} justifyContent="space-between" alignItems="center">
             <Heading fontSize="xs" lineHeight="4">
               Target Health
-              <Tooltip hasArrow label="Soonthetix">
+              <Tooltip hasArrow label="Soonthetix" bg="gray.900">
                 <span>
                   <InfoIcon ml={1} mb={0.5} />
                 </span>

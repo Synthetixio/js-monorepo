@@ -31,7 +31,7 @@ export const EpochPrice = ({ epochEnd, snxPrice, isLoading = false }: EpochPrice
               {t(`staking-v2.epochprice.epoch-${size}`)}
             </Text>
             {size === 'mobile' && (
-              <Tooltip label="Soonthetix" hasArrow lineHeight="10px">
+              <Tooltip label="Soonthetix" hasArrow lineHeight="10px" bg="gray.900">
                 <Flex as="span">
                   <InfoIcon ml={1} width="10px" height="10px" color="whiteAlpha.700" />
                 </Flex>

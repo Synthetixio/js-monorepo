@@ -107,7 +107,7 @@ export const MintUi = ({
           <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
             {t('staking-v2.mint.heading')}
           </Text>
-          <Tooltip label={t('staking-v2.mint.heading-tooltip')} hasArrow>
+          <Tooltip label={t('staking-v2.mint.heading-tooltip')} hasArrow bg="gray.900">
             <Flex alignItems="center">
               <InfoIcon width="12px" height="12px" />
             </Flex>
@@ -150,7 +150,7 @@ export const MintUi = ({
           <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
             {t('staking-v2.mint.borrowing')}
           </Text>
-          <Tooltip label={t('staking-v2.mint.borrowing-tooltip')} hasArrow>
+          <Tooltip label={t('staking-v2.mint.borrowing-tooltip')} hasArrow bg="gray.900">
             <Flex>
               <InfoIcon width="12px" height="12px" />
             </Flex>

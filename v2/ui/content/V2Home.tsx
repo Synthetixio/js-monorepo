@@ -24,13 +24,10 @@ const V2Home = () => {
   const { walletAddress } = useContext(ContractContext);
   return (
     <>
-      <Container maxW="1200px">
+      <CRatioBanner />
+      <Container maxW="1200px" py="1">
         {!walletAddress && <Welcome mt={8} />}
-        <Box height="42px" position="absolute" left="0" right="0">
-          <CRatioBanner />
-        </Box>
-        <Box height="42px" />
-        <Flex mt="4" flexDirection={['column', 'column', 'column', 'row']}>
+        <Flex mt="4" flexDirection={['column', 'column', 'column', 'row']} py={4}>
           <Box
             paddingY="7"
             paddingX="4"
@@ -90,7 +87,16 @@ const V2Home = () => {
           </Flex>
         </Flex>
       </Container>
-      <Box bg="navy.900" px={4} py={8} mt={2} borderTopWidth="1px" borderTopColor="gray.900">
+      {/* sUSD Utilities Section */}
+      <Box
+        bg="navy.900"
+        px={4}
+        py={8}
+        mt={2}
+        borderTopWidth="1px"
+        borderTopColor="gray.900"
+        overflowX="scroll"
+      >
         <Container maxW="1200px">
           <Box>
             <Text
@@ -111,8 +117,8 @@ const V2Home = () => {
             direction="row"
             height="fit-content"
             width="fit-content"
-            overflow="hidden"
             mt={4}
+            pr="10"
           >
             <UtilityCard
               mr={4}

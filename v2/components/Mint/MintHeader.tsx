@@ -54,7 +54,7 @@ const NewStakerHeader: FC<{ nextEpochStartDate?: Date; SNXRate?: number }> = ({
           lineHeight="4"
         >
           {t('staking-v2.mint.epoch')}
-          <Tooltip hasArrow label="Soonthetix">
+          <Tooltip hasArrow label="Soonthetix" bg="gray.900">
             <Box as="span" ml={1}>
               <InfoIcon color="whiteAlpha.700" width="12px" height="12px" mb={0.5} />
             </Box>
@@ -217,7 +217,7 @@ export const MintHeaderUi: FC<{
                 >
                   <Heading fontSize="xs" lineHeight="4">
                     Current Health
-                    <Tooltip hasArrow label="Soonthetix">
+                    <Tooltip hasArrow label="Soonthetix" bg="gray.900">
                       <span>
                         <InfoIcon ml={1} mb={0.5} />
                       </span>
@@ -274,7 +274,7 @@ export const MintHeaderUi: FC<{
                     px={1}
                     borderRadius="base"
                   >
-                    <Tooltip hasArrow label="Soonthetix">
+                    <Tooltip hasArrow label="Soonthetix" bg="gray.900">
                       <span>
                         <InfoIcon mr={1} mb={0.5} color="currentcolor" width="12px" height="12px" />
                       </span>
@@ -286,7 +286,7 @@ export const MintHeaderUi: FC<{
                 <Flex py={2} px={4} justifyContent="space-between" alignItems="center">
                   <Heading fontSize="xs" lineHeight="4">
                     Target Health
-                    <Tooltip hasArrow label="Soonthetix">
+                    <Tooltip hasArrow label="Soonthetix" bg="gray.900">
                       <span>
                         <InfoIcon ml={1} mb={0.5} />
                       </span>

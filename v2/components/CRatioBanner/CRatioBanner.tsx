@@ -25,14 +25,15 @@ const getWrapperStyles = (variant: UiProps['variant']) => {
   }
   return null;
 };
+
 export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, nextEpochStartDate }) => {
   const { t } = useTranslation();
   const translationKey = isFlagged ? 'error-flagged' : variant;
   const wrapperStyles = getWrapperStyles(variant);
   return (
-    <Center {...wrapperStyles}>
+    <Center {...wrapperStyles} mt="0" w="100%">
       <Flex
-        margin="2"
+        m="2"
         paddingTop="1"
         paddingBottom="1"
         paddingLeft="5"

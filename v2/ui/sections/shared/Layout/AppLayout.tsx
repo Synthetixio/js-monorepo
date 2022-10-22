@@ -32,7 +32,7 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
         </>
       )}
       {STAKING_V2_ENABLED ? (
-        <Box overflow="auto" flex="1 1 auto">
+        <Box overflow="auto" flex="1 1 auto" overflowX="hidden">
           {children}
         </Box>
       ) : (
