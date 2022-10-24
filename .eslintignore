@@ -10,4 +10,6 @@ packages/queries/subgraphs
 **/.next/
 **/out/
 **/storybook-static/
-
+**/.nyc_output
+**/junit.xml
+tools/tenderly/fork.json

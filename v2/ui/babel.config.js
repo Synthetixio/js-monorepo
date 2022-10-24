@@ -1,3 +1,4 @@
+const path = require('path');
 require.resolve('core-js');
 require.resolve('@babel/runtime-corejs3/core-js/date/now');
 
@@ -76,6 +77,19 @@ module.exports = {
             modules: 'commonjs',
             targets: { node: 'current' },
           },
+        ],
+      ],
+      plugins: [
+        [
+          require.resolve('babel-plugin-istanbul'),
+          {
+            cwd: path.resolve('../..'),
+            all: true,
+            excludeNodeModules: false,
+            include: ['v1/lib', 'v1/components', 'v2/lib', 'v2/components', 'v2/ui'],
+            exclude: ['**/*.test.*', '**/*.cy.*', '**/*.e2e.*'],
+          },
+          'istanbul',
         ],
       ],
     },

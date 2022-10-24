@@ -164,6 +164,19 @@ jobs:
     steps:
       - checkout
       - yarn-install
+      - run: NODE_ENV=test yarn test --coverage --coverageReporters=json --reporters=jest-junit --runInBand
+      - store_test_results:
+          path: './junit.xml'
+      - store_artifacts:
+          path: 'coverage'
+
+  typecheck:
+    working_directory: /tmp/app
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - yarn-install
       - build-restore
       - run:
           name: Build
@@ -178,7 +191,6 @@ jobs:
             fi
       - build-save
       - run: yarn typecheck
-      - run: NODE_ENV=test yarn test
 
   v2-e2e:
     working_directory: /tmp/app
@@ -207,6 +219,13 @@ jobs:
 
       - tenderly-cleanup
 
+      - store_test_results:
+          path: 'v2/cypress/cypress/reports'
+
+      - store_artifacts:
+          path: 'v2/cypress/.nyc_output'
+          destination: 'coverage'
+
       - store_artifacts:
           path: 'v2/cypress/cypress/screenshots'
           destination: 'screenshots'
@@ -227,6 +246,13 @@ jobs:
           working_directory: /tmp/app/v2/cypress
           command: NODE_ENV=test cypress run --component --browser chrome
 
+      - store_test_results:
+          path: 'v2/cypress/cypress/reports'
+
+      - store_artifacts:
+          path: 'v2/cypress/.nyc_output'
+          destination: 'coverage'
+
       - store_artifacts:
           path: 'v2/cypress/cypress/screenshots'
           destination: 'screenshots'
@@ -234,6 +260,25 @@ jobs:
       - store_artifacts:
           path: 'v2/cypress/cypress/videos'
           destination: 'videos'
+
+  combine-coverage:
+    working_directory: /tmp/app
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - yarn-install
+      - run: rm -rf /tmp/cov
+      - run: yarn download-cci-coverage tests /tmp/cov || true
+      - run: yarn download-cci-coverage v2-cy /tmp/cov || true
+      - run: yarn download-cci-coverage v2-e2e /tmp/cov || true
+      - run: ls -alR /tmp/cov
+      - run: mkdir -p /tmp/cov/combined
+      - run: yarn nyc merge /tmp/cov /tmp/cov/combined/coverage.json || true
+      - run: |-
+          curl -Os https://uploader.codecov.io/latest/linux/codecov
+          chmod +x codecov
+          ./codecov -t ${CODECOV_TOKEN} --file /tmp/cov/combined/coverage.json
 
 workflows:
   version: 2.1
@@ -243,9 +288,13 @@ workflows:
       - yarn-install
       - checks:
           requires: [yarn-install]
+      - typecheck:
+          requires: [yarn-install]
       - tests:
           requires: [yarn-install]
       - v2-cy:
           requires: [yarn-install]
       - v2-e2e:
           requires: [yarn-install]
+      - combine-coverage:
+          requires: [tests, v2-cy, v2-e2e]

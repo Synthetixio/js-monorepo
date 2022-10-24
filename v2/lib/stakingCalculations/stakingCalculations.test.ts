@@ -188,13 +188,43 @@ describe('stakingCalculation', () => {
           transferable,
           sUSDBalance,
           collateralUsdValue,
+          collateral: 50,
         })
       ).toEqual({
-        newCratio: 5 / collateralUsdValue,
+        newCratio: 0.05,
         newDebtBalance: 5,
         newStakedAmountSnx: 10,
         newTransferable: 60,
         newSUSDBalance: 5,
+      });
+    });
+    test('burning more than debt balance', () => {
+      const snxUnstakingAmount = 1000;
+      const burnAmountSusd = 500;
+      const stakedSnx = 10;
+      const debtBalance = 10;
+      const transferable = 20;
+      const sUSDBalance = 10;
+      const collateralUsdValue = 100;
+      const collateral = 50;
+
+      expect(
+        calculateChangesFromBurn({
+          snxUnstakingAmount,
+          burnAmountSusd,
+          stakedSnx,
+          debtBalance,
+          transferable,
+          sUSDBalance,
+          collateralUsdValue,
+          collateral,
+        })
+      ).toEqual({
+        newCratio: 0,
+        newDebtBalance: 0,
+        newStakedAmountSnx: 0,
+        newTransferable: 30, // collateral - (collateral - staked - transferable)
+        newSUSDBalance: 0,
       });
     });
   });

@@ -1,3 +1,4 @@
+import '@cypress/code-coverage/support';
 import { mount } from 'cypress/react18';
 import { MemoryRouter } from 'react-router-dom';
 
