@@ -1,6 +1,12 @@
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
+  reporter: 'junit',
+  reporterOptions: {
+    mochaFile: './cypress/reports/junit-results.[hash].xml',
+    toConsole: true,
+  },
+
   component: {
     watchForFileChanges: false,
     specPattern: ['../**/*.cy.{js,jsx,ts,tsx}'],
@@ -9,7 +15,8 @@ module.exports = defineConfig({
       bundler: 'webpack',
       webpackConfig: require('@synthetixio/v2-ui/webpack.config'),
     },
-    setupNodeEvents(_on, config) {
+    setupNodeEvents(on, config) {
+      require('@cypress/code-coverage/task')(on, config);
       return config;
     },
   },
@@ -19,6 +26,7 @@ module.exports = defineConfig({
     specPattern: ['../**/*.e2e.{js,jsx,ts,tsx}'],
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
+      require('@cypress/code-coverage/task')(on, config);
       on('task', {
         ...require('./cypress/tasks/removeMinimumStakeTime'),
         ...require('./cypress/tasks/getSnx'),

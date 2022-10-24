@@ -1,3 +1,4 @@
+import '@cypress/code-coverage/support';
 import { ethers } from 'ethers';
 
 before(() => {
