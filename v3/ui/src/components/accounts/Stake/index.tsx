@@ -32,6 +32,7 @@ import { CollateralType, StakingPositionType } from '../../../utils/types';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 import { FC } from 'react';
 import { useStake } from '../../../hooks/useStake';
+import { MultistepModal } from '../../shared/MultistepModal';
 
 type FormType = {
   collateralType: CollateralType;
@@ -117,6 +118,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
   });
   return (
     <>
+      <MultistepModal />
       <FormProvider {...methods}>
         <Box bg="whiteAlpha.200" mb="8" p="6" pb="4" borderRadius="12px">
           <form
