@@ -275,12 +275,10 @@ jobs:
       - run: ls -alR /tmp/cov
       - run: mkdir -p /tmp/cov/combined
       - run: yarn nyc merge /tmp/cov /tmp/cov/combined/coverage.json || true
-      # Uploading html coverage takes too much time, will replace with codecov
-      #      - run: mkdir -p /tmp/cov/report
-      #      - run: yarn nyc report --temp-dir=/tmp/cov/combined --reporter=html --report-dir=/tmp/cov/report || true
-      #      - store_artifacts:
-      #          path: '/tmp/cov/report'
-      #          destination: 'coverage'
+      - run: |-
+          curl -Os https://uploader.codecov.io/latest/linux/codecov
+          chmod +x codecov
+          ./codecov -t ${CODECOV_TOKEN} --file /tmp/cov/combined/coverage.json
 
 workflows:
   version: 2.1
