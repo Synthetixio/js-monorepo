@@ -144,22 +144,65 @@ export const BurnUi = ({
                 onChange={onChange('susd')}
                 value={numberWithCommas(burnAmountSusd)}
               />
-              <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
-                <Flex>
-                  <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={4}>
-                    {t('staking-v2.burn.active-debt')}: {formatNumber(debtBalance || 0)}
+              <Flex alignItems="center">
+                <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={1}>
+                  {t('staking-v2.burn.active-debt')}
+                </Text>
+                <Skeleton
+                  isLoaded={!isLoading}
+                  startColor="gray.900"
+                  endColor="gray.700"
+                  height={isLoading ? '12px' : 'unset'}
+                  width={isLoading ? '36px' : 'unset'}
+                  mr={1}
+                  sx={{
+                    display: 'flex',
+                    span: {
+                      fontFamily: 'mono',
+                      fontSize: 'xs',
+                      mt: 1,
+                      lineHeight: '10px',
+                      fontWeight: 'bold',
+                      color: 'whiteAlpha.900',
+                    },
+                  }}
+                >
+                  <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
+                    {formatNumber(debtBalance || 0)}
                   </Text>
+                </Skeleton>
+                <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={1} ml={1}>
+                  {t('staking-v2.burn.susd-balance')}
+                </Text>
+                <Skeleton
+                  isLoaded={!isLoading}
+                  startColor="gray.900"
+                  endColor="gray.700"
+                  height={isLoading ? '12px' : 'unset'}
+                  width={isLoading ? '36px' : 'unset'}
+                  sx={{
+                    display: 'flex',
+                    span: {
+                      fontFamily: 'mono',
+                      fontSize: 'xs',
+                      mt: 1,
+                      lineHeight: '10px',
+                      fontWeight: 'bold',
+                      color: 'whiteAlpha.900',
+                    },
+                  }}
+                >
                   <Text
                     data-testid="burn available susd balance"
-                    data-balance={formatNumber(susdBalance)}
+                    data-balance={formatNumber(susdBalance) || 0}
                     color="whiteAlpha.700"
                     fontSize="xs"
                     fontFamily="heading"
                   >
-                    {t('staking-v2.burn.susd-balance', { susdBalance: formatNumber(susdBalance) })}
+                    {formatNumber(susdBalance) || 0}
                   </Text>
-                </Flex>
-              </Skeleton>
+                </Skeleton>
+              </Flex>
             </Flex>
           </Flex>
 
@@ -190,7 +233,7 @@ export const BurnUi = ({
                 bg: activeBadge === 'toTarget' ? 'cyan.500' : 'whiteAlpha.300',
                 color: activeBadge === 'toTarget' ? 'black' : 'cyan.500',
               }}
-              mr={1}
+              ml={1}
               onClick={() => handleBadgePress('toTarget')}
             >
               {t('staking-v2.burn.burn-cratio')}
@@ -245,13 +288,33 @@ export const BurnUi = ({
                 onChange={onChange('snx')}
                 value={numberWithCommas(snxUnstakingAmount)}
               />
-              <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
-                <Flex>
+              <Flex alignItems="center">
+                <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={1} ml={1}>
+                  {t('staking-v2.burn.staked-snx')}
+                </Text>
+                <Skeleton
+                  isLoaded={!isLoading}
+                  startColor="gray.900"
+                  endColor="gray.700"
+                  height={isLoading ? '12px' : 'unset'}
+                  width={isLoading ? '36px' : 'unset'}
+                  sx={{
+                    display: 'flex',
+                    span: {
+                      fontFamily: 'mono',
+                      fontSize: 'xs',
+                      mt: 1,
+                      lineHeight: '10px',
+                      fontWeight: 'bold',
+                      color: 'whiteAlpha.900',
+                    },
+                  }}
+                >
                   <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-                    {t('staking-v2.burn.staked-snx')}: {formatNumber(stakedSnx)}
+                    {formatNumber(stakedSnx) || 0}
                   </Text>
-                </Flex>
-              </Skeleton>
+                </Skeleton>
+              </Flex>
             </Flex>
           </Flex>
         </Box>
@@ -308,6 +371,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   });
   const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
   const susdBalance = synthsData?.balancesMap.sUSD?.balance;
+
   const {
     mutate,
     transactionFee,
@@ -351,6 +415,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       },
     });
   };
+
   return (
     <>
       <BurnHeader burnAmountSusd={parseFloat(burnAmountSusd)} />
