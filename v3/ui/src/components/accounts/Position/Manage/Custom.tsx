@@ -1,5 +1,5 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import { Box, Heading, SimpleGrid, Flex, Tooltip, Text } from '@chakra-ui/react';
+import { Box, Heading, SimpleGrid, Flex, Tooltip, Text, Badge } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useTokenBalance } from '../../../../hooks/useTokenBalance';
 import { currency } from '../../../../utils/currency';
@@ -31,7 +31,7 @@ export const Custom: FC<Props> = ({
 
   return (
     <Box mb="4">
-      <SimpleGrid columns={2} spacing={6} mb="4">
+      <SimpleGrid columns={2} spacing={4} mb="4">
         <Box>
           <Heading fontSize="md" mb="2">
             Adjust Collateral
@@ -82,6 +82,20 @@ export const Custom: FC<Props> = ({
                   <Tooltip label="You can't mint snxUSD that takes your C-Ratio below the target c-ratio of 300%.">
                     <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
                   </Tooltip>
+                  {maxDebt !== 0 && (
+                    <Badge
+                      transform="translateY(-2px)"
+                      ml="2"
+                      as="button"
+                      variant="outline"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setDebtChange(maxDebt);
+                      }}
+                    >
+                      Use Max
+                    </Badge>
+                  )}
                 </Text>
               </Box>
             </Flex>

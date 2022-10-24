@@ -12,8 +12,8 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { FailedIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
-import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
+import { FailedIcon, GuideIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
+import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
 import { useMintMutation } from '@snx-v2/useMintMutation';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
@@ -28,6 +28,10 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { parseTxnError } from '@snx-v2/parseTxnError';
 import { MintTransactionModal } from './MintTransactionModal';
+import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
+import { MintHeader } from './MintHeader';
+import { BoxLink } from '@snx-v2/BoxLink';
+import { leftColWidth, rightColWidth } from './layout';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -98,18 +102,18 @@ export const MintUi = ({
 
   return (
     <>
-      <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="md" p={5}>
+      <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="base" p={5}>
         <Flex alignItems="center">
           <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
             {t('staking-v2.mint.heading')}
           </Text>
           <Tooltip label={t('staking-v2.mint.heading-tooltip')} hasArrow>
             <Flex alignItems="center">
-              <InfoIcon width="16px" height="16px" />
+              <InfoIcon width="12px" height="12px" />
             </Flex>
           </Tooltip>
         </Flex>
-        <Box borderWidth="1px" borderColor="gray.900" borderRadius="md" p={2} my={3}>
+        <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2} my={3}>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
               <TokensIcon />
@@ -148,11 +152,11 @@ export const MintUi = ({
           </Text>
           <Tooltip label={t('staking-v2.mint.borrowing-tooltip')} hasArrow>
             <Flex>
-              <InfoIcon width="16px" height="16px" />
+              <InfoIcon width="12px" height="12px" />
             </Flex>
           </Tooltip>
         </Flex>
-        <Box borderWidth="1px" borderColor="gray.900" borderRadius="md" p={2} mt={3}>
+        <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2} mt={3}>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
               <TokensIcon />
@@ -175,6 +179,7 @@ export const MintUi = ({
             </Flex>
           </Flex>
         </Box>
+        <MintOrBurnChanges collateralChange={parseFloatWithCommas(stakeAmountSNX)} action="mint" />
         {gasError ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
@@ -189,8 +194,8 @@ export const MintUi = ({
             />
           </Flex>
         )}
-
         <Button
+          variant="solid"
           data-testid="mint submit"
           fontFamily="heading"
           fontWeight="black"
@@ -213,6 +218,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   const [stakeAmountSNX, setStakeAmountSNX] = useState('');
   const [mintAmountSUSD, setMintAmountSUSD] = useState('');
   const queryClient = useQueryClient();
+
   const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
@@ -221,6 +227,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   const { targetCRatio, currentCRatio, collateral } = debtData || {};
 
   const unstakedSnx = calculateUnstakedStakedSnx({ targetCRatio, currentCRatio, collateral });
+
   const {
     mutate,
     transactionFee,
@@ -236,6 +243,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     delegateAddress: delegateWalletAddress,
     toMax: wei(stakeAmountSNX || 0).gte(formatNumber(unstakedSnx.toNumber())),
   });
+
   const isLoading = isDebtDataLoading || isExchangeRateLoading || isSynthsLoading;
 
   const handleSubmit = () => {
@@ -248,35 +256,49 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   };
   return (
     <>
-      <MintUi
-        isLoading={isLoading}
-        stakeAmountSNX={stakeAmountSNX}
-        mintAmountsUSD={mintAmountSUSD}
-        onStakeAmountSNXChange={(val) => {
-          const mintAmountSUSD = calculateMintAmountFromStaking(
-            val,
-            targetCRatio?.toNumber(),
-            exchangeRateData?.SNX?.toNumber()
-          );
-          setStakeAmountSNX(val);
-          setMintAmountSUSD(mintAmountSUSD);
-        }}
-        onMintAmountSUSDChange={(val) => {
-          const stakeAmountSNX = calculateStakeAmountFromMint(
-            val,
-            targetCRatio?.toNumber(),
-            exchangeRateData?.SNX?.toNumber()
-          );
-          setMintAmountSUSD(val);
-          setStakeAmountSNX(stakeAmountSNX);
-        }}
-        unstakedSnx={unstakedSnx.toNumber()}
-        susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
-        onSubmit={handleSubmit}
-        transactionFee={transactionFee}
-        gasError={gasError}
-        isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
-      />
+      <MintHeader mintAmountSUSD={parseFloatWithCommas(mintAmountSUSD)} />
+      <Flex justifyContent="space-between" alignItems="flex-start">
+        <Box width={leftColWidth}>
+          <MintUi
+            isLoading={isLoading}
+            stakeAmountSNX={stakeAmountSNX}
+            mintAmountsUSD={mintAmountSUSD}
+            onStakeAmountSNXChange={(val) => {
+              const mintAmountSUSD = calculateMintAmountFromStaking(
+                val,
+                targetCRatio?.toNumber(),
+                exchangeRateData?.SNX?.toNumber()
+              );
+              setStakeAmountSNX(val);
+              setMintAmountSUSD(mintAmountSUSD);
+            }}
+            onMintAmountSUSDChange={(val) => {
+              const stakeAmountSNX = calculateStakeAmountFromMint(
+                val,
+                targetCRatio?.toNumber(),
+                exchangeRateData?.SNX?.toNumber()
+              );
+              setMintAmountSUSD(val);
+              setStakeAmountSNX(stakeAmountSNX);
+            }}
+            unstakedSnx={unstakedSnx.toNumber()}
+            susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
+            onSubmit={handleSubmit}
+            transactionFee={transactionFee}
+            gasError={gasError}
+            isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
+          />
+        </Box>
+        <Box width={rightColWidth}>
+          <BoxLink
+            icon={<GuideIcon />}
+            href="https://blog.synthetix.io/basics-of-staking-snx-2022/"
+            isExternal
+            subHeadline=""
+            headline="Staking guide"
+          />
+        </Box>
+      </Flex>
       <MintTransactionModal
         txnHash={txnHash}
         settle={settle}
@@ -284,6 +306,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         gasError={gasError}
         onClose={() => {
           setStakeAmountSNX('');
+          setMintAmountSUSD('');
           settle();
         }}
         onSubmit={handleSubmit}

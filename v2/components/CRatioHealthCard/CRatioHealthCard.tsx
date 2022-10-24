@@ -40,6 +40,7 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
                 currentCRatioPercentage,
               })}
               fontSize="2xl"
+              fontWeight="black"
               align="center"
               fontFamily="mono"
             >

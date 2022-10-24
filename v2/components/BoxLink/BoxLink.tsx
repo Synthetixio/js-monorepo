@@ -27,7 +27,14 @@ export const BoxLink: FC<{
 }> = ({ to, headline, subHeadline, icon, href, isExternal = false }) => {
   return (
     <SmartLink isExternal={isExternal} href={href} to={to}>
-      <Flex bg="navy.900" border="1px" borderColor="gray.900" justifyContent="space-between" p={4}>
+      <Flex
+        bg="navy.900"
+        border="1px"
+        borderColor="gray.900"
+        borderRadius="base"
+        justifyContent="space-between"
+        p={4}
+      >
         <Box>
           <Heading fontSize="sm">{headline}</Heading>
           <Text color="whiteAlpha.700" fontSize="xs">

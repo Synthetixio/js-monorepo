@@ -12,9 +12,10 @@ const generate = require('./scripts/minify-synthetix-contract');
 require.resolve('webpack-dev-server');
 
 const isProd = process.env.NODE_ENV === 'production';
+const isTest = process.env.NODE_ENV === 'test';
 
 function optimiseContracts() {
-  const networks = ['goerli', 'goerli-ovm', 'mainnet', 'mainnet-ovm'];
+  const networks = isTest ? ['mainnet'] : ['goerli', 'goerli-ovm', 'mainnet', 'mainnet-ovm'];
   const out = path.resolve(__dirname, './out');
   generate({ networks, out });
 
@@ -30,7 +31,9 @@ function optimiseContracts() {
     )
     .concat([
       new webpack.NormalModuleReplacementPlugin(
-        new RegExp('/synthetix/publish/deployed/(kovan|local)'),
+        isTest
+          ? new RegExp('/synthetix/publish/deployed/(kovan|local|goerli|goerli-ovm|mainnet-ovm)')
+          : new RegExp('/synthetix/publish/deployed/(local)'),
         require.resolve('./scripts/noop')
       ),
       new webpack.NormalModuleReplacementPlugin(
@@ -51,9 +54,21 @@ const htmlPlugin = new HtmlWebpackPlugin({
   excludeChunks: ['main'],
 });
 
-const tsxRule = {
-  test: /\.(ts|tsx)$/,
-  include: [/v1\/lib/, /v1\/components/, /v2\/lib/, /v2\/components/, /v2\/ui/],
+const babelRule = {
+  test: /\.(ts|tsx|js|jsx)$/,
+  include: [
+    /v1\/lib/,
+    /v1\/components/,
+    /v2\/lib/,
+    /v2\/components/,
+    /v2\/cypress/,
+    /v2\/ui/,
+    /v3\/theme/,
+
+    /contracts\/src/,
+    /packages\/[^\/]+\/src/,
+    /tools\/[^\/]+\/src/,
+  ],
   resolve: {
     fullySpecified: false,
   },
@@ -95,7 +110,7 @@ const cssRule = {
 const devServer = {
   port: '3000',
 
-  hot: true,
+  hot: !isTest,
   liveReload: false,
 
   historyApiFallback: {
@@ -103,7 +118,7 @@ const devServer = {
   },
 
   devMiddleware: {
-    writeToDisk: true,
+    writeToDisk: !isTest,
     publicPath: '/',
   },
 
@@ -118,13 +133,16 @@ const devServer = {
   headers: { 'Access-Control-Allow-Origin': '*' },
   allowedHosts: 'all',
   open: false,
-  compress: true,
+  compress: false,
 };
 
 module.exports = {
-  devtool: isProd ? 'source-map' : 'eval',
+  devtool: isProd ? 'source-map' : isTest ? false : 'eval',
   devServer,
   mode: isProd ? 'production' : 'development',
+  //  experiments: {
+  //    lazyCompilation: !isProd,
+  //  },
   entry: './index.ts',
 
   output: {
@@ -164,6 +182,24 @@ module.exports = {
       ),
       new webpack.NormalModuleReplacementPlugin(/^bn.js$/, require.resolve('bn.js')),
     ])
+    .concat(
+      [
+        'contracts-interface',
+        'optimism-networks',
+        'providers',
+        'queries',
+        'transaction-notifier',
+        'wei',
+        'generate-subgraph-query',
+        'v3-theme',
+      ].map(
+        (name) =>
+          new webpack.NormalModuleReplacementPlugin(
+            new RegExp(`^@synthetixio/${name}$`),
+            path.resolve(path.dirname(require.resolve(`@synthetixio/${name}/package.json`)), 'src')
+          )
+      )
+    )
     .concat([
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
@@ -193,7 +229,7 @@ module.exports = {
         ),
       }),
     ])
-    .concat(isProd ? [] : [new ReactRefreshWebpackPlugin({ overlay: false })])
+    .concat(isProd ? [] : isTest ? [] : [new ReactRefreshWebpackPlugin({ overlay: false })])
     .concat(
       process.env.GENERATE_BUNDLE_REPORT === 'true'
         ? [
@@ -208,6 +244,15 @@ module.exports = {
     ),
 
   resolve: {
+    alias: {
+      '@synthetixio/contracts/build': '@synthetixio/contracts/src',
+      '@synthetixio/contracts-interface/build': '@synthetixio/contracts-interface/src',
+      '@synthetixio/optimism-networks/build': '@synthetixio/optimism-networks/src',
+      '@synthetixio/providers/build': '@synthetixio/providers/src',
+      '@synthetixio/queries/build': '@synthetixio/queries/src',
+      '@synthetixio/transaction-notifier/build': '@synthetixio/transaction-notifier/src',
+      '@synthetixio/wei/build': '@synthetixio/wei/src',
+    },
     fallback: {
       buffer: require.resolve('buffer'),
       stream: require.resolve('stream-browserify'),
@@ -221,6 +266,6 @@ module.exports = {
   },
 
   module: {
-    rules: [tsxRule, svgRule, imgRule, cssRule, rawRule],
+    rules: [babelRule, svgRule, imgRule, cssRule, rawRule],
   },
 };

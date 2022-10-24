@@ -10,12 +10,15 @@ import {
   Button,
   Skeleton,
   Center,
+  Alert,
+  AlertDescription,
+  AlertIcon,
   InputProps,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { FailedIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
-import { formatNumber, numberWithCommas } from '@snx-v2/formatters';
+import { FailedIcon, GuideIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
+import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
@@ -29,6 +32,10 @@ import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { useQueryClient } from '@tanstack/react-query';
 import { parseTxnError } from '@snx-v2/parseTxnError';
 import { BurnTransactionModal } from './BurnTransactionModal';
+import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
+import { BurnHeader } from './BurnHeader';
+import { leftColWidth, rightColWidth } from './layout';
+import { BoxLink } from '@snx-v2/BoxLink';
 
 interface BurnProps {
   snxBalance?: number;
@@ -73,7 +80,6 @@ const StyledInput: FC<InputProps> = (props) => {
 };
 
 export const BurnUi = ({
-  snxBalance = 0,
   susdBalance = 0,
   isLoading,
   onSubmit,
@@ -105,18 +111,24 @@ export const BurnUi = ({
 
   return (
     <>
-      <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="md" p={5}>
+      <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="base" p={5}>
         <Flex alignItems="center">
-          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
+          <Text
+            fontFamily="heading"
+            fontWeight="extrabold"
+            lineHeight="base"
+            fontSize="xs"
+            mr={1.5}
+          >
             {t('staking-v2.burn.heading')}
           </Text>
           <Tooltip label="Soonthetix" hasArrow>
             <Flex alignItems="center">
-              <InfoIcon width="16px" height="16px" />
+              <InfoIcon width="12px" height="12px" />
             </Flex>
           </Tooltip>
         </Flex>
-        <Box borderWidth="1px" borderColor="gray.900" borderRadius="md" p={2} my={3}>
+        <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2} my={3}>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
               <TokensIcon />
@@ -150,6 +162,7 @@ export const BurnUi = ({
               </Skeleton>
             </Flex>
           </Flex>
+
           <Flex w="100%" justifyContent="space-between" mt={1}>
             <Badge
               variant="burn"
@@ -164,8 +177,8 @@ export const BurnUi = ({
               <Tooltip label="Soonthetix" hasArrow>
                 <Flex alignItems="center">
                   <InfoIcon
-                    width="16px"
-                    height="16px"
+                    width="12px"
+                    height="12px"
                     color={activeBadge === 'max' ? 'blue.900' : 'cyan.400'}
                   />
                 </Flex>
@@ -184,8 +197,8 @@ export const BurnUi = ({
               <Tooltip label="Soonthetix" hasArrow>
                 <Flex alignItems="center">
                   <InfoIcon
-                    width="16px"
-                    height="16px"
+                    width="12px"
+                    height="12px"
                     color={activeBadge === 'toTarget' ? 'blue.900' : 'cyan.400'}
                   />
                 </Flex>
@@ -193,17 +206,31 @@ export const BurnUi = ({
             </Badge>
           </Flex>
         </Box>
+        {activeBadge === 'toTarget' && (
+          <Alert my={4} status="info" variant="left-accent" py={2} px={3}>
+            <AlertIcon width="20px" height="20px" />
+            <AlertDescription pl={2} pr={[0, 0, 24]} fontSize="sm" fontFamily="heading">
+              {t('staking-v2.burn.description-cratio')}
+            </AlertDescription>
+          </Alert>
+        )}
         <Flex alignItems="center">
-          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
+          <Text
+            fontFamily="heading"
+            fontWeight="extrabold"
+            lineHeight="base"
+            fontSize="xs"
+            mr={1.5}
+          >
             {t('staking-v2.burn.unstaking')}
           </Text>
           <Tooltip label="Soonthetix" hasArrow>
             <Flex>
-              <InfoIcon width="16px" height="16px" />
+              <InfoIcon width="12px" height="12px" />
             </Flex>
           </Tooltip>
         </Flex>
-        <Box borderWidth="1px" borderColor="gray.900" borderRadius="md" p={2} mt={3}>
+        <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2} mt={3}>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
               <TokensIcon />
@@ -220,17 +247,18 @@ export const BurnUi = ({
               />
               <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
                 <Flex>
-                  <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={4}>
-                    {t('staking-v2.burn.staked-snx')}: {formatNumber(stakedSnx)}
-                  </Text>
                   <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
-                    {t('staking-v2.burn.snx-balance', { snxBalance: formatNumber(snxBalance) })}
+                    {t('staking-v2.burn.staked-snx')}: {formatNumber(stakedSnx)}
                   </Text>
                 </Flex>
               </Skeleton>
             </Flex>
           </Flex>
         </Box>
+        <MintOrBurnChanges
+          collateralChange={parseFloatWithCommas(snxUnstakingAmount)}
+          action="burn"
+        />
         {gasError ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
@@ -246,6 +274,7 @@ export const BurnUi = ({
           </Flex>
         )}
         <Button
+          variant="solid"
           data-testid="burn submit"
           fontFamily="heading"
           fontWeight="black"
@@ -327,40 +356,53 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   };
   return (
     <>
-      <BurnUi
-        stakedSnx={stakedSnx.toNumber()}
-        debtBalance={debtData?.debtBalance.toNumber()}
-        snxBalance={debtData?.collateral.toNumber()}
-        isLoading={isLoading}
-        susdBalance={susdBalance?.toNumber()}
-        snxUnstakingAmount={snxUnstakingAmount}
-        burnAmountSusd={burnAmountSusd}
-        onBurnAmountSusdChange={(val) => {
-          const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
-            val,
-            debtData?.targetCRatio.toNumber(),
-            exchangeRateData?.SNX?.toNumber()
-          );
-          setActiveBadge(undefined);
-          setBurnAmountSusd(val);
-          setSnxUnstakingAmount(snxUnstakingAmount);
-        }}
-        onUnstakeAmountChange={(val) => {
-          const burnAmount = calculateBurnAmountFromUnstaking(
-            val,
-            debtData?.targetCRatio.toNumber(),
-            exchangeRateData?.SNX?.toNumber()
-          );
-          setActiveBadge(undefined);
-          setSnxUnstakingAmount(val);
-          setBurnAmountSusd(burnAmount);
-        }}
-        onBadgeClick={handleBadgeClick}
-        gasError={gasError}
-        isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
-        transactionFee={transactionFee}
-        onSubmit={handleSubmit}
-      />
+      <BurnHeader burnAmountSusd={parseFloatWithCommas(burnAmountSusd)} />
+      <Flex justifyContent="space-between" alignItems="flex-start">
+        <Box width={leftColWidth}>
+          <BurnUi
+            stakedSnx={stakedSnx.toNumber()}
+            debtBalance={debtData?.debtBalance.toNumber()}
+            isLoading={isLoading}
+            susdBalance={susdBalance?.toNumber()}
+            snxUnstakingAmount={snxUnstakingAmount}
+            burnAmountSusd={burnAmountSusd}
+            onBurnAmountSusdChange={(val) => {
+              const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
+                val,
+                debtData?.targetCRatio.toNumber(),
+                exchangeRateData?.SNX?.toNumber()
+              );
+              setActiveBadge(undefined);
+              setBurnAmountSusd(val);
+              setSnxUnstakingAmount(snxUnstakingAmount);
+            }}
+            onUnstakeAmountChange={(val) => {
+              const burnAmount = calculateBurnAmountFromUnstaking(
+                val,
+                debtData?.targetCRatio.toNumber(),
+                exchangeRateData?.SNX?.toNumber()
+              );
+              setActiveBadge(undefined);
+              setSnxUnstakingAmount(val);
+              setBurnAmountSusd(burnAmount);
+            }}
+            onBadgeClick={handleBadgeClick}
+            gasError={gasError}
+            isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
+            transactionFee={transactionFee}
+            onSubmit={handleSubmit}
+          />
+        </Box>
+        <Box width={rightColWidth}>
+          <BoxLink
+            icon={<GuideIcon />}
+            href="https://blog.synthetix.io/basics-of-staking-snx-2022/"
+            isExternal
+            subHeadline=""
+            headline="Staking guide"
+          />
+        </Box>
+      </Flex>
       <BurnTransactionModal
         txnHash={txnHash}
         settle={settle}
@@ -369,6 +411,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         onClose={() => {
           setActiveBadge(undefined);
           setBurnAmountSusd('');
+          setSnxUnstakingAmount('');
           settle();
         }}
         onSubmit={handleSubmit}

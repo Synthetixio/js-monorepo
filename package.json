@@ -11,7 +11,7 @@
     "pretty": "prettier . --check",
     "pretty:fix": "prettier . --write",
     "clean": "yarn workspaces foreach --parallel exec rm -rf dist coverage build && find . -name 'tsconfig.tsbuildinfo' -delete",
-    "test": "yarn workspaces foreach --topological-dev --verbose run test",
+    "test": "jest",
     "build": "yarn workspaces foreach --topological-dev --verbose run build",
     "codegen": "yarn workspaces foreach --topological-dev --verbose run codegen",
     "publish": "yarn workspaces foreach --topological-dev --verbose publish",
@@ -22,13 +22,15 @@
     "deps:circular": "deps-circular",
     "deps:version": "deps-version",
     "upgrade-browsers": "yarn up browserslist caniuse-lite --recursive",
-    "svg": "svgo  --config ./svgo.json"
+    "svg": "svgo  --config ./svgo.json",
+    "download-cci-coverage": "download-cci-coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
     "@babel/preset-env": "^7.19.4",
     "@babel/preset-typescript": "^7.18.6",
     "@synthetixio/deps": "workspace:*",
+    "@synthetixio/download-cci-coverage": "workspace:*",
     "@types/jest": "^29.1.2",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
@@ -37,7 +39,10 @@
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.1",
+    "jest": "^29.1.2",
+    "jest-junit": "^14.0.1",
     "lint-staged": "^13.0.3",
+    "nyc": "^15.1.0",
     "prettier": "^2.7.1",
     "typescript": "^4.8.2"
   },
@@ -49,18 +54,18 @@
   ],
   "resolutions": {
     "@emotion/is-prop-valid": "^1.2.0",
-    "@ethersproject/abi": "^5.6.4",
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/bytes": "^5.7.0",
     "@uniswap/sdk-core": "^3.0.0",
     "@uniswap/v3-core": "^1.0.0",
     "@uniswap/v3-periphery": "^1.0.0",
     "big.js": "^6.1.1",
     "bn.js": "^5.2.1",
-    "@ethersproject/bignumber": "^5.6.2",
-    "@ethersproject/bytes": "^5.6.1",
     "browserslist": "4",
     "caniuse-lite": "1",
-    "ethers": "^5.6.4",
-    "synthetix": "^2.76.1"
+    "ethers": "^5.7.2",
+    "synthetix": "^2.77.2"
   },
   "husky": {
     "hooks": {

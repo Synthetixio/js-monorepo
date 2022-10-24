@@ -40,6 +40,7 @@ const RadioItemContent: React.FC<{
       borderRadius="5px"
       paddingY="4"
       paddingX="4"
+      bg="navy.900"
       borderColor={state.isChecked ? 'success' : 'gray.900'}
       marginBottom="4"
       background={disabled ? 'gray.900' : 'none'}

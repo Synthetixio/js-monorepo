@@ -1,7 +1,8 @@
+import '@cypress/code-coverage/support';
 import { ethers } from 'ethers';
 
 before(() => {
-  cy.task('snapshotSave').as('tenderlySnapshot');
+  // cy.task('snapshotSave').as('tenderlySnapshot');
 });
 
 beforeEach(() => {
@@ -107,7 +108,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  cy.get('@tenderlySnapshot').then((tenderlySnapshot) => {
-    cy.task('snapshotLoad', tenderlySnapshot);
-  });
+  //  cy.get('@tenderlySnapshot').then((tenderlySnapshot) => {
+  //    cy.task('snapshotLoad', tenderlySnapshot);
+  //  });
 });

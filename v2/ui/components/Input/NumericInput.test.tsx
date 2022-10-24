@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import ContextProvider from 'tests/ContextProider';
+import ContextProvider from '../../tests/ContextProvider';
 import NumericInput from './NumericInput';
 import userEvent from '@testing-library/user-event';
 

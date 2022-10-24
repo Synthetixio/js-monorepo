@@ -1,5 +1,5 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import { Text, Box, Tooltip, Flex, Heading } from '@chakra-ui/react';
+import { Text, Box, Tooltip, Flex, Heading, Badge } from '@chakra-ui/react';
 import { FC } from 'react';
 import { currency } from '../../../../utils/currency';
 import { NumberInput } from './NumberInput';
@@ -35,6 +35,20 @@ export const Mint: FC<Props> = ({ onChange, value, max }) => {
               >
                 <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
               </Tooltip>
+              {max !== 0 && (
+                <Badge
+                  transform="translateY(-1px)"
+                  ml="2"
+                  as="button"
+                  variant="outline"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onChange(max);
+                  }}
+                >
+                  Use Max
+                </Badge>
+              )}
             </Text>
           </Box>
         </Flex>

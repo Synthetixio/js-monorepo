@@ -62,6 +62,13 @@
       "heading": "Collateralization Ratio Health",
       "sub-heading": "In order to claim weekly rewards, your C-Ratio must be at or above the target."
     },
+    "cratio-box": {
+      "success": "HEALTHY",
+      "warning": "UNHEALTHY",
+      "error": "UNHEALTHY",
+      "current-health": "Current Health",
+      "target-health": "Target Health"
+    },
     "mint": {
       "title-new": "Stake SNX By Minting sUSD",
       "title-existing": "Stake and Borrow More",
@@ -78,9 +85,6 @@
       "epoch": "EPOCH",
       "snx-price": "SNX PRICE",
       "info": "Info",
-      "success": "HEALTHY",
-      "warning": "UNHEALTHY",
-      "error": "UNHEALTHY",
       "gas-estimation-error": "Error estimating gas",
       "txn-modal": {
         "pending": "Transaction Pending",
@@ -114,6 +118,7 @@
       "burn-debt": "Clear Debt",
       "active-debt": "Active debt",
       "staked-snx": "Staked SNX",
+      "description-cratio": "Burn to C-Ratio - Burn sUSD required to reach target C-Ratio",
       "txn-modal": {
         "pending": "Transaction Pending",
         "completed": "Transaction completed",
@@ -180,6 +185,14 @@
       "text": "Buy more sUSD on any of this DAPPS.",
       "susd-needed": "sUSD Needed",
       "once-purchased-text": "Once purchased go to the <0>Burn Page</0> to burn and remove the flag."
+    },
+    "mint-or-burn-changes": {
+      "total-snx": "Total SNX",
+      "staked": "Staked",
+      "transferable": "Transferable",
+      "c-ratio": "C-Ratio",
+      "susd-balance": "sUSD Balance",
+      "active-debt": "Active Debt"
     }
   },
   "meta": {

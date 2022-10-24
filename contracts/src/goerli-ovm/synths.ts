@@ -19,6 +19,7 @@ export const SynthsByName: Partial<
     sign: '$',
     description: 'US Dollars',
     name: 'sUSD',
+    subclass: 'MultiCollateralSynth',
   },
   sETH: {
     asset: 'ETH',

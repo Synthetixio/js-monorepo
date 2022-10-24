@@ -10,7 +10,7 @@ export function Pool() {
         <title>Pool</title>
         <meta name="description" content="Pool" />
       </Helmet>
-      <Flex position="relative" flex="1">
+      <Flex height="100%" position="relative" alignItems="center" justifyContent="center" flex="1">
         <Box
           position="absolute"
           px="3"

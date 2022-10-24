@@ -1,7 +1,7 @@
-async function mintSusd(amount = 1) {
-  const { ethers } = require('ethers');
-  const Synthetix = require('@synthetixio/contracts/build/mainnet/deployment/Synthetix.js');
+import { ethers } from 'ethers';
+import * as Synthetix from '@synthetixio/contracts/src/mainnet/deployment/Synthetix';
 
+export async function mintSusd(amount = 1) {
   const provider = new ethers.providers.JsonRpcProvider(process.env.CYPRESS_TENDERLY_RPC_URL);
   const wallet = process.env.CYPRESS_WALLET_ADDRESS;
   const signer = provider.getSigner(wallet);
@@ -14,9 +14,10 @@ async function mintSusd(amount = 1) {
   );
   console.log('mintSusd', { debt });
   if (debt < 1) {
+    await new Promise((ok) => setTimeout(ok, 1000));
     const mintTx = await SynthetixContract.issueSynths(
       ethers.utils.hexValue(ethers.utils.parseEther(`${amount}`).toHexString()),
-      { gasLimit: 1000000 }
+      { gasLimit: 100_000_000 }
     );
     const receipt = await mintTx.wait();
     console.log('mintSusd', { tx: receipt.transactionHash });
@@ -27,5 +28,3 @@ async function mintSusd(amount = 1) {
 
   return null;
 }
-
-module.exports = { mintSusd };

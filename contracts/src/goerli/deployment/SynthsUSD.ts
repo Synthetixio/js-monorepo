@@ -2,7 +2,7 @@
 
 export const name = 'SynthsUSD';
 export const address = '0xB1f664162c0269A469a699709D37cc5739379dD1';
-export const source = 'Synth';
+export const source = 'MultiCollateralSynth';
 export const abi = [
   'constructor(address _proxy, address _tokenState, string _tokenName, string _tokenSymbol, address _owner, bytes32 _currencyKey, uint256 _totalSupply, address _resolver)',
   'event Approval(address indexed owner, address indexed spender, uint256 value)',

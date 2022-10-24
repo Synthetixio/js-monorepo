@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers';
 import { chain } from 'wagmi';
 import { ChainName } from './types';
 
@@ -20,7 +19,7 @@ export const getChainById = (chainId: number) =>
 
 export const getChainNameById = (chainId: number) => {
   const chain = getChainById(chainId);
-  return chain?.name.toLowerCase() == 'localhost' ? 'hardhat' : chain?.network;
+  return chain?.network.toLowerCase() == 'localhost' ? 'hardhat' : chain?.network;
 };
 
 // TODO: Retrieve from on chain data
@@ -83,4 +82,13 @@ export const poolsData: Record<string, { name: string }> = {
   0: {
     name: 'None',
   },
+};
+
+export const INFURA_KEY = '23087ce9f88c44d1b1c54fd7c07c65fb';
+
+export const ALCHEMY_KEY_MAPPING: Record<number, string> = {
+  1: 'Yq-4rzpsP9Dz8mvjHRQ8lUrmNLNocuQs',
+  5: '6btiU37vkhQ8DJkdV4qggEWXehpgw2aI',
+  10: '-ktIzLrAY_Sf7AAlM1aTuZ-PObMop5sU',
+  420: 'lc1tSn8B8fmURkjmZLeyT1ibNpgqlsnr',
 };

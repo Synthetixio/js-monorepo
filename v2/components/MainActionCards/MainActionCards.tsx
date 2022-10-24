@@ -19,8 +19,8 @@ const CardHeader = ({
 }: PropsWithChildren<{ step: number; headingText: string; bodyText: string; icon: ReactNode }>) => {
   return (
     <Box>
-      <Flex alignItems="center" justifyContent="space-between">
-        <Text fontSize="4xl" fontFamily="mono">
+      <Flex alignItems="center" justifyContent="space-between" mb={2}>
+        <Text fontSize="4xl" lineHeight="6" fontFamily="mono" fontWeight="black" pt={0}>
           {step}
         </Text>
         {icon}
@@ -40,12 +40,13 @@ const Container = ({ children }: PropsWithChildren<{}>) => {
       justifyContent="space-between"
       width="full"
       maxWidth={['full', '70%', '72']}
-      height={['auto', 'auto', '56']}
+      height={['auto', 'auto', '60']}
       alignItems="space-between"
       border="1px"
       borderColor="gray.800"
-      padding="2"
+      p={3}
       borderRadius="base"
+      bg="navy.900"
     >
       {children}
     </Flex>
@@ -84,6 +85,7 @@ const StakeActionCard: React.FC<Required<Pick<UiProps, 'currentCRatioPercentage'
     </Container>
   );
 };
+
 const MaintainActionCard: React.FC<
   Required<
     Pick<
@@ -120,19 +122,19 @@ const MaintainActionCard: React.FC<
       {isStaking && (
         <Badge
           color={variant}
-          bg="blackAlpha.600"
+          bg="#47FAC240"
           border="1px"
           borderColor={variant}
           display="flex"
           alignItems="center"
           width="fit-content"
-          margin="0 auto"
           fontSize="x-small"
           borderRadius="base"
           fontWeight="700"
+          py={0.5}
         >
           <InfoIcon color={variant} width="10px" height="10px" />
-          <Text ml="0.5">
+          <Text ml="0.5" fontWeight="bold" fontSize="2xs">
             {variant !== 'success'
               ? 'Adjust to collect weekly rewards'
               : 'Your ratio is looking healthy!'}
