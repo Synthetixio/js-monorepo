@@ -1,18 +1,15 @@
 describe('loans', () => {
   it('Can borrow sUSD with ETH collateral', () => {
-    // TX confirmation can take a while
-    const TIMEOUT_TX = 120000;
-    // Data fetching from tenderly can take some extra time
-    const TIMEOUT_DATA_FETCH = 30000;
-
     cy.viewport(1000, 1000);
+
+    cy.get('@fork').then((fork) => {
+      cy.task('removeEthCollateralInteractionDelay', fork);
+    });
 
     cy.visit('http://localhost:3000/loans');
     cy.get('[id="Borrow Synths-tab"]').should('be.visible');
 
-    cy.get('[data-testid="loans current eth balance"]', {
-      timeout: TIMEOUT_DATA_FETCH,
-    }).should(($0) => {
+    cy.get('[data-testid="loans current eth balance"]').should(($0) => {
       expect(parseFloat($0.data('balance'))).to.be.gte(2);
     });
 
@@ -31,11 +28,11 @@ describe('loans', () => {
       .should('include.text', 'POSTING')
       .should('include.text', '2.00 ETH');
 
-    cy.get('[role="dialog"]', { timeout: TIMEOUT_TX }).should('not.exist');
+    cy.get('[role="dialog"]').should('not.exist');
 
     cy.get('[id="Active Borrows-tab"][aria-selected="true"]').should('exist');
     cy.get('[id="Active Borrows-tabpanel"]').should('exist');
-    cy.get('[data-testid="loan actions button"]', { timeout: TIMEOUT_DATA_FETCH })
+    cy.get('[data-testid="loan actions button"]')
       .should('exist')
       .then(($0) => cy.wrap($0.data('id')).as('loanId'));
 
@@ -54,9 +51,7 @@ describe('loans', () => {
     /*
 
     // Wait for balance to be fetched and ensure we have 100 sUSD available
-    cy.get('[data-testid="balance item"][data-currency="sUSD"][data-amount="100.00"]', {
-      timeout: TIMEOUT_DATA_FETCH,
-    }).should('exist');
+    cy.get('[data-testid="balance item"][data-currency="sUSD"][data-amount="100.00"]').should('exist');
 
     cy.get('[data-testid="loans submit loan modification"]')
       .should('exist')
@@ -71,7 +66,7 @@ describe('loans', () => {
       .should('include.text', 'RECEIVE')
       .should('include.text', '2.00 ETH');
 
-    cy.get('[role="dialog"]', { timeout: TIMEOUT_TX }).should('not.exist');
+    cy.get('[role="dialog"]').should('not.exist');
 
     cy.get('[id="Active Borrows-tab"][aria-selected="true"]').should('exist');
     cy.get('[id="Active Borrows-tabpanel"]').should('exist');
