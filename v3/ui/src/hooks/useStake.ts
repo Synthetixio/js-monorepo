@@ -3,10 +3,11 @@ import { BigNumber, CallOverrides, ethers, utils } from 'ethers';
 import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
 import { contracts, getChainById } from '../utils/constants';
 import { accountsState, chainIdState } from '../utils/state';
 import { CollateralType, StakingPositionType } from '../utils/types';
-import { useApproveCall } from './useApproveCall';
+import { useApprove } from './useApprove';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
 import { useWrapEth } from './useWrapEth';
@@ -42,7 +43,8 @@ export const useStake = ({
     isClosable: true,
     duration: 9000,
   });
-
+  
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   const [{ refetchAccounts }] = useRecoilState(accountsState);
 
@@ -148,11 +150,10 @@ export const useStake = ({
     },
   });
 
-  const { exec } = useApproveCall(
+  const { approve, requireApproval } = useApprove(
     selectedCollateralType.address,
     amountBN,
     snxProxy?.address,
-    multiTxn.exec,
     {
       onMutate: () => {
         toast({
@@ -171,6 +172,14 @@ export const useStake = ({
       },
     }
   );
+
+  const exec = useCallback(async () => {
+    try {
+      await approve();
+      await multiTxn.exec();
+    } catch (error) {}
+  }, [approve, multiTxn]);
+
   const createAccount = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -187,5 +196,47 @@ export const useStake = ({
     }
   }, [exec, isNativeCurrency, amountBN, wrap]);
 
-  return { createAccount, isLoading: isLoading || isWrapping, multiTxn };
+  const updateTransactions = useCallback(() => {
+    const calls: Transaction[] = [];
+
+    if (isNativeCurrency) {
+      calls.push({
+        title: 'Wrap ETH',
+        subtitle: 'you need to wrap your ether',
+        call: async () => await wrap(amountBN),
+      });
+    }
+
+    if (requireApproval) {
+      calls.push({
+        title: 'Approve ' + selectedCollateralType.symbol,
+        subtitle: 'This step is a approval',
+        call: async () => await approve(),
+      });
+    }
+
+    calls.push({
+      title: 'Stake ' + selectedCollateralType.symbol,
+      subtitle: 'this step is a multicall',
+      call: async () => await multiTxn.exec(),
+    });
+
+    setTransactions(calls);
+  }, [
+    amountBN,
+    approve,
+    isNativeCurrency,
+    multiTxn,
+    requireApproval,
+    selectedCollateralType.symbol,
+    wrap,
+  ]);
+
+  return {
+    createAccount,
+    updateTransactions,
+    transactions,
+    isLoading: isLoading || isWrapping,
+    multiTxn,
+  };
 };

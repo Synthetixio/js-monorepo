@@ -32,7 +32,7 @@ import { CollateralType, StakingPositionType } from '../../../utils/types';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 import { FC } from 'react';
 import { useStake } from '../../../hooks/useStake';
-import { MultistepModal } from '../../shared/MultistepModal';
+import { MultipleTransactionModal } from '../../shared/TransactionReview/MultipleTransactionModal';
 
 type FormType = {
   collateralType: CollateralType;
@@ -65,6 +65,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
   });
   const { handleSubmit, register, formState, reset, control, setValue } = methods;
 
+  const { isOpen: isOpenTx, onOpen: onOpenTx, onClose: onCloseTx } = useDisclosure();
   const { isOpen: isOpenPool, onOpen: onOpenPool, onClose: onClosePool } = useDisclosure();
 
   const { openConnectModal } = useConnectModal();
@@ -106,7 +107,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
     refetch?.();
     balanceData.refetch();
   };
-  const { createAccount, isLoading, multiTxn } = useStake({
+  const { isLoading, multiTxn, transactions, updateTransactions } = useStake({
     accountId,
     stakingPositions,
     amount,
@@ -116,14 +117,16 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
     isNativeCurrency,
     onSuccess,
   });
+
   return (
     <>
-      <MultistepModal />
+      <MultipleTransactionModal isOpen={isOpenTx} onClose={onCloseTx} transacions={transactions} />
       <FormProvider {...methods}>
         <Box bg="whiteAlpha.200" mb="8" p="6" pb="4" borderRadius="12px">
           <form
             onSubmit={handleSubmit((_data) => {
-              createAccount();
+              updateTransactions();
+              onOpenTx();
             })}
           >
             <Flex mb="3">
