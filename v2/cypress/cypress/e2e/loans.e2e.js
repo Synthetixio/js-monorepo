@@ -77,5 +77,6 @@ describe('loans', () => {
     cy.get('[data-testid="loans claim pending withdrawals"]').should('exist');
 
     */
+    cy.wrap(true).as('ok');
   });
 });

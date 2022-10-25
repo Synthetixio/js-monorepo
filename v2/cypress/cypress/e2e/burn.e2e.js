@@ -35,5 +35,6 @@ describe('burn', () => {
       .click();
 
     cy.get('[data-testid="transaction modal"]').should('not.exist');
+    cy.wrap(true).as('ok');
   });
 });

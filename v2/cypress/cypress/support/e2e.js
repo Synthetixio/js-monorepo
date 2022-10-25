@@ -19,6 +19,7 @@ beforeEach(() => {
       Cypress.env('WALLET_ADDRESS', WALLET_ADDRESS);
       Cypress.env('WALLET_PK', WALLET_PK);
     });
+  cy.wrap(false).as('ok');
 
   cy.on('window:before:load', (win) => {
     win.__caches = {};
@@ -111,5 +112,9 @@ beforeEach(() => {
 
 afterEach(() => {
   cy.intercept('https://rpc.tenderly.co/fork/**', { statusCode: 204 }).as('rpc');
-  cy.task('unfork', testname());
+  cy.get('@ok').then((ok) => {
+    if (ok) {
+      cy.task('unfork', testname());
+    }
+  });
 });
