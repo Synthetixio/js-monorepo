@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Pools consolidate liquidity from stakers and markets' credit and debt. Every pool has a vault for each of the accepted collateral types. Pools may also have an owner, which can decide which markets will be backed by the collateral delegated to the pool.
 
-Credit and debt is propagated between staking positions and pools, and between pools and markets with the [Shares Library](/protocol/peripheral/shares-library), taking into account the pool's configuration.
+Credit and debt is propagated between staking positions and pools, and between pools and markets, taking into account the pool's configuration.
 
 ## Creating Pools
 

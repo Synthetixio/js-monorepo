@@ -1,1 +1,19 @@
-export const DeploymentAddresses = ({ deploymentJson }) => <p>Coming soon.</p>;
+import deployments from './deployments.json';
+export const DeploymentAddresses = ({ chainId }) => {
+  const data = deployments.deploys[chainId].main.outputs.contracts;
+  return (
+    <table>
+      <thead></thead>
+      <tbody>
+        {Object.keys(data).map((key, index) => {
+          return (
+            <tr key={index}>
+              <td>{data[key].contractName}</td>
+              <td>{data[key].address}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+};
