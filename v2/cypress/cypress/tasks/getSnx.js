@@ -2,9 +2,12 @@ import { ethers } from 'ethers';
 import * as RewardsDistribution from '@synthetixio/contracts/src/mainnet/deployment/RewardsDistribution';
 import * as ProxyERC20 from '@synthetixio/contracts/src/mainnet/deployment/ProxyERC20';
 
-export async function getSnx(amount = 100) {
-  const provider = new ethers.providers.JsonRpcProvider(process.env.CYPRESS_TENDERLY_RPC_URL);
-  const wallet = process.env.CYPRESS_WALLET_ADDRESS;
+export async function getSnx(fork, amount = 100) {
+  const rpc = `https://rpc.tenderly.co/fork/${fork.simulation_fork.id}`;
+  const [[wallet]] = Object.entries(fork.simulation_fork.accounts);
+  console.log('getSnx', { rpc, wallet });
+
+  const provider = new ethers.providers.JsonRpcProvider(rpc);
 
   const RewardsDistributionContract = new ethers.Contract(
     RewardsDistribution.address,

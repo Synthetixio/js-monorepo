@@ -26,18 +26,20 @@ module.exports = defineConfig({
     specPattern: ['../**/*.e2e.{js,jsx,ts,tsx}'],
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
+      require('dotenv').config({ override: true, path: './env.local' });
       require('@cypress/code-coverage/task')(on, config);
       on('task', {
+        ...require('./cypress/tasks/fork'),
         ...require('./cypress/tasks/removeMinimumStakeTime'),
+        ...require('./cypress/tasks/removeEthCollateralInteractionDelay'),
         ...require('./cypress/tasks/getSnx'),
         ...require('./cypress/tasks/mintSusd'),
-        ...require('./cypress/tasks/snapshot'),
       });
       return config;
     },
 
     retries: {
-      runMode: 3,
+      runMode: 1,
       openMode: 0,
     },
     defaultCommandTimeout: 60_000,

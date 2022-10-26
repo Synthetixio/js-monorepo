@@ -1,9 +1,11 @@
 import { ethers } from 'ethers';
 import * as Synthetix from '@synthetixio/contracts/src/mainnet/deployment/Synthetix';
 
-export async function mintSusd(amount = 1) {
-  const provider = new ethers.providers.JsonRpcProvider(process.env.CYPRESS_TENDERLY_RPC_URL);
-  const wallet = process.env.CYPRESS_WALLET_ADDRESS;
+export async function mintSusd(fork, amount = 1) {
+  const rpc = `https://rpc.tenderly.co/fork/${fork.simulation_fork.id}`;
+  const [[wallet]] = Object.entries(fork.simulation_fork.accounts);
+
+  const provider = new ethers.providers.JsonRpcProvider(rpc);
   const signer = provider.getSigner(wallet);
 
   const SynthetixContract = new ethers.Contract(Synthetix.address, Synthetix.abi, signer);

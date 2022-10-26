@@ -3,17 +3,15 @@ describe('mint', () => {
     cy.on('window:before:load', (win) => {
       win.localStorage.STAKING_V2_ENABLED = 'true';
     });
-
-    cy.task('getSnx');
-
-    const TIMEOUT_TX = 120000;
-    const TIMEOUT_DATA_FETCH = 30000;
+    cy.get('@fork').then((fork) => {
+      cy.task('getSnx', fork);
+    });
 
     cy.visit('http://localhost:3000/staking/mint');
 
-    cy.get('[data-testid="mint header"]', { timeout: TIMEOUT_DATA_FETCH }).should('be.visible');
+    cy.get('[data-testid="mint header"]').should('be.visible');
 
-    cy.get('[data-testid="mint available snx balance"]', { timeout: TIMEOUT_DATA_FETCH })
+    cy.get('[data-testid="mint available snx balance"]')
       .should('be.visible')
       .within(($0) => cy.wrap(parseFloat($0.data('balance'))).should('be.gte', 10));
 
@@ -21,7 +19,7 @@ describe('mint', () => {
 
     cy.get('[data-testid="mint submit"]').should('be.visible').should('not.be.disabled').click();
 
-    cy.get('[data-testid="transaction modal"]', { timeout: TIMEOUT_TX })
+    cy.get('[data-testid="transaction modal"]')
       .should('be.visible')
       .should('include.text', 'Transaction completed')
       .should('include.text', 'Staking')
@@ -35,5 +33,6 @@ describe('mint', () => {
       .click();
 
     cy.get('[data-testid="transaction modal"]').should('not.exist');
+    cy.wrap(true).as('ok');
   });
 });

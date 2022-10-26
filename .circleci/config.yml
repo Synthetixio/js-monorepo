@@ -43,22 +43,6 @@ commands:
           paths:
             - '.yarn/install-state.gz'
 
-  tenderly-prepare:
-    steps:
-      - run:
-          name: Prepare Tenderly fork
-          command: |-
-            ./node_modules/.bin/tenderly-cci
-            cat $BASH_ENV
-
-  tenderly-cleanup:
-    steps:
-      - run:
-          when: always
-          name: Remove Tenderly fork
-          command: |-
-            ./node_modules/.bin/tenderly-unfork
-
   checksum:
     steps:
       - run: |-
@@ -211,13 +195,9 @@ jobs:
           name: Wait for server localhost:3000
           command: wget --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 http://localhost:3000
 
-      - tenderly-prepare
-
       - run:
           working_directory: /tmp/app/v2/cypress
           command: NODE_ENV=test cypress run --e2e --browser chrome
-
-      - tenderly-cleanup
 
       - store_test_results:
           path: 'v2/cypress/cypress/reports'
@@ -233,6 +213,10 @@ jobs:
       - store_artifacts:
           path: 'v2/cypress/cypress/videos'
           destination: 'videos'
+
+      - store_artifacts:
+          path: 'v2/cypress/cypress/forks'
+          destination: 'forks'
 
   v2-cy:
     working_directory: /tmp/app
