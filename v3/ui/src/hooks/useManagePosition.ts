@@ -1,8 +1,12 @@
 import { utils } from 'ethers';
 import { useCallback, useMemo, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
 import { contracts } from '../utils/constants';
 import { compareAddress, parseUnits } from '../utils/helpers';
+import { transactionState } from '../utils/state';
 import { CollateralType } from '../utils/types';
+import { useApprove } from './useApprove';
 import { useApproveCall } from './useApproveCall';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
@@ -113,30 +117,115 @@ export const useManagePosition = (
   ]);
 
   const multiTxn = useMulticall(calls);
-  const { exec: approve } = useApproveCall(
+  const { approve } = useApprove(
     position.collateral.address,
-    collateralAmount > 0 ? collateralChangeBN : 0,
-    snxProxy?.address,
-    multiTxn.exec
+    collateralChange > 0 ? collateralChangeBN : 0,
+    snxProxy?.address
   );
 
-  const exec = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      if (isNativeCurrency && collateralChange > 0) {
-        await wrap(collateralChangeBN);
-      }
-      await approve();
-      if (isNativeCurrency && collateralChange < 0) {
-        await unWrap(collateralChangeBN);
-      }
-      refetch?.();
-    } catch (error) {
-      //console.log(error);
-    } finally {
-      setIsLoading(false);
+  const multicallTitles = useMemo(() => {
+    const title: string[] = [];
+    if (collateralChange > 0) {
+      title.push('Stake ' + position.collateral.symbol.toUpperCase());
+    } else if (collateralChange < 0) {
+      title.push('Unstake ' + position.collateral.symbol.toUpperCase());
     }
-  }, [approve, collateralChange, collateralChangeBN, isNativeCurrency, refetch, unWrap, wrap]);
+
+    if (debtChange > 0) {
+      title.push('Mint snxUSD');
+    } else if (debtChange < 0) {
+      title.push('Burn snxUSD');
+    }
+
+    return title;
+  }, [collateralChange, debtChange, position.collateral.symbol]);
+
+  const setTransaction = useSetRecoilState(transactionState);
+
+  const updateTransactions = useCallback(() => {
+    const transactions: Transaction[] = [];
+
+    if (isNativeCurrency && collateralChange > 0) {
+      transactions.push({
+        title: 'Wrap ETH',
+        subtitle: 'You need to wrap your ether',
+        call: async () => await wrap(collateralChangeBN),
+      });
+    }
+
+    if (collateralChange > 0) {
+      transactions.push({
+        title: 'Approve ' + position.collateral.symbol.toUpperCase(),
+        subtitle: 'This step is a approval',
+        call: async () => await approve(),
+      });
+    }
+
+    transactions.push({
+      title: multicallTitles.join(' - '),
+      subtitle: 'this step is a multicall',
+      call: async () => await multiTxn.exec(),
+    });
+
+    if (isNativeCurrency && collateralChange < 0) {
+      transactions.push({
+        title: 'unWrap ETH',
+        subtitle: 'You need to un-wrap your WETH',
+        call: async () => await unWrap(collateralChangeBN),
+      });
+    }
+
+    setTransaction({
+      transactions,
+      isOpen: true,
+    });
+  }, [
+    multicallTitles,
+    approve,
+    collateralChange,
+    collateralChangeBN,
+    isNativeCurrency,
+    multiTxn,
+    position.collateral.symbol,
+    setTransaction,
+    unWrap,
+    wrap,
+  ]);
+
+  const exec = useCallback(
+    async (useDialog = true) => {
+      if (useDialog) {
+        return updateTransactions();
+      }
+      try {
+        setIsLoading(true);
+        if (isNativeCurrency && collateralChange > 0) {
+          await wrap(collateralChangeBN);
+        }
+        await approve();
+        await multiTxn.exec();
+        if (isNativeCurrency && collateralChange < 0) {
+          await unWrap(collateralChangeBN);
+        }
+        refetch?.();
+      } catch (error) {
+        //console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [
+      updateTransactions,
+      approve,
+      collateralChange,
+      collateralChangeBN,
+      isNativeCurrency,
+      multiTxn,
+      refetch,
+      unWrap,
+      wrap,
+    ]
+  );
 
   return {
     isLoading: isLoading || isWrapping || isUnWrapping,

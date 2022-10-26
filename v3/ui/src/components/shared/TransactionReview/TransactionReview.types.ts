@@ -1,6 +1,7 @@
 export interface Transaction {
   title?: string;
   subtitle?: string;
+  information?: string;
   call?: () => void;
 }
 

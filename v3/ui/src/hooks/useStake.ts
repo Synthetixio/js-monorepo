@@ -2,10 +2,10 @@ import { useToast } from '@chakra-ui/react';
 import { BigNumber, CallOverrides, ethers, utils } from 'ethers';
 import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
 import { contracts, getChainById } from '../utils/constants';
-import { accountsState, chainIdState } from '../utils/state';
+import { accountsState, chainIdState, transactionState } from '../utils/state';
 import { CollateralType, StakingPositionType } from '../utils/types';
 import { useApprove } from './useApprove';
 import { useContract } from './useContract';
@@ -43,8 +43,7 @@ export const useStake = ({
     isClosable: true,
     duration: 9000,
   });
-  
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   const [{ refetchAccounts }] = useRecoilState(accountsState);
 
@@ -150,28 +149,23 @@ export const useStake = ({
     },
   });
 
-  const { approve, requireApproval } = useApprove(
-    selectedCollateralType.address,
-    amountBN,
-    snxProxy?.address,
-    {
-      onMutate: () => {
-        toast({
-          title: 'Approve collateral for transfer',
-          description: 'The next transaction will create your account and stake this collateral.',
-          status: 'info',
-        });
-      },
-      onError: () => {
-        toast.closeAll();
-        toast({
-          title: 'Approval failed',
-          description: 'Please try again.',
-          status: 'error',
-        });
-      },
-    }
-  );
+  const { approve } = useApprove(selectedCollateralType.address, amountBN, snxProxy?.address, {
+    onMutate: () => {
+      toast({
+        title: 'Approve collateral for transfer',
+        description: 'The next transaction will create your account and stake this collateral.',
+        status: 'info',
+      });
+    },
+    onError: () => {
+      toast.closeAll();
+      toast({
+        title: 'Approval failed',
+        description: 'Please try again.',
+        status: 'error',
+      });
+    },
+  });
 
   const exec = useCallback(async () => {
     try {
@@ -180,62 +174,69 @@ export const useStake = ({
     } catch (error) {}
   }, [approve, multiTxn]);
 
-  const createAccount = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      //  add extra step to convert to wrapped token if native (ex. ETH)
-      if (isNativeCurrency) {
-        await wrap(amountBN);
-      }
-
-      await exec();
-    } catch (error) {
-      //console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [exec, isNativeCurrency, amountBN, wrap]);
+  const setTransaction = useSetRecoilState(transactionState);
 
   const updateTransactions = useCallback(() => {
-    const calls: Transaction[] = [];
+    const transactions: Transaction[] = [];
 
     if (isNativeCurrency) {
-      calls.push({
+      transactions.push({
         title: 'Wrap ETH',
         subtitle: 'you need to wrap your ether',
         call: async () => await wrap(amountBN),
       });
     }
 
-    if (requireApproval) {
-      calls.push({
-        title: 'Approve ' + selectedCollateralType.symbol,
-        subtitle: 'This step is a approval',
-        call: async () => await approve(),
-      });
-    }
+    transactions.push({
+      title: 'Approve ' + selectedCollateralType.symbol.toUpperCase(),
+      subtitle: 'This step is a approval',
+      call: async () => await approve(),
+    });
 
-    calls.push({
-      title: 'Stake ' + selectedCollateralType.symbol,
+    transactions.push({
+      title: 'Stake ' + selectedCollateralType.symbol.toUpperCase(),
       subtitle: 'this step is a multicall',
       call: async () => await multiTxn.exec(),
     });
 
-    setTransactions(calls);
+    setTransaction({
+      transactions,
+      isOpen: true,
+    });
   }, [
     amountBN,
     approve,
     isNativeCurrency,
     multiTxn,
-    requireApproval,
     selectedCollateralType.symbol,
+    setTransaction,
     wrap,
   ]);
 
+  const createAccount = useCallback(
+    async (useDialog = true) => {
+      if (useDialog) {
+        return updateTransactions();
+      }
+      try {
+        setIsLoading(true);
+        //  add extra step to convert to wrapped token if native (ex. ETH)
+        if (isNativeCurrency) {
+          await wrap(amountBN);
+        }
+
+        await exec();
+      } catch (error) {
+        //console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [updateTransactions, isNativeCurrency, exec, wrap, amountBN]
+  );
+
   return {
     createAccount,
-    updateTransactions,
-    transactions,
     isLoading: isLoading || isWrapping,
     multiTxn,
   };

@@ -8,6 +8,13 @@ interface StepProps {
   children: ReactNode;
 }
 
+export const statusColor = {
+  [StepStatus.Completed]: 'green.700',
+  [StepStatus.Error]: 'red.700',
+  [StepStatus.Current]: 'gray.700',
+  [StepStatus.Upcoming]: 'gray.700',
+};
+
 export const Step: FC<StepProps> = ({ status, children }) => {
   return (
     <Flex
@@ -15,8 +22,10 @@ export const Step: FC<StepProps> = ({ status, children }) => {
       height={10}
       justifyContent="center"
       alignItems="center"
-      bg="gray.700"
+      bg={statusColor[status]}
       rounded="full"
+      transitionProperty="background"
+      transitionDuration="normal"
     >
       <StepIcon status={status}>{children}</StepIcon>
     </Flex>
