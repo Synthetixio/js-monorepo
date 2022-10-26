@@ -106,16 +106,15 @@ export const SelfLiquidationUi: FC<{
           </Flex>
         </Box>
         <Button mt={4} mx="auto" display="block">
-          Yes I want to Self Liquidate
+          {t('staking-v2.self-liquidation.button-text')}
         </Button>
       </Box>
     </Box>
   );
 };
 export const SelfLiquidation = () => {
-  const { data: selfLiquidationData, error } = useSelfLiquidationData();
+  const { data: selfLiquidationData } = useSelfLiquidationData();
   const { data: debtData } = useDebtData();
-  console.log({ selfLiquidationData, error });
   return (
     <SelfLiquidationUi
       selfLiquidationPenaltyDollar={selfLiquidationData?.selfLiquidationPenaltyDollar.toNumber()}
