@@ -34,6 +34,7 @@ interface TransactionState {
   isOpen: boolean;
   title?: string;
   subtitle?: string;
+  onSuccess?: () => void;
 }
 export const transactionState = atom<TransactionState>({
   key: 'transactionState',

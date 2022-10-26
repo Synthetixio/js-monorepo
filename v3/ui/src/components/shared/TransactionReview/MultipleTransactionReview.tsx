@@ -1,16 +1,20 @@
 import { Button } from '@chakra-ui/react';
 import { FC, useCallback, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { transactionState } from '../../../utils/state';
 import { TransactionReview } from './TransactionReview';
-import { StepStatus, Transaction } from './TransactionReview.types';
+import { StepStatus } from './TransactionReview.types';
 
-interface StepProps {
-  transacions: Transaction[];
+interface Props {
   onSuccess?: () => void;
 }
 
-export const MultipleTransactionReview: FC<StepProps> = ({ transacions, onSuccess }) => {
+export const MultipleTransactionReview: FC<Props> = ({ onSuccess }) => {
+  const [txState, setTransaction] = useRecoilState(transactionState);
   const [step, setStep] = useState(-1);
   const [error, setError] = useState(false);
+
+  const { transactions } = txState;
 
   const submit = useCallback(async () => {
     try {
@@ -19,15 +23,16 @@ export const MultipleTransactionReview: FC<StepProps> = ({ transacions, onSucces
         setError(false);
         i = step;
       }
-      for (; i < transacions.length; i++) {
+      for (; i < transactions.length; i++) {
         setStep(i);
-        await transacions[i].call?.();
+        await transactions[i].call?.(transactions[i].checked);
       }
-      setStep(transacions.length);
+      txState.onSuccess?.();
+      setStep(transactions.length);
     } catch (error) {
       setError(true);
     }
-  }, [error, step, transacions]);
+  }, [error, step, transactions, txState]);
 
   const getStatus = (i: number) => {
     if (i < step) {
@@ -42,19 +47,35 @@ export const MultipleTransactionReview: FC<StepProps> = ({ transacions, onSucces
     return StepStatus.Upcoming;
   };
 
-  const isLoading = step > -1 && step < transacions.length && !error;
+  const setChecked = (index: number) => (checked: boolean) => {
+    const newList = [...transactions];
+    newList[index] = {
+      ...newList[index],
+      checked,
+    };
+    setTransaction({ ...txState, transactions: newList });
+  };
+
+  const isLoading = step > -1 && step < transactions.length && !error;
 
   return (
     <>
-      {transacions.map((tx, i) => (
-        <TransactionReview key={i} index={i} transaction={tx} status={getStatus(i)} />
+      {transactions.map((tx, i) => (
+        <TransactionReview
+          key={i}
+          index={i}
+          transaction={tx}
+          status={getStatus(i)}
+          setChecked={setChecked(i)}
+          isLoading={isLoading}
+        />
       ))}
-      {transacions.length > step && (
+      {transactions.length > step && (
         <Button disabled={isLoading} onClick={submit} width="100%" my="4">
           {error ? 'Retry' : 'Submit'}
         </Button>
       )}
-      {onSuccess && transacions.length === step && (
+      {onSuccess && transactions.length === step && (
         <Button onClick={onSuccess} width="100%" my="4">
           Done
         </Button>

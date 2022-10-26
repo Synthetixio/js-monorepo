@@ -52,7 +52,7 @@ export const useStake = ({
       ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
       : BigNumber.from(0);
 
-  const { wrap, isLoading: isWrapping } = useWrapEth();
+  const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
 
   const newAccountId = useMemo(() => Math.floor(Math.random() * 10000000000), []);
 
@@ -149,23 +149,28 @@ export const useStake = ({
     },
   });
 
-  const { approve } = useApprove(selectedCollateralType.address, amountBN, snxProxy?.address, {
-    onMutate: () => {
-      toast({
-        title: 'Approve collateral for transfer',
-        description: 'The next transaction will create your account and stake this collateral.',
-        status: 'info',
-      });
-    },
-    onError: () => {
-      toast.closeAll();
-      toast({
-        title: 'Approval failed',
-        description: 'Please try again.',
-        status: 'error',
-      });
-    },
-  });
+  const { approve, requireApproval } = useApprove(
+    selectedCollateralType.address,
+    amountBN,
+    snxProxy?.address,
+    {
+      onMutate: () => {
+        toast({
+          title: 'Approve collateral for transfer',
+          description: 'The next transaction will create your account and stake this collateral.',
+          status: 'info',
+        });
+      },
+      onError: () => {
+        toast.closeAll();
+        toast({
+          title: 'Approval failed',
+          description: 'Please try again.',
+          status: 'error',
+        });
+      },
+    }
+  );
 
   const exec = useCallback(async () => {
     try {
@@ -183,14 +188,16 @@ export const useStake = ({
       transactions.push({
         title: 'Wrap ETH',
         subtitle: 'you need to wrap your ether',
-        call: async () => await wrap(amountBN),
+        call: async (useBalance) => await wrap(amountBN, useBalance),
+        checkboxLabel: amountBN.gt(wrapEthBalance?.value || 0) ? undefined : 'Use My WETH Balance',
       });
     }
 
     transactions.push({
       title: 'Approve ' + selectedCollateralType.symbol.toUpperCase(),
       subtitle: 'This step is a approval',
-      call: async () => await approve(),
+      call: async (infiniteApproval) => await approve(infiniteApproval),
+      checkboxLabel: requireApproval ? 'Infinite Approval' : undefined,
     });
 
     transactions.push({
@@ -210,7 +217,9 @@ export const useStake = ({
     multiTxn,
     selectedCollateralType.symbol,
     setTransaction,
+    requireApproval,
     wrap,
+    wrapEthBalance?.value,
   ]);
 
   const createAccount = useCallback(

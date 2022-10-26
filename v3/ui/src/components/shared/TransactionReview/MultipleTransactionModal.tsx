@@ -7,34 +7,30 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
+import { useRecoilState } from 'recoil';
+import { transactionState } from '../../../utils/state';
 import { MultipleTransactionReview } from './MultipleTransactionReview';
-import { Transaction } from './TransactionReview.types';
 
-interface Props {
-  title?: string;
-  subtitle?: string;
-  transacions: Transaction[];
-  isOpen: boolean;
-  onClose: () => void;
-}
+export const MultipleTransactionModal: FC = () => {
+  const [transaction, setTransaction] = useRecoilState(transactionState);
 
-export const MultipleTransactionModal: FC<Props> = ({
-  title = 'Complete this action',
-  subtitle = 'Please execute the following transactions:',
-  isOpen,
-  onClose,
-  transacions,
-}) => {
+  const onClose = useCallback(() => {
+    setTransaction({
+      transactions: [],
+      isOpen: false,
+    });
+  }, [setTransaction]);
+
   return (
-    <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
+    <Modal size="lg" isOpen={transaction.isOpen} onClose={onClose} closeOnOverlayClick={false}>
       <ModalOverlay />
       <ModalContent bg="black" color="white">
-        <ModalHeader>{title}</ModalHeader>
+        <ModalHeader>{transaction.title || 'Complete this action'}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text mb="2">{subtitle}</Text>
-          <MultipleTransactionReview transacions={transacions} onSuccess={onClose} />
+          <Text mb="2">{transaction.subtitle || 'Please execute the following transactions:'}</Text>
+          <MultipleTransactionReview onSuccess={onClose} />
         </ModalBody>
       </ModalContent>
     </Modal>

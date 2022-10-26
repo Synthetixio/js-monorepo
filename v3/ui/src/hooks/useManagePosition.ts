@@ -7,7 +7,6 @@ import { compareAddress, parseUnits } from '../utils/helpers';
 import { transactionState } from '../utils/state';
 import { CollateralType } from '../utils/types';
 import { useApprove } from './useApprove';
-import { useApproveCall } from './useApproveCall';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
 import { useUnWrapEth, useWrapEth } from './useWrapEth';
@@ -31,7 +30,7 @@ export const useManagePosition = (
   const wethContract = useContract(contracts.WETH);
   const isNativeCurrency = compareAddress(wethContract?.address, position.collateral.address);
 
-  const { wrap, isLoading: isWrapping } = useWrapEth();
+  const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
   const { unWrap, isLoading: isUnWrapping } = useUnWrapEth();
 
   const calls: MulticallCall[] = useMemo(() => {
@@ -117,7 +116,7 @@ export const useManagePosition = (
   ]);
 
   const multiTxn = useMulticall(calls);
-  const { approve } = useApprove(
+  const { approve, requireApproval } = useApprove(
     position.collateral.address,
     collateralChange > 0 ? collateralChangeBN : 0,
     snxProxy?.address
@@ -149,7 +148,10 @@ export const useManagePosition = (
       transactions.push({
         title: 'Wrap ETH',
         subtitle: 'You need to wrap your ether',
-        call: async () => await wrap(collateralChangeBN),
+        call: async (useBalance) => await wrap(collateralChangeBN, useBalance),
+        checkboxLabel: collateralChangeBN.gt(wrapEthBalance?.value || 0)
+          ? undefined
+          : 'Use My WETH Balance',
       });
     }
 
@@ -157,7 +159,8 @@ export const useManagePosition = (
       transactions.push({
         title: 'Approve ' + position.collateral.symbol.toUpperCase(),
         subtitle: 'This step is a approval',
-        call: async () => await approve(),
+        call: async (infiniteApproval) => await approve(infiniteApproval),
+        checkboxLabel: requireApproval ? 'Infinite Approval' : undefined,
       });
     }
 
@@ -178,18 +181,22 @@ export const useManagePosition = (
     setTransaction({
       transactions,
       isOpen: true,
+      onSuccess: refetch,
     });
   }, [
-    multicallTitles,
-    approve,
-    collateralChange,
-    collateralChangeBN,
+    refetch,
     isNativeCurrency,
-    multiTxn,
-    position.collateral.symbol,
+    collateralChange,
+    multicallTitles,
     setTransaction,
-    unWrap,
+    collateralChangeBN,
+    wrapEthBalance?.value,
     wrap,
+    position.collateral.symbol,
+    approve,
+    multiTxn,
+    unWrap,
+    requireApproval,
   ]);
 
   const exec = useCallback(

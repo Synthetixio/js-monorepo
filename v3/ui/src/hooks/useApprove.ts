@@ -1,4 +1,4 @@
-import { BigNumberish } from 'ethers';
+import { BigNumberish, ethers } from 'ethers';
 import { useCallback, useMemo } from 'react';
 import { erc20ABI, useAccount, useContractRead, useContractWrite, useNetwork } from 'wagmi';
 import { TxConfig } from './useMulticall';
@@ -39,14 +39,22 @@ export const useApprove = (
     return allowance && allowance.gte(amount);
   }, [allowance, amount]);
 
-  const approve = useCallback(async () => {
-    if (!sufficientAllowance) {
-      const txReceipt = await writeAsync();
-      await txReceipt.wait();
-      refetchAllowance();
-      config?.onSuccess && config.onSuccess();
-    }
-  }, [config, refetchAllowance, sufficientAllowance, writeAsync]);
+  const approve = useCallback(
+    async (infiniteApproval = false) => {
+      if (!sufficientAllowance || infiniteApproval) {
+        const txReceipt = await writeAsync({
+          recklesslySetUnpreparedArgs: [
+            spender,
+            infiniteApproval ? ethers.constants.MaxUint256 : amount,
+          ],
+        });
+        await txReceipt.wait();
+        refetchAllowance();
+        config?.onSuccess && config.onSuccess();
+      }
+    },
+    [amount, config, refetchAllowance, spender, sufficientAllowance, writeAsync]
+  );
 
   return {
     isLoading,
