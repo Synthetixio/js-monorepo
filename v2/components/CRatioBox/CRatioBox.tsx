@@ -57,7 +57,9 @@ export const CRatioBoxUi: FC<{
   const newCratioPercentage = calcNewCratioPercentage(collateral, SNXRate, newDebtBalance);
   const badgeHealthVariant = getHealthVariant({
     currentCRatioPercentage:
-      newCratioPercentage !== undefined ? newCratioPercentage * 100 : currentCRatioPercentage,
+      amount && newCratioPercentage !== undefined
+        ? newCratioPercentage * 100
+        : currentCRatioPercentage,
     targetCratioPercentage: targetCRatioPercentage,
     liquidationCratioPercentage: liquidationRatioPercentage,
   });
@@ -91,7 +93,7 @@ export const CRatioBoxUi: FC<{
                 <Skeleton width={12} h={5} />
               )}
             </Text>
-            {newCratioPercentage !== undefined ? (
+            {newCratioPercentage !== undefined && amount ? (
               <>
                 <ArrowRight mx={1} color="white" />
                 <Text
