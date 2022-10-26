@@ -1,15 +1,54 @@
 import deployments from './deployments.json';
 export const DeploymentAddresses = ({ chainId }) => {
+  const etherscanBase = {
+    5: 'https://goerli.etherscan.io/address/',
+    420: 'https://goerli-optimism.etherscan.io/',
+  };
   const data = deployments.deploys[chainId].main.outputs.contracts;
+  const modules = {};
+  Object.keys(deployments.deploys[chainId].main.def.run).map((key, index) => {
+    let name = key.split('_')[0];
+    const mods = deployments.deploys[chainId].main.def.run[key].depends.map(
+      (mod) => mod.split('.')[1]
+    );
+    modules[name] = mods;
+  });
+  const processed = Object.keys(data)
+    .map((key, index) => {
+      const etherscan = etherscanBase[chainId] + data[key].address;
+      return { name: key, address: data[key].address, etherscan };
+    })
+    .filter((contract) => contract.name.includes('Proxy') && contract.name !== 'InitialCoreProxy');
+  const kebabize = (str) =>
+    str.replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? '-' : '') + $.toLowerCase());
   return (
     <table>
-      <thead></thead>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Modules</th>
+        </tr>
+      </thead>
       <tbody>
-        {Object.keys(data).map((key, index) => {
+        {processed.map((contract, index) => {
           return (
             <tr key={index}>
-              <td>{data[key].contractName}</td>
-              <td>{data[key].address}</td>
+              <td>{contract.name.replace('Proxy', '')}</td>
+              <td>
+                <a target="_blank" href={contract.etherscan}>
+                  {contract.address}
+                </a>
+              </td>
+              <td>
+                {modules[contract.name.replace('Proxy', '').toLowerCase()].map((module, index2) => {
+                  return (
+                    <span key={index2}>
+                      <a href={'./smart-contracts#' + kebabize(module)}>{module}</a>,{' '}
+                    </span>
+                  );
+                })}
+              </td>
             </tr>
           );
         })}
