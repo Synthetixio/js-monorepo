@@ -87,21 +87,19 @@ export const SelfLiquidationUi: FC<{
           <Flex>
             <SNXIcon mt="5px" mr={2} />
             <Box>
-              <Text fontSize="2xl" fontWeight={800}>
-                {selfLiquidationPenaltySNX !== undefined ? (
-                  formatNumber(selfLiquidationPenaltySNX)
-                ) : (
-                  <Skeleton />
-                )}
-              </Text>
-              <Text>
-                ={' '}
-                {selfLiquidationPenaltyDollar !== undefined ? (
-                  formatNumberToUsd(selfLiquidationPenaltyDollar)
-                ) : (
-                  <Skeleton />
-                )}
-              </Text>
+              {selfLiquidationPenaltySNX !== undefined ? (
+                <Text fontSize="2xl" fontWeight={800}>
+                  {formatNumber(selfLiquidationPenaltySNX)}
+                </Text>
+              ) : (
+                <Skeleton w={4} h={2} mt={2} />
+              )}
+
+              {selfLiquidationPenaltyDollar !== undefined ? (
+                <Text>= {formatNumberToUsd(selfLiquidationPenaltyDollar)}</Text>
+              ) : (
+                <Skeleton w={4} h={2} mt={1} />
+              )}
             </Box>
           </Flex>
         </Box>
