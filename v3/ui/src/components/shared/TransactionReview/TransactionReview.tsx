@@ -1,5 +1,5 @@
 import { InfoIcon } from '@chakra-ui/icons';
-import { Checkbox, Flex, Text, Tooltip } from '@chakra-ui/react';
+import { Box, Checkbox, Flex, Text, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
 import { statusColor, Step } from '../Step/Step';
 import { StepStatus, Transaction } from './TransactionReview.types';
@@ -38,16 +38,18 @@ export const TransactionReview: FC<Props> = ({
         {transaction.subtitle}
       </Text>
       {transaction.checkboxLabel && (
-        <Checkbox
-          isChecked={!!transaction.checked}
-          onChange={(e) => setChecked(e.target.checked)}
-          size="sm"
-          disabled={status === StepStatus.Completed || status === StepStatus.Current || isLoading}
-        >
-          <Text fontSize="xs" opacity="0.66">
-            {transaction.checkboxLabel}
-          </Text>
-        </Checkbox>
+        <Flex mt="0.5">
+          <Checkbox
+            isChecked={!!transaction.checked}
+            onChange={(e) => setChecked(e.target.checked)}
+            size="sm"
+            disabled={status === StepStatus.Completed || status === StepStatus.Current || isLoading}
+          >
+            <Box fontSize="xs" opacity="0.66">
+              {transaction.checkboxLabel}
+            </Box>
+          </Checkbox>
+        </Flex>
       )}
     </Flex>
     {transaction.information && (

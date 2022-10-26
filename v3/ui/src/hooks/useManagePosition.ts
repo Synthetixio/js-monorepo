@@ -168,15 +168,15 @@ export const useManagePosition = (
     }
 
     transactions.push({
-      title: multicallTitles.join(' - '),
-      subtitle: 'this step is a multicall',
+      title: multicallTitles.join(', '),
+      subtitle: 'This is a multicall.',
       call: async () => await multiTxn.exec(),
     });
 
     if (isNativeCurrency && collateralChange < 0) {
       transactions.push({
-        title: 'Un-Wrap ETH',
-        subtitle: 'You need to un-wrap your ETH',
+        title: 'Unwrap ETH',
+        subtitle: 'Convert wETH to native ETH.',
         call: async () => await unWrap(collateralChangeBN),
       });
     }
