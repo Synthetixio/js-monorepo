@@ -1,5 +1,15 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import { Box, Heading, SimpleGrid, Flex, Tooltip, Text, Badge } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  SimpleGrid,
+  Flex,
+  Tooltip,
+  Text,
+  Badge,
+  Alert,
+  AlertIcon,
+} from '@chakra-ui/react';
 import { FC } from 'react';
 import { useTokenBalance } from '../../../../hooks/useTokenBalance';
 import { currency } from '../../../../utils/currency';
@@ -102,18 +112,27 @@ export const Custom: FC<Props> = ({
           </Box>
         </Box>
       </SimpleGrid>
-      <Text>
-        This adjustment will{' '}
-        <strong>
-          {collateralChange > 0 ? 'stake' : 'unstake'} {Math.abs(collateralChange)}{' '}
-          {collateral.symbol.toUpperCase()}
-        </strong>{' '}
-        and{' '}
-        <strong>
-          {debtChange > 0 ? 'mint' : 'burn'} {Math.abs(debtChange)} snxUSD
-        </strong>
-        .
-      </Text>
+      {(collateralChange !== 0 || debtChange !== 0) && (
+        <Alert>
+          <AlertIcon />
+          <Box>
+            This adjustment will&nbsp;
+            {collateralChange !== 0 && (
+              <strong>
+                {collateralChange > 0 ? 'stake' : 'unstake'} {Math.abs(collateralChange)}&nbsp;
+                {collateral.symbol.toUpperCase()}
+              </strong>
+            )}
+            {collateralChange !== 0 && debtChange !== 0 && `\u00A0and\u00A0`}
+            {debtChange !== 0 && (
+              <strong>
+                {debtChange > 0 ? 'mint' : 'burn'} {Math.abs(debtChange)} snxUSD
+              </strong>
+            )}
+            .
+          </Box>
+        </Alert>
+      )}
     </Box>
   );
 };
