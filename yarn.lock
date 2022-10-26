@@ -2162,18 +2162,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chakra-ui/icon@npm:latest":
-  version: 3.0.11
-  resolution: "@chakra-ui/icon@npm:3.0.11"
-  dependencies:
-    "@chakra-ui/shared-utils": 2.0.2
-  peerDependencies:
-    "@chakra-ui/system": ">=2.0.0"
-    react: ">=18"
-  checksum: a76900cb23b5c8d55e80bdf794951400faeca4a848496f480dac129d52c67f607e0a64822021ddd08ff429b2a685e80a5298ad2d1dc6021206ca7a466968fe93
-  languageName: node
-  linkType: hard
-
 "@chakra-ui/icons@npm:2.0.6":
   version: 2.0.6
   resolution: "@chakra-ui/icons@npm:2.0.6"
@@ -2756,13 +2744,6 @@ __metadata:
   version: 2.0.1
   resolution: "@chakra-ui/shared-utils@npm:2.0.1"
   checksum: a12ee9e3d09a07481af459ee42938f0c48e98fac9995da99930a2b8db9ba70f04a7648bf792a6c9f59be6a7b6fc2e828d151ce2770a3dfb347e10d8d92bde867
-  languageName: node
-  linkType: hard
-
-"@chakra-ui/shared-utils@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@chakra-ui/shared-utils@npm:2.0.2"
-  checksum: d3e00205dbfa613fbd161f4253d79e519522c100fdb0182ed25bb71ecf627342c876ff0fa2ba986b51aa3b457e73d28ebf8e91111bf4c031ed607e90d1225ace
   languageName: node
   linkType: hard
 
@@ -9663,7 +9644,6 @@ __metadata:
     "@babel/preset-env": ^7.19.4
     "@babel/preset-react": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
-    "@chakra-ui/icon": latest
     "@chakra-ui/icons": ^2.0.9
     "@chakra-ui/react": ^2.2.8
     "@emotion/react": ^11.10.0
