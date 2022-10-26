@@ -114,13 +114,15 @@ export const useStake = ({
   const multiTxn = useMulticall(calls, overrides, {
     onMutate: () => {
       toast.closeAll();
-      toast({
-        title: 'Create your account',
-        description: "You'll be redirected once your account is created.",
-        status: 'info',
-        isClosable: true,
-        duration: 9000,
-      });
+      if (!Boolean(accountId)) {
+        toast({
+          title: 'Create your account',
+          description: "You'll be redirected once your account is created.",
+          status: 'info',
+          isClosable: true,
+          duration: 9000,
+        });
+      }
     },
     onSuccess: async () => {
       toast.closeAll();
@@ -196,14 +198,15 @@ export const useStake = ({
           : `Skip this step and use my existing ${amount} wETH.`,
       });
     }
-
-    transactions.push({
-      title: 'Approve ' + selectedCollateralType.symbol.toUpperCase() + ' transfer',
-      call: async (infiniteApproval) => await approve(infiniteApproval),
-      checkboxLabel: requireApproval
-        ? `Approve unlimited ${selectedCollateralType.symbol.toUpperCase()} transfers to the Synthetix protocol.`
-        : undefined,
-    });
+    if (requireApproval) {
+      transactions.push({
+        title: 'Approve ' + selectedCollateralType.symbol.toUpperCase() + ' transfer',
+        call: async (infiniteApproval) => await approve(infiniteApproval),
+        checkboxLabel: requireApproval
+          ? `Approve unlimited ${selectedCollateralType.symbol.toUpperCase()} transfers to the Synthetix protocol.`
+          : undefined,
+      });
+    }
 
     transactions.push({
       title: 'Stake ' + selectedCollateralType.symbol.toUpperCase(),
@@ -216,15 +219,16 @@ export const useStake = ({
       isOpen: true,
     });
   }, [
-    amountBN,
-    approve,
     isNativeCurrency,
-    multiTxn,
     selectedCollateralType.symbol,
-    setTransaction,
     requireApproval,
-    wrap,
+    setTransaction,
+    amountBN,
     wrapEthBalance?.value,
+    amount,
+    wrap,
+    approve,
+    multiTxn,
   ]);
 
   const createAccount = useCallback(

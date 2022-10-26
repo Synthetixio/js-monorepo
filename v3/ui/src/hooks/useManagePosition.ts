@@ -147,20 +147,23 @@ export const useManagePosition = (
     if (isNativeCurrency && collateralChange > 0) {
       transactions.push({
         title: 'Wrap ETH',
-        subtitle: 'You need to wrap your ether',
+        subtitle: collateralChangeBN.gt(wrapEthBalance?.value || 0)
+          ? 'You must wrap your ether before staking.'
+          : undefined,
         call: async (useBalance) => await wrap(collateralChangeBN, useBalance),
         checkboxLabel: collateralChangeBN.gt(wrapEthBalance?.value || 0)
           ? undefined
-          : 'Use My WETH Balance',
+          : `Skip this step and use my existing ${collateralChange} wETH.`,
       });
     }
 
-    if (collateralChange > 0) {
+    if (collateralChange > 0 && requireApproval) {
       transactions.push({
-        title: 'Approve ' + position.collateral.symbol.toUpperCase(),
-        subtitle: 'This step is a approval',
+        title: 'Approve ' + position.collateral.symbol.toUpperCase() + ' transfer',
         call: async (infiniteApproval) => await approve(infiniteApproval),
-        checkboxLabel: requireApproval ? 'Infinite Approval' : undefined,
+        checkboxLabel: requireApproval
+          ? `Approve unlimited ${position.collateral.symbol.toUpperCase()} transfers to the Synthetix protocol.`
+          : undefined,
       });
     }
 
@@ -172,8 +175,8 @@ export const useManagePosition = (
 
     if (isNativeCurrency && collateralChange < 0) {
       transactions.push({
-        title: 'unWrap ETH',
-        subtitle: 'You need to un-wrap your WETH',
+        title: 'Un-Wrap ETH',
+        subtitle: 'You need to un-wrap your ETH',
         call: async () => await unWrap(collateralChangeBN),
       });
     }
