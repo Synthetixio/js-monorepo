@@ -142,7 +142,7 @@ export default function Manage({
         <Button
           isLoading={isLoading}
           disabled={!isValid || noChange || isLoading}
-          onClick={exec}
+          onClick={() => exec()}
           size="lg"
           width="100%"
           mb="2"

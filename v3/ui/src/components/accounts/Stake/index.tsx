@@ -105,7 +105,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
     refetch?.();
     balanceData.refetch();
   };
-  const { createAccount, isLoading, multiTxn } = useStake({
+  const { isLoading, multiTxn, createAccount } = useStake({
     accountId,
     stakingPositions,
     amount,
@@ -115,6 +115,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
     isNativeCurrency,
     onSuccess,
   });
+
   return (
     <>
       <FormProvider {...methods}>
@@ -161,11 +162,6 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
                   />
                 </Tooltip>
               )}
-              {/*
-              <Tooltip label="Configure Lock">
-                <IconButton onClick={onOpenLock} ml="3" bg="transparent" border="1px solid rgba(255,255,255,0.33)" size="lg" aria-label='Configure Lock' icon={<LockIcon />} />
-              </Tooltip>
-            */}
               {hasWalletConnected ? (
                 <Button
                   isLoading={multiTxn.status === 'pending' || isLoading}
@@ -239,113 +235,11 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
             <ModalCloseButton />
             <ModalBody>
               <EditPosition onClose={onClosePool} />
-              {/*
-              <Heading size="sm" mb="3">Leverage</Heading>
-              <Grid templateColumns='repeat(12, 1fr)' gap={6} alignItems="center" mb="6">
-                <GridItem colSpan="3">
-                  <InputGroup>
-                    <InputLeftAddon bg="black">&times;</InputLeftAddon>
-                    <Input id='amount' type='amount' borderLeft="none" value="1" />
-                  </InputGroup>
-                </GridItem>
-                <GridItem colSpan="9">
-                  <Text fontSize="sm">Leveraging your staking position allows you to earn more rewards, but your c-ratio is subject to greater volatiity. <em>Use leverage with caution.</em></Text>
-                </GridItem>
-              </Grid>
-            */}
             </ModalBody>
           </ModalContent>
         </Modal>
       </FormProvider>
       {!Boolean(accountId) && <HowItWorks selectedCollateralType={selectedCollateralType} />}
-      {/*
-      <Modal size="2xl" isOpen={isOpenLock} onClose={onCloseLock}>
-        <ModalOverlay />
-        <ModalContent bg="black" color="white">
-          <ModalHeader>Manage Lock [WIP]</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Grid templateColumns="repeat(2, 1fr)" gap={6} alignItems="center">
-              <GridItem mb="4">
-                Lock your staked SNX tokens to increase your rewards, fees, and
-                voting power. Benefits scale the longer you lock.
-              </GridItem>
-              <GridItem mb="4">
-                <Heading mb="1.5" size="sm">
-                  Locked SNX
-                </Heading>
-                <Progress
-                  mb="1"
-                  value="23"
-                  colorScheme="green"
-                  size="sm"
-                  borderRadius="4"
-                />
-                <Text fontSize="xs">
-                  Total Locked SNX: 2.3MM
-                  <br />
-                  SNX Floating Supply: 8.2MM
-                </Text>
-              </GridItem>
-            </Grid>
-
-            <Heading mb="2" size="md">
-              Lock Collateral
-            </Heading>
-
-            <Heading mb="2" size="md">
-              Extend Lock
-            </Heading>
-
-            <Grid mb="2" templateColumns="repeat(3, 1fr)" gap={4}>
-              <GridItem mb="4">
-                <FormControl>
-                  <FormLabel htmlFor="amount">Amount</FormLabel>
-                  <InputGroup size="sm">
-                    <Input id="amount" type="amount" />
-                    <InputRightAddon color="black">SNX</InputRightAddon>
-                  </InputGroup>
-                </FormControl>
-              </GridItem>
-              <GridItem mb="4">
-                <FormControl mb="6">
-                  <FormLabel htmlFor="name">Lock Duration</FormLabel>
-                  <ButtonGroup
-                    size="sm"
-                    isAttached
-                    
-                    variant="outline"
-                  >
-                    <Button mr="-px">1W</Button>
-                    <Button mr="-px">1M</Button>
-                    <Button mr="-px">3M</Button>
-                    <Button mr="-px">6M</Button>
-                    <Button mr="-px">1Y</Button>
-                    <Button mr="-px">2Y</Button>
-                    <IconButton aria-label="Custom" icon={<CalendarIcon />} />
-                  </ButtonGroup>
-                </FormControl>
-              </GridItem>
-              <GridItem mb="4">
-                <Button size="sm"  w="100%" mt="8">
-                  Lock
-                </Button>
-              </GridItem>
-            </Grid>
-
-            <Heading mb="2" size="md">
-              Unlock
-            </Heading>
-
-            <Text>
-              You can unlock your collateral early, allowing you to unstake it,
-              but will incur a penalty of <strong>50%</strong>. The penalized
-              collateral is liquidated.
-            </Text>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-      */}
     </>
   );
 };
