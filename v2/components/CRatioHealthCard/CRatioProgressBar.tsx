@@ -1,4 +1,4 @@
-import { Box, Progress, Text, Tooltip } from '@chakra-ui/react';
+import { Box, Progress, Skeleton, Text, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { InfoIcon, TriangleDownIcon, TriangleUpIcon } from '@snx-v2/icons';
@@ -42,17 +42,18 @@ const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
   );
 };
 
-type Props = {
-  liquidationCratioPercentage: number;
-  targetCratioPercentage: number;
-  currentCRatioPercentage: number;
-};
-
-export const CRatioProgressBar: FC<Props> = ({
-  targetCratioPercentage,
-  liquidationCratioPercentage,
-  currentCRatioPercentage,
-}) => {
+export const CRatioProgressBar: FC<{
+  liquidationCratioPercentage?: number;
+  targetCratioPercentage?: number;
+  currentCRatioPercentage?: number;
+}> = ({ targetCratioPercentage, liquidationCratioPercentage, currentCRatioPercentage }) => {
+  if (
+    liquidationCratioPercentage === undefined ||
+    targetCratioPercentage === undefined ||
+    currentCRatioPercentage === undefined
+  ) {
+    return <Skeleton w="100%" minHeight="100px" mb={4} />;
+  }
   const maxRatioShown = Math.max(targetCratioPercentage, currentCRatioPercentage) * 1.1;
   const scaleFactor = maxRatioShown / 100;
   const variant = getHealthVariant({
@@ -62,7 +63,7 @@ export const CRatioProgressBar: FC<Props> = ({
   });
 
   return (
-    <Box position="relative" height="100px" width="full">
+    <Box position="relative" height="100px" width="full" data-testid="c ratio progressbar">
       <LineWithText
         left={liquidationCratioPercentage / scaleFactor}
         text={`Liquidated < ${liquidationCratioPercentage.toFixed(0)}%`}
