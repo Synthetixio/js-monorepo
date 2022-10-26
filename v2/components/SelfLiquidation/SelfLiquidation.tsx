@@ -60,9 +60,9 @@ export const SelfLiquidationUi: FC<{
           borderColor="gray.900"
         >
           <CRatioProgressBar
-            liquidationCratioPercentage={liquidationRatioPercentage || 0}
-            currentCRatioPercentage={currentCRatioPercentage || 0}
-            targetCratioPercentage={targetCRatioPercentage || 0}
+            liquidationCratioPercentage={liquidationRatioPercentage}
+            currentCRatioPercentage={currentCRatioPercentage}
+            targetCratioPercentage={targetCRatioPercentage}
           />
         </Flex>
         <Flex
@@ -88,7 +88,7 @@ export const SelfLiquidationUi: FC<{
             <SNXIcon mt="5px" mr={2} />
             <Box>
               {selfLiquidationPenaltySNX !== undefined ? (
-                <Text fontSize="2xl" fontWeight={800}>
+                <Text data-testid="snx penalty" fontSize="2xl" fontWeight={800}>
                   {formatNumber(selfLiquidationPenaltySNX)}
                 </Text>
               ) : (
@@ -96,7 +96,9 @@ export const SelfLiquidationUi: FC<{
               )}
 
               {selfLiquidationPenaltyDollar !== undefined ? (
-                <Text>= {formatNumberToUsd(selfLiquidationPenaltyDollar)}</Text>
+                <Text data-testid="usd penalty">
+                  = {formatNumberToUsd(selfLiquidationPenaltyDollar)}
+                </Text>
               ) : (
                 <Skeleton w={4} h={2} mt={1} />
               )}

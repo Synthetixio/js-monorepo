@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { SwapLinksUi } from './SwapLinks';
 
-describe('UnflagOptionsUi.cy.tsx', () => {
+describe('SwapLinks', () => {
   it('Render skeleton when missing data', () => {
     cy.viewport(600, 500);
     cy.mount(
