@@ -72,7 +72,7 @@ export const MultipleTransactionReview: FC<Props> = ({ onSuccess }) => {
       ))}
       {transactions.length > step && (
         <Button disabled={isLoading} onClick={submit} width="100%" my="4">
-          {error ? 'Retry' : 'Submit'}
+          {error ? 'Retry' : 'Start'}
         </Button>
       )}
       {onSuccess && transactions.length === step && (

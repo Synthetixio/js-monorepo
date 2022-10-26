@@ -187,22 +187,27 @@ export const useStake = ({
     if (isNativeCurrency) {
       transactions.push({
         title: 'Wrap ETH',
-        subtitle: 'you need to wrap your ether',
+        subtitle: amountBN.gt(wrapEthBalance?.value || 0)
+          ? 'You must wrap your ether before staking.'
+          : undefined,
         call: async (useBalance) => await wrap(amountBN, useBalance),
-        checkboxLabel: amountBN.gt(wrapEthBalance?.value || 0) ? undefined : 'Use My WETH Balance',
+        checkboxLabel: amountBN.gt(wrapEthBalance?.value || 0)
+          ? undefined
+          : `Skip this step and use my existing ${amount} wETH.`,
       });
     }
 
     transactions.push({
-      title: 'Approve ' + selectedCollateralType.symbol.toUpperCase(),
-      subtitle: 'This step is a approval',
+      title: 'Approve ' + selectedCollateralType.symbol.toUpperCase() + ' transfer',
       call: async (infiniteApproval) => await approve(infiniteApproval),
-      checkboxLabel: requireApproval ? 'Infinite Approval' : undefined,
+      checkboxLabel: requireApproval
+        ? `Approve unlimited ${selectedCollateralType.symbol.toUpperCase()} transfers to the Synthetix protocol.`
+        : undefined,
     });
 
     transactions.push({
       title: 'Stake ' + selectedCollateralType.symbol.toUpperCase(),
-      subtitle: 'this step is a multicall',
+      subtitle: `This will transfer your ${selectedCollateralType.symbol.toUpperCase()} to the Synthetix protocol.`,
       call: async () => await multiTxn.exec(),
     });
 

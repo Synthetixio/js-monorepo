@@ -44,7 +44,7 @@ export const TransactionReview: FC<Props> = ({
           size="sm"
           disabled={status === StepStatus.Completed || status === StepStatus.Current || isLoading}
         >
-          <Text fontSize="xs" opacity="0.66" mt="1">
+          <Text fontSize="xs" opacity="0.66">
             {transaction.checkboxLabel}
           </Text>
         </Checkbox>
