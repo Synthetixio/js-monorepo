@@ -34,7 +34,7 @@ const useEscrowDataQuery = (
           RewardEscrowV2.numVestingEntries(walletAddress),
           RewardEscrowV2.balanceOf(walletAddress),
           RewardEscrowV2.totalVestedAccountBalance(walletAddress),
-          OPTIMISM_NETWORKS[ctx.networkId!] != null
+          OPTIMISM_NETWORKS[ctx.networkId!] !== null
             ? BigNumber.from(0)
             : RewardEscrowV2.totalBalancePendingMigration(walletAddress),
         ]);

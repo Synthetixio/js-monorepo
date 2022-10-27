@@ -10,3 +10,16 @@ comment:
   layout: 'reach, diff, flags, files'
   behavior: once
   require_changes: false # if true: only post the comment if coverage changes
+
+ignore:
+  - '**/*.cy.*'
+  - '**/*.test.*'
+  - '**/*.e2e.*'
+  - '.circleci'
+  - '.github'
+  - 'contracts'
+  - 'packages/queries/src/subgraph'
+  - 'tools'
+  - 'v2/cypress'
+  - 'v2/ui/.storybook'
+  - 'v3'

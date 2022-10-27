@@ -1,6 +1,6 @@
 import { BigNumberish } from 'ethers';
 import { useCallback } from 'react';
-import { useContractWrite } from 'wagmi';
+import { useAccount, useBalance, useContractWrite } from 'wagmi';
 import { contracts } from '../utils/constants';
 import { useContract } from './useContract';
 import { TxConfig } from './useMulticall';
@@ -8,6 +8,7 @@ import { TxConfig } from './useMulticall';
 export const useWrapEth = (config?: Partial<TxConfig>) => {
   const wethContract = useContract(contracts.WETH);
 
+  const { address: accountAddress } = useAccount();
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
     addressOrName: wethContract?.address,
@@ -22,22 +23,31 @@ export const useWrapEth = (config?: Partial<TxConfig>) => {
     },
   });
 
+  const { data: balance, refetch } = useBalance({
+    addressOrName: accountAddress,
+    token: wethContract?.address,
+  });
+
   const wrap = useCallback(
-    async (amount: BigNumberish) => {
-      const txReceipt = await writeAsync({
-        recklesslySetUnpreparedOverrides: {
-          value: amount,
-        },
-      });
-      await txReceipt.wait();
+    async (amount: BigNumberish, useBalance = false) => {
+      if (!useBalance || balance?.value.lt(amount)) {
+        const txReceipt = await writeAsync({
+          recklesslySetUnpreparedOverrides: {
+            value: amount,
+          },
+        });
+        await txReceipt.wait();
+      }
+      refetch();
       config?.onSuccess && config.onSuccess();
     },
-    [config, writeAsync]
+    [balance?.value, config, refetch, writeAsync]
   );
 
   return {
     isLoading,
     wrap,
+    balance,
   };
 };
 

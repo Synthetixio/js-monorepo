@@ -2,11 +2,12 @@ import { useToast } from '@chakra-ui/react';
 import { BigNumber, CallOverrides, ethers, utils } from 'ethers';
 import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
 import { contracts, getChainById } from '../utils/constants';
-import { accountsState, chainIdState } from '../utils/state';
+import { accountsState, chainIdState, transactionState } from '../utils/state';
 import { CollateralType, StakingPositionType } from '../utils/types';
-import { useApproveCall } from './useApproveCall';
+import { useApprove } from './useApprove';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
 import { useWrapEth } from './useWrapEth';
@@ -51,7 +52,7 @@ export const useStake = ({
       ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
       : BigNumber.from(0);
 
-  const { wrap, isLoading: isWrapping } = useWrapEth();
+  const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
 
   const newAccountId = useMemo(() => Math.floor(Math.random() * 10000000000), []);
 
@@ -113,13 +114,15 @@ export const useStake = ({
   const multiTxn = useMulticall(calls, overrides, {
     onMutate: () => {
       toast.closeAll();
-      toast({
-        title: 'Create your account',
-        description: "You'll be redirected once your account is created.",
-        status: 'info',
-        isClosable: true,
-        duration: 9000,
-      });
+      if (!Boolean(accountId)) {
+        toast({
+          title: 'Create your account',
+          description: "You'll be redirected once your account is created.",
+          status: 'info',
+          isClosable: true,
+          duration: 9000,
+        });
+      }
     },
     onSuccess: async () => {
       toast.closeAll();
@@ -148,11 +151,10 @@ export const useStake = ({
     },
   });
 
-  const { exec } = useApproveCall(
+  const { approve, requireApproval } = useApprove(
     selectedCollateralType.address,
     amountBN,
     snxProxy?.address,
-    multiTxn.exec,
     {
       onMutate: () => {
         toast({
@@ -171,21 +173,89 @@ export const useStake = ({
       },
     }
   );
-  const createAccount = useCallback(async () => {
+
+  const exec = useCallback(async () => {
     try {
-      setIsLoading(true);
-      //  add extra step to convert to wrapped token if native (ex. ETH)
-      if (isNativeCurrency) {
-        await wrap(amountBN);
-      }
+      await approve();
+      await multiTxn.exec();
+    } catch (error) {}
+  }, [approve, multiTxn]);
 
-      await exec();
-    } catch (error) {
-      //console.log(error);
-    } finally {
-      setIsLoading(false);
+  const setTransaction = useSetRecoilState(transactionState);
+
+  const updateTransactions = useCallback(() => {
+    const transactions: Transaction[] = [];
+
+    if (isNativeCurrency) {
+      transactions.push({
+        title: 'Wrap ETH',
+        subtitle: amountBN.gt(wrapEthBalance?.value || 0)
+          ? 'You must wrap your ether before staking.'
+          : undefined,
+        call: async (useBalance) => await wrap(amountBN, useBalance),
+        checkboxLabel: amountBN.gt(wrapEthBalance?.value || 0)
+          ? undefined
+          : `Skip this step and use my existing ${amount} wETH.`,
+      });
     }
-  }, [exec, isNativeCurrency, amountBN, wrap]);
+    if (requireApproval) {
+      transactions.push({
+        title: 'Approve ' + selectedCollateralType.symbol.toUpperCase() + ' transfer',
+        call: async (infiniteApproval) => await approve(infiniteApproval),
+        checkboxLabel: requireApproval
+          ? `Approve unlimited ${selectedCollateralType.symbol.toUpperCase()} transfers to the Synthetix protocol.`
+          : undefined,
+      });
+    }
 
-  return { createAccount, isLoading: isLoading || isWrapping, multiTxn };
+    transactions.push({
+      title: 'Stake ' + selectedCollateralType.symbol.toUpperCase(),
+      subtitle: `This will transfer your ${selectedCollateralType.symbol.toUpperCase()} to the Synthetix protocol.`,
+      call: async () => await multiTxn.exec(),
+    });
+
+    setTransaction({
+      transactions,
+      isOpen: true,
+    });
+  }, [
+    isNativeCurrency,
+    selectedCollateralType.symbol,
+    requireApproval,
+    setTransaction,
+    amountBN,
+    wrapEthBalance?.value,
+    amount,
+    wrap,
+    approve,
+    multiTxn,
+  ]);
+
+  const createAccount = useCallback(
+    async (useDialog = true) => {
+      if (useDialog) {
+        return updateTransactions();
+      }
+      try {
+        setIsLoading(true);
+        //  add extra step to convert to wrapped token if native (ex. ETH)
+        if (isNativeCurrency) {
+          await wrap(amountBN);
+        }
+
+        await exec();
+      } catch (error) {
+        //console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [updateTransactions, isNativeCurrency, exec, wrap, amountBN]
+  );
+
+  return {
+    createAccount,
+    isLoading: isLoading || isWrapping,
+    multiTxn,
+  };
 };

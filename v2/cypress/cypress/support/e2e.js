@@ -1,9 +1,6 @@
 import '@cypress/code-coverage/support';
 import { ethers } from 'ethers';
-
-before(() => {
-  // cy.task('snapshotSave').as('tenderlySnapshot');
-});
+import { testname } from '../lib/testname';
 
 beforeEach(() => {
   cy.intercept('https://analytics.synthetix.io/matomo.js', { statusCode: 204 }).as('matomo');
@@ -13,10 +10,16 @@ beforeEach(() => {
     statusCode: 204,
   }).as('subgraph');
 
-  // UPD: we still use infura as a generic provider to get general data not related to the wallet, like gas price
-  // Because we are working with tenderly fork, infura calls should not even happen!
-  // cy.intercept('https://mainnet.infura.io/**', { statusCode: 204 }).as('infura-mainnet');
-  // cy.intercept('https://optimism-mainnet.infura.io/**', { statusCode: 204 }).as('infura-optimism');
+  cy.task('fork', testname())
+    .as('fork')
+    .then((fork) => {
+      const TENDERLY_RPC_URL = `https://rpc.tenderly.co/fork/${fork.simulation_fork.id}`;
+      const [[WALLET_ADDRESS, WALLET_PK]] = Object.entries(fork.simulation_fork.accounts);
+      Cypress.env('TENDERLY_RPC_URL', TENDERLY_RPC_URL);
+      Cypress.env('WALLET_ADDRESS', WALLET_ADDRESS);
+      Cypress.env('WALLET_PK', WALLET_PK);
+    });
+  cy.wrap(false).as('ok');
 
   cy.on('window:before:load', (win) => {
     win.__caches = {};
@@ -108,7 +111,10 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  //  cy.get('@tenderlySnapshot').then((tenderlySnapshot) => {
-  //    cy.task('snapshotLoad', tenderlySnapshot);
-  //  });
+  cy.intercept('https://rpc.tenderly.co/fork/**', { statusCode: 204 }).as('rpc');
+  cy.get('@ok').then((ok) => {
+    if (ok) {
+      cy.task('unfork', testname());
+    }
+  });
 });

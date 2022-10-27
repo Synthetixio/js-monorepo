@@ -1,8 +1,10 @@
 import { ethers } from 'ethers';
 import * as SystemSettings from '@synthetixio/contracts/src/mainnet/deployment/SystemSettings';
 
-export async function removeMinimumStakeTime() {
-  const provider = new ethers.providers.JsonRpcProvider(process.env.CYPRESS_TENDERLY_RPC_URL);
+export async function removeMinimumStakeTime(fork) {
+  const rpc = `https://rpc.tenderly.co/fork/${fork.simulation_fork.id}`;
+
+  const provider = new ethers.providers.JsonRpcProvider(rpc);
   const SystemSettingsContract = new ethers.Contract(
     SystemSettings.address,
     SystemSettings.abi,

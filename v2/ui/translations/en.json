@@ -131,6 +131,13 @@
         "close": "Close"
       }
     },
+    "self-liquidation": {
+      "headline": "Unflag Account",
+      "amount-headline": "Self Liquidate Penalty",
+      "amount-sub-headline": "See below the amount that will be liquidated in SNX and USD value",
+      "penalty": "Penalty",
+      "button-text": "Yes I want to Self Liquidate"
+    },
     "transaction-modal": {
       "metamask-note": "Follow the Metamask prompts to authorize the transaction."
     },
