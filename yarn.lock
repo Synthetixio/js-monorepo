@@ -7148,10 +7148,16 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/CRatioHealthCard": "workspace:*"
+    "@snx-v2/ExternalLink": "workspace:*"
+    "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/parseTxnError": "workspace:*"
+    "@snx-v2/txnLink": "workspace:*"
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useSelfLiquidationData": "workspace:*"
+    "@snx-v2/useSelfLiquidationMutation": "workspace:*"
     "@storybook/react": ^6.5.10
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
@@ -7529,6 +7535,18 @@ __metadata:
     "@snx-v2/useLiquidationData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useSelfLiquidationMutation@workspace:*, @snx-v2/useSelfLiquidationMutation@workspace:v2/lib/useSelfLiquidationMutation":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useSelfLiquidationMutation@workspace:v2/lib/useSelfLiquidationMutation"
+  dependencies:
+    "@snx-v2/txnReducer": "workspace:*"
+    "@snx-v2/useGasOptions": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown

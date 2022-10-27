@@ -121,7 +121,10 @@
       "amount-headline": "Self Liquidate Penalty",
       "amount-sub-headline": "See below the amount that will be liquidated in SNX and USD value",
       "penalty": "Penalty",
-      "button-text": "Yes I want to Self Liquidate"
+      "button-text": "Yes I want to Self Liquidate",
+      "txn-modal": {
+        "action": "Self Liquidating..."
+      }
     },
     "transaction-modal": {
       "pending": "Transaction Pending",
