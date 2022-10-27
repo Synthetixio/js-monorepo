@@ -8,29 +8,16 @@ import { parseTxnError } from '@snx-v2/parseTxnError';
 import { ExternalLink } from '@snx-v2/ExternalLink';
 import { useGetTxnLink } from '@snx-v2/txnLink';
 
-export const MintTransactionModal: FC<{
+export const SelfLiquidationTransactionModal: FC<{
   settle: () => void;
   onSubmit: () => void;
   error: Error | null;
   gasError: Error | null;
   txnStatus: TransactionStatus;
   modalOpen: boolean;
-  stakeAmountSNX: string;
-  mintAmountsUSD: string;
   txnHash: string | null;
   onClose: () => void;
-}> = ({
-  settle,
-  error,
-  txnStatus,
-  modalOpen,
-  stakeAmountSNX,
-  mintAmountsUSD,
-  txnHash,
-  gasError,
-  onSubmit,
-  onClose,
-}) => {
+}> = ({ settle, error, txnStatus, modalOpen, txnHash, gasError, onSubmit, onClose }) => {
   const { t } = useTranslation();
   const txnLink = useGetTxnLink(txnHash);
   const transactionLoading = txnStatus === 'pending' || txnStatus === 'prompting';
@@ -58,16 +45,10 @@ export const MintTransactionModal: FC<{
     >
       <Flex flexDirection="column" alignItems="center" bg="black" pt="4" pb="4" mt="4">
         <Text fontWeight={500} color="gray.600">
-          {t('staking-v2.mint.txn-modal.staking')}
+          {t('staking-v2.self-liquidation.txn-modal.action')}
         </Text>
-        <Text fontWeight={500}>{stakeAmountSNX} SNX</Text>
       </Flex>
-      <Flex flexDirection="column" alignItems="center" bg="black" pt="4" pb="4" mt="4">
-        <Text fontWeight={500} color="gray.600">
-          {t('staking-v2.mint.txn-modal.minting')}
-        </Text>
-        <Text fontWeight={500}>{mintAmountsUSD} sUSD</Text>
-      </Flex>
+
       {transactionLoading && (
         <Flex alignItems="center" justifyContent="center" bg="black" pt="4" pb="4" mt="4">
           <Spinner size="sm" mr="3" />
