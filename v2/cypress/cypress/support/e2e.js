@@ -14,10 +14,10 @@ beforeEach(() => {
     return false;
   }).as('subgraph');
 
-  //  cy.intercept('https://mainnet.infura.io/v3/*', (req) => {
-  //    req.url = 'http://127.0.0.1:8545';
-  //    req.continue();
-  //  }).as('mainnet');
+  cy.intercept('https://mainnet.infura.io/v3/*', (req) => {
+    req.url = 'http://127.0.0.1:8545';
+    req.continue();
+  }).as('mainnet');
   //  cy.intercept(' https://optimism-mainnet.infura.io/v3/*', { statusCode: 404 }).as('optimism');
 
   cy.on('window:before:load', (win) => {
@@ -42,27 +42,6 @@ beforeEach(() => {
       }
     }
 
-    async function cachedForever({ key, target, method, params }) {
-      if (key in win.__caches) {
-        return win.__caches[key];
-      }
-      win.__caches[key] = await target.send(method, params);
-      return win.__caches[key];
-    }
-
-    async function cachedDebounced({ key, timeout, target, method, params }) {
-      if (key in win.__caches) {
-        return win.__caches[key];
-      }
-      clearTimeout(win.__timers[key]);
-      win.__caches[key] = await target.send(method, params);
-      // debounce ETH balance checks a bit
-      win.__timers[key] = setTimeout(() => {
-        delete win.__caches[key];
-      }, timeout);
-      return win.__caches[key];
-    }
-
     win.ethereum = new Proxy(new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545'), {
       get(target, prop, _receiver) {
         switch (prop) {
@@ -75,22 +54,6 @@ beforeEach(() => {
           case 'request':
             return async ({ method, params }) => {
               switch (method) {
-                case 'eth_chainId': {
-                  const key = `${method}`;
-                  return await cachedForever({ key, target, method, params });
-                }
-
-                case 'eth_blockNumber': {
-                  const key = `${method}`;
-                  return await cachedDebounced({ key, timeout: 3000, target, method, params });
-                }
-
-                case 'eth_getBalance': {
-                  const walletAddress = params[0];
-                  const key = `${method}/${walletAddress}`;
-                  return await cachedDebounced({ key, timeout: 10000, target, method, params });
-                }
-
                 case 'eth_accounts':
                 case 'eth_requestAccounts':
                   return ['0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266'];
@@ -107,6 +70,7 @@ beforeEach(() => {
     });
   });
 });
+
 afterEach(() => {
   // cy.task('forkReset');
   // cy.intercept('http://127.0.0.1:8545', { statusCode: 404 }).as('rpc');
