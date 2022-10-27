@@ -7,6 +7,10 @@ import { CRatioBox } from '../CRatioBox';
 import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
 import { SNXIcon } from '@snx-v2/icons';
 import { useTranslation } from 'react-i18next';
+import { useSelfLiquidationMutation } from '@snx-v2/useSelfLiquidationMutation';
+import { SelfLiquidationTransactionModal } from './SelfLiquidationTransactionModal';
+import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
+import Wei, { wei } from '@synthetixio/wei';
 
 export const SelfLiquidationUi: FC<{
   selfLiquidationPenalty?: number;
@@ -15,6 +19,10 @@ export const SelfLiquidationUi: FC<{
   targetCRatioPercentage?: number;
   liquidationRatioPercentage?: number;
   currentCRatioPercentage?: number;
+  onSelfLiquidation: () => void;
+  transactionFee?: Wei | null;
+  isGasEnabledAndNotFetched: boolean;
+  gasError: Error | null;
 }> = ({
   selfLiquidationPenalty,
   selfLiquidationPenaltySNX,
@@ -22,6 +30,10 @@ export const SelfLiquidationUi: FC<{
   targetCRatioPercentage,
   liquidationRatioPercentage,
   currentCRatioPercentage,
+  onSelfLiquidation,
+  transactionFee,
+  gasError,
+  isGasEnabledAndNotFetched,
 }) => {
   const { t } = useTranslation();
   const formattedPenalty =
@@ -105,7 +117,16 @@ export const SelfLiquidationUi: FC<{
             </Box>
           </Flex>
         </Box>
-        <Button mt={4} mx="auto" display="block">
+        <Flex mt={3} alignItems="center" justifyContent="space-between">
+          <EthGasPriceEstimator transactionFee={transactionFee ? transactionFee : wei(0)} />
+        </Flex>
+        <Button
+          disabled={Boolean(gasError) || isGasEnabledAndNotFetched}
+          onClick={onSelfLiquidation}
+          mt={4}
+          mx="auto"
+          display="block"
+        >
           {t('staking-v2.self-liquidation.button-text')}
         </Button>
       </Box>
@@ -115,14 +136,44 @@ export const SelfLiquidationUi: FC<{
 export const SelfLiquidation = () => {
   const { data: selfLiquidationData } = useSelfLiquidationData();
   const { data: debtData } = useDebtData();
+  const {
+    mutate,
+    transactionFee,
+    modalOpen,
+    txnStatus,
+    error,
+    gasError,
+    settle,
+    isGasEnabledAndNotFetched,
+    txnHash,
+  } = useSelfLiquidationMutation();
+
   return (
-    <SelfLiquidationUi
-      selfLiquidationPenaltyDollar={selfLiquidationData?.selfLiquidationPenaltyDollar.toNumber()}
-      selfLiquidationPenalty={selfLiquidationData?.selfLiquidationPenalty.toNumber()}
-      selfLiquidationPenaltySNX={selfLiquidationData?.selfLiquidationPenaltySNX.toNumber()}
-      targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
-      liquidationRatioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
-      currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
-    />
+    <>
+      <SelfLiquidationUi
+        transactionFee={transactionFee}
+        gasError={gasError}
+        isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
+        onSelfLiquidation={mutate}
+        selfLiquidationPenaltyDollar={selfLiquidationData?.selfLiquidationPenaltyDollar.toNumber()}
+        selfLiquidationPenalty={selfLiquidationData?.selfLiquidationPenalty.toNumber()}
+        selfLiquidationPenaltySNX={selfLiquidationData?.selfLiquidationPenaltySNX.toNumber()}
+        targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
+        liquidationRatioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
+        currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
+      />
+      <SelfLiquidationTransactionModal
+        txnHash={txnHash}
+        settle={settle}
+        error={error}
+        gasError={gasError}
+        onClose={() => {
+          settle();
+        }}
+        onSubmit={mutate}
+        txnStatus={txnStatus}
+        modalOpen={modalOpen}
+      />
+    </>
   );
 };

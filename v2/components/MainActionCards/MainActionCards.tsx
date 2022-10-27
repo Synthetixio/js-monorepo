@@ -69,11 +69,17 @@ const StakeActionCard: React.FC<Required<Pick<UiProps, 'currentCRatioPercentage'
         icon={<StakeIcon />}
       />
       {isStaking ? (
-        <Button onClick={() => navigate('/staking/mint')} mb="2" variant="link">
+        <Button
+          data-testid="main stake button"
+          onClick={() => navigate('/staking/mint')}
+          mb="2"
+          variant="link"
+        >
           {t('staking-v2.main-action-cards.stake-link-button')}
         </Button>
       ) : (
         <Button
+          data-testid="start staking button"
           onClick={() => {
             navigate('/staking/mint');
           }}
@@ -121,6 +127,7 @@ const MaintainActionCard: React.FC<
       />
       {isStaking && (
         <Badge
+          data-testid="burn badge"
           color={variant}
           bg="#47FAC240"
           border="1px"
@@ -141,8 +148,9 @@ const MaintainActionCard: React.FC<
           </Text>
         </Badge>
       )}
-      {!isStaking || variant === 'success' ? (
+      {!isStaking ? (
         <Button
+          data-testid="not staking maintain button"
           mb="2"
           variant="link"
           onClick={() => {
@@ -154,12 +162,11 @@ const MaintainActionCard: React.FC<
             }
           }}
         >
-          {isStaking
-            ? t('staking-v2.main-action-cards.maintain-main-button')
-            : t('staking-v2.main-action-cards.maintain-explanation-link')}
+          {t('staking-v2.main-action-cards.maintain-explanation-link')}
         </Button>
       ) : (
         <Button
+          data-testid="main maintain button"
           onClick={() => {
             if (isFlagged) {
               navigate('/staking/unflag');
@@ -236,7 +243,7 @@ const CollectActionCard: React.FC<{
                 {t('staking-v2.main-action-cards.collect-price')}
               </Text>
               <Skeleton isLoaded={snxPrice !== undefined}>
-                <Text color="success" fontSize="md" fontFamily="mono">
+                <Text data-testid="snx price" color="success" fontSize="md" fontFamily="mono">
                   {snxPrice && formatNumberToUsd(snxPrice)}
                 </Text>
               </Skeleton>
@@ -244,18 +251,18 @@ const CollectActionCard: React.FC<{
           )}
         </Flex>
       )}
-      {isStaking ? (
+      {isStaking && canClaim ? (
         <Button
+          data-testid="main collect button"
           onClick={() => {
             navigate('/earn');
           }}
-          variant={canClaim ? variant : 'disabled'}
-          disabled={!canClaim}
         >
           {t('staking-v2.main-action-cards.collect-main-button')}
         </Button>
       ) : (
         <Button
+          data-testid="rewards explained button"
           onClick={() => {
             // TODO
             console.log('navigate to Rewards explained');
@@ -286,6 +293,7 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
   isFlagged,
   nextEpochStartDate,
   hasClaimed,
+  snxPrice,
 }) => {
   return (
     <Stack direction={['column', 'column', 'row']} align="center" spacing="14px">
@@ -322,6 +330,7 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
           currentCRatioPercentage={currentCRatioPercentage}
           hasClaimed={hasClaimed}
           nextEpochStartDate={nextEpochStartDate}
+          snxPrice={snxPrice}
         />
       ) : (
         <Skeleton flexGrow={1}>
