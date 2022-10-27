@@ -1,7 +1,7 @@
 import { UtilityCard } from './UtilityCard';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { DHedgeIcon, KwentaIcon, LyraIcon, ThalesIcon } from '@snx-v2/icons';
-import CurveLogo from 'assets/svg/app/curve.svg';
+import CurveLogo from '../../ui/assets/svg/app/curve.svg';
 
 export default {
   title: 'UtilityCard',
