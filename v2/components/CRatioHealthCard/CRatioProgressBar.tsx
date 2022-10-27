@@ -54,7 +54,12 @@ export const CRatioProgressBar: FC<{
   ) {
     return <Skeleton w="100%" minHeight="100px" mb={4} />;
   }
-  const maxRatioShown = Math.max(targetCratioPercentage, currentCRatioPercentage) * 1.1;
+  const maxRatioShown = Math.min(
+    Math.max(targetCratioPercentage, currentCRatioPercentage) * 1.1,
+    // If the c-ratio is bigger than 2.5x the target ratio the target and liquidation labels will overlap due to the big scale difference.
+    // So when this is the case we opt not to show the current c-ratio arrows and set maxRatioShown to target * 2.5.
+    targetCratioPercentage * 2.5
+  );
   const scaleFactor = maxRatioShown / 100;
   const variant = getHealthVariant({
     targetCratioPercentage,
@@ -63,7 +68,13 @@ export const CRatioProgressBar: FC<{
   });
 
   return (
-    <Box position="relative" height="100px" width="full" data-testid="c ratio progressbar">
+    <Box
+      position="relative"
+      height="100px"
+      width="full"
+      data-testid="c ratio progressbar"
+      overflowX="hidden"
+    >
       <LineWithText
         left={liquidationCratioPercentage / scaleFactor}
         text={`Liquidated < ${liquidationCratioPercentage.toFixed(0)}%`}
@@ -94,6 +105,7 @@ export const CRatioProgressBar: FC<{
         margin="auto"
       >
         <TriangleDownIcon
+          data-testid="current c-ration triangle"
           position="absolute"
           right={0}
           top={0}
@@ -101,6 +113,7 @@ export const CRatioProgressBar: FC<{
           color={variant}
         />
         <TriangleUpIcon
+          data-testid="current c-ration triangle"
           position="absolute"
           right={0}
           bottom={0}
