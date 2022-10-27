@@ -192,8 +192,22 @@ jobs:
           background: true
 
       - run:
+          name: Install foundry and run anvil localhost:8545
+          working_directory: /tmp/app
+          command: |-
+            curl -L https://foundry.paradigm.xyz | bash
+            source /root/.bashrc
+            foundryup
+            anvil --fork-url https://mainnet.infura.io/v3/$INFURA_KEY
+          background: true
+
+      - run:
           name: Wait for server localhost:3000
           command: wget --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 http://localhost:3000
+
+      - run:
+          name: Wait for server localhost:3000
+          command: wget -q -O - --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data='{"method":"eth_chainId","params":[],"id":1,"jsonrpc":"2.0"}' --header='Content-Type:application/json' http://localhost:8545
 
       - run:
           working_directory: /tmp/app/v2/cypress

@@ -16,9 +16,7 @@
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/v2-ui": "workspace:*",
     "cypress": "^10.10.0",
-    "dotenv": "^16.0.0",
     "ethers": "^5.7.2",
-    "node-fetch": "^2.6.7",
     "react-router-dom": "^6.3.0"
   },
   "depcheck": {
