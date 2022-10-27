@@ -4,7 +4,9 @@
   "main": "index.ts",
   "version": "0.0.0",
   "dependencies": {
+    "@ethersproject/bignumber": "^5.7.0",
     "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/getHealthVariant": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useLiquidationData": "workspace:*",
