@@ -24,4 +24,5 @@ Primary.args = {
   selfLiquidationPenalty: 0.2,
   selfLiquidationPenaltySNX: 100,
   selfLiquidationPenaltyDollar: 200,
+  onSelfLiquidation: () => {},
 };

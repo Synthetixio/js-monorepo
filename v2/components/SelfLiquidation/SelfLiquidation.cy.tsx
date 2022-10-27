@@ -8,7 +8,7 @@ describe('SelfLiquidationUi', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <QueryClientProvider client={new QueryClient()} contextSharing={true}>
-          <SelfLiquidationUi />
+          <SelfLiquidationUi onSelfLiquidation={() => {}} />
         </QueryClientProvider>
       </Box>
     );
@@ -20,6 +20,7 @@ describe('SelfLiquidationUi', () => {
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <QueryClientProvider client={new QueryClient()} contextSharing={true}>
           <SelfLiquidationUi
+            onSelfLiquidation={() => {}}
             targetCRatioPercentage={300}
             liquidationRatioPercentage={150}
             currentCRatioPercentage={300}
