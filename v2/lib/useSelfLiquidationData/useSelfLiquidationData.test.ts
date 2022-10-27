@@ -106,7 +106,15 @@ describe('useSelfLiquidationData', () => {
   });
 
   test('Returns self liquidation data when dependent query have returned data', async () => {
-    useDebtData.mockReturnValue({ data: { collateral: wei(50), debtBalance: wei(200) } });
+    useDebtData.mockReturnValue({
+      data: {
+        collateral: wei(50),
+        debtBalance: wei(200),
+        targetCRatioPercentage: wei(350),
+        currentCRatioPercentage: wei(200),
+        liquidationRatioPercentage: wei(100),
+      },
+    });
     useExchangeRatesData.mockReturnValue({ data: { SNX: wei(3) } });
     useLiquidationData.mockReturnValue({ data: { selfLiquidationPenalty: wei(0.2) } });
     useLiquidator.mockReturnValue({
