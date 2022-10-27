@@ -13,14 +13,14 @@ describe('MainActionCards', () => {
   });
   it('renders unclaimed rewards with a healthy c-ratio', () => {
     cy.viewport(1000, 1000);
-    const nextEpochStartDate = new Date(1666842537068);
+
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={350}
-          nextEpochStartDate={nextEpochStartDate}
+          nextEpochStartDate={new Date()}
           snxPrice="2.00"
           hasClaimed={false}
           isFlagged={false}
@@ -43,14 +43,13 @@ describe('MainActionCards', () => {
   });
   it('renders claimed rewards with a healthy c-ratio', () => {
     cy.viewport(1000, 1000);
-    const nextEpochStartDate = new Date(1666842537068);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={350}
-          nextEpochStartDate={nextEpochStartDate}
+          nextEpochStartDate={new Date()}
           snxPrice="2.00"
           hasClaimed={true}
           isFlagged={false}
@@ -64,14 +63,13 @@ describe('MainActionCards', () => {
   });
   it('renders unclaimed rewards with a unhealthy c-ratio', () => {
     cy.viewport(1000, 1000);
-    const nextEpochStartDate = new Date(1666842537068);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={300}
-          nextEpochStartDate={nextEpochStartDate}
+          nextEpochStartDate={new Date()}
           snxPrice="2.00"
           hasClaimed={false}
           isFlagged={false}
@@ -91,14 +89,13 @@ describe('MainActionCards', () => {
   });
   it('renders not staking', () => {
     cy.viewport(1000, 1000);
-    const nextEpochStartDate = new Date(1666842537068);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={0}
-          nextEpochStartDate={nextEpochStartDate}
+          nextEpochStartDate={new Date()}
           snxPrice="2.00"
           hasClaimed={false}
           isFlagged={false}
@@ -118,14 +115,13 @@ describe('MainActionCards', () => {
   });
   it('renders flagged', () => {
     cy.viewport(1000, 1000);
-    const nextEpochStartDate = new Date(1666842537068);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={160}
-          nextEpochStartDate={nextEpochStartDate}
+          nextEpochStartDate={new Date()}
           snxPrice="2.00"
           hasClaimed={false}
           isFlagged={true}
