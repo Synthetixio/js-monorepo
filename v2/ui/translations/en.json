@@ -122,6 +122,7 @@
       "amount-sub-headline": "See below the amount that will be liquidated in SNX and USD value",
       "penalty": "Penalty",
       "button-text": "Yes I want to Self Liquidate",
+      "gas-estimation-error": "Error estimating gas",
       "txn-modal": {
         "action": "Self Liquidating..."
       }

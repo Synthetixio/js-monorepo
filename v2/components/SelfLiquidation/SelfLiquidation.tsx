@@ -1,16 +1,17 @@
 import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { FC } from 'react';
-import { Text, Box, Heading, Flex, Skeleton, Button } from '@chakra-ui/react';
+import { Text, Box, Heading, Flex, Skeleton, Button, Center } from '@chakra-ui/react';
 import { useSelfLiquidationData } from '@snx-v2/useSelfLiquidationData';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { CRatioBox } from '../CRatioBox';
 import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
-import { SNXIcon } from '@snx-v2/icons';
+import { FailedIcon, SNXIcon } from '@snx-v2/icons';
 import { useTranslation } from 'react-i18next';
 import { useSelfLiquidationMutation } from '@snx-v2/useSelfLiquidationMutation';
 import { SelfLiquidationTransactionModal } from './SelfLiquidationTransactionModal';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import Wei, { wei } from '@synthetixio/wei';
+import { parseTxnError } from '@snx-v2/parseTxnError';
 
 export const SelfLiquidationUi: FC<{
   selfLiquidationPenalty?: number;
@@ -38,6 +39,7 @@ export const SelfLiquidationUi: FC<{
   const { t } = useTranslation();
   const formattedPenalty =
     selfLiquidationPenalty !== undefined ? formatPercent(selfLiquidationPenalty) : undefined;
+
   return (
     <Box>
       <Heading fontSize="md">{t('staking-v2.self-liquidation.headline')}</Heading>
@@ -117,11 +119,25 @@ export const SelfLiquidationUi: FC<{
             </Box>
           </Flex>
         </Box>
-        <Flex mt={3} alignItems="center" justifyContent="space-between">
-          <EthGasPriceEstimator transactionFee={transactionFee ? transactionFee : wei(0)} />
-        </Flex>
+        {gasError ? (
+          <Center>
+            <FailedIcon width="40px" height="40px" />
+            <Text data-testid="gas error">
+              {t('staking-v2.self-liquidation.gas-estimation-error')}: {parseTxnError(gasError)}
+            </Text>
+          </Center>
+        ) : (
+          <Flex mt={3} alignItems="center" justifyContent="space-between">
+            <EthGasPriceEstimator transactionFee={transactionFee ? transactionFee : wei(0)} />
+          </Flex>
+        )}
         <Button
-          disabled={Boolean(gasError) || isGasEnabledAndNotFetched}
+          data-testid="self liq button"
+          disabled={
+            Boolean(gasError) ||
+            isGasEnabledAndNotFetched ||
+            Number(currentCRatioPercentage) >= Number(targetCRatioPercentage)
+          }
           onClick={onSelfLiquidation}
           mt={4}
           mx="auto"
