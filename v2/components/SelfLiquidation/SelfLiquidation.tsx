@@ -9,6 +9,8 @@ import { SNXIcon } from '@snx-v2/icons';
 import { useTranslation } from 'react-i18next';
 import { useSelfLiquidationMutation } from '@snx-v2/useSelfLiquidationMutation';
 import { SelfLiquidationTransactionModal } from './SelfLiquidationTransactionModal';
+import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
+import Wei, { wei } from '@synthetixio/wei';
 
 export const SelfLiquidationUi: FC<{
   selfLiquidationPenalty?: number;
@@ -18,6 +20,9 @@ export const SelfLiquidationUi: FC<{
   liquidationRatioPercentage?: number;
   currentCRatioPercentage?: number;
   onSelfLiquidation: () => void;
+  transactionFee?: Wei | null;
+  isGasEnabledAndNotFetched: boolean;
+  gasError: Error | null;
 }> = ({
   selfLiquidationPenalty,
   selfLiquidationPenaltySNX,
@@ -26,6 +31,9 @@ export const SelfLiquidationUi: FC<{
   liquidationRatioPercentage,
   currentCRatioPercentage,
   onSelfLiquidation,
+  transactionFee,
+  gasError,
+  isGasEnabledAndNotFetched,
 }) => {
   const { t } = useTranslation();
   const formattedPenalty =
@@ -109,7 +117,16 @@ export const SelfLiquidationUi: FC<{
             </Box>
           </Flex>
         </Box>
-        <Button onClick={onSelfLiquidation} mt={4} mx="auto" display="block">
+        <Flex mt={3} alignItems="center" justifyContent="space-between">
+          <EthGasPriceEstimator transactionFee={transactionFee ? transactionFee : wei(0)} />
+        </Flex>
+        <Button
+          disabled={Boolean(gasError) || isGasEnabledAndNotFetched}
+          onClick={onSelfLiquidation}
+          mt={4}
+          mx="auto"
+          display="block"
+        >
           {t('staking-v2.self-liquidation.button-text')}
         </Button>
       </Box>
@@ -134,6 +151,9 @@ export const SelfLiquidation = () => {
   return (
     <>
       <SelfLiquidationUi
+        transactionFee={transactionFee}
+        gasError={gasError}
+        isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
         onSelfLiquidation={mutate}
         selfLiquidationPenaltyDollar={selfLiquidationData?.selfLiquidationPenaltyDollar.toNumber()}
         selfLiquidationPenalty={selfLiquidationData?.selfLiquidationPenalty.toNumber()}

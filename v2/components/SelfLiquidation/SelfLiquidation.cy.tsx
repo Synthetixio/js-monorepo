@@ -8,7 +8,11 @@ describe('SelfLiquidationUi', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <QueryClientProvider client={new QueryClient()} contextSharing={true}>
-          <SelfLiquidationUi onSelfLiquidation={() => {}} />
+          <SelfLiquidationUi
+            onSelfLiquidation={() => {}}
+            gasError={null}
+            isGasEnabledAndNotFetched={false}
+          />
         </QueryClientProvider>
       </Box>
     );
@@ -27,6 +31,8 @@ describe('SelfLiquidationUi', () => {
             selfLiquidationPenalty={0.2}
             selfLiquidationPenaltySNX={100}
             selfLiquidationPenaltyDollar={200}
+            gasError={null}
+            isGasEnabledAndNotFetched={false}
           />
         </QueryClientProvider>
       </Box>
