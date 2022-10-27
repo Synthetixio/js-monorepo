@@ -7,11 +7,7 @@ beforeEach(() => {
 
   // Because we are working with tenderly fork, subgraph becomes irrelevant
   cy.intercept('https://api.thegraph.com/**', (req) => {
-    if (subgraph(req)) {
-      return true;
-    }
-    req.reply({ data: null });
-    return false;
+    return subgraph(req);
   }).as('subgraph');
 
   cy.intercept('https://mainnet.infura.io/v3/*', (req) => {

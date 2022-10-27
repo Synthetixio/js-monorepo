@@ -36,7 +36,7 @@ it('Can borrow sUSD with ETH collateral', () => {
 
   cy.get('@loanId').then((id) => {
     cy.intercept('https://api.thegraph.com/**', (req) => {
-      if (req.body.query.startsWith('{loans(')) {
+      if (req.body?.query?.startsWith('{loans(')) {
         return req.reply({ data: { loans: [{ id: `${id}` }] } });
       }
       return subgraph(req);
