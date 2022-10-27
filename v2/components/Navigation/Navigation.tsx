@@ -300,8 +300,6 @@ export const Navigation = ({
     { fallback: 'md' }
   );
 
-  const thing = 'hello';
-
   const isLoading = isSynthsLoading || isDebtLoading;
   const isEpochPriceLoading = isExchangeRatesLoading || isFeePoolDataLoading;
 
