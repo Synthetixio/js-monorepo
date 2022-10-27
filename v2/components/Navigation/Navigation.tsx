@@ -81,10 +81,13 @@ export const NavigationUI = ({
   const { name, icon } = activeIcon(currentNetwork);
   const navigate = useNavigate();
 
-  const size = useBreakpointValue({
-    base: 'mobile',
-    md: 'desktop',
-  });
+  const size = useBreakpointValue(
+    {
+      base: 'mobile',
+      md: 'desktop',
+    },
+    { fallback: 'md' }
+  );
 
   return (
     <Flex
@@ -289,10 +292,13 @@ export const Navigation = ({
   const { data: exchangeRateData, isLoading: isExchangeRatesLoading } = useExchangeRatesData();
   const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
 
-  const size = useBreakpointValue({
-    base: 'mobile',
-    md: 'desktop',
-  });
+  const size = useBreakpointValue(
+    {
+      base: 'mobile',
+      md: 'desktop',
+    },
+    { fallback: 'md' }
+  );
 
   const isLoading = isSynthsLoading || isDebtLoading;
   const isEpochPriceLoading = isExchangeRatesLoading || isFeePoolDataLoading;

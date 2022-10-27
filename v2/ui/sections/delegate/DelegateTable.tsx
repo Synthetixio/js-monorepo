@@ -119,7 +119,6 @@ const DelegateTable: FC = () => {
               </Tooltip>
             </FlexDivRow>
           </ListTitle>
-
           <ListTable
             palette="primary"
             isLoading={delegateWalletsQuery.isFetching}

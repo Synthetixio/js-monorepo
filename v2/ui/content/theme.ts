@@ -66,6 +66,18 @@ const Alert: ComponentMultiStyleConfig = {
   },
 };
 
+const Tooltip: ComponentStyleConfig = {
+  baseStyle: {
+    color: 'white',
+    bg: 'gray.900',
+    borderRadius: 'base',
+    p: 2,
+    fontFamily: 'heading',
+    fontSize: '14px',
+    lineHeight: '20px',
+  },
+};
+
 const Badge: ComponentStyleConfig = {
   baseStyle: {
     color: 'cyan.400',
@@ -307,6 +319,7 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
     Stat,
     Badge,
     Alert,
+    Tooltip,
   },
   styles: {
     global: {
