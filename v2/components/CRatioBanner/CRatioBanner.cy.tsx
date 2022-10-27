@@ -36,14 +36,11 @@ describe('CRatioBanner.cy.tsx', () => {
     cy.get(`[data-testid="text content"]`).should('be.visible').should('include.text', 'Unflag');
   });
   it('renders success', () => {
-    const oneMin = 1000 * 60 * 60;
-    cy.clock(0);
-
     cy.viewport(500, 300);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <CRatioBannerUi
-          nextEpochStartDate={new Date(oneMin)}
+          nextEpochStartDate={new Date()}
           variant="success"
           isFlagged={false}
           hasClaimed={false}
@@ -57,8 +54,6 @@ describe('CRatioBanner.cy.tsx', () => {
       .should('include.text', 'now collect');
   });
   it('renders warning', () => {
-    cy.clock(0);
-
     cy.viewport(500, 300);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
@@ -80,7 +75,6 @@ describe('CRatioBanner.cy.tsx', () => {
   });
   it('renders error', () => {
     cy.viewport(500, 300);
-    cy.clock();
 
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
