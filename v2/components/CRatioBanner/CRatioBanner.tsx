@@ -3,6 +3,7 @@ import { CountDown } from '@snx-v2/CountDown';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
+import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
 import { theme } from '@synthetixio/v3-theme';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +12,7 @@ type UiProps = {
   variant: 'success' | 'warning' | 'error';
   isFlagged: boolean;
   nextEpochStartDate: Date;
+  hasClaimed: boolean;
 };
 
 const getWrapperStyles = (variant: UiProps['variant']) => {
@@ -26,16 +28,23 @@ const getWrapperStyles = (variant: UiProps['variant']) => {
   return null;
 };
 
-export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, nextEpochStartDate }) => {
+export const CRatioBannerUi: FC<UiProps> = ({
+  isFlagged,
+  variant,
+  nextEpochStartDate,
+  hasClaimed,
+}) => {
   const { t } = useTranslation();
   const translationKey = isFlagged ? 'error-flagged' : variant;
   const wrapperStyles = getWrapperStyles(variant);
-
+  if (hasClaimed) {
+    return null;
+  }
   return (
     <SlideFade in={true} offsetY="-20px">
-      <Center {...wrapperStyles} mt="0" w="100%">
+      <Center {...wrapperStyles} data-testid="c ratio banner wrapper">
         <Flex
-          m="2"
+          margin="2"
           paddingTop="1"
           paddingBottom="1"
           paddingLeft="5"
@@ -44,7 +53,9 @@ export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, nextEpochStart
           borderRadius="5"
           width="fit-content"
         >
-          <Text fontSize="xs">{t(`staking-v2.c-ratio-banner.${translationKey}`)}</Text>{' '}
+          <Text data-testid="text content" fontSize="xs">
+            {t(`staking-v2.c-ratio-banner.${translationKey}`)}
+          </Text>{' '}
           <Text fontSize="xs" fontFamily="mono" fontWeight="700" marginLeft="2" as="b">
             <CountDown toDate={nextEpochStartDate} />
           </Text>
@@ -57,9 +68,11 @@ export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, nextEpochStart
 export const CRatioBanner: React.FC = () => {
   const { data: debtData } = useDebtData();
   const { data: feePoolData } = useFeePoolData();
+  const { data: rewardsData } = useRewardsAvailable();
 
-  if (!debtData || !feePoolData) return null;
-
+  if (!debtData || !feePoolData || !rewardsData) {
+    return null;
+  }
   const variant = getHealthVariant({
     currentCRatioPercentage: debtData.currentCRatioPercentage.toNumber(),
     targetCratioPercentage: debtData.targetCRatioPercentage.toNumber(),
@@ -73,6 +86,7 @@ export const CRatioBanner: React.FC = () => {
       nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
       variant={variant}
       isFlagged={isFlagged}
+      hasClaimed={rewardsData.hasClaimed}
     />
   );
 };
