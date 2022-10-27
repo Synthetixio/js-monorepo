@@ -1,10 +1,8 @@
 import { ethers } from 'ethers';
 import * as SystemSettings from '@synthetixio/contracts/src/mainnet/deployment/SystemSettings';
 
-export async function removeMinimumStakeTime(fork) {
-  const rpc = `https://rpc.tenderly.co/fork/${fork.simulation_fork.id}`;
-
-  const provider = new ethers.providers.JsonRpcProvider(rpc);
+export async function removeMinimumStakeTime() {
+  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
   const SystemSettingsContract = new ethers.Contract(
     SystemSettings.address,
     SystemSettings.abi,
@@ -15,15 +13,16 @@ export async function removeMinimumStakeTime(fork) {
   console.log('removeMinimumStakeTime', { minimumStakeTime: minimumStakeTime.toNumber() });
 
   if (minimumStakeTime > 0) {
-    await new Promise((ok) => setTimeout(ok, 1000));
     const owner = await SystemSettingsContract.owner();
     console.log('removeMinimumStakeTime', { owner });
 
-    const txMinimumStatkeTime = await SystemSettingsContract.connect(
-      provider.getSigner(owner)
-    ).setMinimumStakeTime(0, { gasLimit: 100_000_000 });
-    const receipt = await txMinimumStatkeTime.wait();
+    await provider.send('anvil_impersonateAccount', [owner]);
+    const signer = provider.getSigner(owner);
+    const txMinimumStakeTime = await SystemSettingsContract.connect(signer).setMinimumStakeTime(0);
+    const receipt = await txMinimumStakeTime.wait();
     console.log('removeMinimumStakeTime', { tx: receipt.transactionHash });
+    await provider.send('anvil_stopImpersonatingAccount', [owner]);
+
     console.log('removeMinimumStakeTime', { result: 'OK' });
   } else {
     console.log('removeMinimumStakeTime', { result: 'SKIP' });

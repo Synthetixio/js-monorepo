@@ -1,18 +1,13 @@
 import { ethers } from 'ethers';
 import * as CollateralEth from '@synthetixio/contracts/src/mainnet/deployment/CollateralEth';
 
-export async function removeEthCollateralInteractionDelay(fork) {
-  const rpc = `https://rpc.tenderly.co/fork/${fork.simulation_fork.id}`;
-
-  const provider = new ethers.providers.JsonRpcProvider(rpc);
+export async function removeEthCollateralInteractionDelay() {
+  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
   const CollateralEthContract = new ethers.Contract(
     CollateralEth.address,
     CollateralEth.abi,
     provider
   );
-
-  const owner = await CollateralEthContract.owner();
-  console.log('removeEthCollateralInteractionDelay', { owner });
 
   const interactionDelay = await CollateralEthContract.interactionDelay();
   console.log('removeEthCollateralInteractionDelay', {
@@ -20,11 +15,16 @@ export async function removeEthCollateralInteractionDelay(fork) {
   });
 
   if (interactionDelay > 0) {
-    const tx = await CollateralEthContract.connect(provider.getSigner(owner)).setInteractionDelay(
-      0
-    );
+    const owner = await CollateralEthContract.owner();
+    console.log('removeEthCollateralInteractionDelay', { owner });
+
+    await provider.send('anvil_impersonateAccount', [owner]);
+    const signer = provider.getSigner(owner);
+    const tx = await CollateralEthContract.connect(signer).setInteractionDelay(0);
     const receipt = await tx.wait();
     console.log('removeEthCollateralInteractionDelay', { tx: receipt.transactionHash });
+    await provider.send('anvil_stopImpersonatingAccount', [owner]);
+
     console.log('removeMinimumStakeTime', { result: 'OK' });
   } else {
     console.log('removeMinimumStakeTime', { result: 'SKIP' });
