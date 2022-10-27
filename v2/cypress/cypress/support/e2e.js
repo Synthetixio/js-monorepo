@@ -1,13 +1,17 @@
 import '@cypress/code-coverage/support';
 import { ethers } from 'ethers';
-import { testname } from '../lib/testname';
+import { subgraph } from '../lib/subgraph';
 
 beforeEach(() => {
   cy.intercept('https://analytics.synthetix.io/matomo.js', { statusCode: 204 }).as('matomo');
 
   // Because we are working with tenderly fork, subgraph becomes irrelevant
-  cy.intercept('https://api.thegraph.com/subgraphs/name/synthetixio-team/mainnet-main', {
-    statusCode: 204,
+  cy.intercept('https://api.thegraph.com/**', (req) => {
+    if (subgraph(req)) {
+      return true;
+    }
+    req.reply({ data: null });
+    return false;
   }).as('subgraph');
 
   //  cy.intercept('https://mainnet.infura.io/v3/*', (req) => {
