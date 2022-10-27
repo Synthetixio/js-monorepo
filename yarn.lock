@@ -7147,11 +7147,15 @@ __metadata:
   resolution: "@snx-v2/SelfLiquidation@workspace:v2/components/SelfLiquidation"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/CRatioHealthCard": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useSelfLiquidationData": "workspace:*"
+    "@storybook/react": ^6.5.10
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
+    react-i18next: ^11.18.3
   languageName: unknown
   linkType: soft
 

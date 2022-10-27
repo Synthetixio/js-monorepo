@@ -43,6 +43,9 @@ const V2UnflagPage = safeLazy(
 const V2SwapLinksPage = safeLazy(
   () => import(/* webpackChunkName: "v2-swap-links" */ './content/V2SwapLinks')
 );
+const V2SelfLiquidation = safeLazy(
+  () => import(/* webpackChunkName: "v2-self-liquidation" */ './content/V2SelfLiquidation')
+);
 
 interface WrapperProps extends BoxProps {
   children: ReactNode;
@@ -74,6 +77,7 @@ export default function AppRoutes() {
               <Route path="/staking/burn" element={<V2BurnPage />} />
               <Route path="/staking/unflag" element={<V2UnflagPage />} />
               <Route path="/staking/swap-links" element={<V2SwapLinksPage />} />
+              <Route path="/staking/self-liquidation" element={<V2SelfLiquidation />} />
             </>
           ) : (
             <Route path="/staking" element={<StakingPage />}>
