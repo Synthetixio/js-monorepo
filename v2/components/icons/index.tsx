@@ -39,7 +39,6 @@ export * from './ThalesIcon';
 export * from './OneInchIcon';
 export * from './CowSwapIcon';
 export * from './SushiSwapLogo';
-export * from './CurveWhiteIcon';
 export * from './NineDots';
 export * from './BridgeIcon';
 export * from './DebtPoolIcon';

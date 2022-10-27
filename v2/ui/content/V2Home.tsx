@@ -6,7 +6,6 @@ import { BalanceBox } from '@snx-v2/BalanceBox';
 import { MainActionCards } from '@snx-v2/MainActionCards';
 import { UtilityCard } from '@snx-v2/UtilityCard';
 import {
-  CurveWhiteIcon,
   DHedgeIcon,
   KwentaIcon,
   LyraIcon,
@@ -18,10 +17,12 @@ import { BoxLink } from '@snx-v2/BoxLink';
 import { useTranslation } from 'react-i18next';
 import { Welcome } from '@snx-v2/Welcome';
 import { ContractContext } from '@snx-v2/ContractContext';
+import CurveLogo from 'assets/svg/app/curve.svg';
 
 const V2Home = () => {
   const { t } = useTranslation();
   const { walletAddress } = useContext(ContractContext);
+
   return (
     <>
       <CRatioBanner />
@@ -153,7 +154,7 @@ const V2Home = () => {
               title="Curve"
               description={t('staking-v2.home.utilities.curveDescription')}
               link="https://curve.fi/"
-              Icon={CurveWhiteIcon}
+              Icon={() => <CurveLogo />}
             />
           </Flex>
         </Container>
