@@ -1,0 +1,114 @@
+{
+  "address": "0xa2B687f6f654d5fC7afA96f12E95d5ed0c3D155f",
+  "abi": [
+    {
+      "type": "error",
+      "name": "EmptyDistribution",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "InconsistentDistribution",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "InsufficientCollateralRatio",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "collateralValue"
+        },
+        {
+          "type": "uint256",
+          "name": "debt"
+        },
+        {
+          "type": "uint256",
+          "name": "ratio"
+        },
+        {
+          "type": "uint256",
+          "name": "minRatio"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "MarketNotFound",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "NotFundedByPool",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId"
+        },
+        {
+          "type": "uint256",
+          "name": "poolId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "actual"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "ZeroValuePerShare",
+      "inputs": []
+    },
+    {
+      "type": "function",
+      "name": "associateDebt",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        },
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "int256"
+        }
+      ]
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0xd22c59ad6a107fc970106953728c982456a090be08d079b23084d84931be28c3",
+  "sourceName": "contracts/modules/core/AssociateDebtModule.sol",
+  "contractName": "AssociateDebtModule",
+  "deployedOn": "contract.AssociateDebtModule"
+}

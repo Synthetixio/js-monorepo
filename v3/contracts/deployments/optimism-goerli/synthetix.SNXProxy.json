@@ -1,5 +1,5 @@
 {
-  "address": "0x201988642a3487a57a26a385cbb53bFFc9948508",
+  "address": "0xB3A0EC6f07c63aEa86f179FA03bAC14fF630C264",
   "abi": [
     {
       "type": "error",
@@ -176,6 +176,11 @@
       "anonymous": false,
       "name": "Upgraded",
       "inputs": [
+        {
+          "type": "address",
+          "name": "self",
+          "indexed": true
+        },
         {
           "type": "address",
           "name": "implementation",
@@ -543,7 +548,7 @@
       ]
     }
   ],
-  "deployTxnHash": "0xc0029aa49de91f5687072eece1b1c22fe4fdf28a04db89d3ff310fe0256d50dd",
+  "deployTxnHash": "0xd6205a8488f9d80f948ab20047a0a9312af3789f7434294b4f8f7014124fc0ef",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_snx"

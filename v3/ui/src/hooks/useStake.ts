@@ -114,10 +114,19 @@ export const useStake = ({
   const multiTxn = useMulticall(calls, overrides, {
     onMutate: () => {
       toast.closeAll();
+
       if (!Boolean(accountId)) {
         toast({
           title: 'Create your account',
           description: "You'll be redirected once your account is created.",
+          status: 'info',
+          isClosable: true,
+          duration: 9000,
+        });
+      } else {
+        toast({
+          title: 'Update your collateral',
+          description: 'Your staked collateral amounts have been updated.',
           status: 'info',
           isClosable: true,
           duration: 9000,

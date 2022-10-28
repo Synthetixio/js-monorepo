@@ -14,6 +14,7 @@ import {
 import { CreateMarket } from './pages/markets/CreateMarket';
 import { Market } from './pages/markets/Market';
 import { Pool } from './pages/pools/pool';
+import { Teleporter } from './pages/teleporter/Teleporter';
 import { NotFoundPage } from './pages/404';
 
 export const Synthetix: React.FC = () => {
@@ -38,6 +39,7 @@ export const Synthetix: React.FC = () => {
           <Route path="/markets/create" element={<CreateMarket />} />
           <Route path="/markets/:address" element={<Market />} />
           <Route path="/pools/:id" element={<Pool />} />
+          <Route path="/teleporter" element={<Teleporter />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

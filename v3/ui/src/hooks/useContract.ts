@@ -28,11 +28,11 @@ export const getContract = (
 };
 
 // Similar to https://wagmi.sh/docs/hooks/useContract, but its aware of the currently selected network.
-export const useContract = (name: string) => {
+export const useContract = (name: string, chainId?: number) => {
   const [localChainId] = useRecoilState(chainIdState);
   const provider = useProvider();
 
-  return getContract(name, provider, localChainId);
+  return getContract(name, provider, chainId || localChainId);
 };
 
 export const useSnxProxy = () => useContract(contracts.SYNTHETIX_PROXY);
