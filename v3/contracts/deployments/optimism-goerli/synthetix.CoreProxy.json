@@ -1,5 +1,5 @@
 {
-  "address": "0xc8c5Fb898F46461A3e119708310E441e7dFb477b",
+  "address": "0x0E0205a5F17e0e71ef71902fF4d803cd4bCFb080",
   "abi": [
     {
       "type": "error",
@@ -178,6 +178,11 @@
       "inputs": [
         {
           "type": "address",
+          "name": "self",
+          "indexed": true
+        },
+        {
+          "type": "address",
           "name": "implementation",
           "indexed": false
         }
@@ -239,20 +244,6 @@
     },
     {
       "type": "error",
-      "name": "MismatchAssociatedSystemKind",
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "expected"
-        },
-        {
-          "type": "bytes32",
-          "name": "actual"
-        }
-      ]
-    },
-    {
-      "type": "error",
       "name": "OnlyAccountTokenProxy",
       "inputs": [
         {
@@ -275,7 +266,7 @@
         },
         {
           "type": "address",
-          "name": "user"
+          "name": "target"
         }
       ]
     },
@@ -586,6 +577,16 @@
     },
     {
       "type": "error",
+      "name": "EmptyDistribution",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "InconsistentDistribution",
+      "inputs": []
+    },
+    {
+      "type": "error",
       "name": "InsufficientCollateralRatio",
       "inputs": [
         {
@@ -603,20 +604,6 @@
         {
           "type": "uint256",
           "name": "minRatio"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "InvalidParameters",
-      "inputs": [
-        {
-          "type": "string",
-          "name": "incorrectParameter"
-        },
-        {
-          "type": "string",
-          "name": "help"
         }
       ]
     },
@@ -643,6 +630,11 @@
           "name": "poolId"
         }
       ]
+    },
+    {
+      "type": "error",
+      "name": "ZeroValuePerShare",
+      "inputs": []
     },
     {
       "type": "function",
@@ -674,6 +666,20 @@
       "outputs": [
         {
           "type": "int256"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "MismatchAssociatedSystemKind",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "expected"
+        },
+        {
+          "type": "bytes32",
+          "name": "actual"
         }
       ]
     },
@@ -827,6 +833,20 @@
         {
           "type": "uint256",
           "name": "amount"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InsufficientAllowance",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "required"
+        },
+        {
+          "type": "uint256",
+          "name": "existing"
         }
       ]
     },
@@ -1239,6 +1259,20 @@
         {
           "type": "uint256",
           "name": "cratio"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidParameters",
+      "inputs": [
+        {
+          "type": "string",
+          "name": "incorrectParameter"
+        },
+        {
+          "type": "string",
+          "name": "help"
         }
       ]
     },
@@ -2619,6 +2653,27 @@
       "outputs": []
     },
     {
+      "type": "function",
+      "name": "registerCcip",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "ccipSend"
+        },
+        {
+          "type": "address",
+          "name": "ccipReceive"
+        },
+        {
+          "type": "address",
+          "name": "ccipTokenPool"
+        }
+      ],
+      "outputs": []
+    },
+    {
       "type": "error",
       "name": "InsufficientDebt",
       "inputs": [
@@ -3007,11 +3062,8 @@
       "outputs": []
     }
   ],
-  "constructorArgs": [
-    "0x341996D765C1aB8B453345fd8e36D592749dDd0E"
-  ],
-  "deployTxnHash": "0x718810262be5e401b8d3f2b9e4deedb800f9cccbde48dddb1ca6aa36aa681c9f",
-  "sourceName": "contracts/Proxy.sol",
-  "contractName": "Proxy",
-  "deployedOn": "contract.CoreProxy"
+  "deployTxnHash": "0xe7f30de5838a6fed8e492dfd9bcd0cf92aec1cbdf1b969a2068589483c2ac794",
+  "sourceName": "",
+  "contractName": "",
+  "deployedOn": "invoke.upgrade_core_proxy"
 }

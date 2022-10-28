@@ -1,5 +1,5 @@
 {
-  "address": "0x1Cc6DD5E54ee325c46E9Ad58D202a1e85D16e735",
+  "address": "0x090FD6ae7e59A8177d03F3A3eaF82E20Ff6D4974",
   "abi": [
     {
       "type": "error",
@@ -176,6 +176,11 @@
       "anonymous": false,
       "name": "Upgraded",
       "inputs": [
+        {
+          "type": "address",
+          "name": "self",
+          "indexed": true
+        },
         {
           "type": "address",
           "name": "implementation",
@@ -543,7 +548,7 @@
       ]
     }
   ],
-  "deployTxnHash": "0x072c992720b9bbc75eda8c53ea1d8d34b1f8badfd7285f91b04475da73d78f41",
+  "deployTxnHash": "0x8e26d462d5cdd558c48664840e50ab7807d16ad15ea5cde47dc1b38fbfdadd49",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_esnx"

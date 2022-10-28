@@ -17,9 +17,10 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useConnectModal, useChainModal } from '@rainbow-me/rainbowkit';
+import { ethers } from 'ethers';
 import { useMemo, useState } from 'react';
 import Head from 'react-helmet';
-import { useNetwork } from 'wagmi';
+import { useAccount, useContractWrite, useNetwork } from 'wagmi';
 import { NumberInput } from '../../components/accounts/Position/Manage/NumberInput';
 import { Balance } from '../../components/accounts/Stake/Balance';
 import { useContract } from '../../hooks';
@@ -40,6 +41,7 @@ const teleportChains = [
 ];
 
 export const Teleporter = () => {
+  const { address } = useAccount();
   const toast = useToast();
   const { openChainModal } = useChainModal();
   const { openConnectModal } = useConnectModal();
@@ -51,11 +53,37 @@ export const Teleporter = () => {
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
 
-  const snxProxy = useContract(contracts.SNX_USD_PROXY, from);
-  const balance = useTokenBalance(snxProxy?.address, from);
+  const CCIP = useContract(contracts.CCIP, from);
+  const snxUsdProxy = useContract(contracts.SNX_USD_PROXY, from);
+  const balance = useTokenBalance(snxUsdProxy?.address, from);
 
   const fromChain = useMemo(() => teleportChains.find((chain) => chain.id === from), [from]);
   const toChain = useMemo(() => teleportChains.find((chain) => chain.id === to), [to]);
+  /*
+  const { write, isLoading } = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    addressOrName: snxUsdProxy!.address,
+    contractInterface: snxUsdProxy!.abi,
+    functionName: 'transferCrossChain',
+    args: [to, amount],
+  });
+  */
+  const { write, isLoading } = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    addressOrName: CCIP!.address,
+    contractInterface: CCIP!.abi,
+    functionName: 'ccipSend',
+    args: [
+      to,
+      [
+        ethers.utils.defaultAbiCoder.encode(['address'], [address]),
+        '0x',
+        [snxUsdProxy!.address],
+        [ethers.utils.parseEther(amount.toString())],
+        100000,
+      ],
+    ],
+  });
 
   return (
     <>
@@ -159,7 +187,7 @@ export const Teleporter = () => {
                   balance={balance.value}
                   decimals={balance.decimals}
                   symbol="snxUsd"
-                  address={snxProxy?.address}
+                  address={snxUsdProxy?.address}
                 />
               </Flex>
             </form>
@@ -260,9 +288,8 @@ export const Teleporter = () => {
 
           {hasWalletConnected ? (
             <Button
-              onClick={() => {
+              onClick={async () => {
                 toast.closeAll();
-
                 if (activeChain?.id !== from) {
                   toast({
                     title: 'Connect to ' + fromChain?.label,
@@ -273,12 +300,14 @@ export const Teleporter = () => {
 
                   openChainModal?.();
                 }
+                await write();
               }}
               size="lg"
               px="8"
               type="submit"
+              isLoading={isLoading}
             >
-              Transfer
+              Teleport
             </Button>
           ) : (
             <Button onClick={openConnectModal} size="lg" px="8">

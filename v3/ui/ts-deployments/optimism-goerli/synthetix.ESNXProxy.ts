@@ -1,4 +1,4 @@
-export const address = '0x1Cc6DD5E54ee325c46E9Ad58D202a1e85D16e735';
+export const address = '0x090FD6ae7e59A8177d03F3A3eaF82E20Ff6D4974';
 export const abi = [
   'error AlreadyInitialized()',
   'error NoChange()',
@@ -17,7 +17,7 @@ export const abi = [
   'error ImplementationIsSterile(address implementation)',
   'error NotAContract(address contr)',
   'error UpgradeSimulationFailed()',
-  'event Upgraded(address implementation)',
+  'event Upgraded(address indexed self, address implementation)',
   'function getImplementation() view returns (address)',
   'function simulateUpgradeTo(address newImplementation)',
   'function upgradeTo(address newImplementation)',

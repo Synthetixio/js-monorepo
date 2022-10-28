@@ -1,5 +1,5 @@
 {
-  "address": "0x419A4c8C9bA74Bd1fdfb355f7b02848f758DD9Ce",
+  "address": "0x5680dC17bD191EE04d048719b57983335c5E6153",
   "abi": [
     {
       "type": "error",
@@ -178,6 +178,11 @@
       "inputs": [
         {
           "type": "address",
+          "name": "self",
+          "indexed": true
+        },
+        {
+          "type": "address",
           "name": "implementation",
           "indexed": false
         }
@@ -218,6 +223,145 @@
         {
           "type": "address",
           "name": "newImplementation"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "error",
+      "name": "MismatchAssociatedSystemKind",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "expected"
+        },
+        {
+          "type": "bytes32",
+          "name": "actual"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "AssociatedSystemSet",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "kind",
+          "indexed": true
+        },
+        {
+          "type": "bytes32",
+          "name": "id",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "proxy",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "impl",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getAssociatedSystem",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "id"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "proxy"
+        },
+        {
+          "type": "bytes32",
+          "name": "kind"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "initOrUpgradeNft",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "id"
+        },
+        {
+          "type": "string",
+          "name": "name"
+        },
+        {
+          "type": "string",
+          "name": "symbol"
+        },
+        {
+          "type": "string",
+          "name": "uri"
+        },
+        {
+          "type": "address",
+          "name": "impl"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "initOrUpgradeToken",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "id"
+        },
+        {
+          "type": "string",
+          "name": "name"
+        },
+        {
+          "type": "string",
+          "name": "symbol"
+        },
+        {
+          "type": "uint8",
+          "name": "decimals"
+        },
+        {
+          "type": "address",
+          "name": "impl"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "registerUnmanagedSystem",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "id"
+        },
+        {
+          "type": "address",
+          "name": "endpoint"
         }
       ],
       "outputs": []
@@ -363,7 +507,28 @@
       "inputs": [
         {
           "type": "address",
+          "name": "target"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "burnWithAllowance",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
           "name": "from"
+        },
+        {
+          "type": "address",
+          "name": "spender"
         },
         {
           "type": "uint256",
@@ -427,7 +592,7 @@
       "inputs": [
         {
           "type": "address",
-          "name": "to"
+          "name": "target"
         },
         {
           "type": "uint256",
@@ -519,6 +684,31 @@
     },
     {
       "type": "function",
+      "name": "transferCrossChain",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "destChainId"
+        },
+        {
+          "type": "address"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "feesPaid"
+        }
+      ]
+    },
+    {
+      "type": "function",
       "name": "transferFrom",
       "constant": false,
       "payable": false,
@@ -543,7 +733,7 @@
       ]
     }
   ],
-  "deployTxnHash": "0x781b38405fbc0fbcc75c9d82b27f6f5b32fb292c82cf0b7927a5a45765d6884e",
+  "deployTxnHash": "0x1c4a6c2d0c73db55192cd46c25356be6bcd57d83e7b27c3c73272a7dab1d3d46",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_usd"

@@ -1,0 +1,270 @@
+{
+  "address": "0x3aaBAcBB0ED9ed6e741c0404673F271D6f34Ce16",
+  "abi": [
+    {
+      "type": "error",
+      "name": "EmptyDistribution",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "FailedTransfer",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "from"
+        },
+        {
+          "type": "address",
+          "name": "to"
+        },
+        {
+          "type": "uint256",
+          "name": "value"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InconsistentDistribution",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "IneligibleForLiquidation",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "collateralValue"
+        },
+        {
+          "type": "uint256",
+          "name": "debt"
+        },
+        {
+          "type": "uint256",
+          "name": "currentCRatio"
+        },
+        {
+          "type": "uint256",
+          "name": "cratio"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidParameters",
+      "inputs": [
+        {
+          "type": "string",
+          "name": "incorrectParameter"
+        },
+        {
+          "type": "string",
+          "name": "help"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "MarketNotFound",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "MismatchAssociatedSystemKind",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "expected"
+        },
+        {
+          "type": "bytes32",
+          "name": "actual"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "MustBeVaultLiquidated",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ZeroValuePerShare",
+      "inputs": []
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "Liquidation",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "uint128",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "debtLiquidated",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "collateralLiquidated",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amountRewarded",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "VaultLiquidation",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "debtLiquidated",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "collateralLiquidated",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amountRewarded",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "isLiquidatable",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "liquidate",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "amountRewarded"
+        },
+        {
+          "type": "uint256",
+          "name": "debtLiquidated"
+        },
+        {
+          "type": "uint256",
+          "name": "collateralLiquidated"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "liquidateVault",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint128",
+          "name": "liquidateAsAccountId"
+        },
+        {
+          "type": "uint256",
+          "name": "maxUsd"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "amountLiquidated"
+        },
+        {
+          "type": "uint256",
+          "name": "collateralRewarded"
+        }
+      ]
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0xbfaec25b264d72525d1534374df85c7f485b5d30ba3e1c9c72058a6b4013aabc",
+  "sourceName": "contracts/modules/core/LiquidationModule.sol",
+  "contractName": "LiquidationModule",
+  "deployedOn": "contract.LiquidationModule"
+}
