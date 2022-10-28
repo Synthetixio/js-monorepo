@@ -29,10 +29,11 @@ export const MultipleTransactionReview: FC<Props> = ({ onSuccess }) => {
       }
       txState.onSuccess?.();
       setStep(transactions.length);
+      setTimeout(() => onSuccess?.(), 1000);
     } catch (error) {
       setError(true);
     }
-  }, [error, step, transactions, txState]);
+  }, [error, onSuccess, step, transactions, txState]);
 
   const getStatus = (i: number) => {
     if (i < step) {

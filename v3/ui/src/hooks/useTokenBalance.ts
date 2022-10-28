@@ -8,7 +8,7 @@ export const useTokenBalance = (token: string | undefined, chainId?: number | un
   const { address: accountAddress } = useAccount();
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
-  const wethContract = useContract(contracts.WETH);
+  const wethContract = useContract(contracts.WETH, chainId || activeChain?.id);
   const { data: balanceData, refetch } = useBalance({
     addressOrName: accountAddress,
     token: compareAddress(token, wethContract?.address) ? undefined : token,
