@@ -162,7 +162,7 @@ export const useManagePosition = (
         title: 'Approve ' + position.collateral.symbol.toUpperCase() + ' transfer',
         call: async (infiniteApproval) => await approve(infiniteApproval),
         checkboxLabel: requireApproval
-          ? `Approve unlimited ${position.collateral.symbol.toUpperCase()} transfers to the Synthetix protocol.`
+          ? `Approve unlimited ${position.collateral.symbol.toUpperCase()} transfers to Synthetix.`
           : undefined,
       });
     }

@@ -1,4 +1,4 @@
-import { ArrowDownIcon, ChevronDownIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import { ArrowDownIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import {
   Image,
   Box,
@@ -31,16 +31,17 @@ import { useApprove } from '../../hooks/useApprove';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';
 import { transactionState } from '../../utils/state';
+import testnetIcon from '../../../public/images/testnet.png';
 
 const chains = [
   {
     id: 5,
-    logo: 'testnet.png',
+    logo: testnetIcon,
     label: 'Goerli',
   },
   {
     id: 420,
-    logo: 'testnet.png',
+    logo: testnetIcon,
     label: 'Optimism Goerli',
   },
 ];
@@ -108,7 +109,7 @@ export const Teleporter = () => {
         title: 'Approve snxUSD transfer',
         call: async (infiniteApproval) => await approve(infiniteApproval),
         checkboxLabel: requireApproval
-          ? `Approve unlimited snxUSD transfers to the Synthetix protocol.`
+          ? `Approve unlimited snxUSD transfers to Synthetix.`
           : undefined,
       });
     }
@@ -175,7 +176,7 @@ export const Teleporter = () => {
                           width="24px"
                           height="24px"
                           mr={2}
-                          src={`/images/${fromChain?.logo}`}
+                          src={fromChain?.logo}
                         />
                         <Text fontWeight="600">{fromChain?.label}</Text>
                       </Flex>
@@ -204,7 +205,7 @@ export const Teleporter = () => {
                           width="24px"
                           height="24px"
                           mr={2}
-                          src={`/images/${chain.logo}`}
+                          src={chain.logo}
                         />
 
                         <Text fontWeight="600">{chain.label}</Text>
@@ -271,7 +272,7 @@ export const Teleporter = () => {
                           width="24px"
                           height="24px"
                           mr={2}
-                          src={`/images/${toChain?.logo}`}
+                          src={toChain?.logo}
                         />
                         <Text fontWeight="600">{toChain?.label}</Text>
                       </Flex>
@@ -300,7 +301,7 @@ export const Teleporter = () => {
                           width="24px"
                           height="24px"
                           mr={2}
-                          src={`/images/${chain.logo}`}
+                          src={chain.logo}
                         />
 
                         <Text fontWeight="600">{chain.label}</Text>
@@ -333,7 +334,7 @@ export const Teleporter = () => {
 
               <Flex alignItems="center">
                 <Text fontSize="xs" textAlign="right" ml="auto" color="gray.300">
-                  Fee: $0 <InfoOutlineIcon ml="1" transform="translateY(-1px)" />
+                  Fee: $0 {/*<InfoOutlineIcon ml="1" transform="translateY(-1px)" />*/}
                 </Text>
               </Flex>
             </form>

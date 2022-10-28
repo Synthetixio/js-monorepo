@@ -212,14 +212,14 @@ export const useStake = ({
         title: 'Approve ' + selectedCollateralType.symbol.toUpperCase() + ' transfer',
         call: async (infiniteApproval) => await approve(infiniteApproval),
         checkboxLabel: requireApproval
-          ? `Approve unlimited ${selectedCollateralType.symbol.toUpperCase()} transfers to the Synthetix protocol.`
+          ? `Approve unlimited ${selectedCollateralType.symbol.toUpperCase()} transfers to Synthetix.`
           : undefined,
       });
     }
 
     transactions.push({
       title: 'Stake ' + selectedCollateralType.symbol.toUpperCase(),
-      subtitle: `This will transfer your ${selectedCollateralType.symbol.toUpperCase()} to the Synthetix protocol.`,
+      subtitle: `This will transfer your ${selectedCollateralType.symbol.toUpperCase()} to Synthetix.`,
       call: async () => await multiTxn.exec(),
     });
 
