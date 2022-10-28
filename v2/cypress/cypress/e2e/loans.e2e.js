@@ -6,7 +6,7 @@ it('Can borrow sUSD with ETH collateral', () => {
 
   cy.get('[data-testid="loans current eth balance"]')
     .should('be.visible')
-    .should(($0) => {
+    .and(($0) => {
       expect(parseFloat($0.data('balance'))).to.be.gte(2);
     });
 
@@ -30,7 +30,7 @@ it('Can borrow sUSD with ETH collateral', () => {
   // Wait for balance to be fetched and ensure we have at least 100 sUSD available
   cy.get('[data-testid="balance item"][data-currency="sUSD"]')
     .should('be.visible')
-    .should(($0) => {
+    .and(($0) => {
       expect(parseFloat($0.data('amount'))).to.be.gte(100);
     });
 
@@ -45,9 +45,7 @@ it('Can borrow sUSD with ETH collateral', () => {
     cy.url().should('include', `/loans/eth/${id}/close`);
   });
 
-  cy.get('[data-testid="loans submit loan modification"]')
-    .should('exist')
-    .should('not.be.disabled');
+  cy.get('[data-testid="loans submit loan modification"]').should('exist').and('not.be.disabled');
 
   cy.get('[data-testid="loans submit loan modification"]').click();
 
