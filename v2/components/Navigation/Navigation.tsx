@@ -20,9 +20,9 @@ import {
   GuideIcon,
   NineDots,
   LoansIcon,
-  NotificationsIcon,
+  // NotificationsIcon,
   OptimismIcon,
-  SettingsIcon,
+  // SettingsIcon,
   StakingIcon,
   WalletIcon,
   StakingLogo,
@@ -189,7 +189,7 @@ export const NavigationUI = ({
             )}
           </Menu>
         </Center>
-        <Center
+        {/* <Center
           ml={2}
           height={10}
           width={10}
@@ -203,8 +203,8 @@ export const NavigationUI = ({
           }}
         >
           <NotificationsIcon color="white" />
-        </Center>
-        <>
+        </Center> */}
+        {/* <>
           <Center
             ml={2}
             height={10}
@@ -220,7 +220,7 @@ export const NavigationUI = ({
           >
             <SettingsIcon color="white" />
           </Center>
-        </>
+        </> */}
         <Menu>
           <Center
             ml={2}
@@ -263,12 +263,12 @@ export const NavigationUI = ({
                 <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>
               </Center>
             </MenuItem>
-            <MenuItem onClick={() => navigate('/')}>
+            {/* <MenuItem onClick={() => navigate('/')}>
               <Center>
                 <SettingsIcon color="white" />
                 <Text ml={2}>{t('common.wallet.menu.settings')}</Text>
               </Center>
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem onClick={() => navigate('/')}>
               <GuideIcon />
               <Text ml={2}>{t('common.wallet.menu.guide')}</Text>
