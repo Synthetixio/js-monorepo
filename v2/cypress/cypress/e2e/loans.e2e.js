@@ -29,27 +29,23 @@ it('Can borrow sUSD with ETH collateral', () => {
 
   cy.get('[role="dialog"]').should('not.exist');
 
+  // Wait for balance to be fetched and ensure we have at least 100 sUSD available
+  cy.get('[data-testid="balance item"][data-currency="sUSD"]')
+    .should('be.visible')
+    .should(($0) => {
+      expect(parseFloat($0.data('amount'))).to.be.gte(100);
+    });
+
   cy.contains('button[role="tab"][aria-selected="true"]', 'Active Borrows').should('exist');
   cy.get('[data-testid="loan actions button"]')
     .should('exist')
     .then(($0) => cy.wrap($0.data('id')).as('loanId'));
 
   cy.get('@loanId').then((id) => {
-    cy.intercept('https://api.thegraph.com/**', (req) => {
-      if (req.body?.query?.startsWith('{loans(')) {
-        return req.reply({ data: { loans: [{ id: `${id}` }] } });
-      }
-      return subgraph(req);
-    }).as('subgraph:loans');
-  });
-
-  cy.get('@loanId').then((id) => {
     cy.get(`[data-testid="loan actions button"][data-id="${id}"]`).last().click();
     cy.get('[data-testid="loan action"][data-action="close"]').should('be.visible').click();
     cy.url().should('include', `/loans/eth/${id}/close`);
   });
-
-  cy.reload();
 
   cy.get('[data-testid="loans submit loan modification"]')
     .should('exist')
