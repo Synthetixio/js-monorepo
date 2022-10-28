@@ -85,7 +85,7 @@ export const WalletModalUi: FC<{
               <ExternalLink
                 fontSize="sm"
                 fontWeight={400}
-                href={`${networkId && getEtherscanBaseUrl(networkId)}/account/${walletAddress}`}
+                href={`${networkId && getEtherscanBaseUrl(networkId)}/address/${walletAddress}`}
               >
                 {t('staking-v2.wallet-modal.explorer')}
               </ExternalLink>
