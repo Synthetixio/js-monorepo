@@ -33,26 +33,19 @@ type BalanceObject = {
   icon?: ReactElement;
 };
 export const WalletModalUi: FC<{
-  isWalletModalOpen: boolean;
-  setIsWalletModalOpen: (x: boolean) => void;
+  isOpen: boolean;
+  onClose: () => void;
   disconnectWallet: () => Promise<void>;
   walletAddress: string | null;
   networkId: number | null;
   balances?: BalanceObject[];
-}> = ({
-  isWalletModalOpen,
-  setIsWalletModalOpen,
-  disconnectWallet,
-  networkId,
-  walletAddress,
-  balances,
-}) => {
+}> = ({ isOpen, onClose, disconnectWallet, networkId, walletAddress, balances }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { hasCopied, onCopy } = useClipboard(walletAddress || '');
 
   return (
-    <Modal isOpen={isWalletModalOpen} onClose={() => setIsWalletModalOpen(false)}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent
         bg="gray.900"
@@ -129,8 +122,8 @@ const getSynthIcon = (currencyKey: string) =>
   `https://raw.githubusercontent.com/Synthetixio/synthetix-assets/master/synths/${currencyKey}.svg`;
 
 export const WalletModal: FC<{
-  isWalletModalOpen: boolean;
-  setIsWalletModalOpen: (x: boolean) => void;
+  isOpen: boolean;
+  onClose: () => void;
   disconnectWallet: () => Promise<void>;
 }> = (props) => {
   const { data: synthBalancesData } = useSynthsBalances();

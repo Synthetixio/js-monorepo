@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Button,
   Center,
@@ -9,6 +8,7 @@ import {
   MenuList,
   Text,
   useBreakpointValue,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface';
 import {
@@ -80,7 +80,8 @@ export const NavigationUI = ({
   disconnectWallet,
 }: NavigationProps) => {
   const { t } = useTranslation();
-  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const { name, icon } = activeIcon(currentNetwork);
   const navigate = useNavigate();
 
@@ -260,7 +261,7 @@ export const NavigationUI = ({
                 <Text ml={2}>{t('common.wallet.menu.gov')}</Text>
               </Center>
             </MenuItem>
-            <MenuItem onClick={() => setIsWalletModalOpen(true)}>
+            <MenuItem onClick={onOpen}>
               <Center>
                 <WalletIcon color="white" />
                 <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>
@@ -279,11 +280,7 @@ export const NavigationUI = ({
           </MenuList>
         </Menu>
       </Flex>
-      <WalletModal
-        isWalletModalOpen={isWalletModalOpen}
-        setIsWalletModalOpen={setIsWalletModalOpen}
-        disconnectWallet={disconnectWallet}
-      />
+      <WalletModal isOpen={isOpen} onClose={onClose} disconnectWallet={disconnectWallet} />
     </Flex>
   );
 };
