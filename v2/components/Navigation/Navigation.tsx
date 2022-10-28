@@ -8,8 +8,8 @@ import {
   MenuList,
   Text,
   useBreakpointValue,
+  useDisclosure,
 } from '@chakra-ui/react';
-
 import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface';
 import {
   ChevronDown,
@@ -20,9 +20,9 @@ import {
   GuideIcon,
   NineDots,
   LoansIcon,
-  NotificationsIcon,
+  // NotificationsIcon,
   OptimismIcon,
-  SettingsIcon,
+  // SettingsIcon,
   StakingIcon,
   WalletIcon,
   StakingLogo,
@@ -38,6 +38,7 @@ import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { EpochPrice } from '@snx-v2/EpochPrice';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
+import { WalletModal } from '@snx-v2/WalletModal';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -48,6 +49,7 @@ interface NavigationProps {
   isLoading: boolean;
   snxBalance: Wei;
   sUSDBalance: Wei;
+  disconnectWallet: () => Promise<void>;
 }
 
 const activeIcon = (currentNetwork: NetworkId) => {
@@ -75,9 +77,11 @@ export const NavigationUI = ({
   isLoading,
   snxBalance,
   sUSDBalance,
+  disconnectWallet,
 }: NavigationProps) => {
   const { t } = useTranslation();
 
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const { name, icon } = activeIcon(currentNetwork);
   const navigate = useNavigate();
 
@@ -189,7 +193,7 @@ export const NavigationUI = ({
             )}
           </Menu>
         </Center>
-        <Center
+        {/* <Center
           ml={2}
           height={10}
           width={10}
@@ -203,8 +207,8 @@ export const NavigationUI = ({
           }}
         >
           <NotificationsIcon color="white" />
-        </Center>
-        <>
+        </Center> */}
+        {/* <>
           <Center
             ml={2}
             height={10}
@@ -220,7 +224,7 @@ export const NavigationUI = ({
           >
             <SettingsIcon color="white" />
           </Center>
-        </>
+        </> */}
         <Menu>
           <Center
             ml={2}
@@ -257,18 +261,18 @@ export const NavigationUI = ({
                 <Text ml={2}>{t('common.wallet.menu.gov')}</Text>
               </Center>
             </MenuItem>
-            <MenuItem onClick={() => navigate('/')}>
+            <MenuItem onClick={onOpen}>
               <Center>
                 <WalletIcon color="white" />
                 <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>
               </Center>
             </MenuItem>
-            <MenuItem onClick={() => navigate('/')}>
+            {/* <MenuItem onClick={() => navigate('/')}>
               <Center>
                 <SettingsIcon color="white" />
                 <Text ml={2}>{t('common.wallet.menu.settings')}</Text>
               </Center>
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem onClick={() => navigate('/')}>
               <GuideIcon />
               <Text ml={2}>{t('common.wallet.menu.guide')}</Text>
@@ -276,6 +280,7 @@ export const NavigationUI = ({
           </MenuList>
         </Menu>
       </Flex>
+      <WalletModal isOpen={isOpen} onClose={onClose} disconnectWallet={disconnectWallet} />
     </Flex>
   );
 };
@@ -286,6 +291,7 @@ export const Navigation = ({
   connectWallet,
   isWalletConnected,
   walletAddress,
+  disconnectWallet,
 }: Omit<NavigationProps, 'snxBalance' | 'sUSDBalance' | 'isLoading'>) => {
   const { data: synthsBalances, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: debtData, isLoading: isDebtLoading } = useDebtData();
@@ -323,6 +329,7 @@ export const Navigation = ({
         isLoading={isLoading}
         snxBalance={debtData?.collateral || wei(0)}
         sUSDBalance={synthsBalances?.balancesMap['sUSD']?.balance || wei(0)}
+        disconnectWallet={disconnectWallet}
       />
       {size === 'mobile' && (
         <EpochPrice

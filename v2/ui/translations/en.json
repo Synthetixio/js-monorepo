@@ -196,6 +196,13 @@
       "c-ratio": "C-Ratio",
       "susd-balance": "sUSD Balance",
       "active-debt": "Active Debt"
+    },
+    "wallet-modal": {
+      "headline": "My Account",
+      "disconnect": "Disconnect",
+      "explorer": "View on Explorer",
+      "view-all": "View All",
+      "escrow": "Escrow"
     }
   },
   "meta": {
