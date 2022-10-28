@@ -1,4 +1,4 @@
-import { FC, useContext, useState, useEffect, ReactElement } from 'react';
+import { FC, useContext, ReactElement } from 'react';
 import {
   Box,
   Button,
@@ -11,11 +11,11 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  useClipboard,
 } from '@chakra-ui/react';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { formatNumber, formatNumberToUsd, truncateAddress } from '@snx-v2/formatters';
 import { AvatarIcon, CopyIcon, SNXIcon } from '@snx-v2/icons';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ExternalLink } from '@snx-v2/ExternalLink';
 import { getEtherscanBaseUrl } from '@snx-v2/txnLink';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
@@ -48,22 +48,9 @@ export const WalletModalUi: FC<{
   balances,
 }) => {
   const { t } = useTranslation();
-  const [copiedAddress, setCopiedAddress] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { hasCopied, onCopy } = useClipboard(walletAddress || '');
 
-  useEffect(() => {
-    let intervalId: number | undefined;
-    if (copiedAddress) {
-      intervalId = Number(
-        setInterval(() => {
-          setCopiedAddress(false);
-        }, 3000)
-      );
-    }
-    () => {
-      clearInterval(intervalId);
-    };
-  }, [copiedAddress]);
   return (
     <Modal isOpen={isWalletModalOpen} onClose={() => setIsWalletModalOpen(false)}>
       <ModalOverlay />
@@ -91,11 +78,10 @@ export const WalletModalUi: FC<{
               </Button>
             </Flex>
             <Flex>
-              <CopyToClipboard text={walletAddress!} onCopy={() => setCopiedAddress(true)}>
-                <Button fontSize="sm" fontWeight={400} variant="ghost">
-                  <CopyIcon mr={2} /> {copiedAddress ? 'Copied' : 'Copy Address'}
-                </Button>
-              </CopyToClipboard>
+              <Button fontSize="sm" fontWeight={400} variant="ghost" onClick={onCopy}>
+                <CopyIcon mr={2} /> {hasCopied ? 'Copied' : 'Copy Address'}
+              </Button>
+
               <ExternalLink
                 fontSize="sm"
                 fontWeight={400}
