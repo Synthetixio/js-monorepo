@@ -10,6 +10,7 @@
     "write-ts": "write-ts"
   },
   "dependencies": {
+    "@chakra-ui/icon": "^3.0.11",
     "@chakra-ui/icons": "^2.0.9",
     "@chakra-ui/react": "^2.2.8",
     "@emotion/react": "^11.10.0",

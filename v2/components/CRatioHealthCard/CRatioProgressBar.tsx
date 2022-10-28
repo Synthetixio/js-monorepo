@@ -1,4 +1,4 @@
-import { Box, Progress, Text, Tooltip } from '@chakra-ui/react';
+import { Box, Progress, Skeleton, Text, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { InfoIcon, TriangleDownIcon, TriangleUpIcon } from '@snx-v2/icons';
@@ -21,7 +21,7 @@ const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
       >
         <Text whiteSpace="nowrap" fontSize="xx-small" transform="translateY(calc(-100% - 10px) )">
           {text}{' '}
-          <Tooltip label={tooltipText}>
+          <Tooltip label={tooltipText} bg="gray.900" hasArrow>
             <span>
               <InfoIcon />
             </span>
@@ -42,18 +42,24 @@ const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
   );
 };
 
-type Props = {
-  liquidationCratioPercentage: number;
-  targetCratioPercentage: number;
-  currentCRatioPercentage: number;
-};
-
-export const CRatioProgressBar: FC<Props> = ({
-  targetCratioPercentage,
-  liquidationCratioPercentage,
-  currentCRatioPercentage,
-}) => {
-  const maxRatioShown = Math.max(targetCratioPercentage, currentCRatioPercentage) * 1.1;
+export const CRatioProgressBar: FC<{
+  liquidationCratioPercentage?: number;
+  targetCratioPercentage?: number;
+  currentCRatioPercentage?: number;
+}> = ({ targetCratioPercentage, liquidationCratioPercentage, currentCRatioPercentage }) => {
+  if (
+    liquidationCratioPercentage === undefined ||
+    targetCratioPercentage === undefined ||
+    currentCRatioPercentage === undefined
+  ) {
+    return <Skeleton w="100%" minHeight="100px" mb={4} />;
+  }
+  const maxRatioShown = Math.min(
+    Math.max(targetCratioPercentage, currentCRatioPercentage) * 1.1,
+    // If the c-ratio is bigger than 2.5x the target ratio the target and liquidation labels will overlap due to the big scale difference.
+    // So when this is the case we opt not to show the current c-ratio arrows and set maxRatioShown to target * 2.5.
+    targetCratioPercentage * 2.5
+  );
   const scaleFactor = maxRatioShown / 100;
   const variant = getHealthVariant({
     targetCratioPercentage,
@@ -62,7 +68,13 @@ export const CRatioProgressBar: FC<Props> = ({
   });
 
   return (
-    <Box position="relative" height="100px" width="full">
+    <Box
+      position="relative"
+      height="100px"
+      width="full"
+      data-testid="c ratio progressbar"
+      overflowX="hidden"
+    >
       <LineWithText
         left={liquidationCratioPercentage / scaleFactor}
         text={`Liquidated < ${liquidationCratioPercentage.toFixed(0)}%`}
@@ -93,6 +105,7 @@ export const CRatioProgressBar: FC<Props> = ({
         margin="auto"
       >
         <TriangleDownIcon
+          data-testid="current c-ration triangle"
           position="absolute"
           right={0}
           top={0}
@@ -100,6 +113,7 @@ export const CRatioProgressBar: FC<Props> = ({
           color={variant}
         />
         <TriangleUpIcon
+          data-testid="current c-ration triangle"
           position="absolute"
           right={0}
           bottom={0}

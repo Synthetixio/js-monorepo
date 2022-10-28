@@ -7,6 +7,7 @@
     "@chakra-ui/react": "^2.2.8",
     "@snx-v2/EpochPrice": "workspace:^",
     "@snx-v2/UserBalances": "workspace:*",
+    "@snx-v2/WalletModal": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
@@ -16,6 +17,7 @@
     "@storybook/react": "^6.5.10",
     "@synthetixio/contracts-interface": "workspace:*",
     "@synthetixio/wei": "workspace:*",
+    "react": "^18.2.0",
     "react-i18next": "^11.18.3",
     "react-router-dom": "^6.3.0"
   }

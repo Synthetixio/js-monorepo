@@ -126,9 +126,11 @@ export const useMulticall = (
   const exec = useCallback(async () => {
     try {
       setStatus('pending');
-      await currentTxn.writeAsync();
+      const txReceipt = await currentTxn.writeAsync();
+      await txReceipt.wait();
     } catch (error) {
       setStatus('error');
+      throw error;
     }
   }, [currentTxn]);
 

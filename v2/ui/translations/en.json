@@ -87,17 +87,9 @@
       "info": "Info",
       "gas-estimation-error": "Error estimating gas",
       "txn-modal": {
-        "pending": "Transaction Pending",
-        "completed": "Transaction completed",
         "staking": "Staking",
-        "minting": "Minting",
-        "loading": "Loading",
-        "etherscan": "View Etherscan",
-        "error-headline": "Error",
-        "retry": "Retry",
-        "close": "Close"
+        "minting": "Minting"
       },
-
       "estimating-gas": "Estimating gas..."
     },
     "burn": {
@@ -110,29 +102,40 @@
       "gas": "Gas Price (GWEI)",
       "gas-tooltip": "Is how much it costs to perform a transaction on the blockchain & GWEI is a denomination of Ether",
       "snx-balance": "SNX Balance: {{snxBalance}}",
-      "susd-balance": "sUSD Balance: {{susdBalance}}",
+      "susd-balance": "sUSD Balance: ",
       "enter-amount": "Enter Amount",
       "tx-cost": "Tx cost: {{txCost}}",
       "burn-max": "Burn Max",
       "burn-cratio": "Burn to C-Ratio",
       "burn-debt": "Clear Debt",
-      "active-debt": "Active debt",
-      "staked-snx": "Staked SNX",
+      "active-debt": "Active debt: ",
+      "staked-snx": "Staked SNX: ",
       "description-cratio": "Burn to C-Ratio - Burn sUSD required to reach target C-Ratio",
       "txn-modal": {
-        "pending": "Transaction Pending",
-        "completed": "Transaction completed",
         "unstaking": "Unstaking",
-        "burning": "Burning",
-        "loading": "Loading",
-        "etherscan": "View Etherscan",
-        "error-headline": "Error",
-        "retry": "Retry",
-        "close": "Close"
+        "burning": "Burning"
+      }
+    },
+    "self-liquidation": {
+      "headline": "Unflag Account",
+      "amount-headline": "Self Liquidate Penalty",
+      "amount-sub-headline": "See below the amount that will be liquidated in SNX and USD value",
+      "penalty": "Penalty",
+      "button-text": "Yes I want to Self Liquidate",
+      "gas-estimation-error": "Error estimating gas",
+      "txn-modal": {
+        "action": "Self Liquidating..."
       }
     },
     "transaction-modal": {
-      "metamask-note": "Follow the Metamask prompts to authorize the transaction."
+      "pending": "Transaction Pending",
+      "completed": "Transaction completed",
+      "etherscan": "View Etherscan",
+      "metamask-note": "Follow the Metamask prompts to authorize the transaction.",
+      "loading": "Loading",
+      "error-headline": "Error",
+      "retry": "Retry",
+      "close": "Close"
     },
     "balance-box": {
       "box-heading": "SNX Total",
@@ -193,6 +196,13 @@
       "c-ratio": "C-Ratio",
       "susd-balance": "sUSD Balance",
       "active-debt": "Active Debt"
+    },
+    "wallet-modal": {
+      "headline": "My Account",
+      "disconnect": "Disconnect",
+      "explorer": "View on Explorer",
+      "view-all": "View All",
+      "escrow": "Escrow"
     }
   },
   "meta": {

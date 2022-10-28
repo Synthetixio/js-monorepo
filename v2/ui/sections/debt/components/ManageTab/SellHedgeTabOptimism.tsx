@@ -180,7 +180,6 @@ export default function SellHedgeTabOptimism() {
             />
           </InputWrapper>
         </Tooltip>
-
         <StyledBalance>
           Balance:&nbsp;
           {formatCryptoCurrency(sUSDBalance, {

@@ -1,9 +1,12 @@
 import { utils } from 'ethers';
 import { useCallback, useMemo, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
 import { contracts } from '../utils/constants';
 import { compareAddress, parseUnits } from '../utils/helpers';
+import { transactionState } from '../utils/state';
 import { CollateralType } from '../utils/types';
-import { useApproveCall } from './useApproveCall';
+import { useApprove } from './useApprove';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
 import { useUnWrapEth, useWrapEth } from './useWrapEth';
@@ -27,7 +30,7 @@ export const useManagePosition = (
   const wethContract = useContract(contracts.WETH);
   const isNativeCurrency = compareAddress(wethContract?.address, position.collateral.address);
 
-  const { wrap, isLoading: isWrapping } = useWrapEth();
+  const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
   const { unWrap, isLoading: isUnWrapping } = useUnWrapEth();
 
   const calls: MulticallCall[] = useMemo(() => {
@@ -113,30 +116,126 @@ export const useManagePosition = (
   ]);
 
   const multiTxn = useMulticall(calls);
-  const { exec: approve } = useApproveCall(
+  const { approve, requireApproval } = useApprove(
     position.collateral.address,
-    collateralAmount > 0 ? collateralChangeBN : 0,
-    snxProxy?.address,
-    multiTxn.exec
+    collateralChange > 0 ? collateralChangeBN : 0,
+    snxProxy?.address
   );
 
-  const exec = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      if (isNativeCurrency && collateralChange > 0) {
-        await wrap(collateralChangeBN);
-      }
-      await approve();
-      if (isNativeCurrency && collateralChange < 0) {
-        await unWrap(collateralChangeBN);
-      }
-      refetch?.();
-    } catch (error) {
-      //console.log(error);
-    } finally {
-      setIsLoading(false);
+  const multicallTitles = useMemo(() => {
+    const title: string[] = [];
+    if (collateralChange > 0) {
+      title.push('Stake ' + position.collateral.symbol.toUpperCase());
+    } else if (collateralChange < 0) {
+      title.push('Unstake ' + position.collateral.symbol.toUpperCase());
     }
-  }, [approve, collateralChange, collateralChangeBN, isNativeCurrency, refetch, unWrap, wrap]);
+
+    if (debtChange > 0) {
+      title.push('Mint snxUSD');
+    } else if (debtChange < 0) {
+      title.push('Burn snxUSD');
+    }
+
+    return title;
+  }, [collateralChange, debtChange, position.collateral.symbol]);
+
+  const setTransaction = useSetRecoilState(transactionState);
+
+  const updateTransactions = useCallback(() => {
+    const transactions: Transaction[] = [];
+
+    if (isNativeCurrency && collateralChange > 0) {
+      transactions.push({
+        title: 'Wrap ETH',
+        subtitle: collateralChangeBN.gt(wrapEthBalance?.value || 0)
+          ? 'You must wrap your ether before staking.'
+          : undefined,
+        call: async (useBalance) => await wrap(collateralChangeBN, useBalance),
+        checkboxLabel: collateralChangeBN.gt(wrapEthBalance?.value || 0)
+          ? undefined
+          : `Skip this step and use my existing ${collateralChange} wETH.`,
+      });
+    }
+
+    if (collateralChange > 0 && requireApproval) {
+      transactions.push({
+        title: 'Approve ' + position.collateral.symbol.toUpperCase() + ' transfer',
+        call: async (infiniteApproval) => await approve(infiniteApproval),
+        checkboxLabel: requireApproval
+          ? `Approve unlimited ${position.collateral.symbol.toUpperCase()} transfers to the Synthetix protocol.`
+          : undefined,
+      });
+    }
+
+    transactions.push({
+      title: multicallTitles.join(', '),
+      subtitle: 'This is a multicall.',
+      call: async () => await multiTxn.exec(),
+    });
+
+    if (isNativeCurrency && collateralChange < 0) {
+      transactions.push({
+        title: 'Unwrap ETH',
+        subtitle: 'Convert wETH to native ETH.',
+        call: async () => await unWrap(collateralChangeBN),
+      });
+    }
+
+    setTransaction({
+      transactions,
+      isOpen: true,
+      onSuccess: refetch,
+    });
+  }, [
+    refetch,
+    isNativeCurrency,
+    collateralChange,
+    multicallTitles,
+    setTransaction,
+    collateralChangeBN,
+    wrapEthBalance?.value,
+    wrap,
+    position.collateral.symbol,
+    approve,
+    multiTxn,
+    unWrap,
+    requireApproval,
+  ]);
+
+  const exec = useCallback(
+    async (useDialog = true) => {
+      if (useDialog) {
+        return updateTransactions();
+      }
+      try {
+        setIsLoading(true);
+        if (isNativeCurrency && collateralChange > 0) {
+          await wrap(collateralChangeBN);
+        }
+        await approve();
+        await multiTxn.exec();
+        if (isNativeCurrency && collateralChange < 0) {
+          await unWrap(collateralChangeBN);
+        }
+        refetch?.();
+      } catch (error) {
+        //console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [
+      updateTransactions,
+      approve,
+      collateralChange,
+      collateralChangeBN,
+      isNativeCurrency,
+      multiTxn,
+      refetch,
+      unWrap,
+      wrap,
+    ]
+  );
 
   return {
     isLoading: isLoading || isWrapping || isUnWrapping,

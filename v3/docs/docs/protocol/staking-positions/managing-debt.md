@@ -8,7 +8,7 @@ sidebar_position: 2
 
 Each staking position has a collateralization ratio (or _C-Ratio_). This represents the relationship between the value of the collateral associated with the staking position and the amount of the debt it’s backing. This is represented as a percentage. For example, a C-Ratio of 200% means that the value of the collateral is double the amount of debt it’s backing.
 
-The value of the collateral is calculated based on the price of the collateral reported by an [oracle](/protocol/peripheral/oracle-manager). The value of the debt is the amount of snxUSD minted with this staking position, minus the amount of snxUSD burned with this position, plus/minus the debt/credit it is responsible for by participating in a pool.
+The value of the collateral is calculated based on the price of the collateral reported by an oracle. The value of the debt is the amount of snxUSD minted with this staking position, minus the amount of snxUSD burned with this position, plus/minus the debt/credit it is responsible for by participating in a pool.
 
 **If a staking position’s collateralization ratio falls below its minimum collateralization, the position can be [liquidated](/protocol/staking-positions/liquidations).** To reduce risk of liquidation, collateralization ratios can be increased by staking additional collateral or burning snxUSD.
 

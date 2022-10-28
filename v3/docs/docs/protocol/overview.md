@@ -4,6 +4,4 @@ sidebar_position: 1
 
 # Overview
 
-Synthetix enables the creation of synthetic assets on the blockchain. The protocol is currently deployed on Ethereum and Optimism.
-
-_Explainer t.c._
+Synthetix enables the creation of synthetic assets on the EVM-compatible blockchains. The protocol is currently deployed on the Görli Testnet and the Optimism Görli Testnet.

@@ -11,14 +11,13 @@ export const CountDown: React.FC<{ toDate: Date; intervalMs?: number }> = ({
   useInterval(() => {
     setNow(new Date());
   }, intervalMs);
-
   const duration = intervalToDuration({
     start: now,
     end: toDate,
   });
 
   return (
-    <span>
+    <span data-testid="countdown">
       {String(duration.days).padStart(2, '0')}:{String(duration.hours).padStart(2, '0')}:
       {String(duration.minutes).padStart(2, '0')}
     </span>

@@ -7,6 +7,9 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import { useSynthUtil } from '@snx-v2/useSynthetixContracts';
 import Wei, { wei } from '@synthetixio/wei';
 
+function notNill<Value>(value: Value | null | undefined): value is Value {
+  return value !== null && value !== undefined;
+}
 export type SynthBalance = {
   currencyKey: string;
   balance: Wei;
@@ -42,8 +45,8 @@ export const processSynthsBalances = (balances: SynthBalancesTuple) => {
   return {
     balancesMap: balancesMap,
     balances: orderBy(
-      Object.values(balancesMap).filter((val) => val !== null && val !== undefined),
-      (balance) => balance?.usdBalance.toNumber(),
+      Object.values(balancesMap).filter(notNill),
+      (balance) => balance.usdBalance.toNumber(),
       'desc'
     ),
     totalUSDBalance,

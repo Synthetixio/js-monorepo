@@ -49,10 +49,10 @@ export const MintTransactionModal: FC<{
       }
       title={
         transactionLoading
-          ? t('staking-v2.mint.txn-modal.pending')
+          ? t('staking-v2.transaction-modal.pending')
           : txnStatus === 'success'
-          ? t('staking-v2.mint.txn-modal.completed')
-          : t('staking-v2.mint.txn-modal.error-headline')
+          ? t('staking-v2.transaction-modal.completed')
+          : t('staking-v2.transaction-modal.error-headline')
       }
       isOpen={modalOpen}
     >
@@ -72,7 +72,7 @@ export const MintTransactionModal: FC<{
         <Flex alignItems="center" justifyContent="center" bg="black" pt="4" pb="4" mt="4">
           <Spinner size="sm" mr="3" />
           <Text color="cyan.500" fontWeight={500}>
-            {t('staking-v2.mint.txn-modal.loading')}
+            {t('staking-v2.transaction-modal.loading')}
           </Text>
         </Flex>
       )}
@@ -88,19 +88,21 @@ export const MintTransactionModal: FC<{
         <Center flexDirection="column">
           {txnLink && (
             <ExternalLink href={txnLink} fontSize="sm">
-              {t('staking-v2.mint.txn-modal.etherscan')}
+              {t('staking-v2.transaction-modal.etherscan')}
             </ExternalLink>
           )}
           {txnStatus === 'success' && (
             <Button mt={2} onClick={onClose}>
-              {t('staking-v2.mint.txn-modal.close')}
+              {t('staking-v2.transaction-modal.close')}
             </Button>
           )}
         </Center>
       ) : (
         <Center>
           <Button onClick={gasError ? settle : onSubmit}>
-            {gasError ? t('staking-v2.mint.txn-modal.close') : t('staking-v2.mint.txn-modal.retry')}
+            {gasError
+              ? t('staking-v2.transaction-modal.close')
+              : t('staking-v2.transaction-modal.retry')}
           </Button>
         </Center>
       )}

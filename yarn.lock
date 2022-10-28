@@ -2162,6 +2162,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chakra-ui/icon@npm:^3.0.11":
+  version: 3.0.11
+  resolution: "@chakra-ui/icon@npm:3.0.11"
+  dependencies:
+    "@chakra-ui/shared-utils": 2.0.2
+  peerDependencies:
+    "@chakra-ui/system": ">=2.0.0"
+    react: ">=18"
+  checksum: a76900cb23b5c8d55e80bdf794951400faeca4a848496f480dac129d52c67f607e0a64822021ddd08ff429b2a685e80a5298ad2d1dc6021206ca7a466968fe93
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/icons@npm:2.0.6":
   version: 2.0.6
   resolution: "@chakra-ui/icons@npm:2.0.6"
@@ -2744,6 +2756,13 @@ __metadata:
   version: 2.0.1
   resolution: "@chakra-ui/shared-utils@npm:2.0.1"
   checksum: a12ee9e3d09a07481af459ee42938f0c48e98fac9995da99930a2b8db9ba70f04a7648bf792a6c9f59be6a7b6fc2e828d151ce2770a3dfb347e10d8d92bde867
+  languageName: node
+  linkType: hard
+
+"@chakra-ui/shared-utils@npm:2.0.2":
+  version: 2.0.2
+  resolution: "@chakra-ui/shared-utils@npm:2.0.2"
+  checksum: d3e00205dbfa613fbd161f4253d79e519522c100fdb0182ed25bb71ecf627342c876ff0fa2ba986b51aa3b457e73d28ebf8e91111bf4c031ed607e90d1225ace
   languageName: node
   linkType: hard
 
@@ -6925,6 +6944,7 @@ __metadata:
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useRewardsAvailable": "workspace:*"
     "@storybook/react": ^6.5.10
     "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
@@ -7109,6 +7129,7 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/EpochPrice": "workspace:^"
     "@snx-v2/UserBalances": "workspace:*"
+    "@snx-v2/WalletModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
@@ -7118,6 +7139,7 @@ __metadata:
     "@storybook/react": ^6.5.10
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    react: ^18.2.0
     react-i18next: ^11.18.3
     react-router-dom: ^6.3.0
   languageName: unknown
@@ -7128,11 +7150,23 @@ __metadata:
   resolution: "@snx-v2/SelfLiquidation@workspace:v2/components/SelfLiquidation"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/CRatioHealthCard": "workspace:*"
+    "@snx-v2/EthGasPriceEstimator": "workspace:*"
+    "@snx-v2/ExternalLink": "workspace:*"
+    "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/parseTxnError": "workspace:*"
+    "@snx-v2/txnLink": "workspace:*"
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useSelfLiquidationData": "workspace:*"
+    "@snx-v2/useSelfLiquidationMutation": "workspace:*"
+    "@storybook/react": ^6.5.10
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
+    react-i18next: ^11.18.3
   languageName: unknown
   linkType: soft
 
@@ -7223,6 +7257,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/WalletModal@workspace:*, @snx-v2/WalletModal@workspace:v2/components/WalletModal":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/WalletModal@workspace:v2/components/WalletModal"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/ExternalLink": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/txnLink": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useSynthsBalances": "workspace:*"
+    "@storybook/react": ^6.5.10
+    "@synthetixio/v3-theme": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+    react-router-dom: ^6.3.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/Welcome@workspace:^, @snx-v2/Welcome@workspace:v2/components/Welcome":
   version: 0.0.0-use.local
   resolution: "@snx-v2/Welcome@workspace:v2/components/Welcome"
@@ -7244,7 +7299,9 @@ __metadata:
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/v2-ui": "workspace:*"
     cypress: ^10.10.0
+    dotenv: ^16.0.0
     ethers: ^5.7.2
+    node-fetch: ^2.6.7
     react-router-dom: ^6.3.0
   languageName: unknown
   linkType: soft
@@ -7498,12 +7555,26 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSelfLiquidationData@workspace:v2/lib/useSelfLiquidationData"
   dependencies:
+    "@ethersproject/bignumber": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useSelfLiquidationMutation@workspace:*, @snx-v2/useSelfLiquidationMutation@workspace:v2/lib/useSelfLiquidationMutation":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useSelfLiquidationMutation@workspace:v2/lib/useSelfLiquidationMutation"
+  dependencies:
+    "@snx-v2/txnReducer": "workspace:*"
+    "@snx-v2/useGasOptions": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -9642,6 +9713,7 @@ __metadata:
     "@babel/preset-env": ^7.19.4
     "@babel/preset-react": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
+    "@chakra-ui/icon": ^3.0.11
     "@chakra-ui/icons": ^2.0.9
     "@chakra-ui/react": ^2.2.8
     "@emotion/react": ^11.10.0

@@ -28,7 +28,11 @@ export const EthGasPriceEstimatorUi: React.FC<{
     <Flex width="full" justifyContent="space-between" alignItems="center">
       <Flex>
         <Text mr={1}>{t('staking-v2.eth-gas-price-estimator.gas-price-label')}</Text>
-        <Tooltip label={t('staking-v2.eth-gas-price-estimator.gas-price-tooltip')} hasArrow>
+        <Tooltip
+          label={t('staking-v2.eth-gas-price-estimator.gas-price-tooltip')}
+          hasArrow
+          bg="gray.900"
+        >
           <Flex alignItems="center">
             <InfoIcon />
           </Flex>

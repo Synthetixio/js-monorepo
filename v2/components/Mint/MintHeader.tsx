@@ -39,7 +39,7 @@ const NewStakerHeader: FC<{ nextEpochStartDate?: Date; SNXRate?: number }> = ({
           lineHeight="4"
         >
           {t('staking-v2.mint.epoch')}
-          <Tooltip hasArrow label="Soonthetix">
+          <Tooltip hasArrow label="Soonthetix" bg="gray.900">
             <Box as="span" ml={1}>
               <InfoIcon color="whiteAlpha.700" width="12px" height="12px" mb={0.5} />
             </Box>

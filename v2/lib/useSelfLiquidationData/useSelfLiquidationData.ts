@@ -6,6 +6,8 @@ import { wei } from '@synthetixio/wei';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useLiquidationData } from '@snx-v2/useLiquidationData';
+import { getHealthVariant } from '@snx-v2/getHealthVariant';
+import { BigNumber } from '@ethersproject/bignumber';
 
 export const useSelfLiquidationData = () => {
   const { networkId } = useContext(ContractContext);
@@ -14,13 +16,25 @@ export const useSelfLiquidationData = () => {
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: liquidationData } = useLiquidationData();
-  const { debtBalance, collateral } = debtData || {};
+  const {
+    debtBalance,
+    collateral,
+    targetCRatioPercentage,
+    currentCRatioPercentage,
+    liquidationRatioPercentage,
+  } = debtData || {};
   const { SNX: SNXRate } = exchangeRateData || {};
   const { selfLiquidationPenalty } = liquidationData || {};
   const collateralInUsd = SNXRate ? collateral?.mul(SNXRate) : undefined;
+  const health = getHealthVariant({
+    targetCratioPercentage: targetCRatioPercentage?.toNumber(),
+    currentCRatioPercentage: currentCRatioPercentage?.toNumber(),
+    liquidationCratioPercentage: liquidationRatioPercentage?.toNumber(),
+  });
   const enabled = Boolean(
-    collateralInUsd && debtBalance && selfLiquidationPenalty && SNXRate && Liquidator
+    collateralInUsd && debtBalance && selfLiquidationPenalty && SNXRate && Liquidator && health
   );
+
   return useQuery(
     ['useSelfLiquidationData', networkId, enabled],
     async () => {
@@ -30,21 +44,27 @@ export const useSelfLiquidationData = () => {
         !collateralInUsd ||
         !debtBalance ||
         !selfLiquidationPenalty ||
-        !SNXRate
+        !SNXRate ||
+        !health
       ) {
         throw Error('Query should not be enabled if contracts or network are missing');
       }
+
       const [amountToLiquidateBn, amountToLiquidateNoPenaltyBn] = await Promise.all([
-        Liquidator.calculateAmountToFixCollateral(
-          debtBalance.toBN(),
-          collateralInUsd.toBN(),
-          selfLiquidationPenalty.toBN()
-        ),
-        Liquidator.calculateAmountToFixCollateral(
-          debtBalance.toBN(),
-          collateralInUsd.toBN(),
-          wei(0).toBN()
-        ),
+        health === 'success'
+          ? BigNumber.from(0)
+          : Liquidator.calculateAmountToFixCollateral(
+              debtBalance.toBN(),
+              collateralInUsd.toBN(),
+              selfLiquidationPenalty.toBN()
+            ),
+        health === 'success'
+          ? BigNumber.from(0)
+          : Liquidator.calculateAmountToFixCollateral(
+              debtBalance.toBN(),
+              collateralInUsd.toBN(),
+              wei(0).toBN()
+            ),
       ]);
       const amountToLiquidate = wei(amountToLiquidateBn);
       const amountToLiquidateNoPenalty = wei(amountToLiquidateNoPenaltyBn);
