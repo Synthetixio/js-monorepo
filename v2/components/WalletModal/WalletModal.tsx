@@ -21,15 +21,14 @@ import { getEtherscanBaseUrl } from '@snx-v2/txnLink';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
-import Wei from '@synthetixio/wei';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
 
 type BalanceObject = {
   currencyKey: string;
-  balance: Wei;
-  usdBalance: Wei;
+  balance: number;
+  usdBalance: number;
   icon?: ReactElement;
 };
 export const WalletModalUi: FC<{
@@ -92,9 +91,9 @@ export const WalletModalUi: FC<{
                     {icon} <Text ml={1}>{currencyKey}</Text>
                   </Flex>
                   <Flex flexDirection="column">
-                    <Text textAlign="right">{formatNumber(balance.toNumber())}</Text>
+                    <Text textAlign="right">{formatNumber(balance)}</Text>
                     <Text color="gray.800" textAlign="right">
-                      {formatNumberToUsd(usdBalance.toNumber())}
+                      {formatNumberToUsd(usdBalance)}
                     </Text>
                   </Flex>
                 </Flex>
@@ -134,14 +133,16 @@ export const WalletModal: FC<{
     debtData && exchangeRateData
       ? {
           currencyKey: 'SNX',
-          balance: debtData.collateral,
-          usdBalance: debtData.collateral.mul(exchangeRateData.SNX || 0),
+          balance: debtData.collateral.toNumber(),
+          usdBalance: debtData.collateral.mul(exchangeRateData.SNX || 0).toNumber(),
           icon: <SNXIcon />,
         }
       : undefined;
 
   const synthBalances = synthBalancesData?.balances.slice(0, 5).map((x) => ({
-    ...x,
+    currencyKey: x.currencyKey,
+    balance: x.balance.toNumber(),
+    usdBalance: x.usdBalance.toNumber(),
     icon: <img width="24px" height="24px" src={getSynthIcon(x.currencyKey)} />,
   }));
   const balances = snxBalance && synthBalances ? [snxBalance].concat(synthBalances) : undefined;

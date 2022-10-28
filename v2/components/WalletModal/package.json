@@ -13,8 +13,8 @@
     "@snx-v2/useDebtData": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useSynthsBalances": "workspace:*",
+    "@storybook/react": "^6.5.10",
     "@synthetixio/v3-theme": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
     "react": "^18.2.0",
     "react-i18next": "^11.18.3",
     "react-router-dom": "^6.3.0"
