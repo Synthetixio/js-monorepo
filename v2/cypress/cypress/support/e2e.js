@@ -1,8 +1,11 @@
 import '@cypress/code-coverage/support';
 import { ethers } from 'ethers';
 import { subgraph } from '../lib/subgraph';
+import { onLogAdded } from '../lib/onLogAdded';
 
 beforeEach(() => {
+  cy.on('log:added', onLogAdded);
+
   cy.intercept('https://analytics.synthetix.io/matomo.js', { statusCode: 204 }).as('matomo');
 
   // Because we are working with tenderly fork, subgraph becomes irrelevant
@@ -65,9 +68,4 @@ beforeEach(() => {
       },
     });
   });
-});
-
-afterEach(() => {
-  // cy.task('forkReset');
-  // cy.intercept('http://127.0.0.1:8545', { statusCode: 404 }).as('rpc');
 });

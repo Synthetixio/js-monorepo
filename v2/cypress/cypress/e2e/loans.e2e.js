@@ -1,5 +1,3 @@
-import { subgraph } from '../lib/subgraph';
-
 it('Can borrow sUSD with ETH collateral', () => {
   cy.viewport(1000, 1200);
   cy.task('removeEthCollateralInteractionDelay');

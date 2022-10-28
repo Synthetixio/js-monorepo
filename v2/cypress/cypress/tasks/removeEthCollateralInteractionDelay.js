@@ -25,9 +25,9 @@ export async function removeEthCollateralInteractionDelay() {
     console.log('removeEthCollateralInteractionDelay', { tx: receipt.transactionHash });
     await provider.send('anvil_stopImpersonatingAccount', [owner]);
 
-    console.log('removeMinimumStakeTime', { result: 'OK' });
+    console.log('removeEthCollateralInteractionDelay', { result: 'OK' });
   } else {
-    console.log('removeMinimumStakeTime', { result: 'SKIP' });
+    console.log('removeEthCollateralInteractionDelay', { result: 'SKIP' });
   }
 
   return null;

@@ -181,6 +181,8 @@ jobs:
     docker:
       - image: cypress/included:<< pipeline.parameters.cypress-version >>
     resource_class: large
+    environment:
+      NODE_ENV: test
     steps:
       - checkout
       - yarn-install
@@ -188,7 +190,7 @@ jobs:
       - run:
           name: Run server localhost:3000
           working_directory: /tmp/app/v2/ui
-          command: NODE_ENV=test yarn start
+          command: yarn start
           background: true
 
       - run:
@@ -206,12 +208,12 @@ jobs:
           command: wget --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 http://localhost:3000
 
       - run:
-          name: Wait for server localhost:3000
+          name: Wait for anvil localhost:8545
           command: wget -q -O - --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data='{"method":"eth_chainId","params":[],"id":1,"jsonrpc":"2.0"}' --header='Content-Type:application/json' http://localhost:8545
 
       - run:
           working_directory: /tmp/app/v2/cypress
-          command: NODE_ENV=test cypress run --e2e --browser chrome
+          command: cypress run --e2e --browser chrome
 
       - store_test_results:
           path: 'v2/cypress/cypress/reports'
@@ -236,13 +238,15 @@ jobs:
     working_directory: /tmp/app
     docker:
       - image: cypress/included:<< pipeline.parameters.cypress-version >>
+    environment:
+      NODE_ENV: test
     steps:
       - checkout
       - yarn-install
 
       - run:
           working_directory: /tmp/app/v2/cypress
-          command: NODE_ENV=test cypress run --component --browser chrome
+          command: cypress run --component --browser chrome
 
       - store_test_results:
           path: 'v2/cypress/cypress/reports'
