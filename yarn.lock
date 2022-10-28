@@ -7129,6 +7129,7 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/EpochPrice": "workspace:^"
     "@snx-v2/UserBalances": "workspace:*"
+    "@snx-v2/WalletModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
@@ -7138,6 +7139,7 @@ __metadata:
     "@storybook/react": ^6.5.10
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    react: ^18.2.0
     react-i18next: ^11.18.3
     react-router-dom: ^6.3.0
   languageName: unknown
@@ -7252,6 +7254,28 @@ __metadata:
     "@snx-v2/icons": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/WalletModal@workspace:*, @snx-v2/WalletModal@workspace:v2/components/WalletModal":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/WalletModal@workspace:v2/components/WalletModal"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/ExternalLink": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/txnLink": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useSynthsBalances": "workspace:*"
+    "@synthetixio/v3-theme": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    react: ^18.2.0
+    react-copy-to-clipboard: ^5.1.0
+    react-i18next: ^11.18.3
+    react-router-dom: ^6.3.0
   languageName: unknown
   linkType: soft
 

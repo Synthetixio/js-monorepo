@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Button,
   Center,
@@ -9,7 +10,6 @@ import {
   Text,
   useBreakpointValue,
 } from '@chakra-ui/react';
-
 import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface';
 import {
   ChevronDown,
@@ -38,6 +38,7 @@ import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { EpochPrice } from '@snx-v2/EpochPrice';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
+import { WalletModal } from '@snx-v2/WalletModal';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -48,6 +49,7 @@ interface NavigationProps {
   isLoading: boolean;
   snxBalance: Wei;
   sUSDBalance: Wei;
+  disconnectWallet: () => Promise<void>;
 }
 
 const activeIcon = (currentNetwork: NetworkId) => {
@@ -75,9 +77,10 @@ export const NavigationUI = ({
   isLoading,
   snxBalance,
   sUSDBalance,
+  disconnectWallet,
 }: NavigationProps) => {
   const { t } = useTranslation();
-
+  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const { name, icon } = activeIcon(currentNetwork);
   const navigate = useNavigate();
 
@@ -257,7 +260,7 @@ export const NavigationUI = ({
                 <Text ml={2}>{t('common.wallet.menu.gov')}</Text>
               </Center>
             </MenuItem>
-            <MenuItem onClick={() => navigate('/')}>
+            <MenuItem onClick={() => setIsWalletModalOpen(true)}>
               <Center>
                 <WalletIcon color="white" />
                 <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>
@@ -276,6 +279,11 @@ export const NavigationUI = ({
           </MenuList>
         </Menu>
       </Flex>
+      <WalletModal
+        isWalletModalOpen={isWalletModalOpen}
+        setIsWalletModalOpen={setIsWalletModalOpen}
+        disconnectWallet={disconnectWallet}
+      />
     </Flex>
   );
 };
@@ -286,6 +294,7 @@ export const Navigation = ({
   connectWallet,
   isWalletConnected,
   walletAddress,
+  disconnectWallet,
 }: Omit<NavigationProps, 'snxBalance' | 'sUSDBalance' | 'isLoading'>) => {
   const { data: synthsBalances, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: debtData, isLoading: isDebtLoading } = useDebtData();
@@ -323,6 +332,7 @@ export const Navigation = ({
         isLoading={isLoading}
         snxBalance={debtData?.collateral || wei(0)}
         sUSDBalance={synthsBalances?.balancesMap['sUSD']?.balance || wei(0)}
+        disconnectWallet={disconnectWallet}
       />
       {size === 'mobile' && (
         <EpochPrice
