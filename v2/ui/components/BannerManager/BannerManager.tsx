@@ -12,6 +12,8 @@ import { EXTERNAL_LINKS } from 'constants/links';
 import Connector from 'containers/Connector';
 import { isAnyElectionInNomination, isAnyElectionInVoting } from 'utils/governance';
 
+const kwentaTokenLive = true;
+
 const BannerManager: FC = () => {
   const { subgraph, useGetLiquidationDataQuery, useGetDebtDataQuery, useGetElectionsPeriodStatus } =
     useSynthetixQueries();
@@ -56,6 +58,20 @@ const BannerManager: FC = () => {
               <Strong />,
               <StyledExternalLink href={EXTERNAL_LINKS.Synthetix.SIP148Liquidations} />,
             ]}
+          />
+        }
+      />
+    );
+  }
+  if (kwentaTokenLive) {
+    return (
+      <Banner
+        type={BannerType.INFORMATION}
+        localStorageKey={LOCAL_STORAGE_KEYS.KWENTA_TOKEN_LIVE}
+        message={
+          <Trans
+            i18nKey="user-menu.banner.kwenta-token"
+            components={[<StyledExternalLink href="waiting for url" />]} // TODO
           />
         }
       />
