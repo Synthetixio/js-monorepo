@@ -45,6 +45,10 @@ const chains = [
   },
 ];
 
+const encodeAddress = (address: string | undefined) => {
+  return address ? ethers.utils.defaultAbiCoder.encode(['address'], [address]) : undefined;
+};
+
 export const Teleporter = () => {
   const { address } = useAccount();
   const toast = useToast();
@@ -81,7 +85,7 @@ export const Teleporter = () => {
     args: [
       to,
       [
-        ethers.utils.defaultAbiCoder.encode(['address'], [address]),
+        encodeAddress(address),
         '0x',
         [snxUsdProxy!.address],
         [ethers.utils.parseEther(amount.toString())],
