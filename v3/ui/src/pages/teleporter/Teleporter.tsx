@@ -15,6 +15,7 @@ import {
   MenuList,
   MenuItem,
   useToast,
+  Stack,
 } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { ethers } from 'ethers';
@@ -145,7 +146,7 @@ export const Teleporter = () => {
         <title>Teleporter snxUSD</title>
       </Head>
       <Container maxW="lg">
-        <Flex height="100%" direction="column" flex="1" py="12">
+        <Flex height="100%" direction="column" flex="1" py={[4, 6, 12]}>
           <Heading size="lg" mb="3">
             Teleport snxUSD
           </Heading>
@@ -158,10 +159,11 @@ export const Teleporter = () => {
               From
             </Text>
             <form>
-              <Flex mb="3">
+              <Stack direction={['column', 'column', 'row']} spacing="20px" mb="3">
                 <Menu>
                   <MenuButton
-                    minWidth="200px"
+                    minHeight="48px"
+                    minWidth={['0px', '200px']}
                     borderWidth="1px"
                     borderColor="gray.800"
                     borderRadius="6px"
@@ -234,7 +236,7 @@ export const Teleporter = () => {
                     snxUSD
                   </InputRightAddon>
                 </InputGroup>
-              </Flex>
+              </Stack>
 
               <Flex alignItems="center" justifyContent="flex-end">
                 <Balance
@@ -254,10 +256,11 @@ export const Teleporter = () => {
               To
             </Text>
             <form>
-              <Flex mb="3">
+              <Stack direction={['column', 'column', 'row']} spacing="20px" mb="3">
                 <Menu>
                   <MenuButton
-                    minWidth="200px"
+                    minHeight="48px"
+                    minWidth={['0px', '200px']}
                     borderWidth="1px"
                     borderColor="gray.800"
                     borderRadius="6px"
@@ -330,7 +333,7 @@ export const Teleporter = () => {
                     snxUSD
                   </InputRightAddon>
                 </InputGroup>
-              </Flex>
+              </Stack>
 
               <Flex alignItems="center">
                 <Text fontSize="xs" textAlign="right" ml="auto" color="gray.300">
