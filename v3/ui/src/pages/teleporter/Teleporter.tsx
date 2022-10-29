@@ -151,7 +151,7 @@ export const Teleporter = () => {
             Teleport snxUSD
           </Heading>
           <Text mb="7" color="whiteAlpha.800">
-            Transfer snxUSD in your wallet across chains.
+            Transfer snxUSD in your wallet across chains without slippage.
           </Text>
 
           <Box bg="whiteAlpha.200" p="6" pb="4" borderRadius="12px">
