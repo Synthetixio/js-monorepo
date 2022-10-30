@@ -26,7 +26,7 @@ export default function Home() {
           <div class="col">
             <a target="_blank" className="intro-link" href="/protocol/overview">
               <h1>Synthetix Protocol</h1>
-              <span>Create, trade, and stake for on-chain derivatives.</span>
+              <span>Create and back for on-chain derivatives.</span>
             </a>
           </div>
         </div>
@@ -36,8 +36,7 @@ export default function Home() {
             <a target="_blank" className="intro-link" href="/governance/overview">
               <h1>Governance</h1>
               <span>
-                Vote for the DAO and review SIPs &amp; SCCPs for protocol upgrades and
-                configurations.
+                Vote for DAO members. Review proposed protocol upgrades and configuration changes.
               </span>
             </a>
           </div>

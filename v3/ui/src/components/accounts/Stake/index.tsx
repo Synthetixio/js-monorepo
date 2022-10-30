@@ -9,7 +9,7 @@ import { EditIcon, InfoOutlineIcon, LockIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
-  Flex,
+  Stack,
   IconButton,
   Input,
   Link,
@@ -125,8 +125,9 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
               createAccount();
             })}
           >
-            <Flex mb="3">
+            <Stack direction={['column', 'column', 'row']} spacing="20px" mb="3">
               <Input
+                minHeight="48px"
                 flex="1"
                 type="number"
                 size="lg"
@@ -186,11 +187,11 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
                   Connect Wallet
                 </Button>
               )}
-            </Flex>
+            </Stack>
 
-            <Flex alignItems="center">
+            <Stack direction={['column', 'column', 'row']} spacing="10px" alignItems="center">
               {hasWalletConnected && (
-                <Box>
+                <Box mr="auto">
                   <Balance
                     balance={balanceData?.value}
                     decimals={selectedCollateralType.decimals}
@@ -202,7 +203,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
               )}
 
               {Boolean(accountId) ? (
-                <Text fontSize="xs" textAlign="right" ml="auto">
+                <Text fontSize="xs" ml="auto">
                   Pool:{' '}
                   {selectedPoolId
                     ? poolsData[selectedPoolId]
@@ -214,17 +215,14 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
                   </Link>
                 </Text>
               ) : (
-                <Text fontSize="xs" textAlign="right" ml="auto">
+                <Text fontSize="xs" ml="auto">
                   Receive an snxAccount token{' '}
-                  <Tooltip
-                    textAlign="center"
-                    label="You will be minted an NFT that represents your account. You can easily transfer it between wallets."
-                  >
+                  <Tooltip label="You will be minted an NFT that represents your account. You can easily transfer it between wallets.">
                     <InfoOutlineIcon transform="translateY(-1px)" />
                   </Tooltip>
                 </Text>
               )}
-            </Flex>
+            </Stack>
           </form>
         </Box>
 

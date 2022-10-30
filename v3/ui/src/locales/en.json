@@ -17,7 +17,7 @@
   },
   "home": {
     "createAccount": {
-      "description": "Stake with Synthetix to enable the creation of synthetic assets on-chain. You earn yield but must also maintain your C-Ratio."
+      "description": "Stake with Synthetix to back synthetic assets on-chain. You earn cnayield but must also maintain your C-Ratio."
     },
     "stake": {
       "selectFund": "Select Fund",

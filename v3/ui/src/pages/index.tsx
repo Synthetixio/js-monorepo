@@ -17,8 +17,15 @@ export function Home() {
   }, []);
 
   return (
-    <Flex flex="1">
-      <Container maxW="container.sm" py="8">
+    <Flex
+      height="100%"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      flex="1"
+      pb="12"
+    >
+      <Container maxW="container.sm" pt="0" pb="24">
         <CreateAccount />
       </Container>
     </Flex>

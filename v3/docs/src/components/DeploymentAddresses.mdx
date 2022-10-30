@@ -4,6 +4,12 @@ export const DeploymentAddresses = ({ chainId }) => {
     5: 'https://goerli.etherscan.io/address/',
     420: 'https://goerli-optimism.etherscan.io/',
   };
+  const displayNames = {
+    CoreProxy: 'Core System',
+    AccountProxy: 'Account Token',
+    SNXProxy: 'SNX Token',
+    USDProxy: 'snxUSD token',
+  };
   const data = deployments.deploys[chainId].main.outputs.contracts;
   const modules = {};
   Object.keys(deployments.deploys[chainId].main.def.run).map((key, index) => {
@@ -34,7 +40,9 @@ export const DeploymentAddresses = ({ chainId }) => {
         {processed.map((contract, index) => {
           return (
             <tr key={index}>
-              <td>{contract.name.replace('Proxy', '')}</td>
+              <td style={{ whiteSpace: 'nowrap' }}>
+                {displayNames[contract.name] || contract.name}
+              </td>
               <td>
                 <a target="_blank" href={contract.etherscan}>
                   {contract.address}
@@ -43,9 +51,13 @@ export const DeploymentAddresses = ({ chainId }) => {
               <td>
                 {modules[contract.name.replace('Proxy', '').toLowerCase()].map((module, index2) => {
                   return (
-                    <span key={index2}>
-                      <a href={'./smart-contracts#' + kebabize(module)}>{module}</a>,{' '}
-                    </span>
+                    <small key={index2}>
+                      <a href={'./smart-contracts#' + kebabize(module)}>{module}</a>
+                      {modules[contract.name.replace('Proxy', '').toLowerCase()].length - 1 ==
+                      index2
+                        ? ''
+                        : ', '}
+                    </small>
                   );
                 })}
               </td>

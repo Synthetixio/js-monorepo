@@ -143,7 +143,7 @@ export const Teleporter = () => {
   return (
     <>
       <Head>
-        <title>Teleporter snxUSD</title>
+        <title>Teleport snxUSD</title>
       </Head>
       <Container maxW="lg">
         <Flex height="100%" direction="column" flex="1" py={[4, 6, 12]}>
@@ -240,6 +240,7 @@ export const Teleporter = () => {
 
               <Flex alignItems="center" justifyContent="flex-end">
                 <Balance
+                  onMax={(balance) => setAmount(parseFloat(balance) || 0)}
                   balance={balance.value}
                   decimals={balance.decimals}
                   symbol="snxUsd"

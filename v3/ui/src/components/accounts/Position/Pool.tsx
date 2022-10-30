@@ -11,8 +11,8 @@ import {
   Td,
   Heading,
   useDisclosure,
-  Alert,
-  AlertIcon,
+  Button,
+  Flex,
 } from '@chakra-ui/react';
 import { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -40,37 +40,36 @@ export const Pool: FC<Props> = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const pool = poolsData[poolId.toString()];
   return (
-    <Box mb="2">
-      <Alert status="info" mt="3" mb="6">
-        <AlertIcon />
-        By pooling liquidity for markets, you’re backing synthetic assets on-chain. You can earn
-        fees and rewards, but your debt may increase and harm your C-Ratio.
-      </Alert>
-      <Box mb="6">
-        <Text fontSize="sm" fontWeight="semibold">
-          Current Pool
-        </Text>
-        <Heading size="lg" mb="1">
-          {pool?.name}
-          <Link
-            color="cyan.500"
-            ml="1.5"
-            display="inline-block"
-            transform="translateY(-2px)"
+    <Box my="4">
+      <Flex mb="6">
+        <Box>
+          <Text fontSize="sm" fontWeight="semibold">
+            Current Pool
+          </Text>
+          <Heading size="lg" mb="1">
+            {pool?.name}
+          </Heading>
+          <Text fontSize="sm">
+            <span style={{ opacity: 0.8 }}>Pool #{poolId}</span>
+            <RouterLink to={`/pools/${poolId}`}>
+              <Link color="cyan.500" ml="1" display="inline-block" transform="translateY(-2px)">
+                <ExternalLinkIcon />
+              </Link>
+            </RouterLink>
+          </Text>
+        </Box>
+        <Box ml="auto">
+          <Button
+            transform="translateY(-3px)"
+            size="xs"
             onClick={onOpen}
+            variant="outline"
+            colorScheme="gray"
           >
-            <EditIcon w="5" />
-          </Link>
-        </Heading>
-        <Text fontSize="sm">
-          <span style={{ opacity: 0.8 }}>Pool #{poolId}</span>
-          <RouterLink to={`/pools/${poolId}`}>
-            <Link color="cyan.500" ml="1" display="inline-block" transform="translateY(-2px)">
-              <ExternalLinkIcon />
-            </Link>
-          </RouterLink>
-        </Text>
-      </Box>
+            <EditIcon transform="translateY(-0.5px)" opacity="0.66" mr="1.5" /> Change Pool
+          </Button>
+        </Box>
+      </Flex>
 
       <PoolDialog
         collateralAmount={collateralAmount}
