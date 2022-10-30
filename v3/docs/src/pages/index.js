@@ -26,7 +26,7 @@ export default function Home() {
           <div class="col">
             <a target="_blank" className="intro-link" href="/protocol/overview">
               <h1>Synthetix Protocol</h1>
-              <span>Create and back for on-chain derivatives.</span>
+              <span>Create and back on-chain derivatives.</span>
             </a>
           </div>
         </div>
