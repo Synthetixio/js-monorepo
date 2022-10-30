@@ -7170,6 +7170,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/Settings@workspace:^, @snx-v2/Settings@workspace:v2/components/Settings":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/Settings@workspace:v2/components/Settings"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:*"
+    "@storybook/react": ^6.5.10
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/SignerContext@workspace:*, @snx-v2/SignerContext@workspace:v2/lib/SignerContext":
   version: 0.0.0-use.local
   resolution: "@snx-v2/SignerContext@workspace:v2/lib/SignerContext"
@@ -9494,6 +9506,7 @@ __metadata:
     "@snx-v2/Mint": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
     "@snx-v2/SelfLiquidation": "workspace:*"
+    "@snx-v2/Settings": "workspace:^"
     "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"

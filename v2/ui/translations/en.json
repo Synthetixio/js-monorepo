@@ -3,6 +3,11 @@
     "en": "English"
   },
   "staking-v2": {
+    "settings": {
+      "title": "Settings",
+      "language": "Language",
+      "currency": "Currency"
+    },
     "home": {
       "title": "Welcome to Synthetix",
       "description": "Stake your SNX to borrow sUSD and contribute to the network collateral. If you’ve never staked before please read through this <0>quick introduction</0> first. Follow the steps below to get started.",
