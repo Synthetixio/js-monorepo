@@ -92,7 +92,7 @@ export const Settings = ({ isOpen, onClose }: SettingsProps) => {
                   </Flex>
                 </MenuButton>
                 <MenuList mt={0} bg="gray.900">
-                  <MenuItem width="100%" onClick={() => console.log('Hello')}>
+                  <MenuItem width="100%" onClick={() => console.log('English')}>
                     <Text width="100%">English</Text>
                   </MenuItem>
                 </MenuList>
@@ -135,7 +135,7 @@ export const Settings = ({ isOpen, onClose }: SettingsProps) => {
                     borderRadius="lg"
                   >
                     <Text fontWeight={700} ml={1.5} mr={2}>
-                      {/* TODO Connect with Existing Settings */}
+                      {/* TODO Connect with Existing Currency */}
                       sUSD
                     </Text>
                     {isOpen ? <ChevronUp color="cyan" /> : <ChevronDown color="cyan.500" />}
