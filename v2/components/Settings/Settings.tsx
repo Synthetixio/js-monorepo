@@ -17,8 +17,7 @@ interface SettingsProps {
 }
 
 export const Settings = ({ isOpen, onClose }: SettingsProps) => {
-  console.log('is open', isOpen);
-  console.log('On close', onClose);
+  console.log(isOpen, onClose);
   const { t } = useTranslation();
 
   return (
