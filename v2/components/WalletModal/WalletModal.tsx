@@ -38,10 +38,20 @@ export const WalletModalUi: FC<{
   onClose: () => void;
   disconnectWallet: () => Promise<void>;
   walletType: string | null;
+  ensName: string | null;
   walletAddress: string | null;
   networkId: number | null;
   balances?: BalanceObject[];
-}> = ({ isOpen, onClose, disconnectWallet, networkId, walletAddress, balances, walletType }) => {
+}> = ({
+  isOpen,
+  onClose,
+  disconnectWallet,
+  networkId,
+  walletAddress,
+  balances,
+  walletType,
+  ensName,
+}) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { hasCopied, onCopy } = useClipboard(walletAddress || '');
@@ -74,7 +84,8 @@ export const WalletModalUi: FC<{
             </Flex>
             <Flex alignItems="center" justifyContent="space-between">
               <Flex>
-                <AvatarIcon mr={2} /> {walletAddress && truncateAddress(walletAddress)}
+                <AvatarIcon mr={2} />{' '}
+                {ensName ? ensName : walletAddress && truncateAddress(walletAddress)}
               </Flex>
             </Flex>
             <Flex>
@@ -148,7 +159,7 @@ export const WalletModal: FC<{
   const { data: synthBalancesData } = useSynthsBalances();
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
-  const { walletAddress, networkId, walletType } = useContext(ContractContext);
+  const { walletAddress, networkId, walletType, ensName } = useContext(ContractContext);
   const { data: synthByNameData } = useGetSynthsByName();
   const snxBalance: BalanceObject | undefined =
     debtData && exchangeRateData
@@ -176,6 +187,7 @@ export const WalletModal: FC<{
   return (
     <WalletModalUi
       {...props}
+      ensName={ensName}
       walletType={walletType}
       balances={balances}
       walletAddress={walletAddress}

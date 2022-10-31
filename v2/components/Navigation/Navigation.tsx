@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {
   Button,
   Center,
@@ -39,6 +40,7 @@ import { EpochPrice } from '@snx-v2/EpochPrice';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { WalletModal } from '@snx-v2/WalletModal';
+import { ContractContext } from '@snx-v2/ContractContext';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -50,6 +52,7 @@ interface NavigationProps {
   snxBalance: Wei;
   sUSDBalance: Wei;
   disconnectWallet: () => Promise<void>;
+  ensName: string | null;
 }
 
 const activeIcon = (currentNetwork: NetworkId) => {
@@ -78,6 +81,7 @@ export const NavigationUI = ({
   snxBalance,
   sUSDBalance,
   disconnectWallet,
+  ensName,
 }: NavigationProps) => {
   const { t } = useTranslation();
 
@@ -130,7 +134,7 @@ export const NavigationUI = ({
             >
               <WalletIcon />
               <Text ml={1} variant="nav" fontWeight={700} fontSize="12" userSelect="none">
-                {truncateAddress(walletAddress, 4, 4)}
+                {ensName ? ensName : truncateAddress(walletAddress, 4, 4)}
               </Text>
             </Center>
           </>
@@ -290,14 +294,16 @@ export const Navigation = ({
   switchNetwork,
   connectWallet,
   isWalletConnected,
-  walletAddress,
   disconnectWallet,
-}: Omit<NavigationProps, 'snxBalance' | 'sUSDBalance' | 'isLoading'>) => {
+}: Omit<
+  NavigationProps,
+  'snxBalance' | 'sUSDBalance' | 'isLoading' | 'walletAddress' | 'ensName'
+>) => {
   const { data: synthsBalances, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: debtData, isLoading: isDebtLoading } = useDebtData();
   const { data: exchangeRateData, isLoading: isExchangeRatesLoading } = useExchangeRatesData();
   const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
-
+  const { walletAddress, ensName } = useContext(ContractContext);
   const size = useBreakpointValue(
     {
       base: 'mobile',
@@ -330,6 +336,7 @@ export const Navigation = ({
         snxBalance={debtData?.collateral || wei(0)}
         sUSDBalance={synthsBalances?.balancesMap['sUSD']?.balance || wei(0)}
         disconnectWallet={disconnectWallet}
+        ensName={ensName}
       />
       {size === 'mobile' && (
         <EpochPrice
