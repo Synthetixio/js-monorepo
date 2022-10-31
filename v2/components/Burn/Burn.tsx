@@ -399,14 +399,30 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     switch (badgeType) {
       case 'toTarget':
         const burnAmount = Wei.max(debtData.debtBalance.sub(debtData.issuableSynths), wei(0));
+        const burnAmountString = formatNumber(burnAmount.toNumber());
         setActiveBadge('toTarget');
-        setBurnAmountSusd(formatNumber(burnAmount.toNumber()));
+        const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
+          burnAmountString,
+          debtData.targetCRatio.toNumber(),
+          exchangeRateData?.SNX?.toNumber()
+        );
+        setBurnAmountSusd(burnAmountString);
+        setSnxUnstakingAmount(snxUnstakingAmount);
         return;
 
-      case 'max':
+      case 'max': {
         setActiveBadge('max');
-        setBurnAmountSusd(formatNumber(susdBalance.toNumber()));
+        const burnAmountString = formatNumber(susdBalance.toNumber());
+        const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
+          burnAmountString,
+          debtData.targetCRatio.toNumber(),
+          exchangeRateData?.SNX?.toNumber()
+        );
+        setBurnAmountSusd(burnAmountString);
+        setSnxUnstakingAmount(snxUnstakingAmount);
+
         return;
+      }
     }
   };
 

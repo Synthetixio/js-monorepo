@@ -1,4 +1,4 @@
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber, parseFloatWithCommas } from '@snx-v2/formatters';
 import Wei, { wei } from '@synthetixio/wei';
 
 export const calculateStakedSnx = ({
@@ -33,7 +33,7 @@ const calculateDebtFromCollateral = (
   targetCRatio?: number,
   collateralPrice?: number
 ) => {
-  const num = parseFloat(collateral);
+  const num = parseFloatWithCommas(collateral);
   if (isNaN(num)) return '';
   if (!targetCRatio || !collateralPrice) return '';
 
@@ -45,7 +45,7 @@ const calculateCollateralFromDebt = (
   targetCRatio?: number,
   collateralPrice?: number
 ) => {
-  const num = parseFloat(debtUsd);
+  const num = parseFloatWithCommas(debtUsd);
   if (isNaN(num)) return '';
   if (!targetCRatio || !collateralPrice) return '';
 
