@@ -2,13 +2,13 @@ import deployments from './deployments.json';
 export const DeploymentAddresses = ({ chainId }) => {
   const etherscanBase = {
     5: 'https://goerli.etherscan.io/address/',
-    420: 'https://goerli-optimism.etherscan.io/',
+    420: 'https://goerli-optimism.etherscan.io/address/',
   };
   const displayNames = {
     CoreProxy: 'Core System',
     AccountProxy: 'Account Token',
     SNXProxy: 'SNX Token',
-    USDProxy: 'snxUSD token',
+    USDProxy: 'snxUSD Token',
   };
   const data = deployments.deploys[chainId].main.outputs.contracts;
   const modules = {};

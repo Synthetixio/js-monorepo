@@ -133,7 +133,6 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
                 size="lg"
                 border="none"
                 placeholder="0.0"
-                mr="4"
                 id="amount"
                 step="any"
                 min="0"
@@ -189,18 +188,20 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
               )}
             </Stack>
 
-            <Stack direction={['column', 'column', 'row']} spacing="10px" alignItems="center">
-              {hasWalletConnected && (
-                <Box mr="auto">
-                  <Balance
-                    balance={balanceData?.value}
-                    decimals={selectedCollateralType.decimals}
-                    symbol={selectedCollateralType.symbol}
-                    onMax={(balance) => setValue('amount', balance)}
-                    address={selectedCollateralType.address}
-                  />
-                </Box>
-              )}
+            <Stack
+              direction={['column-reverse', 'column-reverse', 'row']}
+              spacing="10px"
+              alignItems="center"
+            >
+              <Box mr="auto">
+                <Balance
+                  balance={balanceData?.value}
+                  decimals={selectedCollateralType.decimals}
+                  symbol={selectedCollateralType.symbol}
+                  onMax={(balance) => setValue('amount', balance)}
+                  address={selectedCollateralType.address}
+                />
+              </Box>
 
               {Boolean(accountId) ? (
                 <Text fontSize="xs" ml="auto">
