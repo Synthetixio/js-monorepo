@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { FailedIcon, GuideIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
+import { FailedIcon, GuideIcon, InfoIcon, TokensIcon, SNXIconWithBorder } from '@snx-v2/icons';
 import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
 import { useMintMutation } from '@snx-v2/useMintMutation';
@@ -116,7 +116,7 @@ export const MintUi = ({
         <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2} my={3}>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
-              <TokensIcon />
+              <SNXIconWithBorder />
               <Text ml={2} fontFamily="heading" fontSize="lg" fontWeight="black">
                 SNX
               </Text>
