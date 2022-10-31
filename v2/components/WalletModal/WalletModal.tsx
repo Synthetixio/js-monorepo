@@ -144,7 +144,7 @@ export const WalletModal: FC<{
   const { data: exchangeRateData } = useExchangeRatesData();
   const { walletAddress, networkId } = useContext(ContractContext);
   const { data: synthByNameData } = useGetSynthsByName();
-  const snxBalance =
+  const snxBalance: BalanceObject | undefined =
     debtData && exchangeRateData
       ? {
           currencyKey: 'SNX',
