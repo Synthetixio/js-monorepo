@@ -7127,6 +7127,7 @@ __metadata:
   resolution: "@snx-v2/Navigation@workspace:v2/components/Navigation"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/EpochPrice": "workspace:^"
     "@snx-v2/UserBalances": "workspace:*"
     "@snx-v2/WalletModal": "workspace:*"
