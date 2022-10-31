@@ -122,7 +122,7 @@ export const BurnUi = ({
           >
             {t('staking-v2.burn.heading')}
           </Text>
-          <Tooltip label="Soonthetix" hasArrow bg="gray.900">
+          <Tooltip label="Soonthetix" hasArrow>
             <Flex alignItems="center">
               <InfoIcon width="12px" height="12px" />
             </Flex>
@@ -217,7 +217,7 @@ export const BurnUi = ({
               onClick={() => handleBadgePress('max')}
             >
               {t('staking-v2.burn.burn-max')}
-              <Tooltip label="Soonthetix" hasArrow bg="gray.900">
+              <Tooltip label="Soonthetix" hasArrow>
                 <Flex alignItems="center">
                   <InfoIcon
                     width="12px"
@@ -237,7 +237,7 @@ export const BurnUi = ({
               onClick={() => handleBadgePress('toTarget')}
             >
               {t('staking-v2.burn.burn-cratio')}
-              <Tooltip label="Soonthetix" hasArrow bg="gray.900">
+              <Tooltip label="Soonthetix" hasArrow>
                 <Flex alignItems="center">
                   <InfoIcon
                     width="12px"
@@ -267,7 +267,7 @@ export const BurnUi = ({
           >
             {t('staking-v2.burn.unstaking')}
           </Text>
-          <Tooltip label="Soonthetix" hasArrow bg="gray.900">
+          <Tooltip label="Soonthetix" hasArrow>
             <Flex>
               <InfoIcon width="12px" height="12px" />
             </Flex>

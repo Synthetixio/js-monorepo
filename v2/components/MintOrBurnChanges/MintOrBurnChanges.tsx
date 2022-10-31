@@ -32,7 +32,7 @@ const Row = ({
   const fontWeight = secondary ? 'normal' : 700;
   return (
     <Flex color={color} justifyContent="space-between" fontSize="xs" mt={secondary ? 1 : 4}>
-      <Tooltip label={tooltipText} hasArrow bg="gray.900">
+      <Tooltip label={tooltipText} hasArrow>
         <Flex alignItems="center">
           <Text fontWeight={fontWeight}>{label}</Text>
           <InfoIcon color="currentcolor" ml="1" />
@@ -74,7 +74,7 @@ export const MintOrBurnChangesUi: FC<{
   return (
     <Box bg="whiteAlpha.200" p={4} mt={4} mb={4} borderRadius="base">
       <Flex justifyContent="space-between" fontSize="xs">
-        <Tooltip label="Soonthetix" hasArrow bg="gray.900">
+        <Tooltip label="Soonthetix" hasArrow>
           <Flex alignItems="center">
             <Text fontWeight={700}>{t('staking-v2.mint-or-burn-changes.total-snx')}</Text>
             <InfoIcon ml="1" />
