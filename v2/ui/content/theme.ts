@@ -188,6 +188,9 @@ const Button: ComponentStyleConfig = {
         },
       },
     },
+    link: {
+      height: 10,
+    },
     outline: {
       bgColor: 'rgba(0, 209, 255, 0.12)',
       bgOpacity: '0.2',
