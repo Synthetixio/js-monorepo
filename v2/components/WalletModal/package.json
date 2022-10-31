@@ -9,6 +9,7 @@
     "@snx-v2/ExternalLink": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
+    "@snx-v2/synthsByName": "workspace:*",
     "@snx-v2/txnLink": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",

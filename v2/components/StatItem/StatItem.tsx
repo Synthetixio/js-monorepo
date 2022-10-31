@@ -42,10 +42,8 @@ export const StatItem = ({
             <Tooltip
               isDisabled={!!tooltipLabel}
               borderRadius="4px"
-              color="white"
               hasArrow
               label={tooltipLabel || ''}
-              bg="gray.900"
               p={2}
               mt={2}
             >

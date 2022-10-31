@@ -73,6 +73,7 @@ export const contracts = {
   MULTICALL: 'Multicall',
   SNX_TOKEN: 'snx.token',
   WETH: 'WETH',
+  CCIP: 'CCIP',
 };
 
 export const poolsData: Record<string, { name: string }> = {

@@ -1,15 +1,16 @@
 import { CollateralType } from '../../../utils/types';
+/*
 import { Heading, Link, UnorderedList, ListItem } from '@chakra-ui/react';
 import { BigNumber } from 'ethers';
 import { formatValue } from '../../../utils/helpers';
+*/
 
-export default function HowItWorks({
-  selectedCollateralType,
-}: {
+export default function HowItWorks({}: /*selectedCollateralType*/ {
   selectedCollateralType: CollateralType;
 }) {
   return (
     <>
+      {/*
       <Heading
         size="xs"
         mb="3"
@@ -51,6 +52,8 @@ export default function HowItWorks({
         )}
         <ListItem mb="2">Once you stake, we’ll walk you through C-Ratio maintenance.</ListItem>
       </UnorderedList>
+    
+                */}
     </>
   );
 }

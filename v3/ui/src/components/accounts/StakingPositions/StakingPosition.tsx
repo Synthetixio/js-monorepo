@@ -44,7 +44,7 @@ export const StakingPosition: FC<Props> = ({ position }) => {
         </Text>
       </Td>
       <Td py="4">
-        {cRatio.eq(0) ? <>No Debt</> : cRatio.toString() + `%`}
+        {cRatio.eq(0) ? <>No Debt</> : currency(cRatio.toString()) + `%`}
         <Text fontSize="xs" opacity="0.66" mt="1'">
           {formatValue(collateralType!.minimumCRatio!.mul(BigNumber.from(100)), 6).toFixed(0)}% Min.
         </Text>

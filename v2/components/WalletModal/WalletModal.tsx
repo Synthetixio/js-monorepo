@@ -24,21 +24,34 @@ import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
+import { useGetSynthsByName } from '@snx-v2/synthsByName';
 
 type BalanceObject = {
   currencyKey: string;
   balance: number;
   usdBalance: number;
   icon?: ReactElement;
+  description?: string;
 };
 export const WalletModalUi: FC<{
   isOpen: boolean;
   onClose: () => void;
   disconnectWallet: () => Promise<void>;
+  walletType: string | null;
+  ensName: string | null;
   walletAddress: string | null;
   networkId: number | null;
   balances?: BalanceObject[];
-}> = ({ isOpen, onClose, disconnectWallet, networkId, walletAddress, balances }) => {
+}> = ({
+  isOpen,
+  onClose,
+  disconnectWallet,
+  networkId,
+  walletAddress,
+  balances,
+  walletType,
+  ensName,
+}) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { hasCopied, onCopy } = useClipboard(walletAddress || '');
@@ -61,21 +74,27 @@ export const WalletModalUi: FC<{
         </ModalHeader>
         <ModalBody>
           <Box p={4} bg="black" border="1px" borderColor="gray.800" borderRadius="base">
-            <Flex alignItems="center" justifyContent="space-between">
-              <Flex>
-                <AvatarIcon mr={2} /> {walletAddress && truncateAddress(walletAddress)}
-              </Flex>
-              <Button onClick={() => disconnectWallet()} variant="ghost">
+            <Flex justifyContent="space-between" alignItems="center">
+              <Text fontSize="sm" color="gray.800">
+                {t('staking-v2.wallet-modal.connected-with', { walletType })}
+              </Text>
+              <Button size="xs" onClick={() => disconnectWallet()} variant="ghost">
                 {t('staking-v2.wallet-modal.disconnect')}
               </Button>
             </Flex>
+            <Flex alignItems="center" justifyContent="space-between">
+              <Flex>
+                <AvatarIcon mr={2} />{' '}
+                {ensName ? ensName : walletAddress && truncateAddress(walletAddress)}
+              </Flex>
+            </Flex>
             <Flex>
-              <Button fontSize="sm" fontWeight={400} variant="ghost" onClick={onCopy}>
+              <Button size="xs" fontWeight={400} variant="ghost" onClick={onCopy}>
                 <CopyIcon mr={2} /> {hasCopied ? 'Copied' : 'Copy Address'}
               </Button>
 
               <ExternalLink
-                fontSize="sm"
+                fontSize="xs"
                 fontWeight={400}
                 href={`${networkId && getEtherscanBaseUrl(networkId)}/address/${walletAddress}`}
               >
@@ -84,15 +103,27 @@ export const WalletModalUi: FC<{
             </Flex>
           </Box>
           <Box mt={4} p={4} bg="black" border="1px" borderColor="gray.800" borderRadius="base">
-            {balances?.map(({ usdBalance, balance, icon, currencyKey }) => {
+            {balances?.map(({ usdBalance, balance, icon, currencyKey, description }) => {
               return (
                 <Flex justifyContent="space-between">
-                  <Flex display="flex" alignItems="center">
-                    {icon} <Text ml={1}>{currencyKey}</Text>
+                  <Flex>
+                    <Flex display="flex" alignItems="center">
+                      {icon}
+                    </Flex>
+                    <Flex ml={1} flexDirection="column">
+                      <Text fontSize="sm">{currencyKey}</Text>
+                      {description && (
+                        <Text fontSize="xs" color="gray.800">
+                          {description}
+                        </Text>
+                      )}
+                    </Flex>
                   </Flex>
                   <Flex flexDirection="column">
-                    <Text textAlign="right">{formatNumber(balance)}</Text>
-                    <Text color="gray.800" textAlign="right">
+                    <Text fontSize="sm" textAlign="right">
+                      {formatNumber(balance)}
+                    </Text>
+                    <Text fontSize="xs" color="gray.800" textAlign="right">
                       {formatNumberToUsd(usdBalance)}
                     </Text>
                   </Flex>
@@ -128,27 +159,36 @@ export const WalletModal: FC<{
   const { data: synthBalancesData } = useSynthsBalances();
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
-  const { walletAddress, networkId } = useContext(ContractContext);
-  const snxBalance =
+  const { walletAddress, networkId, walletType, ensName } = useContext(ContractContext);
+  const { data: synthByNameData } = useGetSynthsByName();
+  const snxBalance: BalanceObject | undefined =
     debtData && exchangeRateData
       ? {
           currencyKey: 'SNX',
           balance: debtData.collateral.toNumber(),
           usdBalance: debtData.collateral.mul(exchangeRateData.SNX || 0).toNumber(),
           icon: <SNXIcon />,
+          description: 'Synthetix Network Token',
         }
       : undefined;
 
-  const synthBalances = synthBalancesData?.balances.slice(0, 5).map((x) => ({
-    currencyKey: x.currencyKey,
-    balance: x.balance.toNumber(),
-    usdBalance: x.usdBalance.toNumber(),
-    icon: <img width="24px" height="24px" src={getSynthIcon(x.currencyKey)} />,
-  }));
+  const synthBalances = synthBalancesData?.balances.slice(0, 5).map((x) => {
+    const assetDescription = synthByNameData?.SynthsByName?.[x.currencyKey]?.description;
+    const description = assetDescription ? `Synthetic ${assetDescription}` : undefined;
+    return {
+      currencyKey: x.currencyKey,
+      balance: x.balance.toNumber(),
+      usdBalance: x.usdBalance.toNumber(),
+      icon: <img width="24px" height="24px" src={getSynthIcon(x.currencyKey)} />,
+      description,
+    };
+  });
   const balances = snxBalance && synthBalances ? [snxBalance].concat(synthBalances) : undefined;
   return (
     <WalletModalUi
       {...props}
+      ensName={ensName}
+      walletType={walletType}
       balances={balances}
       walletAddress={walletAddress}
       networkId={networkId}

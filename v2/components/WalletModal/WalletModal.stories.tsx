@@ -23,11 +23,13 @@ Primary.args = {
       balance: 100,
       usdBalance: 200,
       icon: <SNXIcon />,
+      description: 'Synthetix Network Token',
     },
     {
       currencyKey: 'sUSD',
       balance: 100,
       usdBalance: 200,
+      description: 'Synthetic US Dollars',
       icon: (
         <img
           width="24px"

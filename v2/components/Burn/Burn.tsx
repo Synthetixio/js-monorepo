@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { FailedIcon, GuideIcon, InfoIcon, TokensIcon } from '@snx-v2/icons';
+import { FailedIcon, GuideIcon, InfoIcon, SNXIconWithBorder, TokensIcon } from '@snx-v2/icons';
 import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
@@ -108,7 +108,7 @@ export const BurnUi = ({
     setActiveBadge(badgeType);
     onBadgeClick(badgeType);
   };
-
+  const notEnoughBalance = parseFloatWithCommas(burnAmountSusd) > susdBalance;
   return (
     <>
       <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="base" p={5}>
@@ -122,7 +122,7 @@ export const BurnUi = ({
           >
             {t('staking-v2.burn.heading')}
           </Text>
-          <Tooltip label="Soonthetix" hasArrow bg="gray.900">
+          <Tooltip label="Soonthetix" hasArrow>
             <Flex alignItems="center">
               <InfoIcon width="12px" height="12px" />
             </Flex>
@@ -217,7 +217,7 @@ export const BurnUi = ({
               onClick={() => handleBadgePress('max')}
             >
               {t('staking-v2.burn.burn-max')}
-              <Tooltip label="Soonthetix" hasArrow bg="gray.900">
+              <Tooltip label="Soonthetix" hasArrow>
                 <Flex alignItems="center">
                   <InfoIcon
                     width="12px"
@@ -237,7 +237,7 @@ export const BurnUi = ({
               onClick={() => handleBadgePress('toTarget')}
             >
               {t('staking-v2.burn.burn-cratio')}
-              <Tooltip label="Soonthetix" hasArrow bg="gray.900">
+              <Tooltip label="Soonthetix" hasArrow>
                 <Flex alignItems="center">
                   <InfoIcon
                     width="12px"
@@ -267,7 +267,7 @@ export const BurnUi = ({
           >
             {t('staking-v2.burn.unstaking')}
           </Text>
-          <Tooltip label="Soonthetix" hasArrow bg="gray.900">
+          <Tooltip label="Soonthetix" hasArrow>
             <Flex>
               <InfoIcon width="12px" height="12px" />
             </Flex>
@@ -276,7 +276,7 @@ export const BurnUi = ({
         <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2} mt={3}>
           <Flex justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
-              <TokensIcon />
+              <SNXIconWithBorder />
               <Text ml={2} fontFamily="heading" fontSize="lg" fontWeight="black">
                 SNX
               </Text>
@@ -322,11 +322,13 @@ export const BurnUi = ({
           collateralChange={parseFloatWithCommas(snxUnstakingAmount)}
           action="burn"
         />
-        {gasError ? (
+        {gasError || notEnoughBalance ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
             <Text>
-              {t('staking-v2.mint.gas-estimation-error')}: {parseTxnError(gasError)}
+              {notEnoughBalance
+                ? t('staking-v2.burn.balance-error')
+                : `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(gasError)}`}
             </Text>
           </Center>
         ) : (
@@ -348,7 +350,8 @@ export const BurnUi = ({
             burnAmountSusd === '' ||
             burnAmountSusd === '0.00' ||
             Boolean(gasError) ||
-            isGasEnabledAndNotFetched
+            isGasEnabledAndNotFetched ||
+            notEnoughBalance
           }
         >
           Burn
@@ -399,14 +402,30 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     switch (badgeType) {
       case 'toTarget':
         const burnAmount = Wei.max(debtData.debtBalance.sub(debtData.issuableSynths), wei(0));
+        const burnAmountString = formatNumber(burnAmount.toNumber());
         setActiveBadge('toTarget');
-        setBurnAmountSusd(formatNumber(burnAmount.toNumber()));
+        const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
+          burnAmountString,
+          debtData.targetCRatio.toNumber(),
+          exchangeRateData?.SNX?.toNumber()
+        );
+        setBurnAmountSusd(burnAmountString);
+        setSnxUnstakingAmount(snxUnstakingAmount);
         return;
 
-      case 'max':
+      case 'max': {
         setActiveBadge('max');
-        setBurnAmountSusd(formatNumber(susdBalance.toNumber()));
+        const burnAmountString = formatNumber(susdBalance.toNumber());
+        const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
+          burnAmountString,
+          debtData.targetCRatio.toNumber(),
+          exchangeRateData?.SNX?.toNumber()
+        );
+        setBurnAmountSusd(burnAmountString);
+        setSnxUnstakingAmount(snxUnstakingAmount);
+
         return;
+      }
     }
   };
 

@@ -39,13 +39,17 @@ export const useCollateralTypes = () => {
     },
   });
 
+  const supportedCollateralTypesWithPriceFeeds = supportedCollateralTypes.filter((ct) => {
+    return ct.priceFeed;
+  });
+
   // This fetches price and price decimal data for the collateral types when the above hook recieves a response
   const priceCalls = useMemo(() => {
-    if (!supportedCollateralTypes) {
+    if (!supportedCollateralTypesWithPriceFeeds) {
       return [];
     }
 
-    const latestRoundData = supportedCollateralTypes.map((ct) => {
+    const latestRoundData = supportedCollateralTypesWithPriceFeeds.map((ct) => {
       return {
         addressOrName: ct?.priceFeed || '',
         contractInterface: AggregatorABI,
@@ -53,7 +57,7 @@ export const useCollateralTypes = () => {
       };
     });
 
-    const priceDecimals = supportedCollateralTypes.map((ct) => {
+    const priceDecimals = supportedCollateralTypesWithPriceFeeds.map((ct) => {
       return {
         addressOrName: ct.priceFeed || '',
         contractInterface: AggregatorABI,
@@ -63,19 +67,19 @@ export const useCollateralTypes = () => {
 
     return [...latestRoundData, ...priceDecimals];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [supportedCollateralTypes, provider]);
+  }, [supportedCollateralTypesWithPriceFeeds, provider]);
 
   // After the price data is fetched, set the data in recoil and turn off the loading state.
   useContractReads({
     contracts: priceCalls,
-    enabled: Boolean(supportedCollateralTypes.length),
+    enabled: Boolean(supportedCollateralTypesWithPriceFeeds.length),
     onSuccess: (data) => {
       setIsLoading(false);
       setSupportedCollateralTypes(
-        supportedCollateralTypes.map((ct, i) => {
+        supportedCollateralTypesWithPriceFeeds.map((ct, i) => {
           // wagmi types broken
           // @ts-ignore
-          const priceDecimals = data[i + supportedCollateralTypes.length];
+          const priceDecimals = data[i + supportedCollateralTypesWithPriceFeeds.length];
           const priceData = data[i];
 
           return {

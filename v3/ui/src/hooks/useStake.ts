@@ -114,10 +114,19 @@ export const useStake = ({
   const multiTxn = useMulticall(calls, overrides, {
     onMutate: () => {
       toast.closeAll();
+
       if (!Boolean(accountId)) {
         toast({
           title: 'Create your account',
           description: "You'll be redirected once your account is created.",
+          status: 'info',
+          isClosable: true,
+          duration: 9000,
+        });
+      } else {
+        toast({
+          title: 'Update your collateral',
+          description: 'Your staked collateral amounts have been updated.',
           status: 'info',
           isClosable: true,
           duration: 9000,
@@ -203,14 +212,14 @@ export const useStake = ({
         title: 'Approve ' + selectedCollateralType.symbol.toUpperCase() + ' transfer',
         call: async (infiniteApproval) => await approve(infiniteApproval),
         checkboxLabel: requireApproval
-          ? `Approve unlimited ${selectedCollateralType.symbol.toUpperCase()} transfers to the Synthetix protocol.`
+          ? `Approve unlimited ${selectedCollateralType.symbol.toUpperCase()} transfers to Synthetix.`
           : undefined,
       });
     }
 
     transactions.push({
       title: 'Stake ' + selectedCollateralType.symbol.toUpperCase(),
-      subtitle: `This will transfer your ${selectedCollateralType.symbol.toUpperCase()} to the Synthetix protocol.`,
+      subtitle: `This will transfer your ${selectedCollateralType.symbol.toUpperCase()} to Synthetix.`,
       call: async () => await multiTxn.exec(),
     });
 

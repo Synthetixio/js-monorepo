@@ -1,0 +1,480 @@
+{
+  "address": "0x8A289E133aaE93585e16AB906378Df9F04005e84",
+  "abi": [
+    {
+      "type": "error",
+      "name": "FailedTransfer",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "from"
+        },
+        {
+          "type": "address",
+          "name": "to"
+        },
+        {
+          "type": "uint256",
+          "name": "value"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InsufficientAccountCollateral",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InsufficientAllowance",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "required"
+        },
+        {
+          "type": "uint256",
+          "name": "existing"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidCollateral",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "OutOfBounds",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "PermissionDenied",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "bytes32",
+          "name": "permission"
+        },
+        {
+          "type": "address",
+          "name": "target"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "PositionOutOfBounds",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "addr"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "ValueAlreadyInSet",
+      "inputs": []
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "CollateralConfigured",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "priceFeed",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "targetCollateralizationRatio",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "minimumCollateralizationRatio",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "liquidationReward",
+          "indexed": false
+        },
+        {
+          "type": "bool",
+          "name": "stakingEnabled",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "CollateralDeposited",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "CollateralWithdrawn",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "cleanExpiredLocks",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "offset"
+        },
+        {
+          "type": "uint256",
+          "name": "items"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "configureCollateral",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "address",
+          "name": "priceFeed"
+        },
+        {
+          "type": "uint256",
+          "name": "targetCRatio"
+        },
+        {
+          "type": "uint256",
+          "name": "minimumCRatio"
+        },
+        {
+          "type": "uint256",
+          "name": "liquidationReward"
+        },
+        {
+          "type": "bool",
+          "name": "stakingEnabled"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "createLock",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        },
+        {
+          "type": "uint64",
+          "name": "expireTimestamp"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "depositCollateral",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getAccountAvailableCollateral",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getAccountCollateral",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "totalDeposited"
+        },
+        {
+          "type": "uint256",
+          "name": "totalAssigned"
+        },
+        {
+          "type": "uint256",
+          "name": "totalLocked"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getCollateralConfiguration",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "tuple",
+          "components": [
+            {
+              "type": "bool",
+              "name": "stakingEnabled"
+            },
+            {
+              "type": "uint256",
+              "name": "targetCRatio"
+            },
+            {
+              "type": "uint256",
+              "name": "minimumCRatio"
+            },
+            {
+              "type": "uint256",
+              "name": "liquidationReward"
+            },
+            {
+              "type": "address",
+              "name": "priceFeed"
+            },
+            {
+              "type": "address",
+              "name": "tokenAddress"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getCollateralConfigurations",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bool",
+          "name": "hideDisabled"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "tuple[]",
+          "components": [
+            {
+              "type": "bool",
+              "name": "stakingEnabled"
+            },
+            {
+              "type": "uint256",
+              "name": "targetCRatio"
+            },
+            {
+              "type": "uint256",
+              "name": "minimumCRatio"
+            },
+            {
+              "type": "uint256",
+              "name": "liquidationReward"
+            },
+            {
+              "type": "address",
+              "name": "priceFeed"
+            },
+            {
+              "type": "address",
+              "name": "tokenAddress"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getCollateralPrice",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "withdrawCollateral",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": []
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0xc0eda80814a6108a23cfd6e88b3c8007fb7f351df50d9c8de0080308ecae77d9",
+  "sourceName": "contracts/modules/core/CollateralModule.sol",
+  "contractName": "CollateralModule",
+  "deployedOn": "contract.CollateralModule"
+}

@@ -116,6 +116,7 @@
       "active-debt": "Active debt: ",
       "staked-snx": "Staked SNX: ",
       "description-cratio": "Burn to C-Ratio - Burn sUSD required to reach target C-Ratio",
+      "balance-error": "Not enough sUSD balance",
       "txn-modal": {
         "unstaking": "Unstaking",
         "burning": "Burning"
@@ -207,7 +208,8 @@
       "disconnect": "Disconnect",
       "explorer": "View on Explorer",
       "view-all": "View All",
-      "escrow": "Escrow"
+      "escrow": "Escrow",
+      "connected-with": "Connected with {{walletType}}"
     }
   },
   "meta": {

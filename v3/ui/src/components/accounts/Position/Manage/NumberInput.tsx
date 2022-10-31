@@ -1,13 +1,13 @@
-import { Input } from '@chakra-ui/react';
+import { Input, InputProps } from '@chakra-ui/react';
 import { FC, useCallback, useEffect } from 'react';
 
-interface Props {
+interface Props extends Omit<InputProps, 'onChange'> {
   onChange: (value: number) => void;
   value: number;
   max?: number;
 }
 
-export const NumberInput: FC<Props> = ({ value, onChange, max }) => {
+export const NumberInput: FC<Props> = ({ value, onChange, max, ...props }) => {
   const handleChange = useCallback(
     (value: number) => onChange(max !== undefined ? Math.min(max, value) : value),
     [max, onChange]
@@ -28,6 +28,7 @@ export const NumberInput: FC<Props> = ({ value, onChange, max }) => {
       step="any"
       value={value ? `${value}`.replace(/^0+/, '') : 0}
       onChange={(e) => handleChange(parseFloat(e.target.value) || 0)}
+      {...props}
     />
   );
 };
