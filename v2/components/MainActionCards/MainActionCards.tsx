@@ -9,6 +9,7 @@ import {
   Text,
   Badge,
   Tooltip,
+  useTheme,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
@@ -30,7 +31,7 @@ interface CardProps {
   testId: string;
 }
 
-const Card = ({
+export const Card = ({
   step = 1,
   headingText,
   bodyText,
@@ -51,7 +52,7 @@ const Card = ({
       height={['60']}
       alignItems="space-between"
       border="1px"
-      borderColor={disabled ? 'gray.900' : 'gray.800'}
+      borderColor="gray.900"
       p={3}
       borderRadius="base"
       bg="navy.900"
@@ -142,7 +143,8 @@ const MaintainActionCard: React.FC<{
 
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
 
-  console.log('is loading', isLoading);
+  const theme = useTheme();
+  const fadedBg = `${theme.colors[variant]}40`;
 
   return (
     <Card
@@ -155,7 +157,7 @@ const MaintainActionCard: React.FC<{
           <Badge
             data-testid="burn badge"
             color={variant}
-            bg="#47FAC240"
+            bg={fadedBg}
             border="1px"
             borderColor={variant}
             display="flex"

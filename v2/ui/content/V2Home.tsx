@@ -28,7 +28,7 @@ const V2Home = () => {
   return (
     <>
       <CRatioBanner />
-      <Container maxW="1200px" py="1">
+      <Container maxW="1200px" py="1" mt={4} mb={8}>
         {!walletAddress && isAppReady && <Welcome mt={8} />}
         <Flex mt="4" flexDirection={['column', 'column', 'column', 'row']} py={4}>
           <Box
@@ -37,7 +37,7 @@ const V2Home = () => {
             bg="navy.900"
             flex="1"
             border="1px"
-            borderColor="gray.800"
+            borderColor="gray.900"
             borderRadius="base"
           >
             <CRatioHealthCard />
