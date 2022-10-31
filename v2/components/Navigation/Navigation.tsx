@@ -122,7 +122,7 @@ export const NavigationUI = ({
               height={10}
               py="6px"
               px="9.5px"
-              onClick={() => console.log('Open wallet')}
+              onClick={onOpen}
               _hover={{
                 bg: 'blackAlpha.400',
                 cursor: 'pointer',
