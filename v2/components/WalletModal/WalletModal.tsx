@@ -37,10 +37,11 @@ export const WalletModalUi: FC<{
   isOpen: boolean;
   onClose: () => void;
   disconnectWallet: () => Promise<void>;
+  walletType: string | null;
   walletAddress: string | null;
   networkId: number | null;
   balances?: BalanceObject[];
-}> = ({ isOpen, onClose, disconnectWallet, networkId, walletAddress, balances }) => {
+}> = ({ isOpen, onClose, disconnectWallet, networkId, walletAddress, balances, walletType }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { hasCopied, onCopy } = useClipboard(walletAddress || '');
@@ -63,21 +64,26 @@ export const WalletModalUi: FC<{
         </ModalHeader>
         <ModalBody>
           <Box p={4} bg="black" border="1px" borderColor="gray.800" borderRadius="base">
+            <Flex justifyContent="space-between" alignItems="center">
+              <Text fontSize="sm" color="gray.800">
+                {t('staking-v2.wallet-modal.connected-with', { walletType })}
+              </Text>
+              <Button size="xs" onClick={() => disconnectWallet()} variant="ghost">
+                {t('staking-v2.wallet-modal.disconnect')}
+              </Button>
+            </Flex>
             <Flex alignItems="center" justifyContent="space-between">
               <Flex>
                 <AvatarIcon mr={2} /> {walletAddress && truncateAddress(walletAddress)}
               </Flex>
-              <Button onClick={() => disconnectWallet()} variant="ghost">
-                {t('staking-v2.wallet-modal.disconnect')}
-              </Button>
             </Flex>
             <Flex>
-              <Button fontSize="sm" fontWeight={400} variant="ghost" onClick={onCopy}>
+              <Button size="xs" fontWeight={400} variant="ghost" onClick={onCopy}>
                 <CopyIcon mr={2} /> {hasCopied ? 'Copied' : 'Copy Address'}
               </Button>
 
               <ExternalLink
-                fontSize="sm"
+                fontSize="xs"
                 fontWeight={400}
                 href={`${networkId && getEtherscanBaseUrl(networkId)}/address/${walletAddress}`}
               >
@@ -142,7 +148,7 @@ export const WalletModal: FC<{
   const { data: synthBalancesData } = useSynthsBalances();
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
-  const { walletAddress, networkId } = useContext(ContractContext);
+  const { walletAddress, networkId, walletType } = useContext(ContractContext);
   const { data: synthByNameData } = useGetSynthsByName();
   const snxBalance: BalanceObject | undefined =
     debtData && exchangeRateData
@@ -170,6 +176,7 @@ export const WalletModal: FC<{
   return (
     <WalletModalUi
       {...props}
+      walletType={walletType}
       balances={balances}
       walletAddress={walletAddress}
       networkId={networkId}
