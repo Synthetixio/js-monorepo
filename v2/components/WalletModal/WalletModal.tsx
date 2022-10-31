@@ -24,12 +24,14 @@ import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
+import { useGetSynthsByName } from '@snx-v2/synthsByName';
 
 type BalanceObject = {
   currencyKey: string;
   balance: number;
   usdBalance: number;
   icon?: ReactElement;
+  description?: string;
 };
 export const WalletModalUi: FC<{
   isOpen: boolean;
@@ -84,15 +86,27 @@ export const WalletModalUi: FC<{
             </Flex>
           </Box>
           <Box mt={4} p={4} bg="black" border="1px" borderColor="gray.800" borderRadius="base">
-            {balances?.map(({ usdBalance, balance, icon, currencyKey }) => {
+            {balances?.map(({ usdBalance, balance, icon, currencyKey, description }) => {
               return (
                 <Flex justifyContent="space-between">
-                  <Flex display="flex" alignItems="center">
-                    {icon} <Text ml={1}>{currencyKey}</Text>
+                  <Flex>
+                    <Flex display="flex" alignItems="center">
+                      {icon}
+                    </Flex>
+                    <Flex ml={1} flexDirection="column">
+                      <Text fontSize="sm">{currencyKey}</Text>
+                      {description && (
+                        <Text fontSize="xs" color="gray.800">
+                          {description}
+                        </Text>
+                      )}
+                    </Flex>
                   </Flex>
                   <Flex flexDirection="column">
-                    <Text textAlign="right">{formatNumber(balance)}</Text>
-                    <Text color="gray.800" textAlign="right">
+                    <Text fontSize="sm" textAlign="right">
+                      {formatNumber(balance)}
+                    </Text>
+                    <Text fontSize="xs" color="gray.800" textAlign="right">
                       {formatNumberToUsd(usdBalance)}
                     </Text>
                   </Flex>
@@ -129,6 +143,7 @@ export const WalletModal: FC<{
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
   const { walletAddress, networkId } = useContext(ContractContext);
+  const { data: synthByNameData } = useGetSynthsByName();
   const snxBalance =
     debtData && exchangeRateData
       ? {
@@ -136,15 +151,21 @@ export const WalletModal: FC<{
           balance: debtData.collateral.toNumber(),
           usdBalance: debtData.collateral.mul(exchangeRateData.SNX || 0).toNumber(),
           icon: <SNXIcon />,
+          description: 'Synthetix Network Token',
         }
       : undefined;
 
-  const synthBalances = synthBalancesData?.balances.slice(0, 5).map((x) => ({
-    currencyKey: x.currencyKey,
-    balance: x.balance.toNumber(),
-    usdBalance: x.usdBalance.toNumber(),
-    icon: <img width="24px" height="24px" src={getSynthIcon(x.currencyKey)} />,
-  }));
+  const synthBalances = synthBalancesData?.balances.slice(0, 5).map((x) => {
+    const assetDescription = synthByNameData?.SynthsByName?.[x.currencyKey]?.description;
+    const description = assetDescription ? `Synthetic ${assetDescription}` : undefined;
+    return {
+      currencyKey: x.currencyKey,
+      balance: x.balance.toNumber(),
+      usdBalance: x.usdBalance.toNumber(),
+      icon: <img width="24px" height="24px" src={getSynthIcon(x.currencyKey)} />,
+      description,
+    };
+  });
   const balances = snxBalance && synthBalances ? [snxBalance].concat(synthBalances) : undefined;
   return (
     <WalletModalUi

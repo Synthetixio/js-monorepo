@@ -7266,6 +7266,7 @@ __metadata:
     "@snx-v2/ExternalLink": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/synthsByName": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
@@ -7361,6 +7362,18 @@ __metadata:
 "@snx-v2/sumBy@workspace:*, @snx-v2/sumBy@workspace:v2/lib/sumBy":
   version: 0.0.0-use.local
   resolution: "@snx-v2/sumBy@workspace:v2/lib/sumBy"
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/synthsByName@workspace:*, @snx-v2/synthsByName@workspace:v2/lib/synthsByName":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/synthsByName@workspace:v2/lib/synthsByName"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/contracts": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
