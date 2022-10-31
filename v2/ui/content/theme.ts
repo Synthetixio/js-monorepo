@@ -75,6 +75,7 @@ const Tooltip: ComponentStyleConfig = {
     fontFamily: 'heading',
     fontSize: '14px',
     lineHeight: '20px',
+    '--popper-arrow-bg': 'var(--chakra-colors-gray-900)',
   },
 };
 
@@ -303,6 +304,9 @@ const Menu: ComponentMultiStyleConfig = {
     },
   },
 };
+const Divider: ComponentStyleConfig = {
+  baseStyle: { borderColor: 'gray.900' },
+};
 
 export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
   colors: {
@@ -320,6 +324,7 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
     Badge,
     Alert,
     Tooltip,
+    Divider,
   },
   styles: {
     global: {

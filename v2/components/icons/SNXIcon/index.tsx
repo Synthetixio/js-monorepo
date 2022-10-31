@@ -1,1 +1,1 @@
-export { SNXIcon } from './SNXIcon';
+export * from './SNXIcon';

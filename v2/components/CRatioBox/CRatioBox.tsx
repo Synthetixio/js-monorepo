@@ -67,7 +67,7 @@ export const CRatioBoxUi: FC<{
   const cRatioHealth = t(`staking-v2.cratio-box.${badgeHealthVariant}`);
   return (
     <Box>
-      <Flex px={4} pt={4} justifyContent="space-between" alignItems="center" flexWrap="wrap">
+      <Flex px={4} pt={2} justifyContent="space-between" alignItems="center" flexWrap="wrap">
         <Heading fontSize="xs" lineHeight="4">
           {t('staking-v2.cratio-box.current-health')}
           <Tooltip hasArrow label="Soonthetix">
@@ -119,7 +119,7 @@ export const CRatioBoxUi: FC<{
         </Box>
       </Flex>
 
-      <Flex justifyContent="flex-end" px={4} mb={4} mt={1}>
+      <Flex justifyContent="flex-end" px={4} mb={2} mt={1}>
         {currentCRatioPercentage ? (
           <Badge
             data-testid="healthy badge"
