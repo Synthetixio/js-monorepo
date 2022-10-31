@@ -39,8 +39,16 @@ const queryClient = new QueryClient({
 });
 
 function InnerApp() {
-  const { provider, signer, network, L1DefaultProvider, synthetixjs, walletAddress } =
-    Connector.useContainer();
+  const {
+    provider,
+    signer,
+    ensName,
+    walletType,
+    network,
+    L1DefaultProvider,
+    synthetixjs,
+    walletAddress,
+  } = Connector.useContainer();
 
   useEffect(() => {
     try {
@@ -52,8 +60,10 @@ function InnerApp() {
     return {
       networkId: isSupportedNetworkId(networkId) ? networkId : 1,
       walletAddress,
+      ensName,
+      walletType,
     };
-  }, [networkId, walletAddress]);
+  }, [ensName, networkId, walletAddress, walletType]);
   return (
     <>
       <SynthetixQueryContextProvider
