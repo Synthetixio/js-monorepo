@@ -202,7 +202,8 @@
       "disconnect": "Disconnect",
       "explorer": "View on Explorer",
       "view-all": "View All",
-      "escrow": "Escrow"
+      "escrow": "Escrow",
+      "connected-with": "Connected with {{walletType}}"
     }
   },
   "meta": {
