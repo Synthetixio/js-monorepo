@@ -108,7 +108,7 @@ export const BurnUi = ({
     setActiveBadge(badgeType);
     onBadgeClick(badgeType);
   };
-
+  const notEnoughBalance = parseFloatWithCommas(burnAmountSusd) > susdBalance;
   return (
     <>
       <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="base" p={5}>
@@ -322,11 +322,13 @@ export const BurnUi = ({
           collateralChange={parseFloatWithCommas(snxUnstakingAmount)}
           action="burn"
         />
-        {gasError ? (
+        {gasError || notEnoughBalance ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
             <Text>
-              {t('staking-v2.mint.gas-estimation-error')}: {parseTxnError(gasError)}
+              {notEnoughBalance
+                ? t('staking-v2.burn.balance-error')
+                : `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(gasError)}`}
             </Text>
           </Center>
         ) : (
@@ -348,7 +350,8 @@ export const BurnUi = ({
             burnAmountSusd === '' ||
             burnAmountSusd === '0.00' ||
             Boolean(gasError) ||
-            isGasEnabledAndNotFetched
+            isGasEnabledAndNotFetched ||
+            notEnoughBalance
           }
         >
           Burn
@@ -399,14 +402,30 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     switch (badgeType) {
       case 'toTarget':
         const burnAmount = Wei.max(debtData.debtBalance.sub(debtData.issuableSynths), wei(0));
+        const burnAmountString = formatNumber(burnAmount.toNumber());
         setActiveBadge('toTarget');
-        setBurnAmountSusd(formatNumber(burnAmount.toNumber()));
+        const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
+          burnAmountString,
+          debtData.targetCRatio.toNumber(),
+          exchangeRateData?.SNX?.toNumber()
+        );
+        setBurnAmountSusd(burnAmountString);
+        setSnxUnstakingAmount(snxUnstakingAmount);
         return;
 
-      case 'max':
+      case 'max': {
         setActiveBadge('max');
-        setBurnAmountSusd(formatNumber(susdBalance.toNumber()));
+        const burnAmountString = formatNumber(susdBalance.toNumber());
+        const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
+          burnAmountString,
+          debtData.targetCRatio.toNumber(),
+          exchangeRateData?.SNX?.toNumber()
+        );
+        setBurnAmountSusd(burnAmountString);
+        setSnxUnstakingAmount(snxUnstakingAmount);
+
         return;
+      }
     }
   };
 
