@@ -227,7 +227,6 @@ const CollectActionCard: React.FC<{
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
   const canClaim = !hasClaimed && variant === 'success';
 
-  console.log('is loading', isLoading);
   return (
     <Card
       step={3}

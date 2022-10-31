@@ -6,7 +6,7 @@ describe('MainActionCards', () => {
     cy.viewport(1000, 1000);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
-        <MainActionCardsUi />
+        <MainActionCardsUi isLoading={false} />
       </Box>
     );
     cy.get('.chakra-skeleton').should('be.visible');
@@ -24,6 +24,7 @@ describe('MainActionCards', () => {
           snxPrice="2.00"
           hasClaimed={false}
           isFlagged={false}
+          isLoading={false}
         />
       </Box>
     );
@@ -53,6 +54,7 @@ describe('MainActionCards', () => {
           snxPrice="2.00"
           hasClaimed={true}
           isFlagged={false}
+          isLoading={false}
         />
       </Box>
     );
@@ -73,6 +75,7 @@ describe('MainActionCards', () => {
           snxPrice="2.00"
           hasClaimed={false}
           isFlagged={false}
+          isLoading={false}
         />
       </Box>
     );
@@ -99,6 +102,7 @@ describe('MainActionCards', () => {
           snxPrice="2.00"
           hasClaimed={false}
           isFlagged={false}
+          isLoading={false}
         />
       </Box>
     );
@@ -125,6 +129,7 @@ describe('MainActionCards', () => {
           snxPrice="2.00"
           hasClaimed={false}
           isFlagged={true}
+          isLoading={false}
         />
       </Box>
     );
