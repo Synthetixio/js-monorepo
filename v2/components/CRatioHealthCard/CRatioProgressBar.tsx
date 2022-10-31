@@ -82,7 +82,7 @@ export const CRatioProgressBar: FC<{
     >
       <LineWithText
         left={liquidationCratioPercentage / scaleFactor}
-        text={`Liquidated < ${liquidationCratioPercentage.toFixed(0)}%`}
+        text={`Liquidation < ${liquidationCratioPercentage.toFixed(0)}%`}
         tooltipText="You may be flagged for liquidation"
       />
       <LineWithText
