@@ -179,7 +179,7 @@ export const MintUi = ({
             </Flex>
           </Flex>
         </Box>
-        <MintOrBurnChanges collateralChange={parseFloatWithCommas(stakeAmountSNX)} action="mint" />
+        <MintOrBurnChanges debtChange={parseFloatWithCommas(mintAmountsUSD)} action="mint" />
         {gasError ? (
           <Center>
             <FailedIcon width="40px" height="40px" />

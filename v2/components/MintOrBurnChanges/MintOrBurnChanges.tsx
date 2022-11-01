@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Box, Flex, Text, Tooltip } from '@chakra-ui/react';
-import { formatNumber, formatPercent, parseFloatWithCommas } from '@snx-v2/formatters';
+import { formatNumber, formatPercent } from '@snx-v2/formatters';
 import { ArrowRight, InfoIcon } from '@snx-v2/icons';
 import {
   calculateChangesFromBurn,
@@ -143,13 +143,12 @@ export const MintOrBurnChanges: FC<{ debtChange: number; action: 'mint' | 'burn'
     action === 'mint'
       ? calculateChangesFromMint({
           ...args,
-          stakeAmountSNX: parseFloatWithCommas(
+          stakeAmountSNX:
             calculateStakeAmountFromMint(
-              String(debtChange),
+              debtChange,
               debtData.targetCRatio.toNumber(),
-              exchangeRateData.SNX?.toNumber()
-            )
-          ),
+              exchangeRateData.SNX.toNumber()
+            ) || 0,
           mintAmountsUSD: debtChange,
         })
       : calculateChangesFromBurn({
