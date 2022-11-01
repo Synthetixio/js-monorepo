@@ -52,6 +52,7 @@ interface BurnProps {
   onBadgeClick: (badge: ActiveBadge) => void;
   stakedSnx: number;
   debtBalance?: number;
+  sUsdAmountToTarget: number;
 }
 
 type ActiveBadge = 'max' | 'toTarget';
@@ -93,6 +94,7 @@ export const BurnUi = ({
   debtBalance,
   gasError,
   isGasEnabledAndNotFetched,
+  sUsdAmountToTarget,
 }: BurnProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState<ActiveBadge | null>(null);
@@ -237,7 +239,7 @@ export const BurnUi = ({
               onClick={() => handleBadgePress('toTarget')}
             >
               {t('staking-v2.burn.burn-cratio')}
-              <Tooltip label="Soonthetix" hasArrow>
+              <Tooltip label="Amount of debt to burn" hasArrow>
                 <Flex alignItems="center">
                   <InfoIcon
                     width="12px"
@@ -249,11 +251,13 @@ export const BurnUi = ({
             </Badge>
           </Flex>
         </Box>
-        {activeBadge === 'toTarget' && (
+        {parseFloatWithCommas(snxUnstakingAmount) === 0 && (
           <Alert my={4} status="info" variant="left-accent" py={2} px={3}>
             <AlertIcon width="20px" height="20px" />
-            <AlertDescription pl={2} pr={[0, 0, 24]} fontSize="sm" fontFamily="heading">
-              {t('staking-v2.burn.description-cratio')}
+            <AlertDescription pl={2} pr={0} fontSize="sm" fontFamily="heading">
+              {t('staking-v2.burn.unstaking-note', {
+                sUsdAmountToTarget: sUsdAmountToTarget ? formatNumber(sUsdAmountToTarget) : 0,
+              })}
             </AlertDescription>
           </Alert>
         )}
@@ -267,7 +271,10 @@ export const BurnUi = ({
           >
             {t('staking-v2.burn.unstaking')}
           </Text>
-          <Tooltip label="Soonthetix" hasArrow>
+          <Tooltip
+            label="When you're c-ratio is below target all your SNX is considered staked"
+            hasArrow
+          >
             <Flex>
               <InfoIcon width="12px" height="12px" />
             </Flex>
@@ -318,10 +325,7 @@ export const BurnUi = ({
             </Flex>
           </Flex>
         </Box>
-        <MintOrBurnChanges
-          collateralChange={parseFloatWithCommas(snxUnstakingAmount)}
-          action="burn"
-        />
+        <MintOrBurnChanges debtChange={parseFloatWithCommas(burnAmountSusd)} action="burn" />
         {gasError || notEnoughBalance ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
@@ -398,29 +402,33 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   });
 
   const handleBadgeClick = (badgeType: ActiveBadge) => {
-    if (!debtData || !susdBalance) return;
+    const snxPrice = exchangeRateData?.SNX?.toNumber();
+    if (!debtData || !susdBalance || !snxPrice) return;
     switch (badgeType) {
       case 'toTarget':
-        const burnAmount = Wei.max(debtData.debtBalance.sub(debtData.issuableSynths), wei(0));
-        const burnAmountString = formatNumber(burnAmount.toNumber());
+        const burnAmount = Wei.max(
+          debtData.debtBalance.sub(debtData.issuableSynths),
+          wei(0)
+        ).toNumber();
+
         setActiveBadge('toTarget');
-        const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
-          burnAmountString,
-          debtData.targetCRatio.toNumber(),
-          exchangeRateData?.SNX?.toNumber()
+        const snxUnstakingAmount = calculateUnstakingAmountFromBurn({
+          burnAmount,
+          targetCRatio: debtData.targetCRatio.toNumber(),
+          collateralPrice: snxPrice,
+          debtBalance: debtData.debtBalance.toNumber(),
+          issuableSynths: debtData.issuableSynths.toNumber(),
+        });
+        setBurnAmountSusd(formatNumber(burnAmount));
+        setSnxUnstakingAmount(
+          snxUnstakingAmount === undefined ? '' : formatNumber(snxUnstakingAmount)
         );
-        setBurnAmountSusd(burnAmountString);
-        setSnxUnstakingAmount(snxUnstakingAmount);
         return;
 
       case 'max': {
         setActiveBadge('max');
-        const burnAmountString = formatNumber(susdBalance.toNumber());
-        const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
-          burnAmountString,
-          debtData.targetCRatio.toNumber(),
-          exchangeRateData?.SNX?.toNumber()
-        );
+        const burnAmountString = formatNumber(debtData.debtBalance.toNumber());
+        const snxUnstakingAmount = formatNumber(stakedSnx.toNumber());
         setBurnAmountSusd(burnAmountString);
         setSnxUnstakingAmount(snxUnstakingAmount);
 
@@ -449,26 +457,56 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             isLoading={isLoading}
             susdBalance={susdBalance?.toNumber()}
             snxUnstakingAmount={snxUnstakingAmount}
+            sUsdAmountToTarget={Math.max(
+              debtData?.debtBalance.sub(debtData?.issuableSynths || 0)?.toNumber() || 0,
+              0
+            )}
             burnAmountSusd={burnAmountSusd}
-            onBurnAmountSusdChange={(val) => {
-              const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
-                val,
-                debtData?.targetCRatio.toNumber(),
-                exchangeRateData?.SNX?.toNumber()
-              );
+            onBurnAmountSusdChange={(burnAmount) => {
+              if (burnAmount === '') {
+                setBurnAmountSusd('');
+                setSnxUnstakingAmount('');
+                return;
+              }
+
+              const snxPrice = exchangeRateData?.SNX?.toNumber();
+              if (!debtData || !susdBalance || !snxPrice) return;
+              const parsedBurnAmount = parseFloatWithCommas(burnAmount);
+              if (isNaN(parsedBurnAmount)) return undefined;
+              const snxUnstakingAmount = burnAmount
+                ? calculateUnstakingAmountFromBurn({
+                    burnAmount: parsedBurnAmount,
+                    targetCRatio: debtData.targetCRatio.toNumber(),
+                    collateralPrice: snxPrice,
+                    debtBalance: debtData.debtBalance.toNumber(),
+                    issuableSynths: debtData.issuableSynths.toNumber(),
+                  })
+                : undefined;
               setActiveBadge(undefined);
-              setBurnAmountSusd(val);
-              setSnxUnstakingAmount(snxUnstakingAmount);
-            }}
-            onUnstakeAmountChange={(val) => {
-              const burnAmount = calculateBurnAmountFromUnstaking(
-                val,
-                debtData?.targetCRatio.toNumber(),
-                exchangeRateData?.SNX?.toNumber()
-              );
-              setActiveBadge(undefined);
-              setSnxUnstakingAmount(val);
               setBurnAmountSusd(burnAmount);
+              setSnxUnstakingAmount(
+                snxUnstakingAmount === undefined ? '' : formatNumber(snxUnstakingAmount)
+              );
+            }}
+            onUnstakeAmountChange={(unstakingAmount) => {
+              if (!debtData) return;
+              if (unstakingAmount === '') {
+                setBurnAmountSusd('');
+                setSnxUnstakingAmount('');
+                return;
+              }
+              const parsedUnstakingAmount = parseFloatWithCommas(unstakingAmount);
+              if (isNaN(parsedUnstakingAmount)) return undefined;
+              const burnAmount = calculateBurnAmountFromUnstaking({
+                unStakingAmount: parsedUnstakingAmount,
+                targetCRatio: debtData?.targetCRatio.toNumber(),
+                collateralPrice: exchangeRateData?.SNX?.toNumber(),
+                debtBalance: debtData.debtBalance.toNumber(),
+                issuableSynths: debtData.issuableSynths.toNumber(),
+              });
+              setActiveBadge(undefined);
+              setSnxUnstakingAmount(unstakingAmount);
+              setBurnAmountSusd(burnAmount === undefined ? '' : formatNumber(burnAmount));
             }}
             onBadgeClick={handleBadgeClick}
             gasError={gasError}

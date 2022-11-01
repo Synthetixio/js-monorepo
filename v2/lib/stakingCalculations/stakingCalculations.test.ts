@@ -94,23 +94,61 @@ describe('stakingCalculation', () => {
     });
   });
   describe('calculateUnstakingAmountFromBurn', () => {
-    test('when target 400% (0.25%) and snx price 2', () => {
-      expect(calculateUnstakingAmountFromBurn('10', 0.25, 2)).toBe('20.00');
+    test('when target 400% (0.25%), snx price 2 and sUSD to get back to target is 0 (debtBalance-issuableSynths)', () => {
+      expect(
+        calculateUnstakingAmountFromBurn({
+          burnAmount: 10,
+          targetCRatio: 0.25,
+          collateralPrice: 2,
+          debtBalance: 10,
+          issuableSynths: 10,
+        })
+      ).toBe(20);
+    });
+    test('when target 400% (0.25%), snx price 2 and sUSD to get back to target is $10 (debtBalance-issuableSynths)', () => {
+      expect(
+        calculateUnstakingAmountFromBurn({
+          burnAmount: 10,
+          targetCRatio: 0.25,
+          collateralPrice: 2,
+          debtBalance: 20,
+          issuableSynths: 10,
+        })
+      ).toBe(0);
     });
   });
   describe('calculateBurnAmountFromUnstaking', () => {
-    test('when target 400% (0.25%) and snx price 2', () => {
-      expect(calculateBurnAmountFromUnstaking('20', 0.25, 2)).toBe('10.00');
+    test('when target 400% (0.25%), snx price 2 and sUSD to get back to target is 0 (debtBalance-issuableSynths)', () => {
+      expect(
+        calculateBurnAmountFromUnstaking({
+          unStakingAmount: 20,
+          targetCRatio: 0.25,
+          collateralPrice: 2,
+          debtBalance: 10,
+          issuableSynths: 10,
+        })
+      ).toBe(10);
+    });
+    test('when target 400% (0.25%),snx price 2 and sUSD to get back to target is $10 (debtBalance-issuableSynths)', () => {
+      expect(
+        calculateBurnAmountFromUnstaking({
+          unStakingAmount: 20,
+          targetCRatio: 0.25,
+          collateralPrice: 2,
+          debtBalance: 20,
+          issuableSynths: 10,
+        })
+      ).toBe(20);
     });
   });
   describe('calculateStakeAmountFromMint', () => {
     test('when target 400% (0.25%) and snx price 2', () => {
-      expect(calculateStakeAmountFromMint('10', 0.25, 2)).toBe('20.00');
+      expect(calculateStakeAmountFromMint(10, 0.25, 2)).toBe(20);
     });
   });
   describe('calculateMintAmountFromStaking', () => {
     test('when target 400% (0.25%) and snx price 2', () => {
-      expect(calculateMintAmountFromStaking('20', 0.25, 2)).toBe('10.00');
+      expect(calculateMintAmountFromStaking(20, 0.25, 2)).toBe(10);
     });
   });
   describe('calculateChangesFromMint', () => {
@@ -171,24 +209,25 @@ describe('stakingCalculation', () => {
   });
   describe('calculateChangesFromBurn', () => {
     test('burning 10SNX', () => {
-      const snxUnstakingAmount = 10;
       const burnAmountSusd = 5;
       const stakedSnx = 20;
       const debtBalance = 10;
       const transferable = 50;
       const sUSDBalance = 10;
+      const collateral = 50;
       const collateralUsdValue = 100;
+      const targetCRatio = 0.25;
 
       expect(
         calculateChangesFromBurn({
-          snxUnstakingAmount,
           burnAmountSusd,
           stakedSnx,
           debtBalance,
           transferable,
           sUSDBalance,
           collateralUsdValue,
-          collateral: 50,
+          collateral,
+          targetCRatio,
         })
       ).toEqual({
         newCratio: 0.05,
@@ -199,7 +238,6 @@ describe('stakingCalculation', () => {
       });
     });
     test('burning more than debt balance', () => {
-      const snxUnstakingAmount = 1000;
       const burnAmountSusd = 500;
       const stakedSnx = 10;
       const debtBalance = 10;
@@ -207,10 +245,10 @@ describe('stakingCalculation', () => {
       const sUSDBalance = 10;
       const collateralUsdValue = 100;
       const collateral = 50;
+      const targetCRatio = 0.25;
 
       expect(
         calculateChangesFromBurn({
-          snxUnstakingAmount,
           burnAmountSusd,
           stakedSnx,
           debtBalance,
@@ -218,6 +256,7 @@ describe('stakingCalculation', () => {
           sUSDBalance,
           collateralUsdValue,
           collateral,
+          targetCRatio,
         })
       ).toEqual({
         newCratio: 0,

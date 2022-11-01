@@ -1,4 +1,3 @@
-import { formatNumber, parseFloatWithCommas } from '@snx-v2/formatters';
 import Wei, { wei } from '@synthetixio/wei';
 
 export const calculateStakedSnx = ({
@@ -29,32 +28,71 @@ export const calculateUnstakedStakedSnx = ({
     : wei(0);
 
 const calculateDebtFromCollateral = (
-  collateral: string,
+  collateral: number,
   targetCRatio?: number,
   collateralPrice?: number
 ) => {
-  const num = parseFloatWithCommas(collateral);
-  if (isNaN(num)) return '';
-  if (!targetCRatio || !collateralPrice) return '';
+  if (!targetCRatio || !collateralPrice) return undefined;
 
-  return formatNumber(num * targetCRatio * collateralPrice);
+  return collateral * targetCRatio * collateralPrice;
 };
 
 const calculateCollateralFromDebt = (
-  debtUsd: string,
+  debtUsd: number,
   targetCRatio?: number,
   collateralPrice?: number
 ) => {
-  const num = parseFloatWithCommas(debtUsd);
-  if (isNaN(num)) return '';
-  if (!targetCRatio || !collateralPrice) return '';
+  if (!targetCRatio || !collateralPrice) return undefined;
 
-  return formatNumber(num / targetCRatio / collateralPrice);
+  return debtUsd / targetCRatio / collateralPrice;
 };
 
-// Even though the logic is the same for mint and burn I think it make sense to export nicer named functions
-export const calculateUnstakingAmountFromBurn = calculateCollateralFromDebt;
-export const calculateBurnAmountFromUnstaking = calculateDebtFromCollateral;
+export const calculateUnstakingAmountFromBurn = ({
+  burnAmount,
+  targetCRatio,
+  collateralPrice,
+  debtBalance,
+  issuableSynths,
+}: {
+  burnAmount: number;
+  targetCRatio: number;
+  collateralPrice: number;
+  debtBalance: number;
+  issuableSynths: number;
+}) => {
+  const debtToGetBackToTarget = Math.max(debtBalance - issuableSynths, 0);
+  const burnAmountAfterDebtIsCleared = burnAmount - debtToGetBackToTarget;
+  if (burnAmountAfterDebtIsCleared <= 0) {
+    return 0;
+  }
+  const newUnstakingAmount = calculateCollateralFromDebt(
+    burnAmountAfterDebtIsCleared,
+    targetCRatio,
+    collateralPrice
+  );
+  if (newUnstakingAmount === undefined) return undefined;
+
+  return Math.max(newUnstakingAmount, 0);
+};
+
+export const calculateBurnAmountFromUnstaking = ({
+  unStakingAmount,
+  targetCRatio,
+  collateralPrice,
+  debtBalance,
+  issuableSynths,
+}: {
+  unStakingAmount: number;
+  targetCRatio?: number;
+  collateralPrice?: number;
+  debtBalance: number;
+  issuableSynths: number;
+}) => {
+  const debtToGetBackToTarget = Math.max(debtBalance - issuableSynths, 0);
+  const newBurnAmount = calculateDebtFromCollateral(unStakingAmount, targetCRatio, collateralPrice);
+  if (newBurnAmount === undefined) return undefined;
+  return newBurnAmount + debtToGetBackToTarget;
+};
 export const calculateMintAmountFromStaking = calculateDebtFromCollateral;
 export const calculateStakeAmountFromMint = calculateCollateralFromDebt;
 
@@ -85,7 +123,6 @@ export const calculateChangesFromMint = ({
 };
 
 export const calculateChangesFromBurn = ({
-  snxUnstakingAmount,
   burnAmountSusd,
   debtBalance,
   stakedSnx,
@@ -93,8 +130,8 @@ export const calculateChangesFromBurn = ({
   sUSDBalance,
   collateralUsdValue,
   collateral,
+  targetCRatio,
 }: {
-  snxUnstakingAmount: number;
   burnAmountSusd: number;
   debtBalance: number;
   stakedSnx: number;
@@ -102,13 +139,19 @@ export const calculateChangesFromBurn = ({
   sUSDBalance: number;
   collateralUsdValue: number;
   collateral: number;
+  targetCRatio: number;
 }) => {
   const newDebtBalance = Math.max(debtBalance - burnAmountSusd, 0);
-  const newStakedAmountSnx = Math.max(stakedSnx - snxUnstakingAmount, 0);
   const newCratio = newDebtBalance / collateralUsdValue || 0;
+  const newStakedAmountSnx = calculateStakedSnx({
+    currentCRatio: wei(newCratio),
+    targetCRatio: wei(targetCRatio),
+    collateral: wei(collateral),
+  }).toNumber();
+
   const escrowedSnx = collateral - stakedSnx - transferable;
-  const maxTransferable = collateral - escrowedSnx;
-  const newTransferable = Math.min(transferable + snxUnstakingAmount, maxTransferable);
+  const newTransferable = collateral - escrowedSnx - newStakedAmountSnx;
+
   const newSUSDBalance = Math.max(sUSDBalance - burnAmountSusd, 0);
   return { newDebtBalance, newStakedAmountSnx, newCratio, newTransferable, newSUSDBalance };
 };

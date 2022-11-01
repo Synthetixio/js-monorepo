@@ -179,7 +179,7 @@ export const MintUi = ({
             </Flex>
           </Flex>
         </Box>
-        <MintOrBurnChanges collateralChange={parseFloatWithCommas(stakeAmountSNX)} action="mint" />
+        <MintOrBurnChanges debtChange={parseFloatWithCommas(mintAmountsUSD)} action="mint" />
         {gasError ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
@@ -263,23 +263,37 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             isLoading={isLoading}
             stakeAmountSNX={stakeAmountSNX}
             mintAmountsUSD={mintAmountSUSD}
-            onStakeAmountSNXChange={(val) => {
+            onStakeAmountSNXChange={(stakeAmount) => {
+              if (stakeAmount === '') {
+                setStakeAmountSNX('');
+                setMintAmountSUSD('');
+                return;
+              }
+              const parsedStakeAmount = parseFloatWithCommas(stakeAmount);
+              if (isNaN(parsedStakeAmount)) return undefined;
               const mintAmountSUSD = calculateMintAmountFromStaking(
-                val,
+                parsedStakeAmount,
                 targetCRatio?.toNumber(),
                 exchangeRateData?.SNX?.toNumber()
               );
-              setStakeAmountSNX(val);
-              setMintAmountSUSD(mintAmountSUSD);
+              setStakeAmountSNX(stakeAmount);
+              setMintAmountSUSD(mintAmountSUSD === undefined ? '' : formatNumber(mintAmountSUSD));
             }}
-            onMintAmountSUSDChange={(val) => {
+            onMintAmountSUSDChange={(mintAmount) => {
+              if (mintAmount === '') {
+                setStakeAmountSNX('');
+                setMintAmountSUSD('');
+                return;
+              }
+              const parsedMintAmount = parseFloatWithCommas(mintAmount);
+              if (isNaN(parsedMintAmount)) return undefined;
               const stakeAmountSNX = calculateStakeAmountFromMint(
-                val,
+                parsedMintAmount,
                 targetCRatio?.toNumber(),
                 exchangeRateData?.SNX?.toNumber()
               );
-              setMintAmountSUSD(val);
-              setStakeAmountSNX(stakeAmountSNX);
+              setMintAmountSUSD(mintAmount);
+              setStakeAmountSNX(stakeAmountSNX === undefined ? '' : formatNumber(stakeAmountSNX));
             }}
             unstakedSnx={unstakedSnx.toNumber()}
             susdBalance={synthsData?.balancesMap.sUSD?.balance.toNumber()}
