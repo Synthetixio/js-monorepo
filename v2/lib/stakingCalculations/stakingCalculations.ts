@@ -70,7 +70,7 @@ export const calculateUnstakingAmountFromBurn = ({
   const debtToGetBackToTarget = Math.max(debtBalance - issuableSynths, 0);
   const burnAmountAfterDebtIsClear = burnAmountNumber - debtToGetBackToTarget;
   if (burnAmountAfterDebtIsClear <= 0) {
-    return formatNumber(0);
+    return 0;
   }
   const newUnstakingAmount = calculateCollateralFromDebt(
     formatNumber(burnAmountAfterDebtIsClear),
