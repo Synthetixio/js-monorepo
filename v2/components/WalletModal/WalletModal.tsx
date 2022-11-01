@@ -78,7 +78,15 @@ export const WalletModalUi: FC<{
               <Text fontSize="sm" color="gray.800">
                 {t('staking-v2.wallet-modal.connected-with', { walletType })}
               </Text>
-              <Button size="xs" onClick={() => disconnectWallet()} variant="ghost">
+              <Button
+                size="xs"
+                onClick={() => {
+                  onClose();
+                  disconnectWallet();
+                  navigate('/');
+                }}
+                variant="ghost"
+              >
                 {t('staking-v2.wallet-modal.disconnect')}
               </Button>
             </Flex>
