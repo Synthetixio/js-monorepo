@@ -2,15 +2,6 @@ import { Box } from '@chakra-ui/react';
 import { MainActionCardsUi } from './MainActionCards';
 
 describe('MainActionCards', () => {
-  it('renders skeleton', () => {
-    cy.viewport(1000, 1000);
-    cy.mount(
-      <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
-        <MainActionCardsUi isLoading={false} />
-      </Box>
-    );
-    cy.get('.chakra-skeleton').should('be.visible');
-  });
   it('renders unclaimed rewards with a healthy c-ratio', () => {
     cy.viewport(1000, 1000);
 
