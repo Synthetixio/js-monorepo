@@ -80,9 +80,13 @@ const getLoan = async ({
     loanContract.minCratio(),
     loanContract.collateralKey(),
   ]);
-  const cratio = isL2
+
+  const cratio = partialLoan.amount.eq(0)
+    ? BigNumber.from(0)
+    : isL2
     ? await loanContract.collateralRatio(id)
     : await loanContract.collateralRatio(raw);
+
   return {
     ...partialLoan,
     cratio,

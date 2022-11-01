@@ -6,19 +6,18 @@
   "scripts": {
     "start": "yarn cy",
     "cy": "cypress open --component --browser chrome",
-    "cy:check": "cypress run --component",
+    "cy:check": "cypress run --component --browser chrome",
     "e2e": "cypress open --e2e --browser chrome",
-    "e2e:check": "cypress run --e2e"
+    "e2e:check": "cypress run --e2e --browser chrome"
   },
   "devDependencies": {
     "@chakra-ui/react": "^2.2.8",
     "@cypress/code-coverage": "^3.10.0",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/v2-ui": "workspace:*",
+    "chrome-remote-interface": "^0.31.3",
     "cypress": "^10.10.0",
-    "dotenv": "^16.0.0",
     "ethers": "^5.7.2",
-    "node-fetch": "^2.6.7",
     "react-router-dom": "^6.3.0"
   },
   "depcheck": {

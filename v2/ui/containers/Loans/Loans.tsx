@@ -1,6 +1,7 @@
 import { createContainer } from 'unstated-next';
 import { useMemo, useEffect, useState } from 'react';
 import { BigNumber, ethers } from 'ethers';
+import { useQueryClient } from '@tanstack/react-query';
 
 import Connector from 'containers/Connector';
 import { sleep } from 'utils/promise';
@@ -60,6 +61,7 @@ function Container() {
       )
     : '';
 
+  const queryClient = useQueryClient();
   useEffect(() => {
     if (!(isAppReady && walletAddress && provider && ethLoanContract)) {
       return;
@@ -110,6 +112,7 @@ function Container() {
           }
           return loans;
         });
+        queryClient.invalidateQueries(['walletBalances', 'synths']);
       };
 
       const onLoanCreated = async (_address: string, id: BigNumber) => {
@@ -121,10 +124,12 @@ function Container() {
           address: walletAddress,
         });
         setLoans((loans) => [loan, ...loans]);
+        queryClient.invalidateQueries(['walletBalances', 'synths']);
       };
 
       const onLoanClosed = (_owner: string, id: BigNumber) => {
         setLoans((loans) => loans.filter((loan) => !loan.id.eq(id)));
+        queryClient.invalidateQueries(['walletBalances', 'synths']);
       };
 
       const onCollateralDeposited = async (owner: string, id: BigNumber, amount: BigNumber) => {
@@ -137,6 +142,7 @@ function Container() {
           })
         );
         await updateLoan(owner, id);
+        queryClient.invalidateQueries(['walletBalances', 'synths']);
       };
 
       const onCollateralWithdrawn = async (owner: string, id: BigNumber, amount: BigNumber) => {
@@ -149,6 +155,7 @@ function Container() {
           })
         );
         await updateLoan(owner, id);
+        queryClient.invalidateQueries(['walletBalances', 'synths']);
       };
 
       const onLoanRepaymentMade = async (
@@ -166,6 +173,7 @@ function Container() {
           })
         );
         await updateLoan(borrower, id);
+        queryClient.invalidateQueries(['walletBalances', 'synths']);
       };
 
       const onLoanDrawnDown = async (owner: string, id: BigNumber, amount: BigNumber) => {
@@ -178,6 +186,7 @@ function Container() {
           })
         );
         await updateLoan(owner, id);
+        queryClient.invalidateQueries(['walletBalances', 'synths']);
       };
 
       const loanCreatedEvent = loanContract.filters.LoanCreated(walletAddress);
@@ -217,6 +226,7 @@ function Container() {
     isL2,
     network,
     subgraphOpenLoansKey,
+    queryClient,
   ]);
 
   const rateAndDelayQueries = useQuery(

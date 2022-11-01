@@ -4,7 +4,7 @@ module.exports = defineConfig({
   reporter: 'junit',
   reporterOptions: {
     mochaFile: './cypress/reports/junit-results.[hash].xml',
-    toConsole: true,
+    toConsole: false,
   },
 
   component: {
@@ -26,15 +26,18 @@ module.exports = defineConfig({
     specPattern: ['../**/*.e2e.{js,jsx,ts,tsx}'],
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
-      require('dotenv').config({ override: true, path: './env.local' });
-      require('@cypress/code-coverage/task')(on, config);
+      if (process.env.CI) {
+        on('before:browser:launch', require('./cypress/lib/printBrowserLogs').printBrowserLogs);
+        require('@cypress/code-coverage/task')(on, config);
+      }
       on('task', {
-        ...require('./cypress/tasks/fork'),
+        ...require('./cypress/tasks/forkReset'),
         ...require('./cypress/tasks/removeMinimumStakeTime'),
         ...require('./cypress/tasks/removeEthCollateralInteractionDelay'),
         ...require('./cypress/tasks/getSnx'),
         ...require('./cypress/tasks/mintSusd'),
       });
+
       return config;
     },
 
@@ -44,6 +47,6 @@ module.exports = defineConfig({
     },
     defaultCommandTimeout: 60_000,
     execTimeout: 120_000,
-    taskTimeout: 120_000,
+    taskTimeout: 300_000, // sometimes Anvil needs quite a bit of time to complete impersonating tx
   },
 });
