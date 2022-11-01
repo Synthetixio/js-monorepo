@@ -52,6 +52,7 @@ interface BurnProps {
   onBadgeClick: (badge: ActiveBadge) => void;
   stakedSnx: number;
   debtBalance?: number;
+  sUsdAmountToTarget: number;
 }
 
 type ActiveBadge = 'max' | 'toTarget';
@@ -93,6 +94,7 @@ export const BurnUi = ({
   debtBalance,
   gasError,
   isGasEnabledAndNotFetched,
+  sUsdAmountToTarget,
 }: BurnProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState<ActiveBadge | null>(null);
@@ -249,11 +251,13 @@ export const BurnUi = ({
             </Badge>
           </Flex>
         </Box>
-        {activeBadge === 'toTarget' && (
+        {snxUnstakingAmount === '0.00' && (
           <Alert my={4} status="info" variant="left-accent" py={2} px={3}>
             <AlertIcon width="20px" height="20px" />
-            <AlertDescription pl={2} pr={[0, 0, 24]} fontSize="sm" fontFamily="heading">
-              {t('staking-v2.burn.description-cratio')}
+            <AlertDescription pl={2} pr={0} fontSize="sm" fontFamily="heading">
+              {t('staking-v2.burn.unstaking-note', {
+                sUsdAmountToTarget: sUsdAmountToTarget ? formatNumber(sUsdAmountToTarget) : 0,
+              })}
             </AlertDescription>
           </Alert>
         )}
@@ -453,6 +457,10 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             isLoading={isLoading}
             susdBalance={susdBalance?.toNumber()}
             snxUnstakingAmount={snxUnstakingAmount}
+            sUsdAmountToTarget={Math.max(
+              debtData?.debtBalance.sub(debtData?.issuableSynths || 0)?.toNumber() || 0,
+              0
+            )}
             burnAmountSusd={burnAmountSusd}
             onBurnAmountSusdChange={(burnAmount) => {
               if (burnAmount === '') {

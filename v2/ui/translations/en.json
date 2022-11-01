@@ -110,7 +110,7 @@
       "burn-debt": "Clear Debt",
       "active-debt": "Active debt: ",
       "staked-snx": "Staked SNX: ",
-      "description-cratio": "Burn to C-Ratio - Burn sUSD required to reach target C-Ratio",
+      "unstaking-note": "When burning while under target c-ratio, you are not unstaking SNX. You need to burn {{sUsdAmountToTarget}} sUSD to have a c-ratio above target and unstake SNX.",
       "balance-error": "Not enough sUSD balance",
       "txn-modal": {
         "unstaking": "Unstaking",
