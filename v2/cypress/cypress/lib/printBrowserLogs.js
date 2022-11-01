@@ -78,6 +78,8 @@ export function printBrowserLogs(browser = {}, launchOptions) {
 
         cdp.on('disconnect', () => {
           console.log('Chrome Debugging Protocol disconnected');
+          console.log('Reconnecting...');
+          setTimeout(tryConnect, 100);
         });
       })
       .catch(() => {
