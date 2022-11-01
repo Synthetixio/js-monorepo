@@ -251,7 +251,7 @@ export const BurnUi = ({
             </Badge>
           </Flex>
         </Box>
-        {snxUnstakingAmount === '0.00' && (
+        {parseFloatWithCommas(snxUnstakingAmount) === 0 && (
           <Alert my={4} status="info" variant="left-accent" py={2} px={3}>
             <AlertIcon width="20px" height="20px" />
             <AlertDescription pl={2} pr={0} fontSize="sm" fontFamily="heading">
