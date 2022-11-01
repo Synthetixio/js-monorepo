@@ -27,7 +27,7 @@ import {
   StakingIcon,
   WalletIcon,
   StakingLogo,
-  InfoOutline,
+  // InfoOutline,
 } from '@snx-v2/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -247,12 +247,12 @@ export const NavigationUI = ({
             </MenuButton>
           </Center>
           <MenuList>
-            <MenuItem onClick={() => navigate('/')}>
+            {/* <MenuItem onClick={() => navigate('/')}>
               <Center>
                 <InfoOutline />
                 <Text ml={2}>{t('common.wallet.menu.help')}</Text>
               </Center>
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem onClick={() => navigate('/loans')}>
               <Center>
                 <LoansIcon />
