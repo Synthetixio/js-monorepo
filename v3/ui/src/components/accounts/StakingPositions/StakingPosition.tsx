@@ -1,9 +1,8 @@
-import { ArrowRightIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { Link, Td, Text, Tooltip, Tr } from '@chakra-ui/react';
+import { ArrowRightIcon } from '@chakra-ui/icons';
+import { Link, Td, Text, Tr } from '@chakra-ui/react';
 import { BigNumber } from 'ethers';
 import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import { formatValue } from '../../../utils/helpers';
-import { currency } from '../../../utils/currency';
 import { StakingPositionType } from '../../../utils/types';
 import { poolsData } from '../../../utils/constants';
 import { FC } from 'react';
