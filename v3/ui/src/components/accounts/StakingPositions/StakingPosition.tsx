@@ -45,7 +45,7 @@ export const StakingPosition: FC<Props> = ({ position }) => {
         </Text>
       </Td>
       <Td py="4">
-        {cRatio.eq(0) ? <>No Debt</> : <Amount value={cRatio} />}
+        {cRatio.eq(0) ? <>No Debt</> : <Amount value={cRatio} suffix="%" />}
 
         <Text fontSize="xs" opacity="0.66" mt="1'">
           <Amount
