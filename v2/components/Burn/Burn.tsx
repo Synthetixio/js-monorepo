@@ -237,7 +237,7 @@ export const BurnUi = ({
               onClick={() => handleBadgePress('toTarget')}
             >
               {t('staking-v2.burn.burn-cratio')}
-              <Tooltip label="Soonthetix" hasArrow>
+              <Tooltip label="Amount of debt to burn" hasArrow>
                 <Flex alignItems="center">
                   <InfoIcon
                     width="12px"
@@ -267,7 +267,10 @@ export const BurnUi = ({
           >
             {t('staking-v2.burn.unstaking')}
           </Text>
-          <Tooltip label="Soonthetix" hasArrow>
+          <Tooltip
+            label="When you're c-ratio is below target all your SNX is considered staked"
+            hasArrow
+          >
             <Flex>
               <InfoIcon width="12px" height="12px" />
             </Flex>
@@ -318,10 +321,7 @@ export const BurnUi = ({
             </Flex>
           </Flex>
         </Box>
-        <MintOrBurnChanges
-          collateralChange={parseFloatWithCommas(snxUnstakingAmount)}
-          action="burn"
-        />
+        <MintOrBurnChanges debtChange={parseFloatWithCommas(burnAmountSusd)} action="burn" />
         {gasError || notEnoughBalance ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
@@ -469,14 +469,18 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
               setSnxUnstakingAmount(snxUnstakingAmount);
             }}
             onUnstakeAmountChange={(val) => {
-              const burnAmount = calculateBurnAmountFromUnstaking(
-                val,
-                debtData?.targetCRatio.toNumber(),
-                exchangeRateData?.SNX?.toNumber()
-              );
+              if (!debtData) return;
+
+              const burnAmount = calculateBurnAmountFromUnstaking({
+                unStakingAmount: val,
+                targetCRatio: debtData?.targetCRatio.toNumber(),
+                collateralPrice: exchangeRateData?.SNX?.toNumber(),
+                debtBalance: debtData.debtBalance.toNumber(),
+                issuableSynths: debtData.issuableSynths.toNumber(),
+              });
               setActiveBadge(undefined);
               setSnxUnstakingAmount(val);
-              setBurnAmountSusd(burnAmount);
+              setBurnAmountSusd(formatNumber(burnAmount));
             }}
             onBadgeClick={handleBadgeClick}
             gasError={gasError}
