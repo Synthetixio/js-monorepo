@@ -265,12 +265,14 @@ export const NavigationUI = ({
                 <Text ml={2}>{t('common.wallet.menu.gov')}</Text>
               </Center>
             </MenuItem>
-            <MenuItem onClick={onOpen}>
-              <Center>
-                <WalletIcon color="white" />
-                <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>
-              </Center>
-            </MenuItem>
+            {isWalletConnected && (
+              <MenuItem onClick={onOpen}>
+                <Center>
+                  <WalletIcon color="white" />
+                  <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>
+                </Center>
+              </MenuItem>
+            )}
             {/* <MenuItem onClick={() => navigate('/')}>
               <Center>
                 <SettingsIcon color="white" />
