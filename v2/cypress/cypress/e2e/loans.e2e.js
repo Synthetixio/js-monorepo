@@ -1,6 +1,10 @@
 it('Can borrow sUSD with ETH collateral', () => {
   cy.viewport(1000, 1200);
+
   cy.task('removeEthCollateralInteractionDelay');
+  cy.task('getSnx');
+  cy.task('mintSusd', 10);
+
   cy.visit('http://localhost:3000/loans');
   cy.contains('button[role="tab"]', 'Borrow Synths').should('be.visible');
 
