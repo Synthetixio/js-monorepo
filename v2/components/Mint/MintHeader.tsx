@@ -162,6 +162,7 @@ export const MintHeaderUi: FC<{
                   liquidationCratioPercentage={liquidationRatioPercentage || 0}
                   currentCRatioPercentage={currentCRatioPercentage || 0}
                   targetCratioPercentage={targetCRatioPercentage || 0}
+                  isLoading={false}
                 />
               </Flex>
               <Flex
