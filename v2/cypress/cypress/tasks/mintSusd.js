@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import * as Synthetix from '@synthetixio/contracts/src/mainnet/deployment/Synthetix';
 
-export async function mintSusd(fork, amount = 1) {
+export async function mintSusd(amount = 1) {
   const wallet = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266';
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
   const signer = provider.getSigner(wallet);

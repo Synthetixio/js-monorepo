@@ -8,11 +8,10 @@ it('Can borrow sUSD with ETH collateral', () => {
   cy.visit('http://localhost:3000/loans');
   cy.contains('button[role="tab"]', 'Borrow Synths').should('be.visible');
 
-  cy.get('[data-testid="loans current eth balance"]')
-    .should('be.visible')
-    .and(($0) => {
-      expect(parseFloat($0.data('balance'))).to.be.gte(2);
-    });
+  cy.get('[data-testid="loans current eth balance"]').should('be.visible');
+  cy.get('[data-testid="loans current eth balance"]').should(
+    ($0) => parseFloat($0.attr('data-balance')) >= 2
+  );
 
   // input for the debt asset
   cy.get('[data-testid="loans form"] input[type="number"]').eq(0).type(100);
@@ -32,16 +31,14 @@ it('Can borrow sUSD with ETH collateral', () => {
   cy.get('[role="dialog"]').should('not.exist');
 
   // Wait for balance to be fetched and ensure we have at least 100 sUSD available
-  cy.get('[data-testid="balance item"][data-currency="sUSD"]')
-    .should('be.visible')
-    .and(($0) => {
-      expect(parseFloat($0.data('amount'))).to.be.gte(100);
-    });
+  cy.get('[data-testid="balance item"][data-currency="sUSD"]').should(
+    ($0) => parseFloat($0.attr('data-amount')) >= 100
+  );
 
   cy.contains('button[role="tab"][aria-selected="true"]', 'Active Borrows').should('exist');
   cy.get('[data-testid="loan actions button"]')
     .should('exist')
-    .then(($0) => cy.wrap($0.data('id')).as('loanId'));
+    .then(($0) => cy.wrap($0.attr('data-id')).as('loanId'));
 
   cy.get('@loanId').then((id) => {
     cy.get(`[data-testid="loan actions button"][data-id="${id}"]`).last().click();
@@ -49,7 +46,8 @@ it('Can borrow sUSD with ETH collateral', () => {
     cy.url().should('include', `/loans/eth/${id}/close`);
   });
 
-  cy.get('[data-testid="loans submit loan modification"]').should('exist').and('not.be.disabled');
+  cy.get('[data-testid="loans submit loan modification"]').should('exist');
+  cy.get('[data-testid="loans submit loan modification"]').should('not.be.disabled');
 
   cy.get('[data-testid="loans submit loan modification"]').click();
 

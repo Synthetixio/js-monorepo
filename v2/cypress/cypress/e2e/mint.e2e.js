@@ -8,9 +8,10 @@ it('should mint sUSD', () => {
 
   cy.get('[data-testid="mint header"]').should('be.visible');
 
-  cy.get('[data-testid="mint available snx balance"]')
-    .should('be.visible')
-    .within(($0) => cy.wrap(parseFloat($0.data('balance'))).should('be.gte', 10));
+  cy.get('[data-testid="mint available snx balance"]').should('be.visible');
+  cy.get('[data-testid="mint available snx balance"]').should(
+    ($0) => parseFloat($0.attr('data-balance')) >= 10
+  );
 
   cy.get('[data-testid="mint snx amount input"]').type(10);
 

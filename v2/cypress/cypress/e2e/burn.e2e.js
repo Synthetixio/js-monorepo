@@ -11,9 +11,10 @@ it('should burn sUSD', () => {
 
   cy.get('[data-testid="burn header"]').should('be.visible');
 
-  cy.get('[data-testid="burn available susd balance"]')
-    .should('be.visible')
-    .within(($0) => cy.wrap(parseFloat($0.data('balance'))).should('be.gte', 1));
+  cy.get('[data-testid="burn available susd balance"]').should('be.visible');
+  cy.get('[data-testid="burn available susd balance"]').should(
+    ($0) => parseFloat($0.attr('data-balance')) >= 1
+  );
 
   cy.get('[data-testid="burn susd amount input"]').type(1);
 
