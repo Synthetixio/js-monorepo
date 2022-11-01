@@ -71,7 +71,7 @@ const BannerManager: FC = () => {
         message={
           <Trans
             i18nKey="user-menu.banner.kwenta-token"
-            components={[<StyledExternalLink href="waiting for url" />]} // TODO
+            components={[<StyledExternalLink href={EXTERNAL_LINKS.Trading.KwentaToken} />]}
           />
         }
       />
