@@ -2,15 +2,6 @@ import { Box } from '@chakra-ui/react';
 import { MainActionCardsUi } from './MainActionCards';
 
 describe('MainActionCards', () => {
-  it('renders skeleton', () => {
-    cy.viewport(1000, 1000);
-    cy.mount(
-      <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
-        <MainActionCardsUi />
-      </Box>
-    );
-    cy.get('.chakra-skeleton').should('be.visible');
-  });
   it('renders unclaimed rewards with a healthy c-ratio', () => {
     cy.viewport(1000, 1000);
 
@@ -24,6 +15,7 @@ describe('MainActionCards', () => {
           snxPrice="2.00"
           hasClaimed={false}
           isFlagged={false}
+          isLoading={false}
         />
       </Box>
     );
@@ -53,6 +45,7 @@ describe('MainActionCards', () => {
           snxPrice="2.00"
           hasClaimed={true}
           isFlagged={false}
+          isLoading={false}
         />
       </Box>
     );
@@ -73,6 +66,7 @@ describe('MainActionCards', () => {
           snxPrice="2.00"
           hasClaimed={false}
           isFlagged={false}
+          isLoading={false}
         />
       </Box>
     );
@@ -99,6 +93,7 @@ describe('MainActionCards', () => {
           snxPrice="2.00"
           hasClaimed={false}
           isFlagged={false}
+          isLoading={false}
         />
       </Box>
     );
@@ -125,6 +120,7 @@ describe('MainActionCards', () => {
           snxPrice="2.00"
           hasClaimed={false}
           isFlagged={true}
+          isLoading={false}
         />
       </Box>
     );

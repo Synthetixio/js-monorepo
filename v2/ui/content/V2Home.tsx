@@ -3,7 +3,7 @@ import { Box, Container, Flex, Text, Center } from '@chakra-ui/react';
 import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
 import { BalanceBox } from '@snx-v2/BalanceBox';
-import { MainActionCards } from '@snx-v2/MainActionCards';
+import { MainActionCardsList } from '@snx-v2/MainActionCards';
 import { UtilityCard } from '@snx-v2/UtilityCard';
 import {
   DHedgeIcon,
@@ -18,16 +18,18 @@ import { useTranslation } from 'react-i18next';
 import { Welcome } from '@snx-v2/Welcome';
 import { ContractContext } from '@snx-v2/ContractContext';
 import CurveLogo from '../../ui/assets/svg/app/curve.svg';
+import Connector from 'containers/Connector';
 
 const V2Home = () => {
   const { t } = useTranslation();
   const { walletAddress } = useContext(ContractContext);
+  const { isAppReady } = Connector.useContainer();
 
   return (
     <>
       <CRatioBanner />
-      <Container maxW="1200px" py="1">
-        {!walletAddress && <Welcome mt={8} />}
+      <Container maxW="1200px" py="1" mt={4} mb={8}>
+        {!walletAddress && isAppReady && <Welcome mt={8} />}
         <Flex mt="4" flexDirection={['column', 'column', 'column', 'row']} py={4}>
           <Box
             paddingY="7"
@@ -35,11 +37,11 @@ const V2Home = () => {
             bg="navy.900"
             flex="1"
             border="1px"
-            borderColor="gray.800"
+            borderColor="gray.900"
             borderRadius="base"
           >
             <CRatioHealthCard />
-            <MainActionCards />
+            <MainActionCardsList />
           </Box>
           <Flex
             ml="6"

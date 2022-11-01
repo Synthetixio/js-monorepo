@@ -67,6 +67,7 @@ const MintTab: React.FC = () => {
       default:
         return <MintTiles />;
     }
+
     return (
       <StakingInput
         onSubmit={onSubmit}

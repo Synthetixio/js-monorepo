@@ -34,7 +34,7 @@ export const BalanceBoxUi: React.FC<{
   const [show, setShow] = React.useState(false);
   return (
     <Box fontSize="xs" width="full">
-      <Box bg="navy.900" padding="2" border="1px" borderColor="gray.800" borderRadius="base">
+      <Box bg="navy.900" p={3} border="1px" borderColor="gray.900" borderRadius="base">
         <Text fontFamily="heading" fontWeight="extrabold" lineHeight="4">
           {t('staking-v2.balance-box.box-heading')}
         </Text>
@@ -83,8 +83,7 @@ export const BalanceBoxUi: React.FC<{
             <Skeleton my={1} width={8} height={4} />
           )}
         </Flex>
-        <Divider my={4} />
-
+        <Divider my={2} />
         <Collapse in={show}>
           <Flex justifyContent="space-between">
             <Text fontWeight={700}>
@@ -128,7 +127,13 @@ export const BalanceBoxUi: React.FC<{
             )}
           </Flex>
         </Collapse>
-        <Button margin="0 auto" display="block" variant="link" onClick={() => setShow((x) => !x)}>
+        <Button
+          margin="0 auto"
+          display="block"
+          variant="link"
+          size="sm"
+          onClick={() => setShow((x) => !x)}
+        >
           {t('staking-v2.balance-box.show-all-balances')} {show ? <ChevronUp /> : <ChevronDown />}
         </Button>
       </Box>
