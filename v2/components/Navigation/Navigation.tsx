@@ -277,7 +277,7 @@ export const NavigationUI = ({
                 <Text ml={2}>{t('common.wallet.menu.settings')}</Text>
               </Center>
             </MenuItem> */}
-            <MenuItem onClick={() => navigate('/')}>
+            <MenuItem onClick={() => window.open('https://synthetix.io/guides', '_newtab')}>
               <GuideIcon />
               <Text ml={2}>{t('common.wallet.menu.guide')}</Text>
             </MenuItem>
