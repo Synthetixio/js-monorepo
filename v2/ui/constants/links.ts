@@ -6,6 +6,7 @@ export const EXTERNAL_LINKS = {
   Trading: {
     Kwenta: 'https://kwenta.io',
     KwentaTrading: 'https://kwenta.io/exchange',
+    KwentaToken: 'https://mirror.xyz/kwenta.eth/bM-hUzw9fzxTom3k8Is_HbkVJ4My3XzamHthA0Lp7KI',
     DexAG: 'https://dex.ag/',
     Uniswap: 'https://uniswap.exchange/',
     OneInchLink: (from: CurrencyKey, to: CurrencyKey) =>
