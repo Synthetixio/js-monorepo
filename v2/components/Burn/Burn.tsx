@@ -402,18 +402,23 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     if (!debtData || !susdBalance || !snxPrice) return;
     switch (badgeType) {
       case 'toTarget':
-        const burnAmount = Wei.max(debtData.debtBalance.sub(debtData.issuableSynths), wei(0));
-        const burnAmountString = formatNumber(burnAmount.toNumber());
+        const burnAmount = Wei.max(
+          debtData.debtBalance.sub(debtData.issuableSynths),
+          wei(0)
+        ).toNumber();
+
         setActiveBadge('toTarget');
         const snxUnstakingAmount = calculateUnstakingAmountFromBurn({
-          burnAmount: burnAmountString,
+          burnAmount,
           targetCRatio: debtData.targetCRatio.toNumber(),
           collateralPrice: snxPrice,
           debtBalance: debtData.debtBalance.toNumber(),
           issuableSynths: debtData.issuableSynths.toNumber(),
         });
-        setBurnAmountSusd(burnAmountString);
-        setSnxUnstakingAmount(formatNumber(snxUnstakingAmount));
+        setBurnAmountSusd(formatNumber(burnAmount));
+        setSnxUnstakingAmount(
+          snxUnstakingAmount === undefined ? '' : formatNumber(snxUnstakingAmount)
+        );
         return;
 
       case 'max': {
@@ -450,37 +455,50 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             snxUnstakingAmount={snxUnstakingAmount}
             burnAmountSusd={burnAmountSusd}
             onBurnAmountSusdChange={(burnAmount) => {
+              if (burnAmount === '') {
+                setBurnAmountSusd('');
+                setSnxUnstakingAmount('');
+                return;
+              }
+
               const snxPrice = exchangeRateData?.SNX?.toNumber();
               if (!debtData || !susdBalance || !snxPrice) return;
-
+              const parsedBurnAmount = parseFloatWithCommas(burnAmount);
+              if (isNaN(parsedBurnAmount)) return undefined;
               const snxUnstakingAmount = burnAmount
-                ? formatNumber(
-                    calculateUnstakingAmountFromBurn({
-                      burnAmount,
+                ? calculateUnstakingAmountFromBurn({
+                    burnAmount: parsedBurnAmount,
                       targetCRatio: debtData.targetCRatio.toNumber(),
                       collateralPrice: snxPrice,
                       debtBalance: debtData.debtBalance.toNumber(),
                       issuableSynths: debtData.issuableSynths.toNumber(),
                     })
-                  )
-                : '';
+                : undefined;
               setActiveBadge(undefined);
               setBurnAmountSusd(burnAmount);
-              setSnxUnstakingAmount(snxUnstakingAmount);
+              setSnxUnstakingAmount(
+                snxUnstakingAmount === undefined ? '' : formatNumber(snxUnstakingAmount)
+              );
             }}
-            onUnstakeAmountChange={(val) => {
+            onUnstakeAmountChange={(unstakingAmount) => {
               if (!debtData) return;
-
+              if (unstakingAmount === '') {
+                setBurnAmountSusd('');
+                setSnxUnstakingAmount('');
+                return;
+              }
+              const parsedUnstakingAmount = parseFloatWithCommas(unstakingAmount);
+              if (isNaN(parsedUnstakingAmount)) return undefined;
               const burnAmount = calculateBurnAmountFromUnstaking({
-                unStakingAmount: val,
+                unStakingAmount: parsedUnstakingAmount,
                 targetCRatio: debtData?.targetCRatio.toNumber(),
                 collateralPrice: exchangeRateData?.SNX?.toNumber(),
                 debtBalance: debtData.debtBalance.toNumber(),
                 issuableSynths: debtData.issuableSynths.toNumber(),
               });
               setActiveBadge(undefined);
-              setSnxUnstakingAmount(val);
-              setBurnAmountSusd(formatNumber(burnAmount));
+              setSnxUnstakingAmount(unstakingAmount);
+              setBurnAmountSusd(burnAmount === undefined ? '' : formatNumber(burnAmount));
             }}
             onBadgeClick={handleBadgeClick}
             gasError={gasError}

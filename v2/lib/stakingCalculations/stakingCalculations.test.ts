@@ -97,7 +97,7 @@ describe('stakingCalculation', () => {
     test('when target 400% (0.25%), snx price 2 and sUSD to get back to target is 0 (debtBalance-issuableSynths)', () => {
       expect(
         calculateUnstakingAmountFromBurn({
-          burnAmount: '10',
+          burnAmount: 10,
           targetCRatio: 0.25,
           collateralPrice: 2,
           debtBalance: 10,
@@ -108,7 +108,7 @@ describe('stakingCalculation', () => {
     test('when target 400% (0.25%), snx price 2 and sUSD to get back to target is $10 (debtBalance-issuableSynths)', () => {
       expect(
         calculateUnstakingAmountFromBurn({
-          burnAmount: '10',
+          burnAmount: 10,
           targetCRatio: 0.25,
           collateralPrice: 2,
           debtBalance: 20,
@@ -121,7 +121,7 @@ describe('stakingCalculation', () => {
     test('when target 400% (0.25%), snx price 2 and sUSD to get back to target is 0 (debtBalance-issuableSynths)', () => {
       expect(
         calculateBurnAmountFromUnstaking({
-          unStakingAmount: '20',
+          unStakingAmount: 20,
           targetCRatio: 0.25,
           collateralPrice: 2,
           debtBalance: 10,
@@ -132,7 +132,7 @@ describe('stakingCalculation', () => {
     test('when target 400% (0.25%),snx price 2 and sUSD to get back to target is $10 (debtBalance-issuableSynths)', () => {
       expect(
         calculateBurnAmountFromUnstaking({
-          unStakingAmount: '20',
+          unStakingAmount: 20,
           targetCRatio: 0.25,
           collateralPrice: 2,
           debtBalance: 20,
@@ -143,12 +143,12 @@ describe('stakingCalculation', () => {
   });
   describe('calculateStakeAmountFromMint', () => {
     test('when target 400% (0.25%) and snx price 2', () => {
-      expect(calculateStakeAmountFromMint('10', 0.25, 2)).toBe('20.00');
+      expect(calculateStakeAmountFromMint(10, 0.25, 2)).toBe(20);
     });
   });
   describe('calculateMintAmountFromStaking', () => {
     test('when target 400% (0.25%) and snx price 2', () => {
-      expect(calculateMintAmountFromStaking('20', 0.25, 2)).toBe('10.00');
+      expect(calculateMintAmountFromStaking(20, 0.25, 2)).toBe(10);
     });
   });
   describe('calculateChangesFromMint', () => {

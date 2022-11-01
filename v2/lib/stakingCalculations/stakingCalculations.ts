@@ -29,27 +29,23 @@ export const calculateUnstakedStakedSnx = ({
     : wei(0);
 
 const calculateDebtFromCollateral = (
-  collateral: string,
+  collateral: number,
   targetCRatio?: number,
   collateralPrice?: number
 ) => {
-  const num = parseFloatWithCommas(collateral);
-  if (isNaN(num)) return '';
-  if (!targetCRatio || !collateralPrice) return '';
+  if (!targetCRatio || !collateralPrice) return undefined;
 
-  return formatNumber(num * targetCRatio * collateralPrice);
+  return collateral * targetCRatio * collateralPrice;
 };
 
 const calculateCollateralFromDebt = (
-  debtUsd: string,
+  debtUsd: number,
   targetCRatio?: number,
   collateralPrice?: number
 ) => {
-  const num = parseFloatWithCommas(debtUsd);
-  if (isNaN(num)) return '';
-  if (!targetCRatio || !collateralPrice) return '';
+  if (!targetCRatio || !collateralPrice) return undefined;
 
-  return formatNumber(num / targetCRatio / collateralPrice);
+  return debtUsd / targetCRatio / collateralPrice;
 };
 
 export const calculateUnstakingAmountFromBurn = ({
@@ -59,26 +55,25 @@ export const calculateUnstakingAmountFromBurn = ({
   debtBalance,
   issuableSynths,
 }: {
-  burnAmount: string;
+  burnAmount: number;
   targetCRatio: number;
   collateralPrice: number;
   debtBalance: number;
   issuableSynths: number;
 }) => {
-  const burnAmountNumber = parseFloatWithCommas(burnAmount);
-
   const debtToGetBackToTarget = Math.max(debtBalance - issuableSynths, 0);
-  const burnAmountAfterDebtIsClear = burnAmountNumber - debtToGetBackToTarget;
-  if (burnAmountAfterDebtIsClear <= 0) {
+  const burnAmountAfterDebtIsCleared = burnAmount - debtToGetBackToTarget;
+  if (burnAmountAfterDebtIsCleared <= 0) {
     return 0;
   }
   const newUnstakingAmount = calculateCollateralFromDebt(
-    formatNumber(burnAmountAfterDebtIsClear),
+    burnAmountAfterDebtIsCleared,
     targetCRatio,
     collateralPrice
   );
+  if (newUnstakingAmount === undefined) return undefined;
 
-  return Math.max(parseFloatWithCommas(newUnstakingAmount), 0);
+  return Math.max(newUnstakingAmount, 0);
 };
 
 export const calculateBurnAmountFromUnstaking = ({
@@ -88,7 +83,7 @@ export const calculateBurnAmountFromUnstaking = ({
   debtBalance,
   issuableSynths,
 }: {
-  unStakingAmount: string;
+  unStakingAmount: number;
   targetCRatio?: number;
   collateralPrice?: number;
   debtBalance: number;
@@ -96,7 +91,8 @@ export const calculateBurnAmountFromUnstaking = ({
 }) => {
   const debtToGetBackToTarget = Math.max(debtBalance - issuableSynths, 0);
   const newBurnAmount = calculateDebtFromCollateral(unStakingAmount, targetCRatio, collateralPrice);
-  return parseFloatWithCommas(newBurnAmount) + debtToGetBackToTarget;
+  if (newBurnAmount === undefined) return undefined;
+  return newBurnAmount + debtToGetBackToTarget;
 };
 export const calculateMintAmountFromStaking = calculateDebtFromCollateral;
 export const calculateStakeAmountFromMint = calculateCollateralFromDebt;
