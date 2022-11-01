@@ -4,7 +4,6 @@
   "main": "index.ts",
   "version": "0.0.0",
   "dependencies": {
-    "@snx-v2/formatters": "workspace:*",
     "@synthetixio/wei": "workspace:*"
   }
 }

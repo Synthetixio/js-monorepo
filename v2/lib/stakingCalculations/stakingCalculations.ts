@@ -1,4 +1,3 @@
-import { formatNumber, parseFloatWithCommas } from '@snx-v2/formatters';
 import Wei, { wei } from '@synthetixio/wei';
 
 export const calculateStakedSnx = ({
