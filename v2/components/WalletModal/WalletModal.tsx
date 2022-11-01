@@ -141,14 +141,24 @@ export const WalletModalUi: FC<{
             <Button
               display="block"
               variant="ghost"
-              onClick={() => navigate('/synths')}
+              onClick={() => {
+                onClose();
+                navigate('/synths');
+              }}
               margin="0 auto"
             >
               {t('staking-v2.wallet-modal.view-all')}
             </Button>
           </Box>
           <Divider my={4} />
-          <Button onClick={() => navigate('/escrow')} margin="0 auto" display="block">
+          <Button
+            onClick={() => {
+              onClose();
+              navigate('/escrow');
+            }}
+            margin="0 auto"
+            display="block"
+          >
             {t('staking-v2.wallet-modal.escrow')}
           </Button>
         </ModalBody>
