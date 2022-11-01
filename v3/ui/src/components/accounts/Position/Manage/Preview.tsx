@@ -4,6 +4,7 @@ import { CollateralType } from '../../../../utils/types';
 import { useValidatePosition } from '../../../../hooks/useValidatePosition';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { CRatio } from './CRatio';
+import { Amount } from '../../../shared/Amount/Amount';
 
 interface Props {
   collateral: CollateralType;
@@ -51,14 +52,14 @@ export const Preview: FC<Props> = ({
       <Box py="2" borderBottom="1px solid rgba(255,255,255,0.2)">
         <strong>Collateral</strong>
         <Text color={getColor(newCollateralAmount, collateralAmount)} float="right">
-          {collateralAmount.toString()} {collateral.symbol.toUpperCase()} →{' '}
-          {newCollateralAmount.toString()} {collateral.symbol.toUpperCase()}
+          <Amount value={collateralAmount} suffix={` ${collateral.symbol.toUpperCase()}`} /> →{' '}
+          <Amount value={newCollateralAmount} suffix={` ${collateral.symbol.toUpperCase()}`} />
         </Text>
       </Box>
       <Box py="2" borderBottom="1px solid rgba(255,255,255,0.2)">
         <strong>Debt</strong>
         <Text color={getColor(debt, newDebt)} float="right">
-          ${debt.toString()} → ${newDebt.toString()}
+          <Amount value={debt} prefix="$" /> → <Amount value={newDebt} prefix="$" />
         </Text>
       </Box>
       <Box py="2" borderBottom="1px solid rgba(255,255,255,0.2)">

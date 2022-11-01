@@ -12,19 +12,21 @@ export function Account() {
   return (
     <Box>
       <StakingNav />
-      <Box height={!isLoading && Boolean(stakingPositions) ? '0px' : '180px'} position="relative">
-        <Stack position="absolute" top="0" left="0" width="100%">
-          <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-          <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-          <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-          <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-          <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-          <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-          <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-          <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-          <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-        </Stack>
-      </Box>
+      {isLoading && (
+        <Box height={!isLoading && Boolean(stakingPositions) ? '0px' : '180px'} position="relative">
+          <Stack position="absolute" top="0" left="0" width="100%">
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+          </Stack>
+        </Box>
+      )}
       {stakingPositions && (
         <StakingPositions positions={stakingPositions ?? {}} refetch={refetch} />
       )}

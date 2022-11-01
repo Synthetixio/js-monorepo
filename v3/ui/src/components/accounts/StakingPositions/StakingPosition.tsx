@@ -3,10 +3,10 @@ import { Link, Td, Text, Tr } from '@chakra-ui/react';
 import { BigNumber } from 'ethers';
 import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import { formatValue } from '../../../utils/helpers';
-import { currency } from '../../../utils/currency';
 import { StakingPositionType } from '../../../utils/types';
 import { poolsData } from '../../../utils/constants';
 import { FC } from 'react';
+import { Amount } from '../../shared/Amount/Amount';
 
 interface Props {
   position: StakingPositionType;
@@ -31,22 +31,27 @@ export const StakingPosition: FC<Props> = ({ position }) => {
     <Tr>
       <Td py="4">
         <>
-          ${currency(collateralValue)}
+          <Amount value={collateralValue} prefix="$" />
           <Text fontSize="xs" opacity="0.66" mt="1'">
-            {currency(collateralAmount)} {collateralType.symbol.toUpperCase()}
+            <Amount value={collateralAmount} suffix={`${collateralType.symbol.toUpperCase()} `} />
           </Text>
         </>
       </Td>
       <Td py="4">
-        ${currency(debt.toString())}
+        <Amount value={debt} prefix="$" />
         <Text fontSize="xs" opacity="0.66" mt="1'">
           $X net issuance
         </Text>
       </Td>
       <Td py="4">
-        {cRatio.eq(0) ? <>No Debt</> : currency(cRatio.toString()) + `%`}
+        {cRatio.eq(0) ? <>No Debt</> : <Amount value={cRatio} suffix="%" />}
+
         <Text fontSize="xs" opacity="0.66" mt="1'">
-          {formatValue(collateralType!.minimumCRatio!.mul(BigNumber.from(100)), 6).toFixed(0)}% Min.
+          <Amount
+            value={formatValue(collateralType!.minimumCRatio!.mul(BigNumber.from(100)), 6)}
+            suffix="% "
+          />
+          Min.
         </Text>
       </Td>
 

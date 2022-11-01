@@ -3,6 +3,7 @@ import { BigNumber, utils } from 'ethers';
 import { FC, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import { chainIdState } from '../../../utils/state';
+import { Amount } from '../../shared/Amount/Amount';
 
 interface Props {
   balance: BigNumber;
@@ -27,10 +28,11 @@ export const Balance: FC<Props> = ({ balance, decimals, symbol, address, onMax }
     }
   }, [address, localChainId, symbol]);
 
+  const formattedBalance = utils.formatUnits(balance, decimals);
   return (
     <Text display="flex" gap={2} alignItems="center" fontSize="xs">
-      Balance: {parseFloat(utils.formatUnits(balance, decimals)).toLocaleString()}{' '}
-      {symbol.toUpperCase()}
+      Balance:
+      <Amount value={formattedBalance} suffix={` ${symbol.toUpperCase()}`} />
       {balance.eq(0) && buyAssetLink && (
         <Link href={buyAssetLink} isExternal>
           <Badge ml="1" variant="outline" transform="translateY(-1px)">
@@ -44,8 +46,7 @@ export const Balance: FC<Props> = ({ balance, decimals, symbol, address, onMax }
           variant="outline"
           onClick={(e) => {
             e.preventDefault();
-            const balanceValue = utils.formatUnits(balance, decimals);
-            onMax(balanceValue);
+            onMax(formattedBalance);
           }}
         >
           Use Max

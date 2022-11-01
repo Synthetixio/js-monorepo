@@ -5,6 +5,7 @@ import { formatValue } from '../../../utils/helpers';
 import { BigNumber } from 'ethers';
 import { currency } from '../../../utils/currency';
 import { CollateralType } from '../../../utils/types';
+import { Amount } from '../../shared/Amount/Amount';
 
 interface Props {
   collateral: CollateralType;
@@ -29,11 +30,11 @@ export const StakingStats: FC<Props> = ({
         </Text>
         <Heading size="md">
           <Skeleton isLoaded={collateralAmount !== undefined}>
-            {collateralAmount?.toString()} {collateral.symbol.toUpperCase()}
+            <Amount value={collateralAmount} suffix={` ${collateral.symbol.toUpperCase()} `} />
           </Skeleton>
         </Heading>
         <Text opacity="0.6" fontSize="sm">
-          ${currency(collateralValue)}
+          <Amount value={collateralValue} prefix="$" />
         </Text>
       </GridItem>
       <GridItem mb="3">
@@ -41,7 +42,9 @@ export const StakingStats: FC<Props> = ({
           Debt
         </Text>
         <Skeleton isLoaded={debt !== undefined}>
-          <Heading size="md">${currency(debt.toString())}</Heading>
+          <Heading size="md">
+            <Amount value={debt} prefix="$" />
+          </Heading>
         </Skeleton>
         <Text opacity="0.6" fontSize="sm">
           $X net issuance
@@ -65,13 +68,17 @@ export const StakingStats: FC<Props> = ({
                   </Tooltip>
                 </>
               ) : (
-                currency(cRatio?.toString()) + '%'
+                <Amount value={cRatio} suffix="%" />
               )}
             </Flex>
           </Heading>
         </Skeleton>
         <Text opacity="0.6" fontSize="sm">
-          Minimum {formatValue(collateral!.minimumCRatio!.mul(BigNumber.from(100)), 6).toFixed(0)}%
+          Minimum{' '}
+          <Amount
+            value={formatValue(collateral.minimumCRatio!.mul(BigNumber.from(100)), 6)}
+            suffix="% "
+          />
         </Text>
       </GridItem>
       <GridItem mb="3">
