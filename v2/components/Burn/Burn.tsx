@@ -398,29 +398,28 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   });
 
   const handleBadgeClick = (badgeType: ActiveBadge) => {
-    if (!debtData || !susdBalance) return;
+    const snxPrice = exchangeRateData?.SNX?.toNumber();
+    if (!debtData || !susdBalance || !snxPrice) return;
     switch (badgeType) {
       case 'toTarget':
         const burnAmount = Wei.max(debtData.debtBalance.sub(debtData.issuableSynths), wei(0));
         const burnAmountString = formatNumber(burnAmount.toNumber());
         setActiveBadge('toTarget');
-        const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
-          burnAmountString,
-          debtData.targetCRatio.toNumber(),
-          exchangeRateData?.SNX?.toNumber()
-        );
+        const snxUnstakingAmount = calculateUnstakingAmountFromBurn({
+          burnAmount: burnAmountString,
+          targetCRatio: debtData.targetCRatio.toNumber(),
+          collateralPrice: snxPrice,
+          debtBalance: debtData.debtBalance.toNumber(),
+          issuableSynths: debtData.issuableSynths.toNumber(),
+        });
         setBurnAmountSusd(burnAmountString);
-        setSnxUnstakingAmount(snxUnstakingAmount);
+        setSnxUnstakingAmount(formatNumber(snxUnstakingAmount));
         return;
 
       case 'max': {
         setActiveBadge('max');
         const burnAmountString = formatNumber(susdBalance.toNumber());
-        const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
-          burnAmountString,
-          debtData.targetCRatio.toNumber(),
-          exchangeRateData?.SNX?.toNumber()
-        );
+        const snxUnstakingAmount = formatNumber(stakedSnx.toNumber());
         setBurnAmountSusd(burnAmountString);
         setSnxUnstakingAmount(snxUnstakingAmount);
 
@@ -450,14 +449,23 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             susdBalance={susdBalance?.toNumber()}
             snxUnstakingAmount={snxUnstakingAmount}
             burnAmountSusd={burnAmountSusd}
-            onBurnAmountSusdChange={(val) => {
-              const snxUnstakingAmount = calculateUnstakingAmountFromBurn(
-                val,
-                debtData?.targetCRatio.toNumber(),
-                exchangeRateData?.SNX?.toNumber()
-              );
+            onBurnAmountSusdChange={(burnAmount) => {
+              const snxPrice = exchangeRateData?.SNX?.toNumber();
+              if (!debtData || !susdBalance || !snxPrice) return;
+
+              const snxUnstakingAmount = burnAmount
+                ? formatNumber(
+                    calculateUnstakingAmountFromBurn({
+                      burnAmount,
+                      targetCRatio: debtData.targetCRatio.toNumber(),
+                      collateralPrice: snxPrice,
+                      debtBalance: debtData.debtBalance.toNumber(),
+                      issuableSynths: debtData.issuableSynths.toNumber(),
+                    })
+                  )
+                : '';
               setActiveBadge(undefined);
-              setBurnAmountSusd(val);
+              setBurnAmountSusd(burnAmount);
               setSnxUnstakingAmount(snxUnstakingAmount);
             }}
             onUnstakeAmountChange={(val) => {

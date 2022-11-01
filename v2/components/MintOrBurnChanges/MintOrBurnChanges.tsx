@@ -3,10 +3,9 @@ import { Box, Flex, Text, Tooltip } from '@chakra-ui/react';
 import { formatNumber, formatPercent, parseFloatWithCommas } from '@snx-v2/formatters';
 import { ArrowRight, InfoIcon } from '@snx-v2/icons';
 import {
-  calculateBurnAmountFromUnstaking,
   calculateChangesFromBurn,
   calculateChangesFromMint,
-  calculateMintAmountFromStaking,
+  calculateStakeAmountFromMint,
   calculateStakedSnx,
 } from '@snx-v2/stakingCalculations';
 import { useDebtData } from '@snx-v2/useDebtData';
@@ -112,8 +111,8 @@ export const MintOrBurnChangesUi: FC<{
     </Box>
   );
 };
-export const MintOrBurnChanges: FC<{ collateralChange: number; action: 'mint' | 'burn' }> = ({
-  collateralChange,
+export const MintOrBurnChanges: FC<{ debtChange: number; action: 'mint' | 'burn' }> = ({
+  debtChange,
   action,
 }) => {
   const { data: debtData } = useDebtData();
@@ -126,7 +125,7 @@ export const MintOrBurnChanges: FC<{ collateralChange: number; action: 'mint' | 
     !debtData ||
     !synthBalanceData ||
     !exchangeRateData ||
-    !collateralChange ||
+    !debtChange ||
     !exchangeRateData?.SNX ||
     sUSDBalance === undefined
   ) {
@@ -144,25 +143,19 @@ export const MintOrBurnChanges: FC<{ collateralChange: number; action: 'mint' | 
     action === 'mint'
       ? calculateChangesFromMint({
           ...args,
-          stakeAmountSNX: collateralChange,
-          mintAmountsUSD: parseFloatWithCommas(
-            calculateMintAmountFromStaking(
-              String(collateralChange),
+          stakeAmountSNX: parseFloatWithCommas(
+            calculateStakeAmountFromMint(
+              String(debtChange),
               debtData.targetCRatio.toNumber(),
               exchangeRateData.SNX?.toNumber()
             )
           ),
+          mintAmountsUSD: debtChange,
         })
       : calculateChangesFromBurn({
           ...args,
           collateral: debtData.collateral.toNumber(),
-          burnAmountSusd: parseFloatWithCommas(
-            calculateBurnAmountFromUnstaking(
-              String(collateralChange),
-              debtData.targetCRatio.toNumber(),
-              exchangeRateData.SNX?.toNumber()
-            )
-          ),
+          burnAmountSusd: debtChange,
         });
 
   return (

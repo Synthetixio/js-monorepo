@@ -52,9 +52,52 @@ const calculateCollateralFromDebt = (
   return formatNumber(num / targetCRatio / collateralPrice);
 };
 
-// Even though the logic is the same for mint and burn I think it make sense to export nicer named functions
-export const calculateUnstakingAmountFromBurn = calculateCollateralFromDebt;
-export const calculateBurnAmountFromUnstaking = calculateDebtFromCollateral;
+export const calculateUnstakingAmountFromBurn = ({
+  burnAmount,
+  targetCRatio,
+  collateralPrice,
+  debtBalance,
+  issuableSynths,
+}: {
+  burnAmount: string;
+  targetCRatio: number;
+  collateralPrice: number;
+  debtBalance: number;
+  issuableSynths: number;
+}) => {
+  const burnAmountNumber = parseFloatWithCommas(burnAmount);
+
+  const debtToGetBackToTarget = Math.max(debtBalance - issuableSynths, 0);
+  const burnAmountAfterDebtIsClear = burnAmountNumber - debtToGetBackToTarget;
+  if (burnAmountAfterDebtIsClear <= 0) {
+    return formatNumber(0);
+  }
+  const newUnstakingAmount = calculateCollateralFromDebt(
+    formatNumber(burnAmountAfterDebtIsClear),
+    targetCRatio,
+    collateralPrice
+  );
+
+  return Math.max(parseFloatWithCommas(newUnstakingAmount), 0);
+};
+
+export const calculateBurnAmountFromUnstaking = ({
+  unStakingAmount,
+  targetCRatio,
+  collateralPrice,
+  debtBalance,
+  issuableSynths,
+}: {
+  unStakingAmount: string;
+  targetCRatio?: number;
+  collateralPrice?: number;
+  debtBalance: number;
+  issuableSynths: number;
+}) => {
+  const debtToGetBackToTarget = Math.max(debtBalance - issuableSynths, 0);
+  const newBurnAmount = calculateDebtFromCollateral(unStakingAmount, targetCRatio, collateralPrice);
+  return parseFloatWithCommas(newBurnAmount) + debtToGetBackToTarget;
+};
 export const calculateMintAmountFromStaking = calculateDebtFromCollateral;
 export const calculateStakeAmountFromMint = calculateCollateralFromDebt;
 
