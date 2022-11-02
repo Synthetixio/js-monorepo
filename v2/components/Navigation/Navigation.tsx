@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import {
+  Box,
   Button,
   Center,
   Flex,
@@ -111,7 +112,6 @@ export const NavigationUI = ({
       <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
       <Flex alignItems="center">
         <Center
-          mr={1}
           borderColor="gray.900"
           borderWidth="1px"
           borderRadius="4px"
@@ -134,11 +134,13 @@ export const NavigationUI = ({
         {isWalletConnected && walletAddress ? (
           <>
             {size === 'desktop' && (
-              <UserBalances
-                isLoading={isLoading}
-                snxBalance={snxBalance}
-                sUSDBalance={sUSDBalance}
-              />
+              <Flex ml={2}>
+                <UserBalances
+                  isLoading={isLoading}
+                  snxBalance={snxBalance}
+                  sUSDBalance={sUSDBalance}
+                />
+              </Flex>
             )}
             <Center
               ml={2}
