@@ -1,4 +1,4 @@
-import { Bridge } from '@socket.tech/widget';
+import { Bridge } from '@socket.tech/plugin';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import { useTheme } from 'styled-components';
 import Connector from 'containers/Connector';
