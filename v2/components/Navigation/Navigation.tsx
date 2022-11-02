@@ -93,7 +93,7 @@ export const NavigationUI = ({
   const size = useBreakpointValue(
     {
       base: 'mobile',
-      md: 'desktop',
+      lg: 'desktop',
     },
     { fallback: 'md' }
   );
@@ -111,11 +111,12 @@ export const NavigationUI = ({
       <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
       <Flex alignItems="center">
         <Center
-          mr={2}
+          mr={1}
           borderColor="gray.900"
           borderWidth="1px"
           borderRadius="4px"
           height={10}
+          fontSize="xs"
           py="6px"
           px="9.5px"
           _hover={{
