@@ -25,7 +25,7 @@ interface CardProps {
   icon: ReactNode;
   disabled: boolean;
   Content: JSX.Element | null;
-  buttonVariant?: 'solid' | 'outline' | 'link';
+  buttonVariant?: string;
   buttonText: string;
   buttonAction: () => void;
   testId: string;
@@ -178,7 +178,7 @@ const MaintainActionCard: React.FC<{
         ) : null
       }
       disabled={isLoading}
-      buttonVariant={isStaking ? 'solid' : 'link'}
+      buttonVariant={isStaking ? variant : 'link'}
       buttonText={
         isStaking
           ? isFlagged
@@ -280,7 +280,7 @@ const CollectActionCard: React.FC<{
           ? t('staking-v2.main-action-cards.collect-main-button')
           : t('staking-v2.main-action-cards.collect-explanation-link')
       }
-      buttonVariant={isStaking && canClaim ? 'solid' : 'link'}
+      buttonVariant={isStaking && canClaim ? variant : 'link'}
       buttonAction={
         isStaking && canClaim
           ? () => navigate('/earn')
