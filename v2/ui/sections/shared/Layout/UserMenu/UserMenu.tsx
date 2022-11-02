@@ -36,6 +36,7 @@ import WatchWalletModal from 'sections/shared/modals/WatchWalletModal';
 import DelegateModal from 'sections/shared/modals/DelegateModal';
 import Connector from 'containers/Connector';
 import { truncateAddress } from 'utils/formatters/string';
+import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
 
 const UserMenu: FC = () => {
   const { t } = useTranslation();
@@ -62,6 +63,18 @@ const UserMenu: FC = () => {
   return (
     <Container>
       <FlexDivCentered>
+        {location.search.includes('internal') && (
+          <StyledButton
+            style={{ marginRight: 10 }}
+            variant="solid"
+            onClick={() => {
+              window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'true';
+              window.location.reload();
+            }}
+          >
+            Try out Staking v2
+          </StyledButton>
+        )}
         <DesktopOnlyView>
           <FlexDiv>
             {isWalletConnected && delegateWallet && (
@@ -72,7 +85,7 @@ const UserMenu: FC = () => {
             <DropdownContainer>
               <OutsideClickHandler onOutsideClick={() => setWalletOptionsModalOpened(false)}>
                 {isWalletConnected ? (
-                  <WalletButton
+                  <StyledButton
                     variant="solid"
                     onClick={() => {
                       setWalletOptionsModalOpened(!walletOptionsModalOpened);
@@ -91,9 +104,9 @@ const UserMenu: FC = () => {
                       {getNetworkName()}
                     </NetworkTag>
                     {walletOptionsModalOpened ? <CaretUp width="10" /> : <CaretDown width="10" />}
-                  </WalletButton>
+                  </StyledButton>
                 ) : (
-                  <WalletButton
+                  <StyledButton
                     variant="solid"
                     onClick={() => setWalletOptionsModalOpened(!walletOptionsModalOpened)}
                     data-testid="user-menu"
@@ -108,7 +121,7 @@ const UserMenu: FC = () => {
                       </UpperCased>
                     </FlexDivCentered>
                     {walletOptionsModalOpened ? <CaretUp width="10" /> : <CaretDown width="10" />}
-                  </WalletButton>
+                  </StyledButton>
                 )}
                 {walletOptionsModalOpened && (
                   <DesktopWalletOptionsModal
@@ -129,7 +142,7 @@ const UserMenu: FC = () => {
                   <DelegateIcon />
                 </DelegateIconWrapper>
               )}
-              <WalletButton
+              <StyledButton
                 variant="solid"
                 onClick={() => {
                   setWalletOptionsModalOpened(!walletOptionsModalOpened);
@@ -145,7 +158,7 @@ const UserMenu: FC = () => {
                   </Ens>
                 </FlexDivCentered>
                 {walletOptionsModalOpened ? <CaretUp width="10" /> : <CaretDown width="10" />}
-              </WalletButton>
+              </StyledButton>
             </FlexDiv>
           ) : (
             <MobileStyledGlowingButton
@@ -243,7 +256,7 @@ const NetworkTag = styled(FlexDivCentered)`
   text-transform: uppercase;
 `;
 
-const WalletButton = styled(Button)`
+const StyledButton = styled(Button)`
   display: inline-flex;
   align-items: center;
   justify-content: space-between;

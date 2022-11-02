@@ -41,6 +41,7 @@ import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { WalletModal } from '@snx-v2/WalletModal';
 import { ContractContext } from '@snx-v2/ContractContext';
+import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -92,7 +93,7 @@ export const NavigationUI = ({
   const size = useBreakpointValue(
     {
       base: 'mobile',
-      md: 'desktop',
+      lg: 'desktop',
     },
     { fallback: 'md' }
   );
@@ -109,14 +110,36 @@ export const NavigationUI = ({
     >
       <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
       <Flex alignItems="center">
+        <Center
+          borderColor="gray.900"
+          borderWidth="1px"
+          borderRadius="4px"
+          height={10}
+          fontSize="xs"
+          py="6px"
+          px="9.5px"
+          _hover={{
+            bg: 'blackAlpha.400',
+            cursor: 'pointer',
+          }}
+          onClick={() => {
+            window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'false';
+            window.location.reload();
+          }}
+        >
+          Back to old UI
+        </Center>
+
         {isWalletConnected && walletAddress ? (
           <>
             {size === 'desktop' && (
-              <UserBalances
-                isLoading={isLoading}
-                snxBalance={snxBalance}
-                sUSDBalance={sUSDBalance}
-              />
+              <Flex ml={2}>
+                <UserBalances
+                  isLoading={isLoading}
+                  snxBalance={snxBalance}
+                  sUSDBalance={sUSDBalance}
+                />
+              </Flex>
             )}
             <Center
               ml={2}
