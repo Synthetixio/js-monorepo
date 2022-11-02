@@ -19,6 +19,7 @@ const GovPage = safeLazy(() => import(/* webpackChunkName: "gov" */ './content/G
 const EarnPage = safeLazy(() => import(/* webpackChunkName: "earn" */ './content/EarnPage'));
 const DebtPage = safeLazy(() => import(/* webpackChunkName: "debt" */ './content/DebtPage'));
 const EscrowPage = safeLazy(() => import(/* webpackChunkName: "escrow" */ './content/EscrowPage'));
+const PoolPage = safeLazy(() => import(/* webpackChunkName: "pools" */ './content/PoolsPage'));
 const MigrateEscrowPage = safeLazy(
   () => import(/* webpackChunkName: "migrate-escrow" */ './content/MigrateEscrowPage')
 );
@@ -242,6 +243,14 @@ export default function AppRoutes() {
             element={
               <Wrapper>
                 <BridgePage />
+              </Wrapper>
+            }
+          />
+          <Route
+            path="/pools/weth-snx"
+            element={
+              <Wrapper>
+                <PoolPage />
               </Wrapper>
             }
           />
