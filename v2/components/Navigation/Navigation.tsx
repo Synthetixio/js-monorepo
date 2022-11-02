@@ -27,7 +27,7 @@ import {
   StakingIcon,
   WalletIcon,
   StakingLogo,
-  InfoOutline,
+  // InfoOutline,
 } from '@snx-v2/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -247,12 +247,12 @@ export const NavigationUI = ({
             </MenuButton>
           </Center>
           <MenuList>
-            <MenuItem onClick={() => navigate('/')}>
+            {/* <MenuItem onClick={() => navigate('/')}>
               <Center>
                 <InfoOutline />
                 <Text ml={2}>{t('common.wallet.menu.help')}</Text>
               </Center>
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem onClick={() => navigate('/loans')}>
               <Center>
                 <LoansIcon />
@@ -265,19 +265,21 @@ export const NavigationUI = ({
                 <Text ml={2}>{t('common.wallet.menu.gov')}</Text>
               </Center>
             </MenuItem>
-            <MenuItem onClick={onOpen}>
-              <Center>
-                <WalletIcon color="white" />
-                <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>
-              </Center>
-            </MenuItem>
+            {isWalletConnected && (
+              <MenuItem onClick={onOpen}>
+                <Center>
+                  <WalletIcon color="white" />
+                  <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>
+                </Center>
+              </MenuItem>
+            )}
             {/* <MenuItem onClick={() => navigate('/')}>
               <Center>
                 <SettingsIcon color="white" />
                 <Text ml={2}>{t('common.wallet.menu.settings')}</Text>
               </Center>
             </MenuItem> */}
-            <MenuItem onClick={() => navigate('/')}>
+            <MenuItem onClick={() => window.open('https://synthetix.io/guides', '_newtab')}>
               <GuideIcon />
               <Text ml={2}>{t('common.wallet.menu.guide')}</Text>
             </MenuItem>
