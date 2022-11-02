@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "dependencies": {
     "@chakra-ui/react": "^2.2.8",
+    "@snx-v2/CRatioHealthPercentage": "workspace:^",
     "@snx-v2/getHealthVariant": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",

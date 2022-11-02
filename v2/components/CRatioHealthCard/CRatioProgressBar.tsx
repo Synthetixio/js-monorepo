@@ -48,17 +48,16 @@ const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
 };
 
 export const CRatioProgressBar: FC<{
-  liquidationCratioPercentage?: number;
-  targetCratioPercentage?: number;
-  currentCRatioPercentage?: number;
-}> = ({ targetCratioPercentage, liquidationCratioPercentage, currentCRatioPercentage }) => {
-  if (
-    liquidationCratioPercentage === undefined ||
-    targetCratioPercentage === undefined ||
-    currentCRatioPercentage === undefined
-  ) {
-    return <Skeleton w="100%" minHeight="100px" mb={4} />;
-  }
+  liquidationCratioPercentage: number;
+  targetCratioPercentage: number;
+  currentCRatioPercentage: number;
+  isLoading: boolean;
+}> = ({
+  targetCratioPercentage,
+  liquidationCratioPercentage,
+  currentCRatioPercentage,
+  isLoading,
+}) => {
   const maxRatioShown = Math.min(
     Math.max(targetCratioPercentage, currentCRatioPercentage) * 1.1,
     // If the c-ratio is bigger than 2.5x the target ratio the target and liquidation labels will overlap due to the big scale difference.
@@ -66,6 +65,7 @@ export const CRatioProgressBar: FC<{
     targetCratioPercentage * 2.5
   );
   const scaleFactor = maxRatioShown / 100;
+
   const variant = getHealthVariant({
     targetCratioPercentage,
     liquidationCratioPercentage,
@@ -80,17 +80,22 @@ export const CRatioProgressBar: FC<{
       data-testid="c ratio progressbar"
       overflowX="hidden"
     >
-      <LineWithText
-        left={liquidationCratioPercentage / scaleFactor}
-        text={`Liquidation < ${liquidationCratioPercentage.toFixed(0)}%`}
-        tooltipText="You may be flagged for liquidation"
-      />
-      <LineWithText
-        left={targetCratioPercentage / scaleFactor}
-        text={`Target ${targetCratioPercentage.toFixed(0)}%`}
-        tooltipText="Required to claim rewards"
-      />
-      <Progress
+      <>
+        <LineWithText
+          left={!isLoading ? liquidationCratioPercentage / scaleFactor : 33}
+          text={
+            !isLoading ? `Liquidation < ${liquidationCratioPercentage.toFixed(0)}%` : 'Liquidation'
+          }
+          tooltipText="You may be flagged for liquidation"
+        />
+        <LineWithText
+          left={!isLoading ? targetCratioPercentage / scaleFactor : 66}
+          text={!isLoading ? `Target ${targetCratioPercentage.toFixed(0)}%` : 'Target'}
+          tooltipText="Required to claim rewards"
+        />
+      </>
+
+      <Skeleton
         variant={variant}
         top={0}
         bottom={0}
@@ -98,8 +103,19 @@ export const CRatioProgressBar: FC<{
         position="absolute"
         margin="auto"
         width="100%"
-        value={currentCRatioPercentage / scaleFactor}
-      />
+        isLoaded={!isLoading}
+      >
+        <Progress
+          variant={variant}
+          top={0}
+          bottom={0}
+          height="12px"
+          position="absolute"
+          margin="auto"
+          width="100%"
+          value={currentCRatioPercentage / scaleFactor}
+        />
+      </Skeleton>
       <Box
         bg={variant}
         height="12px"
@@ -109,22 +125,26 @@ export const CRatioProgressBar: FC<{
         bottom={0}
         margin="auto"
       >
-        <TriangleDownIcon
-          data-testid="current c-ration triangle"
-          position="absolute"
-          right={0}
-          top={0}
-          transform="translate(50%,-100%)"
-          color={variant}
-        />
-        <TriangleUpIcon
-          data-testid="current c-ration triangle"
-          position="absolute"
-          right={0}
-          bottom={0}
-          transform="translate(50%,100%)"
-          color={variant}
-        />
+        {currentCRatioPercentage > 0 && !isLoading && (
+          <>
+            <TriangleDownIcon
+              data-testid="current c-ration triangle"
+              position="absolute"
+              right={0}
+              top={0}
+              transform="translate(50%,-100%)"
+              color={variant}
+            />
+            <TriangleUpIcon
+              data-testid="current c-ration triangle"
+              position="absolute"
+              right={0}
+              bottom={0}
+              transform="translate(50%,100%)"
+              color={variant}
+            />
+          </>
+        )}
       </Box>
     </Box>
   );

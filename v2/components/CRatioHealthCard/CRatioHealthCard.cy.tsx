@@ -2,27 +2,12 @@ import { Box } from '@chakra-ui/react';
 import { CRatioHealthCardUi } from './CRatioHealthCard';
 
 describe('CRatioHealthCard.cy.tsx', () => {
-  it('renders skeleton', () => {
-    cy.viewport(500, 300);
-    cy.mount(
-      <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
-        <CRatioHealthCardUi
-          {...{
-            targetCratioPercentage: undefined,
-            liquidationCratioPercentage: undefined,
-            currentCRatioPercentage: undefined,
-          }}
-        />
-      </Box>
-    );
-    cy.contains('h2', 'Collateralization Ratio Health').should('be.visible');
-    cy.get('.chakra-skeleton').should('be.visible');
-  });
   it('renders green', () => {
     cy.viewport(500, 300);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <CRatioHealthCardUi
+          isLoading={false}
           {...{
             targetCratioPercentage: 400,
             liquidationCratioPercentage: 150,
@@ -48,6 +33,7 @@ describe('CRatioHealthCard.cy.tsx', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <CRatioHealthCardUi
+          isLoading={false}
           {...{
             targetCratioPercentage: 600,
             liquidationCratioPercentage: 100,
@@ -69,6 +55,7 @@ describe('CRatioHealthCard.cy.tsx', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <CRatioHealthCardUi
+          isLoading={false}
           {...{
             targetCratioPercentage: 200,
             liquidationCratioPercentage: 100,
@@ -92,6 +79,7 @@ describe('CRatioHealthCard.cy.tsx', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <CRatioHealthCardUi
+          isLoading={false}
           {...{
             targetCratioPercentage: 350,
             liquidationCratioPercentage: 100,

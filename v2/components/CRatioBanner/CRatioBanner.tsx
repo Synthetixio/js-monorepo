@@ -37,9 +37,11 @@ export const CRatioBannerUi: FC<UiProps> = ({
   const { t } = useTranslation();
   const translationKey = isFlagged ? 'error-flagged' : variant;
   const wrapperStyles = getWrapperStyles(variant);
-  if (hasClaimed) {
+
+  if (hasClaimed && variant === 'success') {
     return null;
   }
+
   return (
     <SlideFade in={true} offsetY="-20px">
       <Center {...wrapperStyles} data-testid="c ratio banner wrapper">
@@ -73,6 +75,7 @@ export const CRatioBanner: React.FC = () => {
   if (!debtData || !feePoolData || !rewardsData) {
     return null;
   }
+
   const variant = getHealthVariant({
     currentCRatioPercentage: debtData.currentCRatioPercentage.toNumber(),
     targetCratioPercentage: debtData.targetCRatioPercentage.toNumber(),

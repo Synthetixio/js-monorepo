@@ -74,9 +74,10 @@ export const SelfLiquidationUi: FC<{
           borderColor="gray.900"
         >
           <CRatioProgressBar
-            liquidationCratioPercentage={liquidationRatioPercentage}
-            currentCRatioPercentage={currentCRatioPercentage}
-            targetCratioPercentage={targetCRatioPercentage}
+            liquidationCratioPercentage={liquidationRatioPercentage || 0}
+            currentCRatioPercentage={currentCRatioPercentage || 0}
+            targetCratioPercentage={targetCRatioPercentage || 0}
+            isLoading={false}
           />
         </Flex>
         <Flex
