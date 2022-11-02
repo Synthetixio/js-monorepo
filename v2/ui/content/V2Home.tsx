@@ -30,19 +30,28 @@ const V2Home = () => {
       <CRatioBanner />
       <Container maxW="1200px" py="1" mt={4} mb={8}>
         {!walletAddress && isAppReady && <Welcome mt={8} />}
-        <Flex mt="4" flexDirection={['column', 'column', 'column', 'row']} py={4}>
-          <Box
-            paddingY="7"
-            paddingX="4"
-            bg="navy.900"
-            flex="1"
-            border="1px"
-            borderColor="gray.900"
-            borderRadius="base"
-          >
-            <CRatioHealthCard />
+        <Flex
+          mt="4"
+          flexDirection={['column', 'column', 'column', 'row']}
+          py={4}
+          justifyContent="space-between"
+        >
+          {walletAddress ? (
+            <Box
+              paddingY="7"
+              paddingX="4"
+              bg="navy.900"
+              flex="1"
+              border="1px"
+              borderColor="gray.900"
+              borderRadius="base"
+            >
+              <CRatioHealthCard />
+              <MainActionCardsList />
+            </Box>
+          ) : (
             <MainActionCardsList />
-          </Box>
+          )}
           <Flex
             ml="6"
             alignSelf={['center', 'center', 'center', 'flex-start']}
@@ -50,8 +59,8 @@ const V2Home = () => {
             width="full"
             flexDirection="column"
           >
-            <BalanceBox />
-            <Box mt={4}>
+            {walletAddress && <BalanceBox />}
+            <Box mt={walletAddress ? 4 : 0}>
               <BoxLink
                 to="/bridge"
                 headline={t('staking-v2.v2-home.box-links.bridge.headline')}
