@@ -73,7 +73,8 @@ describe('MainActionCards', () => {
 
     cy.get('[data-testid="main maintain button"]')
       .should('be.visible')
-      .should('include.text', 'Maintain');
+      .should('include.text', 'Maintain')
+      .should('have.css', 'background-color', 'rgb(252, 135, 56)');
     cy.get('[data-testid="rewards explained button"]')
       .should('be.visible')
       .should('include.text', 'Rewards explained');
@@ -81,6 +82,7 @@ describe('MainActionCards', () => {
       .should('be.visible')
       .should('include.text', 'Adjust to collect weekly rewards');
   });
+
   it('renders not staking', () => {
     cy.viewport(1000, 1000);
     cy.mount(
@@ -115,7 +117,7 @@ describe('MainActionCards', () => {
         <MainActionCardsUi
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
-          currentCRatioPercentage={160}
+          currentCRatioPercentage={140}
           nextEpochStartDate={new Date()}
           snxPrice="2.00"
           hasClaimed={false}
@@ -127,7 +129,9 @@ describe('MainActionCards', () => {
 
     cy.get('[data-testid="main maintain button"]')
       .should('be.visible')
-      .should('include.text', 'Unflag');
+      .should('include.text', 'Unflag')
+      .should('have.css', 'background-color', 'rgb(255, 74, 96)');
+
     cy.get('[data-testid="rewards explained button"]')
       .should('be.visible')
       .should('include.text', 'Rewards explained');
