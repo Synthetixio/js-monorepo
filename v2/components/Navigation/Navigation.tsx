@@ -118,6 +118,7 @@ export const NavigationUI = ({
           fontSize="xs"
           py="6px"
           px="9.5px"
+          mr={isWalletConnected ? 0 : 3}
           _hover={{
             bg: 'blackAlpha.400',
             cursor: 'pointer',
@@ -126,6 +127,7 @@ export const NavigationUI = ({
             window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'false';
             window.location.reload();
           }}
+          fontFamily="heading"
         >
           Back to old UI
         </Center>
