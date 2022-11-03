@@ -8,6 +8,7 @@ describe('MainActionCards', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
+          connectWallet={async () => {}}
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={350}
@@ -38,6 +39,7 @@ describe('MainActionCards', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
+          connectWallet={async () => {}}
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={350}
@@ -59,6 +61,7 @@ describe('MainActionCards', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
+          connectWallet={async () => {}}
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={300}
@@ -88,6 +91,7 @@ describe('MainActionCards', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
+          connectWallet={async () => {}}
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={0}
@@ -115,6 +119,7 @@ describe('MainActionCards', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
+          connectWallet={async () => {}}
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={140}
