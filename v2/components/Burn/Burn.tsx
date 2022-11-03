@@ -17,7 +17,14 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { FailedIcon, GuideIcon, InfoIcon, SNXIconWithBorder, TokensIcon } from '@snx-v2/icons';
+import {
+  BridgeIcon,
+  FailedIcon,
+  GuideIcon,
+  InfoIcon,
+  SNXIconWithBorder,
+  TokensIcon,
+} from '@snx-v2/icons';
 import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
@@ -147,7 +154,13 @@ export const BurnUi = ({
                 value={numberWithCommas(burnAmountSusd)}
               />
               <Flex alignItems="center">
-                <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={1}>
+                <Text
+                  display={{ base: 'none', sm: 'block' }}
+                  color="whiteAlpha.700"
+                  fontSize="xs"
+                  fontFamily="heading"
+                  mr={1}
+                >
                   {t('staking-v2.burn.active-debt')}
                 </Text>
                 <Skeleton
@@ -169,7 +182,12 @@ export const BurnUi = ({
                     },
                   }}
                 >
-                  <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
+                  <Text
+                    display={{ base: 'none', sm: 'block' }}
+                    color="whiteAlpha.700"
+                    fontSize="xs"
+                    fontFamily="heading"
+                  >
                     {formatNumber(debtBalance || 0)}
                   </Text>
                 </Skeleton>
@@ -449,8 +467,12 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   return (
     <>
       <BurnHeader burnAmountSusd={parseFloatWithCommas(burnAmountSusd)} />
-      <Flex justifyContent="space-between" alignItems="flex-start">
-        <Box width={leftColWidth}>
+      <Flex
+        justifyContent="space-between"
+        alignItems="flex-start"
+        flexDirection={{ base: 'column', md: 'row' }}
+      >
+        <Box width={{ base: 'full', md: leftColWidth }}>
           <BurnUi
             stakedSnx={stakedSnx.toNumber()}
             debtBalance={debtData?.debtBalance.toNumber()}
@@ -515,13 +537,20 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             onSubmit={handleSubmit}
           />
         </Box>
-        <Box width={rightColWidth}>
+        <Box width={{ base: 'full', md: rightColWidth }} mt={{ base: 2, md: 0 }}>
           <BoxLink
             icon={<GuideIcon />}
             href="https://blog.synthetix.io/basics-of-staking-snx-2022/"
             isExternal
             subHeadline=""
             headline="Staking guide"
+          />
+          <BoxLink
+            containerProps={{ mt: '2' }}
+            icon={<BridgeIcon width="auto" height="20px" color="white" />}
+            to="/bridge"
+            subHeadline=""
+            headline="Bridge"
           />
         </Box>
       </Flex>

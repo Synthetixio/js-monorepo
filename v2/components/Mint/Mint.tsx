@@ -121,7 +121,7 @@ export const MintUi = ({
                 SNX
               </Text>
             </Flex>
-            <Flex flexDir="column" alignItems="flex-end" w="30%">
+            <Flex flexDir="column" alignItems="flex-end">
               <StyledInput
                 autoFocus
                 data-testid="mint snx amount input"
@@ -257,8 +257,12 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   return (
     <>
       <MintHeader mintAmountSUSD={parseFloatWithCommas(mintAmountSUSD)} />
-      <Flex justifyContent="space-between" alignItems="flex-start">
-        <Box width={leftColWidth}>
+      <Flex
+        justifyContent="space-between"
+        alignItems="flex-start"
+        flexDirection={{ base: 'column', md: 'row' }}
+      >
+        <Box width={{ base: 'full', md: leftColWidth }}>
           <MintUi
             isLoading={isLoading}
             stakeAmountSNX={stakeAmountSNX}
@@ -303,7 +307,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
           />
         </Box>
-        <Box width={rightColWidth}>
+        <Box width={{ base: 'full', md: rightColWidth }} mt={{ base: 2, md: 0 }}>
           <BoxLink
             icon={<GuideIcon />}
             href="https://blog.synthetix.io/basics-of-staking-snx-2022/"

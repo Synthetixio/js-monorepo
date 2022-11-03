@@ -129,7 +129,7 @@ export const NavigationUI = ({
           }}
           fontFamily="heading"
         >
-          Back to old UI
+          {size === 'mobile' ? 'Old App' : 'Back to old app'}
         </Center>
 
         {isWalletConnected && walletAddress ? (
@@ -331,13 +331,6 @@ export const Navigation = ({
   const { data: exchangeRateData, isLoading: isExchangeRatesLoading } = useExchangeRatesData();
   const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
   const { walletAddress, ensName } = useContext(ContractContext);
-  const size = useBreakpointValue(
-    {
-      base: 'mobile',
-      md: 'desktop',
-    },
-    { fallback: 'md' }
-  );
 
   const isLoading = isSynthsLoading || isDebtLoading;
   const isEpochPriceLoading = isExchangeRatesLoading || isFeePoolDataLoading;
@@ -345,14 +338,12 @@ export const Navigation = ({
   const snxPrice = exchangeRateData?.SNX && formatNumberToUsd(exchangeRateData?.SNX.toString(2));
 
   return (
-    <>
-      {size === 'desktop' && (
-        <EpochPrice
-          isLoading={isEpochPriceLoading}
-          epochEnd={feePoolData?.nextFeePeriodStartDate}
-          snxPrice={snxPrice}
-        />
-      )}
+    <Flex flexDir={{ base: 'column-reverse', md: 'column' }}>
+      <EpochPrice
+        isLoading={isEpochPriceLoading}
+        epochEnd={feePoolData?.nextFeePeriodStartDate}
+        snxPrice={snxPrice}
+      />
       <NavigationUI
         currentNetwork={currentNetwork}
         switchNetwork={switchNetwork}
@@ -365,13 +356,6 @@ export const Navigation = ({
         disconnectWallet={disconnectWallet}
         ensName={ensName}
       />
-      {size === 'mobile' && (
-        <EpochPrice
-          isLoading={isEpochPriceLoading}
-          epochEnd={feePoolData?.nextFeePeriodStartDate}
-          snxPrice={snxPrice}
-        />
-      )}
-    </>
+    </Flex>
   );
 };
