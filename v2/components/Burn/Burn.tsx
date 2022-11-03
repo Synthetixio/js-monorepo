@@ -17,7 +17,14 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { FailedIcon, GuideIcon, InfoIcon, SNXIconWithBorder, TokensIcon } from '@snx-v2/icons';
+import {
+  BridgeIcon,
+  FailedIcon,
+  GuideIcon,
+  InfoIcon,
+  SNXIconWithBorder,
+  TokensIcon,
+} from '@snx-v2/icons';
 import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
@@ -537,6 +544,13 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             isExternal
             subHeadline=""
             headline="Staking guide"
+          />
+          <BoxLink
+            containerProps={{ mt: '2' }}
+            icon={<BridgeIcon width="auto" height="20px" color="white" />}
+            to="/bridge"
+            subHeadline=""
+            headline="Bridge"
           />
         </Box>
       </Flex>

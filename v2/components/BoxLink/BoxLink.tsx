@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, ReactNode } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { Heading, Text, Box, Flex } from '@chakra-ui/react';
+import { Heading, Text, Box, Flex, FlexProps } from '@chakra-ui/react';
 
 const SmartLink: FC<PropsWithChildren<{ to?: string; href?: string; isExternal: boolean }>> = ({
   to,
@@ -24,7 +24,8 @@ export const BoxLink: FC<{
   to?: string;
   href?: string;
   isExternal?: boolean;
-}> = ({ to, headline, subHeadline, icon, href, isExternal = false }) => {
+  containerProps?: FlexProps;
+}> = ({ to, headline, subHeadline, icon, href, isExternal = false, containerProps }) => {
   return (
     <SmartLink isExternal={isExternal} href={href} to={to}>
       <Flex
@@ -34,6 +35,7 @@ export const BoxLink: FC<{
         borderRadius="base"
         justifyContent="space-between"
         p={4}
+        {...containerProps}
       >
         <Box>
           <Heading fontSize="sm">{headline}</Heading>
