@@ -91,7 +91,7 @@ export const MintHeaderUi: FC<{
   const isCurrentStaker = (currentCRatioPercentage || 0) > 0;
 
   return (
-    <Box display={{ base: 'none', md: 'block' }}>
+    <>
       <Skeleton
         textAlign="center"
         isLoaded={!isLoading}
@@ -144,7 +144,7 @@ export const MintHeaderUi: FC<{
         </SkeletonText>
       </Center>
       {isCurrentStaker ? (
-        <>
+        <Box display={{ base: 'none', md: 'block' }}>
           <Fade in={!isLoading}>
             <Flex justifyContent="space-between" mb={8}>
               <Flex
@@ -178,11 +178,11 @@ export const MintHeaderUi: FC<{
               </Flex>
             </Flex>
           </Fade>
-        </>
+        </Box>
       ) : (
         <NewStakerHeader nextEpochStartDate={nextEpochStartDate} SNXRate={SNXRate} />
       )}
-    </Box>
+    </>
   );
 };
 
