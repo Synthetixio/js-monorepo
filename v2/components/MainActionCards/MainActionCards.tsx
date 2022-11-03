@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useCallback, useContext } from 'react';
 import {
   Box,
   Button,
@@ -17,9 +17,13 @@ import { CollectIcon, InfoIcon, MaintainIcon, StakeIcon } from '@snx-v2/icons';
 import { CountDown } from '@snx-v2/CountDown';
 import { useNavigate } from 'react-router-dom';
 import { formatNumberToUsd } from '@snx-v2/formatters';
+import { NetworkId } from '@snx-v2/useSynthetixContracts';
+import { ContractContext } from '@snx-v2/ContractContext';
 
 interface CardProps {
   step: number;
+  stepFrom: string;
+  stepTo: string;
   headingText: string;
   bodyText: string;
   icon: ReactNode;
@@ -33,6 +37,8 @@ interface CardProps {
 
 export const Card = ({
   step = 1,
+  stepFrom = '#eee',
+  stepTo = '#333',
   headingText,
   bodyText,
   icon,
@@ -43,6 +49,14 @@ export const Card = ({
   buttonAction = () => {},
   testId,
 }: CardProps) => {
+  const stepStyles = disabled
+    ? {}
+    : {
+        backgroundImage: `linear-gradient(${stepFrom}, ${stepTo})`,
+        backgroundClip: 'text',
+        textFillColor: 'transparent',
+        backgroundSize: '100%',
+      };
   return (
     <Flex
       flexDirection="column"
@@ -55,17 +69,18 @@ export const Card = ({
       borderColor="gray.900"
       p={3}
       borderRadius="base"
-      bg="navy.900"
+      bg={disabled ? 'gray.900' : 'navy.900'}
     >
       <Box>
         <Flex alignItems="center" justifyContent="space-between" mb={3}>
           <Text
             fontSize="4xl"
-            lineHeight="6"
+            lineHeight="8"
             fontFamily="mono"
             fontWeight="black"
             pt={0}
             color={disabled ? 'gray.500' : 'whiteAlpha.700'}
+            sx={stepStyles}
           >
             {step}
           </Text>
@@ -90,31 +105,52 @@ export const Card = ({
   );
 };
 
-const StakeActionCard: React.FC<{ currentCRatioPercentage?: number; isLoading: boolean }> = ({
-  currentCRatioPercentage,
-  isLoading,
-}) => {
+const StakeActionCard: React.FC<{
+  currentCRatioPercentage?: number;
+  targetCRatioPercentage?: number;
+  isLoading: boolean;
+  connectWallet: (chainId?: NetworkId | undefined) => Promise<void>;
+}> = ({ currentCRatioPercentage, targetCRatioPercentage, isLoading, connectWallet }) => {
+  const { walletAddress } = useContext(ContractContext);
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
   const navigate = useNavigate();
 
   const { t } = useTranslation();
 
+  const buttonAction = useCallback(async () => {
+    if (!walletAddress) {
+      await connectWallet();
+      return;
+    }
+
+    navigate('/staking/mint');
+  }, [walletAddress, connectWallet, navigate]);
+
+  // TODO: Need a better way to handle this. isLoading is true for wallet not being connected.
+  const isCardLoading = isLoading && walletAddress !== null;
+
+  const buttonVariant = isCardLoading ? 'link' : 'solid';
+
+  const buttonText = !isStaking
+    ? t('staking-v2.main-action-cards.stake-main-button')
+    : targetCRatioPercentage && currentCRatioPercentage > targetCRatioPercentage
+    ? t('staking-v2.main-action-cards.stake-more-button')
+    : t('staking-v2.main-action-cards.stake-link-button');
+
   return (
     <Card
       step={1}
+      stepFrom="#34EDB3"
+      stepTo="#00D1FF"
       headingText={t('staking-v2.main-action-cards.stake-headline')}
       bodyText={t('staking-v2.main-action-cards.stake-body')}
-      icon={<StakeIcon disabled={isLoading} />}
-      disabled={isLoading}
-      buttonText={
-        isStaking
-          ? t('staking-v2.main-action-cards.stake-link-button')
-          : t('staking-v2.main-action-cards.stake-main-button')
-      }
+      icon={<StakeIcon disabled={isCardLoading} />}
+      disabled={isCardLoading}
+      buttonText={buttonText}
       Content={null}
-      buttonVariant={isStaking ? 'link' : isLoading ? 'link' : 'solid'}
+      buttonVariant={buttonVariant}
       testId={isStaking ? 'main stake button' : 'start staking button'}
-      buttonAction={() => navigate('/staking/mint')}
+      buttonAction={buttonAction}
     />
   );
 };
@@ -149,6 +185,8 @@ const MaintainActionCard: React.FC<{
   return (
     <Card
       step={2}
+      stepFrom={theme.colors['orange']['400']}
+      stepTo={theme.colors['orange']['400']}
       headingText={t('staking-v2.main-action-cards.maintain-headline')}
       bodyText={t('staking-v2.main-action-cards.maintain-body')}
       icon={<MaintainIcon height="32px" color={isLoading ? 'gray.500' : '#FF9A54'} />}
@@ -227,9 +265,13 @@ const CollectActionCard: React.FC<{
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
   const canClaim = !hasClaimed && variant === 'success';
 
+  const theme = useTheme();
+
   return (
     <Card
       step={3}
+      stepFrom={theme.colors['cyan']['500']}
+      stepTo={theme.colors['cyan']['500']}
       headingText={t('staking-v2.main-action-cards.collect-headline')}
       bodyText={t('staking-v2.main-action-cards.collect-body')}
       icon={<CollectIcon color={isLoading ? 'gray.400' : '#2ED9FF'} />}
@@ -300,6 +342,7 @@ type UiProps = {
   nextEpochStartDate?: Date;
   hasClaimed?: boolean;
   snxPrice?: string;
+  connectWallet: (chainId?: NetworkId | undefined) => Promise<void>;
 };
 
 export const MainActionCardsUi: React.FC<UiProps> = ({
@@ -311,10 +354,16 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
   nextEpochStartDate,
   hasClaimed,
   snxPrice,
+  connectWallet,
 }) => {
   return (
     <Stack direction={['column', 'column', 'row']} align="center" spacing="14px">
-      <StakeActionCard isLoading={isLoading} currentCRatioPercentage={currentCRatioPercentage} />
+      <StakeActionCard
+        isLoading={isLoading}
+        currentCRatioPercentage={currentCRatioPercentage}
+        targetCRatioPercentage={targetCratioPercentage}
+        connectWallet={connectWallet}
+      />
       <MaintainActionCard
         isLoading={isLoading}
         liquidationCratioPercentage={liquidationCratioPercentage}
