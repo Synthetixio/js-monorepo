@@ -22,9 +22,9 @@ export const MainActionCardsList = ({ connectWallet }: MainActionsCardsListProps
     <MainActionCardsUi
       connectWallet={connectWallet}
       isLoading={isLoading}
-      currentCRatioPercentage={debtData?.currentCRatioPercentage.mul(100).toNumber()}
-      targetCratioPercentage={debtData?.targetCRatioPercentage.mul(100).toNumber()}
-      liquidationCratioPercentage={debtData?.liquidationRatioPercentage.mul(100).toNumber()}
+      currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
+      targetCratioPercentage={debtData?.targetCRatioPercentage.toNumber()}
+      liquidationCratioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
       isFlagged={debtData?.liquidationDeadlineForAccount.gt(0)}
       hasClaimed={rewardsData?.hasClaimed}
       nextEpochStartDate={feePoolData?.nextFeePeriodStartDate}
