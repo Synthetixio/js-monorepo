@@ -147,7 +147,13 @@ export const BurnUi = ({
                 value={numberWithCommas(burnAmountSusd)}
               />
               <Flex alignItems="center">
-                <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={1}>
+                <Text
+                  display={{ base: 'none', sm: 'block' }}
+                  color="whiteAlpha.700"
+                  fontSize="xs"
+                  fontFamily="heading"
+                  mr={1}
+                >
                   {t('staking-v2.burn.active-debt')}
                 </Text>
                 <Skeleton
@@ -169,7 +175,12 @@ export const BurnUi = ({
                     },
                   }}
                 >
-                  <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">
+                  <Text
+                    display={{ base: 'none', sm: 'block' }}
+                    color="whiteAlpha.700"
+                    fontSize="xs"
+                    fontFamily="heading"
+                  >
                     {formatNumber(debtBalance || 0)}
                   </Text>
                 </Skeleton>
