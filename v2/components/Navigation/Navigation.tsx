@@ -129,7 +129,7 @@ export const NavigationUI = ({
           }}
           fontFamily="heading"
         >
-          Back to old UI
+          {size === 'mobile' ? 'Old App' : 'Back to old app'}
         </Center>
 
         {isWalletConnected && walletAddress ? (
