@@ -113,7 +113,7 @@ export const WalletModalUi: FC<{
           <Box mt={4} p={4} bg="black" border="1px" borderColor="gray.800" borderRadius="base">
             {balances?.map(({ usdBalance, balance, icon, currencyKey, description }) => {
               return (
-                <Flex justifyContent="space-between">
+                <Flex key={currencyKey} justifyContent="space-between">
                   <Flex>
                     <Flex display="flex" alignItems="center">
                       {icon}
@@ -167,7 +167,7 @@ export const WalletModalUi: FC<{
   );
 };
 const getSynthIcon = (currencyKey: string) =>
-  `https://raw.githubusercontent.com/Synthetixio/synthetix-assets/master/synths/${currencyKey}.svg`;
+  `https://raw.githubusercontent.com/Synthetixio/synthetix-assets/master/synths/png/${currencyKey}.png`;
 
 export const WalletModal: FC<{
   isOpen: boolean;
@@ -197,7 +197,9 @@ export const WalletModal: FC<{
       currencyKey: x.currencyKey,
       balance: x.balance.toNumber(),
       usdBalance: x.usdBalance.toNumber(),
-      icon: <img width="24px" height="24px" src={getSynthIcon(x.currencyKey)} />,
+      icon: (
+        <img width="24px" height="24px" alt={x.currencyKey} src={getSynthIcon(x.currencyKey)} />
+      ),
       description,
     };
   });
