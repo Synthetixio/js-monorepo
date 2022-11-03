@@ -274,7 +274,7 @@ const CollectActionCard: React.FC<{
       stepTo={theme.colors['cyan']['500']}
       headingText={t('staking-v2.main-action-cards.collect-headline')}
       bodyText={t('staking-v2.main-action-cards.collect-body')}
-      icon={<CollectIcon color={isLoading ? 'gray.400' : '#2ED9FF'} />}
+      icon={<CollectIcon color={isLoading ? 'gray.400' : 'cyan.400'} />}
       Content={
         isStaking ? (
           <Flex justifyContent="space-between">
