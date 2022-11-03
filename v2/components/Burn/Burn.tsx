@@ -449,8 +449,12 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   return (
     <>
       <BurnHeader burnAmountSusd={parseFloatWithCommas(burnAmountSusd)} />
-      <Flex justifyContent="space-between" alignItems="flex-start">
-        <Box width={leftColWidth}>
+      <Flex
+        justifyContent="space-between"
+        alignItems="flex-start"
+        flexDirection={{ base: 'column', md: 'row' }}
+      >
+        <Box width={{ base: 'full', md: leftColWidth }}>
           <BurnUi
             stakedSnx={stakedSnx.toNumber()}
             debtBalance={debtData?.debtBalance.toNumber()}
@@ -515,7 +519,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             onSubmit={handleSubmit}
           />
         </Box>
-        <Box width={rightColWidth}>
+        <Box width={{ base: 'full', md: rightColWidth }} mt={{ base: 2, md: 0 }}>
           <BoxLink
             icon={<GuideIcon />}
             href="https://blog.synthetix.io/basics-of-staking-snx-2022/"
