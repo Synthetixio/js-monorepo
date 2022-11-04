@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'Issuer';
-export const address = '0x12120AcBE7d6402104b68a2e86C071Fcdd1034Fe';
+export const address = '0x59B01789bF268C7C77451D02758621990bB50BBF';
 export const source = 'Issuer';
 export const abi = [
   'constructor(address _owner, address _resolver)',
