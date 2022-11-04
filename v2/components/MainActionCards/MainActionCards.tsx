@@ -147,7 +147,7 @@ const StakeActionCard: React.FC<{
       buttonText={buttonText}
       Content={null}
       buttonVariant={buttonVariant}
-      testId={isStaking ? 'main stake button' : 'start staking button'}
+      testId="stake button"
       buttonAction={buttonAction}
     />
   );
@@ -229,7 +229,7 @@ const MaintainActionCard: React.FC<{
             : () => navigate('/staking/burn')
           : () => console.log('C-Ratio explained')
       }
-      testId={isStaking ? 'main maintain button' : 'not staking maintain button'}
+      testId="maintain button"
     />
   );
 };
@@ -326,7 +326,7 @@ const CollectActionCard: React.FC<{
           ? () => navigate('/earn')
           : () => console.log('navigate to Rewards explained')
       }
-      testId={isStaking && canClaim ? 'main collect button' : 'rewards explained button'}
+      testId="collect button"
     />
   );
 };
