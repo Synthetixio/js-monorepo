@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'Exchanger';
-export const address = '0x889d8a97f43809Ef3FBb002B4b7a6A65319B61eD';
+export const address = '0x6Ce575c870ce744e245Ef8400b6d89412C35c328';
 export const source = 'ExchangerWithFeeRecAlternatives';
 export const abi = [
   'constructor(address _owner, address _resolver)',
@@ -37,7 +37,6 @@ export const abi = [
   'function resolverAddressesRequired() view returns (bytes32[] addresses)',
   'function settle(address from, bytes32 currencyKey) returns (uint256 reclaimed, uint256 refunded, uint256 numEntriesSettled)',
   'function settlementOwing(address account, bytes32 currencyKey) view returns (uint256 reclaimAmount, uint256 rebateAmount, uint256 numEntries)',
-  'function suspendSynthWithInvalidRate(bytes32 currencyKey)',
   'function tradingRewardsEnabled() view returns (bool)',
   'function waitingPeriodSecs() view returns (uint256)',
 ];
@@ -94,7 +93,6 @@ export interface ExchangerInterface extends utils.Interface {
     'resolverAddressesRequired()': FunctionFragment;
     'settle(address,bytes32)': FunctionFragment;
     'settlementOwing(address,bytes32)': FunctionFragment;
-    'suspendSynthWithInvalidRate(bytes32)': FunctionFragment;
     'tradingRewardsEnabled()': FunctionFragment;
     'waitingPeriodSecs()': FunctionFragment;
   };
@@ -127,7 +125,6 @@ export interface ExchangerInterface extends utils.Interface {
       | 'resolverAddressesRequired'
       | 'settle'
       | 'settlementOwing'
-      | 'suspendSynthWithInvalidRate'
       | 'tradingRewardsEnabled'
       | 'waitingPeriodSecs'
   ): FunctionFragment;
@@ -226,10 +223,6 @@ export interface ExchangerInterface extends utils.Interface {
     functionFragment: 'settlementOwing',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
-  encodeFunctionData(
-    functionFragment: 'suspendSynthWithInvalidRate',
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
   encodeFunctionData(functionFragment: 'tradingRewardsEnabled', values?: undefined): string;
   encodeFunctionData(functionFragment: 'waitingPeriodSecs', values?: undefined): string;
 
@@ -262,7 +255,6 @@ export interface ExchangerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'settle', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'settlementOwing', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'suspendSynthWithInvalidRate', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'tradingRewardsEnabled', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'waitingPeriodSecs', data: BytesLike): Result;
 
@@ -531,11 +523,6 @@ export interface Exchanger extends BaseContract {
       }
     >;
 
-    suspendSynthWithInvalidRate(
-      currencyKey: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     tradingRewardsEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
     waitingPeriodSecs(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -690,11 +677,6 @@ export interface Exchanger extends BaseContract {
     }
   >;
 
-  suspendSynthWithInvalidRate(
-    currencyKey: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   tradingRewardsEnabled(overrides?: CallOverrides): Promise<boolean>;
 
   waitingPeriodSecs(overrides?: CallOverrides): Promise<BigNumber>;
@@ -847,11 +829,6 @@ export interface Exchanger extends BaseContract {
         numEntries: BigNumber;
       }
     >;
-
-    suspendSynthWithInvalidRate(
-      currencyKey: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     tradingRewardsEnabled(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1054,11 +1031,6 @@ export interface Exchanger extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    suspendSynthWithInvalidRate(
-      currencyKey: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     tradingRewardsEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
     waitingPeriodSecs(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1192,11 +1164,6 @@ export interface Exchanger extends BaseContract {
       account: PromiseOrValue<string>,
       currencyKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    suspendSynthWithInvalidRate(
-      currencyKey: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     tradingRewardsEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
