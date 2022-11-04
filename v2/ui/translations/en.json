@@ -47,9 +47,8 @@
     "main-action-cards": {
       "stake-headline": "Stake & Borrow",
       "stake-body": "Borrow sUSD by staking your SNX.",
-      "stake-link-button": "Stake & Borrow More",
+      "stake-more-button": "Stake & Borrow More",
       "stake-main-button": "Start Staking",
-      "stake-more-button": "Stake More",
       "maintain-headline": "Maintain Collateralization Ratio",
       "maintain-body": "Use the burn feature to maintain your c-ratio or completely pay off debt and unstake your SNX.",
       "maintain-badge-success": "Adjust to collect weekly rewards",

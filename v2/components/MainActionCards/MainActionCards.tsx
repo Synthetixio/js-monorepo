@@ -133,9 +133,7 @@ const StakeActionCard: React.FC<{
 
   const buttonText = !isStaking
     ? t('staking-v2.main-action-cards.stake-main-button')
-    : targetCRatioPercentage && currentCRatioPercentage > targetCRatioPercentage
-    ? t('staking-v2.main-action-cards.stake-more-button')
-    : t('staking-v2.main-action-cards.stake-link-button');
+    : t('staking-v2.main-action-cards.stake-more-button');
 
   return (
     <Card
