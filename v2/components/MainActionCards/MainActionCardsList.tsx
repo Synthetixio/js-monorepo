@@ -4,6 +4,8 @@ import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { MainActionCardsUi } from './MainActionCards';
 import { NetworkId } from '@snx-v2/useSynthetixContracts';
+import { useContext } from 'react';
+import { ContractContext } from '@snx-v2/ContractContext';
 
 interface MainActionsCardsListProps {
   connectWallet: (chainId?: NetworkId | undefined) => Promise<void>;
@@ -14,6 +16,7 @@ export const MainActionCardsList = ({ connectWallet }: MainActionsCardsListProps
   const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
   const { data: rewardsData, isLoading: isRewardsDataLoading } = useRewardsAvailable();
   const { data: exchangeRateData, isLoading: isExchangeRateDataLoading } = useExchangeRatesData();
+  const { walletAddress } = useContext(ContractContext);
 
   const isLoading =
     isDebtDataLoading || isFeePoolDataLoading || isRewardsDataLoading || isExchangeRateDataLoading;
@@ -29,6 +32,7 @@ export const MainActionCardsList = ({ connectWallet }: MainActionsCardsListProps
       hasClaimed={rewardsData?.hasClaimed}
       nextEpochStartDate={feePoolData?.nextFeePeriodStartDate}
       snxPrice={exchangeRateData?.SNX?.toString()}
+      walletAddress={walletAddress}
     />
   );
 };

@@ -14,6 +14,7 @@ describe('MainActionCards', () => {
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
           connectWallet={async () => {}}
+          walletAddress="vitalik.eth"
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={350}
@@ -53,6 +54,7 @@ describe('MainActionCards', () => {
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
           connectWallet={async () => {}}
+          walletAddress="vitalik.eth"
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={350}
@@ -85,6 +87,7 @@ describe('MainActionCards', () => {
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
           connectWallet={async () => {}}
+          walletAddress="vitalik.eth"
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={300}
@@ -119,6 +122,7 @@ describe('MainActionCards', () => {
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
           connectWallet={async () => {}}
+          walletAddress="vitalik.eth"
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={0}
@@ -151,6 +155,7 @@ describe('MainActionCards', () => {
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <MainActionCardsUi
           connectWallet={async () => {}}
+          walletAddress="vitalik.eth"
           liquidationCratioPercentage={150}
           targetCratioPercentage={350}
           currentCRatioPercentage={140}
@@ -177,5 +182,32 @@ describe('MainActionCards', () => {
       .should('be.visible')
       .should('include.text', 'Adjust to collect weekly rewards')
       .should('have.css', 'color', redColor);
+  });
+  it('calls connectWallet when no wallet address', () => {
+    cy.viewport(1000, 1000);
+
+    cy.mount(
+      <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
+        <MainActionCardsUi
+          connectWallet={cy.spy().as('connectWallet')}
+          walletAddress={null}
+          liquidationCratioPercentage={0}
+          targetCratioPercentage={0}
+          currentCRatioPercentage={0}
+          nextEpochStartDate={new Date()}
+          snxPrice="2.00"
+          hasClaimed={false}
+          isFlagged={false}
+          isLoading={false}
+        />
+      </Box>
+    );
+
+    cy.get('[data-testid="stake button"]')
+      .should('be.visible')
+      .should('include.text', 'Start Staking')
+      .should('have.css', 'background-color', cyanColor)
+      .click();
+    cy.get('@connectWallet').should('have.been.called');
   });
 });

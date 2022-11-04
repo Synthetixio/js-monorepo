@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useContext } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import {
   Box,
   Button,
@@ -18,7 +18,6 @@ import { CountDown } from '@snx-v2/CountDown';
 import { useNavigate } from 'react-router-dom';
 import { formatNumberToUsd } from '@snx-v2/formatters';
 import { NetworkId } from '@snx-v2/useSynthetixContracts';
-import { ContractContext } from '@snx-v2/ContractContext';
 
 interface CardProps {
   step: number;
@@ -110,8 +109,14 @@ const StakeActionCard: React.FC<{
   targetCRatioPercentage?: number;
   isLoading: boolean;
   connectWallet: (chainId?: NetworkId | undefined) => Promise<void>;
-}> = ({ currentCRatioPercentage, targetCRatioPercentage, isLoading, connectWallet }) => {
-  const { walletAddress } = useContext(ContractContext);
+  walletAddress: string | null;
+}> = ({
+  currentCRatioPercentage,
+  targetCRatioPercentage,
+  isLoading,
+  connectWallet,
+  walletAddress,
+}) => {
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
   const navigate = useNavigate();
 
@@ -120,7 +125,6 @@ const StakeActionCard: React.FC<{
   const buttonAction = useCallback(async () => {
     if (!walletAddress) {
       await connectWallet();
-      return;
     }
 
     navigate('/staking/mint');
@@ -359,6 +363,7 @@ type UiProps = {
   hasClaimed?: boolean;
   snxPrice?: string;
   connectWallet: (chainId?: NetworkId | undefined) => Promise<void>;
+  walletAddress: string | null;
 };
 
 export const MainActionCardsUi: React.FC<UiProps> = ({
@@ -371,6 +376,7 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
   hasClaimed,
   snxPrice,
   connectWallet,
+  walletAddress,
 }) => {
   return (
     <Stack direction={['column', 'column', 'row']} align="center" spacing="14px">
@@ -379,6 +385,7 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
         currentCRatioPercentage={currentCRatioPercentage}
         targetCRatioPercentage={targetCratioPercentage}
         connectWallet={connectWallet}
+        walletAddress={walletAddress}
       />
       <MaintainActionCard
         isLoading={isLoading}
