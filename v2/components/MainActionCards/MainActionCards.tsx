@@ -128,8 +128,17 @@ const StakeActionCard: React.FC<{
 
   // TODO: Need a better way to handle this. isLoading is true for wallet not being connected.
   const isCardLoading = isLoading && walletAddress !== null;
-
-  const buttonVariant = isCardLoading ? 'link' : 'solid';
+  const cRatioAboveTarget = Boolean(
+    targetCRatioPercentage &&
+      currentCRatioPercentage &&
+      currentCRatioPercentage > targetCRatioPercentage
+  );
+  const getButtonVariant = () => {
+    if (isCardLoading) return 'link';
+    if (!isStaking) return 'solid';
+    if (!cRatioAboveTarget) return 'link';
+    return 'solid';
+  };
 
   const buttonText = !isStaking
     ? t('staking-v2.main-action-cards.stake-main-button')
@@ -146,7 +155,7 @@ const StakeActionCard: React.FC<{
       disabled={isCardLoading}
       buttonText={buttonText}
       Content={null}
-      buttonVariant={buttonVariant}
+      buttonVariant={getButtonVariant()}
       testId="stake button"
       buttonAction={buttonAction}
     />
@@ -176,7 +185,16 @@ const MaintainActionCard: React.FC<{
   });
 
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
-
+  const cRatioAboveOrEqToTarget = Boolean(
+    targetCratioPercentage &&
+      currentCRatioPercentage &&
+      currentCRatioPercentage >= targetCratioPercentage
+  );
+  const getButtonVariant = () => {
+    if (!isStaking) return 'link';
+    if (cRatioAboveOrEqToTarget) return 'link';
+    return variant;
+  };
   const theme = useTheme();
   const fadedBg = `${theme.colors[variant]}40`;
 
@@ -214,7 +232,7 @@ const MaintainActionCard: React.FC<{
         ) : null
       }
       disabled={isLoading}
-      buttonVariant={isStaking ? variant : 'link'}
+      buttonVariant={getButtonVariant()}
       buttonText={
         isStaking
           ? isFlagged
