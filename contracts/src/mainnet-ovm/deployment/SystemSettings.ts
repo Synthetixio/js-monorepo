@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'SystemSettings';
-export const address = '0x05E1b1Dff853B1D67828Aa5E8CB37cC25aA050eE';
+export const address = '0xE28b785ecc2Cb5FE949f5f31A5aEC3989f764838';
 export const source = 'SystemSettings';
 export const abi = [
   'constructor(address _owner, address _resolver)',
