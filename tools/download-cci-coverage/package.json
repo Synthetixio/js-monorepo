@@ -1,8 +1,6 @@
 {
   "name": "@synthetixio/download-cci-coverage",
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
   "main": "index.js",
   "bin": "./download-cci-coverage.js",
   "files": [
