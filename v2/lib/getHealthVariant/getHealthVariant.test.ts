@@ -6,6 +6,7 @@ describe('getVariant', () => {
       liquidationCratioPercentage: 130,
       targetCratioPercentage: 400,
       currentCRatioPercentage: 0,
+      targetThreshold: 0.01,
     };
     const result = getHealthVariant(arg);
     expect(result).toBe('success');
@@ -14,7 +15,18 @@ describe('getVariant', () => {
     const arg = {
       liquidationCratioPercentage: 130,
       targetCratioPercentage: 400,
-      currentCRatioPercentage: 401,
+      currentCRatioPercentage: 405,
+      targetThreshold: 0.01,
+    };
+    const result = getHealthVariant(arg);
+    expect(result).toBe('success');
+  });
+  test('success with threshold', () => {
+    const arg = {
+      liquidationCratioPercentage: 130,
+      targetCratioPercentage: 400,
+      currentCRatioPercentage: 397, // below target but within the threshold
+      targetThreshold: 0.01,
     };
     const result = getHealthVariant(arg);
     expect(result).toBe('success');
@@ -23,16 +35,29 @@ describe('getVariant', () => {
     const arg = {
       liquidationCratioPercentage: 130,
       targetCratioPercentage: 400,
-      currentCRatioPercentage: 399,
+      currentCRatioPercentage: 395,
+      targetThreshold: 0.01,
     };
     const result = getHealthVariant(arg);
     expect(result).toBe('warning');
   });
+  test('threshold doesnt apply to liquidationRatio', () => {
+    const arg = {
+      liquidationCratioPercentage: 130,
+      targetCratioPercentage: 400,
+      currentCRatioPercentage: 129, // would be ok if threshold was applied between warning and error
+      targetThreshold: 0.01,
+    };
+    const result = getHealthVariant(arg);
+    expect(result).toBe('error');
+  });
+
   test('error', () => {
     const arg = {
       liquidationCratioPercentage: 130,
       targetCratioPercentage: 400,
-      currentCRatioPercentage: 129,
+      currentCRatioPercentage: 125,
+      targetThreshold: 0.01,
     };
     const result = getHealthVariant(arg);
     expect(result).toBe('error');
