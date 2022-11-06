@@ -23,7 +23,7 @@ import Connector from 'containers/Connector';
 const V2Home = () => {
   const { t } = useTranslation();
   const { walletAddress } = useContext(ContractContext);
-  const { isAppReady } = Connector.useContainer();
+  const { isAppReady, connectWallet } = Connector.useContainer();
 
   return (
     <>
@@ -47,10 +47,10 @@ const V2Home = () => {
               borderRadius="base"
             >
               <CRatioHealthCard />
-              <MainActionCardsList />
+              <MainActionCardsList connectWallet={connectWallet} />
             </Box>
           ) : (
-            <MainActionCardsList />
+            <MainActionCardsList connectWallet={connectWallet} />
           )}
           <Flex
             ml="6"
