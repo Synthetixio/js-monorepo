@@ -80,6 +80,7 @@ export const CRatioBanner: React.FC = () => {
     currentCRatioPercentage: debtData.currentCRatioPercentage.toNumber(),
     targetCratioPercentage: debtData.targetCRatioPercentage.toNumber(),
     liquidationCratioPercentage: debtData.liquidationRatioPercentage.toNumber(),
+    targetThreshold: debtData.targetThreshold.toNumber(),
   });
 
   const isFlagged = debtData.liquidationDeadlineForAccount.gt(0);

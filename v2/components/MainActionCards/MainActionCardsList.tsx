@@ -33,6 +33,7 @@ export const MainActionCardsList = ({ connectWallet }: MainActionsCardsListProps
       nextEpochStartDate={feePoolData?.nextFeePeriodStartDate}
       snxPrice={exchangeRateData?.SNX?.toString()}
       walletAddress={walletAddress}
+      targetThreshold={debtData?.targetThreshold.toNumber()}
     />
   );
 };

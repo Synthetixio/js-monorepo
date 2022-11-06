@@ -36,6 +36,7 @@ export const CRatioBoxUi: FC<{
   collateral?: number;
   debtBalance?: number;
   SNXRate?: number;
+  targetThreshold?: number;
 }> = ({
   currentCRatioPercentage,
   targetCRatioPercentage,
@@ -45,6 +46,7 @@ export const CRatioBoxUi: FC<{
   SNXRate,
   amount,
   actionType,
+  targetThreshold,
 }) => {
   const { t } = useTranslation();
 
@@ -52,6 +54,7 @@ export const CRatioBoxUi: FC<{
     currentCRatioPercentage,
     targetCratioPercentage: targetCRatioPercentage,
     liquidationCratioPercentage: liquidationRatioPercentage,
+    targetThreshold,
   });
   const newDebtBalance = calculateNewDebtBalance(actionType, debtBalance, amount);
   const newCratioPercentage = calcNewCratioPercentage(collateral, SNXRate, newDebtBalance);
@@ -62,6 +65,7 @@ export const CRatioBoxUi: FC<{
         : currentCRatioPercentage,
     targetCratioPercentage: targetCRatioPercentage,
     liquidationCratioPercentage: liquidationRatioPercentage,
+    targetThreshold,
   });
 
   const cRatioHealth = t(`staking-v2.cratio-box.${badgeHealthVariant}`);
@@ -104,6 +108,7 @@ export const CRatioBoxUi: FC<{
                         targetCratioPercentage: targetCRatioPercentage,
                         liquidationCratioPercentage: liquidationRatioPercentage,
                         currentCRatioPercentage: newCratioPercentage * 100,
+                        targetThreshold,
                       })
                     ).color
                   }
@@ -180,6 +185,7 @@ export const CRatioBox: FC<{ actionType: 'mint' | 'burn'; amount?: number }> = (
       collateral={debtData?.collateral.toNumber()}
       debtBalance={debtData?.debtBalance.toNumber()}
       SNXRate={exchangeRateData?.SNX?.toNumber()}
+      targetThreshold={debtData?.targetThreshold.toNumber()}
     />
   );
 };
