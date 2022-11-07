@@ -3,6 +3,8 @@
     "en": "English"
   },
   "staking-v2": {
+    "home-btn": "Home",
+    "back-btn": "Back",
     "settings": {
       "title": "Settings",
       "language": "Language",

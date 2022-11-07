@@ -1,5 +1,5 @@
 import { useContext, FC, PropsWithChildren } from 'react';
-import { Box, Skeleton, Link, Flex, LinkProps, Text } from '@chakra-ui/react';
+import { Box, Skeleton, Link, Flex, LinkProps, Text, Button } from '@chakra-ui/react';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useProxyERC20sUSD, NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 import {
@@ -144,6 +144,22 @@ export const SwapLinksUi: FC<{
           components={[<Link color="cyan.400" as={ReactRouterLink} to="/staking/burn" />]}
         />
       </Text>
+      <Box>
+        <Button
+          variant="link"
+          as={ReactRouterLink}
+          to="/staking/unflag"
+          border="1px"
+          borderColor="cyan.500"
+          paddingLeft={4}
+          paddingRight={4}
+          height={8}
+          fontSize="sm"
+          mt={2}
+        >
+          {t('staking-v2.back-btn')}
+        </Button>
+      </Box>
     </Flex>
   );
 };

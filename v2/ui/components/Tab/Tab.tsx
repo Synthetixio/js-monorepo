@@ -92,7 +92,7 @@ export const StyledTabButton = styled.button<TabButtonProps>`
         ? props.theme.colors.black
         : props.theme.colors.backgroundBlue
       : isV2
-      ? chakraTheme.colors.blackAlpha['300']
+      ? chakraTheme.colors.navy['900']
       : props.inverseTabColor
       ? props.theme.colors.backgroundBlue
       : props.theme.colors.black};

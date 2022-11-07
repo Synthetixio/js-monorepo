@@ -5,7 +5,8 @@ import { safeLazy } from '@synthetixio/safe-import';
 import AppLayout from './sections/shared/Layout/AppLayout';
 import { LOCAL_STORAGE_KEYS } from 'constants/storage';
 import useLocalStorage from 'hooks/useLocalStorage';
-import { BoxProps, Box } from '@chakra-ui/react';
+import { BoxProps, Flex } from '@chakra-ui/react';
+import { HomeButton } from '@snx-v2/HomeButton';
 
 const DashboardPage = safeLazy(
   () => import(/* webpackChunkName: "dashboard" */ './content/DashboardPage')
@@ -55,9 +56,10 @@ interface WrapperProps extends BoxProps {
 const Wrapper: FC<WrapperProps> = ({ children, ...props }) => {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
   return STAKING_V2_ENABLED ? (
-    <Box {...props} m={12}>
+    <Flex flexDirection="column" {...props} maxW="1200px" m="auto">
+      <HomeButton marginTop={4} />
       {children}
-    </Box>
+    </Flex>
   ) : (
     <>{children}</>
   );
