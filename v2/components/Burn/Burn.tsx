@@ -60,6 +60,7 @@ interface BurnProps {
   stakedSnx: number;
   debtBalance?: number;
   sUsdAmountToTarget: number;
+  isAboveTarget?: boolean;
 }
 
 type ActiveBadge = 'max' | 'toTarget';
@@ -102,6 +103,7 @@ export const BurnUi = ({
   gasError,
   isGasEnabledAndNotFetched,
   sUsdAmountToTarget,
+  isAboveTarget,
 }: BurnProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState<ActiveBadge | null>(null);
@@ -237,7 +239,7 @@ export const BurnUi = ({
               onClick={() => handleBadgePress('max')}
             >
               {t('staking-v2.burn.burn-max')}
-              <Tooltip label="Soonthetix" hasArrow>
+              <Tooltip label={t('staking-v2.burn.burn-max-tooltip')} hasArrow>
                 <Flex alignItems="center">
                   <InfoIcon
                     width="12px"
@@ -249,15 +251,24 @@ export const BurnUi = ({
             </Badge>
             <Badge
               variant="burn"
-              sx={{
-                bg: activeBadge === 'toTarget' ? 'cyan.500' : 'whiteAlpha.300',
-                color: activeBadge === 'toTarget' ? 'black' : 'cyan.500',
+              bg={activeBadge === 'toTarget' ? 'cyan.500' : 'whiteAlpha.300'}
+              color={activeBadge === 'toTarget' ? 'black' : 'cyan.500'}
+              cursor={isAboveTarget ? 'not-allowed' : 'pointer'}
+              _hover={{
+                cursor: isAboveTarget ? 'not-allowed' : 'pointer',
               }}
               ml={1}
-              onClick={() => handleBadgePress('toTarget')}
+              onClick={isAboveTarget ? undefined : () => handleBadgePress('toTarget')}
             >
               {t('staking-v2.burn.burn-cratio')}
-              <Tooltip label="Amount of debt to burn" hasArrow>
+              <Tooltip
+                label={
+                  isAboveTarget
+                    ? t('staking-v2.burn.burn-cratio-tooltip-not-allowed')
+                    : t('staking-v2.burn.burn-cratio-tooltip-allowed')
+                }
+                hasArrow
+              >
                 <Flex alignItems="center">
                   <InfoIcon
                     width="12px"
@@ -269,7 +280,7 @@ export const BurnUi = ({
             </Badge>
           </Flex>
         </Box>
-        {parseFloatWithCommas(snxUnstakingAmount) === 0 && (
+        {Boolean(parseFloatWithCommas(snxUnstakingAmount) === 0 && !isAboveTarget) && (
           <Alert my={4} status="info" variant="left-accent" py={2} px={3}>
             <AlertIcon width="20px" height="20px" />
             <AlertDescription pl={2} pr={0} fontSize="sm" fontFamily="heading">
@@ -479,6 +490,9 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             isLoading={isLoading}
             susdBalance={susdBalance?.toNumber()}
             snxUnstakingAmount={snxUnstakingAmount}
+            isAboveTarget={debtData?.currentCRatioPercentage.gt(
+              debtData?.targetCRatioPercentage || 0
+            )}
             sUsdAmountToTarget={Math.max(
               debtData?.debtBalance.sub(debtData?.issuableSynths || 0)?.toNumber() || 0,
               0
