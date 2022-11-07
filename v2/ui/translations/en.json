@@ -91,6 +91,7 @@
       "snx-price": "SNX PRICE",
       "info": "Info",
       "gas-estimation-error": "Error estimating gas",
+      "below-target-error": "Minting not allowed when below target c-ratio",
       "txn-modal": {
         "staking": "Staking",
         "minting": "Minting"
