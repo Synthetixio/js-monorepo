@@ -8,69 +8,69 @@ import {
   store,
   Bytes,
   BigInt,
-  BigDecimal
-} from "@graphprotocol/graph-ts";
+  BigDecimal,
+} from '@graphprotocol/graph-ts';
 
 export class Pool extends Entity {
   constructor(id: string) {
     super();
-    this.set("id", Value.fromString(id));
+    this.set('id', Value.fromString(id));
   }
 
   save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save Pool entity without an ID");
+    let id = this.get('id');
+    assert(id != null, 'Cannot save Pool entity without an ID');
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
         `Entities of type Pool must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Pool", id.toString(), this);
+      store.set('Pool', id.toString(), this);
     }
   }
 
   static load(id: string): Pool | null {
-    return changetype<Pool | null>(store.get("Pool", id));
+    return changetype<Pool | null>(store.get('Pool', id));
   }
 
   get id(): string {
-    let value = this.get("id");
+    let value = this.get('id');
     return value!.toString();
   }
 
   set id(value: string) {
-    this.set("id", Value.fromString(value));
+    this.set('id', Value.fromString(value));
   }
 
   get created_at_block(): BigInt {
-    let value = this.get("created_at_block");
+    let value = this.get('created_at_block');
     return value!.toBigInt();
   }
 
   set created_at_block(value: BigInt) {
-    this.set("created_at_block", Value.fromBigInt(value));
+    this.set('created_at_block', Value.fromBigInt(value));
   }
 
   get owner(): Bytes {
-    let value = this.get("owner");
+    let value = this.get('owner');
     return value!.toBytes();
   }
 
   set owner(value: Bytes) {
-    this.set("owner", Value.fromBytes(value));
+    this.set('owner', Value.fromBytes(value));
   }
 
   get created_at(): BigInt {
-    let value = this.get("created_at");
+    let value = this.get('created_at');
     return value!.toBigInt();
   }
 
   set created_at(value: BigInt) {
-    this.set("created_at", Value.fromBigInt(value));
+    this.set('created_at', Value.fromBigInt(value));
   }
 
   get sender(): Bytes | null {
-    let value = this.get("sender");
+    let value = this.get('sender');
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -80,14 +80,14 @@ export class Pool extends Entity {
 
   set sender(value: Bytes | null) {
     if (!value) {
-      this.unset("sender");
+      this.unset('sender');
     } else {
-      this.set("sender", Value.fromBytes(<Bytes>value));
+      this.set('sender', Value.fromBytes(<Bytes>value));
     }
   }
 
   get name(): string | null {
-    let value = this.get("name");
+    let value = this.get('name');
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -97,14 +97,14 @@ export class Pool extends Entity {
 
   set name(value: string | null) {
     if (!value) {
-      this.unset("name");
+      this.unset('name');
     } else {
-      this.set("name", Value.fromString(<string>value));
+      this.set('name', Value.fromString(<string>value));
     }
   }
 
   get updated_at(): BigInt | null {
-    let value = this.get("updated_at");
+    let value = this.get('updated_at');
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -114,14 +114,14 @@ export class Pool extends Entity {
 
   set updated_at(value: BigInt | null) {
     if (!value) {
-      this.unset("updated_at");
+      this.unset('updated_at');
     } else {
-      this.set("updated_at", Value.fromBigInt(<BigInt>value));
+      this.set('updated_at', Value.fromBigInt(<BigInt>value));
     }
   }
 
   get updated_at_block(): BigInt | null {
-    let value = this.get("updated_at_block");
+    let value = this.get('updated_at_block');
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -131,9 +131,9 @@ export class Pool extends Entity {
 
   set updated_at_block(value: BigInt | null) {
     if (!value) {
-      this.unset("updated_at_block");
+      this.unset('updated_at_block');
     } else {
-      this.set("updated_at_block", Value.fromBigInt(<BigInt>value));
+      this.set('updated_at_block', Value.fromBigInt(<BigInt>value));
     }
   }
 }
