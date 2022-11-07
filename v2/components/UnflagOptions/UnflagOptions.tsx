@@ -101,7 +101,7 @@ const options = ['unflag', 'swap', 'self-liquidate'] as const;
 const optionToLink: Record<string, string | undefined> = {
   unflag: '/staking/burn',
   swap: '/staking/swap-links',
-  'self-liquidate': '/self-liquidate',
+  'self-liquidate': '/staking/self-liquidation',
 };
 export const UnflagOptionsUi: React.FC<{
   sUSDBalance?: number;
@@ -112,9 +112,6 @@ export const UnflagOptionsUi: React.FC<{
 
   const { getRootProps, getRadioProps, value } = useRadioGroup({
     name: 'UnflagOptions',
-    onChange: (x) => {
-      console.log(x);
-    },
   });
   const navigate = useNavigate();
   if (
