@@ -239,7 +239,7 @@ export const BurnUi = ({
               onClick={() => handleBadgePress('max')}
             >
               {t('staking-v2.burn.burn-max')}
-              <Tooltip label="Soonthetix" hasArrow>
+              <Tooltip label={t('staking-v2.burn.burn-max-tooltip')} hasArrow>
                 <Flex alignItems="center">
                   <InfoIcon
                     width="12px"
@@ -261,7 +261,14 @@ export const BurnUi = ({
               onClick={isAboveTarget ? undefined : () => handleBadgePress('toTarget')}
             >
               {t('staking-v2.burn.burn-cratio')}
-              <Tooltip label="Amount of debt to burn" hasArrow>
+              <Tooltip
+                label={
+                  isAboveTarget
+                    ? t('staking-v2.burn.burn-cratio-tooltip-not-allowed')
+                    : t('staking-v2.burn.burn-cratio-tooltip-allowed')
+                }
+                hasArrow
+              >
                 <Flex alignItems="center">
                   <InfoIcon
                     width="12px"
