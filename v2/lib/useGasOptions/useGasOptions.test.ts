@@ -92,16 +92,16 @@ describe('useGasOptions', () => {
 
     const queryResult = await query();
     expect(queryResult).toEqual({
-      gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
+      gasLimit: wei(600000, GWEI_DECIMALS).toBN(), // 500000 * 1.2
       gasOptionsForTransaction: {
         maxFeePerGas: wei(14, GWEI_DECIMALS, true).toBN(),
         maxPriorityFeePerGas: wei(4, GWEI_DECIMALS, true).toBN(),
-        gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
+        gasLimit: wei(600000, GWEI_DECIMALS).toBN(), // 500000 * 1.2
       },
       gasPrices: gasPricesMainnetMockData,
       gasSpeed: 'average',
       optimismLayerOneFees: undefined,
-      transactionPrice: wei(7, GWEI_DECIMALS),
+      transactionPrice: wei(8.4, GWEI_DECIMALS), // 7 * 1.2
       populatedTransaction,
     });
   });
@@ -117,16 +117,16 @@ describe('useGasOptions', () => {
 
     const queryResult = await query();
     expect(queryResult).toEqual({
-      gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
+      gasLimit: wei(600000, GWEI_DECIMALS).toBN(), // 500000 * 1.2
       gasOptionsForTransaction: {
         maxFeePerGas: BigNumber.from(18),
         maxPriorityFeePerGas: BigNumber.from(8),
-        gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
+        gasLimit: wei(600000, GWEI_DECIMALS).toBN(), // 500000 * 1.2
       },
       gasPrices: gasPricesMainnetMockData,
       gasSpeed: 'fastest',
       optimismLayerOneFees: undefined,
-      transactionPrice: wei(9, GWEI_DECIMALS),
+      transactionPrice: wei(10.8, GWEI_DECIMALS), // 9 * 1.2
       populatedTransaction,
     });
   });
@@ -144,15 +144,15 @@ describe('useGasOptions', () => {
 
     const queryResult = await query();
     expect(queryResult).toEqual({
-      gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
+      gasLimit: wei(600000, GWEI_DECIMALS).toBN(), // 500000 * 1.2
       gasOptionsForTransaction: {
         gasPrice: BigNumber.from(10),
-        gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
+        gasLimit: wei(600000, GWEI_DECIMALS).toBN(), // 500000 * 1.2
       },
       gasPrices: gasPricesOptimismMockData,
       gasSpeed: 'average',
       optimismLayerOneFees: wei(0.00000001),
-      transactionPrice: wei(5.00001, GWEI_DECIMALS),
+      transactionPrice: wei(6.00001, GWEI_DECIMALS), //5.00001 * 1.2
       populatedTransaction,
     });
   });
