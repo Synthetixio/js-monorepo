@@ -253,9 +253,9 @@ export const BurnUi = ({
               variant="burn"
               bg={activeBadge === 'toTarget' ? 'cyan.500' : 'whiteAlpha.300'}
               color={activeBadge === 'toTarget' ? 'black' : 'cyan.500'}
-              cursor={isAboveTarget ? 'not-allowed' : 'cursor'}
+              cursor={isAboveTarget ? 'not-allowed' : 'pointer'}
               _hover={{
-                cursor: isAboveTarget ? 'not-allowed' : 'cursor',
+                cursor: isAboveTarget ? 'not-allowed' : 'pointer',
               }}
               ml={1}
               onClick={isAboveTarget ? undefined : () => handleBadgePress('toTarget')}
