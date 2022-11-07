@@ -64,7 +64,7 @@ export const BurnHeaderUi: FC<{
             fadeDuration={1}
           >
             <CRatioProgressBar
-              targetThreshold={targetThreshold || 0.01}
+              targetThreshold={targetThreshold || 0}
               liquidationCratioPercentage={liquidationRatioPercentage || 0}
               currentCRatioPercentage={currentCRatioPercentage || 0}
               targetCratioPercentage={targetCRatioPercentage || 0}

@@ -48,7 +48,7 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
         />
       </Flex>
       <CRatioProgressBar
-        targetThreshold={targetThreshold || 0.01}
+        targetThreshold={targetThreshold || 0}
         targetCratioPercentage={targetCratioPercentage || 0}
         liquidationCratioPercentage={liquidationCratioPercentage || 0}
         currentCRatioPercentage={currentCRatioPercentage || 0}

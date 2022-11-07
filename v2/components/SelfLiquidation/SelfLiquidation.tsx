@@ -76,7 +76,7 @@ export const SelfLiquidationUi: FC<{
           borderColor="gray.900"
         >
           <CRatioProgressBar
-            targetThreshold={targetThreshold || 0.01}
+            targetThreshold={targetThreshold || 0}
             liquidationCratioPercentage={liquidationRatioPercentage || 0}
             currentCRatioPercentage={currentCRatioPercentage || 0}
             targetCratioPercentage={targetCRatioPercentage || 0}
