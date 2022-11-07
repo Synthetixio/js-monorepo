@@ -5,18 +5,15 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ fritzschiff/subgraphs",
-    "create-local": "graph create --node http://localhost:8020/ fritzschiff/subgraphs",
-    "remove-local": "graph remove --node http://localhost:8020/ fritzschiff/subgraphs",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 fritzschiff/subgraphs",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ fritzschoff/subgraphs",
+    "create-local": "graph create --node http://localhost:8020/ fritzschoff/subgraphs",
+    "remove-local": "graph remove --node http://localhost:8020/ fritzschoff/subgraphs",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 fritzschoff/subgraphs",
     "test": "graph test"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.35.0",
     "@graphprotocol/graph-ts": "0.28.1"
-  },
-  "devDependencies": {
-    "matchstick-as": "0.5.0"
   },
   "depcheck": {
     "ignorePatterns": [
