@@ -9,7 +9,10 @@ export const Welcome = ({ ...props }: BoxProps) => {
       <Text color="whiteAlpha.900" variant="heading" fontWeight="700" fontSize="4xl">
         {t('staking-v2.home.title')}
       </Text>
-      <Flex alignItems="center">
+      <Flex
+        alignItems={['flex-start', 'flex-start', 'flex-start', 'center']}
+        flexDirection={['column', 'column', 'column', 'row']}
+      >
         <Text color="gray.600" variant="heading" fontSize="small">
           <Trans
             i18nKey="staking-v2.home.description"
@@ -18,8 +21,12 @@ export const Welcome = ({ ...props }: BoxProps) => {
             ]}
           />
         </Text>
-        {/* TODO Link to introduction */}
-        <Button variant="outline" onClick={() => console.log('To introduction')}>
+        <Button
+          variant="outline"
+          minW="120px"
+          onClick={() => window.open(EXTERNAL_LINKS.CMS.Home, '_blank')?.focus()}
+          mt={[3, 3, 3, 0]}
+        >
           {t('staking-v2.home.action')}
         </Button>
       </Flex>

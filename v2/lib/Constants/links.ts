@@ -8,6 +8,9 @@ export const EXTERNAL_LINKS = {
     Uniswap: 'https://uniswap.exchange/',
     OneInchLink: (from: string, to: string) => `https://1inch.exchange/#/1/swap/${from}/${to}`,
   },
+  CMS: {
+    Home: 'https://synthetix.io/guides',
+  },
   Synthetix: {
     Home: 'https://www.synthetix.io',
     Litepaper: 'https://docs.synthetix.io/litepaper/',
