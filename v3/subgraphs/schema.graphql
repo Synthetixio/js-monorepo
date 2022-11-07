@@ -1,6 +1,14 @@
-type PoolCreated @entity {
+type Pool @entity {
   id: ID!
-  block: BigInt!
+  created_at_block: BigInt!
   owner: Bytes!
-  timestamp: BigInt!
+  created_at: BigInt!
+  "Only set when name of the pool got updated"
+  sender: Bytes
+  "Only set when name of the pool got updated"
+  name: String
+  "Only set when the pool got updated"
+  updated_at: BigInt
+  "Only set when the pool got updated"
+  updated_at_block: BigInt
 }

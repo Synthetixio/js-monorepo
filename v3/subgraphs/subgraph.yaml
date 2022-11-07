@@ -21,4 +21,6 @@ dataSources:
       eventHandlers:
         - event: PoolCreated(indexed uint128,indexed address)
           handler: handlePoolCreated
+        - event: PoolNameUpdated(indexed uint128,indexed string,indexed address)
+          handler: handlePoolNameUpdated
       file: ./src/core.ts
