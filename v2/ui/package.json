@@ -41,6 +41,7 @@
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/EthGasPriceEstimator": "workspace:*",
     "@snx-v2/GasSpeedContext": "workspace:*",
+    "@snx-v2/HomeButton": "workspace:*",
     "@snx-v2/MainActionCards": "workspace:*",
     "@snx-v2/Mint": "workspace:*",
     "@snx-v2/Navigation": "workspace:*",

@@ -5,6 +5,8 @@
   "version": "0.0.1",
   "dependencies": {
     "@chakra-ui/react": "^2.2.8",
+    "@snx-v2/icons": "workspace:*",
+    "react-i18next": "^11.18.3",
     "react-router-dom": "^6.3.0"
   }
 }

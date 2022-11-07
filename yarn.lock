@@ -7065,6 +7065,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/HomeButton@workspace:*, @snx-v2/HomeButton@workspace:v2/components/HomeButton":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/HomeButton@workspace:v2/components/HomeButton"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:*"
+    react-i18next: ^11.18.3
+    react-router-dom: ^6.3.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/MainActionCards@workspace:*, @snx-v2/MainActionCards@workspace:v2/components/MainActionCards":
   version: 0.0.0-use.local
   resolution: "@snx-v2/MainActionCards@workspace:v2/components/MainActionCards"
@@ -7183,6 +7194,7 @@ __metadata:
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
     react-i18next: ^11.18.3
+    react-router-dom: ^6.3.0
   languageName: unknown
   linkType: soft
 
@@ -9529,6 +9541,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/GasSpeedContext": "workspace:*"
+    "@snx-v2/HomeButton": "workspace:*"
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Mint": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
