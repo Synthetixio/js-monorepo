@@ -27,6 +27,7 @@ interface CardProps {
   bodyText: string;
   icon: ReactNode;
   disabled: boolean;
+  isLoading: boolean;
   Content: JSX.Element | null;
   buttonVariant?: string;
   buttonText: string;
@@ -47,8 +48,10 @@ export const Card = ({
   buttonText,
   buttonAction = () => {},
   testId,
+  isLoading,
 }: CardProps) => {
-  const stepStyles = disabled
+  const disabledOrLoading = disabled || isLoading;
+  const stepStyles = disabledOrLoading
     ? {}
     : {
         backgroundImage: `linear-gradient(${stepFrom}, ${stepTo})`,
@@ -68,7 +71,7 @@ export const Card = ({
       borderColor="gray.900"
       p={3}
       borderRadius="base"
-      bg={disabled ? 'gray.900' : 'navy.900'}
+      bg={isLoading ? 'gray.900' : disabled ? 'whiteAlpha.200' : 'navy.900'}
     >
       <Box>
         <Flex alignItems="center" justifyContent="space-between" mb={3}>
@@ -78,17 +81,17 @@ export const Card = ({
             fontFamily="mono"
             fontWeight="black"
             pt={0}
-            color={disabled ? 'gray.500' : 'whiteAlpha.700'}
+            color={disabledOrLoading ? 'gray.500' : 'whiteAlpha.700'}
             sx={stepStyles}
           >
             {step}
           </Text>
           {icon}
         </Flex>
-        <Heading fontSize="sm" color={disabled ? 'gray.500' : 'white'} mb={1}>
+        <Heading fontSize="sm" color={disabledOrLoading ? 'gray.500' : 'white'} mb={1}>
           {headingText}
         </Heading>
-        <Text color={disabled ? 'gray.500' : 'whiteAlpha.700'} fontSize="xs">
+        <Text color={disabledOrLoading ? 'gray.500' : 'whiteAlpha.700'} fontSize="xs">
           {bodyText}
         </Text>
       </Box>
@@ -96,7 +99,8 @@ export const Card = ({
       <Button
         data-testid={testId}
         variant={buttonVariant}
-        onClick={disabled ? () => {} : buttonAction}
+        disabled={disabled}
+        onClick={disabledOrLoading ? () => {} : buttonAction}
       >
         {buttonText}
       </Button>
@@ -159,7 +163,8 @@ const StakeActionCard: React.FC<{
       headingText={t('staking-v2.main-action-cards.stake-headline')}
       bodyText={t('staking-v2.main-action-cards.stake-body')}
       icon={<StakeIcon disabled={isCardLoading} />}
-      disabled={isCardLoading}
+      disabled={false}
+      isLoading={isCardLoading}
       buttonText={buttonText}
       Content={null}
       buttonVariant={getButtonVariant()}
@@ -241,7 +246,8 @@ const MaintainActionCard: React.FC<{
           </Badge>
         ) : null
       }
-      disabled={isLoading}
+      isLoading={isLoading}
+      disabled={false}
       buttonVariant={getButtonVariant()}
       buttonText={
         isStaking
@@ -271,6 +277,7 @@ const CollectActionCard: React.FC<{
   hasClaimed?: boolean;
   snxPrice?: string;
   targetThreshold?: number;
+  rewardsDollarValue: number;
 }> = ({
   isLoading,
   liquidationCratioPercentage,
@@ -278,8 +285,8 @@ const CollectActionCard: React.FC<{
   currentCRatioPercentage,
   nextEpochStartDate,
   hasClaimed,
-  snxPrice,
   targetThreshold,
+  rewardsDollarValue,
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -292,10 +299,15 @@ const CollectActionCard: React.FC<{
   });
 
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
-  const canClaim = !hasClaimed && variant === 'success';
-
+  const canClaim = !hasClaimed;
+  const disabled = Boolean(canClaim && variant !== 'success');
   const theme = useTheme();
-
+  const getButtonVariant = () => {
+    if (hasClaimed) return 'link';
+    if (!isStaking) return 'link';
+    if (variant === 'success') return 'success';
+    return 'solid';
+  };
   return (
     <Card
       step={3}
@@ -303,7 +315,7 @@ const CollectActionCard: React.FC<{
       stepTo={theme.colors['cyan']['500']}
       headingText={t('staking-v2.main-action-cards.collect-headline')}
       bodyText={t('staking-v2.main-action-cards.collect-body')}
-      icon={<CollectIcon color={isLoading ? 'gray.400' : 'cyan.400'} />}
+      icon={<CollectIcon color={isLoading || disabled ? 'gray.400' : 'cyan.400'} />}
       Content={
         isStaking ? (
           <Flex justifyContent="space-between">
@@ -320,45 +332,52 @@ const CollectActionCard: React.FC<{
                     </Box>
                   </Tooltip>
                 </Text>
-                <Text fontFamily="mono" fontSize="md" color="green.400" fontWeight="700">
+                <Text
+                  data-testid="value of rewards"
+                  fontFamily="mono"
+                  fontSize="md"
+                  color="green.400"
+                  fontWeight="700"
+                >
                   ≈ {formatNumberToUsd(rewardsDollarValue)}
                 </Text>
               </Flex>
             ) : (
-            <Flex flexDirection="column">
-              <Flex alignItems="center">
-                <Text
-                  textTransform="uppercase"
-                  color="whiteAlpha.700"
-                  fontSize="xs"
-                  mr="1"
-                  fontWeight="700"
-                >
-                  {t('staking-v2.main-action-cards.collect-epoch')}
-                </Text>
+              <Flex flexDirection="column">
+                <Flex alignItems="center">
+                  <Text
+                    textTransform="uppercase"
+                    color="whiteAlpha.700"
+                    fontSize="xs"
+                    mr="1"
+                    fontWeight="700"
+                  >
+                    {t('staking-v2.main-action-cards.collect-epoch')}
+                  </Text>
                   <Tooltip label={t('staking-v2.main-action-cards.collect-epoch-tooltip')} hasArrow>
-                  <Box as="span" mb={1}>
-                    <InfoIcon width="10px" height="10px" />
-                  </Box>
-                </Tooltip>
-              </Flex>
+                    <Box as="span" mb={1}>
+                      <InfoIcon width="10px" height="10px" />
+                    </Box>
+                  </Tooltip>
+                </Flex>
                 <Text color="success" fontSize="md" fontFamily="mono">
                   <Skeleton isLoaded={Boolean(nextEpochStartDate)}>
                     {nextEpochStartDate && <CountDown toDate={nextEpochStartDate} />}
-                </Skeleton>
+                  </Skeleton>
                 </Text>
               </Flex>
             )}
           </Flex>
         ) : null
       }
-      disabled={isLoading}
+      isLoading={isLoading}
+      disabled={Boolean(canClaim && variant !== 'success')}
       buttonText={
         isStaking && canClaim
           ? t('staking-v2.main-action-cards.collect-main-button')
           : t('staking-v2.main-action-cards.collect-explanation-link')
       }
-      buttonVariant={isStaking && canClaim ? variant : 'link'}
+      buttonVariant={getButtonVariant()}
       buttonAction={
         isStaking && canClaim
           ? () => navigate('/earn')
