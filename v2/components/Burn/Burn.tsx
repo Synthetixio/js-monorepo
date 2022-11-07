@@ -60,6 +60,7 @@ interface BurnProps {
   stakedSnx: number;
   debtBalance?: number;
   sUsdAmountToTarget: number;
+  isAboveTarget?: boolean;
 }
 
 type ActiveBadge = 'max' | 'toTarget';
@@ -102,6 +103,7 @@ export const BurnUi = ({
   gasError,
   isGasEnabledAndNotFetched,
   sUsdAmountToTarget,
+  isAboveTarget,
 }: BurnProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState<ActiveBadge | null>(null);
@@ -269,7 +271,7 @@ export const BurnUi = ({
             </Badge>
           </Flex>
         </Box>
-        {parseFloatWithCommas(snxUnstakingAmount) === 0 && (
+        {Boolean(parseFloatWithCommas(snxUnstakingAmount) === 0 && !isAboveTarget) && (
           <Alert my={4} status="info" variant="left-accent" py={2} px={3}>
             <AlertIcon width="20px" height="20px" />
             <AlertDescription pl={2} pr={0} fontSize="sm" fontFamily="heading">
@@ -479,6 +481,9 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             isLoading={isLoading}
             susdBalance={susdBalance?.toNumber()}
             snxUnstakingAmount={snxUnstakingAmount}
+            isAboveTarget={debtData?.currentCRatioPercentage.gt(
+              debtData?.targetCRatioPercentage || 0
+            )}
             sUsdAmountToTarget={Math.max(
               debtData?.debtBalance.sub(debtData?.issuableSynths || 0)?.toNumber() || 0,
               0
