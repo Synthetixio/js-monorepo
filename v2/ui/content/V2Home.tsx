@@ -28,7 +28,7 @@ const V2Home = () => {
   return (
     <>
       <CRatioBanner />
-      <Container maxW="1200px" py="1" mt={4} mb={8}>
+      <Container maxW="1200px" py="1" mt={[0, 4, 4]} mb={8}>
         {!walletAddress && isAppReady && <Welcome mt={8} />}
         <Flex
           mt="4"
@@ -53,7 +53,8 @@ const V2Home = () => {
             <MainActionCardsList connectWallet={connectWallet} />
           )}
           <Flex
-            ml="6"
+            ml={[0, 6]}
+            mt={[4, 4, 4, 0]}
             alignSelf={['center', 'center', 'center', 'flex-start']}
             maxWidth="287px"
             width="full"
@@ -126,11 +127,12 @@ const V2Home = () => {
           </Box>
           <Flex
             bg="navy.900"
-            direction="row"
+            direction={['column', 'row', 'row']}
             height="fit-content"
-            width="fit-content"
+            width={['100%', 'fit-content', 'fit-content']}
             mt={4}
-            pr="10"
+            pr={['0', '0', '10']}
+            alignItems={['center', 'unset', 'unset']}
           >
             <UtilityCard
               mr={4}
@@ -145,6 +147,7 @@ const V2Home = () => {
               description={t('staking-v2.home.utilities.dHedgeDescription')}
               link="https://www.dhedge.org/"
               Icon={DHedgeIcon}
+              mt={[4, 0, 0]}
             />
             <UtilityCard
               mr={4}
@@ -152,6 +155,7 @@ const V2Home = () => {
               description={t('staking-v2.home.utilities.lyraDescription')}
               link="https://www.lyra.finance/"
               Icon={LyraIcon}
+              mt={[4, 0, 0]}
             />
             <UtilityCard
               mr={4}
@@ -159,6 +163,7 @@ const V2Home = () => {
               description={t('staking-v2.home.utilities.thalesDescription')}
               link="https://thalesmarket.io/"
               Icon={ThalesIcon}
+              mt={[4, 0, 0]}
             />
             <UtilityCard
               mr={4}
@@ -166,6 +171,7 @@ const V2Home = () => {
               description={t('staking-v2.home.utilities.curveDescription')}
               link="https://curve.fi/"
               Icon={() => <CurveLogo />}
+              mt={[4, 0, 0]}
             />
           </Flex>
         </Container>
