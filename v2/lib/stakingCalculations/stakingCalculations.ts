@@ -155,3 +155,12 @@ export const calculateChangesFromBurn = ({
   const newSUSDBalance = Math.max(sUSDBalance - burnAmountSusd, 0);
   return { newDebtBalance, newStakedAmountSnx, newCratio, newTransferable, newSUSDBalance };
 };
+
+export const calculateValueOfRewards = (
+  snxReward = wei(0),
+  sUSDRewards = wei(0),
+  snxRate = wei(0)
+) => {
+  const valueOfSnxReward = snxReward.mul(snxRate);
+  return valueOfSnxReward.add(sUSDRewards).toNumber();
+};
