@@ -1,0 +1,6 @@
+type PoolCreated @entity {
+  id: ID!
+  block: BigInt!
+  owner: Bytes!
+  timestamp: BigInt!
+}
