@@ -69,6 +69,7 @@ export const MintHeaderUi: FC<{
   liquidationRatioPercentage?: number;
   targetCRatioPercentage?: number;
   currentCRatioPercentage?: number;
+  targetThreshold?: number;
   collateral?: number;
   debtBalance?: number;
   SNXRate?: number;
@@ -80,6 +81,7 @@ export const MintHeaderUi: FC<{
   liquidationRatioPercentage,
   targetCRatioPercentage,
   currentCRatioPercentage,
+  targetThreshold,
   SNXRate,
   isDebtDataLoading,
   isExchangeRateLoading,
@@ -162,6 +164,7 @@ export const MintHeaderUi: FC<{
                   liquidationCratioPercentage={liquidationRatioPercentage || 0}
                   currentCRatioPercentage={currentCRatioPercentage || 0}
                   targetCratioPercentage={targetCRatioPercentage || 0}
+                  targetThreshold={targetThreshold || 0}
                   isLoading={false}
                 />
               </Flex>
@@ -197,6 +200,7 @@ export const MintHeader: FC<{ mintAmountSUSD?: number }> = ({ mintAmountSUSD }) 
       liquidationRatioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
       targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
       currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
+      targetThreshold={debtData?.targetThreshold.toNumber()}
       SNXRate={exchangeRateData?.SNX?.toNumber()}
       isDebtDataLoading={isDebtDataLoading}
       isExchangeRateLoading={isExchangeRateLoading}

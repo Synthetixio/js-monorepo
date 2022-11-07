@@ -171,12 +171,14 @@ const MaintainActionCard: React.FC<{
   liquidationCratioPercentage?: number;
   targetCratioPercentage?: number;
   currentCRatioPercentage?: number;
+  targetThreshold?: number;
   isFlagged?: boolean;
 }> = ({
   isLoading,
   liquidationCratioPercentage,
   targetCratioPercentage,
   currentCRatioPercentage,
+  targetThreshold,
   isFlagged,
 }) => {
   const navigate = useNavigate();
@@ -186,6 +188,7 @@ const MaintainActionCard: React.FC<{
     liquidationCratioPercentage,
     targetCratioPercentage,
     currentCRatioPercentage,
+    targetThreshold,
   });
 
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
@@ -264,6 +267,7 @@ const CollectActionCard: React.FC<{
   nextEpochStartDate?: Date;
   hasClaimed?: boolean;
   snxPrice?: string;
+  targetThreshold?: number;
 }> = ({
   isLoading,
   liquidationCratioPercentage,
@@ -272,6 +276,7 @@ const CollectActionCard: React.FC<{
   nextEpochStartDate,
   hasClaimed,
   snxPrice,
+  targetThreshold,
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -280,6 +285,7 @@ const CollectActionCard: React.FC<{
     liquidationCratioPercentage,
     targetCratioPercentage,
     currentCRatioPercentage,
+    targetThreshold,
   });
 
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
@@ -364,6 +370,7 @@ type UiProps = {
   snxPrice?: string;
   connectWallet: (chainId?: NetworkId | undefined) => Promise<void>;
   walletAddress: string | null;
+  targetThreshold?: number;
 };
 
 export const MainActionCardsUi: React.FC<UiProps> = ({
@@ -377,6 +384,7 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
   snxPrice,
   connectWallet,
   walletAddress,
+  targetThreshold,
 }) => {
   return (
     <Stack direction={['column', 'column', 'row']} align="center" spacing="14px">
@@ -393,6 +401,7 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
         targetCratioPercentage={targetCratioPercentage}
         currentCRatioPercentage={currentCRatioPercentage}
         isFlagged={isFlagged}
+        targetThreshold={targetThreshold}
       />
       <CollectActionCard
         isLoading={isLoading}
@@ -402,6 +411,7 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
         hasClaimed={hasClaimed}
         nextEpochStartDate={nextEpochStartDate}
         snxPrice={snxPrice}
+        targetThreshold={targetThreshold}
       />
     </Stack>
   );

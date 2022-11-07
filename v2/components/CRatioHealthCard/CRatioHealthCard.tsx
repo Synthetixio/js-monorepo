@@ -10,6 +10,7 @@ type UiProps = {
   liquidationCratioPercentage?: number;
   targetCratioPercentage?: number;
   currentCRatioPercentage?: number;
+  targetThreshold?: number;
   isLoading: boolean;
 };
 
@@ -17,6 +18,7 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
   targetCratioPercentage,
   liquidationCratioPercentage,
   currentCRatioPercentage,
+  targetThreshold,
   isLoading,
 }) => {
   const { t } = useTranslation();
@@ -25,6 +27,7 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
     targetCratioPercentage,
     liquidationCratioPercentage,
     currentCRatioPercentage,
+    targetThreshold,
   });
 
   return (
@@ -45,6 +48,7 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
         />
       </Flex>
       <CRatioProgressBar
+        targetThreshold={targetThreshold || 0}
         targetCratioPercentage={targetCratioPercentage || 0}
         liquidationCratioPercentage={liquidationCratioPercentage || 0}
         currentCRatioPercentage={currentCRatioPercentage || 0}
@@ -62,6 +66,7 @@ export const CRatioHealthCard: React.FC = () => {
       currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
       targetCratioPercentage={debtData?.targetCRatioPercentage.toNumber()}
       liquidationCratioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
+      targetThreshold={debtData?.targetThreshold.toNumber()}
       isLoading={isLoading}
     />
   );

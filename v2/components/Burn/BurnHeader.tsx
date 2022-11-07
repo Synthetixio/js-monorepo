@@ -12,12 +12,14 @@ export const BurnHeaderUi: FC<{
   liquidationRatioPercentage?: number;
   targetCRatioPercentage?: number;
   currentCRatioPercentage?: number;
+  targetThreshold?: number;
   isDebtDataLoading?: boolean;
 }> = ({
   burnAmountSusd,
   liquidationRatioPercentage,
   targetCRatioPercentage,
   currentCRatioPercentage,
+  targetThreshold,
   isDebtDataLoading,
 }) => {
   const { t } = useTranslation();
@@ -62,6 +64,7 @@ export const BurnHeaderUi: FC<{
             fadeDuration={1}
           >
             <CRatioProgressBar
+              targetThreshold={targetThreshold || 0}
               liquidationCratioPercentage={liquidationRatioPercentage || 0}
               currentCRatioPercentage={currentCRatioPercentage || 0}
               targetCratioPercentage={targetCRatioPercentage || 0}
@@ -97,6 +100,7 @@ export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) =
       liquidationRatioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
       targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
       currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
+      targetThreshold={debtData?.targetThreshold.toNumber()}
       isDebtDataLoading={isDebtDataLoading}
     />
   );

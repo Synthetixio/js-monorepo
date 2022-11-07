@@ -22,6 +22,7 @@ export const useSelfLiquidationData = () => {
     targetCRatioPercentage,
     currentCRatioPercentage,
     liquidationRatioPercentage,
+    targetThreshold,
   } = debtData || {};
   const { SNX: SNXRate } = exchangeRateData || {};
   const { selfLiquidationPenalty } = liquidationData || {};
@@ -30,6 +31,7 @@ export const useSelfLiquidationData = () => {
     targetCratioPercentage: targetCRatioPercentage?.toNumber(),
     currentCRatioPercentage: currentCRatioPercentage?.toNumber(),
     liquidationCratioPercentage: liquidationRatioPercentage?.toNumber(),
+    targetThreshold: targetThreshold?.toNumber(),
   });
   const enabled = Boolean(
     collateralInUsd && debtBalance && selfLiquidationPenalty && SNXRate && Liquidator && health

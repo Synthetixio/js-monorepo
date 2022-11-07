@@ -20,6 +20,7 @@ export const SelfLiquidationUi: FC<{
   targetCRatioPercentage?: number;
   liquidationRatioPercentage?: number;
   currentCRatioPercentage?: number;
+  targetThreshold?: number;
   onSelfLiquidation: () => void;
   transactionFee?: Wei | null;
   isGasEnabledAndNotFetched: boolean;
@@ -31,6 +32,7 @@ export const SelfLiquidationUi: FC<{
   targetCRatioPercentage,
   liquidationRatioPercentage,
   currentCRatioPercentage,
+  targetThreshold,
   onSelfLiquidation,
   transactionFee,
   gasError,
@@ -74,6 +76,7 @@ export const SelfLiquidationUi: FC<{
           borderColor="gray.900"
         >
           <CRatioProgressBar
+            targetThreshold={targetThreshold || 0}
             liquidationCratioPercentage={liquidationRatioPercentage || 0}
             currentCRatioPercentage={currentCRatioPercentage || 0}
             targetCratioPercentage={targetCRatioPercentage || 0}
@@ -178,6 +181,7 @@ export const SelfLiquidation = () => {
         targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
         liquidationRatioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
         currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
+        targetThreshold={debtData?.targetThreshold.toNumber()}
       />
       <SelfLiquidationTransactionModal
         txnHash={txnHash}
