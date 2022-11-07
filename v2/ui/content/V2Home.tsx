@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Box, Container, Flex, Text, Center, Spacer } from '@chakra-ui/react';
+import { Box, Container, Flex, Text, Center } from '@chakra-ui/react';
 import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
 import { BalanceBox } from '@snx-v2/BalanceBox';
