@@ -44,6 +44,7 @@ interface MintProps {
   mintAmountsUSD: string;
   transactionFee?: Wei | null;
   gasError: Error | null;
+  belowTargetError: boolean;
   isGasEnabledAndNotFetched: boolean;
 }
 const StyledInput: FC<InputProps> = (props) => {
@@ -80,6 +81,7 @@ export const MintUi = ({
   mintAmountsUSD,
   transactionFee,
   gasError,
+  belowTargetError,
   isGasEnabledAndNotFetched,
 }: MintProps) => {
   const { t } = useTranslation();
@@ -180,11 +182,13 @@ export const MintUi = ({
           </Flex>
         </Box>
         <MintOrBurnChanges debtChange={parseFloatWithCommas(mintAmountsUSD)} action="mint" />
-        {gasError ? (
+        {gasError || belowTargetError ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
             <Text>
-              {t('staking-v2.mint.gas-estimation-error')}: {parseTxnError(gasError)}
+              {belowTargetError
+                ? t('staking-v2.mint.below-target-error')
+                : `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(gasError)}`}
             </Text>
           </Center>
         ) : (
@@ -205,7 +209,12 @@ export const MintUi = ({
             setActiveBadge(0);
             onSubmit();
           }}
-          disabled={stakeAmountSNX === '' || Boolean(gasError) || isGasEnabledAndNotFetched}
+          disabled={
+            stakeAmountSNX === '' ||
+            Boolean(gasError) ||
+            isGasEnabledAndNotFetched ||
+            belowTargetError
+          }
         >
           {isGasEnabledAndNotFetched ? t('staking-v2.mint.estimating-gas') : 'Mint'}
         </Button>
@@ -304,6 +313,9 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             onSubmit={handleSubmit}
             transactionFee={transactionFee}
             gasError={gasError}
+            belowTargetError={
+              currentCRatio && targetCRatio ? currentCRatio.gt(targetCRatio) : false
+            }
             isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
           />
         </Box>
