@@ -251,12 +251,14 @@ export const BurnUi = ({
             </Badge>
             <Badge
               variant="burn"
-              sx={{
-                bg: activeBadge === 'toTarget' ? 'cyan.500' : 'whiteAlpha.300',
-                color: activeBadge === 'toTarget' ? 'black' : 'cyan.500',
+              bg={activeBadge === 'toTarget' ? 'cyan.500' : 'whiteAlpha.300'}
+              color={activeBadge === 'toTarget' ? 'black' : 'cyan.500'}
+              cursor={isAboveTarget ? 'not-allowed' : 'cursor'}
+              _hover={{
+                cursor: isAboveTarget ? 'not-allowed' : 'cursor',
               }}
               ml={1}
-              onClick={() => handleBadgePress('toTarget')}
+              onClick={isAboveTarget ? undefined : () => handleBadgePress('toTarget')}
             >
               {t('staking-v2.burn.burn-cratio')}
               <Tooltip label="Amount of debt to burn" hasArrow>
