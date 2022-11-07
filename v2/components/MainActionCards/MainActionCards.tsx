@@ -307,6 +307,24 @@ const CollectActionCard: React.FC<{
       Content={
         isStaking ? (
           <Flex justifyContent="space-between">
+            {rewardsDollarValue > 0 ? (
+              <Flex flexDirection="column">
+                <Text color="whiteAlpha.700" fontSize="xs" mr="1" fontWeight="700">
+                  {t('staking-v2.main-action-cards.collect-rewards')}{' '}
+                  <Tooltip
+                    label={t('staking-v2.main-action-cards.collect-rewards-tooltip')}
+                    hasArrow
+                  >
+                    <Box as="span" mb={1}>
+                      <InfoIcon width="10px" height="10px" />
+                    </Box>
+                  </Tooltip>
+                </Text>
+                <Text fontFamily="mono" fontSize="md" color="green.400" fontWeight="700">
+                  ≈ {formatNumberToUsd(rewardsDollarValue)}
+                </Text>
+              </Flex>
+            ) : (
             <Flex flexDirection="column">
               <Flex alignItems="center">
                 <Text
@@ -318,28 +336,17 @@ const CollectActionCard: React.FC<{
                 >
                   {t('staking-v2.main-action-cards.collect-epoch')}
                 </Text>
-                <Tooltip label="Soonthetix" hasArrow>
+                  <Tooltip label={t('staking-v2.main-action-cards.collect-epoch-tooltip')} hasArrow>
                   <Box as="span" mb={1}>
                     <InfoIcon width="10px" height="10px" />
                   </Box>
                 </Tooltip>
               </Flex>
-              {nextEpochStartDate && (
                 <Text color="success" fontSize="md" fontFamily="mono">
-                  <CountDown toDate={nextEpochStartDate} />
-                </Text>
-              )}
-            </Flex>
-            {canClaim && (
-              <Flex flexDirection="column">
-                <Text color="whiteAlpha.700" fontSize="xs" mr="1" fontWeight="700">
-                  {t('staking-v2.main-action-cards.collect-price')}
-                </Text>
-                <Skeleton isLoaded={snxPrice !== undefined}>
-                  <Text data-testid="snx price" color="success" fontSize="md" fontFamily="mono">
-                    {snxPrice && formatNumberToUsd(snxPrice)}
-                  </Text>
+                  <Skeleton isLoaded={Boolean(nextEpochStartDate)}>
+                    {nextEpochStartDate && <CountDown toDate={nextEpochStartDate} />}
                 </Skeleton>
+                </Text>
               </Flex>
             )}
           </Flex>
@@ -370,10 +377,10 @@ type UiProps = {
   isFlagged?: boolean;
   nextEpochStartDate?: Date;
   hasClaimed?: boolean;
-  snxPrice?: string;
   connectWallet: (chainId?: NetworkId | undefined) => Promise<void>;
   walletAddress: string | null;
   targetThreshold?: number;
+  rewardsDollarValue: number;
 };
 
 export const MainActionCardsUi: React.FC<UiProps> = ({
@@ -384,10 +391,10 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
   isFlagged,
   nextEpochStartDate,
   hasClaimed,
-  snxPrice,
   connectWallet,
   walletAddress,
   targetThreshold,
+  rewardsDollarValue,
 }) => {
   return (
     <Stack direction={['column', 'column', 'row']} align="center" spacing="14px">
@@ -408,13 +415,13 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
         targetThreshold={targetThreshold}
       />
       <CollectActionCard
+        rewardsDollarValue={rewardsDollarValue}
         isLoading={isLoading}
         liquidationCratioPercentage={liquidationCratioPercentage}
         targetCratioPercentage={targetCratioPercentage}
         currentCRatioPercentage={currentCRatioPercentage}
         hasClaimed={hasClaimed}
         nextEpochStartDate={nextEpochStartDate}
-        snxPrice={snxPrice}
         targetThreshold={targetThreshold}
       />
     </Stack>
