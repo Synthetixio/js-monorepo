@@ -107,7 +107,7 @@ export const Card = ({
 const StakeActionCard: React.FC<{
   currentCRatioPercentage?: number;
   targetCRatioPercentage?: number;
-  hasClaimed: boolean;
+  hasClaimed?: boolean;
   isLoading: boolean;
   connectWallet: (chainId?: NetworkId | undefined) => Promise<void>;
   walletAddress: string | null;
@@ -143,7 +143,7 @@ const StakeActionCard: React.FC<{
     if (isCardLoading) return 'link';
     if (!isStaking) return 'solid';
     if (!cRatioAboveTarget) return 'link';
-    if (!hasClaimed) return 'link';
+    if (hasClaimed === false) return 'link';
     return 'solid';
   };
 
