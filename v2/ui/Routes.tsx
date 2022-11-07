@@ -57,7 +57,7 @@ const Wrapper: FC<WrapperProps> = ({ children, ...props }) => {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
   return STAKING_V2_ENABLED ? (
     <Flex flexDirection="column" {...props} maxW="1200px" m="auto">
-      <HomeButton />
+      <HomeButton marginTop={4} />
       {children}
     </Flex>
   ) : (
