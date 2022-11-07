@@ -12,6 +12,7 @@ import { SelfLiquidationTransactionModal } from './SelfLiquidationTransactionMod
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import Wei, { wei } from '@synthetixio/wei';
 import { parseTxnError } from '@snx-v2/parseTxnError';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 export const SelfLiquidationUi: FC<{
   selfLiquidationPenalty?: number;
@@ -148,6 +149,22 @@ export const SelfLiquidationUi: FC<{
           display="block"
         >
           {t('staking-v2.self-liquidation.button-text')}
+        </Button>
+      </Box>
+      <Box>
+        <Button
+          variant="link"
+          as={ReactRouterLink}
+          to="/staking/unflag"
+          border="1px"
+          borderColor="cyan.500"
+          paddingLeft={4}
+          paddingRight={4}
+          height={8}
+          fontSize="sm"
+          mt={2}
+        >
+          {t('staking-v2.back-btn')}
         </Button>
       </Box>
     </Box>
