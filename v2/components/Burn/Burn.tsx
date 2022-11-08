@@ -432,7 +432,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
 
   const handleBadgeClick = (badgeType: ActiveBadge) => {
     const snxPrice = exchangeRateData?.SNX?.toNumber();
-    if (!debtData || !susdBalance || !snxPrice) return;
+    if (!debtData || !snxPrice) return;
     switch (badgeType) {
       case 'toTarget':
         const burnAmount = Wei.max(
