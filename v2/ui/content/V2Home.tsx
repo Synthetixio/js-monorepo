@@ -19,6 +19,7 @@ import { Welcome } from '@snx-v2/Welcome';
 import { ContractContext } from '@snx-v2/ContractContext';
 import CurveLogo from '../../ui/assets/svg/app/curve.svg';
 import Connector from 'containers/Connector';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 
 const V2Home = () => {
   const { t } = useTranslation();
@@ -79,9 +80,10 @@ const V2Home = () => {
             </Box>
             <Box mt={4}>
               <BoxLink
-                href="https://synthetix.io/guides"
+                href={EXTERNAL_LINKS.CMS.Home}
                 headline={t('staking-v2.v2-home.box-links.help.headline')}
                 subHeadline={t('staking-v2.v2-home.box-links.help.subHeadline')}
+                isExternal
                 icon={
                   <Center
                     boxSize="36px"
