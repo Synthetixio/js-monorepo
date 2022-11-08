@@ -79,7 +79,7 @@ const V2Home = () => {
             </Box>
             <Box mt={4}>
               <BoxLink
-                href="https://synthetix.io/"
+                href="https://synthetix.io/guides"
                 headline={t('staking-v2.v2-home.box-links.help.headline')}
                 subHeadline={t('staking-v2.v2-home.box-links.help.subHeadline')}
                 icon={
