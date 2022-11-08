@@ -7,7 +7,7 @@ dataSources:
     network: goerli
     source:
       address: '0x8589Cf382d82fdDa237eFd75CEb493C4fe79A5ED'
-      abi: PoolModule
+      abi: Proxy
       startBlock: 7833258
     mapping:
       kind: ethereum/events
@@ -18,11 +18,8 @@ dataSources:
         - MarketManagerModule
         - PoolAndMarket
       abis:
-        - name: PoolModule
-          file: ./abis/PoolModule.json
-        - name: MarketManagerModule
-          file: ./abis/MarketManagerModule.json
-
+        - name: Proxy
+          file: ./abis/proxy.json
       eventHandlers:
         - event: PoolCreated(indexed uint128,indexed address)
           handler: handlePoolCreated
@@ -32,6 +29,8 @@ dataSources:
           handler: handleNewPoolOwner
         - event: PoolConfigurationSet(indexed uint128,indexed uint128[],indexed uint256[],address)
           handler: handlePoolConfigurationSet
-        - event: UsdDeposited(uint128 indexed, address indexed, uint,address indexed)
+        - event: UsdDeposited(indexed uint128,indexed address,uint256,indexed address)
+          handler: handleUSDMinted
+        - event: UsdWithdrawn(indexed uint128,indexed address,uint256,indexed address)
           handler: handleUSDMinted
       file: ./src/core.ts

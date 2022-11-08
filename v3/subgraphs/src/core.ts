@@ -4,14 +4,14 @@ import {
   PoolNameUpdated,
   PoolOwnershipAccepted,
 } from '../generated/core/PoolModule';
-import { MarketRegistered, UsdDeposited } from '../generated/core/MarketManagerModule';
+import {
+  MarketManagerModule,
+  MarketRegistered,
+  UsdDeposited,
+} from '../generated/core/MarketManagerModule';
 import { Pool, Market, PoolAndMarket } from '../generated/schema';
-import { BigInt } from '@graphprotocol/graph-ts';
-
-// Utils
-function concatIds(ids: string[]) {
-  return ids.reduce((prev, cur) => (prev ? prev.concat('-').concat(cur) : cur), '');
-}
+import { BigDecimal, BigInt } from '@graphprotocol/graph-ts';
+import { concatIds } from '../utils/strings';
 
 // Event handlers
 export function handlePoolCreated(event: PoolCreated): void {
@@ -59,15 +59,19 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
       m.updated_at_block = event.block.number;
       m.updated_at = event.block.timestamp;
       // will this overflow?
-      m.weight = BigInt.fromU64(event.params.weights.subarray(index)[0]);
+      m.weight = BigDecimal.fromString(event.params.weights.subarray(index)[0].toString());
       markets.push(m);
     }
   });
   if (pool !== null && !!markets.length) {
     markets.forEach((market) => {
       const poolAndMarket = new PoolAndMarket(concatIds([pool.id, market.id]));
+      const getMarketDebtPerShare = MarketManagerModule.bind(market.address).getMarketDebtPerShare(
+        BigInt.fromString(market.id)
+      );
       poolAndMarket.pool = event.params.poolId.toString();
       poolAndMarket.market = market.id;
+      poolAndMarket.max_debt_share_value = getMarketDebtPerShare.toBigDecimal();
       poolAndMarket.save();
     });
   }
@@ -77,6 +81,8 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
 export function usdMinted(event: UsdDeposited): void {
   const market = Market.load(event.params.marketId.toString());
   if (market !== null) {
+    const contract = MarketManagerModule.bind(event.address);
+    market.reported_debt = contract.getMarketReportedDebt(event.params.marketId).toBigDecimal();
     market.usd_minted = event.params.amount.toBigDecimal();
     market.updated_at = event.block.timestamp;
     market.updated_at_block = event.block.number;
@@ -87,6 +93,8 @@ export function usdMinted(event: UsdDeposited): void {
 export function usdBurned(event: UsdDeposited): void {
   const market = Market.load(event.params.marketId.toString());
   if (market !== null) {
+    const contract = MarketManagerModule.bind(event.address);
+    market.reported_debt = contract.getMarketReportedDebt(event.params.marketId).toBigDecimal();
     market.usd_burned = event.params.amount.toBigDecimal();
     market.updated_at = event.block.timestamp;
     market.updated_at_block = event.block.number;

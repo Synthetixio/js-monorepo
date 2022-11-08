@@ -40,14 +40,16 @@ type PoolAndMarket @entity {
   pool: Pool!
   market: Market!
   max_debt_share_value: BigDecimal
+  updated_at: BigInt
+  updated_at_block: BigInt
 }
 
 # type Account @entity {
-#   id: ID!
 #   "NFT TOKEN ID"
+#   id: ID!
 #   owner: Bytes!
 #   "roles and permissions || account permissions user"
-#   permissions: AccountPermissionUsers
+#   # permissions: AccountPermissionUsers
 # }
 
 # type AccountPermissionUsers @entity {

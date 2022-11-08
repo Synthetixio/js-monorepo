@@ -213,20 +213,20 @@ export class Market extends Entity {
     }
   }
 
-  get weight(): BigInt | null {
+  get weight(): BigDecimal | null {
     let value = this.get("weight");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toBigInt();
+      return value.toBigDecimal();
     }
   }
 
-  set weight(value: BigInt | null) {
+  set weight(value: BigDecimal | null) {
     if (!value) {
       this.unset("weight");
     } else {
-      this.set("weight", Value.fromBigInt(<BigInt>value));
+      this.set("weight", Value.fromBigDecimal(<BigDecimal>value));
     }
   }
 
@@ -362,6 +362,40 @@ export class PoolAndMarket extends Entity {
       this.unset("max_debt_share_value");
     } else {
       this.set("max_debt_share_value", Value.fromBigDecimal(<BigDecimal>value));
+    }
+  }
+
+  get updated_at(): BigInt | null {
+    let value = this.get("updated_at");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set updated_at(value: BigInt | null) {
+    if (!value) {
+      this.unset("updated_at");
+    } else {
+      this.set("updated_at", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get updated_at_block(): BigInt | null {
+    let value = this.get("updated_at_block");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set updated_at_block(value: BigInt | null) {
+    if (!value) {
+      this.unset("updated_at_block");
+    } else {
+      this.set("updated_at_block", Value.fromBigInt(<BigInt>value));
     }
   }
 }
