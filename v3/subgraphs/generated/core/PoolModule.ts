@@ -7,8 +7,8 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt,
-} from '@graphprotocol/graph-ts';
+  BigInt
+} from "@graphprotocol/graph-ts";
 
 export class NominatedPoolOwner extends ethereum.Event {
   get params(): NominatedPoolOwner__Params {
@@ -203,7 +203,11 @@ export class PoolModule__getPoolConfigurationResult {
   value1: Array<BigInt>;
   value2: Array<BigInt>;
 
-  constructor(value0: Array<BigInt>, value1: Array<BigInt>, value2: Array<BigInt>) {
+  constructor(
+    value0: Array<BigInt>,
+    value1: Array<BigInt>,
+    value2: Array<BigInt>
+  ) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
@@ -211,9 +215,9 @@ export class PoolModule__getPoolConfigurationResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set('value0', ethereum.Value.fromUnsignedBigIntArray(this.value0));
-    map.set('value1', ethereum.Value.fromUnsignedBigIntArray(this.value1));
-    map.set('value2', ethereum.Value.fromSignedBigIntArray(this.value2));
+    map.set("value0", ethereum.Value.fromUnsignedBigIntArray(this.value0));
+    map.set("value1", ethereum.Value.fromUnsignedBigIntArray(this.value1));
+    map.set("value2", ethereum.Value.fromSignedBigIntArray(this.value2));
     return map;
   }
 
@@ -232,17 +236,25 @@ export class PoolModule__getPoolConfigurationResult {
 
 export class PoolModule extends ethereum.SmartContract {
   static bind(address: Address): PoolModule {
-    return new PoolModule('PoolModule', address);
+    return new PoolModule("PoolModule", address);
   }
 
   getMinLiquidityRatio(): BigInt {
-    let result = super.call('getMinLiquidityRatio', 'getMinLiquidityRatio():(uint256)', []);
+    let result = super.call(
+      "getMinLiquidityRatio",
+      "getMinLiquidityRatio():(uint256)",
+      []
+    );
 
     return result[0].toBigInt();
   }
 
   try_getMinLiquidityRatio(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall('getMinLiquidityRatio', 'getMinLiquidityRatio():(uint256)', []);
+    let result = super.tryCall(
+      "getMinLiquidityRatio",
+      "getMinLiquidityRatio():(uint256)",
+      []
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -251,17 +263,19 @@ export class PoolModule extends ethereum.SmartContract {
   }
 
   getNominatedPoolOwner(poolId: BigInt): Address {
-    let result = super.call('getNominatedPoolOwner', 'getNominatedPoolOwner(uint128):(address)', [
-      ethereum.Value.fromUnsignedBigInt(poolId),
-    ]);
+    let result = super.call(
+      "getNominatedPoolOwner",
+      "getNominatedPoolOwner(uint128):(address)",
+      [ethereum.Value.fromUnsignedBigInt(poolId)]
+    );
 
     return result[0].toAddress();
   }
 
   try_getNominatedPoolOwner(poolId: BigInt): ethereum.CallResult<Address> {
     let result = super.tryCall(
-      'getNominatedPoolOwner',
-      'getNominatedPoolOwner(uint128):(address)',
+      "getNominatedPoolOwner",
+      "getNominatedPoolOwner(uint128):(address)",
       [ethereum.Value.fromUnsignedBigInt(poolId)]
     );
     if (result.reverted) {
@@ -273,8 +287,8 @@ export class PoolModule extends ethereum.SmartContract {
 
   getPoolConfiguration(poolId: BigInt): PoolModule__getPoolConfigurationResult {
     let result = super.call(
-      'getPoolConfiguration',
-      'getPoolConfiguration(uint128):(uint256[],uint256[],int256[])',
+      "getPoolConfiguration",
+      "getPoolConfiguration(uint128):(uint256[],uint256[],int256[])",
       [ethereum.Value.fromUnsignedBigInt(poolId)]
     );
 
@@ -289,8 +303,8 @@ export class PoolModule extends ethereum.SmartContract {
     poolId: BigInt
   ): ethereum.CallResult<PoolModule__getPoolConfigurationResult> {
     let result = super.tryCall(
-      'getPoolConfiguration',
-      'getPoolConfiguration(uint128):(uint256[],uint256[],int256[])',
+      "getPoolConfiguration",
+      "getPoolConfiguration(uint128):(uint256[],uint256[],int256[])",
       [ethereum.Value.fromUnsignedBigInt(poolId)]
     );
     if (result.reverted) {
@@ -307,16 +321,16 @@ export class PoolModule extends ethereum.SmartContract {
   }
 
   getPoolName(poolId: BigInt): string {
-    let result = super.call('getPoolName', 'getPoolName(uint128):(string)', [
-      ethereum.Value.fromUnsignedBigInt(poolId),
+    let result = super.call("getPoolName", "getPoolName(uint128):(string)", [
+      ethereum.Value.fromUnsignedBigInt(poolId)
     ]);
 
     return result[0].toString();
   }
 
   try_getPoolName(poolId: BigInt): ethereum.CallResult<string> {
-    let result = super.tryCall('getPoolName', 'getPoolName(uint128):(string)', [
-      ethereum.Value.fromUnsignedBigInt(poolId),
+    let result = super.tryCall("getPoolName", "getPoolName(uint128):(string)", [
+      ethereum.Value.fromUnsignedBigInt(poolId)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -326,17 +340,19 @@ export class PoolModule extends ethereum.SmartContract {
   }
 
   getPoolOwner(poolId: BigInt): Address {
-    let result = super.call('getPoolOwner', 'getPoolOwner(uint128):(address)', [
-      ethereum.Value.fromUnsignedBigInt(poolId),
+    let result = super.call("getPoolOwner", "getPoolOwner(uint128):(address)", [
+      ethereum.Value.fromUnsignedBigInt(poolId)
     ]);
 
     return result[0].toAddress();
   }
 
   try_getPoolOwner(poolId: BigInt): ethereum.CallResult<Address> {
-    let result = super.tryCall('getPoolOwner', 'getPoolOwner(uint128):(address)', [
-      ethereum.Value.fromUnsignedBigInt(poolId),
-    ]);
+    let result = super.tryCall(
+      "getPoolOwner",
+      "getPoolOwner(uint128):(address)",
+      [ethereum.Value.fromUnsignedBigInt(poolId)]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }

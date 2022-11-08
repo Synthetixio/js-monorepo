@@ -1,14 +1,93 @@
-type Pool @entity {
-  id: ID!
-  created_at_block: BigInt!
-  owner: Bytes!
+interface Metadata {
   created_at: BigInt!
-  "Only set when name of the pool got updated"
-  sender: Bytes
-  "Only set when name of the pool got updated"
-  name: String
-  "Only set when the pool got updated"
+  created_at_block: BigInt!
   updated_at: BigInt
-  "Only set when the pool got updated"
   updated_at_block: BigInt
 }
+
+type Pool @entity {
+  id: ID!
+  owner: Bytes!
+  created_at: BigInt!
+  created_at_block: BigInt!
+  updated_at: BigInt
+  updated_at_block: BigInt
+  "Only set when name of the pool got updated"
+  name: String
+}
+
+type Market @entity {
+  id: ID!
+  address: Bytes!
+  created_at: BigInt!
+  created_at_block: BigInt!
+  updated_at: BigInt
+  updated_at_block: BigInt
+  weight: BigDecimal
+  "Market manager, event name is different"
+  usd_minted: BigDecimal
+  "Market manager, event name is different"
+  usd_burned: BigDecimal
+  "Make a contract call"
+  reported_debt: BigDecimal
+  "Name of the market"
+  name: String
+}
+
+type PoolAndMarket @entity {
+  "pool id + market id"
+  id: ID!
+  pool: Pool!
+  market: Market!
+  max_debt_share_value: BigDecimal
+}
+
+# type Account @entity {
+#   id: ID!
+#   "NFT TOKEN ID"
+#   owner: Bytes!
+#   "roles and permissions || account permissions user"
+#   permissions: AccountPermissionUsers
+# }
+
+# type AccountPermissionUsers @entity {
+#   id: ID! "NFT Token ID (-)+ user address"
+#   address: Bytes! "user address"
+#   permissions: Bytes32[]! "addresses"
+# }
+
+# type Position @entity{
+#   id: ID! "NFT Token ID + pool id + collateral type address | concat it"
+#   total_minted: BigInt!
+#   total_burned: BigInt!
+#   "value of delegation updated event. No computation!"
+#   collateral_amount: BigInt!
+#   "position is updated, call the c ratio function?"
+#   c_ratio: BigInt!
+#   updated_at: BigInt!
+# }
+
+# type Vault @entity {
+#   id: "pool id + collateral type address"
+#   "When processing the delegation updated event, if already collateral amount, then compute that, minus or plus,
+#    if not just put it in"
+#   collateral_amount: BigInt!
+# }
+
+# type CollateralType @entity {
+#   id: ID! "address of an ERC20 contract"
+#   "/// must be true for staking or collateral delegation
+#         bool stakingEnabled;
+#         /// accounts cannot mint sUSD if their debt brings their cratio below this value
+#         uint targetCRatio;
+#         /// accounts below the ratio specified here are immediately liquidated
+#         uint minimumCRatio;
+#         /// amount of token to award when an account is liquidated with this collateral type
+#         uint liquidationReward;
+#         /// address which reports the current price of the collateral
+#         address priceFeed;
+#         /// address which should be used for transferring this collateral
+#         address tokenAddress;
+#     }"
+#     total_amount_deposited: BigInt! "collateral deposited for adding up and collateral removed for subtraction / CollateralModule Contract"
+# }
