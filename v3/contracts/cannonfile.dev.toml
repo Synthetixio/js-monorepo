@@ -3,7 +3,7 @@ version = "1.0.0"
 description = "Synthetix system supplemental contracts"
 
 [setting.owner]
-defaultValue = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
+defaultValue = "0xEB045D78d273107348b0300c01D29B7552D622ab"
 
 [setting.erc20_version]
 defaultValue = "latest"
@@ -41,7 +41,7 @@ options.decimals = "<%= settings.rate_decimals %>"
 options.rate = "<%= settings.weth_rate %>"
 
 [import.synthetix]
-source = "synthetix:<%= settings.synthetix_version %>"
+source = "synthetix:1.0.0"
 options.owner = "<%= settings.owner %>"
 
 [contract.Multicall]
@@ -52,7 +52,7 @@ artifact = "WETH9"
 
 [invoke.register_snx_collateral]
 target = ["synthetix.CoreProxy"]
-fromCall.func = "owner"
+from = "<%= settings.owner %>"
 func = "configureCollateral"
 args = [
     "<%= imports.snx.contracts.token.address %>",
@@ -66,7 +66,7 @@ depends = ["import.synthetix", "import.snx", "import.aggregator_snx"]
 
 [invoke.register_weth_collateral]
 target = ["synthetix.CoreProxy"]
-fromCall.func = "owner"
+from = "<%= settings.owner %>"
 func = "configureCollateral"
 args = [
     "<%= contracts.WETH.address %>",
@@ -81,6 +81,7 @@ depends = ["import.synthetix", "contract.WETH", "import.aggregator_weth"]
 [invoke.mint_snx]
 target = ["snx.token"]
 func = "mint"
+from = "<%= settings.owner %>"
 args = [
     # change to your address for some SNX
     "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
@@ -89,8 +90,11 @@ args = [
 depends=["import.snx", "import.synthetix"]
 
 [invoke.create_preferred_pool]
-target = ["synthetix.CoreProxy"]
+target = ["<%= imports.synthetix.contracts.CoreProxy.address %>"]
+abi = "synthetix.CoreProxy"
+# target = ["synthetix.CoreProxy"]
 func = "createPool"
+from = "<%= settings.owner %>"
 args = [
     1,
     "<%= settings.owner %>",
@@ -109,7 +113,7 @@ depends=["invoke.create_preferred_pool"]
 # [contract.snx_rewards]
 # artifact = "RewardDistributor"
 # depends=["import.snx"]
-# 
+#
 # [invoke.register_snx_rewards]
 # target = ["synthetix.CoreProxy"]
 # func = "distributeRewards"
