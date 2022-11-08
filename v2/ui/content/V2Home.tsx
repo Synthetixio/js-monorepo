@@ -53,11 +53,11 @@ const V2Home = () => {
             <MainActionCardsList connectWallet={connectWallet} />
           )}
           <Flex
-            ml={[0, 6]}
-            mt={[4, 4, 4, 0]}
+            ml={[0, 0, 0, 6]}
+            mt={[8, 8, 8, 0]}
             alignSelf={['center', 'center', 'center', 'flex-start']}
-            maxWidth="287px"
             width="full"
+            maxWidth={['none', 'none', 'none', '287px']}
             flexDirection="column"
           >
             {walletAddress && <BalanceBox />}
