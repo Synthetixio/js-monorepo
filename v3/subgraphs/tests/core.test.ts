@@ -3,7 +3,15 @@ import {
   PoolNameUpdated,
   PoolOwnershipAccepted,
 } from '../generated/PoolModule/PoolModule';
-import { newMockEvent, test, assert, logStore, clearStore } from 'matchstick-as/assembly/index';
+import {
+  newMockEvent,
+  test,
+  assert,
+  logStore,
+  clearStore,
+  describe,
+  beforeEach,
+} from 'matchstick-as/assembly/index';
 import { Address, ethereum, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
 import { address, address2 } from './constants';
 import {
@@ -13,11 +21,6 @@ import {
   handlePoolNameUpdated,
 } from '../src/core';
 import { MarketRegistered } from '../generated/MarketManagerModule/MarketManagerModule';
-
-interface Block {
-  timestamp: number;
-  blockNumber: number;
-}
 
 function createBlock(timestamp: i32, blockNumber: i32): Map<string, i32> {
   const newBlock = new Map<string, i32>();
@@ -69,59 +72,59 @@ function createNewPoolOwnerEvent(id: i32, owner: string): PoolOwnershipAccepted 
   return newPoolOwnershipAcceptedEvent;
 }
 
-function createMarketCreatedEvent(id: i32, marketAddress: string): MarketRegistered {
+function createMarketCreatedEvent(id: i32, market: string): MarketRegistered {
   const newMarketRegisteredEvent = changetype<MarketRegistered>(newMockEvent());
-  const block = createBlock(123, 321);
+  const block = createBlock(222, 333);
   newMarketRegisteredEvent.parameters = new Array();
   newMarketRegisteredEvent.parameters.push(
     new ethereum.EventParam('marketId', ethereum.Value.fromI32(id))
   );
   newMarketRegisteredEvent.parameters.push(
-    new ethereum.EventParam('market', ethereum.Value.fromAddress(Address.fromString(marketAddress)))
+    new ethereum.EventParam('marketId', ethereum.Value.fromAddress(Address.fromString(market)))
   );
   newMarketRegisteredEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
   newMarketRegisteredEvent.block.number = BigInt.fromI64(block['blockNumber']);
   return newMarketRegisteredEvent;
 }
+describe('core tests', () => {
+  beforeEach(() => {});
+  test('handlePoolCreatedEvent', () => {
+    let newPoolEvent = createPoolCreatedEvent(1, address);
+    handlePoolCreated(newPoolEvent);
+    assert.fieldEquals('Pool', '1', 'id', '1');
+    assert.fieldEquals('Pool', '1', 'owner', address);
+    assert.fieldEquals('Pool', '1', 'created_at', '123');
+    assert.fieldEquals('Pool', '1', 'created_at_block', '321');
+  });
 
-test('handlePoolCreatedEvent', () => {
-  let newPoolEvent = createPoolCreatedEvent(1, address);
-  handlePoolCreated(newPoolEvent);
-  assert.fieldEquals('Pool', '1', 'id', '1');
-  assert.fieldEquals('Pool', '1', 'owner', address);
-  assert.fieldEquals('Pool', '1', 'created_at', '123');
-  assert.fieldEquals('Pool', '1', 'created_at_block', '321');
-});
+  test('handlePoolNameUpdated', () => {
+    let newPoolEvent = createPoolCreatedEvent(1, address);
+    handlePoolCreated(newPoolEvent);
+    const newPoolNameEvent = createPoolNameUpdatedEvent(1, 'SC Pool');
+    handlePoolNameUpdated(newPoolNameEvent);
+    assert.fieldEquals('Pool', '1', 'id', '1');
+    assert.fieldEquals('Pool', '1', 'name', 'SC Pool');
+    assert.fieldEquals('Pool', '1', 'created_at', '123');
+    assert.fieldEquals('Pool', '1', 'created_at_block', '321');
+  });
 
-test('handlePoolNameUpdated', () => {
-  let newPoolEvent = createPoolCreatedEvent(1, address);
-  handlePoolCreated(newPoolEvent);
-  const newPoolNameEvent = createPoolNameUpdatedEvent(1, 'SC Pool');
-  handlePoolNameUpdated(newPoolNameEvent);
-  assert.fieldEquals('Pool', '1', 'id', '1');
-  assert.fieldEquals('Pool', '1', 'name', 'SC Pool');
-  assert.fieldEquals('Pool', '1', 'created_at', '123');
-  assert.fieldEquals('Pool', '1', 'created_at_block', '321');
-});
+  test('handleNewPoolOwner', () => {
+    let newPool = createPoolCreatedEvent(1, address);
+    const newOwnerEvent = createNewPoolOwnerEvent(1, address2);
+    handlePoolCreated(newPool);
+    handleNewPoolOwner(newOwnerEvent);
+    assert.fieldEquals('Pool', '1', 'id', '1');
+    assert.fieldEquals('Pool', '1', 'owner', address2);
+    assert.fieldEquals('Pool', '1', 'created_at', '123');
+    assert.fieldEquals('Pool', '1', 'created_at_block', '321');
+  });
 
-test('handleNewPoolOwner', () => {
-  let newPool = createPoolCreatedEvent(1, address);
-  const newOwnerEvent = createNewPoolOwnerEvent(1, address2);
-  handlePoolCreated(newPool);
-  handleNewPoolOwner(newOwnerEvent);
-  assert.fieldEquals('Pool', '1', 'id', '1');
-  assert.fieldEquals('Pool', '1', 'owner', address2);
-  assert.fieldEquals('Pool', '1', 'created_at', '123');
-  assert.fieldEquals('Pool', '1', 'created_at_block', '321');
-});
-
-test('handleMarketCreated', () => {
-  clearStore();
-  const newMarketRegisteredEvent = createMarketCreatedEvent(1, address);
-  logStore();
-  handleMarketCreated(newMarketRegisteredEvent);
-  assert.fieldEquals('Market', '1', 'id', '1');
-  assert.fieldEquals('Market', '1', 'address', address);
-  assert.fieldEquals('Market', '1', 'created_at', '123');
-  assert.fieldEquals('Market', '1', 'created_at_block', '321');
+  test('handleMarketCreated', () => {
+    const newMarketRegisteredEvent = createMarketCreatedEvent(23, address);
+    handleMarketCreated(newMarketRegisteredEvent);
+    assert.fieldEquals('Market', '1', 'id', '1');
+    assert.fieldEquals('Market', '1', 'address', address);
+    assert.fieldEquals('Market', '1', 'created_at', '123');
+    assert.fieldEquals('Market', '1', 'created_at_block', '321');
+  });
 });

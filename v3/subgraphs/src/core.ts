@@ -27,7 +27,7 @@ import {
   Account,
   AccountPermissionUsers,
 } from '../generated/schema';
-import { Address, BigDecimal, BigInt } from '@graphprotocol/graph-ts';
+import { Address, BigDecimal, BigInt, log } from '@graphprotocol/graph-ts';
 import { concatIds } from '../utils/strings';
 
 // Event handlers
@@ -70,7 +70,7 @@ export function handleMarketCreated(event: MarketRegistered): void {
 export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
   const pool = Pool.load(event.params.poolId.toString());
   const markets: Market[] = [];
-  for(let i = 0; i < event.params.markets.length; ++i) {
+  for (let i = 0; i < event.params.markets.length; ++i) {
     const m = Market.load(event.params.markets[i].toString());
     if (m) {
       m.updated_at = event.block.timestamp;
@@ -81,16 +81,16 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
     }
   }
   if (pool !== null && !!markets.length) {
-    for(let i = 0; i < markets.length; ++i) {
+    for (let i = 0; i < markets.length; ++i) {
       const poolAndMarket = new PoolAndMarket(concatIds([pool.id, markets[i].id]));
-      const getMarketDebtPerShare = MarketManagerModule.bind(Address.fromBytes(markets[i].address)).getMarketDebtPerShare(
-        BigInt.fromString(markets[i].id)
-        );
-        poolAndMarket.pool = event.params.poolId.toString();
-        poolAndMarket.market = markets[i].id;
-        poolAndMarket.max_debt_share_value = getMarketDebtPerShare.toBigDecimal();
-        poolAndMarket.save();
-      }
+      const getMarketDebtPerShare = MarketManagerModule.bind(
+        Address.fromBytes(markets[i].address)
+      ).getMarketDebtPerShare(BigInt.fromString(markets[i].id));
+      poolAndMarket.pool = event.params.poolId.toString();
+      poolAndMarket.market = markets[i].id;
+      poolAndMarket.max_debt_share_value = getMarketDebtPerShare.toBigDecimal();
+      poolAndMarket.save();
+    }
   }
 }
 
@@ -142,7 +142,10 @@ export function handleCollateralDeposit(event: CollateralDeposited): void {
   if (collateralType) {
     collateralType.updated_at = event.block.timestamp;
     collateralType.updated_at_block = event.block.number;
-    if (typeof collateralType.total_amount_deposited  === 'object' && !collateralType.total_amount_deposited!.isZero()) {
+    if (
+      typeof collateralType.total_amount_deposited === 'object' &&
+      !collateralType.total_amount_deposited!.isZero()
+    ) {
       collateralType.total_amount_deposited = collateralType.total_amount_deposited!.plus(
         event.params.amount
       );
@@ -158,7 +161,10 @@ export function handleCollateralWithdrawn(event: CollateralWithdrawn): void {
   if (collateralType) {
     collateralType.updated_at = event.block.timestamp;
     collateralType.updated_at_block = event.block.number;
-    if (typeof collateralType.total_amount_deposited === 'object' && !collateralType.total_amount_deposited!.isZero()) {
+    if (
+      typeof collateralType.total_amount_deposited === 'object' &&
+      !collateralType.total_amount_deposited!.isZero()
+    ) {
       collateralType.total_amount_deposited = collateralType.total_amount_deposited!.minus(
         event.params.amount
       );
