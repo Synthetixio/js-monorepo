@@ -6,7 +6,6 @@ const cyanColor = 'rgb(46, 217, 255)';
 const orangeColor = 'rgb(252, 135, 56)';
 const redColor = 'rgb(255, 74, 96)';
 const noColor = 'rgba(0, 0, 0, 0)';
-const disabledColor = 'rgb(48, 48, 55)';
 
 describe('MainActionCards', () => {
   it('renders claimed rewards with a healthy c-ratio', () => {
@@ -39,7 +38,7 @@ describe('MainActionCards', () => {
 
     cy.get('[data-testid="collect button"]')
       .should('be.visible')
-      .should('include.text', 'Rewards explained')
+      .should('include.text', 'Claim page')
       .should('have.css', 'background-color', noColor);
     cy.get('[data-testid="value of rewards"]').should('not.exist');
   });
@@ -73,7 +72,7 @@ describe('MainActionCards', () => {
 
     cy.get('[data-testid="collect button"]')
       .should('be.visible')
-      .should('include.text', 'Rewards explained')
+      .should('include.text', 'Claim page')
       .should('have.css', 'background-color', noColor);
     cy.get('[data-testid="value of rewards"]').should('not.exist');
     cy.get('[data-testid="burn badge"]').should('not.exist');
@@ -107,9 +106,8 @@ describe('MainActionCards', () => {
       .should('have.css', 'background-color', noColor);
     cy.get('[data-testid="collect button"]')
       .should('be.visible')
-      .should('include.text', 'Claim your rewards')
-      .should('be.disabled')
-      .should('have.css', 'background-color', disabledColor);
+      .should('include.text', 'Claim page')
+      .should('have.css', 'background-color', noColor);
 
     cy.get('[data-testid="burn badge"]')
       .should('be.visible')
@@ -212,8 +210,8 @@ describe('MainActionCards', () => {
 
     cy.get('[data-testid="collect button"]')
       .should('be.visible')
-      .should('include.text', 'Claim your rewards')
-      .should('have.css', 'background-color', disabledColor);
+      .should('include.text', 'Claim page')
+      .should('have.css', 'background-color', noColor);
 
     cy.get('[data-testid="burn badge"]')
       .should('be.visible')
