@@ -44,19 +44,35 @@ type PoolAndMarket @entity {
   updated_at_block: BigInt
 }
 
-# type Account @entity {
-#   "NFT TOKEN ID"
-#   id: ID!
-#   owner: Bytes!
-#   "roles and permissions || account permissions user"
-#   # permissions: AccountPermissionUsers
-# }
+type CollateralType @entity {
+  "address of an ERC20 contract"
+  id: ID!
+  depositing_enabled: Boolean!
+  target_c_ratio: BigInt!
+  minimum_c_ratio: BigInt!
+  liquidation_reward: BigDecimal!
+  "collateral deposited for adding up and collateral removed for subtraction / CollateralModule Contract"
+  created_at: BigInt!
+  created_at_block: BigInt!
+  total_amount_deposited: BigInt
+  updated_at: BigInt
+  updated_at_block: BigInt
+}
 
-# type AccountPermissionUsers @entity {
-#   id: ID! "NFT Token ID (-)+ user address"
-#   address: Bytes! "user address"
-#   permissions: Bytes32[]! "addresses"
-# }
+type Account @entity {
+  "NFT TOKEN ID"
+  id: ID!
+  owner: Bytes!
+  "roles and permissions"
+  permissions: AccountPermissionUsers
+}
+
+type AccountPermissionUsers @entity {
+  "NFT Token ID - user address"
+  id: ID!
+  address: Bytes!
+  permissions: Bytes!
+}
 
 # type Position @entity{
 #   id: ID! "NFT Token ID + pool id + collateral type address | concat it"
@@ -74,22 +90,4 @@ type PoolAndMarket @entity {
 #   "When processing the delegation updated event, if already collateral amount, then compute that, minus or plus,
 #    if not just put it in"
 #   collateral_amount: BigInt!
-# }
-
-# type CollateralType @entity {
-#   id: ID! "address of an ERC20 contract"
-#   "/// must be true for staking or collateral delegation
-#         bool stakingEnabled;
-#         /// accounts cannot mint sUSD if their debt brings their cratio below this value
-#         uint targetCRatio;
-#         /// accounts below the ratio specified here are immediately liquidated
-#         uint minimumCRatio;
-#         /// amount of token to award when an account is liquidated with this collateral type
-#         uint liquidationReward;
-#         /// address which reports the current price of the collateral
-#         address priceFeed;
-#         /// address which should be used for transferring this collateral
-#         address tokenAddress;
-#     }"
-#     total_amount_deposited: BigInt! "collateral deposited for adding up and collateral removed for subtraction / CollateralModule Contract"
 # }

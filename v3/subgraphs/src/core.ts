@@ -1,16 +1,33 @@
 import {
-  PoolConfigurationSet,
   PoolCreated,
   PoolNameUpdated,
   PoolOwnershipAccepted,
-} from '../generated/core/PoolModule';
+  PoolConfigurationSet,
+} from '../generated/PoolModule/PoolModule';
 import {
-  MarketManagerModule,
   MarketRegistered,
-  UsdDeposited,
-} from '../generated/core/MarketManagerModule';
-import { Pool, Market, PoolAndMarket } from '../generated/schema';
-import { BigDecimal, BigInt } from '@graphprotocol/graph-ts';
+  MarketManagerModule,
+} from '../generated/MarketManagerModule/MarketManagerModule';
+import { UsdDeposited, UsdWithdrawn } from '../generated/MarketManagerModule/MarketManagerModule';
+import {
+  CollateralConfigured,
+  CollateralDeposited,
+  CollateralWithdrawn,
+} from '../generated/CollateralModule/CollateralModule';
+import {
+  AccountCreated,
+  PermissionGranted,
+  PermissionRevoked,
+} from '../generated/AccountModule/AccountModule';
+import {
+  Pool,
+  Market,
+  PoolAndMarket,
+  CollateralType,
+  Account,
+  AccountPermissionUsers,
+} from '../generated/schema';
+import { Address, BigDecimal, BigInt } from '@graphprotocol/graph-ts';
 import { concatIds } from '../utils/strings';
 
 // Event handlers
@@ -53,27 +70,27 @@ export function handleMarketCreated(event: MarketRegistered): void {
 export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
   const pool = Pool.load(event.params.poolId.toString());
   const markets: Market[] = [];
-  event.params.markets.forEach((market, index) => {
-    const m = Market.load(market.toString());
+  for(let i = 0; i < event.params.markets.length; ++i) {
+    const m = Market.load(event.params.markets[i].toString());
     if (m) {
-      m.updated_at_block = event.block.number;
       m.updated_at = event.block.timestamp;
+      m.updated_at_block = event.block.number;
       // will this overflow?
-      m.weight = BigDecimal.fromString(event.params.weights.subarray(index)[0].toString());
+      m.weight = BigDecimal.fromString(event.params.weights.subarray(i)[0].toString());
       markets.push(m);
     }
-  });
+  }
   if (pool !== null && !!markets.length) {
-    markets.forEach((market) => {
-      const poolAndMarket = new PoolAndMarket(concatIds([pool.id, market.id]));
-      const getMarketDebtPerShare = MarketManagerModule.bind(market.address).getMarketDebtPerShare(
-        BigInt.fromString(market.id)
-      );
-      poolAndMarket.pool = event.params.poolId.toString();
-      poolAndMarket.market = market.id;
-      poolAndMarket.max_debt_share_value = getMarketDebtPerShare.toBigDecimal();
-      poolAndMarket.save();
-    });
+    for(let i = 0; i < markets.length; ++i) {
+      const poolAndMarket = new PoolAndMarket(concatIds([pool.id, markets[i].id]));
+      const getMarketDebtPerShare = MarketManagerModule.bind(Address.fromBytes(markets[i].address)).getMarketDebtPerShare(
+        BigInt.fromString(markets[i].id)
+        );
+        poolAndMarket.pool = event.params.poolId.toString();
+        poolAndMarket.market = markets[i].id;
+        poolAndMarket.max_debt_share_value = getMarketDebtPerShare.toBigDecimal();
+        poolAndMarket.save();
+      }
   }
 }
 
@@ -90,7 +107,7 @@ export function usdMinted(event: UsdDeposited): void {
 }
 
 // TODO @MF event name will change. Also update the subgraph.yaml file
-export function usdBurned(event: UsdDeposited): void {
+export function usdBurned(event: UsdWithdrawn): void {
   const market = Market.load(event.params.marketId.toString());
   if (market !== null) {
     const contract = MarketManagerModule.bind(event.address);
@@ -100,3 +117,86 @@ export function usdBurned(event: UsdDeposited): void {
     market.updated_at_block = event.block.number;
   }
 }
+
+export function handleCollateralConfigured(event: CollateralConfigured): void {
+  let collateralType = CollateralType.load(event.params.collateralType.toString());
+  if (collateralType === null) {
+    collateralType = new CollateralType(event.params.collateralType.toString());
+    collateralType.created_at = event.block.timestamp;
+    collateralType.created_at_block = event.block.number;
+  }
+  collateralType.updated_at = event.block.timestamp;
+  collateralType.updated_at_block = event.block.number;
+  collateralType.liquidation_reward = event.params.liquidationReward.toBigDecimal();
+  collateralType.minimum_c_ratio = event.params.minimumCollateralizationRatio;
+  // TODO @MF could be renamed the staking part
+  collateralType.depositing_enabled = event.params.stakingEnabled;
+  collateralType.target_c_ratio = event.params.targetCollateralizationRatio;
+  collateralType.updated_at = event.block.timestamp;
+  collateralType.updated_at_block = event.block.number;
+  collateralType.save();
+}
+
+export function handleCollateralDeposit(event: CollateralDeposited): void {
+  let collateralType = CollateralType.load(event.address.toString());
+  if (collateralType) {
+    collateralType.updated_at = event.block.timestamp;
+    collateralType.updated_at_block = event.block.number;
+    if (typeof collateralType.total_amount_deposited  === 'object' && !collateralType.total_amount_deposited!.isZero()) {
+      collateralType.total_amount_deposited = collateralType.total_amount_deposited!.plus(
+        event.params.amount
+      );
+    } else {
+      collateralType.total_amount_deposited = event.params.amount;
+    }
+    collateralType.save();
+  }
+}
+
+export function handleCollateralWithdrawn(event: CollateralWithdrawn): void {
+  let collateralType = CollateralType.load(event.address.toString());
+  if (collateralType) {
+    collateralType.updated_at = event.block.timestamp;
+    collateralType.updated_at_block = event.block.number;
+    if (typeof collateralType.total_amount_deposited === 'object' && !collateralType.total_amount_deposited!.isZero()) {
+      collateralType.total_amount_deposited = collateralType.total_amount_deposited!.minus(
+        event.params.amount
+      );
+    }
+    collateralType.save();
+  }
+}
+
+export function handleAccountCreated(event: AccountCreated): void {
+  const account = new Account(event.params.accountId.toString());
+  account.owner = event.params.sender;
+  account.save();
+}
+
+export function handlePermissionGranted(event: PermissionGranted): void {
+  const account = Account.load(event.params.accountId.toString());
+  if (account !== null) {
+    let permissions = AccountPermissionUsers.load(
+      concatIds([event.params.accountId.toString(), event.params.user.toString()])
+    );
+    if (permissions !== null) {
+      permissions.address = event.params.user;
+      permissions.permissions = event.params.permission.concat(permissions.permissions);
+      permissions.save();
+    } else {
+      permissions = new AccountPermissionUsers(
+        concatIds([event.params.accountId.toString(), event.params.user.toString()])
+      );
+      permissions.address = event.params.permission;
+      permissions.permissions = event.params.permission;
+      permissions.save();
+    }
+    account.permissions = concatIds([
+      event.params.accountId.toString(),
+      event.params.user.toString(),
+    ]);
+    account.save();
+  }
+}
+
+export function handlePermissionRevoked(event: PermissionRevoked): void {}
