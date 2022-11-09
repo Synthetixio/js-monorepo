@@ -181,6 +181,7 @@ const MaintainActionCard: React.FC<{
   currentCRatioPercentage?: number;
   targetThreshold?: number;
   isFlagged?: boolean;
+  hasClaimed?: boolean;
 }> = ({
   isLoading,
   liquidationCratioPercentage,
@@ -188,6 +189,7 @@ const MaintainActionCard: React.FC<{
   currentCRatioPercentage,
   targetThreshold,
   isFlagged,
+  hasClaimed,
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -212,7 +214,7 @@ const MaintainActionCard: React.FC<{
   };
   const theme = useTheme();
   const fadedBg = `${theme.colors[variant]}40`;
-
+  const rewardsClaimedAndWarning = hasClaimed && variant === 'warning';
   return (
     <Card
       step={2}
@@ -222,7 +224,7 @@ const MaintainActionCard: React.FC<{
       bodyText={t('staking-v2.main-action-cards.maintain-body')}
       icon={<MaintainIcon height="32px" color={isLoading ? 'gray.500' : '#FF9A54'} />}
       Content={
-        isStaking ? (
+        !isStaking || rewardsClaimedAndWarning ? null : (
           <Badge
             data-testid="burn badge"
             color={variant}
@@ -244,7 +246,7 @@ const MaintainActionCard: React.FC<{
                 : 'Your ratio is looking healthy!'}
             </Text>
           </Badge>
-        ) : null
+        )
       }
       isLoading={isLoading}
       disabled={false}
@@ -300,13 +302,12 @@ const CollectActionCard: React.FC<{
 
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
   const canClaim = !hasClaimed;
-  const disabled = Boolean(canClaim && variant !== 'success');
   const theme = useTheme();
   const getButtonVariant = () => {
     if (hasClaimed) return 'link';
     if (!isStaking) return 'link';
     if (variant === 'success') return 'success';
-    return 'solid';
+    return 'link';
   };
   return (
     <Card
@@ -315,7 +316,7 @@ const CollectActionCard: React.FC<{
       stepTo={theme.colors['cyan']['500']}
       headingText={t('staking-v2.main-action-cards.collect-headline')}
       bodyText={t('staking-v2.main-action-cards.collect-body')}
-      icon={<CollectIcon color={isLoading || disabled ? 'gray.400' : 'cyan.400'} />}
+      icon={<CollectIcon color={isLoading ? 'gray.400' : 'cyan.400'} />}
       Content={
         isStaking ? (
           <Flex justifyContent="space-between">
@@ -371,10 +372,12 @@ const CollectActionCard: React.FC<{
         ) : null
       }
       isLoading={isLoading}
-      disabled={Boolean(canClaim && variant !== 'success')}
+      disabled={false}
       buttonText={
-        isStaking && canClaim
-          ? t('staking-v2.main-action-cards.collect-main-button')
+        isStaking
+          ? variant === 'success' && !hasClaimed
+            ? t('staking-v2.main-action-cards.collect-main-healthy-button')
+            : t('staking-v2.main-action-cards.collect-main-unhealthy-button')
           : t('staking-v2.main-action-cards.collect-explanation-link')
       }
       buttonVariant={getButtonVariant()}
@@ -432,6 +435,7 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
         currentCRatioPercentage={currentCRatioPercentage}
         isFlagged={isFlagged}
         targetThreshold={targetThreshold}
+        hasClaimed={hasClaimed}
       />
       <CollectActionCard
         rewardsDollarValue={rewardsDollarValue}
