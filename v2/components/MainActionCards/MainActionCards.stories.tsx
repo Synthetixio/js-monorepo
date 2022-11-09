@@ -58,9 +58,5 @@ Flagged.args = {
 };
 export const Loading = Template.bind({});
 Loading.args = {
-  ...defaultProps,
-  currentCRatioPercentage: 400,
-  hasClaimed: true,
   isLoading: true,
-  rewardsDollarValue: 100,
 };
