@@ -181,6 +181,7 @@ const MaintainActionCard: React.FC<{
   currentCRatioPercentage?: number;
   targetThreshold?: number;
   isFlagged?: boolean;
+  hasClaimed: boolean;
 }> = ({
   isLoading,
   liquidationCratioPercentage,
@@ -188,6 +189,7 @@ const MaintainActionCard: React.FC<{
   currentCRatioPercentage,
   targetThreshold,
   isFlagged,
+  hasClaimed,
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -212,7 +214,7 @@ const MaintainActionCard: React.FC<{
   };
   const theme = useTheme();
   const fadedBg = `${theme.colors[variant]}40`;
-
+  const rewardsClaimedAndWarning = hasClaimed && variant === 'warning';
   return (
     <Card
       step={2}
@@ -222,7 +224,7 @@ const MaintainActionCard: React.FC<{
       bodyText={t('staking-v2.main-action-cards.maintain-body')}
       icon={<MaintainIcon height="32px" color={isLoading ? 'gray.500' : '#FF9A54'} />}
       Content={
-        isStaking ? (
+        !isStaking || rewardsClaimedAndWarning ? null : (
           <Badge
             data-testid="burn badge"
             color={variant}
@@ -244,7 +246,7 @@ const MaintainActionCard: React.FC<{
                 : 'Your ratio is looking healthy!'}
             </Text>
           </Badge>
-        ) : null
+        )
       }
       isLoading={isLoading}
       disabled={false}
@@ -432,6 +434,7 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
         currentCRatioPercentage={currentCRatioPercentage}
         isFlagged={isFlagged}
         targetThreshold={targetThreshold}
+        hasClaimed={hasClaimed}
       />
       <CollectActionCard
         rewardsDollarValue={rewardsDollarValue}
