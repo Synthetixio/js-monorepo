@@ -1,12 +1,12 @@
-import { RewardsStat } from '.';
+import { StatBox } from './';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 export default {
-  title: 'RewardsStat',
-  component: RewardsStat,
-} as ComponentMeta<typeof RewardsStat>;
+  title: 'StatBox',
+  component: StatBox,
+} as ComponentMeta<typeof StatBox>;
 
-const Template: ComponentStory<typeof RewardsStat> = (_args) => <RewardsStat {..._args} />;
+const Template: ComponentStory<typeof StatBox> = (_args) => <StatBox {..._args} />;
 
 export const Primary = Template.bind({});
 export const Secondary = Template.bind({});

@@ -1,5 +1,5 @@
 {
-  "name": "@snx-v2/RewardsStat",
+  "name": "@snx-v2/StatBox",
   "private": true,
   "main": "index.ts",
   "version": "0.0.1",

@@ -6,7 +6,7 @@ interface RewardsStatProps {
   align?: 'start' | 'center' | 'end';
 }
 
-export const RewardsStat = ({ label, amount, align = 'center' }: RewardsStatProps) => {
+export const StatBox = ({ label, amount, align = 'center' }: RewardsStatProps) => {
   return (
     <Flex
       alignItems={align}
