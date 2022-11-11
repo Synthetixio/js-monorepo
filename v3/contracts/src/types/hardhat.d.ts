@@ -17,6 +17,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Multicall3__factory>;
     getContractFactory(
+      name: "IRewardsManagerModule",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IRewardsManagerModule__factory>;
+    getContractFactory(
       name: "RewardDistributor",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.RewardDistributor__factory>;
@@ -38,6 +42,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Multicall3>;
+    getContractAt(
+      name: "IRewardsManagerModule",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IRewardsManagerModule>;
     getContractAt(
       name: "RewardDistributor",
       address: string,

@@ -9,7 +9,7 @@ const hardhatMulticallConfig = {
 export const chains = {
   goerli: chain.goerli,
   optimismGoerli: chain.optimismGoerli,
-  hardhat: { ...chain.hardhat, multicall: hardhatMulticallConfig },
+  hardhat: { ...chain.hardhat, multicall: hardhatMulticallConfig, id: 13370 },
 };
 
 export const supportedChains = Object.keys(chains).map((chain) => chains[chain as ChainName]);
@@ -72,6 +72,7 @@ export const contracts = {
   ACCOUNT_PROXY: 'synthetix.AccountProxy',
   MULTICALL: 'Multicall',
   SNX_TOKEN: 'snx.token',
+  SNX_REWARD: 'snx_rewards',
   WETH: 'WETH',
   CCIP: 'CCIP',
 };
