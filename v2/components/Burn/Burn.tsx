@@ -61,6 +61,7 @@ interface BurnProps {
   debtBalance?: number;
   sUsdAmountToTarget: number;
   isAboveTarget?: boolean;
+  burnAmountForCalculations: number;
 }
 
 type ActiveBadge = 'max' | 'toTarget';
@@ -104,6 +105,7 @@ export const BurnUi = ({
   isGasEnabledAndNotFetched,
   sUsdAmountToTarget,
   isAboveTarget,
+  burnAmountForCalculations,
 }: BurnProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState<ActiveBadge | null>(null);
@@ -119,7 +121,8 @@ export const BurnUi = ({
     setActiveBadge(badgeType);
     onBadgeClick(badgeType);
   };
-  const notEnoughBalance = parseFloatWithCommas(burnAmountSusd) > susdBalance;
+  const notEnoughBalance = burnAmountForCalculations > susdBalance;
+
   return (
     <>
       <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="base" p={5}>
@@ -354,7 +357,7 @@ export const BurnUi = ({
             </Flex>
           </Flex>
         </Box>
-        <MintOrBurnChanges debtChange={parseFloatWithCommas(burnAmountSusd)} action="burn" />
+        <MintOrBurnChanges debtChange={burnAmountForCalculations} action="burn" />
         {gasError || notEnoughBalance ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
@@ -393,7 +396,15 @@ export const BurnUi = ({
     </>
   );
 };
-
+const getBurnAmountForCalculations = (
+  burnAmountSusd: string,
+  activeBadge?: ActiveBadge,
+  susdBalance = 0,
+  debtBalance = 0
+) => {
+  if (activeBadge !== 'max') return parseFloatWithCommas(burnAmountSusd);
+  return susdBalance > debtBalance ? debtBalance : susdBalance;
+};
 export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
   const [burnAmountSusd, setBurnAmountSusd] = useState('');
   const [snxUnstakingAmount, setSnxUnstakingAmount] = useState('');
@@ -474,10 +485,15 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       },
     });
   };
-
+  const burnAmountForCalculations = getBurnAmountForCalculations(
+    burnAmountSusd,
+    activeBadge,
+    susdBalance?.toNumber(),
+    debtData?.debtBalance.toNumber()
+  );
   return (
     <>
-      <BurnHeader burnAmountSusd={parseFloatWithCommas(burnAmountSusd)} />
+      <BurnHeader burnAmountSusd={burnAmountForCalculations} />
       <Flex
         justifyContent="space-between"
         alignItems="flex-start"
@@ -549,6 +565,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
             transactionFee={transactionFee}
             onSubmit={handleSubmit}
+            burnAmountForCalculations={burnAmountForCalculations}
           />
         </Box>
         <Box width={{ base: 'full', md: rightColWidth }} mt={{ base: 2, md: 0 }}>
