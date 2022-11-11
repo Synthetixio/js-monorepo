@@ -12,7 +12,9 @@ import { EXTERNAL_LINKS } from 'constants/links';
 import Connector from 'containers/Connector';
 import { isAnyElectionInNomination, isAnyElectionInVoting } from 'utils/governance';
 
-const kwentaTokenLive = true;
+const kwentaAelinPoolActive = new Date() < new Date('2022-11-15T00:00:00.000Z');
+
+const shouldShowLiquidationSettingChanges = new Date() < new Date('2022-11-20T00:00:00.000Z');
 
 const BannerManager: FC = () => {
   const { subgraph, useGetLiquidationDataQuery, useGetDebtDataQuery, useGetElectionsPeriodStatus } =
@@ -63,7 +65,8 @@ const BannerManager: FC = () => {
       />
     );
   }
-  if (kwentaTokenLive) {
+  if (kwentaAelinPoolActive) {
+    // TODO remove nov 15
     return (
       <Banner
         type={BannerType.INFORMATION}
