@@ -7,6 +7,7 @@ import { LOCAL_STORAGE_KEYS } from 'constants/storage';
 import useLocalStorage from 'hooks/useLocalStorage';
 import { BoxProps, Flex } from '@chakra-ui/react';
 import { HomeButton } from '@snx-v2/HomeButton';
+import V2Earn from 'content/V2Earn';
 
 const DashboardPage = safeLazy(
   () => import(/* webpackChunkName: "dashboard" */ './content/DashboardPage')
@@ -81,11 +82,40 @@ export default function AppRoutes() {
               <Route path="/staking/unflag" element={<V2UnflagPage />} />
               <Route path="/staking/swap-links" element={<V2SwapLinksPage />} />
               <Route path="/staking/self-liquidation" element={<V2SelfLiquidation />} />
+              <Route path="/earn" element={<V2Earn />} />
             </>
           ) : (
-            <Route path="/staking" element={<StakingPage />}>
-              <Route path=":action" element={<StakingPage />} />
-            </Route>
+            <>
+              <Route path="/staking" element={<StakingPage />}>
+                <Route path=":action" element={<StakingPage />} />
+              </Route>
+              <Route
+                path="/earn"
+                element={
+                  <Wrapper>
+                    <EarnPage />
+                  </Wrapper>
+                }
+              >
+                <Route
+                  path=":pool"
+                  element={
+                    <Wrapper>
+                      <EarnPage />
+                    </Wrapper>
+                  }
+                >
+                  <Route
+                    path=":action"
+                    element={
+                      <Wrapper>
+                        <EarnPage />
+                      </Wrapper>
+                    }
+                  />
+                </Route>
+              </Route>
+            </>
           )}
 
           <Route
@@ -139,33 +169,6 @@ export default function AppRoutes() {
                 </Wrapper>
               }
             />
-          </Route>
-
-          <Route
-            path="/earn"
-            element={
-              <Wrapper>
-                <EarnPage />
-              </Wrapper>
-            }
-          >
-            <Route
-              path=":pool"
-              element={
-                <Wrapper>
-                  <EarnPage />
-                </Wrapper>
-              }
-            >
-              <Route
-                path=":action"
-                element={
-                  <Wrapper>
-                    <EarnPage />
-                  </Wrapper>
-                }
-              />
-            </Route>
           </Route>
 
           <Route

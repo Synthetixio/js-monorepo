@@ -1,0 +1,10 @@
+{
+  "name": "@snx-v2/RewardsItem",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.8",
+    "@storybook/react": "^6.5.10"
+  }
+}
