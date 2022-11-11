@@ -1,11 +1,10 @@
 {
-  "name": "@snx-v2/StatItem",
+  "name": "@snx-v2/StatBox",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "@chakra-ui/react": "^2.2.8",
-    "@snx-v2/icons": "workspace:*",
     "@storybook/react": "^6.5.10"
   }
 }

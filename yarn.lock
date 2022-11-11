@@ -7219,12 +7219,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/StatItem@workspace:v2/components/StatItem":
+"@snx-v2/StatBox@workspace:v2/components/StatBox":
   version: 0.0.0-use.local
-  resolution: "@snx-v2/StatItem@workspace:v2/components/StatItem"
+  resolution: "@snx-v2/StatBox@workspace:v2/components/StatBox"
   dependencies:
     "@chakra-ui/react": ^2.2.8
-    "@snx-v2/icons": "workspace:*"
     "@storybook/react": ^6.5.10
   languageName: unknown
   linkType: soft
