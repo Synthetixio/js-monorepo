@@ -1,6 +1,7 @@
 import { UtilityCard } from './UtilityCard';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { DHedgeIcon, KwentaIcon, LyraIcon, ThalesIcon } from '@snx-v2/icons';
+import { Image } from '@chakra-ui/react';
 import CurveLogo from '../../ui/assets/svg/app/curve.svg';
 
 export default {
@@ -52,6 +53,6 @@ Quinary.args = {
   title: 'Curve',
   description:
     'Deposit your sUSD or sETH into Curve pools for consistent, secure yield on synth pairs.',
-  Icon: () => <CurveLogo />,
+  Icon: () => <Image src={CurveLogo} />,
   link: 'https://curve.fi/',
 };

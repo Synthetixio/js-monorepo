@@ -7172,6 +7172,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/RewardsStat@workspace:v2/components/RewardsStat":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/RewardsStat@workspace:v2/components/RewardsStat"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@storybook/react": ^6.5.10
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/SelfLiquidation@workspace:*, @snx-v2/SelfLiquidation@workspace:v2/components/SelfLiquidation":
   version: 0.0.0-use.local
   resolution: "@snx-v2/SelfLiquidation@workspace:v2/components/SelfLiquidation"
