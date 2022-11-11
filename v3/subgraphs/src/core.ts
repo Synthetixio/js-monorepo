@@ -27,7 +27,7 @@ import {
   Account,
   AccountPermissionUsers,
 } from '../generated/schema';
-import { Address, BigDecimal, BigInt, log } from '@graphprotocol/graph-ts';
+import { Address, BigDecimal, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
 import { concatIds } from '../utils/strings';
 
 // Event handlers
@@ -42,9 +42,9 @@ export function handlePoolCreated(event: PoolCreated): void {
 export function handlePoolNameUpdated(event: PoolNameUpdated): void {
   const pool = Pool.load(event.params.poolId.toString());
   if (pool !== null) {
+    pool.name = event.params.name.toString();
     pool.updated_at_block = event.block.number;
     pool.updated_at = event.block.timestamp;
-    pool.name = event.params.name.toString();
     pool.save();
   }
 }
@@ -71,24 +71,21 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
   const pool = Pool.load(event.params.poolId.toString());
   const markets: Market[] = [];
   for (let i = 0; i < event.params.markets.length; ++i) {
-    const m = Market.load(event.params.markets[i].toString());
+    const m = Market.load(event.params.markets.subarray().at(i).toString());
     if (m) {
       m.updated_at = event.block.timestamp;
       m.updated_at_block = event.block.number;
-      // will this overflow?
-      m.weight = BigDecimal.fromString(event.params.weights.subarray(i)[0].toString());
+      log.info('s {}', [event.params.markets.subarray().at(i).toString()]);
+      m.weight = BigDecimal.fromString(event.params.markets.subarray().at(i).toString());
       markets.push(m);
     }
   }
   if (pool !== null && !!markets.length) {
     for (let i = 0; i < markets.length; ++i) {
       const poolAndMarket = new PoolAndMarket(concatIds([pool.id, markets[i].id]));
-      const getMarketDebtPerShare = MarketManagerModule.bind(
-        Address.fromBytes(markets[i].address)
-      ).getMarketDebtPerShare(BigInt.fromString(markets[i].id));
       poolAndMarket.pool = event.params.poolId.toString();
       poolAndMarket.market = markets[i].id;
-      poolAndMarket.max_debt_share_value = getMarketDebtPerShare.toBigDecimal();
+      //poolAndMarket.max_debt_share_value = event.params.
       poolAndMarket.save();
     }
   }
@@ -176,6 +173,8 @@ export function handleCollateralWithdrawn(event: CollateralWithdrawn): void {
 export function handleAccountCreated(event: AccountCreated): void {
   const account = new Account(event.params.accountId.toString());
   account.owner = event.params.sender;
+  account.created_at = event.block.timestamp;
+  account.created_at_block = event.block.number;
   account.save();
 }
 

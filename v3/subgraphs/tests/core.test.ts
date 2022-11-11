@@ -1,4 +1,5 @@
 import {
+  PoolConfigurationSet,
   PoolCreated,
   PoolNameUpdated,
   PoolOwnershipAccepted,
@@ -12,15 +13,18 @@ import {
   describe,
   beforeEach,
 } from 'matchstick-as/assembly/index';
-import { Address, ethereum, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
+import { Address, ethereum, BigInt, Bytes, log, ByteArray } from '@graphprotocol/graph-ts';
 import { address, address2 } from './constants';
 import {
+  handleAccountCreated,
   handleMarketCreated,
   handleNewPoolOwner,
+  handlePoolConfigurationSet,
   handlePoolCreated,
   handlePoolNameUpdated,
 } from '../src/core';
 import { MarketRegistered } from '../generated/MarketManagerModule/MarketManagerModule';
+import { AccountCreated } from '../generated/AccountModule/AccountModule';
 
 function createBlock(timestamp: i32, blockNumber: i32): Map<string, i32> {
   const newBlock = new Map<string, i32>();
@@ -77,19 +81,57 @@ function createMarketCreatedEvent(id: i32, market: string): MarketRegistered {
   const block = createBlock(222, 333);
   newMarketRegisteredEvent.parameters = new Array();
   newMarketRegisteredEvent.parameters.push(
-    new ethereum.EventParam('marketId', ethereum.Value.fromI32(id))
+    new ethereum.EventParam('market', ethereum.Value.fromAddress(Address.fromString(market)))
   );
   newMarketRegisteredEvent.parameters.push(
-    new ethereum.EventParam('marketId', ethereum.Value.fromAddress(Address.fromString(market)))
+    new ethereum.EventParam('marketId', ethereum.Value.fromI32(id))
+  );
+
+  newMarketRegisteredEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  newMarketRegisteredEvent.block.number = BigInt.fromI64(block['blockNumber']);
+  return newMarketRegisteredEvent;
+}
+
+function createAccountCreatedEvent(id: i32, owner: string): AccountCreated {
+  const newMarketRegisteredEvent = changetype<AccountCreated>(newMockEvent());
+  const block = createBlock(222, 333);
+  newMarketRegisteredEvent.parameters = new Array();
+  newMarketRegisteredEvent.parameters.push(
+    new ethereum.EventParam('owner', ethereum.Value.fromAddress(Address.fromString(owner)))
+  );
+  newMarketRegisteredEvent.parameters.push(
+    new ethereum.EventParam('accountId', ethereum.Value.fromI32(id))
   );
   newMarketRegisteredEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
   newMarketRegisteredEvent.block.number = BigInt.fromI64(block['blockNumber']);
   return newMarketRegisteredEvent;
 }
+
+function createPoolConfigurationSetEvent(
+  poolId: i32,
+  marketConfigs: ethereum.Tuple
+): PoolConfigurationSet {
+  const newMarketRegisteredEvent = changetype<PoolConfigurationSet>(newMockEvent());
+  const block = createBlock(222, 333);
+  newMarketRegisteredEvent.parameters = new Array();
+  newMarketRegisteredEvent.parameters.push(
+    new ethereum.EventParam('poolId', ethereum.Value.fromI32(poolId))
+  );
+  newMarketRegisteredEvent.parameters.push(
+    new ethereum.EventParam('markets', ethereum.Value.fromTuple(marketConfigs))
+  );
+  newMarketRegisteredEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  newMarketRegisteredEvent.block.number = BigInt.fromI64(block['blockNumber']);
+  return newMarketRegisteredEvent;
+}
+
 describe('core tests', () => {
-  beforeEach(() => {});
-  test('handlePoolCreatedEvent', () => {
-    let newPoolEvent = createPoolCreatedEvent(1, address);
+  beforeEach(() => {
+    clearStore();
+  });
+
+  test('handlePoolCreated', () => {
+    const newPoolEvent = createPoolCreatedEvent(1, address);
     handlePoolCreated(newPoolEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Pool', '1', 'owner', address);
@@ -98,7 +140,7 @@ describe('core tests', () => {
   });
 
   test('handlePoolNameUpdated', () => {
-    let newPoolEvent = createPoolCreatedEvent(1, address);
+    const newPoolEvent = createPoolCreatedEvent(1, address);
     handlePoolCreated(newPoolEvent);
     const newPoolNameEvent = createPoolNameUpdatedEvent(1, 'SC Pool');
     handlePoolNameUpdated(newPoolNameEvent);
@@ -109,7 +151,7 @@ describe('core tests', () => {
   });
 
   test('handleNewPoolOwner', () => {
-    let newPool = createPoolCreatedEvent(1, address);
+    const newPool = createPoolCreatedEvent(1, address);
     const newOwnerEvent = createNewPoolOwnerEvent(1, address2);
     handlePoolCreated(newPool);
     handleNewPoolOwner(newOwnerEvent);
@@ -120,11 +162,48 @@ describe('core tests', () => {
   });
 
   test('handleMarketCreated', () => {
-    const newMarketRegisteredEvent = createMarketCreatedEvent(23, address);
+    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address);
     handleMarketCreated(newMarketRegisteredEvent);
     assert.fieldEquals('Market', '1', 'id', '1');
     assert.fieldEquals('Market', '1', 'address', address);
-    assert.fieldEquals('Market', '1', 'created_at', '123');
-    assert.fieldEquals('Market', '1', 'created_at_block', '321');
+    assert.fieldEquals('Market', '1', 'created_at', '222');
+    assert.fieldEquals('Market', '1', 'created_at_block', '333');
+  });
+
+  test('handleAccountCreated', () => {
+    const accountCreatedEvent = createAccountCreatedEvent(1, address);
+    handleAccountCreated(accountCreatedEvent);
+    assert.fieldEquals('Account', '1', 'id', '1');
+    assert.fieldEquals('Account', '1', 'owner', address);
+    assert.fieldEquals('Account', '1', 'created_at', '222');
+    assert.fieldEquals('Account', '1', 'created_at_block', '333');
+  });
+
+  test('handlePoolConfigurationSet', () => {
+    const newPoolEvent = createPoolCreatedEvent(1, address);
+    handlePoolCreated(newPoolEvent);
+    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address);
+    const newMarketRegisteredEvent2 = createMarketCreatedEvent(2, address2);
+    handleMarketCreated(newMarketRegisteredEvent);
+    handleMarketCreated(newMarketRegisteredEvent2);
+    const markets = new ethereum.Tuple();
+    markets.push(ethereum.Value.fromI32(1));
+    markets.push(ethereum.Value.fromI32(32));
+    markets.push(ethereum.Value.fromI32(2));
+    markets.push(ethereum.Value.fromI32(2));
+    markets.push(ethereum.Value.fromI32(43));
+    markets.push(ethereum.Value.fromI32(54));
+    const newPoolConfigurationSetEvent = createPoolConfigurationSetEvent(1, markets);
+    logStore();
+    handlePoolConfigurationSet(newPoolConfigurationSetEvent);
+    assert.fieldEquals('Pool', '1', 'id', '1');
+    assert.fieldEquals('Market', '1', 'id', '1');
+    assert.fieldEquals('Market', '2', 'id', '2');
+    assert.fieldEquals('Market', '1', 'updated_at', '222');
+    assert.fieldEquals('Market', '1', 'updated_at_block', '333');
+    assert.fieldEquals('Market', '1', 'weight', '12');
+    assert.fieldEquals('Market', '2', 'weight', '43');
+    assert.fieldEquals('PoolAndMarket', '1-1', 'id', '1-1');
+    assert.fieldEquals('PoolAndMarket', '1-2', 'id', '1-2');
   });
 });

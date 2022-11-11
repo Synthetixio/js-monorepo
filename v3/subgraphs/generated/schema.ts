@@ -577,6 +577,58 @@ export class Account extends Entity {
     this.set("owner", Value.fromBytes(value));
   }
 
+  get created_at(): BigInt {
+    let value = this.get("created_at");
+    return value!.toBigInt();
+  }
+
+  set created_at(value: BigInt) {
+    this.set("created_at", Value.fromBigInt(value));
+  }
+
+  get created_at_block(): BigInt {
+    let value = this.get("created_at_block");
+    return value!.toBigInt();
+  }
+
+  set created_at_block(value: BigInt) {
+    this.set("created_at_block", Value.fromBigInt(value));
+  }
+
+  get updated_at(): BigInt | null {
+    let value = this.get("updated_at");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set updated_at(value: BigInt | null) {
+    if (!value) {
+      this.unset("updated_at");
+    } else {
+      this.set("updated_at", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get updated_at_block(): BigInt | null {
+    let value = this.get("updated_at_block");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set updated_at_block(value: BigInt | null) {
+    if (!value) {
+      this.unset("updated_at_block");
+    } else {
+      this.set("updated_at_block", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
   get permissions(): string | null {
     let value = this.get("permissions");
     if (!value || value.kind == ValueKind.NULL) {
