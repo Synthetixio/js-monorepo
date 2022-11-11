@@ -22,8 +22,12 @@ import {
   handlePoolConfigurationSet,
   handlePoolCreated,
   handlePoolNameUpdated,
+  handleUsdWithdrawn,
 } from '../src/core';
-import { MarketRegistered } from '../generated/MarketManagerModule/MarketManagerModule';
+import {
+  MarketRegistered,
+  UsdDeposited,
+} from '../generated/MarketManagerModule/MarketManagerModule';
 import { AccountCreated } from '../generated/AccountModule/AccountModule';
 
 function createBlock(timestamp: i32, blockNumber: i32): Map<string, i32> {
@@ -86,7 +90,6 @@ function createMarketCreatedEvent(id: i32, market: string): MarketRegistered {
   newMarketRegisteredEvent.parameters.push(
     new ethereum.EventParam('marketId', ethereum.Value.fromI32(id))
   );
-
   newMarketRegisteredEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
   newMarketRegisteredEvent.block.number = BigInt.fromI64(block['blockNumber']);
   return newMarketRegisteredEvent;
@@ -109,7 +112,7 @@ function createAccountCreatedEvent(id: i32, owner: string): AccountCreated {
 
 function createPoolConfigurationSetEvent(
   poolId: i32,
-  marketConfigs: ethereum.Tuple
+  marketConfigs: Array<ethereum.Tuple>
 ): PoolConfigurationSet {
   const newMarketRegisteredEvent = changetype<PoolConfigurationSet>(newMockEvent());
   const block = createBlock(222, 333);
@@ -118,11 +121,30 @@ function createPoolConfigurationSetEvent(
     new ethereum.EventParam('poolId', ethereum.Value.fromI32(poolId))
   );
   newMarketRegisteredEvent.parameters.push(
-    new ethereum.EventParam('markets', ethereum.Value.fromTuple(marketConfigs))
+    new ethereum.EventParam('markets', ethereum.Value.fromTupleArray(marketConfigs))
   );
+
   newMarketRegisteredEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
   newMarketRegisteredEvent.block.number = BigInt.fromI64(block['blockNumber']);
   return newMarketRegisteredEvent;
+}
+
+function createUsdMintedEvent(marketId: i32, target: Address, amount: BigInt): UsdDeposited {
+  const newUsdMintedEvent = changetype<UsdDeposited>(newMockEvent());
+  const block = createBlock(222, 333);
+  newUsdMintedEvent.parameters = new Array();
+  newUsdMintedEvent.parameters.push(
+    new ethereum.EventParam('marketId', ethereum.Value.fromI32(marketId))
+  );
+  newUsdMintedEvent.parameters.push(
+    new ethereum.EventParam('target', ethereum.Value.fromAddress(target))
+  );
+  newUsdMintedEvent.parameters.push(
+    new ethereum.EventParam('amount', ethereum.Value.fromUnsignedBigInt(amount))
+  );
+  newUsdMintedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  newUsdMintedEvent.block.number = BigInt.fromI64(block['blockNumber']);
+  return newUsdMintedEvent;
 }
 
 describe('core tests', () => {
@@ -186,24 +208,42 @@ describe('core tests', () => {
     const newMarketRegisteredEvent2 = createMarketCreatedEvent(2, address2);
     handleMarketCreated(newMarketRegisteredEvent);
     handleMarketCreated(newMarketRegisteredEvent2);
-    const markets = new ethereum.Tuple();
-    markets.push(ethereum.Value.fromI32(1));
-    markets.push(ethereum.Value.fromI32(32));
-    markets.push(ethereum.Value.fromI32(2));
-    markets.push(ethereum.Value.fromI32(2));
-    markets.push(ethereum.Value.fromI32(43));
-    markets.push(ethereum.Value.fromI32(54));
+    const markets = changetype<Array<ethereum.Tuple>>([
+      changetype<Array<ethereum.Tuple>>([
+        ethereum.Value.fromI32(1),
+        ethereum.Value.fromI32(32),
+        ethereum.Value.fromI32(2),
+      ]),
+      changetype<Array<ethereum.Tuple>>([
+        ethereum.Value.fromI32(2),
+        ethereum.Value.fromI32(43),
+        ethereum.Value.fromI32(54),
+      ]),
+    ]);
     const newPoolConfigurationSetEvent = createPoolConfigurationSetEvent(1, markets);
-    logStore();
     handlePoolConfigurationSet(newPoolConfigurationSetEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Market', '1', 'id', '1');
     assert.fieldEquals('Market', '2', 'id', '2');
     assert.fieldEquals('Market', '1', 'updated_at', '222');
     assert.fieldEquals('Market', '1', 'updated_at_block', '333');
-    assert.fieldEquals('Market', '1', 'weight', '12');
+    assert.fieldEquals('Market', '1', 'weight', '32');
     assert.fieldEquals('Market', '2', 'weight', '43');
     assert.fieldEquals('PoolAndMarket', '1-1', 'id', '1-1');
     assert.fieldEquals('PoolAndMarket', '1-2', 'id', '1-2');
+    assert.fieldEquals('PoolAndMarket', '1-1', 'market', '1');
+    assert.fieldEquals('PoolAndMarket', '1-2', 'market', '2');
+    assert.fieldEquals('PoolAndMarket', '1-1', 'max_debt_share_value', '2');
+    assert.fieldEquals('PoolAndMarket', '1-2', 'max_debt_share_value', '54');
+  });
+  test('handleUsdMinted', () => {
+    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address);
+    handleMarketCreated(newMarketRegisteredEvent);
+    const newUsdMintedEvent = createUsdMintedEvent(
+      1,
+      Address.fromString(address2),
+      BigInt.fromU64(200)
+    );
+    handleUsdWithdrawn(newUsdMintedEvent);
   });
 });

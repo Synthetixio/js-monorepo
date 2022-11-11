@@ -230,8 +230,8 @@ export class Market extends Entity {
     }
   }
 
-  get usd_minted(): BigDecimal | null {
-    let value = this.get("usd_minted");
+  get usd_deposited(): BigDecimal | null {
+    let value = this.get("usd_deposited");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -239,16 +239,16 @@ export class Market extends Entity {
     }
   }
 
-  set usd_minted(value: BigDecimal | null) {
+  set usd_deposited(value: BigDecimal | null) {
     if (!value) {
-      this.unset("usd_minted");
+      this.unset("usd_deposited");
     } else {
-      this.set("usd_minted", Value.fromBigDecimal(<BigDecimal>value));
+      this.set("usd_deposited", Value.fromBigDecimal(<BigDecimal>value));
     }
   }
 
-  get usd_burned(): BigDecimal | null {
-    let value = this.get("usd_burned");
+  get usd_withdrawn(): BigDecimal | null {
+    let value = this.get("usd_withdrawn");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -256,11 +256,28 @@ export class Market extends Entity {
     }
   }
 
-  set usd_burned(value: BigDecimal | null) {
+  set usd_withdrawn(value: BigDecimal | null) {
     if (!value) {
-      this.unset("usd_burned");
+      this.unset("usd_withdrawn");
     } else {
-      this.set("usd_burned", Value.fromBigDecimal(<BigDecimal>value));
+      this.set("usd_withdrawn", Value.fromBigDecimal(<BigDecimal>value));
+    }
+  }
+
+  get net_issuance(): BigDecimal | null {
+    let value = this.get("net_issuance");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set net_issuance(value: BigDecimal | null) {
+    if (!value) {
+      this.unset("net_issuance");
+    } else {
+      this.set("net_issuance", Value.fromBigDecimal(<BigDecimal>value));
     }
   }
 

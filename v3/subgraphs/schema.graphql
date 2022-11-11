@@ -17,11 +17,10 @@ type Market @entity {
   updated_at: BigInt
   updated_at_block: BigInt
   weight: BigDecimal
-  "Market manager, event name is different"
-  usd_minted: BigDecimal
-  "Market manager, event name is different"
-  usd_burned: BigDecimal
-  "Make a contract call"
+  usd_deposited: BigDecimal
+  usd_withdrawn: BigDecimal
+  "withdrawn - deposited"
+  net_issuance: BigDecimal
   reported_debt: BigDecimal
   "Name of the market"
   name: String

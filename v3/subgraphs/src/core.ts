@@ -27,8 +27,7 @@ import {
   Account,
   AccountPermissionUsers,
 } from '../generated/schema';
-import { Address, BigDecimal, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
-import { concatIds } from '../utils/strings';
+import { BigDecimal, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
 
 // Event handlers
 export function handlePoolCreated(event: PoolCreated): void {
@@ -70,48 +69,55 @@ export function handleMarketCreated(event: MarketRegistered): void {
 export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
   const pool = Pool.load(event.params.poolId.toString());
   const markets: Market[] = [];
+
   for (let i = 0; i < event.params.markets.length; ++i) {
-    const m = Market.load(event.params.markets.subarray().at(i).toString());
+    const m = Market.load(event.params.markets.at(i).market.toString());
     if (m) {
       m.updated_at = event.block.timestamp;
       m.updated_at_block = event.block.number;
-      log.info('s {}', [event.params.markets.subarray().at(i).toString()]);
-      m.weight = BigDecimal.fromString(event.params.markets.subarray().at(i).toString());
+      m.weight = BigDecimal.fromString(event.params.markets[i].weight.toString());
       markets.push(m);
+      m.save();
     }
   }
   if (pool !== null && !!markets.length) {
     for (let i = 0; i < markets.length; ++i) {
-      const poolAndMarket = new PoolAndMarket(concatIds([pool.id, markets[i].id]));
+      const poolAndMarket = new PoolAndMarket(pool.id.concat('-').concat(markets[i].id));
       poolAndMarket.pool = event.params.poolId.toString();
       poolAndMarket.market = markets[i].id;
-      //poolAndMarket.max_debt_share_value = event.params.
+      poolAndMarket.max_debt_share_value = event.params.markets[i].maxDebtShareValue.toBigDecimal();
       poolAndMarket.save();
     }
   }
 }
 
-// TODO @MF event name will change. Also update the subgraph.yaml file
-export function usdMinted(event: UsdDeposited): void {
+export function handleUsdDeposit(event: UsdDeposited): void {
   const market = Market.load(event.params.marketId.toString());
   if (market !== null) {
     const contract = MarketManagerModule.bind(event.address);
     market.reported_debt = contract.getMarketReportedDebt(event.params.marketId).toBigDecimal();
-    market.usd_minted = event.params.amount.toBigDecimal();
+    market.usd_deposited = event.params.amount.toBigDecimal();
     market.updated_at = event.block.timestamp;
     market.updated_at_block = event.block.number;
+    if (market.usd_withdrawn !== null && market.usd_deposited !== null) {
+      market.net_issuance = market.usd_withdrawn.minus(market.usd_deposited);
+    }
+    market.save();
   }
 }
 
-// TODO @MF event name will change. Also update the subgraph.yaml file
-export function usdBurned(event: UsdWithdrawn): void {
+export function handleUsdWithdrawn(event: UsdWithdrawn): void {
   const market = Market.load(event.params.marketId.toString());
   if (market !== null) {
     const contract = MarketManagerModule.bind(event.address);
     market.reported_debt = contract.getMarketReportedDebt(event.params.marketId).toBigDecimal();
-    market.usd_burned = event.params.amount.toBigDecimal();
+    market.usd_withdrawn = event.params.amount.toBigDecimal();
     market.updated_at = event.block.timestamp;
     market.updated_at_block = event.block.number;
+    if (market.usd_withdrawn !== null && market.usd_deposited !== null) {
+      market.net_issuance = market.usd_withdrawn.minus(market.usd_deposited);
+    }
+    market.save();
   }
 }
 
