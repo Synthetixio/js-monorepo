@@ -82,24 +82,22 @@ export default function AppRoutes() {
               <Route path="/staking/unflag" element={<V2UnflagPage />} />
               <Route path="/staking/swap-links" element={<V2SwapLinksPage />} />
               <Route path="/staking/self-liquidation" element={<V2SelfLiquidation />} />
-              <Route path="/synths" element={<V2Wallet />} />
-              <Route path="/wallet" element={<V2Wallet />} />
+              <Route path="/wallet" element={<Navigate to="/wallet/balances" replace={true} />} />
+              <Route path="/wallet/:tab" element={<V2Wallet />} />
             </>
           ) : (
-            <>
-              <Route path="/staking" element={<StakingPage />}>
-                <Route path=":action" element={<StakingPage />} />
-              </Route>
-              <Route
-                path="/synths"
-                element={
-                  <Wrapper pb={4}>
-                    <SynthsPage />
-                  </Wrapper>
-                }
-              />
-            </>
+            <Route path="/staking" element={<StakingPage />}>
+              <Route path=":action" element={<StakingPage />} />
+            </Route>
           )}
+          <Route
+            path="/synths"
+            element={
+              <Wrapper pb={4}>
+                <SynthsPage />
+              </Wrapper>
+            }
+          />
 
           <Route
             path="/loans"
