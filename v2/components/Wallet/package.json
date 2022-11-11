@@ -5,7 +5,8 @@
   "version": "0.0.0",
   "dependencies": {
     "@chakra-ui/react": "^2.2.8",
-    "@snx-v2/useDSnxBalance": "workspace:*",
-    "@snx-v2/useSynthsBalances": "workspace:*"
+    "@snx-v2/WalletBalances": "workspace:*",
+    "@snx-v2/icons": "workspace:*",
+    "react-router-dom": "^6.3.0"
   }
 }

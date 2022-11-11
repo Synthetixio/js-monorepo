@@ -1,6 +1,7 @@
 import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Heading } from '@chakra-ui/react';
 import { ArrowTopRight } from '@snx-v2/icons';
 import { useParams, useNavigate } from 'react-router-dom';
+import { WalletBalances } from '@snx-v2/WalletBalances';
 
 const walletPages = [
   'balances',
@@ -64,7 +65,7 @@ const WalletUi = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <p>Balances!</p>
+            <WalletBalances />
           </TabPanel>
           {/* TODO tab panels as pages get rebuilt */}
         </TabPanels>
