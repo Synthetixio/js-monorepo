@@ -232,6 +232,17 @@
         "merge": "Merge",
         "migrate-escrow": "Migrate Escrow"
       }
+    },
+    "wallet-balances": {
+      "active-debt": "Active Debt",
+      "d-snx-value": "dSNX Value",
+      "total-synth-value": "Total Synth Value",
+      "table-columns": {
+        "asset": "Asset",
+        "balance": "Balance",
+        "price": "Price",
+        "holdings": "Holdings"
+      }
     }
   },
   "meta": {
