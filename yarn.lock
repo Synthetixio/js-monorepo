@@ -7177,7 +7177,9 @@ __metadata:
   resolution: "@snx-v2/RewardsItem@workspace:v2/components/RewardsItem"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/icons": "workspace:^"
     "@storybook/react": ^6.5.10
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -7366,7 +7368,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/icons@workspace:*, @snx-v2/icons@workspace:v2/components/icons":
+"@snx-v2/icons@workspace:*, @snx-v2/icons@workspace:^, @snx-v2/icons@workspace:v2/components/icons":
   version: 0.0.0-use.local
   resolution: "@snx-v2/icons@workspace:v2/components/icons"
   dependencies:

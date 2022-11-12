@@ -1,5 +1,6 @@
 import { RewardsItem } from '.';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { SNXIcon } from '@snx-v2/icons';
 
 export default {
   title: 'RewardsItem',
@@ -13,8 +14,8 @@ export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   isLoading: false,
-  title: 'Hello',
-  description: 'Hello there',
+  title: 'Synthetix',
+  description: 'Staking Rewards',
   apyReturn: '12%',
-  icon: 'null',
+  Icon: () => <SNXIcon height="40px" width="40px" />,
 };
