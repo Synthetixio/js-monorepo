@@ -1,7 +1,25 @@
-import { Box, Flex, Stat, StatLabel, StatNumber, StatProps } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  Text,
+  Heading,
+  Progress,
+} from '@chakra-ui/react';
 import { formatNumber } from '@snx-v2/formatters';
+import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
+import { useGetSynthsByName } from '@snx-v2/synthsByName';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
+import { SynthBalance, useSynthsBalances } from '@snx-v2/useSynthsBalances';
+import Wei from '@synthetixio/wei';
 import { formatPercent, formatNumberToUsd } from '@snx-v2/formatters';
 import { StatBox } from '@snx-v2/StatBox';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +28,16 @@ const WalletBalancesUi: React.FC<{
   totalSynthBalance?: number;
   dSNXBalance?: number;
   debtBalance?: number;
+  synthData?: {
+    currencyKey: string;
+    description?: string;
+    iconUrl: string;
+    price?: number;
+    balance: number;
+    usdBalance: number;
+    holdingPct?: number;
+  }[];
+}> = ({ totalSynthBalance, dSNXBalance, debtBalance, synthData }) => {
   const { t } = useTranslation();
   return (
     <Box>
@@ -29,21 +57,128 @@ const WalletBalancesUi: React.FC<{
           amount={formatNumberToUsd(totalSynthBalance || 0)}
           containerStyles={{ alignItems: 'end' }}
         />
-        />
       </Flex>
+      <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" mt={4} py={4} px={2}>
+        <Heading size="md" mb={4}>
+          Synths
+        </Heading>
+        <TableContainer>
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
+                  {t('staking-v2.wallet-balances.table-columns.asset')}
+                </Th>
+                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
+                  {t('staking-v2.wallet-balances.table-columns.balance')}{' '}
+                </Th>
+                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
+                  {t('staking-v2.wallet-balances.table-columns.price')}
+                </Th>
+                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
+                  {t('staking-v2.wallet-balances.table-columns.holdings')}{' '}
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {synthData?.map(
+                ({ iconUrl, currencyKey, description, balance, usdBalance, price, holdingPct }) => {
+                  return (
+                    <Tr>
+                      <Td sx={{ borderBottomColor: 'gray.900' }}>
+                        <Flex>
+                          <Flex display="flex" alignItems="center">
+                            <img width="24px" height="24px" src={iconUrl} alt={currencyKey} />
+                          </Flex>
+                          <Flex ml={1} flexDirection="column">
+                            <Text fontSize="sm">{currencyKey}</Text>
+                            {description && (
+                              <Text fontSize="xs" color="gray.500">
+                                {description}
+                              </Text>
+                            )}
+                          </Flex>
+                        </Flex>
+                      </Td>
+                      <Td sx={{ borderBottomColor: 'gray.900' }}>
+                        <Flex flexDirection="column">
+                          <Text fontSize="sm">{formatNumber(balance)}</Text>
+                          <Text fontSize="xs" color="gray.500">
+                            {formatNumber(usdBalance)}
+                          </Text>
+                        </Flex>
+                      </Td>
+                      <Td sx={{ borderBottomColor: 'gray.900' }}>
+                        <Flex flexDirection="column">
+                          <Text fontSize="sm">{price ? formatNumber(price) : '-'}</Text>
+                        </Flex>
+                      </Td>
+                      <Td sx={{ borderBottomColor: 'gray.900' }}>
+                        <Flex flexDirection="column">
+                          <Text fontSize="sm">
+                            <Progress
+                              height="1"
+                              variant="white"
+                              value={holdingPct ? holdingPct * 100 : 100}
+                            />
+                            <Text size="xs" color="whiteAlpha.600">
+                              {holdingPct ? formatPercent(holdingPct) : ''}
+                            </Text>
+                          </Text>
+                        </Flex>
+                      </Td>
+                    </Tr>
+                  );
+                }
+              )}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Box>
     </Box>
   );
 };
+
+const getSynthDataForTable = (
+  synthsBalanceData?: SynthBalance[],
+  synthsByName?: Partial<Record<string, { description: string }>>,
+  totalSynthBalance?: Wei,
+  exchangeRateData?: Record<string, Wei | undefined>
+) => {
+  return synthsBalanceData?.map((x) => {
+    const assetDescription = synthsByName?.[x.currencyKey]?.description;
+    const iconUrl = getPngSynthIconUrl(x.currencyKey);
+    const description = assetDescription ? `Synthetic ${assetDescription}` : undefined;
+    const holdingsPct = totalSynthBalance ? x.balance.div(totalSynthBalance) : undefined;
+
+    return {
+      currencyKey: x.currencyKey,
+      description,
+      iconUrl,
+      price: exchangeRateData?.[x.currencyKey]?.toNumber(),
+      balance: x.balance.toNumber(),
+      usdBalance: x.usdBalance.toNumber(),
+      holdingPct: holdingsPct?.toNumber(),
+    };
+  });
+};
 export const WalletBalances = () => {
   const { data: debtData } = useDebtData();
-  const { data: synthsData } = useSynthsBalances();
-  const { data: dSNXBalance } = useGetDSnxBalance();
-
+  const { data: synthsBalanceData } = useSynthsBalances();
+  const { data: dSNXBalanceData } = useGetDSnxBalance();
+  const { data: exchangeRateData } = useExchangeRatesData();
+  const { data: synthByNameData } = useGetSynthsByName();
   return (
     <WalletBalancesUi
       debtBalance={debtData?.debtBalance.toNumber()}
-      dSNXBalance={dSNXBalance?.toNumber()}
-      totalSynthBalance={synthsData?.totalUSDBalance.toNumber()}
+      dSNXBalance={dSNXBalanceData?.balance.toNumber()}
+      totalSynthBalance={synthsBalanceData?.totalUSDBalance.toNumber()}
+      synthData={getSynthDataForTable(
+        synthsBalanceData?.balances,
+        synthByNameData?.SynthsByName,
+        synthsBalanceData?.totalUSDBalance,
+        exchangeRateData
+      )}
     />
   );
 };

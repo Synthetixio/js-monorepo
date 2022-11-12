@@ -311,6 +311,26 @@ const Menu: ComponentMultiStyleConfig = {
 const Divider: ComponentStyleConfig = {
   baseStyle: { borderColor: 'gray.900' },
 };
+const Table: ComponentMultiStyleConfig = {
+  parts: ['th', 'td', 'item'],
+  baseStyle: {
+    th: {
+      borderBottom: '1px',
+      borderTop: '1px',
+      borderTopColor: 'gray.900',
+      borderBottomColor: 'gray.900',
+      borderColor: 'gray.900',
+      textTransform: 'none',
+    },
+    td: {
+      borderColor: 'gray.900', // borderColor and paddings doesn't work, but will keep it here if it gets fixed
+      paddingBottom: 1,
+      paddingTop: 4,
+      borderBottom: '1px',
+      borderTop: '1px',
+    },
+  },
+};
 
 export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
   colors: {
@@ -329,6 +349,7 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
     Alert,
     Tooltip,
     Divider,
+    Table,
   },
   styles: {
     global: {
