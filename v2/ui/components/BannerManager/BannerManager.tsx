@@ -25,7 +25,7 @@ const BannerManager: FC = () => {
 
   const electionIsInNomination = isAnyElectionInNomination(periodStatusQuery.data);
   const electionIsInVoting = isAnyElectionInVoting(periodStatusQuery.data);
-  const [showLiqSetting] = useLocalStorage(LOCAL_STORAGE_KEYS.LIQUIDATION_SETTING_CHANGES, false);
+  const [showLiqSetting] = useLocalStorage(LOCAL_STORAGE_KEYS.LIQUIDATION_SETTING_CHANGES, true);
   const liquidationData = useGetLiquidationDataQuery(walletAddress);
   const debtData = useGetDebtDataQuery(walletAddress);
 
