@@ -2,22 +2,9 @@ import { Box, Flex, Stat, StatLabel, StatNumber, StatProps } from '@chakra-ui/re
 import { formatNumber } from '@snx-v2/formatters';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
-import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
+import { formatPercent, formatNumberToUsd } from '@snx-v2/formatters';
+import { StatBox } from '@snx-v2/StatBox';
 
-const StatItem: React.FC<{
-  label: string;
-  value?: number;
-  statProps: StatProps;
-}> = ({ value, label, statProps }) => {
-  return (
-    <Stat {...statProps}>
-      <StatLabel color="gray.500">{label}</StatLabel>
-      <StatNumber color="gray.50" fontWeight="bold">
-        {value ? formatNumber(value) : '-'}
-      </StatNumber>
-    </Stat>
-  );
-};
 const WalletBalancesUi: React.FC<{
   totalSynthBalance?: number;
   dSNXBalance?: number;
@@ -26,16 +13,21 @@ const WalletBalancesUi: React.FC<{
   return (
     <Box>
       <Flex>
-        <StatItem label="Active Debt" value={debtBalance} statProps={{ textAlign: 'left' }} />
-        <StatItem
-          label="dSNX Balance"
-          value={dSNXBalance}
-          statProps={{ marginX: 2, textAlign: 'center' }}
+        <StatBox
+          label="Active Debt"
+          amount={formatNumberToUsd(debtBalance || 0)} // TODO skeleton
+          containerStyles={{ alignItems: 'start' }}
         />
-        <StatItem
-          label="Total Synth Balance"
-          value={totalSynthBalance}
-          statProps={{ textAlign: 'right' }}
+        <StatBox
+          label="dSNX Value"
+          amount={dSNXBalance === undefined ? '-' : formatNumberToUsd(dSNXBalance)}
+          containerStyles={{ marginX: 2, alignItems: 'center' }}
+        />
+        <StatBox
+          label="Total Synth Value"
+          amount={formatNumberToUsd(totalSynthBalance || 0)}
+          containerStyles={{ alignItems: 'end' }}
+        />
         />
       </Flex>
     </Box>
