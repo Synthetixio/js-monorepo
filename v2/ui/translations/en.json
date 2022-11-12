@@ -1426,7 +1426,8 @@
       "thales-staking-info": "ATTENTION: As a SNX staker you are eligible for THALES weekly rewards. If you haven't already, <0>click here to learn more and claim</0>.",
       "election-in-nomination": "ATTENTION: Elections are now in nomination. Go to <0>https://governance.synthetix.io</0> to nominate.",
       "election-in-voting": "ATTENTION: The Synthetix Governing bodies need your vote! Go to <0>https://governance.synthetix.io</0> to vote.",
-      "kwenta-token": "KWENTA token is available for SNX stakers via a pool on Aelin. Learn more about how to participate <0>here</0>."
+      "kwenta-token": "KWENTA token is available for SNX stakers via a pool on Aelin. Learn more about how to participate <0>here</0>.",
+      "liq-setting-changes": "Liquidation penalties have been increased and flagging period shortened to 8 hours. Read more <0>here</0>."
     },
     "error": {
       "please-install-metamask": "Please install Metamask or manually add the Optimism network to your browser wallet."
