@@ -220,6 +220,18 @@
       "view-all": "View All",
       "escrow": "Escrow",
       "connected-with": "Connected with {{walletType}}"
+    },
+    "wallet": {
+      "my-account": "My Account",
+      "tabs": {
+        "balances": "Balances",
+        "bridge": "Bridge",
+        "escrow": "Escrow",
+        "history": "History",
+        "delegate": "delegate",
+        "merge": "Merge",
+        "migrate-escrow": "Migrate Escrow"
+      }
     }
   },
   "meta": {

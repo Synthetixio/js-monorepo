@@ -1,7 +1,10 @@
+import { useContext } from 'react';
 import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Heading } from '@chakra-ui/react';
 import { ArrowTopRight } from '@snx-v2/icons';
 import { useParams, useNavigate } from 'react-router-dom';
 import { WalletBalances } from '@snx-v2/WalletBalances';
+import { ContractContext } from '@snx-v2/ContractContext';
+import { useTranslation } from 'react-i18next';
 
 const walletPages = [
   'balances',
@@ -20,14 +23,15 @@ const pagesStillUsingOldDesign = [
   'merge-accounts',
   'migrate-escrow',
 ];
-const WalletUi = () => {
+const WalletUi = ({ networkId }: { networkId: number | null }) => {
   const { tab = 'balances' } = useParams();
   const navigate = useNavigate();
   const tabIndex = walletPages.indexOf(tab);
+  const { t } = useTranslation();
   return (
-    <Box>
+    <Box mt={6}>
       <Heading size="md" textAlign="center">
-        My Account
+        {t('staking-v2.wallet.my-account')}
       </Heading>
       <Tabs
         variant="soft-rounded"
@@ -43,25 +47,27 @@ const WalletUi = () => {
         }}
       >
         <TabList display="flex" justifyContent="center">
-          <Tab>Balances</Tab>
+          <Tab>{t('staking-v2.wallet.tabs.balances')}</Tab>
           <Tab>
-            Bridge <ArrowTopRight ml={1} />
+            {t('staking-v2.wallet.tabs.bridge')} <ArrowTopRight ml={1} />
           </Tab>
           <Tab>
-            Escrow <ArrowTopRight ml={1} />
+            {t('staking-v2.wallet.tabs.escrow')} <ArrowTopRight ml={1} />
           </Tab>
           <Tab>
-            History <ArrowTopRight ml={1} />
+            {t('staking-v2.wallet.tabs.history')} <ArrowTopRight ml={1} />
           </Tab>
           <Tab>
-            Delegate <ArrowTopRight ml={1} />
+            {t('staking-v2.wallet.tabs.delegate')} <ArrowTopRight ml={1} />
           </Tab>
           <Tab>
-            Merge <ArrowTopRight ml={1} />
+            {t('staking-v2.wallet.tabs.merge')} <ArrowTopRight ml={1} />
           </Tab>
-          <Tab>
-            Migrate Escrow <ArrowTopRight ml={1} />
-          </Tab>
+          {networkId === 1 && (
+            <Tab>
+              {t('staking-v2.wallet.tabs.merge')} <ArrowTopRight ml={1} />
+            </Tab>
+          )}
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -74,5 +80,6 @@ const WalletUi = () => {
   );
 };
 export const Wallet = () => {
-  return <WalletUi />;
+  const { networkId } = useContext(ContractContext);
+  return <WalletUi networkId={networkId} />;
 };
