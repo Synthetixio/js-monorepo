@@ -228,8 +228,8 @@
         "bridge": "Bridge",
         "escrow": "Escrow",
         "history": "History",
-        "delegate": "delegate",
-        "merge": "Merge",
+        "delegate": "Delegate",
+        "merge-accounts": "Merge Accounts",
         "migrate-escrow": "Migrate Escrow"
       }
     },

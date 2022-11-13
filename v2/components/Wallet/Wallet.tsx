@@ -5,28 +5,22 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { WalletBalances } from '@snx-v2/WalletBalances';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useTranslation } from 'react-i18next';
+import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 
 const walletPages = [
-  'balances',
-  'bridge',
-  'escrow',
-  'history',
-  'delegate',
-  'merge-accounts',
-  'migrate-escrow',
-];
-const pagesStillUsingOldDesign = [
-  'bridge',
-  'escrow',
-  'history',
-  'delegate',
-  'merge-accounts',
-  'migrate-escrow',
-];
+  { name: 'balances', link: '/wallet/balances', icon: false, mainnetOnly: false },
+  { name: 'bridge', link: 'bridge', icon: true, mainnetOnly: false },
+  { name: 'escrow', link: 'escrow', icon: true, mainnetOnly: false },
+  { name: 'history', link: 'history', icon: true, mainnetOnly: false },
+  { name: 'delegate', link: 'delegate', icon: true, mainnetOnly: false },
+  { name: 'merge-accounts', link: 'merge-accounts', icon: true, mainnetOnly: false },
+  { name: 'migrate-escrow', link: 'migrate-escrow', icon: true, mainnetOnly: true },
+] as const;
+
 const WalletUi = ({ networkId }: { networkId: number | null }) => {
   const { tab = 'balances' } = useParams();
   const navigate = useNavigate();
-  const tabIndex = walletPages.indexOf(tab);
+  const tabIndex = walletPages.findIndex(({ name }) => tab === name);
   const { t } = useTranslation();
   return (
     <Box mt={6}>
@@ -39,35 +33,22 @@ const WalletUi = ({ networkId }: { networkId: number | null }) => {
         index={tabIndex}
         onChange={(tabIndex) => {
           const newTab = walletPages[tabIndex];
-          if (pagesStillUsingOldDesign.includes(newTab)) {
-            navigate(`/${newTab}`);
-          } else {
-            navigate(`/wallet/${newTab}`);
-          }
+          navigate(newTab.link);
         }}
       >
         <TabList display="flex" justifyContent="center">
-          <Tab>{t('staking-v2.wallet.tabs.balances')}</Tab>
-          <Tab>
-            {t('staking-v2.wallet.tabs.bridge')} <ArrowTopRight ml={1} />
-          </Tab>
-          <Tab>
-            {t('staking-v2.wallet.tabs.escrow')} <ArrowTopRight ml={1} />
-          </Tab>
-          <Tab>
-            {t('staking-v2.wallet.tabs.history')} <ArrowTopRight ml={1} />
-          </Tab>
-          <Tab>
-            {t('staking-v2.wallet.tabs.delegate')} <ArrowTopRight ml={1} />
-          </Tab>
-          <Tab>
-            {t('staking-v2.wallet.tabs.merge')} <ArrowTopRight ml={1} />
-          </Tab>
-          {networkId === 1 && (
-            <Tab>
-              {t('staking-v2.wallet.tabs.merge')} <ArrowTopRight ml={1} />
-            </Tab>
-          )}
+          {walletPages.map(({ name, icon, mainnetOnly }) => {
+            if (mainnetOnly && networkId === NetworkIdByName.mainnet) {
+              return null;
+            }
+            return (
+              <Tab key={name}>
+                <>
+                  {t(`staking-v2.wallet.tabs.${name}`)} {icon && <ArrowTopRight ml={1} />}
+                </>
+              </Tab>
+            );
+          })}
         </TabList>
         <TabPanels>
           <TabPanel>
