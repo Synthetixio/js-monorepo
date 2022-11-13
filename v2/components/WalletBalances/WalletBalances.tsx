@@ -84,7 +84,7 @@ const WalletBalancesUi: React.FC<{
               {synthData?.map(
                 ({ iconUrl, currencyKey, description, balance, usdBalance, price, holdingPct }) => {
                   return (
-                    <Tr>
+                    <Tr key={currencyKey}>
                       <Td sx={{ borderBottomColor: 'gray.900' }}>
                         <Flex>
                           <Flex display="flex" alignItems="center">
@@ -115,15 +115,13 @@ const WalletBalancesUi: React.FC<{
                       </Td>
                       <Td sx={{ borderBottomColor: 'gray.900' }}>
                         <Flex flexDirection="column">
-                          <Text fontSize="sm">
-                            <Progress
-                              height="1"
-                              variant="white"
-                              value={holdingPct ? holdingPct * 100 : 100}
-                            />
-                            <Text size="xs" color="whiteAlpha.600">
-                              {holdingPct ? formatPercent(holdingPct) : ''}
-                            </Text>
+                          <Progress
+                            height="1"
+                            variant="white"
+                            value={holdingPct ? holdingPct * 100 : 100}
+                          />
+                          <Text fontSize="xs" color="whiteAlpha.600">
+                            {holdingPct ? formatPercent(holdingPct) : ''}
                           </Text>
                         </Flex>
                       </Td>
