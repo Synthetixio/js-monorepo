@@ -44,7 +44,7 @@ export const useManagePosition = (
       list.push(
         {
           contract: snxProxy?.contract,
-          functionName: 'depositCollateral',
+          functionName: 'deposit',
           callArgs: [position.accountId, position.collateral.address, collateralChangeBN],
         },
         {
@@ -96,7 +96,7 @@ export const useManagePosition = (
         },
         {
           contract: snxProxy.contract,
-          functionName: 'withdrawCollateral',
+          functionName: 'withdraw',
           callArgs: [position.accountId, position.collateral.address, collateralChangeBN],
         }
       );
