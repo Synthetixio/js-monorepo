@@ -25,7 +25,7 @@ export const RewardsDistributor: FC<Props> = ({ distributor }) => {
   return (
     <>
       <span>{data}</span>
-      <Text fontSize="xs" opacity="0.66" mt="1'">
+      <Text fontSize="xs" opacity="0.66" mt="1">
         {prettyTx(distributor)}
       </Text>
     </>

@@ -34,7 +34,6 @@ export const Rewards: FC<Props> = ({ poolId, collateral, accountId }) => {
             <RewardsRow
               key={reward.distributor}
               value={reward.value}
-              rate={reward.rate}
               distributor={reward.distributor}
               poolId={poolId}
               collateral={collateral}

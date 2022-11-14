@@ -6,7 +6,6 @@ import { formatUnits } from 'ethers/lib/utils';
 interface RewardDistribution {
   value: string;
   distributor: string;
-  rate: string;
 }
 
 export const useGetRewards = (accountId: string, poolId: string, collateral: CollateralType) => {
@@ -16,17 +15,11 @@ export const useGetRewards = (accountId: string, poolId: string, collateral: Col
     ['rewards', poolId, collateral.address, accountId],
     async () => {
       try {
-        const [[rewards, distributors], rates] = await Promise.all([
-          snxProxy?.contract?.callStatic?.getAvailableRewards(
-            poolId,
-            collateral.address,
-            accountId
-          ),
-          snxProxy?.contract.getCurrentRewardRate(poolId, collateral.address),
+        const [[rewards, distributors]] = await Promise.all([
+          snxProxy?.contract?.callStatic?.getRewards(poolId, collateral.address, accountId),
         ]);
 
         return (rewards || []).map((reward: any, index: number) => ({
-          rate: rates[index].toString() || '0',
           distributor: distributors[index],
           value: formatUnits(reward?.toString()),
         }));

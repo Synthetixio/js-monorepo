@@ -41,7 +41,7 @@ options.decimals = "<%= settings.rate_decimals %>"
 options.rate = "<%= settings.weth_rate %>"
 
 [import.synthetix]
-source = "@ipfs:QmWTQGVC6nDiPbC7nXqurmTbZBaJoQAFteUCMUtA2v2ayA"
+source = "@ipfs:QmaLU2fe8FemcZQFjm1gfoNBYUoAVjK7bvw7pV2EuKTsaW"
 options.owner = "<%= settings.owner %>"
 
 [contract.Multicall]
@@ -115,8 +115,26 @@ args = [
 depends=["invoke.create_preferred_pool"]
 
 [contract.snx_rewards]
-artifact = "RewardDistributor"
-depends=["import.snx"]
+artifact = "RewardDistributorMock"
+
+[invoke.initialize_reward_distributor]
+target = ["snx_rewards"]
+func = "initialize"
+args = [
+    "<%= imports.synthetix.contracts.CoreProxy.address %>",
+    "<%= imports.snx.contracts.token.address %>",
+    "SNX Reward Manager"
+]
+depends=["import.synthetix", "contract.snx_rewards", "import.snx"]
+
+[invoke.mint_reward_snx]
+target = ["snx.token"]
+func = "mint"
+args = [
+    "<%= contracts.snx_rewards.address %>",
+    "200000000000000000000"
+]
+depends=["import.synthetix", "contract.snx_rewards"]
 
 [invoke.register_snx_rewards]
 target = ["synthetix.CoreProxy"]

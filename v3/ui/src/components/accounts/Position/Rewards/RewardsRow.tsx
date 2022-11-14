@@ -5,6 +5,7 @@ import { useContractWrite } from 'wagmi';
 import { useSnxProxy } from '../../../../hooks';
 import { CollateralType } from '../../../../utils/types';
 import { Amount } from '../../../shared/Amount/Amount';
+import { RewardRate } from './RewardRate';
 import { RewardsDistributor } from './RewardsDistributor';
 
 interface Props {
@@ -13,7 +14,6 @@ interface Props {
   collateral: CollateralType;
   distributor: string;
   value: string;
-  rate: string;
   refetch: () => void;
 }
 
@@ -23,7 +23,6 @@ export const RewardsRow: FC<Props> = ({
   poolId,
   collateral,
   accountId,
-  rate,
   refetch,
 }) => {
   const snxProxy = useSnxProxy();
@@ -56,8 +55,8 @@ export const RewardsRow: FC<Props> = ({
       </Td>
       <Td py="4">
         <Amount value={value} /> available
-        <Text fontSize="xs" opacity="0.66" mt="1'">
-          accruing {rate} per week
+        <Text fontSize="xs" opacity="0.66" mt="1">
+          <RewardRate poolId={poolId} collateral={collateral} distributor={distributor} />
         </Text>
       </Td>
       <Td isNumeric>
