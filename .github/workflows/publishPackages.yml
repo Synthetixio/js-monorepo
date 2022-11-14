@@ -14,6 +14,8 @@ on:
 
 jobs:
   update_version:
+    # run only on master branch
+    if: github.ref == 'refs/heads/master'
     name: Publish Single Package
     runs-on: ubuntu-latest
     steps:
