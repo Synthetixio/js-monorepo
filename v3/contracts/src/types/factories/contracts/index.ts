@@ -3,4 +3,5 @@
 /* eslint-disable */
 export * as rewardDistributorSol from "./RewardDistributor.sol";
 export { Multicall3__factory } from "./Multicall3__factory";
+export { RewardDistributorMock__factory } from "./RewardDistributorMock__factory";
 export { WETH9__factory } from "./WETH9__factory";

@@ -4,4 +4,5 @@
 import type * as rewardDistributorSol from "./RewardDistributor.sol";
 export type { rewardDistributorSol };
 export type { Multicall3 } from "./Multicall3";
+export type { RewardDistributorMock } from "./RewardDistributorMock";
 export type { WETH9 } from "./WETH9";

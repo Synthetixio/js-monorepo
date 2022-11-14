@@ -12,6 +12,8 @@ export type { IRewardsManagerModule } from "./contracts/RewardDistributor.sol/IR
 export { IRewardsManagerModule__factory } from "./factories/contracts/RewardDistributor.sol/IRewardsManagerModule__factory";
 export type { RewardDistributor } from "./contracts/RewardDistributor.sol/RewardDistributor";
 export { RewardDistributor__factory } from "./factories/contracts/RewardDistributor.sol/RewardDistributor__factory";
+export type { RewardDistributorMock } from "./contracts/RewardDistributorMock";
+export { RewardDistributorMock__factory } from "./factories/contracts/RewardDistributorMock__factory";
 export type { WETH9 } from "./contracts/WETH9";
 export { WETH9__factory } from "./factories/contracts/WETH9__factory";
 export type { IERC20 } from "./interfaces/IERC20";

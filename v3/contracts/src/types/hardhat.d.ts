@@ -25,6 +25,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.RewardDistributor__factory>;
     getContractFactory(
+      name: "RewardDistributorMock",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.RewardDistributorMock__factory>;
+    getContractFactory(
       name: "WETH9",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.WETH9__factory>;
@@ -36,6 +40,10 @@ declare module "hardhat/types/runtime" {
       name: "IRewardDistributor",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IRewardDistributor__factory>;
+    getContractFactory(
+      name: "IRewardsManagerModule",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IRewardsManagerModule__factory>;
 
     getContractAt(
       name: "Multicall3",
@@ -53,6 +61,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.RewardDistributor>;
     getContractAt(
+      name: "RewardDistributorMock",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.RewardDistributorMock>;
+    getContractAt(
       name: "WETH9",
       address: string,
       signer?: ethers.Signer
@@ -67,6 +80,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IRewardDistributor>;
+    getContractAt(
+      name: "IRewardsManagerModule",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IRewardsManagerModule>;
 
     // default types
     getContractFactory(
