@@ -12,9 +12,10 @@ import {
   clearStore,
   describe,
   beforeEach,
+  createMockedFunction,
 } from 'matchstick-as/assembly/index';
 import { Address, ethereum, BigInt, Bytes, log, ByteArray } from '@graphprotocol/graph-ts';
-import { address, address2 } from './constants';
+import { address, address2, defaultGraphContractAddress } from './constants';
 import {
   handleAccountCreated,
   handleMarketCreated,
@@ -22,11 +23,13 @@ import {
   handlePoolConfigurationSet,
   handlePoolCreated,
   handlePoolNameUpdated,
+  handleUsdDeposit,
   handleUsdWithdrawn,
 } from '../src/core';
 import {
   MarketRegistered,
   UsdDeposited,
+  UsdWithdrawn,
 } from '../generated/MarketManagerModule/MarketManagerModule';
 import { AccountCreated } from '../generated/AccountModule/AccountModule';
 
@@ -129,7 +132,7 @@ function createPoolConfigurationSetEvent(
   return newMarketRegisteredEvent;
 }
 
-function createUsdMintedEvent(marketId: i32, target: Address, amount: BigInt): UsdDeposited {
+function createUsdDepositedEvent(marketId: i32, target: Address, amount: BigInt): UsdDeposited {
   const newUsdMintedEvent = changetype<UsdDeposited>(newMockEvent());
   const block = createBlock(222, 333);
   newUsdMintedEvent.parameters = new Array();
@@ -145,6 +148,24 @@ function createUsdMintedEvent(marketId: i32, target: Address, amount: BigInt): U
   newUsdMintedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
   newUsdMintedEvent.block.number = BigInt.fromI64(block['blockNumber']);
   return newUsdMintedEvent;
+}
+
+function createUsdWithdrawnEvent(marketId: i32, target: Address, amount: BigInt): UsdWithdrawn {
+  const newUsdWithdrawnEvent = changetype<UsdWithdrawn>(newMockEvent());
+  const block = createBlock(222, 333);
+  newUsdWithdrawnEvent.parameters = new Array();
+  newUsdWithdrawnEvent.parameters.push(
+    new ethereum.EventParam('marketId', ethereum.Value.fromI32(marketId))
+  );
+  newUsdWithdrawnEvent.parameters.push(
+    new ethereum.EventParam('target', ethereum.Value.fromAddress(target))
+  );
+  newUsdWithdrawnEvent.parameters.push(
+    new ethereum.EventParam('amount', ethereum.Value.fromUnsignedBigInt(amount))
+  );
+  newUsdWithdrawnEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  newUsdWithdrawnEvent.block.number = BigInt.fromI64(block['blockNumber']);
+  return newUsdWithdrawnEvent;
 }
 
 describe('core tests', () => {
@@ -236,14 +257,34 @@ describe('core tests', () => {
     assert.fieldEquals('PoolAndMarket', '1-1', 'max_debt_share_value', '2');
     assert.fieldEquals('PoolAndMarket', '1-2', 'max_debt_share_value', '54');
   });
-  test('handleUsdMinted', () => {
+  test('calculate net issuance', () => {
     const newMarketRegisteredEvent = createMarketCreatedEvent(1, address);
+    const arg = ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(1));
+    createMockedFunction(
+      Address.fromString(defaultGraphContractAddress),
+      'getMarketReportedDebt',
+      'getMarketReportedDebt(uint128):(uint256)'
+    )
+      .withArgs([arg])
+      .returns([ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(23))]);
     handleMarketCreated(newMarketRegisteredEvent);
-    const newUsdMintedEvent = createUsdMintedEvent(
+    const newUsdDepositedEvent = createUsdDepositedEvent(
       1,
       Address.fromString(address2),
       BigInt.fromU64(200)
     );
-    handleUsdWithdrawn(newUsdMintedEvent);
+    handleUsdDeposit(newUsdDepositedEvent);
+    const newUsdWithdrawnEvent = createUsdWithdrawnEvent(
+      1,
+      Address.fromString(address2),
+      BigInt.fromU64(300)
+    );
+    handleUsdWithdrawn(newUsdWithdrawnEvent);
+    assert.fieldEquals('Market', '1', 'reported_debt', '23');
+    assert.fieldEquals('Market', '1', 'usd_deposited', '200');
+    assert.fieldEquals('Market', '1', 'usd_withdrawn', '300');
+    assert.fieldEquals('Market', '1', 'net_issuance', '100');
+    assert.fieldEquals('Market', '1', 'updated_at', '222');
+    assert.fieldEquals('Market', '1', 'updated_at_block', '333');
   });
 });

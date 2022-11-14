@@ -96,11 +96,19 @@ export function handleUsdDeposit(event: UsdDeposited): void {
   if (market !== null) {
     const contract = MarketManagerModule.bind(event.address);
     market.reported_debt = contract.getMarketReportedDebt(event.params.marketId).toBigDecimal();
-    market.usd_deposited = event.params.amount.toBigDecimal();
+    if (market.usd_deposited === null) {
+      market.usd_deposited = event.params.amount.toBigDecimal();
+    } else {
+      market.usd_deposited = changetype<BigDecimal>(market.usd_deposited).plus(
+        event.params.amount.toBigDecimal()
+      );
+    }
     market.updated_at = event.block.timestamp;
     market.updated_at_block = event.block.number;
     if (market.usd_withdrawn !== null && market.usd_deposited !== null) {
-      market.net_issuance = market.usd_withdrawn.minus(market.usd_deposited);
+      market.net_issuance = changetype<BigDecimal>(market.usd_withdrawn).minus(
+        changetype<BigDecimal>(market.usd_deposited)
+      );
     }
     market.save();
   }
@@ -111,11 +119,20 @@ export function handleUsdWithdrawn(event: UsdWithdrawn): void {
   if (market !== null) {
     const contract = MarketManagerModule.bind(event.address);
     market.reported_debt = contract.getMarketReportedDebt(event.params.marketId).toBigDecimal();
+    if (market.usd_withdrawn === null) {
+      market.usd_withdrawn = event.params.amount.toBigDecimal();
+    } else {
+      market.usd_withdrawn = changetype<BigDecimal>(market.usd_withdrawn).plus(
+        event.params.amount.toBigDecimal()
+      );
+    }
     market.usd_withdrawn = event.params.amount.toBigDecimal();
     market.updated_at = event.block.timestamp;
     market.updated_at_block = event.block.number;
     if (market.usd_withdrawn !== null && market.usd_deposited !== null) {
-      market.net_issuance = market.usd_withdrawn.minus(market.usd_deposited);
+      market.net_issuance = changetype<BigDecimal>(market.usd_withdrawn).minus(
+        changetype<BigDecimal>(market.usd_deposited)
+      );
     }
     market.save();
   }
@@ -132,7 +149,6 @@ export function handleCollateralConfigured(event: CollateralConfigured): void {
   collateralType.updated_at_block = event.block.number;
   collateralType.liquidation_reward = event.params.liquidationReward.toBigDecimal();
   collateralType.minimum_c_ratio = event.params.minimumCollateralizationRatio;
-  // TODO @MF could be renamed the staking part
   collateralType.depositing_enabled = event.params.stakingEnabled;
   collateralType.target_c_ratio = event.params.targetCollateralizationRatio;
   collateralType.updated_at = event.block.timestamp;
