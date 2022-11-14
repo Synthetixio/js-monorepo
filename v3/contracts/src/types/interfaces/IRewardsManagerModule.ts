@@ -23,34 +23,38 @@ import type {
   PromiseOrValue,
 } from "../common";
 
-export interface RewardDistributorInterface extends utils.Interface {
+export interface IRewardsManagerModuleInterface extends utils.Interface {
   functions: {
-    "payout(uint256,address,address,uint256)": FunctionFragment;
+    "distributeRewards(uint128,address,uint256,uint256,uint256)": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "payout"): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: "distributeRewards"): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "payout",
+    functionFragment: "distributeRewards",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
-      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
 
-  decodeFunctionResult(functionFragment: "payout", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "distributeRewards",
+    data: BytesLike
+  ): Result;
 
   events: {};
 }
 
-export interface RewardDistributor extends BaseContract {
+export interface IRewardsManagerModule extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: RewardDistributorInterface;
+  interface: IRewardsManagerModuleInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -72,51 +76,56 @@ export interface RewardDistributor extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    payout(
+    distributeRewards(
       poolId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
+      collateralType: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      duration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
-  payout(
+  distributeRewards(
     poolId: PromiseOrValue<BigNumberish>,
-    token: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
+    collateralType: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
+    start: PromiseOrValue<BigNumberish>,
+    duration: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    payout(
+    distributeRewards(
       poolId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
+      collateralType: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      duration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<boolean>;
+    ): Promise<void>;
   };
 
   filters: {};
 
   estimateGas: {
-    payout(
+    distributeRewards(
       poolId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
+      collateralType: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      duration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    payout(
+    distributeRewards(
       poolId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
+      collateralType: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      duration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

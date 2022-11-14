@@ -11,20 +11,38 @@ import type {
 
 const _abi = [
   {
+    inputs: [],
+    name: "name",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       {
-        internalType: "uint256",
+        internalType: "uint128",
+        name: "accountId",
+        type: "uint128",
+      },
+      {
+        internalType: "uint128",
         name: "poolId",
-        type: "uint256",
+        type: "uint128",
       },
       {
         internalType: "address",
-        name: "token",
+        name: "collateralType",
         type: "address",
       },
       {
         internalType: "address",
-        name: "to",
+        name: "sender",
         type: "address",
       },
       {
@@ -39,6 +57,19 @@ const _abi = [
         internalType: "bool",
         name: "",
         type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "token",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
       },
     ],
     stateMutability: "nonpayable",

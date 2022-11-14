@@ -41,7 +41,7 @@ options.decimals = "<%= settings.rate_decimals %>"
 options.rate = "<%= settings.weth_rate %>"
 
 [import.synthetix]
-source = "synthetix:<%= settings.synthetix_version %>"
+source = "@ipfs:QmaLU2fe8FemcZQFjm1gfoNBYUoAVjK7bvw7pV2EuKTsaW"
 options.owner = "<%= settings.owner %>"
 
 [contract.Multicall]
@@ -88,6 +88,13 @@ args = [
 ]
 depends=["import.snx", "import.synthetix"]
 
+[invoke.enable_pool_creation]
+target = ["synthetix.CoreProxy"]
+func = "setFeatureFlagAllowAll"
+args = ["0x637265617465506f6f6c00000000000000000000000000000000000000000000", true] # formatBytes32String("createPool")
+fromCall.func = "owner"
+depends=["import.synthetix"]
+
 [invoke.create_preferred_pool]
 target = ["synthetix.CoreProxy"]
 func = "createPool"
@@ -95,7 +102,8 @@ args = [
     1,
     "<%= settings.owner %>",
 ]
-depends=["import.synthetix"]
+fromCall.func = "owner"
+depends=["invoke.enable_pool_creation"]
 
 [invoke.set_preferred_pool]
 target = ["synthetix.CoreProxy"]
@@ -106,21 +114,35 @@ args = [
 ]
 depends=["invoke.create_preferred_pool"]
 
-# [contract.snx_rewards]
-# artifact = "RewardDistributor"
-# depends=["import.snx"]
-# 
-# [invoke.register_snx_rewards]
-# target = ["synthetix.CoreProxy"]
-# func = "distributeRewards"
-# from = "<%= settings.owner %>"
-# args = [
-#     1,
-#     "<%= imports.snx.contracts.token.address %>",
-#     0,
-#     "<%= contracts.snx_rewards.address %>",
-#     "10000000000000000000000000", # amount
-#     "1664582400", # start
-#     "1696118400", # end
-# ]
-# depends=["contract.snx_rewards", "invoke.create_preferred_pool"]
+[contract.snx_rewards]
+artifact = "RewardDistributorMock"
+
+[invoke.initialize_reward_distributor]
+target = ["snx_rewards"]
+func = "initialize"
+args = [
+    "<%= imports.synthetix.contracts.CoreProxy.address %>",
+    "<%= imports.snx.contracts.token.address %>",
+    "SNX Reward Manager"
+]
+depends=["import.synthetix", "contract.snx_rewards", "import.snx"]
+
+[invoke.mint_reward_snx]
+target = ["snx.token"]
+func = "mint"
+args = [
+    "<%= contracts.snx_rewards.address %>",
+    "200000000000000000000"
+]
+depends=["import.synthetix", "contract.snx_rewards"]
+
+[invoke.register_snx_rewards]
+target = ["synthetix.CoreProxy"]
+func = "registerRewardsDistributor"
+from = "<%= settings.owner %>"
+args = [
+    1,
+    "<%= imports.snx.contracts.token.address %>",
+    "<%= contracts.snx_rewards.address %>",
+]
+depends=["contract.snx_rewards", "invoke.create_preferred_pool"]

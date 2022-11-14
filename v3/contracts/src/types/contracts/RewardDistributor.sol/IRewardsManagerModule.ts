@@ -21,45 +21,40 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../common";
+} from "../../common";
 
-export interface IRewardDistributorInterface extends utils.Interface {
+export interface IRewardsManagerModuleInterface extends utils.Interface {
   functions: {
-    "name()": FunctionFragment;
-    "payout(uint128,uint128,address,address,uint256)": FunctionFragment;
-    "token()": FunctionFragment;
+    "distributeRewards(uint128,address,uint256,uint256,uint256)": FunctionFragment;
   };
 
-  getFunction(
-    nameOrSignatureOrTopic: "name" | "payout" | "token"
-  ): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: "distributeRewards"): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "payout",
+    functionFragment: "distributeRewards",
     values: [
       PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
-  encodeFunctionData(functionFragment: "token", values?: undefined): string;
 
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "payout", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "token", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "distributeRewards",
+    data: BytesLike
+  ): Result;
 
   events: {};
 }
 
-export interface IRewardDistributor extends BaseContract {
+export interface IRewardsManagerModule extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IRewardDistributorInterface;
+  interface: IRewardsManagerModuleInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -81,92 +76,56 @@ export interface IRewardDistributor extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    name(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    payout(
-      accountId: PromiseOrValue<BigNumberish>,
+    distributeRewards(
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
-      sender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    token(
+      start: PromiseOrValue<BigNumberish>,
+      duration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
-  name(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  payout(
-    accountId: PromiseOrValue<BigNumberish>,
+  distributeRewards(
     poolId: PromiseOrValue<BigNumberish>,
     collateralType: PromiseOrValue<string>,
-    sender: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  token(
+    start: PromiseOrValue<BigNumberish>,
+    duration: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    name(overrides?: CallOverrides): Promise<string>;
-
-    payout(
-      accountId: PromiseOrValue<BigNumberish>,
+    distributeRewards(
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
-      sender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      duration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    token(overrides?: CallOverrides): Promise<string>;
+    ): Promise<void>;
   };
 
   filters: {};
 
   estimateGas: {
-    name(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    payout(
-      accountId: PromiseOrValue<BigNumberish>,
+    distributeRewards(
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
-      sender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    token(
+      start: PromiseOrValue<BigNumberish>,
+      duration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    name(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    payout(
-      accountId: PromiseOrValue<BigNumberish>,
+    distributeRewards(
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
-      sender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    token(
+      start: PromiseOrValue<BigNumberish>,
+      duration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
