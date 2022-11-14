@@ -1,5 +1,5 @@
 {
-  "address": "0xC3b31BfD689B1812aBA7c17288495Ea9fE9ccE0b",
+  "address": "0x2910D2833c90adC0Da818D240CcA411FA94C5D9F",
   "abi": [
     {
       "type": "error",
@@ -693,7 +693,8 @@
           "name": "destChainId"
         },
         {
-          "type": "address"
+          "type": "address",
+          "name": "to"
         },
         {
           "type": "uint256",
@@ -734,7 +735,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xfae3f04c8eaca5957cc94781a6308ea2b63612419437bc01133eccc7021b9dcf",
+  "deployTxnHash": "0xeda829cd0e8609b0b590f80c90485c98d815885d891be9c6c7094b23e40b2c76",
   "sourceName": "contracts/routers/chain-5/USDRouter.sol",
   "contractName": "USDRouter",
   "deployedOn": "contract.USDRouter"

@@ -1,6 +1,16 @@
 {
-  "address": "0x30F768a7C5fb51820dDb91F6583E35CdD7c4fB8A",
+  "address": "0x26dFEcC173f567E7B60431731b384B8d5Ff2fE22",
   "abi": [
+    {
+      "type": "error",
+      "name": "CapacityLocked",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId"
+        }
+      ]
+    },
     {
       "type": "error",
       "name": "EmptyDistribution",
@@ -45,11 +55,11 @@
     },
     {
       "type": "error",
-      "name": "InsufficientDebt",
+      "name": "InvalidCollateral",
       "inputs": [
         {
-          "type": "int256",
-          "name": "currentDebt"
+          "type": "address",
+          "name": "collateralType"
         }
       ]
     },
@@ -99,20 +109,6 @@
     },
     {
       "type": "error",
-      "name": "MismatchAssociatedSystemKind",
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "expected"
-        },
-        {
-          "type": "bytes32",
-          "name": "actual"
-        }
-      ]
-    },
-    {
-      "type": "error",
       "name": "PermissionDenied",
       "inputs": [
         {
@@ -138,6 +134,21 @@
           "name": "poolId"
         }
       ]
+    },
+    {
+      "type": "error",
+      "name": "PoolNotFound",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "PositionOutOfBounds",
+      "inputs": []
     },
     {
       "type": "error",
@@ -190,95 +201,6 @@
           "indexed": true
         }
       ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "UsdBurned",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "accountId",
-          "indexed": true
-        },
-        {
-          "type": "uint128",
-          "name": "poolId",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amount",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "sender",
-          "indexed": true
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "UsdMinted",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "accountId",
-          "indexed": true
-        },
-        {
-          "type": "uint128",
-          "name": "poolId",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amount",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "sender",
-          "indexed": true
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "burnUsd",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "accountId"
-        },
-        {
-          "type": "uint128",
-          "name": "poolId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "uint256",
-          "name": "amount"
-        }
-      ],
-      "outputs": []
     },
     {
       "type": "function",
@@ -496,35 +418,10 @@
           "type": "int256"
         }
       ]
-    },
-    {
-      "type": "function",
-      "name": "mintUsd",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "accountId"
-        },
-        {
-          "type": "uint128",
-          "name": "poolId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "uint256",
-          "name": "amount"
-        }
-      ],
-      "outputs": []
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x7cdf36f7d7349ef807e8d69d4666a822b4d0e0a822a1b227970972ba1d343fd9",
+  "deployTxnHash": "0x972a44b5253dadddcf3c16a49f8bfb5710d6c5b0548f8893d6085c5c5ceb913b",
   "sourceName": "contracts/modules/core/VaultModule.sol",
   "contractName": "VaultModule",
   "deployedOn": "contract.VaultModule"

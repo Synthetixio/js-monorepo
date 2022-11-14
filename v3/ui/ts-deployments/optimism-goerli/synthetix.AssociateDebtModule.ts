@@ -1,4 +1,4 @@
-export const address = '0x2AC2cf07EEbc48025eAd4A50c8b306E091465aaC';
+export const address = '0x5b5ff238F1d43087A033c9c1800BAAC03d4386F1';
 export const abi = [
   'error EmptyDistribution()',
   'error InconsistentDistribution()',

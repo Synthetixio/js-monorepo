@@ -1,20 +1,22 @@
-export const address = '0x799cc04C581Cf3B74385C47632c3f2F4816305ED';
+export const address = '0x489Ca87B0749711F1081a30b8c6e9f1AAA2B8Ebd';
 export const abi = [
   'error EmptyDistribution()',
+  'error FeatureUnavailable()',
   'error MarketDepositNotApproved(address market, address from, uint256 requestedAmount, uint256 approvedAmount)',
   'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',
   'error NotEnoughLiquidity(uint128 marketId, uint256 amount)',
   'error Unauthorized(address addr)',
   'event MarketRegistered(address indexed market, uint128 indexed marketId)',
-  'event UsdDeposited(uint128 indexed marketId, address indexed target, uint256 amount, address indexed sender)',
-  'event UsdWithdrawn(uint128 indexed marketId, address indexed target, uint256 amount, address indexed sender)',
-  'function depositUsd(uint128 marketId, address target, uint256 amount)',
+  'event MarketUsdDeposited(uint128 indexed marketId, address indexed target, uint256 amount, address indexed sender)',
+  'event MarketUsdWithdrawn(uint128 indexed marketId, address indexed target, uint256 amount, address indexed sender)',
+  'function depositMarketUsd(uint128 marketId, address target, uint256 amount)',
   'function getMarketCollateral(uint128 marketId) view returns (uint256)',
   'function getMarketDebtPerShare(uint128 marketId) returns (int256)',
   'function getMarketIssuance(uint128 marketId) view returns (int128)',
   'function getMarketReportedDebt(uint128 marketId) view returns (uint256)',
   'function getMarketTotalBalance(uint128 marketId) view returns (int256)',
   'function getWithdrawableUsd(uint128 marketId) view returns (uint256)',
+  'function isMarketCapacityLocked(uint128 marketId) view returns (bool)',
   'function registerMarket(address market) returns (uint128 marketId)',
-  'function withdrawUsd(uint128 marketId, address target, uint256 amount)',
+  'function withdrawMarketUsd(uint128 marketId, address target, uint256 amount)',
 ];

@@ -693,7 +693,8 @@
           "name": "destChainId"
         },
         {
-          "type": "address"
+          "type": "address",
+          "name": "to"
         },
         {
           "type": "uint256",
@@ -733,7 +734,7 @@
       ]
     }
   ],
-  "deployTxnHash": "0xd19dc4a59d947b034e472e55ccc205efa234a8b07c10fde3f01320ed688ec989",
+  "deployTxnHash": "0x7e73a442bf8dbc4a53dd91c551f52ad1b483226fc6c95ed81e6b99c352865f2c",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_usd"

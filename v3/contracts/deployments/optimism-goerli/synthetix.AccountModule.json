@@ -1,5 +1,5 @@
 {
-  "address": "0x5aD27fa2E3225Ea057839A196f23082e8f10652E",
+  "address": "0xB3737eEFa2C21b07ACc7053F099B67231A1a0D78",
   "abi": [
     {
       "type": "error",
@@ -356,7 +356,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xbfda496321a23f8b390b7b45972942963ba74b001551f0033d21e8abac59a138",
+  "deployTxnHash": "0x7d39962f46023ca96a9db27d7acf659a89bd8acdbebaa53ce28f7aa15402d9e1",
   "sourceName": "contracts/modules/core/AccountModule.sol",
   "contractName": "AccountModule",
   "deployedOn": "contract.AccountModule"

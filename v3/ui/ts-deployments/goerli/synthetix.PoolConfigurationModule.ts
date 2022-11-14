@@ -1,4 +1,4 @@
-export const address = '0xbe55a54dE7500992EEA1db09CD854893a7A2a221';
+export const address = '0x632e7008Fe2DF46DEDd1Fe01580764868C0264A8';
 export const abi = [
   'error PoolNotFound(uint128 poolId)',
   'error Unauthorized(address addr)',
