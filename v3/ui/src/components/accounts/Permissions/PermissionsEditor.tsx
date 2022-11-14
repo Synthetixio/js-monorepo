@@ -24,7 +24,7 @@ import {
 import { FC, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useManagePermissions } from '../../../hooks';
-import { formatShortAddress } from '../../shared/Address';
+import { prettyTx } from '../../../utils/helpers';
 import { AddressInput } from './AddressInput';
 
 type Props =
@@ -161,8 +161,7 @@ export const PermissionsEditor: FC<Props> = ({
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Are you sure you want to revoke all permissions for{' '}
-              <p>{formatShortAddress(address)}</p>
+              Are you sure you want to revoke all permissions for <p>{prettyTx(address)}</p>
             </AlertDialogBody>
 
             <AlertDialogFooter>

@@ -41,7 +41,7 @@ options.decimals = "<%= settings.rate_decimals %>"
 options.rate = "<%= settings.weth_rate %>"
 
 [import.synthetix]
-source = "@ipfs:QmaLU2fe8FemcZQFjm1gfoNBYUoAVjK7bvw7pV2EuKTsaW"
+source = "synthetix:<%= settings.synthetix_version %>"
 options.owner = "<%= settings.owner %>"
 
 [contract.Multicall]
