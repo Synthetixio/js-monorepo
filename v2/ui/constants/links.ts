@@ -54,4 +54,7 @@ export const EXTERNAL_LINKS = {
   multichain: {
     app: 'https://app.multichain.org/',
   },
+  sips: {
+    sccp246: 'https://sips.synthetix.io/sccp/sccp-246/',
+  },
 };
