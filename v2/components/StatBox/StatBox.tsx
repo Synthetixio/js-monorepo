@@ -1,4 +1,4 @@
-import { Flex, FlexProps, Text } from '@chakra-ui/react';
+import { Flex, FlexProps, Skeleton, Text } from '@chakra-ui/react';
 
 export const StatBox = ({
   label,
@@ -6,7 +6,7 @@ export const StatBox = ({
   containerStyles,
 }: {
   label: string;
-  amount: string;
+  amount?: string;
   containerStyles?: FlexProps;
 }) => {
   return (
@@ -27,7 +27,7 @@ export const StatBox = ({
         {label}
       </Text>
       <Text fontFamily="heading" fontWeight="black" fontSize="2xl" color="white">
-        {amount}
+        {amount === undefined ? <Skeleton height={6} width={10} mt={2} /> : amount}
       </Text>
     </Flex>
   );

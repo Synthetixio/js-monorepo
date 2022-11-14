@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {
   Box,
   Flex,
@@ -11,6 +12,7 @@ import {
   Text,
   Heading,
   Progress,
+  Skeleton,
 } from '@chakra-ui/react';
 import { formatNumber } from '@snx-v2/formatters';
 import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
@@ -23,6 +25,8 @@ import Wei from '@synthetixio/wei';
 import { formatPercent, formatNumberToUsd } from '@snx-v2/formatters';
 import { StatBox } from '@snx-v2/StatBox';
 import { useTranslation } from 'react-i18next';
+import { ContractContext } from '@snx-v2/ContractContext';
+import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 
 const WalletBalancesUi: React.FC<{
   totalSynthBalance?: number;
@@ -44,17 +48,19 @@ const WalletBalancesUi: React.FC<{
       <Flex>
         <StatBox
           label={t('staking-v2.wallet-balances.active-debt')}
-          amount={formatNumberToUsd(debtBalance || 0)} // TODO skeleton
+          amount={debtBalance === undefined ? undefined : formatNumberToUsd(debtBalance)}
           containerStyles={{ alignItems: 'start' }}
         />
         <StatBox
           label={t('staking-v2.wallet-balances.d-snx-value')}
-          amount={dSNXBalance === undefined ? '-' : formatNumberToUsd(dSNXBalance)}
+          amount={dSNXBalance === undefined ? undefined : formatNumberToUsd(dSNXBalance)}
           containerStyles={{ marginX: 2, alignItems: 'center' }}
         />
         <StatBox
           label={t('staking-v2.wallet-balances.total-synth-value')}
-          amount={formatNumberToUsd(totalSynthBalance || 0)}
+          amount={
+            totalSynthBalance === undefined ? undefined : formatNumberToUsd(totalSynthBalance)
+          }
           containerStyles={{ alignItems: 'end' }}
         />
       </Flex>
@@ -166,10 +172,13 @@ export const WalletBalances = () => {
   const { data: dSNXBalanceData } = useGetDSnxBalance();
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: synthByNameData } = useGetSynthsByName();
+  const { networkId } = useContext(ContractContext);
   return (
     <WalletBalancesUi
       debtBalance={debtData?.debtBalance.toNumber()}
-      dSNXBalance={dSNXBalanceData?.balance.toNumber()}
+      dSNXBalance={
+        networkId !== NetworkIdByName['mainnet-ovm'] ? 0 : dSNXBalanceData?.balance.toNumber()
+      }
       totalSynthBalance={synthsBalanceData?.totalUSDBalance.toNumber()}
       synthData={getSynthDataForTable(
         synthsBalanceData?.balances,
