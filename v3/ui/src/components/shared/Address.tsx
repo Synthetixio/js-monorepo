@@ -2,15 +2,13 @@ import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { Link, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useRecoilState } from 'recoil';
+import { prettyTx } from '../../utils/helpers';
 import { chainIdState } from '../../utils/state';
 
 interface Props {
   address?: string;
   displayFullAddress?: boolean;
 }
-
-export const formatShortAddress = (address: string) =>
-  `${address.slice(0, 6)}....${address.slice(-4)}`;
 
 export const Address: FC<Props> = ({ address, displayFullAddress }) => {
   const [localChainId] = useRecoilState(chainIdState);
@@ -32,7 +30,7 @@ export const Address: FC<Props> = ({ address, displayFullAddress }) => {
   }
 
   // ENS support here?
-  const addressDisplay = displayFullAddress ? address : formatShortAddress(address);
+  const addressDisplay = displayFullAddress ? address : prettyTx(address);
   return (
     <Text>
       {addressDisplay}

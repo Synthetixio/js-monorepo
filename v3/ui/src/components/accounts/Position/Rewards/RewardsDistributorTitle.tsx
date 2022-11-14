@@ -1,8 +1,10 @@
 import { Text, Button, Tr, Td } from '@chakra-ui/react';
 import Big from 'big.js';
+import { formatUnits } from 'ethers/lib/utils';
 import { FC, useCallback, useState } from 'react';
-import { useContractWrite } from 'wagmi';
-import { useSnxProxy } from '../../../../hooks';
+import { useContractRead, useContractWrite, useToken } from 'wagmi';
+import { useContract, useSnxProxy } from '../../../../hooks';
+import { contracts } from '../../../../utils/constants';
 import { CollateralType } from '../../../../utils/types';
 import { Amount } from '../../../shared/Amount/Amount';
 import { RewardRate } from './RewardRate';
@@ -17,7 +19,7 @@ interface Props {
   refetch: () => void;
 }
 
-export const RewardsRow: FC<Props> = ({
+export const RewardsDistributorTitle: FC<Props> = ({
   distributor,
   value,
   poolId,
@@ -26,7 +28,19 @@ export const RewardsRow: FC<Props> = ({
   refetch,
 }) => {
   const snxProxy = useSnxProxy();
+  const snxReward = useContract(contracts.SNX_REWARD);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { data: rewardToken } = useContractRead({
+    addressOrName: distributor,
+    contractInterface: snxReward?.abi,
+    functionName: 'token',
+  });
+
+  const { data: token } = useToken({
+    address: rewardToken?.toString(),
+    enabled: !!rewardToken,
+  });
 
   const { writeAsync } = useContractWrite({
     mode: 'recklesslyUnprepared',
@@ -54,9 +68,16 @@ export const RewardsRow: FC<Props> = ({
         <RewardsDistributor distributor={distributor} />
       </Td>
       <Td py="4">
-        <Amount value={value} /> available
+        {token && <Amount value={formatUnits(value, token.decimals)} suffix={` ${token.symbol}`} />}{' '}
+        available
         <Text fontSize="xs" opacity="0.66" mt="1">
-          <RewardRate poolId={poolId} collateral={collateral} distributor={distributor} />
+          <RewardRate
+            poolId={poolId}
+            collateral={collateral}
+            distributor={distributor}
+            decimals={token?.decimals || 18}
+            symbol={token?.symbol}
+          />
         </Text>
       </Td>
       <Td isNumeric>
@@ -68,7 +89,9 @@ export const RewardsRow: FC<Props> = ({
           colorScheme="green"
         >
           <Text mr={1}>Claim</Text>
-          <Amount value={value} />
+          {token && (
+            <Amount value={formatUnits(value, token.decimals)} suffix={` ${token.symbol}`} />
+          )}
         </Button>
       </Td>
     </Tr>
