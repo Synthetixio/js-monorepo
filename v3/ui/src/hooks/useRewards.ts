@@ -1,7 +1,6 @@
 import { useQuery } from 'wagmi';
 import { useSnxProxy } from './useContract';
 import { CollateralType } from '../utils/types';
-import { formatUnits } from 'ethers/lib/utils';
 
 interface RewardDistribution {
   value: string;
@@ -21,7 +20,7 @@ export const useGetRewards = (accountId: string, poolId: string, collateral: Col
 
         return (rewards || []).map((reward: any, index: number) => ({
           distributor: distributors[index],
-          value: formatUnits(reward?.toString()),
+          value: reward?.toString(),
         }));
       } catch (error) {}
     }

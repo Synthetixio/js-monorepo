@@ -2,7 +2,7 @@ import { Box, Text, Table, Thead, Tbody, Tr, Th, Spinner } from '@chakra-ui/reac
 import { FC } from 'react';
 import { useGetRewards } from '../../../../hooks/useRewards';
 import { CollateralType } from '../../../../utils/types';
-import { RewardsRow } from './RewardsRow';
+import { RewardsDistributorTitle } from './RewardsDistributorTitle';
 
 interface Props {
   accountId: string;
@@ -31,7 +31,7 @@ export const Rewards: FC<Props> = ({ poolId, collateral, accountId }) => {
         </Thead>
         <Tbody>
           {rewards.map((reward) => (
-            <RewardsRow
+            <RewardsDistributorTitle
               key={reward.distributor}
               value={reward.value}
               distributor={reward.distributor}
