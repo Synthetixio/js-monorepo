@@ -1,5 +1,5 @@
 import { InfoIcon } from '@chakra-ui/icons';
-import { Text, Tooltip } from '@chakra-ui/react';
+import { Tooltip } from '@chakra-ui/react';
 import Big from 'big.js';
 import { FC } from 'react';
 import { useContractRead } from 'wagmi';
