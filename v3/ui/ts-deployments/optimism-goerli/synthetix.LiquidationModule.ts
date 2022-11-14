@@ -1,4 +1,4 @@
-export const address = '0x3aaBAcBB0ED9ed6e741c0404673F271D6f34Ce16';
+export const address = '0x125187A4FBAEdE1287D072d6bF0a8C09FcEaE118';
 export const abi = [
   'error EmptyDistribution()',
   'error FailedTransfer(address from, address to, uint256 value)',

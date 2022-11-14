@@ -1,4 +1,4 @@
-export const address = '0x218b8eba49f8d54c320951e87d6222C26D029D80';
+export const address = '0x0c7963B4A5c93338cC29FD8cf37D5CA777225187';
 export const abi = [
   'error FailedTransfer(address from, address to, uint256 value)',
   'error InsufficientMarketCollateralDepositable(uint128 marketId, address collateralType, uint256 amountToDeposit)',

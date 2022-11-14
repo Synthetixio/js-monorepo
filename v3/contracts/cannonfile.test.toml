@@ -6,7 +6,7 @@ description = "Synthetix system supplemental contracts for testnet"
 defaultValue = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
 
 [setting.synthetix_version]
-defaultValue = "3.0.0-alpha.2"
+defaultValue = "3.0.0-alpha.3"
 
 [setting.weth_address]
 defaultValue = "0x4200000000000000000000000000000000000006"

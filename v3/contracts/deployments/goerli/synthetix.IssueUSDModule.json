@@ -1,5 +1,5 @@
 {
-  "address": "0x125187A4FBAEdE1287D072d6bF0a8C09FcEaE118",
+  "address": "0xe24fbfA8AACbF2dB1f52BB0d729627BD573dED67",
   "abi": [
     {
       "type": "error",
@@ -8,30 +8,12 @@
     },
     {
       "type": "error",
-      "name": "FailedTransfer",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "from"
-        },
-        {
-          "type": "address",
-          "name": "to"
-        },
-        {
-          "type": "uint256",
-          "name": "value"
-        }
-      ]
-    },
-    {
-      "type": "error",
       "name": "InconsistentDistribution",
       "inputs": []
     },
     {
       "type": "error",
-      "name": "IneligibleForLiquidation",
+      "name": "InsufficientCollateralRatio",
       "inputs": [
         {
           "type": "uint256",
@@ -43,25 +25,21 @@
         },
         {
           "type": "uint256",
-          "name": "currentCRatio"
+          "name": "ratio"
         },
         {
           "type": "uint256",
-          "name": "cratio"
+          "name": "minRatio"
         }
       ]
     },
     {
       "type": "error",
-      "name": "InvalidParameters",
+      "name": "InsufficientDebt",
       "inputs": [
         {
-          "type": "string",
-          "name": "incorrectParameter"
-        },
-        {
-          "type": "string",
-          "name": "help"
+          "type": "int256",
+          "name": "currentDebt"
         }
       ]
     },
@@ -91,8 +69,21 @@
     },
     {
       "type": "error",
-      "name": "MustBeVaultLiquidated",
-      "inputs": []
+      "name": "PermissionDenied",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "bytes32",
+          "name": "permission"
+        },
+        {
+          "type": "address",
+          "name": "target"
+        }
+      ]
     },
     {
       "type": "error",
@@ -102,7 +93,7 @@
     {
       "type": "event",
       "anonymous": false,
-      "name": "Liquidation",
+      "name": "UsdBurned",
       "inputs": [
         {
           "type": "uint128",
@@ -117,30 +108,30 @@
         {
           "type": "address",
           "name": "collateralType",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
           "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "debtLiquidated",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "collateralLiquidated",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amountRewarded",
-          "indexed": false
         }
       ]
     },
     {
       "type": "event",
       "anonymous": false,
-      "name": "VaultLiquidation",
+      "name": "UsdMinted",
       "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId",
+          "indexed": true
+        },
         {
           "type": "uint128",
           "name": "poolId",
@@ -149,28 +140,23 @@
         {
           "type": "address",
           "name": "collateralType",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
           "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "debtLiquidated",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "collateralLiquidated",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amountRewarded",
-          "indexed": false
         }
       ]
     },
     {
       "type": "function",
-      "name": "isLiquidatable",
+      "name": "burnUsd",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -185,17 +171,17 @@
         {
           "type": "address",
           "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
         }
       ],
-      "outputs": [
-        {
-          "type": "bool"
-        }
-      ]
+      "outputs": []
     },
     {
       "type": "function",
-      "name": "liquidate",
+      "name": "mintUsd",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -210,61 +196,18 @@
         {
           "type": "address",
           "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
         }
       ],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "amountRewarded"
-        },
-        {
-          "type": "uint256",
-          "name": "debtLiquidated"
-        },
-        {
-          "type": "uint256",
-          "name": "collateralLiquidated"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "liquidateVault",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "uint128",
-          "name": "liquidateAsAccountId"
-        },
-        {
-          "type": "uint256",
-          "name": "maxUsd"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "amountLiquidated"
-        },
-        {
-          "type": "uint256",
-          "name": "collateralRewarded"
-        }
-      ]
+      "outputs": []
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x0bbf24575d3f2584a5d5c26bf11e840417b815a13d07621ebdfa616e3c1b6551",
-  "sourceName": "contracts/modules/core/LiquidationModule.sol",
-  "contractName": "LiquidationModule",
-  "deployedOn": "contract.LiquidationModule"
+  "deployTxnHash": "0x1382505232d70d9b432b6537bf8e3dc84d390136e431a59f29c262adde4aaf1a",
+  "sourceName": "contracts/modules/core/IssueUSDModule.sol",
+  "contractName": "IssueUSDModule",
+  "deployedOn": "contract.IssueUSDModule"
 }

@@ -45,6 +45,6 @@ export const abi = [
   'function symbol() view returns (string)',
   'function totalSupply() view returns (uint256)',
   'function transfer(address to, uint256 amount) returns (bool)',
-  'function transferCrossChain(uint256 destChainId, address, uint256 amount) returns (uint256 feesPaid)',
+  'function transferCrossChain(uint256 destChainId, address to, uint256 amount) returns (uint256 feesPaid)',
   'function transferFrom(address from, address to, uint256 amount) returns (bool)',
 ];

@@ -1,4 +1,4 @@
-export const address = '0x5aD27fa2E3225Ea057839A196f23082e8f10652E';
+export const address = '0xB3737eEFa2C21b07ACc7053F099B67231A1a0D78';
 export const abi = [
   'error InvalidPermission(bytes32 permission)',
   'error InvalidPermission()',
