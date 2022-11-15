@@ -9,10 +9,10 @@ import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 
 const walletPages = [
   { name: 'balances', link: '/wallet/balances', icon: false, mainnetOnly: false },
-  { name: 'bridge', link: '/bridge', icon: true, mainnetOnly: false },
   { name: 'escrow', link: '/escrow', icon: true, mainnetOnly: false },
   { name: 'history', link: '/history', icon: true, mainnetOnly: false },
   { name: 'delegate', link: '/delegate', icon: true, mainnetOnly: false },
+  { name: 'bridge', link: '/bridge', icon: true, mainnetOnly: false },
   { name: 'merge-accounts', link: '/merge-accounts', icon: true, mainnetOnly: false },
   { name: 'migrate-escrow', link: '/migrate-escrow', icon: true, mainnetOnly: true },
 ] as const;
