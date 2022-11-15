@@ -32,7 +32,7 @@ export const useGetDSnxBalance = () => {
         balanceUsd: balance.mul(price),
       };
     },
-    enabled: Boolean(walletAddress && networkId && networkId == NetworkIdByName['mainnet-ovm']), // TODO need a discussion if we want to fetch price form optimism when connected to mainnet
+    enabled: Boolean(walletAddress && networkId && networkId == NetworkIdByName['mainnet-ovm']),
     staleTime: 10000,
   });
 };
