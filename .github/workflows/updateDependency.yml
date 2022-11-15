@@ -35,7 +35,11 @@ jobs:
 
       - name: Update to the new synthetix version
         run: |
-          yarn up synthetix@${{ github.event.inputs.synthetix_version }}
+          TMP_PACKAGE_JSON=$(mktemp)
+          jq --arg synthetix_version "${{ github.event.inputs.synthetix_version }}" '.resolutions.synthetix = $synthetix_version' package.json > $TMP_PACKAGE_JSON
+          mv "$TMP_PACKAGE_JSON" package.json
+
+          yarn up "synthetix@${{ github.event.inputs.synthetix_version }}"
 
           # Synthetix version will bump only affected packages
           for WORKSPACE_PACKAGE in $(git diff --name-only '**/package.json'); do
