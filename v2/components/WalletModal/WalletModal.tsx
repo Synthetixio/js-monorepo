@@ -144,7 +144,7 @@ export const WalletModalUi: FC<{
               variant="ghost"
               onClick={() => {
                 onClose();
-                navigate('/synths');
+                navigate('/wallet');
               }}
               margin="0 auto"
             >
