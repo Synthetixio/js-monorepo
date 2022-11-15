@@ -125,7 +125,7 @@ export const NavigationUI = ({
           }}
           onClick={() => {
             window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'false';
-            window.location.reload();
+            window.location.href = window.location.origin;
           }}
           fontFamily="heading"
         >
