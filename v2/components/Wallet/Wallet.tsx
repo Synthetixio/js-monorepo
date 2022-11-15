@@ -25,7 +25,7 @@ const WalletUi = ({ networkId }: { networkId: number | null }) => {
   return (
     <Box mt={6}>
       <Heading size="md" textAlign="center">
-        {t('staking-v2.wallet.my-account')}
+        {t('staking-v2.wallet.my-wallet')}
       </Heading>
       <Tabs
         variant="solid-rounded"
