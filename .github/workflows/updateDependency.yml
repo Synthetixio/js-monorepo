@@ -52,7 +52,8 @@ jobs:
             yarn deps:version $WORKSPACE_NAME patch
           done
 
-          git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty --no-verify
+          # Commit changes in one go later
+          # git commit -am "synthetix@${{ github.event.inputs.synthetix_version }}" --allow-empty --no-verify
 
       - run: yarn version apply --all
       - run: yarn build
@@ -63,6 +64,7 @@ jobs:
           cat /tmp/changed-packages.txt
 
           echo -n > /tmp/commit-message.txt
+          echo "synthetix@${{ github.event.inputs.synthetix_version }}" > /tmp/commit-message.txt 
           echo 'Updated packages:' >> /tmp/commit-message.txt
           for WORKSPACE_PACKAGE in $(cat /tmp/changed-packages.txt); do
             WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
