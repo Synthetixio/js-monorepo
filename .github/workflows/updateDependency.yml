@@ -9,6 +9,8 @@ on:
 
 jobs:
   update_version:
+    # run only on master branch
+    if: github.ref == 'refs/heads/master'
     name: Update synthetix in packages
     runs-on: ubuntu-latest
     steps:
