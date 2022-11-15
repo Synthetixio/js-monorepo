@@ -8,6 +8,7 @@
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/WalletBalances": "workspace:*",
     "@snx-v2/icons": "workspace:*",
+    "@snx-v2/useSynthetixContracts": "workspace:*",
     "react": "^18.2.0",
     "react-i18next": "^11.18.3",
     "react-router-dom": "^6.3.0"

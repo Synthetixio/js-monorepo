@@ -7310,6 +7310,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/WalletBalances": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
     react-router-dom: ^6.3.0
@@ -7321,6 +7322,7 @@ __metadata:
   resolution: "@snx-v2/WalletBalances@workspace:v2/components/WalletBalances"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/SynthIcons": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
@@ -7328,8 +7330,10 @@ __metadata:
     "@snx-v2/useDSnxBalance": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
   linkType: soft
