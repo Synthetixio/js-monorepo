@@ -41,6 +41,9 @@ jobs:
 
           yarn up "synthetix@${{ github.event.inputs.synthetix_version }}"
 
+          echo 'yarn workspace "@synthetixio/contracts" build'
+          yarn workspace "@synthetixio/contracts" build 
+
           # Synthetix version will bump only affected packages
           for WORKSPACE_PACKAGE in $(git diff --name-only '**/package.json'); do
             WORKSPACE_NAME=$(jq --raw-output '.name' < $WORKSPACE_PACKAGE)
