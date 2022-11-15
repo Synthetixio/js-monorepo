@@ -43,7 +43,6 @@ type CollateralType @entity {
   target_c_ratio: BigInt!
   minimum_c_ratio: BigInt!
   liquidation_reward: BigDecimal!
-  "collateral deposited for adding up and collateral removed for subtraction / CollateralModule Contract"
   created_at: BigInt!
   created_at_block: BigInt!
   total_amount_deposited: BigInt
@@ -52,38 +51,47 @@ type CollateralType @entity {
 }
 
 type Account @entity {
-  "NFT TOKEN ID"
+  "NFT token ID"
   id: ID!
   owner: Bytes!
   created_at: BigInt!
   created_at_block: BigInt!
   updated_at: BigInt
   updated_at_block: BigInt
-  "roles and permissions"
-  permissions: AccountPermissionUsers
+  permissions: [AccountPermissionUsers!]
 }
 
 type AccountPermissionUsers @entity {
-  "NFT Token ID - user address"
+  "NFT token ID + user address"
   id: ID!
   address: Bytes!
   permissions: Bytes!
+  created_at: BigInt!
+  created_at_block: BigInt!
+  updated_at: BigInt!
+  updated_at_block: BigInt!
 }
 
-# type Position @entity{
-#   id: ID! "NFT Token ID + pool id + collateral type address | concat it"
-#   total_minted: BigInt!
-#   total_burned: BigInt!
-#   "value of delegation updated event. No computation!"
-#   collateral_amount: BigInt!
-#   "position is updated, call the c ratio function?"
-#   c_ratio: BigInt!
-#   updated_at: BigInt!
-# }
+type Position @entity {
+  "NFT Token ID + pool id + collateral type address"
+  id: ID!
+  collateral_amount: BigInt!
+  leverage: BigInt!
+  c_ratio: BigInt!
+  created_at: BigInt!
+  created_at_block: BigInt!
+  updated_at: BigInt!
+  updated_at_block: BigInt!
+  total_minted: BigInt
+  total_burned: BigInt
+}
 
-# type Vault @entity {
-#   id: "pool id + collateral type address"
-#   "When processing the delegation updated event, if already collateral amount, then compute that, minus or plus,
-#    if not just put it in"
-#   collateral_amount: BigInt!
-# }
+type Vault @entity {
+  "Pool id + collateral type address"
+  id: ID!
+  collateral_amount: BigInt!
+  created_at: BigInt!
+  created_at_block: BigInt!
+  updated_at: BigInt!
+  updated_at_block: BigInt!
+}

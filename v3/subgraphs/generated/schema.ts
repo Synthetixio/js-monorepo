@@ -646,20 +646,20 @@ export class Account extends Entity {
     }
   }
 
-  get permissions(): string | null {
+  get permissions(): Array<string> | null {
     let value = this.get("permissions");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toString();
+      return value.toStringArray();
     }
   }
 
-  set permissions(value: string | null) {
+  set permissions(value: Array<string> | null) {
     if (!value) {
       this.unset("permissions");
     } else {
-      this.set("permissions", Value.fromString(<string>value));
+      this.set("permissions", Value.fromStringArray(<Array<string>>value));
     }
   }
 }
@@ -716,5 +716,247 @@ export class AccountPermissionUsers extends Entity {
 
   set permissions(value: Bytes) {
     this.set("permissions", Value.fromBytes(value));
+  }
+
+  get created_at(): BigInt {
+    let value = this.get("created_at");
+    return value!.toBigInt();
+  }
+
+  set created_at(value: BigInt) {
+    this.set("created_at", Value.fromBigInt(value));
+  }
+
+  get created_at_block(): BigInt {
+    let value = this.get("created_at_block");
+    return value!.toBigInt();
+  }
+
+  set created_at_block(value: BigInt) {
+    this.set("created_at_block", Value.fromBigInt(value));
+  }
+
+  get updated_at(): BigInt {
+    let value = this.get("updated_at");
+    return value!.toBigInt();
+  }
+
+  set updated_at(value: BigInt) {
+    this.set("updated_at", Value.fromBigInt(value));
+  }
+
+  get updated_at_block(): BigInt {
+    let value = this.get("updated_at_block");
+    return value!.toBigInt();
+  }
+
+  set updated_at_block(value: BigInt) {
+    this.set("updated_at_block", Value.fromBigInt(value));
+  }
+}
+
+export class Position extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Position entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Position must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Position", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Position | null {
+    return changetype<Position | null>(store.get("Position", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get collateral_amount(): BigInt {
+    let value = this.get("collateral_amount");
+    return value!.toBigInt();
+  }
+
+  set collateral_amount(value: BigInt) {
+    this.set("collateral_amount", Value.fromBigInt(value));
+  }
+
+  get leverage(): BigInt {
+    let value = this.get("leverage");
+    return value!.toBigInt();
+  }
+
+  set leverage(value: BigInt) {
+    this.set("leverage", Value.fromBigInt(value));
+  }
+
+  get c_ratio(): BigInt {
+    let value = this.get("c_ratio");
+    return value!.toBigInt();
+  }
+
+  set c_ratio(value: BigInt) {
+    this.set("c_ratio", Value.fromBigInt(value));
+  }
+
+  get created_at(): BigInt {
+    let value = this.get("created_at");
+    return value!.toBigInt();
+  }
+
+  set created_at(value: BigInt) {
+    this.set("created_at", Value.fromBigInt(value));
+  }
+
+  get created_at_block(): BigInt {
+    let value = this.get("created_at_block");
+    return value!.toBigInt();
+  }
+
+  set created_at_block(value: BigInt) {
+    this.set("created_at_block", Value.fromBigInt(value));
+  }
+
+  get updated_at(): BigInt {
+    let value = this.get("updated_at");
+    return value!.toBigInt();
+  }
+
+  set updated_at(value: BigInt) {
+    this.set("updated_at", Value.fromBigInt(value));
+  }
+
+  get updated_at_block(): BigInt {
+    let value = this.get("updated_at_block");
+    return value!.toBigInt();
+  }
+
+  set updated_at_block(value: BigInt) {
+    this.set("updated_at_block", Value.fromBigInt(value));
+  }
+
+  get total_minted(): BigInt | null {
+    let value = this.get("total_minted");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set total_minted(value: BigInt | null) {
+    if (!value) {
+      this.unset("total_minted");
+    } else {
+      this.set("total_minted", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get total_burned(): BigInt | null {
+    let value = this.get("total_burned");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set total_burned(value: BigInt | null) {
+    if (!value) {
+      this.unset("total_burned");
+    } else {
+      this.set("total_burned", Value.fromBigInt(<BigInt>value));
+    }
+  }
+}
+
+export class Vault extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Vault entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Vault must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Vault", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Vault | null {
+    return changetype<Vault | null>(store.get("Vault", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get collateral_amount(): BigInt {
+    let value = this.get("collateral_amount");
+    return value!.toBigInt();
+  }
+
+  set collateral_amount(value: BigInt) {
+    this.set("collateral_amount", Value.fromBigInt(value));
+  }
+
+  get created_at(): BigInt {
+    let value = this.get("created_at");
+    return value!.toBigInt();
+  }
+
+  set created_at(value: BigInt) {
+    this.set("created_at", Value.fromBigInt(value));
+  }
+
+  get created_at_block(): BigInt {
+    let value = this.get("created_at_block");
+    return value!.toBigInt();
+  }
+
+  set created_at_block(value: BigInt) {
+    this.set("created_at_block", Value.fromBigInt(value));
+  }
+
+  get updated_at(): BigInt {
+    let value = this.get("updated_at");
+    return value!.toBigInt();
+  }
+
+  set updated_at(value: BigInt) {
+    this.set("updated_at", Value.fromBigInt(value));
+  }
+
+  get updated_at_block(): BigInt {
+    let value = this.get("updated_at_block");
+    return value!.toBigInt();
+  }
+
+  set updated_at_block(value: BigInt) {
+    this.set("updated_at_block", Value.fromBigInt(value));
   }
 }

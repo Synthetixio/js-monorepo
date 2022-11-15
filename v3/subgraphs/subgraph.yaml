@@ -25,7 +25,7 @@ dataSources:
           handler: handlePoolNameUpdated
         - event: PoolOwnershipAccepted(indexed uint128,indexed address)
           handler: handleNewPoolOwner
-        - event: PoolConfigurationSet(indexed uint128,(uint128,uint128,int128)[],address)
+        - event: PoolConfigurationSet(indexed uint128,(uint128,uint128,int128)[],indexed address)
           handler: handlePoolConfigurationSet
       file: ./src/core.ts
   - kind: ethereum
@@ -45,9 +45,11 @@ dataSources:
         - name: MarketManagerModule
           file: ./abis/MarketManagerModule.json
       eventHandlers:
-        - event: UsdDeposited(indexed uint128,indexed address,uint256,indexed address)
+        - event: MarketRegistered(indexed address,indexed uint128)
+          handler: handleMarketCreated
+        - event: MarketUsdDeposited(indexed uint128,indexed address,uint256,indexed address)
           handler: handleUSDDeposited
-        - event: UsdWithdrawn(indexed uint128,indexed address,uint256,indexed address)
+        - event: MarketUsdWithdrawn(indexed uint128,indexed address,uint256,indexed address)
           handler: handleUSDWithdrawn
       file: ./src/core.ts
   - kind: ethereum
@@ -69,9 +71,9 @@ dataSources:
       eventHandlers:
         - event: CollateralConfigured(indexed address,indexed address,uint256,uint256,uint256,indexed bool)
           handler: handleCollateralConfigured
-        - event: CollateralDeposited(indexed uint128,indexed address,uint256,indexed address)
+        - event: Deposited(indexed uint128,indexed address,uint256,indexed address)
           handler: handleCollateralDeposit
-        - event: CollateralWithdrawn(indexed uint128,indexed address,uint256,indexed address)
+        - event: Withdrawn(indexed uint128,indexed address,uint256,indexed address)
           handler: handleCollateralWithdrawn
       file: ./src/core.ts
   - kind: ethereum
@@ -98,4 +100,47 @@ dataSources:
           handler: handlePermissionGranted
         - event: PermissionRevoked(indexed uint128,indexed bytes32,indexed address,address)
           handler: handlePermissionRevoked
+      file: ./src/core.ts
+  - kind: ethereum
+    name: VaultModule
+    network: goerli
+    source:
+      address: '0x8589Cf382d82fdDa237eFd75CEb493C4fe79A5ED'
+      abi: VaultModule
+      startBlock: 7833258
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - VaultModule
+        - Position
+      abis:
+        - name: VaultModule
+          file: ./abis/VaultModule.json
+      eventHandlers:
+        - event: DelegationUpdated(indexed uint128,indexed uint128,address,uint256,uint256,indexed address)
+          handler: handleDelegationUpdated
+      file: ./src/core.ts
+  - kind: ethereum
+    name: IssueUSDModule
+    network: goerli
+    source:
+      address: '0x8589Cf382d82fdDa237eFd75CEb493C4fe79A5ED'
+      abi: IssueUSDModule
+      startBlock: 7833258
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - IssueUSDModule
+      abis:
+        - name: IssueUSDModule
+          file: ./abis/IssueUSDModule.json
+      eventHandlers:
+        - event: UsdMinted(indexed uint128,indexed uint128,address,uint256,indexed address)
+          handler: handleUSDMinted
+        - event: UsdBurned(indexed uint128,indexed uint128,address,uint256,indexed address)
+          handler: handleUSDBurned
       file: ./src/core.ts

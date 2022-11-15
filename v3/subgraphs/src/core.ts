@@ -7,18 +7,21 @@ import {
 import {
   MarketRegistered,
   MarketManagerModule,
+  MarketUsdDeposited,
+  MarketUsdWithdrawn,
 } from '../generated/MarketManagerModule/MarketManagerModule';
-import { UsdDeposited, UsdWithdrawn } from '../generated/MarketManagerModule/MarketManagerModule';
 import {
   CollateralConfigured,
-  CollateralDeposited,
-  CollateralWithdrawn,
+  Deposited,
+  Withdrawn,
 } from '../generated/CollateralModule/CollateralModule';
 import {
   AccountCreated,
   PermissionGranted,
   PermissionRevoked,
 } from '../generated/AccountModule/AccountModule';
+import { DelegationUpdated, VaultModule } from '../generated/VaultModule/VaultModule';
+import { UsdMinted, UsdBurned } from '../generated/IssueUSDModule/IssueUSDModule';
 import {
   Pool,
   Market,
@@ -26,8 +29,10 @@ import {
   CollateralType,
   Account,
   AccountPermissionUsers,
+  Vault,
+  Position,
 } from '../generated/schema';
-import { BigDecimal, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
+import { BigDecimal } from '@graphprotocol/graph-ts';
 
 // Event handlers
 export function handlePoolCreated(event: PoolCreated): void {
@@ -66,6 +71,15 @@ export function handleMarketCreated(event: MarketRegistered): void {
   newMarket.save();
 }
 
+export function handleAccountCreated(event: AccountCreated): void {
+  const account = new Account(event.params.accountId.toString());
+  account.owner = event.params.sender;
+  account.created_at = event.block.timestamp;
+  account.created_at_block = event.block.number;
+  account.permissions = [''];
+  account.save();
+}
+
 export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
   const pool = Pool.load(event.params.poolId.toString());
   const markets: Market[] = [];
@@ -91,7 +105,7 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
   }
 }
 
-export function handleUsdDeposit(event: UsdDeposited): void {
+export function handleUsdDeposit(event: MarketUsdDeposited): void {
   const market = Market.load(event.params.marketId.toString());
   if (market !== null) {
     const contract = MarketManagerModule.bind(event.address);
@@ -114,7 +128,7 @@ export function handleUsdDeposit(event: UsdDeposited): void {
   }
 }
 
-export function handleUsdWithdrawn(event: UsdWithdrawn): void {
+export function handleUsdWithdrawn(event: MarketUsdWithdrawn): void {
   const market = Market.load(event.params.marketId.toString());
   if (market !== null) {
     const contract = MarketManagerModule.bind(event.address);
@@ -139,9 +153,9 @@ export function handleUsdWithdrawn(event: UsdWithdrawn): void {
 }
 
 export function handleCollateralConfigured(event: CollateralConfigured): void {
-  let collateralType = CollateralType.load(event.params.collateralType.toString());
+  let collateralType = CollateralType.load(event.params.collateralType.toHex());
   if (collateralType === null) {
-    collateralType = new CollateralType(event.params.collateralType.toString());
+    collateralType = new CollateralType(event.params.collateralType.toHex());
     collateralType.created_at = event.block.timestamp;
     collateralType.created_at_block = event.block.number;
   }
@@ -149,20 +163,18 @@ export function handleCollateralConfigured(event: CollateralConfigured): void {
   collateralType.updated_at_block = event.block.number;
   collateralType.liquidation_reward = event.params.liquidationReward.toBigDecimal();
   collateralType.minimum_c_ratio = event.params.minimumCollateralizationRatio;
-  collateralType.depositing_enabled = event.params.stakingEnabled;
+  collateralType.depositing_enabled = event.params.depositingEnabled;
   collateralType.target_c_ratio = event.params.targetCollateralizationRatio;
-  collateralType.updated_at = event.block.timestamp;
-  collateralType.updated_at_block = event.block.number;
   collateralType.save();
 }
 
-export function handleCollateralDeposit(event: CollateralDeposited): void {
-  let collateralType = CollateralType.load(event.address.toString());
+export function handleCollateralDeposit(event: Deposited): void {
+  let collateralType = CollateralType.load(event.params.collateralType.toHex());
   if (collateralType) {
     collateralType.updated_at = event.block.timestamp;
     collateralType.updated_at_block = event.block.number;
     if (
-      typeof collateralType.total_amount_deposited === 'object' &&
+      collateralType.total_amount_deposited !== null &&
       !collateralType.total_amount_deposited!.isZero()
     ) {
       collateralType.total_amount_deposited = collateralType.total_amount_deposited!.plus(
@@ -175,13 +187,13 @@ export function handleCollateralDeposit(event: CollateralDeposited): void {
   }
 }
 
-export function handleCollateralWithdrawn(event: CollateralWithdrawn): void {
-  let collateralType = CollateralType.load(event.address.toString());
+export function handleCollateralWithdrawn(event: Withdrawn): void {
+  let collateralType = CollateralType.load(event.params.collateralType.toHex());
   if (collateralType) {
     collateralType.updated_at = event.block.timestamp;
     collateralType.updated_at_block = event.block.number;
     if (
-      typeof collateralType.total_amount_deposited === 'object' &&
+      collateralType.total_amount_deposited !== null &&
       !collateralType.total_amount_deposited!.isZero()
     ) {
       collateralType.total_amount_deposited = collateralType.total_amount_deposited!.minus(
@@ -192,38 +204,172 @@ export function handleCollateralWithdrawn(event: CollateralWithdrawn): void {
   }
 }
 
-export function handleAccountCreated(event: AccountCreated): void {
-  const account = new Account(event.params.accountId.toString());
-  account.owner = event.params.sender;
-  account.created_at = event.block.timestamp;
-  account.created_at_block = event.block.number;
-  account.save();
-}
-
 export function handlePermissionGranted(event: PermissionGranted): void {
   const account = Account.load(event.params.accountId.toString());
   if (account !== null) {
     let permissions = AccountPermissionUsers.load(
-      concatIds([event.params.accountId.toString(), event.params.user.toString()])
+      event.params.accountId.toString().concat('-').concat(event.params.user.toHex())
     );
     if (permissions !== null) {
       permissions.address = event.params.user;
       permissions.permissions = event.params.permission.concat(permissions.permissions);
+      permissions.updated_at = event.block.timestamp;
+      permissions.updated_at_block = event.block.number;
       permissions.save();
     } else {
       permissions = new AccountPermissionUsers(
-        concatIds([event.params.accountId.toString(), event.params.user.toString()])
+        event.params.accountId.toString().concat('-').concat(event.params.user.toHex())
       );
-      permissions.address = event.params.permission;
+      permissions.created_at = event.block.timestamp;
+      permissions.created_at_block = event.block.number;
+      permissions.updated_at = event.block.timestamp;
+      permissions.updated_at_block = event.block.number;
+      permissions.address = account.owner;
       permissions.permissions = event.params.permission;
       permissions.save();
     }
-    account.permissions = concatIds([
-      event.params.accountId.toString(),
-      event.params.user.toString(),
-    ]);
+    const definedAccountPermissions = changetype<Array<string>>(account.permissions);
+    if (!definedAccountPermissions[0]) {
+      account.permissions = [
+        event.params.accountId.toString().concat('-').concat(event.params.user.toHex()),
+      ];
+    } else {
+      definedAccountPermissions.push(
+        event.params.accountId.toString().concat('-').concat(event.params.user.toHex())
+      );
+      account.permissions = definedAccountPermissions;
+    }
+    account.updated_at = event.block.timestamp;
+    account.updated_at_block = event.block.number;
     account.save();
   }
 }
 
-export function handlePermissionRevoked(event: PermissionRevoked): void {}
+export function handlePermissionRevoked(event: PermissionRevoked): void {
+  const account = Account.load(event.params.accountId.toString());
+  if (account !== null) {
+    account.updated_at = event.block.timestamp;
+    account.updated_at_block = event.block.number;
+    if (account.permissions !== null) {
+      const oldPermissions = changetype<Array<string>>(account.permissions);
+      const newPermissions: string[] = [];
+      const permissionToRemove = event.params.accountId
+        .toString()
+        .concat('-')
+        .concat(event.params.user.toHex());
+      for (let i = 0; i < oldPermissions.length; ++i) {
+        if (!oldPermissions[i].includes(permissionToRemove)) {
+          newPermissions.push(oldPermissions[i]);
+        }
+      }
+      account.permissions = newPermissions;
+      const permissions = AccountPermissionUsers.load(
+        event.params.accountId.toString().concat('-').concat(event.params.user.toHex())
+      );
+      if (permissions !== null) {
+        // Not sure if the best way
+        permissions.id = 'revoked'
+          .concat('-')
+          .concat(event.params.accountId.toString().concat('-').concat(event.params.user.toHex()));
+        permissions.updated_at = event.block.timestamp;
+        permissions.updated_at_block = event.block.number;
+        permissions.save();
+      }
+      account.save();
+    }
+  }
+}
+
+export function handleDelegationUpdated(event: DelegationUpdated): void {
+  let position = Position.load(
+    event.params.accountId
+      .toString()
+      .concat('-')
+      .concat(event.params.poolId.toString())
+      .concat('-')
+      .concat(event.params.collateralType.toHex())
+  );
+  if (position === null) {
+    position = new Position(
+      event.params.accountId
+        .toString()
+        .concat('-')
+        .concat(event.params.poolId.toString())
+        .concat('-')
+        .concat(event.params.collateralType.toHex())
+    );
+    position.created_at = event.block.timestamp;
+    position.created_at_block = event.block.number;
+  }
+  position = changetype<Position>(position);
+  position.collateral_amount = event.params.amount;
+  position.updated_at = event.block.timestamp;
+  position.updated_at_block = event.block.number;
+  position.c_ratio = VaultModule.bind(event.address).getPositionCollateralizationRatio(
+    event.params.accountId,
+    event.params.poolId,
+    event.params.collateralType
+  );
+  position.leverage = event.params.leverage;
+  let vault = Vault.load(
+    event.params.poolId.toString().concat('-').concat(event.params.collateralType.toHex())
+  );
+  if (vault === null) {
+    vault = new Vault(
+      event.params.poolId.toString().concat('-').concat(event.params.collateralType.toHex())
+    );
+    vault.created_at = event.block.timestamp;
+    vault.created_at_block = event.block.number;
+  }
+  vault.updated_at = event.block.timestamp;
+  vault.updated_at_block = event.block.number;
+  if (vault.collateral_amount === null) {
+    vault.collateral_amount = event.params.amount;
+  } else {
+    // TODO @MF how to calc the diff? minus or plus?
+    vault.collateral_amount = event.params.amount;
+  }
+  position.save();
+  vault.save();
+}
+
+export function handleUSDMinted(event: UsdMinted): void {
+  const position = Position.load(
+    event.params.accountId
+      .toString()
+      .concat('-')
+      .concat(
+        event.params.poolId.toString().concat('-').concat(event.params.collateralType.toHex())
+      )
+  );
+  if (position !== null) {
+    position.updated_at = event.block.timestamp;
+    position.updated_at_block = event.block.number;
+    if (position.total_minted !== null) {
+      position.total_minted = position.total_minted.plus(event.params.amount);
+    } else {
+      position.total_minted = event.params.amount;
+    }
+    position.save();
+  }
+}
+export function handleUSDBurned(event: UsdBurned): void {
+  const position = Position.load(
+    event.params.accountId
+      .toString()
+      .concat('-')
+      .concat(
+        event.params.poolId.toString().concat('-').concat(event.params.collateralType.toHex())
+      )
+  );
+  if (position !== null) {
+    position.updated_at = event.block.timestamp;
+    position.updated_at_block = event.block.number;
+    if (position.total_burned !== null) {
+      position.total_burned = position.total_burned.plus(event.params.amount);
+    } else {
+      position.total_burned = event.params.amount;
+    }
+    position.save();
+  }
+}

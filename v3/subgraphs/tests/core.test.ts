@@ -1,25 +1,32 @@
 import {
-  PoolConfigurationSet,
-  PoolCreated,
-  PoolNameUpdated,
-  PoolOwnershipAccepted,
-} from '../generated/PoolModule/PoolModule';
-import {
-  newMockEvent,
   test,
   assert,
-  logStore,
   clearStore,
   describe,
   beforeEach,
   createMockedFunction,
+  logStore,
 } from 'matchstick-as/assembly/index';
-import { Address, ethereum, BigInt, Bytes, log, ByteArray } from '@graphprotocol/graph-ts';
+import {
+  Address,
+  ethereum,
+  BigInt,
+  Bytes,
+  ByteArray,
+  store,
+  log,
+  Entity,
+} from '@graphprotocol/graph-ts';
 import { address, address2, defaultGraphContractAddress } from './constants';
 import {
   handleAccountCreated,
+  handleCollateralConfigured,
+  handleCollateralDeposit,
+  handleCollateralWithdrawn,
   handleMarketCreated,
   handleNewPoolOwner,
+  handlePermissionGranted,
+  handlePermissionRevoked,
   handlePoolConfigurationSet,
   handlePoolCreated,
   handlePoolNameUpdated,
@@ -27,146 +34,20 @@ import {
   handleUsdWithdrawn,
 } from '../src/core';
 import {
-  MarketRegistered,
-  UsdDeposited,
-  UsdWithdrawn,
-} from '../generated/MarketManagerModule/MarketManagerModule';
-import { AccountCreated } from '../generated/AccountModule/AccountModule';
-
-function createBlock(timestamp: i32, blockNumber: i32): Map<string, i32> {
-  const newBlock = new Map<string, i32>();
-  newBlock.set('timestamp', timestamp);
-  newBlock.set('blockNumber', blockNumber);
-  return newBlock;
-}
-
-function createPoolCreatedEvent(id: i32, owner: string): PoolCreated {
-  const newPoolCreatedEvent = changetype<PoolCreated>(newMockEvent());
-  const block = createBlock(123, 321);
-  newPoolCreatedEvent.parameters = new Array();
-  newPoolCreatedEvent.parameters.push(new ethereum.EventParam('id', ethereum.Value.fromI32(id)));
-  newPoolCreatedEvent.parameters.push(
-    new ethereum.EventParam('owner', ethereum.Value.fromAddress(Address.fromString(owner)))
-  );
-  newPoolCreatedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
-  newPoolCreatedEvent.block.number = BigInt.fromI64(block['blockNumber']);
-  return newPoolCreatedEvent;
-}
-
-function createPoolNameUpdatedEvent(id: i32, name: string): PoolNameUpdated {
-  const newPoolNameUpdatedEvent = changetype<PoolNameUpdated>(newMockEvent());
-  const block = createBlock(123, 321);
-  newPoolNameUpdatedEvent.parameters = new Array();
-  newPoolNameUpdatedEvent.parameters.push(
-    new ethereum.EventParam('poolId', ethereum.Value.fromI32(id))
-  );
-  newPoolNameUpdatedEvent.parameters.push(
-    new ethereum.EventParam('name', ethereum.Value.fromBytes(Bytes.fromUTF8(name)))
-  );
-  newPoolNameUpdatedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
-  newPoolNameUpdatedEvent.block.number = BigInt.fromI64(block['blockNumber']);
-  return newPoolNameUpdatedEvent;
-}
-
-function createNewPoolOwnerEvent(id: i32, owner: string): PoolOwnershipAccepted {
-  const newPoolOwnershipAcceptedEvent = changetype<PoolOwnershipAccepted>(newMockEvent());
-  const block = createBlock(123, 321);
-  newPoolOwnershipAcceptedEvent.parameters = new Array();
-  newPoolOwnershipAcceptedEvent.parameters.push(
-    new ethereum.EventParam('poolId', ethereum.Value.fromI32(id))
-  );
-  newPoolOwnershipAcceptedEvent.parameters.push(
-    new ethereum.EventParam('owner', ethereum.Value.fromAddress(Address.fromString(owner)))
-  );
-  newPoolOwnershipAcceptedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
-  newPoolOwnershipAcceptedEvent.block.number = BigInt.fromI64(block['blockNumber']);
-  return newPoolOwnershipAcceptedEvent;
-}
-
-function createMarketCreatedEvent(id: i32, market: string): MarketRegistered {
-  const newMarketRegisteredEvent = changetype<MarketRegistered>(newMockEvent());
-  const block = createBlock(222, 333);
-  newMarketRegisteredEvent.parameters = new Array();
-  newMarketRegisteredEvent.parameters.push(
-    new ethereum.EventParam('market', ethereum.Value.fromAddress(Address.fromString(market)))
-  );
-  newMarketRegisteredEvent.parameters.push(
-    new ethereum.EventParam('marketId', ethereum.Value.fromI32(id))
-  );
-  newMarketRegisteredEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
-  newMarketRegisteredEvent.block.number = BigInt.fromI64(block['blockNumber']);
-  return newMarketRegisteredEvent;
-}
-
-function createAccountCreatedEvent(id: i32, owner: string): AccountCreated {
-  const newMarketRegisteredEvent = changetype<AccountCreated>(newMockEvent());
-  const block = createBlock(222, 333);
-  newMarketRegisteredEvent.parameters = new Array();
-  newMarketRegisteredEvent.parameters.push(
-    new ethereum.EventParam('owner', ethereum.Value.fromAddress(Address.fromString(owner)))
-  );
-  newMarketRegisteredEvent.parameters.push(
-    new ethereum.EventParam('accountId', ethereum.Value.fromI32(id))
-  );
-  newMarketRegisteredEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
-  newMarketRegisteredEvent.block.number = BigInt.fromI64(block['blockNumber']);
-  return newMarketRegisteredEvent;
-}
-
-function createPoolConfigurationSetEvent(
-  poolId: i32,
-  marketConfigs: Array<ethereum.Tuple>
-): PoolConfigurationSet {
-  const newMarketRegisteredEvent = changetype<PoolConfigurationSet>(newMockEvent());
-  const block = createBlock(222, 333);
-  newMarketRegisteredEvent.parameters = new Array();
-  newMarketRegisteredEvent.parameters.push(
-    new ethereum.EventParam('poolId', ethereum.Value.fromI32(poolId))
-  );
-  newMarketRegisteredEvent.parameters.push(
-    new ethereum.EventParam('markets', ethereum.Value.fromTupleArray(marketConfigs))
-  );
-
-  newMarketRegisteredEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
-  newMarketRegisteredEvent.block.number = BigInt.fromI64(block['blockNumber']);
-  return newMarketRegisteredEvent;
-}
-
-function createUsdDepositedEvent(marketId: i32, target: Address, amount: BigInt): UsdDeposited {
-  const newUsdMintedEvent = changetype<UsdDeposited>(newMockEvent());
-  const block = createBlock(222, 333);
-  newUsdMintedEvent.parameters = new Array();
-  newUsdMintedEvent.parameters.push(
-    new ethereum.EventParam('marketId', ethereum.Value.fromI32(marketId))
-  );
-  newUsdMintedEvent.parameters.push(
-    new ethereum.EventParam('target', ethereum.Value.fromAddress(target))
-  );
-  newUsdMintedEvent.parameters.push(
-    new ethereum.EventParam('amount', ethereum.Value.fromUnsignedBigInt(amount))
-  );
-  newUsdMintedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
-  newUsdMintedEvent.block.number = BigInt.fromI64(block['blockNumber']);
-  return newUsdMintedEvent;
-}
-
-function createUsdWithdrawnEvent(marketId: i32, target: Address, amount: BigInt): UsdWithdrawn {
-  const newUsdWithdrawnEvent = changetype<UsdWithdrawn>(newMockEvent());
-  const block = createBlock(222, 333);
-  newUsdWithdrawnEvent.parameters = new Array();
-  newUsdWithdrawnEvent.parameters.push(
-    new ethereum.EventParam('marketId', ethereum.Value.fromI32(marketId))
-  );
-  newUsdWithdrawnEvent.parameters.push(
-    new ethereum.EventParam('target', ethereum.Value.fromAddress(target))
-  );
-  newUsdWithdrawnEvent.parameters.push(
-    new ethereum.EventParam('amount', ethereum.Value.fromUnsignedBigInt(amount))
-  );
-  newUsdWithdrawnEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
-  newUsdWithdrawnEvent.block.number = BigInt.fromI64(block['blockNumber']);
-  return newUsdWithdrawnEvent;
-}
+  createAccountCreatedEvent,
+  createCollateralConfiguredEvent,
+  createDepositEvent,
+  createMarketCreatedEvent,
+  createMarketUsdDepositedEvent,
+  createMarketUsdWithdrawnEvent,
+  createNewPoolOwnerEvent,
+  createPermissionGrantedEvent,
+  createPermissionRevokedEvent,
+  createPoolConfigurationSetEvent,
+  createPoolCreatedEvent,
+  createPoolNameUpdatedEvent,
+  createWithdrawnEvent,
+} from './event-factories';
 
 describe('core tests', () => {
   beforeEach(() => {
@@ -174,117 +55,364 @@ describe('core tests', () => {
   });
 
   test('handlePoolCreated', () => {
-    const newPoolEvent = createPoolCreatedEvent(1, address);
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newPoolEvent = createPoolCreatedEvent(1, address, now, now - 1000);
     handlePoolCreated(newPoolEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Pool', '1', 'owner', address);
-    assert.fieldEquals('Pool', '1', 'created_at', '123');
-    assert.fieldEquals('Pool', '1', 'created_at_block', '321');
+    assert.fieldEquals('Pool', '1', 'created_at', now.toString());
+    assert.fieldEquals('Pool', '1', 'created_at_block', (now - 1000).toString());
   });
 
   test('handlePoolNameUpdated', () => {
-    const newPoolEvent = createPoolCreatedEvent(1, address);
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newPoolEvent = createPoolCreatedEvent(1, address, now, now - 1000);
     handlePoolCreated(newPoolEvent);
-    const newPoolNameEvent = createPoolNameUpdatedEvent(1, 'SC Pool');
+    const newPoolNameEvent = createPoolNameUpdatedEvent(1, 'SC Pool', now + 1000, now);
     handlePoolNameUpdated(newPoolNameEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Pool', '1', 'name', 'SC Pool');
-    assert.fieldEquals('Pool', '1', 'created_at', '123');
-    assert.fieldEquals('Pool', '1', 'created_at_block', '321');
+    assert.fieldEquals('Pool', '1', 'created_at', now.toString());
+    assert.fieldEquals('Pool', '1', 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('Pool', '1', 'updated_at', (now + 1000).toString());
+    assert.fieldEquals('Pool', '1', 'updated_at_block', now.toString());
   });
 
   test('handleNewPoolOwner', () => {
-    const newPool = createPoolCreatedEvent(1, address);
-    const newOwnerEvent = createNewPoolOwnerEvent(1, address2);
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newPool = createPoolCreatedEvent(1, address, now, now - 1000);
+    const newOwnerEvent = createNewPoolOwnerEvent(1, address2, now + 1000, now);
     handlePoolCreated(newPool);
     handleNewPoolOwner(newOwnerEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Pool', '1', 'owner', address2);
-    assert.fieldEquals('Pool', '1', 'created_at', '123');
-    assert.fieldEquals('Pool', '1', 'created_at_block', '321');
+    assert.fieldEquals('Pool', '1', 'created_at', now.toString());
+    assert.fieldEquals('Pool', '1', 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('Pool', '1', 'updated_at', (now + 1000).toString());
+    assert.fieldEquals('Pool', '1', 'updated_at_block', now.toString());
   });
 
   test('handleMarketCreated', () => {
-    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address);
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address, now, now - 1000);
     handleMarketCreated(newMarketRegisteredEvent);
     assert.fieldEquals('Market', '1', 'id', '1');
     assert.fieldEquals('Market', '1', 'address', address);
-    assert.fieldEquals('Market', '1', 'created_at', '222');
-    assert.fieldEquals('Market', '1', 'created_at_block', '333');
+    assert.fieldEquals('Market', '1', 'created_at', now.toString());
+    assert.fieldEquals('Market', '1', 'created_at_block', (now - 1000).toString());
   });
 
   test('handleAccountCreated', () => {
-    const accountCreatedEvent = createAccountCreatedEvent(1, address);
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const accountCreatedEvent = createAccountCreatedEvent(1, address, now, now - 1000);
     handleAccountCreated(accountCreatedEvent);
     assert.fieldEquals('Account', '1', 'id', '1');
     assert.fieldEquals('Account', '1', 'owner', address);
-    assert.fieldEquals('Account', '1', 'created_at', '222');
-    assert.fieldEquals('Account', '1', 'created_at_block', '333');
+    assert.fieldEquals('Account', '1', 'created_at', now.toString());
+    assert.fieldEquals('Account', '1', 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('Account', '1', 'permissions', '[]');
   });
 
   test('handlePoolConfigurationSet', () => {
-    const newPoolEvent = createPoolCreatedEvent(1, address);
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newPoolEvent = createPoolCreatedEvent(1, address, now, now - 1000);
     handlePoolCreated(newPoolEvent);
-    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address);
-    const newMarketRegisteredEvent2 = createMarketCreatedEvent(2, address2);
+    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address, now + 1000, now);
+    const newMarketRegisteredEvent2 = createMarketCreatedEvent(2, address2, now + 2000, now + 1000);
     handleMarketCreated(newMarketRegisteredEvent);
     handleMarketCreated(newMarketRegisteredEvent2);
     const markets = changetype<Array<ethereum.Tuple>>([
       changetype<Array<ethereum.Tuple>>([
         ethereum.Value.fromI32(1),
         ethereum.Value.fromI32(32),
-        ethereum.Value.fromI32(2),
+        ethereum.Value.fromI32(812739821),
       ]),
       changetype<Array<ethereum.Tuple>>([
         ethereum.Value.fromI32(2),
         ethereum.Value.fromI32(43),
-        ethereum.Value.fromI32(54),
+        ethereum.Value.fromI32(892379812),
       ]),
     ]);
-    const newPoolConfigurationSetEvent = createPoolConfigurationSetEvent(1, markets);
+    const newPoolConfigurationSetEvent = createPoolConfigurationSetEvent(
+      1,
+      markets,
+      now + 3000,
+      now + 2000
+    );
     handlePoolConfigurationSet(newPoolConfigurationSetEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Market', '1', 'id', '1');
     assert.fieldEquals('Market', '2', 'id', '2');
-    assert.fieldEquals('Market', '1', 'updated_at', '222');
-    assert.fieldEquals('Market', '1', 'updated_at_block', '333');
+    assert.fieldEquals('Market', '1', 'created_at', (now + 1000).toString());
+    assert.fieldEquals('Market', '1', 'created_at_block', now.toString());
+    assert.fieldEquals('Market', '2', 'created_at', (now + 2000).toString());
+    assert.fieldEquals('Market', '2', 'created_at_block', (now + 1000).toString());
+    assert.fieldEquals('Market', '1', 'updated_at', (now + 3000).toString());
+    assert.fieldEquals('Market', '1', 'updated_at_block', (now + 2000).toString());
+    assert.fieldEquals('Market', '2', 'updated_at', (now + 3000).toString());
+    assert.fieldEquals('Market', '2', 'updated_at_block', (now + 2000).toString());
     assert.fieldEquals('Market', '1', 'weight', '32');
     assert.fieldEquals('Market', '2', 'weight', '43');
     assert.fieldEquals('PoolAndMarket', '1-1', 'id', '1-1');
     assert.fieldEquals('PoolAndMarket', '1-2', 'id', '1-2');
     assert.fieldEquals('PoolAndMarket', '1-1', 'market', '1');
     assert.fieldEquals('PoolAndMarket', '1-2', 'market', '2');
-    assert.fieldEquals('PoolAndMarket', '1-1', 'max_debt_share_value', '2');
-    assert.fieldEquals('PoolAndMarket', '1-2', 'max_debt_share_value', '54');
+    assert.fieldEquals('PoolAndMarket', '1-1', 'max_debt_share_value', '812739821');
+    assert.fieldEquals('PoolAndMarket', '1-2', 'max_debt_share_value', '892379812');
   });
+
   test('calculate net issuance', () => {
-    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address);
-    const arg = ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(1));
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address, now, now - 1000);
+    const arg = ethereum.Value.fromUnsignedBigInt(BigInt.fromU64(1));
     createMockedFunction(
       Address.fromString(defaultGraphContractAddress),
       'getMarketReportedDebt',
       'getMarketReportedDebt(uint128):(uint256)'
     )
       .withArgs([arg])
-      .returns([ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(23))]);
+      .returns([ethereum.Value.fromI32(23)]);
     handleMarketCreated(newMarketRegisteredEvent);
-    const newUsdDepositedEvent = createUsdDepositedEvent(
+    const newUsdDepositedEvent = createMarketUsdDepositedEvent(
       1,
       Address.fromString(address2),
-      BigInt.fromU64(200)
+      BigInt.fromU64(200),
+      now + 1000,
+      now
     );
     handleUsdDeposit(newUsdDepositedEvent);
-    const newUsdWithdrawnEvent = createUsdWithdrawnEvent(
+    const newUsdWithdrawnEvent = createMarketUsdWithdrawnEvent(
       1,
       Address.fromString(address2),
-      BigInt.fromU64(300)
+      BigInt.fromU64(300),
+      now + 2000,
+      now + 1000
     );
     handleUsdWithdrawn(newUsdWithdrawnEvent);
     assert.fieldEquals('Market', '1', 'reported_debt', '23');
     assert.fieldEquals('Market', '1', 'usd_deposited', '200');
     assert.fieldEquals('Market', '1', 'usd_withdrawn', '300');
     assert.fieldEquals('Market', '1', 'net_issuance', '100');
-    assert.fieldEquals('Market', '1', 'updated_at', '222');
-    assert.fieldEquals('Market', '1', 'updated_at_block', '333');
+    assert.fieldEquals('Market', '1', 'created_at', now.toString());
+    assert.fieldEquals('Market', '1', 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('Market', '1', 'updated_at', (now + 2000).toString());
+    assert.fieldEquals('Market', '1', 'updated_at_block', (now + 1000).toString());
   });
+
+  test('handleCollateralConfigured', () => {
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newCollateralConfiguredEvent = createCollateralConfiguredEvent(
+      Address.fromString(address),
+      Address.fromString(address2),
+      BigInt.fromI32(23),
+      BigInt.fromI32(55),
+      BigInt.fromI32(11),
+      true,
+      now,
+      now - 1000
+    );
+    handleCollateralConfigured(newCollateralConfiguredEvent);
+    const newCollateralConfiguredEvent2 = createCollateralConfiguredEvent(
+      Address.fromString(address),
+      Address.fromString(address2),
+      BigInt.fromI32(23),
+      BigInt.fromI32(55),
+      BigInt.fromI32(11),
+      true,
+      now + 1000,
+      now
+    );
+    handleCollateralConfigured(newCollateralConfiguredEvent2);
+    assert.fieldEquals('CollateralType', address, 'id', address);
+    assert.fieldEquals('CollateralType', address, 'created_at', now.toString());
+    assert.fieldEquals('CollateralType', address, 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('CollateralType', address, 'updated_at', (now + 1000).toString());
+    assert.fieldEquals('CollateralType', address, 'updated_at_block', now.toString());
+    assert.fieldEquals('CollateralType', address, 'liquidation_reward', '11');
+    assert.fieldEquals('CollateralType', address, 'minimum_c_ratio', '55');
+    assert.fieldEquals('CollateralType', address, 'depositing_enabled', 'true');
+    assert.fieldEquals('CollateralType', address, 'target_c_ratio', '23');
+  });
+
+  test('handleCollateralDeposit', () => {
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newCollateralConfiguredEvent = createCollateralConfiguredEvent(
+      Address.fromString(address),
+      Address.fromString(address2),
+      BigInt.fromI32(23),
+      BigInt.fromI32(55),
+      BigInt.fromI32(11),
+      true,
+      now,
+      now - 1000
+    );
+    const newCollateralDepositEvent = createDepositEvent(
+      23,
+      Address.fromString(address),
+      BigInt.fromI32(555),
+      now + 1000,
+      now
+    );
+    handleCollateralConfigured(newCollateralConfiguredEvent);
+    handleCollateralDeposit(newCollateralDepositEvent);
+    assert.fieldEquals('CollateralType', address, 'id', address);
+    assert.fieldEquals('CollateralType', address, 'created_at', now.toString());
+    assert.fieldEquals('CollateralType', address, 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('CollateralType', address, 'updated_at', (now + 1000).toString());
+    assert.fieldEquals('CollateralType', address, 'updated_at_block', now.toString());
+    assert.fieldEquals('CollateralType', address, 'total_amount_deposited', '555');
+    handleCollateralDeposit(newCollateralDepositEvent);
+    assert.fieldEquals('CollateralType', address, 'total_amount_deposited', '1110');
+  });
+
+  test('handleCollateralWithdrawn', () => {
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newCollateralConfiguredEvent = createCollateralConfiguredEvent(
+      Address.fromString(address),
+      Address.fromString(address2),
+      BigInt.fromI32(23),
+      BigInt.fromI32(55),
+      BigInt.fromI32(11),
+      true,
+      now,
+      now - 1000
+    );
+    const newCollateralDepositEvent = createDepositEvent(
+      23,
+      Address.fromString(address),
+      BigInt.fromI32(555),
+      now + 1000,
+      now
+    );
+    const newCollateralWithdrawnEvent = createWithdrawnEvent(
+      23,
+      Address.fromString(address),
+      BigInt.fromI32(100),
+      now + 2000,
+      now + 1000
+    );
+    handleCollateralConfigured(newCollateralConfiguredEvent);
+    handleCollateralDeposit(newCollateralDepositEvent);
+    handleCollateralWithdrawn(newCollateralWithdrawnEvent);
+    assert.fieldEquals('CollateralType', address, 'id', address);
+    assert.fieldEquals('CollateralType', address, 'created_at', now.toString());
+    assert.fieldEquals('CollateralType', address, 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('CollateralType', address, 'updated_at', (now + 2000).toString());
+    assert.fieldEquals('CollateralType', address, 'updated_at_block', (now + 1000).toString());
+    assert.fieldEquals('CollateralType', address, 'total_amount_deposited', '455');
+  });
+
+  test('handlePermissionGranted', () => {
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newAccountCreatedEvent = createAccountCreatedEvent(1, address, now, now - 1000);
+    const newPermissionGrantedEvent = createPermissionGrantedEvent(
+      1,
+      Address.fromString(address),
+      Bytes.fromByteArray(Bytes.fromI64(1234)),
+      now + 1000,
+      now
+    );
+    handleAccountCreated(newAccountCreatedEvent);
+    handlePermissionGranted(newPermissionGrantedEvent);
+    assert.fieldEquals('AccountPermissionUsers', `1-${address}`, 'id', `1-${address}`);
+    assert.fieldEquals(
+      'AccountPermissionUsers',
+      `1-${address}`,
+      'permissions',
+      Bytes.fromByteArray(Bytes.fromI64(1234)).toHex()
+    );
+    assert.fieldEquals('AccountPermissionUsers', `1-${address}`, 'address', address);
+    assert.fieldEquals('Account', '1', 'permissions', `[1-${address}]`);
+    assert.fieldEquals('Account', '1', 'created_at', now.toString());
+    assert.fieldEquals('Account', '1', 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('Account', '1', 'updated_at_block', now.toString());
+    assert.fieldEquals('Account', '1', 'updated_at', (now + 1000).toString());
+    handlePermissionGranted(newPermissionGrantedEvent);
+    assert.fieldEquals(
+      'AccountPermissionUsers',
+      `1-${address}`,
+      'permissions',
+      Bytes.fromByteArray(Bytes.fromI64(1234))
+        .toHex()
+        .concat(Bytes.fromByteArray(Bytes.fromI64(1234)).toHex().substring(2))
+    );
+  });
+
+  test('handlePermissionRevoked', () => {
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newAccountCreatedEvent = createAccountCreatedEvent(1, address, now, now - 1000);
+    handleAccountCreated(newAccountCreatedEvent);
+    const newPermissionGrantedEvent = createPermissionGrantedEvent(
+      1,
+      Address.fromString(address),
+      Bytes.fromByteArray(Bytes.fromI64(1234)),
+      now + 1000,
+      now
+    );
+    handlePermissionGranted(newPermissionGrantedEvent);
+    const newPermissionGrantedEvent2 = createPermissionGrantedEvent(
+      1,
+      Address.fromString(address2),
+      Bytes.fromByteArray(Bytes.fromI64(1111)),
+      now + 2000,
+      now + 1000
+    );
+    handlePermissionGranted(newPermissionGrantedEvent2);
+    const newPermissionRevokedEvent = createPermissionRevokedEvent(
+      1,
+      Address.fromString(address),
+      Bytes.fromByteArray(ByteArray.fromHexString(Address.fromString(address).toHex())),
+      now + 3000,
+      now + 2000
+    );
+    handlePermissionRevoked(newPermissionRevokedEvent);
+    assert.fieldEquals('AccountPermissionUsers', `1-${address}`, 'address', address);
+    assert.fieldEquals('Account', '1', 'permissions', `[1-${address2}]`);
+    assert.fieldEquals(
+      'AccountPermissionUsers',
+      `1-${address}`,
+      'created_at',
+      (now + 1000).toString()
+    );
+    assert.fieldEquals(
+      'AccountPermissionUsers',
+      `1-${address}`,
+      'created_at_block',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'AccountPermissionUsers',
+      `revoked-1-${address}`,
+      'updated_at',
+      (now + 3000).toString()
+    );
+    assert.fieldEquals(
+      'AccountPermissionUsers',
+      `revoked-1-${address}`,
+      'updated_at_block',
+      (now + 2000).toString()
+    );
+    assert.fieldEquals('Account', '1', 'created_at', now.toString());
+    assert.fieldEquals('Account', '1', 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('Account', '1', 'updated_at', (now + 3000).toString());
+    assert.fieldEquals('Account', '1', 'updated_at_block', (now + 2000).toString());
+  });
+
+  test('handleDelegationUpdated', () => {});
+
+  test('handleUSDMinted', () => {});
+
+  test('handleUSDBurned', () => {});
 });
