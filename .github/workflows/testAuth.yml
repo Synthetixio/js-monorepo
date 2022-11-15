@@ -1,0 +1,21 @@
+name: Test commit
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Config git identity
+        run: |
+          git config --global user.email "team@synthetix.io"
+          git config --global user.name "Synthetix CI"
+
+      # publish
+      - name: Test commit
+        run: |
+          git commit --allow-empty --message "Test commit"
+          git push
