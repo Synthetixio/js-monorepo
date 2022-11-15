@@ -32,7 +32,7 @@ import {
   Vault,
   Position,
 } from '../generated/schema';
-import { BigDecimal } from '@graphprotocol/graph-ts';
+import { BigDecimal, BigInt, log } from '@graphprotocol/graph-ts';
 
 // Event handlers
 export function handlePoolCreated(event: PoolCreated): void {
@@ -281,27 +281,20 @@ export function handlePermissionRevoked(event: PermissionRevoked): void {
 }
 
 export function handleDelegationUpdated(event: DelegationUpdated): void {
-  let position = Position.load(
-    event.params.accountId
-      .toString()
-      .concat('-')
-      .concat(event.params.poolId.toString())
-      .concat('-')
-      .concat(event.params.collateralType.toHex())
-  );
+  const id = event.params.accountId
+    .toString()
+    .concat('-')
+    .concat(event.params.poolId.toString())
+    .concat('-')
+    .concat(event.params.collateralType.toHex());
+  let position = Position.load(id);
   if (position === null) {
-    position = new Position(
-      event.params.accountId
-        .toString()
-        .concat('-')
-        .concat(event.params.poolId.toString())
-        .concat('-')
-        .concat(event.params.collateralType.toHex())
-    );
+    position = new Position(id);
     position.created_at = event.block.timestamp;
     position.created_at_block = event.block.number;
+    position.collateral_amount = event.params.amount;
   }
-  position = changetype<Position>(position);
+  const collateralAmountChange = event.params.amount.minus(position.collateral_amount);
   position.collateral_amount = event.params.amount;
   position.updated_at = event.block.timestamp;
   position.updated_at_block = event.block.number;
@@ -320,15 +313,12 @@ export function handleDelegationUpdated(event: DelegationUpdated): void {
     );
     vault.created_at = event.block.timestamp;
     vault.created_at_block = event.block.number;
+    vault.collateral_amount = event.params.amount;
+  } else {
+    vault.collateral_amount = vault.collateral_amount.plus(collateralAmountChange);
   }
   vault.updated_at = event.block.timestamp;
   vault.updated_at_block = event.block.number;
-  if (vault.collateral_amount === null) {
-    vault.collateral_amount = event.params.amount;
-  } else {
-    // TODO @MF how to calc the diff? minus or plus?
-    vault.collateral_amount = event.params.amount;
-  }
   position.save();
   vault.save();
 }
@@ -346,7 +336,7 @@ export function handleUSDMinted(event: UsdMinted): void {
     position.updated_at = event.block.timestamp;
     position.updated_at_block = event.block.number;
     if (position.total_minted !== null) {
-      position.total_minted = position.total_minted.plus(event.params.amount);
+      position.total_minted = changetype<BigInt>(position.total_minted).plus(event.params.amount);
     } else {
       position.total_minted = event.params.amount;
     }
@@ -366,7 +356,7 @@ export function handleUSDBurned(event: UsdBurned): void {
     position.updated_at = event.block.timestamp;
     position.updated_at_block = event.block.number;
     if (position.total_burned !== null) {
-      position.total_burned = position.total_burned.plus(event.params.amount);
+      position.total_burned = changetype<BigInt>(position.total_burned).plus(event.params.amount);
     } else {
       position.total_burned = event.params.amount;
     }

@@ -23,6 +23,7 @@ import {
   handleCollateralConfigured,
   handleCollateralDeposit,
   handleCollateralWithdrawn,
+  handleDelegationUpdated,
   handleMarketCreated,
   handleNewPoolOwner,
   handlePermissionGranted,
@@ -30,12 +31,15 @@ import {
   handlePoolConfigurationSet,
   handlePoolCreated,
   handlePoolNameUpdated,
+  handleUSDBurned,
   handleUsdDeposit,
+  handleUSDMinted,
   handleUsdWithdrawn,
 } from '../src/core';
 import {
   createAccountCreatedEvent,
   createCollateralConfiguredEvent,
+  createDelegationUpdateEvent,
   createDepositEvent,
   createMarketCreatedEvent,
   createMarketUsdDepositedEvent,
@@ -46,6 +50,8 @@ import {
   createPoolConfigurationSetEvent,
   createPoolCreatedEvent,
   createPoolNameUpdatedEvent,
+  createUSDBurnedEvent,
+  createUSDMintedEvent,
   createWithdrawnEvent,
 } from './event-factories';
 
@@ -410,9 +416,151 @@ describe('core tests', () => {
     assert.fieldEquals('Account', '1', 'updated_at_block', (now + 2000).toString());
   });
 
-  test('handleDelegationUpdated', () => {});
+  test('handleDelegationUpdated', () => {
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newDelegationUpdatedEvent = createDelegationUpdateEvent(
+      BigInt.fromI32(1),
+      BigInt.fromI32(1),
+      Address.fromString(address),
+      BigInt.fromI32(2323),
+      BigInt.fromI32(10),
+      now,
+      now - 1000
+    );
+    createMockedFunction(
+      Address.fromString(defaultGraphContractAddress),
+      'getPositionCollateralizationRatio',
+      'getPositionCollateralizationRatio(uint128,uint128,address):(uint256)'
+    )
+      .withArgs([
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(1)),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(1)),
+        ethereum.Value.fromAddress(Address.fromString(address)),
+      ])
+      .returns([ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(200))]);
+    handleDelegationUpdated(newDelegationUpdatedEvent);
+    assert.fieldEquals('Position', `1-1-${address}`, 'id', `1-1-${address}`);
+    assert.fieldEquals('Position', `1-1-${address}`, 'created_at', now.toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'collateral_amount', '2323');
+    assert.fieldEquals('Position', `1-1-${address}`, 'updated_at', now.toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'updated_at_block', (now - 1000).toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'c_ratio', '200');
+    assert.fieldEquals('Position', `1-1-${address}`, 'leverage', '10');
+    assert.fieldEquals('Vault', `1-${address}`, 'id', `1-${address}`);
+    assert.fieldEquals('Vault', `1-${address}`, 'created_at', now.toString());
+    assert.fieldEquals('Vault', `1-${address}`, 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('Vault', `1-${address}`, 'updated_at', now.toString());
+    assert.fieldEquals('Vault', `1-${address}`, 'updated_at_block', (now - 1000).toString());
+    assert.fieldEquals('Vault', `1-${address}`, 'collateral_amount', '2323');
+    const newDelegatioNUpdatedEvent2 = createDelegationUpdateEvent(
+      BigInt.fromI32(1),
+      BigInt.fromI32(1),
+      Address.fromString(address),
+      BigInt.fromI32(10000),
+      BigInt.fromI32(10),
+      now + 1000,
+      now
+    );
+    handleDelegationUpdated(newDelegatioNUpdatedEvent2);
+    assert.fieldEquals('Position', `1-1-${address}`, 'updated_at', (now + 1000).toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'updated_at_block', now.toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'collateral_amount', '10000');
+    assert.fieldEquals('Vault', `1-${address}`, 'updated_at', (now + 1000).toString());
+    assert.fieldEquals('Vault', `1-${address}`, 'updated_at_block', now.toString());
+    assert.fieldEquals('Vault', `1-${address}`, 'collateral_amount', '10000');
+  });
 
-  test('handleUSDMinted', () => {});
+  test('handleUSDMinted', () => {
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newDelegationUpdatedEvent = createDelegationUpdateEvent(
+      BigInt.fromI32(1),
+      BigInt.fromI32(1),
+      Address.fromString(address),
+      BigInt.fromI32(2323),
+      BigInt.fromI32(10),
+      now,
+      now - 1000
+    );
+    createMockedFunction(
+      Address.fromString(defaultGraphContractAddress),
+      'getPositionCollateralizationRatio',
+      'getPositionCollateralizationRatio(uint128,uint128,address):(uint256)'
+    )
+      .withArgs([
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(1)),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(1)),
+        ethereum.Value.fromAddress(Address.fromString(address)),
+      ])
+      .returns([ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(200))]);
+    handleDelegationUpdated(newDelegationUpdatedEvent);
+    const newUSDMintedEvent = createUSDMintedEvent(
+      BigInt.fromI32(1),
+      BigInt.fromI32(1),
+      Address.fromString(address),
+      BigInt.fromI32(2000),
+      now + 1000,
+      now
+    );
+    handleUSDMinted(newUSDMintedEvent);
+    assert.fieldEquals('Position', `1-1-${address}`, 'id', `1-1-${address}`);
+    assert.fieldEquals('Position', `1-1-${address}`, 'created_at', now.toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'collateral_amount', '2323');
+    assert.fieldEquals('Position', `1-1-${address}`, 'updated_at', (now + 1000).toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'updated_at_block', now.toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'c_ratio', '200');
+    assert.fieldEquals('Position', `1-1-${address}`, 'leverage', '10');
+    assert.fieldEquals('Position', `1-1-${address}`, 'total_minted', '2000');
+    handleUSDMinted(newUSDMintedEvent);
+    assert.fieldEquals('Position', `1-1-${address}`, 'total_minted', '4000');
+  });
 
-  test('handleUSDBurned', () => {});
+  test('handleUSDBurned', () => {
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newDelegationUpdatedEvent = createDelegationUpdateEvent(
+      BigInt.fromI32(1),
+      BigInt.fromI32(1),
+      Address.fromString(address),
+      BigInt.fromI32(2323),
+      BigInt.fromI32(10),
+      now,
+      now - 1000
+    );
+    createMockedFunction(
+      Address.fromString(defaultGraphContractAddress),
+      'getPositionCollateralizationRatio',
+      'getPositionCollateralizationRatio(uint128,uint128,address):(uint256)'
+    )
+      .withArgs([
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(1)),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(1)),
+        ethereum.Value.fromAddress(Address.fromString(address)),
+      ])
+      .returns([ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(200))]);
+    handleDelegationUpdated(newDelegationUpdatedEvent);
+    const newUSDBurnedEvent = createUSDBurnedEvent(
+      BigInt.fromI32(1),
+      BigInt.fromI32(1),
+      Address.fromString(address),
+      BigInt.fromI32(2000),
+      now + 1000,
+      now
+    );
+    handleUSDBurned(newUSDBurnedEvent);
+    assert.fieldEquals('Position', `1-1-${address}`, 'id', `1-1-${address}`);
+    assert.fieldEquals('Position', `1-1-${address}`, 'created_at', now.toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'collateral_amount', '2323');
+    assert.fieldEquals('Position', `1-1-${address}`, 'updated_at', (now + 1000).toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'updated_at_block', now.toString());
+    assert.fieldEquals('Position', `1-1-${address}`, 'c_ratio', '200');
+    assert.fieldEquals('Position', `1-1-${address}`, 'leverage', '10');
+    assert.fieldEquals('Position', `1-1-${address}`, 'total_burned', '2000');
+    handleUSDBurned(newUSDBurnedEvent);
+    assert.fieldEquals('Position', `1-1-${address}`, 'total_burned', '4000');
+  });
 });

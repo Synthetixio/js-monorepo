@@ -10,6 +10,7 @@ import {
   Deposited,
   Withdrawn,
 } from '../generated/CollateralModule/CollateralModule';
+import { UsdBurned, UsdMinted } from '../generated/IssueUSDModule/IssueUSDModule';
 import {
   MarketRegistered,
   MarketUsdDeposited,
@@ -21,6 +22,7 @@ import {
   PoolNameUpdated,
   PoolOwnershipAccepted,
 } from '../generated/PoolModule/PoolModule';
+import { DelegationUpdated } from '../generated/VaultModule/VaultModule';
 
 function createBlock(timestamp: i64, blockNumber: i64): Map<string, i64> {
   const newBlock = new Map<string, i64>();
@@ -335,4 +337,92 @@ export function createPermissionRevokedEvent(
   newUsdWithdrawnEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
   newUsdWithdrawnEvent.block.number = BigInt.fromI64(block['blockNumber']);
   return newUsdWithdrawnEvent;
+}
+
+export function createDelegationUpdateEvent(
+  accountId: BigInt,
+  poolId: BigInt,
+  collateralType: Address,
+  amount: BigInt,
+  leverage: BigInt,
+  timestamp: i64,
+  blockNumber: i64
+): DelegationUpdated {
+  const newDelegationUpdatedEvent = changetype<DelegationUpdated>(newMockEvent());
+  const block = createBlock(timestamp, blockNumber);
+  newDelegationUpdatedEvent.parameters = new Array();
+  newDelegationUpdatedEvent.parameters.push(
+    new ethereum.EventParam('accountId', ethereum.Value.fromUnsignedBigInt(accountId))
+  );
+  newDelegationUpdatedEvent.parameters.push(
+    new ethereum.EventParam('poolId', ethereum.Value.fromUnsignedBigInt(poolId))
+  );
+  newDelegationUpdatedEvent.parameters.push(
+    new ethereum.EventParam('collateralType', ethereum.Value.fromAddress(collateralType))
+  );
+  newDelegationUpdatedEvent.parameters.push(
+    new ethereum.EventParam('amount', ethereum.Value.fromUnsignedBigInt(amount))
+  );
+  newDelegationUpdatedEvent.parameters.push(
+    new ethereum.EventParam('leverage', ethereum.Value.fromUnsignedBigInt(leverage))
+  );
+  newDelegationUpdatedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  newDelegationUpdatedEvent.block.number = BigInt.fromI64(block['blockNumber']);
+  return newDelegationUpdatedEvent;
+}
+
+export function createUSDMintedEvent(
+  accountId: BigInt,
+  poolId: BigInt,
+  collateralType: Address,
+  amount: BigInt,
+  timestamp: i64,
+  blockNumber: i64
+): UsdMinted {
+  const newUSDMintedEvent = changetype<UsdMinted>(newMockEvent());
+  const block = createBlock(timestamp, blockNumber);
+  newUSDMintedEvent.parameters = new Array();
+  newUSDMintedEvent.parameters.push(
+    new ethereum.EventParam('accountId', ethereum.Value.fromUnsignedBigInt(accountId))
+  );
+  newUSDMintedEvent.parameters.push(
+    new ethereum.EventParam('poolId', ethereum.Value.fromUnsignedBigInt(poolId))
+  );
+  newUSDMintedEvent.parameters.push(
+    new ethereum.EventParam('collateralType', ethereum.Value.fromAddress(collateralType))
+  );
+  newUSDMintedEvent.parameters.push(
+    new ethereum.EventParam('amount', ethereum.Value.fromUnsignedBigInt(amount))
+  );
+  newUSDMintedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  newUSDMintedEvent.block.number = BigInt.fromI64(block['blockNumber']);
+  return newUSDMintedEvent;
+}
+
+export function createUSDBurnedEvent(
+  accountId: BigInt,
+  poolId: BigInt,
+  collateralType: Address,
+  amount: BigInt,
+  timestamp: i64,
+  blockNumber: i64
+): UsdBurned {
+  const newUSDBurnedEvent = changetype<UsdBurned>(newMockEvent());
+  const block = createBlock(timestamp, blockNumber);
+  newUSDBurnedEvent.parameters = new Array();
+  newUSDBurnedEvent.parameters.push(
+    new ethereum.EventParam('accountId', ethereum.Value.fromUnsignedBigInt(accountId))
+  );
+  newUSDBurnedEvent.parameters.push(
+    new ethereum.EventParam('poolId', ethereum.Value.fromUnsignedBigInt(poolId))
+  );
+  newUSDBurnedEvent.parameters.push(
+    new ethereum.EventParam('collateralType', ethereum.Value.fromAddress(collateralType))
+  );
+  newUSDBurnedEvent.parameters.push(
+    new ethereum.EventParam('amount', ethereum.Value.fromUnsignedBigInt(amount))
+  );
+  newUSDBurnedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  newUSDBurnedEvent.block.number = BigInt.fromI64(block['blockNumber']);
+  return newUSDBurnedEvent;
 }
