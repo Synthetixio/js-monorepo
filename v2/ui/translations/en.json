@@ -218,7 +218,8 @@
       "disconnect": "Disconnect",
       "explorer": "View on Explorer",
       "view-all": "View All",
-      "escrow": "Escrow",
+      "manage": "Manage My Wallet",
+      "delegate-mode": "Delegate Mode",
       "connected-with": "Connected with {{walletType}}"
     },
     "wallet": {

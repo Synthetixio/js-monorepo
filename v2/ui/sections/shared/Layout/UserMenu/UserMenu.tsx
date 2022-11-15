@@ -1,8 +1,9 @@
-import { FC, useState } from 'react';
+import { FC, useState, useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { useLocation } from 'react-router-dom';
 
 import {
   FlexDiv,
@@ -38,17 +39,23 @@ import Connector from 'containers/Connector';
 import { truncateAddress } from 'utils/formatters/string';
 import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
 
+function useQueryParam() {
+  const { search } = useLocation();
+  return useMemo(() => new URLSearchParams(search), [search]);
+}
 const UserMenu: FC = () => {
   const { t } = useTranslation();
   const { networkError } = UI.useContainer();
-
+  const queryParam = useQueryParam();
   const { network, ensName, ensAvatar, isWalletConnected, walletAddress, signer } =
     Connector.useContainer();
 
-  const [walletOptionsModalOpened, setWalletOptionsModalOpened] = useState<boolean>(false);
-  const [settingsModalOpened, setSettingsModalOpened] = useState<boolean>(false);
-  const [watchWalletModalOpened, setWatchWalletModalOpened] = useState<boolean>(false);
-  const [delegateModalOpened, setDelegateModalOpened] = useState<boolean>(false);
+  const [walletOptionsModalOpened, setWalletOptionsModalOpened] = useState(false);
+  const [settingsModalOpened, setSettingsModalOpened] = useState(false);
+  const [watchWalletModalOpened, setWatchWalletModalOpened] = useState(false);
+  const [delegateModalOpened, setDelegateModalOpened] = useState(
+    queryParam.get('delegateModalOpen') === 'true'
+  );
 
   const truncatedWalletAddress = walletAddress && truncateAddress(walletAddress);
 
@@ -127,7 +134,10 @@ const UserMenu: FC = () => {
                   <DesktopWalletOptionsModal
                     onDismiss={() => setWalletOptionsModalOpened(false)}
                     setWatchWalletModalOpened={setWatchWalletModalOpened}
-                    setDelegateModalOpened={setDelegateModalOpened}
+                    setDelegateModalOpened={(x) => {
+                      window.history.replaceState({ path: location.origin }, '', location.origin);
+                      setDelegateModalOpened(x);
+                    }}
                   />
                 )}
               </OutsideClickHandler>
@@ -172,7 +182,10 @@ const UserMenu: FC = () => {
             <MobileWalletOptionsModal
               onDismiss={() => setWalletOptionsModalOpened(false)}
               setWatchWalletModalOpened={setWatchWalletModalOpened}
-              setDelegateModalOpened={setDelegateModalOpened}
+              setDelegateModalOpened={(x) => {
+                window.history.replaceState({ path: location.origin }, '', location.origin);
+                setDelegateModalOpened(x);
+              }}
             />
           )}
         </MobileOrTabletView>

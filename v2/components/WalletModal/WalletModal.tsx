@@ -26,6 +26,7 @@ import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
 import { useGetSynthsByName } from '@snx-v2/synthsByName';
 import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
+import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
 
 type BalanceObject = {
   currencyKey: string;
@@ -153,14 +154,27 @@ export const WalletModalUi: FC<{
           </Box>
           <Divider my={4} />
           <Button
+            w="full"
             onClick={() => {
               onClose();
-              navigate('/escrow');
+              navigate('/wallet/balances');
             }}
             margin="0 auto"
             display="block"
           >
-            {t('staking-v2.wallet-modal.escrow')}
+            {t('staking-v2.wallet-modal.manage')}
+          </Button>
+          <Button
+            mt={4}
+            w="full"
+            variant="outline"
+            onClick={() => {
+              window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'false';
+              window.location.href = window.location.origin + '/?delegateModalOpen=true';
+            }}
+            display="block"
+          >
+            {t('staking-v2.wallet-modal.delegate-mode')}
           </Button>
         </ModalBody>
       </ModalContent>
