@@ -38,7 +38,7 @@ const WalletUi = ({ networkId }: { networkId: number | null }) => {
       >
         <TabList display="flex" justifyContent="center">
           {walletPages.map(({ name, icon, mainnetOnly }) => {
-            if (mainnetOnly && networkId === NetworkIdByName.mainnet) {
+            if (mainnetOnly && networkId !== NetworkIdByName.mainnet) {
               return null;
             }
             return (
