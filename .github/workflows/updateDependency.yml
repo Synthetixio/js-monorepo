@@ -73,6 +73,7 @@ jobs:
           done
           cat /tmp/commit-message.txt
 
+          git add .
           git commit --allow-empty --no-verify --all --file /tmp/commit-message.txt 
 
           # We are currently not using tags in any way so not much sense pushing tags to the repo
