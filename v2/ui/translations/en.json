@@ -223,6 +223,7 @@
     },
     "wallet": {
       "my-account": "My Account",
+      "no-synths": "You have no Synths",
       "tabs": {
         "balances": "Balances",
         "bridge": "Bridge",

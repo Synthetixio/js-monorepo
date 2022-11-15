@@ -28,6 +28,16 @@ import { useTranslation } from 'react-i18next';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 
+const TbodyLoading = ({ numberOfCols }: { numberOfCols: number }) => (
+  <Tr w="full">
+    {Array.from({ length: numberOfCols }, (x, i) => (
+      <Td key={'skeleton=' + i} border="none">
+        <Skeleton w="full" height={6} />
+      </Td>
+    ))}
+  </Tr>
+);
+
 const WalletBalancesUi: React.FC<{
   totalSynthBalance?: number;
   dSNXBalance?: number;
@@ -76,20 +86,38 @@ const WalletBalancesUi: React.FC<{
                   {t('staking-v2.wallet-balances.table-columns.asset')}
                 </Th>
                 <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.balance')}{' '}
+                  {t('staking-v2.wallet-balances.table-columns.balance')}
                 </Th>
                 <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
                   {t('staking-v2.wallet-balances.table-columns.price')}
                 </Th>
                 <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.holdings')}{' '}
+                  {t('staking-v2.wallet-balances.table-columns.holdings')}
                 </Th>
               </Tr>
             </Thead>
             <Tbody>
-              {synthData?.map(
-                ({ iconUrl, currencyKey, description, balance, usdBalance, price, holdingPct }) => {
-                  return (
+              {synthData === undefined ? (
+                <TbodyLoading numberOfCols={4} />
+              ) : synthData.length === 0 ? (
+                <Tr w="full">
+                  <Td colSpan={4} border="none">
+                    <Text textAlign="center" mt={4}>
+                      {t('staking-v2.wallet.no-synths')}
+                    </Text>
+                  </Td>
+                </Tr>
+              ) : (
+                synthData.map(
+                  ({
+                    iconUrl,
+                    currencyKey,
+                    description,
+                    balance,
+                    usdBalance,
+                    price,
+                    holdingPct,
+                  }) => (
                     <Tr key={currencyKey}>
                       <Td sx={{ borderBottomColor: 'gray.900' }}>
                         <Flex>
@@ -116,7 +144,9 @@ const WalletBalancesUi: React.FC<{
                       </Td>
                       <Td sx={{ borderBottomColor: 'gray.900' }}>
                         <Flex flexDirection="column">
-                          <Text fontSize="sm">{price ? formatNumber(price) : '-'}</Text>
+                          <Text fontSize="sm">
+                            {price ? formatNumberToUsd(price) : <Skeleton w={8} height={6} />}
+                          </Text>
                         </Flex>
                       </Td>
                       <Td sx={{ borderBottomColor: 'gray.900' }}>
@@ -127,13 +157,13 @@ const WalletBalancesUi: React.FC<{
                             value={holdingPct ? holdingPct * 100 : 100}
                           />
                           <Text fontSize="xs" color="whiteAlpha.600">
-                            {holdingPct ? formatPercent(holdingPct) : ''}
+                            {holdingPct ? formatPercent(holdingPct) : <Skeleton w={8} height={6} />}
                           </Text>
                         </Flex>
                       </Td>
                     </Tr>
-                  );
-                }
+                  )
+                )
               )}
             </Tbody>
           </Table>
