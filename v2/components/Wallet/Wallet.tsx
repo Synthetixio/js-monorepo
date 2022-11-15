@@ -28,7 +28,7 @@ const WalletUi = ({ networkId }: { networkId: number | null }) => {
         {t('staking-v2.wallet.my-account')}
       </Heading>
       <Tabs
-        variant="soft-rounded"
+        variant="solid-rounded"
         colorScheme="cyan"
         index={tabIndex}
         onChange={(tabIndex) => {

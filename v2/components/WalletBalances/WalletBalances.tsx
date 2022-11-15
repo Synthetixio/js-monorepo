@@ -30,7 +30,7 @@ import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 
 const TbodyLoading = ({ numberOfCols }: { numberOfCols: number }) => (
   <Tr w="full">
-    {Array.from({ length: numberOfCols }, (x, i) => (
+    {Array.from({ length: numberOfCols }, (_x, i) => (
       <Td key={'skeleton=' + i} border="none">
         <Skeleton w="full" height={6} />
       </Td>
