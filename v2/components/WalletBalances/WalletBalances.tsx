@@ -139,7 +139,7 @@ const WalletBalancesUi: React.FC<{
             </Thead>
             <Tbody>
               {nonSynthData === undefined ? (
-                <TbodyLoading numberOfCols={4} />
+                <TbodyLoading numberOfCols={3} />
               ) : nonSynthData.length === 0 ? (
                 <Tr w="full">
                   <Td colSpan={4} border="none">
