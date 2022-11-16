@@ -107,18 +107,20 @@ export default function AppRoutes() {
               <Route
                 path="/wallet/balances"
                 element={
-                  <Wrapper>
-                    <WalletLayout>
-                      <WalletBalances />
-                    </WalletLayout>
-                  </Wrapper>
+                  <WalletWrapper>
+                    <WalletBalances />
+                  </WalletWrapper>
                 }
               />
             </>
           ) : (
-            <Route path="/staking" element={<StakingPage />}>
-              <Route path=":action" element={<StakingPage />} />
-            </Route>
+            <>
+              <Route path="/staking" element={<StakingPage />}>
+                <Route path=":action" element={<StakingPage />} />
+              </Route>
+              <Route path="/wallet" element={<Navigate to="/synths" replace={true} />} />
+              <Route path="/wallet/balances" element={<Navigate to="/synths" replace={true} />} />
+            </>
           )}
           <Route
             path="/synths"
