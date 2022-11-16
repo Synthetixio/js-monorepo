@@ -32,7 +32,7 @@ jobs:
 
       - name: Config git identity
         run: |
-          git config --global user.email "ci@cc.snxdao.io"
+          git config --global user.email "ci@snxdao.io"
           git config --global user.name "Synthetix CI"
 
       - name: Update to the new synthetix version
