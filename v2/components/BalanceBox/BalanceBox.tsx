@@ -114,7 +114,7 @@ export const BalanceBoxUi: React.FC<{
             <Text size="sm" fontWeight={700}>
               {t('staking-v2.balance-box.assets')} <InfoIcon />
             </Text>
-            <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/synths">
+            <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/wallet/balances">
               {t('staking-v2.balance-box.see-all-synths')}
             </Link>
           </Flex>
