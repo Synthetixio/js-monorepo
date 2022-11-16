@@ -7219,7 +7219,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/StatBox@workspace:v2/components/StatBox":
+"@snx-v2/StatBox@workspace:*, @snx-v2/StatBox@workspace:v2/components/StatBox":
   version: 0.0.0-use.local
   resolution: "@snx-v2/StatBox@workspace:v2/components/StatBox"
   dependencies:
@@ -7242,6 +7242,12 @@ __metadata:
     react: ^18.2.0
     react-i18next: ^11.18.3
     react-router-dom: ^6.3.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/SynthIcons@workspace:*, @snx-v2/SynthIcons@workspace:v2/lib/SynthIcons":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/SynthIcons@workspace:v2/lib/SynthIcons"
   languageName: unknown
   linkType: soft
 
@@ -7296,6 +7302,42 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/Wallet@workspace:*, @snx-v2/Wallet@workspace:v2/components/Wallet":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/Wallet@workspace:v2/components/Wallet"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/WalletBalances": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+    react-router-dom: ^6.3.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/WalletBalances@workspace:*, @snx-v2/WalletBalances@workspace:v2/components/WalletBalances":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/WalletBalances@workspace:v2/components/WalletBalances"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/StatBox": "workspace:*"
+    "@snx-v2/SynthIcons": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/synthsByName": "workspace:*"
+    "@snx-v2/useDSnxBalance": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v2/useSynthsBalances": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/WalletModal@workspace:*, @snx-v2/WalletModal@workspace:v2/components/WalletModal":
   version: 0.0.0-use.local
   resolution: "@snx-v2/WalletModal@workspace:v2/components/WalletModal"
@@ -7303,6 +7345,7 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/ExternalLink": "workspace:*"
+    "@snx-v2/SynthIcons": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/synthsByName": "workspace:*"
@@ -9549,6 +9592,7 @@ __metadata:
     "@snx-v2/SwapLinks": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/UtilityCard": "workspace:^"
+    "@snx-v2/Wallet": "workspace:*"
     "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"

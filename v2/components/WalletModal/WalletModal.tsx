@@ -25,6 +25,7 @@ import { useNavigate } from 'react-router-dom';
 import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
 import { useGetSynthsByName } from '@snx-v2/synthsByName';
+import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
 
 type BalanceObject = {
   currencyKey: string;
@@ -143,7 +144,7 @@ export const WalletModalUi: FC<{
               variant="ghost"
               onClick={() => {
                 onClose();
-                navigate('/synths');
+                navigate('/wallet');
               }}
               margin="0 auto"
             >
@@ -166,8 +167,6 @@ export const WalletModalUi: FC<{
     </Modal>
   );
 };
-const getSynthIcon = (currencyKey: string) =>
-  `https://raw.githubusercontent.com/Synthetixio/synthetix-assets/master/synths/png/${currencyKey}.png`;
 
 export const WalletModal: FC<{
   isOpen: boolean;
@@ -198,7 +197,12 @@ export const WalletModal: FC<{
       balance: x.balance.toNumber(),
       usdBalance: x.usdBalance.toNumber(),
       icon: (
-        <img width="24px" height="24px" alt={x.currencyKey} src={getSynthIcon(x.currencyKey)} />
+        <img
+          width="24px"
+          height="24px"
+          alt={x.currencyKey}
+          src={getPngSynthIconUrl(x.currencyKey)}
+        />
       ),
       description,
     };

@@ -291,7 +291,7 @@ export const NavigationUI = ({
               </Center>
             </MenuItem>
             {isWalletConnected && (
-              <MenuItem onClick={onOpen}>
+              <MenuItem onClick={() => navigate('/wallet')}>
                 <Center>
                   <WalletIcon color="white" />
                   <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>

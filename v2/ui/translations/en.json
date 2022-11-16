@@ -214,12 +214,36 @@
       "active-debt": "Active Debt"
     },
     "wallet-modal": {
-      "headline": "My Account",
+      "headline": "My Wallet",
       "disconnect": "Disconnect",
       "explorer": "View on Explorer",
       "view-all": "View All",
       "escrow": "Escrow",
       "connected-with": "Connected with {{walletType}}"
+    },
+    "wallet": {
+      "my-wallet": "My Wallet",
+      "no-synths": "You have no Synths",
+      "tabs": {
+        "balances": "Balances",
+        "bridge": "Bridge",
+        "escrow": "Escrow",
+        "history": "History",
+        "delegate": "Delegate",
+        "merge-accounts": "Merge Accounts",
+        "migrate-escrow": "Migrate Escrow"
+      }
+    },
+    "wallet-balances": {
+      "active-debt": "Active Debt",
+      "d-snx-value": "dSNX Value",
+      "total-synth-value": "Total Synth Value",
+      "table-columns": {
+        "asset": "Asset",
+        "balance": "Balance",
+        "price": "Price",
+        "holdings": "Holdings"
+      }
     }
   },
   "meta": {

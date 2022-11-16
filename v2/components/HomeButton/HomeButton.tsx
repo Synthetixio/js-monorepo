@@ -13,7 +13,7 @@ export const HomeButton = (props: LinkProps) => {
       color="cyan.500"
       as={ReactRouterLink}
       to="/"
-      size="sm"
+      fontSize="sm"
       fontWeight={700}
       {...props}
     >

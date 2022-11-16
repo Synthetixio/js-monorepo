@@ -1,0 +1,16 @@
+{
+  "name": "@snx-v2/Wallet",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.0",
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/WalletBalances": "workspace:*",
+    "@snx-v2/icons": "workspace:*",
+    "@snx-v2/useSynthetixContracts": "workspace:*",
+    "react": "^18.2.0",
+    "react-i18next": "^11.18.3",
+    "react-router-dom": "^6.3.0"
+  }
+}
