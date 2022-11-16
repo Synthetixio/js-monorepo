@@ -1,8 +1,9 @@
-import { FC, useState } from 'react';
+import { FC, useState, useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { useLocation } from 'react-router-dom';
 
 import {
   FlexDiv,
@@ -38,22 +39,31 @@ import Connector from 'containers/Connector';
 import { truncateAddress } from 'utils/formatters/string';
 import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
 
+function useQueryParam() {
+  const { search } = useLocation();
+  return useMemo(() => new URLSearchParams(search), [search]);
+}
 const UserMenu: FC = () => {
   const { t } = useTranslation();
   const { networkError } = UI.useContainer();
-
+  const queryParam = useQueryParam();
   const { network, ensName, ensAvatar, isWalletConnected, walletAddress, signer } =
     Connector.useContainer();
-
-  const [walletOptionsModalOpened, setWalletOptionsModalOpened] = useState<boolean>(false);
-  const [settingsModalOpened, setSettingsModalOpened] = useState<boolean>(false);
-  const [watchWalletModalOpened, setWatchWalletModalOpened] = useState<boolean>(false);
-  const [delegateModalOpened, setDelegateModalOpened] = useState<boolean>(false);
+  const delegateModalOpenQuerySet = queryParam.get('delegateModalOpen') === 'true';
+  const [walletOptionsModalOpened, setWalletOptionsModalOpened_] = useState(false);
+  const [settingsModalOpened, setSettingsModalOpened] = useState(false);
+  const [watchWalletModalOpened, setWatchWalletModalOpened] = useState(false);
+  const [delegateModalOpened, setDelegateModalOpened] = useState(delegateModalOpenQuerySet);
 
   const truncatedWalletAddress = walletAddress && truncateAddress(walletAddress);
 
   const delegateWallet = useRecoilValue(delegateWalletState);
-
+  const handleWalletModalChange = (x: boolean) => {
+    if (delegateModalOpenQuerySet) {
+      window.history.replaceState({ path: location.origin }, '', location.origin);
+    }
+    setWalletOptionsModalOpened_(x);
+  };
   const getNetworkName = () => {
     if (network?.useOvm) {
       return `0Ξ ${network?.name.split('-')[0]}`;
@@ -83,12 +93,12 @@ const UserMenu: FC = () => {
               </DelegateIconWrapper>
             )}
             <DropdownContainer>
-              <OutsideClickHandler onOutsideClick={() => setWalletOptionsModalOpened(false)}>
+              <OutsideClickHandler onOutsideClick={() => handleWalletModalChange(false)}>
                 {isWalletConnected ? (
                   <StyledButton
                     variant="solid"
                     onClick={() => {
-                      setWalletOptionsModalOpened(!walletOptionsModalOpened);
+                      handleWalletModalChange(!walletOptionsModalOpened);
                     }}
                     isActive={walletOptionsModalOpened}
                     data-testid="user-menu"
@@ -108,7 +118,7 @@ const UserMenu: FC = () => {
                 ) : (
                   <StyledButton
                     variant="solid"
-                    onClick={() => setWalletOptionsModalOpened(!walletOptionsModalOpened)}
+                    onClick={() => handleWalletModalChange(!walletOptionsModalOpened)}
                     data-testid="user-menu"
                     disabled={!!networkError}
                   >
@@ -125,7 +135,7 @@ const UserMenu: FC = () => {
                 )}
                 {walletOptionsModalOpened && (
                   <DesktopWalletOptionsModal
-                    onDismiss={() => setWalletOptionsModalOpened(false)}
+                    onDismiss={() => handleWalletModalChange(false)}
                     setWatchWalletModalOpened={setWatchWalletModalOpened}
                     setDelegateModalOpened={setDelegateModalOpened}
                   />
@@ -145,7 +155,7 @@ const UserMenu: FC = () => {
               <StyledButton
                 variant="solid"
                 onClick={() => {
-                  setWalletOptionsModalOpened(!walletOptionsModalOpened);
+                  handleWalletModalChange(!walletOptionsModalOpened);
                 }}
                 isActive={walletOptionsModalOpened}
                 data-testid="user-menu"
@@ -163,14 +173,14 @@ const UserMenu: FC = () => {
           ) : (
             <MobileStyledGlowingButton
               data-testid="connect-wallet"
-              onClick={() => setWalletOptionsModalOpened(true)}
+              onClick={() => handleWalletModalChange(true)}
             >
               {t('common.wallet.connect-wallet')}
             </MobileStyledGlowingButton>
           )}
           {walletOptionsModalOpened && (
             <MobileWalletOptionsModal
-              onDismiss={() => setWalletOptionsModalOpened(false)}
+              onDismiss={() => handleWalletModalChange(false)}
               setWatchWalletModalOpened={setWatchWalletModalOpened}
               setDelegateModalOpened={setDelegateModalOpened}
             />
