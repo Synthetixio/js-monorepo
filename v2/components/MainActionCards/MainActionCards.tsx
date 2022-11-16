@@ -263,7 +263,7 @@ const MaintainActionCard: React.FC<{
           ? isFlagged
             ? () => navigate('/staking/unflag')
             : () => navigate('/staking/burn')
-          : () => console.log('C-Ratio explained')
+          : () => window.open('https://synthetix.io/guides/collateralization-ratio', '_newtab')
       }
       testId="maintain button"
     />
@@ -384,7 +384,7 @@ const CollectActionCard: React.FC<{
       buttonAction={
         isStaking && canClaim
           ? () => navigate('/earn')
-          : () => console.log('navigate to Rewards explained')
+          : () => window.open('https://synthetix.io/guides/staking-rewards-epochs', '_newtab')
       }
       testId="collect button"
     />
