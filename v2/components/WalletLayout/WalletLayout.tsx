@@ -1,0 +1,56 @@
+import type { FC, PropsWithChildren } from 'react';
+import { useContext } from 'react';
+import { Box, Button, ButtonGroup, Heading } from '@chakra-ui/react';
+import { Link, useLocation } from 'react-router-dom';
+import { ContractContext } from '@snx-v2/ContractContext';
+import { useTranslation } from 'react-i18next';
+import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
+
+const WalletTab: FC<PropsWithChildren<{ to: string }>> = ({ to, children }) => {
+  const location = useLocation();
+  return (
+    <Button
+      as={Link}
+      to={to}
+      aria-selected={location.pathname === to ? 'true' : 'false'}
+      variant={location.pathname === to ? 'solid' : 'ghost'}
+      borderRadius="9999px"
+      backgroundImage="none"
+      _hover={{ backgroundImage: 'none' }}
+      _active={{ backgroundImage: 'none' }}
+    >
+      {children}
+    </Button>
+  );
+};
+
+const WalletLayoutUi = ({
+  networkId,
+  children,
+}: PropsWithChildren<{ networkId: number | null }>) => {
+  const { t } = useTranslation();
+  const isMainnet = networkId === NetworkIdByName.mainnet;
+  return (
+    <Box mt={6}>
+      <Heading size="md" textAlign="center">
+        {t('staking-v2.wallet.my-wallet')}
+      </Heading>
+      <ButtonGroup py={4} display="flex" justifyContent="center">
+        <WalletTab to="/wallet/balances">{t(`staking-v2.wallet.tabs.balances`)}</WalletTab>
+        <WalletTab to="/escrow">{t(`staking-v2.wallet.tabs.escrow`)}</WalletTab>
+        <WalletTab to="/history">{t(`staking-v2.wallet.tabs.history`)}</WalletTab>
+        <WalletTab to="/delegate">{t(`staking-v2.wallet.tabs.delegate`)}</WalletTab>
+        <WalletTab to="/bridge">{t(`staking-v2.wallet.tabs.bridge`)}</WalletTab>
+        <WalletTab to="/merge-accounts">{t(`staking-v2.wallet.tabs.merge-accounts`)}</WalletTab>
+        {isMainnet ? (
+          <WalletTab to="/migrate-escrow">{t(`staking-v2.wallet.tabs.migrate-escrow`)}</WalletTab>
+        ) : null}
+      </ButtonGroup>
+      {children}
+    </Box>
+  );
+};
+export const WalletLayout: FC<PropsWithChildren> = ({ children }) => {
+  const { networkId } = useContext(ContractContext);
+  return <WalletLayoutUi networkId={networkId}>{children}</WalletLayoutUi>;
+};
