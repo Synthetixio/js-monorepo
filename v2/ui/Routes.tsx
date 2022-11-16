@@ -8,59 +8,36 @@ import useLocalStorage from 'hooks/useLocalStorage';
 import { Box, Container } from '@chakra-ui/react';
 import { HomeButton } from '@snx-v2/HomeButton';
 
-const DashboardPage = safeLazy(
-  () => import(/* webpackChunkName: "dashboard" */ './content/DashboardPage')
-);
-const SynthsPage = safeLazy(() => import(/* webpackChunkName: "synths" */ './content/SynthsPage'));
-const StakingPage = safeLazy(
-  () => import(/* webpackChunkName: "staking" */ './content/StakingPage')
-);
-const LoansPage = safeLazy(() => import(/* webpackChunkName: "loans" */ './content/LoansPage'));
+import DashboardPage from './content/DashboardPage';
+import SynthsPage from './content/SynthsPage';
+import StakingPage from './content/StakingPage';
+import LoansPage from './content/LoansPage';
+
+// gov is heavy, leave it async
 const GovPage = safeLazy(() => import(/* webpackChunkName: "gov" */ './content/GovPage'));
-const EarnPage = safeLazy(() => import(/* webpackChunkName: "earn" */ './content/EarnPage'));
-const DebtPage = safeLazy(() => import(/* webpackChunkName: "debt" */ './content/DebtPage'));
-const PoolPage = safeLazy(() => import(/* webpackChunkName: "pools" */ './content/PoolsPage'));
 
-const WalletLayout = safeLazy(() =>
-  import(/* webpackChunkName: "wallet" */ '@snx-v2/WalletLayout').then(({ WalletLayout }) => ({
-    default: WalletLayout,
-  }))
-);
-const WalletBalances = safeLazy(() =>
-  import(/* webpackChunkName: "wallet" */ '@snx-v2/WalletBalances').then(({ WalletBalances }) => ({
-    default: WalletBalances,
-  }))
-);
-const EscrowPage = safeLazy(() => import(/* webpackChunkName: "wallet" */ './content/EscrowPage'));
+import EarnPage from './content/EarnPage';
+import DebtPage from './content/DebtPage';
+import PoolPage from './content/PoolsPage';
 
-const MigrateEscrowPage = safeLazy(
-  () => import(/* webpackChunkName: "wallet" */ './content/MigrateEscrowPage')
-);
-const HistoryPage = safeLazy(
-  () => import(/* webpackChunkName: "wallet" */ './content/HistoryPage')
-);
-const DelegatePage = safeLazy(
-  () => import(/* webpackChunkName: "wallet" */ './content/DelegatePage')
-);
-const MergeAccountsPage = safeLazy(
-  () => import(/* webpackChunkName: "wallet" */ './content/MergeAccountsPage')
-);
-const BridgePage = safeLazy(() => import(/* webpackChunkName: "wallet" */ './content/BridgePage'));
+// wallet pages
+import { WalletLayout } from '@snx-v2/WalletLayout';
+import { WalletBalances } from '@snx-v2/WalletBalances';
+import EscrowPage from './content/EscrowPage';
+import MigrateEscrowPage from './content/MigrateEscrowPage';
+import HistoryPage from './content/HistoryPage';
+import DelegatePage from './content/DelegatePage';
+import MergeAccountsPage from './content/MergeAccountsPage';
+import BridgePage from './content/BridgePage';
 
-const NotFound = safeLazy(() => import(/* webpackChunkName: "404" */ './content/404'));
+import NotFound from './content/404';
 
-const V2HomePage = safeLazy(() => import(/* webpackChunkName: "v2-home" */ './content/V2Home'));
-const V2MintPage = safeLazy(() => import(/* webpackChunkName: "v2-mint" */ './content/V2Mint'));
-const V2BurnPage = safeLazy(() => import(/* webpackChunkName: "v2-burn" */ './content/V2Burn'));
-const V2UnflagPage = safeLazy(
-  () => import(/* webpackChunkName: "v2-unflag" */ './content/V2Unflag')
-);
-const V2SwapLinksPage = safeLazy(
-  () => import(/* webpackChunkName: "v2-swap-links" */ './content/V2SwapLinks')
-);
-const V2SelfLiquidation = safeLazy(
-  () => import(/* webpackChunkName: "v2-self-liquidation" */ './content/V2SelfLiquidation')
-);
+import V2HomePage from './content/V2Home';
+import V2MintPage from './content/V2Mint';
+import V2BurnPage from './content/V2Burn';
+import V2UnflagPage from './content/V2Unflag';
+import V2SwapLinksPage from './content/V2SwapLinks';
+import V2SelfLiquidation from './content/V2SelfLiquidation';
 
 const Wrapper: FC<PropsWithChildren> = ({ children }) => {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
