@@ -7343,6 +7343,7 @@ __metadata:
   resolution: "@snx-v2/WalletModal@workspace:v2/components/WalletModal"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/ExternalLink": "workspace:*"
     "@snx-v2/SynthIcons": "workspace:*"
