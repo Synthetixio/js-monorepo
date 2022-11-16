@@ -382,7 +382,7 @@ const CollectActionCard: React.FC<{
       }
       buttonVariant={getButtonVariant()}
       buttonAction={
-        isStaking && canClaim
+        isStaking
           ? () => navigate('/earn')
           : () => window.open('https://synthetix.io/guides/staking-rewards-epochs', '_newtab')
       }
