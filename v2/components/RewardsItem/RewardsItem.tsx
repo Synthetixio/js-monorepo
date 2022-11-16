@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Box, Text, Flex, Button, Progress } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import { CountDown } from '@snx-v2/CountDown';
 
 interface RewardsItemProps {
   isLoading: boolean;
@@ -9,6 +10,7 @@ interface RewardsItemProps {
   description: string;
   apyReturn: string;
   stakedBalance: string;
+  endDate: Date;
 }
 
 export const RewardsItem = ({
@@ -18,6 +20,7 @@ export const RewardsItem = ({
   description,
   apyReturn,
   stakedBalance,
+  endDate,
 }: RewardsItemProps) => {
   console.log(isLoading, Icon);
   const { t } = useTranslation();
@@ -81,10 +84,14 @@ export const RewardsItem = ({
           {t('staking-v2.earn.staked')}
         </Text>
       </Flex>
-      <Flex>
-        <Progress />
-        <Text>{apyReturn}</Text>
-        <Text>Est. APY</Text>
+      <Flex direction="column">
+        <Progress w="208px" variant="white" height="4px" min={0} max={100} value={50} />
+        <Flex>
+          <Text fontFamily="heading" fontSize="xs" color="green.400">
+            {t('staking-v2.earn.remaining')}
+          </Text>
+          <CountDown toDate={endDate} />
+        </Flex>
       </Flex>
       <Flex>
         <Text>{apyReturn}</Text>

@@ -7008,7 +7008,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/CountDown@workspace:*, @snx-v2/CountDown@workspace:v2/components/CountDown":
+"@snx-v2/CountDown@workspace:*, @snx-v2/CountDown@workspace:^, @snx-v2/CountDown@workspace:v2/components/CountDown":
   version: 0.0.0-use.local
   resolution: "@snx-v2/CountDown@workspace:v2/components/CountDown"
   dependencies:
@@ -7177,6 +7177,7 @@ __metadata:
   resolution: "@snx-v2/RewardsItem@workspace:v2/components/RewardsItem"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/CountDown": "workspace:^"
     "@snx-v2/icons": "workspace:^"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
