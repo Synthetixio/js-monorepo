@@ -301,7 +301,6 @@ const CollectActionCard: React.FC<{
   });
 
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
-  const canClaim = !hasClaimed;
   const theme = useTheme();
   const getButtonVariant = () => {
     if (hasClaimed) return 'link';
@@ -382,7 +381,7 @@ const CollectActionCard: React.FC<{
       }
       buttonVariant={getButtonVariant()}
       buttonAction={
-        isStaking && canClaim
+        isStaking
           ? () => navigate('/earn')
           : () => window.open('https://synthetix.io/guides/staking-rewards-epochs', '_newtab')
       }
