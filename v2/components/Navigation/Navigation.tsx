@@ -267,11 +267,11 @@ export const NavigationUI = ({
               cursor: 'pointer',
             }}
           >
-            <MenuButton>
+            <MenuButton data-testid="main menu button">
               <NineDots />
             </MenuButton>
           </Center>
-          <MenuList>
+          <MenuList data-testid="main menu dropdown">
             {/* <MenuItem onClick={() => navigate('/')}>
               <Center>
                 <InfoOutline />
