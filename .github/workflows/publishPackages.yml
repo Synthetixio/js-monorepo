@@ -37,7 +37,7 @@ jobs:
 
       - name: Config git identity
         run: |
-          git config --global user.email "ci@cc.snxdao.io"
+          git config --global user.email "ci@snxdao.io"
           git config --global user.name "Synthetix CI"
 
       - run: yarn deps:version '${{ github.event.inputs.package }}' ${{ github.event.inputs.version }}
