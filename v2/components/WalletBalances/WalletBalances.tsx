@@ -6,15 +6,11 @@ import {
   TableContainer,
   Tbody,
   Td,
-  Th,
   Thead,
   Tr,
   Text,
   Heading,
-  Progress,
-  Skeleton,
 } from '@chakra-ui/react';
-import { formatNumber } from '@snx-v2/formatters';
 import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
 import { useGetSynthsByName } from '@snx-v2/synthsByName';
 import { useEthBalance } from '@snx-v2/useEthBalance';
@@ -23,22 +19,13 @@ import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { SynthBalance, useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import Wei from '@synthetixio/wei';
-import { formatPercent, formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumberToUsd } from '@snx-v2/formatters';
 import { StatBox } from '@snx-v2/StatBox';
 import { useTranslation } from 'react-i18next';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 import { SNXIcon, DSNXIcon, EthereumIcon } from '@snx-v2/icons';
-
-const TbodyLoading = ({ numberOfCols }: { numberOfCols: number }) => (
-  <Tr w="full">
-    {Array.from({ length: numberOfCols }, (_x, i) => (
-      <Td key={'skeleton=' + i} border="none">
-        <Skeleton w="full" height={6} />
-      </Td>
-    ))}
-  </Tr>
-);
+import { AssetTd, BalanceTd, HoldingTd, PriceTd, StyledTh, TbodyLoading } from './TableComponents';
 
 const WalletBalancesUi: React.FC<{
   totalSynthBalance?: number;
@@ -92,18 +79,10 @@ const WalletBalancesUi: React.FC<{
           <Table variant="simple">
             <Thead>
               <Tr>
-                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.asset')}
-                </Th>
-                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.balance')}
-                </Th>
-                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.price')}
-                </Th>
-                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.holdings')}
-                </Th>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.asset')}</StyledTh>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.balance')}</StyledTh>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.price')}</StyledTh>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.holdings')}</StyledTh>
               </Tr>
             </Thead>
             <Tbody>
@@ -129,48 +108,14 @@ const WalletBalancesUi: React.FC<{
                     holdingPct,
                   }) => (
                     <Tr key={currencyKey}>
-                      <Td sx={{ borderBottomColor: 'gray.900' }}>
-                        <Flex>
-                          <Flex display="flex" alignItems="center">
-                            <img width="24px" height="24px" src={iconUrl} alt={currencyKey} />
-                          </Flex>
-                          <Flex ml={1} flexDirection="column">
-                            <Text fontSize="sm">{currencyKey}</Text>
-                            {description && (
-                              <Text fontSize="xs" color="gray.500">
-                                {description}
-                              </Text>
-                            )}
-                          </Flex>
-                        </Flex>
-                      </Td>
-                      <Td sx={{ borderBottomColor: 'gray.900' }}>
-                        <Flex flexDirection="column">
-                          <Text fontSize="sm">{formatNumber(balance)}</Text>
-                          <Text fontSize="xs" color="gray.500">
-                            {formatNumber(usdBalance)}
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td sx={{ borderBottomColor: 'gray.900' }}>
-                        <Flex flexDirection="column">
-                          <Text fontSize="sm">
-                            {price ? formatNumberToUsd(price) : <Skeleton w={8} height={6} />}
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td sx={{ borderBottomColor: 'gray.900' }}>
-                        <Flex flexDirection="column">
-                          <Progress
-                            height="1"
-                            variant="white"
-                            value={holdingPct ? holdingPct * 100 : 100}
-                          />
-                          <Text fontSize="xs" color="whiteAlpha.600">
-                            {holdingPct ? formatPercent(holdingPct) : <Skeleton w={8} height={6} />}
-                          </Text>
-                        </Flex>
-                      </Td>
+                      <AssetTd
+                        currencyKey={currencyKey}
+                        description={description}
+                        iconUrl={iconUrl}
+                      />
+                      <BalanceTd balance={balance} usdBalance={usdBalance} />
+                      <PriceTd price={price} />
+                      <HoldingTd holdingPct={holdingPct} />
                     </Tr>
                   )
                 )
@@ -187,15 +132,9 @@ const WalletBalancesUi: React.FC<{
           <Table variant="simple">
             <Thead>
               <Tr>
-                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.asset')}
-                </Th>
-                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.balance')}
-                </Th>
-                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.price')}
-                </Th>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.asset')}</StyledTh>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.balance')}</StyledTh>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.price')}</StyledTh>
               </Tr>
             </Thead>
             <Tbody>
@@ -213,38 +152,9 @@ const WalletBalancesUi: React.FC<{
                 nonSynthData.map(
                   ({ icon, currencyKey, description, balance, usdBalance, price }) => (
                     <Tr key={currencyKey}>
-                      <Td sx={{ borderBottomColor: 'gray.900' }}>
-                        <Flex>
-                          <Flex alignItems="center">{icon}</Flex>
-                          <Flex ml={1} flexDirection="column">
-                            <Text fontSize="sm">{currencyKey}</Text>
-                            <Text fontSize="xs" color="gray.500">
-                              {description}
-                            </Text>
-                          </Flex>
-                        </Flex>
-                      </Td>
-                      <Td sx={{ borderBottomColor: 'gray.900' }}>
-                        <Flex flexDirection="column">
-                          <Text fontSize="sm">
-                            {balance ? formatNumber(balance) : <Skeleton w={8} height={4} />}
-                          </Text>
-                          <Text fontSize="xs" color="gray.500">
-                            {usdBalance ? (
-                              formatNumber(usdBalance)
-                            ) : (
-                              <Skeleton mt={2} w={8} height={4} />
-                            )}
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td sx={{ borderBottomColor: 'gray.900' }}>
-                        <Flex flexDirection="column">
-                          <Text fontSize="sm">
-                            {price ? formatNumberToUsd(price) : <Skeleton w={8} height={6} />}
-                          </Text>
-                        </Flex>
-                      </Td>
+                      <AssetTd currencyKey={currencyKey} description={description} icon={icon} />
+                      <BalanceTd balance={balance} usdBalance={usdBalance} />
+                      <PriceTd price={price} />
                     </Tr>
                   )
                 )
