@@ -51,7 +51,7 @@ export const BalanceTd = ({ balance, usdBalance }: { balance?: number; usdBalanc
     <Flex flexDirection="column">
       <Text fontSize="sm">{balance ? formatNumber(balance) : <Skeleton w={8} height={4} />}</Text>
       <Text fontSize="xs" color="gray.500">
-        {usdBalance ? formatNumber(usdBalance) : <Skeleton mt={2} w={8} height={4} />}
+        {usdBalance ? formatNumberToUsd(usdBalance) : <Skeleton mt={2} w={8} height={4} />}
       </Text>
     </Flex>
   </StyledTd>
