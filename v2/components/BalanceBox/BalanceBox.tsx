@@ -54,12 +54,12 @@ export const BalanceBoxUi: React.FC<{
           <Skeleton my={1} width={8} height={4} />
         )}
 
-        {transferable !== undefined && snxBalance !== undefined ? (
+        {stakedSnx !== undefined && snxBalance !== undefined ? (
           <Progress
             mt="1"
             mb="1"
             height="1"
-            value={(transferable / snxBalance) * 100}
+            value={(stakedSnx / snxBalance) * 100}
             variant="white"
           />
         ) : (
