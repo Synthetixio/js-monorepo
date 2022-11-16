@@ -301,7 +301,6 @@ const CollectActionCard: React.FC<{
   });
 
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
-  const canClaim = !hasClaimed;
   const theme = useTheme();
   const getButtonVariant = () => {
     if (hasClaimed) return 'link';
