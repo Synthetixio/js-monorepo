@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 import OutsideClickHandler from 'react-outside-click-handler';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   FlexDiv,
@@ -49,7 +49,7 @@ const UserMenu: FC = () => {
   const queryParam = useQueryParam();
   const { network, ensName, ensAvatar, isWalletConnected, walletAddress, signer } =
     Connector.useContainer();
-
+  const navigate = useNavigate();
   const [walletOptionsModalOpened, setWalletOptionsModalOpened] = useState(false);
   const [settingsModalOpened, setSettingsModalOpened] = useState(false);
   const [watchWalletModalOpened, setWatchWalletModalOpened] = useState(false);
@@ -135,7 +135,7 @@ const UserMenu: FC = () => {
                     onDismiss={() => setWalletOptionsModalOpened(false)}
                     setWatchWalletModalOpened={setWatchWalletModalOpened}
                     setDelegateModalOpened={(x) => {
-                      window.history.replaceState({ path: location.origin }, '', location.origin);
+                      navigate(location.origin, { state: '' });
                       setDelegateModalOpened(x);
                     }}
                   />
@@ -183,7 +183,7 @@ const UserMenu: FC = () => {
               onDismiss={() => setWalletOptionsModalOpened(false)}
               setWatchWalletModalOpened={setWatchWalletModalOpened}
               setDelegateModalOpened={(x) => {
-                window.history.replaceState({ path: location.origin }, '', location.origin);
+                navigate(location.origin, { state: '' });
                 setDelegateModalOpened(x);
               }}
             />
