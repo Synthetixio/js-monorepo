@@ -1,11 +1,11 @@
-import { ReactNode, FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { safeLazy } from '@synthetixio/safe-import';
 import AppLayout from './sections/shared/Layout/AppLayout';
 import { LOCAL_STORAGE_KEYS } from 'constants/storage';
 import useLocalStorage from 'hooks/useLocalStorage';
-import { BoxProps, Flex } from '@chakra-ui/react';
+import { Box, BoxProps, Container } from '@chakra-ui/react';
 import { HomeButton } from '@snx-v2/HomeButton';
 
 const DashboardPage = safeLazy(
@@ -54,13 +54,15 @@ interface WrapperProps extends BoxProps {
   children: ReactNode;
 }
 
-const Wrapper: FC<WrapperProps> = ({ children, ...props }) => {
+const Wrapper: FC<WrapperProps> = ({ children }) => {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
   return STAKING_V2_ENABLED ? (
-    <Flex flexDirection="column" {...props} maxW="1200px" m="auto">
-      <HomeButton marginTop={4} />
-      {children}
-    </Flex>
+    <Box bg="navy.900" height="100%" className="v2">
+      <Container pt={4} pb={16} bg="navy.900" maxW="4xl">
+        <HomeButton />
+        {children}
+      </Container>
+    </Box>
   ) : (
     <>{children}</>
   );
@@ -93,7 +95,7 @@ export default function AppRoutes() {
           <Route
             path="/synths"
             element={
-              <Wrapper pb={4}>
+              <Wrapper>
                 <SynthsPage />
               </Wrapper>
             }
