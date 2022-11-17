@@ -12,5 +12,7 @@ export const Solid = Template.bind({});
 Solid.args = { variant: 'solid' };
 export const Outline = Template.bind({});
 Outline.args = { variant: 'outline' };
+export const OutlineGrey = Template.bind({});
+Outline.args = { variant: 'outline', colorScheme: 'gray' };
 export const Ghost = Template.bind({});
 Ghost.args = { variant: 'ghost' };
