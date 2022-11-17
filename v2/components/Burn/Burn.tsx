@@ -443,6 +443,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
 
   const handleBadgeClick = (badgeType: ActiveBadge) => {
     const snxPrice = exchangeRateData?.SNX?.toNumber();
+    const sUSDBalanceWithDefault = susdBalance?.toNumber() || 0;
     if (!debtData || !snxPrice) return;
     switch (badgeType) {
       case 'toTarget':
@@ -467,7 +468,12 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
 
       case 'max': {
         setActiveBadge('max');
-        const burnAmountString = formatNumber(debtData.debtBalance.toNumber());
+
+        const burnAmountString = formatNumber(
+          debtData.debtBalance.gt(sUSDBalanceWithDefault)
+            ? sUSDBalanceWithDefault
+            : debtData.debtBalance.toNumber()
+        );
         const snxUnstakingAmount = formatNumber(stakedSnx.toNumber());
         setBurnAmountSusd(burnAmountString);
         setSnxUnstakingAmount(snxUnstakingAmount);
