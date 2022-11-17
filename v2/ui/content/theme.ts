@@ -195,7 +195,7 @@ const Button: ComponentStyleConfig = {
           color: 'whiteAlpha.800',
           borderColor: 'gray.900',
           _hover: { bg: 'rgba(255, 255, 255, 0.12)' }, // white 0.12 opacity
-          _active: { bg: 'rgba(255, 255, 255, 0.24)' }, //white 0.12 opacity
+          _active: { bg: 'rgba(255, 255, 255, 0.24)' }, //white 0.24 opacity
         };
       }
       return {
