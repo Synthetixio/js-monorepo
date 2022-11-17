@@ -189,30 +189,19 @@ const Button: ComponentStyleConfig = {
         },
       },
     },
-    link: {
-      height: 10,
-      color: 'cyan.500',
-    },
     outline: {
-      bgColor: 'rgba(0, 209, 255, 0.12)',
-      bgOpacity: '0.2',
-      bgImage: 'none',
-      color: 'cyan.400',
-      borderWidth: 1,
-      borderColor: 'cyan.400',
-      _hover: {
-        bgColor: 'rgba(0, 209, 255, 0.24)',
-      },
-      _active: {
-        bgColor: 'rgba(0, 209, 255, 0.24)',
-      },
-      _disabled: {
-        color: 'gray.900',
-        bgColor: 'transparent',
-        borderWidth: 1,
-        borderColor: 'gray.900',
-      },
+      color: 'cyan.500', // needed for storybook for some reason
+      border: '1px solid', // needed for storybook for some reason
+      borderColor: 'cyan.500', // needed for storybook for some reason
+      _hover: { bg: 'rgb(0, 209, 255, 0.12)' }, // cyan.500 0.12 opacity
+      _active: { bg: 'rgb(0, 209, 255, 0.24)' }, // cyan.500 0.24 opacity
     },
+    ghost: {
+      color: 'cyan.500', // needed for storybook for some reason
+      _hover: { bg: 'rgb(0, 209, 255, 0.12)' }, // cyan.500 0.12 opacity
+      _active: { bg: 'rgb(0, 209, 255, 0.24)' }, // cyan.500 0.24 opacity
+    },
+
     error: {
       bg: 'error',
     },
