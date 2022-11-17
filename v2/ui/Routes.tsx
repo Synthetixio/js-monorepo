@@ -1,60 +1,45 @@
-import { FC, ReactNode } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { safeLazy } from '@synthetixio/safe-import';
 import AppLayout from './sections/shared/Layout/AppLayout';
 import { LOCAL_STORAGE_KEYS } from 'constants/storage';
 import useLocalStorage from 'hooks/useLocalStorage';
-import { Box, BoxProps, Container } from '@chakra-ui/react';
+import { Box, Container } from '@chakra-ui/react';
 import { HomeButton } from '@snx-v2/HomeButton';
 
-const DashboardPage = safeLazy(
-  () => import(/* webpackChunkName: "dashboard" */ './content/DashboardPage')
-);
-const SynthsPage = safeLazy(() => import(/* webpackChunkName: "synths" */ './content/SynthsPage'));
-const StakingPage = safeLazy(
-  () => import(/* webpackChunkName: "staking" */ './content/StakingPage')
-);
-const LoansPage = safeLazy(() => import(/* webpackChunkName: "loans" */ './content/LoansPage'));
+import DashboardPage from './content/DashboardPage';
+import SynthsPage from './content/SynthsPage';
+import StakingPage from './content/StakingPage';
+import LoansPage from './content/LoansPage';
+
+// gov is heavy, leave it async
 const GovPage = safeLazy(() => import(/* webpackChunkName: "gov" */ './content/GovPage'));
-const EarnPage = safeLazy(() => import(/* webpackChunkName: "earn" */ './content/EarnPage'));
-const DebtPage = safeLazy(() => import(/* webpackChunkName: "debt" */ './content/DebtPage'));
-const EscrowPage = safeLazy(() => import(/* webpackChunkName: "escrow" */ './content/EscrowPage'));
-const PoolPage = safeLazy(() => import(/* webpackChunkName: "pools" */ './content/PoolsPage'));
-const MigrateEscrowPage = safeLazy(
-  () => import(/* webpackChunkName: "migrate-escrow" */ './content/MigrateEscrowPage')
-);
-const HistoryPage = safeLazy(
-  () => import(/* webpackChunkName: "history" */ './content/HistoryPage')
-);
-const DelegatePage = safeLazy(
-  () => import(/* webpackChunkName: "delegate" */ './content/DelegatePage')
-);
-const MergeAccountsPage = safeLazy(
-  () => import(/* webpackChunkName: "merge-accounts" */ './content/MergeAccountsPage')
-);
-const BridgePage = safeLazy(() => import(/* webpackChunkName: "bridge" */ './content/BridgePage'));
-const NotFound = safeLazy(() => import(/* webpackChunkName: "404" */ './content/404'));
 
-const V2HomePage = safeLazy(() => import(/* webpackChunkName: "v2-home" */ './content/V2Home'));
-const V2MintPage = safeLazy(() => import(/* webpackChunkName: "v2-mint" */ './content/V2Mint'));
-const V2BurnPage = safeLazy(() => import(/* webpackChunkName: "v2-burn" */ './content/V2Burn'));
-const V2UnflagPage = safeLazy(
-  () => import(/* webpackChunkName: "v2-unflag" */ './content/V2Unflag')
-);
-const V2SwapLinksPage = safeLazy(
-  () => import(/* webpackChunkName: "v2-swap-links" */ './content/V2SwapLinks')
-);
-const V2SelfLiquidation = safeLazy(
-  () => import(/* webpackChunkName: "v2-self-liquidation" */ './content/V2SelfLiquidation')
-);
-const V2Wallet = safeLazy(() => import(/* webpackChunkName: "v2-wallet" */ './content/V2Wallet'));
+import EarnPage from './content/EarnPage';
+import DebtPage from './content/DebtPage';
+import PoolPage from './content/PoolsPage';
 
-interface WrapperProps extends BoxProps {
-  children: ReactNode;
-}
+// wallet pages
+import { WalletLayout } from '@snx-v2/WalletLayout';
+import { WalletBalances } from '@snx-v2/WalletBalances';
+import EscrowPage from './content/EscrowPage';
+import MigrateEscrowPage from './content/MigrateEscrowPage';
+import HistoryPage from './content/HistoryPage';
+import DelegatePage from './content/DelegatePage';
+import MergeAccountsPage from './content/MergeAccountsPage';
+import BridgePage from './content/BridgePage';
 
-const Wrapper: FC<WrapperProps> = ({ children }) => {
+import NotFound from './content/404';
+
+import V2HomePage from './content/V2Home';
+import V2MintPage from './content/V2Mint';
+import V2BurnPage from './content/V2Burn';
+import V2UnflagPage from './content/V2Unflag';
+import V2SwapLinksPage from './content/V2SwapLinks';
+import V2SelfLiquidation from './content/V2SelfLiquidation';
+
+const Wrapper: FC<PropsWithChildren> = ({ children }) => {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
   return STAKING_V2_ENABLED ? (
     <Box bg="navy.900" height="100%" className="v2">
@@ -63,6 +48,17 @@ const Wrapper: FC<WrapperProps> = ({ children }) => {
         {children}
       </Container>
     </Box>
+  ) : (
+    <>{children}</>
+  );
+};
+
+const WalletWrapper: FC<PropsWithChildren> = ({ children }) => {
+  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
+  return STAKING_V2_ENABLED ? (
+    <Wrapper>
+      <WalletLayout>{children}</WalletLayout>
+    </Wrapper>
   ) : (
     <>{children}</>
   );
@@ -85,12 +81,23 @@ export default function AppRoutes() {
               <Route path="/staking/swap-links" element={<V2SwapLinksPage />} />
               <Route path="/staking/self-liquidation" element={<V2SelfLiquidation />} />
               <Route path="/wallet" element={<Navigate to="/wallet/balances" replace={true} />} />
-              <Route path="/wallet/:tab" element={<V2Wallet />} />
+              <Route
+                path="/wallet/balances"
+                element={
+                  <WalletWrapper>
+                    <WalletBalances />
+                  </WalletWrapper>
+                }
+              />
             </>
           ) : (
-            <Route path="/staking" element={<StakingPage />}>
-              <Route path=":action" element={<StakingPage />} />
-            </Route>
+            <>
+              <Route path="/staking" element={<StakingPage />}>
+                <Route path=":action" element={<StakingPage />} />
+              </Route>
+              <Route path="/wallet" element={<Navigate to="/synths" replace={true} />} />
+              <Route path="/wallet/balances" element={<Navigate to="/synths" replace={true} />} />
+            </>
           )}
           <Route
             path="/synths"
@@ -184,26 +191,26 @@ export default function AppRoutes() {
           <Route
             path="/migrate-escrow"
             element={
-              <Wrapper>
+              <WalletWrapper>
                 <MigrateEscrowPage />
-              </Wrapper>
+              </WalletWrapper>
             }
           />
 
           <Route
             path="/escrow"
             element={
-              <Wrapper>
+              <WalletWrapper>
                 <EscrowPage />
-              </Wrapper>
+              </WalletWrapper>
             }
           >
             <Route
               path=":action"
               element={
-                <Wrapper>
+                <WalletWrapper>
                   <EscrowPage />
-                </Wrapper>
+                </WalletWrapper>
               }
             />
           </Route>
@@ -211,35 +218,35 @@ export default function AppRoutes() {
           <Route
             path="/history"
             element={
-              <Wrapper>
+              <WalletWrapper>
                 <HistoryPage />
-              </Wrapper>
+              </WalletWrapper>
             }
           />
 
           <Route
             path="/delegate"
             element={
-              <Wrapper>
+              <WalletWrapper>
                 <DelegatePage />
-              </Wrapper>
+              </WalletWrapper>
             }
           />
 
           <Route
             path="/merge-accounts"
             element={
-              <Wrapper>
+              <WalletWrapper>
                 <MergeAccountsPage />
-              </Wrapper>
+              </WalletWrapper>
             }
           >
             <Route
               path=":action"
               element={
-                <Wrapper>
+                <WalletWrapper>
                   <MergeAccountsPage />
-                </Wrapper>
+                </WalletWrapper>
               }
             />
           </Route>
@@ -247,9 +254,9 @@ export default function AppRoutes() {
           <Route
             path="/bridge"
             element={
-              <Wrapper>
+              <WalletWrapper>
                 <BridgePage />
-              </Wrapper>
+              </WalletWrapper>
             }
           />
           <Route

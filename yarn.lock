@@ -7302,21 +7302,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/Wallet@workspace:*, @snx-v2/Wallet@workspace:v2/components/Wallet":
-  version: 0.0.0-use.local
-  resolution: "@snx-v2/Wallet@workspace:v2/components/Wallet"
-  dependencies:
-    "@chakra-ui/react": ^2.2.8
-    "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/WalletBalances": "workspace:*"
-    "@snx-v2/icons": "workspace:*"
-    "@snx-v2/useSynthetixContracts": "workspace:*"
-    react: ^18.2.0
-    react-i18next: ^11.18.3
-    react-router-dom: ^6.3.0
-  languageName: unknown
-  linkType: soft
-
 "@snx-v2/WalletBalances@workspace:*, @snx-v2/WalletBalances@workspace:v2/components/WalletBalances":
   version: 0.0.0-use.local
   resolution: "@snx-v2/WalletBalances@workspace:v2/components/WalletBalances"
@@ -7326,15 +7311,30 @@ __metadata:
     "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/SynthIcons": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
     "@snx-v2/synthsByName": "workspace:*"
     "@snx-v2/useDSnxBalance": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useEthBalance": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/WalletLayout@workspace:*, @snx-v2/WalletLayout@workspace:v2/components/WalletLayout":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/WalletLayout@workspace:v2/components/WalletLayout"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+    react-router-dom: ^6.3.0
   languageName: unknown
   linkType: soft
 
@@ -7511,6 +7511,18 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.7.2
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useEthBalance@workspace:*, @snx-v2/useEthBalance@workspace:v2/lib/useEthBalance":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useEthBalance@workspace:v2/lib/useEthBalance"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/SignerContext": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -9593,7 +9605,8 @@ __metadata:
     "@snx-v2/SwapLinks": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/UtilityCard": "workspace:^"
-    "@snx-v2/Wallet": "workspace:*"
+    "@snx-v2/WalletBalances": "workspace:*"
+    "@snx-v2/WalletLayout": "workspace:*"
     "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"

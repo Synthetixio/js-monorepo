@@ -54,12 +54,12 @@ export const BalanceBoxUi: React.FC<{
           <Skeleton my={1} width={8} height={4} />
         )}
 
-        {transferable !== undefined && snxBalance !== undefined ? (
+        {stakedSnx !== undefined && snxBalance !== undefined ? (
           <Progress
             mt="1"
             mb="1"
             height="1"
-            value={(transferable / snxBalance) * 100}
+            value={(stakedSnx / snxBalance) * 100}
             variant="white"
           />
         ) : (
@@ -114,7 +114,7 @@ export const BalanceBoxUi: React.FC<{
             <Text size="sm" fontWeight={700}>
               {t('staking-v2.balance-box.assets')} <InfoIcon />
             </Text>
-            <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/synths">
+            <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/wallet/balances">
               {t('staking-v2.balance-box.see-all-synths')}
             </Link>
           </Flex>

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { ReactElement, useContext } from 'react';
 import {
   Box,
   Flex,
@@ -6,37 +6,26 @@ import {
   TableContainer,
   Tbody,
   Td,
-  Th,
   Thead,
   Tr,
   Text,
   Heading,
-  Progress,
-  Skeleton,
 } from '@chakra-ui/react';
-import { formatNumber } from '@snx-v2/formatters';
 import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
 import { useGetSynthsByName } from '@snx-v2/synthsByName';
+import { useEthBalance } from '@snx-v2/useEthBalance';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { SynthBalance, useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import Wei from '@synthetixio/wei';
-import { formatPercent, formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumberToUsd } from '@snx-v2/formatters';
 import { StatBox } from '@snx-v2/StatBox';
 import { useTranslation } from 'react-i18next';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
-
-const TbodyLoading = ({ numberOfCols }: { numberOfCols: number }) => (
-  <Tr w="full">
-    {Array.from({ length: numberOfCols }, (_x, i) => (
-      <Td key={'skeleton=' + i} border="none">
-        <Skeleton w="full" height={6} />
-      </Td>
-    ))}
-  </Tr>
-);
+import { SNXIcon, DSNXIcon, EthereumIcon } from '@snx-v2/icons';
+import { AssetTd, BalanceTd, HoldingTd, PriceTd, StyledTh, TbodyLoading } from './TableComponents';
 
 const WalletBalancesUi: React.FC<{
   totalSynthBalance?: number;
@@ -51,7 +40,15 @@ const WalletBalancesUi: React.FC<{
     usdBalance: number;
     holdingPct?: number;
   }[];
-}> = ({ totalSynthBalance, dSNXBalance, debtBalance, synthData }) => {
+  nonSynthData: {
+    currencyKey: string;
+    description: string;
+    icon: ReactElement;
+    price?: number;
+    balance?: number;
+    usdBalance?: number;
+  }[];
+}> = ({ totalSynthBalance, dSNXBalance, debtBalance, synthData, nonSynthData }) => {
   const { t } = useTranslation();
   return (
     <Box>
@@ -82,18 +79,10 @@ const WalletBalancesUi: React.FC<{
           <Table variant="simple">
             <Thead>
               <Tr>
-                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.asset')}
-                </Th>
-                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.balance')}
-                </Th>
-                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.price')}
-                </Th>
-                <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>
-                  {t('staking-v2.wallet-balances.table-columns.holdings')}
-                </Th>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.asset')}</StyledTh>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.balance')}</StyledTh>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.price')}</StyledTh>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.holdings')}</StyledTh>
               </Tr>
             </Thead>
             <Tbody>
@@ -119,48 +108,53 @@ const WalletBalancesUi: React.FC<{
                     holdingPct,
                   }) => (
                     <Tr key={currencyKey}>
-                      <Td sx={{ borderBottomColor: 'gray.900' }}>
-                        <Flex>
-                          <Flex display="flex" alignItems="center">
-                            <img width="24px" height="24px" src={iconUrl} alt={currencyKey} />
-                          </Flex>
-                          <Flex ml={1} flexDirection="column">
-                            <Text fontSize="sm">{currencyKey}</Text>
-                            {description && (
-                              <Text fontSize="xs" color="gray.500">
-                                {description}
-                              </Text>
-                            )}
-                          </Flex>
-                        </Flex>
-                      </Td>
-                      <Td sx={{ borderBottomColor: 'gray.900' }}>
-                        <Flex flexDirection="column">
-                          <Text fontSize="sm">{formatNumber(balance)}</Text>
-                          <Text fontSize="xs" color="gray.500">
-                            {formatNumber(usdBalance)}
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td sx={{ borderBottomColor: 'gray.900' }}>
-                        <Flex flexDirection="column">
-                          <Text fontSize="sm">
-                            {price ? formatNumberToUsd(price) : <Skeleton w={8} height={6} />}
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td sx={{ borderBottomColor: 'gray.900' }}>
-                        <Flex flexDirection="column">
-                          <Progress
-                            height="1"
-                            variant="white"
-                            value={holdingPct ? holdingPct * 100 : 100}
-                          />
-                          <Text fontSize="xs" color="whiteAlpha.600">
-                            {holdingPct ? formatPercent(holdingPct) : <Skeleton w={8} height={6} />}
-                          </Text>
-                        </Flex>
-                      </Td>
+                      <AssetTd
+                        currencyKey={currencyKey}
+                        description={description}
+                        iconUrl={iconUrl}
+                      />
+                      <BalanceTd balance={balance} usdBalance={usdBalance} />
+                      <PriceTd price={price} />
+                      <HoldingTd holdingPct={holdingPct} />
+                    </Tr>
+                  )
+                )
+              )}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Box>
+      <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" mt={4} py={4} px={2}>
+        <Heading size="md" mb={4}>
+          Non Synths
+        </Heading>
+        <TableContainer>
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.asset')}</StyledTh>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.balance')}</StyledTh>
+                <StyledTh>{t('staking-v2.wallet-balances.table-columns.price')}</StyledTh>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {nonSynthData === undefined ? (
+                <TbodyLoading numberOfCols={3} />
+              ) : nonSynthData.length === 0 ? (
+                <Tr w="full">
+                  <Td colSpan={4} border="none">
+                    <Text textAlign="center" mt={4}>
+                      {t('staking-v2.wallet.no-synths')}
+                    </Text>
+                  </Td>
+                </Tr>
+              ) : (
+                nonSynthData.map(
+                  ({ icon, currencyKey, description, balance, usdBalance, price }) => (
+                    <Tr key={currencyKey}>
+                      <AssetTd currencyKey={currencyKey} description={description} icon={icon} />
+                      <BalanceTd balance={balance} usdBalance={usdBalance} />
+                      <PriceTd price={price} />
                     </Tr>
                   )
                 )
@@ -196,13 +190,56 @@ const getSynthDataForTable = (
     };
   });
 };
+
+const getNonSynthDataForTable = (
+  collateral?: Wei,
+  dSNXBalanceData?: {
+    balance: Wei;
+    price: Wei;
+    balanceUsd: Wei;
+  },
+  ethBalance?: Wei,
+  exchangeRateData?: Record<string, Wei | undefined>
+) => {
+  const ethRate = exchangeRateData?.ETH;
+  const snxRate = exchangeRateData?.SNX;
+  return [
+    {
+      icon: <SNXIcon />,
+      currencyKey: 'SNX',
+      description: 'Synthetix Network Token',
+      balance: collateral?.toNumber(),
+      price: snxRate?.toNumber(),
+      usdBalance: snxRate && collateral ? snxRate?.mul(collateral).toNumber() : undefined,
+    },
+    {
+      icon: <DSNXIcon />,
+      currencyKey: 'dSNX',
+      description: 'dSNX token',
+      balance: dSNXBalanceData?.balance.toNumber(),
+      price: dSNXBalanceData?.price.toNumber(),
+      usdBalance: dSNXBalanceData?.balanceUsd.toNumber(),
+    },
+    {
+      icon: <EthereumIcon />,
+      currencyKey: 'ETH',
+      description: 'Ether',
+      balance: ethBalance?.toNumber(),
+      price: ethRate?.toNumber(),
+      usdBalance: ethBalance && ethRate ? ethBalance.mul(ethRate).toNumber() : undefined,
+    },
+  ];
+};
+
 export const WalletBalances = () => {
   const { data: debtData } = useDebtData();
   const { data: synthsBalanceData } = useSynthsBalances();
   const { data: dSNXBalanceData } = useGetDSnxBalance();
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: synthByNameData } = useGetSynthsByName();
+  const { data: ethBalance } = useEthBalance();
   const { networkId } = useContext(ContractContext);
+
   return (
     <WalletBalancesUi
       debtBalance={debtData?.debtBalance.toNumber()}
@@ -214,6 +251,12 @@ export const WalletBalances = () => {
         synthsBalanceData?.balances,
         synthByNameData?.SynthsByName,
         synthsBalanceData?.totalUSDBalance,
+        exchangeRateData
+      )}
+      nonSynthData={getNonSynthDataForTable(
+        debtData?.collateral,
+        dSNXBalanceData,
+        ethBalance,
         exchangeRateData
       )}
     />
