@@ -82,23 +82,24 @@ export const BurnTransactionModal: FC<{
           <Text>{parseTxnError(error)}</Text>
         </Center>
       )}
-      <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
+
       {!error ? (
         <Center flexDirection="column">
+          {txnStatus === 'success' && (
+            <Button mt={4} onClick={onClose} w="100%">
+              {t('staking-v2.transaction-modal.done')}
+            </Button>
+          )}
+          <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
           {txnLink && (
             <ExternalLink href={txnLink} fontSize="sm">
               {t('staking-v2.transaction-modal.etherscan')}
             </ExternalLink>
           )}
-          {txnStatus === 'success' && (
-            <Button mt={2} onClick={onClose}>
-              {t('staking-v2.transaction-modal.close')}
-            </Button>
-          )}
         </Center>
       ) : (
         <Center>
-          <Button onClick={gasError ? settle : onSubmit}>
+          <Button onClick={gasError ? settle : onSubmit} w="100%">
             {gasError
               ? t('staking-v2.transaction-modal.close')
               : t('staking-v2.transaction-modal.retry')}

@@ -151,7 +151,8 @@
       "loading": "Loading",
       "error-headline": "Error",
       "retry": "Retry",
-      "close": "Close"
+      "close": "Close",
+      "done": "Done"
     },
     "balance-box": {
       "box-heading": "SNX Total",
