@@ -17,6 +17,7 @@ const SmartLink: FC<PropsWithChildren<{ to?: string; href?: string; isExternal: 
     </a>
   );
 };
+
 export const BoxLink: FC<{
   headline: string;
   subHeadline?: string;

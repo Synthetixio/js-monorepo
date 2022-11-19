@@ -11,6 +11,7 @@ export default {
 const Template: ComponentStory<typeof BoxLink> = (props) => <BoxLink {...props} />;
 
 export const Primary = Template.bind({});
+
 Primary.args = {
   headline: 'SNX Bridge',
   subHeadline: 'Transfer asset between blockchains',
