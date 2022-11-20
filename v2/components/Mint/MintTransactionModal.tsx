@@ -79,27 +79,28 @@ export const MintTransactionModal: FC<{
       {error && (
         <Center pt="4" pb="4" mt="4">
           <FailedIcon width="40px" height="40px" />
-
           <Text>{parseTxnError(error)}</Text>
         </Center>
       )}
-      <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
       {!error ? (
         <Center flexDirection="column">
-          {txnLink && (
-            <ExternalLink href={txnLink} fontSize="sm">
-              {t('staking-v2.transaction-modal.etherscan')}
-            </ExternalLink>
-          )}
           {txnStatus === 'success' && (
-            <Button mt={2} onClick={onClose}>
-              {t('staking-v2.transaction-modal.close')}
+            <Button mt={4} onClick={onClose} width="100%">
+              {t('staking-v2.transaction-modal.done')}
             </Button>
+          )}
+          {txnLink && (
+            <>
+              <Divider borderColor="gray.900" mt="4" mb="4" orientation="horizontal" />
+              <ExternalLink href={txnLink} fontSize="sm">
+                {t('staking-v2.transaction-modal.etherscan')}
+              </ExternalLink>
+            </>
           )}
         </Center>
       ) : (
-        <Center>
-          <Button onClick={gasError ? settle : onSubmit}>
+        <Center w="100%">
+          <Button onClick={gasError ? settle : onSubmit} w="100%" mt={4}>
             {gasError
               ? t('staking-v2.transaction-modal.close')
               : t('staking-v2.transaction-modal.retry')}

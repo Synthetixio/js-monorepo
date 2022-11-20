@@ -25,7 +25,7 @@ it('should mint sUSD', () => {
     .should('include.text', 'Minting')
     .should('include.text', 'sUSD');
 
-  cy.contains('[data-testid="transaction modal"] button', 'Close')
+  cy.contains('[data-testid="transaction modal"] button', 'Done')
     .should('be.visible')
     .should('not.be.disabled')
     .click();

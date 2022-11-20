@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, FC } from 'react';
 import {
   Box,
   Flex,
@@ -31,7 +31,8 @@ export const BalanceBoxUi: React.FC<{
   dSNXBalance?: number;
 }> = ({ snxBalance, snxPrice, transferable, stakedSnx, debtBalance, dSNXBalance, issuedDebt }) => {
   const { t } = useTranslation();
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
+
   return (
     <Box fontSize="xs" width="full">
       <Box bg="navy.900" p={3} border="1px" borderColor="gray.900" borderRadius="base">
@@ -141,7 +142,7 @@ export const BalanceBoxUi: React.FC<{
   );
 };
 
-export const BalanceBox: React.FC = () => {
+export const BalanceBox: FC = () => {
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: dSNXBalance } = useGetDSnxBalance();

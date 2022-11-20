@@ -28,7 +28,7 @@ it('should burn sUSD', () => {
     .should('include.text', 'Burning')
     .should('include.text', '1 sUSD');
 
-  cy.contains('[data-testid="transaction modal"] button', 'Close')
+  cy.contains('[data-testid="transaction modal"] button', 'Done')
     .should('be.visible')
     .should('not.be.disabled')
     .click();

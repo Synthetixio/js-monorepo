@@ -37,7 +37,7 @@ export const TransactionModal = ({
         <ModalHeader pb={0} textAlign="center">
           {title}
         </ModalHeader>
-        <ModalBody textAlign="center" fontSize="xs" color="gray.600">
+        <ModalBody textAlign="center" fontSize="xs" color="gray.600" p={1}>
           {t('staking-v2.transaction-modal.metamask-note')}
         </ModalBody>
         <ModalBody>{children}</ModalBody>

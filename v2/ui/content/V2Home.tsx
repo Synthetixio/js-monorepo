@@ -103,16 +103,8 @@ const V2Home = () => {
         </Flex>
       </Container>
       {/* sUSD Utilities Section */}
-      <Box
-        bg="navy.900"
-        px={4}
-        py={8}
-        mt={2}
-        borderTopWidth="1px"
-        borderTopColor="gray.900"
-        overflowX="scroll"
-      >
-        <Container maxW="1200px">
+      <Box width="100%" borderTopWidth="1px" borderTopColor="gray.900" pt={8} bg="navy.900">
+        <Container maxW="1200px" bg="transparent" mt={2}>
           <Box>
             <Text
               variant="heading"
@@ -127,12 +119,16 @@ const V2Home = () => {
               {t('staking-v2.home.utilities.description')}
             </Text>
           </Box>
+        </Container>
+      </Box>
+      <Box overflowX="scroll" pb={10} width="100%" px={[2, 0, 0, 0]} bg="navy.900">
+        <Container maxW="1200px" bg="transparent" mt={0}>
           <Flex
             bg="navy.900"
             direction={['column', 'row', 'row']}
             height="fit-content"
             width={['100%', 'fit-content', 'fit-content']}
-            mt={4}
+            mt={6}
             pr={['0', '0', '10']}
             alignItems={['center', 'unset', 'unset']}
           >

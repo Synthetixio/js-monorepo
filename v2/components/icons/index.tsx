@@ -46,4 +46,5 @@ export * from './ArrowRight';
 export * from './ArrowLeft';
 export * from './AvatarIcon';
 export * from './CopyIcon';
+export * from './OpenInNew';
 export * from './dSNXIcon';
