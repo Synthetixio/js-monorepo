@@ -73,18 +73,17 @@ const UserMenu: FC = () => {
   return (
     <Container>
       <FlexDivCentered>
-        {location.search.includes('internal') && (
-          <StyledButton
-            style={{ marginRight: 10 }}
-            variant="solid"
-            onClick={() => {
-              window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'true';
-              window.location.reload();
-            }}
-          >
-            Try out Staking v2
-          </StyledButton>
-        )}
+        <StyledButton
+          style={{ marginRight: 10 }}
+          variant="solid"
+          onClick={() => {
+            window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'true';
+            window.location.reload();
+          }}
+        >
+          Try out Staking v2
+        </StyledButton>
+
         <DesktopOnlyView>
           <FlexDiv>
             {isWalletConnected && delegateWallet && (
