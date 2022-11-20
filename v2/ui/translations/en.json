@@ -27,6 +27,7 @@
     "epochprice": {
       "epoch-mobile": "EPOCH",
       "epoch-desktop": "Epoch",
+      "epoch-tooltip": "Time to next epoch",
       "price-mobile": "SNX Price",
       "price-desktop": "SNX:"
     },
@@ -78,7 +79,9 @@
       "warning": "UNHEALTHY",
       "error": "UNHEALTHY",
       "current-health": "Current Health",
-      "target-health": "Target Health"
+      "current-health-tooltip": "Your current c-ratio",
+      "target-health": "Target Health",
+      "target-health-tooltip": "Target c-ratio"
     },
     "mint": {
       "title-new": "Stake SNX By Minting sUSD",
@@ -86,7 +89,7 @@
       "description": "Mint sUSD by staking your SNX. SNX stakers earn weekly staking rewards in exchange for managing their Collateralization Ratio and debt. <0>Your staked SNX will be locked for 7 days.<0>",
       "description-existing": "Borrowing more carries risks. Only do this if you are an experienced SNX Staker and understand the risks.",
       "heading": "How much SNX do you want to stake?",
-      "heading-tooltip": "Chose the amount of SNX you want to Stake. Simply input a custom amount or use the preset selector",
+      "heading-tooltip": "How much SNX you stake will determine how much sUSD you can borrow",
       "borrowing": "Borrowing",
       "borrowing-tooltip": "Based on much you SNX you stake will determine how much sUSD you can borrow",
       "unstaked-snx": "Unstaked SNX: {{unstakedSnx}}",
@@ -94,6 +97,7 @@
       "enter-amount": "Enter Amount",
       "tx-cost": "Tx cost: {{txCost}}",
       "epoch": "EPOCH",
+      "epoch-tooltip": "Time to next epoch",
       "snx-price": "SNX PRICE",
       "info": "Info",
       "gas-estimation-error": "Error estimating gas",
@@ -108,9 +112,9 @@
       "title": "Burn Debt",
       "description": "Burn your sUSD debt to unlock your staked SNX. This will increase your Collateralization Ratio and reduce your debt. <0>Learn more.<0>",
       "heading": "Burn sUSD",
-      "heading-tooltip": "Choose how much SNX you would like to stake. You can use the presets available or enter custom amount.",
+      "heading-tooltip": "Burn sUSD to increase your c-ratio",
       "unstaking": "Unstaking",
-      "unstaking-tooltip": "By staking SNX you're effectively borrowing sUSD.",
+      "unstaking-tooltip": "When your c-ratio is below target, all your SNX is staked",
       "gas": "Gas Price (GWEI)",
       "gas-tooltip": "Is how much it costs to perform a transaction on the blockchain & GWEI is a denomination of Ether",
       "snx-balance": "SNX Balance: {{snxBalance}}",
@@ -208,10 +212,15 @@
     "mint-or-burn-changes": {
       "total-snx": "Total SNX",
       "staked": "Staked",
+      "staked-tooltip": "Staked SNX change",
       "transferable": "Transferable",
+      "transferable-tooltip": "Transferable SNX change",
       "c-ratio": "C-Ratio",
+      "c-ratio-tooltip": "C-Ratio change",
       "susd-balance": "sUSD Balance",
-      "active-debt": "Active Debt"
+      "susd-balance-tooltip": "sUSD Balance change",
+      "active-debt": "Active Debt",
+      "active-debt-tooltip": "Active Debt change"
     },
     "wallet-modal": {
       "headline": "My Wallet",

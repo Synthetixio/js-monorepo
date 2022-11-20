@@ -136,7 +136,7 @@ export const BurnUi = ({
           >
             {t('staking-v2.burn.heading')}
           </Text>
-          <Tooltip label="Soonthetix" hasArrow>
+          <Tooltip label={t('staking-v2.burn.heading-tooltip')} hasArrow>
             <Flex alignItems="center">
               <InfoIcon width="12px" height="12px" />
             </Flex>
@@ -303,10 +303,7 @@ export const BurnUi = ({
           >
             {t('staking-v2.burn.unstaking')}
           </Text>
-          <Tooltip
-            label="When you're c-ratio is below target all your SNX is considered staked"
-            hasArrow
-          >
+          <Tooltip label={t('staking-v2.burn.unstaking-tooltip')} hasArrow>
             <Flex>
               <InfoIcon width="12px" height="12px" />
             </Flex>

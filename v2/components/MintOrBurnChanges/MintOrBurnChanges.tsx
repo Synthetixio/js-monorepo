@@ -18,14 +18,14 @@ const Row = ({
   oldVal,
   newVal,
 
-  tooltipText = 'Soonthetix',
+  tooltipText,
   secondary = false,
 }: {
   label: string;
   oldVal: string;
   newVal: string;
   secondary?: boolean;
-  tooltipText?: string;
+  tooltipText: string;
 }) => {
   const color = secondary ? 'whiteAlpha.700' : 'white';
   const fontWeight = secondary ? 'normal' : 700;
@@ -73,38 +73,39 @@ export const MintOrBurnChangesUi: FC<{
   return (
     <Box bg="whiteAlpha.200" p={4} mt={4} mb={4} borderRadius="base">
       <Flex justifyContent="space-between" fontSize="xs">
-        <Tooltip label="Soonthetix" hasArrow>
-          <Flex alignItems="center">
-            <Text fontWeight={700}>{t('staking-v2.mint-or-burn-changes.total-snx')}</Text>
-            <InfoIcon ml="1" />
-          </Flex>
-        </Tooltip>
+        <Text fontWeight={700}>{t('staking-v2.mint-or-burn-changes.total-snx')}</Text>
+
         <Text fontWeight={700}>{formatNumber(collateral)}</Text>
       </Flex>
       <Row
         label={t('staking-v2.mint-or-burn-changes.staked')}
+        tooltipText={t('staking-v2.mint-or-burn-changes.staked-tooltip')}
         oldVal={formatNumber(stakedSnx)}
         newVal={formatNumber(changedValues.newStakedAmountSnx)}
         secondary={true}
       />
       <Row
         label={t('staking-v2.mint-or-burn-changes.transferable')}
+        tooltipText={t('staking-v2.mint-or-burn-changes.transferable-tooltip')}
         oldVal={formatNumber(transferable)}
         newVal={formatNumber(changedValues.newTransferable)}
         secondary={true}
       />
       <Row
         label={t('staking-v2.mint-or-burn-changes.c-ratio')}
+        tooltipText={t('staking-v2.mint-or-burn-changes.c-ratio-tooltip')}
         oldVal={formatPercent(currentCRatioPercentage / 100)}
         newVal={formatPercent(changedValues.newCratio > 0 ? 1 / changedValues.newCratio : 0)}
       />
       <Row
         label={t('staking-v2.mint-or-burn-changes.susd-balance')}
+        tooltipText={t('staking-v2.mint-or-burn-changes.susd-balance-tooltip')}
         oldVal={formatNumber(sUSDBalance)}
         newVal={formatNumber(changedValues.newSUSDBalance)}
       />
       <Row
         label={t('staking-v2.mint-or-burn-changes.active-debt')}
+        tooltipText={t('staking-v2.mint-or-burn-changes.active-debt-tooltip')}
         oldVal={formatNumber(debtBalance)}
         newVal={formatNumber(changedValues.newDebtBalance)}
       />

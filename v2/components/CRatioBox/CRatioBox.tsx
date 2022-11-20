@@ -74,7 +74,7 @@ export const CRatioBoxUi: FC<{
       <Flex px={4} pt={2} justifyContent="space-between" alignItems="center" flexWrap="wrap">
         <Heading fontSize="xs" lineHeight="4">
           {t('staking-v2.cratio-box.current-health')}
-          <Tooltip hasArrow label="Soonthetix">
+          <Tooltip hasArrow label={t('staking-v2.cratio-box.current-health-tooltip')}>
             <span>
               <InfoIcon ml={1} mb={0.5} />
             </span>
@@ -136,11 +136,9 @@ export const CRatioBoxUi: FC<{
             px={1}
             borderRadius="base"
           >
-            <Tooltip hasArrow label="Soonthetix">
-              <span>
-                <InfoIcon mr={1} mb={0.5} color="currentcolor" width="12px" height="12px" />
-              </span>
-            </Tooltip>
+            <span>
+              <InfoIcon mr={1} mb={0.5} color="currentcolor" width="12px" height="12px" />
+            </span>
             {cRatioHealth}
           </Badge>
         ) : null}
@@ -150,7 +148,7 @@ export const CRatioBoxUi: FC<{
         <Heading fontSize="xs" lineHeight="4">
           {t('staking-v2.cratio-box.target-health')}
 
-          <Tooltip hasArrow label="Soonthetix">
+          <Tooltip hasArrow label={t('staking-v2.cratio-box.target-health')}>
             <span>
               <InfoIcon ml={1} mb={0.5} />
             </span>
