@@ -164,3 +164,23 @@ export const calculateValueOfRewards = (
   const valueOfSnxReward = snxReward.mul(snxRate);
   return valueOfSnxReward.add(sUSDRewards).toNumber();
 };
+
+export const calcNewCratioPercentage = (
+  collateral?: number,
+  SNXRate?: number,
+  newDebtBalance?: number
+) => {
+  if (!collateral || !SNXRate || newDebtBalance == undefined) return undefined;
+  if (newDebtBalance === 0) return 0;
+  const collateralValue = SNXRate * collateral;
+  return (1 / (newDebtBalance / collateralValue)) * 100;
+};
+
+export const calculateNewDebtBalance = (
+  actionType: 'mint' | 'burn',
+  debtBalance?: number,
+  amount?: number
+) => {
+  if (debtBalance === undefined || amount === undefined) return undefined;
+  return actionType === 'burn' ? Math.max(debtBalance - amount, 0) : debtBalance + amount;
+};

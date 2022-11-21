@@ -5,27 +5,6 @@ import { formatPercent } from '@snx-v2/formatters';
 import { badgeColor, getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useTranslation } from 'react-i18next';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
-
-const calcNewCratioPercentage = (
-  collateral?: number,
-  SNXRate?: number,
-  newDebtBalance?: number
-) => {
-  if (!collateral || !SNXRate || newDebtBalance == undefined) return undefined;
-  if (newDebtBalance === 0) return 0;
-  const collateralValue = SNXRate * collateral;
-  return 1 / (newDebtBalance / collateralValue);
-};
-
-const calculateNewDebtBalance = (
-  actionType: 'mint' | 'burn',
-  debtBalance?: number,
-  amount?: number
-) => {
-  if (!debtBalance || !amount) return 0;
-  return actionType === 'burn' ? Math.max(debtBalance - amount, 0) : debtBalance + amount;
-};
 
 export const CRatioBoxUi: FC<{
   actionType: 'mint' | 'burn';
