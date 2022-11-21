@@ -95,6 +95,7 @@ export const CRatioProgressBarUi: FC<{
     newCratioPercentageWithDefault < currentCRatioPercentage
       ? currentCRatioPercentage
       : newCratioPercentageWithDefault;
+
   return (
     <Box
       position="relative"
@@ -159,7 +160,10 @@ export const CRatioProgressBarUi: FC<{
         bg={variant}
         height="12px"
         position="absolute"
-        left={`${(newCratioPercentageWithDefault || currentCRatioPercentage) / scaleFactor}%`}
+        left={`${
+          (newCratioPercentage !== undefined ? newCratioPercentage : currentCRatioPercentage) /
+          scaleFactor
+        }%`}
         top={0}
         bottom={0}
         margin="auto"
@@ -172,7 +176,7 @@ export const CRatioProgressBarUi: FC<{
               right={0}
               top={0}
               transform="translate(50%,-100%)"
-              color={newCratioPercentage ? newVariant : variant}
+              color={newCratioPercentage !== undefined ? newVariant : variant}
             />
             <TriangleUpIcon
               data-testid="current c-ration triangle"
@@ -180,7 +184,7 @@ export const CRatioProgressBarUi: FC<{
               right={0}
               bottom={0}
               transform="translate(50%,100%)"
-              color={newCratioPercentage ? newVariant : variant}
+              color={newCratioPercentage !== undefined ? newVariant : variant}
             />
           </>
         )}
