@@ -10,7 +10,7 @@ import {
   Center,
   Fade,
 } from '@chakra-ui/react';
-import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
+import { CRatioProgressBar } from '@snx-v2/CRatioProgressBar';
 import { InfoIcon } from '@snx-v2/icons';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useTranslation, Trans } from 'react-i18next';

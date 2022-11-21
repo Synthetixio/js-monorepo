@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Text, Flex, Link, Skeleton, Box } from '@chakra-ui/react';
-import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
+import { CRatioProgressBar } from '@snx-v2/CRatioProgressBar';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { useTranslation, Trans } from 'react-i18next';
 import { useDebtData } from '@snx-v2/useDebtData';

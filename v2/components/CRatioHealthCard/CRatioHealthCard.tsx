@@ -4,7 +4,7 @@ import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { CRatioHealthPercentage } from '@snx-v2/CRatioHealthPercentage';
 import { useTranslation } from 'react-i18next';
-import { CRatioProgressBar } from './CRatioProgressBar';
+import { CRatioProgressBar } from '@snx-v2/CRatioProgressBar';
 
 type UiProps = {
   liquidationCratioPercentage?: number;
