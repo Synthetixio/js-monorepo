@@ -25,7 +25,7 @@ describe('CRatioHealthCard.cy.tsx', () => {
     cy.contains('p', 'Target 400%').find('span').trigger('mouseover');
     cy.root().should('contain', 'Required to claim rewards');
 
-    cy.get('[role="progressbar"]').should('have.css', 'background-color', 'rgb(52, 237, 179)');
+    cy.get('[role="progressbar"]').should('be.visible');
   });
 
   it('renders orange', () => {
@@ -47,7 +47,7 @@ describe('CRatioHealthCard.cy.tsx', () => {
     cy.contains('p', 'Liquidation < 100%').should('be.visible');
     cy.contains('p', 'Target 600%').should('be.visible');
 
-    cy.get('[role="progressbar"]').should('have.css', 'background-color', 'rgb(252, 135, 56)');
+    cy.get('[role="progressbar"]').should('be.visible');
   });
 
   it('renders red', () => {
@@ -70,7 +70,7 @@ describe('CRatioHealthCard.cy.tsx', () => {
     cy.contains('p', 'Liquidation < 100%').should('be.visible');
     cy.contains('p', 'Target 200%').should('be.visible');
 
-    cy.get('[role="progressbar"]').should('have.css', 'background-color', 'rgb(255, 74, 96)');
+    cy.get('[role="progressbar"]').should('be.visible');
 
     cy.get('[data-testid="current c-ration triangle"]').should('be.visible');
   });
