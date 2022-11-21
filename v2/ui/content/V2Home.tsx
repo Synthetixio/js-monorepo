@@ -27,7 +27,11 @@ const V2Home = () => {
   const { isAppReady, connectWallet } = Connector.useContainer();
 
   return (
-    <>
+    <Box
+      height="calc(100vh - 86px)"
+      minHeight={['2600px', '2000px', '1450px', '930px']}
+      position="relative"
+    >
       <CRatioBanner />
       <Container maxW="1200px" py="1" mt={[0, 4, 4]} mb={8}>
         {!walletAddress && isAppReady && <Welcome mt={8} />}
@@ -103,78 +107,80 @@ const V2Home = () => {
         </Flex>
       </Container>
       {/* sUSD Utilities Section */}
-      <Box width="100%" borderTopWidth="1px" borderTopColor="gray.900" pt={8} bg="navy.900">
-        <Container maxW="1200px" bg="transparent" mt={2}>
-          <Box>
-            <Text
-              variant="heading"
-              color="whiteAlpha.900"
-              fontSize="md"
-              lineHeight="lg"
-              fontWeight="700"
+      <Box position="absolute" width="100%" bottom="0">
+        <Box width="100%" borderTopWidth="1px" borderTopColor="gray.900" pt={8} bg="navy.900">
+          <Container maxW="1200px" bg="transparent" mt={2}>
+            <Box>
+              <Text
+                variant="heading"
+                color="whiteAlpha.900"
+                fontSize="md"
+                lineHeight="lg"
+                fontWeight="700"
+              >
+                {t('staking-v2.home.utilities.title')}
+              </Text>
+              <Text variant="heading" color="whiteAlpha.700" fontSize="sm" lineHeight="lg">
+                {t('staking-v2.home.utilities.description')}
+              </Text>
+            </Box>
+          </Container>
+        </Box>
+        <Box overflowX="scroll" pb={10} width="100%" px={[2, 0, 0, 0]} bg="navy.900">
+          <Container maxW="1200px" bg="transparent" mt={0}>
+            <Flex
+              bg="navy.900"
+              direction={['column', 'row', 'row']}
+              height="fit-content"
+              width={['100%', 'fit-content', 'fit-content']}
+              mt={6}
+              pr={['0', '0', '10']}
+              alignItems={['center', 'unset', 'unset']}
             >
-              {t('staking-v2.home.utilities.title')}
-            </Text>
-            <Text variant="heading" color="whiteAlpha.700" fontSize="sm" lineHeight="lg">
-              {t('staking-v2.home.utilities.description')}
-            </Text>
-          </Box>
-        </Container>
+              <UtilityCard
+                mr={4}
+                title="Kwenta"
+                description={t('staking-v2.home.utilities.kwentaDescription')}
+                link="https://kwenta.io"
+                Icon={KwentaIcon}
+              />
+              <UtilityCard
+                mr={4}
+                title="dHedge"
+                description={t('staking-v2.home.utilities.dHedgeDescription')}
+                link="https://www.dhedge.org/"
+                Icon={DHedgeIcon}
+                mt={[4, 0, 0]}
+              />
+              <UtilityCard
+                mr={4}
+                title="Lyra"
+                description={t('staking-v2.home.utilities.lyraDescription')}
+                link="https://www.lyra.finance/"
+                Icon={LyraIcon}
+                mt={[4, 0, 0]}
+              />
+              <UtilityCard
+                mr={4}
+                title="Thales"
+                description={t('staking-v2.home.utilities.thalesDescription')}
+                link="https://thalesmarket.io/"
+                Icon={ThalesIcon}
+                mt={[4, 0, 0]}
+              />
+              <UtilityCard
+                mr={4}
+                title="Curve"
+                description={t('staking-v2.home.utilities.curveDescription')}
+                link="https://curve.fi/"
+                Icon={() => <CurveLogo />}
+                mt={[4, 0, 0]}
+              />
+            </Flex>
+          </Container>
+        </Box>
       </Box>
-      <Box overflowX="scroll" pb={10} width="100%" px={[2, 0, 0, 0]} bg="navy.900">
-        <Container maxW="1200px" bg="transparent" mt={0}>
-          <Flex
-            bg="navy.900"
-            direction={['column', 'row', 'row']}
-            height="fit-content"
-            width={['100%', 'fit-content', 'fit-content']}
-            mt={6}
-            pr={['0', '0', '10']}
-            alignItems={['center', 'unset', 'unset']}
-          >
-            <UtilityCard
-              mr={4}
-              title="Kwenta"
-              description={t('staking-v2.home.utilities.kwentaDescription')}
-              link="https://kwenta.io"
-              Icon={KwentaIcon}
-            />
-            <UtilityCard
-              mr={4}
-              title="dHedge"
-              description={t('staking-v2.home.utilities.dHedgeDescription')}
-              link="https://www.dhedge.org/"
-              Icon={DHedgeIcon}
-              mt={[4, 0, 0]}
-            />
-            <UtilityCard
-              mr={4}
-              title="Lyra"
-              description={t('staking-v2.home.utilities.lyraDescription')}
-              link="https://www.lyra.finance/"
-              Icon={LyraIcon}
-              mt={[4, 0, 0]}
-            />
-            <UtilityCard
-              mr={4}
-              title="Thales"
-              description={t('staking-v2.home.utilities.thalesDescription')}
-              link="https://thalesmarket.io/"
-              Icon={ThalesIcon}
-              mt={[4, 0, 0]}
-            />
-            <UtilityCard
-              mr={4}
-              title="Curve"
-              description={t('staking-v2.home.utilities.curveDescription')}
-              link="https://curve.fi/"
-              Icon={() => <CurveLogo />}
-              mt={[4, 0, 0]}
-            />
-          </Flex>
-        </Container>
-      </Box>
-    </>
+    </Box>
   );
 };
 

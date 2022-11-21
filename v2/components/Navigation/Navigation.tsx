@@ -114,7 +114,7 @@ export const NavigationUI = ({
           variant="outline"
           colorScheme="gray"
           height={10}
-          fontSize="xs"
+          fontSize="sm"
           py="6px"
           px="9.5px"
           mr={isWalletConnected ? 0 : 3}
@@ -157,6 +157,7 @@ export const NavigationUI = ({
             variant="connect"
             onClick={() => connectWallet()}
             sx={{ textTransform: 'capitalize' }}
+            fontSize="sm"
           >
             {size === 'desktop'
               ? t('common.wallet.connect-wallet')
@@ -185,7 +186,7 @@ export const NavigationUI = ({
                   {icon}
                   {size === 'desktop' && (
                     <>
-                      <Text variant="nav" fontWeight={700} ml={1.5} mr={2}>
+                      <Text variant="nav" fontSize="sm" fontWeight={700} ml={1.5} mr={2}>
                         {name}
                       </Text>
                       {isOpen ? <ChevronUp color="cyan" /> : <ChevronDown color="cyan.500" />}
