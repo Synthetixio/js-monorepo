@@ -7,6 +7,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const generate = require('./scripts/minify-synthetix-contract');
+const { cspCompiled, updateVercel } = require('./csp');
 
 // For depcheck to be happy
 require.resolve('webpack-dev-server');
@@ -44,6 +45,10 @@ function optimiseContracts() {
 }
 
 const contractPlugins = optimiseContracts();
+
+if (isProd) {
+  updateVercel();
+}
 
 const htmlPlugin = new HtmlWebpackPlugin({
   template: './index.html',
@@ -130,7 +135,11 @@ const devServer = {
 
   static: './public',
 
-  headers: { 'Access-Control-Allow-Origin': '*' },
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Security-Policy': cspCompiled,
+  },
+
   allowedHosts: 'all',
   open: false,
   compress: false,
