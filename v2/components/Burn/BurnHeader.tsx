@@ -6,23 +6,19 @@ import { useTranslation, Trans } from 'react-i18next';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { leftColWidth, rightColWidth } from './layout';
 import { CRatioBox } from '../CRatioBox';
+import { calcNewCratioPercentage, calculateNewDebtBalance } from '@snx-v2/stakingCalculations';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 
 export const BurnHeaderUi: FC<{
   burnAmountSusd?: number;
-  liquidationRatioPercentage?: number;
-  targetCRatioPercentage?: number;
-  currentCRatioPercentage?: number;
-  targetThreshold?: number;
-  isDebtDataLoading?: boolean;
-}> = ({
-  burnAmountSusd,
-  liquidationRatioPercentage,
-  targetCRatioPercentage,
-  currentCRatioPercentage,
-  targetThreshold,
-  isDebtDataLoading,
-}) => {
+  isDebtDataLoading: boolean;
+  collateral?: number;
+  debtBalance?: number;
+  SNXRate?: number;
+}> = ({ burnAmountSusd, isDebtDataLoading, SNXRate, debtBalance, collateral }) => {
   const { t } = useTranslation();
+  const newDebtBalance = calculateNewDebtBalance('burn', debtBalance, burnAmountSusd);
+  const newCratioPercentage = calcNewCratioPercentage(collateral, SNXRate, newDebtBalance);
 
   return (
     <>
@@ -63,13 +59,7 @@ export const BurnHeaderUi: FC<{
             borderColor="gray.900"
             fadeDuration={1}
           >
-            <CRatioProgressBar
-              targetThreshold={targetThreshold || 0}
-              liquidationCratioPercentage={liquidationRatioPercentage || 0}
-              currentCRatioPercentage={currentCRatioPercentage || 0}
-              targetCratioPercentage={targetCRatioPercentage || 0}
-              isLoading={false}
-            />
+            <CRatioProgressBar newCratioPercentage={newCratioPercentage} />
           </Skeleton>
           <Skeleton
             startColor="gray.900"
@@ -84,7 +74,7 @@ export const BurnHeaderUi: FC<{
             justifyContent="space-between"
             fadeDuration={1}
           >
-            <CRatioBox amount={burnAmountSusd} actionType="burn" />
+            <CRatioBox newCratioPercentage={newCratioPercentage} />
           </Skeleton>
         </Flex>
       </Box>
@@ -92,16 +82,17 @@ export const BurnHeaderUi: FC<{
   );
 };
 
-export const BurnHeader: FC<{ burnAmountSusd: number }> = ({ burnAmountSusd }) => {
+export const BurnHeader: FC<{ burnAmountSusd?: number }> = ({ burnAmountSusd }) => {
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
+  const { data: exchangeRateData } = useExchangeRatesData();
+
   return (
     <BurnHeaderUi
       burnAmountSusd={burnAmountSusd}
-      liquidationRatioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
-      targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
-      currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
-      targetThreshold={debtData?.targetThreshold.toNumber()}
       isDebtDataLoading={isDebtDataLoading}
+      SNXRate={exchangeRateData?.SNX?.toNumber()}
+      debtBalance={debtData?.debtBalance.toNumber()}
+      collateral={debtData?.collateral.toNumber()}
     />
   );
 };
