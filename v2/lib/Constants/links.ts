@@ -2,8 +2,8 @@ export const PROD_HOSTNAME = 'staking.synthetix.io';
 
 export const EXTERNAL_LINKS = {
   Trading: {
-    Kwenta: 'https://kwenta.io',
-    KwentaTrading: 'https://kwenta.io/exchange',
+    Kwenta: 'https://kwenta.eth.limo',
+    KwentaTrading: 'https://kwenta.eth.limo/exchange',
     DexAG: 'https://dex.ag/',
     Uniswap: 'https://uniswap.exchange/',
     OneInchLink: (from: string, to: string) => `https://1inch.exchange/#/1/swap/${from}/${to}`,
