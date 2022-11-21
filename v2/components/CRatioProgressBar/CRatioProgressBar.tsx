@@ -48,15 +48,18 @@ const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
   );
 };
 
+export const CRatioProgressBarUi: FC<{
   liquidationCratioPercentage: number;
   targetCratioPercentage: number;
   currentCRatioPercentage: number;
+  newCratioPercentage?: number;
   targetThreshold: number;
   isLoading: boolean;
 }> = ({
   targetCratioPercentage,
   liquidationCratioPercentage,
   currentCRatioPercentage,
+  newCratioPercentage,
   targetThreshold,
   isLoading,
 }) => {
@@ -74,7 +77,24 @@ const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
     currentCRatioPercentage,
     targetThreshold,
   });
+  const newVariant = getHealthVariant({
+    targetCratioPercentage,
+    liquidationCratioPercentage,
+    currentCRatioPercentage: newCratioPercentage,
+    targetThreshold,
+  });
 
+  const newCratioPercentageWithDefault = newCratioPercentage || 0;
+  const highlightedProgressCRatio =
+    newCratioPercentage === undefined
+      ? currentCRatioPercentage
+      : newCratioPercentageWithDefault < currentCRatioPercentage
+      ? newCratioPercentageWithDefault
+      : currentCRatioPercentage;
+  const nonHighLightedProgressCRatio =
+    newCratioPercentageWithDefault < currentCRatioPercentage
+      ? currentCRatioPercentage
+      : newCratioPercentageWithDefault;
   return (
     <Box
       position="relative"
@@ -109,18 +129,37 @@ const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
         isLoaded={!isLoading}
       >
         <Progress
+          variant={newCratioPercentage !== undefined ? newVariant : variant}
+          top={0}
+          bottom={0}
+          height="12px"
+          position="absolute"
+          margin="auto"
+          width="100%"
+          zIndex={10}
+          data-testId="highlighted progress bar"
+          value={highlightedProgressCRatio / scaleFactor}
+        />
+        {newCratioPercentage !== undefined ? (
+          <Progress
+            data-testId="non highlighted progress bar"
+            zIndex={1}
+            variant={'update-' + newVariant}
             top={0}
             bottom={0}
             height="12px"
             position="absolute"
             margin="auto"
             width="100%"
+            value={nonHighLightedProgressCRatio / scaleFactor}
           />
+        ) : null}
       </Skeleton>
       <Box
         bg={variant}
         height="12px"
         position="absolute"
+        left={`${(newCratioPercentageWithDefault || currentCRatioPercentage) / scaleFactor}%`}
         top={0}
         bottom={0}
         margin="auto"
@@ -133,6 +172,7 @@ const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
               right={0}
               top={0}
               transform="translate(50%,-100%)"
+              color={newCratioPercentage ? newVariant : variant}
             />
             <TriangleUpIcon
               data-testid="current c-ration triangle"
@@ -140,6 +180,7 @@ const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
               right={0}
               bottom={0}
               transform="translate(50%,100%)"
+              color={newCratioPercentage ? newVariant : variant}
             />
           </>
         )}
