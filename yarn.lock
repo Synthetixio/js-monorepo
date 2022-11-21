@@ -6911,7 +6911,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/BoxLink": "workspace:*"
-    "@snx-v2/CRatioHealthCard": "workspace:*"
+    "@snx-v2/CRatioProgressBar": "workspace:*"
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/ExternalLink": "workspace:*"
@@ -6961,7 +6961,6 @@ __metadata:
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
-    "@snx-v2/useExchangeRatesData": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
@@ -6973,8 +6972,8 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/CRatioHealthPercentage": "workspace:^"
+    "@snx-v2/CRatioProgressBar": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
-    "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
@@ -6987,6 +6986,19 @@ __metadata:
   resolution: "@snx-v2/CRatioHealthPercentage@workspace:v2/components/CRatioHealthPercentage"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@storybook/react": ^6.5.10
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/CRatioProgressBar@workspace:*, @snx-v2/CRatioProgressBar@workspace:v2/components/CRatioProgressBar":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/CRatioProgressBar@workspace:v2/components/CRatioProgressBar"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/getHealthVariant": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
   languageName: unknown
@@ -7105,7 +7117,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/BoxLink": "workspace:*"
-    "@snx-v2/CRatioHealthCard": "workspace:*"
+    "@snx-v2/CRatioProgressBar": "workspace:*"
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/CountDown": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
