@@ -10,12 +10,28 @@ const Template: ComponentStory<typeof CRatioProgressBarUi> = (props) => (
   <CRatioProgressBarUi {...props} />
 );
 
-export const NoChange = Template.bind({});
+export const NoChangeGreen = Template.bind({});
 
-NoChange.args = {
+NoChangeGreen.args = {
   targetCratioPercentage: 400,
   liquidationCratioPercentage: 150,
   currentCRatioPercentage: 400,
+  newCratioPercentage: undefined,
+};
+export const NoChangeOrange = Template.bind({});
+
+NoChangeOrange.args = {
+  targetCratioPercentage: 400,
+  liquidationCratioPercentage: 150,
+  currentCRatioPercentage: 300,
+  newCratioPercentage: undefined,
+};
+export const NoChangeRed = Template.bind({});
+
+NoChangeRed.args = {
+  targetCratioPercentage: 400,
+  liquidationCratioPercentage: 150,
+  currentCRatioPercentage: 149,
   newCratioPercentage: undefined,
 };
 export const BurnToGreen = Template.bind({});
