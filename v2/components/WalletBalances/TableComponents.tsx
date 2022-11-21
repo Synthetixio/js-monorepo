@@ -49,9 +49,15 @@ export const AssetTd = ({
 export const BalanceTd = ({ balance, usdBalance }: { balance?: number; usdBalance?: number }) => (
   <StyledTd>
     <Flex flexDirection="column">
-      <Text fontSize="sm">{balance ? formatNumber(balance) : <Skeleton w={8} height={4} />}</Text>
+      <Text fontSize="sm">
+        {balance ? formatNumber(balance) : <Skeleton as="span" w={8} height={4} />}
+      </Text>
       <Text fontSize="xs" color="gray.500">
-        {usdBalance ? formatNumberToUsd(usdBalance) : <Skeleton mt={2} w={8} height={4} />}
+        {usdBalance ? (
+          formatNumberToUsd(usdBalance)
+        ) : (
+          <Skeleton as="span" mt={2} w={8} height={4} />
+        )}
       </Text>
     </Flex>
   </StyledTd>
@@ -60,7 +66,9 @@ export const BalanceTd = ({ balance, usdBalance }: { balance?: number; usdBalanc
 export const PriceTd = ({ price }: { price?: number }) => (
   <StyledTd>
     <Flex flexDirection="column">
-      <Text fontSize="sm">{price ? formatNumberToUsd(price) : <Skeleton w={8} height={6} />}</Text>
+      <Text fontSize="sm">
+        {price ? formatNumberToUsd(price) : <Skeleton as="span" w={8} height={6} />}
+      </Text>
     </Flex>
   </StyledTd>
 );
@@ -70,7 +78,7 @@ export const HoldingTd = ({ holdingPct }: { holdingPct?: number }) => (
     <Flex flexDirection="column">
       <Progress height="1" variant="white" value={holdingPct ? holdingPct * 100 : 100} />
       <Text fontSize="xs" color="whiteAlpha.600">
-        {holdingPct ? formatPercent(holdingPct) : <Skeleton w={8} height={6} />}
+        {holdingPct ? formatPercent(holdingPct) : <Skeleton as="span" w={8} height={6} />}
       </Text>
     </Flex>
   </StyledTd>
