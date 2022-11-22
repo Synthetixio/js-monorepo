@@ -120,7 +120,7 @@ export const NavigationUI = ({
           mr={isWalletConnected ? 0 : 3}
           onClick={() => {
             window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'false';
-            window.location.href = window.location.origin;
+            window.location.reload();
           }}
         >
           {size === 'mobile' ? 'Old App' : 'Back to old app'}
