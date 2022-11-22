@@ -72,7 +72,7 @@ export const CRatioBoxUi: FC<{
   return (
     <Box>
       <Flex px={4} pt={2} justifyContent="space-between" alignItems="center" flexWrap="wrap">
-        <Heading fontSize="xs" lineHeight="4">
+        <Heading fontSize="sm" lineHeight="4">
           {t('staking-v2.cratio-box.current-health')}
           <Tooltip hasArrow label={t('staking-v2.cratio-box.current-health-tooltip')}>
             <span>
@@ -123,7 +123,6 @@ export const CRatioBoxUi: FC<{
           </Flex>
         </Box>
       </Flex>
-
       <Flex justifyContent="flex-end" px={4} mb={2} mt={1}>
         {currentCRatioPercentage ? (
           <Badge
@@ -145,9 +144,8 @@ export const CRatioBoxUi: FC<{
       </Flex>
       <Divider />
       <Flex py={2} px={4} justifyContent="space-between" alignItems="center">
-        <Heading fontSize="xs" lineHeight="4">
+        <Heading fontSize="sm" lineHeight="4">
           {t('staking-v2.cratio-box.target-health')}
-
           <Tooltip hasArrow label={t('staking-v2.cratio-box.target-health')}>
             <span>
               <InfoIcon ml={1} mb={0.5} />

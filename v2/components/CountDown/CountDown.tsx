@@ -18,8 +18,8 @@ export const CountDown: React.FC<{ toDate: Date; intervalMs?: number }> = ({
 
   return (
     <span data-testid="countdown">
-      {String(duration.days).padStart(2, '0')}:{String(duration.hours).padStart(2, '0')}:
-      {String(duration.minutes).padStart(2, '0')}
+      {String(duration.days).padStart(2, '0')}D {String(duration.hours).padStart(2, '0')}H{' '}
+      {String(duration.minutes).padStart(2, '0')}M
     </span>
   );
 };

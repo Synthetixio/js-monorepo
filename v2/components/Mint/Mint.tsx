@@ -106,7 +106,7 @@ export const MintUi = ({
     <>
       <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="base" p={5}>
         <Flex alignItems="center">
-          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
+          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="md" mr={1.5}>
             {t('staking-v2.mint.heading')}
           </Text>
           <Tooltip label={t('staking-v2.mint.heading-tooltip')} hasArrow>
@@ -149,7 +149,7 @@ export const MintUi = ({
           <PercentBadges onBadgePress={onBadgePress} activeBadge={activeBadge} />
         </Box>
         <Flex alignItems="center">
-          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
+          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="md" mr={1.5}>
             {t('staking-v2.mint.borrowing')}
           </Text>
           <Tooltip label={t('staking-v2.mint.borrowing-tooltip')} hasArrow>

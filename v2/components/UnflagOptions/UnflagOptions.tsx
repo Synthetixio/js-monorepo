@@ -12,7 +12,7 @@ import {
   Link,
   Button,
 } from '@chakra-ui/react';
-import { CollectIcon, InfoIcon, MaintainIcon } from '@snx-v2/icons';
+import { CollectIcon, InfoIcon, MaintainIcon, WreckedIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useTranslation } from 'react-i18next';
 import { useLiquidationData } from '@snx-v2/useLiquidationData';
@@ -51,10 +51,10 @@ const RadioItemContent: React.FC<{
       <Box>
         <Flex alignItems="center" justifyContent="space-between">
           <Flex alignItems="center">
-            {option === 'unflag' ? (
-              <MaintainIcon color={state.isChecked ? 'success' : 'white'} />
-            ) : (
-              <CollectIcon color={state.isChecked ? 'success' : 'white'} />
+            {option === 'unflag' && <MaintainIcon color={state.isChecked ? 'success' : 'white'} />}
+            {option === 'swap' && <CollectIcon color={state.isChecked ? 'success' : 'white'} />}
+            {option === 'self-liquidate' && (
+              <WreckedIcon width="32px" height="32px" mb={1} color="white" />
             )}
             <Box marginLeft="4">
               {recommended && (
