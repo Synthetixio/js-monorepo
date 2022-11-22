@@ -91,7 +91,7 @@
       "heading": "How much SNX do you want to stake?",
       "heading-tooltip": "How much SNX you stake will determine how much sUSD you can borrow",
       "borrowing": "Borrowing",
-      "borrowing-tooltip": "Based on much you SNX you stake will determine how much sUSD you can borrow",
+      "borrowing-tooltip": "How much SNX you stake will determine how much sUSD you can borrow",
       "unstaked-snx": "Unstaked SNX: {{unstakedSnx}}",
       "susd-balance": "sUSD Balance: {{susdBalance}}",
       "enter-amount": "Enter Amount",
@@ -187,7 +187,7 @@
     },
     "unflag-options": {
       "heading": "Unflag Account",
-      "text": "To unflag your account, buying SNX isn't enough. You can either burn to target or self liquidate. Learn about the new self liquidation mechanism.",
+      "text": "If you are unable to pay down your sUSD debt, you can self liquidate your SNX collateral, with a 40% penalty. Self Liquidation is permanent, and results in the loss of some or all of your collateral.",
       "recommended": "Recommended",
       "unflag": {
         "heading": "Unflag my account by burning sUSD in order to meet target ratio",

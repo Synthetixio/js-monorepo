@@ -27,87 +27,85 @@ const V2Home = () => {
   const { isAppReady, connectWallet } = Connector.useContainer();
 
   return (
-    <Box
-      height="calc(100vh - 86px)"
-      minHeight={['2600px', '2000px', '1450px', '930px']}
-      position="relative"
-    >
-      <CRatioBanner />
-      <Container maxW="1200px" py="1" mt={[0, 4, 4]} mb={8}>
-        {!walletAddress && isAppReady && <Welcome mt={8} />}
-        <Flex
-          mt="4"
-          flexDirection={['column', 'column', 'column', 'row']}
-          py={4}
-          justifyContent="space-between"
-        >
-          {walletAddress ? (
-            <Box
-              paddingY="7"
-              paddingX="4"
-              bg="navy.900"
-              flex="1"
-              border="1px"
-              borderColor="gray.900"
-              borderRadius="base"
-            >
-              <CRatioHealthCard />
-              <MainActionCardsList connectWallet={connectWallet} />
-            </Box>
-          ) : (
-            <MainActionCardsList connectWallet={connectWallet} />
-          )}
+    <Flex minHeight="calc(100vh - 86px)" direction="column">
+      <Box sx={{ flex: '1 0 auto' }}>
+        <CRatioBanner />
+        <Container maxW="1200px" py="1" mt={[0, 4, 4]} mb={8}>
+          {!walletAddress && isAppReady && <Welcome mt={8} />}
           <Flex
-            ml={[0, 0, 0, 6]}
-            mt={[8, 8, 8, 0]}
-            alignSelf={['center', 'center', 'center', 'flex-start']}
-            width="full"
-            maxWidth={['none', 'none', 'none', '287px']}
-            flexDirection="column"
+            mt="4"
+            flexDirection={['column', 'column', 'column', 'row']}
+            py={4}
+            justifyContent="space-between"
           >
-            {walletAddress && <BalanceBox />}
-            <Box mt={walletAddress ? 4 : 0}>
-              <BoxLink
-                to="/bridge"
-                headline={t('staking-v2.v2-home.box-links.bridge.headline')}
-                subHeadline={t('staking-v2.v2-home.box-links.bridge.subHeadline')}
-                icon={<BridgeIcon />}
-              />
-            </Box>
-            <Box mt={4}>
-              <BoxLink
-                to="/debt"
-                headline={t('staking-v2.v2-home.box-links.debt-pool.headline')}
-                subHeadline={t('staking-v2.v2-home.box-links.debt-pool.subHeadline')}
-                icon={<DebtPoolIcon />}
-              />
-            </Box>
-            <Box mt={4}>
-              <BoxLink
-                href={EXTERNAL_LINKS.CMS.Home}
-                headline={t('staking-v2.v2-home.box-links.help.headline')}
-                subHeadline={t('staking-v2.v2-home.box-links.help.subHeadline')}
-                isExternal
-                icon={
-                  <Center
-                    boxSize="36px"
-                    border="1px"
-                    fontSize="3xl"
-                    borderRadius="base"
-                    fontWeight={800}
-                    borderColor="whiteAlpha.400"
-                    color="whiteAlpha.400"
-                  >
-                    ?
-                  </Center>
-                }
-              />
-            </Box>
+            {walletAddress ? (
+              <Box
+                paddingY="7"
+                paddingX="4"
+                bg="navy.900"
+                flex="1"
+                border="1px"
+                borderColor="gray.900"
+                borderRadius="base"
+              >
+                <CRatioHealthCard />
+                <MainActionCardsList connectWallet={connectWallet} />
+              </Box>
+            ) : (
+              <MainActionCardsList connectWallet={connectWallet} />
+            )}
+            <Flex
+              ml={[0, 0, 0, 6]}
+              mt={[8, 8, 8, 0]}
+              alignSelf={['center', 'center', 'center', 'flex-start']}
+              width="full"
+              maxWidth={['none', 'none', 'none', '287px']}
+              flexDirection="column"
+            >
+              {walletAddress && <BalanceBox />}
+              <Box mt={walletAddress ? 4 : 0}>
+                <BoxLink
+                  to="/bridge"
+                  headline={t('staking-v2.v2-home.box-links.bridge.headline')}
+                  subHeadline={t('staking-v2.v2-home.box-links.bridge.subHeadline')}
+                  icon={<BridgeIcon />}
+                />
+              </Box>
+              <Box mt={4}>
+                <BoxLink
+                  to="/debt"
+                  headline={t('staking-v2.v2-home.box-links.debt-pool.headline')}
+                  subHeadline={t('staking-v2.v2-home.box-links.debt-pool.subHeadline')}
+                  icon={<DebtPoolIcon />}
+                />
+              </Box>
+              <Box mt={4}>
+                <BoxLink
+                  href={EXTERNAL_LINKS.CMS.Home}
+                  headline={t('staking-v2.v2-home.box-links.help.headline')}
+                  subHeadline={t('staking-v2.v2-home.box-links.help.subHeadline')}
+                  isExternal
+                  icon={
+                    <Center
+                      boxSize="36px"
+                      border="1px"
+                      fontSize="3xl"
+                      borderRadius="base"
+                      fontWeight={800}
+                      borderColor="whiteAlpha.400"
+                      color="whiteAlpha.400"
+                    >
+                      ?
+                    </Center>
+                  }
+                />
+              </Box>
+            </Flex>
           </Flex>
-        </Flex>
-      </Container>
+        </Container>
+      </Box>
       {/* sUSD Utilities Section */}
-      <Box position="absolute" width="100%" bottom="0">
+      <Box width="100%">
         <Box width="100%" borderTopWidth="1px" borderTopColor="gray.900" pt={8} bg="navy.900">
           <Container maxW="1200px" bg="transparent" mt={2}>
             <Box>
@@ -180,7 +178,7 @@ const V2Home = () => {
           </Container>
         </Box>
       </Box>
-    </Box>
+    </Flex>
   );
 };
 
