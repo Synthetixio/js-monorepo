@@ -179,8 +179,18 @@ export default function AppRoutes() {
             </Route>
           </Route>
 
+          <Route path="/debt" element={<Navigate to="/debt/overview" replace={true} />} />
+          <Route path="/debt/manage" element={<Navigate to="/debt/manage/buy" replace={true} />} />
           <Route
-            path="/debt"
+            path="/debt/:activeTab"
+            element={
+              <Wrapper>
+                <DebtPage />
+              </Wrapper>
+            }
+          />
+          <Route
+            path="/debt/:activeTab/:action"
             element={
               <Wrapper>
                 <DebtPage />

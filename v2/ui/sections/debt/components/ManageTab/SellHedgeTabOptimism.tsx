@@ -34,9 +34,9 @@ import {
   TorosLogo,
 } from './hedge-tab-ui-components';
 import {
-  dSNXWrapperSwapperContractOptimism,
   dSNXPoolAddressOptimism,
   dSNXPoolContractOptimism,
+  dSNXWrapperSwapperContractOptimism,
   SLIPPAGE,
 } from 'constants/dhedge';
 import useGetDSNXPrice from 'hooks/useGetDSNXPrice';
@@ -45,6 +45,7 @@ import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';
 import { EXTERNAL_LINKS } from 'constants/links';
 import { useTranslation } from 'react-i18next';
 import TorosWhite from './toros-white.png';
+import { Flip } from './Flip';
 
 export default function SellHedgeTabOptimism() {
   const { useContractTxn, useSynthsBalancesQuery } = useSynthetixQueries();
@@ -115,9 +116,9 @@ export default function SellHedgeTabOptimism() {
     <StyledSellHedgeContainer>
       <StyledBackgroundTab>
         <StyledInputLabel>
-          Using
+          {t('debt.actions.manage.using')}
           <StyledCryptoCurrencyBox>
-            <Dhedge width="24" />
+            <Dhedge width="24" height="24" />
             dSNX
           </StyledCryptoCurrencyBox>
         </StyledInputLabel>
@@ -144,7 +145,7 @@ export default function SellHedgeTabOptimism() {
           />
         </InputWrapper>
         <StyledBalance>
-          Balance:&nbsp;
+          {t('debt.actions.manage.balance')}
           {formatCryptoCurrency(wei(dSNXBalanceQuery.data || wei(0)), {
             minDecimals: 3,
           })}
@@ -158,14 +159,20 @@ export default function SellHedgeTabOptimism() {
               }
             }}
           >
-            MAX
+            {t('debt.actions.manage.max')}
           </StyledMaxButton>
         </StyledBalance>
         <StyledSpacer />
+        <Flip to="/debt/manage/buy" />
+
         <StyledInputLabel>
-          Buying
+          {t('debt.actions.manage.buying')}
           <StyledCryptoCurrencyBox>
-            <StyledCryptoCurrencyImage src="https://raw.githubusercontent.com/Synthetixio/synthetix-assets/v2.0.10/synths/sUSD.svg" />
+            <StyledCryptoCurrencyImage
+              src="https://raw.githubusercontent.com/Synthetixio/synthetix-assets/v2.0.10/synths/sUSD.svg"
+              width="24"
+              height="24"
+            />
             sUSD
           </StyledCryptoCurrencyBox>
         </StyledInputLabel>
@@ -181,7 +188,7 @@ export default function SellHedgeTabOptimism() {
           </InputWrapper>
         </Tooltip>
         <StyledBalance>
-          Balance:&nbsp;
+          {t('debt.actions.manage.balance')}
           {formatCryptoCurrency(sUSDBalance, {
             minDecimals: 3,
           })}
@@ -198,13 +205,13 @@ export default function SellHedgeTabOptimism() {
       {approveTx.isLoading && (
         <LoaderContainer>
           <LoaderIcon width="20" />
-          <LoaderText>Approving dSNX</LoaderText>
+          <LoaderText>{t('debt.actions.manage.approving-dsnx')}</LoaderText>
         </LoaderContainer>
       )}
       {withdrawTx.isLoading && (
         <LoaderContainer>
           <LoaderIcon width="20" />
-          <LoaderText>Selling dSNX for sUSD</LoaderText>
+          <LoaderText>{t('debt.actions.manage.selling-dsnx')}</LoaderText>
         </LoaderContainer>
       )}
       {Boolean(!approveTx.isLoading && !withdrawTx.isLoading) && (
@@ -224,7 +231,7 @@ export default function SellHedgeTabOptimism() {
             variant="primary"
             disabled={wei(actualAmountToSendBn || '0').eq(0) || Boolean(withdrawTx.errorMessage)}
           >
-            {approveQuery.data ? 'Swap' : 'Approve'}
+            {approveQuery.data ? t('debt.actions.manage.swap') : t('debt.actions.manage.approve')}
           </StyledButton>
         </>
       )}
@@ -243,7 +250,9 @@ export default function SellHedgeTabOptimism() {
             <ModalContent>
               <ModalItem>
                 <ModalItemTitle>
-                  {approveQuery.data ? 'Selling dSNX for sUSD' : 'Approving dSNX'}
+                  {approveQuery.data
+                    ? t('debt.actions.manage.selling-dsnx')
+                    : t('debt.actions.manage.approving-dsnx')}
                 </ModalItemTitle>
                 <ModalItemText>{dSNXPoolContractOptimism.address}</ModalItemText>
               </ModalItem>
