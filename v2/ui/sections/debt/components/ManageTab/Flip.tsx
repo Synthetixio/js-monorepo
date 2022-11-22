@@ -20,9 +20,10 @@ const Link = styled(RouterLink)`
   color: rgb(0, 209, 255);
   padding: 6px;
   box-sizing: content-box;
-  transition: transform 200ms;
+  transition: transform 0ms;
 
   &:hover {
     transform: rotate(-180deg);
+    transition-duration: 200ms;
   }
 `;
