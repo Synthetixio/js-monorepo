@@ -103,6 +103,23 @@ export class Pool extends Entity {
     }
   }
 
+  get nominated_owner(): Bytes | null {
+    let value = this.get("nominated_owner");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set nominated_owner(value: Bytes | null) {
+    if (!value) {
+      this.unset("nominated_owner");
+    } else {
+      this.set("nominated_owner", Value.fromBytes(<Bytes>value));
+    }
+  }
+
   get name(): string | null {
     let value = this.get("name");
     if (!value || value.kind == ValueKind.NULL) {
@@ -117,6 +134,40 @@ export class Pool extends Entity {
       this.unset("name");
     } else {
       this.set("name", Value.fromString(<string>value));
+    }
+  }
+
+  get total_weight(): BigInt | null {
+    let value = this.get("total_weight");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set total_weight(value: BigInt | null) {
+    if (!value) {
+      this.unset("total_weight");
+    } else {
+      this.set("total_weight", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get configurations(): Array<string> | null {
+    let value = this.get("configurations");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set configurations(value: Array<string> | null) {
+    if (!value) {
+      this.unset("configurations");
+    } else {
+      this.set("configurations", Value.fromStringArray(<Array<string>>value));
     }
   }
 }
@@ -179,6 +230,23 @@ export class Market extends Entity {
     this.set("created_at_block", Value.fromBigInt(value));
   }
 
+  get configurations(): Array<string> | null {
+    let value = this.get("configurations");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set configurations(value: Array<string> | null) {
+    if (!value) {
+      this.unset("configurations");
+    } else {
+      this.set("configurations", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
   get updated_at(): BigInt | null {
     let value = this.get("updated_at");
     if (!value || value.kind == ValueKind.NULL) {
@@ -210,23 +278,6 @@ export class Market extends Entity {
       this.unset("updated_at_block");
     } else {
       this.set("updated_at_block", Value.fromBigInt(<BigInt>value));
-    }
-  }
-
-  get weight(): BigDecimal | null {
-    let value = this.get("weight");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set weight(value: BigDecimal | null) {
-    if (!value) {
-      this.unset("weight");
-    } else {
-      this.set("weight", Value.fromBigDecimal(<BigDecimal>value));
     }
   }
 
@@ -316,7 +367,7 @@ export class Market extends Entity {
   }
 }
 
-export class PoolAndMarket extends Entity {
+export class MarketConfiguration extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -324,18 +375,20 @@ export class PoolAndMarket extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save PoolAndMarket entity without an ID");
+    assert(id != null, "Cannot save MarketConfiguration entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type PoolAndMarket must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type MarketConfiguration must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("PoolAndMarket", id.toString(), this);
+      store.set("MarketConfiguration", id.toString(), this);
     }
   }
 
-  static load(id: string): PoolAndMarket | null {
-    return changetype<PoolAndMarket | null>(store.get("PoolAndMarket", id));
+  static load(id: string): MarketConfiguration | null {
+    return changetype<MarketConfiguration | null>(
+      store.get("MarketConfiguration", id)
+    );
   }
 
   get id(): string {
@@ -363,6 +416,33 @@ export class PoolAndMarket extends Entity {
 
   set market(value: string) {
     this.set("market", Value.fromString(value));
+  }
+
+  get weight(): BigInt {
+    let value = this.get("weight");
+    return value!.toBigInt();
+  }
+
+  set weight(value: BigInt) {
+    this.set("weight", Value.fromBigInt(value));
+  }
+
+  get created_at(): BigInt {
+    let value = this.get("created_at");
+    return value!.toBigInt();
+  }
+
+  set created_at(value: BigInt) {
+    this.set("created_at", Value.fromBigInt(value));
+  }
+
+  get created_at_block(): BigInt {
+    let value = this.get("created_at_block");
+    return value!.toBigInt();
+  }
+
+  set created_at_block(value: BigInt) {
+    this.set("created_at_block", Value.fromBigInt(value));
   }
 
   get max_debt_share_value(): BigDecimal | null {
@@ -448,6 +528,24 @@ export class CollateralType extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get address_price_feed(): Bytes {
+    let value = this.get("address_price_feed");
+    return value!.toBytes();
+  }
+
+  set address_price_feed(value: Bytes) {
+    this.set("address_price_feed", Value.fromBytes(value));
+  }
+
+  get token(): Bytes {
+    let value = this.get("token");
+    return value!.toBytes();
+  }
+
+  set token(value: Bytes) {
+    this.set("token", Value.fromBytes(value));
+  }
+
   get depositing_enabled(): boolean {
     let value = this.get("depositing_enabled");
     return value!.toBoolean();
@@ -457,22 +555,22 @@ export class CollateralType extends Entity {
     this.set("depositing_enabled", Value.fromBoolean(value));
   }
 
-  get target_c_ratio(): BigInt {
+  get target_c_ratio(): BigDecimal {
     let value = this.get("target_c_ratio");
-    return value!.toBigInt();
+    return value!.toBigDecimal();
   }
 
-  set target_c_ratio(value: BigInt) {
-    this.set("target_c_ratio", Value.fromBigInt(value));
+  set target_c_ratio(value: BigDecimal) {
+    this.set("target_c_ratio", Value.fromBigDecimal(value));
   }
 
-  get minimum_c_ratio(): BigInt {
+  get minimum_c_ratio(): BigDecimal {
     let value = this.get("minimum_c_ratio");
-    return value!.toBigInt();
+    return value!.toBigDecimal();
   }
 
-  set minimum_c_ratio(value: BigInt) {
-    this.set("minimum_c_ratio", Value.fromBigInt(value));
+  set minimum_c_ratio(value: BigDecimal) {
+    this.set("minimum_c_ratio", Value.fromBigDecimal(value));
   }
 
   get liquidation_reward(): BigDecimal {
@@ -502,20 +600,23 @@ export class CollateralType extends Entity {
     this.set("created_at_block", Value.fromBigInt(value));
   }
 
-  get total_amount_deposited(): BigInt | null {
+  get total_amount_deposited(): BigDecimal | null {
     let value = this.get("total_amount_deposited");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toBigInt();
+      return value.toBigDecimal();
     }
   }
 
-  set total_amount_deposited(value: BigInt | null) {
+  set total_amount_deposited(value: BigDecimal | null) {
     if (!value) {
       this.unset("total_amount_deposited");
     } else {
-      this.set("total_amount_deposited", Value.fromBigInt(<BigInt>value));
+      this.set(
+        "total_amount_deposited",
+        Value.fromBigDecimal(<BigDecimal>value)
+      );
     }
   }
 
@@ -709,13 +810,22 @@ export class AccountPermissionUsers extends Entity {
     this.set("address", Value.fromBytes(value));
   }
 
-  get permissions(): Bytes {
-    let value = this.get("permissions");
-    return value!.toBytes();
+  get account(): string {
+    let value = this.get("account");
+    return value!.toString();
   }
 
-  set permissions(value: Bytes) {
-    this.set("permissions", Value.fromBytes(value));
+  set account(value: string) {
+    this.set("account", Value.fromString(value));
+  }
+
+  get permissions(): Array<Bytes> {
+    let value = this.get("permissions");
+    return value!.toBytesArray();
+  }
+
+  set permissions(value: Array<Bytes>) {
+    this.set("permissions", Value.fromBytesArray(value));
   }
 
   get created_at(): BigInt {
@@ -786,31 +896,31 @@ export class Position extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get collateral_amount(): BigInt {
+  get collateral_amount(): BigDecimal {
     let value = this.get("collateral_amount");
-    return value!.toBigInt();
+    return value!.toBigDecimal();
   }
 
-  set collateral_amount(value: BigInt) {
-    this.set("collateral_amount", Value.fromBigInt(value));
+  set collateral_amount(value: BigDecimal) {
+    this.set("collateral_amount", Value.fromBigDecimal(value));
   }
 
-  get leverage(): BigInt {
+  get leverage(): BigDecimal {
     let value = this.get("leverage");
-    return value!.toBigInt();
+    return value!.toBigDecimal();
   }
 
-  set leverage(value: BigInt) {
-    this.set("leverage", Value.fromBigInt(value));
+  set leverage(value: BigDecimal) {
+    this.set("leverage", Value.fromBigDecimal(value));
   }
 
-  get c_ratio(): BigInt {
+  get c_ratio(): BigDecimal {
     let value = this.get("c_ratio");
-    return value!.toBigInt();
+    return value!.toBigDecimal();
   }
 
-  set c_ratio(value: BigInt) {
-    this.set("c_ratio", Value.fromBigInt(value));
+  set c_ratio(value: BigDecimal) {
+    this.set("c_ratio", Value.fromBigDecimal(value));
   }
 
   get created_at(): BigInt {
@@ -849,37 +959,73 @@ export class Position extends Entity {
     this.set("updated_at_block", Value.fromBigInt(value));
   }
 
-  get total_minted(): BigInt | null {
+  get account(): string {
+    let value = this.get("account");
+    return value!.toString();
+  }
+
+  set account(value: string) {
+    this.set("account", Value.fromString(value));
+  }
+
+  get pool(): string {
+    let value = this.get("pool");
+    return value!.toString();
+  }
+
+  set pool(value: string) {
+    this.set("pool", Value.fromString(value));
+  }
+
+  get collateral_type(): string {
+    let value = this.get("collateral_type");
+    return value!.toString();
+  }
+
+  set collateral_type(value: string) {
+    this.set("collateral_type", Value.fromString(value));
+  }
+
+  get net_issuance(): BigDecimal {
+    let value = this.get("net_issuance");
+    return value!.toBigDecimal();
+  }
+
+  set net_issuance(value: BigDecimal) {
+    this.set("net_issuance", Value.fromBigDecimal(value));
+  }
+
+  get total_minted(): BigDecimal | null {
     let value = this.get("total_minted");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toBigInt();
+      return value.toBigDecimal();
     }
   }
 
-  set total_minted(value: BigInt | null) {
+  set total_minted(value: BigDecimal | null) {
     if (!value) {
       this.unset("total_minted");
     } else {
-      this.set("total_minted", Value.fromBigInt(<BigInt>value));
+      this.set("total_minted", Value.fromBigDecimal(<BigDecimal>value));
     }
   }
 
-  get total_burned(): BigInt | null {
+  get total_burned(): BigDecimal | null {
     let value = this.get("total_burned");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toBigInt();
+      return value.toBigDecimal();
     }
   }
 
-  set total_burned(value: BigInt | null) {
+  set total_burned(value: BigDecimal | null) {
     if (!value) {
       this.unset("total_burned");
     } else {
-      this.set("total_burned", Value.fromBigInt(<BigInt>value));
+      this.set("total_burned", Value.fromBigDecimal(<BigDecimal>value));
     }
   }
 }
@@ -915,13 +1061,13 @@ export class Vault extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get collateral_amount(): BigInt {
+  get collateral_amount(): BigDecimal {
     let value = this.get("collateral_amount");
-    return value!.toBigInt();
+    return value!.toBigDecimal();
   }
 
-  set collateral_amount(value: BigInt) {
-    this.set("collateral_amount", Value.fromBigInt(value));
+  set collateral_amount(value: BigDecimal) {
+    this.set("collateral_amount", Value.fromBigDecimal(value));
   }
 
   get created_at(): BigInt {
@@ -958,5 +1104,23 @@ export class Vault extends Entity {
 
   set updated_at_block(value: BigInt) {
     this.set("updated_at_block", Value.fromBigInt(value));
+  }
+
+  get collateral_type(): string {
+    let value = this.get("collateral_type");
+    return value!.toString();
+  }
+
+  set collateral_type(value: string) {
+    this.set("collateral_type", Value.fromString(value));
+  }
+
+  get pool(): string {
+    let value = this.get("pool");
+    return value!.toString();
+  }
+
+  set pool(value: string) {
+    this.set("pool", Value.fromString(value));
   }
 }

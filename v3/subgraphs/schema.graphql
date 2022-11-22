@@ -5,8 +5,12 @@ type Pool @entity {
   created_at_block: BigInt!
   updated_at: BigInt
   updated_at_block: BigInt
+  "Defined when a owner is nominated and empty if he revoked, or got revoked"
+  nominated_owner: Bytes
   "Only set when name of the pool got updated"
   name: String
+  total_weight: BigInt
+  configurations: [MarketConfiguration!] @derivedFrom(field: "pool")
 }
 
 type Market @entity {
@@ -14,9 +18,9 @@ type Market @entity {
   address: Bytes!
   created_at: BigInt!
   created_at_block: BigInt!
+  configurations: [MarketConfiguration!] @derivedFrom(field: "market")
   updated_at: BigInt
   updated_at_block: BigInt
-  weight: BigDecimal
   usd_deposited: BigDecimal
   usd_withdrawn: BigDecimal
   "withdrawn - deposited"
@@ -26,11 +30,14 @@ type Market @entity {
   name: String
 }
 
-type PoolAndMarket @entity {
+type MarketConfiguration @entity {
   "pool id + market id"
   id: ID!
   pool: Pool!
   market: Market!
+  weight: BigInt!
+  created_at: BigInt!
+  created_at_block: BigInt!
   max_debt_share_value: BigDecimal
   updated_at: BigInt
   updated_at_block: BigInt
@@ -39,13 +46,15 @@ type PoolAndMarket @entity {
 type CollateralType @entity {
   "address of an ERC20 contract"
   id: ID!
+  address_price_feed: Bytes!
+  token: Bytes!
   depositing_enabled: Boolean!
-  target_c_ratio: BigInt!
-  minimum_c_ratio: BigInt!
+  target_c_ratio: BigDecimal!
+  minimum_c_ratio: BigDecimal!
   liquidation_reward: BigDecimal!
   created_at: BigInt!
   created_at_block: BigInt!
-  total_amount_deposited: BigInt
+  total_amount_deposited: BigDecimal
   updated_at: BigInt
   updated_at_block: BigInt
 }
@@ -65,7 +74,8 @@ type AccountPermissionUsers @entity {
   "NFT token ID + user address"
   id: ID!
   address: Bytes!
-  permissions: Bytes!
+  account: Account!
+  permissions: [Bytes!]!
   created_at: BigInt!
   created_at_block: BigInt!
   updated_at: BigInt!
@@ -75,23 +85,30 @@ type AccountPermissionUsers @entity {
 type Position @entity {
   "NFT Token ID + pool id + collateral type address"
   id: ID!
-  collateral_amount: BigInt!
-  leverage: BigInt!
-  c_ratio: BigInt!
+  collateral_amount: BigDecimal!
+  leverage: BigDecimal!
+  c_ratio: BigDecimal!
   created_at: BigInt!
   created_at_block: BigInt!
   updated_at: BigInt!
   updated_at_block: BigInt!
-  total_minted: BigInt
-  total_burned: BigInt
+  account: Account!
+  pool: Pool!
+  collateral_type: CollateralType!
+  "total-minted - total_burned"
+  net_issuance: BigDecimal
+  total_minted: BigDecimal
+  total_burned: BigDecimal
 }
 
 type Vault @entity {
   "Pool id + collateral type address"
   id: ID!
-  collateral_amount: BigInt!
+  collateral_amount: BigDecimal!
   created_at: BigInt!
   created_at_block: BigInt!
   updated_at: BigInt!
   updated_at_block: BigInt!
+  collateral_type: CollateralType!
+  pool: Pool!
 }

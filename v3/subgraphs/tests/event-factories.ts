@@ -17,9 +17,12 @@ import {
   MarketUsdWithdrawn,
 } from '../generated/MarketManagerModule/MarketManagerModule';
 import {
+  NominatedPoolOwner,
   PoolConfigurationSet,
   PoolCreated,
   PoolNameUpdated,
+  PoolNominationRenounced,
+  PoolNominationRevoked,
   PoolOwnershipAccepted,
 } from '../generated/PoolModule/PoolModule';
 import { DelegationUpdated } from '../generated/VaultModule/VaultModule';
@@ -49,6 +52,26 @@ export function createPoolCreatedEvent(
   return newPoolCreatedEvent;
 }
 
+export function createNominatedPoolOwnerEvent(
+  id: i32,
+  nominee: string,
+  timestamp: i64,
+  blockNumber: i64
+): NominatedPoolOwner {
+  const newCreateNominatedPoolOwnerEvent = changetype<NominatedPoolOwner>(newMockEvent());
+  const block = createBlock(timestamp, blockNumber);
+  newCreateNominatedPoolOwnerEvent.parameters = new Array();
+  newCreateNominatedPoolOwnerEvent.parameters.push(
+    new ethereum.EventParam('id', ethereum.Value.fromI32(id))
+  );
+  newCreateNominatedPoolOwnerEvent.parameters.push(
+    new ethereum.EventParam('owner', ethereum.Value.fromAddress(Address.fromString(nominee)))
+  );
+  newCreateNominatedPoolOwnerEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  newCreateNominatedPoolOwnerEvent.block.number = BigInt.fromI64(block['blockNumber']);
+  return newCreateNominatedPoolOwnerEvent;
+}
+
 export function createPoolNameUpdatedEvent(
   id: i32,
   name: string,
@@ -69,7 +92,7 @@ export function createPoolNameUpdatedEvent(
   return newPoolNameUpdatedEvent;
 }
 
-export function createNewPoolOwnerEvent(
+export function createPoolOwnershipAcceptedEvent(
   id: i32,
   owner: string,
   timestamp: i64,
@@ -87,6 +110,37 @@ export function createNewPoolOwnerEvent(
   newPoolOwnershipAcceptedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
   newPoolOwnershipAcceptedEvent.block.number = BigInt.fromI64(block['blockNumber']);
   return newPoolOwnershipAcceptedEvent;
+}
+
+export function createPoolNominationRevokedEvent(
+  id: i32,
+  timestamp: i64,
+  blockNumber: i64
+): PoolNominationRevoked {
+  const newPoolNominationRevokedEvent = changetype<PoolNominationRevoked>(newMockEvent());
+  const block = createBlock(timestamp, blockNumber);
+  newPoolNominationRevokedEvent.parameters = new Array();
+  newPoolNominationRevokedEvent.parameters.push(
+    new ethereum.EventParam('poolId', ethereum.Value.fromI32(id))
+  );
+  newPoolNominationRevokedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  newPoolNominationRevokedEvent.block.number = BigInt.fromI64(block['blockNumber']);
+  return newPoolNominationRevokedEvent;
+}
+export function createPoolOwnershipRenouncedEvent(
+  id: i32,
+  timestamp: i64,
+  blockNumber: i64
+): PoolNominationRenounced {
+  const newPoolOwnerNominationRenouncedEvent = changetype<PoolNominationRenounced>(newMockEvent());
+  const block = createBlock(timestamp, blockNumber);
+  newPoolOwnerNominationRenouncedEvent.parameters = new Array();
+  newPoolOwnerNominationRenouncedEvent.parameters.push(
+    new ethereum.EventParam('poolId', ethereum.Value.fromI32(id))
+  );
+  newPoolOwnerNominationRenouncedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  newPoolOwnerNominationRenouncedEvent.block.number = BigInt.fromI64(block['blockNumber']);
+  return newPoolOwnerNominationRenouncedEvent;
 }
 
 export function createMarketCreatedEvent(
