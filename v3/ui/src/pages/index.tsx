@@ -8,13 +8,12 @@ import { accountsState } from '../utils/state';
 export function Home() {
   const navigate = useNavigateWithChain();
   const [{ accounts }] = useRecoilState(accountsState);
-
+  const numOfAccount = accounts.length;
   useEffect(() => {
-    if (accounts.length) {
-      navigate({ pathname: `/accounts/${accounts[0]}` });
+    if (numOfAccount > 0) {
+      navigate({ pathname: `/accounts/${accounts[0]}` }, { replace: true });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [numOfAccount]);
 
   return (
     <Flex
