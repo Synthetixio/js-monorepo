@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.19.4",
-    "@chakra-ui/icons": "^2.0.9",
     "@chakra-ui/react": "^2.2.8",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
