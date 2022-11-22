@@ -179,8 +179,9 @@ export default function AppRoutes() {
             </Route>
           </Route>
 
+          <Route path="/debt" element={<Navigate to="/debt/overview" replace={true} />} />
           <Route
-            path="/debt"
+            path="/debt/:activeTab"
             element={
               <Wrapper>
                 <DebtPage />
