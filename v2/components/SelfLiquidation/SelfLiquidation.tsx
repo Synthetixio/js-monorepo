@@ -19,9 +19,7 @@ export const SelfLiquidationUi: FC<{
   selfLiquidationPenaltySNX?: number;
   selfLiquidationPenaltyDollar?: number;
   targetCRatioPercentage?: number;
-  liquidationRatioPercentage?: number;
   currentCRatioPercentage?: number;
-  targetThreshold?: number;
   onSelfLiquidation: () => void;
   transactionFee?: Wei | null;
   isGasEnabledAndNotFetched: boolean;
@@ -31,9 +29,7 @@ export const SelfLiquidationUi: FC<{
   selfLiquidationPenaltySNX,
   selfLiquidationPenaltyDollar,
   targetCRatioPercentage,
-  liquidationRatioPercentage,
   currentCRatioPercentage,
-  targetThreshold,
   onSelfLiquidation,
   transactionFee,
   gasError,
@@ -190,9 +186,7 @@ export const SelfLiquidation = () => {
         selfLiquidationPenalty={selfLiquidationData?.selfLiquidationPenalty.toNumber()}
         selfLiquidationPenaltySNX={selfLiquidationData?.selfLiquidationPenaltySNX.toNumber()}
         targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
-        liquidationRatioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
         currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
-        targetThreshold={debtData?.targetThreshold.toNumber()}
       />
       <SelfLiquidationTransactionModal
         txnHash={txnHash}

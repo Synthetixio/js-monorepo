@@ -26,7 +26,6 @@ describe('SelfLiquidationUi', () => {
           <SelfLiquidationUi
             onSelfLiquidation={() => {}}
             targetCRatioPercentage={300}
-            liquidationRatioPercentage={150}
             currentCRatioPercentage={250}
             selfLiquidationPenalty={0.2}
             selfLiquidationPenaltySNX={100}
@@ -52,7 +51,6 @@ describe('SelfLiquidationUi', () => {
           <SelfLiquidationUi
             onSelfLiquidation={cy.spy().as('onSelfLiquidationMock')}
             targetCRatioPercentage={300}
-            liquidationRatioPercentage={150}
             currentCRatioPercentage={250}
             selfLiquidationPenalty={0.2}
             selfLiquidationPenaltySNX={100}
@@ -77,7 +75,6 @@ describe('SelfLiquidationUi', () => {
           <SelfLiquidationUi
             onSelfLiquidation={() => {}}
             targetCRatioPercentage={300}
-            liquidationRatioPercentage={150}
             currentCRatioPercentage={300}
             selfLiquidationPenalty={0.2}
             selfLiquidationPenaltySNX={100}
@@ -101,7 +98,6 @@ describe('SelfLiquidationUi', () => {
           <SelfLiquidationUi
             onSelfLiquidation={() => {}}
             targetCRatioPercentage={300}
-            liquidationRatioPercentage={150}
             currentCRatioPercentage={100}
             selfLiquidationPenalty={0.2}
             selfLiquidationPenaltySNX={100}
@@ -126,7 +122,6 @@ describe('SelfLiquidationUi', () => {
           <SelfLiquidationUi
             onSelfLiquidation={() => {}}
             targetCRatioPercentage={300}
-            liquidationRatioPercentage={150}
             currentCRatioPercentage={100}
             selfLiquidationPenalty={0.2}
             selfLiquidationPenaltySNX={100}
