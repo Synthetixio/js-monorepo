@@ -7189,7 +7189,7 @@ __metadata:
   resolution: "@snx-v2/SelfLiquidation@workspace:v2/components/SelfLiquidation"
   dependencies:
     "@chakra-ui/react": ^2.2.8
-    "@snx-v2/CRatioHealthCard": "workspace:*"
+    "@snx-v2/CRatioProgressBar": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/ExternalLink": "workspace:*"
     "@snx-v2/TransactionModal": "workspace:*"
