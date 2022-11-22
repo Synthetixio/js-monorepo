@@ -32,7 +32,6 @@ export const EXTERNAL_LINKS = {
   },
   TokenLists: {
     OneInch: 'https://gateway.ipfs.io/ipns/tokens.1inch.eth',
-    Zapper: 'https://zapper.fi/api/token-list',
   },
   L2: {
     Optimism: 'https://app.optimism.io/',
