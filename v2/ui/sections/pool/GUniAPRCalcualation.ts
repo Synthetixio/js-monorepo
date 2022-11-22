@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { ethers, BigNumber, providers, Contract } from 'ethers';
-import { abi as IUniswapV3PoolABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json';
+import IUniswapV3Pool from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json';
 import { GELATO_POOL_ABI } from './useGetUniswapStakingRewardsAPY';
 import { gelatoGraphURL, UNISWAP_HELPERS_ADDRESS } from 'constants/gelato';
 
+const IUniswapV3PoolABI = IUniswapV3Pool.abi;
 const X96 = BigNumber.from(2).pow(BigNumber.from(96));
 const BLOCKS_PER_YEAR = 537542;
 

@@ -364,7 +364,7 @@ const CollectActionCard: React.FC<{
                   </Tooltip>
                 </Flex>
                 <Text color="success" fontSize="md" fontFamily="mono">
-                  <Skeleton isLoaded={Boolean(nextEpochStartDate)}>
+                  <Skeleton as="span" isLoaded={Boolean(nextEpochStartDate)}>
                     {nextEpochStartDate && <CountDown toDate={nextEpochStartDate} />}
                   </Skeleton>
                 </Text>

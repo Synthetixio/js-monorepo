@@ -27,7 +27,7 @@ export const StatBox = ({
         {label}
       </Text>
       <Text fontFamily="heading" fontWeight="black" fontSize="2xl" color="white">
-        {amount === undefined ? <Skeleton height={6} width={10} mt={2} /> : amount}
+        {amount === undefined ? <Skeleton as="span" height={6} width={10} mt={2} /> : amount}
       </Text>
     </Flex>
   );
