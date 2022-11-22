@@ -11,11 +11,6 @@ import useSynthetixQueries from '@synthetixio/queries';
 import { EXTERNAL_LINKS } from 'constants/links';
 import Connector from 'containers/Connector';
 import { isAnyElectionInNomination, isAnyElectionInVoting } from 'utils/governance';
-import useLocalStorage from '../../hooks/useLocalStorage';
-
-const kwentaAelinPoolActive = new Date() < new Date('2022-11-15T00:00:00.000Z');
-
-const liqSettingDeadlineNotPassed = new Date() < new Date('2022-11-20T00:00:00.000Z');
 
 const BannerManager: FC = () => {
   const { subgraph, useGetLiquidationDataQuery, useGetDebtDataQuery, useGetElectionsPeriodStatus } =
@@ -25,7 +20,6 @@ const BannerManager: FC = () => {
 
   const electionIsInNomination = isAnyElectionInNomination(periodStatusQuery.data);
   const electionIsInVoting = isAnyElectionInVoting(periodStatusQuery.data);
-  const [showLiqSetting] = useLocalStorage(LOCAL_STORAGE_KEYS.LIQUIDATION_SETTING_CHANGES, true);
   const liquidationData = useGetLiquidationDataQuery(walletAddress);
   const debtData = useGetDebtDataQuery(walletAddress);
 
@@ -61,35 +55,6 @@ const BannerManager: FC = () => {
               <Strong />,
               <StyledExternalLink href={EXTERNAL_LINKS.Synthetix.SIP148Liquidations} />,
             ]}
-          />
-        }
-      />
-    );
-  }
-  if (liqSettingDeadlineNotPassed && showLiqSetting) {
-    return (
-      <Banner
-        type={BannerType.INFORMATION}
-        localStorageKey={LOCAL_STORAGE_KEYS.LIQUIDATION_SETTING_CHANGES}
-        message={
-          <Trans
-            i18nKey="user-menu.banner.liq-setting-changes"
-            components={[<StyledExternalLink href={EXTERNAL_LINKS.sips.sccp246} />]}
-          />
-        }
-      />
-    );
-  }
-  if (kwentaAelinPoolActive) {
-    // TODO remove nov 15
-    return (
-      <Banner
-        type={BannerType.INFORMATION}
-        localStorageKey={LOCAL_STORAGE_KEYS.KWENTA_TOKEN_LIVE}
-        message={
-          <Trans
-            i18nKey="user-menu.banner.kwenta-token"
-            components={[<StyledExternalLink href={EXTERNAL_LINKS.Trading.KwentaToken} />]}
           />
         }
       />
