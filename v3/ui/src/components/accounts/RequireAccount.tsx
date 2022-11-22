@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { useNavigateWithChain } from '../../hooks';
 import { accountsState } from '../../utils/state';
 
-const RequireAccount: React.FC<PropsWithChildren> = ({ children }) => {
+export const RequireAccount: React.FC<PropsWithChildren> = ({ children }) => {
   const navigate = useNavigateWithChain();
   const [{ accounts }] = useRecoilState(accountsState);
   const numOfAccount = accounts.length;
@@ -11,7 +11,6 @@ const RequireAccount: React.FC<PropsWithChildren> = ({ children }) => {
     if (numOfAccount === 0) {
       navigate({ pathname: `/` }, { replace: true });
     }
-  }, [numOfAccount]);
+  }, [numOfAccount, navigate]);
   return <>{children}</>;
 };
-export default RequireAccount;

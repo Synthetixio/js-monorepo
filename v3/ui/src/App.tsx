@@ -16,7 +16,7 @@ import { Market } from './pages/markets/Market';
 import { Pool } from './pages/pools/pool';
 import { Teleporter } from './pages/teleporter/Teleporter';
 import { NotFoundPage } from './pages/404';
-import RequireAccount from './components/accounts/RequireAccount';
+import { RequireAccount } from './components/accounts/RequireAccount';
 
 export const Synthetix: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
