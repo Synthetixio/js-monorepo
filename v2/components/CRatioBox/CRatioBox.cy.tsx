@@ -98,7 +98,7 @@ describe('CratioBox', () => {
           liquidationRatioPercentage={150}
           targetCRatioPercentage={350}
           currentCRatioPercentage={200}
-          newCratioPercentage={450}
+          newCratioPercentage={500}
         />
       </Box>
     );
