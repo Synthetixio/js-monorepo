@@ -136,7 +136,7 @@ const V2Home = () => {
               mr={4}
               title="Kwenta"
               description={t('staking-v2.home.utilities.kwentaDescription')}
-              link="https://kwenta.io"
+              link="https://kwenta.eth.limo"
               Icon={KwentaIcon}
             />
             <UtilityCard

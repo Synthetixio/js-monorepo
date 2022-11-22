@@ -32,7 +32,7 @@ import { useEffect } from 'react';
 const tradeContent = () => {
   return (
     <>
-      <a href="https://kwenta.io" target="_blank" rel="noreferrer">
+      <a href="https://kwenta.eth.limo" target="_blank" rel="noreferrer">
         <Flex mb="3" cursor="pointer" alignItems="center">
           <Image src={kwenta} alt="Kwenta" width="28px" height="28px" />
           <Box pl="3">
