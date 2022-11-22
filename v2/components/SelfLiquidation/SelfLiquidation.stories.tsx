@@ -19,7 +19,6 @@ const Template: ComponentStory<typeof SelfLiquidationUi> = (_args) => (
 export const Primary = Template.bind({});
 Primary.args = {
   targetCRatioPercentage: 300,
-  liquidationRatioPercentage: 150,
   currentCRatioPercentage: 300,
   selfLiquidationPenalty: 0.2,
   selfLiquidationPenaltySNX: 100,

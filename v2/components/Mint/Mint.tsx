@@ -265,7 +265,9 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   };
   return (
     <>
-      <MintHeader mintAmountSUSD={parseFloatWithCommas(mintAmountSUSD)} />
+      <MintHeader
+        mintAmountSUSD={mintAmountSUSD === '' ? undefined : parseFloatWithCommas(mintAmountSUSD)}
+      />
       <Flex
         justifyContent="space-between"
         alignItems="flex-start"

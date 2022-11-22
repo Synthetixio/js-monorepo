@@ -4,7 +4,7 @@ import { Text, Box, Heading, Flex, Skeleton, Button, Center } from '@chakra-ui/r
 import { useSelfLiquidationData } from '@snx-v2/useSelfLiquidationData';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { CRatioBox } from '../CRatioBox';
-import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
+import { CRatioProgressBar } from '@snx-v2/CRatioProgressBar';
 import { FailedIcon, SNXIcon } from '@snx-v2/icons';
 import { useTranslation } from 'react-i18next';
 import { useSelfLiquidationMutation } from '@snx-v2/useSelfLiquidationMutation';
@@ -19,9 +19,7 @@ export const SelfLiquidationUi: FC<{
   selfLiquidationPenaltySNX?: number;
   selfLiquidationPenaltyDollar?: number;
   targetCRatioPercentage?: number;
-  liquidationRatioPercentage?: number;
   currentCRatioPercentage?: number;
-  targetThreshold?: number;
   onSelfLiquidation: () => void;
   transactionFee?: Wei | null;
   isGasEnabledAndNotFetched: boolean;
@@ -31,9 +29,7 @@ export const SelfLiquidationUi: FC<{
   selfLiquidationPenaltySNX,
   selfLiquidationPenaltyDollar,
   targetCRatioPercentage,
-  liquidationRatioPercentage,
   currentCRatioPercentage,
-  targetThreshold,
   onSelfLiquidation,
   transactionFee,
   gasError,
@@ -76,13 +72,7 @@ export const SelfLiquidationUi: FC<{
           borderWidth="1px"
           borderColor="gray.900"
         >
-          <CRatioProgressBar
-            targetThreshold={targetThreshold || 0}
-            liquidationCratioPercentage={liquidationRatioPercentage || 0}
-            currentCRatioPercentage={currentCRatioPercentage || 0}
-            targetCratioPercentage={targetCRatioPercentage || 0}
-            isLoading={false}
-          />
+          <CRatioProgressBar />
         </Flex>
         <Flex
           bg="black"
@@ -93,7 +83,7 @@ export const SelfLiquidationUi: FC<{
           flexDirection="column"
           justifyContent="space-between"
         >
-          <CRatioBox actionType="burn" />
+          <CRatioBox />
         </Flex>
       </Flex>
       <Box borderRadius="base" borderWidth="1px" borderColor="gray.900" p={4}>
@@ -196,9 +186,7 @@ export const SelfLiquidation = () => {
         selfLiquidationPenalty={selfLiquidationData?.selfLiquidationPenalty.toNumber()}
         selfLiquidationPenaltySNX={selfLiquidationData?.selfLiquidationPenaltySNX.toNumber()}
         targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
-        liquidationRatioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
         currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
-        targetThreshold={debtData?.targetThreshold.toNumber()}
       />
       <SelfLiquidationTransactionModal
         txnHash={txnHash}

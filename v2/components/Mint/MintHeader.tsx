@@ -10,7 +10,7 @@ import {
   Center,
   Fade,
 } from '@chakra-ui/react';
-import { CRatioProgressBar } from '@snx-v2/CRatioHealthCard';
+import { CRatioProgressBar } from '@snx-v2/CRatioProgressBar';
 import { InfoIcon } from '@snx-v2/icons';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useTranslation, Trans } from 'react-i18next';
@@ -21,6 +21,7 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { leftColWidth, rightColWidth } from './layout';
 import { CRatioBox } from '../CRatioBox';
+import { calcNewCratioPercentage, calculateNewDebtBalance } from '@snx-v2/stakingCalculations';
 
 const NewStakerHeader: FC<{ nextEpochStartDate?: Date; SNXRate?: number }> = ({
   nextEpochStartDate,
@@ -66,10 +67,7 @@ const NewStakerHeader: FC<{ nextEpochStartDate?: Date; SNXRate?: number }> = ({
 };
 export const MintHeaderUi: FC<{
   mintAmountSUSD?: number;
-  liquidationRatioPercentage?: number;
-  targetCRatioPercentage?: number;
   currentCRatioPercentage?: number;
-  targetThreshold?: number;
   collateral?: number;
   debtBalance?: number;
   SNXRate?: number;
@@ -78,12 +76,11 @@ export const MintHeaderUi: FC<{
   nextEpochStartDate?: Date;
 }> = ({
   mintAmountSUSD,
-  liquidationRatioPercentage,
-  targetCRatioPercentage,
   currentCRatioPercentage,
-  targetThreshold,
   SNXRate,
   isDebtDataLoading,
+  debtBalance,
+  collateral,
   isExchangeRateLoading,
   nextEpochStartDate,
 }) => {
@@ -91,6 +88,8 @@ export const MintHeaderUi: FC<{
 
   const isLoading = isDebtDataLoading || isExchangeRateLoading;
   const isCurrentStaker = (currentCRatioPercentage || 0) > 0;
+  const newDebtBalance = calculateNewDebtBalance('mint', debtBalance, mintAmountSUSD);
+  const newCratioPercentage = calcNewCratioPercentage(collateral, SNXRate, newDebtBalance);
 
   return (
     <>
@@ -160,13 +159,7 @@ export const MintHeaderUi: FC<{
                 borderWidth="1px"
                 borderColor="gray.900"
               >
-                <CRatioProgressBar
-                  liquidationCratioPercentage={liquidationRatioPercentage || 0}
-                  currentCRatioPercentage={currentCRatioPercentage || 0}
-                  targetCratioPercentage={targetCRatioPercentage || 0}
-                  targetThreshold={targetThreshold || 0}
-                  isLoading={false}
-                />
+                <CRatioProgressBar newCratioPercentage={newCratioPercentage} />
               </Flex>
               <Flex
                 bg="black"
@@ -177,7 +170,7 @@ export const MintHeaderUi: FC<{
                 flexDirection="column"
                 justifyContent="space-between"
               >
-                <CRatioBox amount={mintAmountSUSD} actionType="mint" />
+                <CRatioBox newCratioPercentage={newCratioPercentage} />
               </Flex>
             </Flex>
           </Fade>
@@ -197,14 +190,13 @@ export const MintHeader: FC<{ mintAmountSUSD?: number }> = ({ mintAmountSUSD }) 
   return (
     <MintHeaderUi
       mintAmountSUSD={mintAmountSUSD}
-      liquidationRatioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
-      targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
       currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
-      targetThreshold={debtData?.targetThreshold.toNumber()}
       SNXRate={exchangeRateData?.SNX?.toNumber()}
       isDebtDataLoading={isDebtDataLoading}
       isExchangeRateLoading={isExchangeRateLoading}
       nextEpochStartDate={feePoolData?.nextFeePeriodStartDate}
+      debtBalance={debtData?.debtBalance.toNumber()}
+      collateral={debtData?.collateral.toNumber()}
     />
   );
 };

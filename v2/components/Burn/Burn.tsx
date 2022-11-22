@@ -399,7 +399,9 @@ const getBurnAmountForCalculations = (
   susdBalance = 0,
   debtBalance = 0
 ) => {
-  if (activeBadge !== 'max') return parseFloatWithCommas(burnAmountSusd);
+  if (activeBadge !== 'max') {
+    return burnAmountSusd === '' ? undefined : parseFloatWithCommas(burnAmountSusd);
+  }
   return susdBalance > debtBalance ? debtBalance : susdBalance;
 };
 export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
@@ -568,7 +570,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
             transactionFee={transactionFee}
             onSubmit={handleSubmit}
-            burnAmountForCalculations={burnAmountForCalculations}
+            burnAmountForCalculations={burnAmountForCalculations || 0}
           />
         </Box>
         <Box width={{ base: 'full', md: rightColWidth }} mt={{ base: 2, md: 0 }}>
