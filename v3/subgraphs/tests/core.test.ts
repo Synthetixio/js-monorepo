@@ -661,6 +661,4 @@ describe('core tests', () => {
     handleUSDBurned(newUSDBurnedEvent);
     assert.fieldEquals('Position', `1-1-${address}`, 'total_burned', '4000');
   });
-
-  // write a test case when a accountpermissionsusers has the same nft id but with different users? is that possible?
 });
