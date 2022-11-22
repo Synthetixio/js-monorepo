@@ -49,7 +49,7 @@ const InfoPanelTitle = styled.p`
   font-size: 16px;
 `;
 
-const InfoPanelBody = styled.p`
+const InfoPanelBody = styled.div`
   padding: 0px 30px 30px 30px;
   margin: 0;
   font-family: ${({ theme }) => theme.fonts.regular};
