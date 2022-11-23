@@ -4680,6 +4680,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gnosis.pm/safe-apps-provider@npm:latest":
+  version: 0.14.0
+  resolution: "@gnosis.pm/safe-apps-provider@npm:0.14.0"
+  dependencies:
+    "@gnosis.pm/safe-apps-sdk": 7.8.0
+    events: ^3.3.0
+  checksum: ea52ba7d2ce43b54b84c88ddc73802f46111c883484237cbbbe1fd538e96e437cec669a9fc45cf0b7caf9d9c645f2a4ea40374e55c692f2bcfbcc92988775b61
+  languageName: node
+  linkType: hard
+
 "@gnosis.pm/safe-apps-sdk@npm:6.2.0":
   version: 6.2.0
   resolution: "@gnosis.pm/safe-apps-sdk@npm:6.2.0"
@@ -4687,6 +4697,16 @@ __metadata:
     "@gnosis.pm/safe-react-gateway-sdk": ^2.5.6
     ethers: ^5.4.7
   checksum: 9c6d08601749e9ef9cd4fcb67daf94da8f36bf566c00e733f1231e9f447b7097c20ec269d5fd6dbd2a3a4ab16792cd601b308a3b4ee10f1ee1188b8e449c3ef1
+  languageName: node
+  linkType: hard
+
+"@gnosis.pm/safe-apps-sdk@npm:7.8.0, @gnosis.pm/safe-apps-sdk@npm:latest":
+  version: 7.8.0
+  resolution: "@gnosis.pm/safe-apps-sdk@npm:7.8.0"
+  dependencies:
+    "@gnosis.pm/safe-react-gateway-sdk": ^3.1.3
+    ethers: ^5.6.8
+  checksum: 3535c20fad397795e658d19bbf3f536fea65128e5bcaca3b403582ae8d1c395d43033d04332b2a842f906066a9a2a5eda3133fe9c03043bb295b81bb1b8a7ff8
   languageName: node
   linkType: hard
 
@@ -4706,6 +4726,15 @@ __metadata:
   dependencies:
     cross-fetch: ^3.1.5
   checksum: 289b7432437efaddd615a8930883b03335f132828fa66523f89f2bad6bbd876c9af0c39dd2814d6a74b661b82eb49f13920dfde18055cc40fb6006e3949d20ef
+  languageName: node
+  linkType: hard
+
+"@gnosis.pm/safe-react-gateway-sdk@npm:^3.1.3":
+  version: 3.4.5
+  resolution: "@gnosis.pm/safe-react-gateway-sdk@npm:3.4.5"
+  dependencies:
+    cross-fetch: ^3.1.5
+  checksum: cd7da39482476d208015d00596cb71ae57458300241574c9a4fedfd77aec2d22cfc6651b9169274c7162f2315b272a09a1ac883b54283deae3bab6d755574922
   languageName: node
   linkType: hard
 
@@ -9578,6 +9607,8 @@ __metadata:
     "@chakra-ui/storybook-addon": ^4.0.4
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
+    "@gnosis.pm/safe-apps-provider": latest
+    "@gnosis.pm/safe-apps-sdk": latest
     "@mdx-js/react": ^1.6.22
     "@metamask/providers": ^10.0.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.7
@@ -9656,6 +9687,7 @@ __metadata:
     "@uniswap/v3-periphery": ^1.0.0
     "@uniswap/v3-sdk": ^3.6.3
     "@web3-onboard/coinbase": ^2.1.3
+    "@web3-onboard/common": latest
     "@web3-onboard/core": ^2.9.0
     "@web3-onboard/gnosis": ^2.1.5
     "@web3-onboard/injected-wallets": ^2.2.4
@@ -12064,7 +12096,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web3-onboard/common@npm:^2.2.3":
+"@web3-onboard/common@npm:^2.2.3, @web3-onboard/common@npm:latest":
   version: 2.2.3
   resolution: "@web3-onboard/common@npm:2.2.3"
   dependencies:
