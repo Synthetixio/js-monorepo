@@ -713,7 +713,8 @@
       "manage": {
         "title": "Manage",
         "approve": "APPROVE",
-        "swap": "BUY DEBT MIRROR (dSNX)",
+        "sell-button": "SELL DEBT MIRROR (dSNX)",
+        "buy-button": "BUY DEBT MIRROR (dSNX)",
         "output": "Receive:",
         "balance-usd": "Balance: $",
         "balance": "Balance: ",

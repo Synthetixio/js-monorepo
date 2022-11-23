@@ -220,7 +220,7 @@ const BuyHedgeTabOptimism = () => {
             variant="primary"
             disabled={wei(actualAmountToSendBn || '0').eq(0) || Boolean(depositTx.errorMessage)}
           >
-            {approved ? t('debt.actions.manage.swap') : t('debt.actions.manage.approve')}
+            {approved ? t('debt.actions.manage.buy-button') : t('debt.actions.manage.approve')}
           </StyledButton>
         </>
       )}
