@@ -12,14 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import {
-  FailedIcon,
-  GuideIcon,
-  InfoIcon,
-  TokensIcon,
-  SNXIconWithBorder,
-  DebtPoolIcon,
-} from '@snx-v2/icons';
+import { FailedIcon, InfoIcon, TokensIcon, SNXIconWithBorder } from '@snx-v2/icons';
 import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
 import { useMintMutation } from '@snx-v2/useMintMutation';
@@ -37,8 +30,8 @@ import { parseTxnError } from '@snx-v2/parseTxnError';
 import { MintTransactionModal } from './MintTransactionModal';
 import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 import { MintHeader } from './MintHeader';
-import { BoxLink } from '@snx-v2/BoxLink';
 import { leftColWidth, rightColWidth } from './layout';
+import { MintLinks } from './MintLinks';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -329,20 +322,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
           />
         </Box>
         <Box width={{ base: 'full', md: rightColWidth }} mt={{ base: 2, md: 0 }}>
-          <BoxLink
-            icon={<GuideIcon />}
-            href="https://blog.synthetix.io/basics-of-staking-snx-2022/"
-            isExternal
-            subHeadline=""
-            headline="Staking guide"
-          />
-          <BoxLink
-            containerProps={{ mt: '2' }}
-            icon={<DebtPoolIcon width="20px" height="20px" color="white" />}
-            to="/debt/manage"
-            subHeadline=""
-            headline="Hedge your debt"
-          />
+          <MintLinks />
         </Box>
       </Flex>
       <MintTransactionModal

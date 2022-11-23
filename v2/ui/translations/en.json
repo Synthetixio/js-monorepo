@@ -102,6 +102,10 @@
       "info": "Info",
       "gas-estimation-error": "Error estimating gas",
       "below-target-error": "Minting not allowed when below target c-ratio",
+      "links": {
+        "guide": "Staking Guide",
+        "hedge": "Hedge Debt"
+      },
       "txn-modal": {
         "staking": "Staking",
         "minting": "Minting"
@@ -132,7 +136,7 @@
       "unstaking-note": "When burning while under target c-ratio, you are not unstaking SNX. You need to burn {{sUsdAmountToTarget}} sUSD to have a c-ratio above target and unstake SNX.",
       "balance-error": "Not enough sUSD balance",
       "links": {
-        "guide": "Staking guide",
+        "guide": "Staking Guide",
         "bridge": "Bridge",
         "sell-dsnx": "Sell dSNX for sUSD",
         "self-liquidate": "Self Liquidate"
