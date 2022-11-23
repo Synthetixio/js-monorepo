@@ -12,7 +12,14 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { FailedIcon, GuideIcon, InfoIcon, TokensIcon, SNXIconWithBorder } from '@snx-v2/icons';
+import {
+  FailedIcon,
+  GuideIcon,
+  InfoIcon,
+  TokensIcon,
+  SNXIconWithBorder,
+  DebtPoolIcon,
+} from '@snx-v2/icons';
 import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
 import { useMintMutation } from '@snx-v2/useMintMutation';
@@ -328,6 +335,13 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             isExternal
             subHeadline=""
             headline="Staking guide"
+          />
+          <BoxLink
+            containerProps={{ mt: '2' }}
+            icon={<DebtPoolIcon width="20px" height="20px" color="white" />}
+            to="/debt/manage"
+            subHeadline=""
+            headline="Hedge your debt"
           />
         </Box>
       </Flex>
