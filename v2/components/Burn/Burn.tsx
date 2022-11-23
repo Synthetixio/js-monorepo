@@ -17,14 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import {
-  BridgeIcon,
-  FailedIcon,
-  GuideIcon,
-  InfoIcon,
-  SNXIconWithBorder,
-  TokensIcon,
-} from '@snx-v2/icons';
+import { FailedIcon, InfoIcon, SNXIconWithBorder, TokensIcon } from '@snx-v2/icons';
 import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
@@ -42,7 +35,7 @@ import { BurnTransactionModal } from './BurnTransactionModal';
 import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 import { BurnHeader } from './BurnHeader';
 import { leftColWidth, rightColWidth } from './layout';
-import { BoxLink } from '@snx-v2/BoxLink';
+import { BurnLinks } from './BurnLinks';
 
 interface BurnProps {
   snxBalance?: number;
@@ -574,20 +567,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
           />
         </Box>
         <Box width={{ base: 'full', md: rightColWidth }} mt={{ base: 2, md: 0 }}>
-          <BoxLink
-            icon={<GuideIcon />}
-            href="https://blog.synthetix.io/basics-of-staking-snx-2022/"
-            isExternal
-            subHeadline=""
-            headline="Staking guide"
-          />
-          <BoxLink
-            containerProps={{ mt: '2' }}
-            icon={<BridgeIcon width="auto" height="20px" color="white" />}
-            to="/bridge"
-            subHeadline=""
-            headline="Bridge"
-          />
+          <BurnLinks />
         </Box>
       </Flex>
       <BurnTransactionModal

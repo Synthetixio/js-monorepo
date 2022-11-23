@@ -37,9 +37,9 @@
           "headline": "SNX Bridge",
           "subHeadline": "Transfer Asset between blockchains"
         },
-        "debt-pool": {
-          "headline": "Debt Pool",
-          "subHeadline": "Explore the debt pool"
+        "hedge-debt": {
+          "headline": "Hedge Debt",
+          "subHeadline": "Buy dSNX to hedge"
         },
         "help": {
           "headline": "Help",
@@ -131,6 +131,12 @@
       "staked-snx": "Staked SNX: ",
       "unstaking-note": "When burning while under target c-ratio, you are not unstaking SNX. You need to burn {{sUsdAmountToTarget}} sUSD to have a c-ratio above target and unstake SNX.",
       "balance-error": "Not enough sUSD balance",
+      "links": {
+        "guide": "Staking guide",
+        "bridge": "Bridge",
+        "sell-dsnx": "Sell dSNX for sUSD",
+        "self-liquidate": "Self Liquidate"
+      },
       "txn-modal": {
         "unstaking": "Unstaking",
         "burning": "Burning"
