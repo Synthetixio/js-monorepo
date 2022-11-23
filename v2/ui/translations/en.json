@@ -37,9 +37,9 @@
           "headline": "SNX Bridge",
           "subHeadline": "Transfer Asset between blockchains"
         },
-        "debt-pool": {
-          "headline": "Debt Pool",
-          "subHeadline": "Explore the debt pool"
+        "hedge-debt": {
+          "headline": "Hedge Debt",
+          "subHeadline": "Buy dSNX to hedge"
         },
         "help": {
           "headline": "Help",
@@ -102,6 +102,10 @@
       "info": "Info",
       "gas-estimation-error": "Error estimating gas",
       "below-target-error": "Minting not allowed when below target c-ratio",
+      "links": {
+        "guide": "Staking Guide",
+        "hedge": "Hedge Debt"
+      },
       "txn-modal": {
         "staking": "Staking",
         "minting": "Minting"
@@ -131,6 +135,12 @@
       "staked-snx": "Staked SNX: ",
       "unstaking-note": "When burning while under target c-ratio, you are not unstaking SNX. You need to burn {{sUsdAmountToTarget}} sUSD to have a c-ratio above target and unstake SNX.",
       "balance-error": "Not enough sUSD balance",
+      "links": {
+        "guide": "Staking Guide",
+        "bridge": "Bridge",
+        "sell-dsnx": "Sell dSNX for sUSD",
+        "self-liquidate": "Self Liquidate"
+      },
       "txn-modal": {
         "unstaking": "Unstaking",
         "burning": "Burning"
@@ -713,7 +723,8 @@
       "manage": {
         "title": "Manage",
         "approve": "APPROVE",
-        "swap": "BUY DEBT MIRROR (dSNX)",
+        "sell-button": "SELL DEBT MIRROR (dSNX)",
+        "buy-button": "BUY DEBT MIRROR (dSNX)",
         "output": "Receive:",
         "balance-usd": "Balance: $",
         "balance": "Balance: ",

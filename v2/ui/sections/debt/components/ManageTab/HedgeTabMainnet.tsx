@@ -23,8 +23,7 @@ export default function HedgeTapMainnet() {
         {t('debt.actions.manage.l1-deprecation.switch-link')}
       </StyledLink>
       <SubHeadline>{t('debt.actions.manage.l1-deprecation.second-sub-headline')}</SubHeadline>
-
-      <ol>
+      <StyledOl>
         <li>
           {t('debt.actions.manage.l1-deprecation.step-1')}{' '}
           <StyledExternalLink href={EXTERNAL_LINKS.multichain.app}>
@@ -38,21 +37,26 @@ export default function HedgeTapMainnet() {
             {t('debt.actions.manage.l1-deprecation.link-text')}
           </StyledExternalLink>
         </li>
-      </ol>
+      </StyledOl>
     </StyledHedgeWrapper>
   );
 }
 
+const StyledOl = styled.ol`
+  padding-inline-start: 40px;
+`;
 const SubHeadline = styled.h3`
   font-weight: bold;
   color: white;
   margin-bottom: 0;
+  font-size: 16px;
+  margin-top: 16px;
 `;
 
 const StyledLink = styled(ExternalLink)`
   color: ${(props) => props.theme.colors.pink};
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 16px;
 `;
 const StyledHedgeWrapper = styled.div`
   width: 100%;
@@ -68,6 +72,7 @@ const StyledHedgeWrapper = styled.div`
 
 const Headline = styled.h2`
   color: white;
+  font-size: 21px;
 `;
 const StyledExternalLink = styled.a`
   text-decoration: none;

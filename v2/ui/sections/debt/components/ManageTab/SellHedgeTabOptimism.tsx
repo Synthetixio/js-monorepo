@@ -231,7 +231,9 @@ export default function SellHedgeTabOptimism() {
             variant="primary"
             disabled={wei(actualAmountToSendBn || '0').eq(0) || Boolean(withdrawTx.errorMessage)}
           >
-            {approveQuery.data ? t('debt.actions.manage.swap') : t('debt.actions.manage.approve')}
+            {approveQuery.data
+              ? t('debt.actions.manage.sell-button')
+              : t('debt.actions.manage.approve')}
           </StyledButton>
         </>
       )}
