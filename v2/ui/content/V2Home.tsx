@@ -73,9 +73,9 @@ const V2Home = () => {
               </Box>
               <Box mt={4}>
                 <BoxLink
-                  to="/debt"
-                  headline={t('staking-v2.v2-home.box-links.debt-pool.headline')}
-                  subHeadline={t('staking-v2.v2-home.box-links.debt-pool.subHeadline')}
+                  to="/debt/manage"
+                  headline={t('staking-v2.v2-home.box-links.hedge-debt.headline')}
+                  subHeadline={t('staking-v2.v2-home.box-links.hedge-debt.subHeadline')}
                   icon={<DebtPoolIcon />}
                 />
               </Box>
