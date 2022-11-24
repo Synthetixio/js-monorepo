@@ -6,39 +6,6 @@ import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useTranslation } from 'react-i18next';
 import { useDebtData } from '@snx-v2/useDebtData';
 
-function getBadgeColor(healthVariant: string) {
-  switch (healthVariant) {
-    case 'success':
-      return {
-        color: 'green.400',
-        bg: 'green.900',
-      };
-
-    case 'warning':
-      return {
-        color: 'orange.400',
-        bg: 'orange.900',
-      };
-
-    case 'error':
-      return {
-        color: 'red.400',
-        bg: 'red.900',
-      };
-    case 'not-staking':
-      return {
-        color: 'white',
-        bg: 'gray.500',
-      };
-
-    default:
-      return {
-        color: 'green.400',
-        bg: 'green.900',
-      };
-  }
-}
-
 export const CRatioBoxUi: FC<{
   currentCRatioPercentage?: number;
   targetCRatioPercentage?: number;
@@ -86,7 +53,7 @@ export const CRatioBoxUi: FC<{
           <Flex alignItems="center">
             <Text
               data-testid="current c-ratio badge"
-              color={getBadgeColor(healthVariant).color}
+              color={healthVariant}
               fontFamily="mono"
               fontSize="lg"
               textAlign="end"
@@ -104,7 +71,7 @@ export const CRatioBoxUi: FC<{
                 <ArrowRight mx={1} color="white" />
                 <Text
                   data-testid="new c-ratio badge"
-                  color={getBadgeColor(badgeHealthVariant).color}
+                  color={badgeHealthVariant === 'not-staking' ? 'white' : badgeHealthVariant}
                   fontFamily="mono"
                   fontSize="lg"
                   textAlign="end"
@@ -122,9 +89,7 @@ export const CRatioBoxUi: FC<{
         {currentCRatioPercentage ? (
           <Badge
             data-testid="healthy badge"
-            color={getBadgeColor(badgeHealthVariant).color}
-            bg={getBadgeColor(badgeHealthVariant).bg}
-            borderColor={getBadgeColor(badgeHealthVariant).color}
+            variant={badgeHealthVariant}
             borderWidth="1px"
             py={0}
             px={1}
