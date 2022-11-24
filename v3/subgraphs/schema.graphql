@@ -46,7 +46,7 @@ type MarketConfiguration @entity {
 type CollateralType @entity {
   "address of an ERC20 contract"
   id: ID!
-  address_price_feed: Bytes!
+  price_feed: Bytes!
   token: Bytes!
   depositing_enabled: Boolean!
   target_c_ratio: BigDecimal!
@@ -105,10 +105,10 @@ type Vault @entity {
   "Pool id + collateral type address"
   id: ID!
   collateral_amount: BigDecimal!
+  collateral_type: CollateralType!
+  pool: Pool!
   created_at: BigInt!
   created_at_block: BigInt!
   updated_at: BigInt!
   updated_at_block: BigInt!
-  collateral_type: CollateralType!
-  pool: Pool!
 }

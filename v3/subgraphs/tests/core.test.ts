@@ -104,9 +104,13 @@ describe('core tests', () => {
     const newPool = createPoolCreatedEvent(1, address, now, now - 1000);
     const newOwnerEvent = createPoolOwnershipAcceptedEvent(1, address2, now + 1000, now);
     handlePoolCreated(newPool);
+    const newNominatedPoolOwnerEvent = createNominatedPoolOwnerEvent(1, address2, now + 1000, now);
+    handleNominatedPoolOwner(newNominatedPoolOwnerEvent);
+    assert.fieldEquals('Pool', '1', 'nominated_owner', address2);
     handleNewPoolOwner(newOwnerEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Pool', '1', 'owner', address2);
+    assert.fieldEquals('Pool', '1', 'nominated_owner', '0x00000000');
     assert.fieldEquals('Pool', '1', 'created_at', now.toString());
     assert.fieldEquals('Pool', '1', 'created_at_block', (now - 1000).toString());
     assert.fieldEquals('Pool', '1', 'updated_at', (now + 1000).toString());
@@ -184,6 +188,7 @@ describe('core tests', () => {
     assert.fieldEquals('Account', '1', 'permissions', '[]');
   });
 
+  // TODO @MF write a test case where we removed a market configuration so we need to remove it from the store
   test('handlePoolConfigurationSet', () => {
     // Needs to be here because of Closures
     const now = new Date(1668448739566).getTime();
@@ -203,6 +208,13 @@ describe('core tests', () => {
         ethereum.Value.fromI32(2),
         ethereum.Value.fromI32(43),
         ethereum.Value.fromI32(892379812),
+      ]),
+    ]);
+    const secondMarkets = changetype<Array<ethereum.Tuple>>([
+      changetype<Array<ethereum.Tuple>>([
+        ethereum.Value.fromI32(2),
+        ethereum.Value.fromI32(32),
+        ethereum.Value.fromI32(812739821),
       ]),
     ]);
     const newPoolConfigurationSetEvent = createPoolConfigurationSetEvent(
@@ -237,6 +249,20 @@ describe('core tests', () => {
     assert.fieldEquals('MarketConfiguration', '1-1', 'pool', '1');
     assert.fieldEquals('MarketConfiguration', '1-1', 'max_debt_share_value', '812739821');
     assert.fieldEquals('MarketConfiguration', '1-2', 'max_debt_share_value', '892379812');
+    assert.fieldEquals('MarketConfiguration', '1-1', 'updated_at', (now + 3000).toString());
+    assert.fieldEquals('MarketConfiguration', '1-1', 'updated_at_block', (now + 2000).toString());
+    assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at', (now + 3000).toString());
+    assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at_block', (now + 2000).toString());
+    const secondNewPoolConfigurationSetEvent = createPoolConfigurationSetEvent(
+      1,
+      secondMarkets,
+      now + 4000,
+      now + 3000
+    );
+    handlePoolConfigurationSet(secondNewPoolConfigurationSetEvent);
+    assert.notInStore('MarketConfiguration', '1-1');
+    assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at', (now + 4000).toString());
+    assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at_block', (now + 3000).toString());
   });
 
   test('calculate net issuance', () => {

@@ -41,6 +41,9 @@ import { BigDecimal, BigInt, Bytes, store } from '@graphprotocol/graph-ts';
 // Event handlers //
 ////////////////////
 
+// TOD @MF think of a way to avoid smart contract calls
+// TODO @MF added comments
+
 export function handlePoolCreated(event: PoolCreated): void {
   const newPool = new Pool(event.params.poolId.toString());
   newPool.owner = event.params.owner;
@@ -97,6 +100,7 @@ export function handleNewPoolOwner(event: PoolOwnershipAccepted): void {
     pool.updated_at_block = event.block.number;
     pool.updated_at = event.block.timestamp;
     pool.owner = event.params.owner;
+    pool.nominated_owner = Bytes.empty();
     pool.save();
   }
 }
@@ -124,45 +128,78 @@ export function handleAccountCreated(event: AccountCreated): void {
 
 export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
   const pool = Pool.load(event.params.poolId.toString());
+  // Pool will be never undefined, though for safety reasons we are checking for that
   if (pool !== null) {
-    const totalWeight: BigInt[] = [];
+    // Reset the state because the new configuration is the only source of truth
+    pool.configurations = [];
+    // Creating a temporarily variable for figuring out which MarketConfiguration entity to delete
+    const oldMarketConfigurationState: Map<string, string[]> = new Map<string, string[]>();
+    // Same for all markets
     for (let i = 0; i < event.params.markets.length; ++i) {
-      const m = Market.load(event.params.markets.at(i).market.toString());
-      if (m && pool) {
-        let marketConfiguration = MarketConfiguration.load(pool.id.concat('-').concat(m.id));
+      const market = Market.load(event.params.markets.at(i).market.toString());
+      if (market && market.configurations) {
+        oldMarketConfigurationState.set(market.id, market.configurations);
+        market.configurations = [];
+        market.save();
+      }
+    }
+    // Creating a temporarily variable for the pool.total_weight key
+    const totalWeight: BigInt[] = [];
+
+    for (let i = 0; i < event.params.markets.length; ++i) {
+      const market = Market.load(event.params.markets.at(i).market.toString());
+      if (market) {
+        let marketConfiguration = MarketConfiguration.load(pool.id.concat('-').concat(market.id));
         if (marketConfiguration === null) {
-          marketConfiguration = new MarketConfiguration(pool.id.concat('-').concat(m.id));
+          marketConfiguration = new MarketConfiguration(pool.id.concat('-').concat(market.id));
           marketConfiguration.created_at = event.block.timestamp;
           marketConfiguration.created_at_block = event.block.number;
         }
-        if (marketConfiguration) {
-          marketConfiguration.weight = event.params.markets.at(i).weight;
-          marketConfiguration.market = event.params.markets.at(i).market.toString();
-          marketConfiguration.pool = event.params.poolId.toString();
-          marketConfiguration.max_debt_share_value = event.params.markets
-            .at(i)
-            .maxDebtShareValue.toBigDecimal();
-          const id = marketConfiguration.id;
-          if (m.configurations === null) {
-            m.configurations = [id];
-          } else if (!m.configurations!.includes(marketConfiguration.id)) {
-            const newState = m.configurations;
-            newState!.push(id);
-            m.configurations = newState;
+        marketConfiguration.weight = event.params.markets.at(i).weight;
+        marketConfiguration.market = market.id;
+        marketConfiguration.pool = event.params.poolId.toString();
+        marketConfiguration.max_debt_share_value = event.params.markets
+          .at(i)
+          .maxDebtShareValue.toBigDecimal();
+        marketConfiguration.updated_at = event.block.timestamp;
+        marketConfiguration.updated_at_block = event.block.number;
+        // If the market doesn't have configurations mapped, create an array with the current configurations id
+        if (market.configurations === null) {
+          market.configurations = [marketConfiguration.id];
+          // Otherwise check if this configuration id is not included, if so, add it
+        } else if (!market.configurations!.includes(marketConfiguration.id)) {
+          // Set the new state to the current one, to add up the previously added entities
+          const newState = market.configurations;
+          newState.push(marketConfiguration.id);
+          market.configurations = newState;
+        }
+        if (pool.configurations === null) {
+          pool.configurations = [marketConfiguration.id];
+        } else if (!pool.configurations!.includes(marketConfiguration.id)) {
+          // Set the new state to the current one, to add up the previously added entities
+          const newState: string[] = pool.configurations;
+          newState!.push(marketConfiguration.id);
+          pool.configurations = newState;
+        }
+        totalWeight.push(event.params.markets.at(i).weight);
+        market.updated_at = event.block.timestamp;
+        market.updated_at_block = event.block.number;
+        market.save();
+        marketConfiguration.save();
+      }
+    }
+    // Compare the old state vs the new state and if new state doesn't have the old state anymore, remove the entity
+    for (let i = 0; i < oldMarketConfigurationState.keys().length; ++i) {
+      const oldState = oldMarketConfigurationState.get(oldMarketConfigurationState.keys().at(i));
+      const newState = Market.load(event.params.markets.at(i).market.toString());
+      if (newState?.configurations) {
+        for (let j = 0; j < newState.configurations.length; j++) {
+          if (!oldState.includes(newState.configurations[j])) {
+            store.remove(
+              'MarketConfigurations',
+              `${pool.id}-${oldMarketConfigurationState.keys().at(i)}`
+            );
           }
-
-          if (pool.configurations === null) {
-            pool.configurations = [id];
-          } else if (!pool.configurations!.includes(marketConfiguration.id)) {
-            const newState = pool.configurations;
-            newState!.push(id);
-            pool.configurations = newState;
-          }
-          totalWeight.push(event.params.markets.at(i).weight);
-          m.updated_at = event.block.timestamp;
-          m.updated_at_block = event.block.number;
-          m.save();
-          marketConfiguration.save();
         }
       }
     }
@@ -190,11 +227,10 @@ export function handleMarketUsdDeposited(event: MarketUsdDeposited): void {
     }
     market.updated_at = event.block.timestamp;
     market.updated_at_block = event.block.number;
-    if (market.usd_withdrawn !== null && market.usd_deposited !== null) {
-      market.net_issuance = market.usd_withdrawn!.minus(market.usd_deposited!);
-    } else {
-      market.net_issuance = event.params.amount.toBigDecimal();
+    if (!market.net_issuance) {
+      market.net_issuance = BigDecimal.fromString('0');
     }
+    market.net_issuance = market.net_issuance.minus(event.params.amount.toBigDecimal());
     market.save();
   }
 }
@@ -212,9 +248,10 @@ export function handleMarketUsdWithdrawn(event: MarketUsdWithdrawn): void {
     market.usd_withdrawn = event.params.amount.toBigDecimal();
     market.updated_at = event.block.timestamp;
     market.updated_at_block = event.block.number;
-    if (market.usd_withdrawn !== null && market.usd_deposited !== null) {
-      market.net_issuance = market.usd_withdrawn!.minus(market.usd_deposited!);
+    if (!market.net_issuance) {
+      market.net_issuance = BigDecimal.fromString('0');
     }
+    market.net_issuance = market.net_issuance.plus(event.params.amount.toBigDecimal());
     market.save();
   }
 }
@@ -226,7 +263,7 @@ export function handleCollateralConfigured(event: CollateralConfigured): void {
     collateralType.created_at = event.block.timestamp;
     collateralType.created_at_block = event.block.number;
   }
-  collateralType.address_price_feed = event.params.priceFeed;
+  collateralType.price_feed = event.params.priceFeed;
   collateralType.token = event.params.collateralType;
   collateralType.updated_at = event.block.timestamp;
   collateralType.updated_at_block = event.block.number;
@@ -259,6 +296,7 @@ export function handleWithdrawn(event: Withdrawn): void {
     collateralType.updated_at = event.block.timestamp;
     collateralType.updated_at_block = event.block.number;
     if (collateralType.total_amount_deposited !== null) {
+      // @dev we could also account for every account how much they deposited and withdrawn
       collateralType.total_amount_deposited = collateralType.total_amount_deposited!.minus(
         event.params.amount.toBigDecimal()
       );
@@ -289,8 +327,6 @@ export function handlePermissionGranted(event: PermissionGranted): void {
     permissions.updated_at_block = event.block.number;
     permissions.address = event.params.user;
     permissions.account = account.id;
-    permissions.updated_at = event.block.timestamp;
-    permissions.updated_at_block = event.block.number;
     if (account.permissions === null) {
       account.permissions = [permissions.id];
     } else if (!account.permissions!.includes(permissions.id)) {
@@ -358,17 +394,13 @@ export function handleDelegationUpdated(event: DelegationUpdated): void {
     position = new Position(id);
     position.created_at = event.block.timestamp;
     position.created_at_block = event.block.number;
-    position.collateral_amount = event.params.amount.toBigDecimal();
+    position.account = event.params.accountId.toString();
+    position.pool = event.params.poolId.toString();
+    position.collateral_type = event.params.collateralType.toHex();
   }
-  position.account = event.params.accountId.toString();
-  position.pool = event.params.poolId.toString();
-  if (position.total_burned && position.total_minted) {
-    position.net_issuance = position.total_minted!.minus(position.total_burned!);
-  }
-  position.collateral_type = event.params.collateralType.toHex();
   const collateralAmountChange = event.params.amount
     .toBigDecimal()
-    .minus(position.collateral_amount);
+    .minus(position.collateral_amount ? position.collateral_amount : BigDecimal.fromString('0'));
   position.collateral_amount = event.params.amount.toBigDecimal();
   position.updated_at = event.block.timestamp;
   position.updated_at_block = event.block.number;
@@ -390,11 +422,11 @@ export function handleDelegationUpdated(event: DelegationUpdated): void {
     vault.created_at = event.block.timestamp;
     vault.created_at_block = event.block.number;
     vault.collateral_amount = event.params.amount.toBigDecimal();
+    vault.collateral_type = event.params.collateralType.toHex();
+    vault.pool = event.params.poolId.toString();
   } else {
     vault.collateral_amount = vault.collateral_amount.plus(collateralAmountChange);
   }
-  vault.collateral_type = event.params.collateralType.toHex();
-  vault.pool = event.params.poolId.toString();
   vault.updated_at = event.block.timestamp;
   vault.updated_at_block = event.block.number;
   vault.save();
@@ -418,12 +450,15 @@ export function handleUSDMinted(event: UsdMinted): void {
     } else {
       position.total_minted = event.params.amount.toBigDecimal();
     }
-    if (position.total_minted && position.total_burned) {
-      position.net_issuance = position.total_minted!.minus(position.total_burned!);
+    if (position.net_issuance) {
+      position.net_issuance = position.net_issuance.plus(event.params.amount.toBigDecimal());
+    } else {
+      position.net_issuance = event.params.amount.toBigDecimal();
     }
     position.save();
   }
 }
+
 export function handleUSDBurned(event: UsdBurned): void {
   const position = Position.load(
     event.params.accountId
@@ -439,8 +474,10 @@ export function handleUSDBurned(event: UsdBurned): void {
     } else {
       position.total_burned = event.params.amount.toBigDecimal();
     }
-    if (position.total_burned && position.total_burned) {
-      position.net_issuance = position.total_minted!.minus(position.total_burned!);
+    if (position.net_issuance) {
+      position.net_issuance = position.net_issuance.plus(event.params.amount.toBigDecimal());
+    } else {
+      position.net_issuance = event.params.amount.toBigDecimal();
     }
     position.updated_at = event.block.timestamp;
     position.updated_at_block = event.block.number;
