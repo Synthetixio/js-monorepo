@@ -1,4 +1,4 @@
-import { useState, FC } from 'react';
+import { useState, FC, useContext } from 'react';
 import {
   Box,
   Flex,
@@ -20,6 +20,8 @@ import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
 import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
 import { useEscrowBalance } from '@snx-v2/useEscrowBalance';
 import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
+import { ContractContext } from '@snx-v2/ContractContext';
+import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 
 const Row = ({
   value,
@@ -169,7 +171,7 @@ export const BalanceBox: FC = () => {
   const { data: dSNXBalanceData } = useGetDSnxBalance();
   const { data: escrowBalanceData } = useEscrowBalance();
   const { data: liquidationRewardsData } = useGetLiquidationRewards();
-
+  const { networkId } = useContext(ContractContext);
   const stakedSnx = calculateStakedSnx({
     targetCRatio: debtData?.targetCRatio,
     currentCRatio: debtData?.currentCRatio,
@@ -186,8 +188,12 @@ export const BalanceBox: FC = () => {
       stakedSnx={stakedSnx.toNumber()}
       transferable={debtData?.transferable.toNumber()}
       debtBalance={debtData?.debtBalance.toNumber()}
-      dSNXBalance={dSNXBalanceData?.balance.toNumber()}
-      dSNXBalanceUsd={dSNXBalanceData?.balanceUsd.toNumber()}
+      dSNXBalance={
+        networkId === NetworkIdByName['mainnet-ovm'] ? dSNXBalanceData?.balance.toNumber() : 0
+      }
+      dSNXBalanceUsd={
+        networkId === NetworkIdByName['mainnet-ovm'] ? dSNXBalanceData?.balanceUsd.toNumber() : 0
+      }
     />
   );
 };
