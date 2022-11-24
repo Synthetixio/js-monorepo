@@ -65,7 +65,7 @@
       "collect-epoch-tooltip": "Time to next epoch, you currently don't have any rewards",
       "collect-price": "SNX Price",
       "collect-main-healthy-button": "Claim your rewards",
-      "collect-main-unhealthy-button": "Claim page",
+      "collect-main-unhealthy-button": "Claim",
       "collect-explanation-link": "Rewards explained",
       "collect-rewards": "Your Rewards",
       "collect-rewards-tooltip": "Value of SNX and sUSD rewards"
