@@ -132,14 +132,14 @@ export const CRatioProgressBarUi: FC<{
         {newCratioPercentage !== undefined ? (
           <Progress
             data-testId="non highlighted progress bar"
-            variant={'update-' + newVariant}
+            variant={newCratioPercentage === 0 ? 'white' : 'update-' + newVariant}
             top={0}
             bottom={0}
             height="12px"
             position="absolute"
             margin="auto"
             width="100%"
-            value={nonHighLightedProgressCRatio / scaleFactor}
+            value={newCratioPercentage === 0 ? 0 : nonHighLightedProgressCRatio / scaleFactor}
           />
         ) : null}
         <Progress
@@ -151,6 +151,7 @@ export const CRatioProgressBarUi: FC<{
           margin="auto"
           width="100%"
           data-testId="highlighted progress bar"
+          display={newCratioPercentage === 0 ? 'none' : 'block'}
           value={highlightedProgressCRatio / scaleFactor}
         />
       </Skeleton>
@@ -165,6 +166,7 @@ export const CRatioProgressBarUi: FC<{
         top={0}
         bottom={0}
         margin="auto"
+        display={newCratioPercentage === 0 ? 'none' : 'block'}
       >
         {currentCRatioPercentage > 0 && !isLoading && (
           <>
