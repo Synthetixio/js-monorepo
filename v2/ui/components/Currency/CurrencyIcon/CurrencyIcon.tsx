@@ -45,17 +45,8 @@ export const CurrencyIconContainer: FC<CurrencyIconProps> = (props) => (
 export const CurrencyIcon: FC<CurrencyIconProps> = ({ currencyKey, isDeprecated, ...rest }) => {
   const [firstFallbackError, setFirstFallbackError] = useState<boolean>(false);
   const [secondFallbackError, setSecondFallbackError] = useState<boolean>(false);
-  const [thirdFallbackError, setThirdFallbackError] = useState<boolean>(false);
 
   const { useTokenListQuery } = useSynthetixQueries();
-
-  const ZapperTokenListQuery = useTokenListQuery(EXTERNAL_LINKS.TokenLists.Zapper, {
-    enabled: firstFallbackError,
-    staleTime: 100000,
-  });
-  const ZapperTokenListMap = ZapperTokenListQuery.isSuccess
-    ? ZapperTokenListQuery.data?.tokensMap ?? null
-    : null;
 
   const OneInchTokenListQuery = useTokenListQuery(EXTERNAL_LINKS.TokenLists.OneInch, {
     enabled: secondFallbackError,
@@ -102,14 +93,6 @@ export const CurrencyIcon: FC<CurrencyIconProps> = ({ currencyKey, isDeprecated,
       <TokenIcon
         src={OneInchTokenListMap?.[currencyKey]?.logoURI}
         onError={() => setSecondFallbackError(true)}
-        {...props}
-      />
-    );
-  } else if (ZapperTokenListMap?.[currencyKey]?.logoURI && !thirdFallbackError) {
-    return (
-      <TokenIcon
-        src={ZapperTokenListMap?.[currencyKey]?.logoURI}
-        onError={() => setThirdFallbackError(true)}
         {...props}
       />
     );

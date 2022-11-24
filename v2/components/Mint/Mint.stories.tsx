@@ -10,6 +10,7 @@ export default {
 const Template: ComponentStory<typeof MintUi> = (_args) => <MintUi {..._args} />;
 
 export const Primary = Template.bind({});
+
 Primary.args = {
   unstakedSnx: 2000,
   susdBalance: 2000,

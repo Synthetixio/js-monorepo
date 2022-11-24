@@ -123,9 +123,7 @@ const StakeActionCard: React.FC<{
   connectWallet,
   walletAddress,
 }) => {
-  const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
   const navigate = useNavigate();
-
   const { t } = useTranslation();
 
   const buttonAction = useCallback(async () => {
@@ -143,11 +141,13 @@ const StakeActionCard: React.FC<{
       currentCRatioPercentage &&
       currentCRatioPercentage > targetCRatioPercentage
   );
+  const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
+
   const getButtonVariant = () => {
-    if (isCardLoading) return 'link';
+    if (isCardLoading) return 'ghost';
     if (!isStaking) return 'solid';
-    if (!cRatioAboveTarget) return 'link';
-    if (hasClaimed === false) return 'link';
+    if (!cRatioAboveTarget) return 'ghost';
+    if (hasClaimed === false) return 'ghost';
     return 'solid';
   };
 
@@ -193,6 +193,7 @@ const MaintainActionCard: React.FC<{
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const variant = getHealthVariant({
     liquidationCratioPercentage,
@@ -201,20 +202,21 @@ const MaintainActionCard: React.FC<{
     targetThreshold,
   });
 
+  const getButtonVariant = () => {
+    if (!isStaking) return 'ghost';
+    if (cRatioAboveOrEqToTarget) return 'ghost';
+    return variant;
+  };
+
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
   const cRatioAboveOrEqToTarget = Boolean(
     targetCratioPercentage &&
       currentCRatioPercentage &&
       currentCRatioPercentage >= targetCratioPercentage
   );
-  const getButtonVariant = () => {
-    if (!isStaking) return 'link';
-    if (cRatioAboveOrEqToTarget) return 'link';
-    return variant;
-  };
-  const theme = useTheme();
   const fadedBg = `${theme.colors[variant]}40`;
   const rewardsClaimedAndWarning = hasClaimed && variant === 'warning';
+
   return (
     <Card
       step={2}
@@ -263,7 +265,7 @@ const MaintainActionCard: React.FC<{
           ? isFlagged
             ? () => navigate('/staking/unflag')
             : () => navigate('/staking/burn')
-          : () => console.log('C-Ratio explained')
+          : () => window.open('https://synthetix.io/guides/collateralization-ratio', '_newtab')
       }
       testId="maintain button"
     />
@@ -292,6 +294,7 @@ const CollectActionCard: React.FC<{
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const variant = getHealthVariant({
     liquidationCratioPercentage,
@@ -299,16 +302,15 @@ const CollectActionCard: React.FC<{
     currentCRatioPercentage,
     targetThreshold,
   });
+  const getButtonVariant = () => {
+    if (hasClaimed) return 'ghost';
+    if (!isStaking) return 'ghost';
+    if (variant === 'success') return 'success';
+    return 'ghost';
+  };
 
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
-  const canClaim = !hasClaimed;
-  const theme = useTheme();
-  const getButtonVariant = () => {
-    if (hasClaimed) return 'link';
-    if (!isStaking) return 'link';
-    if (variant === 'success') return 'success';
-    return 'link';
-  };
+
   return (
     <Card
       step={3}
@@ -362,7 +364,7 @@ const CollectActionCard: React.FC<{
                   </Tooltip>
                 </Flex>
                 <Text color="success" fontSize="md" fontFamily="mono">
-                  <Skeleton isLoaded={Boolean(nextEpochStartDate)}>
+                  <Skeleton as="span" isLoaded={Boolean(nextEpochStartDate)}>
                     {nextEpochStartDate && <CountDown toDate={nextEpochStartDate} />}
                   </Skeleton>
                 </Text>
@@ -382,9 +384,9 @@ const CollectActionCard: React.FC<{
       }
       buttonVariant={getButtonVariant()}
       buttonAction={
-        isStaking && canClaim
+        isStaking
           ? () => navigate('/earn')
-          : () => console.log('navigate to Rewards explained')
+          : () => window.open('https://synthetix.io/guides/staking-rewards-epochs', '_newtab')
       }
       testId="collect button"
     />

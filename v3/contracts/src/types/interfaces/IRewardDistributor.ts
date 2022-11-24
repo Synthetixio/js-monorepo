@@ -25,22 +25,31 @@ import type {
 
 export interface IRewardDistributorInterface extends utils.Interface {
   functions: {
-    "payout(uint256,address,address,uint256)": FunctionFragment;
+    "name()": FunctionFragment;
+    "payout(uint128,uint128,address,address,uint256)": FunctionFragment;
+    "token()": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "payout"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic: "name" | "payout" | "token"
+  ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "payout",
     values: [
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
+  encodeFunctionData(functionFragment: "token", values?: undefined): string;
 
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "payout", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "token", data: BytesLike): Result;
 
   events: {};
 }
@@ -72,51 +81,92 @@ export interface IRewardDistributor extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    name(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     payout(
+      accountId: PromiseOrValue<BigNumberish>,
       poolId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
+      collateralType: PromiseOrValue<string>,
+      sender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    token(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
+  name(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   payout(
+    accountId: PromiseOrValue<BigNumberish>,
     poolId: PromiseOrValue<BigNumberish>,
-    token: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
+    collateralType: PromiseOrValue<string>,
+    sender: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  token(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
+    name(overrides?: CallOverrides): Promise<string>;
+
     payout(
+      accountId: PromiseOrValue<BigNumberish>,
       poolId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
+      collateralType: PromiseOrValue<string>,
+      sender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    token(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {};
 
   estimateGas: {
+    name(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     payout(
+      accountId: PromiseOrValue<BigNumberish>,
       poolId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
+      collateralType: PromiseOrValue<string>,
+      sender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    token(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    name(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     payout(
+      accountId: PromiseOrValue<BigNumberish>,
       poolId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
+      collateralType: PromiseOrValue<string>,
+      sender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    token(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

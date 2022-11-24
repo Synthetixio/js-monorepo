@@ -70,7 +70,7 @@ export const useStake = ({
     const stakingCalls: MulticallCall[] = [
       {
         contract: snxProxy.contract,
-        functionName: 'depositCollateral',
+        functionName: 'deposit',
         callArgs: [id, selectedCollateralType.address, amountBN],
       },
       {

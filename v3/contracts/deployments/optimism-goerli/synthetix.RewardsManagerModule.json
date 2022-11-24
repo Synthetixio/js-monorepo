@@ -1,5 +1,5 @@
 {
-  "address": "0x4F397fBce7a424AB571AcBafC4b3226a36f06c8B",
+  "address": "0xBd499a2a367a16f7B6D7A23951062d61FCea622D",
   "abi": [
     {
       "type": "error",
@@ -49,6 +49,11 @@
     },
     {
       "type": "error",
+      "name": "PositionOutOfBounds",
+      "inputs": []
+    },
+    {
+      "type": "error",
       "name": "Unauthorized",
       "inputs": [
         {
@@ -58,10 +63,20 @@
       ]
     },
     {
+      "type": "error",
+      "name": "ValueAlreadyInSet",
+      "inputs": []
+    },
+    {
       "type": "event",
       "anonymous": false,
-      "name": "RewardDistributed",
+      "name": "RewardsClaimed",
       "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId",
+          "indexed": true
+        },
         {
           "type": "uint128",
           "name": "poolId",
@@ -69,12 +84,7 @@
         },
         {
           "type": "address",
-          "name": "token",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "index",
+          "name": "collateralType",
           "indexed": true
         },
         {
@@ -84,7 +94,34 @@
         },
         {
           "type": "uint256",
-          "name": "totalRewarded",
+          "name": "amount",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "RewardsDistributed",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "distributor",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
           "indexed": false
         },
         {
@@ -95,38 +132,6 @@
         {
           "type": "uint256",
           "name": "duration",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "RewardsClaimed",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "token",
-          "indexed": true
-        },
-        {
-          "type": "uint128",
-          "name": "accountId",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "index",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amountClaimed",
           "indexed": false
         }
       ]
@@ -148,17 +153,76 @@
         {
           "type": "uint128",
           "name": "accountId"
+        },
+        {
+          "type": "address",
+          "name": "distributor"
         }
       ],
       "outputs": [
         {
-          "type": "uint256[]"
+          "type": "uint256"
         }
       ]
     },
     {
       "type": "function",
-      "name": "getAvailableRewards",
+      "name": "distributeRewards",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        },
+        {
+          "type": "uint256",
+          "name": "start"
+        },
+        {
+          "type": "uint256",
+          "name": "duration"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getRewardRate",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "address",
+          "name": "distributor"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getRewards",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -178,34 +242,15 @@
       "outputs": [
         {
           "type": "uint256[]"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "getCurrentRewardAccumulation",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId"
         },
         {
-          "type": "address",
-          "name": "collateralType"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256[]"
+          "type": "address[]"
         }
       ]
     },
     {
       "type": "function",
-      "name": "setRewardsDistribution",
+      "name": "registerRewardsDistributor",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -218,31 +263,15 @@
           "name": "collateralType"
         },
         {
-          "type": "uint256",
-          "name": "index"
-        },
-        {
           "type": "address",
           "name": "distributor"
-        },
-        {
-          "type": "uint256",
-          "name": "amount"
-        },
-        {
-          "type": "uint256",
-          "name": "start"
-        },
-        {
-          "type": "uint256",
-          "name": "duration"
         }
       ],
       "outputs": []
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x946080f813bb74f7a6c34911e3ab307f570c7dae3e79fdcd68e9f028c59d8086",
+  "deployTxnHash": "0x2b7839266b00a86a57d73274d28935b8f5b11f1e900c4de9b47f8e9336da299a",
   "sourceName": "contracts/modules/core/RewardsManagerModule.sol",
   "contractName": "RewardsManagerModule",
   "deployedOn": "contract.RewardsManagerModule"

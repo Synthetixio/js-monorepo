@@ -32,21 +32,21 @@ export const StakingPosition: FC<Props> = ({ position }) => {
       <Td py="4">
         <>
           <Amount value={collateralValue} prefix="$" />
-          <Text fontSize="xs" opacity="0.66" mt="1'">
+          <Text fontSize="xs" opacity="0.66" mt="1">
             <Amount value={collateralAmount} suffix={`${collateralType.symbol.toUpperCase()} `} />
           </Text>
         </>
       </Td>
       <Td py="4">
         <Amount value={debt} prefix="$" />
-        <Text fontSize="xs" opacity="0.66" mt="1'">
+        <Text fontSize="xs" opacity="0.66" mt="1">
           $X net issuance
         </Text>
       </Td>
       <Td py="4">
         {cRatio.eq(0) ? <>No Debt</> : <Amount value={cRatio} suffix="%" />}
 
-        <Text fontSize="xs" opacity="0.66" mt="1'">
+        <Text fontSize="xs" opacity="0.66" mt="1">
           <Amount
             value={formatValue(collateralType!.minimumCRatio!.mul(BigNumber.from(100)), 6)}
             suffix="% "
@@ -57,7 +57,7 @@ export const StakingPosition: FC<Props> = ({ position }) => {
 
       <Td>
         {poolsData[position.poolId.toString()]?.name}{' '}
-        <Text fontSize="xs" opacity="0.66" mt="1'">
+        <Text fontSize="xs" opacity="0.66" mt="1">
           ID: {poolId}
         </Text>
       </Td>

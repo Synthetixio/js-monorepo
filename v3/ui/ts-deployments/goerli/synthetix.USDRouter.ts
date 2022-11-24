@@ -1,4 +1,4 @@
-export const address = '0xC3b31BfD689B1812aBA7c17288495Ea9fE9ccE0b';
+export const address = '0x2910D2833c90adC0Da818D240CcA411FA94C5D9F';
 export const abi = [
   'error AlreadyInitialized()',
   'error NoChange()',
@@ -45,6 +45,6 @@ export const abi = [
   'function symbol() view returns (string)',
   'function totalSupply() view returns (uint256)',
   'function transfer(address to, uint256 amount) returns (bool)',
-  'function transferCrossChain(uint256 destChainId, address, uint256 amount) returns (uint256 feesPaid)',
+  'function transferCrossChain(uint256 destChainId, address to, uint256 amount) returns (uint256 feesPaid)',
   'function transferFrom(address from, address to, uint256 amount) returns (bool)',
 ];

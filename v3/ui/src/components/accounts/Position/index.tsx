@@ -1,7 +1,7 @@
 import { StakingStats } from './StakingStats';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Spinner, Box } from '@chakra-ui/react';
 import Manage from './Manage';
-import { Rewards } from './Rewards';
+import { Rewards } from './Rewards/Rewards';
 import { Pool } from './Pool';
 import { FC } from 'react';
 import { CollateralType } from '../../../utils/types';

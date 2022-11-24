@@ -208,6 +208,9 @@ export const StatsSection = styled(FlexDivRowCentered)`
 
 export const LineSpacer = styled.div`
   height: 32px;
+  .v2 & {
+    display: none;
+  }
   &:after {
     background: ${(props) => props.theme.colors.grayBlue};
     height: 1px;

@@ -38,7 +38,7 @@ describe('MainActionCards', () => {
 
     cy.get('[data-testid="collect button"]')
       .should('be.visible')
-      .should('include.text', 'Claim page')
+      .should('include.text', 'Claim')
       .should('have.css', 'background-color', noColor);
     cy.get('[data-testid="value of rewards"]').should('not.exist');
   });
@@ -72,7 +72,7 @@ describe('MainActionCards', () => {
 
     cy.get('[data-testid="collect button"]')
       .should('be.visible')
-      .should('include.text', 'Claim page')
+      .should('include.text', 'Claim')
       .should('have.css', 'background-color', noColor);
     cy.get('[data-testid="value of rewards"]').should('not.exist');
     cy.get('[data-testid="burn badge"]').should('not.exist');
@@ -106,7 +106,7 @@ describe('MainActionCards', () => {
       .should('have.css', 'background-color', noColor);
     cy.get('[data-testid="collect button"]')
       .should('be.visible')
-      .should('include.text', 'Claim page')
+      .should('include.text', 'Claim')
       .should('have.css', 'background-color', noColor);
 
     cy.get('[data-testid="burn badge"]')
@@ -210,7 +210,7 @@ describe('MainActionCards', () => {
 
     cy.get('[data-testid="collect button"]')
       .should('be.visible')
-      .should('include.text', 'Claim page')
+      .should('include.text', 'Claim')
       .should('have.css', 'background-color', noColor);
 
     cy.get('[data-testid="burn badge"]')

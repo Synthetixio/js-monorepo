@@ -141,6 +141,21 @@ const Progress: ComponentMultiStyleConfig = {
         boxShadow: `0px 0px 15px ${props.theme.colors.success}`,
       },
     }),
+    'update-error': () => ({
+      filledTrack: {
+        bg: 'red.700',
+      },
+    }),
+    'update-warning': () => ({
+      filledTrack: {
+        bg: 'orange.700',
+      },
+    }),
+    'update-success': () => ({
+      filledTrack: {
+        bg: 'green.700',
+      },
+    }),
     white: {
       filledTrack: {
         bg: 'white',
@@ -189,30 +204,29 @@ const Button: ComponentStyleConfig = {
         },
       },
     },
-    link: {
-      height: 10,
-      color: 'cyan.500',
+    outline: (props) => {
+      if (props.colorScheme === 'gray') {
+        return {
+          color: 'whiteAlpha.800',
+          borderColor: 'gray.900',
+          _hover: { bg: 'rgba(255, 255, 255, 0.12)' }, // white 0.12 opacity
+          _active: { bg: 'rgba(255, 255, 255, 0.24)' }, //white 0.24 opacity
+        };
+      }
+      return {
+        color: 'cyan.500', // needed for storybook for some reason
+        border: '1px solid', // needed for storybook for some reason
+        borderColor: 'cyan.500', // needed for storybook for some reason
+        _hover: { bg: 'rgb(0, 209, 255, 0.12)' }, // cyan.500 0.12 opacity
+        _active: { bg: 'rgb(0, 209, 255, 0.24)' }, // cyan.500 0.24 opacity
+      };
     },
-    outline: {
-      bgColor: 'rgba(0, 209, 255, 0.12)',
-      bgOpacity: '0.2',
-      bgImage: 'none',
-      color: 'cyan.400',
-      borderWidth: 1,
-      borderColor: 'cyan.400',
-      _hover: {
-        bgColor: 'rgba(0, 209, 255, 0.24)',
-      },
-      _active: {
-        bgColor: 'rgba(0, 209, 255, 0.24)',
-      },
-      _disabled: {
-        color: 'gray.900',
-        bgColor: 'transparent',
-        borderWidth: 1,
-        borderColor: 'gray.900',
-      },
+    ghost: {
+      color: 'cyan.500', // needed for storybook for some reason
+      _hover: { bg: 'rgb(0, 209, 255, 0.12)' }, // cyan.500 0.12 opacity
+      _active: { bg: 'rgb(0, 209, 255, 0.24)' }, // cyan.500 0.24 opacity
     },
+
     error: {
       bg: 'error',
     },
@@ -311,6 +325,26 @@ const Menu: ComponentMultiStyleConfig = {
 const Divider: ComponentStyleConfig = {
   baseStyle: { borderColor: 'gray.900' },
 };
+const Table: ComponentMultiStyleConfig = {
+  parts: ['th', 'td', 'item'],
+  baseStyle: {
+    th: {
+      borderBottom: '1px',
+      borderTop: '1px',
+      borderTopColor: 'gray.900',
+      borderBottomColor: 'gray.900',
+      borderColor: 'gray.900',
+      textTransform: 'none',
+    },
+    td: {
+      borderColor: 'gray.900', // borderColor and paddings doesn't work, but will keep it here if it gets fixed
+      paddingBottom: 1,
+      paddingTop: 4,
+      borderBottom: '1px',
+      borderTop: '1px',
+    },
+  },
+};
 
 export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
   colors: {
@@ -329,6 +363,7 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
     Alert,
     Tooltip,
     Divider,
+    Table,
   },
   styles: {
     global: {

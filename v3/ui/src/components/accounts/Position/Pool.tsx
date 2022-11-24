@@ -104,13 +104,13 @@ export const Pool: FC<Props> = ({
           <Tr>
             <Td py="4">
               Synthetic&nbsp;Bitcoin
-              <Text fontSize="xs" opacity="0.66" mt="1'">
+              <Text fontSize="xs" opacity="0.66" mt="1">
                 ID: {poolId}
               </Text>
             </Td>
             <Td py="4">
               20% allocation
-              <Text fontSize="xs" opacity="0.66" mt="1'">
+              <Text fontSize="xs" opacity="0.66" mt="1">
                 Max Debt: $2,000
               </Text>
             </Td>
@@ -130,13 +130,13 @@ export const Pool: FC<Props> = ({
           <Tr>
             <Td py="4">
               Synthetic&nbsp;Ether
-              <Text fontSize="xs" opacity="0.66" mt="1'">
+              <Text fontSize="xs" opacity="0.66" mt="1">
                 ID: 2
               </Text>
             </Td>
             <Td py="4">
               20% allocation
-              <Text fontSize="xs" opacity="0.66" mt="1'">
+              <Text fontSize="xs" opacity="0.66" mt="1">
                 Max Debt: $2,000
               </Text>
             </Td>
@@ -156,13 +156,13 @@ export const Pool: FC<Props> = ({
           <Tr>
             <Td py="4">
               Synthetic&nbsp;Euro
-              <Text fontSize="xs" opacity="0.66" mt="1'">
+              <Text fontSize="xs" opacity="0.66" mt="1">
                 ID: 3
               </Text>
             </Td>
             <Td py="4">
               10% allocation
-              <Text fontSize="xs" opacity="0.66" mt="1'">
+              <Text fontSize="xs" opacity="0.66" mt="1">
                 Max Debt: $2,000
               </Text>
             </Td>
@@ -182,13 +182,13 @@ export const Pool: FC<Props> = ({
           <Tr>
             <Td py="4">
               ETH Perps
-              <Text fontSize="xs" opacity="0.66" mt="1'">
+              <Text fontSize="xs" opacity="0.66" mt="1">
                 ID: 4
               </Text>
             </Td>
             <Td py="4">
               25% allocation
-              <Text fontSize="xs" opacity="0.66" mt="1'">
+              <Text fontSize="xs" opacity="0.66" mt="1">
                 Max Debt: $5,000
               </Text>
             </Td>
@@ -208,13 +208,13 @@ export const Pool: FC<Props> = ({
           <Tr>
             <Td py="4">
               BTC Perps
-              <Text fontSize="xs" opacity="0.66" mt="1'">
+              <Text fontSize="xs" opacity="0.66" mt="1">
                 ID: 5
               </Text>
             </Td>
             <Td py="4">
               25% allocation
-              <Text fontSize="xs" opacity="0.66" mt="1'">
+              <Text fontSize="xs" opacity="0.66" mt="1">
                 Max Debt: $5,000
               </Text>
             </Td>

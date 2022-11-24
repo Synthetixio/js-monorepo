@@ -27,6 +27,7 @@
     "epochprice": {
       "epoch-mobile": "EPOCH",
       "epoch-desktop": "Epoch",
+      "epoch-tooltip": "Time to next epoch",
       "price-mobile": "SNX Price",
       "price-desktop": "SNX:"
     },
@@ -36,9 +37,9 @@
           "headline": "SNX Bridge",
           "subHeadline": "Transfer Asset between blockchains"
         },
-        "debt-pool": {
-          "headline": "Debt Pool",
-          "subHeadline": "Explore the debt pool"
+        "hedge-debt": {
+          "headline": "Hedge Debt",
+          "subHeadline": "Buy dSNX to hedge"
         },
         "help": {
           "headline": "Help",
@@ -64,7 +65,7 @@
       "collect-epoch-tooltip": "Time to next epoch, you currently don't have any rewards",
       "collect-price": "SNX Price",
       "collect-main-healthy-button": "Claim your rewards",
-      "collect-main-unhealthy-button": "Claim page",
+      "collect-main-unhealthy-button": "Claim",
       "collect-explanation-link": "Rewards explained",
       "collect-rewards": "Your Rewards",
       "collect-rewards-tooltip": "Value of SNX and sUSD rewards"
@@ -78,7 +79,9 @@
       "warning": "UNHEALTHY",
       "error": "UNHEALTHY",
       "current-health": "Current Health",
-      "target-health": "Target Health"
+      "current-health-tooltip": "Your current c-ratio",
+      "target-health": "Target Health",
+      "target-health-tooltip": "Target c-ratio"
     },
     "mint": {
       "title-new": "Stake SNX By Minting sUSD",
@@ -86,18 +89,23 @@
       "description": "Mint sUSD by staking your SNX. SNX stakers earn weekly staking rewards in exchange for managing their Collateralization Ratio and debt. <0>Your staked SNX will be locked for 7 days.<0>",
       "description-existing": "Borrowing more carries risks. Only do this if you are an experienced SNX Staker and understand the risks.",
       "heading": "How much SNX do you want to stake?",
-      "heading-tooltip": "Chose the amount of SNX you want to Stake. Simply input a custom amount or use the preset selector",
+      "heading-tooltip": "How much SNX you stake will determine how much sUSD you can borrow",
       "borrowing": "Borrowing",
-      "borrowing-tooltip": "Based on much you SNX you stake will determine how much sUSD you can borrow",
+      "borrowing-tooltip": "How much SNX you stake will determine how much sUSD you can borrow",
       "unstaked-snx": "Unstaked SNX: {{unstakedSnx}}",
       "susd-balance": "sUSD Balance: {{susdBalance}}",
       "enter-amount": "Enter Amount",
       "tx-cost": "Tx cost: {{txCost}}",
       "epoch": "EPOCH",
+      "epoch-tooltip": "Time to next epoch",
       "snx-price": "SNX PRICE",
       "info": "Info",
       "gas-estimation-error": "Error estimating gas",
       "below-target-error": "Minting not allowed when below target c-ratio",
+      "links": {
+        "guide": "Staking Guide",
+        "hedge": "Hedge Debt"
+      },
       "txn-modal": {
         "staking": "Staking",
         "minting": "Minting"
@@ -108,9 +116,9 @@
       "title": "Burn Debt",
       "description": "Burn your sUSD debt to unlock your staked SNX. This will increase your Collateralization Ratio and reduce your debt. <0>Learn more.<0>",
       "heading": "Burn sUSD",
-      "heading-tooltip": "Choose how much SNX you would like to stake. You can use the presets available or enter custom amount.",
+      "heading-tooltip": "Burn sUSD to increase your c-ratio",
       "unstaking": "Unstaking",
-      "unstaking-tooltip": "By staking SNX you're effectively borrowing sUSD.",
+      "unstaking-tooltip": "When your c-ratio is below target, all your SNX is staked",
       "gas": "Gas Price (GWEI)",
       "gas-tooltip": "Is how much it costs to perform a transaction on the blockchain & GWEI is a denomination of Ether",
       "snx-balance": "SNX Balance: {{snxBalance}}",
@@ -127,6 +135,12 @@
       "staked-snx": "Staked SNX: ",
       "unstaking-note": "When burning while under target c-ratio, you are not unstaking SNX. You need to burn {{sUsdAmountToTarget}} sUSD to have a c-ratio above target and unstake SNX.",
       "balance-error": "Not enough sUSD balance",
+      "links": {
+        "guide": "Staking Guide",
+        "bridge": "Bridge",
+        "sell-dsnx": "Sell dSNX for sUSD",
+        "self-liquidate": "Self Liquidate"
+      },
       "txn-modal": {
         "unstaking": "Unstaking",
         "burning": "Burning"
@@ -158,18 +172,21 @@
       "loading": "Loading",
       "error-headline": "Error",
       "retry": "Retry",
-      "close": "Close"
+      "close": "Close",
+      "done": "Done"
     },
     "balance-box": {
       "box-heading": "SNX Total",
       "staked": "Staked",
       "transferable": "Transferable",
-      "debt": "Debt",
-      "hedged-debt": "Hedge debt",
-      "active": "Active",
-      "issued": "Issued",
-      "assets": "Assets",
-      "see-all-synths": "See all synths",
+      "debt-management": "Debt Management",
+      "hedged-debt": "Hedge Debt",
+      "active-debt": "Active Debt",
+      "collateral": "Collateral",
+      "balance": "Balance",
+      "dsnx-balance": "dSNX Balance",
+      "escrowed": "Escrowed",
+      "liq-rewards": "Liquidation Rewards",
       "show-all-balances": "Show all balances"
     },
     "c-ratio-banner": {
@@ -189,7 +206,7 @@
     },
     "unflag-options": {
       "heading": "Unflag Account",
-      "text": "To unflag your account, buying SNX isn't enough. You can either burn to target or self liquidate. Learn about the new self liquidation mechanism.",
+      "text": "If you are unable to pay down your sUSD debt, you can self liquidate your SNX collateral, with a 40% penalty. Self Liquidation is permanent, and results in the loss of some or all of your collateral.",
       "recommended": "Recommended",
       "unflag": {
         "heading": "Unflag my account by burning sUSD in order to meet target ratio",
@@ -215,18 +232,48 @@
     "mint-or-burn-changes": {
       "total-snx": "Total SNX",
       "staked": "Staked",
+      "staked-tooltip": "Staked SNX change",
       "transferable": "Transferable",
+      "transferable-tooltip": "Transferable SNX change",
       "c-ratio": "C-Ratio",
+      "c-ratio-tooltip": "C-Ratio change",
       "susd-balance": "sUSD Balance",
-      "active-debt": "Active Debt"
+      "susd-balance-tooltip": "sUSD Balance change",
+      "active-debt": "Active Debt",
+      "active-debt-tooltip": "Active Debt change"
     },
     "wallet-modal": {
-      "headline": "My Account",
+      "headline": "My Wallet",
       "disconnect": "Disconnect",
       "explorer": "View on Explorer",
       "view-all": "View All",
-      "escrow": "Escrow",
+      "manage": "Manage My Wallet",
+      "delegate-mode": "Delegate Mode",
       "connected-with": "Connected with {{walletType}}"
+    },
+    "wallet": {
+      "my-wallet": "My Wallet",
+      "no-synths": "You have no Synths",
+      "tabs": {
+        "balances": "Balances",
+        "bridge": "Bridge",
+        "escrow": "Escrow",
+        "history": "History",
+        "delegate": "Delegate",
+        "merge-accounts": "Merge Accounts",
+        "migrate-escrow": "Migrate Escrow"
+      }
+    },
+    "wallet-balances": {
+      "active-debt": "Active Debt",
+      "d-snx-value": "dSNX Value",
+      "total-synth-value": "Total Synth Value",
+      "table-columns": {
+        "asset": "Asset",
+        "balance": "Balance",
+        "price": "Price",
+        "holdings": "Holdings"
+      }
     }
   },
   "meta": {
@@ -685,7 +732,8 @@
       "manage": {
         "title": "Manage",
         "approve": "APPROVE",
-        "swap": "BUY DEBT MIRROR (dSNX)",
+        "sell-button": "SELL DEBT MIRROR (dSNX)",
+        "buy-button": "BUY DEBT MIRROR (dSNX)",
         "output": "Receive:",
         "balance-usd": "Balance: $",
         "balance": "Balance: ",
@@ -693,6 +741,7 @@
         "price-impact": "Price impact:",
         "buying": "Buying",
         "buying-dsnx": "Buying dSNX...",
+        "selling-dsnx": "Selling dSNX...",
         "approving-dsnx": "Approving dSNX...",
         "using": "using",
         "powered-by": "Powered by",

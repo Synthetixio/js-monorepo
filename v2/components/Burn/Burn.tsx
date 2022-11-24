@@ -17,14 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import {
-  BridgeIcon,
-  FailedIcon,
-  GuideIcon,
-  InfoIcon,
-  SNXIconWithBorder,
-  TokensIcon,
-} from '@snx-v2/icons';
+import { FailedIcon, InfoIcon, SNXIconWithBorder, TokensIcon } from '@snx-v2/icons';
 import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
@@ -42,7 +35,7 @@ import { BurnTransactionModal } from './BurnTransactionModal';
 import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 import { BurnHeader } from './BurnHeader';
 import { leftColWidth, rightColWidth } from './layout';
-import { BoxLink } from '@snx-v2/BoxLink';
+import { BurnLinks } from './BurnLinks';
 
 interface BurnProps {
   snxBalance?: number;
@@ -136,7 +129,7 @@ export const BurnUi = ({
           >
             {t('staking-v2.burn.heading')}
           </Text>
-          <Tooltip label="Soonthetix" hasArrow>
+          <Tooltip label={t('staking-v2.burn.heading-tooltip')} hasArrow>
             <Flex alignItems="center">
               <InfoIcon width="12px" height="12px" />
             </Flex>
@@ -303,10 +296,7 @@ export const BurnUi = ({
           >
             {t('staking-v2.burn.unstaking')}
           </Text>
-          <Tooltip
-            label="When you're c-ratio is below target all your SNX is considered staked"
-            hasArrow
-          >
+          <Tooltip label={t('staking-v2.burn.unstaking-tooltip')} hasArrow>
             <Flex>
               <InfoIcon width="12px" height="12px" />
             </Flex>
@@ -402,7 +392,9 @@ const getBurnAmountForCalculations = (
   susdBalance = 0,
   debtBalance = 0
 ) => {
-  if (activeBadge !== 'max') return parseFloatWithCommas(burnAmountSusd);
+  if (activeBadge !== 'max') {
+    return burnAmountSusd === '' ? undefined : parseFloatWithCommas(burnAmountSusd);
+  }
   return susdBalance > debtBalance ? debtBalance : susdBalance;
 };
 export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
@@ -443,6 +435,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
 
   const handleBadgeClick = (badgeType: ActiveBadge) => {
     const snxPrice = exchangeRateData?.SNX?.toNumber();
+    const sUSDBalanceWithDefault = susdBalance?.toNumber() || 0;
     if (!debtData || !snxPrice) return;
     switch (badgeType) {
       case 'toTarget':
@@ -467,7 +460,12 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
 
       case 'max': {
         setActiveBadge('max');
-        const burnAmountString = formatNumber(debtData.debtBalance.toNumber());
+
+        const burnAmountString = formatNumber(
+          debtData.debtBalance.gt(sUSDBalanceWithDefault)
+            ? sUSDBalanceWithDefault
+            : debtData.debtBalance.toNumber()
+        );
         const snxUnstakingAmount = formatNumber(stakedSnx.toNumber());
         setBurnAmountSusd(burnAmountString);
         setSnxUnstakingAmount(snxUnstakingAmount);
@@ -565,24 +563,11 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
             transactionFee={transactionFee}
             onSubmit={handleSubmit}
-            burnAmountForCalculations={burnAmountForCalculations}
+            burnAmountForCalculations={burnAmountForCalculations || 0}
           />
         </Box>
         <Box width={{ base: 'full', md: rightColWidth }} mt={{ base: 2, md: 0 }}>
-          <BoxLink
-            icon={<GuideIcon />}
-            href="https://blog.synthetix.io/basics-of-staking-snx-2022/"
-            isExternal
-            subHeadline=""
-            headline="Staking guide"
-          />
-          <BoxLink
-            containerProps={{ mt: '2' }}
-            icon={<BridgeIcon width="auto" height="20px" color="white" />}
-            to="/bridge"
-            subHeadline=""
-            headline="Bridge"
-          />
+          <BurnLinks />
         </Box>
       </Flex>
       <BurnTransactionModal

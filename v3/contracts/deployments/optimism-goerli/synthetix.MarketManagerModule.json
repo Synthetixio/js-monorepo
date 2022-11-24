@@ -1,9 +1,14 @@
 {
-  "address": "0x799cc04C581Cf3B74385C47632c3f2F4816305ED",
+  "address": "0x489Ca87B0749711F1081a30b8c6e9f1AAA2B8Ebd",
   "abi": [
     {
       "type": "error",
       "name": "EmptyDistribution",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "FeatureUnavailable",
       "inputs": []
     },
     {
@@ -86,7 +91,7 @@
     {
       "type": "event",
       "anonymous": false,
-      "name": "UsdDeposited",
+      "name": "MarketUsdDeposited",
       "inputs": [
         {
           "type": "uint128",
@@ -113,7 +118,7 @@
     {
       "type": "event",
       "anonymous": false,
-      "name": "UsdWithdrawn",
+      "name": "MarketUsdWithdrawn",
       "inputs": [
         {
           "type": "uint128",
@@ -139,7 +144,7 @@
     },
     {
       "type": "function",
-      "name": "depositUsd",
+      "name": "depositMarketUsd",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -267,6 +272,24 @@
     },
     {
       "type": "function",
+      "name": "isMarketCapacityLocked",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "function",
       "name": "registerMarket",
       "constant": false,
       "payable": false,
@@ -285,7 +308,7 @@
     },
     {
       "type": "function",
-      "name": "withdrawUsd",
+      "name": "withdrawMarketUsd",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -306,7 +329,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x11ef9153dee19103ce3b642eae21a48f18314cde4883d9be4b19560c7d28c32a",
+  "deployTxnHash": "0x572914c72007448a90dab8166c15976e23f8a5862126a36bfba8271126e32d5e",
   "sourceName": "contracts/modules/core/MarketManagerModule.sol",
   "contractName": "MarketManagerModule",
   "deployedOn": "contract.MarketManagerModule"

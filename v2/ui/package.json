@@ -50,6 +50,8 @@
     "@snx-v2/SwapLinks": "workspace:*",
     "@snx-v2/UnflagOptions": "workspace:*",
     "@snx-v2/UtilityCard": "workspace:^",
+    "@snx-v2/WalletBalances": "workspace:*",
+    "@snx-v2/WalletLayout": "workspace:*",
     "@snx-v2/Welcome": "workspace:^",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",

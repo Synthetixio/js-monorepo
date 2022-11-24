@@ -1,5 +1,5 @@
 {
-  "address": "0x8A289E133aaE93585e16AB906378Df9F04005e84",
+  "address": "0x78E0D9a1a2f9395A09D9Eb86E57743fAd0ed7d10",
   "abi": [
     {
       "type": "error",
@@ -40,6 +40,16 @@
         {
           "type": "uint256",
           "name": "existing"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidCollateral",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "collateralType"
         }
       ]
     },
@@ -128,7 +138,7 @@
         },
         {
           "type": "bool",
-          "name": "stakingEnabled",
+          "name": "depositingEnabled",
           "indexed": true
         }
       ]
@@ -136,7 +146,7 @@
     {
       "type": "event",
       "anonymous": false,
-      "name": "CollateralDeposited",
+      "name": "Deposited",
       "inputs": [
         {
           "type": "uint128",
@@ -163,7 +173,7 @@
     {
       "type": "event",
       "anonymous": false,
-      "name": "CollateralWithdrawn",
+      "name": "Withdrawn",
       "inputs": [
         {
           "type": "uint128",
@@ -240,7 +250,7 @@
         },
         {
           "type": "bool",
-          "name": "stakingEnabled"
+          "name": "depositingEnabled"
         }
       ],
       "outputs": []
@@ -272,7 +282,7 @@
     },
     {
       "type": "function",
-      "name": "depositCollateral",
+      "name": "deposit",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -362,7 +372,7 @@
           "components": [
             {
               "type": "bool",
-              "name": "stakingEnabled"
+              "name": "depositingEnabled"
             },
             {
               "type": "uint256",
@@ -406,7 +416,7 @@
           "components": [
             {
               "type": "bool",
-              "name": "stakingEnabled"
+              "name": "depositingEnabled"
             },
             {
               "type": "uint256",
@@ -452,7 +462,7 @@
     },
     {
       "type": "function",
-      "name": "withdrawCollateral",
+      "name": "withdraw",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -473,7 +483,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xc0eda80814a6108a23cfd6e88b3c8007fb7f351df50d9c8de0080308ecae77d9",
+  "deployTxnHash": "0xa4c044e8353db4664af86166848cde5abf7a52e451eb631e90a78aa93272e050",
   "sourceName": "contracts/modules/core/CollateralModule.sol",
   "contractName": "CollateralModule",
   "deployedOn": "contract.CollateralModule"

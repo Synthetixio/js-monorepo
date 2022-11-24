@@ -1,13 +1,16 @@
-export const address = '0x00cF91cb3AE826881d34A21B5ABE999e087cD0Ed';
+export const address = '0x5Eaf47FAddD1B83584426187C262427729f9411b';
 export const abi = [
   'error InvalidParameters(string incorrectParameter, string help)',
   'error InvalidParameters(string incorrectParameter, string help)',
   'error PermissionDenied(uint128 accountId, bytes32 permission, address target)',
+  'error PositionOutOfBounds()',
   'error Unauthorized(address addr)',
-  'event RewardDistributed(uint128 indexed poolId, address indexed token, uint256 indexed index, address distributor, uint256 totalRewarded, uint256 start, uint256 duration)',
-  'event RewardsClaimed(uint128 indexed poolId, address indexed token, uint128 indexed accountId, uint256 index, uint256 amountClaimed)',
-  'function claimRewards(uint128 poolId, address collateralType, uint128 accountId) returns (uint256[])',
-  'function getAvailableRewards(uint128 poolId, address collateralType, uint128 accountId) returns (uint256[])',
-  'function getCurrentRewardAccumulation(uint128 poolId, address collateralType) view returns (uint256[])',
-  'function setRewardsDistribution(uint128 poolId, address collateralType, uint256 index, address distributor, uint256 amount, uint256 start, uint256 duration)',
+  'error ValueAlreadyInSet()',
+  'event RewardsClaimed(uint128 indexed accountId, uint128 indexed poolId, address indexed collateralType, address distributor, uint256 amount)',
+  'event RewardsDistributed(uint128 indexed poolId, address indexed collateralType, address distributor, uint256 amount, uint256 start, uint256 duration)',
+  'function claimRewards(uint128 poolId, address collateralType, uint128 accountId, address distributor) returns (uint256)',
+  'function distributeRewards(uint128 poolId, address collateralType, uint256 amount, uint256 start, uint256 duration)',
+  'function getRewardRate(uint128 poolId, address collateralType, address distributor) view returns (uint256)',
+  'function getRewards(uint128 poolId, address collateralType, uint128 accountId) returns (uint256[], address[])',
+  'function registerRewardsDistributor(uint128 poolId, address collateralType, address distributor)',
 ];

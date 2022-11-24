@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import React, { FC, ReactNode, useState, useEffect, Dispatch, SetStateAction } from 'react';
+import React, { FC, ReactNode } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { FlexDiv, FlexDivCol, Tooltip } from '@snx-v1/styles';
@@ -19,10 +20,8 @@ import Connector from 'containers/Connector';
 
 export type TabInfo = {
   title: string;
-  icon?: ReactNode;
   tabChildren: ReactNode;
   key: string;
-  disabled?: boolean;
   width?: number;
 };
 
@@ -31,27 +30,13 @@ type DebtTabsProps = {
   boxHeight?: number;
   boxWidth: number;
   boxPadding: number;
-  tabHeight?: number;
   currentPanel?: string;
-  setPanelType?: Dispatch<SetStateAction<any>>;
 };
 
-const DebtTabs: FC<DebtTabsProps> = ({
-  tabData,
-  boxHeight,
-  boxPadding,
-  tabHeight,
-  currentPanel,
-  setPanelType,
-}) => {
+const DebtTabs: FC<DebtTabsProps> = ({ tabData, boxHeight, boxPadding }) => {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState<string>(currentPanel ? currentPanel : tabData[0].key);
-
-  useEffect(() => {
-    if (currentPanel) {
-      setActiveTab(currentPanel);
-    }
-  }, [currentPanel]);
+  const navigate = useNavigate();
+  const { activeTab } = useParams();
 
   const { walletAddress, isMainnet } = Connector.useContainer();
 
@@ -79,22 +64,14 @@ const DebtTabs: FC<DebtTabsProps> = ({
       <TopContainer isManageTab={isManageTab} isMainnet={isMainnet}>
         <DebtTabsContainer>
           <TabList noOfTabs={tabData.length}>
-            {tabData.map(({ title, icon, key, disabled = false }, index) => (
+            {tabData.map(({ title, key }, index) => (
               <TabButton
                 isSingle={false}
-                tabHeight={tabHeight}
                 key={`${key}-${index}-button`}
                 name={title}
                 active={activeTab === key}
-                isDisabled={disabled}
-                onClick={() => {
-                  setActiveTab(key);
-                  if (setPanelType != null) {
-                    setPanelType(key);
-                  }
-                }}
+                onClick={() => navigate(`/debt/${key}`)}
               >
-                {icon != null && icon}
                 <TitleContainer>{title}</TitleContainer>
               </TabButton>
             ))}

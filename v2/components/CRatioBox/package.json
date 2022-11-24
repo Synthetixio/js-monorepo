@@ -9,7 +9,6 @@
     "@snx-v2/getHealthVariant": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
-    "@snx-v2/useExchangeRatesData": "workspace:*",
     "react": "^18.2.0",
     "react-i18next": "^11.18.3"
   }

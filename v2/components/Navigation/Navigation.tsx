@@ -110,27 +110,21 @@ export const NavigationUI = ({
     >
       <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
       <Flex alignItems="center">
-        <Center
-          borderColor="gray.900"
-          borderWidth="1px"
-          borderRadius="4px"
+        <Button
+          variant="outline"
+          colorScheme="gray"
           height={10}
-          fontSize="xs"
+          fontSize="sm"
           py="6px"
           px="9.5px"
           mr={isWalletConnected ? 0 : 3}
-          _hover={{
-            bg: 'blackAlpha.400',
-            cursor: 'pointer',
-          }}
           onClick={() => {
             window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'false';
             window.location.reload();
           }}
-          fontFamily="heading"
         >
           {size === 'mobile' ? 'Old App' : 'Back to old app'}
-        </Center>
+        </Button>
 
         {isWalletConnected && walletAddress ? (
           <>
@@ -143,31 +137,27 @@ export const NavigationUI = ({
                 />
               </Flex>
             )}
-            <Center
+            <Button
+              variant="outline"
+              colorScheme="gray"
               ml={2}
-              borderColor="gray.900"
-              borderWidth="1px"
-              borderRadius="4px"
               height={10}
               py="6px"
               px="9.5px"
               onClick={onOpen}
-              _hover={{
-                bg: 'blackAlpha.400',
-                cursor: 'pointer',
-              }}
             >
               <WalletIcon />
               <Text ml={1} variant="nav" fontWeight={700} fontSize="12" userSelect="none">
                 {ensName ? ensName : truncateAddress(walletAddress, 4, 4)}
               </Text>
-            </Center>
+            </Button>
           </>
         ) : (
           <Button
             variant="connect"
             onClick={() => connectWallet()}
             sx={{ textTransform: 'capitalize' }}
+            fontSize="sm"
           >
             {size === 'desktop'
               ? t('common.wallet.connect-wallet')
@@ -188,16 +178,15 @@ export const NavigationUI = ({
             {({ isOpen }) => (
               <>
                 <MenuButton
-                  borderRadius="4px"
-                  bg="navy.900"
-                  _hover={{
-                    bg: 'blackAlpha.400',
-                  }}
+                  as={Button}
+                  variant="outline"
+                  colorScheme="gray"
+                  sx={{ '> span': { display: 'flex', alignItems: 'center' } }}
                 >
                   {icon}
                   {size === 'desktop' && (
                     <>
-                      <Text variant="nav" fontWeight={700} ml={1.5} mr={2}>
+                      <Text variant="nav" fontSize="sm" fontWeight={700} ml={1.5} mr={2}>
                         {name}
                       </Text>
                       {isOpen ? <ChevronUp color="cyan" /> : <ChevronDown color="cyan.500" />}
@@ -267,11 +256,17 @@ export const NavigationUI = ({
               cursor: 'pointer',
             }}
           >
-            <MenuButton>
+            <MenuButton
+              as={Button}
+              variant="outline"
+              colorScheme="gray"
+              data-testid="main menu button"
+              p={0}
+            >
               <NineDots />
             </MenuButton>
           </Center>
-          <MenuList>
+          <MenuList data-testid="main menu dropdown">
             {/* <MenuItem onClick={() => navigate('/')}>
               <Center>
                 <InfoOutline />
@@ -291,7 +286,7 @@ export const NavigationUI = ({
               </Center>
             </MenuItem>
             {isWalletConnected && (
-              <MenuItem onClick={onOpen}>
+              <MenuItem onClick={() => navigate('/wallet')}>
                 <Center>
                   <WalletIcon color="white" />
                   <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>

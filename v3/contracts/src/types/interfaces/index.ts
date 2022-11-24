@@ -3,3 +3,4 @@
 /* eslint-disable */
 export type { IERC20 } from "./IERC20";
 export type { IRewardDistributor } from "./IRewardDistributor";
+export type { IRewardsManagerModule } from "./IRewardsManagerModule";

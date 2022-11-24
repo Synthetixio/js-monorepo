@@ -8,7 +8,7 @@ describe('CountdownUi', () => {
     cy.viewport(500, 300);
     cy.mount(<CountDown toDate={new Date(oneDay)} />);
 
-    cy.get(`[data-testid="countdown"]`).should('include.text', '01:00:00');
+    cy.get(`[data-testid="countdown"]`).should('include.text', '01D 00H 00M');
   });
   it('toDate 1 hour', () => {
     const oneHour = 1000 * 60 * 60;
@@ -17,7 +17,7 @@ describe('CountdownUi', () => {
     cy.viewport(500, 300);
     cy.mount(<CountDown toDate={new Date(oneHour)} />);
 
-    cy.get(`[data-testid="countdown"]`).should('include.text', '00:01:00');
+    cy.get(`[data-testid="countdown"]`).should('include.text', '00D 01H 00M');
   });
   it('toDate 1 min', () => {
     const oneMin = 1000 * 60;
@@ -26,7 +26,7 @@ describe('CountdownUi', () => {
     cy.viewport(500, 300);
     cy.mount(<CountDown toDate={new Date(oneMin)} />);
 
-    cy.get(`[data-testid="countdown"]`).should('include.text', '00:00:01');
+    cy.get(`[data-testid="countdown"]`).should('include.text', '00D 00H 01M');
   });
   it('decrease every second', () => {
     const oneHour = 1000 * 60 * 60;
@@ -35,9 +35,9 @@ describe('CountdownUi', () => {
     const toDate = new Date(oneHour);
     cy.mount(<CountDown toDate={toDate} />);
 
-    cy.get(`[data-testid="countdown"]`).should('include.text', '00:01:00');
+    cy.get(`[data-testid="countdown"]`).should('include.text', '00D 01H 00M');
     cy.tick(1000);
     cy.mount(<CountDown toDate={toDate} />);
-    cy.get(`[data-testid="countdown"]`).should('include.text', '00:00:59');
+    cy.get(`[data-testid="countdown"]`).should('include.text', '00D 00H 59M');
   });
 });

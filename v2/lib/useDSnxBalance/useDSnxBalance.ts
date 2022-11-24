@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { wei } from '@synthetixio/wei';
-import { dSNXPoolAddressMainnet, dSNXPoolAddressOptimism, dSNXAbi } from '@snx-v2/Constants';
+import { dSNXPoolAddressOptimism, dSNXAbi } from '@snx-v2/Constants';
 import { useQuery } from '@tanstack/react-query';
 import { Contract, providers } from 'ethers';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
@@ -12,21 +12,27 @@ export const useGetDSnxBalance = () => {
   return useQuery({
     queryKey: ['useGetDSnxBalance', walletAddress, networkId],
     queryFn: async () => {
-      if (!walletAddress || !networkId) return wei(0);
+      if (!walletAddress || !networkId) throw Error('Query should not be enabled');
       const provider = new providers.InfuraProvider(
-        networkId,
+        NetworkIdByName['mainnet-ovm'],
         process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
       );
-      const dSNXContract = new Contract(
-        networkId === NetworkIdByName.mainnet ? dSNXPoolAddressMainnet : dSNXPoolAddressOptimism,
-        dSNXAbi,
-        provider
-      );
+      const dSNXContract = new Contract(dSNXPoolAddressOptimism, dSNXAbi, provider);
 
-      const balance = await dSNXContract.balanceOf(walletAddress);
-      return wei(balance);
+      const [balanceBn, priceBn] = await Promise.all([
+        dSNXContract.balanceOf(walletAddress),
+        dSNXContract.tokenPrice(),
+      ]);
+      const balance = wei(balanceBn);
+      const price = wei(priceBn);
+
+      return {
+        balance,
+        price,
+        balanceUsd: balance.mul(price),
+      };
     },
-    enabled: Boolean(walletAddress && networkId),
+    enabled: Boolean(walletAddress && networkId && networkId == NetworkIdByName['mainnet-ovm']),
     staleTime: 10000,
   });
 };

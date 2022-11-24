@@ -1,9 +1,24 @@
 {
-  "address": "0x770F4Df1DE337FF4dEE79C82E954eb6f70961e57",
+  "address": "0x6D9a6C50D0a8A2fcfd3bD6de2B240177A71e6C7e",
   "abi": [
     {
       "type": "error",
+      "name": "CapacityLocked",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId"
+        }
+      ]
+    },
+    {
+      "type": "error",
       "name": "EmptyDistribution",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "FeatureUnavailable",
       "inputs": []
     },
     {
@@ -33,6 +48,16 @@
     {
       "type": "error",
       "name": "PoolAlreadyExists",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "PoolNotFound",
       "inputs": [
         {
           "type": "uint128",
@@ -93,19 +118,28 @@
           "indexed": true
         },
         {
-          "type": "uint128[]",
+          "type": "tuple[]",
           "name": "markets",
-          "indexed": true
-        },
-        {
-          "type": "uint256[]",
-          "name": "weights",
-          "indexed": true
+          "indexed": false,
+          "components": [
+            {
+              "type": "uint128",
+              "name": "market"
+            },
+            {
+              "type": "uint128",
+              "name": "weight"
+            },
+            {
+              "type": "int128",
+              "name": "maxDebtShareValue"
+            }
+          ]
         },
         {
           "type": "address",
-          "name": "executedBy",
-          "indexed": false
+          "name": "sender",
+          "indexed": true
         }
       ]
     },
@@ -291,13 +325,21 @@
       ],
       "outputs": [
         {
-          "type": "uint256[]"
-        },
-        {
-          "type": "uint256[]"
-        },
-        {
-          "type": "int256[]"
+          "type": "tuple[]",
+          "components": [
+            {
+              "type": "uint128",
+              "name": "market"
+            },
+            {
+              "type": "uint128",
+              "name": "weight"
+            },
+            {
+              "type": "int128",
+              "name": "maxDebtShareValue"
+            }
+          ]
         }
       ]
     },
@@ -405,16 +447,22 @@
           "name": "poolId"
         },
         {
-          "type": "uint128[]",
-          "name": "markets"
-        },
-        {
-          "type": "uint256[]",
-          "name": "weights"
-        },
-        {
-          "type": "int256[]",
-          "name": "maxDebtShareValues"
+          "type": "tuple[]",
+          "name": "newDistributions",
+          "components": [
+            {
+              "type": "uint128",
+              "name": "market"
+            },
+            {
+              "type": "uint128",
+              "name": "weight"
+            },
+            {
+              "type": "int128",
+              "name": "maxDebtShareValue"
+            }
+          ]
         }
       ],
       "outputs": []
@@ -438,7 +486,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xd67a876cf1e6a74c77c91da995a8c4570bacc2b40e81f9a682853434c1f29242",
+  "deployTxnHash": "0xe478f7aa1647788041d63bf1d1409a980157387e0514edb8e2689c44742609ef",
   "sourceName": "contracts/modules/core/PoolModule.sol",
   "contractName": "PoolModule",
   "deployedOn": "contract.PoolModule"

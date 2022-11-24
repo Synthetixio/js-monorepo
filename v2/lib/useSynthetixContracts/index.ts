@@ -5,4 +5,6 @@ export * from './useFeePool';
 export * from './useExchangeRates';
 export * from './useSynthUtil';
 export * from './useProxyERC20sUSD';
+export * from './useRewardEscrowV2';
+export * from './useLiquidatorRewards';
 export * from './common';

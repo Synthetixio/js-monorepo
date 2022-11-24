@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import { FailedIcon, GuideIcon, InfoIcon, TokensIcon, SNXIconWithBorder } from '@snx-v2/icons';
+import { FailedIcon, InfoIcon, TokensIcon, SNXIconWithBorder } from '@snx-v2/icons';
 import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
 import { useMintMutation } from '@snx-v2/useMintMutation';
@@ -30,8 +30,8 @@ import { parseTxnError } from '@snx-v2/parseTxnError';
 import { MintTransactionModal } from './MintTransactionModal';
 import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 import { MintHeader } from './MintHeader';
-import { BoxLink } from '@snx-v2/BoxLink';
 import { leftColWidth, rightColWidth } from './layout';
+import { MintLinks } from './MintLinks';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -106,7 +106,7 @@ export const MintUi = ({
     <>
       <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="base" p={5}>
         <Flex alignItems="center">
-          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
+          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="md" mr={1.5}>
             {t('staking-v2.mint.heading')}
           </Text>
           <Tooltip label={t('staking-v2.mint.heading-tooltip')} hasArrow>
@@ -149,7 +149,7 @@ export const MintUi = ({
           <PercentBadges onBadgePress={onBadgePress} activeBadge={activeBadge} />
         </Box>
         <Flex alignItems="center">
-          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="xs" mr={1.5}>
+          <Text fontFamily="heading" fontWeight="extrabold" lineHeight="md" fontSize="md" mr={1.5}>
             {t('staking-v2.mint.borrowing')}
           </Text>
           <Tooltip label={t('staking-v2.mint.borrowing-tooltip')} hasArrow>
@@ -265,7 +265,9 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   };
   return (
     <>
-      <MintHeader mintAmountSUSD={parseFloatWithCommas(mintAmountSUSD)} />
+      <MintHeader
+        mintAmountSUSD={mintAmountSUSD === '' ? undefined : parseFloatWithCommas(mintAmountSUSD)}
+      />
       <Flex
         justifyContent="space-between"
         alignItems="flex-start"
@@ -320,13 +322,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
           />
         </Box>
         <Box width={{ base: 'full', md: rightColWidth }} mt={{ base: 2, md: 0 }}>
-          <BoxLink
-            icon={<GuideIcon />}
-            href="https://blog.synthetix.io/basics-of-staking-snx-2022/"
-            isExternal
-            subHeadline=""
-            headline="Staking guide"
-          />
+          <MintLinks />
         </Box>
       </Flex>
       <MintTransactionModal

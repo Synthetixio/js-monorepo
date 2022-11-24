@@ -4,8 +4,8 @@ export const PROD_HOSTNAME = 'staking.synthetix.io';
 
 export const EXTERNAL_LINKS = {
   Trading: {
-    Kwenta: 'https://kwenta.io',
-    KwentaTrading: 'https://kwenta.io/exchange',
+    Kwenta: 'https://kwenta.eth.limo',
+    KwentaTrading: 'https://kwenta.eth.limo/exchange',
     KwentaToken: 'https://mirror.xyz/kwenta.eth/bM-hUzw9fzxTom3k8Is_HbkVJ4My3XzamHthA0Lp7KI',
     DexAG: 'https://dex.ag/',
     Uniswap: 'https://uniswap.exchange/',
@@ -33,7 +33,6 @@ export const EXTERNAL_LINKS = {
   },
   TokenLists: {
     OneInch: 'https://gateway.ipfs.io/ipns/tokens.1inch.eth',
-    Zapper: 'https://zapper.fi/api/token-list',
   },
   L2: {
     Optimism: 'https://app.optimism.io/',
