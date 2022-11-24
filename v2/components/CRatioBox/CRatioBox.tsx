@@ -6,6 +6,32 @@ import { badgeColor, getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useTranslation } from 'react-i18next';
 import { useDebtData } from '@snx-v2/useDebtData';
 
+function badgeColor(healthVariant: string) {
+  switch (healthVariant) {
+    case 'success':
+      return {
+        color: 'green.400',
+        border: 'green.900',
+      };
+
+    case 'warning':
+      return {
+        color: 'orange.400',
+        border: 'orange.900',
+      };
+
+    case 'error':
+      return {
+        color: 'red.400',
+        border: 'red.900',
+      };
+    default:
+      return {
+        color: 'green.400',
+        border: 'green.900',
+      };
+  }
+}
 export const CRatioBoxUi: FC<{
   currentCRatioPercentage?: number;
   targetCRatioPercentage?: number;
