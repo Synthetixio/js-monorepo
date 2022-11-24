@@ -11,8 +11,14 @@ const Template: ComponentStory<typeof BalanceBoxUi> = (props) => <BalanceBoxUi {
 
 export const Primary = Template.bind({});
 Primary.args = {
-  snxBalance: 2000,
-  stakedSnx: 1800,
-  transferable: 1700,
+  collateral: 100,
+  escrowBalance: 10,
+  liquidationRewards: 1,
+  snxBalance: 89,
   snxPrice: 3,
+  transferable: 40,
+  stakedSnx: 50,
+  debtBalance: 100,
+  dSNXBalance: 100,
+  dSNXBalanceUsd: 99,
 };

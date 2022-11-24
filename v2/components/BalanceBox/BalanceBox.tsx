@@ -1,4 +1,4 @@
-import { useState, FC } from 'react';
+import { useState, FC, useContext } from 'react';
 import {
   Box,
   Flex,
@@ -18,115 +18,138 @@ import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
 import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
-import { useIssuedDebt } from '@snx-v2/useIssuedDebt';
-import { sumBy } from '@snx-v2/sumBy';
+import { useEscrowBalance } from '@snx-v2/useEscrowBalance';
+import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
+import { ContractContext } from '@snx-v2/ContractContext';
+import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
+
+const Row = ({
+  value,
+  label,
+  color = 'gray.500',
+  formatFn = formatNumber,
+  fontWeight,
+}: {
+  value?: number;
+  label: string;
+  color?: string;
+  formatFn?: (x: number | string) => string;
+  fontWeight?: string;
+}) => {
+  return (
+    <Flex color={color} justifyContent="space-between">
+      <Text fontWeight={fontWeight}>{label}</Text>
+      {value !== undefined ? (
+        <Text fontWeight={fontWeight}>{formatFn(value)}</Text>
+      ) : (
+        <Skeleton my={1} width={8} height={4} />
+      )}
+    </Flex>
+  );
+};
 
 export const BalanceBoxUi: React.FC<{
+  collateral?: number;
+  escrowBalance?: number;
+  liquidationRewards?: number;
   snxBalance?: number;
   snxPrice?: number;
   transferable?: number;
   stakedSnx?: number;
   debtBalance?: number;
-  issuedDebt?: number;
   dSNXBalance?: number;
-}> = ({ snxBalance, snxPrice, transferable, stakedSnx, debtBalance, dSNXBalance, issuedDebt }) => {
+  dSNXBalanceUsd?: number;
+}> = ({
+  collateral,
+  snxPrice,
+  transferable,
+  stakedSnx,
+  debtBalance,
+  dSNXBalance,
+  snxBalance,
+  escrowBalance,
+  liquidationRewards,
+  dSNXBalanceUsd,
+}) => {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
 
   return (
     <Box fontSize="xs" width="full">
       <Box bg="navy.900" p={3} border="1px" borderColor="gray.900" borderRadius="base">
-        <Text fontFamily="heading" fontWeight="extrabold" lineHeight="4">
-          {t('staking-v2.balance-box.box-heading')}
+        <Text
+          fontFamily="heading"
+          fontWeight="extrabold"
+          lineHeight="4"
+          display="flex"
+          alignItems="center"
+        >
+          {t('staking-v2.balance-box.box-heading')} <InfoIcon ml={1} />
         </Text>
-        {snxBalance !== undefined ? (
+        {collateral !== undefined ? (
           <Text fontFamily="mono" fontWeight="extrabold" fontSize="sm" lineHeight="5">
-            {formatNumber(snxBalance)}
+            {formatNumber(collateral)}
           </Text>
         ) : (
           <Skeleton my={1} width={8} height={4} />
         )}
 
-        {snxBalance !== undefined && snxPrice !== undefined ? (
+        {collateral !== undefined && snxPrice !== undefined ? (
           <Text lineHeight="4" color="gray.500">
-            {formatNumberToUsd(snxBalance * snxPrice)}
+            {formatNumberToUsd(collateral * snxPrice)}
           </Text>
         ) : (
           <Skeleton my={1} width={8} height={4} />
         )}
 
-        {stakedSnx !== undefined && snxBalance !== undefined ? (
+        {stakedSnx !== undefined && collateral !== undefined ? (
           <Progress
             mt="1"
             mb="1"
             height="1"
-            value={(stakedSnx / snxBalance) * 100}
+            value={(stakedSnx / collateral) * 100}
             variant="white"
           />
         ) : (
           <Skeleton my={1} width="full" height={4} />
         )}
 
-        <Flex justifyContent="space-between">
-          <Text fontWeight={700}>{t('staking-v2.balance-box.staked')}</Text>
+        <Row
+          value={stakedSnx}
+          label={t('staking-v2.balance-box.staked')}
+          color="white"
+          fontWeight="700"
+        />
+        <Row value={transferable} label={t('staking-v2.balance-box.transferable')} />
 
-          {stakedSnx !== undefined ? (
-            <Text fontWeight={700}>{formatNumber(stakedSnx)}</Text>
-          ) : (
-            <Skeleton my={1} width={8} height={4} />
-          )}
-        </Flex>
-        <Flex color="gray.500" justifyContent="space-between">
-          <Text>{t('staking-v2.balance-box.transferable')}</Text>
-          {transferable !== undefined ? (
-            <Text>{formatNumber(transferable)}</Text>
-          ) : (
-            <Skeleton my={1} width={8} height={4} />
-          )}
-        </Flex>
         <Divider my={2} />
         <Collapse in={show}>
+          <Row
+            value={collateral}
+            label={t('staking-v2.balance-box.collateral')}
+            fontWeight="700"
+            color="white"
+          />
+          <Row value={snxBalance} label={t('staking-v2.balance-box.balance')} />
+          <Row value={escrowBalance} label={t('staking-v2.balance-box.escrowed')} />
+          <Row value={liquidationRewards} label={t('staking-v2.balance-box.liq-rewards')} />
+
+          <Divider my={4} />
           <Flex justifyContent="space-between">
-            <Text fontWeight={700}>
-              {t('staking-v2.balance-box.debt')} <InfoIcon />
-            </Text>
+            <Text fontWeight={700}>{t('staking-v2.balance-box.debt-management')}</Text>
             <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/debt">
               {t('staking-v2.balance-box.hedged-debt')}
             </Link>
           </Flex>
-          <Flex justifyContent="space-between">
-            <Text>{t('staking-v2.balance-box.active')}</Text>
-            {debtBalance !== undefined ? (
-              <Text>{formatNumber(debtBalance)}</Text>
-            ) : (
-              <Skeleton my={1} width={8} height={4} />
-            )}
-          </Flex>
-          <Flex justifyContent="space-between">
-            <Text>{t('staking-v2.balance-box.issued')}</Text>
-            {issuedDebt !== undefined ? (
-              <Text>{formatNumber(issuedDebt)}</Text>
-            ) : (
-              <Skeleton my={1} width={8} height={4} />
-            )}
-          </Flex>
-          <Divider my={4} />
-          <Flex justifyContent="space-between">
-            <Text size="sm" fontWeight={700}>
-              {t('staking-v2.balance-box.assets')} <InfoIcon />
-            </Text>
-            <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/wallet/balances">
-              {t('staking-v2.balance-box.see-all-synths')}
-            </Link>
-          </Flex>
-          <Flex justifyContent="space-between">
-            <Text>dSNX</Text>
-            {dSNXBalance !== undefined ? (
-              <Text>{formatNumber(dSNXBalance)}</Text>
-            ) : (
-              <Skeleton my={1} width={8} height={4} />
-            )}
-          </Flex>
+          <Row
+            value={debtBalance}
+            label={t('staking-v2.balance-box.active-debt')}
+            color="white"
+            formatFn={formatNumberToUsd}
+          />
+          <Row value={dSNXBalance} label={t('staking-v2.balance-box.dsnx-balance')} color="white" />
+          <Row value={dSNXBalanceUsd} label="" formatFn={formatNumberToUsd} />
+          <Divider my={2} />
         </Collapse>
         <Button
           margin="0 auto"
@@ -145,9 +168,10 @@ export const BalanceBoxUi: React.FC<{
 export const BalanceBox: FC = () => {
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
-  const { data: dSNXBalance } = useGetDSnxBalance();
-  const { data } = useIssuedDebt();
-
+  const { data: dSNXBalanceData } = useGetDSnxBalance();
+  const { data: escrowBalanceData } = useEscrowBalance();
+  const { data: liquidationRewardsData } = useGetLiquidationRewards();
+  const { networkId } = useContext(ContractContext);
   const stakedSnx = calculateStakedSnx({
     targetCRatio: debtData?.targetCRatio,
     currentCRatio: debtData?.currentCRatio,
@@ -157,12 +181,19 @@ export const BalanceBox: FC = () => {
   return (
     <BalanceBoxUi
       snxPrice={exchangeRateData?.SNX?.toNumber()}
-      snxBalance={debtData?.collateral.toNumber()}
+      collateral={debtData?.collateral.toNumber()}
+      escrowBalance={escrowBalanceData?.totalEscrowed.toNumber()}
+      liquidationRewards={liquidationRewardsData?.liquidatorRewards.toNumber()}
+      snxBalance={debtData?.balance.toNumber()}
       stakedSnx={stakedSnx.toNumber()}
       transferable={debtData?.transferable.toNumber()}
       debtBalance={debtData?.debtBalance.toNumber()}
-      issuedDebt={sumBy('value', data || [])}
-      dSNXBalance={dSNXBalance?.balance.toNumber()}
+      dSNXBalance={
+        networkId === NetworkIdByName['mainnet-ovm'] ? dSNXBalanceData?.balance.toNumber() : 0
+      }
+      dSNXBalanceUsd={
+        networkId === NetworkIdByName['mainnet-ovm'] ? dSNXBalanceData?.balanceUsd.toNumber() : 0
+      }
     />
   );
 };
