@@ -78,6 +78,7 @@
       "success": "HEALTHY",
       "warning": "UNHEALTHY",
       "error": "UNHEALTHY",
+      "not-staking": "DEBT CLEARED",
       "current-health": "Current Health",
       "current-health-tooltip": "Your current c-ratio",
       "target-health": "Target Health",

@@ -90,7 +90,7 @@ describe('CratioBox', () => {
     cy.get('[data-testid="new c-ratio badge"]').should('not.exist');
   });
 
-  it('Renders new c-ratio badge', () => {
+  it('Renders new c-ratio going from warning to healthy', () => {
     cy.viewport(600, 500);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
@@ -106,5 +106,26 @@ describe('CratioBox', () => {
       .should('be.visible')
       .should('include.text', '500%')
       .should('have.css', 'color', 'rgb(71, 250, 194)');
+    cy.get('[data-testid="healthy badge"]').should('be.visible').should('include.text', 'HEALTHY');
+  });
+  it('Renders new c-ratio being 0', () => {
+    cy.viewport(600, 500);
+    cy.mount(
+      <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
+        <CRatioBoxUi
+          liquidationRatioPercentage={150}
+          targetCRatioPercentage={350}
+          currentCRatioPercentage={200}
+          newCratioPercentage={0}
+        />
+      </Box>
+    );
+    cy.get('[data-testid="new c-ratio badge"]')
+      .should('be.visible')
+      .should('include.text', 'N/A')
+      .should('have.css', 'color', 'rgb(255, 255, 255)');
+    cy.get('[data-testid="healthy badge"]')
+      .should('be.visible')
+      .should('include.text', 'DEBT CLEARED');
   });
 });

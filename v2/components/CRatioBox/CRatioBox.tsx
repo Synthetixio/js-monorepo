@@ -25,6 +25,11 @@ function getBadgeColor(healthVariant: string) {
         color: 'red.400',
         bg: 'red.900',
       };
+    case 'not-staking':
+      return {
+        color: 'white',
+        bg: 'gray.500',
+      };
 
     default:
       return {
@@ -55,13 +60,16 @@ export const CRatioBoxUi: FC<{
     liquidationCratioPercentage: liquidationRatioPercentage,
     targetThreshold,
   });
-  const badgeHealthVariant = getHealthVariant({
-    currentCRatioPercentage:
-      newCratioPercentage !== undefined ? newCratioPercentage : currentCRatioPercentage,
-    targetCratioPercentage: targetCRatioPercentage,
-    liquidationCratioPercentage: liquidationRatioPercentage,
-    targetThreshold,
-  });
+  const badgeHealthVariant =
+    newCratioPercentage === 0
+      ? 'not-staking'
+      : getHealthVariant({
+          currentCRatioPercentage:
+            newCratioPercentage !== undefined ? newCratioPercentage : currentCRatioPercentage,
+          targetCratioPercentage: targetCRatioPercentage,
+          liquidationCratioPercentage: liquidationRatioPercentage,
+          targetThreshold,
+        });
 
   return (
     <Box>
@@ -101,7 +109,9 @@ export const CRatioBoxUi: FC<{
                   fontSize="lg"
                   textAlign="end"
                 >
-                  {formatPercent(newCratioPercentage / 100, { maximumFractionDigits: 0 })}
+                  {newCratioPercentage === 0
+                    ? 'N/A'
+                    : formatPercent(newCratioPercentage / 100, { maximumFractionDigits: 0 })}
                 </Text>
               </>
             ) : null}
