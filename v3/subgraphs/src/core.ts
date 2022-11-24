@@ -35,7 +35,7 @@ import {
   Position,
   MarketConfiguration,
 } from '../generated/schema';
-import { BigDecimal, BigInt, Bytes, log, store } from '@graphprotocol/graph-ts';
+import { BigDecimal, BigInt, Bytes, store } from '@graphprotocol/graph-ts';
 
 ////////////////////
 // Event handlers //
