@@ -147,6 +147,7 @@ export const BalanceBoxUi: React.FC<{
           />
           <Row value={dSNXBalance} label={t('staking-v2.balance-box.dsnx-balance')} color="white" />
           <Row value={dSNXBalanceUsd} label="" formatFn={formatNumberToUsd} />
+          <Divider my={2} />
         </Collapse>
         <Button
           margin="0 auto"
