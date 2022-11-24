@@ -19,15 +19,13 @@ type Market @entity {
   created_at: BigInt!
   created_at_block: BigInt!
   configurations: [MarketConfiguration!] @derivedFrom(field: "market")
-  updated_at: BigInt
-  updated_at_block: BigInt
+  updated_at: BigInt!
+  updated_at_block: BigInt!
   usd_deposited: BigDecimal
   usd_withdrawn: BigDecimal
   "withdrawn - deposited"
   net_issuance: BigDecimal
   reported_debt: BigDecimal
-  "Name of the market"
-  name: String
 }
 
 type MarketConfiguration @entity {
@@ -38,9 +36,9 @@ type MarketConfiguration @entity {
   weight: BigInt!
   created_at: BigInt!
   created_at_block: BigInt!
-  max_debt_share_value: BigDecimal
-  updated_at: BigInt
-  updated_at_block: BigInt
+  updated_at_block: BigInt!
+  updated_at: BigInt!
+  max_debt_share_value: BigDecimal!
 }
 
 type CollateralType @entity {
@@ -54,9 +52,9 @@ type CollateralType @entity {
   liquidation_reward: BigDecimal!
   created_at: BigInt!
   created_at_block: BigInt!
+  updated_at: BigInt!
+  updated_at_block: BigInt!
   total_amount_deposited: BigDecimal
-  updated_at: BigInt
-  updated_at_block: BigInt
 }
 
 type Account @entity {
@@ -65,8 +63,8 @@ type Account @entity {
   owner: Bytes!
   created_at: BigInt!
   created_at_block: BigInt!
-  updated_at: BigInt
-  updated_at_block: BigInt
+  updated_at: BigInt!
+  updated_at_block: BigInt!
   permissions: [AccountPermissionUsers!]
 }
 

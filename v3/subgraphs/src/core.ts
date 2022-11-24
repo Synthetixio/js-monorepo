@@ -35,14 +35,11 @@ import {
   Position,
   MarketConfiguration,
 } from '../generated/schema';
-import { BigDecimal, BigInt, Bytes, store } from '@graphprotocol/graph-ts';
+import { BigDecimal, BigInt, Bytes, log, store } from '@graphprotocol/graph-ts';
 
 ////////////////////
 // Event handlers //
 ////////////////////
-
-// TOD @MF think of a way to avoid smart contract calls
-// TODO @MF added comments
 
 ///////////
 // Pool //
@@ -127,19 +124,15 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
   const pool = Pool.load(event.params.poolId.toString());
   // Pool will be never undefined, though for safety reasons we are checking for that
   if (pool !== null) {
-    // Reset the state because the new configuration is the only source of truth
-    pool.configurations = [];
     // Creating a temporarily variable for figuring out which MarketConfiguration entity to delete
-    const oldMarketConfigurationState: Map<string, string[]> = new Map<string, string[]>();
-    for (let i = 0; i < event.params.markets.length; ++i) {
-      const market = Market.load(event.params.markets.at(i).market.toString());
-      if (market && market.configurations !== null) {
-        oldMarketConfigurationState.set(market.id, changetype<string[]>(market.configurations));
-        market.configurations = [];
-      }
+    const oldPoolMarketConfigurationState = new Map<string, string[]>();
+    if (pool.configurations !== null) {
+      oldPoolMarketConfigurationState.set(pool.id, pool.configurations!);
     }
     // Creating a temporarily variable for the pool.total_weight key
     const totalWeight: BigInt[] = [];
+    // Reset the state because the new configuration from the event is the only source of truth
+    pool.configurations = [];
     for (let i = 0; i < event.params.markets.length; ++i) {
       const market = Market.load(event.params.markets.at(i).market.toString());
       if (market) {
@@ -157,37 +150,34 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
           .maxDebtShareValue.toBigDecimal();
         marketConfiguration.updated_at = event.block.timestamp;
         marketConfiguration.updated_at_block = event.block.number;
-        // If the market doesn't have configurations mapped, create an array with the current configurations id
+        // If the market doesn't have configurations array, create an array with the current configurations id
         if (market.configurations === null) {
           market.configurations = [marketConfiguration.id];
           // Otherwise check if this configuration id is not included, if so, add it
         } else if (!market.configurations!.includes(marketConfiguration.id)) {
           // Set the new state to the current one, to add up the previously added entities
-          let newState: string[];
-          if (market.configurations !== null) {
-            newState = changetype<string[]>(market.configurations);
-          } else {
-            newState = [];
-          }
+          const newState = market.configurations!;
           newState.push(marketConfiguration.id);
           market.configurations = newState;
         }
-        // If the new MarketConfiguration is not part of the old state, remove it from the store
-        if (!oldMarketConfigurationState.get(market.id).includes(marketConfiguration.id)) {
-          store.remove('MarketConfigurations', marketConfiguration.id);
-        }
+        // Same as for the market, if empty initialize it
         if (pool.configurations === null) {
           pool.configurations = [marketConfiguration.id];
         } else if (!pool.configurations!.includes(marketConfiguration.id)) {
           // Set the new state to the current one, to add up the previously added entities
-          let newState: string[];
-          if (pool.configurations !== null) {
-            newState = changetype<string[]>(pool.configurations);
-          } else {
-            newState = [];
-          }
+          const newState = pool.configurations!;
           newState.push(marketConfiguration.id);
           pool.configurations = newState;
+        }
+        // If the new MarketConfiguration is not part of the old state, remove it from the store
+        if (oldPoolMarketConfigurationState.has(pool.id)) {
+          const oldMarketConfigs = oldPoolMarketConfigurationState.get(pool.id);
+          for (let j = 0; j < oldMarketConfigs.length; ++j) {
+            const currentOldState = oldPoolMarketConfigurationState.get(pool.id).at(j);
+            if (!pool.configurations!.includes(currentOldState)) {
+              store.remove('MarketConfiguration', currentOldState);
+            }
+          }
         }
         totalWeight.push(event.params.markets.at(i).weight);
         market.updated_at = event.block.timestamp;
@@ -214,18 +204,14 @@ export function handleMarketUsdDeposited(event: MarketUsdDeposited): void {
     if (market.usd_deposited === null) {
       market.usd_deposited = event.params.amount.toBigDecimal();
     } else {
-      market.usd_deposited = changetype<BigDecimal>(market.usd_deposited).plus(
-        event.params.amount.toBigDecimal()
-      );
+      market.usd_deposited = market.usd_deposited!.plus(event.params.amount.toBigDecimal());
     }
     market.updated_at = event.block.timestamp;
     market.updated_at_block = event.block.number;
     if (!market.net_issuance) {
       market.net_issuance = BigDecimal.fromString('0');
     }
-    market.net_issuance = changetype<BigDecimal>(market.net_issuance).minus(
-      event.params.amount.toBigDecimal()
-    );
+    market.net_issuance = market.net_issuance!.minus(event.params.amount.toBigDecimal());
     market.save();
   }
 }
@@ -296,6 +282,7 @@ export function handleDeposited(event: Deposited): void {
     collateralType.updated_at = event.block.timestamp;
     collateralType.updated_at_block = event.block.number;
     if (collateralType.total_amount_deposited !== null) {
+      // @dev we could also account for every account how much they deposited and withdrawn
       collateralType.total_amount_deposited = collateralType.total_amount_deposited!.plus(
         event.params.amount.toBigDecimal()
       );
@@ -328,35 +315,35 @@ export function handleWithdrawn(event: Withdrawn): void {
 export function handlePermissionGranted(event: PermissionGranted): void {
   const account = Account.load(event.params.accountId.toString());
   if (account !== null) {
-    let permissions = AccountPermissionUsers.load(
+    let accountPermissionUsers = AccountPermissionUsers.load(
       event.params.accountId.toString().concat('-').concat(event.params.user.toHex())
     );
-    if (permissions === null) {
-      permissions = new AccountPermissionUsers(
+    if (accountPermissionUsers === null) {
+      accountPermissionUsers = new AccountPermissionUsers(
         event.params.accountId.toString().concat('-').concat(event.params.user.toHex())
       );
-      permissions.created_at = event.block.timestamp;
-      permissions.created_at_block = event.block.number;
-      permissions.permissions = [event.params.permission];
+      accountPermissionUsers.created_at = event.block.timestamp;
+      accountPermissionUsers.created_at_block = event.block.number;
+      accountPermissionUsers.permissions = [event.params.permission];
     } else {
-      const newState = permissions.permissions;
+      const newState = accountPermissionUsers.permissions;
       newState.push(event.params.permission);
-      permissions.permissions = newState;
+      accountPermissionUsers.permissions = newState;
     }
-    permissions.updated_at = event.block.timestamp;
-    permissions.updated_at_block = event.block.number;
-    permissions.address = event.params.user;
-    permissions.account = account.id;
+    accountPermissionUsers.updated_at = event.block.timestamp;
+    accountPermissionUsers.updated_at_block = event.block.number;
+    accountPermissionUsers.address = event.params.user;
+    accountPermissionUsers.account = account.id;
     if (account.permissions === null) {
-      account.permissions = [permissions.id];
-    } else if (!account.permissions!.includes(permissions.id)) {
+      account.permissions = [accountPermissionUsers.id];
+    } else if (!account.permissions!.includes(accountPermissionUsers.id)) {
       const newState = account.permissions!;
-      newState.push(permissions.id);
+      newState.push(accountPermissionUsers.id);
       account.permissions = newState;
     }
     account.updated_at = event.block.timestamp;
     account.updated_at_block = event.block.number;
-    permissions.save();
+    accountPermissionUsers.save();
     account.save();
   }
 }
@@ -373,6 +360,8 @@ export function handlePermissionRevoked(event: PermissionRevoked): void {
         newState.push(permissions.permissions.at(i));
       }
     }
+    // If newState is empty, we know that all the permissions have been revoked and we can
+    // remove the entity from the store
     if (newState.length === 0) {
       store.remove(
         'AccountPermissionUsers',
@@ -419,13 +408,13 @@ export function handleDelegationUpdated(event: DelegationUpdated): void {
     position.created_at = event.block.timestamp;
     position.created_at_block = event.block.number;
     position.account = event.params.accountId.toString();
-    position.pool = event.params.poolId.toString();
-    position.collateral_type = event.params.collateralType.toHex();
     position.collateral_amount = event.params.amount.toBigDecimal();
   }
-  const collateralAmountChange = event.params.amount
-    .toBigDecimal()
-    .minus(position.collateral_amount);
+  const collateralAmountChange = position.collateral_amount.minus(
+    event.params.amount.toBigDecimal()
+  );
+  position.pool = event.params.poolId.toString();
+  position.collateral_type = event.params.collateralType.toHex();
   position.collateral_amount = event.params.amount.toBigDecimal();
   position.updated_at = event.block.timestamp;
   position.updated_at_block = event.block.number;

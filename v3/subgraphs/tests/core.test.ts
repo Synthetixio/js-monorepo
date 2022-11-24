@@ -5,9 +5,8 @@ import {
   describe,
   beforeEach,
   createMockedFunction,
-  logStore,
 } from 'matchstick-as/assembly/index';
-import { Address, ethereum, BigInt, Bytes, ByteArray } from '@graphprotocol/graph-ts';
+import { Address, ethereum, BigInt, Bytes, ByteArray, store } from '@graphprotocol/graph-ts';
 import { address, address2, defaultGraphContractAddress } from './constants';
 import {
   handleAccountCreated,
@@ -66,29 +65,40 @@ describe('core tests', () => {
     assert.fieldEquals('Pool', '1', 'owner', address);
     assert.fieldEquals('Pool', '1', 'created_at', now.toString());
     assert.fieldEquals('Pool', '1', 'created_at_block', (now - 1000).toString());
+    assert.entityCount('Pool', 1);
+    assert.assertNull(store.get('Pool', '1')!.get('nominated_owner'));
+    assert.assertNull(store.get('Pool', '1')!.get('name'));
+    assert.assertNull(store.get('Pool', '1')!.get('total_weight'));
+    assert.assertNull(store.get('Pool', '1')!.get('configurations'));
+    assert.notInStore('Pool', '2');
   });
 
   test('handleNominatedPoolOwner', () => {
     // Needs to be here because of Closures
     const now = new Date(1668448739566).getTime();
     const newPoolEvent = createPoolCreatedEvent(1, address, now, now - 1000);
-    handlePoolCreated(newPoolEvent);
     const newNominatedPoolOwnerEvent = createNominatedPoolOwnerEvent(1, address2, now + 1000, now);
+    handlePoolCreated(newPoolEvent);
     handleNominatedPoolOwner(newNominatedPoolOwnerEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Pool', '1', 'owner', address);
+    assert.fieldEquals('Pool', '1', 'nominated_owner', address2);
     assert.fieldEquals('Pool', '1', 'created_at', now.toString());
     assert.fieldEquals('Pool', '1', 'created_at_block', (now - 1000).toString());
     assert.fieldEquals('Pool', '1', 'updated_at', (now + 1000).toString());
     assert.fieldEquals('Pool', '1', 'updated_at_block', now.toString());
+    assert.assertNull(store.get('Pool', '1')!.get('name'));
+    assert.assertNull(store.get('Pool', '1')!.get('total_weight'));
+    assert.assertNull(store.get('Pool', '1')!.get('configurations'));
+    assert.notInStore('Pool', '2');
   });
 
   test('handlePoolNameUpdated', () => {
     // Needs to be here because of Closures
     const now = new Date(1668448739566).getTime();
     const newPoolEvent = createPoolCreatedEvent(1, address, now, now - 1000);
-    handlePoolCreated(newPoolEvent);
     const newPoolNameEvent = createPoolNameUpdatedEvent(1, 'SC Pool', now + 1000, now);
+    handlePoolCreated(newPoolEvent);
     handlePoolNameUpdated(newPoolNameEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Pool', '1', 'name', 'SC Pool');
@@ -96,6 +106,10 @@ describe('core tests', () => {
     assert.fieldEquals('Pool', '1', 'created_at_block', (now - 1000).toString());
     assert.fieldEquals('Pool', '1', 'updated_at', (now + 1000).toString());
     assert.fieldEquals('Pool', '1', 'updated_at_block', now.toString());
+    assert.assertNull(store.get('Pool', '1')!.get('nominated_owner'));
+    assert.assertNull(store.get('Pool', '1')!.get('total_weight'));
+    assert.assertNull(store.get('Pool', '1')!.get('configurations'));
+    assert.notInStore('Pool', '2');
   });
 
   test('handleNewPoolOwner', () => {
@@ -103,8 +117,8 @@ describe('core tests', () => {
     const now = new Date(1668448739566).getTime();
     const newPool = createPoolCreatedEvent(1, address, now, now - 1000);
     const newOwnerEvent = createPoolOwnershipAcceptedEvent(1, address2, now + 1000, now);
-    handlePoolCreated(newPool);
     const newNominatedPoolOwnerEvent = createNominatedPoolOwnerEvent(1, address2, now + 1000, now);
+    handlePoolCreated(newPool);
     handleNominatedPoolOwner(newNominatedPoolOwnerEvent);
     assert.fieldEquals('Pool', '1', 'nominated_owner', address2);
     handleNewPoolOwner(newOwnerEvent);
@@ -115,6 +129,10 @@ describe('core tests', () => {
     assert.fieldEquals('Pool', '1', 'created_at_block', (now - 1000).toString());
     assert.fieldEquals('Pool', '1', 'updated_at', (now + 1000).toString());
     assert.fieldEquals('Pool', '1', 'updated_at_block', now.toString());
+    assert.assertNull(store.get('Pool', '1')!.get('name'));
+    assert.assertNull(store.get('Pool', '1')!.get('total_weight'));
+    assert.assertNull(store.get('Pool', '1')!.get('configurations'));
+    assert.notInStore('Pool', '2');
   });
 
   test('handlePoolNominationRenounced', () => {
@@ -122,11 +140,7 @@ describe('core tests', () => {
     const now = new Date(1668448739566).getTime();
     const newPool = createPoolCreatedEvent(1, address, now, now - 1000);
     const newNominatedPoolOwnerEvent = createNominatedPoolOwnerEvent(1, address2, now + 1000, now);
-    const newPoolOwnershipRenouncedEvent = createPoolOwnershipRenouncedEvent(
-      1,
-      now + 2000,
-      now + 1000
-    );
+    const newPoolOwnershipRenouncedEvent = createPoolOwnershipRenouncedEvent(1, now + 1000, now);
     handlePoolCreated(newPool);
     handleNominatedPoolOwner(newNominatedPoolOwnerEvent);
     handlePoolNominationRenounced(newPoolOwnershipRenouncedEvent);
@@ -135,8 +149,12 @@ describe('core tests', () => {
     assert.fieldEquals('Pool', '1', 'nominated_owner', '0x00000000');
     assert.fieldEquals('Pool', '1', 'created_at', now.toString());
     assert.fieldEquals('Pool', '1', 'created_at_block', (now - 1000).toString());
-    assert.fieldEquals('Pool', '1', 'updated_at', (now + 2000).toString());
-    assert.fieldEquals('Pool', '1', 'updated_at_block', (now + 1000).toString());
+    assert.fieldEquals('Pool', '1', 'updated_at', (now + 1000).toString());
+    assert.fieldEquals('Pool', '1', 'updated_at_block', now.toString());
+    assert.assertNull(store.get('Pool', '1')!.get('name'));
+    assert.assertNull(store.get('Pool', '1')!.get('total_weight'));
+    assert.assertNull(store.get('Pool', '1')!.get('configurations'));
+    assert.notInStore('Pool', '2');
   });
 
   test('handlePoolNominationRevoked', () => {
@@ -144,11 +162,7 @@ describe('core tests', () => {
     const now = new Date(1668448739566).getTime();
     const newPool = createPoolCreatedEvent(1, address, now, now - 1000);
     const newNominatedPoolOwnerEvent = createNominatedPoolOwnerEvent(1, address2, now + 1000, now);
-    const newPoolNominationRevokedEvent = createPoolNominationRevokedEvent(
-      1,
-      now + 2000,
-      now + 1000
-    );
+    const newPoolNominationRevokedEvent = createPoolNominationRevokedEvent(1, now + 1000, now);
     handlePoolCreated(newPool);
     handleNominatedPoolOwner(newNominatedPoolOwnerEvent);
     handlePoolNominationRevoked(newPoolNominationRevokedEvent);
@@ -157,8 +171,12 @@ describe('core tests', () => {
     assert.fieldEquals('Pool', '1', 'nominated_owner', '0x00000000');
     assert.fieldEquals('Pool', '1', 'created_at', now.toString());
     assert.fieldEquals('Pool', '1', 'created_at_block', (now - 1000).toString());
-    assert.fieldEquals('Pool', '1', 'updated_at', (now + 2000).toString());
-    assert.fieldEquals('Pool', '1', 'updated_at_block', (now + 1000).toString());
+    assert.fieldEquals('Pool', '1', 'updated_at', (now + 1000).toString());
+    assert.fieldEquals('Pool', '1', 'updated_at_block', now.toString());
+    assert.assertNull(store.get('Pool', '1')!.get('name'));
+    assert.assertNull(store.get('Pool', '1')!.get('total_weight'));
+    assert.assertNull(store.get('Pool', '1')!.get('configurations'));
+    assert.notInStore('Pool', '2');
   });
 
   test('handleMarketCreated', () => {
@@ -172,6 +190,12 @@ describe('core tests', () => {
     assert.fieldEquals('Market', '1', 'created_at_block', (now - 1000).toString());
     assert.fieldEquals('Market', '1', 'updated_at', now.toString());
     assert.fieldEquals('Market', '1', 'updated_at_block', (now - 1000).toString());
+    assert.assertNull(store.get('Market', '1')!.get('usd_deposited'));
+    assert.assertNull(store.get('Market', '1')!.get('usd_withdrawn'));
+    assert.assertNull(store.get('Market', '1')!.get('net_issuance'));
+    assert.assertNull(store.get('Market', '1')!.get('reported_debt'));
+    assert.assertNull(store.get('Market', '1')!.get('configurations'));
+    assert.notInStore('Market', '2');
   });
 
   test('handleAccountCreated', () => {
@@ -186,17 +210,15 @@ describe('core tests', () => {
     assert.fieldEquals('Account', '1', 'updated_at', now.toString());
     assert.fieldEquals('Account', '1', 'updated_at_block', (now - 1000).toString());
     assert.fieldEquals('Account', '1', 'permissions', '[]');
+    assert.notInStore('Account', '2');
   });
 
   test('handlePoolConfigurationSet', () => {
     // Needs to be here because of Closures
     const now = new Date(1668448739566).getTime();
     const newPoolEvent = createPoolCreatedEvent(1, address, now, now - 1000);
-    handlePoolCreated(newPoolEvent);
     const newMarketRegisteredEvent = createMarketCreatedEvent(1, address, now + 1000, now);
     const newMarketRegisteredEvent2 = createMarketCreatedEvent(2, address2, now + 2000, now + 1000);
-    handleMarketCreated(newMarketRegisteredEvent);
-    handleMarketCreated(newMarketRegisteredEvent2);
     const markets = changetype<Array<ethereum.Tuple>>([
       changetype<Array<ethereum.Tuple>>([
         ethereum.Value.fromI32(1),
@@ -209,6 +231,13 @@ describe('core tests', () => {
         ethereum.Value.fromI32(892379812),
       ]),
     ]);
+
+    const newPoolConfigurationSetEvent = createPoolConfigurationSetEvent(
+      1,
+      markets,
+      now + 3000,
+      now + 2000
+    );
     const secondMarkets = changetype<Array<ethereum.Tuple>>([
       changetype<Array<ethereum.Tuple>>([
         ethereum.Value.fromI32(2),
@@ -216,52 +245,61 @@ describe('core tests', () => {
         ethereum.Value.fromI32(812739821),
       ]),
     ]);
-    const newPoolConfigurationSetEvent = createPoolConfigurationSetEvent(
-      1,
-      markets,
-      now + 3000,
-      now + 2000
-    );
-    handlePoolConfigurationSet(newPoolConfigurationSetEvent);
-    assert.fieldEquals('Pool', '1', 'id', '1');
-    assert.fieldEquals('Pool', '1', 'total_weight', '75');
-    assert.fieldEquals('Pool', '1', 'updated_at', (now + 3000).toString());
-    assert.fieldEquals('Pool', '1', 'updated_at_block', (now + 2000).toString());
-    assert.fieldEquals('Pool', '1', 'configurations', '[1-1, 1-2]');
-    assert.fieldEquals('Market', '1', 'id', '1');
-    assert.fieldEquals('Market', '2', 'id', '2');
-    assert.fieldEquals('Market', '1', 'configurations', '[1-1]');
-    assert.fieldEquals('Market', '2', 'configurations', '[1-2]');
-    assert.fieldEquals('Market', '1', 'created_at', (now + 1000).toString());
-    assert.fieldEquals('Market', '1', 'created_at_block', now.toString());
-    assert.fieldEquals('Market', '2', 'created_at', (now + 2000).toString());
-    assert.fieldEquals('Market', '2', 'created_at_block', (now + 1000).toString());
-    assert.fieldEquals('Market', '1', 'updated_at', (now + 3000).toString());
-    assert.fieldEquals('Market', '1', 'updated_at_block', (now + 2000).toString());
-    assert.fieldEquals('Market', '2', 'updated_at', (now + 3000).toString());
-    assert.fieldEquals('Market', '2', 'updated_at_block', (now + 2000).toString());
-    assert.fieldEquals('MarketConfiguration', '1-1', 'id', '1-1');
-    assert.fieldEquals('MarketConfiguration', '1-2', 'id', '1-2');
-    assert.fieldEquals('MarketConfiguration', '1-1', 'market', '1');
-    assert.fieldEquals('MarketConfiguration', '1-2', 'market', '2');
-    assert.fieldEquals('MarketConfiguration', '1-1', 'pool', '1');
-    assert.fieldEquals('MarketConfiguration', '1-1', 'pool', '1');
-    assert.fieldEquals('MarketConfiguration', '1-1', 'max_debt_share_value', '812739821');
-    assert.fieldEquals('MarketConfiguration', '1-2', 'max_debt_share_value', '892379812');
-    assert.fieldEquals('MarketConfiguration', '1-1', 'updated_at', (now + 3000).toString());
-    assert.fieldEquals('MarketConfiguration', '1-1', 'updated_at_block', (now + 2000).toString());
-    assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at', (now + 3000).toString());
-    assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at_block', (now + 2000).toString());
     const secondNewPoolConfigurationSetEvent = createPoolConfigurationSetEvent(
       1,
       secondMarkets,
       now + 4000,
       now + 3000
     );
+    handlePoolCreated(newPoolEvent);
+    handleMarketCreated(newMarketRegisteredEvent);
+    handleMarketCreated(newMarketRegisteredEvent2);
+    handlePoolConfigurationSet(newPoolConfigurationSetEvent);
+    assert.fieldEquals('Pool', '1', 'id', '1');
+    assert.fieldEquals('Pool', '1', 'total_weight', '75');
+    assert.fieldEquals('Pool', '1', 'updated_at', (now + 3000).toString());
+    assert.fieldEquals('Pool', '1', 'updated_at_block', (now + 2000).toString());
+    assert.fieldEquals('Pool', '1', 'configurations', '[1-1, 1-2]');
+    assert.fieldEquals('Pool', '1', 'total_weight', '75');
+    assert.assertNull(store.get('Pool', '1')!.get('name'));
+    assert.notInStore('Pool', '2');
+    assert.fieldEquals('Market', '1', 'id', '1');
+    assert.fieldEquals('Market', '1', 'configurations', '[1-1]');
+    assert.fieldEquals('Market', '1', 'created_at', (now + 1000).toString());
+    assert.fieldEquals('Market', '1', 'created_at_block', now.toString());
+    assert.fieldEquals('Market', '1', 'updated_at', (now + 3000).toString());
+    assert.fieldEquals('Market', '1', 'updated_at_block', (now + 2000).toString());
+    assert.fieldEquals('Market', '2', 'id', '2');
+    assert.fieldEquals('Market', '2', 'configurations', '[1-2]');
+    assert.fieldEquals('Market', '2', 'created_at', (now + 2000).toString());
+    assert.fieldEquals('Market', '2', 'created_at_block', (now + 1000).toString());
+    assert.fieldEquals('Market', '2', 'updated_at', (now + 3000).toString());
+    assert.fieldEquals('Market', '2', 'updated_at_block', (now + 2000).toString());
+    assert.notInStore('Market', '3');
+    assert.fieldEquals('MarketConfiguration', '1-1', 'id', '1-1');
+    assert.fieldEquals('MarketConfiguration', '1-1', 'pool', '1');
+    assert.fieldEquals('MarketConfiguration', '1-1', 'max_debt_share_value', '812739821');
+    assert.fieldEquals('MarketConfiguration', '1-1', 'updated_at_block', (now + 2000).toString());
+    assert.fieldEquals('MarketConfiguration', '1-1', 'updated_at', (now + 3000).toString());
+    assert.fieldEquals('MarketConfiguration', '1-1', 'created_at', (now + 3000).toString());
+    assert.fieldEquals('MarketConfiguration', '1-1', 'created_at_block', (now + 2000).toString());
+    assert.fieldEquals('MarketConfiguration', '1-1', 'market', '1');
+    assert.fieldEquals('MarketConfiguration', '1-2', 'id', '1-2');
+    assert.fieldEquals('MarketConfiguration', '1-2', 'market', '2');
+    assert.fieldEquals('MarketConfiguration', '1-2', 'pool', '1');
+    assert.fieldEquals('MarketConfiguration', '1-2', 'max_debt_share_value', '892379812');
+    assert.fieldEquals('MarketConfiguration', '1-2', 'created_at', (now + 3000).toString());
+    assert.fieldEquals('MarketConfiguration', '1-2', 'created_at_block', (now + 2000).toString());
+    assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at', (now + 3000).toString());
+    assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at_block', (now + 2000).toString());
+    // Fire second event that should update all entities + remove the MarketConfigurations entities that
+    // are not used anymore from the store
     handlePoolConfigurationSet(secondNewPoolConfigurationSetEvent);
     assert.notInStore('MarketConfiguration', '1-1');
+    assert.fieldEquals('Pool', '1', 'total_weight', '32');
     assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at', (now + 4000).toString());
     assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at_block', (now + 3000).toString());
+    assert.notInStore('Pool', '2');
   });
 
   test('calculate net issuance', () => {
@@ -276,7 +314,6 @@ describe('core tests', () => {
     )
       .withArgs([arg])
       .returns([ethereum.Value.fromI32(23)]);
-    handleMarketCreated(newMarketRegisteredEvent);
     const newUsdDepositedEvent = createMarketUsdDepositedEvent(
       1,
       Address.fromString(address2),
@@ -284,7 +321,6 @@ describe('core tests', () => {
       now + 1000,
       now
     );
-    handleMarketUsdDeposited(newUsdDepositedEvent);
     const newUsdWithdrawnEvent = createMarketUsdWithdrawnEvent(
       1,
       Address.fromString(address2),
@@ -292,7 +328,11 @@ describe('core tests', () => {
       now + 2000,
       now + 1000
     );
+    handleMarketCreated(newMarketRegisteredEvent);
+    handleMarketUsdDeposited(newUsdDepositedEvent);
     handleMarketUsdWithdrawn(newUsdWithdrawnEvent);
+    assert.fieldEquals('Market', '1', 'address', address);
+    assert.assertNull(store.get('Market', '1')!.get('configurations'));
     assert.fieldEquals('Market', '1', 'reported_debt', '23');
     assert.fieldEquals('Market', '1', 'usd_deposited', '200');
     assert.fieldEquals('Market', '1', 'usd_withdrawn', '300');
@@ -301,6 +341,7 @@ describe('core tests', () => {
     assert.fieldEquals('Market', '1', 'created_at_block', (now - 1000).toString());
     assert.fieldEquals('Market', '1', 'updated_at', (now + 2000).toString());
     assert.fieldEquals('Market', '1', 'updated_at_block', (now + 1000).toString());
+    assert.notInStore('Market', '2');
   });
 
   test('handleCollateralConfigured', () => {
@@ -337,6 +378,9 @@ describe('core tests', () => {
     assert.fieldEquals('CollateralType', address, 'minimum_c_ratio', '53');
     assert.fieldEquals('CollateralType', address, 'depositing_enabled', 'true');
     assert.fieldEquals('CollateralType', address, 'target_c_ratio', '23');
+    assert.fieldEquals('CollateralType', address, 'price_feed', address2);
+    assert.assertNull(store.get('CollateralType', address)!.get('total_amount_deposited'));
+    assert.notInStore('CollateralType', address2);
   });
 
   test('handleCollateralDeposit', () => {
@@ -369,6 +413,7 @@ describe('core tests', () => {
     assert.fieldEquals('CollateralType', address, 'total_amount_deposited', '555');
     handleDeposited(newCollateralDepositEvent);
     assert.fieldEquals('CollateralType', address, 'total_amount_deposited', '1110');
+    assert.notInStore('CollateralType', address2);
   });
 
   test('handleCollateralWithdrawn', () => {
@@ -407,6 +452,7 @@ describe('core tests', () => {
     assert.fieldEquals('CollateralType', address, 'updated_at', (now + 2000).toString());
     assert.fieldEquals('CollateralType', address, 'updated_at_block', (now + 1000).toString());
     assert.fieldEquals('CollateralType', address, 'total_amount_deposited', '455');
+    assert.notInStore('CollateralType', address2);
   });
 
   test('handlePermissionGranted', () => {
@@ -430,6 +476,19 @@ describe('core tests', () => {
       `[${Bytes.fromByteArray(Bytes.fromI64(1234)).toHex()}]`
     );
     assert.fieldEquals('AccountPermissionUsers', `1-${address}`, 'address', address);
+    assert.fieldEquals('AccountPermissionUsers', `1-${address}`, 'account', '1');
+    assert.fieldEquals(
+      'AccountPermissionUsers',
+      `1-${address}`,
+      'created_at',
+      (now + 1000).toString()
+    );
+    assert.fieldEquals(
+      'AccountPermissionUsers',
+      `1-${address}`,
+      'created_at_block',
+      now.toString()
+    );
     assert.fieldEquals('Account', '1', 'permissions', `[1-${address}]`);
     assert.fieldEquals('Account', '1', 'created_at', now.toString());
     assert.fieldEquals('Account', '1', 'created_at_block', (now - 1000).toString());
@@ -528,6 +587,10 @@ describe('core tests', () => {
     assert.fieldEquals('Account', '1', 'created_at_block', (now - 1000).toString());
     assert.fieldEquals('Account', '1', 'updated_at', (now + 3000).toString());
     assert.fieldEquals('Account', '1', 'updated_at_block', (now + 2000).toString());
+    assert.notInStore(
+      'AccountPermissionUsers',
+      Bytes.fromByteArray(ByteArray.fromHexString(Address.fromString(address).toHex())).toString()
+    );
   });
 
   test('handleDelegationUpdated', () => {
@@ -562,12 +625,16 @@ describe('core tests', () => {
     assert.fieldEquals('Position', `1-1-${address}`, 'updated_at_block', (now - 1000).toString());
     assert.fieldEquals('Position', `1-1-${address}`, 'c_ratio', '200');
     assert.fieldEquals('Position', `1-1-${address}`, 'leverage', '10');
+    assert.fieldEquals('Position', `1-1-${address}`, 'pool', '1');
+    assert.fieldEquals('Position', `1-1-${address}`, 'collateral_type', address);
     assert.fieldEquals('Vault', `1-${address}`, 'id', `1-${address}`);
     assert.fieldEquals('Vault', `1-${address}`, 'created_at', now.toString());
     assert.fieldEquals('Vault', `1-${address}`, 'created_at_block', (now - 1000).toString());
     assert.fieldEquals('Vault', `1-${address}`, 'updated_at', now.toString());
     assert.fieldEquals('Vault', `1-${address}`, 'updated_at_block', (now - 1000).toString());
     assert.fieldEquals('Vault', `1-${address}`, 'collateral_amount', '2323');
+    assert.fieldEquals('Vault', `1-${address}`, 'collateral_type', address);
+    assert.fieldEquals('Vault', `1-${address}`, 'pool', '1');
     const newDelegatioNUpdatedEvent2 = createDelegationUpdateEvent(
       BigInt.fromI32(1),
       BigInt.fromI32(1),
@@ -583,7 +650,7 @@ describe('core tests', () => {
     assert.fieldEquals('Position', `1-1-${address}`, 'collateral_amount', '10000');
     assert.fieldEquals('Vault', `1-${address}`, 'updated_at', (now + 1000).toString());
     assert.fieldEquals('Vault', `1-${address}`, 'updated_at_block', now.toString());
-    assert.fieldEquals('Vault', `1-${address}`, 'collateral_amount', '10000');
+    assert.fieldEquals('Vault', `1-${address}`, 'collateral_amount', '-5354');
   });
 
   test('handleUSDMinted', () => {
