@@ -188,7 +188,6 @@ describe('core tests', () => {
     assert.fieldEquals('Account', '1', 'permissions', '[]');
   });
 
-  // TODO @MF write a test case where we removed a market configuration so we need to remove it from the store
   test('handlePoolConfigurationSet', () => {
     // Needs to be here because of Closures
     const now = new Date(1668448739566).getTime();

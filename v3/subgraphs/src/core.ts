@@ -44,6 +44,10 @@ import { BigDecimal, BigInt, Bytes, store } from '@graphprotocol/graph-ts';
 // TOD @MF think of a way to avoid smart contract calls
 // TODO @MF added comments
 
+///////////
+// Pool //
+//////////
+
 export function handlePoolCreated(event: PoolCreated): void {
   const newPool = new Pool(event.params.poolId.toString());
   newPool.owner = event.params.owner;
@@ -105,6 +109,10 @@ export function handleNewPoolOwner(event: PoolOwnershipAccepted): void {
   }
 }
 
+/////////////
+// Market //
+////////////
+
 export function handleMarketCreated(event: MarketRegistered): void {
   const newMarket = new Market(event.params.marketId.toString());
   newMarket.address = event.params.market;
@@ -115,17 +123,6 @@ export function handleMarketCreated(event: MarketRegistered): void {
   newMarket.save();
 }
 
-export function handleAccountCreated(event: AccountCreated): void {
-  const account = new Account(event.params.accountId.toString());
-  account.owner = event.params.sender;
-  account.created_at = event.block.timestamp;
-  account.created_at_block = event.block.number;
-  account.updated_at = event.block.timestamp;
-  account.updated_at_block = event.block.number;
-  account.permissions = [];
-  account.save();
-}
-
 export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
   const pool = Pool.load(event.params.poolId.toString());
   // Pool will be never undefined, though for safety reasons we are checking for that
@@ -134,18 +131,15 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
     pool.configurations = [];
     // Creating a temporarily variable for figuring out which MarketConfiguration entity to delete
     const oldMarketConfigurationState: Map<string, string[]> = new Map<string, string[]>();
-    // Same for all markets
     for (let i = 0; i < event.params.markets.length; ++i) {
       const market = Market.load(event.params.markets.at(i).market.toString());
-      if (market && market.configurations) {
-        oldMarketConfigurationState.set(market.id, market.configurations);
+      if (market && market.configurations !== null) {
+        oldMarketConfigurationState.set(market.id, changetype<string[]>(market.configurations));
         market.configurations = [];
-        market.save();
       }
     }
     // Creating a temporarily variable for the pool.total_weight key
     const totalWeight: BigInt[] = [];
-
     for (let i = 0; i < event.params.markets.length; ++i) {
       const market = Market.load(event.params.markets.at(i).market.toString());
       if (market) {
@@ -169,16 +163,30 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
           // Otherwise check if this configuration id is not included, if so, add it
         } else if (!market.configurations!.includes(marketConfiguration.id)) {
           // Set the new state to the current one, to add up the previously added entities
-          const newState = market.configurations;
+          let newState: string[];
+          if (market.configurations !== null) {
+            newState = changetype<string[]>(market.configurations);
+          } else {
+            newState = [];
+          }
           newState.push(marketConfiguration.id);
           market.configurations = newState;
+        }
+        // If the new MarketConfiguration is not part of the old state, remove it from the store
+        if (!oldMarketConfigurationState.get(market.id).includes(marketConfiguration.id)) {
+          store.remove('MarketConfigurations', marketConfiguration.id);
         }
         if (pool.configurations === null) {
           pool.configurations = [marketConfiguration.id];
         } else if (!pool.configurations!.includes(marketConfiguration.id)) {
           // Set the new state to the current one, to add up the previously added entities
-          const newState: string[] = pool.configurations;
-          newState!.push(marketConfiguration.id);
+          let newState: string[];
+          if (pool.configurations !== null) {
+            newState = changetype<string[]>(pool.configurations);
+          } else {
+            newState = [];
+          }
+          newState.push(marketConfiguration.id);
           pool.configurations = newState;
         }
         totalWeight.push(event.params.markets.at(i).weight);
@@ -186,21 +194,6 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
         market.updated_at_block = event.block.number;
         market.save();
         marketConfiguration.save();
-      }
-    }
-    // Compare the old state vs the new state and if new state doesn't have the old state anymore, remove the entity
-    for (let i = 0; i < oldMarketConfigurationState.keys().length; ++i) {
-      const oldState = oldMarketConfigurationState.get(oldMarketConfigurationState.keys().at(i));
-      const newState = Market.load(event.params.markets.at(i).market.toString());
-      if (newState?.configurations) {
-        for (let j = 0; j < newState.configurations.length; j++) {
-          if (!oldState.includes(newState.configurations[j])) {
-            store.remove(
-              'MarketConfigurations',
-              `${pool.id}-${oldMarketConfigurationState.keys().at(i)}`
-            );
-          }
-        }
       }
     }
     pool.total_weight = totalWeight.reduce((prev, next) => {
@@ -230,7 +223,9 @@ export function handleMarketUsdDeposited(event: MarketUsdDeposited): void {
     if (!market.net_issuance) {
       market.net_issuance = BigDecimal.fromString('0');
     }
-    market.net_issuance = market.net_issuance.minus(event.params.amount.toBigDecimal());
+    market.net_issuance = changetype<BigDecimal>(market.net_issuance).minus(
+      event.params.amount.toBigDecimal()
+    );
     market.save();
   }
 }
@@ -251,10 +246,31 @@ export function handleMarketUsdWithdrawn(event: MarketUsdWithdrawn): void {
     if (!market.net_issuance) {
       market.net_issuance = BigDecimal.fromString('0');
     }
-    market.net_issuance = market.net_issuance.plus(event.params.amount.toBigDecimal());
+    market.net_issuance = changetype<BigDecimal>(market.net_issuance).plus(
+      event.params.amount.toBigDecimal()
+    );
     market.save();
   }
 }
+
+//////////////
+// Account //
+/////////////
+
+export function handleAccountCreated(event: AccountCreated): void {
+  const account = new Account(event.params.accountId.toString());
+  account.owner = event.params.sender;
+  account.created_at = event.block.timestamp;
+  account.created_at_block = event.block.number;
+  account.updated_at = event.block.timestamp;
+  account.updated_at_block = event.block.number;
+  account.permissions = [];
+  account.save();
+}
+
+/////////////////
+// Collateral //
+////////////////
 
 export function handleCollateralConfigured(event: CollateralConfigured): void {
   let collateralType = CollateralType.load(event.params.collateralType.toHex());
@@ -304,6 +320,10 @@ export function handleWithdrawn(event: Withdrawn): void {
     collateralType.save();
   }
 }
+
+/////////////////
+// Permission //
+////////////////
 
 export function handlePermissionGranted(event: PermissionGranted): void {
   const account = Account.load(event.params.accountId.toString());
@@ -382,6 +402,10 @@ export function handlePermissionRevoked(event: PermissionRevoked): void {
   }
 }
 
+///////////////////////
+// Position + Vault //
+//////////////////////
+
 export function handleDelegationUpdated(event: DelegationUpdated): void {
   const id = event.params.accountId
     .toString()
@@ -397,10 +421,11 @@ export function handleDelegationUpdated(event: DelegationUpdated): void {
     position.account = event.params.accountId.toString();
     position.pool = event.params.poolId.toString();
     position.collateral_type = event.params.collateralType.toHex();
+    position.collateral_amount = event.params.amount.toBigDecimal();
   }
   const collateralAmountChange = event.params.amount
     .toBigDecimal()
-    .minus(position.collateral_amount ? position.collateral_amount : BigDecimal.fromString('0'));
+    .minus(position.collateral_amount);
   position.collateral_amount = event.params.amount.toBigDecimal();
   position.updated_at = event.block.timestamp;
   position.updated_at_block = event.block.number;
@@ -450,8 +475,8 @@ export function handleUSDMinted(event: UsdMinted): void {
     } else {
       position.total_minted = event.params.amount.toBigDecimal();
     }
-    if (position.net_issuance) {
-      position.net_issuance = position.net_issuance.plus(event.params.amount.toBigDecimal());
+    if (position.net_issuance !== null) {
+      position.net_issuance = position.net_issuance!.plus(event.params.amount.toBigDecimal());
     } else {
       position.net_issuance = event.params.amount.toBigDecimal();
     }
@@ -463,9 +488,10 @@ export function handleUSDBurned(event: UsdBurned): void {
   const position = Position.load(
     event.params.accountId
       .toString()
-      .concat('-')
       .concat(
-        event.params.poolId.toString().concat('-').concat(event.params.collateralType.toHex())
+        '-'.concat(
+          event.params.poolId.toString().concat('-').concat(event.params.collateralType.toHex())
+        )
       )
   );
   if (position !== null) {
@@ -474,8 +500,8 @@ export function handleUSDBurned(event: UsdBurned): void {
     } else {
       position.total_burned = event.params.amount.toBigDecimal();
     }
-    if (position.net_issuance) {
-      position.net_issuance = position.net_issuance.plus(event.params.amount.toBigDecimal());
+    if (position.net_issuance !== null) {
+      position.net_issuance = position.net_issuance!.plus(event.params.amount.toBigDecimal());
     } else {
       position.net_issuance = event.params.amount.toBigDecimal();
     }
