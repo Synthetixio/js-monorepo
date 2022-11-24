@@ -7026,6 +7026,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/CountDown@workspace:v2/components/CountDown"
   dependencies:
+    "@chakra-ui/react": ^2.2.8
     "@snx-v2/useInterval": "workspace:*"
     date-fns: ^2.19.0
     react: ^18.2.0

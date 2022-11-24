@@ -11,6 +11,9 @@ const Template: ComponentStory<typeof RewardsItem> = (_args) => <RewardsItem {..
 
 export const Primary = Template.bind({});
 
+const date = new Date();
+date.setDate(date.getDate() + 3);
+
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   isLoading: false,
@@ -19,5 +22,5 @@ Primary.args = {
   apyReturn: '12%',
   stakedBalance: '5,000,000.00 SNX',
   Icon: () => <SNXIcon height="40px" width="40px" />,
-  endDate: new Date(),
+  endDate: date,
 };

@@ -46,7 +46,7 @@ export const RewardsItem = ({
         <Text
           fontFamily="heading"
           fontSize="sm"
-          fontWeight="black"
+          fontWeight="700"
           lineHeight="5"
           color="whiteAlpha.900"
         >
@@ -60,7 +60,7 @@ export const RewardsItem = ({
         <Text
           fontFamily="heading"
           fontSize="sm"
-          fontWeight="black"
+          fontWeight="700"
           lineHeight="5"
           color="whiteAlpha.900"
         >
@@ -74,7 +74,7 @@ export const RewardsItem = ({
         <Text
           fontFamily="heading"
           fontSize="sm"
-          fontWeight="black"
+          fontWeight="700"
           lineHeight="5"
           color="whiteAlpha.900"
         >
@@ -85,12 +85,21 @@ export const RewardsItem = ({
         </Text>
       </Flex>
       <Flex direction="column">
-        <Progress w="208px" variant="white" height="4px" min={0} max={100} value={50} />
-        <Flex>
-          <Text fontFamily="heading" fontSize="xs" color="green.400">
+        <Progress w="208px" variant="white" height="5px" min={0} max={100} value={50} />
+        <Flex justifyContent="space-between" alignItems="center" mt="3px">
+          <Text fontFamily="heading" fontWeight="700" fontSize="xs" color="whiteAlpha.600">
             {t('staking-v2.earn.remaining')}
           </Text>
-          <CountDown toDate={endDate} />
+          <CountDown
+            sx={{
+              color: 'green.400',
+              fontWeight: '700',
+              fontFamily: 'heading',
+              fontSize: 'xs',
+              lineHeight: '4',
+            }}
+            toDate={endDate}
+          />
         </Flex>
       </Flex>
       <Flex>
