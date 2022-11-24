@@ -177,9 +177,9 @@
       "active-debt": "Active Debt",
       "collateral": "Collateral",
       "balance": "Balance",
+      "dsnx-balance": "dSNX Balance",
       "escrowed": "Escrowed",
       "liq-rewards": "Liquidation Rewards",
-
       "show-all-balances": "Show all balances"
     },
     "c-ratio-banner": {
