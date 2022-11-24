@@ -172,12 +172,14 @@
       "box-heading": "SNX Total",
       "staked": "Staked",
       "transferable": "Transferable",
-      "debt": "Debt",
-      "hedged-debt": "Hedge debt",
-      "active": "Active",
-      "issued": "Issued",
-      "assets": "Assets",
-      "see-all-synths": "See all synths",
+      "debt-management": "Debt Management",
+      "hedged-debt": "Hedge Debt",
+      "active-debt": "Active Debt",
+      "collateral": "Collateral",
+      "balance": "Balance",
+      "escrowed": "Escrowed",
+      "liq-rewards": "Liquidation Rewards",
+
       "show-all-balances": "Show all balances"
     },
     "c-ratio-banner": {

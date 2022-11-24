@@ -6881,12 +6881,11 @@ __metadata:
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
-    "@snx-v2/sumBy": "workspace:*"
     "@snx-v2/useDSnxBalance": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useEscrowBalance": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
-    "@snx-v2/useIssuedDebt": "workspace:*"
+    "@snx-v2/useGetLiquidationRewards": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
     react-i18next: ^11.18.3
@@ -7452,7 +7451,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/sumBy@workspace:*, @snx-v2/sumBy@workspace:v2/lib/sumBy":
+"@snx-v2/sumBy@workspace:v2/lib/sumBy":
   version: 0.0.0-use.local
   resolution: "@snx-v2/sumBy@workspace:v2/lib/sumBy"
   languageName: unknown
@@ -7610,6 +7609,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useGetLiquidationRewards@workspace:*, @snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useInterval@workspace:*, @snx-v2/useInterval@workspace:v2/lib/useInterval":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useInterval@workspace:v2/lib/useInterval"
@@ -7618,7 +7629,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useIssuedDebt@workspace:*, @snx-v2/useIssuedDebt@workspace:v2/lib/useIssuedDebt":
+"@snx-v2/useIssuedDebt@workspace:v2/lib/useIssuedDebt":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useIssuedDebt@workspace:v2/lib/useIssuedDebt"
   dependencies:
