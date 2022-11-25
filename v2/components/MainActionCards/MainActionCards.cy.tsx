@@ -23,6 +23,7 @@ describe('MainActionCards', () => {
           hasClaimed={true}
           isFlagged={false}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );
@@ -57,6 +58,7 @@ describe('MainActionCards', () => {
           hasClaimed={true}
           isFlagged={false}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );
@@ -128,6 +130,7 @@ describe('MainActionCards', () => {
           hasClaimed={false}
           isFlagged={false}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );
@@ -166,6 +169,7 @@ describe('MainActionCards', () => {
           hasClaimed={false}
           isFlagged={false}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );
@@ -199,6 +203,7 @@ describe('MainActionCards', () => {
           hasClaimed={false}
           isFlagged={true}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );
@@ -229,12 +234,12 @@ describe('MainActionCards', () => {
           liquidationCratioPercentage={145}
           targetCratioPercentage={400}
           currentCRatioPercentage={396.5742686926663}
-          targetThreshold={0.01}
           nextEpochStartDate={new Date(Date.now() + 100000)}
           rewardsDollarValue={100}
           hasClaimed={false}
           isFlagged={false}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );
@@ -264,6 +269,7 @@ describe('MainActionCards', () => {
           hasClaimed={false}
           isFlagged={false}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );
