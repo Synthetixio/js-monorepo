@@ -51,6 +51,28 @@ import {
   createWithdrawnEvent,
 } from './event-factories';
 
+export {
+  handleAccountCreated,
+  handleCollateralConfigured,
+  handleDelegationUpdated,
+  handleDeposited,
+  handleMarketCreated,
+  handleMarketUsdDeposited,
+  handleMarketUsdWithdrawn,
+  handleNewPoolOwner,
+  handleNominatedPoolOwner,
+  handlePermissionGranted,
+  handlePermissionRevoked,
+  handlePoolConfigurationSet,
+  handlePoolCreated,
+  handlePoolNameUpdated,
+  handlePoolNominationRenounced,
+  handlePoolNominationRevoked,
+  handleUSDBurned,
+  handleUSDMinted,
+  handleWithdrawn,
+};
+
 describe('core tests', () => {
   beforeEach(() => {
     clearStore();
