@@ -49,16 +49,26 @@ export class PoolConfigurationSet__Params {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get markets(): Bytes {
-    return this._event.parameters[1].value.toBytes();
+  get markets(): Array<PoolConfigurationSetMarketsStruct> {
+    return this._event.parameters[1].value.toTupleArray<PoolConfigurationSetMarketsStruct>();
   }
 
-  get weights(): Bytes {
-    return this._event.parameters[2].value.toBytes();
+  get sender(): Address {
+    return this._event.parameters[2].value.toAddress();
+  }
+}
+
+export class PoolConfigurationSetMarketsStruct extends ethereum.Tuple {
+  get market(): BigInt {
+    return this[0].toBigInt();
   }
 
-  get executedBy(): Address {
-    return this._event.parameters[3].value.toAddress();
+  get weight(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get maxDebtShareValue(): BigInt {
+    return this[2].toBigInt();
   }
 }
 
@@ -176,57 +186,17 @@ export class PoolOwnershipAccepted__Params {
   }
 }
 
-export class PoolOwnershipRenounced extends ethereum.Event {
-  get params(): PoolOwnershipRenounced__Params {
-    return new PoolOwnershipRenounced__Params(this);
-  }
-}
-
-export class PoolOwnershipRenounced__Params {
-  _event: PoolOwnershipRenounced;
-
-  constructor(event: PoolOwnershipRenounced) {
-    this._event = event;
+export class PoolModule__getPoolConfigurationResultValue0Struct extends ethereum.Tuple {
+  get market(): BigInt {
+    return this[0].toBigInt();
   }
 
-  get poolId(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
+  get weight(): BigInt {
+    return this[1].toBigInt();
   }
 
-  get owner(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-}
-
-export class PoolModule__getPoolConfigurationResult {
-  value0: Array<BigInt>;
-  value1: Array<BigInt>;
-  value2: Array<BigInt>;
-
-  constructor(value0: Array<BigInt>, value1: Array<BigInt>, value2: Array<BigInt>) {
-    this.value0 = value0;
-    this.value1 = value1;
-    this.value2 = value2;
-  }
-
-  toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
-    map.set('value0', ethereum.Value.fromUnsignedBigIntArray(this.value0));
-    map.set('value1', ethereum.Value.fromUnsignedBigIntArray(this.value1));
-    map.set('value2', ethereum.Value.fromSignedBigIntArray(this.value2));
-    return map;
-  }
-
-  getValue0(): Array<BigInt> {
-    return this.value0;
-  }
-
-  getValue1(): Array<BigInt> {
-    return this.value1;
-  }
-
-  getValue2(): Array<BigInt> {
-    return this.value2;
+  get maxDebtShareValue(): BigInt {
+    return this[2].toBigInt();
   }
 }
 
@@ -271,26 +241,22 @@ export class PoolModule extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  getPoolConfiguration(poolId: BigInt): PoolModule__getPoolConfigurationResult {
+  getPoolConfiguration(poolId: BigInt): Array<PoolModule__getPoolConfigurationResultValue0Struct> {
     let result = super.call(
       'getPoolConfiguration',
-      'getPoolConfiguration(uint128):(uint256[],uint256[],int256[])',
+      'getPoolConfiguration(uint128):((uint128,uint128,int128)[])',
       [ethereum.Value.fromUnsignedBigInt(poolId)]
     );
 
-    return new PoolModule__getPoolConfigurationResult(
-      result[0].toBigIntArray(),
-      result[1].toBigIntArray(),
-      result[2].toBigIntArray()
-    );
+    return result[0].toTupleArray<PoolModule__getPoolConfigurationResultValue0Struct>();
   }
 
   try_getPoolConfiguration(
     poolId: BigInt
-  ): ethereum.CallResult<PoolModule__getPoolConfigurationResult> {
+  ): ethereum.CallResult<Array<PoolModule__getPoolConfigurationResultValue0Struct>> {
     let result = super.tryCall(
       'getPoolConfiguration',
-      'getPoolConfiguration(uint128):(uint256[],uint256[],int256[])',
+      'getPoolConfiguration(uint128):((uint128,uint128,int128)[])',
       [ethereum.Value.fromUnsignedBigInt(poolId)]
     );
     if (result.reverted) {
@@ -298,11 +264,7 @@ export class PoolModule extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PoolModule__getPoolConfigurationResult(
-        value[0].toBigIntArray(),
-        value[1].toBigIntArray(),
-        value[2].toBigIntArray()
-      )
+      value[0].toTupleArray<PoolModule__getPoolConfigurationResultValue0Struct>()
     );
   }
 
@@ -473,20 +435,20 @@ export class RenouncePoolNominationCall__Outputs {
   }
 }
 
-export class RenouncePoolOwnershipCall extends ethereum.Call {
-  get inputs(): RenouncePoolOwnershipCall__Inputs {
-    return new RenouncePoolOwnershipCall__Inputs(this);
+export class RevokePoolNominationCall extends ethereum.Call {
+  get inputs(): RevokePoolNominationCall__Inputs {
+    return new RevokePoolNominationCall__Inputs(this);
   }
 
-  get outputs(): RenouncePoolOwnershipCall__Outputs {
-    return new RenouncePoolOwnershipCall__Outputs(this);
+  get outputs(): RevokePoolNominationCall__Outputs {
+    return new RevokePoolNominationCall__Outputs(this);
   }
 }
 
-export class RenouncePoolOwnershipCall__Inputs {
-  _call: RenouncePoolOwnershipCall;
+export class RevokePoolNominationCall__Inputs {
+  _call: RevokePoolNominationCall;
 
-  constructor(call: RenouncePoolOwnershipCall) {
+  constructor(call: RevokePoolNominationCall) {
     this._call = call;
   }
 
@@ -495,10 +457,10 @@ export class RenouncePoolOwnershipCall__Inputs {
   }
 }
 
-export class RenouncePoolOwnershipCall__Outputs {
-  _call: RenouncePoolOwnershipCall;
+export class RevokePoolNominationCall__Outputs {
+  _call: RevokePoolNominationCall;
 
-  constructor(call: RenouncePoolOwnershipCall) {
+  constructor(call: RevokePoolNominationCall) {
     this._call = call;
   }
 }
@@ -554,16 +516,8 @@ export class SetPoolConfigurationCall__Inputs {
     return this._call.inputValues[0].value.toBigInt();
   }
 
-  get markets(): Array<BigInt> {
-    return this._call.inputValues[1].value.toBigIntArray();
-  }
-
-  get weights(): Array<BigInt> {
-    return this._call.inputValues[2].value.toBigIntArray();
-  }
-
-  get maxDebtShareValues(): Array<BigInt> {
-    return this._call.inputValues[3].value.toBigIntArray();
+  get newDistributions(): Array<SetPoolConfigurationCallNewDistributionsStruct> {
+    return this._call.inputValues[1].value.toTupleArray<SetPoolConfigurationCallNewDistributionsStruct>();
   }
 }
 
@@ -572,6 +526,20 @@ export class SetPoolConfigurationCall__Outputs {
 
   constructor(call: SetPoolConfigurationCall) {
     this._call = call;
+  }
+}
+
+export class SetPoolConfigurationCallNewDistributionsStruct extends ethereum.Tuple {
+  get market(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get weight(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get maxDebtShareValue(): BigInt {
+    return this[2].toBigInt();
   }
 }
 

@@ -7,8 +7,8 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
-} from "@graphprotocol/graph-ts";
+  BigInt,
+} from '@graphprotocol/graph-ts';
 
 export class NominatedPoolOwner extends ethereum.Event {
   get params(): NominatedPoolOwner__Params {
@@ -285,11 +285,7 @@ export class Proxy__getPoolConfigurationResult {
   value1: Array<BigInt>;
   value2: Array<BigInt>;
 
-  constructor(
-    value0: Array<BigInt>,
-    value1: Array<BigInt>,
-    value2: Array<BigInt>
-  ) {
+  constructor(value0: Array<BigInt>, value1: Array<BigInt>, value2: Array<BigInt>) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
@@ -297,9 +293,9 @@ export class Proxy__getPoolConfigurationResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigIntArray(this.value0));
-    map.set("value1", ethereum.Value.fromUnsignedBigIntArray(this.value1));
-    map.set("value2", ethereum.Value.fromSignedBigIntArray(this.value2));
+    map.set('value0', ethereum.Value.fromUnsignedBigIntArray(this.value0));
+    map.set('value1', ethereum.Value.fromUnsignedBigIntArray(this.value1));
+    map.set('value2', ethereum.Value.fromSignedBigIntArray(this.value2));
     return map;
   }
 
@@ -318,25 +314,17 @@ export class Proxy__getPoolConfigurationResult {
 
 export class Proxy extends ethereum.SmartContract {
   static bind(address: Address): Proxy {
-    return new Proxy("Proxy", address);
+    return new Proxy('Proxy', address);
   }
 
   getMinLiquidityRatio(): BigInt {
-    let result = super.call(
-      "getMinLiquidityRatio",
-      "getMinLiquidityRatio():(uint256)",
-      []
-    );
+    let result = super.call('getMinLiquidityRatio', 'getMinLiquidityRatio():(uint256)', []);
 
     return result[0].toBigInt();
   }
 
   try_getMinLiquidityRatio(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "getMinLiquidityRatio",
-      "getMinLiquidityRatio():(uint256)",
-      []
-    );
+    let result = super.tryCall('getMinLiquidityRatio', 'getMinLiquidityRatio():(uint256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -345,19 +333,17 @@ export class Proxy extends ethereum.SmartContract {
   }
 
   getNominatedPoolOwner(poolId: BigInt): Address {
-    let result = super.call(
-      "getNominatedPoolOwner",
-      "getNominatedPoolOwner(uint128):(address)",
-      [ethereum.Value.fromUnsignedBigInt(poolId)]
-    );
+    let result = super.call('getNominatedPoolOwner', 'getNominatedPoolOwner(uint128):(address)', [
+      ethereum.Value.fromUnsignedBigInt(poolId),
+    ]);
 
     return result[0].toAddress();
   }
 
   try_getNominatedPoolOwner(poolId: BigInt): ethereum.CallResult<Address> {
     let result = super.tryCall(
-      "getNominatedPoolOwner",
-      "getNominatedPoolOwner(uint128):(address)",
+      'getNominatedPoolOwner',
+      'getNominatedPoolOwner(uint128):(address)',
       [ethereum.Value.fromUnsignedBigInt(poolId)]
     );
     if (result.reverted) {
@@ -369,8 +355,8 @@ export class Proxy extends ethereum.SmartContract {
 
   getPoolConfiguration(poolId: BigInt): Proxy__getPoolConfigurationResult {
     let result = super.call(
-      "getPoolConfiguration",
-      "getPoolConfiguration(uint128):(uint256[],uint256[],int256[])",
+      'getPoolConfiguration',
+      'getPoolConfiguration(uint128):(uint256[],uint256[],int256[])',
       [ethereum.Value.fromUnsignedBigInt(poolId)]
     );
 
@@ -381,12 +367,10 @@ export class Proxy extends ethereum.SmartContract {
     );
   }
 
-  try_getPoolConfiguration(
-    poolId: BigInt
-  ): ethereum.CallResult<Proxy__getPoolConfigurationResult> {
+  try_getPoolConfiguration(poolId: BigInt): ethereum.CallResult<Proxy__getPoolConfigurationResult> {
     let result = super.tryCall(
-      "getPoolConfiguration",
-      "getPoolConfiguration(uint128):(uint256[],uint256[],int256[])",
+      'getPoolConfiguration',
+      'getPoolConfiguration(uint128):(uint256[],uint256[],int256[])',
       [ethereum.Value.fromUnsignedBigInt(poolId)]
     );
     if (result.reverted) {
@@ -403,16 +387,16 @@ export class Proxy extends ethereum.SmartContract {
   }
 
   getPoolName(poolId: BigInt): string {
-    let result = super.call("getPoolName", "getPoolName(uint128):(string)", [
-      ethereum.Value.fromUnsignedBigInt(poolId)
+    let result = super.call('getPoolName', 'getPoolName(uint128):(string)', [
+      ethereum.Value.fromUnsignedBigInt(poolId),
     ]);
 
     return result[0].toString();
   }
 
   try_getPoolName(poolId: BigInt): ethereum.CallResult<string> {
-    let result = super.tryCall("getPoolName", "getPoolName(uint128):(string)", [
-      ethereum.Value.fromUnsignedBigInt(poolId)
+    let result = super.tryCall('getPoolName', 'getPoolName(uint128):(string)', [
+      ethereum.Value.fromUnsignedBigInt(poolId),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -422,19 +406,17 @@ export class Proxy extends ethereum.SmartContract {
   }
 
   getPoolOwner(poolId: BigInt): Address {
-    let result = super.call("getPoolOwner", "getPoolOwner(uint128):(address)", [
-      ethereum.Value.fromUnsignedBigInt(poolId)
+    let result = super.call('getPoolOwner', 'getPoolOwner(uint128):(address)', [
+      ethereum.Value.fromUnsignedBigInt(poolId),
     ]);
 
     return result[0].toAddress();
   }
 
   try_getPoolOwner(poolId: BigInt): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "getPoolOwner",
-      "getPoolOwner(uint128):(address)",
-      [ethereum.Value.fromUnsignedBigInt(poolId)]
-    );
+    let result = super.tryCall('getPoolOwner', 'getPoolOwner(uint128):(address)', [
+      ethereum.Value.fromUnsignedBigInt(poolId),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -443,21 +425,17 @@ export class Proxy extends ethereum.SmartContract {
   }
 
   getMarketCollateral(marketId: BigInt): BigInt {
-    let result = super.call(
-      "getMarketCollateral",
-      "getMarketCollateral(uint128):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(marketId)]
-    );
+    let result = super.call('getMarketCollateral', 'getMarketCollateral(uint128):(uint256)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
 
     return result[0].toBigInt();
   }
 
   try_getMarketCollateral(marketId: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "getMarketCollateral",
-      "getMarketCollateral(uint128):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(marketId)]
-    );
+    let result = super.tryCall('getMarketCollateral', 'getMarketCollateral(uint128):(uint256)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -466,21 +444,17 @@ export class Proxy extends ethereum.SmartContract {
   }
 
   getMarketDebtPerShare(marketId: BigInt): BigInt {
-    let result = super.call(
-      "getMarketDebtPerShare",
-      "getMarketDebtPerShare(uint128):(int256)",
-      [ethereum.Value.fromUnsignedBigInt(marketId)]
-    );
+    let result = super.call('getMarketDebtPerShare', 'getMarketDebtPerShare(uint128):(int256)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
 
     return result[0].toBigInt();
   }
 
   try_getMarketDebtPerShare(marketId: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "getMarketDebtPerShare",
-      "getMarketDebtPerShare(uint128):(int256)",
-      [ethereum.Value.fromUnsignedBigInt(marketId)]
-    );
+    let result = super.tryCall('getMarketDebtPerShare', 'getMarketDebtPerShare(uint128):(int256)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -489,21 +463,17 @@ export class Proxy extends ethereum.SmartContract {
   }
 
   getMarketIssuance(marketId: BigInt): BigInt {
-    let result = super.call(
-      "getMarketIssuance",
-      "getMarketIssuance(uint128):(int128)",
-      [ethereum.Value.fromUnsignedBigInt(marketId)]
-    );
+    let result = super.call('getMarketIssuance', 'getMarketIssuance(uint128):(int128)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
 
     return result[0].toBigInt();
   }
 
   try_getMarketIssuance(marketId: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "getMarketIssuance",
-      "getMarketIssuance(uint128):(int128)",
-      [ethereum.Value.fromUnsignedBigInt(marketId)]
-    );
+    let result = super.tryCall('getMarketIssuance', 'getMarketIssuance(uint128):(int128)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -512,19 +482,17 @@ export class Proxy extends ethereum.SmartContract {
   }
 
   getMarketReportedDebt(marketId: BigInt): BigInt {
-    let result = super.call(
-      "getMarketReportedDebt",
-      "getMarketReportedDebt(uint128):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(marketId)]
-    );
+    let result = super.call('getMarketReportedDebt', 'getMarketReportedDebt(uint128):(uint256)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
 
     return result[0].toBigInt();
   }
 
   try_getMarketReportedDebt(marketId: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "getMarketReportedDebt",
-      "getMarketReportedDebt(uint128):(uint256)",
+      'getMarketReportedDebt',
+      'getMarketReportedDebt(uint128):(uint256)',
       [ethereum.Value.fromUnsignedBigInt(marketId)]
     );
     if (result.reverted) {
@@ -535,21 +503,17 @@ export class Proxy extends ethereum.SmartContract {
   }
 
   getMarketTotalBalance(marketId: BigInt): BigInt {
-    let result = super.call(
-      "getMarketTotalBalance",
-      "getMarketTotalBalance(uint128):(int256)",
-      [ethereum.Value.fromUnsignedBigInt(marketId)]
-    );
+    let result = super.call('getMarketTotalBalance', 'getMarketTotalBalance(uint128):(int256)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
 
     return result[0].toBigInt();
   }
 
   try_getMarketTotalBalance(marketId: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "getMarketTotalBalance",
-      "getMarketTotalBalance(uint128):(int256)",
-      [ethereum.Value.fromUnsignedBigInt(marketId)]
-    );
+    let result = super.tryCall('getMarketTotalBalance', 'getMarketTotalBalance(uint128):(int256)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -558,21 +522,17 @@ export class Proxy extends ethereum.SmartContract {
   }
 
   getWithdrawableUsd(marketId: BigInt): BigInt {
-    let result = super.call(
-      "getWithdrawableUsd",
-      "getWithdrawableUsd(uint128):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(marketId)]
-    );
+    let result = super.call('getWithdrawableUsd', 'getWithdrawableUsd(uint128):(uint256)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
 
     return result[0].toBigInt();
   }
 
   try_getWithdrawableUsd(marketId: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "getWithdrawableUsd",
-      "getWithdrawableUsd(uint128):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(marketId)]
-    );
+    let result = super.tryCall('getWithdrawableUsd', 'getWithdrawableUsd(uint128):(uint256)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -581,21 +541,17 @@ export class Proxy extends ethereum.SmartContract {
   }
 
   registerMarket(market: Address): BigInt {
-    let result = super.call(
-      "registerMarket",
-      "registerMarket(address):(uint128)",
-      [ethereum.Value.fromAddress(market)]
-    );
+    let result = super.call('registerMarket', 'registerMarket(address):(uint128)', [
+      ethereum.Value.fromAddress(market),
+    ]);
 
     return result[0].toBigInt();
   }
 
   try_registerMarket(market: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "registerMarket",
-      "registerMarket(address):(uint128)",
-      [ethereum.Value.fromAddress(market)]
-    );
+    let result = super.tryCall('registerMarket', 'registerMarket(address):(uint128)', [
+      ethereum.Value.fromAddress(market),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }

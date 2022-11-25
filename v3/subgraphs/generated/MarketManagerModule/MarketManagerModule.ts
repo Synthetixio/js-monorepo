@@ -32,16 +32,16 @@ export class MarketRegistered__Params {
   }
 }
 
-export class UsdDeposited extends ethereum.Event {
-  get params(): UsdDeposited__Params {
-    return new UsdDeposited__Params(this);
+export class MarketUsdDeposited extends ethereum.Event {
+  get params(): MarketUsdDeposited__Params {
+    return new MarketUsdDeposited__Params(this);
   }
 }
 
-export class UsdDeposited__Params {
-  _event: UsdDeposited;
+export class MarketUsdDeposited__Params {
+  _event: MarketUsdDeposited;
 
-  constructor(event: UsdDeposited) {
+  constructor(event: MarketUsdDeposited) {
     this._event = event;
   }
 
@@ -62,16 +62,16 @@ export class UsdDeposited__Params {
   }
 }
 
-export class UsdWithdrawn extends ethereum.Event {
-  get params(): UsdWithdrawn__Params {
-    return new UsdWithdrawn__Params(this);
+export class MarketUsdWithdrawn extends ethereum.Event {
+  get params(): MarketUsdWithdrawn__Params {
+    return new MarketUsdWithdrawn__Params(this);
   }
 }
 
-export class UsdWithdrawn__Params {
-  _event: UsdWithdrawn;
+export class MarketUsdWithdrawn__Params {
+  _event: MarketUsdWithdrawn;
 
-  constructor(event: UsdWithdrawn) {
+  constructor(event: MarketUsdWithdrawn) {
     this._event = event;
   }
 
@@ -213,6 +213,25 @@ export class MarketManagerModule extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  isMarketCapacityLocked(marketId: BigInt): boolean {
+    let result = super.call('isMarketCapacityLocked', 'isMarketCapacityLocked(uint128):(bool)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
+
+    return result[0].toBoolean();
+  }
+
+  try_isMarketCapacityLocked(marketId: BigInt): ethereum.CallResult<boolean> {
+    let result = super.tryCall('isMarketCapacityLocked', 'isMarketCapacityLocked(uint128):(bool)', [
+      ethereum.Value.fromUnsignedBigInt(marketId),
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
   registerMarket(market: Address): BigInt {
     let result = super.call('registerMarket', 'registerMarket(address):(uint128)', [
       ethereum.Value.fromAddress(market),
@@ -233,20 +252,20 @@ export class MarketManagerModule extends ethereum.SmartContract {
   }
 }
 
-export class DepositUsdCall extends ethereum.Call {
-  get inputs(): DepositUsdCall__Inputs {
-    return new DepositUsdCall__Inputs(this);
+export class DepositMarketUsdCall extends ethereum.Call {
+  get inputs(): DepositMarketUsdCall__Inputs {
+    return new DepositMarketUsdCall__Inputs(this);
   }
 
-  get outputs(): DepositUsdCall__Outputs {
-    return new DepositUsdCall__Outputs(this);
+  get outputs(): DepositMarketUsdCall__Outputs {
+    return new DepositMarketUsdCall__Outputs(this);
   }
 }
 
-export class DepositUsdCall__Inputs {
-  _call: DepositUsdCall;
+export class DepositMarketUsdCall__Inputs {
+  _call: DepositMarketUsdCall;
 
-  constructor(call: DepositUsdCall) {
+  constructor(call: DepositMarketUsdCall) {
     this._call = call;
   }
 
@@ -263,10 +282,10 @@ export class DepositUsdCall__Inputs {
   }
 }
 
-export class DepositUsdCall__Outputs {
-  _call: DepositUsdCall;
+export class DepositMarketUsdCall__Outputs {
+  _call: DepositMarketUsdCall;
 
-  constructor(call: DepositUsdCall) {
+  constructor(call: DepositMarketUsdCall) {
     this._call = call;
   }
 }
@@ -339,20 +358,20 @@ export class RegisterMarketCall__Outputs {
   }
 }
 
-export class WithdrawUsdCall extends ethereum.Call {
-  get inputs(): WithdrawUsdCall__Inputs {
-    return new WithdrawUsdCall__Inputs(this);
+export class WithdrawMarketUsdCall extends ethereum.Call {
+  get inputs(): WithdrawMarketUsdCall__Inputs {
+    return new WithdrawMarketUsdCall__Inputs(this);
   }
 
-  get outputs(): WithdrawUsdCall__Outputs {
-    return new WithdrawUsdCall__Outputs(this);
+  get outputs(): WithdrawMarketUsdCall__Outputs {
+    return new WithdrawMarketUsdCall__Outputs(this);
   }
 }
 
-export class WithdrawUsdCall__Inputs {
-  _call: WithdrawUsdCall;
+export class WithdrawMarketUsdCall__Inputs {
+  _call: WithdrawMarketUsdCall;
 
-  constructor(call: WithdrawUsdCall) {
+  constructor(call: WithdrawMarketUsdCall) {
     this._call = call;
   }
 
@@ -369,10 +388,10 @@ export class WithdrawUsdCall__Inputs {
   }
 }
 
-export class WithdrawUsdCall__Outputs {
-  _call: WithdrawUsdCall;
+export class WithdrawMarketUsdCall__Outputs {
+  _call: WithdrawMarketUsdCall;
 
-  constructor(call: WithdrawUsdCall) {
+  constructor(call: WithdrawMarketUsdCall) {
     this._call = call;
   }
 }
