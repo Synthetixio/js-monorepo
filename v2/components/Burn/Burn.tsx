@@ -37,6 +37,8 @@ import { BurnHeader } from './BurnHeader';
 import { leftColWidth, rightColWidth } from './layout';
 import { BurnLinks } from './BurnLinks';
 
+type ActivePreset = 'max' | 'toTarget' | 'sUSDBalance' | 'debtBalance';
+
 interface BurnProps {
   snxBalance?: number;
   susdBalance?: number;
@@ -49,15 +51,14 @@ interface BurnProps {
   transactionFee?: Wei | null;
   gasError: Error | null;
   isGasEnabledAndNotFetched: boolean;
-  onBadgeClick: (badge: ActiveBadge) => void;
+  onPresetClick: (badge: ActivePreset | null) => void;
   stakedSnx: number;
   debtBalance?: number;
   sUsdAmountToTarget: number;
   isAboveTarget?: boolean;
   burnAmountForCalculations: number;
+  activePreset: ActivePreset;
 }
-
-type ActiveBadge = 'max' | 'toTarget';
 
 const StyledInput: FC<InputProps> = (props) => {
   return (
@@ -91,7 +92,7 @@ export const BurnUi = ({
   onBurnAmountSusdChange,
   onUnstakeAmountChange,
   transactionFee,
-  onBadgeClick,
+  onPresetClick,
   stakedSnx,
   debtBalance,
   gasError,
@@ -99,20 +100,20 @@ export const BurnUi = ({
   sUsdAmountToTarget,
   isAboveTarget,
   burnAmountForCalculations,
+  activePreset,
 }: BurnProps) => {
   const { t } = useTranslation();
-  const [activeBadge, setActiveBadge] = useState<ActiveBadge | null>(null);
 
   const onChange = (currency: 'susd' | 'snx') => (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
-    setActiveBadge(null);
+    onPresetClick(null);
     if (/^[0-9]*(\.[0-9]{0,2})?$/.test(value)) {
       return currency === 'susd' ? onBurnAmountSusdChange(value) : onUnstakeAmountChange(value);
     }
   };
-  const handleBadgePress = (badgeType: ActiveBadge) => {
-    setActiveBadge(badgeType);
-    onBadgeClick(badgeType);
+  const handlePresetPress = (badgeType: ActivePreset) => {
+    onPresetClick(badgeType);
+    onPresetClick(badgeType);
   };
   const notEnoughBalance = burnAmountForCalculations > susdBalance;
 
@@ -149,11 +150,11 @@ export const BurnUi = ({
                 onKeyDown={(e) => {
                   const oldVal = parseFloatWithCommas(burnAmountSusd);
                   if (e.key === 'ArrowUp') {
-                    setActiveBadge(null);
+                    onPresetClick(null);
                     onBurnAmountSusdChange(numberWithCommas(String(oldVal + 1)));
                   }
                   if (e.key === 'ArrowDown') {
-                    setActiveBadge(null);
+                    onPresetClick(null);
                     onBurnAmountSusdChange(numberWithCommas(String(Math.max(0, oldVal - 1))));
                   }
                 }}
@@ -239,11 +240,11 @@ export const BurnUi = ({
             <Badge
               variant="burn"
               sx={{
-                bg: activeBadge === 'max' ? 'cyan.500' : 'whiteAlpha.300',
-                color: activeBadge === 'max' ? 'black' : 'cyan.500',
+                bg: activePreset === 'max' ? 'cyan.500' : 'whiteAlpha.300',
+                color: activePreset === 'max' ? 'black' : 'cyan.500',
               }}
               mr={1}
-              onClick={() => handleBadgePress('max')}
+              onClick={() => handlePresetPress('max')}
             >
               {t('staking-v2.burn.burn-max')}
               <Tooltip label={t('staking-v2.burn.burn-max-tooltip')} hasArrow>
@@ -251,21 +252,21 @@ export const BurnUi = ({
                   <InfoIcon
                     width="12px"
                     height="12px"
-                    color={activeBadge === 'max' ? 'blue.900' : 'cyan.400'}
+                    color={activePreset === 'max' ? 'blue.900' : 'cyan.400'}
                   />
                 </Flex>
               </Tooltip>
             </Badge>
             <Badge
               variant="burn"
-              bg={activeBadge === 'toTarget' ? 'cyan.500' : 'whiteAlpha.300'}
-              color={activeBadge === 'toTarget' ? 'black' : 'cyan.500'}
+              bg={activePreset === 'toTarget' ? 'cyan.500' : 'whiteAlpha.300'}
+              color={activePreset === 'toTarget' ? 'black' : 'cyan.500'}
               cursor={isAboveTarget ? 'not-allowed' : 'pointer'}
               _hover={{
                 cursor: isAboveTarget ? 'not-allowed' : 'pointer',
               }}
               ml={1}
-              onClick={isAboveTarget ? undefined : () => handleBadgePress('toTarget')}
+              onClick={isAboveTarget ? undefined : () => handlePresetPress('toTarget')}
             >
               {t('staking-v2.burn.burn-target')}
               <Tooltip
@@ -280,7 +281,7 @@ export const BurnUi = ({
                   <InfoIcon
                     width="12px"
                     height="12px"
-                    color={activeBadge === 'toTarget' ? 'blue.900' : 'cyan.400'}
+                    color={activePreset === 'toTarget' ? 'blue.900' : 'cyan.400'}
                   />
                 </Flex>
               </Tooltip>
@@ -329,11 +330,11 @@ export const BurnUi = ({
                 onKeyDown={(e) => {
                   const oldVal = parseFloatWithCommas(snxUnstakingAmount);
                   if (e.key === 'ArrowUp') {
-                    setActiveBadge(null);
+                    onPresetClick(null);
                     onUnstakeAmountChange(numberWithCommas(String(oldVal + 1)));
                   }
                   if (e.key === 'ArrowDown') {
-                    setActiveBadge(null);
+                    onPresetClick(null);
                     onUnstakeAmountChange(numberWithCommas(String(Math.max(0, oldVal - 1))));
                   }
                 }}
@@ -410,11 +411,11 @@ export const BurnUi = ({
 };
 const getBurnAmountForCalculations = (
   burnAmountSusd: string,
-  activeBadge?: ActiveBadge,
+  activePreset?: ActivePreset,
   susdBalance = 0,
   debtBalance = 0
 ) => {
-  if (activeBadge !== 'max') {
+  if (activePreset !== 'max') {
     return burnAmountSusd === '' ? undefined : parseFloatWithCommas(burnAmountSusd);
   }
   return susdBalance > debtBalance ? debtBalance : susdBalance;
@@ -422,7 +423,7 @@ const getBurnAmountForCalculations = (
 export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
   const [burnAmountSusd, setBurnAmountSusd] = useState('');
   const [snxUnstakingAmount, setSnxUnstakingAmount] = useState('');
-  const [activeBadge, setActiveBadge] = useState<ActiveBadge | undefined>(undefined);
+  const [activePreset, setActivePreset] = useState<ActivePreset | undefined>(undefined);
   const queryClient = useQueryClient();
 
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
@@ -450,23 +451,23 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     // Even if the sUSD balance might be bigger than the users debt we still send the complete balance to the contract
     // We do this to avoid users having sUSD dust incase the debt fluctuates.
     // The contract will only burn whats needed to clear the debt.
-    amount: activeBadge === 'max' ? wei(susdBalance || 0).toBN() : wei(burnAmountSusd || 0).toBN(),
+    amount: activePreset === 'max' ? wei(susdBalance || 0).toBN() : wei(burnAmountSusd || 0).toBN(),
     delegateAddress: delegateWalletAddress,
-    toTarget: activeBadge === 'toTarget',
+    toTarget: activePreset === 'toTarget',
   });
 
-  const handleBadgeClick = (badgeType: ActiveBadge) => {
+  const handlePresetClick = (presetType: ActivePreset | null) => {
     const snxPrice = exchangeRateData?.SNX?.toNumber();
     const sUSDBalanceWithDefault = susdBalance?.toNumber() || 0;
     if (!debtData || !snxPrice) return;
-    switch (badgeType) {
+    switch (presetType) {
       case 'toTarget':
         const burnAmount = Wei.max(
           debtData.debtBalance.sub(debtData.issuableSynths),
           wei(0)
         ).toNumber();
 
-        setActiveBadge('toTarget');
+        setActivePreset('toTarget');
         const snxUnstakingAmount = calculateUnstakingAmountFromBurn({
           burnAmount,
           targetCRatio: debtData.targetCRatio.toNumber(),
@@ -481,7 +482,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         return;
 
       case 'max': {
-        setActiveBadge('max');
+        setActivePreset('max');
 
         const burnAmountString = formatNumber(
           debtData.debtBalance.gt(sUSDBalanceWithDefault)
@@ -507,7 +508,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
   };
   const burnAmountForCalculations = getBurnAmountForCalculations(
     burnAmountSusd,
-    activeBadge,
+    activePreset,
     susdBalance?.toNumber(),
     debtData?.debtBalance.toNumber()
   );
@@ -554,7 +555,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
                     issuableSynths: debtData.issuableSynths.toNumber(),
                   })
                 : undefined;
-              setActiveBadge(undefined);
+              setActivePreset(null);
               setBurnAmountSusd(burnAmount);
               setSnxUnstakingAmount(
                 snxUnstakingAmount === undefined ? '' : formatNumber(snxUnstakingAmount)
@@ -576,16 +577,17 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
                 debtBalance: debtData.debtBalance.toNumber(),
                 issuableSynths: debtData.issuableSynths.toNumber(),
               });
-              setActiveBadge(undefined);
+              setActivePreset(null);
               setSnxUnstakingAmount(unstakingAmount);
               setBurnAmountSusd(burnAmount === undefined ? '' : formatNumber(burnAmount));
             }}
-            onBadgeClick={handleBadgeClick}
+            onPresetClick={handlePresetClick}
             gasError={gasError}
             isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
             transactionFee={transactionFee}
             onSubmit={handleSubmit}
             burnAmountForCalculations={burnAmountForCalculations || 0}
+            activePreset={activePreset}
           />
         </Box>
         <Box width={{ base: 'full', md: rightColWidth }} mt={{ base: 2, md: 0 }}>
@@ -598,7 +600,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         error={error}
         gasError={gasError}
         onClose={() => {
-          setActiveBadge(undefined);
+          setActivePreset(null);
           setBurnAmountSusd('');
           setSnxUnstakingAmount('');
           settle();
