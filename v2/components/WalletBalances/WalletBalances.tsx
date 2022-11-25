@@ -25,7 +25,15 @@ import { useTranslation } from 'react-i18next';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 import { SNXIcon, DSNXIcon, EthereumIcon } from '@snx-v2/icons';
-import { AssetTd, BalanceTd, HoldingTd, PriceTd, StyledTh, TbodyLoading } from './TableComponents';
+import {
+  AssetTd,
+  BalanceTd,
+  HoldingTd,
+  PriceTd,
+  StyledTd,
+  StyledTh,
+  TbodyLoading,
+} from './TableComponents';
 
 const WalletBalancesUi: React.FC<{
   totalSynthBalance?: number;
@@ -79,7 +87,9 @@ const WalletBalancesUi: React.FC<{
           <Table variant="simple">
             <Thead>
               <Tr>
-                <StyledTh>{t('staking-v2.wallet-balances.table-columns.asset')}</StyledTh>
+                <StyledTh width="40%">
+                  {t('staking-v2.wallet-balances.table-columns.asset')}
+                </StyledTh>
                 <StyledTh>{t('staking-v2.wallet-balances.table-columns.balance')}</StyledTh>
                 <StyledTh>{t('staking-v2.wallet-balances.table-columns.price')}</StyledTh>
                 <StyledTh>{t('staking-v2.wallet-balances.table-columns.holdings')}</StyledTh>
@@ -132,9 +142,14 @@ const WalletBalancesUi: React.FC<{
           <Table variant="simple">
             <Thead>
               <Tr>
-                <StyledTh>{t('staking-v2.wallet-balances.table-columns.asset')}</StyledTh>
+                <StyledTh width="40%">
+                  {t('staking-v2.wallet-balances.table-columns.asset')}
+                </StyledTh>
                 <StyledTh>{t('staking-v2.wallet-balances.table-columns.balance')}</StyledTh>
                 <StyledTh>{t('staking-v2.wallet-balances.table-columns.price')}</StyledTh>
+                <StyledTh visibility="hidden">
+                  {t('staking-v2.wallet-balances.table-columns.holdings')}
+                </StyledTh>
               </Tr>
             </Thead>
             <Tbody>
@@ -155,6 +170,7 @@ const WalletBalancesUi: React.FC<{
                       <AssetTd currencyKey={currencyKey} description={description} icon={icon} />
                       <BalanceTd balance={balance} usdBalance={usdBalance} />
                       <PriceTd price={price} />
+                      <StyledTd />
                     </Tr>
                   )
                 )
