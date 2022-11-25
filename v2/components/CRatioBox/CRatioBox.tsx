@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Flex, Box, Heading, Badge, Divider, Text, Tooltip, Skeleton } from '@chakra-ui/react';
 import { ArrowRight, InfoIcon } from '@snx-v2/icons';
 import { formatPercent } from '@snx-v2/formatters';
-import { badgeColor, getHealthVariant } from '@snx-v2/getHealthVariant';
+import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useTranslation } from 'react-i18next';
 import { useDebtData } from '@snx-v2/useDebtData';
 
@@ -27,15 +27,17 @@ export const CRatioBoxUi: FC<{
     liquidationCratioPercentage: liquidationRatioPercentage,
     targetThreshold,
   });
-  const badgeHealthVariant = getHealthVariant({
-    currentCRatioPercentage:
-      newCratioPercentage !== undefined ? newCratioPercentage : currentCRatioPercentage,
-    targetCratioPercentage: targetCRatioPercentage,
-    liquidationCratioPercentage: liquidationRatioPercentage,
-    targetThreshold,
-  });
+  const badgeHealthVariant =
+    newCratioPercentage === 0
+      ? 'not-staking'
+      : getHealthVariant({
+          currentCRatioPercentage:
+            newCratioPercentage !== undefined ? newCratioPercentage : currentCRatioPercentage,
+          targetCratioPercentage: targetCRatioPercentage,
+          liquidationCratioPercentage: liquidationRatioPercentage,
+          targetThreshold,
+        });
 
-  const cRatioHealth = t(`staking-v2.cratio-box.${badgeHealthVariant}`);
   return (
     <Box>
       <Flex px={4} pt={2} justifyContent="space-between" alignItems="center" flexWrap="wrap">
@@ -50,8 +52,8 @@ export const CRatioBoxUi: FC<{
         <Box>
           <Flex alignItems="center">
             <Text
-              data-testid="current c-ratio badge"
-              color={badgeColor(healthVariant).color}
+              data-testid="current c-ratio text"
+              color={healthVariant}
               fontFamily="mono"
               fontSize="lg"
               textAlign="end"
@@ -68,22 +70,15 @@ export const CRatioBoxUi: FC<{
               <>
                 <ArrowRight mx={1} color="white" />
                 <Text
-                  data-testid="new c-ratio badge"
-                  color={
-                    badgeColor(
-                      getHealthVariant({
-                        targetCratioPercentage: targetCRatioPercentage,
-                        liquidationCratioPercentage: liquidationRatioPercentage,
-                        currentCRatioPercentage: newCratioPercentage,
-                        targetThreshold,
-                      })
-                    ).color
-                  }
+                  data-testid="new c-ratio text"
+                  color={badgeHealthVariant === 'not-staking' ? 'white' : badgeHealthVariant}
                   fontFamily="mono"
                   fontSize="lg"
                   textAlign="end"
                 >
-                  {formatPercent(newCratioPercentage / 100, { maximumFractionDigits: 0 })}
+                  {newCratioPercentage === 0
+                    ? 'N/A'
+                    : formatPercent(newCratioPercentage / 100, { maximumFractionDigits: 0 })}
                 </Text>
               </>
             ) : null}
@@ -94,9 +89,7 @@ export const CRatioBoxUi: FC<{
         {currentCRatioPercentage ? (
           <Badge
             data-testid="healthy badge"
-            color={badgeColor(badgeHealthVariant).color}
-            bg={badgeColor(badgeHealthVariant).border}
-            borderColor={badgeColor(badgeHealthVariant).color}
+            variant={badgeHealthVariant}
             borderWidth="1px"
             py={0}
             px={1}
@@ -105,7 +98,7 @@ export const CRatioBoxUi: FC<{
             <span>
               <InfoIcon mr={1} mb={0.5} color="currentcolor" width="12px" height="12px" />
             </span>
-            {cRatioHealth}
+            {t(`staking-v2.cratio-box.${badgeHealthVariant}`)}
           </Badge>
         ) : null}
       </Flex>
@@ -119,7 +112,7 @@ export const CRatioBoxUi: FC<{
             </span>
           </Tooltip>
         </Heading>
-        <Text data-testid="target-ratio badge" color="green.400" fontFamily="mono" fontSize="lg">
+        <Text data-testid="target-ratio text" color="success" fontFamily="mono" fontSize="lg">
           {targetCRatioPercentage ? (
             formatPercent(targetCRatioPercentage / 100, { maximumFractionDigits: 0 })
           ) : (
