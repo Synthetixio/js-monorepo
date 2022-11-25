@@ -81,7 +81,7 @@ const Tooltip: ComponentStyleConfig = {
 
 const Badge: ComponentStyleConfig = {
   baseStyle: {
-    color: 'cyan.400',
+    color: 'cyan.500',
     bg: 'whiteAlpha.300',
     fontFamily: 'heading',
     py: 1,
@@ -89,13 +89,13 @@ const Badge: ComponentStyleConfig = {
   },
   variants: {
     success: {
-      color: 'green.400',
-      borderColor: 'green.400',
+      color: 'green.500',
+      borderColor: 'green.500',
       bg: 'green.900',
     },
     warning: {
-      color: 'orange.400',
-      borderColor: 'orange.400',
+      color: 'orange.500',
+      borderColor: 'orange.500',
       bg: 'orange.900',
     },
     error: {

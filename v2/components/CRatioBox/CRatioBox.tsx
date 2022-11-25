@@ -52,7 +52,7 @@ export const CRatioBoxUi: FC<{
         <Box>
           <Flex alignItems="center">
             <Text
-              data-testid="current c-ratio badge"
+              data-testid="current c-ratio text"
               color={healthVariant}
               fontFamily="mono"
               fontSize="lg"
@@ -70,7 +70,7 @@ export const CRatioBoxUi: FC<{
               <>
                 <ArrowRight mx={1} color="white" />
                 <Text
-                  data-testid="new c-ratio badge"
+                  data-testid="new c-ratio text"
                   color={badgeHealthVariant === 'not-staking' ? 'white' : badgeHealthVariant}
                   fontFamily="mono"
                   fontSize="lg"
@@ -112,7 +112,7 @@ export const CRatioBoxUi: FC<{
             </span>
           </Tooltip>
         </Heading>
-        <Text data-testid="target-ratio badge" color="green.400" fontFamily="mono" fontSize="lg">
+        <Text data-testid="target-ratio text" color="success" fontFamily="mono" fontSize="lg">
           {targetCRatioPercentage ? (
             formatPercent(targetCRatioPercentage / 100, { maximumFractionDigits: 0 })
           ) : (

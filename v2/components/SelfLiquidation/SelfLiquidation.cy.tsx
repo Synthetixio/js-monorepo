@@ -37,7 +37,7 @@ describe('SelfLiquidationUi', () => {
       </Box>
     );
     cy.get(`[data-testid='c ratio progressbar']`).should('be.visible');
-    cy.get(`[data-testid='current c-ratio badge']`).should('be.visible');
+    cy.get(`[data-testid='current c-ratio text']`).should('be.visible');
     cy.get(`[data-testid='snx penalty']`).should('have.text', '100.00');
     cy.get(`[data-testid='usd penalty']`).should('have.text', '= $200.00');
     cy.get(`[data-testid='self liq button']`)
