@@ -9,7 +9,7 @@ const red = 'rgb(255, 74, 96)';
 const darkRed = 'rgb(155, 44, 44)';
 
 describe('no new c-ratio', () => {
-  it('renders green and tooltops', () => {
+  it('renders green and tooltips', () => {
     cy.viewport(500, 300);
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
@@ -169,6 +169,30 @@ describe('with new c-ratio', () => {
       'have.css',
       'background-color',
       darkRed
+    );
+  });
+  it('renders new cratio 0', () => {
+    cy.viewport(500, 300);
+    cy.mount(
+      <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
+        <CRatioProgressBarUi
+          {...{
+            targetCratioPercentage: 350,
+            liquidationCratioPercentage: 100,
+            currentCRatioPercentage: 400,
+            newCratioPercentage: 0,
+            targetThreshold: 0.05,
+            isLoading: false,
+          }}
+        />
+      </Box>
+    );
+
+    cy.get('[data-testid="highlighted progress bar"] [role="progressbar"]').should(
+      'not.be.visible'
+    );
+    cy.get('[data-testid="non highlighted progress bar"] [role="progressbar"]').should(
+      'not.be.visible'
     );
   });
 });

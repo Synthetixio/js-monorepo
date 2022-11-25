@@ -129,6 +129,15 @@ export const MintUi = ({
                 data-testid="mint snx amount input"
                 placeholder={t('staking-v2.mint.enter-amount')}
                 onChange={onChange('snx')}
+                onKeyDown={(e) => {
+                  const oldVal = parseFloatWithCommas(stakeAmountSNX);
+                  if (e.key === 'ArrowUp') {
+                    onStakeAmountSNXChange(numberWithCommas(String(oldVal + 1)));
+                  }
+                  if (e.key === 'ArrowDown') {
+                    onStakeAmountSNXChange(numberWithCommas(String(Math.max(0, oldVal - 1))));
+                  }
+                }}
                 value={numberWithCommas(stakeAmountSNX)}
               />
               <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
@@ -172,6 +181,15 @@ export const MintUi = ({
                 placeholder={t('staking-v2.mint.enter-amount')}
                 onChange={onChange('susd')}
                 value={numberWithCommas(mintAmountsUSD)}
+                onKeyDown={(e) => {
+                  const oldVal = parseFloatWithCommas(mintAmountsUSD);
+                  if (e.key === 'ArrowUp') {
+                    onMintAmountSUSDChange(numberWithCommas(String(oldVal + 1)));
+                  }
+                  if (e.key === 'ArrowDown') {
+                    onMintAmountSUSDChange(numberWithCommas(String(Math.max(0, oldVal - 1))));
+                  }
+                }}
               />
               <Skeleton isLoaded={!isLoading} startColor="gray.900" endColor="gray.700">
                 <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading">

@@ -146,6 +146,15 @@ export const BurnUi = ({
             <Flex flexDir="column" alignItems="flex-end">
               <StyledInput
                 autoFocus
+                onKeyDown={(e) => {
+                  const oldVal = parseFloatWithCommas(burnAmountSusd);
+                  if (e.key === 'ArrowUp') {
+                    onBurnAmountSusdChange(numberWithCommas(String(oldVal + 1)));
+                  }
+                  if (e.key === 'ArrowDown') {
+                    onBurnAmountSusdChange(numberWithCommas(String(Math.max(0, oldVal - 1))));
+                  }
+                }}
                 data-testid="burn susd amount input"
                 placeholder={t('staking-v2.burn.enter-amount')}
                 onChange={onChange('susd')}
@@ -315,6 +324,15 @@ export const BurnUi = ({
                 data-testid="burn snx amount input"
                 placeholder={t('staking-v2.burn.enter-amount')}
                 onChange={onChange('snx')}
+                onKeyDown={(e) => {
+                  const oldVal = parseFloatWithCommas(snxUnstakingAmount);
+                  if (e.key === 'ArrowUp') {
+                    onUnstakeAmountChange(numberWithCommas(String(oldVal + 1)));
+                  }
+                  if (e.key === 'ArrowDown') {
+                    onUnstakeAmountChange(numberWithCommas(String(Math.max(0, oldVal - 1))));
+                  }
+                }}
                 value={numberWithCommas(snxUnstakingAmount)}
               />
               <Flex alignItems="center">
