@@ -15,12 +15,9 @@ function gnosis(options?: gnosisOptions) {
     ],
   } = options || {};
   return () => ({
-    label: 'Safe',
+    label: 'Gnosis Safe',
     getIcon: async () => (await import('@web3-onboard/gnosis/dist/icon')).default,
     getInterface: async () => {
-      // const { default: SafeAppsSDK } = await import('@gnosis.pm/safe-apps-sdk');
-      // const { SafeAppProvider } = await import('@gnosis.pm/safe-apps-provider');
-      // const { createEIP1193Provider } = await import('@web3-onboard/common');
       const SafeAppProviderConstructor =
         // @ts-ignore
         SafeAppsSDK.default || SafeAppsSDK;
