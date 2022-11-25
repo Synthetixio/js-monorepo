@@ -202,18 +202,20 @@ const MaintainActionCard: React.FC<{
     targetThreshold,
   });
 
+  const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
+  const currentCRatioPercentageWithThresHold =
+    currentCRatioPercentage && targetCratioPercentage && targetThreshold
+      ? currentCRatioPercentage * (1 + targetThreshold)
+      : false;
+  const cRatioAboveOrEqToTarget =
+    targetCratioPercentage && currentCRatioPercentageWithThresHold
+      ? currentCRatioPercentageWithThresHold >= targetCratioPercentage
+      : false;
   const getButtonVariant = () => {
     if (!isStaking) return 'ghost';
     if (cRatioAboveOrEqToTarget) return 'ghost';
     return variant;
   };
-
-  const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
-  const cRatioAboveOrEqToTarget = Boolean(
-    targetCratioPercentage &&
-      currentCRatioPercentage &&
-      currentCRatioPercentage >= targetCratioPercentage
-  );
   const fadedBg = `${theme.colors[variant]}40`;
   const rewardsClaimedAndWarning = hasClaimed && variant === 'warning';
 
@@ -302,6 +304,7 @@ const CollectActionCard: React.FC<{
     currentCRatioPercentage,
     targetThreshold,
   });
+  console.log('collect', variant);
   const getButtonVariant = () => {
     if (hasClaimed) return 'ghost';
     if (!isStaking) return 'ghost';
@@ -420,6 +423,15 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
   targetThreshold,
   rewardsDollarValue,
 }) => {
+  console.log({
+    liquidationCratioPercentage,
+    currentCRatioPercentage,
+    targetCratioPercentage,
+    isFlagged,
+    nextEpochStartDate,
+    hasClaimed,
+    targetThreshold,
+  });
   return (
     <Stack direction={['column', 'column', 'row']} align="center" spacing="14px">
       <StakeActionCard
