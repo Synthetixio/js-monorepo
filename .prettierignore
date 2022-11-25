@@ -17,3 +17,4 @@ v3/contracts/deployments
 **/.nyc_output
 **/junit.xml
 tools/tenderly/fork.json
+v3/subgraphs/tests/.latest.json
