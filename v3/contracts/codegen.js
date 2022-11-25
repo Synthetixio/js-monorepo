@@ -7,7 +7,7 @@ const prettierOptions = JSON.parse(fs.readFileSync('../../.prettierrc', 'utf8'))
 const networks = ['hardhat', 'goerli', 'optimism-goerli'];
 
 function generateTS(network) {
-  const deploymentFiles = fs.readdirSync(path.resolve(__dirname, `../deployments/${network}`));
+  const deploymentFiles = fs.readdirSync(path.resolve(__dirname, `deployments/${network}`));
 
   if (!deploymentFiles.length) {
     throw new Error(`No deployment files found for ${network}`);
@@ -21,7 +21,7 @@ function generateTS(network) {
   deploymentFiles.forEach((file) => {
     const fileName = path.basename(file, path.extname(file));
     const json = JSON.parse(
-      fs.readFileSync(path.resolve(__dirname, `../deployments/${network}/${file}`))
+      fs.readFileSync(path.resolve(__dirname, `deployments/${network}/${file}`))
     );
     const abiInterface = new ethers.utils.Interface(json.abi);
     json.abi = abiInterface.format(ethers.utils.FormatTypes.full);
