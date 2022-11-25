@@ -37,9 +37,9 @@
           "headline": "SNX Bridge",
           "subHeadline": "Transfer Asset between blockchains"
         },
-        "debt-pool": {
-          "headline": "Debt Pool",
-          "subHeadline": "Explore the debt pool"
+        "hedge-debt": {
+          "headline": "Hedge Debt",
+          "subHeadline": "Buy dSNX to hedge"
         },
         "help": {
           "headline": "Help",
@@ -65,7 +65,7 @@
       "collect-epoch-tooltip": "Time to next epoch, you currently don't have any rewards",
       "collect-price": "SNX Price",
       "collect-main-healthy-button": "Claim your rewards",
-      "collect-main-unhealthy-button": "Claim page",
+      "collect-main-unhealthy-button": "Claim",
       "collect-explanation-link": "Rewards explained",
       "collect-rewards": "Your Rewards",
       "collect-rewards-tooltip": "Value of SNX and sUSD rewards"
@@ -102,6 +102,10 @@
       "info": "Info",
       "gas-estimation-error": "Error estimating gas",
       "below-target-error": "Minting not allowed when below target c-ratio",
+      "links": {
+        "guide": "Staking Guide",
+        "hedge": "Hedge Debt"
+      },
       "txn-modal": {
         "staking": "Staking",
         "minting": "Minting"
@@ -131,6 +135,12 @@
       "staked-snx": "Staked SNX: ",
       "unstaking-note": "When burning while under target c-ratio, you are not unstaking SNX. You need to burn {{sUsdAmountToTarget}} sUSD to have a c-ratio above target and unstake SNX.",
       "balance-error": "Not enough sUSD balance",
+      "links": {
+        "guide": "Staking Guide",
+        "bridge": "Bridge",
+        "sell-dsnx": "Sell dSNX for sUSD",
+        "self-liquidate": "Self Liquidate"
+      },
       "txn-modal": {
         "unstaking": "Unstaking",
         "burning": "Burning"
@@ -162,12 +172,14 @@
       "box-heading": "SNX Total",
       "staked": "Staked",
       "transferable": "Transferable",
-      "debt": "Debt",
-      "hedged-debt": "Hedge debt",
-      "active": "Active",
-      "issued": "Issued",
-      "assets": "Assets",
-      "see-all-synths": "See all synths",
+      "debt-management": "Debt Management",
+      "hedged-debt": "Hedge Debt",
+      "active-debt": "Active Debt",
+      "collateral": "Collateral",
+      "balance": "Balance",
+      "dsnx-balance": "dSNX Balance",
+      "escrowed": "Escrowed",
+      "liq-rewards": "Liquidation Rewards",
       "show-all-balances": "Show all balances"
     },
     "c-ratio-banner": {
@@ -713,7 +725,8 @@
       "manage": {
         "title": "Manage",
         "approve": "APPROVE",
-        "swap": "BUY DEBT MIRROR (dSNX)",
+        "sell-button": "SELL DEBT MIRROR (dSNX)",
+        "buy-button": "BUY DEBT MIRROR (dSNX)",
         "output": "Receive:",
         "balance-usd": "Balance: $",
         "balance": "Balance: ",
@@ -721,6 +734,7 @@
         "price-impact": "Price impact:",
         "buying": "Buying",
         "buying-dsnx": "Buying dSNX...",
+        "selling-dsnx": "Selling dSNX...",
         "approving-dsnx": "Approving dSNX...",
         "using": "using",
         "powered-by": "Powered by",

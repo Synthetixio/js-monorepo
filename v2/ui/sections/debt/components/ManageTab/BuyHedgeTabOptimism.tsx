@@ -1,11 +1,9 @@
 import { dSNXPoolContractOptimism, SLIPPAGE } from 'constants/dhedge';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { utils } from 'ethers';
-import useSynthetixQueries from '@synthetixio/queries';
-import { constants } from 'ethers';
+import { constants, utils } from 'ethers';
+import useSynthetixQueries, { GasPrice } from '@synthetixio/queries';
 import GasSelector from 'components/GasSelector';
-import { GasPrice } from '@synthetixio/queries';
 import { wei } from '@synthetixio/wei';
 import {
   InputWrapper,
@@ -41,6 +39,7 @@ import { EXTERNAL_LINKS } from 'constants/links';
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';
 import WarningIcon from 'assets/svg/app/warning.svg';
 import TorosWhite from './toros-white.png';
+import { Flip } from './Flip';
 
 const BuyHedgeTabOptimism = () => {
   const { t } = useTranslation();
@@ -111,7 +110,11 @@ const BuyHedgeTabOptimism = () => {
         <StyledInputLabel>
           {t('debt.actions.manage.using')}
           <StyledCryptoCurrencyBox>
-            <StyledCryptoCurrencyImage src="https://raw.githubusercontent.com/Synthetixio/synthetix-assets/v2.0.10/synths/sUSD.svg" />
+            <StyledCryptoCurrencyImage
+              src="https://raw.githubusercontent.com/Synthetixio/synthetix-assets/v2.0.10/synths/sUSD.svg"
+              width="24"
+              height="24"
+            />
             sUSD
           </StyledCryptoCurrencyBox>
         </StyledInputLabel>
@@ -154,10 +157,12 @@ const BuyHedgeTabOptimism = () => {
           </StyledMaxButton>
         </StyledBalance>
         <StyledSpacer />
+        <Flip to="/debt/manage/sell" />
+
         <StyledInputLabel>
           {t('debt.actions.manage.buying')}
           <StyledCryptoCurrencyBox>
-            <Dhedge width="24" />
+            <Dhedge width="24" height="24" />
             dSNX
           </StyledCryptoCurrencyBox>
         </StyledInputLabel>
@@ -215,7 +220,7 @@ const BuyHedgeTabOptimism = () => {
             variant="primary"
             disabled={wei(actualAmountToSendBn || '0').eq(0) || Boolean(depositTx.errorMessage)}
           >
-            {approved ? t('debt.actions.manage.swap') : t('debt.actions.manage.approve')}
+            {approved ? t('debt.actions.manage.buy-button') : t('debt.actions.manage.approve')}
           </StyledButton>
         </>
       )}

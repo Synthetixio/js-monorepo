@@ -2,6 +2,7 @@ import { Box, Progress, Skeleton, Text, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { InfoIcon, TriangleDownIcon, TriangleUpIcon } from '@snx-v2/icons';
+import { useDebtData } from '@snx-v2/useDebtData';
 
 const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
   left,
@@ -47,16 +48,18 @@ const LineWithText: FC<{ left: number; text: string; tooltipText: string }> = ({
   );
 };
 
-export const CRatioProgressBar: FC<{
+export const CRatioProgressBarUi: FC<{
   liquidationCratioPercentage: number;
   targetCratioPercentage: number;
   currentCRatioPercentage: number;
+  newCratioPercentage?: number;
   targetThreshold: number;
   isLoading: boolean;
 }> = ({
   targetCratioPercentage,
   liquidationCratioPercentage,
   currentCRatioPercentage,
+  newCratioPercentage,
   targetThreshold,
   isLoading,
 }) => {
@@ -74,6 +77,24 @@ export const CRatioProgressBar: FC<{
     currentCRatioPercentage,
     targetThreshold,
   });
+  const newVariant = getHealthVariant({
+    targetCratioPercentage,
+    liquidationCratioPercentage,
+    currentCRatioPercentage: newCratioPercentage,
+    targetThreshold,
+  });
+
+  const newCratioPercentageWithDefault = newCratioPercentage || 0;
+  const highlightedProgressCRatio =
+    newCratioPercentage === undefined
+      ? currentCRatioPercentage
+      : newCratioPercentageWithDefault < currentCRatioPercentage
+      ? newCratioPercentageWithDefault
+      : currentCRatioPercentage;
+  const nonHighLightedProgressCRatio =
+    newCratioPercentageWithDefault < currentCRatioPercentage
+      ? currentCRatioPercentage
+      : newCratioPercentageWithDefault;
 
   return (
     <Box
@@ -108,22 +129,39 @@ export const CRatioProgressBar: FC<{
         width="100%"
         isLoaded={!isLoading}
       >
+        {newCratioPercentage !== undefined ? (
+          <Progress
+            data-testId="non highlighted progress bar"
+            variant={'update-' + newVariant}
+            top={0}
+            bottom={0}
+            height="12px"
+            position="absolute"
+            margin="auto"
+            width="100%"
+            value={nonHighLightedProgressCRatio / scaleFactor}
+          />
+        ) : null}
         <Progress
-          variant={variant}
+          variant={newCratioPercentage !== undefined ? newVariant : variant}
           top={0}
           bottom={0}
           height="12px"
           position="absolute"
           margin="auto"
           width="100%"
-          value={currentCRatioPercentage / scaleFactor}
+          data-testId="highlighted progress bar"
+          value={highlightedProgressCRatio / scaleFactor}
         />
       </Skeleton>
       <Box
         bg={variant}
         height="12px"
         position="absolute"
-        left={`${currentCRatioPercentage / scaleFactor}%`}
+        left={`${
+          (newCratioPercentage !== undefined ? newCratioPercentage : currentCRatioPercentage) /
+          scaleFactor
+        }%`}
         top={0}
         bottom={0}
         margin="auto"
@@ -136,7 +174,7 @@ export const CRatioProgressBar: FC<{
               right={0}
               top={0}
               transform="translate(50%,-100%)"
-              color={variant}
+              color={newCratioPercentage !== undefined ? newVariant : variant}
             />
             <TriangleUpIcon
               data-testid="current c-ration triangle"
@@ -144,11 +182,27 @@ export const CRatioProgressBar: FC<{
               right={0}
               bottom={0}
               transform="translate(50%,100%)"
-              color={variant}
+              color={newCratioPercentage !== undefined ? newVariant : variant}
             />
           </>
         )}
       </Box>
     </Box>
+  );
+};
+
+export const CRatioProgressBar: FC<{ newCratioPercentage?: number }> = ({
+  newCratioPercentage,
+}) => {
+  const { data: debtData } = useDebtData();
+  return (
+    <CRatioProgressBarUi
+      liquidationCratioPercentage={debtData?.liquidationRatioPercentage.toNumber() || 0}
+      targetCratioPercentage={debtData?.targetCRatioPercentage.toNumber() || 0}
+      currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber() || 0}
+      targetThreshold={debtData?.targetThreshold.toNumber() || 0}
+      newCratioPercentage={newCratioPercentage}
+      isLoading={false}
+    />
   );
 };

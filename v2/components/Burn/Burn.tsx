@@ -17,14 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
-import {
-  BridgeIcon,
-  FailedIcon,
-  GuideIcon,
-  InfoIcon,
-  SNXIconWithBorder,
-  TokensIcon,
-} from '@snx-v2/icons';
+import { FailedIcon, InfoIcon, SNXIconWithBorder, TokensIcon } from '@snx-v2/icons';
 import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
@@ -42,7 +35,7 @@ import { BurnTransactionModal } from './BurnTransactionModal';
 import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 import { BurnHeader } from './BurnHeader';
 import { leftColWidth, rightColWidth } from './layout';
-import { BoxLink } from '@snx-v2/BoxLink';
+import { BurnLinks } from './BurnLinks';
 
 interface BurnProps {
   snxBalance?: number;
@@ -153,6 +146,15 @@ export const BurnUi = ({
             <Flex flexDir="column" alignItems="flex-end">
               <StyledInput
                 autoFocus
+                onKeyDown={(e) => {
+                  const oldVal = parseFloatWithCommas(burnAmountSusd);
+                  if (e.key === 'ArrowUp') {
+                    onBurnAmountSusdChange(numberWithCommas(String(oldVal + 1)));
+                  }
+                  if (e.key === 'ArrowDown') {
+                    onBurnAmountSusdChange(numberWithCommas(String(Math.max(0, oldVal - 1))));
+                  }
+                }}
                 data-testid="burn susd amount input"
                 placeholder={t('staking-v2.burn.enter-amount')}
                 onChange={onChange('susd')}
@@ -322,6 +324,15 @@ export const BurnUi = ({
                 data-testid="burn snx amount input"
                 placeholder={t('staking-v2.burn.enter-amount')}
                 onChange={onChange('snx')}
+                onKeyDown={(e) => {
+                  const oldVal = parseFloatWithCommas(snxUnstakingAmount);
+                  if (e.key === 'ArrowUp') {
+                    onUnstakeAmountChange(numberWithCommas(String(oldVal + 1)));
+                  }
+                  if (e.key === 'ArrowDown') {
+                    onUnstakeAmountChange(numberWithCommas(String(Math.max(0, oldVal - 1))));
+                  }
+                }}
                 value={numberWithCommas(snxUnstakingAmount)}
               />
               <Flex alignItems="center">
@@ -399,7 +410,9 @@ const getBurnAmountForCalculations = (
   susdBalance = 0,
   debtBalance = 0
 ) => {
-  if (activeBadge !== 'max') return parseFloatWithCommas(burnAmountSusd);
+  if (activeBadge !== 'max') {
+    return burnAmountSusd === '' ? undefined : parseFloatWithCommas(burnAmountSusd);
+  }
   return susdBalance > debtBalance ? debtBalance : susdBalance;
 };
 export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
@@ -568,24 +581,11 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
             isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
             transactionFee={transactionFee}
             onSubmit={handleSubmit}
-            burnAmountForCalculations={burnAmountForCalculations}
+            burnAmountForCalculations={burnAmountForCalculations || 0}
           />
         </Box>
         <Box width={{ base: 'full', md: rightColWidth }} mt={{ base: 2, md: 0 }}>
-          <BoxLink
-            icon={<GuideIcon />}
-            href="https://blog.synthetix.io/basics-of-staking-snx-2022/"
-            isExternal
-            subHeadline=""
-            headline="Staking guide"
-          />
-          <BoxLink
-            containerProps={{ mt: '2' }}
-            icon={<BridgeIcon width="auto" height="20px" color="white" />}
-            to="/bridge"
-            subHeadline=""
-            headline="Bridge"
-          />
+          <BurnLinks />
         </Box>
       </Flex>
       <BurnTransactionModal

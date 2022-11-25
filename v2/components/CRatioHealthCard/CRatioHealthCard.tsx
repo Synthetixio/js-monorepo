@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { CRatioHealthPercentage } from '@snx-v2/CRatioHealthPercentage';
 import { useTranslation } from 'react-i18next';
-import { CRatioProgressBar } from './CRatioProgressBar';
+import { CRatioProgressBar } from '@snx-v2/CRatioProgressBar';
 
 type UiProps = {
   liquidationCratioPercentage?: number;
@@ -12,6 +12,7 @@ type UiProps = {
   currentCRatioPercentage?: number;
   targetThreshold?: number;
   isLoading: boolean;
+  CRatioProgressBar: ReactElement;
 };
 
 export const CRatioHealthCardUi: React.FC<UiProps> = ({
@@ -20,6 +21,7 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
   currentCRatioPercentage,
   targetThreshold,
   isLoading,
+  CRatioProgressBar,
 }) => {
   const { t } = useTranslation();
 
@@ -47,13 +49,7 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
           isLoading={isLoading}
         />
       </Flex>
-      <CRatioProgressBar
-        targetThreshold={targetThreshold || 0}
-        targetCratioPercentage={targetCratioPercentage || 0}
-        liquidationCratioPercentage={liquidationCratioPercentage || 0}
-        currentCRatioPercentage={currentCRatioPercentage || 0}
-        isLoading={isLoading}
-      />
+      {CRatioProgressBar}
     </Box>
   );
 };
@@ -63,6 +59,7 @@ export const CRatioHealthCard: React.FC = () => {
 
   return (
     <CRatioHealthCardUi
+      CRatioProgressBar={<CRatioProgressBar />}
       currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
       targetCratioPercentage={debtData?.targetCRatioPercentage.toNumber()}
       liquidationCratioPercentage={debtData?.liquidationRatioPercentage.toNumber()}

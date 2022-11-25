@@ -141,6 +141,21 @@ const Progress: ComponentMultiStyleConfig = {
         boxShadow: `0px 0px 15px ${props.theme.colors.success}`,
       },
     }),
+    'update-error': () => ({
+      filledTrack: {
+        bg: 'red.700',
+      },
+    }),
+    'update-warning': () => ({
+      filledTrack: {
+        bg: 'orange.700',
+      },
+    }),
+    'update-success': () => ({
+      filledTrack: {
+        bg: 'green.700',
+      },
+    }),
     white: {
       filledTrack: {
         bg: 'white',

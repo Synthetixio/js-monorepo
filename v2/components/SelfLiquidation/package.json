@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "dependencies": {
     "@chakra-ui/react": "^2.2.8",
-    "@snx-v2/CRatioHealthCard": "workspace:*",
+    "@snx-v2/CRatioProgressBar": "workspace:*",
     "@snx-v2/EthGasPriceEstimator": "workspace:*",
     "@snx-v2/ExternalLink": "workspace:*",
     "@snx-v2/TransactionModal": "workspace:*",

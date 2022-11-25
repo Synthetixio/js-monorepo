@@ -6907,14 +6907,16 @@ __metadata:
   resolution: "@snx-v2/BalanceBox@workspace:v2/components/BalanceBox"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
-    "@snx-v2/sumBy": "workspace:*"
     "@snx-v2/useDSnxBalance": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useEscrowBalance": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
-    "@snx-v2/useIssuedDebt": "workspace:*"
+    "@snx-v2/useGetLiquidationRewards": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
     react-i18next: ^11.18.3
@@ -6940,7 +6942,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/BoxLink": "workspace:*"
-    "@snx-v2/CRatioHealthCard": "workspace:*"
+    "@snx-v2/CRatioProgressBar": "workspace:*"
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/ExternalLink": "workspace:*"
@@ -6990,7 +6992,6 @@ __metadata:
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
-    "@snx-v2/useExchangeRatesData": "workspace:*"
     react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
@@ -7002,8 +7003,8 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/CRatioHealthPercentage": "workspace:^"
+    "@snx-v2/CRatioProgressBar": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
-    "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
@@ -7016,6 +7017,19 @@ __metadata:
   resolution: "@snx-v2/CRatioHealthPercentage@workspace:v2/components/CRatioHealthPercentage"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@storybook/react": ^6.5.10
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/CRatioProgressBar@workspace:*, @snx-v2/CRatioProgressBar@workspace:v2/components/CRatioProgressBar":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/CRatioProgressBar@workspace:v2/components/CRatioProgressBar"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/getHealthVariant": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
   languageName: unknown
@@ -7134,7 +7148,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/BoxLink": "workspace:*"
-    "@snx-v2/CRatioHealthCard": "workspace:*"
+    "@snx-v2/CRatioProgressBar": "workspace:*"
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/CountDown": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
@@ -7206,7 +7220,7 @@ __metadata:
   resolution: "@snx-v2/SelfLiquidation@workspace:v2/components/SelfLiquidation"
   dependencies:
     "@chakra-ui/react": ^2.2.8
-    "@snx-v2/CRatioHealthCard": "workspace:*"
+    "@snx-v2/CRatioProgressBar": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/ExternalLink": "workspace:*"
     "@snx-v2/TransactionModal": "workspace:*"
@@ -7468,7 +7482,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/sumBy@workspace:*, @snx-v2/sumBy@workspace:v2/lib/sumBy":
+"@snx-v2/sumBy@workspace:v2/lib/sumBy":
   version: 0.0.0-use.local
   resolution: "@snx-v2/sumBy@workspace:v2/lib/sumBy"
   languageName: unknown
@@ -7539,6 +7553,18 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.7.2
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useEscrowBalance@workspace:*, @snx-v2/useEscrowBalance@workspace:v2/lib/useEscrowBalance":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useEscrowBalance@workspace:v2/lib/useEscrowBalance"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7614,6 +7640,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useGetLiquidationRewards@workspace:*, @snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useInterval@workspace:*, @snx-v2/useInterval@workspace:v2/lib/useInterval":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useInterval@workspace:v2/lib/useInterval"
@@ -7622,7 +7660,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useIssuedDebt@workspace:*, @snx-v2/useIssuedDebt@workspace:v2/lib/useIssuedDebt":
+"@snx-v2/useIssuedDebt@workspace:v2/lib/useIssuedDebt":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useIssuedDebt@workspace:v2/lib/useIssuedDebt"
   dependencies:
