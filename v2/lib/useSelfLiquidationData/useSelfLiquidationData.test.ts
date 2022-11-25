@@ -115,7 +115,7 @@ describe('useSelfLiquidationData', () => {
         liquidationRatioPercentage: wei(100),
       },
     });
-    useExchangeRatesData.mockReturnValue({ data: { SNX: wei(3) } });
+    useExchangeRatesData.mockReturnValue({ data: { SNX: wei(2) } });
     useLiquidationData.mockReturnValue({ data: { selfLiquidationPenalty: wei(0.2) } });
     useLiquidator.mockReturnValue({
       data: {
@@ -134,11 +134,13 @@ describe('useSelfLiquidationData', () => {
 
     const queryResult = await query();
     expect(queryResult).toEqual({
-      selfLiquidationPenalty: wei(0.2),
-      selfLiquidationPenaltyDollar: wei(20),
-      selfLiquidationPenaltySNX: wei(20).div(3),
-      amountToLiquidate: wei(100),
-      amountToLiquidateNoPenalty: wei(80),
+      selfLiquidationPenaltyPercent: wei(0.2),
+      selfLiquidationPenaltyUSD: wei(20),
+      selfLiquidationPenaltySNX: wei(10),
+      totalAmountToLiquidateUSD: wei(100),
+      totalAmountToLiquidateSNX: wei(50),
+      amountToLiquidateToTargetUsd: wei(80),
+      amountToLiquidateToTargetSNX: wei(40),
     });
   });
   test('Handles calculateAmountToFixCollateral returning 0', async () => {
@@ -162,11 +164,13 @@ describe('useSelfLiquidationData', () => {
 
     const queryResult = await query();
     expect(queryResult).toEqual({
-      selfLiquidationPenalty: wei(0.2),
-      selfLiquidationPenaltyDollar: wei(0),
+      selfLiquidationPenaltyPercent: wei(0.2),
+      selfLiquidationPenaltyUSD: wei(0),
       selfLiquidationPenaltySNX: wei(0),
-      amountToLiquidate: wei(0),
-      amountToLiquidateNoPenalty: wei(0),
+      totalAmountToLiquidateUSD: wei(0),
+      totalAmountToLiquidateSNX: wei(0),
+      amountToLiquidateToTargetUsd: wei(0),
+      amountToLiquidateToTargetSNX: wei(0),
     });
   });
 });

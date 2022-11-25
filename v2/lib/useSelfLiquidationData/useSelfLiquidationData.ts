@@ -68,19 +68,28 @@ export const useSelfLiquidationData = () => {
               wei(0).toBN()
             ),
       ]);
-      const amountToLiquidate = wei(amountToLiquidateBn);
+      const totalAmountToLiquidateUSD = wei(amountToLiquidateBn);
+      const totalAmountToLiquidateSNX = totalAmountToLiquidateUSD
+        ? wei(amountToLiquidateBn).div(SNXRate)
+        : wei(0);
       const amountToLiquidateNoPenalty = wei(amountToLiquidateNoPenaltyBn);
-      const selfLiquidationPenaltyDollar = amountToLiquidate.sub(amountToLiquidateNoPenalty);
-      const selfLiquidationPenaltySNX = selfLiquidationPenaltyDollar.gt(0)
-        ? selfLiquidationPenaltyDollar.div(SNXRate)
+      const selfLiquidationPenaltyUSD = totalAmountToLiquidateUSD.sub(amountToLiquidateNoPenalty);
+      const selfLiquidationPenaltySNX = selfLiquidationPenaltyUSD.gt(0)
+        ? selfLiquidationPenaltyUSD.div(SNXRate)
         : wei(0);
 
+      const amountToLiquidateToTargetUsd = amountToLiquidateNoPenalty;
+      const amountToLiquidateToTargetSNX = amountToLiquidateToTargetUsd.gt(0)
+        ? amountToLiquidateToTargetUsd.div(SNXRate)
+        : wei(0);
       return {
-        selfLiquidationPenalty: selfLiquidationPenalty,
-        selfLiquidationPenaltyDollar,
+        selfLiquidationPenaltyPercent: selfLiquidationPenalty,
+        selfLiquidationPenaltyUSD,
         selfLiquidationPenaltySNX,
-        amountToLiquidate,
-        amountToLiquidateNoPenalty,
+        totalAmountToLiquidateUSD,
+        totalAmountToLiquidateSNX,
+        amountToLiquidateToTargetUsd,
+        amountToLiquidateToTargetSNX,
       };
     },
     {
