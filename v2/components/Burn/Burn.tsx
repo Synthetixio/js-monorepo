@@ -57,7 +57,7 @@ interface BurnProps {
   sUsdAmountToTarget: number;
   isAboveTarget?: boolean;
   burnAmountForCalculations: number;
-  activePreset: ActivePreset;
+  activePreset: ActivePreset | null;
 }
 
 const StyledInput: FC<InputProps> = (props) => {
@@ -166,10 +166,13 @@ export const BurnUi = ({
               <Flex alignItems="center">
                 <Text
                   display={{ base: 'none', sm: 'block' }}
-                  color="whiteAlpha.700"
                   fontSize="xs"
                   fontFamily="heading"
                   mr={1}
+                  color={activePreset === 'debtBalance' ? 'white' : 'whiteAlpha.700'}
+                  cursor="pointer"
+                  fontWeight={activePreset === 'debtBalance' ? 700 : 500}
+                  onClick={() => onPresetClick('debtBalance')}
                 >
                   {t('staking-v2.burn.active-debt')}
                 </Text>
@@ -194,14 +197,26 @@ export const BurnUi = ({
                 >
                   <Text
                     display={{ base: 'none', sm: 'block' }}
-                    color="whiteAlpha.700"
                     fontSize="xs"
                     fontFamily="heading"
+                    color={activePreset === 'debtBalance' ? 'white' : 'whiteAlpha.700'}
+                    cursor="pointer"
+                    fontWeight={activePreset === 'debtBalance' ? '700' : 500}
+                    onClick={() => onPresetClick('debtBalance')}
                   >
                     {formatNumber(debtBalance || 0)}
                   </Text>
                 </Skeleton>
-                <Text color="whiteAlpha.700" fontSize="xs" fontFamily="heading" mr={1} ml={1}>
+                <Text
+                  fontSize="xs"
+                  fontFamily="heading"
+                  mr={1}
+                  ml={1}
+                  color={activePreset === 'sUSDBalance' ? 'white' : 'whiteAlpha.700'}
+                  cursor="pointer"
+                  fontWeight={activePreset === 'sUSDBalance' ? 700 : 500}
+                  onClick={() => onPresetClick('sUSDBalance')}
+                >
                   {t('staking-v2.burn.susd-balance')}
                 </Text>
                 <Skeleton
@@ -225,9 +240,12 @@ export const BurnUi = ({
                   <Text
                     data-testid="burn available susd balance"
                     data-balance={formatNumber(susdBalance) || 0}
-                    color="whiteAlpha.700"
                     fontSize="xs"
                     fontFamily="heading"
+                    color={activePreset === 'sUSDBalance' ? 'white' : 'whiteAlpha.700'}
+                    cursor="pointer"
+                    fontWeight={activePreset === 'sUSDBalance' ? 700 : 500}
+                    onClick={() => onPresetClick('sUSDBalance')}
                   >
                     {formatNumber(susdBalance) || 0}
                   </Text>
@@ -411,19 +429,27 @@ export const BurnUi = ({
 };
 const getBurnAmountForCalculations = (
   burnAmountSusd: string,
-  activePreset?: ActivePreset,
+  activePreset: ActivePreset | null,
   susdBalance = 0,
   debtBalance = 0
 ) => {
-  if (activePreset !== 'max') {
-    return burnAmountSusd === '' ? undefined : parseFloatWithCommas(burnAmountSusd);
+  switch (activePreset) {
+    case 'toTarget':
+      return burnAmountSusd === '' ? undefined : parseFloatWithCommas(burnAmountSusd);
+    case 'max':
+      return susdBalance > debtBalance ? debtBalance : susdBalance;
+    case 'debtBalance':
+      return burnAmountSusd === '' ? undefined : debtBalance;
+    case 'sUSDBalance':
+      return burnAmountSusd === '' ? undefined : susdBalance;
+    default:
+      return undefined;
   }
-  return susdBalance > debtBalance ? debtBalance : susdBalance;
 };
 export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
   const [burnAmountSusd, setBurnAmountSusd] = useState('');
   const [snxUnstakingAmount, setSnxUnstakingAmount] = useState('');
-  const [activePreset, setActivePreset] = useState<ActivePreset | undefined>(undefined);
+  const [activePreset, setActivePreset] = useState<ActivePreset | null>(null);
   const queryClient = useQueryClient();
 
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
@@ -462,6 +488,12 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     if (!debtData || !snxPrice) return;
     switch (presetType) {
       case 'toTarget':
+        if (activePreset === 'toTarget') {
+          setActivePreset(null);
+          setBurnAmountSusd('');
+          setSnxUnstakingAmount('');
+          return;
+        }
         const burnAmount = Wei.max(
           debtData.debtBalance.sub(debtData.issuableSynths),
           wei(0)
@@ -482,6 +514,12 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         return;
 
       case 'max': {
+        if (activePreset === 'max') {
+          setActivePreset(null);
+          setBurnAmountSusd('');
+          setSnxUnstakingAmount('');
+          return;
+        }
         setActivePreset('max');
 
         const burnAmountString = formatNumber(
@@ -493,6 +531,53 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         setBurnAmountSusd(burnAmountString);
         setSnxUnstakingAmount(snxUnstakingAmount);
 
+        return;
+      }
+      case 'sUSDBalance': {
+        if (activePreset === 'sUSDBalance') {
+          setActivePreset(null);
+          setBurnAmountSusd('');
+          setSnxUnstakingAmount('');
+          return;
+        }
+        setActivePreset('sUSDBalance');
+
+        const burnAmountString = formatNumber(sUSDBalanceWithDefault);
+        const snxUnstakingAmount = calculateUnstakingAmountFromBurn({
+          burnAmount: sUSDBalanceWithDefault,
+          targetCRatio: debtData.targetCRatio.toNumber(),
+          collateralPrice: snxPrice,
+          debtBalance: debtData.debtBalance.toNumber(),
+          issuableSynths: debtData.issuableSynths.toNumber(),
+        });
+
+        setBurnAmountSusd(burnAmountString);
+        setSnxUnstakingAmount(
+          snxUnstakingAmount === undefined ? '' : formatNumber(snxUnstakingAmount)
+        );
+        return;
+      }
+      case 'debtBalance': {
+        if (activePreset === 'debtBalance') {
+          setActivePreset(null);
+          setBurnAmountSusd('');
+          setSnxUnstakingAmount('');
+          return;
+        }
+        setActivePreset('debtBalance');
+        const burnAmountString = formatNumber(debtData.debtBalance.toNumber());
+        const snxUnstakingAmount = calculateUnstakingAmountFromBurn({
+          burnAmount: sUSDBalanceWithDefault,
+          targetCRatio: debtData.targetCRatio.toNumber(),
+          collateralPrice: snxPrice,
+          debtBalance: debtData.debtBalance.toNumber(),
+          issuableSynths: debtData.issuableSynths.toNumber(),
+        });
+
+        setBurnAmountSusd(burnAmountString);
+        setSnxUnstakingAmount(
+          snxUnstakingAmount === undefined ? '' : formatNumber(snxUnstakingAmount)
+        );
         return;
       }
     }
