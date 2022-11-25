@@ -304,7 +304,6 @@ const CollectActionCard: React.FC<{
     currentCRatioPercentage,
     targetThreshold,
   });
-  console.log('collect', variant);
   const getButtonVariant = () => {
     if (hasClaimed) return 'ghost';
     if (!isStaking) return 'ghost';
@@ -423,15 +422,6 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
   targetThreshold,
   rewardsDollarValue,
 }) => {
-  console.log({
-    liquidationCratioPercentage,
-    currentCRatioPercentage,
-    targetCratioPercentage,
-    isFlagged,
-    nextEpochStartDate,
-    hasClaimed,
-    targetThreshold,
-  });
   return (
     <Stack direction={['column', 'column', 'row']} align="center" spacing="14px">
       <StakeActionCard
