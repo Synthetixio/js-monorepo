@@ -7,13 +7,13 @@ import injectedModule from '@web3-onboard/injected-wallets';
 import coinbaseWalletModule from '@web3-onboard/coinbase';
 import walletConnectModule from '@web3-onboard/walletconnect';
 import ledgerModule from '@web3-onboard/ledger';
+import gnosisModule from './customGnosis';
 // import trezorModule from '@web3-onboard/trezor';
-import gnosisModule from '@web3-onboard/gnosis';
 import portisModule from '@web3-onboard/portis';
 import torusModule from '@web3-onboard/torus';
 
 import { SynthetixIcon, SynthetixLogo } from 'components/WalletComponents';
-import { customBrave, customMetaMask, customDetected } from './customInjected';
+import { customBrave, customMetaMask, customDetected, customTrust } from './customInjected';
 
 const injected = injectedModule({ custom: [customMetaMask, customBrave, customDetected] });
 
@@ -26,6 +26,7 @@ const gnosis = gnosisModule();
 const portis = portisModule({ apiKey: `${process.env.NEXT_PUBLIC_PORTIS_APP_ID}` });
 const torus = torusModule();
 const brave = () => customBrave;
+const trust = customTrust();
 
 const supportedChains = [
   // Mainnet
@@ -82,6 +83,7 @@ export const onboard: OnboardAPI = Onboard({
     brave,
     ledger /*trezor,*/,
     coinbaseWalletSdk,
+    trust,
     walletConnect,
     gnosis,
     portis,

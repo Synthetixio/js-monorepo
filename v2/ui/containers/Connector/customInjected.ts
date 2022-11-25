@@ -101,8 +101,8 @@ export const customDetected: InjectedWalletModule = {
   checkProviderIdentity: ({ provider }) => {
     let result = !!provider && !!provider[ProviderIdentityFlag.Detected];
 
-    // Overwrite to hide on brave
-    if (provider.isMetaMask && provider.isBraveWallet) {
+    // Overwrite to hide on brave and on trust
+    if ((provider.isMetaMask && provider.isBraveWallet) || provider.isTrust) {
       result = false;
     }
 
@@ -114,3 +114,24 @@ export const customDetected: InjectedWalletModule = {
   }),
   platforms: ['all'],
 };
+
+export function customTrust() {
+  return () => ({
+    label: ProviderLabel.Trust,
+    getIcon: async () => (await import('@web3-onboard/injected-wallets/dist/icons/trust')).default,
+
+    getInterface: async () => {
+      let provider = {} as EIP1193Provider;
+      if ((window?.ethereum && !window?.trustwallet) || !window?.ethereum) {
+        window.open('https://trustwallet.com/', '_blank');
+      } else {
+        provider = window?.trustwallet;
+      }
+
+      return {
+        provider,
+        instance: {},
+      };
+    },
+  });
+}

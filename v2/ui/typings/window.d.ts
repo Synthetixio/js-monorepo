@@ -15,5 +15,6 @@ declare global {
       };
     };
     ethereum?: providers;
+    trustwallet?: providers;
   }
 }
