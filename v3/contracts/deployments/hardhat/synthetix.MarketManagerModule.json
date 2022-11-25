@@ -1,0 +1,336 @@
+{
+  "address": "0xc9962c7F2B0951E458252322f4823f3109c93517",
+  "abi": [
+    {
+      "type": "error",
+      "name": "EmptyDistribution",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "FeatureUnavailable",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "MarketDepositNotApproved",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "market"
+        },
+        {
+          "type": "address",
+          "name": "from"
+        },
+        {
+          "type": "uint256",
+          "name": "requestedAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "approvedAmount"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "MismatchAssociatedSystemKind",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "expected"
+        },
+        {
+          "type": "bytes32",
+          "name": "actual"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "NotEnoughLiquidity",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "addr"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "MarketRegistered",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "market",
+          "indexed": true
+        },
+        {
+          "type": "uint128",
+          "name": "marketId",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "MarketUsdDeposited",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "target",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "MarketUsdWithdrawn",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "target",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "depositMarketUsd",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        },
+        {
+          "type": "address",
+          "name": "target"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getMarketCollateral",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getMarketDebtPerShare",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "int256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getMarketIssuance",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "int128"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getMarketReportedDebt",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getMarketTotalBalance",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "int256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getWithdrawableUsd",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "isMarketCapacityLocked",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "registerMarket",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "market"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "withdrawMarketUsd",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        },
+        {
+          "type": "address",
+          "name": "target"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": []
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0x24be87f78126a75188cd588eef78dabdd03e57767f63e6936598fac43928f194",
+  "sourceName": "contracts/modules/core/MarketManagerModule.sol",
+  "contractName": "MarketManagerModule",
+  "deployedOn": "contract.MarketManagerModule"
+}

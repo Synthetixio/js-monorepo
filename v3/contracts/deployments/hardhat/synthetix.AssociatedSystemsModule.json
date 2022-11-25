@@ -1,0 +1,159 @@
+{
+  "address": "0xeBF38ca5534b7EDE4f53C67fF530206BC951AA2a",
+  "abi": [
+    {
+      "type": "error",
+      "name": "MismatchAssociatedSystemKind",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "expected"
+        },
+        {
+          "type": "bytes32",
+          "name": "actual"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "addr"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "AssociatedSystemSet",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "kind",
+          "indexed": true
+        },
+        {
+          "type": "bytes32",
+          "name": "id",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "proxy",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "impl",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getAssociatedSystem",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "id"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "proxy"
+        },
+        {
+          "type": "bytes32",
+          "name": "kind"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "initOrUpgradeNft",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "id"
+        },
+        {
+          "type": "string",
+          "name": "name"
+        },
+        {
+          "type": "string",
+          "name": "symbol"
+        },
+        {
+          "type": "string",
+          "name": "uri"
+        },
+        {
+          "type": "address",
+          "name": "impl"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "initOrUpgradeToken",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "id"
+        },
+        {
+          "type": "string",
+          "name": "name"
+        },
+        {
+          "type": "string",
+          "name": "symbol"
+        },
+        {
+          "type": "uint8",
+          "name": "decimals"
+        },
+        {
+          "type": "address",
+          "name": "impl"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "registerUnmanagedSystem",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "id"
+        },
+        {
+          "type": "address",
+          "name": "endpoint"
+        }
+      ],
+      "outputs": []
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0x55cb009df1916ecc88afd8b0beedea379c5bab3c842ac2bda0e4e590574d55a4",
+  "sourceName": "contracts/modules/associated-systems/AssociatedSystemsModule.sol",
+  "contractName": "AssociatedSystemsModule",
+  "deployedOn": "contract.AssociatedSystemsModule"
+}

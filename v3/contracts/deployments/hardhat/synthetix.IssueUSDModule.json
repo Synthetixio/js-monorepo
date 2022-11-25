@@ -1,0 +1,213 @@
+{
+  "address": "0xa3A11CdA51Cab049BDc5057673d3d421458f5FdC",
+  "abi": [
+    {
+      "type": "error",
+      "name": "EmptyDistribution",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "InconsistentDistribution",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "InsufficientCollateralRatio",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "collateralValue"
+        },
+        {
+          "type": "uint256",
+          "name": "debt"
+        },
+        {
+          "type": "uint256",
+          "name": "ratio"
+        },
+        {
+          "type": "uint256",
+          "name": "minRatio"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InsufficientDebt",
+      "inputs": [
+        {
+          "type": "int256",
+          "name": "currentDebt"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "MarketNotFound",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "MismatchAssociatedSystemKind",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "expected"
+        },
+        {
+          "type": "bytes32",
+          "name": "actual"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "PermissionDenied",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "bytes32",
+          "name": "permission"
+        },
+        {
+          "type": "address",
+          "name": "target"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "ZeroValuePerShare",
+      "inputs": []
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "UsdBurned",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "uint128",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "UsdMinted",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "uint128",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "burnUsd",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "mintUsd",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": []
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0x089558a4ce504e99828aa2585219136e90585069ee3f65df2f4860e1f9fb496b",
+  "sourceName": "contracts/modules/core/IssueUSDModule.sol",
+  "contractName": "IssueUSDModule",
+  "deployedOn": "contract.IssueUSDModule"
+}

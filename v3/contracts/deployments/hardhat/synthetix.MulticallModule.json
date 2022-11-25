@@ -1,0 +1,29 @@
+{
+  "address": "0xAb4e6CD86bb96EC011f6cE4C648DE5a0B345Ab32",
+  "abi": [
+    {
+      "type": "function",
+      "name": "multicall",
+      "constant": false,
+      "stateMutability": "payable",
+      "payable": true,
+      "inputs": [
+        {
+          "type": "bytes[]",
+          "name": "data"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bytes[]",
+          "name": "results"
+        }
+      ]
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0xfddf55dd2eaf04cdadf9f4b72ac1ed1f6c638ab2bad89f336d1e655fecb30ff4",
+  "sourceName": "contracts/modules/core/MulticallModule.sol",
+  "contractName": "MulticallModule",
+  "deployedOn": "contract.MulticallModule"
+}

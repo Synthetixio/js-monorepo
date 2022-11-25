@@ -1,0 +1,111 @@
+{
+  "address": "0xBC494A7cdb4F82B10d8D8804f04C2Fb1286A4822",
+  "abi": [
+    {
+      "type": "error",
+      "name": "ImplementationIsSterile",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "implementation"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "NoChange",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "NotAContract",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "contr"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "addr"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "UpgradeSimulationFailed",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ZeroAddress",
+      "inputs": []
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "Upgraded",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "self",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "implementation",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getImplementation",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "simulateUpgradeTo",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "newImplementation"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "upgradeTo",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "newImplementation"
+        }
+      ],
+      "outputs": []
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0x9e3c8eed76bcebb79135faf21395b239021511e29ba2706f2245a1049457d239",
+  "sourceName": "contracts/modules/common/UpgradeModule.sol",
+  "contractName": "UpgradeModule",
+  "deployedOn": "contract.UpgradeModule"
+}
