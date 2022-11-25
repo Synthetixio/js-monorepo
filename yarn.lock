@@ -7834,6 +7834,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/subgraphs@workspace:v3/subgraphs":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/subgraphs@workspace:v3/subgraphs"
+  dependencies:
+    "@graphprotocol/graph-cli": ^0.35.0
+    "@graphprotocol/graph-ts": ^0.28.1
+    matchstick-as: ^0.5.0
+  languageName: unknown
+  linkType: soft
+
 "@socket.tech/ll-core@npm:^0.1.10, @socket.tech/ll-core@npm:^0.1.14":
   version: 0.1.20
   resolution: "@socket.tech/ll-core@npm:0.1.20"
@@ -9387,16 +9397,6 @@ __metadata:
   checksum: 36784eacf80601462ede7eab66347423a8635e68aa9f152308c81878b071807adee152a28eed2cce9c72faaf6553dd500f68f00601062ec6821ec0a3a77f4e13
   languageName: node
   linkType: hard
-
-"@synthetix/subgraphs-v3@workspace:v3/subgraphs":
-  version: 0.0.0-use.local
-  resolution: "@synthetix/subgraphs-v3@workspace:v3/subgraphs"
-  dependencies:
-    "@graphprotocol/graph-cli": ^0.35.0
-    "@graphprotocol/graph-ts": ^0.28.1
-    matchstick-as: ^0.5.0
-  languageName: unknown
-  linkType: soft
 
 "@synthetixio/codegen-graph-ts@workspace:*, @synthetixio/codegen-graph-ts@workspace:tools/codegen-graph-ts":
   version: 0.0.0-use.local
