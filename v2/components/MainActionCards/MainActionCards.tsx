@@ -202,18 +202,20 @@ const MaintainActionCard: React.FC<{
     targetThreshold,
   });
 
+  const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
+  const currentCRatioPercentageWithThresHold =
+    currentCRatioPercentage && targetCratioPercentage && targetThreshold
+      ? currentCRatioPercentage * (1 + targetThreshold)
+      : false;
+  const cRatioAboveOrEqToTarget =
+    targetCratioPercentage && currentCRatioPercentageWithThresHold
+      ? currentCRatioPercentageWithThresHold >= targetCratioPercentage
+      : false;
   const getButtonVariant = () => {
     if (!isStaking) return 'ghost';
     if (cRatioAboveOrEqToTarget) return 'ghost';
     return variant;
   };
-
-  const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
-  const cRatioAboveOrEqToTarget = Boolean(
-    targetCratioPercentage &&
-      currentCRatioPercentage &&
-      currentCRatioPercentage >= targetCratioPercentage
-  );
   const fadedBg = `${theme.colors[variant]}40`;
   const rewardsClaimedAndWarning = hasClaimed && variant === 'warning';
 
