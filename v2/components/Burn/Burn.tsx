@@ -149,9 +149,11 @@ export const BurnUi = ({
                 onKeyDown={(e) => {
                   const oldVal = parseFloatWithCommas(burnAmountSusd);
                   if (e.key === 'ArrowUp') {
+                    setActiveBadge(null);
                     onBurnAmountSusdChange(numberWithCommas(String(oldVal + 1)));
                   }
                   if (e.key === 'ArrowDown') {
+                    setActiveBadge(null);
                     onBurnAmountSusdChange(numberWithCommas(String(Math.max(0, oldVal - 1))));
                   }
                 }}
@@ -327,9 +329,11 @@ export const BurnUi = ({
                 onKeyDown={(e) => {
                   const oldVal = parseFloatWithCommas(snxUnstakingAmount);
                   if (e.key === 'ArrowUp') {
+                    setActiveBadge(null);
                     onUnstakeAmountChange(numberWithCommas(String(oldVal + 1)));
                   }
                   if (e.key === 'ArrowDown') {
+                    setActiveBadge(null);
                     onUnstakeAmountChange(numberWithCommas(String(Math.max(0, oldVal - 1))));
                   }
                 }}
