@@ -265,12 +265,12 @@ export const BurnUi = ({
               ml={1}
               onClick={isAboveTarget ? undefined : () => handleBadgePress('toTarget')}
             >
-              {t('staking-v2.burn.burn-cratio')}
+              {t('staking-v2.burn.burn-target')}
               <Tooltip
                 label={
                   isAboveTarget
-                    ? t('staking-v2.burn.burn-cratio-tooltip-not-allowed')
-                    : t('staking-v2.burn.burn-cratio-tooltip-allowed')
+                    ? t('staking-v2.burn.burn-target-tooltip-not-allowed')
+                    : t('staking-v2.burn.burn-target-tooltip-allowed')
                 }
                 hasArrow
               >
