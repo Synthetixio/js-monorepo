@@ -14,10 +14,48 @@ import Wei, { wei } from '@synthetixio/wei';
 import { parseTxnError } from '@snx-v2/parseTxnError';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
+const LiquidationDataBox = ({
+  headline,
+  snxValue,
+  usdValue,
+}: {
+  headline: string;
+  snxValue?: number;
+  usdValue?: number;
+}) => {
+  return (
+    <Box borderRadius="base" px={6} py={4} bg="whiteAlpha.100">
+      <Text>{headline}</Text>
+      <Flex>
+        <SNXIcon mt="5px" mr={2} />
+        <Box>
+          {snxValue !== undefined ? (
+            <Text data-testid="snx penalty" fontSize="2xl" fontWeight={800}>
+              {formatNumber(snxValue)}
+            </Text>
+          ) : (
+            <Skeleton w={8} h={6} mt={2} />
+          )}
+
+          {usdValue !== undefined ? (
+            <Text data-testid="usd penalty">= {formatNumberToUsd(usdValue)}</Text>
+          ) : (
+            <Skeleton w={10} h={6} mt={1} />
+          )}
+        </Box>
+      </Flex>
+    </Box>
+  );
+};
+
 export const SelfLiquidationUi: FC<{
-  selfLiquidationPenalty?: number;
+  selfLiquidationPenaltyPercent?: number;
+  selfLiquidationPenaltyUSD?: number;
   selfLiquidationPenaltySNX?: number;
-  selfLiquidationPenaltyDollar?: number;
+  totalAmountToLiquidateUSD?: number;
+  totalAmountToLiquidateSNX?: number;
+  amountToLiquidateToTargetUsd?: number;
+  amountToLiquidateToTargetSNX?: number;
   targetCRatioPercentage?: number;
   currentCRatioPercentage?: number;
   onSelfLiquidation: () => void;
@@ -25,9 +63,13 @@ export const SelfLiquidationUi: FC<{
   isGasEnabledAndNotFetched: boolean;
   gasError: Error | null;
 }> = ({
-  selfLiquidationPenalty,
+  selfLiquidationPenaltyPercent,
+  selfLiquidationPenaltyUSD,
   selfLiquidationPenaltySNX,
-  selfLiquidationPenaltyDollar,
+  totalAmountToLiquidateUSD,
+  totalAmountToLiquidateSNX,
+  amountToLiquidateToTargetUsd,
+  amountToLiquidateToTargetSNX,
   targetCRatioPercentage,
   currentCRatioPercentage,
   onSelfLiquidation,
@@ -37,7 +79,9 @@ export const SelfLiquidationUi: FC<{
 }) => {
   const { t } = useTranslation();
   const formattedPenalty =
-    selfLiquidationPenalty !== undefined ? formatPercent(selfLiquidationPenalty) : undefined;
+    selfLiquidationPenaltyPercent !== undefined
+      ? formatPercent(selfLiquidationPenaltyPercent)
+      : undefined;
 
   return (
     <Box>
@@ -91,29 +135,23 @@ export const SelfLiquidationUi: FC<{
           {formattedPenalty} {t('staking-v2.self-liquidation.amount-headline')}
         </Text>
         <Text mb={2}>{t('staking-v2.self-liquidation.amount-sub-headline')}</Text>
-        <Box borderRadius="base" px={6} py={4} bg="whiteAlpha.100">
-          <Text>SNX {t('staking-v2.self-liquidation.penalty')}</Text>
-          <Flex>
-            <SNXIcon mt="5px" mr={2} />
-            <Box>
-              {selfLiquidationPenaltySNX !== undefined ? (
-                <Text data-testid="snx penalty" fontSize="2xl" fontWeight={800}>
-                  {formatNumber(selfLiquidationPenaltySNX)}
-                </Text>
-              ) : (
-                <Skeleton w={4} h={2} mt={2} />
-              )}
-
-              {selfLiquidationPenaltyDollar !== undefined ? (
-                <Text data-testid="usd penalty">
-                  = {formatNumberToUsd(selfLiquidationPenaltyDollar)}
-                </Text>
-              ) : (
-                <Skeleton w={4} h={2} mt={1} />
-              )}
-            </Box>
-          </Flex>
-        </Box>
+        <Flex>
+          <LiquidationDataBox
+            snxValue={selfLiquidationPenaltySNX}
+            usdValue={selfLiquidationPenaltyUSD}
+            headline="Penalty"
+          />
+          <LiquidationDataBox
+            snxValue={amountToLiquidateToTargetSNX}
+            usdValue={amountToLiquidateToTargetUsd}
+            headline="Back to target"
+          />
+          <LiquidationDataBox
+            snxValue={totalAmountToLiquidateSNX}
+            usdValue={totalAmountToLiquidateUSD}
+            headline="Total"
+          />
+        </Flex>
         {gasError ? (
           <Center>
             <FailedIcon width="40px" height="40px" />
@@ -182,9 +220,13 @@ export const SelfLiquidation = () => {
         gasError={gasError}
         isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
         onSelfLiquidation={mutate}
-        selfLiquidationPenaltyDollar={selfLiquidationData?.selfLiquidationPenaltyDollar.toNumber()}
-        selfLiquidationPenalty={selfLiquidationData?.selfLiquidationPenalty.toNumber()}
+        selfLiquidationPenaltyPercent={selfLiquidationData?.selfLiquidationPenaltyPercent.toNumber()}
+        selfLiquidationPenaltyUSD={selfLiquidationData?.selfLiquidationPenaltyUSD.toNumber()}
         selfLiquidationPenaltySNX={selfLiquidationData?.selfLiquidationPenaltySNX.toNumber()}
+        totalAmountToLiquidateUSD={selfLiquidationData?.totalAmountToLiquidateUSD.toNumber()}
+        totalAmountToLiquidateSNX={selfLiquidationData?.totalAmountToLiquidateSNX.toNumber()}
+        amountToLiquidateToTargetUsd={selfLiquidationData?.amountToLiquidateToTargetUsd.toNumber()}
+        amountToLiquidateToTargetSNX={selfLiquidationData?.amountToLiquidateToTargetSNX.toNumber()}
         targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
         currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
       />
