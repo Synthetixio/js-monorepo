@@ -1,5 +1,5 @@
 import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
 import { Text, Box, Heading, Flex, Skeleton, Button, Center } from '@chakra-ui/react';
 import { useSelfLiquidationData } from '@snx-v2/useSelfLiquidationData';
 import { useDebtData } from '@snx-v2/useDebtData';
@@ -12,7 +12,7 @@ import { SelfLiquidationTransactionModal } from './SelfLiquidationTransactionMod
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import Wei, { wei } from '@synthetixio/wei';
 import { parseTxnError } from '@snx-v2/parseTxnError';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const LiquidationDataBox = ({
   headline,
@@ -26,7 +26,7 @@ const LiquidationDataBox = ({
   usdValue?: number;
 }) => {
   return (
-    <Box borderRadius="base" px={6} py={4} bg="whiteAlpha.100">
+    <Box borderRadius="base" px={6} py={4} bg="whiteAlpha.100" mr={4}>
       <Text>{headline}</Text>
       <Flex>
         <SNXIcon mt="5px" mr={2} />
@@ -82,6 +82,8 @@ export const SelfLiquidationUi: FC<{
   isGasEnabledAndNotFetched,
 }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const formattedPenalty =
     selfLiquidationPenaltyPercent !== undefined
       ? formatPercent(selfLiquidationPenaltyPercent)
@@ -160,7 +162,7 @@ export const SelfLiquidationUi: FC<{
           />
         </Flex>
         {gasError ? (
-          <Center>
+          <Center mt={2}>
             <FailedIcon width="40px" height="40px" />
             <Text data-testid="gas error">
               {t('staking-v2.self-liquidation.gas-estimation-error')}: {parseTxnError(gasError)}
@@ -187,18 +189,7 @@ export const SelfLiquidationUi: FC<{
         </Button>
       </Box>
       <Box>
-        <Button
-          variant="link"
-          as={ReactRouterLink}
-          to="/staking/unflag"
-          border="1px"
-          borderColor="cyan.500"
-          paddingLeft={4}
-          paddingRight={4}
-          height={8}
-          fontSize="sm"
-          mt={2}
-        >
+        <Button variant="outline" onClick={() => navigate(-1)} mt={2}>
           {t('staking-v2.back-btn')}
         </Button>
       </Box>
@@ -236,6 +227,8 @@ export const SelfLiquidation = () => {
         amountToLiquidateToTargetSNX={selfLiquidationData?.amountToLiquidateToTargetSNX.toNumber()}
         targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
         currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
+        CRatioProgressBar={<CRatioProgressBar />}
+        CRatioBox={<CRatioBox />}
       />
       <SelfLiquidationTransactionModal
         txnHash={txnHash}
