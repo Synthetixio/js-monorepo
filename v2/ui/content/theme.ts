@@ -92,21 +92,25 @@ const Badge: ComponentStyleConfig = {
       color: 'green.500',
       borderColor: 'green.500',
       bg: 'green.900',
+      borderWidth: '1px',
     },
     warning: {
       color: 'orange.500',
       borderColor: 'orange.500',
       bg: 'orange.900',
+      borderWidth: '1px',
     },
     error: {
       color: 'red.400',
       borderColor: 'red.400',
       bg: 'red.900',
+      borderWidth: '1px',
     },
     'not-staking': {
       color: 'white',
       borderColor: 'white',
       bg: 'gray.500',
+      borderWidth: '1px',
     },
     mint: {
       width: '100%',

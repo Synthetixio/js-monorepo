@@ -1,6 +1,7 @@
 import { RewardsItem } from '.';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { SNXIcon } from '@snx-v2/icons';
+import { InfoOutline, SNXIcon } from '@snx-v2/icons';
+import { Badge } from '@chakra-ui/react';
 
 export default {
   title: 'RewardsItem',
@@ -23,4 +24,11 @@ Primary.args = {
   stakedBalance: '5,000,000.00 SNX',
   Icon: () => <SNXIcon height="40px" width="40px" />,
   endDate: date,
+  rewardBalance: '5,000,000.00 SNX',
+  RewardsBadge: () => (
+    <Badge py={0.5} px={1} fontSize="2xs" variant="warning" mt={0.5} borderRadius="md">
+      <InfoOutline color="warning" mb="2.5px" mr="2px" height="12px" width="12px" />
+      Adjust to Collect Rewards
+    </Badge>
+  ),
 };

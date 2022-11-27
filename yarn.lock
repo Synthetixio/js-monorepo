@@ -7216,7 +7216,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/RewardsItem@workspace:v2/components/RewardsItem":
+"@snx-v2/RewardsItem@workspace:^, @snx-v2/RewardsItem@workspace:v2/components/RewardsItem":
   version: 0.0.0-use.local
   resolution: "@snx-v2/RewardsItem@workspace:v2/components/RewardsItem"
   dependencies:
@@ -9682,6 +9682,7 @@ __metadata:
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Mint": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
+    "@snx-v2/RewardsItem": "workspace:^"
     "@snx-v2/SelfLiquidation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"

@@ -1,17 +1,15 @@
 import { Flex, FlexProps, Skeleton, Text } from '@chakra-ui/react';
 
-export const StatBox = ({
-  label,
-  amount,
-  containerStyles,
-}: {
+interface StatboxProps extends FlexProps {
   label: string;
   amount?: string;
-  containerStyles?: FlexProps;
-}) => {
+}
+
+export const StatBox = ({ label, amount, ...props }: StatboxProps) => {
   return (
     <Flex
       alignItems="center"
+      justifyContent="center"
       flexDirection="column"
       w="33%"
       maxW="325px"
@@ -21,7 +19,7 @@ export const StatBox = ({
       borderWidth="1px"
       borderColor="gray.900"
       bg="whiteAlpha.50"
-      {...containerStyles}
+      {...props}
     >
       <Text fontFamily="heading" fontWeight="semibold" fontSize="sm" color="gray.500">
         {label}

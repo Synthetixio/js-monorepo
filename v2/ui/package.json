@@ -47,6 +47,7 @@
     "@snx-v2/MainActionCards": "workspace:*",
     "@snx-v2/Mint": "workspace:*",
     "@snx-v2/Navigation": "workspace:*",
+    "@snx-v2/RewardsItem": "workspace:^",
     "@snx-v2/SelfLiquidation": "workspace:*",
     "@snx-v2/SignerContext": "workspace:*",
     "@snx-v2/SwapLinks": "workspace:*",
