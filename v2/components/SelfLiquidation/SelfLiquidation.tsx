@@ -18,7 +18,9 @@ const LiquidationDataBox = ({
   headline,
   snxValue,
   usdValue,
+  testId,
 }: {
+  testId: string;
   headline: string;
   snxValue?: number;
   usdValue?: number;
@@ -30,7 +32,7 @@ const LiquidationDataBox = ({
         <SNXIcon mt="5px" mr={2} />
         <Box>
           {snxValue !== undefined ? (
-            <Text data-testid="snx penalty" fontSize="2xl" fontWeight={800}>
+            <Text data-testid={`snx ${testId}`} fontSize="2xl" fontWeight={800}>
               {formatNumber(snxValue)}
             </Text>
           ) : (
@@ -38,7 +40,7 @@ const LiquidationDataBox = ({
           )}
 
           {usdValue !== undefined ? (
-            <Text data-testid="usd penalty">= {formatNumberToUsd(usdValue)}</Text>
+            <Text data-testid={`usd ${testId}`}>= {formatNumberToUsd(usdValue)}</Text>
           ) : (
             <Skeleton w={10} h={6} mt={1} />
           )}
@@ -62,6 +64,8 @@ export const SelfLiquidationUi: FC<{
   transactionFee?: Wei | null;
   isGasEnabledAndNotFetched: boolean;
   gasError: Error | null;
+  CRatioProgressBar: ReactElement;
+  CRatioBox: ReactElement;
 }> = ({
   selfLiquidationPenaltyPercent,
   selfLiquidationPenaltyUSD,
@@ -137,11 +141,13 @@ export const SelfLiquidationUi: FC<{
         <Text mb={2}>{t('staking-v2.self-liquidation.amount-sub-headline')}</Text>
         <Flex>
           <LiquidationDataBox
+            testId="penalty"
             snxValue={selfLiquidationPenaltySNX}
             usdValue={selfLiquidationPenaltyUSD}
             headline="Penalty"
           />
           <LiquidationDataBox
+            testId="to target"
             snxValue={amountToLiquidateToTargetSNX}
             usdValue={amountToLiquidateToTargetUsd}
             headline="Back to target"
@@ -150,6 +156,7 @@ export const SelfLiquidationUi: FC<{
             snxValue={totalAmountToLiquidateSNX}
             usdValue={totalAmountToLiquidateUSD}
             headline="Total"
+            testId="total"
           />
         </Flex>
         {gasError ? (
