@@ -178,7 +178,8 @@ export const SelfLiquidationUi: FC<{
           disabled={
             Boolean(gasError) ||
             isGasEnabledAndNotFetched ||
-            Number(currentCRatioPercentage) >= Number(targetCRatioPercentage)
+            Number(currentCRatioPercentage) >= Number(targetCRatioPercentage) ||
+            totalAmountToLiquidateUSD === 0
           }
           onClick={onSelfLiquidation}
           mt={4}
