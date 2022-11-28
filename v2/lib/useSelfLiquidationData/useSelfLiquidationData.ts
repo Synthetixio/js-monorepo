@@ -7,10 +7,9 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useLiquidationData } from '@snx-v2/useLiquidationData';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
-import { BigNumber } from '@ethersproject/bignumber';
 
 export const useSelfLiquidationData = () => {
-  const { networkId } = useContext(ContractContext);
+  const { networkId, walletAddress } = useContext(ContractContext);
 
   const { data: Liquidator } = useLiquidator();
   const { data: debtData } = useDebtData();
@@ -34,11 +33,17 @@ export const useSelfLiquidationData = () => {
     targetThreshold: targetThreshold?.toNumber(),
   });
   const enabled = Boolean(
-    collateralInUsd && debtBalance && selfLiquidationPenalty && SNXRate && Liquidator && health
+    collateralInUsd &&
+      debtBalance &&
+      selfLiquidationPenalty &&
+      SNXRate &&
+      Liquidator &&
+      health &&
+      walletAddress
   );
 
   return useQuery(
-    ['useSelfLiquidationData', networkId, enabled],
+    ['useSelfLiquidationData', networkId, walletAddress, enabled],
     async () => {
       if (
         !networkId ||
@@ -47,41 +52,29 @@ export const useSelfLiquidationData = () => {
         !debtBalance ||
         !selfLiquidationPenalty ||
         !SNXRate ||
-        !health
+        !health ||
+        !walletAddress
       ) {
         throw Error('Query should not be enabled if contracts or network are missing');
       }
 
-      const [amountToLiquidateBn, amountToLiquidateNoPenaltyBn] = await Promise.all([
-        health === 'success'
-          ? BigNumber.from(0)
-          : Liquidator.calculateAmountToFixCollateral(
-              debtBalance.toBN(),
-              collateralInUsd.toBN(),
-              selfLiquidationPenalty.toBN()
-            ),
-        health === 'success'
-          ? BigNumber.from(0)
-          : Liquidator.calculateAmountToFixCollateral(
-              debtBalance.toBN(),
-              collateralInUsd.toBN(),
-              wei(0).toBN()
-            ),
-      ]);
-      const totalAmountToLiquidateUSD = wei(amountToLiquidateBn);
-      const totalAmountToLiquidateSNX = totalAmountToLiquidateUSD
-        ? wei(amountToLiquidateBn).div(SNXRate)
-        : wei(0);
-      const amountToLiquidateNoPenalty = wei(amountToLiquidateNoPenaltyBn);
-      const selfLiquidationPenaltyUSD = totalAmountToLiquidateUSD.sub(amountToLiquidateNoPenalty);
-      const selfLiquidationPenaltySNX = selfLiquidationPenaltyUSD.gt(0)
-        ? selfLiquidationPenaltyUSD.div(SNXRate)
-        : wei(0);
+      const [snxToLiquidateIncludingPenalty] = await Liquidator.liquidationAmounts(
+        walletAddress,
+        true
+      );
 
-      const amountToLiquidateToTargetUsd = amountToLiquidateNoPenalty;
-      const amountToLiquidateToTargetSNX = amountToLiquidateToTargetUsd.gt(0)
-        ? amountToLiquidateToTargetUsd.div(SNXRate)
-        : wei(0);
+      const totalAmountToLiquidateSNX = wei(snxToLiquidateIncludingPenalty);
+      const totalAmountToLiquidateUSD = wei(totalAmountToLiquidateSNX).mul(SNXRate);
+
+      // Remove penalty, to get amount required to get to target
+      const amountToLiquidateToTargetSNX = totalAmountToLiquidateSNX.div(
+        wei(1).add(selfLiquidationPenalty)
+      );
+      const amountToLiquidateToTargetUsd = amountToLiquidateToTargetSNX.mul(SNXRate);
+
+      const selfLiquidationPenaltySNX = totalAmountToLiquidateSNX.sub(amountToLiquidateToTargetSNX);
+      const selfLiquidationPenaltyUSD = selfLiquidationPenaltySNX.mul(SNXRate);
+
       return {
         selfLiquidationPenaltyPercent: selfLiquidationPenalty,
         selfLiquidationPenaltyUSD,
