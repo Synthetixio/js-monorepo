@@ -14,6 +14,8 @@ import Wei, { wei } from '@synthetixio/wei';
 import { parseTxnError } from '@snx-v2/parseTxnError';
 import { useNavigate } from 'react-router-dom';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
+import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
+import { calcNewCratioPercentage } from '@snx-v2/stakingCalculations';
 
 const LiquidationDataBox = ({
   headline,
@@ -81,6 +83,8 @@ export const SelfLiquidationUi: FC<{
   transactionFee,
   gasError,
   isGasEnabledAndNotFetched,
+  CRatioProgressBar,
+  CRatioBox,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -122,7 +126,7 @@ export const SelfLiquidationUi: FC<{
           borderWidth="1px"
           borderColor="gray.900"
         >
-          <CRatioProgressBar />
+          {CRatioProgressBar}
         </Flex>
         <Flex
           bg="black"
@@ -133,7 +137,7 @@ export const SelfLiquidationUi: FC<{
           flexDirection="column"
           justifyContent="space-between"
         >
-          <CRatioBox />
+          {CRatioBox}
         </Flex>
       </Flex>
       <Box borderRadius="base" borderWidth="1px" borderColor="gray.900" p={4}>
@@ -197,6 +201,7 @@ export const SelfLiquidationUi: FC<{
 export const SelfLiquidation = () => {
   const { data: selfLiquidationData, refetch } = useSelfLiquidationData();
   const { data: debtData } = useDebtData();
+  const { data: exchangeRateData } = useExchangeRatesData();
   const {
     mutate,
     transactionFee,
@@ -208,6 +213,19 @@ export const SelfLiquidation = () => {
     isGasEnabledAndNotFetched,
     txnHash,
   } = useSelfLiquidationMutation(selfLiquidationData?.totalAmountToLiquidateSNX);
+  const newCollateral =
+    debtData && selfLiquidationData && selfLiquidationData.totalAmountToLiquidateSNX.gt(0)
+      ? debtData.collateral.sub(selfLiquidationData?.totalAmountToLiquidateSNX).toNumber()
+      : undefined;
+  const newDebtBalance =
+    debtData && selfLiquidationData && selfLiquidationData.debtToRemove.gt(0)
+      ? debtData.debtBalance.sub(selfLiquidationData.debtToRemove).toNumber()
+      : undefined;
+  const newCratioPercentage = calcNewCratioPercentage(
+    newCollateral,
+    exchangeRateData?.SNX?.toNumber(),
+    newDebtBalance
+  );
 
   return (
     <>
@@ -225,8 +243,8 @@ export const SelfLiquidation = () => {
         amountToLiquidateToTargetSNX={selfLiquidationData?.amountToLiquidateToTargetSNX.toNumber()}
         targetCRatioPercentage={debtData?.targetCRatioPercentage.toNumber()}
         currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
-        CRatioProgressBar={<CRatioProgressBar />}
-        CRatioBox={<CRatioBox />}
+        CRatioProgressBar={<CRatioProgressBar newCratioPercentage={newCratioPercentage} />}
+        CRatioBox={<CRatioBox newCratioPercentage={newCratioPercentage} />}
       />
       <SelfLiquidationTransactionModal
         txnHash={txnHash}

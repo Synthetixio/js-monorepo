@@ -58,12 +58,10 @@ export const useSelfLiquidationData = () => {
         throw Error('Query should not be enabled if contracts or network are missing');
       }
 
-      const [snxToLiquidateIncludingPenalty] = await Liquidator.liquidationAmounts(
-        walletAddress,
-        true
-      );
+      const [snxToLiquidateIncludingPenaltyBn, debtToRemoveBn] =
+        await Liquidator.liquidationAmounts(walletAddress, true);
 
-      const totalAmountToLiquidateSNX = wei(snxToLiquidateIncludingPenalty);
+      const totalAmountToLiquidateSNX = wei(snxToLiquidateIncludingPenaltyBn);
       const totalAmountToLiquidateUSD = wei(totalAmountToLiquidateSNX).mul(SNXRate);
 
       // Remove penalty, to get amount required to get to target
@@ -83,6 +81,7 @@ export const useSelfLiquidationData = () => {
         totalAmountToLiquidateSNX,
         amountToLiquidateToTargetUsd,
         amountToLiquidateToTargetSNX,
+        debtToRemove: wei(debtToRemoveBn),
       };
     },
     {
