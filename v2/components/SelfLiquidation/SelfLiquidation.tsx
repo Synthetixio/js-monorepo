@@ -144,16 +144,16 @@ export const SelfLiquidationUi: FC<{
         <Text mb={2}>{t('staking-v2.self-liquidation.amounts-headline')}</Text>
         <Flex>
           <LiquidationDataBox
-            testId="penalty"
-            snxValue={selfLiquidationPenaltySNX}
-            usdValue={selfLiquidationPenaltyUSD}
-            headline={t('staking-v2.self-liquidation.penalty', { penalty: formattedPenalty })}
-          />
-          <LiquidationDataBox
             testId="to target"
             snxValue={amountToLiquidateToTargetSNX}
             usdValue={amountToLiquidateToTargetUsd}
             headline={t('staking-v2.self-liquidation.back-to-target')}
+          />
+          <LiquidationDataBox
+            testId="penalty"
+            snxValue={selfLiquidationPenaltySNX}
+            usdValue={selfLiquidationPenaltyUSD}
+            headline={t('staking-v2.self-liquidation.penalty', { penalty: formattedPenalty })}
           />
           <LiquidationDataBox
             snxValue={totalAmountToLiquidateSNX}
