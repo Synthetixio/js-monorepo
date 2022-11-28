@@ -198,7 +198,7 @@ export const SelfLiquidationUi: FC<{
   );
 };
 export const SelfLiquidation = () => {
-  const { data: selfLiquidationData } = useSelfLiquidationData();
+  const { data: selfLiquidationData, refetch } = useSelfLiquidationData();
   const { data: debtData } = useDebtData();
   const {
     mutate,
@@ -239,7 +239,7 @@ export const SelfLiquidation = () => {
         onClose={() => {
           settle();
         }}
-        onSubmit={mutate}
+        onSubmit={() => mutate(undefined, { onSuccess: () => refetch() })}
         txnStatus={txnStatus}
         modalOpen={modalOpen}
       />
