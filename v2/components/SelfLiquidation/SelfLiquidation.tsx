@@ -179,7 +179,7 @@ export const SelfLiquidationUi: FC<{
             Boolean(gasError) ||
             isGasEnabledAndNotFetched ||
             Number(currentCRatioPercentage) >= Number(targetCRatioPercentage) ||
-            totalAmountToLiquidateUSD === 0
+            !totalAmountToLiquidateUSD
           }
           onClick={onSelfLiquidation}
           mt={4}
@@ -210,7 +210,7 @@ export const SelfLiquidation = () => {
     settle,
     isGasEnabledAndNotFetched,
     txnHash,
-  } = useSelfLiquidationMutation();
+  } = useSelfLiquidationMutation(selfLiquidationData?.totalAmountToLiquidateSNX);
 
   return (
     <>
