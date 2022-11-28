@@ -7780,7 +7780,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSelfLiquidationData@workspace:v2/lib/useSelfLiquidationData"
   dependencies:
-    "@ethersproject/bignumber": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
@@ -7800,6 +7799,7 @@ __metadata:
     "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
