@@ -1,18 +1,19 @@
 import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { FC, ReactElement } from 'react';
-import { Text, Box, Heading, Flex, Skeleton, Button, Center } from '@chakra-ui/react';
+import { Text, Box, Heading, Flex, Skeleton, Button, Center, Link } from '@chakra-ui/react';
 import { useSelfLiquidationData } from '@snx-v2/useSelfLiquidationData';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { CRatioBox } from '../CRatioBox';
 import { CRatioProgressBar } from '@snx-v2/CRatioProgressBar';
 import { FailedIcon, SNXIcon } from '@snx-v2/icons';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { useSelfLiquidationMutation } from '@snx-v2/useSelfLiquidationMutation';
 import { SelfLiquidationTransactionModal } from './SelfLiquidationTransactionModal';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import Wei, { wei } from '@synthetixio/wei';
 import { parseTxnError } from '@snx-v2/parseTxnError';
 import { useNavigate } from 'react-router-dom';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 
 const LiquidationDataBox = ({
   headline,
@@ -93,22 +94,21 @@ export const SelfLiquidationUi: FC<{
     <Box>
       <Heading fontSize="md">{t('staking-v2.self-liquidation.headline')}</Heading>
       <Text color="whiteAlpha.600">
-        Need some better copy for this, can mention self liquidation penalty:
-        {formattedPenalty !== undefined ? (
-          <Text as="span" fontWeight={700}>
-            {formattedPenalty}
-          </Text>
-        ) : (
-          <Skeleton as="span" w={4} h={2} />
-        )}{' '}
-        And the target maybe:
-        {targetCRatioPercentage !== undefined ? (
-          <Text as="span" fontWeight={700}>
-            {formatPercent(targetCRatioPercentage / 100)}
-          </Text>
-        ) : (
-          <Skeleton as="span" w={4} h={2} />
-        )}{' '}
+        <Trans
+          i18nKey="staking-v2.self-liquidation.sub-headline"
+          values={{ penalty: formattedPenalty }}
+          components={{
+            bold: <b />,
+            linkTag: (
+              <Link
+                display="block"
+                color="cyan"
+                isExternal={true}
+                href={EXTERNAL_LINKS.Synthetix.SIP148Liquidations}
+              />
+            ),
+          }}
+        />
       </Text>
       <Flex justifyContent="space-between" my={4}>
         <Flex
@@ -137,27 +137,24 @@ export const SelfLiquidationUi: FC<{
         </Flex>
       </Flex>
       <Box borderRadius="base" borderWidth="1px" borderColor="gray.900" p={4}>
-        <Text>
-          {formattedPenalty} {t('staking-v2.self-liquidation.amount-headline')}
-        </Text>
-        <Text mb={2}>{t('staking-v2.self-liquidation.amount-sub-headline')}</Text>
+        <Text mb={2}>{t('staking-v2.self-liquidation.amounts-headline')}</Text>
         <Flex>
           <LiquidationDataBox
             testId="penalty"
             snxValue={selfLiquidationPenaltySNX}
             usdValue={selfLiquidationPenaltyUSD}
-            headline="Penalty"
+            headline={t('staking-v2.self-liquidation.penalty', { penalty: formattedPenalty })}
           />
           <LiquidationDataBox
             testId="to target"
             snxValue={amountToLiquidateToTargetSNX}
             usdValue={amountToLiquidateToTargetUsd}
-            headline="Back to target"
+            headline={t('staking-v2.self-liquidation.back-to-target')}
           />
           <LiquidationDataBox
             snxValue={totalAmountToLiquidateSNX}
             usdValue={totalAmountToLiquidateUSD}
-            headline="Total"
+            headline={t('staking-v2.self-liquidation.total')}
             testId="total"
           />
         </Flex>

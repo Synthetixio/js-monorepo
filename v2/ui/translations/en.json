@@ -148,10 +148,12 @@
       }
     },
     "self-liquidation": {
-      "headline": "Unflag Account",
-      "amount-headline": "Self Liquidate Penalty",
-      "amount-sub-headline": "See below the amount that will be liquidated in SNX and USD value",
-      "penalty": "Penalty",
+      "headline": "Self Liquidate",
+      "sub-headline": "If you are unable to repay your debt, you can self liquidate your collateral, with a penalty of <bold>{{penalty}}</bold>. <linkTag>Read more about self liquidation</linkTag>",
+      "amounts-headline": "See below the amount that will be liquidated in SNX and USD value",
+      "penalty": "Penalty {{penalty}}",
+      "back-to-target": "Back to target",
+      "total": "Total",
       "button-text": "Yes I want to Self Liquidate",
       "gas-estimation-error": "Error estimating gas",
       "txn-modal": {
