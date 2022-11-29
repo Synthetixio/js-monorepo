@@ -200,7 +200,7 @@ module.exports = {
 
   resolve: {
     alias: {
-      '@synthetixio/contracts/build': '@synthetixio/contracts/src',
+      '@synthetixio/v3-contracts/build': '@synthetixio/v3-contracts/src',
       '@synthetixio/contracts-interface/build': '@synthetixio/contracts-interface/src',
       '@synthetixio/optimism-networks/build': '@synthetixio/optimism-networks/src',
       '@synthetixio/providers/build': '@synthetixio/providers/src',

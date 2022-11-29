@@ -47,6 +47,8 @@ module.exports = {
               '@synthetixio/generate-subgraph-query': './tools/generate-subgraph-query/src',
 
               '@synthetixio/contracts/build': './v2/contracts/src',
+
+              '@synthetixio/v3-contracts/build': './v3/contracts/src',
               '@synthetixio/v3-theme': './v3/theme/src',
             },
           },
