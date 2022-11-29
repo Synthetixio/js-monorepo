@@ -10,6 +10,7 @@ import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
 import { formatNumber } from '@snx-v2/formatters';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import intervalToDuration from 'date-fns/intervalToDuration';
+import { getHealthVariant } from '@snx-v2/getHealthVariant';
 
 interface RewardsItemProps extends FlexProps {
   isLoading: boolean;
@@ -206,6 +207,8 @@ function percentEpochCompleted(nextStartDate?: Date, duration?: number) {
 }
 
 export const Rewards = () => {
+  const { t } = useTranslation();
+
   const { data: debtData, isLoading: isDebtLoading } = useDebtData();
   const { data: liquidationData, isLoading: isLiquidationLoading } = useGetLiquidationRewards();
   const { data: rewardsData, isLoading: isRewardsLoading } = useRewardsAvailable();
@@ -217,7 +220,14 @@ export const Rewards = () => {
     collateral: debtData?.collateral,
   });
 
-  console.log('Rewards, data', rewardsData, 'isRewardsLoading', isRewardsLoading);
+  const variant = getHealthVariant({
+    currentCRatioPercentage: debtData?.currentCRatioPercentage.toNumber(),
+    liquidationCratioPercentage: debtData?.liquidationRatioPercentage.toNumber(),
+    targetCratioPercentage: debtData?.targetCRatioPercentage.toNumber(),
+    targetThreshold: debtData?.targetThreshold.toNumber(),
+  });
+
+  console.log('Variant', variant);
 
   const isLoading =
     isDebtLoading || isLiquidationLoading || isRewardsLoading || isFeePoolDataLoading;
@@ -262,12 +272,32 @@ export const Rewards = () => {
         rewardBalance={`${formatNumber(
           liquidationData?.liquidatorRewards?.toNumber() || 0
         ).toString()} SNX`}
-        RewardsBadge={() => (
-          <Badge py={0.5} px={1} fontSize="2xs" variant="warning" mt={0.5} borderRadius="md">
-            <InfoOutline color="warning" mb="1.75px" mr="2px" height="12px" width="12px" />
-            Adjust to Collect Rewards
-          </Badge>
-        )}
+        RewardsBadge={() => {
+          const nothingToClaim = !liquidationData?.liquidatorRewards.gt(0);
+          if (nothingToClaim)
+            return (
+              <Badge
+                py={0.5}
+                px={1}
+                fontSize="2xs"
+                variant="not-staking"
+                mt={0.5}
+                borderRadius="md"
+                w={'fit-content'}
+              >
+                {t('staking-v2.earn.badges.claimed')}
+              </Badge>
+            );
+
+          return (
+            <Badge py={0.5} px={1} fontSize="2xs" variant="warning" mt={0.5} borderRadius="md">
+              <InfoOutline color="warning" mb="1.75px" mr="2px" height="12px" width="12px" />
+              {liquidationData?.liquidatorRewards.gt(0)
+                ? 'Adjust to Collect Rewards'
+                : 'No liquidation Rewards'}
+            </Badge>
+          );
+        }}
         onClick={() => console.log('Claim Liquidations')}
       />
       <Divider my={4} />

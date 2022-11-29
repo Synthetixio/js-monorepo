@@ -153,7 +153,12 @@
       "apy": "Est. APY",
       "staked": "Staked Balance",
       "remaining": "Time Remaining",
-      "does-not-expire": "Does not expire"
+      "does-not-expire": "Does not expire",
+      "badges": {
+        "claimable": "CLAIMABLE",
+        "claimed": "CLAIMED",
+        "maintain": "ADJUST TO MAINTAIN C-RATIO"
+      }
     },
     "self-liquidation": {
       "headline": "Unflag Account",
