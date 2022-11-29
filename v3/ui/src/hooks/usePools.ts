@@ -24,12 +24,13 @@ export const usePools = () => {
       },
     ],
     onSuccess: (data) => {
-      const pools = data
-        ? [
-            data[0].toString(),
-            ...data[1].filter((id) => !id.eq(data[0])).map((poolId) => poolId.toString()),
-          ]
-        : [];
+      const pools =
+        data && Array.isArray(data) && data.length >= 2
+          ? [
+              data[0].toString(),
+              ...data[1].filter((id) => !id.eq(data[0])).map((poolId) => poolId.toString()),
+            ]
+          : [];
       setPools(pools);
     },
   });
