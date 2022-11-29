@@ -13,7 +13,7 @@ function generateTS(network) {
     throw new Error(`No deployment files found for ${network}`);
   }
 
-  const dir = `ts-deployments/${network}`;
+  const dir = `src/${network}`;
   fs.rmSync(dir, { recursive: true, force: true });
 
   fs.mkdirSync(dir, { recursive: true });
@@ -26,7 +26,7 @@ function generateTS(network) {
     const abiInterface = new ethers.utils.Interface(json.abi);
     json.abi = abiInterface.format(ethers.utils.FormatTypes.full);
 
-    const writeTo = `ts-deployments/${network}/${fileName}.ts`;
+    const writeTo = `src/${network}/${fileName}.ts`;
 
     fs.writeFileSync(
       writeTo,
