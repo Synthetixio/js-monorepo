@@ -16,7 +16,7 @@ export const RewardsTransactionModal: FC<{
   txnStatus: TransactionStatus;
   modalOpen: boolean;
   amountSNX: string;
-  amountsUSD: string;
+  amountsUSD?: string;
   txnHash: string | null;
   onClose: () => void;
 }> = ({
