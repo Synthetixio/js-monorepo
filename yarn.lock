@@ -7582,6 +7582,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useClaimLiquidatorRewardsMutation@workspace:v2/lib/useClaimLiquidatorRewardsMutation":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useClaimLiquidatorRewardsMutation@workspace:v2/lib/useClaimLiquidatorRewardsMutation"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/txnReducer": "workspace:*"
+    "@snx-v2/useGasOptions": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useClaimRewardsMutation@workspace:v2/lib/useClaimRewardsMutation":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useClaimRewardsMutation@workspace:v2/lib/useClaimRewardsMutation"
