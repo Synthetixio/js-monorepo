@@ -29,7 +29,17 @@ const LiquidationDataBox = ({
   usdValue?: number;
 }) => {
   return (
-    <Box borderRadius="base" px={6} py={4} bg="whiteAlpha.100" mr={4}>
+    <Box
+      width={['250px', 'full', 'full']}
+      mt={[4, 4, 0]}
+      borderRadius="base"
+      px={6}
+      flexGrow={1}
+      flexBasis={1}
+      py={4}
+      bg="whiteAlpha.100"
+      mr={4}
+    >
       <Text>{headline}</Text>
       <Flex>
         <SNXIcon mt="5px" mr={2} />
@@ -114,7 +124,7 @@ export const SelfLiquidationUi: FC<{
           }}
         />
       </Text>
-      <Flex justifyContent="space-between" my={4}>
+      <Flex justifyContent="space-between" my={4} flexWrap="wrap">
         <Flex
           display="flex"
           alignItems="center"
@@ -142,7 +152,7 @@ export const SelfLiquidationUi: FC<{
       </Flex>
       <Box borderRadius="base" borderWidth="1px" borderColor="gray.900" p={4}>
         <Text mb={2}>{t('staking-v2.self-liquidation.amounts-headline')}</Text>
-        <Flex>
+        <Flex flexDirection={['column', 'column', 'row']}>
           <LiquidationDataBox
             testId="to target"
             snxValue={amountToLiquidateToTargetSNX}
