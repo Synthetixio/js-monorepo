@@ -28,6 +28,8 @@ import {
   handleUSDBurned,
   handleUSDMinted,
   handleWithdrawn,
+  handleRewardsDistributed,
+  handleRewardsClaimed,
 } from '../src/core';
 import {
   createAccountCreatedEvent,
@@ -46,6 +48,8 @@ import {
   createPoolNominationRevokedEvent,
   createPoolOwnershipAcceptedEvent,
   createPoolOwnershipRenouncedEvent,
+  createRewardsClaimedEvent,
+  createRewardsDistributedEvent,
   createUSDBurnedEvent,
   createUSDMintedEvent,
   createWithdrawnEvent,
@@ -71,6 +75,8 @@ export {
   handleUSDBurned,
   handleUSDMinted,
   handleWithdrawn,
+  handleRewardsDistributed,
+  handleRewardsClaimed,
 };
 
 describe('core tests', () => {
@@ -779,5 +785,134 @@ describe('core tests', () => {
     assert.fieldEquals('Position', `1-1-${address}`, 'total_burned', '2000');
     handleUSDBurned(newUSDBurnedEvent);
     assert.fieldEquals('Position', `1-1-${address}`, 'total_burned', '4000');
+  });
+
+  test('handleRewardsDistributed', () => {
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const rewardsDistributedEvent = createRewardsDistributedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(address),
+      Address.fromString(address2),
+      BigInt.fromI32(200),
+      BigInt.fromI64(now),
+      BigInt.fromI32(300),
+      now,
+      now - 1000
+    );
+    handleRewardsDistributed(rewardsDistributedEvent);
+    assert.fieldEquals(
+      'RewardsDistributed',
+      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'id',
+      `1-${address}-${BigInt.fromI64(now).toString()}`
+    );
+    assert.fieldEquals(
+      'RewardsDistributed',
+      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'amount',
+      '200'
+    );
+    assert.fieldEquals(
+      'RewardsDistributed',
+      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'collateral_type',
+      address
+    );
+    assert.fieldEquals(
+      'RewardsDistributed',
+      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'pool',
+      '1'
+    );
+    assert.fieldEquals(
+      'RewardsDistributed',
+      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'distributor',
+      address2
+    );
+    assert.fieldEquals(
+      'RewardsDistributed',
+      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'start',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'RewardsDistributed',
+      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'duration',
+      '300'
+    );
+    assert.fieldEquals(
+      'RewardsDistributed',
+      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'created_at',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'RewardsDistributed',
+      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'created_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals(
+      'RewardsDistributed',
+      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'updated_at',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'RewardsDistributed',
+      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'updated_at_block',
+      (now - 1000).toString()
+    );
+  });
+
+  test('handleRewardsClaimed', () => {
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const rewardsClaimed = createRewardsClaimedEvent(
+      BigInt.fromI32(1),
+      BigInt.fromI32(2),
+      Address.fromString(address),
+      Address.fromString(address2),
+      BigInt.fromI32(500),
+      now,
+      now - 1000
+    );
+    handleRewardsClaimed(rewardsClaimed);
+    assert.fieldEquals('RewardsClaimed', '2-1', 'id', '2-1');
+    assert.fieldEquals('RewardsClaimed', '2-1', 'created_at', now.toString());
+    assert.fieldEquals('RewardsClaimed', '2-1', 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('RewardsClaimed', '2-1', 'account', '1');
+    assert.fieldEquals('RewardsClaimed', '2-1', 'pool', '2');
+    assert.fieldEquals('RewardsClaimed', '2-1', 'total_amount_claimed', '500');
+    assert.fieldEquals('RewardsClaimed', '2-1', 'collateral_type', address);
+    assert.fieldEquals('RewardsClaimed', '2-1', 'distributor', address2);
+    assert.fieldEquals('RewardsClaimed', '2-1', 'amount', '500');
+    assert.fieldEquals('RewardsClaimed', '2-1', 'updated_at', now.toString());
+    assert.fieldEquals('RewardsClaimed', '2-1', 'updated_At_block', (now - 1000).toString());
+    const rewardsClaimed2 = createRewardsClaimedEvent(
+      BigInt.fromI32(1),
+      BigInt.fromI32(2),
+      Address.fromString(address),
+      Address.fromString(address2),
+      BigInt.fromI32(800),
+      now + 1000,
+      now
+    );
+    handleRewardsClaimed(rewardsClaimed2);
+    assert.fieldEquals('RewardsClaimed', '2-1', 'id', '2-1');
+    assert.fieldEquals('RewardsClaimed', '2-1', 'created_at', now.toString());
+    assert.fieldEquals('RewardsClaimed', '2-1', 'created_at_block', (now - 1000).toString());
+    assert.fieldEquals('RewardsClaimed', '2-1', 'account', '1');
+    assert.fieldEquals('RewardsClaimed', '2-1', 'pool', '2');
+    assert.fieldEquals('RewardsClaimed', '2-1', 'total_amount_claimed', '1300');
+    assert.fieldEquals('RewardsClaimed', '2-1', 'collateral_type', address);
+    assert.fieldEquals('RewardsClaimed', '2-1', 'distributor', address2);
+    assert.fieldEquals('RewardsClaimed', '2-1', 'amount', '800');
+    assert.fieldEquals('RewardsClaimed', '2-1', 'updated_at', (now + 1000).toString());
+    assert.fieldEquals('RewardsClaimed', '2-1', 'updated_At_block', now.toString());
   });
 });

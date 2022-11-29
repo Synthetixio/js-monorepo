@@ -511,7 +511,7 @@ export function createRewardsDistributedEvent(
   return newUSDBurnedEvent;
 }
 
-export function createRewardsClaimed(
+export function createRewardsClaimedEvent(
   accountId: BigInt,
   poolId: BigInt,
   collateralType: Address,

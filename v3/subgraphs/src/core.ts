@@ -516,6 +516,7 @@ export function handleRewardsDistributed(event: RewardsDistributedEvent): void {
       .toString()
       .concat('-')
       .concat(event.params.collateralType.toHex())
+      .concat('-')
       .concat(event.params.start.toString())
   );
   rewardsDistributed.amount = event.params.amount.toBigDecimal();
@@ -541,18 +542,19 @@ export function handleRewardsClaimed(event: RewardsClaimedEvent): void {
     );
     rewardsClaimed.created_at = event.block.timestamp;
     rewardsClaimed.created_at_block = event.block.number;
-    rewardsClaimed.account = event.params.accountId.toString();
   }
-  if (rewardsClaimed.account !== null) {
+  rewardsClaimed!.account = event.params.accountId.toString();
+  rewardsClaimed!.pool = event.params.poolId.toString();
+  if (rewardsClaimed !== null && rewardsClaimed.amount !== null) {
     rewardsClaimed.total_amount_claimed = rewardsClaimed.amount.plus(
       event.params.amount.toBigDecimal()
     );
   } else {
-    rewardsClaimed.total_amount_claimed = event.params.amount.toBigDecimal();
+    rewardsClaimed!.total_amount_claimed = event.params.amount.toBigDecimal();
   }
+  rewardsClaimed!.collateral_type = event.params.collateralType;
   rewardsClaimed!.distributor = event.params.distributor;
   rewardsClaimed!.amount = event.params.amount.toBigDecimal();
-  rewardsClaimed!.pool = event.params.poolId.toString();
   rewardsClaimed!.updated_at = event.block.timestamp;
   rewardsClaimed!.updated_at_block = event.block.number;
   rewardsClaimed!.save();
