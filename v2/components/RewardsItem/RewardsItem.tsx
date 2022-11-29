@@ -283,7 +283,7 @@ export const Rewards = () => {
                 variant="not-staking"
                 mt={0.5}
                 borderRadius="md"
-                w={'fit-content'}
+                w="fit-content"
               >
                 {t('staking-v2.earn.badges.claimed')}
               </Badge>
