@@ -50,6 +50,7 @@
     "@snx-v2/RewardsItem": "workspace:^",
     "@snx-v2/SelfLiquidation": "workspace:*",
     "@snx-v2/SignerContext": "workspace:*",
+    "@snx-v2/StatBox": "workspace:*",
     "@snx-v2/SwapLinks": "workspace:*",
     "@snx-v2/UnflagOptions": "workspace:*",
     "@snx-v2/UtilityCard": "workspace:^",
