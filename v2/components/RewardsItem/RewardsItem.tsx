@@ -339,11 +339,7 @@ export const Rewards = () => {
         description="Liquidation Rewards"
         apyReturn={null}
         stakedBalance={`${formatNumber(stakedSnx.toNumber()).toString()} SNX`}
-        endDate={feePoolData?.nextFeePeriodStartDate || null}
-        percentCompleted={percentEpochCompleted(
-          feePoolData?.nextFeePeriodStartDate,
-          feePoolData?.feePeriodDuration
-        )}
+        endDate={null}
         isLoading={isLoading}
         rewardBalance={`${formatNumber(
           liquidationData?.liquidatorRewards?.toNumber() || 0
