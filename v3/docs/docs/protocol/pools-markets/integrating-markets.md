@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Integrating Markets
 
-Markets can be integrated with the Synthetix protocol to access liquidity provided by stakers. Markets report a balance of debt, may deposit snxUSD, and withdraw snxUSD based on their balance and the amount of liquidity available.
+Markets can be integrated with the Synthetix protocol to access liquidity provided by stakers. Markets report a balance of debt, may deposit snxUSD, and withdraw snxUSD depending on the amount of liquidity delegated to them by pools.
 
 ## Registering Markets
 
@@ -14,12 +14,13 @@ Markets must conform to the [`IMarket` interface](https://github.com/Synthetixio
 
 - `function name(uint128 marketId) external view returns (string memory);` - A function which should return a human-readable name for the given market.
 - `function reportedDebt(uint129 marketId) external view returns (uint);` - A function which should return the total value of debt issued by the market (to be collateralized by the assets in the pools backing it), denominated with 18 decimals places.
+- `function locked(uint128 marketId) external view returns (uint);` - A function which returns the amount of credit under which pools cannot rescind credit delegated to the market. This value is dollar-denominated, with 18 decimals places. If the market implementation does not lock collateral, this function can just `return 0;`.
 
 ## Managing Credit & Debt
 
-When a market receives snxUSD (e.g. by selling a synthetic asset), it should deposit them into the market manager using the [`depositUsd` function](/protocol/technical-reference/smart-contracts#depositusd). This effectively credits all of the pools (and relevant staking positions) backing this market, pro-rata.
+When a market receives snxUSD (e.g. by selling a synthetic asset), it should deposit them into the market manager using the [`depositMarketUsd` function](/protocol/technical-reference/smart-contracts#depositmarketusd). This effectively credits all of the pools (and relevant staking positions) backing this market, pro-rata.
 
-When a market needs to pay out snxUSD (e.g. when a synthetic asset is sold to the market), it may withdraw snxUSD from the market manager using the [`withdrawUsd` function](/protocol/technical-reference/smart-contracts#withdrawusd). This increases debt among all of the pools (and relevant staking positions) backing this market, pro-rata. A market can withdraw no more than the amount returned by the [`getWithdrawableUsd` function](/protocol/technical-reference/smart-contracts#getwithdrawableusd).
+When a market needs to pay out snxUSD (e.g. when a synthetic asset is sold to the market), it may withdraw snxUSD from the market manager using the [`withdrawMarketUsd` function](/protocol/technical-reference/smart-contracts#withdrawmarketusd). This increases debt among all of the pools (and relevant staking positions) backing this market, pro-rata. A market can withdraw no more than the amount returned by the [`getWithdrawableUsd` function](/protocol/technical-reference/smart-contracts#getwithdrawableusd).
 
 The amount of snxUSD withdrawn by the market minus the amount deposited can be retrieved using the [`getMarketIssuance` function](/protocol/technical-reference/smart-contracts#getmarketissuance). (Note that this value can be negative.) This, plus the [`getMarketReportedBalance`](/protocol/technical-reference/smart-contracts#getmarketreportedbalance), results in the [`getMarketTotalBalance`](/protocol/technical-reference/smart-contracts#getmarkettotalbalance). The amount of collateral backing the market can be retrieved with the [`getMarketCollateral` function](/protocol/technical-reference/smart-contracts#getmarketcollateral).
 

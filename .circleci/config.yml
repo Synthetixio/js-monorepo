@@ -154,6 +154,8 @@ jobs:
       - store_artifacts:
           path: 'coverage'
 
+      - run: yarn workspace @snx-v3/subgraphs test
+
   typecheck:
     working_directory: /tmp/app
     docker:

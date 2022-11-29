@@ -12,4 +12,5 @@ packages/queries/subgraphs
 **/storybook-static/
 **/.nyc_output
 **/junit.xml
+**/generated
 tools/tenderly/fork.json

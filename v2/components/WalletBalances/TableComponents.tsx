@@ -1,5 +1,5 @@
-import { PropsWithChildren, ReactElement } from 'react';
-import { Flex, Td, Th, Tr, Text, Skeleton, Progress } from '@chakra-ui/react';
+import { ReactElement } from 'react';
+import { Flex, Td, Th, Tr, Text, Skeleton, Progress, TableCellProps } from '@chakra-ui/react';
 import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 
 export const TbodyLoading = ({ numberOfCols }: { numberOfCols: number }) => (
@@ -12,11 +12,15 @@ export const TbodyLoading = ({ numberOfCols }: { numberOfCols: number }) => (
   </Tr>
 );
 
-export const StyledTh = ({ children }: PropsWithChildren) => (
-  <Th sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900' }}>{children}</Th>
+export const StyledTh: React.FC<TableCellProps> = (props) => (
+  <Th
+    sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900', borderTop: 'none' }}
+    {...props}
+  />
 );
-const StyledTd = ({ children }: PropsWithChildren) => (
-  <Td sx={{ borderBottomColor: 'gray.900' }}>{children}</Td>
+
+export const StyledTd: React.FC<TableCellProps> = (props) => (
+  <Td sx={{ borderBottomColor: 'gray.900' }} {...props} />
 );
 export const AssetTd = ({
   description,
