@@ -158,6 +158,9 @@
         "claimable": "CLAIMABLE",
         "claimed": "CLAIMED",
         "maintain": "ADJUST TO MAINTAIN C-RATIO"
+      },
+      "transaction-modal": {
+        "claiming": "Claiming"
       }
     },
     "self-liquidation": {
