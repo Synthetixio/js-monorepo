@@ -110,3 +110,33 @@ type Vault @entity {
   updated_at: BigInt!
   updated_at_block: BigInt!
 }
+
+type RewardsDistributed @entity {
+  "Pool id + collateral type address + start"
+  id: ID!
+  pool: Pool!
+  collateral_type: Bytes!
+  distributor: Bytes!
+  amount: BigDecimal!
+  start: BigInt!
+  duration: BigInt!
+  created_at: BigInt!
+  created_at_block: BigInt!
+  updated_at: BigInt!
+  updated_at_block: BigInt!
+}
+
+type RewardsClaimed @entity {
+  "Pool id + Account NFT id"
+  id: ID!
+  account: Account!
+  pool: Pool!
+  collateral_type: Bytes!
+  distributor: Bytes!
+  amount: BigDecimal!
+  total_amount_claimed: BigDecimal!
+  created_at: BigInt!
+  created_at_block: BigInt!
+  updated_at: BigInt!
+  updated_at_block: BigInt!
+}

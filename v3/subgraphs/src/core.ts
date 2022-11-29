@@ -23,6 +23,10 @@ import {
   PermissionGranted,
   PermissionRevoked,
 } from '../generated/AccountModule/AccountModule';
+import {
+  RewardsClaimed as RewardsClaimedEvent,
+  RewardsDistributed as RewardsDistributedEvent,
+} from '../generated/RewardsManagerModule/RewardsManagerModule';
 import { DelegationUpdated, VaultModule } from '../generated/VaultModule/VaultModule';
 import { UsdMinted, UsdBurned } from '../generated/IssueUSDModule/IssueUSDModule';
 import {
@@ -34,6 +38,8 @@ import {
   Vault,
   Position,
   MarketConfiguration,
+  RewardsDistributed,
+  RewardsClaimed,
 } from '../generated/schema';
 import { BigDecimal, BigInt, Bytes, store } from '@graphprotocol/graph-ts';
 
@@ -498,4 +504,56 @@ export function handleUSDBurned(event: UsdBurned): void {
     position.updated_at_block = event.block.number;
     position.save();
   }
+}
+
+//////////////
+// Rewards //
+/////////////
+
+export function handleRewardsDistributed(event: RewardsDistributedEvent): void {
+  const rewardsDistributed = new RewardsDistributed(
+    event.params.poolId
+      .toString()
+      .concat('-')
+      .concat(event.params.collateralType.toHex())
+      .concat(event.params.start.toString())
+  );
+  rewardsDistributed.amount = event.params.amount.toBigDecimal();
+  rewardsDistributed.collateral_type = event.params.collateralType;
+  rewardsDistributed.distributor = event.params.distributor;
+  rewardsDistributed.start = event.params.start;
+  rewardsDistributed.pool = event.params.poolId.toString();
+  rewardsDistributed.duration = event.params.duration;
+  rewardsDistributed.created_at = event.block.timestamp;
+  rewardsDistributed.created_at_block = event.block.number;
+  rewardsDistributed.updated_at = event.block.timestamp;
+  rewardsDistributed.updated_at_block = event.block.number;
+  rewardsDistributed.save();
+}
+
+export function handleRewardsClaimed(event: RewardsClaimedEvent): void {
+  let rewardsClaimed = RewardsClaimed.load(
+    event.params.poolId.toString().concat('-').concat(event.params.accountId.toString())
+  );
+  if (rewardsClaimed) {
+    rewardsClaimed = new RewardsClaimed(
+      event.params.poolId.toString().concat('-').concat(event.params.accountId.toString())
+    );
+    rewardsClaimed.created_at = event.block.timestamp;
+    rewardsClaimed.created_at_block = event.block.number;
+    rewardsClaimed.account = event.params.accountId.toString();
+  }
+  if (rewardsClaimed.account !== null) {
+    rewardsClaimed.total_amount_claimed = rewardsClaimed.amount.plus(
+      event.params.amount.toBigDecimal()
+    );
+  } else {
+    rewardsClaimed.total_amount_claimed = event.params.amount.toBigDecimal();
+  }
+  rewardsClaimed!.distributor = event.params.distributor;
+  rewardsClaimed!.amount = event.params.amount.toBigDecimal();
+  rewardsClaimed!.pool = event.params.poolId.toString();
+  rewardsClaimed!.updated_at = event.block.timestamp;
+  rewardsClaimed!.updated_at_block = event.block.number;
+  rewardsClaimed!.save();
 }

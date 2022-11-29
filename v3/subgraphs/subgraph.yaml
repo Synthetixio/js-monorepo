@@ -150,3 +150,26 @@ dataSources:
         - event: UsdBurned(indexed uint128,indexed uint128,address,uint256,indexed address)
           handler: handleUSDBurned
       file: ./src/core.ts
+  - kind: ethereum
+    name: RewardsManagerModule
+    network: goerli
+    source:
+      address: '0x8589Cf382d82fdDa237eFd75CEb493C4fe79A5ED'
+      abi: RewardsManagerModule
+      startBlock: 7833258
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - RewardsClaimed
+        - RewardsDistributed
+      abis:
+        - name: RewardsManagerModule
+          file: ./abis/RewardsManagerModule.json
+      eventHandlers:
+        - event: RewardsDistributed(indexed uint128,indexed address,address,uint256,uint256,uint256)
+          handler: handleRewardsDistributed
+        - event: RewardsClaimed(indexed uint128,indexed uint128,indexed address,address,uint256)
+          handler: handleRewardsClaimed
+      file: ./src/core.ts
