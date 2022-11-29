@@ -12,6 +12,7 @@ const createPopulateTransaction = (FeePool: ReturnType<typeof useFeePool>['data'
       gasLimit: FeePool.estimateGas.claimFees(),
     });
 };
+
 export function useClaimRewardsMutation() {
   const { data: FeePool } = useFeePool();
 

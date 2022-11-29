@@ -16,6 +16,7 @@ const createPopulateTransaction = (
       gasLimit: LiquidatorRewards.estimateGas.getReward(walletAddress),
     });
 };
+
 export function useClaimLiquidatorRewardsMutation() {
   const { data: LiquidatorRewards } = useLiquidatorRewards();
   const { walletAddress } = useContext(ContractContext);
