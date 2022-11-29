@@ -32,7 +32,7 @@ import { useApprove } from '../../hooks/useApprove';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';
 import { transactionState } from '../../utils/state';
-import testnetIcon from '../../../public/images/testnet.png';
+import testnetIcon from './testnet.png';
 
 const chains = [
   {

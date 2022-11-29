@@ -10133,22 +10133,29 @@ __metadata:
     "@babel/preset-env": ^7.19.4
     "@babel/preset-react": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
+    "@babel/runtime-corejs3": ^7.19.4
     "@chakra-ui/icon": ^3.0.11
     "@chakra-ui/icons": ^2.0.9
     "@chakra-ui/react": ^2.2.8
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@faker-js/faker": ^7.6.0
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.7
     "@rainbow-me/rainbowkit": ^0.7.1
     "@svgr/webpack": ^6.3.1
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     "@types/react": ^18.0.18
     "@types/react-chartjs-2": ^2.5.7
     "@types/react-helmet": ^6.1.5
     babel-loader: ^8.2.5
+    babel-plugin-istanbul: ^6.1.1
     big.js: ^6.1.1
+    bn.js: ^5.2.1
     chart.js: ^3.9.1
+    core-js: 3
+    crypto-browserify: ^3.12.0
     css-loader: ^6.7.1
     css-minimizer-webpack-plugin: ^4.0.0
     ethers: ^5.7.2
@@ -10163,10 +10170,15 @@ __metadata:
     react-helmet: ^6.1.0
     react-hook-form: ^7.34.0
     react-i18next: ^11.18.3
+    react-refresh: ^0.14.0
     react-router-dom: ^6.3.0
     recoil: ^0.7.4
+    stream-browserify: ^3.0.0
+    style-loader: ^3.3.1
+    terser-webpack-plugin: ^5.3.6
     wagmi: ^0.6.3
     webpack: ^5.74.0
+    webpack-bundle-analyzer: ^4.6.1
     webpack-cli: ^4.10.0
     webpack-dev-server: ^4.11.1
   languageName: unknown
@@ -37183,6 +37195,15 @@ __metadata:
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
   checksum: 21425246a5a8f14d1625a657a3a56f8a323193fa341a71af818a2ed2a429efa2385a328b4381cf2f12c2d0e6380801eb9e0427ed9c3a10ff95c86e383184d632
+  languageName: node
+  linkType: hard
+
+"style-loader@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "style-loader@npm:3.3.1"
+  peerDependencies:
+    webpack: ^5.0.0
+  checksum: 470feef680f59e2fce4d6601b5c55b88c01ad8d1dd693c528ffd591ff5fd7c01a4eff3bdbe62f26f847d6bd2430c9ab594be23307cfe7a3446ab236683f0d066
   languageName: node
   linkType: hard
 

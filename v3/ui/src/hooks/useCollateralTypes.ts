@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { useContractReads, useProvider } from 'wagmi';
 import { chainIdState, collateralTypesState } from '../utils/state';
 import { localCollateralTypes } from '../utils/constants';
-import { abi as AggregatorABI } from '../../ts-deployments/aggregator';
+import { abi as AggregatorABI } from '@synthetixio/v3-contracts/build/hardhat/aggregator_snx.aggregator';
 import { compareAddress } from '../utils/helpers';
 
 export const useCollateralTypes = () => {
