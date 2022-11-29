@@ -7223,7 +7223,13 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/CountDown": "workspace:^"
     "@snx-v2/icons": "workspace:^"
+    "@snx-v2/stakingCalculations": "workspace:^"
+    "@snx-v2/useDebtData": "workspace:^"
+    "@snx-v2/useFeePoolData": "workspace:^"
+    "@snx-v2/useGetLiquidationRewards": "workspace:^"
+    "@snx-v2/useRewardsAvailable": "workspace:^"
     "@storybook/react": ^6.5.10
+    date-fns: ^2.29.3
     react: ^18.2.0
     react-i18next: ^11.18.3
   languageName: unknown
@@ -7475,7 +7481,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/stakingCalculations@workspace:*, @snx-v2/stakingCalculations@workspace:v2/lib/stakingCalculations":
+"@snx-v2/stakingCalculations@workspace:*, @snx-v2/stakingCalculations@workspace:^, @snx-v2/stakingCalculations@workspace:v2/lib/stakingCalculations":
   version: 0.0.0-use.local
   resolution: "@snx-v2/stakingCalculations@workspace:v2/lib/stakingCalculations"
   dependencies:
@@ -7557,7 +7563,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useDebtData@workspace:*, @snx-v2/useDebtData@workspace:v2/lib/useDebtData":
+"@snx-v2/useDebtData@workspace:*, @snx-v2/useDebtData@workspace:^, @snx-v2/useDebtData@workspace:v2/lib/useDebtData":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useDebtData@workspace:v2/lib/useDebtData"
   dependencies:
@@ -7609,7 +7615,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useFeePoolData@workspace:*, @snx-v2/useFeePoolData@workspace:v2/lib/useFeePoolData":
+"@snx-v2/useFeePoolData@workspace:*, @snx-v2/useFeePoolData@workspace:^, @snx-v2/useFeePoolData@workspace:v2/lib/useFeePoolData":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useFeePoolData@workspace:v2/lib/useFeePoolData"
   dependencies:
@@ -7654,7 +7660,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useGetLiquidationRewards@workspace:*, @snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards":
+"@snx-v2/useGetLiquidationRewards@workspace:*, @snx-v2/useGetLiquidationRewards@workspace:^, @snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards"
   dependencies:
@@ -7725,7 +7731,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useRewardsAvailable@workspace:*, @snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable":
+"@snx-v2/useRewardsAvailable@workspace:*, @snx-v2/useRewardsAvailable@workspace:^, @snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable"
   dependencies:
@@ -18035,6 +18041,13 @@ __metadata:
   version: 2.29.2
   resolution: "date-fns@npm:2.29.2"
   checksum: 08bebcceb0a5dbadae4c55e6592b9d5c07dbd7833433c7e9a1d4a424300db32589b8b48e5979b32863c9b00a48d9bab6663e580c2a4f9f203d46cbf9113b5664
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^2.29.3":
+  version: 2.29.3
+  resolution: "date-fns@npm:2.29.3"
+  checksum: e01cf5b62af04e05dfff921bb9c9933310ed0e1ae9a81eb8653452e64dc841acf7f6e01e1a5ae5644d0337e9a7f936175fd2cb6819dc122fdd9c5e86c56be484
   languageName: node
   linkType: hard
 

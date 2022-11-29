@@ -172,6 +172,7 @@ export const BalanceBox: FC = () => {
   const { data: escrowBalanceData } = useEscrowBalance();
   const { data: liquidationRewardsData } = useGetLiquidationRewards();
   const { networkId } = useContext(ContractContext);
+
   const stakedSnx = calculateStakedSnx({
     targetCRatio: debtData?.targetCRatio,
     currentCRatio: debtData?.currentCRatio,

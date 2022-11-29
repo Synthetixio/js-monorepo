@@ -1,7 +1,15 @@
 import { FC } from 'react';
-import { Box, Text, Flex, Button, Progress, FlexProps } from '@chakra-ui/react';
+import { Box, Text, Flex, Button, Progress, FlexProps, Badge, Divider } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { CountDown } from '@snx-v2/CountDown';
+import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
+import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
+import { SNXIcon, InfoOutline, CurveIcon } from '@snx-v2/icons';
+import { useDebtData } from '@snx-v2/useDebtData';
+import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
+import { formatNumber } from '@snx-v2/formatters';
+import { useFeePoolData } from '@snx-v2/useFeePoolData';
+import intervalToDuration from 'date-fns/intervalToDuration';
 
 interface RewardsItemProps extends FlexProps {
   isLoading: boolean;
@@ -11,12 +19,13 @@ interface RewardsItemProps extends FlexProps {
   apyReturn: string | null;
   stakedBalance: string | null;
   endDate: Date | null;
+  percentCompleted?: number;
   rewardBalance: string;
   RewardsBadge?: FC;
   onClick?: () => void;
 }
 
-export const RewardsItem = ({
+export const RewardsItemUI = ({
   isLoading,
   Icon,
   title,
@@ -24,12 +33,14 @@ export const RewardsItem = ({
   apyReturn,
   stakedBalance,
   endDate,
+  percentCompleted,
   rewardBalance,
   RewardsBadge,
   onClick,
   ...props
 }: RewardsItemProps) => {
   const { t } = useTranslation();
+
   console.log('isLoading', isLoading);
 
   return (
@@ -105,7 +116,14 @@ export const RewardsItem = ({
         </Flex>
         {endDate ? (
           <Flex direction="column" justifyContent="space-between" w="210px" mx={[6, 6, 6, 5]}>
-            <Progress w="100%" variant="white" height="5px" min={0} max={100} value={50} />
+            <Progress
+              w="100%"
+              variant="white"
+              height="5px"
+              min={0}
+              max={100}
+              value={percentCompleted}
+            />
             <Flex justifyContent="space-between" alignItems="center" mt={2.25}>
               <Text fontFamily="heading" fontWeight="700" fontSize="xs" color="whiteAlpha.600">
                 {t('staking-v2.earn.remaining')}
@@ -167,5 +185,122 @@ export const RewardsItem = ({
         </Button>
       </Flex>
     </Flex>
+  );
+};
+
+function percentEpochCompleted(nextStartDate?: Date, duration?: number) {
+  const { days, hours, minutes, seconds } = intervalToDuration({
+    start: new Date(),
+    end: nextStartDate || 0,
+  });
+
+  const totalSecondsUntil =
+    (days ? days * 24 * 3600 : 0) +
+    (hours ? hours * 3600 : 0) +
+    (minutes ? minutes * 60 : 0) +
+    (seconds ? seconds : 0);
+
+  const totalDuration = duration || 0;
+
+  return (100 * (totalDuration - totalSecondsUntil)) / totalDuration;
+}
+
+export const Rewards = () => {
+  const { data: debtData, isLoading: isDebtLoading } = useDebtData();
+  const { data: liquidationData, isLoading: isLiquidationLoading } = useGetLiquidationRewards();
+  const { data: rewardsData, isLoading: isRewardsLoading } = useRewardsAvailable();
+  const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
+
+  const stakedSnx = calculateStakedSnx({
+    targetCRatio: debtData?.targetCRatio,
+    currentCRatio: debtData?.currentCRatio,
+    collateral: debtData?.collateral,
+  });
+
+  console.log('Rewards, data', rewardsData, 'isRewardsLoading', isRewardsLoading);
+
+  const isLoading =
+    isDebtLoading || isLiquidationLoading || isRewardsLoading || isFeePoolDataLoading;
+  console.log(isLoading);
+  return (
+    <Box my={8}>
+      <Divider my={4} />
+      <RewardsItemUI
+        Icon={() => <SNXIcon height="40px" width="40px" />}
+        title="Synthetix"
+        description="Staking Rewards"
+        apyReturn="24.00%"
+        stakedBalance={`${formatNumber(stakedSnx.toNumber()).toString()} SNX`}
+        endDate={feePoolData?.nextFeePeriodStartDate || null}
+        percentCompleted={percentEpochCompleted(
+          feePoolData?.nextFeePeriodStartDate,
+          feePoolData?.feePeriodDuration
+        )}
+        isLoading={false}
+        rewardBalance={`${formatNumber(rewardsData?.snxRewards.toNumber() || 0).toString()} SNX`}
+        RewardsBadge={() => (
+          <Badge py={0.5} px={1} fontSize="2xs" variant="warning" mt={0.5} borderRadius="md">
+            <InfoOutline color="warning" mb="1.75px" mr="2px" height="12px" width="12px" />
+            Adjust to Collect Rewards
+          </Badge>
+        )}
+        onClick={() => console.log('Claim Inflation Rewards')}
+      />
+      <Divider my={4} />
+      <RewardsItemUI
+        Icon={() => <SNXIcon height="40px" width="40px" />}
+        title="Synthetix"
+        description="Liquidation Rewards"
+        apyReturn={null}
+        stakedBalance={`${formatNumber(stakedSnx.toNumber()).toString()} SNX`}
+        endDate={feePoolData?.nextFeePeriodStartDate || null}
+        percentCompleted={percentEpochCompleted(
+          feePoolData?.nextFeePeriodStartDate,
+          feePoolData?.feePeriodDuration
+        )}
+        isLoading={false}
+        rewardBalance={`${formatNumber(
+          liquidationData?.liquidatorRewards?.toNumber() || 0
+        ).toString()} SNX`}
+        RewardsBadge={() => (
+          <Badge py={0.5} px={1} fontSize="2xs" variant="warning" mt={0.5} borderRadius="md">
+            <InfoOutline color="warning" mb="1.75px" mr="2px" height="12px" width="12px" />
+            Adjust to Collect Rewards
+          </Badge>
+        )}
+        onClick={() => console.log('Claim Liquidations')}
+      />
+      <Divider my={4} />
+      <RewardsItemUI
+        Icon={() => (
+          <Box
+            bg="black"
+            borderRadius="full"
+            w="37px"
+            h="37px"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <CurveIcon height="24px" width="24px" />
+          </Box>
+        )}
+        title="Curve"
+        description="sUSD CPT Rewards"
+        apyReturn="24.00%"
+        stakedBalance={null}
+        endDate={null}
+        isLoading={false}
+        rewardBalance="5,000.00 SNX"
+        RewardsBadge={() => (
+          <Badge py={0.5} px={1} fontSize="2xs" variant="warning" mt={0.5} borderRadius="md">
+            <InfoOutline color="warning" mb="1.75px" mr="2px" height="12px" width="12px" />
+            Adjust to Collect Rewards
+          </Badge>
+        )}
+        onClick={() => console.log('Curve')}
+      />
+      <Divider my={4} />
+    </Box>
   );
 };

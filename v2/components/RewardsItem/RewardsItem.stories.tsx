@@ -1,14 +1,14 @@
-import { RewardsItem } from '.';
+import { RewardsItemUI } from '.';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { InfoOutline, SNXIcon } from '@snx-v2/icons';
 import { Badge } from '@chakra-ui/react';
 
 export default {
   title: 'RewardsItem',
-  component: RewardsItem,
-} as ComponentMeta<typeof RewardsItem>;
+  component: RewardsItemUI,
+} as ComponentMeta<typeof RewardsItemUI>;
 
-const Template: ComponentStory<typeof RewardsItem> = (_args) => <RewardsItem {..._args} />;
+const Template: ComponentStory<typeof RewardsItemUI> = (_args) => <RewardsItemUI {..._args} />;
 
 export const Primary = Template.bind({});
 
