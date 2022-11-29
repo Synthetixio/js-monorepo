@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useSynthetix } from '@snx-v2/useSynthetixContracts';
 import { useGasOptions } from '@snx-v2/useGasOptions';
 import { initialState, reducer } from '@snx-v2/txnReducer';
+import Wei from '@synthetixio/wei';
 
 const createPopulateTransaction = (Synthetix: ReturnType<typeof useSynthetix>['data']) => {
   if (!Synthetix?.signer) return undefined;
@@ -12,11 +13,13 @@ const createPopulateTransaction = (Synthetix: ReturnType<typeof useSynthetix>['d
       gasLimit: Synthetix.estimateGas.liquidateSelf(),
     });
 };
-export function useSelfLiquidationMutation() {
+export function useSelfLiquidationMutation(snxToLiquidate?: Wei) {
   const { data: Synthetix } = useSynthetix();
 
   const [txnState, dispatch] = useReducer(reducer, initialState);
-  const populateTransaction = createPopulateTransaction(Synthetix);
+  const populateTransaction = snxToLiquidate?.gt(0)
+    ? createPopulateTransaction(Synthetix)
+    : undefined;
   const {
     data,
     isFetched: isGasFetched,

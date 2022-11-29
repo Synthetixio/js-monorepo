@@ -14,6 +14,7 @@ describe('useSelfLiquidationData', () => {
     react = {
       useContext: jest.fn(() => ({
         networkId: 1,
+        walletAddress: 'vitalik.eth',
         gasSpeed: 'average',
       })),
     };
@@ -47,13 +48,13 @@ describe('useSelfLiquidationData', () => {
     useLiquidationData.mockReturnValue({ data: { selfLiquidationPenalty: wei(0.2) } });
     useLiquidator.mockReturnValue({
       data: {
-        calculateAmountToFixCollateral: jest.fn().mockReturnValue({ data: wei(100) }),
+        liquidationAmounts: jest.fn().mockReturnValue({ data: [wei(100), wei(10)] }),
       },
     });
 
     const result = useSelfLiquidationData();
     const [cacheKey, _query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual(['useSelfLiquidationData', 1, false]);
+    expect(cacheKey).toEqual(['useSelfLiquidationData', 1, 'vitalik.eth', false]);
 
     expect(result.data).toEqual(undefined);
     expect(options).toEqual({ enabled: false, staleTime: 10000 });
@@ -65,13 +66,13 @@ describe('useSelfLiquidationData', () => {
     useLiquidationData.mockReturnValue({ data: { selfLiquidationPenalty: wei(0.2) } });
     useLiquidator.mockReturnValue({
       data: {
-        calculateAmountToFixCollateral: jest.fn().mockReturnValue({ data: wei(100) }),
+        liquidationAmounts: jest.fn().mockReturnValue({ data: [wei(100), wei(10)] }),
       },
     });
 
     const result = useSelfLiquidationData();
     const [cacheKey, _query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual(['useSelfLiquidationData', 1, false]);
+    expect(cacheKey).toEqual(['useSelfLiquidationData', 1, 'vitalik.eth', false]);
     expect(result.data).toEqual(undefined);
     expect(options).toEqual({ enabled: false, staleTime: 10000 });
   });
@@ -83,7 +84,7 @@ describe('useSelfLiquidationData', () => {
 
     const result = useSelfLiquidationData();
     const [cacheKey, _query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual(['useSelfLiquidationData', 1, false]);
+    expect(cacheKey).toEqual(['useSelfLiquidationData', 1, 'vitalik.eth', false]);
 
     expect(result.data).toEqual(undefined);
     expect(options).toEqual({ enabled: false, staleTime: 10000 });
@@ -94,12 +95,12 @@ describe('useSelfLiquidationData', () => {
     useExchangeRatesData.mockReturnValue({ data: { SNX: wei(3) } });
     useLiquidator.mockReturnValue({
       data: {
-        calculateAmountToFixCollateral: jest.fn().mockReturnValue({ data: wei(100) }),
+        liquidationAmounts: jest.fn().mockReturnValue({ data: [wei(100), wei(10)] }),
       },
     });
     const result = useSelfLiquidationData();
     const [cacheKey, _query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual(['useSelfLiquidationData', 1, false]);
+    expect(cacheKey).toEqual(['useSelfLiquidationData', 1, 'vitalik.eth', false]);
 
     expect(result.data).toEqual(undefined);
     expect(options).toEqual({ enabled: false, staleTime: 10000 });
@@ -115,31 +116,30 @@ describe('useSelfLiquidationData', () => {
         liquidationRatioPercentage: wei(100),
       },
     });
-    useExchangeRatesData.mockReturnValue({ data: { SNX: wei(3) } });
-    useLiquidationData.mockReturnValue({ data: { selfLiquidationPenalty: wei(0.2) } });
+    useExchangeRatesData.mockReturnValue({ data: { SNX: wei(2) } });
+    useLiquidationData.mockReturnValue({ data: { selfLiquidationPenalty: wei(0.4) } });
     useLiquidator.mockReturnValue({
       data: {
-        calculateAmountToFixCollateral: jest
-          .fn()
-          .mockReturnValueOnce(wei(100))
-          .mockReturnValueOnce(wei(80)),
+        liquidationAmounts: jest.fn().mockReturnValue([wei(50), wei(10)]),
       },
     });
 
     useSelfLiquidationData();
 
     const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual(['useSelfLiquidationData', 1, true]);
+    expect(cacheKey).toEqual(['useSelfLiquidationData', 1, 'vitalik.eth', true]);
     expect(options).toEqual({ enabled: true, staleTime: 10000 });
 
     const queryResult = await query();
-    expect(queryResult).toEqual({
-      selfLiquidationPenalty: wei(0.2),
-      selfLiquidationPenaltyDollar: wei(20),
-      selfLiquidationPenaltySNX: wei(20).div(3),
-      amountToLiquidate: wei(100),
-      amountToLiquidateNoPenalty: wei(80),
-    });
+
+    expect(queryResult.selfLiquidationPenaltyPercent).toEqual(wei(0.4));
+    expect(queryResult.totalAmountToLiquidateSNX).toEqual(wei(50));
+    expect(queryResult.totalAmountToLiquidateUSD).toEqual(wei(100));
+    expect(queryResult.debtToRemove).toEqual(wei(10));
+    expect(queryResult.amountToLiquidateToTargetSNX.toString(2)).toBe('35.71'); // 50 / 1.40
+    expect(queryResult.amountToLiquidateToTargetUsd.toString(2)).toBe('71.43'); //35.71 * 2
+    expect(queryResult.selfLiquidationPenaltySNX.toString(2)).toBe('14.29'); // 50 - 35.71
+    expect(queryResult.selfLiquidationPenaltyUSD.toString(2)).toBe('28.57'); // 14.29 * 2
   });
   test('Handles calculateAmountToFixCollateral returning 0', async () => {
     useDebtData.mockReturnValue({ data: { collateral: wei(50), debtBalance: wei(200) } });
@@ -147,26 +147,26 @@ describe('useSelfLiquidationData', () => {
     useLiquidationData.mockReturnValue({ data: { selfLiquidationPenalty: wei(0.2) } });
     useLiquidator.mockReturnValue({
       data: {
-        calculateAmountToFixCollateral: jest
-          .fn()
-          .mockReturnValueOnce(wei(0))
-          .mockReturnValueOnce(wei(0)),
+        liquidationAmounts: jest.fn().mockReturnValue([wei(0), wei(0)]),
       },
     });
 
     useSelfLiquidationData();
 
     const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual(['useSelfLiquidationData', 1, true]);
+    expect(cacheKey).toEqual(['useSelfLiquidationData', 1, 'vitalik.eth', true]);
     expect(options).toEqual({ enabled: true, staleTime: 10000 });
 
     const queryResult = await query();
     expect(queryResult).toEqual({
-      selfLiquidationPenalty: wei(0.2),
-      selfLiquidationPenaltyDollar: wei(0),
+      selfLiquidationPenaltyPercent: wei(0.2),
+      selfLiquidationPenaltyUSD: wei(0),
       selfLiquidationPenaltySNX: wei(0),
-      amountToLiquidate: wei(0),
-      amountToLiquidateNoPenalty: wei(0),
+      totalAmountToLiquidateUSD: wei(0),
+      totalAmountToLiquidateSNX: wei(0),
+      amountToLiquidateToTargetUsd: wei(0),
+      amountToLiquidateToTargetSNX: wei(0),
+      debtToRemove: wei(0),
     });
   });
 });
