@@ -7115,6 +7115,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/EarnStats@workspace:*, @snx-v2/EarnStats@workspace:v2/components/EarnStats":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/EarnStats@workspace:v2/components/EarnStats"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/StatBox": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/useGetLifetimeRewards": "workspace:*"
+    "@storybook/react": ^6.5.10
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/EpochPrice@workspace:^, @snx-v2/EpochPrice@workspace:v2/components/EpochPrice":
   version: 0.0.0-use.local
   resolution: "@snx-v2/EpochPrice@workspace:v2/components/EpochPrice"
@@ -7718,6 +7731,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useFeesClaimed@workspace:v2/lib/useFeesClaimed":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useFeesClaimed@workspace:v2/lib/useFeesClaimed"
+  dependencies:
+    "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/ContractContext": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useGasOptions@workspace:*, @snx-v2/useGasOptions@workspace:v2/lib/useGasOptions":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useGasOptions@workspace:v2/lib/useGasOptions"
@@ -7746,6 +7770,16 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useGetLifetimeRewards@workspace:*, @snx-v2/useGetLifetimeRewards@workspace:v2/lib/useGetLifetimeRewards":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useGetLifetimeRewards@workspace:v2/lib/useGetLifetimeRewards"
+  dependencies:
+    "@snx-v2/useExchangeRatesData": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -9784,6 +9818,7 @@ __metadata:
     "@snx-v2/CRatioHealthCard": "workspace:*"
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/EarnStats": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/GasSpeedContext": "workspace:*"
     "@snx-v2/HomeButton": "workspace:*"
@@ -9793,7 +9828,6 @@ __metadata:
     "@snx-v2/RewardsItem": "workspace:^"
     "@snx-v2/SelfLiquidation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
-    "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/UtilityCard": "workspace:^"

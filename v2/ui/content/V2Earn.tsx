@@ -1,9 +1,9 @@
-import { Container, Box, Text, Link, Flex } from '@chakra-ui/react';
+import { Container, Box, Text, Link } from '@chakra-ui/react';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { HomeButton } from '@snx-v2/HomeButton';
 import { Rewards } from '@snx-v2/RewardsItem';
-import { StatBox } from '@snx-v2/StatBox';
 import { Trans, useTranslation } from 'react-i18next';
+import { EarnStats } from '@snx-v2/EarnStats';
 
 const V2Earn = () => {
   const { t } = useTranslation();
@@ -37,38 +37,8 @@ const V2Earn = () => {
               ]}
             />
           </Text>
-          <Flex
-            my={1}
-            flexDirection={['column', 'column', 'row', 'row']}
-            justifyContent="space-between"
-          >
-            <StatBox
-              label="Estimated Upcoming Rewards"
-              amount="$10,090.92"
-              mb={[3, 3, 0, 0]}
-              alignItems="start"
-              mr={3}
-              width="100%"
-              maxW={['100%', '100%', 'initial', 'initial']}
-            />
-            <StatBox
-              label="Earning"
-              amount="30.75%"
-              mb={[3, 3, 0, 0]}
-              alignItems={['start', 'start', 'center', 'center']}
-              mr={3}
-              width="100%"
-              maxW={['100%', '100%', 'initial', 'initial']}
-            />
-            <StatBox
-              label="Lifetime Rewards"
-              amount="$10,090.92"
-              mb={[3, 3, 0, 0]}
-              alignItems={['start', 'start', 'end', 'end']}
-              width="100%"
-              maxW={['100%', '100%', 'initial', 'initial']}
-            />
-          </Flex>
+          <EarnStats />
+
           <Rewards />
         </Container>
       </Box>
