@@ -88,6 +88,7 @@ const Badge: ComponentStyleConfig = {
     px: 2,
     borderRadius: 'base',
     borderWidth: '1px',
+    borderColor: 'transparent',
   },
   variants: {
     success: {
@@ -105,7 +106,7 @@ const Badge: ComponentStyleConfig = {
       borderColor: 'red.400',
       bg: 'red.900',
     },
-    'not-staking': {
+    gray: {
       color: 'gray.500',
       borderColor: 'gray.500',
       bg: 'gray.900',

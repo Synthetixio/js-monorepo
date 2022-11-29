@@ -18,4 +18,4 @@ export const Error = Template.bind({});
 Error.args = { variant: 'error' };
 
 export const NotStaking = Template.bind({});
-NotStaking.args = { variant: 'not-staking' };
+NotStaking.args = { variant: 'gray' };

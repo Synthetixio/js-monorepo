@@ -1,7 +1,7 @@
 import { RewardsItemUI } from '.';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { InfoOutline, SNXIcon } from '@snx-v2/icons';
-import { Badge } from '@chakra-ui/react';
+import { CurveIcon, InfoOutline, SNXIcon } from '@snx-v2/icons';
+import { Badge, Box } from '@chakra-ui/react';
 
 export default {
   title: 'RewardsItem',
@@ -11,6 +11,7 @@ export default {
 const Template: ComponentStory<typeof RewardsItemUI> = (_args) => <RewardsItemUI {..._args} />;
 
 export const Primary = Template.bind({});
+export const Secondary = Template.bind({});
 
 const date = new Date();
 date.setDate(date.getDate() + 3);
@@ -31,4 +32,28 @@ Primary.args = {
       Adjust to Collect Rewards
     </Badge>
   ),
+};
+
+Secondary.args = {
+  isLoading: false,
+  title: 'Curve',
+  description: 'sUSD CPT Rewards',
+  apyReturn: '12%',
+  stakedBalance: null,
+  Icon: () => (
+    <Box
+      bg="black"
+      borderRadius="full"
+      w="37px"
+      h="37px"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <CurveIcon height="24px" width="24px" />
+    </Box>
+  ),
+  endDate: null,
+  rewardBalance: null,
+  RewardsBadge: null,
 };
