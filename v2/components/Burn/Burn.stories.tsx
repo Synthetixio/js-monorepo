@@ -21,6 +21,6 @@ Primary.args = {
   snxUnstakingAmount: '',
   transactionFee: wei(0),
   isGasEnabledAndNotFetched: true,
-  onBadgeClick: () => {},
+  onPresetClick: () => {},
   stakedSnx: 100,
 };

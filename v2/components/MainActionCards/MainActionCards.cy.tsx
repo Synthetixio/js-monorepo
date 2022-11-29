@@ -23,6 +23,7 @@ describe('MainActionCards', () => {
           hasClaimed={true}
           isFlagged={false}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );
@@ -57,6 +58,7 @@ describe('MainActionCards', () => {
           hasClaimed={true}
           isFlagged={false}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );
@@ -128,6 +130,7 @@ describe('MainActionCards', () => {
           hasClaimed={false}
           isFlagged={false}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );
@@ -166,6 +169,7 @@ describe('MainActionCards', () => {
           hasClaimed={false}
           isFlagged={false}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );
@@ -199,6 +203,7 @@ describe('MainActionCards', () => {
           hasClaimed={false}
           isFlagged={true}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );
@@ -218,6 +223,36 @@ describe('MainActionCards', () => {
       .should('include.text', 'Adjust to collect weekly rewards')
       .should('have.css', 'color', redColor);
   });
+  it('c-ratio under target but within threshold', () => {
+    cy.viewport(1000, 1000);
+
+    cy.mount(
+      <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
+        <MainActionCardsUi
+          connectWallet={async () => {}}
+          walletAddress="vitalik.eth"
+          liquidationCratioPercentage={145}
+          targetCratioPercentage={400}
+          currentCRatioPercentage={396.5742686926663}
+          nextEpochStartDate={new Date(Date.now() + 100000)}
+          rewardsDollarValue={100}
+          hasClaimed={false}
+          isFlagged={false}
+          isLoading={false}
+          targetThreshold={0.01}
+        />
+      </Box>
+    );
+    cy.get('[data-testid="maintain button"]')
+      .should('be.visible')
+      .should('include.text', 'Maintain')
+      .should('have.css', 'background-color', noColor);
+
+    cy.get('[data-testid="collect button"]')
+      .should('be.visible')
+      .should('include.text', 'Claim your rewards')
+      .should('have.css', 'background-color', greenColor);
+  });
   it('calls connectWallet when no wallet address', () => {
     cy.viewport(1000, 1000);
 
@@ -234,6 +269,7 @@ describe('MainActionCards', () => {
           hasClaimed={false}
           isFlagged={false}
           isLoading={false}
+          targetThreshold={0.01}
         />
       </Box>
     );

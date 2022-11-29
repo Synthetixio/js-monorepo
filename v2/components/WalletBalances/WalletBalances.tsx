@@ -25,11 +25,19 @@ import { useTranslation } from 'react-i18next';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 import { SNXIcon, DSNXIcon, EthereumIcon } from '@snx-v2/icons';
-import { AssetTd, BalanceTd, HoldingTd, PriceTd, StyledTh, TbodyLoading } from './TableComponents';
+import {
+  AssetTd,
+  BalanceTd,
+  HoldingTd,
+  PriceTd,
+  StyledTd,
+  StyledTh,
+  TbodyLoading,
+} from './TableComponents';
 
 const WalletBalancesUi: React.FC<{
-  totalSynthBalance?: number;
-  dSNXBalance?: number;
+  totalSynthUSDBalance?: number;
+  dSNXUSDBalance?: number;
   debtBalance?: number;
   synthData?: {
     currencyKey: string;
@@ -48,7 +56,7 @@ const WalletBalancesUi: React.FC<{
     balance?: number;
     usdBalance?: number;
   }[];
-}> = ({ totalSynthBalance, dSNXBalance, debtBalance, synthData, nonSynthData }) => {
+}> = ({ totalSynthUSDBalance, dSNXUSDBalance, debtBalance, synthData, nonSynthData }) => {
   const { t } = useTranslation();
   return (
     <Box>
@@ -60,14 +68,14 @@ const WalletBalancesUi: React.FC<{
         />
         <StatBox
           label={t('staking-v2.wallet-balances.d-snx-value')}
-          amount={dSNXBalance === undefined ? undefined : formatNumberToUsd(dSNXBalance)}
+          amount={dSNXUSDBalance === undefined ? undefined : formatNumberToUsd(dSNXUSDBalance)}
           mx={2}
           alignItems="center"
         />
         <StatBox
           label={t('staking-v2.wallet-balances.total-synth-value')}
           amount={
-            totalSynthBalance === undefined ? undefined : formatNumberToUsd(totalSynthBalance)
+            totalSynthUSDBalance === undefined ? undefined : formatNumberToUsd(totalSynthUSDBalance)
           }
           alignItems="end"
         />
@@ -80,7 +88,9 @@ const WalletBalancesUi: React.FC<{
           <Table variant="simple">
             <Thead>
               <Tr>
-                <StyledTh>{t('staking-v2.wallet-balances.table-columns.asset')}</StyledTh>
+                <StyledTh width="40%">
+                  {t('staking-v2.wallet-balances.table-columns.asset')}
+                </StyledTh>
                 <StyledTh>{t('staking-v2.wallet-balances.table-columns.balance')}</StyledTh>
                 <StyledTh>{t('staking-v2.wallet-balances.table-columns.price')}</StyledTh>
                 <StyledTh>{t('staking-v2.wallet-balances.table-columns.holdings')}</StyledTh>
@@ -133,9 +143,14 @@ const WalletBalancesUi: React.FC<{
           <Table variant="simple">
             <Thead>
               <Tr>
-                <StyledTh>{t('staking-v2.wallet-balances.table-columns.asset')}</StyledTh>
+                <StyledTh width="40%">
+                  {t('staking-v2.wallet-balances.table-columns.asset')}
+                </StyledTh>
                 <StyledTh>{t('staking-v2.wallet-balances.table-columns.balance')}</StyledTh>
                 <StyledTh>{t('staking-v2.wallet-balances.table-columns.price')}</StyledTh>
+                <StyledTh visibility="hidden">
+                  {t('staking-v2.wallet-balances.table-columns.holdings')}
+                </StyledTh>
               </Tr>
             </Thead>
             <Tbody>
@@ -156,6 +171,7 @@ const WalletBalancesUi: React.FC<{
                       <AssetTd currencyKey={currencyKey} description={description} icon={icon} />
                       <BalanceTd balance={balance} usdBalance={usdBalance} />
                       <PriceTd price={price} />
+                      <StyledTd />
                     </Tr>
                   )
                 )
@@ -244,10 +260,10 @@ export const WalletBalances = () => {
   return (
     <WalletBalancesUi
       debtBalance={debtData?.debtBalance.toNumber()}
-      dSNXBalance={
-        networkId !== NetworkIdByName['mainnet-ovm'] ? 0 : dSNXBalanceData?.balance.toNumber()
+      dSNXUSDBalance={
+        networkId !== NetworkIdByName['mainnet-ovm'] ? 0 : dSNXBalanceData?.balanceUsd.toNumber()
       }
-      totalSynthBalance={synthsBalanceData?.totalUSDBalance.toNumber()}
+      totalSynthUSDBalance={synthsBalanceData?.totalUSDBalance.toNumber()}
       synthData={getSynthDataForTable(
         synthsBalanceData?.balances,
         synthByNameData?.SynthsByName,
