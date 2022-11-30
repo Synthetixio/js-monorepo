@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
 import {
   Box,
   Text,
@@ -21,6 +21,8 @@ import { formatNumber } from '@snx-v2/formatters';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import intervalToDuration from 'date-fns/intervalToDuration';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
+import { ClaimRewardsBtn } from './ClaimRewardsBtn';
+import { ClaimLiquidationBtn } from './ClaimLiquidationBtn';
 
 interface RewardsItemProps extends FlexProps {
   isLoading: boolean;
@@ -33,6 +35,7 @@ interface RewardsItemProps extends FlexProps {
   percentCompleted?: number;
   rewardBalance: string | null;
   RewardsBadge?: FC | null;
+  claimBtn: ReactElement;
   onClick?: () => void;
 }
 
@@ -47,7 +50,7 @@ export const RewardsItemUI = ({
   percentCompleted,
   rewardBalance,
   RewardsBadge,
-  onClick,
+  claimBtn,
   ...props
 }: RewardsItemProps) => {
   const { t } = useTranslation();
@@ -259,10 +262,7 @@ export const RewardsItemUI = ({
               </>
             )}
           </Flex>
-
-          <Button w={['100%', '100%', '100%', '80px']} ml={[6, 6, 6, 4]} onClick={onClick}>
-            Claim
-          </Button>
+          {claimBtn}
         </Flex>
       )}
     </Flex>
@@ -352,7 +352,13 @@ export const Rewards = () => {
             </Badge>
           );
         }}
-        onClick={() => console.log('Claim Inflation Rewards')}
+        claimBtn={
+          <ClaimRewardsBtn
+            variant={variant}
+            amountSNX={rewardsData?.snxRewards.toNumber()}
+            amountsUSD={rewardsData?.sUSDRewards.toNumber()}
+          />
+        }
       />
       <Divider my={4} />
       <RewardsItemUI
@@ -361,11 +367,7 @@ export const Rewards = () => {
         description="Liquidation Rewards"
         apyReturn={null}
         stakedBalance={`${formatNumber(stakedSnx.toNumber()).toString()} SNX`}
-        endDate={feePoolData?.nextFeePeriodStartDate || null}
-        percentCompleted={percentEpochCompleted(
-          feePoolData?.nextFeePeriodStartDate,
-          feePoolData?.feePeriodDuration
-        )}
+        endDate={null}
         isLoading={isLoading}
         rewardBalance={`${formatNumber(
           liquidationData?.liquidatorRewards?.toNumber() || 0
@@ -388,7 +390,7 @@ export const Rewards = () => {
             </Badge>
           );
         }}
-        onClick={() => console.log('Claim Liquidations')}
+        claimBtn={<ClaimLiquidationBtn amountSNX={liquidationData?.liquidatorRewards.toNumber()} />}
       />
       <Divider my={4} />
       <RewardsItemUI
@@ -411,9 +413,16 @@ export const Rewards = () => {
         stakedBalance={null}
         endDate={null}
         isLoading={false}
-        rewardBalance={null}
-        RewardsBadge={null}
-        onClick={() => console.log('Curve')}
+        rewardBalance=""
+        claimBtn={
+          <Button
+            onClick={() => {
+              console.log('Curve');
+            }}
+          >
+            Claim
+          </Button>
+        }
       />
       <Divider my={4} />
     </Box>
