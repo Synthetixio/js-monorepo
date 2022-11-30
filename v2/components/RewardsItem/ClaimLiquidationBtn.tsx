@@ -37,7 +37,7 @@ export const ClaimLiquidationBtn: FC<{ amountSNX?: number }> = ({ amountSNX }) =
       >
         Claim
       </Button>
-      {amountSNX && (
+      {amountSNX ? (
         <RewardsTransactionModal
           txnHash={txnHash}
           settle={settle}
@@ -51,7 +51,7 @@ export const ClaimLiquidationBtn: FC<{ amountSNX?: number }> = ({ amountSNX }) =
           modalOpen={modalOpen}
           amountSNX={formatNumber(amountSNX)}
         />
-      )}
+      ) : null}
     </>
   );
 };
