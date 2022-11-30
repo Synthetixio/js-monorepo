@@ -213,7 +213,7 @@ export const RewardsItemUI = ({
               height="16px"
             />
           </Flex>
-          <Button w={['100%', '100%', '100%', '80px']} ml={[4, 4, 4, 4]} onClick={onClick} disabled>
+          <Button w={['100%', '100%', '100%', '80px']} ml={[4, 4, 4, 4]} disabled>
             Claim
           </Button>
         </Flex>
