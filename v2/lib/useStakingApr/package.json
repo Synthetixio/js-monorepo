@@ -1,0 +1,16 @@
+{
+  "name": "@snx-v2/useStakingApr",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@snx-v2/Constants": "workspace:*",
+    "@snx-v2/stakingCalculations": "workspace:*",
+    "@snx-v2/useDebtData": "workspace:*",
+    "@snx-v2/useExchangeRatesData": "workspace:*",
+    "@snx-v2/useFeePoolData": "workspace:*",
+    "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral": "workspace:*",
+    "@synthetixio/wei": "workspace:*",
+    "@tanstack/react-query": "^4.3.4"
+  }
+}

@@ -7726,6 +7726,7 @@ __metadata:
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     date-fns: ^2.19.0
     react: ^18.2.0
@@ -7910,6 +7911,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useStakingApr@workspace:v2/lib/useStakingApr":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useStakingApr@workspace:v2/lib/useStakingApr"
+  dependencies:
+    "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/stakingCalculations": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useSynthetixContracts@workspace:*, @snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts"
@@ -7936,6 +7952,17 @@ __metadata:
     "@tanstack/react-query": ^4.3.4
     lodash: ^4.17.21
     react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral@workspace:*, @snx-v2/useTotalIssuedSynthsExcludeOtherCollateral@workspace:v2/lib/useTotalIssuedSynthsExcludeOtherCollateral":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral@workspace:v2/lib/useTotalIssuedSynthsExcludeOtherCollateral"
+  dependencies:
+    "@ethersproject/strings": ^5.7.0
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
   languageName: unknown
   linkType: soft
 
