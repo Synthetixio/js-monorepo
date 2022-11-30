@@ -52,8 +52,6 @@ export const RewardsItemUI = ({
 }: RewardsItemProps) => {
   const { t } = useTranslation();
 
-  console.log('isLoading', isLoading);
-
   return (
     <Flex alignItems="center" {...props} flexDirection={['column', 'column', 'column', 'row']}>
       <Flex width={['100%', '100%', '100%', 'initial']}>
@@ -90,10 +88,13 @@ export const RewardsItemUI = ({
             {description}
           </Text>
         </Flex>
-        <Flex direction="column" justifyContent="center" minWidth="80px" ml={[6, 6, 6, 0]}>
-          {isLoading ? (
-            <Skeleton width="60px" height="16px" />
-          ) : (
+
+        {isLoading ? (
+          <Flex direction="column" justifyContent="center" width="90%" minWidth="80px" ml={0}>
+            <Skeleton width={['100%', '100%', '100%', '60px']} height="16px" />
+          </Flex>
+        ) : (
+          <Flex direction="column" justifyContent="center" minWidth="80px" ml={[6, 6, 6, 0]}>
             <>
               <Text
                 fontFamily="heading"
@@ -108,19 +109,25 @@ export const RewardsItemUI = ({
                 {apyReturn ? t('staking-v2.earn.apy') : '—'}
               </Text>
             </>
-          )}
-        </Flex>
+          </Flex>
+        )}
       </Flex>
       {/* Second Group */}
       <Flex alignItems="center" width={['100%', '100%', '100%', 'initial']} mt={[4, 4, 4, 0]}>
-        <Flex
-          direction="column"
-          minWidth={['182px', '182px', '182px', '120px']}
-          mr={[0, 10, 10, 4]}
-        >
-          {isLoading ? (
-            <Skeleton width="100px" height="16px" />
-          ) : (
+        {isLoading ? (
+          <Flex
+            direction="column"
+            minWidth={['182px', '182px', '182px', '120px']}
+            mr={[0, 10, 10, 4]}
+          >
+            <Skeleton width={['100%', '100%', '100%', '100px']} mr={2} height="16px" />
+          </Flex>
+        ) : (
+          <Flex
+            direction="column"
+            minWidth={['182px', '182px', '182px', '120px']}
+            mr={[0, 10, 10, 4]}
+          >
             <>
               <Text
                 fontFamily="heading"
@@ -135,12 +142,12 @@ export const RewardsItemUI = ({
                 {stakedBalance ? t('staking-v2.earn.staked') : '—'}
               </Text>
             </>
-          )}
-        </Flex>
+          </Flex>
+        )}
         {/* Date Group */}
         {isLoading ? (
-          <Flex>
-            <Skeleton />
+          <Flex width="100%">
+            <Skeleton width={['100%', '100%', '100%', '210px']} height="16px" />
           </Flex>
         ) : (
           <>
@@ -187,54 +194,77 @@ export const RewardsItemUI = ({
         )}
       </Flex>
       {/* Final Group */}
-      <Flex
-        alignItems="center"
-        width={['100%', '100%', '100%', 'initial']}
-        mt={[4, 4, 4, 0]}
-        justifyContent="space-between"
-        flexGrow={1}
-      >
+      {isLoading ? (
         <Flex
-          direction="column"
-          minW="182px"
-          mx={[0, 0, 0, 5]}
-          mr={[0, 10, 10, 0]}
-          width={['150px', '150px', 'initial', 'initial']}
+          alignItems="center"
+          width={['100%', '100%', '100%', 'initial']}
+          mt={[4, 4, 4, 0]}
+          justifyContent="space-between"
+          flexGrow={1}
         >
-          {rewardBalance ? (
-            <>
-              <Text
-                fontFamily="heading"
-                fontSize="sm"
-                fontWeight="700"
-                lineHeight="5"
-                color="whiteAlpha.900"
-              >
-                {rewardBalance}
-              </Text>
-              {RewardsBadge && <RewardsBadge />}
-            </>
-          ) : (
-            <>
-              <Text
-                fontFamily="heading"
-                fontSize="sm"
-                fontWeight="700"
-                lineHeight="5"
-                color="whiteAlpha.900"
-              >
-                —
-              </Text>
-              <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
-                —
-              </Text>
-            </>
-          )}
+          <Flex minW={['182px', '182px', '182px', '120px']}>
+            <Skeleton
+              ml={[0, 0, 0, 8]}
+              mr={[8, 8, 8, 0]}
+              w={['270px', '270px', '270px', '210px']}
+              height="16px"
+            />
+          </Flex>
+          <Button w={['100%', '100%', '100%', '80px']} ml={[4, 4, 4, 4]} onClick={onClick} disabled>
+            Claim
+          </Button>
         </Flex>
-        <Button w={['100%', '100%', '100%', '80px']} ml={[6, 6, 6, 4]} onClick={onClick}>
-          Claim
-        </Button>
-      </Flex>
+      ) : (
+        <Flex
+          alignItems="center"
+          width={['100%', '100%', '100%', 'initial']}
+          mt={[4, 4, 4, 0]}
+          justifyContent="space-between"
+          flexGrow={1}
+        >
+          <Flex
+            direction="column"
+            minW="182px"
+            mx={[0, 0, 0, 5]}
+            mr={[0, 10, 10, 0]}
+            width={['150px', '150px', 'initial', 'initial']}
+          >
+            {rewardBalance ? (
+              <>
+                <Text
+                  fontFamily="heading"
+                  fontSize="sm"
+                  fontWeight="700"
+                  lineHeight="5"
+                  color="whiteAlpha.900"
+                >
+                  {rewardBalance}
+                </Text>
+                {RewardsBadge && <RewardsBadge />}
+              </>
+            ) : (
+              <>
+                <Text
+                  fontFamily="heading"
+                  fontSize="sm"
+                  fontWeight="700"
+                  lineHeight="5"
+                  color="whiteAlpha.900"
+                >
+                  —
+                </Text>
+                <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
+                  —
+                </Text>
+              </>
+            )}
+          </Flex>
+
+          <Button w={['100%', '100%', '100%', '80px']} ml={[6, 6, 6, 4]} onClick={onClick}>
+            Claim
+          </Button>
+        </Flex>
+      )}
     </Flex>
   );
 };
@@ -280,7 +310,6 @@ export const Rewards = () => {
   const isLoading =
     isDebtLoading || isLiquidationLoading || isRewardsLoading || isFeePoolDataLoading;
 
-  console.log('is loading', isLoading);
   return (
     <Box my={8}>
       <Divider my={4} />
@@ -295,7 +324,7 @@ export const Rewards = () => {
           feePoolData?.nextFeePeriodStartDate,
           feePoolData?.feePeriodDuration
         )}
-        isLoading={true}
+        isLoading={isLoading}
         rewardBalance={`${formatNumber(rewardsData?.snxRewards.toNumber() || 0).toString()} SNX`}
         RewardsBadge={() => {
           const onTarget = variant === 'success';
