@@ -35,7 +35,7 @@ export const ClaimRewardsBtn: FC<{
     <>
       <Button
         variant={variant !== 'success' ? variant : undefined}
-        disabled={Boolean(isGasEnabledAndNotFetched && !amountsUSD)}
+        disabled={Boolean(isGasEnabledAndNotFetched || !amountsUSD || error)}
         w={['100%', '100%', '100%', '80px']}
         ml={[6, 6, 6, 4]}
         onClick={() => {
