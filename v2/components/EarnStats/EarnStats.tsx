@@ -14,7 +14,7 @@ export const EarnStatsUi: FC<{
     <Flex my={1} flexDirection={['column', 'column', 'row', 'row']} justifyContent="space-between">
       <StatBox
         label="Estimated Upcoming Rewards"
-        amount={upcomingRewards ? formatNumberToUsd(upcomingRewards) : undefined}
+        amount={upcomingRewards !== undefined ? formatNumberToUsd(upcomingRewards) : undefined}
         mb={[3, 3, 0, 0]}
         alignItems="start"
         mr={3}
@@ -23,7 +23,7 @@ export const EarnStatsUi: FC<{
       />
       <StatBox
         label="Earning"
-        amount={earning ? formatPercent(earning) : undefined}
+        amount={earning !== undefined ? formatPercent(earning) : undefined}
         mb={[3, 3, 0, 0]}
         alignItems={['start', 'start', 'center', 'center']}
         mr={3}
@@ -32,7 +32,7 @@ export const EarnStatsUi: FC<{
       />
       <StatBox
         label="Lifetime Rewards"
-        amount={lifetimeRewards ? formatNumberToUsd(lifetimeRewards) : undefined}
+        amount={lifetimeRewards !== undefined ? formatNumberToUsd(lifetimeRewards) : undefined}
         mb={[3, 3, 0, 0]}
         alignItems={['start', 'start', 'end', 'end']}
         width="100%"
