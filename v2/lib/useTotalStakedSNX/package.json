@@ -1,0 +1,9 @@
+{
+  "name": "@snx-v2/useTotalStakedSNX",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@tanstack/react-query": "^4.3.4"
+  }
+}
