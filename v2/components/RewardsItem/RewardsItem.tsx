@@ -9,6 +9,7 @@ import {
   Badge,
   Divider,
   Skeleton,
+  Fade,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { CountDown } from '@snx-v2/CountDown';
@@ -97,22 +98,24 @@ export const RewardsItemUI = ({
             <Skeleton width={['100%', '100%', '100%', '60px']} height="16px" />
           </Flex>
         ) : (
-          <Flex direction="column" justifyContent="center" minWidth="80px" ml={[6, 6, 6, 0]}>
-            <>
-              <Text
-                fontFamily="heading"
-                fontSize="sm"
-                fontWeight="700"
-                lineHeight="5"
-                color="whiteAlpha.900"
-              >
-                {apyReturn || '—'}
-              </Text>
-              <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
-                {apyReturn ? t('staking-v2.earn.apy') : '—'}
-              </Text>
-            </>
-          </Flex>
+          <Fade in={!isLoading}>
+            <Flex direction="column" justifyContent="center" minWidth="80px" ml={[6, 6, 6, 0]}>
+              <>
+                <Text
+                  fontFamily="heading"
+                  fontSize="sm"
+                  fontWeight="700"
+                  lineHeight="5"
+                  color="whiteAlpha.900"
+                >
+                  {apyReturn || '—'}
+                </Text>
+                <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
+                  {apyReturn ? t('staking-v2.earn.apy') : '—'}
+                </Text>
+              </>
+            </Flex>
+          </Fade>
         )}
       </Flex>
       {/* Second Group */}
@@ -126,26 +129,28 @@ export const RewardsItemUI = ({
             <Skeleton width={['100%', '100%', '100%', '100px']} mr={2} height="16px" />
           </Flex>
         ) : (
-          <Flex
-            direction="column"
-            minWidth={['182px', '182px', '182px', '120px']}
-            mr={[0, 10, 10, 4]}
-          >
-            <>
-              <Text
-                fontFamily="heading"
-                fontSize="sm"
-                fontWeight="700"
-                lineHeight="5"
-                color="whiteAlpha.900"
-              >
-                {stakedBalance || '—'}
-              </Text>
-              <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
-                {stakedBalance ? t('staking-v2.earn.staked') : '—'}
-              </Text>
-            </>
-          </Flex>
+          <Fade in={!isLoading}>
+            <Flex
+              direction="column"
+              minWidth={['182px', '182px', '182px', '120px']}
+              mr={[0, 10, 10, 4]}
+            >
+              <>
+                <Text
+                  fontFamily="heading"
+                  fontSize="sm"
+                  fontWeight="700"
+                  lineHeight="5"
+                  color="whiteAlpha.900"
+                >
+                  {stakedBalance || '—'}
+                </Text>
+                <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
+                  {stakedBalance ? t('staking-v2.earn.staked') : '—'}
+                </Text>
+              </>
+            </Flex>
+          </Fade>
         )}
         {/* Date Group */}
         {isLoading ? (
@@ -153,7 +158,7 @@ export const RewardsItemUI = ({
             <Skeleton width={['100%', '100%', '100%', '210px']} height="16px" />
           </Flex>
         ) : (
-          <>
+          <Fade in={!isLoading}>
             {endDate ? (
               <Flex direction="column" justifyContent="space-between" w="210px" mx={[6, 6, 6, 5]}>
                 <Progress
@@ -193,7 +198,7 @@ export const RewardsItemUI = ({
                 </Text>
               </Flex>
             )}
-          </>
+          </Fade>
         )}
       </Flex>
       {/* Final Group */}
@@ -218,52 +223,54 @@ export const RewardsItemUI = ({
           </Button>
         </Flex>
       ) : (
-        <Flex
-          alignItems="center"
-          width={['100%', '100%', '100%', 'initial']}
-          mt={[4, 4, 4, 0]}
-          justifyContent="space-between"
-          flexGrow={1}
-        >
+        <Fade in={!isLoading}>
           <Flex
-            direction="column"
-            minW="182px"
-            mx={[0, 0, 0, 5]}
-            mr={[0, 10, 10, 0]}
-            width={['150px', '150px', 'initial', 'initial']}
+            alignItems="center"
+            width={['100%', '100%', '100%', 'initial']}
+            mt={[4, 4, 4, 0]}
+            justifyContent="space-between"
+            flexGrow={1}
           >
-            {rewardBalance ? (
-              <>
-                <Text
-                  fontFamily="heading"
-                  fontSize="sm"
-                  fontWeight="700"
-                  lineHeight="5"
-                  color="whiteAlpha.900"
-                >
-                  {rewardBalance}
-                </Text>
-                {RewardsBadge && <RewardsBadge />}
-              </>
-            ) : (
-              <>
-                <Text
-                  fontFamily="heading"
-                  fontSize="sm"
-                  fontWeight="700"
-                  lineHeight="5"
-                  color="whiteAlpha.900"
-                >
-                  —
-                </Text>
-                <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
-                  —
-                </Text>
-              </>
-            )}
+            <Flex
+              direction="column"
+              minW="182px"
+              mx={[0, 0, 0, 5]}
+              mr={[0, 10, 10, 0]}
+              width={['150px', '150px', 'initial', 'initial']}
+            >
+              {rewardBalance ? (
+                <>
+                  <Text
+                    fontFamily="heading"
+                    fontSize="sm"
+                    fontWeight="700"
+                    lineHeight="5"
+                    color="whiteAlpha.900"
+                  >
+                    {rewardBalance}
+                  </Text>
+                  {RewardsBadge && <RewardsBadge />}
+                </>
+              ) : (
+                <>
+                  <Text
+                    fontFamily="heading"
+                    fontSize="sm"
+                    fontWeight="700"
+                    lineHeight="5"
+                    color="whiteAlpha.900"
+                  >
+                    —
+                  </Text>
+                  <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
+                    —
+                  </Text>
+                </>
+              )}
+            </Flex>
+            {claimBtn}
           </Flex>
-          {claimBtn}
-        </Flex>
+        </Fade>
       )}
     </Flex>
   );

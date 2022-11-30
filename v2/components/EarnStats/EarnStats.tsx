@@ -9,6 +9,7 @@ export const EarnStatsUi: FC<{
   lifetimeRewards?: number;
   earning?: number;
   upcomingRewards?: number;
+  isLoading: boolean;
 }> = ({ lifetimeRewards, earning, upcomingRewards }) => {
   return (
     <Flex my={1} flexDirection={['column', 'column', 'row', 'row']} justifyContent="space-between">
@@ -43,13 +44,15 @@ export const EarnStatsUi: FC<{
 };
 
 export const EarnStats = () => {
-  const { data: lifetimeRewardsData } = useGetLifetimeRewards();
-  const { data: upcomingRewards } = useGetUpcomingRewards();
+  const { data: lifetimeRewardsData, isLoading: isGetLifetimeLoading } = useGetLifetimeRewards();
+  const { data: upcomingRewards, isLoading: isUpcomingLoading } = useGetUpcomingRewards();
 
   const earning = 0.3; // TODO
   // const upcomingRewards = 100; // TODO
+  const isLoading = isGetLifetimeLoading || isUpcomingLoading;
   return (
     <EarnStatsUi
+      isLoading={isLoading}
       lifetimeRewards={lifetimeRewardsData}
       upcomingRewards={upcomingRewards}
       earning={earning}

@@ -3,11 +3,10 @@ import { Fade, Flex, FlexProps, Skeleton, Text } from '@chakra-ui/react';
 interface StatboxProps extends FlexProps {
   label: string;
   amount?: string;
+  isLoading?: boolean;
 }
 
-export const StatBox = ({ label, amount, ...props }: StatboxProps) => {
-  const isLoaded = amount !== undefined;
-
+export const StatBox = ({ label, amount, isLoading, ...props }: StatboxProps) => {
   return (
     <Flex
       alignItems="center"
@@ -27,10 +26,10 @@ export const StatBox = ({ label, amount, ...props }: StatboxProps) => {
         {label}
       </Text>
 
-      {!isLoaded ? (
+      {isLoading ? (
         <Skeleton height="28px" width="50%" mt="8px" />
       ) : (
-        <Fade in={isLoaded}>
+        <Fade in={!isLoading}>
           <Text fontFamily="heading" fontWeight="black" fontSize="2xl" color="white">
             {amount}
           </Text>
