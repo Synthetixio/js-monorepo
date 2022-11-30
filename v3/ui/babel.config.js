@@ -8,36 +8,7 @@ module.exports = {
     [require.resolve('@babel/preset-react'), { runtime: 'automatic' }],
   ],
 
-  plugins: [
-    //    [
-    //      require.resolve('babel-plugin-module-resolver'),
-    //      {
-    //        root: ['.'],
-    //        alias: {
-    //          //          i18n: './i18n.ts',
-    //          //          assets: './assets',
-    //          //          components: './components',
-    //          //          constants: './constants',
-    //          //          containers: './containers',
-    //          //          content: './content',
-    //          //          contracts: './contracts',
-    //          //          hoc: './hoc',
-    //          //          hooks: './hooks',
-    //          //          lib: './lib',
-    //          //          mutations: './mutations',
-    //          //          queries: './queries',
-    //          //          scripts: './scripts',
-    //          //          sections: './sections',
-    //          //          store: './store',
-    //          //          styles: './styles',
-    //          //          translations: './translations',
-    //          //          typings: './typings',
-    //          //          utils: './utils',
-    //        },
-    //      },
-    //    ],
-    [require.resolve('@babel/plugin-transform-runtime'), { corejs: 3 }],
-  ],
+  plugins: [[require.resolve('@babel/plugin-transform-runtime'), { corejs: 3 }]],
 
   env: {
     production: {
@@ -86,7 +57,7 @@ module.exports = {
             cwd: path.resolve('../..'),
             all: true,
             excludeNodeModules: false,
-            include: ['v1/lib', 'v1/components', 'v2/lib', 'v2/components', 'v2/ui'],
+            include: ['v3'],
             exclude: ['**/*.test.*', '**/*.cy.*', '**/*.e2e.*'],
           },
           'istanbul',
