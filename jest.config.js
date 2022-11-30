@@ -18,6 +18,7 @@ module.exports = {
     '<rootDir>/v3/theme/**/*.{js,jsx,ts,tsx}',
     '!<rootDir>/**/*.d.ts',
     '!<rootDir>/**/*.test.{js,jsx,ts,tsx}',
+    '!<rootDir>/v2/contracts',
     '!<rootDir>/v3/subgraphs',
   ],
 };

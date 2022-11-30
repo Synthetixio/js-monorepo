@@ -60,12 +60,12 @@ const babelRule = {
     /v1\/lib/,
     /v1\/components/,
     /v2\/lib/,
+    /v2\/contracts/,
     /v2\/components/,
     /v2\/cypress/,
     /v2\/ui/,
     /v3\/theme/,
 
-    /contracts\/src/,
     /packages\/[^\/]+\/src/,
     /tools\/[^\/]+\/src/,
   ],

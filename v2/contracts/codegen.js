@@ -131,7 +131,7 @@ async function run() {
   const networks = (await fs.readdir(deployed, { withFileTypes: true }))
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
-  const prettierOptions = JSON.parse(await fs.readFile('../.prettierrc', 'utf8'));
+  const prettierOptions = JSON.parse(await fs.readFile('../../.prettierrc', 'utf8'));
 
   for await (const network of networks) {
     const contracts = prepareContracts(network);

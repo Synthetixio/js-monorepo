@@ -38,7 +38,6 @@ module.exports = {
               typings: './v2/ui/typings',
               utils: './v2/ui/utils',
 
-              '@synthetixio/contracts/build': './contracts/src',
               '@synthetixio/contracts-interface': './packages/contracts-interface/src',
               '@synthetixio/optimism-networks': './packages/optimism-networks/src',
               '@synthetixio/providers': './packages/providers/src',
@@ -46,6 +45,8 @@ module.exports = {
               '@synthetixio/transaction-notifier': './packages/transaction-notifier/src',
               '@synthetixio/wei': './packages/wei/src',
               '@synthetixio/generate-subgraph-query': './tools/generate-subgraph-query/src',
+
+              '@synthetixio/contracts/build': './v2/contracts/src',
               '@synthetixio/v3-theme': './v3/theme/src',
             },
           },
