@@ -9,7 +9,9 @@ const createPopulateTransaction = (
   LiquidatorRewards: ReturnType<typeof useLiquidatorRewards>['data'],
   walletAddress: string | null
 ) => {
-  if (!LiquidatorRewards?.signer || !walletAddress) return undefined;
+  if (!LiquidatorRewards?.signer || !walletAddress) {
+    return undefined;
+  }
 
   return () =>
     LiquidatorRewards.populateTransaction.getReward(walletAddress, {
@@ -29,7 +31,7 @@ export function useClaimLiquidatorRewardsMutation() {
     error: gasError,
   } = useGasOptions({
     populateTransaction,
-    queryKeys: [populateTransaction],
+    queryKeys: [populateTransaction, walletAddress],
   });
 
   const { populatedTransaction, gasOptionsForTransaction, transactionPrice } = data || {};
