@@ -1,4 +1,4 @@
-import { Flex, FlexProps, Skeleton, Text } from '@chakra-ui/react';
+import { Fade, Flex, FlexProps, Skeleton, Text } from '@chakra-ui/react';
 
 interface StatboxProps extends FlexProps {
   label: string;
@@ -6,6 +6,8 @@ interface StatboxProps extends FlexProps {
 }
 
 export const StatBox = ({ label, amount, ...props }: StatboxProps) => {
+  const isLoaded = amount !== undefined;
+
   return (
     <Flex
       alignItems="center"
@@ -24,9 +26,16 @@ export const StatBox = ({ label, amount, ...props }: StatboxProps) => {
       <Text fontFamily="heading" fontWeight="semibold" fontSize="sm" color="gray.500">
         {label}
       </Text>
-      <Text fontFamily="heading" fontWeight="black" fontSize="2xl" color="white">
-        {amount === undefined ? <Skeleton as="span" height={6} width={10} mt={2} /> : amount}
-      </Text>
+
+      {!isLoaded ? (
+        <Skeleton height="28px" width="50%" mt="8px" />
+      ) : (
+        <Fade in={isLoaded}>
+          <Text fontFamily="heading" fontWeight="black" fontSize="2xl" color="white">
+            {amount}
+          </Text>
+        </Fade>
+      )}
     </Flex>
   );
 };

@@ -7123,6 +7123,7 @@ __metadata:
     "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/useGetLifetimeRewards": "workspace:*"
+    "@snx-v2/useGetUpcomingRewards": "workspace:^"
     "@storybook/react": ^6.5.10
     react: ^18.2.0
   languageName: unknown
@@ -7705,7 +7706,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useExchangeRatesData@workspace:*, @snx-v2/useExchangeRatesData@workspace:v2/lib/useExchangeRatesData":
+"@snx-v2/useExchangeRatesData@workspace:*, @snx-v2/useExchangeRatesData@workspace:^, @snx-v2/useExchangeRatesData@workspace:v2/lib/useExchangeRatesData":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useExchangeRatesData@workspace:v2/lib/useExchangeRatesData"
   dependencies:
@@ -7785,13 +7786,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useGetLiquidationRewards@workspace:*, @snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards":
+"@snx-v2/useGetLiquidationRewards@workspace:*, @snx-v2/useGetLiquidationRewards@workspace:^, @snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useGetUpcomingRewards@workspace:^, @snx-v2/useGetUpcomingRewards@workspace:v2/lib/useGetUpcomingRewards":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useGetUpcomingRewards@workspace:v2/lib/useGetUpcomingRewards"
+  dependencies:
+    "@snx-v2/useExchangeRatesData": "workspace:^"
+    "@snx-v2/useGetLiquidationRewards": "workspace:^"
+    "@snx-v2/useRewardsAvailable": "workspace:^"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -7856,7 +7869,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useRewardsAvailable@workspace:*, @snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable":
+"@snx-v2/useRewardsAvailable@workspace:*, @snx-v2/useRewardsAvailable@workspace:^, @snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable"
   dependencies:

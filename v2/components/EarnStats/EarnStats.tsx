@@ -3,6 +3,7 @@ import { Flex } from '@chakra-ui/react';
 import { StatBox } from '@snx-v2/StatBox';
 import { useGetLifetimeRewards } from '@snx-v2/useGetLifetimeRewards';
 import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
+import { useGetUpcomingRewards } from '@snx-v2/useGetUpcomingRewards';
 
 export const EarnStatsUi: FC<{
   lifetimeRewards?: number;
@@ -43,8 +44,10 @@ export const EarnStatsUi: FC<{
 
 export const EarnStats = () => {
   const { data: lifetimeRewardsData } = useGetLifetimeRewards();
+  const { data: upcomingRewards } = useGetUpcomingRewards();
+
   const earning = 0.3; // TODO
-  const upcomingRewards = 100; // TODO
+  // const upcomingRewards = 100; // TODO
   return (
     <EarnStatsUi
       lifetimeRewards={lifetimeRewardsData}

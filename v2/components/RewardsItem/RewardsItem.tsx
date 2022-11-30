@@ -419,6 +419,8 @@ export const Rewards = () => {
             onClick={() => {
               console.log('Curve');
             }}
+            w={['100%', '100%', '100%', '80px']}
+            ml={[6, 6, 6, 4]}
           >
             Claim
           </Button>
