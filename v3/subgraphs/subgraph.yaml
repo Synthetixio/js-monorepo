@@ -163,7 +163,8 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - RewardsClaimed
-        - RewardsDistributed
+        - RewardsDistribution
+        - AccountRewardsDistributor
       abis:
         - name: RewardsManagerModule
           file: ./abis/RewardsManagerModule.json

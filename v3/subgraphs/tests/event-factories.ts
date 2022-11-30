@@ -483,32 +483,34 @@ export function createRewardsDistributedEvent(
   start: BigInt,
   duration: BigInt,
   timestamp: i64,
-  blockNumber: i64
+  blockNumber: i64,
+  logIndex: i32 = 1
 ): RewardsDistributed {
-  const newUSDBurnedEvent = changetype<RewardsDistributed>(newMockEvent());
+  const newRewardsDistributedEvent = changetype<RewardsDistributed>(newMockEvent());
   const block = createBlock(timestamp, blockNumber);
-  newUSDBurnedEvent.parameters = new Array();
-  newUSDBurnedEvent.parameters.push(
+  newRewardsDistributedEvent.logIndex = BigInt.fromI32(logIndex);
+  newRewardsDistributedEvent.parameters = new Array();
+  newRewardsDistributedEvent.parameters.push(
     new ethereum.EventParam('poolId', ethereum.Value.fromUnsignedBigInt(poolId))
   );
-  newUSDBurnedEvent.parameters.push(
+  newRewardsDistributedEvent.parameters.push(
     new ethereum.EventParam('collateralType', ethereum.Value.fromAddress(collateralType))
   );
-  newUSDBurnedEvent.parameters.push(
+  newRewardsDistributedEvent.parameters.push(
     new ethereum.EventParam('distributor', ethereum.Value.fromAddress(distributor))
   );
-  newUSDBurnedEvent.parameters.push(
+  newRewardsDistributedEvent.parameters.push(
     new ethereum.EventParam('amount', ethereum.Value.fromUnsignedBigInt(amount))
   );
-  newUSDBurnedEvent.parameters.push(
+  newRewardsDistributedEvent.parameters.push(
     new ethereum.EventParam('start', ethereum.Value.fromUnsignedBigInt(start))
   );
-  newUSDBurnedEvent.parameters.push(
+  newRewardsDistributedEvent.parameters.push(
     new ethereum.EventParam('duration', ethereum.Value.fromUnsignedBigInt(duration))
   );
-  newUSDBurnedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
-  newUSDBurnedEvent.block.number = BigInt.fromI64(block['blockNumber']);
-  return newUSDBurnedEvent;
+  newRewardsDistributedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  newRewardsDistributedEvent.block.number = BigInt.fromI64(block['blockNumber']);
+  return newRewardsDistributedEvent;
 }
 
 export function createRewardsClaimedEvent(
@@ -518,27 +520,29 @@ export function createRewardsClaimedEvent(
   distributor: Address,
   amount: BigInt,
   timestamp: i64,
-  blockNumber: i64
+  blockNumber: i64,
+  logIndex: i32 = 1
 ): RewardsClaimed {
-  const newUSDBurnedEvent = changetype<RewardsClaimed>(newMockEvent());
+  const newRewardsClaimedEvent = changetype<RewardsClaimed>(newMockEvent());
   const block = createBlock(timestamp, blockNumber);
-  newUSDBurnedEvent.parameters = new Array();
-  newUSDBurnedEvent.parameters.push(
+  newRewardsClaimedEvent.logIndex = BigInt.fromI32(logIndex);
+  newRewardsClaimedEvent.parameters = new Array();
+  newRewardsClaimedEvent.parameters.push(
     new ethereum.EventParam('accountId', ethereum.Value.fromUnsignedBigInt(accountId))
   );
-  newUSDBurnedEvent.parameters.push(
+  newRewardsClaimedEvent.parameters.push(
     new ethereum.EventParam('poolId', ethereum.Value.fromUnsignedBigInt(poolId))
   );
-  newUSDBurnedEvent.parameters.push(
+  newRewardsClaimedEvent.parameters.push(
     new ethereum.EventParam('collateralType', ethereum.Value.fromAddress(collateralType))
   );
-  newUSDBurnedEvent.parameters.push(
+  newRewardsClaimedEvent.parameters.push(
     new ethereum.EventParam('distributor', ethereum.Value.fromAddress(distributor))
   );
-  newUSDBurnedEvent.parameters.push(
+  newRewardsClaimedEvent.parameters.push(
     new ethereum.EventParam('amount', ethereum.Value.fromUnsignedBigInt(amount))
   );
-  newUSDBurnedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
-  newUSDBurnedEvent.block.number = BigInt.fromI64(block['blockNumber']);
-  return newUSDBurnedEvent;
+  newRewardsClaimedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  newRewardsClaimedEvent.block.number = BigInt.fromI64(block['blockNumber']);
+  return newRewardsClaimedEvent;
 }

@@ -5,6 +5,7 @@ import {
   describe,
   beforeEach,
   createMockedFunction,
+  logStore,
 } from 'matchstick-as/assembly/index';
 import { Address, ethereum, BigInt, Bytes, ByteArray, store } from '@graphprotocol/graph-ts';
 import { address, address2, defaultGraphContractAddress } from './constants';
@@ -802,70 +803,206 @@ describe('core tests', () => {
     );
     handleRewardsDistributed(rewardsDistributedEvent);
     assert.fieldEquals(
-      'RewardsDistributed',
-      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'RewardsDistribution',
+      `${address2}-${now.toString()}-1`,
       'id',
-      `1-${address}-${BigInt.fromI64(now).toString()}`
+      `${address2}-${now.toString()}-1`
     );
+    assert.fieldEquals('RewardsDistribution', `${address2}-${now.toString()}-1`, 'amount', '200');
     assert.fieldEquals(
-      'RewardsDistributed',
-      `1-${address}-${BigInt.fromI64(now).toString()}`,
-      'amount',
-      '200'
-    );
-    assert.fieldEquals(
-      'RewardsDistributed',
-      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'RewardsDistribution',
+      `${address2}-${now.toString()}-1`,
       'collateral_type',
       address
     );
+    assert.fieldEquals('RewardsDistribution', `${address2}-${now.toString()}-1`, 'pool', '1');
     assert.fieldEquals(
-      'RewardsDistributed',
-      `1-${address}-${BigInt.fromI64(now).toString()}`,
-      'pool',
-      '1'
-    );
-    assert.fieldEquals(
-      'RewardsDistributed',
-      `1-${address}-${BigInt.fromI64(now).toString()}`,
-      'distributor',
-      address2
-    );
-    assert.fieldEquals(
-      'RewardsDistributed',
-      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'RewardsDistribution',
+      `${address2}-${now.toString()}-1`,
       'start',
       now.toString()
     );
+    assert.fieldEquals('RewardsDistribution', `${address2}-${now.toString()}-1`, 'duration', '300');
     assert.fieldEquals(
-      'RewardsDistributed',
-      `1-${address}-${BigInt.fromI64(now).toString()}`,
-      'duration',
-      '300'
-    );
-    assert.fieldEquals(
-      'RewardsDistributed',
-      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'RewardsDistribution',
+      `${address2}-${now.toString()}-1`,
       'created_at',
       now.toString()
     );
     assert.fieldEquals(
-      'RewardsDistributed',
-      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'RewardsDistribution',
+      `${address2}-${now.toString()}-1`,
       'created_at_block',
       (now - 1000).toString()
     );
     assert.fieldEquals(
-      'RewardsDistributed',
-      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'RewardsDistribution',
+      `${address2}-${now.toString()}-1`,
       'updated_at',
       now.toString()
     );
     assert.fieldEquals(
-      'RewardsDistributed',
-      `1-${address}-${BigInt.fromI64(now).toString()}`,
+      'RewardsDistribution',
+      `${address2}-${now.toString()}-1`,
       'updated_at_block',
       (now - 1000).toString()
+    );
+    assert.fieldEquals('RewardsDistribution', `${address2}-${now.toString()}-1`, 'pool', '1');
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `1-${address}-${address2}`,
+      'id',
+      `1-${address}-${address2}`
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `1-${address}-${address2}`,
+      'created_at',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `1-${address}-${address2}`,
+      'created_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `1-${address}-${address2}`,
+      'updated_at',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `1-${address}-${address2}`,
+      'updated_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `1-${address}-${address2}`,
+      'total_distributed',
+      '200'
+    );
+    assert.assertNull(
+      store.get('AccountRewardsDistributor', `1-${address}-${address2}`)!.get('total_claimed')
+    );
+    const rewardsDistributedEvent2 = createRewardsDistributedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(address),
+      Address.fromString(address2),
+      BigInt.fromI32(500),
+      BigInt.fromI64(now + 1000),
+      BigInt.fromI32(1000),
+      now + 1000,
+      now,
+      2
+    );
+    handleRewardsDistributed(rewardsDistributedEvent2);
+    assert.fieldEquals(
+      'RewardsDistribution',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'id',
+      `${address2}-${(now + 1000).toString()}-2`
+    );
+    assert.fieldEquals(
+      'RewardsDistribution',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'amount',
+      '500'
+    );
+    assert.fieldEquals(
+      'RewardsDistribution',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'collateral_type',
+      address
+    );
+    assert.fieldEquals(
+      'RewardsDistribution',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'pool',
+      '1'
+    );
+    assert.fieldEquals(
+      'RewardsDistribution',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'start',
+      (now + 1000).toString()
+    );
+    assert.fieldEquals(
+      'RewardsDistribution',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'duration',
+      '1000'
+    );
+    assert.fieldEquals(
+      'RewardsDistribution',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'created_at',
+      (now + 1000).toString()
+    );
+    assert.fieldEquals(
+      'RewardsDistribution',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'created_at_block',
+      (now + 1000 - 1000).toString()
+    );
+    assert.fieldEquals(
+      'RewardsDistribution',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'updated_at',
+      (now + 1000).toString()
+    );
+    assert.fieldEquals(
+      'RewardsDistribution',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'updated_at_block',
+      (now + 1000 - 1000).toString()
+    );
+    assert.fieldEquals(
+      'RewardsDistribution',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'pool',
+      '1'
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `1-${address}-${address2}`,
+      'id',
+      `1-${address}-${address2}`
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `1-${address}-${address2}`,
+      'created_at',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `1-${address}-${address2}`,
+      'created_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `1-${address}-${address2}`,
+      'updated_at',
+      (now + 1000).toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `1-${address}-${address2}`,
+      'updated_at_block',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `1-${address}-${address2}`,
+      'total_distributed',
+      '700'
+    );
+    assert.assertNull(
+      store.get('AccountRewardsDistributor', `1-${address}-${address2}`)!.get('total_claimed')
     );
   });
 
@@ -881,18 +1018,77 @@ describe('core tests', () => {
       now,
       now - 1000
     );
+    const rewardsDistributedEvent = createRewardsDistributedEvent(
+      BigInt.fromI32(2),
+      Address.fromString(address),
+      Address.fromString(address2),
+      BigInt.fromI32(200),
+      BigInt.fromI64(now),
+      BigInt.fromI32(300),
+      now,
+      now - 1000
+    );
+    handleRewardsDistributed(rewardsDistributedEvent);
+    assert.assertNull(
+      store.get('AccountRewardsDistributor', `2-${address}-${address2}`)!.get('total_claimed')
+    );
     handleRewardsClaimed(rewardsClaimed);
-    assert.fieldEquals('RewardsClaimed', '2-1', 'id', '2-1');
-    assert.fieldEquals('RewardsClaimed', '2-1', 'created_at', now.toString());
-    assert.fieldEquals('RewardsClaimed', '2-1', 'created_at_block', (now - 1000).toString());
-    assert.fieldEquals('RewardsClaimed', '2-1', 'account', '1');
-    assert.fieldEquals('RewardsClaimed', '2-1', 'pool', '2');
-    assert.fieldEquals('RewardsClaimed', '2-1', 'total_amount_claimed', '500');
-    assert.fieldEquals('RewardsClaimed', '2-1', 'collateral_type', address);
-    assert.fieldEquals('RewardsClaimed', '2-1', 'distributor', address2);
-    assert.fieldEquals('RewardsClaimed', '2-1', 'amount', '500');
-    assert.fieldEquals('RewardsClaimed', '2-1', 'updated_at', now.toString());
-    assert.fieldEquals('RewardsClaimed', '2-1', 'updated_At_block', (now - 1000).toString());
+    assert.fieldEquals('RewardsClaimed', `${address2}-${now}-1`, 'id', `${address2}-${now}-1`);
+    assert.fieldEquals('RewardsClaimed', `${address2}-${now}-1`, 'created_at', now.toString());
+    assert.fieldEquals(
+      'RewardsClaimed',
+      `${address2}-${now}-1`,
+      'created_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals('RewardsClaimed', `${address2}-${now}-1`, 'account', '1');
+    assert.fieldEquals('RewardsClaimed', `${address2}-${now}-1`, 'pool', '2');
+    assert.fieldEquals('RewardsClaimed', `${address2}-${now}-1`, 'collateral_type', address);
+    assert.fieldEquals('RewardsClaimed', `${address2}-${now}-1`, 'distributor', address2);
+    assert.fieldEquals('RewardsClaimed', `${address2}-${now}-1`, 'amount', '500');
+    assert.fieldEquals('RewardsClaimed', `${address2}-${now}-1`, 'updated_at', now.toString());
+    assert.fieldEquals(
+      'RewardsClaimed',
+      `${address2}-${now}-1`,
+      'updated_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `2-${address}-${address2}`,
+      'created_at',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `2-${address}-${address2}`,
+      'created_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `2-${address}-${address2}`,
+      'updated_at',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `2-${address}-${address2}`,
+      'updated_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `2-${address}-${address2}`,
+      'total_distributed',
+      '200'
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `2-${address}-${address2}`,
+      'total_claimed',
+      '500'
+    );
     const rewardsClaimed2 = createRewardsClaimedEvent(
       BigInt.fromI32(1),
       BigInt.fromI32(2),
@@ -900,19 +1096,100 @@ describe('core tests', () => {
       Address.fromString(address2),
       BigInt.fromI32(800),
       now + 1000,
-      now
+      now,
+      2
     );
     handleRewardsClaimed(rewardsClaimed2);
-    assert.fieldEquals('RewardsClaimed', '2-1', 'id', '2-1');
-    assert.fieldEquals('RewardsClaimed', '2-1', 'created_at', now.toString());
-    assert.fieldEquals('RewardsClaimed', '2-1', 'created_at_block', (now - 1000).toString());
-    assert.fieldEquals('RewardsClaimed', '2-1', 'account', '1');
-    assert.fieldEquals('RewardsClaimed', '2-1', 'pool', '2');
-    assert.fieldEquals('RewardsClaimed', '2-1', 'total_amount_claimed', '1300');
-    assert.fieldEquals('RewardsClaimed', '2-1', 'collateral_type', address);
-    assert.fieldEquals('RewardsClaimed', '2-1', 'distributor', address2);
-    assert.fieldEquals('RewardsClaimed', '2-1', 'amount', '800');
-    assert.fieldEquals('RewardsClaimed', '2-1', 'updated_at', (now + 1000).toString());
-    assert.fieldEquals('RewardsClaimed', '2-1', 'updated_At_block', now.toString());
+    assert.fieldEquals(
+      'RewardsClaimed',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'id',
+      `${address2}-${(now + 1000).toString()}-2`
+    );
+    assert.fieldEquals(
+      'RewardsClaimed',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'created_at',
+      (now + 1000).toString()
+    );
+    assert.fieldEquals(
+      'RewardsClaimed',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'created_at_block',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'RewardsClaimed',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'account',
+      '1'
+    );
+    assert.fieldEquals('RewardsClaimed', `${address2}-${(now + 1000).toString()}-2`, 'pool', '2');
+    assert.fieldEquals(
+      'RewardsClaimed',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'collateral_type',
+      address
+    );
+    assert.fieldEquals(
+      'RewardsClaimed',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'distributor',
+      address2
+    );
+    assert.fieldEquals(
+      'RewardsClaimed',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'amount',
+      '800'
+    );
+    assert.fieldEquals(
+      'RewardsClaimed',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'updated_at',
+      (now + 1000).toString()
+    );
+    assert.fieldEquals(
+      'RewardsClaimed',
+      `${address2}-${(now + 1000).toString()}-2`,
+      'updated_at_block',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `2-${address}-${address2}`,
+      'created_at',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `2-${address}-${address2}`,
+      'created_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `2-${address}-${address2}`,
+      'updated_at',
+      (now + 1000).toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `2-${address}-${address2}`,
+      'updated_at_block',
+      now.toString()
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `2-${address}-${address2}`,
+      'total_claimed',
+      '1300'
+    );
+    assert.fieldEquals(
+      'AccountRewardsDistributor',
+      `2-${address}-${address2}`,
+      'total_distributed',
+      '200'
+    );
   });
 });
