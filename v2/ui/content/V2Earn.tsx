@@ -32,13 +32,12 @@ const V2Earn = () => {
                 <Link
                   target="_blank"
                   color="cyan.400"
-                  href={EXTERNAL_LINKS.Synthetix.StakingGuide}
+                  href={EXTERNAL_LINKS.Synthetix.RewardsGuide}
                 />,
               ]}
             />
           </Text>
           <EarnStats />
-
           <Rewards />
         </Container>
       </Box>
