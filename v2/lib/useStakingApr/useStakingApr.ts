@@ -6,15 +6,7 @@ import Wei, { wei } from '@synthetixio/wei';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
 import { WEEKS_IN_YEAR } from '@snx-v2/Constants';
-
-export const calculateWeeklyRewardsInUsd = (
-  SNXRate?: Wei,
-  feesToDistribute?: Wei,
-  rewardsToDistribute?: Wei
-) => {
-  if (!feesToDistribute || !rewardsToDistribute || !SNXRate) return undefined;
-  return feesToDistribute.add(SNXRate.mul(rewardsToDistribute));
-};
+import { calculateWeeklyRewardsInUsd } from '@snx-v2/calculateWeeklyRewardsInUsd';
 
 export const calculateStakingApr = ({
   stakedValue,
