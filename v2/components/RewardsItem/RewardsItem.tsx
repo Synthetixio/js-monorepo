@@ -35,7 +35,7 @@ interface RewardsItemProps extends FlexProps {
   stakedBalance: string | null;
   endDate: Date | null;
   percentCompleted?: number;
-  rewardBalance: string | null;
+  rewardBalance: string | null | ReactElement;
   RewardsBadge?: FC | null;
   claimBtn: ReactElement;
   onClick?: () => void;
@@ -331,7 +331,12 @@ export const Rewards = () => {
           feePoolData?.feePeriodDuration
         )}
         isLoading={isLoading}
-        rewardBalance={`${formatNumber(rewardsData?.snxRewards.toNumber() || 0).toString()} SNX`}
+        rewardBalance={
+          <Flex flexDirection="column">
+            <span>{formatNumber(rewardsData?.sUSDRewards.toNumber() || 0)} sUSD</span>
+            <span>{formatNumber(rewardsData?.snxRewards.toNumber() || 0)} SNX</span>
+          </Flex>
+        }
         RewardsBadge={() => {
           const onTarget = variant === 'success';
           const nothingToClaim = rewardsData?.hasClaimed;
@@ -375,9 +380,7 @@ export const Rewards = () => {
         stakedBalance={`${formatNumber(stakedSnx.toNumber()).toString()} SNX`}
         endDate={null}
         isLoading={isLoading}
-        rewardBalance={`${formatNumber(
-          liquidationData?.liquidatorRewards?.toNumber() || 0
-        ).toString()} SNX`}
+        rewardBalance={`${formatNumber(liquidationData?.liquidatorRewards?.toNumber() || 0)} SNX`}
         RewardsBadge={() => {
           const nothingToClaim = !liquidationData?.liquidatorRewards.gt(0);
           return (
