@@ -18,12 +18,14 @@ import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
 import { SNXIcon, InfoOutline } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber, formatPercent } from '@snx-v2/formatters';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import intervalToDuration from 'date-fns/intervalToDuration';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { ClaimRewardsBtn } from './ClaimRewardsBtn';
 import { ClaimLiquidationBtn } from './ClaimLiquidationBtn';
+import { useStakingApr } from '../../lib/useStakingApr';
+import { useGlobalStakingApr } from '../../lib/useGlobalStakingApr';
 
 interface RewardsItemProps extends FlexProps {
   isLoading: boolean;
@@ -311,6 +313,11 @@ export const Rewards = () => {
     targetCratioPercentage: debtData?.targetCRatioPercentage.toNumber(),
     targetThreshold: debtData?.targetThreshold.toNumber(),
   });
+  const { data: stakingApr } = useStakingApr();
+  const notStaking = debtData?.debtBalance.eq(0);
+  const enableGlobalStakingApr = Boolean(notStaking);
+  const { data: globalStakingApr } = useGlobalStakingApr(enableGlobalStakingApr);
+  const stakingAprToUse = notStaking ? globalStakingApr : stakingApr;
 
   const isLoading =
     isDebtLoading || isLiquidationLoading || isRewardsLoading || isFeePoolDataLoading;
@@ -322,7 +329,7 @@ export const Rewards = () => {
         Icon={() => <SNXIcon height="40px" width="40px" />}
         title={t('staking-v2.earn.staking-rewards.title')}
         description={t('staking-v2.earn.staking-rewards.description')}
-        apyReturn="24.00%"
+        apyReturn={stakingAprToUse !== undefined ? formatPercent(stakingAprToUse.toNumber()) : ''}
         stakedBalance={`${formatNumber(stakedSnx.toNumber()).toString()} SNX`}
         endDate={feePoolData?.nextFeePeriodStartDate || null}
         percentCompleted={percentEpochCompleted(

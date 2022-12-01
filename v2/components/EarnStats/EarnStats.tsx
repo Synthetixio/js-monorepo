@@ -4,6 +4,9 @@ import { StatBox } from '@snx-v2/StatBox';
 import { useGetLifetimeRewards } from '@snx-v2/useGetLifetimeRewards';
 import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { useGetUpcomingRewards } from '@snx-v2/useGetUpcomingRewards';
+import { useStakingApr } from '../../lib/useStakingApr';
+import { useGlobalStakingApr } from '../../lib/useGlobalStakingApr';
+import { useDebtData } from '@snx-v2/useDebtData';
 
 export const EarnStatsUi: FC<{
   lifetimeRewards?: number;
@@ -47,15 +50,20 @@ export const EarnStats = () => {
   const { data: lifetimeRewardsData, isLoading: isGetLifetimeLoading } = useGetLifetimeRewards();
   const { data: upcomingRewards, isLoading: isUpcomingLoading } = useGetUpcomingRewards();
 
-  const earning = 0.3; // TODO
-  // const upcomingRewards = 100; // TODO
   const isLoading = isGetLifetimeLoading || isUpcomingLoading;
+  const { data: debtData } = useDebtData();
+  const { data: stakingApr } = useStakingApr();
+  const notStaking = debtData?.debtBalance.eq(0);
+  const enableGlobalStakingApr = Boolean(notStaking);
+  const { data: globalStakingApr } = useGlobalStakingApr(enableGlobalStakingApr);
+  const earning = notStaking ? globalStakingApr : stakingApr;
+
   return (
     <EarnStatsUi
       isLoading={isLoading}
       lifetimeRewards={lifetimeRewardsData}
       upcomingRewards={upcomingRewards}
-      earning={earning}
+      earning={earning?.toNumber()}
     />
   );
 };
