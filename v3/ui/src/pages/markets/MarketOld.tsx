@@ -35,10 +35,12 @@ import {
 import { Line } from 'react-chartjs-2';
 import { Helmet } from 'react-helmet';
 import { Link as Navlink } from 'react-router-dom';
+import { faker } from '@faker-js/faker';
 
 import { Address } from '../../components/shared/Address';
 
-const { faker } = require('@faker-js/faker');
+import etherscanIcon from './etherscan.svg';
+import tenderlyIcon from './tenderly.svg';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Legend);
 
@@ -145,12 +147,12 @@ export function Market() {
               Synthetic Bitcoin
               <Link display="inline-block" opacity="0.66" ml="2">
                 <Tooltip label="View Synth Contract on Tenderly">
-                  <Image alt="tenderly" width="12" height="12" src="/tenderly.svg" />
+                  <Image alt="tenderly" width="12" height="12" src={tenderlyIcon} />
                 </Tooltip>
               </Link>
               <Link display="inline-block" opacity="0.66" ml="2">
                 <Tooltip label="View Synth Contract on Etherscan">
-                  <Image alt="etherscan" width="12" height="12" src="/etherscan.svg" />
+                  <Image alt="etherscan" width="12" height="12" src={etherscanIcon} />
                 </Tooltip>
               </Link>
             </Text>
@@ -164,12 +166,12 @@ export function Market() {
                 Price
                 <Link display="inline-block" opacity="0.66" ml="2">
                   <Tooltip label="View Price Contract on Tenderly">
-                    <Image alt="tenderly" width="10" height="10" src="/tenderly.svg" />
+                    <Image alt="tenderly" width="10" height="10" src={tenderlyIcon} />
                   </Tooltip>
                 </Link>
                 <Link display="inline-block" opacity="0.66" ml="2">
                   <Tooltip label="View Price Contract on Etherscan">
-                    <Image alt="etherscan" width="10" height="10" src="/etherscan.svg" />
+                    <Image alt="etherscan" width="10" height="10" src={etherscanIcon} />
                   </Tooltip>
                 </Link>
               </StatLabel>
@@ -187,12 +189,12 @@ export function Market() {
                 Exchange Volume
                 <Link display="inline-block" opacity="0.66" ml="2">
                   <Tooltip label="View Market Contract on Tenderly">
-                    <Image alt="tenderly" width="10" height="10" src="/tenderly.svg" />
+                    <Image alt="tenderly" width="10" height="10" src={tenderlyIcon} />
                   </Tooltip>
                 </Link>
                 <Link display="inline-block" opacity="0.66" ml="2">
                   <Tooltip label="View Market Contract on Etherscan">
-                    <Image alt="etherscan" width="10" height="10" src="/etherscan.svg" />
+                    <Image alt="etherscan" width="10" height="10" src={etherscanIcon} />
                   </Tooltip>
                 </Link>
               </StatLabel>

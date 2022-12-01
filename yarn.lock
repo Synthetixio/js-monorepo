@@ -10142,7 +10142,6 @@ __metadata:
     "@faker-js/faker": ^7.6.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.7
     "@rainbow-me/rainbowkit": ^0.7.1
-    "@svgr/webpack": ^6.3.1
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
     "@tanstack/react-query": ^4.3.4

@@ -1,8 +1,8 @@
-import logo from '../../assets/svgs/logo.png';
-import logomark from '../../assets/svgs/logomark.svg?url';
-import kwenta from '../../assets/svgs/kwenta.svg?url';
-import lyra from '../../assets/svgs/lyra.svg?url';
-import thales from '../../assets/svgs/thales.svg?url';
+import logo from './logo.png';
+import logomark from './logomark.svg';
+import kwenta from './kwenta.svg';
+import lyra from './lyra.svg';
+import thales from './thales.svg';
 import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
   Container,

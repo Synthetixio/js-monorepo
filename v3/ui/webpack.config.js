@@ -37,21 +37,8 @@ const babelRule = {
   },
 };
 
-const svgRule = {
-  test: /\.svg$/,
-  issuer: /\.[jt]sx?$/,
-  resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
-  use: require.resolve('@svgr/webpack'),
-};
-
-const svgUrlRule = {
-  test: /\.svg$/i,
-  type: 'asset',
-  resourceQuery: /url/, // *.svg?url
-};
-
 const imgRule = {
-  test: /\.(png|jpg|ico|gif|woff|woff2|ttf|eot|doc|pdf|zip|wav|avi|txt|webp)$/,
+  test: /\.(png|jpg|ico|gif|woff|woff2|ttf|eot|doc|pdf|zip|wav|avi|txt|webp|svg)$/,
   type: 'asset',
   parser: {
     dataUrlCondition: {
@@ -200,6 +187,6 @@ module.exports = {
   },
 
   module: {
-    rules: [babelRule, svgRule, svgUrlRule, imgRule, cssRule],
+    rules: [babelRule, imgRule, cssRule],
   },
 };
