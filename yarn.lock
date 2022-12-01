@@ -7122,6 +7122,7 @@ __metadata:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useGetLifetimeRewards": "workspace:*"
     "@snx-v2/useGetUpcomingRewards": "workspace:^"
     "@storybook/react": ^6.5.10
@@ -7516,6 +7517,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/calculateWeeklyRewardsInUsd@workspace:*, @snx-v2/calculateWeeklyRewardsInUsd@workspace:v2/lib/calculateWeeklyRewardsInUsd":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/calculateWeeklyRewardsInUsd@workspace:v2/lib/calculateWeeklyRewardsInUsd"
+  dependencies:
+    "@synthetixio/wei": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/cypress@workspace:v2/cypress":
   version: 0.0.0-use.local
   resolution: "@snx-v2/cypress@workspace:v2/cypress"
@@ -7706,7 +7715,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useExchangeRatesData@workspace:*, @snx-v2/useExchangeRatesData@workspace:^, @snx-v2/useExchangeRatesData@workspace:v2/lib/useExchangeRatesData":
+"@snx-v2/useExchangeRatesData@workspace:*, @snx-v2/useExchangeRatesData@workspace:v2/lib/useExchangeRatesData":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useExchangeRatesData@workspace:v2/lib/useExchangeRatesData"
   dependencies:
@@ -7787,7 +7796,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useGetLiquidationRewards@workspace:*, @snx-v2/useGetLiquidationRewards@workspace:^, @snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards":
+"@snx-v2/useGetLiquidationRewards@workspace:*, @snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards"
   dependencies:
@@ -7803,9 +7812,27 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useGetUpcomingRewards@workspace:v2/lib/useGetUpcomingRewards"
   dependencies:
-    "@snx-v2/useExchangeRatesData": "workspace:^"
-    "@snx-v2/useGetLiquidationRewards": "workspace:^"
-    "@snx-v2/useRewardsAvailable": "workspace:^"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useGetLiquidationRewards": "workspace:*"
+    "@snx-v2/useRewardsAvailable": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useGlobalStakingApr@workspace:v2/lib/useGlobalStakingApr":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useGlobalStakingApr@workspace:v2/lib/useGlobalStakingApr"
+  dependencies:
+    "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/calculateWeeklyRewardsInUsd": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral": "workspace:*"
+    "@snx-v2/useTotalStakedSNX": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -7870,7 +7897,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useRewardsAvailable@workspace:*, @snx-v2/useRewardsAvailable@workspace:^, @snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable":
+"@snx-v2/useRewardsAvailable@workspace:*, @snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable"
   dependencies:
@@ -7916,6 +7943,7 @@ __metadata:
   resolution: "@snx-v2/useStakingApr@workspace:v2/lib/useStakingApr"
   dependencies:
     "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/calculateWeeklyRewardsInUsd": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
@@ -7962,6 +7990,14 @@ __metadata:
     "@ethersproject/strings": ^5.7.0
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useTotalStakedSNX@workspace:*, @snx-v2/useTotalStakedSNX@workspace:v2/lib/useTotalStakedSNX":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useTotalStakedSNX@workspace:v2/lib/useTotalStakedSNX"
+  dependencies:
     "@tanstack/react-query": ^4.3.4
   languageName: unknown
   linkType: soft
