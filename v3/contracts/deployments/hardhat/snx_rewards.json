@@ -1,0 +1,126 @@
+{
+  "address": "0x0f589A84e9e0C66D22241E1d0Bd7a07Da86A1E19",
+  "abi": [
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "sender"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "distributeRewards",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        },
+        {
+          "type": "uint256",
+          "name": "start"
+        },
+        {
+          "type": "uint256",
+          "name": "duration"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "initialize",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "rewardManager"
+        },
+        {
+          "type": "address",
+          "name": "token_"
+        },
+        {
+          "type": "string",
+          "name": "name_"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "name",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "payout",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128"
+        },
+        {
+          "type": "uint128"
+        },
+        {
+          "type": "address"
+        },
+        {
+          "type": "address",
+          "name": "sender"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "token",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0xf9d8fc896b0d15b016d2975f8f3edeb23d5f3a95fdd0ccac22f5d6939408b714",
+  "sourceName": "contracts/RewardDistributorMock.sol",
+  "contractName": "RewardDistributorMock",
+  "deployedOn": "contract.snx_rewards"
+}

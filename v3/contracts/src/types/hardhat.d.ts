@@ -17,10 +17,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Multicall3__factory>;
     getContractFactory(
-      name: "RewardDistributor",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.RewardDistributor__factory>;
-    getContractFactory(
       name: "RewardDistributorMock",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.RewardDistributorMock__factory>;
@@ -46,11 +42,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Multicall3>;
-    getContractAt(
-      name: "RewardDistributor",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.RewardDistributor>;
     getContractAt(
       name: "RewardDistributorMock",
       address: string,

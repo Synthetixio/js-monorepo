@@ -1,4 +1,12 @@
 import { chain } from 'wagmi';
+
+import { address as SnxTokenGoerliAddress } from '@synthetixio/v3-contracts/build/goerli/snx.token';
+import { address as SnxTokenGoerliOptimismAddress } from '@synthetixio/v3-contracts/build/optimism-goerli/snx.token';
+import { address as SnxTokenHardhatAddress } from '@synthetixio/v3-contracts/build/goerli/snx.token';
+import { address as WethGoerliAddress } from '@synthetixio/v3-contracts/build/goerli/WETH';
+import { address as WethGoerliOptimismAddress } from '@synthetixio/v3-contracts/build/optimism-goerli/WETH';
+import { address as WethHardhatAddress } from '@synthetixio/v3-contracts/build/goerli/WETH';
+
 import { ChainName } from './types';
 
 const hardhatMulticallConfig = {
@@ -21,6 +29,32 @@ export const getChainNameById = (chainId: number) => {
   const chain = getChainById(chainId);
   return chain?.network.toLowerCase() == 'localhost' ? 'hardhat' : chain?.network;
 };
+
+function getSnxTokenAddress(chainName: string | undefined): string {
+  switch (chainName) {
+    case 'goerli':
+      return SnxTokenGoerliAddress;
+    case 'optimism-goerli':
+      return SnxTokenGoerliOptimismAddress;
+    case 'hardhat':
+      return SnxTokenHardhatAddress;
+    default:
+      throw new Error('Unsupported chain');
+  }
+}
+
+function getWethAddress(chainName: string | undefined): string {
+  switch (chainName) {
+    case 'goerli':
+      return WethGoerliAddress;
+    case 'optimism-goerli':
+      return WethGoerliOptimismAddress;
+    case 'hardhat':
+      return WethHardhatAddress;
+    default:
+      throw new Error('Unsupported chain');
+  }
+}
 
 // TODO: Retrieve from on chain data
 export const localCollateralTypes = (chainId: number) => {
@@ -49,14 +83,14 @@ export const localCollateralTypes = (chainId: number) => {
 
   return [
     {
-      address: require(`../../ts-deployments/${chainName}/snx.token.ts`).address,
+      address: getSnxTokenAddress(chainName),
       symbol: 'SNX',
       logoURI:
         'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F/logo.png',
       decimals: 18,
     },
     {
-      address: require(`../../ts-deployments/${chainName}/WETH.ts`).address,
+      address: getWethAddress(chainName),
       symbol: 'ETH',
       logoURI:
         'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',

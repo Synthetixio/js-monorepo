@@ -10052,12 +10052,11 @@ __metadata:
     "@typechain/ethers-v5": ^10.1.0
     "@typechain/hardhat": ^6.1.3
     "@types/node": ^18.8.5
-    cross-env: ^7.0.3
     dotenv: ^16.0.0
     ethereum-waffle: ^3.4.4
     ethers: ^5.7.2
     hardhat: ^2.9.2
-    hardhat-cannon: 1.1.16
+    hardhat-cannon: ^1.1.16
     hardhat-gas-reporter: ^1.0.8
     hardhat-interact: ^0.2.3
     prettier: ^2.7.1
@@ -10065,8 +10064,6 @@ __metadata:
     ts-node: ^10.9.1
     typechain: ^8.1.0
     typescript: ^4.8.2
-  bin:
-    write-ts: ./scripts/write-ts-contracts.js
   languageName: unknown
   linkType: soft
 
@@ -10136,40 +10133,50 @@ __metadata:
     "@babel/preset-env": ^7.19.4
     "@babel/preset-react": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
+    "@babel/runtime-corejs3": ^7.19.4
     "@chakra-ui/icon": ^3.0.11
     "@chakra-ui/icons": ^2.0.9
     "@chakra-ui/react": ^2.2.8
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@faker-js/faker": ^7.6.0
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.7
     "@rainbow-me/rainbowkit": ^0.7.1
-    "@svgr/webpack": ^6.3.1
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     "@types/react": ^18.0.18
     "@types/react-chartjs-2": ^2.5.7
     "@types/react-helmet": ^6.1.5
     babel-loader: ^8.2.5
+    babel-plugin-istanbul: ^6.1.1
     big.js: ^6.1.1
+    bn.js: ^5.2.1
     chart.js: ^3.9.1
+    core-js: 3
+    crypto-browserify: ^3.12.0
     css-loader: ^6.7.1
-    css-minimizer-webpack-plugin: ^4.0.0
     ethers: ^5.7.2
     framer-motion: ^7.0.0
     html-webpack-plugin: ^5.5.0
     i18next: ^21.9.0
     i18next-browser-languagedetector: ^6.1.4
-    mini-css-extract-plugin: ^2.6.1
     react: ^18.2.0
     react-chartjs-2: ^4.3.1
     react-dom: ^18.2.0
     react-helmet: ^6.1.0
     react-hook-form: ^7.34.0
     react-i18next: ^11.18.3
+    react-refresh: ^0.14.0
     react-router-dom: ^6.3.0
     recoil: ^0.7.4
+    stream-browserify: ^3.0.0
+    style-loader: ^3.3.1
+    terser-webpack-plugin: ^5.3.6
+    typescript: ^4.8.2
     wagmi: ^0.6.3
     webpack: ^5.74.0
+    webpack-bundle-analyzer: ^4.6.1
     webpack-cli: ^4.10.0
     webpack-dev-server: ^4.11.1
   languageName: unknown
@@ -11935,9 +11942,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^1.1.16":
-  version: 1.1.16
-  resolution: "@usecannon/builder@npm:1.1.16"
+"@usecannon/builder@npm:^1.1.18":
+  version: 1.1.18
+  resolution: "@usecannon/builder@npm:1.1.18"
   dependencies:
     adm-zip: ^0.5.9
     ajv: ^8.11.0
@@ -11948,17 +11955,17 @@ __metadata:
     semver: ^7.3.7
   peerDependencies:
     ethers: ">=5.6.0"
-  checksum: d3cee9be98c26d81fc346dab2b3b69918c675747a559c114afd84b536cd392157cb4a0f096bc62e31e12d0ac13ef1c46fec22f75d08431f92aa224ba25e36534
+  checksum: 92060683043e872964dcacde48b09a1addb92d33ecaee79be2dcba54d545284f6fc31f9b7e387ba7274d8d011a8371d1493cb7def748c3c460510ca31c677c74
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:^1.1.16":
-  version: 1.1.16
-  resolution: "@usecannon/cli@npm:1.1.16"
+"@usecannon/cli@npm:^1.1.18":
+  version: 1.1.18
+  resolution: "@usecannon/cli@npm:1.1.18"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^1.1.16
+    "@usecannon/builder": ^1.1.18
     chalk: ^4.1.2
     commander: ^9.3.0
     debug: ^4.3.4
@@ -11971,7 +11978,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: dist/bin/cannon.js
-  checksum: 7cf851258d6698a633d9a845d29af7ba5f2c88d7f5dfc9b56a289649c1418f06baf37fbaf4071934f93ce85881713f4cdb60a678007493158cae3597d4ea9cac
+  checksum: 92d9ea96302e226e8169da0046ac91fa72ea29d32c73a67df26fb9271d5fa9d26f91c45bcc9246777e7382cb89002d735db2c3edb2ff210bd74dc522556b8dab
   languageName: node
   linkType: hard
 
@@ -17805,18 +17812,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-env@npm:^7.0.3":
-  version: 7.0.3
-  resolution: "cross-env@npm:7.0.3"
-  dependencies:
-    cross-spawn: ^7.0.1
-  bin:
-    cross-env: src/bin/cross-env.js
-    cross-env-shell: src/bin/cross-env-shell.js
-  checksum: 26f2f3ea2ab32617f57effb70d329c2070d2f5630adc800985d8b30b56e8bf7f5f439dd3a0358b79cee6f930afc23cf8e23515f17ccfb30092c6b62c6b630a79
-  languageName: node
-  linkType: hard
-
 "cross-fetch@npm:^2.1.0, cross-fetch@npm:^2.1.1":
   version: 2.2.6
   resolution: "cross-fetch@npm:2.2.6"
@@ -17849,7 +17844,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.1, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
+"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
   dependencies:
@@ -23559,13 +23554,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat-cannon@npm:1.1.16":
-  version: 1.1.16
-  resolution: "hardhat-cannon@npm:1.1.16"
+"hardhat-cannon@npm:^1.1.16":
+  version: 1.1.18
+  resolution: "hardhat-cannon@npm:1.1.18"
   dependencies:
     "@iarna/toml": ^3.0.0
-    "@usecannon/builder": ^1.1.16
-    "@usecannon/cli": ^1.1.16
+    "@usecannon/builder": ^1.1.18
+    "@usecannon/cli": ^1.1.18
     adm-zip: ^0.5.9
     ajv: ^8.10.0
     chalk: ^4.1.2
@@ -23583,7 +23578,7 @@ __metadata:
     "@nomiclabs/hardhat-ethers": ^2.0.0
     "@nomiclabs/hardhat-etherscan": ^3.0.0
     hardhat: ^2.0.0
-  checksum: d733214826e0e6042f95c3586b1648502c686e310d1bcd9b3f58957918349a8f99768e36415382761c4bbca14e8d0130346f4632707d56d9bfd6f2d697de85cb
+  checksum: a2c74cc90a70757e93f97f467f86e7523a6c682d2585e02317217b2ea45d9800b5777d47c65d93ecac7e31d5dbfddd681459f0364b33a4c4bbdde065143131ea
   languageName: node
   linkType: hard
 
@@ -37198,6 +37193,15 @@ __metadata:
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
   checksum: 21425246a5a8f14d1625a657a3a56f8a323193fa341a71af818a2ed2a429efa2385a328b4381cf2f12c2d0e6380801eb9e0427ed9c3a10ff95c86e383184d632
+  languageName: node
+  linkType: hard
+
+"style-loader@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "style-loader@npm:3.3.1"
+  peerDependencies:
+    webpack: ^5.0.0
+  checksum: 470feef680f59e2fce4d6601b5c55b88c01ad8d1dd693c528ffd591ff5fd7c01a4eff3bdbe62f26f847d6bd2430c9ab594be23307cfe7a3446ab236683f0d066
   languageName: node
   linkType: hard
 

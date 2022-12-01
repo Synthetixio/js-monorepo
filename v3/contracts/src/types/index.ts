@@ -8,8 +8,6 @@ export type { interfaces };
 export * as factories from "./factories";
 export type { Multicall3 } from "./contracts/Multicall3";
 export { Multicall3__factory } from "./factories/contracts/Multicall3__factory";
-export type { RewardDistributor } from "./contracts/RewardDistributor";
-export { RewardDistributor__factory } from "./factories/contracts/RewardDistributor__factory";
 export type { RewardDistributorMock } from "./contracts/RewardDistributorMock";
 export { RewardDistributorMock__factory } from "./factories/contracts/RewardDistributorMock__factory";
 export type { WETH9 } from "./contracts/WETH9";

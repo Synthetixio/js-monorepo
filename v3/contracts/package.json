@@ -3,6 +3,15 @@
   "private": true,
   "description": "peripheral smart contracts for frontend",
   "version": "1.0.0",
+  "scripts": {
+    "codegen": "node ./codegen.js",
+    "build": "yarn cannon-build && yarn codegen && tsc --build --verbose",
+    "clean": "shx rm -rf ./artifacts ./cache ./coverage ./src/types ./coverage.json",
+    "compile": "TS_NODE_TRANSPILE_ONLY=true hardhat compile",
+    "test": "echo Skip contract tests || hardhat test",
+    "typechain": "TS_NODE_TRANSPILE_ONLY=true hardhat typechain",
+    "cannon-build": "hardhat cannon:build cannonfile.dev.toml --write-deployments ./deployments/hardhat"
+  },
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
@@ -12,45 +21,17 @@
     "@typechain/ethers-v5": "^10.1.0",
     "@typechain/hardhat": "^6.1.3",
     "@types/node": "^18.8.5",
-    "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",
     "ethereum-waffle": "^3.4.4",
     "ethers": "^5.7.2",
     "hardhat": "^2.9.2",
-    "hardhat-cannon": "1.1.16",
+    "hardhat-cannon": "^1.1.16",
     "hardhat-gas-reporter": "^1.0.8",
     "hardhat-interact": "^0.2.3",
+    "prettier": "^2.7.1",
     "shx": "^0.3.4",
     "ts-node": "^10.9.1",
     "typechain": "^8.1.0",
     "typescript": "^4.8.2"
-  },
-  "bin": {
-    "write-ts": "./scripts/write-ts-contracts.js"
-  },
-  "files": [
-    "/contracts"
-  ],
-  "keywords": [
-    "blockchain",
-    "ethereum",
-    "hardhat",
-    "smart-contracts",
-    "solidity"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "clean": "shx rm -rf ./artifacts ./cache ./coverage ./src/types ./coverage.json",
-    "commit": "git-cz",
-    "compile": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat compile",
-    "test": "echo Skip contract tests || hardhat test",
-    "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain",
-    "cannon-build": "hardhat cannon:build cannonfile.dev.toml --write-deployments ./deployments/hardhat",
-    "write-ts": "node ./scripts/write-ts-contracts.js"
-  },
-  "dependencies": {
-    "prettier": "^2.7.1"
   }
 }

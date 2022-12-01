@@ -14,7 +14,7 @@ export const getContract = (
 
   let contractInfo;
   try {
-    contractInfo = require(`../../ts-deployments/${chainName}/${name}.ts`);
+    contractInfo = require(`@synthetixio/v3-contracts/build/${chainName}/${name}.ts`);
   } catch {
     return null;
   }
