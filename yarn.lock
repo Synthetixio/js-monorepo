@@ -9629,9 +9629,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/contracts@workspace:*, @synthetixio/contracts@workspace:contracts":
+"@synthetixio/contracts@workspace:*, @synthetixio/contracts@workspace:v2/contracts":
   version: 0.0.0-use.local
-  resolution: "@synthetixio/contracts@workspace:contracts"
+  resolution: "@synthetixio/contracts@workspace:v2/contracts"
   dependencies:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/providers": ^5.7.2

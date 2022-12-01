@@ -4,34 +4,28 @@ sidebar_position: 1
 
 # Delegating Credit & Debt
 
-Pools consolidate liquidity from stakers and markets' credit and debt. Every pool has a vault for each of the accepted collateral types. Pools may also have an owner, which can decide which markets will be backed by the collateral delegated to the pool.
-
-Credit and debt is propagated between staking positions and pools, and between pools and markets, taking into account the pool's configuration.
+Pools distribute credit and debt between stakers and markets. Every pool has a vault for each of the accepted collateral types. A pool's owner can decide which market to provide with liquidity.
 
 ## Creating Pools
 
-Anyone can create a pool using the [`createPool` function](/protocol/technical-reference/smart-contracts#createpool). Ownership can then be transferred with the [`nominatePoolOwner`](/protocol/technical-reference/smart-contracts#nominatepoolowner) and [`acceptPoolOwnership`](/protocol/technical-reference/smart-contracts#acceptpoolownership) functions.
+Pools may be created using the [`createPool` function](/protocol/technical-reference/smart-contracts#createpool). Ownership can then be transferred with the [`nominatePoolOwner`](/protocol/technical-reference/smart-contracts#nominatepoolowner) and [`acceptPoolOwnership`](/protocol/technical-reference/smart-contracts#acceptpoolownership) functions. Ownership may also be renounced with the [`renouncePoolNomination`](/protocol/technical-reference/smart-contracts#renouncepoolnomination), effectively locking the pool's configuration.
 
-Optionally, pools have human-readable names stored on-chain, which can be set by the owner using the [`setPoolName` function](/protocol/technical-reference/smart-contracts#setpoolname) and retrieved with the [`getPoolName` function](/protocol/technical-reference/smart-contracts#getpoolname).
+Pools may also have human-readable names stored on-chain, which can be set by the owner using the [`setPoolName` function](/protocol/technical-reference/smart-contracts#setpoolname) and retrieved with the [`getPoolName` function](/protocol/technical-reference/smart-contracts#getpoolname).
 
-## Pool Configuration
+## Configuring Pools
 
-The owner of a pool may choose the markets to back (with their corresponding **weights** and **maximum debt per dollar of collateral**) with the [`setPoolConfiguration` function](/protocol/technical-reference/smart-contracts#setpoolconfiguration).
+The owner of a pool may choose the markets to back (with their corresponding **weights** and **maximum debt share value**) using the [`setPoolConfiguration` function](/protocol/technical-reference/smart-contracts#setpoolconfiguration).
 
-Fundamentally, this configuration effects a `marketCollateral` and `amountWithdrawable` value for each market. This determines how much debt the pool is willing to assume from market, and how to limit the amount of snxUSD that markets can withdraw.
+Fundamentally, this configuration effects the credit capacity provided to each market. This determines how much debt the pool is willing to assume from markets and how to limit the amount of stablecoins that markets can withdraw.
 
-### Weights
+### Calculating Credit Capacity
 
-Weights determine what proportion of the liquidity in a particular pool should be allocated to each market. For example, if a pool has $500,000 of liquidity with a weight of 3 assigned to an sBTC market and a weight 1 assigned to an sEUR market, the `marketCollateral` for the markets would be $375,000 and $125,000, respectively.
+**Weights** determine what proportion of the liquidity in a particular pool should be allocated to each market. For example, if a pool has $500,000 of liquidity with a weight of 3 assigned to an sBTC market and a weight 1 assigned to an sEUR market, the credit capacity provided to these markets would be $375,000 and $125,000, respectively.
 
-### Maximum debt per dollar of collateral
+The credit capacity is then reduced based on the **maximum debt share value**. For instance, if the credit capacity derived from the weights is $100 and the maximum debt share value is set to $0.75, the actual credit capacity provided to the market would be $75.
 
-The maximum debt per dollar of collateral determines the maximum debt the stakers in a pool are willing to assume from a given market. The **maximum debt** is calculated by multiplying the maximum debt per dollar of collateral by `marketCollateral`. For example, a pool may have $100 of `marketCollateral` and a maximum debt per dollar of collateral of $0.5. This would mean the maximum debt from this pool would be $50.
+Note that the maximum debt share value will not be greater than a maximum debt share value calculated based on a global **minimum liquidity ratio**. For instance, if the credit capacity derived from the weights is $100 and the minimum liquidity ratio is set to 400%, the actual credit capacity provided to the market would never be greater than $25 (regardless of the maximum debt share value specified by the pool owner).
 
-## Minimum Liquidity Ratio
+### Available Credit
 
-The Minimum Liquidity Ratio is a global value (configured by SCCP) which is functionally similar to the Target C-Ratio. This creates another **maximum debt** value. For example, if a market has $100 of `marketCollateral` from a pool and the Minimum Liquidity Ratio is set to 400%, the maximum debt from this pool would be $25.
-
-## Calculating `amountWithdrawable`
-
-To calculate the `amountWithdrawable` of a given market, the protocol takes the lesser of the two **maximum debt** values described above across each pool delegating to a given market and returns the sum.
+The credit available to a market is calculated by taking the total credit capacity provided to it across all pools, subtracting its amount of `reportedDebt()` and its net issuance (i.e. the amount of stablecoins it has minted minus the amount it has burned). This is the maximum amount of stablecoins it is allowed to withdraw. If it begins to report debt such that its available credit drops below 0, the market becomes insolvent and positions which are backing this market no longer accrue debt.

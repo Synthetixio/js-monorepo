@@ -155,6 +155,7 @@ jobs:
           path: 'coverage'
 
       - run: yarn workspace @snx-v3/subgraphs test
+      - run: yarn workspace @snx-v3/subgraphs test-coverage
 
   typecheck:
     working_directory: /tmp/app
