@@ -14,6 +14,7 @@ export const ClaimRewardsBtn: FC<{
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
+
   const {
     mutate,
     modalOpen,
@@ -24,6 +25,7 @@ export const ClaimRewardsBtn: FC<{
     isGasEnabledAndNotFetched,
     txnHash,
   } = useClaimRewardsMutation();
+
   const handleSubmit = () => {
     mutate(undefined, {
       onSuccess: () => {
@@ -31,11 +33,14 @@ export const ClaimRewardsBtn: FC<{
       },
     });
   };
+
   return (
     <>
       <Button
-        variant={variant !== 'success' ? variant : undefined}
-        disabled={Boolean(isGasEnabledAndNotFetched || !amountsUSD || error)}
+        variant={variant !== 'success' ? variant : 'solid'}
+        disabled={
+          variant === 'success' ? Boolean(isGasEnabledAndNotFetched || !amountsUSD || error) : false
+        }
         w={['100%', '100%', '100%', '80px']}
         ml={[6, 6, 6, 4]}
         onClick={() => {

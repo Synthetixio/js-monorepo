@@ -18,6 +18,7 @@ export function useClaimRewardsMutation() {
 
   const [txnState, dispatch] = useReducer(reducer, initialState);
   const populateTransaction = createPopulateTransaction(FeePool);
+
   const {
     data,
     isFetched: isGasFetched,
