@@ -1,0 +1,9 @@
+{
+  "name": "@snx-v2/calculateWeeklyRewardsInUsd",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@synthetixio/wei": "workspace:*"
+  }
+}

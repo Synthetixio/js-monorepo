@@ -4,13 +4,14 @@ import { StatBox } from '@snx-v2/StatBox';
 import { useGetLifetimeRewards } from '@snx-v2/useGetLifetimeRewards';
 import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { useGetUpcomingRewards } from '@snx-v2/useGetUpcomingRewards';
+import { useApr } from '@snx-v2/useApr';
 
 export const EarnStatsUi: FC<{
   lifetimeRewards?: number;
   earning?: number;
   upcomingRewards?: number;
   isLoading: boolean;
-}> = ({ lifetimeRewards, earning, upcomingRewards }) => {
+}> = ({ lifetimeRewards, earning, upcomingRewards, isLoading }) => {
   return (
     <Flex my={1} flexDirection={['column', 'column', 'row', 'row']} justifyContent="space-between">
       <StatBox
@@ -21,6 +22,7 @@ export const EarnStatsUi: FC<{
         mr={3}
         width="100%"
         maxW={['100%', '100%', 'initial', 'initial']}
+        isLoading={isLoading}
       />
       <StatBox
         label="Earning"
@@ -30,6 +32,7 @@ export const EarnStatsUi: FC<{
         mr={3}
         width="100%"
         maxW={['100%', '100%', 'initial', 'initial']}
+        isLoading={isLoading}
       />
       <StatBox
         label="Lifetime Rewards"
@@ -38,6 +41,7 @@ export const EarnStatsUi: FC<{
         alignItems={['start', 'start', 'end', 'end']}
         width="100%"
         maxW={['100%', '100%', 'initial', 'initial']}
+        isLoading={isLoading}
       />
     </Flex>
   );
@@ -46,16 +50,16 @@ export const EarnStatsUi: FC<{
 export const EarnStats = () => {
   const { data: lifetimeRewardsData, isLoading: isGetLifetimeLoading } = useGetLifetimeRewards();
   const { data: upcomingRewards, isLoading: isUpcomingLoading } = useGetUpcomingRewards();
+  const { data: earning, isLoading: isAprLoading } = useApr();
 
-  const earning = 0.3; // TODO
-  // const upcomingRewards = 100; // TODO
-  const isLoading = isGetLifetimeLoading || isUpcomingLoading;
+  const isLoading = isGetLifetimeLoading || isUpcomingLoading || isAprLoading;
+
   return (
     <EarnStatsUi
       isLoading={isLoading}
       lifetimeRewards={lifetimeRewardsData}
       upcomingRewards={upcomingRewards}
-      earning={earning}
+      earning={earning?.toNumber()}
     />
   );
 };
