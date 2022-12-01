@@ -281,6 +281,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       },
     });
   };
+
   return (
     <>
       <MintHeader

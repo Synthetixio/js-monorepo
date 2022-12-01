@@ -78,7 +78,7 @@
       "success": "HEALTHY",
       "warning": "UNHEALTHY",
       "error": "UNHEALTHY",
-      "not-staking": "DEBT CLEARED",
+      "gray": "DEBT CLEARED",
       "current-health": "Current Health",
       "current-health-tooltip": "Your current c-ratio",
       "target-health": "Target Health",
@@ -145,6 +145,30 @@
       "txn-modal": {
         "unstaking": "Unstaking",
         "burning": "Burning"
+      }
+    },
+    "earn": {
+      "title": "Earn Rewards",
+      "description": "Earn Rewards Staking SNX tokens offers weekly rewards in both inflationary SNX and sUSD from trading fees. <0>Learn more<0>",
+      "apy": "Est. APY",
+      "staked": "Staked Balance",
+      "remaining": "Time Remaining",
+      "does-not-expire": "Does not expire",
+      "badges": {
+        "claimable": "CLAIMABLE",
+        "claimed": "CLAIMED",
+        "maintain": "ADJUST TO MAINTAIN C-RATIO"
+      },
+      "transaction-modal": {
+        "claiming": "Claiming"
+      },
+      "staking-rewards": {
+        "title": "Synthetix",
+        "description": "Staking Rewards"
+      },
+      "liquidation-rewards": {
+        "title": "Synthetix",
+        "description": "Liquidation Rewards"
       }
     },
     "self-liquidation": {

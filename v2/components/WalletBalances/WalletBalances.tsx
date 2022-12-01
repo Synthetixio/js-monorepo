@@ -64,19 +64,20 @@ const WalletBalancesUi: React.FC<{
         <StatBox
           label={t('staking-v2.wallet-balances.active-debt')}
           amount={debtBalance === undefined ? undefined : formatNumberToUsd(debtBalance)}
-          containerStyles={{ alignItems: 'start' }}
+          alignItems="start"
         />
         <StatBox
           label={t('staking-v2.wallet-balances.d-snx-value')}
           amount={dSNXUSDBalance === undefined ? undefined : formatNumberToUsd(dSNXUSDBalance)}
-          containerStyles={{ marginX: 2, alignItems: 'center' }}
+          mx={2}
+          alignItems="center"
         />
         <StatBox
           label={t('staking-v2.wallet-balances.total-synth-value')}
           amount={
             totalSynthUSDBalance === undefined ? undefined : formatNumberToUsd(totalSynthUSDBalance)
           }
-          containerStyles={{ alignItems: 'end' }}
+          alignItems="end"
         />
       </Flex>
       <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" mt={4} py={4} px={2}>

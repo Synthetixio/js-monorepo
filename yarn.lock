@@ -7108,8 +7108,24 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/CountDown@workspace:v2/components/CountDown"
   dependencies:
+    "@chakra-ui/react": ^2.2.8
     "@snx-v2/useInterval": "workspace:*"
     date-fns: ^2.19.0
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/EarnStats@workspace:*, @snx-v2/EarnStats@workspace:v2/components/EarnStats":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/EarnStats@workspace:v2/components/EarnStats"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/StatBox": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/useApr": "workspace:*"
+    "@snx-v2/useGetLifetimeRewards": "workspace:*"
+    "@snx-v2/useGetUpcomingRewards": "workspace:^"
+    "@storybook/react": ^6.5.10
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7262,6 +7278,36 @@ __metadata:
     "@storybook/react": ^6.5.10
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^11.18.3
+    react-router-dom: ^6.3.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/RewardsItem@workspace:^, @snx-v2/RewardsItem@workspace:v2/components/RewardsItem":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/RewardsItem@workspace:v2/components/RewardsItem"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/CountDown": "workspace:*"
+    "@snx-v2/ExternalLink": "workspace:*"
+    "@snx-v2/TransactionModal": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/getHealthVariant": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/parseTxnError": "workspace:*"
+    "@snx-v2/stakingCalculations": "workspace:*"
+    "@snx-v2/txnLink": "workspace:*"
+    "@snx-v2/txnReducer": "workspace:*"
+    "@snx-v2/useApr": "workspace:*"
+    "@snx-v2/useClaimRewardsMutation": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useGetLiquidationRewards": "workspace:*"
+    "@snx-v2/useRewardsAvailable": "workspace:*"
+    "@storybook/react": ^6.5.10
+    "@tanstack/react-query": ^4.3.4
+    date-fns: ^2.19.0
     react: ^18.2.0
     react-i18next: ^11.18.3
     react-router-dom: ^6.3.0
@@ -7472,6 +7518,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/calculateWeeklyRewardsInUsd@workspace:*, @snx-v2/calculateWeeklyRewardsInUsd@workspace:v2/lib/calculateWeeklyRewardsInUsd":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/calculateWeeklyRewardsInUsd@workspace:v2/lib/calculateWeeklyRewardsInUsd"
+  dependencies:
+    "@synthetixio/wei": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/cypress@workspace:v2/cypress":
   version: 0.0.0-use.local
   resolution: "@snx-v2/cypress@workspace:v2/cypress"
@@ -7572,6 +7626,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useApr@workspace:*, @snx-v2/useApr@workspace:v2/lib/useApr":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useApr@workspace:v2/lib/useApr"
+  dependencies:
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useGlobalStakingApr": "workspace:*"
+    "@snx-v2/useStakingApr": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useBurnMutation@workspace:*, @snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation"
@@ -7598,7 +7662,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useClaimRewardsMutation@workspace:v2/lib/useClaimRewardsMutation":
+"@snx-v2/useClaimRewardsMutation@workspace:*, @snx-v2/useClaimRewardsMutation@workspace:v2/lib/useClaimRewardsMutation":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useClaimRewardsMutation@workspace:v2/lib/useClaimRewardsMutation"
   dependencies:
@@ -7682,8 +7746,20 @@ __metadata:
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     date-fns: ^2.19.0
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useFeesClaimed@workspace:v2/lib/useFeesClaimed":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useFeesClaimed@workspace:v2/lib/useFeesClaimed"
+  dependencies:
+    "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/ContractContext": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7721,12 +7797,52 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useGetLifetimeRewards@workspace:*, @snx-v2/useGetLifetimeRewards@workspace:v2/lib/useGetLifetimeRewards":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useGetLifetimeRewards@workspace:v2/lib/useGetLifetimeRewards"
+  dependencies:
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useGetLiquidationRewards@workspace:*, @snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useGetUpcomingRewards@workspace:^, @snx-v2/useGetUpcomingRewards@workspace:v2/lib/useGetUpcomingRewards":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useGetUpcomingRewards@workspace:v2/lib/useGetUpcomingRewards"
+  dependencies:
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useGetLiquidationRewards": "workspace:*"
+    "@snx-v2/useRewardsAvailable": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useGlobalStakingApr@workspace:*, @snx-v2/useGlobalStakingApr@workspace:v2/lib/useGlobalStakingApr":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useGlobalStakingApr@workspace:v2/lib/useGlobalStakingApr"
+  dependencies:
+    "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/calculateWeeklyRewardsInUsd": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral": "workspace:*"
+    "@snx-v2/useTotalStakedSNX": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
@@ -7833,6 +7949,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useStakingApr@workspace:*, @snx-v2/useStakingApr@workspace:v2/lib/useStakingApr":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useStakingApr@workspace:v2/lib/useStakingApr"
+  dependencies:
+    "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/calculateWeeklyRewardsInUsd": "workspace:*"
+    "@snx-v2/stakingCalculations": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useSynthetixContracts@workspace:*, @snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts"
@@ -7859,6 +7991,25 @@ __metadata:
     "@tanstack/react-query": ^4.3.4
     lodash: ^4.17.21
     react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral@workspace:*, @snx-v2/useTotalIssuedSynthsExcludeOtherCollateral@workspace:v2/lib/useTotalIssuedSynthsExcludeOtherCollateral":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral@workspace:v2/lib/useTotalIssuedSynthsExcludeOtherCollateral"
+  dependencies:
+    "@ethersproject/strings": ^5.7.0
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useTotalStakedSNX@workspace:*, @snx-v2/useTotalStakedSNX@workspace:v2/lib/useTotalStakedSNX":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useTotalStakedSNX@workspace:v2/lib/useTotalStakedSNX"
+  dependencies:
+    "@tanstack/react-query": ^4.3.4
   languageName: unknown
   linkType: soft
 
@@ -9754,12 +9905,14 @@ __metadata:
     "@snx-v2/CRatioHealthCard": "workspace:*"
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/EarnStats": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/GasSpeedContext": "workspace:*"
     "@snx-v2/HomeButton": "workspace:*"
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Mint": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
+    "@snx-v2/RewardsItem": "workspace:^"
     "@snx-v2/SelfLiquidation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"

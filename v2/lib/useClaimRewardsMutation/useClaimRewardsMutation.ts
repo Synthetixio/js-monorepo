@@ -13,11 +13,13 @@ const createPopulateTransaction = (FeePool: ReturnType<typeof useFeePool>['data'
     });
 };
 
-export function useClaimRewardsMutation() {
+export function useClaimRewardsMutation(canClaim: boolean) {
   const { data: FeePool } = useFeePool();
 
   const [txnState, dispatch] = useReducer(reducer, initialState);
-  const populateTransaction = createPopulateTransaction(FeePool);
+
+  const populateTransaction = canClaim ? createPopulateTransaction(FeePool) : undefined;
+
   const {
     data,
     isFetched: isGasFetched,

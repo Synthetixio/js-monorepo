@@ -23,6 +23,7 @@ export const EXTERNAL_LINKS = {
     StakingGuide: 'https://blog.synthetix.io/basics-of-staking-snx-2022/',
     SIP148Liquidations: 'https://blog.synthetix.io/new-liquidation-mechanism/',
     Governance: 'https://governance.synthetix.io',
+    RewardsGuide: ' https://synthetix.io/guides/staking-rewards-epochs',
   },
   Social: {
     Twitter: 'https://twitter.com/synthetix_io',

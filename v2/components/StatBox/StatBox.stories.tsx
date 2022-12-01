@@ -16,23 +16,17 @@ export const Tertiary = Template.bind({});
 Primary.args = {
   label: 'Estimated Upcoming Rewards',
   amount: '$10,090.92',
-  containerStyles: {
-    align: 'start',
-  },
+  alignItems: 'start',
 };
 
 Secondary.args = {
   label: 'Earning',
   amount: '30.75%',
-  containerStyles: {
-    align: 'center',
-  },
+  alignItems: 'center',
 };
 
 Tertiary.args = {
   label: 'Lifetime Rewards',
   amount: '$10,090.92',
-  containerStyles: {
-    align: 'start',
-  },
+  alignItems: 'start',
 };

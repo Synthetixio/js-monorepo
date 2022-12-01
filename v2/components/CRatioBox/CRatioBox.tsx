@@ -29,7 +29,7 @@ export const CRatioBoxUi: FC<{
   });
   const badgeHealthVariant =
     newCratioPercentage === 0
-      ? 'not-staking'
+      ? 'gray'
       : getHealthVariant({
           currentCRatioPercentage:
             newCratioPercentage !== undefined ? newCratioPercentage : currentCRatioPercentage,
@@ -71,7 +71,7 @@ export const CRatioBoxUi: FC<{
                 <ArrowRight mx={1} color="white" />
                 <Text
                   data-testid="new c-ratio text"
-                  color={badgeHealthVariant === 'not-staking' ? 'white' : badgeHealthVariant}
+                  color={badgeHealthVariant === 'gray' ? 'white' : badgeHealthVariant}
                   fontFamily="mono"
                   fontSize="lg"
                   textAlign="end"

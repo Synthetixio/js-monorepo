@@ -86,6 +86,9 @@ const Badge: ComponentStyleConfig = {
     fontFamily: 'heading',
     py: 1,
     px: 2,
+    borderRadius: 'base',
+    borderWidth: '1px',
+    borderColor: 'transparent',
   },
   variants: {
     success: {
@@ -103,16 +106,15 @@ const Badge: ComponentStyleConfig = {
       borderColor: 'red.400',
       bg: 'red.900',
     },
-    'not-staking': {
-      color: 'white',
-      borderColor: 'white',
-      bg: 'gray.500',
+    gray: {
+      color: 'gray.500',
+      borderColor: 'gray.500',
+      bg: 'gray.900',
     },
     mint: {
       width: '100%',
       textAlign: 'center',
       userSelect: 'none',
-      borderRadius: 'base',
       _hover: {
         cursor: 'pointer',
       },
@@ -121,7 +123,6 @@ const Badge: ComponentStyleConfig = {
       width: '100%',
       textAlign: 'center',
       userSelect: 'none',
-      borderRadius: 'base',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',

@@ -7,6 +7,7 @@ import { LOCAL_STORAGE_KEYS } from 'constants/storage';
 import useLocalStorage from 'hooks/useLocalStorage';
 import { Box, Container } from '@chakra-ui/react';
 import { HomeButton } from '@snx-v2/HomeButton';
+import V2Earn from 'content/V2Earn';
 
 import DashboardPage from './content/DashboardPage';
 import SynthsPage from './content/SynthsPage';
@@ -80,6 +81,7 @@ export default function AppRoutes() {
               <Route path="/staking/unflag" element={<V2UnflagPage />} />
               <Route path="/staking/swap-links" element={<V2SwapLinksPage />} />
               <Route path="/staking/self-liquidation" element={<V2SelfLiquidation />} />
+              <Route path="/earn" element={<V2Earn />} />
               <Route path="/wallet" element={<Navigate to="/wallet/balances" replace={true} />} />
               <Route
                 path="/wallet/balances"
@@ -94,6 +96,32 @@ export default function AppRoutes() {
             <>
               <Route path="/staking" element={<StakingPage />}>
                 <Route path=":action" element={<StakingPage />} />
+              </Route>
+              <Route
+                path="/earn"
+                element={
+                  <Wrapper>
+                    <EarnPage />
+                  </Wrapper>
+                }
+              >
+                <Route
+                  path=":pool"
+                  element={
+                    <Wrapper>
+                      <EarnPage />
+                    </Wrapper>
+                  }
+                >
+                  <Route
+                    path=":action"
+                    element={
+                      <Wrapper>
+                        <EarnPage />
+                      </Wrapper>
+                    }
+                  />
+                </Route>
               </Route>
               <Route path="/wallet" element={<Navigate to="/synths" replace={true} />} />
               <Route path="/wallet/balances" element={<Navigate to="/synths" replace={true} />} />

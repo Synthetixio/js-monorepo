@@ -9,7 +9,9 @@ const createPopulateTransaction = (
   LiquidatorRewards: ReturnType<typeof useLiquidatorRewards>['data'],
   walletAddress: string | null
 ) => {
-  if (!LiquidatorRewards?.signer || !walletAddress) return undefined;
+  if (!LiquidatorRewards?.signer || !walletAddress) {
+    return undefined;
+  }
 
   return () =>
     LiquidatorRewards.populateTransaction.getReward(walletAddress, {
@@ -17,11 +19,13 @@ const createPopulateTransaction = (
     });
 };
 
-export function useClaimLiquidatorRewardsMutation() {
+export function useClaimLiquidatorRewardsMutation(canClaim: boolean) {
   const { data: LiquidatorRewards } = useLiquidatorRewards();
   const { walletAddress } = useContext(ContractContext);
   const [txnState, dispatch] = useReducer(reducer, initialState);
-  const populateTransaction = createPopulateTransaction(LiquidatorRewards, walletAddress);
+  const populateTransaction = canClaim
+    ? createPopulateTransaction(LiquidatorRewards, walletAddress)
+    : undefined;
   const {
     data,
     isFetched: isGasFetched,
@@ -29,7 +33,7 @@ export function useClaimLiquidatorRewardsMutation() {
     error: gasError,
   } = useGasOptions({
     populateTransaction,
-    queryKeys: [populateTransaction],
+    queryKeys: [populateTransaction, walletAddress],
   });
 
   const { populatedTransaction, gasOptionsForTransaction, transactionPrice } = data || {};

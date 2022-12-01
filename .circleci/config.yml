@@ -202,7 +202,7 @@ jobs:
           command: |-
             curl -L https://foundry.paradigm.xyz | bash
             source /root/.bashrc
-            foundryup
+            foundryup -v nightly-15204ec245c11a521f5d48c8b79990cdc85f2198
             anvil --fork-url https://mainnet.infura.io/v3/$INFURA_KEY
           background: true
 
