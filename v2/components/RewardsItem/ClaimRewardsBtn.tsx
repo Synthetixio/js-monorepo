@@ -14,7 +14,8 @@ export const ClaimRewardsBtn: FC<{
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
-
+  const haveSomethingToClaim = Boolean(amountSNX || amountsUSD);
+  const canClaim = haveSomethingToClaim && variant === 'success';
   const {
     mutate,
     modalOpen,
@@ -24,7 +25,7 @@ export const ClaimRewardsBtn: FC<{
     settle,
     isGasEnabledAndNotFetched,
     txnHash,
-  } = useClaimRewardsMutation();
+  } = useClaimRewardsMutation(canClaim);
 
   const handleSubmit = () => {
     mutate(undefined, {
@@ -38,9 +39,7 @@ export const ClaimRewardsBtn: FC<{
     <>
       <Button
         variant={variant !== 'success' ? variant : 'solid'}
-        disabled={
-          variant === 'success' ? Boolean(isGasEnabledAndNotFetched || !amountsUSD || error) : false
-        }
+        disabled={Boolean(!canClaim || isGasEnabledAndNotFetched || error)}
         w={['100%', '100%', '100%', '80px']}
         ml={[6, 6, 6, 4]}
         onClick={() => {
