@@ -1,7 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
@@ -52,16 +50,9 @@ const cssRule = {
   include: [new RegExp('./src'), new RegExp('@rainbow-me/rainbowkit')],
   exclude: [],
   use: [
-    isProd
-      ? {
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            publicPath: '/',
-          },
-        }
-      : {
-          loader: require.resolve('style-loader'),
-        },
+    {
+      loader: require.resolve('style-loader'),
+    },
     {
       loader: require.resolve('css-loader'),
     },
@@ -123,13 +114,12 @@ module.exports = {
     moduleIds: isProd ? 'deterministic' : 'named',
     chunkIds: isProd ? 'deterministic' : 'named',
     minimize: isProd,
-    minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
+    minimizer: [new TerserPlugin()],
     innerGraph: true,
     emitOnErrors: false,
   },
 
   plugins: [htmlPlugin]
-    .concat(isProd ? [new MiniCssExtractPlugin()] : [])
     .concat([
       new webpack.NormalModuleReplacementPlugin(
         /^@tanstack\/react-query$/,

@@ -10156,13 +10156,11 @@ __metadata:
     core-js: 3
     crypto-browserify: ^3.12.0
     css-loader: ^6.7.1
-    css-minimizer-webpack-plugin: ^4.0.0
     ethers: ^5.7.2
     framer-motion: ^7.0.0
     html-webpack-plugin: ^5.5.0
     i18next: ^21.9.0
     i18next-browser-languagedetector: ^6.1.4
-    mini-css-extract-plugin: ^2.6.1
     react: ^18.2.0
     react-chartjs-2: ^4.3.1
     react-dom: ^18.2.0
