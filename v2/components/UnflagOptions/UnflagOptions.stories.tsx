@@ -13,4 +13,5 @@ Primary.args = {
   sUSDBalance: 100,
   sUSDToGetBackToTarget: 100,
   selfLiquidationPenalty: '20%',
+  canSelfLiquidate: true,
 };

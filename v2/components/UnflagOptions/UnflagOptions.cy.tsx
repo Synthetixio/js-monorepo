@@ -10,6 +10,7 @@ describe('UnflagOptionsUi.cy.tsx', () => {
           selfLiquidationPenalty="20%"
           sUSDBalance={undefined}
           sUSDToGetBackToTarget={undefined}
+          canSelfLiquidate={false}
         />
       </Box>
     );
@@ -23,6 +24,7 @@ describe('UnflagOptionsUi.cy.tsx', () => {
           selfLiquidationPenalty="20%"
           sUSDBalance={100}
           sUSDToGetBackToTarget={100}
+          canSelfLiquidate={true}
         />
       </Box>
     );
@@ -58,6 +60,7 @@ describe('UnflagOptionsUi.cy.tsx', () => {
           selfLiquidationPenalty="20%"
           sUSDBalance={90}
           sUSDToGetBackToTarget={100}
+          canSelfLiquidate={true}
         />
       </Box>
     );
@@ -73,6 +76,7 @@ describe('UnflagOptionsUi.cy.tsx', () => {
           selfLiquidationPenalty="20%"
           sUSDBalance={100}
           sUSDToGetBackToTarget={100}
+          canSelfLiquidate={true}
         />
       </Box>
     );
@@ -85,5 +89,19 @@ describe('UnflagOptionsUi.cy.tsx', () => {
     cy.get('[role="radiogroup"] label:nth-child(1) input').should('not.be.checked');
     cy.get('[role="radiogroup"] label:nth-child(2) input').should('be.checked');
     cy.get('[role="radiogroup"] label:nth-child(3) input').should('not.be.checked');
+  });
+  it('Disable self liquidation option is we cant self liquidate', () => {
+    cy.viewport(600, 500);
+    cy.mount(
+      <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
+        <UnflagOptionsUi
+          selfLiquidationPenalty="20%"
+          sUSDBalance={100}
+          sUSDToGetBackToTarget={100}
+          canSelfLiquidate={false}
+        />
+      </Box>
+    );
+    cy.get('[role="radiogroup"] label:nth-child(3) input').should('be.disabled');
   });
 });

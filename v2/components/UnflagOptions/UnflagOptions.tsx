@@ -19,6 +19,7 @@ import { useLiquidationData } from '@snx-v2/useLiquidationData';
 import { formatPercent } from '@snx-v2/formatters/number';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
+import { getHealthVariant } from '@snx-v2/getHealthVariant';
 
 const RadioItemContent: React.FC<{
   radioProps: UseRadioProps;
@@ -107,7 +108,8 @@ export const UnflagOptionsUi: React.FC<{
   sUSDBalance?: number;
   sUSDToGetBackToTarget?: number;
   selfLiquidationPenalty?: string;
-}> = ({ sUSDBalance, sUSDToGetBackToTarget, selfLiquidationPenalty }) => {
+  canSelfLiquidate: boolean;
+}> = ({ sUSDBalance, sUSDToGetBackToTarget, selfLiquidationPenalty, canSelfLiquidate }) => {
   const { t } = useTranslation();
 
   const { getRootProps, getRadioProps, value } = useRadioGroup({
@@ -136,10 +138,19 @@ export const UnflagOptionsUi: React.FC<{
   return (
     <Flex flexDirection="column" {...group}>
       {options.map((option) => {
+        const isDisabled = () => {
+          if (option === 'self-liquidate') {
+            return !canSelfLiquidate;
+          }
+          if (option === 'unflag') {
+            return !enoughSUsd;
+          }
+          return false;
+        };
         return (
           <RadioItemContent
             recommended={recommended === option}
-            disabled={option === 'unflag' && !enoughSUsd}
+            disabled={isDisabled()}
             key={option}
             option={option}
             selfLiquidationPenalty={selfLiquidationPenalty}
@@ -178,16 +189,23 @@ export const UnflagOptions = () => {
     ? debtData.debtBalance.sub(debtData.issuableSynths).toNumber()
     : undefined;
 
-  const sUSDBalance = balanceData?.balancesMap.sUSD?.balance.toNumber();
+  const sUSDBalance = 10 || balanceData?.balancesMap.sUSD?.balance.toNumber();
   const selfLiquidationPenalty = liquidationData
     ? formatPercent(liquidationData.selfLiquidationPenalty.toNumber())
     : undefined;
-
+  const variant = getHealthVariant({
+    targetCratioPercentage: debtData?.targetCRatioPercentage.toNumber(),
+    liquidationCratioPercentage: debtData?.liquidationRatioPercentage.toNumber(),
+    currentCRatioPercentage: debtData?.currentCRatioPercentage.toNumber(),
+    targetThreshold: debtData?.targetThreshold.toNumber(),
+  });
+  const canSelfLiquidate = variant !== 'success';
   return (
     <UnflagOptionsUi
       selfLiquidationPenalty={selfLiquidationPenalty}
       sUSDToGetBackToTarget={sUSDToGetBackToTarget}
       sUSDBalance={sUSDBalance}
+      canSelfLiquidate={canSelfLiquidate}
     />
   );
 };
