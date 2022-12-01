@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 export const ClaimLiquidationBtn: FC<{ amountSNX?: number }> = ({ amountSNX }) => {
   const queryClient = useQueryClient();
-
+  const canClaim = Boolean(amountSNX);
   const {
     mutate,
     modalOpen,
@@ -17,7 +17,8 @@ export const ClaimLiquidationBtn: FC<{ amountSNX?: number }> = ({ amountSNX }) =
     settle,
     isGasEnabledAndNotFetched,
     txnHash,
-  } = useClaimLiquidatorRewardsMutation();
+  } = useClaimLiquidatorRewardsMutation(canClaim);
+
   const handleSubmit = () => {
     mutate(undefined, {
       onSuccess: () => {
@@ -25,6 +26,7 @@ export const ClaimLiquidationBtn: FC<{ amountSNX?: number }> = ({ amountSNX }) =
       },
     });
   };
+
   return (
     <>
       <Button

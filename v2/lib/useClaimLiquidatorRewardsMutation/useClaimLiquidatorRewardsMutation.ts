@@ -19,11 +19,13 @@ const createPopulateTransaction = (
     });
 };
 
-export function useClaimLiquidatorRewardsMutation() {
+export function useClaimLiquidatorRewardsMutation(canClaim: boolean) {
   const { data: LiquidatorRewards } = useLiquidatorRewards();
   const { walletAddress } = useContext(ContractContext);
   const [txnState, dispatch] = useReducer(reducer, initialState);
-  const populateTransaction = createPopulateTransaction(LiquidatorRewards, walletAddress);
+  const populateTransaction = canClaim
+    ? createPopulateTransaction(LiquidatorRewards, walletAddress)
+    : undefined;
   const {
     data,
     isFetched: isGasFetched,
