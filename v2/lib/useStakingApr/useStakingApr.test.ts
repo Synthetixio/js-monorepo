@@ -1,7 +1,6 @@
 import { wei } from '@synthetixio/wei';
 import { calculateStakingApr } from './useStakingApr';
 
-
 describe('calculateStakingApr', () => {
   test('returns undefined when missing data', () => {
     expect(calculateStakingApr({})).toBe(undefined);

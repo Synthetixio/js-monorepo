@@ -24,8 +24,7 @@ import intervalToDuration from 'date-fns/intervalToDuration';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { ClaimRewardsBtn } from './ClaimRewardsBtn';
 import { ClaimLiquidationBtn } from './ClaimLiquidationBtn';
-import { useStakingApr } from '../../lib/useStakingApr';
-import { useGlobalStakingApr } from '../../lib/useGlobalStakingApr';
+import { useApr } from '@snx-v2/useApr';
 
 interface RewardsItemProps extends FlexProps {
   isLoading: boolean;
@@ -300,6 +299,7 @@ export const Rewards = () => {
   const { data: liquidationData, isLoading: isLiquidationLoading } = useGetLiquidationRewards();
   const { data: rewardsData, isLoading: isRewardsLoading } = useRewardsAvailable();
   const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
+  const { data: aprData } = useApr();
 
   const stakedSnx = calculateStakedSnx({
     targetCRatio: debtData?.targetCRatio,
@@ -313,12 +313,6 @@ export const Rewards = () => {
     targetCratioPercentage: debtData?.targetCRatioPercentage.toNumber(),
     targetThreshold: debtData?.targetThreshold.toNumber(),
   });
-  const { data: stakingApr } = useStakingApr();
-  const notStaking = debtData?.debtBalance.eq(0);
-  const enableGlobalStakingApr = Boolean(notStaking);
-  const { data: globalStakingApr } = useGlobalStakingApr(enableGlobalStakingApr);
-  const stakingAprToUse = notStaking ? globalStakingApr : stakingApr;
-
   const isLoading =
     isDebtLoading || isLiquidationLoading || isRewardsLoading || isFeePoolDataLoading;
 
@@ -329,7 +323,7 @@ export const Rewards = () => {
         Icon={() => <SNXIcon height="40px" width="40px" />}
         title={t('staking-v2.earn.staking-rewards.title')}
         description={t('staking-v2.earn.staking-rewards.description')}
-        apyReturn={stakingAprToUse !== undefined ? formatPercent(stakingAprToUse.toNumber()) : ''}
+        apyReturn={aprData !== undefined ? formatPercent(aprData.toNumber()) : ''}
         stakedBalance={`${formatNumber(stakedSnx.toNumber()).toString()} SNX`}
         endDate={feePoolData?.nextFeePeriodStartDate || null}
         percentCompleted={percentEpochCompleted(
