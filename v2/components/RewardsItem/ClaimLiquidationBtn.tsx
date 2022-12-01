@@ -30,7 +30,7 @@ export const ClaimLiquidationBtn: FC<{ amountSNX?: number }> = ({ amountSNX }) =
       <Button
         disabled={Boolean(isGasEnabledAndNotFetched || !amountSNX || error)}
         w={['100%', '100%', '100%', '80px']}
-        ml={[6, 6, 6, 4]}
+        ml={[4, 4, 4, 4]}
         onClick={() => {
           mutate();
         }}

@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { CountDown } from '@snx-v2/CountDown';
 import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
 import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
-import { SNXIcon, InfoOutline, CurveIcon } from '@snx-v2/icons';
+import { SNXIcon, InfoOutline } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
 import { formatNumber } from '@snx-v2/formatters';
@@ -223,54 +223,52 @@ export const RewardsItemUI = ({
           </Button>
         </Flex>
       ) : (
-        <Fade in={!isLoading}>
+        <Flex
+          alignItems="center"
+          width={['100%', '100%', '100%', 'initial']}
+          mt={[4, 4, 4, 0]}
+          justifyContent="center"
+          flexGrow={1}
+        >
           <Flex
-            alignItems="center"
-            width={['100%', '100%', '100%', 'initial']}
-            mt={[4, 4, 4, 0]}
-            justifyContent="space-between"
-            flexGrow={1}
+            direction="column"
+            minW="182px"
+            mx={[0, 0, 0, 5]}
+            mr={[0, 10, 10, 0]}
+            width={['150px', '150px', 'initial', 'initial']}
           >
-            <Flex
-              direction="column"
-              minW="182px"
-              mx={[0, 0, 0, 5]}
-              mr={[0, 10, 10, 0]}
-              width={['150px', '150px', 'initial', 'initial']}
-            >
-              {rewardBalance ? (
-                <>
-                  <Text
-                    fontFamily="heading"
-                    fontSize="sm"
-                    fontWeight="700"
-                    lineHeight="5"
-                    color="whiteAlpha.900"
-                  >
-                    {rewardBalance}
-                  </Text>
-                  {RewardsBadge && <RewardsBadge />}
-                </>
-              ) : (
-                <>
-                  <Text
-                    fontFamily="heading"
-                    fontSize="sm"
-                    fontWeight="700"
-                    lineHeight="5"
-                    color="whiteAlpha.900"
-                  >
-                    —
-                  </Text>
-                  <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
-                    —
-                  </Text>
-                </>
-              )}
-            </Flex>
-            {claimBtn}
+            {rewardBalance ? (
+              <Fade in={!isLoading}>
+                <Text
+                  fontFamily="heading"
+                  fontSize="sm"
+                  fontWeight="700"
+                  lineHeight="5"
+                  color="whiteAlpha.900"
+                >
+                  {rewardBalance}
+                </Text>
+                {RewardsBadge && <RewardsBadge />}
+              </Fade>
+            ) : (
+              <Fade in={!isLoading}>
+                <Text
+                  fontFamily="heading"
+                  fontSize="sm"
+                  fontWeight="700"
+                  lineHeight="5"
+                  color="whiteAlpha.900"
+                >
+                  —
+                </Text>
+                <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
+                  —
+                </Text>
+              </Fade>
+            )}
           </Flex>
-        </Fade>
+          {claimBtn}
+        </Flex>
       )}
     </Flex>
   );
@@ -322,8 +320,8 @@ export const Rewards = () => {
       <Divider my={4} />
       <RewardsItemUI
         Icon={() => <SNXIcon height="40px" width="40px" />}
-        title="Synthetix"
-        description="Staking Rewards"
+        title={t('staking-v2.earn.staking-rewards.title')}
+        description={t('staking-v2.earn.staking-rewards.description')}
         apyReturn="24.00%"
         stakedBalance={`${formatNumber(stakedSnx.toNumber()).toString()} SNX`}
         endDate={feePoolData?.nextFeePeriodStartDate || null}
@@ -370,8 +368,8 @@ export const Rewards = () => {
       <Divider my={4} />
       <RewardsItemUI
         Icon={() => <SNXIcon height="40px" width="40px" />}
-        title="Synthetix"
-        description="Liquidation Rewards"
+        title={t('staking-v2.earn.liquidation-rewards.title')}
+        description={t('staking-v2.earn.liquidation-rewards.description')}
         apyReturn={null}
         stakedBalance={`${formatNumber(stakedSnx.toNumber()).toString()} SNX`}
         endDate={null}
@@ -400,7 +398,8 @@ export const Rewards = () => {
         claimBtn={<ClaimLiquidationBtn amountSNX={liquidationData?.liquidatorRewards.toNumber()} />}
       />
       <Divider my={4} />
-      <RewardsItemUI
+      {/* Curve disabled for now */}
+      {/* <RewardsItemUI
         Icon={() => (
           <Box
             bg="black"
@@ -432,8 +431,8 @@ export const Rewards = () => {
             Claim
           </Button>
         }
-      />
-      <Divider my={4} />
+      /> */}
+      {/* <Divider my={4} /> */}
     </Box>
   );
 };

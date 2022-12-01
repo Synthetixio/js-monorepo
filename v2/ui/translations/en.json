@@ -161,6 +161,14 @@
       },
       "transaction-modal": {
         "claiming": "Claiming"
+      },
+      "staking-rewards": {
+        "title": "Synthetix",
+        "description": "Staking Rewards"
+      },
+      "liquidation-rewards": {
+        "title": "Synthetix",
+        "description": "Liquidation Rewards"
       }
     },
     "self-liquidation": {
