@@ -80,7 +80,7 @@ export const RewardsTransactionModal: FC<{
       {error && (
         <Center pt="4" pb="4" mt="4">
           <FailedIcon width="40px" height="40px" />
-          <Text>{parseTxnError(error)}</Text>
+          <Text overflowWrap="anywhere">{parseTxnError(error)}</Text>
         </Center>
       )}
       {!error ? (
