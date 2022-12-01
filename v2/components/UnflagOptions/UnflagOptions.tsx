@@ -189,7 +189,7 @@ export const UnflagOptions = () => {
     ? debtData.debtBalance.sub(debtData.issuableSynths).toNumber()
     : undefined;
 
-  const sUSDBalance = 10 || balanceData?.balancesMap.sUSD?.balance.toNumber();
+  const sUSDBalance = balanceData?.balancesMap.sUSD?.balance.toNumber();
   const selfLiquidationPenalty = liquidationData
     ? formatPercent(liquidationData.selfLiquidationPenalty.toNumber())
     : undefined;
