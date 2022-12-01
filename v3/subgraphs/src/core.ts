@@ -26,6 +26,7 @@ import {
 import {
   RewardsClaimed as RewardsClaimedEvent,
   RewardsDistributed,
+  RewardsDistributorRegistered,
 } from '../generated/RewardsManagerModule/RewardsManagerModule';
 import { DelegationUpdated, VaultModule } from '../generated/VaultModule/VaultModule';
 import { UsdMinted, UsdBurned } from '../generated/IssueUSDModule/IssueUSDModule';
@@ -41,6 +42,7 @@ import {
   RewardsDistribution,
   AccountRewardsDistributor,
   RewardsClaimed,
+  RewardsDistributor,
 } from '../generated/schema';
 import { BigDecimal, BigInt, Bytes, store } from '@graphprotocol/graph-ts';
 
@@ -511,8 +513,19 @@ export function handleUSDBurned(event: UsdBurned): void {
 // Rewards //
 /////////////
 
+export function handleRewardsDistributorRegistered(event: RewardsDistributorRegistered): void {
+  const distributor = new RewardsDistributor(event.params.distributor.toHex());
+  distributor.created_at = event.block.timestamp;
+  distributor.created_at_block = event.block.number;
+  distributor.updated_at = event.block.number;
+  distributor.updated_at_block = event.block.timestamp;
+  distributor.total_claimed = BigDecimal.fromString('0');
+  distributor.total_distributed = BigDecimal.fromString('0');
+  distributor.save();
+}
+
 export function handleRewardsDistributed(event: RewardsDistributed): void {
-  const rewardsDistributed = new RewardsDistribution(
+  const rewardsDistribution = new RewardsDistribution(
     event.params.distributor
       .toHex()
       .concat('-')
@@ -528,6 +541,15 @@ export function handleRewardsDistributed(event: RewardsDistributed): void {
       .concat('-')
       .concat(event.params.distributor.toHex())
   );
+  let rewardsDistributor = RewardsDistributor.load(event.params.distributor.toHex());
+  if (rewardsDistributor !== null) {
+    rewardsDistributor.total_distributed = rewardsDistributor.total_distributed.plus(
+      event.params.amount.toBigDecimal()
+    );
+    rewardsDistributor.updated_at = event.block.timestamp;
+    rewardsDistributor.updated_at_block = event.block.number;
+    rewardsDistributor.save();
+  }
   if (accountRewardsDistributor === null) {
     accountRewardsDistributor = new AccountRewardsDistributor(
       event.params.poolId
@@ -539,25 +561,22 @@ export function handleRewardsDistributed(event: RewardsDistributed): void {
     );
     accountRewardsDistributor.created_at = event.block.timestamp;
     accountRewardsDistributor.created_at_block = event.block.number;
-    accountRewardsDistributor.total_distributed = event.params.amount.toBigDecimal();
-  } else {
-    accountRewardsDistributor.total_distributed = accountRewardsDistributor.total_distributed.plus(
-      event.params.amount.toBigDecimal()
-    );
   }
+  accountRewardsDistributor.distributor = event.params.distributor.toHex();
   accountRewardsDistributor.updated_at = event.block.timestamp;
   accountRewardsDistributor.updated_at_block = event.block.number;
-  rewardsDistributed.pool = event.params.poolId.toString();
-  rewardsDistributed.collateral_type = event.params.collateralType;
-  rewardsDistributed.amount = event.params.amount.toBigDecimal();
-  rewardsDistributed.start = event.params.start;
-  rewardsDistributed.duration = event.params.duration;
-  rewardsDistributed.created_at = event.block.timestamp;
-  rewardsDistributed.created_at_block = event.block.number;
-  rewardsDistributed.updated_at = event.block.timestamp;
-  rewardsDistributed.updated_at_block = event.block.number;
+  rewardsDistribution.distributor = event.params.distributor.toHex();
+  rewardsDistribution.pool = event.params.poolId.toString();
+  rewardsDistribution.collateral_type = event.params.collateralType;
+  rewardsDistribution.amount = event.params.amount.toBigDecimal();
+  rewardsDistribution.start = event.params.start;
+  rewardsDistribution.duration = event.params.duration;
+  rewardsDistribution.created_at = event.block.timestamp;
+  rewardsDistribution.created_at_block = event.block.number;
+  rewardsDistribution.updated_at = event.block.timestamp;
+  rewardsDistribution.updated_at_block = event.block.number;
   accountRewardsDistributor.save();
-  rewardsDistributed.save();
+  rewardsDistribution.save();
 }
 
 export function handleRewardsClaimed(event: RewardsClaimedEvent): void {
@@ -577,6 +596,15 @@ export function handleRewardsClaimed(event: RewardsClaimedEvent): void {
       .concat('-')
       .concat(event.logIndex.toString())
   );
+  let rewardsDistributor = RewardsDistributor.load(event.params.distributor.toHex());
+  if (rewardsDistributor !== null) {
+    rewardsDistributor.total_claimed = rewardsDistributor.total_claimed.plus(
+      event.params.amount.toBigDecimal()
+    );
+    rewardsDistributor.updated_at = event.block.timestamp;
+    rewardsDistributor.updated_at_block = event.block.number;
+    rewardsDistributor.save();
+  }
   if (accountRewardsDistributor !== null) {
     if (accountRewardsDistributor.total_claimed !== null) {
       accountRewardsDistributor.total_claimed = accountRewardsDistributor.total_claimed!.plus(
@@ -587,14 +615,15 @@ export function handleRewardsClaimed(event: RewardsClaimedEvent): void {
     }
     accountRewardsDistributor.updated_at = event.block.timestamp;
     accountRewardsDistributor.updated_at_block = event.block.number;
+    accountRewardsDistributor.distributor = event.params.distributor.toHex();
     accountRewardsDistributor.save();
   }
+  rewardsClaimed.distributor = event.params.distributor.toHex();
   rewardsClaimed.created_at = event.block.timestamp;
   rewardsClaimed.created_at_block = event.block.number;
   rewardsClaimed.account = event.params.accountId.toString();
   rewardsClaimed.pool = event.params.poolId.toString();
   rewardsClaimed.collateral_type = event.params.collateralType;
-  rewardsClaimed.distributor = event.params.distributor;
   rewardsClaimed.amount = event.params.amount.toBigDecimal();
   rewardsClaimed.updated_at = event.block.timestamp;
   rewardsClaimed.updated_at_block = event.block.number;

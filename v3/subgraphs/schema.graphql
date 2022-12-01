@@ -111,6 +111,19 @@ type Vault @entity {
   updated_at_block: BigInt!
 }
 
+type RewardsDistributor @entity {
+  "Address of the distributor"
+  id: ID!
+  "Total amount of to be or already distributions"
+  total_distributed: BigDecimal!
+  "Total amount of claimed distributions"
+  total_claimed: BigDecimal!
+  created_at: BigInt!
+  created_at_block: BigInt!
+  updated_at: BigInt!
+  updated_at_block: BigInt!
+}
+
 type RewardsDistribution @entity {
   "Rewards distributor address + timestamp + log index"
   id: ID!
@@ -119,6 +132,7 @@ type RewardsDistribution @entity {
   amount: BigDecimal!
   start: BigInt!
   duration: BigInt!
+  distributor: RewardsDistributor!
   created_at: BigInt!
   created_at_block: BigInt!
   updated_at: BigInt!
@@ -128,7 +142,7 @@ type RewardsDistribution @entity {
 type AccountRewardsDistributor @entity {
   "Pool id + collateral type + distributor"
   id: ID!
-  total_distributed: BigDecimal!
+  distributor: RewardsDistributor!
   created_at: BigInt!
   created_at_block: BigInt!
   updated_at: BigInt!
@@ -142,8 +156,37 @@ type RewardsClaimed @entity {
   account: Account!
   pool: Pool!
   collateral_type: Bytes!
-  distributor: Bytes!
+  distributor: RewardsDistributor!
   amount: BigDecimal!
+  created_at: BigInt!
+  created_at_block: BigInt!
+  updated_at: BigInt!
+  updated_at_block: BigInt!
+}
+
+type Liquidation @entity {
+  "NFT token id + pool id + collateral_type + log index"
+  id: ID!
+  account: Account!
+  pool: Pool!
+  collateral_type: Bytes!
+  debt_liquidated: BigDecimal!
+  collateral_liquidated: BigDecimal!
+  amount_rewarded: BigDecimal!
+  created_at: BigInt!
+  created_at_block: BigInt!
+  updated_at: BigInt!
+  updated_at_block: BigInt!
+}
+
+type VaultLiquidation @entity {
+  "Pool id + collateral type + log index"
+  id: ID!
+  pool: Pool!
+  collateral_type: Bytes!
+  amount_rewarded: BigDecimal!
+  amount_liquidated: BigDecimal!
+  collateral_liquidated: BigDecimal!
   created_at: BigInt!
   created_at_block: BigInt!
   updated_at: BigInt!

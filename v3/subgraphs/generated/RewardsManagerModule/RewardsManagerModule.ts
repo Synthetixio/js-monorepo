@@ -82,6 +82,32 @@ export class RewardsDistributed__Params {
   }
 }
 
+export class RewardsDistributorRegistered extends ethereum.Event {
+  get params(): RewardsDistributorRegistered__Params {
+    return new RewardsDistributorRegistered__Params(this);
+  }
+}
+
+export class RewardsDistributorRegistered__Params {
+  _event: RewardsDistributorRegistered;
+
+  constructor(event: RewardsDistributorRegistered) {
+    this._event = event;
+  }
+
+  get poolId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get collateralType(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get distributor(): Address {
+    return this._event.parameters[2].value.toAddress();
+  }
+}
+
 export class RewardsManagerModule__getRewardsResult {
   value0: Array<BigInt>;
   value1: Array<Address>;
