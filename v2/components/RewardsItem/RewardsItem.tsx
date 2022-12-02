@@ -93,7 +93,6 @@ export const RewardsItemUI = ({
             {description}
           </Text>
         </Flex>
-
         {isLoading ? (
           <Flex direction="column" justifyContent="center" width="90%" minWidth="80px" ml={0}>
             <Skeleton width={['100%', '100%', '100%', '60px']} height="16px" />
@@ -228,13 +227,13 @@ export const RewardsItemUI = ({
           alignItems="center"
           width={['100%', '100%', '100%', 'initial']}
           mt={[4, 4, 4, 0]}
-          justifyContent="center"
+          justifyContent="space-between"
           flexGrow={1}
         >
           <Flex
             direction="column"
             minW="182px"
-            mx={[0, 0, 0, 5]}
+            mx={[0, 0, 0, 7]}
             mr={[0, 10, 10, 0]}
             width={['150px', '150px', 'initial', 'initial']}
           >
@@ -313,6 +312,7 @@ export const Rewards = () => {
     targetCratioPercentage: debtData?.targetCRatioPercentage.toNumber(),
     targetThreshold: debtData?.targetThreshold.toNumber(),
   });
+
   const isLoading =
     isDebtLoading || isLiquidationLoading || isRewardsLoading || isFeePoolDataLoading;
 
@@ -332,9 +332,7 @@ export const Rewards = () => {
         )}
         isLoading={isLoading}
         rewardBalance={
-          rewardsData?.hasClaimed ? (
-            <></>
-          ) : (
+          rewardsData?.hasClaimed ? null : (
             <Flex flexDirection="column">
               <span>{formatNumber(rewardsData?.sUSDRewards.toNumber() || 0)} sUSD</span>
               <span>{formatNumber(rewardsData?.snxRewards.toNumber() || 0)} SNX</span>
