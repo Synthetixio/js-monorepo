@@ -117,7 +117,6 @@ export const NavigationUI = ({
           fontSize="sm"
           py="6px"
           px="9.5px"
-          mr={isWalletConnected ? 0 : 3}
           onClick={() => {
             window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'false';
             window.location.reload();
@@ -125,8 +124,7 @@ export const NavigationUI = ({
         >
           {size === 'mobile' ? 'Old App' : 'Back to old app'}
         </Button>
-
-        {isWalletConnected && walletAddress ? (
+        {isWalletConnected && walletAddress && (
           <>
             {size === 'desktop' && (
               <Flex ml={2}>
@@ -137,32 +135,7 @@ export const NavigationUI = ({
                 />
               </Flex>
             )}
-            <Button
-              variant="outline"
-              colorScheme="gray"
-              ml={2}
-              height={10}
-              py="6px"
-              px="9.5px"
-              onClick={onOpen}
-            >
-              <WalletIcon />
-              <Text ml={1} variant="nav" fontWeight={700} fontSize="12" userSelect="none">
-                {ensName ? ensName : truncateAddress(walletAddress, 4, 4)}
-              </Text>
-            </Button>
           </>
-        ) : (
-          <Button
-            variant="connect"
-            onClick={() => connectWallet()}
-            sx={{ textTransform: 'capitalize' }}
-            fontSize="sm"
-          >
-            {size === 'desktop'
-              ? t('common.wallet.connect-wallet')
-              : t('common.wallet.connect-wallet-mobile')}
-          </Button>
         )}
         <Center
           ml={2}
@@ -211,6 +184,38 @@ export const NavigationUI = ({
             )}
           </Menu>
         </Center>
+        {}
+        {isWalletConnected && walletAddress ? (
+          <>
+            <Button
+              variant="outline"
+              colorScheme="gray"
+              ml={2}
+              height={10}
+              py="6px"
+              px="9.5px"
+              onClick={onOpen}
+            >
+              <WalletIcon />
+              <Text ml={1} variant="nav" fontWeight={700} fontSize="sm" userSelect="none">
+                {ensName ? ensName : truncateAddress(walletAddress, 4, 4)}
+              </Text>
+            </Button>
+          </>
+        ) : (
+          <Button
+            variant="connect"
+            onClick={() => connectWallet()}
+            sx={{ textTransform: 'capitalize' }}
+            fontSize="sm"
+            ml={2}
+          >
+            {size === 'desktop'
+              ? t('common.wallet.connect-wallet')
+              : t('common.wallet.connect-wallet-mobile')}
+          </Button>
+        )}
+
         {/* <Center
           ml={2}
           height={10}
@@ -276,20 +281,26 @@ export const NavigationUI = ({
             <MenuItem onClick={() => navigate('/loans')}>
               <Center>
                 <LoansIcon />
-                <Text ml={2}>{t('common.wallet.menu.loans')}</Text>
+                <Text fontSize="sm" ml={2}>
+                  {t('common.wallet.menu.loans')}
+                </Text>
               </Center>
             </MenuItem>
             <MenuItem onClick={() => window.open('https://governance.synthetix.io/', '_newtab')}>
               <Center>
                 <GovIcon />
-                <Text ml={2}>{t('common.wallet.menu.gov')}</Text>
+                <Text fontSize="sm" ml={2}>
+                  {t('common.wallet.menu.gov')}
+                </Text>
               </Center>
             </MenuItem>
             {isWalletConnected && (
               <MenuItem onClick={() => navigate('/wallet')}>
                 <Center>
                   <WalletIcon color="white" />
-                  <Text ml={2}>{t('common.wallet.menu.wallet')}</Text>
+                  <Text fontSize="sm" ml={2}>
+                    {t('common.wallet.menu.wallet')}
+                  </Text>
                 </Center>
               </MenuItem>
             )}
@@ -301,7 +312,9 @@ export const NavigationUI = ({
             </MenuItem> */}
             <MenuItem onClick={() => window.open('https://synthetix.io/guides', '_newtab')}>
               <GuideIcon />
-              <Text ml={2}>{t('common.wallet.menu.guide')}</Text>
+              <Text fontSize="sm" ml={2}>
+                {t('common.wallet.menu.guide')}
+              </Text>
             </MenuItem>
           </MenuList>
         </Menu>
