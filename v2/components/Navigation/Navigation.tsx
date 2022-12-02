@@ -184,7 +184,6 @@ export const NavigationUI = ({
             )}
           </Menu>
         </Center>
-        {}
         {isWalletConnected && walletAddress ? (
           <>
             <Button
