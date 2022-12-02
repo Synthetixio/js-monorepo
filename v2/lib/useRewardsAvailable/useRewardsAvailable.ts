@@ -23,6 +23,7 @@ export const useRewardsAvailable = () => {
       const sUSDRewards = wei(sUSDRewardsBn);
       const snxRewards = wei(snxRewardsBn);
       return {
+        nothingToClaim: sUSDRewards.eq(0) && snxRewards.eq(0),
         sUSDRewards,
         snxRewards,
         hasClaimed,
