@@ -111,7 +111,7 @@ const LazyChakraProvider: FC<PropsWithChildren<{ enabled: boolean }>> = ({ enabl
 
 function App() {
   const { t } = useTranslation();
-  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
+  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, true);
   return (
     <>
       <Head>
