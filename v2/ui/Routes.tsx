@@ -41,7 +41,7 @@ import V2SwapLinksPage from './content/V2SwapLinks';
 import V2SelfLiquidation from './content/V2SelfLiquidation';
 
 const Wrapper: FC<PropsWithChildren> = ({ children }) => {
-  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
+  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, true);
   return STAKING_V2_ENABLED ? (
     <Box bg="navy.900" height="100%" className="v2">
       <Container pt={4} pb={16} bg="navy.900" maxW="4xl">
@@ -55,7 +55,7 @@ const Wrapper: FC<PropsWithChildren> = ({ children }) => {
 };
 
 const WalletWrapper: FC<PropsWithChildren> = ({ children }) => {
-  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
+  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, true);
   return STAKING_V2_ENABLED ? (
     <Wrapper>
       <WalletLayout>{children}</WalletLayout>
@@ -66,7 +66,7 @@ const WalletWrapper: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export default function AppRoutes() {
-  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, false);
+  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, true);
   return (
     <BrowserRouter>
       <AppLayout>
