@@ -38,8 +38,11 @@ export const ClaimRewardsBtn: FC<{
   return (
     <>
       <Button
+        data-testid="claim rewards button"
         variant={variant !== 'success' ? variant : 'solid'}
-        disabled={Boolean(!canClaim || isGasEnabledAndNotFetched || error)}
+        disabled={
+          variant !== 'success' ? false : Boolean(!canClaim || isGasEnabledAndNotFetched || error)
+        }
         w={['100%', '100%', '100%', '80px']}
         ml={[6, 6, 6, 4]}
         onClick={() => {
