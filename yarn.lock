@@ -7416,6 +7416,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
