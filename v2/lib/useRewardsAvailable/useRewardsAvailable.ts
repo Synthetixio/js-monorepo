@@ -13,15 +13,20 @@ export const useRewardsAvailable = () => {
       if (!FeePool || !walletAddress) {
         throw Error('Query should not be enabled if contracts are missing');
       }
-
-      const [sUSDRewardsBn, snxRewardsBn] = await FeePool.feesAvailable(walletAddress);
-
+      const [[sUSDRewardsBn, snxRewardsBn], [currentFeePeriodId], lastFeePeriodUserClaimed] =
+        await Promise.all([
+          FeePool.feesAvailable(walletAddress),
+          FeePool.recentFeePeriods(1),
+          FeePool.getLastFeeWithdrawal(walletAddress),
+        ]);
+      const hasClaimed = currentFeePeriodId.eq(lastFeePeriodUserClaimed);
       const sUSDRewards = wei(sUSDRewardsBn);
       const snxRewards = wei(snxRewardsBn);
       return {
+        nothingToClaim: sUSDRewards.eq(0) && snxRewards.eq(0),
         sUSDRewards,
         snxRewards,
-        hasClaimed: sUSDRewards.eq(0) && snxRewards.eq(0),
+        hasClaimed,
       };
     },
     {

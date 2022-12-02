@@ -35,7 +35,7 @@ interface RewardsItemProps extends FlexProps {
   stakedBalance: string | null;
   endDate: Date | null;
   percentCompleted?: number;
-  rewardBalance: string | null | ReactElement;
+  RewardBalance: FC;
   RewardsBadge?: FC | null;
   claimBtn: ReactElement;
   onClick?: () => void;
@@ -50,7 +50,7 @@ export const RewardsItemUI = ({
   stakedBalance,
   endDate,
   percentCompleted,
-  rewardBalance,
+  RewardBalance,
   RewardsBadge,
   claimBtn,
   ...props
@@ -93,7 +93,6 @@ export const RewardsItemUI = ({
             {description}
           </Text>
         </Flex>
-
         {isLoading ? (
           <Flex direction="column" justifyContent="center" width="90%" minWidth="80px" ml={0}>
             <Skeleton width={['100%', '100%', '100%', '60px']} height="16px" />
@@ -228,45 +227,28 @@ export const RewardsItemUI = ({
           alignItems="center"
           width={['100%', '100%', '100%', 'initial']}
           mt={[4, 4, 4, 0]}
-          justifyContent="center"
+          justifyContent="space-between"
           flexGrow={1}
         >
           <Flex
             direction="column"
             minW="182px"
-            mx={[0, 0, 0, 5]}
+            mx={[0, 0, 0, 7]}
             mr={[0, 10, 10, 0]}
             width={['150px', '150px', 'initial', 'initial']}
           >
-            {rewardBalance ? (
-              <Fade in={!isLoading}>
-                <Text
-                  fontFamily="heading"
-                  fontSize="sm"
-                  fontWeight="700"
-                  lineHeight="5"
-                  color="whiteAlpha.900"
-                >
-                  {rewardBalance}
-                </Text>
-                {RewardsBadge && <RewardsBadge />}
-              </Fade>
-            ) : (
-              <Fade in={!isLoading}>
-                <Text
-                  fontFamily="heading"
-                  fontSize="sm"
-                  fontWeight="700"
-                  lineHeight="5"
-                  color="whiteAlpha.900"
-                >
-                  —
-                </Text>
-                <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
-                  —
-                </Text>
-              </Fade>
-            )}
+            <Fade in={!isLoading}>
+              <Text
+                fontFamily="heading"
+                fontSize="sm"
+                fontWeight="700"
+                lineHeight="5"
+                color="whiteAlpha.900"
+              >
+                <RewardBalance />
+              </Text>
+              {RewardsBadge && <RewardsBadge />}
+            </Fade>
           </Flex>
           {claimBtn}
         </Flex>
@@ -313,6 +295,7 @@ export const Rewards = () => {
     targetCratioPercentage: debtData?.targetCRatioPercentage.toNumber(),
     targetThreshold: debtData?.targetThreshold.toNumber(),
   });
+
   const isLoading =
     isDebtLoading || isLiquidationLoading || isRewardsLoading || isFeePoolDataLoading;
 
@@ -331,22 +314,48 @@ export const Rewards = () => {
           feePoolData?.feePeriodDuration
         )}
         isLoading={isLoading}
-        rewardBalance={
-          <Flex flexDirection="column">
-            <span>{formatNumber(rewardsData?.sUSDRewards.toNumber() || 0)} sUSD</span>
-            <span>{formatNumber(rewardsData?.snxRewards.toNumber() || 0)} SNX</span>
-          </Flex>
-        }
+        RewardBalance={() => {
+          if (rewardsData?.hasClaimed) {
+            return null;
+          }
+          if (rewardsData?.nothingToClaim)
+            return (
+              <>
+                <Text
+                  fontFamily="heading"
+                  fontSize="sm"
+                  fontWeight="700"
+                  lineHeight="5"
+                  color="whiteAlpha.900"
+                >
+                  —
+                </Text>
+                <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
+                  —
+                </Text>
+              </>
+            );
+          return (
+            <Flex flexDirection="column">
+              <span>{formatNumber(rewardsData?.sUSDRewards.toNumber() || 0)} sUSD</span>
+              <span>{formatNumber(rewardsData?.snxRewards.toNumber() || 0)} SNX</span>
+            </Flex>
+          );
+        }}
         RewardsBadge={() => {
           const onTarget = variant === 'success';
-          const nothingToClaim = rewardsData?.hasClaimed;
 
+          const hasClaimed = rewardsData?.hasClaimed;
+          const nothingToClaim = rewardsData?.nothingToClaim;
+          if (!hasClaimed && nothingToClaim) {
+            return null;
+          }
           return (
             <Badge
               py={0.5}
               px={1}
               fontSize="2xs"
-              variant={!onTarget ? 'warning' : nothingToClaim ? 'gray' : 'success'}
+              variant={!onTarget ? 'warning' : hasClaimed ? 'gray' : 'success'}
               mt={0.5}
               w="fit-content"
               fontWeight="700"
@@ -357,7 +366,7 @@ export const Rewards = () => {
                 ))}
               {!onTarget
                 ? t('staking-v2.earn.badges.maintain')
-                : nothingToClaim
+                : rewardsData?.hasClaimed
                 ? t('staking-v2.earn.badges.claimed')
                 : t('staking-v2.earn.badges.claimable')}
             </Badge>
@@ -380,20 +389,25 @@ export const Rewards = () => {
         stakedBalance={`${formatNumber(stakedSnx.toNumber()).toString()} SNX`}
         endDate={null}
         isLoading={isLoading}
-        rewardBalance={`${formatNumber(liquidationData?.liquidatorRewards?.toNumber() || 0)} SNX`}
+        RewardBalance={() => {
+          if (liquidationData?.liquidatorRewards.eq(0)) return <>-</>;
+          return <>{formatNumber(liquidationData?.liquidatorRewards?.toNumber() || 0)} SNX</>;
+        }}
         RewardsBadge={() => {
-          const nothingToClaim = !liquidationData?.liquidatorRewards.gt(0);
+          const nothingToClaim = liquidationData?.liquidatorRewards.eq(0);
+          const hasClaimed = false; // TODO figure out a way to know if a user has ever claimed liq rewards
+          if (nothingToClaim && !hasClaimed) return null;
           return (
             <Badge
               py={0.5}
               px={1}
               fontSize="2xs"
-              variant={nothingToClaim ? 'gray' : 'success'}
+              variant={hasClaimed ? 'gray' : 'success'}
               mt={0.5}
               w="fit-content"
               fontWeight="700"
             >
-              {nothingToClaim
+              {hasClaimed
                 ? t('staking-v2.earn.badges.claimed')
                 : t('staking-v2.earn.badges.claimable')}
             </Badge>
