@@ -5,7 +5,6 @@ import {
   describe,
   beforeEach,
   createMockedFunction,
-  logStore,
 } from 'matchstick-as/assembly/index';
 import { Address, ethereum, BigInt, Bytes, ByteArray, store } from '@graphprotocol/graph-ts';
 import { address, address2, defaultGraphContractAddress } from './constants';
@@ -32,12 +31,15 @@ import {
   handleRewardsDistributed,
   handleRewardsClaimed,
   handleRewardsDistributorRegistered,
+  handleLiquidation,
+  handleVaultLiquidation,
 } from '../src/core';
 import {
   createAccountCreatedEvent,
   createCollateralConfiguredEvent,
   createDelegationUpdateEvent,
   createDepositEvent,
+  createLiquidationEvent,
   createMarketCreatedEvent,
   createMarketUsdDepositedEvent,
   createMarketUsdWithdrawnEvent,
@@ -55,6 +57,7 @@ import {
   createRewardsDistributorRegisteredEvent,
   createUSDBurnedEvent,
   createUSDMintedEvent,
+  createVaultLiquidationEvent,
   createWithdrawnEvent,
 } from './event-factories';
 
@@ -80,6 +83,9 @@ export {
   handleWithdrawn,
   handleRewardsDistributed,
   handleRewardsClaimed,
+  handleRewardsDistributorRegistered,
+  handleLiquidation,
+  handleVaultLiquidation,
 };
 
 describe('core tests', () => {
@@ -1220,5 +1226,73 @@ describe('core tests', () => {
       'total_claimed',
       '1300'
     );
+  });
+
+  test('handleLiquidation', () => {
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newLiquidationEvent = createLiquidationEvent(
+      BigInt.fromI32(1),
+      BigInt.fromI32(2),
+      Address.fromString(address),
+      BigInt.fromI32(300),
+      BigInt.fromI32(200),
+      BigInt.fromI32(100),
+      now,
+      now - 1000
+    );
+    handleLiquidation(newLiquidationEvent);
+    assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'id', `1-2-${address}-1`);
+    assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'created_at', now.toString());
+    assert.fieldEquals(
+      'Liquidation',
+      `1-2-${address}-1`,
+      'created_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'updated_at', now.toString());
+    assert.fieldEquals(
+      'Liquidation',
+      `1-2-${address}-1`,
+      'updated_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'account', '1');
+    assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'pool', '2');
+    assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'collateral_type', address);
+    assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'debt_liquidated', '300');
+    assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'collateral_liquidated', '200');
+    assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'amount_rewarded', '100');
+  });
+  test('handleVaultLiquidation', () => {
+    // Needs to be here because of Closures
+    const now = new Date(1668448739566).getTime();
+    const newVaultLiquidationEvent = createVaultLiquidationEvent(
+      BigInt.fromI32(1),
+      Address.fromString(address),
+      BigInt.fromI32(300),
+      BigInt.fromI32(200),
+      BigInt.fromI32(100),
+      now,
+      now - 1000
+    );
+    handleVaultLiquidation(newVaultLiquidationEvent);
+    assert.fieldEquals('VaultLiquidation', `1-${address}-1`, 'id', `1-${address}-1`);
+    assert.fieldEquals('VaultLiquidation', `1-${address}-1`, 'created_at', now.toString());
+    assert.fieldEquals(
+      'VaultLiquidation',
+      `1-${address}-1`,
+      'created_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals('VaultLiquidation', `1-${address}-1`, 'updated_at', now.toString());
+    assert.fieldEquals(
+      'VaultLiquidation',
+      `1-${address}-1`,
+      'updated_at_block',
+      (now - 1000).toString()
+    );
+    assert.fieldEquals('VaultLiquidation', `1-${address}-1`, 'pool', '1');
+    assert.fieldEquals('VaultLiquidation', `1-${address}-1`, 'collateral_type', address);
   });
 });

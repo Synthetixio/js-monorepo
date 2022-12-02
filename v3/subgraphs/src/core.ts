@@ -28,6 +28,7 @@ import {
   RewardsDistributed,
   RewardsDistributorRegistered,
 } from '../generated/RewardsManagerModule/RewardsManagerModule';
+import { Liquidation, VaultLiquidation } from '../generated/LiquidationModule/LiquidationModule';
 import { DelegationUpdated, VaultModule } from '../generated/VaultModule/VaultModule';
 import { UsdMinted, UsdBurned } from '../generated/IssueUSDModule/IssueUSDModule';
 import {
@@ -43,6 +44,8 @@ import {
   AccountRewardsDistributor,
   RewardsClaimed,
   RewardsDistributor,
+  Liquidation as LiquidationEntity,
+  VaultLiquidation as VaultLiquidationEntity,
 } from '../generated/schema';
 import { BigDecimal, BigInt, Bytes, store } from '@graphprotocol/graph-ts';
 
@@ -628,4 +631,55 @@ export function handleRewardsClaimed(event: RewardsClaimedEvent): void {
   rewardsClaimed.updated_at = event.block.timestamp;
   rewardsClaimed.updated_at_block = event.block.number;
   rewardsClaimed.save();
+}
+
+//////////////////
+// Liquidation //
+/////////////////
+
+export function handleLiquidation(event: Liquidation): void {
+  const newLiquidation = new LiquidationEntity(
+    event.params.accountId
+      .toString()
+      .concat('-')
+      .concat(event.params.poolId.toString())
+      .concat('-')
+      .concat(event.params.collateralType.toHex())
+      .concat('-')
+      .concat(event.logIndex.toString())
+  );
+  newLiquidation.created_at = event.block.timestamp;
+  newLiquidation.created_at_block = event.block.number;
+  newLiquidation.updated_at = event.block.timestamp;
+  newLiquidation.updated_at_block = event.block.number;
+  newLiquidation.account = event.params.accountId.toString();
+  newLiquidation.pool = event.params.poolId.toString();
+  newLiquidation.collateral_type = event.params.collateralType;
+  newLiquidation.debt_liquidated = event.params.debtLiquidated.toBigDecimal();
+  newLiquidation.collateral_liquidated = event.params.collateralLiquidated.toBigDecimal();
+  newLiquidation.amount_rewarded = event.params.amountRewarded.toBigDecimal();
+  newLiquidation.save();
+}
+
+export function handleVaultLiquidation(event: VaultLiquidation): void {
+  const newVaultLiquidation = new VaultLiquidationEntity(
+    event.params.poolId
+      .toString()
+      .concat('-')
+      .concat(event.params.collateralType.toHex())
+      .concat('-')
+      .concat(event.logIndex.toString())
+  );
+  newVaultLiquidation.created_at = event.block.timestamp;
+  newVaultLiquidation.created_at_block = event.block.number;
+  newVaultLiquidation.updated_at = event.block.timestamp;
+  newVaultLiquidation.updated_at_block = event.block.number;
+  newVaultLiquidation.pool = event.params.poolId.toString();
+  newVaultLiquidation.collateral_type = event.params.collateralType;
+  newVaultLiquidation.amount_rewarded = event.params.amountRewarded.toBigDecimal();
+  // TODO @MF wait for noahs PR to fix the signature
+  newVaultLiquidation.amount_liquidated = event.params.collateralLiquidated.toBigDecimal();
+  newVaultLiquidation.collateral_liquidated = event.params.collateralLiquidated.toBigDecimal();
+  newVaultLiquidation.amount_rewarded = event.params.amountRewarded.toBigDecimal();
+  newVaultLiquidation.save();
 }
