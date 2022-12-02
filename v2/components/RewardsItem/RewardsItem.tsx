@@ -332,10 +332,14 @@ export const Rewards = () => {
         )}
         isLoading={isLoading}
         rewardBalance={
-          <Flex flexDirection="column">
-            <span>{formatNumber(rewardsData?.sUSDRewards.toNumber() || 0)} sUSD</span>
-            <span>{formatNumber(rewardsData?.snxRewards.toNumber() || 0)} SNX</span>
-          </Flex>
+          rewardsData?.hasClaimed ? (
+            <></>
+          ) : (
+            <Flex flexDirection="column">
+              <span>{formatNumber(rewardsData?.sUSDRewards.toNumber() || 0)} sUSD</span>
+              <span>{formatNumber(rewardsData?.snxRewards.toNumber() || 0)} SNX</span>
+            </Flex>
+          )
         }
         RewardsBadge={() => {
           const onTarget = variant === 'success';
