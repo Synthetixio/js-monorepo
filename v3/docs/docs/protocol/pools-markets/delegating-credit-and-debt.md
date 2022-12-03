@@ -29,3 +29,5 @@ Note that the maximum debt share value will not be greater than a maximum debt s
 ### Available Credit
 
 The credit available to a market is calculated by taking the total credit capacity provided to it across all pools, subtracting its amount of `reportedDebt()` and its net issuance (i.e. the amount of stablecoins it has minted minus the amount it has burned). This is the maximum amount of stablecoins it is allowed to withdraw. If it begins to report debt such that its available credit drops below 0, the market becomes insolvent and positions which are backing this market no longer accrue debt.
+
+_See the [liquidity distribution overview](/protocol/technical-reference/liquidity-distribution) for more technical details on the how delegation is calculated._
