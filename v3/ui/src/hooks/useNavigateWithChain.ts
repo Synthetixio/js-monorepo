@@ -16,7 +16,7 @@ export const useNavigateWithChain = () => {
     navigate(
       {
         ...to,
-        search: `?${createSearchParams({ chain: chainName })}`,
+        search: `?${createSearchParams({ chain: chainName || '' })}`,
       },
       options
     );
