@@ -165,7 +165,7 @@ type RewardsClaimed @entity {
 }
 
 type Liquidation @entity {
-  "NFT token id + pool id + collateral_type + log index"
+  "NFT token id + pool id + collateral_type + log index (number of occurence)"
   id: ID!
   account: Account!
   pool: Pool!
@@ -182,7 +182,7 @@ type Liquidation @entity {
 }
 
 type VaultLiquidation @entity {
-  "Pool id + collateral type + log index"
+  "Pool id + collateral type + log index (number of occurence)"
   id: ID!
   pool: Pool!
   collateral_type: Bytes!
