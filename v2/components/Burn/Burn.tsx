@@ -628,7 +628,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
               }
 
               const snxPrice = exchangeRateData?.SNX?.toNumber();
-              if (!debtData || !susdBalance || !snxPrice) return;
+              if (!debtData || !snxPrice) return;
               const parsedBurnAmount = parseFloatWithCommas(burnAmount);
               if (isNaN(parsedBurnAmount)) return undefined;
               const snxUnstakingAmount = burnAmount
