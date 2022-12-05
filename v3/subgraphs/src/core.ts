@@ -5,7 +5,7 @@ import {
   PoolConfigurationSet,
   PoolNominationRenounced,
   PoolNominationRevoked,
-  NominatedPoolOwner,
+  PoolOwnerNominated,
 } from '../generated/PoolModule/PoolModule';
 import {
   MarketRegistered,
@@ -13,11 +13,8 @@ import {
   MarketUsdDeposited,
   MarketUsdWithdrawn,
 } from '../generated/MarketManagerModule/MarketManagerModule';
-import {
-  CollateralConfigured,
-  Deposited,
-  Withdrawn,
-} from '../generated/CollateralModule/CollateralModule';
+import { Deposited, Withdrawn } from '../generated/CollateralModule/CollateralModule';
+import { CollateralConfigured } from '../generated/CollateralConfigurationModule/CollateralConfigurationModule';
 import {
   AccountCreated,
   PermissionGranted,
@@ -67,10 +64,10 @@ export function handlePoolCreated(event: PoolCreated): void {
   newPool.save();
 }
 
-export function handleNominatedPoolOwner(event: NominatedPoolOwner): void {
+export function handlePoolOwnerNominated(event: PoolOwnerNominated): void {
   const pool = Pool.load(event.params.poolId.toString());
   if (pool !== null) {
-    pool.nominated_owner = event.params.owner;
+    pool.nominated_owner = event.params.nominatedOwner;
     pool.updated_at = event.block.timestamp;
     pool.updated_at_block = event.block.number;
     pool.save();
@@ -146,7 +143,7 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
     // Reset the state because the new configuration from the event is the only source of truth
     pool.configurations = [];
     for (let i = 0; i < event.params.markets.length; ++i) {
-      const market = Market.load(event.params.markets.at(i).market.toString());
+      const market = Market.load(event.params.markets.at(i).marketId.toString());
       if (market) {
         let marketConfiguration = MarketConfiguration.load(pool.id.concat('-').concat(market.id));
         if (marketConfiguration === null) {
@@ -154,12 +151,12 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
           marketConfiguration.created_at = event.block.timestamp;
           marketConfiguration.created_at_block = event.block.number;
         }
-        marketConfiguration.weight = event.params.markets.at(i).weight;
+        marketConfiguration.weight = event.params.markets.at(i).weightD18;
         marketConfiguration.market = market.id;
         marketConfiguration.pool = event.params.poolId.toString();
         marketConfiguration.max_debt_share_value = event.params.markets
           .at(i)
-          .maxDebtShareValue.toBigDecimal();
+          .maxDebtShareValueD18.toBigDecimal();
         marketConfiguration.updated_at = event.block.timestamp;
         marketConfiguration.updated_at_block = event.block.number;
         // If the market doesn't have configurations array, create an array with the current configurations id
@@ -191,7 +188,7 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
             }
           }
         }
-        totalWeight.push(event.params.markets.at(i).weight);
+        totalWeight.push(event.params.markets.at(i).weightD18);
         market.updated_at = event.block.timestamp;
         market.updated_at_block = event.block.number;
         market.save();
@@ -277,12 +274,12 @@ export function handleCollateralConfigured(event: CollateralConfigured): void {
     collateralType.created_at = event.block.timestamp;
     collateralType.created_at_block = event.block.number;
   }
-  collateralType.price_feed = event.params.config.priceFeed;
-  collateralType.liquidation_reward = event.params.config.liquidationReward.toBigDecimal();
-  collateralType.liquidation_ratio = event.params.config.liquidationRatio.toBigDecimal();
+  collateralType.oracle_node_id = BigInt.fromSignedBytes(event.params.config.oracleNodeId);
+  collateralType.liquidation_reward = event.params.config.liquidationRewardD18.toBigDecimal();
+  collateralType.liquidation_ratio = event.params.config.liquidationRatioD18.toBigDecimal();
   collateralType.depositing_enabled = event.params.config.depositingEnabled;
-  collateralType.issuance_ratio = event.params.config.issuanceRatio.toBigDecimal();
-  collateralType.min_delegation = event.params.config.minDelegation.toBigDecimal();
+  collateralType.issuance_ratio = event.params.config.issuanceRatioD18.toBigDecimal();
+  collateralType.min_delegation = event.params.config.minDelegationD18.toBigDecimal();
   collateralType.updated_at = event.block.timestamp;
   collateralType.updated_at_block = event.block.number;
   collateralType.save();
@@ -296,10 +293,10 @@ export function handleDeposited(event: Deposited): void {
     if (collateralType.total_amount_deposited !== null) {
       // @dev we could also account for every account how much they deposited and withdrawn
       collateralType.total_amount_deposited = collateralType.total_amount_deposited!.plus(
-        event.params.amount.toBigDecimal()
+        event.params.tokenAmount.toBigDecimal()
       );
     } else {
-      collateralType.total_amount_deposited = event.params.amount.toBigDecimal();
+      collateralType.total_amount_deposited = event.params.tokenAmount.toBigDecimal();
     }
     collateralType.save();
   }
@@ -313,7 +310,7 @@ export function handleWithdrawn(event: Withdrawn): void {
     if (collateralType.total_amount_deposited !== null) {
       // @dev we could also account for every account how much they deposited and withdrawn
       collateralType.total_amount_deposited = collateralType.total_amount_deposited!.minus(
-        event.params.amount.toBigDecimal()
+        event.params.tokenAmount.toBigDecimal()
       );
     }
     collateralType.save();
@@ -655,9 +652,12 @@ export function handleLiquidation(event: Liquidation): void {
   newLiquidation.account = event.params.accountId.toString();
   newLiquidation.pool = event.params.poolId.toString();
   newLiquidation.collateral_type = event.params.collateralType;
-  newLiquidation.debt_liquidated = event.params.debtLiquidated.toBigDecimal();
-  newLiquidation.collateral_liquidated = event.params.collateralLiquidated.toBigDecimal();
-  newLiquidation.amount_rewarded = event.params.amountRewarded.toBigDecimal();
+  newLiquidation.debt_liquidated = event.params.liquidationData.debtLiquidated.toBigDecimal();
+  newLiquidation.collateral_liquidated =
+    event.params.liquidationData.collateralLiquidated.toBigDecimal();
+  newLiquidation.amount_rewarded = event.params.liquidationData.amountRewarded.toBigDecimal();
+  newLiquidation.sender = event.params.sender;
+  newLiquidation.liquidate_as_account_id = event.params.liquidateAsAccountId.toString();
   newLiquidation.save();
 }
 
@@ -676,10 +676,13 @@ export function handleVaultLiquidation(event: VaultLiquidation): void {
   newVaultLiquidation.updated_at_block = event.block.number;
   newVaultLiquidation.pool = event.params.poolId.toString();
   newVaultLiquidation.collateral_type = event.params.collateralType;
-  newVaultLiquidation.amount_rewarded = event.params.amountRewarded.toBigDecimal();
-  // TODO @MF wait for noahs PR to fix the signature
-  newVaultLiquidation.amount_liquidated = event.params.collateralLiquidated.toBigDecimal();
-  newVaultLiquidation.collateral_liquidated = event.params.collateralLiquidated.toBigDecimal();
-  newVaultLiquidation.amount_rewarded = event.params.amountRewarded.toBigDecimal();
+  newVaultLiquidation.amount_rewarded = event.params.liquidationData.amountRewarded.toBigDecimal();
+  newVaultLiquidation.amount_liquidated =
+    event.params.liquidationData.debtLiquidated.toBigDecimal();
+  newVaultLiquidation.collateral_liquidated =
+    event.params.liquidationData.collateralLiquidated.toBigDecimal();
+  newVaultLiquidation.amount_rewarded = event.params.liquidationData.amountRewarded.toBigDecimal();
+  newVaultLiquidation.liquidate_as_account_id = event.params.liquidateAsAccountId.toString();
+  newVaultLiquidation.sender = event.params.sender;
   newVaultLiquidation.save();
 }

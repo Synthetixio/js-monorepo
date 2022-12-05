@@ -469,13 +469,13 @@ export class CollateralType extends Entity {
     this.set('id', Value.fromString(value));
   }
 
-  get price_feed(): Bytes {
-    let value = this.get('price_feed');
-    return value!.toBytes();
+  get oracle_node_id(): BigInt {
+    let value = this.get('oracle_node_id');
+    return value!.toBigInt();
   }
 
-  set price_feed(value: Bytes) {
-    this.set('price_feed', Value.fromBytes(value));
+  set oracle_node_id(value: BigInt) {
+    this.set('oracle_node_id', Value.fromBigInt(value));
   }
 
   get depositing_enabled(): boolean {
@@ -1534,6 +1534,24 @@ export class Liquidation extends Entity {
     this.set('amount_rewarded', Value.fromBigDecimal(value));
   }
 
+  get liquidate_as_account_id(): string {
+    let value = this.get('liquidate_as_account_id');
+    return value!.toString();
+  }
+
+  set liquidate_as_account_id(value: string) {
+    this.set('liquidate_as_account_id', Value.fromString(value));
+  }
+
+  get sender(): Bytes {
+    let value = this.get('sender');
+    return value!.toBytes();
+  }
+
+  set sender(value: Bytes) {
+    this.set('sender', Value.fromBytes(value));
+  }
+
   get created_at(): BigInt {
     let value = this.get('created_at');
     return value!.toBigInt();
@@ -1645,6 +1663,24 @@ export class VaultLiquidation extends Entity {
 
   set collateral_liquidated(value: BigDecimal) {
     this.set('collateral_liquidated', Value.fromBigDecimal(value));
+  }
+
+  get liquidate_as_account_id(): string {
+    let value = this.get('liquidate_as_account_id');
+    return value!.toString();
+  }
+
+  set liquidate_as_account_id(value: string) {
+    this.set('liquidate_as_account_id', Value.fromString(value));
+  }
+
+  get sender(): Bytes {
+    let value = this.get('sender');
+    return value!.toBytes();
+  }
+
+  set sender(value: Bytes) {
+    this.set('sender', Value.fromBytes(value));
   }
 
   get created_at(): BigInt {

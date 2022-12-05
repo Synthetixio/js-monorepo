@@ -5,11 +5,8 @@ import {
   PermissionGranted,
   PermissionRevoked,
 } from '../generated/AccountModule/AccountModule';
-import {
-  CollateralConfigured,
-  Deposited,
-  Withdrawn,
-} from '../generated/CollateralModule/CollateralModule';
+import { Deposited, Withdrawn } from '../generated/CollateralModule/CollateralModule';
+import { CollateralConfigured } from '../generated/CollateralConfigurationModule/CollateralConfigurationModule';
 import { UsdBurned, UsdMinted } from '../generated/IssueUSDModule/IssueUSDModule';
 import {
   MarketRegistered,
@@ -17,12 +14,12 @@ import {
   MarketUsdWithdrawn,
 } from '../generated/MarketManagerModule/MarketManagerModule';
 import {
-  NominatedPoolOwner,
   PoolConfigurationSet,
   PoolCreated,
   PoolNameUpdated,
   PoolNominationRenounced,
   PoolNominationRevoked,
+  PoolOwnerNominated,
   PoolOwnershipAccepted,
 } from '../generated/PoolModule/PoolModule';
 import { Liquidation, VaultLiquidation } from '../generated/LiquidationModule/LiquidationModule';
@@ -59,20 +56,27 @@ export function createPoolCreatedEvent(
   return newPoolCreatedEvent;
 }
 
-export function createNominatedPoolOwnerEvent(
+export function createPoolOwnerNominatedEvent(
   id: i32,
   nominee: string,
+  owner: string,
   timestamp: i64,
   blockNumber: i64
-): NominatedPoolOwner {
-  const newCreateNominatedPoolOwnerEvent = changetype<NominatedPoolOwner>(newMockEvent());
+): PoolOwnerNominated {
+  const newCreateNominatedPoolOwnerEvent = changetype<PoolOwnerNominated>(newMockEvent());
   const block = createBlock(timestamp, blockNumber);
   newCreateNominatedPoolOwnerEvent.parameters = new Array();
   newCreateNominatedPoolOwnerEvent.parameters.push(
     new ethereum.EventParam('id', ethereum.Value.fromI32(id))
   );
   newCreateNominatedPoolOwnerEvent.parameters.push(
-    new ethereum.EventParam('owner', ethereum.Value.fromAddress(Address.fromString(nominee)))
+    new ethereum.EventParam(
+      'nominatedOwner',
+      ethereum.Value.fromAddress(Address.fromString(nominee))
+    )
+  );
+  newCreateNominatedPoolOwnerEvent.parameters.push(
+    new ethereum.EventParam('owner', ethereum.Value.fromAddress(Address.fromString(owner)))
   );
   newCreateNominatedPoolOwnerEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
   newCreateNominatedPoolOwnerEvent.block.number = BigInt.fromI64(block['blockNumber']);
@@ -265,7 +269,7 @@ export function createCollateralConfiguredEvent(
   issuanceRatio: BigInt,
   liquidationRatio: BigInt,
   liquidationReward: BigInt,
-  priceFeed: Address,
+  oracleNodeId: Bytes,
   minDelegation: BigInt,
   timestamp: i64,
   blockNumber: i64
@@ -281,7 +285,7 @@ export function createCollateralConfiguredEvent(
     ethereum.Value.fromSignedBigInt(issuanceRatio),
     ethereum.Value.fromSignedBigInt(liquidationRatio),
     ethereum.Value.fromSignedBigInt(liquidationReward),
-    ethereum.Value.fromAddress(priceFeed),
+    ethereum.Value.fromBytes(oracleNodeId),
     ethereum.Value.fromAddress(Address.fromString(address)),
     ethereum.Value.fromSignedBigInt(minDelegation),
   ]);
@@ -582,6 +586,8 @@ export function createLiquidationEvent(
   debtLiquidated: BigInt,
   collateralLiquidated: BigInt,
   amountRewarded: BigInt,
+  liquidateAsAccountId: BigInt,
+  sender: Address,
   timestamp: i64,
   blockNumber: i64,
   logIndex: i32 = 1
@@ -599,17 +605,22 @@ export function createLiquidationEvent(
   newLiquidatedEvent.parameters.push(
     new ethereum.EventParam('collateralType', ethereum.Value.fromAddress(collateralType))
   );
-  newLiquidatedEvent.parameters.push(
-    new ethereum.EventParam('debtLiquidated', ethereum.Value.fromUnsignedBigInt(debtLiquidated))
-  );
+  const tupleArray = changetype<ethereum.Value>([
+    ethereum.Value.fromSignedBigInt(debtLiquidated),
+    ethereum.Value.fromSignedBigInt(collateralLiquidated),
+    ethereum.Value.fromSignedBigInt(amountRewarded),
+  ]);
+  const tuple = changetype<ethereum.Tuple>(tupleArray);
+  const tupleValue = ethereum.Value.fromTuple(tuple);
+  newLiquidatedEvent.parameters.push(new ethereum.EventParam('liquidationData', tupleValue));
   newLiquidatedEvent.parameters.push(
     new ethereum.EventParam(
-      'collateralLiquidated',
-      ethereum.Value.fromUnsignedBigInt(collateralLiquidated)
+      'liquidateAsAccountId',
+      ethereum.Value.fromSignedBigInt(liquidateAsAccountId)
     )
   );
   newLiquidatedEvent.parameters.push(
-    new ethereum.EventParam('amountRewarded', ethereum.Value.fromUnsignedBigInt(amountRewarded))
+    new ethereum.EventParam('sender', ethereum.Value.fromAddress(sender))
   );
   newLiquidatedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
   newLiquidatedEvent.block.number = BigInt.fromI64(block['blockNumber']);
@@ -622,6 +633,8 @@ export function createVaultLiquidationEvent(
   debtLiquidated: BigInt,
   collateralLiquidated: BigInt,
   amountRewarded: BigInt,
+  liquidateAsAccountId: BigInt,
+  sender: Address,
   timestamp: i64,
   blockNumber: i64,
   logIndex: i32 = 1
@@ -636,17 +649,22 @@ export function createVaultLiquidationEvent(
   newVaultLiquidationEvent.parameters.push(
     new ethereum.EventParam('collateralType', ethereum.Value.fromAddress(collateralType))
   );
-  newVaultLiquidationEvent.parameters.push(
-    new ethereum.EventParam('debtLiquidated', ethereum.Value.fromUnsignedBigInt(debtLiquidated))
-  );
+  const tupleArray = changetype<ethereum.Value>([
+    ethereum.Value.fromSignedBigInt(debtLiquidated),
+    ethereum.Value.fromSignedBigInt(collateralLiquidated),
+    ethereum.Value.fromSignedBigInt(amountRewarded),
+  ]);
+  const tuple = changetype<ethereum.Tuple>(tupleArray);
+  const tupleValue = ethereum.Value.fromTuple(tuple);
+  newVaultLiquidationEvent.parameters.push(new ethereum.EventParam('liquidationData', tupleValue));
   newVaultLiquidationEvent.parameters.push(
     new ethereum.EventParam(
-      'collateralLiquidated',
-      ethereum.Value.fromUnsignedBigInt(collateralLiquidated)
+      'liquidateAsAccountId',
+      ethereum.Value.fromSignedBigInt(liquidateAsAccountId)
     )
   );
   newVaultLiquidationEvent.parameters.push(
-    new ethereum.EventParam('amountRewarded', ethereum.Value.fromUnsignedBigInt(amountRewarded))
+    new ethereum.EventParam('sender', ethereum.Value.fromAddress(sender))
   );
   newVaultLiquidationEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
   newVaultLiquidationEvent.block.number = BigInt.fromI64(block['blockNumber']);

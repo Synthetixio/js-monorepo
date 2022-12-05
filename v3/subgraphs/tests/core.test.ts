@@ -17,7 +17,7 @@ import {
   handleMarketUsdDeposited,
   handleMarketUsdWithdrawn,
   handleNewPoolOwner,
-  handleNominatedPoolOwner,
+  handlePoolOwnerNominated,
   handlePermissionGranted,
   handlePermissionRevoked,
   handlePoolConfigurationSet,
@@ -43,7 +43,7 @@ import {
   createMarketCreatedEvent,
   createMarketUsdDepositedEvent,
   createMarketUsdWithdrawnEvent,
-  createNominatedPoolOwnerEvent,
+  createPoolOwnerNominatedEvent,
   createPermissionGrantedEvent,
   createPermissionRevokedEvent,
   createPoolConfigurationSetEvent,
@@ -70,7 +70,7 @@ export {
   handleMarketUsdDeposited,
   handleMarketUsdWithdrawn,
   handleNewPoolOwner,
-  handleNominatedPoolOwner,
+  handlePoolOwnerNominated,
   handlePermissionGranted,
   handlePermissionRevoked,
   handlePoolConfigurationSet,
@@ -114,9 +114,15 @@ describe('core tests', () => {
     // Needs to be here because of Closures
     const now = new Date(1668448739566).getTime();
     const newPoolEvent = createPoolCreatedEvent(1, address, now, now - 1000);
-    const newNominatedPoolOwnerEvent = createNominatedPoolOwnerEvent(1, address2, now + 1000, now);
+    const newNominatedPoolOwnerEvent = createPoolOwnerNominatedEvent(
+      1,
+      address2,
+      address,
+      now + 1000,
+      now
+    );
     handlePoolCreated(newPoolEvent);
-    handleNominatedPoolOwner(newNominatedPoolOwnerEvent);
+    handlePoolOwnerNominated(newNominatedPoolOwnerEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Pool', '1', 'owner', address);
     assert.fieldEquals('Pool', '1', 'nominated_owner', address2);
@@ -154,9 +160,15 @@ describe('core tests', () => {
     const now = new Date(1668448739566).getTime();
     const newPool = createPoolCreatedEvent(1, address, now, now - 1000);
     const newOwnerEvent = createPoolOwnershipAcceptedEvent(1, address2, now + 1000, now);
-    const newNominatedPoolOwnerEvent = createNominatedPoolOwnerEvent(1, address2, now + 1000, now);
+    const newNominatedPoolOwnerEvent = createPoolOwnerNominatedEvent(
+      1,
+      address2,
+      address,
+      now + 1000,
+      now
+    );
     handlePoolCreated(newPool);
-    handleNominatedPoolOwner(newNominatedPoolOwnerEvent);
+    handlePoolOwnerNominated(newNominatedPoolOwnerEvent);
     assert.fieldEquals('Pool', '1', 'nominated_owner', address2);
     handleNewPoolOwner(newOwnerEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
@@ -176,10 +188,16 @@ describe('core tests', () => {
     // Needs to be here because of Closures
     const now = new Date(1668448739566).getTime();
     const newPool = createPoolCreatedEvent(1, address, now, now - 1000);
-    const newNominatedPoolOwnerEvent = createNominatedPoolOwnerEvent(1, address2, now + 1000, now);
+    const newNominatedPoolOwnerEvent = createPoolOwnerNominatedEvent(
+      1,
+      address2,
+      address,
+      now + 1000,
+      now
+    );
     const newPoolOwnershipRenouncedEvent = createPoolOwnershipRenouncedEvent(1, now + 1000, now);
     handlePoolCreated(newPool);
-    handleNominatedPoolOwner(newNominatedPoolOwnerEvent);
+    handlePoolOwnerNominated(newNominatedPoolOwnerEvent);
     handlePoolNominationRenounced(newPoolOwnershipRenouncedEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Pool', '1', 'owner', address);
@@ -198,10 +216,16 @@ describe('core tests', () => {
     // Needs to be here because of Closures
     const now = new Date(1668448739566).getTime();
     const newPool = createPoolCreatedEvent(1, address, now, now - 1000);
-    const newNominatedPoolOwnerEvent = createNominatedPoolOwnerEvent(1, address2, now + 1000, now);
+    const newNominatedPoolOwnerEvent = createPoolOwnerNominatedEvent(
+      1,
+      address2,
+      address,
+      now + 1000,
+      now
+    );
     const newPoolNominationRevokedEvent = createPoolNominationRevokedEvent(1, now + 1000, now);
     handlePoolCreated(newPool);
-    handleNominatedPoolOwner(newNominatedPoolOwnerEvent);
+    handlePoolOwnerNominated(newNominatedPoolOwnerEvent);
     handlePoolNominationRevoked(newPoolNominationRevokedEvent);
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Pool', '1', 'owner', address);
@@ -390,7 +414,7 @@ describe('core tests', () => {
       BigInt.fromI32(200),
       BigInt.fromI32(50),
       BigInt.fromI32(90),
-      Address.fromString(address2),
+      Bytes.fromByteArray(Bytes.fromBigInt(BigInt.fromI32(10))),
       BigInt.fromI32(500),
       now,
       now - 1000
@@ -402,7 +426,7 @@ describe('core tests', () => {
       BigInt.fromI32(300),
       BigInt.fromI32(60),
       BigInt.fromI32(80),
-      Address.fromString(address2),
+      Bytes.fromByteArray(Bytes.fromBigInt(BigInt.fromI32(10))),
       BigInt.fromI32(400),
       now + 1000,
       now
@@ -418,7 +442,7 @@ describe('core tests', () => {
     assert.fieldEquals('CollateralType', address, 'depositing_enabled', 'true');
     assert.fieldEquals('CollateralType', address, 'issuance_ratio', '300');
     assert.fieldEquals('CollateralType', address, 'min_delegation', '400');
-    assert.fieldEquals('CollateralType', address, 'price_feed', address2);
+    assert.fieldEquals('CollateralType', address, 'oracle_node_id', '10');
     assert.assertNull(store.get('CollateralType', address)!.get('total_amount_deposited'));
     assert.notInStore('CollateralType', address2);
   });
@@ -432,7 +456,7 @@ describe('core tests', () => {
       BigInt.fromI32(200),
       BigInt.fromI32(50),
       BigInt.fromI32(90),
-      Address.fromString(address2),
+      Bytes.fromByteArray(Bytes.fromBigInt(BigInt.fromI32(12))),
       BigInt.fromI32(500),
       now,
       now - 1000
@@ -452,6 +476,7 @@ describe('core tests', () => {
     assert.fieldEquals('CollateralType', address, 'updated_at', (now + 1000).toString());
     assert.fieldEquals('CollateralType', address, 'updated_at_block', now.toString());
     assert.fieldEquals('CollateralType', address, 'total_amount_deposited', '555');
+    assert.fieldEquals('CollateralType', address, 'oracle_node_id', '12');
     handleDeposited(newCollateralDepositEvent);
     assert.fieldEquals('CollateralType', address, 'total_amount_deposited', '1110');
     assert.notInStore('CollateralType', address2);
@@ -466,7 +491,7 @@ describe('core tests', () => {
       BigInt.fromI32(200),
       BigInt.fromI32(50),
       BigInt.fromI32(90),
-      Address.fromString(address2),
+      Bytes.fromByteArray(Bytes.fromBigInt(BigInt.fromI32(13))),
       BigInt.fromI32(500),
       now,
       now - 1000
@@ -494,6 +519,7 @@ describe('core tests', () => {
     assert.fieldEquals('CollateralType', address, 'updated_at', (now + 2000).toString());
     assert.fieldEquals('CollateralType', address, 'updated_at_block', (now + 1000).toString());
     assert.fieldEquals('CollateralType', address, 'total_amount_deposited', '455');
+    assert.fieldEquals('CollateralType', address, 'oracle_node_id', '13');
     assert.notInStore('CollateralType', address2);
   });
 
@@ -1238,6 +1264,8 @@ describe('core tests', () => {
       BigInt.fromI32(300),
       BigInt.fromI32(200),
       BigInt.fromI32(100),
+      BigInt.fromI32(10),
+      Address.fromString(address2),
       now,
       now - 1000
     );
@@ -1263,6 +1291,8 @@ describe('core tests', () => {
     assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'debt_liquidated', '300');
     assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'collateral_liquidated', '200');
     assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'amount_rewarded', '100');
+    assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'liquidate_as_account_id', '10');
+    assert.fieldEquals('Liquidation', `1-2-${address}-1`, 'sender', address2);
   });
   test('handleVaultLiquidation', () => {
     // Needs to be here because of Closures
@@ -1273,6 +1303,8 @@ describe('core tests', () => {
       BigInt.fromI32(300),
       BigInt.fromI32(200),
       BigInt.fromI32(100),
+      BigInt.fromI32(10),
+      Address.fromString(address2),
       now,
       now - 1000
     );
@@ -1294,5 +1326,7 @@ describe('core tests', () => {
     );
     assert.fieldEquals('VaultLiquidation', `1-${address}-1`, 'pool', '1');
     assert.fieldEquals('VaultLiquidation', `1-${address}-1`, 'collateral_type', address);
+    assert.fieldEquals('VaultLiquidation', `1-${address}-1`, 'sender', address2);
+    assert.fieldEquals('VaultLiquidation', `1-${address}-1`, 'liquidate_as_account_id', '10');
   });
 });

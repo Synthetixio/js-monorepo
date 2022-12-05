@@ -108,7 +108,7 @@ export class RewardsDistributorRegistered__Params {
   }
 }
 
-export class RewardsManagerModule__getRewardsResult {
+export class RewardsManagerModule__getClaimableRewardsResult {
   value0: Array<BigInt>;
   value1: Array<Address>;
 
@@ -181,6 +181,53 @@ export class RewardsManagerModule extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  getClaimableRewards(
+    poolId: BigInt,
+    collateralType: Address,
+    accountId: BigInt
+  ): RewardsManagerModule__getClaimableRewardsResult {
+    let result = super.call(
+      'getClaimableRewards',
+      'getClaimableRewards(uint128,address,uint128):(uint256[],address[])',
+      [
+        ethereum.Value.fromUnsignedBigInt(poolId),
+        ethereum.Value.fromAddress(collateralType),
+        ethereum.Value.fromUnsignedBigInt(accountId),
+      ]
+    );
+
+    return new RewardsManagerModule__getClaimableRewardsResult(
+      result[0].toBigIntArray(),
+      result[1].toAddressArray()
+    );
+  }
+
+  try_getClaimableRewards(
+    poolId: BigInt,
+    collateralType: Address,
+    accountId: BigInt
+  ): ethereum.CallResult<RewardsManagerModule__getClaimableRewardsResult> {
+    let result = super.tryCall(
+      'getClaimableRewards',
+      'getClaimableRewards(uint128,address,uint128):(uint256[],address[])',
+      [
+        ethereum.Value.fromUnsignedBigInt(poolId),
+        ethereum.Value.fromAddress(collateralType),
+        ethereum.Value.fromUnsignedBigInt(accountId),
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new RewardsManagerModule__getClaimableRewardsResult(
+        value[0].toBigIntArray(),
+        value[1].toAddressArray()
+      )
+    );
+  }
+
   getRewardRate(poolId: BigInt, collateralType: Address, distributor: Address): BigInt {
     let result = super.call('getRewardRate', 'getRewardRate(uint128,address,address):(uint256)', [
       ethereum.Value.fromUnsignedBigInt(poolId),
@@ -210,53 +257,6 @@ export class RewardsManagerModule extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  getRewards(
-    poolId: BigInt,
-    collateralType: Address,
-    accountId: BigInt
-  ): RewardsManagerModule__getRewardsResult {
-    let result = super.call(
-      'getRewards',
-      'getRewards(uint128,address,uint128):(uint256[],address[])',
-      [
-        ethereum.Value.fromUnsignedBigInt(poolId),
-        ethereum.Value.fromAddress(collateralType),
-        ethereum.Value.fromUnsignedBigInt(accountId),
-      ]
-    );
-
-    return new RewardsManagerModule__getRewardsResult(
-      result[0].toBigIntArray(),
-      result[1].toAddressArray()
-    );
-  }
-
-  try_getRewards(
-    poolId: BigInt,
-    collateralType: Address,
-    accountId: BigInt
-  ): ethereum.CallResult<RewardsManagerModule__getRewardsResult> {
-    let result = super.tryCall(
-      'getRewards',
-      'getRewards(uint128,address,uint128):(uint256[],address[])',
-      [
-        ethereum.Value.fromUnsignedBigInt(poolId),
-        ethereum.Value.fromAddress(collateralType),
-        ethereum.Value.fromUnsignedBigInt(accountId),
-      ]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(
-      new RewardsManagerModule__getRewardsResult(
-        value[0].toBigIntArray(),
-        value[1].toAddressArray()
-      )
-    );
   }
 }
 
@@ -352,20 +352,20 @@ export class DistributeRewardsCall__Outputs {
   }
 }
 
-export class GetRewardsCall extends ethereum.Call {
-  get inputs(): GetRewardsCall__Inputs {
-    return new GetRewardsCall__Inputs(this);
+export class GetClaimableRewardsCall extends ethereum.Call {
+  get inputs(): GetClaimableRewardsCall__Inputs {
+    return new GetClaimableRewardsCall__Inputs(this);
   }
 
-  get outputs(): GetRewardsCall__Outputs {
-    return new GetRewardsCall__Outputs(this);
+  get outputs(): GetClaimableRewardsCall__Outputs {
+    return new GetClaimableRewardsCall__Outputs(this);
   }
 }
 
-export class GetRewardsCall__Inputs {
-  _call: GetRewardsCall;
+export class GetClaimableRewardsCall__Inputs {
+  _call: GetClaimableRewardsCall;
 
-  constructor(call: GetRewardsCall) {
+  constructor(call: GetClaimableRewardsCall) {
     this._call = call;
   }
 
@@ -382,10 +382,10 @@ export class GetRewardsCall__Inputs {
   }
 }
 
-export class GetRewardsCall__Outputs {
-  _call: GetRewardsCall;
+export class GetClaimableRewardsCall__Outputs {
+  _call: GetClaimableRewardsCall;
 
-  constructor(call: GetRewardsCall) {
+  constructor(call: GetClaimableRewardsCall) {
     this._call = call;
   }
 

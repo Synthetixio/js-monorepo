@@ -35,16 +35,30 @@ export class Liquidation__Params {
     return this._event.parameters[2].value.toAddress();
   }
 
-  get debtLiquidated(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+  get liquidationData(): LiquidationLiquidationDataStruct {
+    return changetype<LiquidationLiquidationDataStruct>(this._event.parameters[3].value.toTuple());
   }
 
-  get collateralLiquidated(): BigInt {
+  get liquidateAsAccountId(): BigInt {
     return this._event.parameters[4].value.toBigInt();
   }
 
+  get sender(): Address {
+    return this._event.parameters[5].value.toAddress();
+  }
+}
+
+export class LiquidationLiquidationDataStruct extends ethereum.Tuple {
+  get debtLiquidated(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get collateralLiquidated(): BigInt {
+    return this[1].toBigInt();
+  }
+
   get amountRewarded(): BigInt {
-    return this._event.parameters[5].value.toBigInt();
+    return this[2].toBigInt();
   }
 }
 
@@ -69,73 +83,60 @@ export class VaultLiquidation__Params {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get debtLiquidated(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+  get liquidationData(): VaultLiquidationLiquidationDataStruct {
+    return changetype<VaultLiquidationLiquidationDataStruct>(
+      this._event.parameters[2].value.toTuple()
+    );
   }
 
-  get collateralLiquidated(): BigInt {
+  get liquidateAsAccountId(): BigInt {
     return this._event.parameters[3].value.toBigInt();
   }
 
+  get sender(): Address {
+    return this._event.parameters[4].value.toAddress();
+  }
+}
+
+export class VaultLiquidationLiquidationDataStruct extends ethereum.Tuple {
+  get debtLiquidated(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get collateralLiquidated(): BigInt {
+    return this[1].toBigInt();
+  }
+
   get amountRewarded(): BigInt {
-    return this._event.parameters[4].value.toBigInt();
+    return this[2].toBigInt();
   }
 }
 
-export class LiquidationModule__liquidateResult {
-  value0: BigInt;
-  value1: BigInt;
-  value2: BigInt;
-
-  constructor(value0: BigInt, value1: BigInt, value2: BigInt) {
-    this.value0 = value0;
-    this.value1 = value1;
-    this.value2 = value2;
+export class LiquidationModule__liquidateResultLiquidationDataStruct extends ethereum.Tuple {
+  get debtLiquidated(): BigInt {
+    return this[0].toBigInt();
   }
 
-  toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
-    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set('value1', ethereum.Value.fromUnsignedBigInt(this.value1));
-    map.set('value2', ethereum.Value.fromUnsignedBigInt(this.value2));
-    return map;
+  get collateralLiquidated(): BigInt {
+    return this[1].toBigInt();
   }
 
-  getAmountRewarded(): BigInt {
-    return this.value0;
-  }
-
-  getDebtLiquidated(): BigInt {
-    return this.value1;
-  }
-
-  getCollateralLiquidated(): BigInt {
-    return this.value2;
+  get amountRewarded(): BigInt {
+    return this[2].toBigInt();
   }
 }
 
-export class LiquidationModule__liquidateVaultResult {
-  value0: BigInt;
-  value1: BigInt;
-
-  constructor(value0: BigInt, value1: BigInt) {
-    this.value0 = value0;
-    this.value1 = value1;
+export class LiquidationModule__liquidateVaultResultLiquidationDataStruct extends ethereum.Tuple {
+  get debtLiquidated(): BigInt {
+    return this[0].toBigInt();
   }
 
-  toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
-    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set('value1', ethereum.Value.fromUnsignedBigInt(this.value1));
-    return map;
+  get collateralLiquidated(): BigInt {
+    return this[1].toBigInt();
   }
 
-  getAmountLiquidated(): BigInt {
-    return this.value0;
-  }
-
-  getCollateralRewarded(): BigInt {
-    return this.value1;
+  get amountRewarded(): BigInt {
+    return this[2].toBigInt();
   }
 }
 
@@ -144,9 +145,43 @@ export class LiquidationModule extends ethereum.SmartContract {
     return new LiquidationModule('LiquidationModule', address);
   }
 
-  isLiquidatable(accountId: BigInt, poolId: BigInt, collateralType: Address): boolean {
-    let result = super.call('isLiquidatable', 'isLiquidatable(uint128,uint128,address):(bool)', [
-      ethereum.Value.fromUnsignedBigInt(accountId),
+  isPositionLiquidatable(accountId: BigInt, poolId: BigInt, collateralType: Address): boolean {
+    let result = super.call(
+      'isPositionLiquidatable',
+      'isPositionLiquidatable(uint128,uint128,address):(bool)',
+      [
+        ethereum.Value.fromUnsignedBigInt(accountId),
+        ethereum.Value.fromUnsignedBigInt(poolId),
+        ethereum.Value.fromAddress(collateralType),
+      ]
+    );
+
+    return result[0].toBoolean();
+  }
+
+  try_isPositionLiquidatable(
+    accountId: BigInt,
+    poolId: BigInt,
+    collateralType: Address
+  ): ethereum.CallResult<boolean> {
+    let result = super.tryCall(
+      'isPositionLiquidatable',
+      'isPositionLiquidatable(uint128,uint128,address):(bool)',
+      [
+        ethereum.Value.fromUnsignedBigInt(accountId),
+        ethereum.Value.fromUnsignedBigInt(poolId),
+        ethereum.Value.fromAddress(collateralType),
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
+  isVaultLiquidatable(poolId: BigInt, collateralType: Address): boolean {
+    let result = super.call('isVaultLiquidatable', 'isVaultLiquidatable(uint128,address):(bool)', [
       ethereum.Value.fromUnsignedBigInt(poolId),
       ethereum.Value.fromAddress(collateralType),
     ]);
@@ -154,16 +189,12 @@ export class LiquidationModule extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_isLiquidatable(
-    accountId: BigInt,
-    poolId: BigInt,
-    collateralType: Address
-  ): ethereum.CallResult<boolean> {
-    let result = super.tryCall('isLiquidatable', 'isLiquidatable(uint128,uint128,address):(bool)', [
-      ethereum.Value.fromUnsignedBigInt(accountId),
-      ethereum.Value.fromUnsignedBigInt(poolId),
-      ethereum.Value.fromAddress(collateralType),
-    ]);
+  try_isVaultLiquidatable(poolId: BigInt, collateralType: Address): ethereum.CallResult<boolean> {
+    let result = super.tryCall(
+      'isVaultLiquidatable',
+      'isVaultLiquidatable(uint128,address):(bool)',
+      [ethereum.Value.fromUnsignedBigInt(poolId), ethereum.Value.fromAddress(collateralType)]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -174,37 +205,37 @@ export class LiquidationModule extends ethereum.SmartContract {
   liquidate(
     accountId: BigInt,
     poolId: BigInt,
-    collateralType: Address
-  ): LiquidationModule__liquidateResult {
+    collateralType: Address,
+    liquidateAsAccountId: BigInt
+  ): LiquidationModule__liquidateResultLiquidationDataStruct {
     let result = super.call(
       'liquidate',
-      'liquidate(uint128,uint128,address):(uint256,uint256,uint256)',
+      'liquidate(uint128,uint128,address,uint128):((uint256,uint256,uint256))',
       [
         ethereum.Value.fromUnsignedBigInt(accountId),
         ethereum.Value.fromUnsignedBigInt(poolId),
         ethereum.Value.fromAddress(collateralType),
+        ethereum.Value.fromUnsignedBigInt(liquidateAsAccountId),
       ]
     );
 
-    return new LiquidationModule__liquidateResult(
-      result[0].toBigInt(),
-      result[1].toBigInt(),
-      result[2].toBigInt()
-    );
+    return changetype<LiquidationModule__liquidateResultLiquidationDataStruct>(result[0].toTuple());
   }
 
   try_liquidate(
     accountId: BigInt,
     poolId: BigInt,
-    collateralType: Address
-  ): ethereum.CallResult<LiquidationModule__liquidateResult> {
+    collateralType: Address,
+    liquidateAsAccountId: BigInt
+  ): ethereum.CallResult<LiquidationModule__liquidateResultLiquidationDataStruct> {
     let result = super.tryCall(
       'liquidate',
-      'liquidate(uint128,uint128,address):(uint256,uint256,uint256)',
+      'liquidate(uint128,uint128,address,uint128):((uint256,uint256,uint256))',
       [
         ethereum.Value.fromUnsignedBigInt(accountId),
         ethereum.Value.fromUnsignedBigInt(poolId),
         ethereum.Value.fromAddress(collateralType),
+        ethereum.Value.fromUnsignedBigInt(liquidateAsAccountId),
       ]
     );
     if (result.reverted) {
@@ -212,11 +243,7 @@ export class LiquidationModule extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new LiquidationModule__liquidateResult(
-        value[0].toBigInt(),
-        value[1].toBigInt(),
-        value[2].toBigInt()
-      )
+      changetype<LiquidationModule__liquidateResultLiquidationDataStruct>(value[0].toTuple())
     );
   }
 
@@ -225,10 +252,10 @@ export class LiquidationModule extends ethereum.SmartContract {
     collateralType: Address,
     liquidateAsAccountId: BigInt,
     maxUsd: BigInt
-  ): LiquidationModule__liquidateVaultResult {
+  ): LiquidationModule__liquidateVaultResultLiquidationDataStruct {
     let result = super.call(
       'liquidateVault',
-      'liquidateVault(uint128,address,uint128,uint256):(uint256,uint256)',
+      'liquidateVault(uint128,address,uint128,uint256):((uint256,uint256,uint256))',
       [
         ethereum.Value.fromUnsignedBigInt(poolId),
         ethereum.Value.fromAddress(collateralType),
@@ -237,7 +264,9 @@ export class LiquidationModule extends ethereum.SmartContract {
       ]
     );
 
-    return new LiquidationModule__liquidateVaultResult(result[0].toBigInt(), result[1].toBigInt());
+    return changetype<LiquidationModule__liquidateVaultResultLiquidationDataStruct>(
+      result[0].toTuple()
+    );
   }
 
   try_liquidateVault(
@@ -245,10 +274,10 @@ export class LiquidationModule extends ethereum.SmartContract {
     collateralType: Address,
     liquidateAsAccountId: BigInt,
     maxUsd: BigInt
-  ): ethereum.CallResult<LiquidationModule__liquidateVaultResult> {
+  ): ethereum.CallResult<LiquidationModule__liquidateVaultResultLiquidationDataStruct> {
     let result = super.tryCall(
       'liquidateVault',
-      'liquidateVault(uint128,address,uint128,uint256):(uint256,uint256)',
+      'liquidateVault(uint128,address,uint128,uint256):((uint256,uint256,uint256))',
       [
         ethereum.Value.fromUnsignedBigInt(poolId),
         ethereum.Value.fromAddress(collateralType),
@@ -261,25 +290,25 @@ export class LiquidationModule extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new LiquidationModule__liquidateVaultResult(value[0].toBigInt(), value[1].toBigInt())
+      changetype<LiquidationModule__liquidateVaultResultLiquidationDataStruct>(value[0].toTuple())
     );
   }
 }
 
-export class IsLiquidatableCall extends ethereum.Call {
-  get inputs(): IsLiquidatableCall__Inputs {
-    return new IsLiquidatableCall__Inputs(this);
+export class IsPositionLiquidatableCall extends ethereum.Call {
+  get inputs(): IsPositionLiquidatableCall__Inputs {
+    return new IsPositionLiquidatableCall__Inputs(this);
   }
 
-  get outputs(): IsLiquidatableCall__Outputs {
-    return new IsLiquidatableCall__Outputs(this);
+  get outputs(): IsPositionLiquidatableCall__Outputs {
+    return new IsPositionLiquidatableCall__Outputs(this);
   }
 }
 
-export class IsLiquidatableCall__Inputs {
-  _call: IsLiquidatableCall;
+export class IsPositionLiquidatableCall__Inputs {
+  _call: IsPositionLiquidatableCall;
 
-  constructor(call: IsLiquidatableCall) {
+  constructor(call: IsPositionLiquidatableCall) {
     this._call = call;
   }
 
@@ -296,10 +325,48 @@ export class IsLiquidatableCall__Inputs {
   }
 }
 
-export class IsLiquidatableCall__Outputs {
-  _call: IsLiquidatableCall;
+export class IsPositionLiquidatableCall__Outputs {
+  _call: IsPositionLiquidatableCall;
 
-  constructor(call: IsLiquidatableCall) {
+  constructor(call: IsPositionLiquidatableCall) {
+    this._call = call;
+  }
+
+  get value0(): boolean {
+    return this._call.outputValues[0].value.toBoolean();
+  }
+}
+
+export class IsVaultLiquidatableCall extends ethereum.Call {
+  get inputs(): IsVaultLiquidatableCall__Inputs {
+    return new IsVaultLiquidatableCall__Inputs(this);
+  }
+
+  get outputs(): IsVaultLiquidatableCall__Outputs {
+    return new IsVaultLiquidatableCall__Outputs(this);
+  }
+}
+
+export class IsVaultLiquidatableCall__Inputs {
+  _call: IsVaultLiquidatableCall;
+
+  constructor(call: IsVaultLiquidatableCall) {
+    this._call = call;
+  }
+
+  get poolId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get collateralType(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+}
+
+export class IsVaultLiquidatableCall__Outputs {
+  _call: IsVaultLiquidatableCall;
+
+  constructor(call: IsVaultLiquidatableCall) {
     this._call = call;
   }
 
@@ -336,6 +403,10 @@ export class LiquidateCall__Inputs {
   get collateralType(): Address {
     return this._call.inputValues[2].value.toAddress();
   }
+
+  get liquidateAsAccountId(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
+  }
 }
 
 export class LiquidateCall__Outputs {
@@ -345,16 +416,24 @@ export class LiquidateCall__Outputs {
     this._call = call;
   }
 
-  get amountRewarded(): BigInt {
-    return this._call.outputValues[0].value.toBigInt();
+  get liquidationData(): LiquidateCallLiquidationDataStruct {
+    return changetype<LiquidateCallLiquidationDataStruct>(
+      this._call.outputValues[0].value.toTuple()
+    );
   }
+}
 
+export class LiquidateCallLiquidationDataStruct extends ethereum.Tuple {
   get debtLiquidated(): BigInt {
-    return this._call.outputValues[1].value.toBigInt();
+    return this[0].toBigInt();
   }
 
   get collateralLiquidated(): BigInt {
-    return this._call.outputValues[2].value.toBigInt();
+    return this[1].toBigInt();
+  }
+
+  get amountRewarded(): BigInt {
+    return this[2].toBigInt();
   }
 }
 
@@ -399,11 +478,23 @@ export class LiquidateVaultCall__Outputs {
     this._call = call;
   }
 
-  get amountLiquidated(): BigInt {
-    return this._call.outputValues[0].value.toBigInt();
+  get liquidationData(): LiquidateVaultCallLiquidationDataStruct {
+    return changetype<LiquidateVaultCallLiquidationDataStruct>(
+      this._call.outputValues[0].value.toTuple()
+    );
+  }
+}
+
+export class LiquidateVaultCallLiquidationDataStruct extends ethereum.Tuple {
+  get debtLiquidated(): BigInt {
+    return this[0].toBigInt();
   }
 
-  get collateralRewarded(): BigInt {
-    return this._call.outputValues[1].value.toBigInt();
+  get collateralLiquidated(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get amountRewarded(): BigInt {
+    return this[2].toBigInt();
   }
 }
