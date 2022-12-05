@@ -8,7 +8,9 @@ The protocol allow for vaults to be connected to **reward distributors** by the 
 
 ## Rewards Distributor
 
-Reward distributors must conform to the [`IRewardDistributor`](https://github.com/Synthetixio/synthetix-v3/blob/main/packages/synthetix-main/contracts/interfaces/external/IRewardDistributor.sol) interface. This includes consists of `function payout(uint128 accountId, uint128 poolId, address collateralType, address sender, uint amount) external returns (bool);`. When called, it should transfer `amount` of rewards to the `sender` address.
+Reward distributors must conform to the [`IRewardDistributor`](https://github.com/Synthetixio/synthetix-v3/blob/main/packages/synthetix-main/contracts/interfaces/external/IRewardDistributor.sol) interface. This consists of:
+
+- `function payout(uint128 accountId, uint128 poolId, address collateralType, address sender, uint amount) external returns (bool);` - A function which should transfer `amount` of rewards to the `sender` address.
 
 :::caution
 For security reasons, the payout function should revert unless `msg.sender` is equal to [Synthetix’s Core System address](/protocol/technical-reference/deployment-addresses).
