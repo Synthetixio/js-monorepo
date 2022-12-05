@@ -7,7 +7,9 @@ import { useQueryClient } from '@tanstack/react-query';
 
 export const ClaimLiquidationBtn: FC<{ amountSNX?: number }> = ({ amountSNX }) => {
   const queryClient = useQueryClient();
-  const canClaim = Boolean(amountSNX);
+  // Liquidation claim threshold set as 0.01
+  const canClaim = Boolean(amountSNX && amountSNX >= 0.01);
+
   const {
     mutate,
     modalOpen,
@@ -30,7 +32,7 @@ export const ClaimLiquidationBtn: FC<{ amountSNX?: number }> = ({ amountSNX }) =
   return (
     <>
       <Button
-        disabled={Boolean(isGasEnabledAndNotFetched || !amountSNX || error)}
+        disabled={Boolean(isGasEnabledAndNotFetched || !canClaim || error)}
         w={['100%', '100%', '100%', '80px']}
         ml={[4, 4, 4, 4]}
         onClick={handleSubmit}
