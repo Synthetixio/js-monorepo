@@ -390,11 +390,11 @@ export const Rewards = () => {
         endDate={null}
         isLoading={isLoading}
         RewardBalance={() => {
-          if (liquidationData?.liquidatorRewards.eq(0)) return <>-</>;
+          if (liquidationData?.liquidatorRewards.lt(0.01)) return <>-</>;
           return <>{formatNumber(liquidationData?.liquidatorRewards?.toNumber() || 0)} SNX</>;
         }}
         RewardsBadge={() => {
-          const nothingToClaim = liquidationData?.liquidatorRewards.eq(0);
+          const nothingToClaim = liquidationData?.liquidatorRewards.lt(0.01);
           const hasClaimed = false; // TODO figure out a way to know if a user has ever claimed liq rewards
           if (nothingToClaim && !hasClaimed) return null;
           return (
