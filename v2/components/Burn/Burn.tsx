@@ -443,7 +443,7 @@ const getBurnAmountForCalculations = (
     case 'sUSDBalance':
       return burnAmountSusd === '' ? undefined : susdBalance;
     default:
-      return undefined;
+      return burnAmountSusd === '' ? undefined : parseFloatWithCommas(burnAmountSusd);
   }
 };
 export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
