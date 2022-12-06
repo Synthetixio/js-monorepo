@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 
 import { TabContainer } from '../../components/common';
 
@@ -16,10 +16,10 @@ const MigrateTab = () => {
   const claimableAmount = escrowDataQuery?.data?.claimableAmount ?? wei(0);
   const escrowData = escrowDataQuery?.data ?? null;
   const totalEscrowed = escrowData?.totalEscrowed ?? wei(0);
-  const entryIds = useMemo(
-    () => escrowData?.claimableEntryIdsInChunk?.map((v) => v.map((eid) => eid.toBN())) ?? [],
-    [escrowData]
-  );
+  const entryIds =
+    escrowData?.migratableEntryIdsInChunk?.map((entries) =>
+      entries.filter((entry) => entry).map((entry) => entry.toBN())
+    ) ?? [];
 
   const [isVestNeeded, setIsVestNeeded] = useState<boolean>(false);
   const [gasPrice, setGasPrice] = useState<GasPrice | undefined>(undefined);
