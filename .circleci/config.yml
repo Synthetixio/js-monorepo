@@ -70,6 +70,14 @@ commands:
       - restore_cache:
           keys:
             - build-no-private-{{ .Environment.CACHE_VERSION }}-{{ checksum "/tmp/checksum.txt" }}
+  install-foundry:
+    steps:
+      - run:
+          name: Install foundry for cannon, required to build v3/contracts
+          working_directory: /tmp/app
+          command: |-
+            curl -L https://foundry.paradigm.xyz | bash
+            source /root/.bashrc
 
 jobs:
   yarn-install:
@@ -165,6 +173,7 @@ jobs:
       - checkout
       - yarn-install
       - build-restore
+      - install-foundry
       - run:
           name: Build
           command: |-
@@ -177,12 +186,6 @@ jobs:
               git diff --name-only --exit-code
             fi
       - build-save
-      - run:
-          name: Install foundry for cannon, required to build v3/contracts
-          working_directory: /tmp/app
-          command: |-
-            curl -L https://foundry.paradigm.xyz | bash
-            source /root/.bashrc
       - run: yarn typecheck
 
   v2-e2e:
@@ -195,6 +198,7 @@ jobs:
     steps:
       - checkout
       - yarn-install
+      - install-foundry
 
       - run:
           name: Run server localhost:3000
@@ -203,13 +207,9 @@ jobs:
           background: true
 
       - run:
-          name: Install foundry and run anvil localhost:8545
+          name: Run anvil localhost:8545
           working_directory: /tmp/app
-          command: |-
-            curl -L https://foundry.paradigm.xyz | bash
-            source /root/.bashrc
-            foundryup
-            anvil --fork-url https://mainnet.infura.io/v3/$INFURA_KEY
+          command: anvil --fork-url https://mainnet.infura.io/v3/$INFURA_KEY
           background: true
 
       - run:
