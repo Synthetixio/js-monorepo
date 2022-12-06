@@ -183,8 +183,6 @@ jobs:
           command: |-
             curl -L https://foundry.paradigm.xyz | bash
             source /root/.bashrc
-
-          background: true
       - run: yarn typecheck
 
   v2-e2e:
