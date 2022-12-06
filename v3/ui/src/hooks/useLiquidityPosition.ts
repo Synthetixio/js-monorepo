@@ -5,7 +5,7 @@ import { formatValue } from '../utils/helpers';
 import Big from 'big.js';
 import { CollateralType } from '../utils/types';
 
-export const useStakingPosition = (
+export const useLiquidityPosition = (
   accountId: string,
   poolId: string,
   collateral: CollateralType

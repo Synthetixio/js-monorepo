@@ -2,7 +2,7 @@ import { Text, Box, Flex, Heading } from '@chakra-ui/react';
 import { FC } from 'react';
 import { parseUnits } from '../../../../utils/helpers';
 import { CollateralType } from '../../../../utils/types';
-import { Balance } from '../../Stake/Balance';
+import { Balance } from '../../Deposit/Balance';
 import { NumberInput } from './NumberInput';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
   collateralAmount: number;
 }
 
-export const Unstake: FC<Props> = ({ collateral, collateralAmount, value, onChange }) => {
+export const Withdraw: FC<Props> = ({ collateral, collateralAmount, value, onChange }) => {
   return (
     <>
       <Heading fontSize="md" mb="1">

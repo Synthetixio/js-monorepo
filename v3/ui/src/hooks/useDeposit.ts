@@ -6,7 +6,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
 import { contracts, getChainById } from '../utils/constants';
 import { accountsState, chainIdState, transactionState } from '../utils/state';
-import { CollateralType, StakingPositionType } from '../utils/types';
+import { CollateralType, LiquidityPositionType } from '../utils/types';
 import { useApprove } from './useApprove';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
@@ -14,7 +14,7 @@ import { useWrapEth } from './useWrapEth';
 
 interface Props {
   accountId?: string;
-  stakingPositions: Record<string, StakingPositionType>;
+  liquidityPositions: Record<string, LiquidityPositionType>;
   amount: string;
   selectedCollateralType: CollateralType;
   selectedPoolId: string;
@@ -23,9 +23,9 @@ interface Props {
   onSuccess: () => void;
 }
 
-export const useStake = ({
+export const useDeposit = ({
   accountId,
-  stakingPositions,
+  liquidityPositions,
   amount,
   selectedCollateralType,
   selectedPoolId,
@@ -59,15 +59,15 @@ export const useStake = ({
   const calls: MulticallCall[] = useMemo(() => {
     const id = accountId ?? newAccountId;
     const key = `${selectedPoolId}-${selectedCollateralType.symbol}`;
-    const currentStakingPosition = stakingPositions[key];
+    const currentLiquidityPosition = liquidityPositions[key];
 
     const amountToDelegate = Boolean(accountId)
-      ? (currentStakingPosition?.collateralAmount || BigNumber.from(0)).add(amountBN)
+      ? (currentLiquidityPosition?.collateralAmount || BigNumber.from(0)).add(amountBN)
       : amountBN;
 
     if (!snxProxy) return [];
 
-    const stakingCalls: MulticallCall[] = [
+    const depositingCalls: MulticallCall[] = [
       {
         contract: snxProxy.contract,
         functionName: 'deposit',
@@ -96,14 +96,14 @@ export const useStake = ({
       });
     }
 
-    return [...initialCalls, ...stakingCalls];
+    return [...initialCalls, ...depositingCalls];
   }, [
     accountId,
     newAccountId,
     selectedPoolId,
     selectedCollateralType.symbol,
     selectedCollateralType.address,
-    stakingPositions,
+    liquidityPositions,
     amountBN,
     snxProxy,
     poolId,
@@ -126,7 +126,7 @@ export const useStake = ({
       } else {
         toast({
           title: 'Update your collateral',
-          description: 'Your staked collateral amounts have been updated.',
+          description: 'Your deposited collateral amounts have been updated.',
           status: 'info',
           isClosable: true,
           duration: 9000,
@@ -145,7 +145,7 @@ export const useStake = ({
         // TODO: get language from noah
         toast({
           title: 'Success',
-          description: 'Your staked collateral amounts have been updated.',
+          description: 'Your deposited collateral amounts have been updated.',
           status: 'success',
           duration: 5000,
         });
@@ -168,7 +168,7 @@ export const useStake = ({
       onMutate: () => {
         toast({
           title: 'Approve collateral for transfer',
-          description: 'The next transaction will create your account and stake this collateral.',
+          description: 'The next transaction will create your account and deposit this collateral.',
           status: 'info',
         });
       },
@@ -199,7 +199,7 @@ export const useStake = ({
       transactions.push({
         title: 'Wrap ETH',
         subtitle: amountBN.gt(wrapEthBalance?.value || 0)
-          ? 'You must wrap your ether before staking.'
+          ? 'You must wrap your ether before depositing.'
           : undefined,
         call: async (useBalance) => await wrap(amountBN, useBalance),
         checkboxLabel: amountBN.gt(wrapEthBalance?.value || 0)
@@ -218,7 +218,7 @@ export const useStake = ({
     }
 
     transactions.push({
-      title: 'Stake ' + selectedCollateralType.symbol.toUpperCase(),
+      title: 'Deposit ' + selectedCollateralType.symbol.toUpperCase(),
       subtitle: `This will transfer your ${selectedCollateralType.symbol.toUpperCase()} to Synthetix.`,
       call: async () => await multiTxn.exec(),
     });

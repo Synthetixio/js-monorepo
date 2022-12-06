@@ -125,9 +125,9 @@ export const useManagePosition = (
   const multicallTitles = useMemo(() => {
     const title: string[] = [];
     if (collateralChange > 0) {
-      title.push('Stake ' + position.collateral.symbol.toUpperCase());
+      title.push('Deposit ' + position.collateral.symbol.toUpperCase());
     } else if (collateralChange < 0) {
-      title.push('Unstake ' + position.collateral.symbol.toUpperCase());
+      title.push('Withdraw ' + position.collateral.symbol.toUpperCase());
     }
 
     if (debtChange > 0) {
@@ -148,7 +148,7 @@ export const useManagePosition = (
       transactions.push({
         title: 'Wrap ETH',
         subtitle: collateralChangeBN.gt(wrapEthBalance?.value || 0)
-          ? 'You must wrap your ether before staking.'
+          ? 'You must wrap your ether before depositing.'
           : undefined,
         call: async (useBalance) => await wrap(collateralChangeBN, useBalance),
         checkboxLabel: collateralChangeBN.gt(wrapEthBalance?.value || 0)

@@ -6,5 +6,5 @@ export * from './useOwnerAccounts';
 export * from './useContractEvent';
 export * from './useMulticall';
 export * from './useManagePermissions';
-export * from './useStakingPositions';
+export * from './useLiquidityPositions';
 export * from './usePools';

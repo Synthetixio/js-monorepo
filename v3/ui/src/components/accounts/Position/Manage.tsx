@@ -1,13 +1,13 @@
 import { Custom } from './Manage/Custom';
 import { Mint } from './Manage/Mint';
 import { Preview } from './Manage/Preview';
-import { Unstake } from './Manage/Unstake';
+import { Withdraw } from './Manage/Withdraw';
 import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Button } from '@chakra-ui/react';
 
 import { MaintainCRatio } from './Manage/MaintainCRatio';
 import { useCallback, useState } from 'react';
 import { useManagePosition } from '../../../hooks/useManagePosition';
-import { Stake } from './Manage/Stake';
+import { Deposit } from './Manage/Deposit';
 import { Burn } from './Manage/Burn';
 import { useValidatePosition } from '../../../hooks/useValidatePosition';
 import { useTranslation } from 'react-i18next';
@@ -91,7 +91,7 @@ export default function Manage({
           </TabPanel>
           <TabPanel>
             <Box mb="6">
-              <Stake
+              <Deposit
                 onChange={setCollateralChange}
                 value={collateralChange}
                 collateral={collateral}
@@ -106,7 +106,7 @@ export default function Manage({
               <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
             </Box>
             <Box mb="6">
-              <Unstake
+              <Withdraw
                 collateral={collateral}
                 collateralAmount={collateralAmount}
                 onChange={(val) => setCollateralChange(-val)}

@@ -4,9 +4,9 @@ import { useRecoilState } from 'recoil';
 import { collateralTypesState } from '../../utils/state';
 import { useMemo } from 'react';
 import { Position } from '../../components/accounts/Position';
-import { StakingNav } from '../../components/accounts/StakingNav';
+import { DepositingNav } from '../../components/accounts/DepositingNav';
 
-export function StakingPosition() {
+export function LiquidityPosition() {
   const { id: accountId, poolId, collateral: collateralSymbol } = useParams();
 
   const [collateralTypes] = useRecoilState(collateralTypesState);
@@ -21,7 +21,7 @@ export function StakingPosition() {
 
   return (
     <Container>
-      <StakingNav />
+      <DepositingNav />
       <Position collateral={collateral} poolId={poolId} accountId={accountId} />
     </Container>
   );

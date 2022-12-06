@@ -1,39 +1,46 @@
 import { Box, Heading, Skeleton, Stack } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { Stake } from '../../components/accounts/Stake';
-import { StakingNav } from '../../components/accounts/StakingNav';
-import { StakingPositions } from '../../components/accounts/StakingPositions';
-import { useStakingPositions } from '../../hooks';
+import { Deposit } from '../../components/accounts/Deposit';
+import { DepositingNav } from '../../components/accounts/DepositingNav';
+import { LiquidityPositions } from '../../components/accounts/LiquidityPositions';
+import { useLiquidityPositions } from '../../hooks';
 
 export function Account() {
   const { id: accountId } = useParams();
-  const { data: stakingPositions, isLoading, refetch } = useStakingPositions(accountId || '');
+  const { data: liquidityPositions, isLoading, refetch } = useLiquidityPositions(accountId || '');
 
   return (
     <Box>
-      <StakingNav />
+      <DepositingNav />
       {isLoading && (
-        <Box height={!isLoading && Boolean(stakingPositions) ? '0px' : '180px'} position="relative">
+        <Box
+          height={!isLoading && Boolean(liquidityPositions) ? '0px' : '180px'}
+          position="relative"
+        >
           <Stack position="absolute" top="0" left="0" width="100%">
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(stakingPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
+            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
           </Stack>
         </Box>
       )}
-      {stakingPositions && (
-        <StakingPositions positions={stakingPositions ?? {}} refetch={refetch} />
+      {liquidityPositions && (
+        <LiquidityPositions positions={liquidityPositions ?? {}} refetch={refetch} />
       )}
       <Heading size="md" mb="3">
-        Stake Collateral
+        Deposit Collateral
       </Heading>
-      <Stake accountId={accountId} stakingPositions={stakingPositions ?? {}} refetch={refetch} />
+      <Deposit
+        accountId={accountId}
+        liquidityPositions={liquidityPositions ?? {}}
+        refetch={refetch}
+      />
     </Box>
   );
 }

@@ -4,22 +4,22 @@ import { collateralTypesState, poolsState } from '../utils/state';
 import { useSnxProxy } from './useContract';
 import { poolsData } from '../utils/constants';
 import { useSynthetixProxyEvent } from './useContractEvent';
-import { CollateralType, StakingPositionType } from '../utils/types';
+import { CollateralType, LiquidityPositionType } from '../utils/types';
 import { formatValue } from '../utils/helpers';
 import Big from 'big.js';
 
-interface StakingCall {
+interface DepositingCall {
   poolId: string;
   collateral: CollateralType;
   functionName: string;
 }
 
-export const useStakingPositions = (accountId: string) => {
+export const useLiquidityPositions = (accountId: string) => {
   const pools = useRecoilValue(poolsState);
   const supportedCollateralTypes = useRecoilValue(collateralTypesState);
   const snxProxy = useSnxProxy();
 
-  const calls: StakingCall[] = [];
+  const calls: DepositingCall[] = [];
   const functionNames = ['getPositionCollateral', 'getPositionDebt'];
   functionNames.forEach((functionName) => {
     pools.forEach((poolId) => {
@@ -33,7 +33,7 @@ export const useStakingPositions = (accountId: string) => {
     });
   });
 
-  const getStakingPositions = useContractReads({
+  const getLiquidityPositions = useContractReads({
     enabled: true,
     contracts: calls.map((call) => ({
       addressOrName: snxProxy?.address,
@@ -50,7 +50,7 @@ export const useStakingPositions = (accountId: string) => {
 
       const collaterals = results.filter((val) => val.functionName === 'getPositionCollateral');
       const debts = results.filter((val) => val.functionName === 'getPositionDebt');
-      const positions: Record<string, StakingPositionType> = {};
+      const positions: Record<string, LiquidityPositionType> = {};
 
       collaterals.forEach((c, i) => {
         if (!c.value || c.value.amount.eq(0)) {
@@ -85,10 +85,10 @@ export const useStakingPositions = (accountId: string) => {
     listener: (event) => {
       const [userAccountId] = event;
       if (accountId === userAccountId.toString()) {
-        getStakingPositions.refetch();
+        getLiquidityPositions.refetch();
       }
     },
   });
 
-  return getStakingPositions;
+  return getLiquidityPositions;
 };

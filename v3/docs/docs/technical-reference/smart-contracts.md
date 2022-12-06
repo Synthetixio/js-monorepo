@@ -539,12 +539,12 @@ Emitted when `amount` of collateral of type `collateralType` is withdrawn from a
 function mintUsd(uint128 accountId, uint128 poolId, address collateralType, uint256 amount) external
 ```
 
-Mints {amount} of snxUSD with the specified staking position.
+Mints {amount} of snxUSD with the specified liquidity position.
 
 Requirements:
 
 - `msg.sender` must be the owner of the account, have the `ADMIN` permission, or have the `MINT` permission.
-- After minting, the collateralization ratio of the staking position must not be below the target collateralization ratio for the corresponding collateral type.
+- After minting, the collateralization ratio of the liquidity position must not be below the target collateralization ratio for the corresponding collateral type.
 
 Emits a {UsdMinted} event.
 
@@ -554,7 +554,7 @@ Emits a {UsdMinted} event.
 function burnUsd(uint128 accountId, uint128 poolId, address collateralType, uint256 amount) external
 ```
 
-Burns {amount} of snxUSD with the specified staking position.
+Burns {amount} of snxUSD with the specified liquidity position.
 
 Requirements:
 
@@ -570,7 +570,7 @@ Emits a {UsdMinted} event.
 event UsdMinted(uint128 accountId, uint128 poolId, address collateralType, uint256 amount, address sender)
 ```
 
-Emitted when {sender} mints {amount} of snxUSD with the specified staking position.
+Emitted when {sender} mints {amount} of snxUSD with the specified liquidity position.
 
 #### UsdBurned
 
@@ -578,7 +578,7 @@ Emitted when {sender} mints {amount} of snxUSD with the specified staking positi
 event UsdBurned(uint128 accountId, uint128 poolId, address collateralType, uint256 amount, address sender)
 ```
 
-Emitted when {sender} burns {amount} of snxUSD with the specified staking position.
+Emitted when {sender} burns {amount} of snxUSD with the specified liquidity position.
 
 ## Liquidation Module
 
@@ -1258,7 +1258,7 @@ Requirements:
 
 - `msg.sender` must be the owner of the account, have the `ADMIN` permission, or have the `DELEGATE` permission.
 - If increasing the amount delegated, it must not exceed the available collateral (`getAccountAvailableCollateral`) associated with the account.
-- If decreasing the amount delegated, the staking position must have a collateralization ratio greater than the target collateralization ratio for the corresponding collateral type.
+- If decreasing the amount delegated, the liquidity position must have a collateralization ratio greater than the target collateralization ratio for the corresponding collateral type.
 
 Emits a {DelegationUpdated} event.
 
@@ -1268,7 +1268,7 @@ Emits a {DelegationUpdated} event.
 function getPositionCollateralizationRatio(uint128 accountId, uint128 poolId, address collateralType) external returns (uint256)
 ```
 
-Returns the collateralization ratio of the specified staking position. If debt is negative, this function will return 0.
+Returns the collateralization ratio of the specified liquidity position. If debt is negative, this function will return 0.
 
 Call this function using `callStatic` to treat it as a view function.
 The return value is a percentage with 18 decimals places.
@@ -1279,7 +1279,7 @@ The return value is a percentage with 18 decimals places.
 function getPositionDebt(uint128 accountId, uint128 poolId, address collateralType) external returns (int256)
 ```
 
-Returns the debt of the specified staking position. Credit is expressed as negative debt.
+Returns the debt of the specified liquidity position. Credit is expressed as negative debt.
 
 This is not a view function, and actually updates the entire debt distribution chain.
 To call this externally as a view function, use `staticall`.
@@ -1290,7 +1290,7 @@ To call this externally as a view function, use `staticall`.
 function getPositionCollateral(uint128 accountId, uint128 poolId, address collateralType) external view returns (uint256 collateralAmount, uint256 collateralValue)
 ```
 
-Returns the amount and value of the collateral associated with the specified staking position.
+Returns the amount and value of the collateral associated with the specified liquidity position.
 
 Call this function using `callStatic` to treat it as a view function.
 collateralAmount is represented as an integer with 18 decimals.
@@ -1302,7 +1302,7 @@ collateralValue is represented as an integer with the number of decimals specifi
 function getPosition(uint128 accountId, uint128 poolId, address collateralType) external returns (uint256 collateralAmount, uint256 collateralValue, int256 debt, uint256 collateralizationRatio)
 ```
 
-Returns all information pertaining to a specified staking position in the vault module.
+Returns all information pertaining to a specified liquidity position in the vault module.
 
 #### getVaultDebt
 
@@ -1346,4 +1346,4 @@ The return value is a percentage with 18 decimals places.
 event DelegationUpdated(uint128 accountId, uint128 poolId, address collateralType, uint256 amount, uint256 leverage, address sender)
 ```
 
-Emitted when {sender} updates the delegation of collateral in the specified staking position.
+Emitted when {sender} updates the delegation of collateral in the specified liquidity position.

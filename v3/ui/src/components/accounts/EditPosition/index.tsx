@@ -4,7 +4,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import { poolsData } from '../../../utils/constants';
 import { poolsState } from '../../../utils/state';
-import StakerOption from './StakerOption';
+import DepositrOption from './DepositorOption';
 
 type PropsType = {
   onClose: () => void;
@@ -22,7 +22,7 @@ export default function EditPosition({ onClose }: PropsType) {
   return (
     <>
       <Box>
-        <StakerOption checked={selectedPool === '0'} name="No Pool" value="0" key="0" />
+        <DepositrOption checked={selectedPool === '0'} name="No Pool" value="0" key="0" />
         <RadioGroup
           onChange={(v) => {
             setSelectedPool(v);
@@ -32,7 +32,7 @@ export default function EditPosition({ onClose }: PropsType) {
           {pools.map((option) => {
             const { name } = poolsData[option];
             return (
-              <StakerOption
+              <DepositrOption
                 checked={selectedPool ? selectedPool : poolValue}
                 name={name}
                 value={option}

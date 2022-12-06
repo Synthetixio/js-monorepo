@@ -1,4 +1,4 @@
-import { StakingStats } from './StakingStats';
+import { DepositingStats } from './Callouts';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Spinner, Box } from '@chakra-ui/react';
 import Manage from './Manage';
 import { Rewards } from './Rewards/Rewards';
@@ -6,7 +6,7 @@ import { Pool } from './Pool';
 import { FC } from 'react';
 import { CollateralType } from '../../../utils/types';
 import { formatValue } from '../../../utils/helpers';
-import { useStakingPosition } from '../../../hooks/useStakingPosition';
+import { useLiquidityPosition } from '../../../hooks/useLiquidityPosition';
 
 interface Props {
   accountId: string;
@@ -21,7 +21,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
     cRatio,
     collateralAmount: collateralAmountBN,
     refetch,
-  } = useStakingPosition(accountId, poolId, collateral);
+  } = useLiquidityPosition(accountId, poolId, collateral);
 
   if (isLoading)
     return (
@@ -38,7 +38,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
 
   return (
     <>
-      <StakingStats
+      <DepositingStats
         collateral={collateral}
         collateralValue={collateralValue}
         collateralAmount={collateralAmount}
@@ -85,8 +85,8 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
     // <Box mb="2">
     //   <Table size="sm" variant="simple">
     //     <TableCaption color="white">
-    //       {/* if only staking with spartan council fund */}
-    //       <InfoOutlineIcon display="inline-block" transform="translateY(-1px)" /> Your staking
+    //       {/* if only depositing with spartan council fund */}
+    //       <InfoOutlineIcon display="inline-block" transform="translateY(-1px)" /> Your depositing
     //       position is currently managed by{' '}
     //       <NavLink to="/dao">
     //         <Link fontWeight="semibold" color="cyan.500">

@@ -15,7 +15,7 @@ interface Props {
   cRatio: number;
 }
 
-export const StakingStats: FC<Props> = ({
+export const DepositingStats: FC<Props> = ({
   collateral,
   debt,
   collateralAmount,
