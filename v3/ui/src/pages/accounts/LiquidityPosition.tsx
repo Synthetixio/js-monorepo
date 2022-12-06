@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 import { Position } from '../../components/accounts/Position';
 import { StakingNav } from '../../components/accounts/StakingNav';
 
-export function StakingPosition() {
+export function LiquidityPosition() {
   const { id: accountId, poolId, collateral: collateralSymbol } = useParams();
 
   const [collateralTypes] = useRecoilState(collateralTypesState);

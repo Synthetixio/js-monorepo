@@ -12,7 +12,7 @@ interface Props {
   collateralAmount: number;
 }
 
-export const Unstake: FC<Props> = ({ collateral, collateralAmount, value, onChange }) => {
+export const Withdraw: FC<Props> = ({ collateral, collateralAmount, value, onChange }) => {
   return (
     <>
       <Heading fontSize="md" mb="1">

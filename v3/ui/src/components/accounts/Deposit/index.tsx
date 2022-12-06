@@ -27,7 +27,7 @@ import { BigNumber, ethers } from 'ethers';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { useNetwork } from 'wagmi';
-import { CollateralType, StakingPositionType } from '../../../utils/types';
+import { CollateralType, LiquidityPositionType } from '../../../utils/types';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 import { FC } from 'react';
 import { useStake } from '../../../hooks/useDeposit';
@@ -40,11 +40,11 @@ type FormType = {
 
 interface Props {
   accountId?: string;
-  stakingPositions?: Record<string, StakingPositionType>;
+  liquidityPositions?: Record<string, LiquidityPositionType>;
   refetch?: () => void;
 }
 
-export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) => {
+export const Stake: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
   const [collateralTypes] = useRecoilState(collateralTypesState);
@@ -106,7 +106,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
   };
   const { isLoading, multiTxn, createAccount } = useStake({
     accountId,
-    stakingPositions,
+    liquidityPositions,
     amount,
     selectedCollateralType,
     selectedPoolId,

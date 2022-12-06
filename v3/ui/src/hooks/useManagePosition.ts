@@ -127,7 +127,7 @@ export const useManagePosition = (
     if (collateralChange > 0) {
       title.push('Stake ' + position.collateral.symbol.toUpperCase());
     } else if (collateralChange < 0) {
-      title.push('Unstake ' + position.collateral.symbol.toUpperCase());
+      title.push('Withdraw ' + position.collateral.symbol.toUpperCase());
     }
 
     if (debtChange > 0) {

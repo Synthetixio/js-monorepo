@@ -19,8 +19,8 @@ export function Collateral() {
         your c-ratio and reduce risk of liquidation by providing more collateral.
       </Text>
 
-      {/* StakingPositions requires different props */}
-      {/* <StakingPositions accountId={id} /> */}
+      {/* LiquidityPositions requires different props */}
+      {/* <LiquidityPositions accountId={id} /> */}
 
       <Heading size="md" mb="3">
         Stake Additional Collateral

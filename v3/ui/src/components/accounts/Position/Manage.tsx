@@ -1,7 +1,7 @@
 import { Custom } from './Manage/Custom';
 import { Mint } from './Manage/Mint';
 import { Preview } from './Manage/Preview';
-import { Unstake } from './Manage/Withdraw';
+import { Withdraw } from './Manage/Withdraw';
 import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Button } from '@chakra-ui/react';
 
 import { MaintainCRatio } from './Manage/MaintainCRatio';
@@ -106,7 +106,7 @@ export default function Manage({
               <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
             </Box>
             <Box mb="6">
-              <Unstake
+              <Withdraw
                 collateral={collateral}
                 collateralAmount={collateralAmount}
                 onChange={(val) => setCollateralChange(-val)}

@@ -6,7 +6,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
 import { contracts, getChainById } from '../utils/constants';
 import { accountsState, chainIdState, transactionState } from '../utils/state';
-import { CollateralType, StakingPositionType } from '../utils/types';
+import { CollateralType, LiquidityPositionType } from '../utils/types';
 import { useApprove } from './useApprove';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
@@ -14,7 +14,7 @@ import { useWrapEth } from './useWrapEth';
 
 interface Props {
   accountId?: string;
-  stakingPositions: Record<string, StakingPositionType>;
+  liquidityPositions: Record<string, LiquidityPositionType>;
   amount: string;
   selectedCollateralType: CollateralType;
   selectedPoolId: string;
@@ -25,7 +25,7 @@ interface Props {
 
 export const useStake = ({
   accountId,
-  stakingPositions,
+  liquidityPositions,
   amount,
   selectedCollateralType,
   selectedPoolId,
@@ -59,10 +59,10 @@ export const useStake = ({
   const calls: MulticallCall[] = useMemo(() => {
     const id = accountId ?? newAccountId;
     const key = `${selectedPoolId}-${selectedCollateralType.symbol}`;
-    const currentStakingPosition = stakingPositions[key];
+    const currentLiquidityPosition = liquidityPositions[key];
 
     const amountToDelegate = Boolean(accountId)
-      ? (currentStakingPosition?.collateralAmount || BigNumber.from(0)).add(amountBN)
+      ? (currentLiquidityPosition?.collateralAmount || BigNumber.from(0)).add(amountBN)
       : amountBN;
 
     if (!snxProxy) return [];
@@ -103,7 +103,7 @@ export const useStake = ({
     selectedPoolId,
     selectedCollateralType.symbol,
     selectedCollateralType.address,
-    stakingPositions,
+    liquidityPositions,
     amountBN,
     snxProxy,
     poolId,

@@ -15,7 +15,7 @@ export type CollateralType = {
 
 export type ChainName = keyof typeof chains;
 
-export type StakingPositionType = {
+export type LiquidityPositionType = {
   id: string;
   accountId: string;
   poolId: string;

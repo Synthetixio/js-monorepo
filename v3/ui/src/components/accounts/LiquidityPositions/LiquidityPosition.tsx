@@ -3,17 +3,17 @@ import { Link, Td, Text, Tr } from '@chakra-ui/react';
 import { BigNumber } from 'ethers';
 import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import { formatValue } from '../../../utils/helpers';
-import { StakingPositionType } from '../../../utils/types';
+import { LiquidityPositionType } from '../../../utils/types';
 import { poolsData } from '../../../utils/constants';
 import { FC } from 'react';
 import { Amount } from '../../shared/Amount/Amount';
 
 interface Props {
-  position: StakingPositionType;
+  position: LiquidityPositionType;
   refetch: () => void;
 }
 
-export const StakingPosition: FC<Props> = ({ position }) => {
+export const LiquidityPosition: FC<Props> = ({ position }) => {
   // If the connected wallet doesn’t own this account token, remove/disable the interactivity
 
   const { collateralAmount: collateralAmountBN, collateralType, cRatio, debt, poolId } = position;

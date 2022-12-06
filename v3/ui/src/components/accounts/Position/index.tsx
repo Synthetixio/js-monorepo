@@ -6,7 +6,7 @@ import { Pool } from './Pool';
 import { FC } from 'react';
 import { CollateralType } from '../../../utils/types';
 import { formatValue } from '../../../utils/helpers';
-import { useStakingPosition } from '../../../hooks/useLiquidityPosition';
+import { useLiquidityPosition } from '../../../hooks/useLiquidityPosition';
 
 interface Props {
   accountId: string;
@@ -21,7 +21,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
     cRatio,
     collateralAmount: collateralAmountBN,
     refetch,
-  } = useStakingPosition(accountId, poolId, collateral);
+  } = useLiquidityPosition(accountId, poolId, collateral);
 
   if (isLoading)
     return (
