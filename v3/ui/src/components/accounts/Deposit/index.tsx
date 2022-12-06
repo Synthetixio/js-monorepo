@@ -30,7 +30,7 @@ import { useNetwork } from 'wagmi';
 import { CollateralType, LiquidityPositionType } from '../../../utils/types';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 import { FC } from 'react';
-import { useStake } from '../../../hooks/useDeposit';
+import { useDeposit } from '../../../hooks/useDeposit';
 
 type FormType = {
   collateralType: CollateralType;
@@ -44,7 +44,7 @@ interface Props {
   refetch?: () => void;
 }
 
-export const Stake: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
+export const Deposit: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
   const [collateralTypes] = useRecoilState(collateralTypesState);
@@ -104,7 +104,7 @@ export const Stake: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }
     refetch?.();
     balanceData.refetch();
   };
-  const { isLoading, multiTxn, createAccount } = useStake({
+  const { isLoading, multiTxn, createAccount } = useDeposit({
     accountId,
     liquidityPositions,
     amount,
@@ -156,7 +156,7 @@ export const Stake: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }
                     color="blue.200"
                     border="1px solid rgba(255,255,255,0.33)"
                     size="lg"
-                    aria-label="Configure Staking Position"
+                    aria-label="Configure Depositing Position"
                     icon={<LockIcon />}
                   />
                 </Tooltip>
@@ -173,7 +173,7 @@ export const Stake: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }
                   {/* @ts-ignore */}
                   {formState.errors.amount?.type === 'insufficientBalance'
                     ? 'Insufficient Balance'
-                    : 'Stake'}
+                    : 'Deposit'}
                 </Button>
               ) : (
                 <Button

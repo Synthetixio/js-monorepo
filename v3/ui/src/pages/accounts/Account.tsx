@@ -1,7 +1,7 @@
 import { Box, Heading, Skeleton, Stack } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { Stake } from '../../components/accounts/Deposit';
-import { StakingNav } from '../../components/accounts/StakingNav';
+import { Deposit } from '../../components/accounts/Deposit';
+import { DepositingNav } from '../../components/accounts/DepositingNav';
 import { LiquidityPositions } from '../../components/accounts/LiquidityPositions';
 import { useLiquidityPositions } from '../../hooks';
 
@@ -11,7 +11,7 @@ export function Account() {
 
   return (
     <Box>
-      <StakingNav />
+      <DepositingNav />
       {isLoading && (
         <Box
           height={!isLoading && Boolean(liquidityPositions) ? '0px' : '180px'}
@@ -34,9 +34,9 @@ export function Account() {
         <LiquidityPositions positions={liquidityPositions ?? {}} refetch={refetch} />
       )}
       <Heading size="md" mb="3">
-        Stake Collateral
+        Deposit Collateral
       </Heading>
-      <Stake
+      <Deposit
         accountId={accountId}
         liquidityPositions={liquidityPositions ?? {}}
         refetch={refetch}

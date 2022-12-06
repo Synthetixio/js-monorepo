@@ -1,4 +1,4 @@
-import { StakingStats } from './Callouts';
+import { DepositingStats } from './Callouts';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Spinner, Box } from '@chakra-ui/react';
 import Manage from './Manage';
 import { Rewards } from './Rewards/Rewards';
@@ -38,7 +38,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
 
   return (
     <>
-      <StakingStats
+      <DepositingStats
         collateral={collateral}
         collateralValue={collateralValue}
         collateralAmount={collateralAmount}
@@ -85,8 +85,8 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
     // <Box mb="2">
     //   <Table size="sm" variant="simple">
     //     <TableCaption color="white">
-    //       {/* if only staking with spartan council fund */}
-    //       <InfoOutlineIcon display="inline-block" transform="translateY(-1px)" /> Your staking
+    //       {/* if only depositing with spartan council fund */}
+    //       <InfoOutlineIcon display="inline-block" transform="translateY(-1px)" /> Your depositing
     //       position is currently managed by{' '}
     //       <NavLink to="/dao">
     //         <Link fontWeight="semibold" color="cyan.500">

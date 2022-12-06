@@ -119,7 +119,7 @@ export const Custom: FC<Props> = ({
             This adjustment will&nbsp;
             {collateralChange !== 0 && (
               <strong>
-                {collateralChange > 0 ? 'stake' : 'withdraw'} {Math.abs(collateralChange)}&nbsp;
+                {collateralChange > 0 ? 'deposit' : 'withdraw'} {Math.abs(collateralChange)}&nbsp;
                 {collateral.symbol.toUpperCase()}
               </strong>
             )}

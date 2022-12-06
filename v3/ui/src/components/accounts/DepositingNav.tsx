@@ -10,7 +10,7 @@ import {
 import { useRecoilState } from 'recoil';
 import { accountsState } from '../../utils/state';
 
-export function StakingNav() {
+export function DepositingNav() {
   const [{ accounts: userAccounts }] = useRecoilState(accountsState);
   const { id } = useParams();
   const [search] = useSearchParams();

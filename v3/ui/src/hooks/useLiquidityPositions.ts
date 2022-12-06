@@ -8,7 +8,7 @@ import { CollateralType, LiquidityPositionType } from '../utils/types';
 import { formatValue } from '../utils/helpers';
 import Big from 'big.js';
 
-interface StakingCall {
+interface DepositingCall {
   poolId: string;
   collateral: CollateralType;
   functionName: string;
@@ -19,7 +19,7 @@ export const useLiquidityPositions = (accountId: string) => {
   const supportedCollateralTypes = useRecoilValue(collateralTypesState);
   const snxProxy = useSnxProxy();
 
-  const calls: StakingCall[] = [];
+  const calls: DepositingCall[] = [];
   const functionNames = ['getPositionCollateral', 'getPositionDebt'];
   functionNames.forEach((functionName) => {
     pools.forEach((poolId) => {

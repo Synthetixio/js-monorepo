@@ -8,7 +8,7 @@ type PropsType = {
   checked?: boolean;
 };
 
-export default function StakerOption({ name, value, checked = false }: PropsType) {
+export default function DepositrOption({ name, value, checked = false }: PropsType) {
   return (
     <Flex alignItems="center" mb="2.5" pb="2.5" borderBottom="1px solid rgba(255,255,255,0.3)">
       <Box>

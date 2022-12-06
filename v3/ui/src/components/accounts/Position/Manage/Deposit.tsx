@@ -13,7 +13,7 @@ interface Props {
 
 // TODO: This needs to change based on collateral type? At least heading
 
-export const Stake: FC<Props> = ({ collateral, value, onChange }) => {
+export const Deposit: FC<Props> = ({ collateral, value, onChange }) => {
   const balance = useTokenBalance(collateral.address);
 
   return (
