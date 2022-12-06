@@ -85,6 +85,7 @@ const TabContent: FC<TabContentProps> = ({
           {t('migrate-escrow.actions.migrate.action.migrate-button', {
             escrowedAmount: formatCurrency(vestingCurrencyKey, escrowedAmount, {
               currencyKey: vestingCurrencyKey,
+              minDecimals: 2,
             }),
           })}
         </StyledCTA>
