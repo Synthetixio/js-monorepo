@@ -354,7 +354,7 @@ export type EscrowData = {
   totalVested: Wei;
   totalBalancePendingMigration: Wei;
   claimableEntryIds?: Wei[];
-  claimableEntryIdsInChunk?: Wei[][];
+  migratableEntryIdsInChunk?: Wei[][];
 };
 
 export type Schedule = Array<
