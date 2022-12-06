@@ -77,7 +77,7 @@ commands:
           working_directory: /tmp/app
           command: |-
             curl -L https://foundry.paradigm.xyz | bash
-            source /root/.bashrc
+            source ~/.bashrc
             foundryup
 
 jobs:
