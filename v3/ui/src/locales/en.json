@@ -17,7 +17,7 @@
   },
   "home": {
     "createAccount": {
-      "description": "Deposit with Synthetix to back synthetic assets on-chain. You can earn yield but must also maintain your collateralization ratio."
+      "description": "Deposit with Synthetix to back synthetic assets on-chain. You can earn yield but must maintain your collateralization ratio."
     },
     "deposit": {
       "selectFund": "Select Fund",
