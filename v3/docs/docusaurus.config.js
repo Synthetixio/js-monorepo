@@ -24,7 +24,6 @@ const config = {
       ({
         docs: {
           routeBasePath: '/',
-          sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl: 'https://github.com/synthetixio/js-monorepo/tree/master/v3/docs',
         },
@@ -51,24 +50,6 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
-          {
-            type: 'doc',
-            docId: 'protocol/overview',
-            position: 'right',
-            label: 'Protocol',
-          },
-          {
-            type: 'doc',
-            docId: 'governance/overview',
-            position: 'right',
-            label: 'Governance',
-          },
-          {
-            type: 'doc',
-            docId: 'upgrades/overview',
-            position: 'right',
-            label: 'Upgrades',
-          },
           {
             href: 'https://github.com/Synthetixio/synthetix-v3',
             position: 'right',
