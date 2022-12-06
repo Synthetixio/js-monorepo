@@ -124,6 +124,7 @@ const TabContent: FC<TabContentProps> = ({
 
   return (
     <>
+      <SubHeadline>{t('migrate-escrow.actions.migrate.subtitle')}</SubHeadline>
       <InputContainer>
         <InputBox>
           <SNXLogo width="64" />
@@ -175,6 +176,9 @@ const TabContent: FC<TabContentProps> = ({
   );
 };
 
+const SubHeadline = styled.h4`
+  margin-top: 0;
+`;
 const Data = styled.p`
   color: ${(props) => props.theme.colors.white};
   font-family: ${(props) => props.theme.fonts.extended};
