@@ -10,7 +10,7 @@ Each liquidity position has a collateralization ratio (or _C-Ratio_). This repre
 
 The value of the collateral is calculated based on the price of the collateral reported by an oracle. The value of the debt is the amount of snxUSD minted with this liquidity position, minus the amount of snxUSD burned with this position, plus/minus the debt/credit it is responsible for by participating in a pool.
 
-**If a liquidity position’s collateralization ratio falls below its minimum collateralization, the position can be [liquidated](/depositing-positions/liquidations).** To reduce risk of liquidation, collateralization ratios can be increased by depositing additional collateral or burning snxUSD.
+**If a liquidity position’s collateralization ratio falls below its minimum collateralization, the position can be [liquidated](/liquidity-positions/liquidations).** To reduce risk of liquidation, collateralization ratios can be increased by depositing additional collateral or burning snxUSD.
 
 A position’s collateral, debt, and resulting C-Ratio can be retrieved with the [`getPositionCollateral`](/technical-reference/smart-contracts#getpositioncollateral), [`getPositionDebt`](/technical-reference/smart-contracts#getpositiondebt), and [`getPositionCollateralizationRatio`](/technical-reference/smart-contracts#getpositioncollateralizationratio) functions, respectively.
 
