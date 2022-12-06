@@ -1823,7 +1823,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled",
+                      "name": "depositingEnabled",
                       "indexed": true
                     }
                   ]
@@ -1935,7 +1935,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled"
+                      "name": "depositingEnabled"
                     }
                   ],
                   "outputs": []
@@ -2057,7 +2057,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -2101,7 +2101,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -5368,7 +5368,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled",
+                      "name": "depositingEnabled",
                       "indexed": true
                     }
                   ]
@@ -5480,7 +5480,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled"
+                      "name": "depositingEnabled"
                     }
                   ],
                   "outputs": []
@@ -5602,7 +5602,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -5646,7 +5646,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -8417,7 +8417,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled",
+                      "name": "depositingEnabled",
                       "indexed": true
                     }
                   ]
@@ -8529,7 +8529,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled"
+                      "name": "depositingEnabled"
                     }
                   ],
                   "outputs": []
@@ -8651,7 +8651,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -8695,7 +8695,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -18353,7 +18353,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled",
+                      "name": "depositingEnabled",
                       "indexed": true
                     }
                   ]
@@ -18465,7 +18465,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled"
+                      "name": "depositingEnabled"
                     }
                   ],
                   "outputs": []
@@ -18587,7 +18587,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -18631,7 +18631,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -21898,7 +21898,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled",
+                      "name": "depositingEnabled",
                       "indexed": true
                     }
                   ]
@@ -22010,7 +22010,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled"
+                      "name": "depositingEnabled"
                     }
                   ],
                   "outputs": []
@@ -22132,7 +22132,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -22176,7 +22176,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -24947,7 +24947,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled",
+                      "name": "depositingEnabled",
                       "indexed": true
                     }
                   ]
@@ -25059,7 +25059,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled"
+                      "name": "depositingEnabled"
                     }
                   ],
                   "outputs": []
@@ -25181,7 +25181,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -25225,7 +25225,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -34645,7 +34645,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled",
+                      "name": "depositingEnabled",
                       "indexed": true
                     }
                   ]
@@ -34757,7 +34757,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled"
+                      "name": "depositingEnabled"
                     }
                   ],
                   "outputs": []
@@ -34879,7 +34879,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -34923,7 +34923,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -40220,7 +40220,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled",
+                      "name": "depositingEnabled",
                       "indexed": true
                     }
                   ]
@@ -40332,7 +40332,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled"
+                      "name": "depositingEnabled"
                     }
                   ],
                   "outputs": []
@@ -40454,7 +40454,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -40498,7 +40498,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -45430,7 +45430,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled",
+                      "name": "depositingEnabled",
                       "indexed": true
                     }
                   ]
@@ -45542,7 +45542,7 @@
                     },
                     {
                       "type": "bool",
-                      "name": "stakingEnabled"
+                      "name": "depositingEnabled"
                     }
                   ],
                   "outputs": []
@@ -45664,7 +45664,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",
@@ -45708,7 +45708,7 @@
                       "components": [
                         {
                           "type": "bool",
-                          "name": "stakingEnabled"
+                          "name": "depositingEnabled"
                         },
                         {
                           "type": "uint256",

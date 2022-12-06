@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Rewards
 
-The protocol allow for vaults to be connected to **reward distributors** by the pool’s owner using the **rewards manager**. This allows rewards (typically tokens) to be provided across staking positions participating in a pool’s vault (instantaneously or over time) pro-rata based on their amount of shares in the corresponding vault.
+The protocol allow for vaults to be connected to **reward distributors** by the pool’s owner using the **rewards manager**. This allows rewards (typically tokens) to be provided across liquidity positions participating in a pool’s vault (instantaneously or over time) pro-rata based on their amount of shares in the corresponding vault.
 
 ## Rewards Distributor
 
