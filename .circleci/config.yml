@@ -73,11 +73,12 @@ commands:
   install-foundry:
     steps:
       - run:
-          name: Install foundry for cannon, required to build v3/contracts
+          name: Install foundry used for cannon and e2e tests
           working_directory: /tmp/app
           command: |-
             curl -L https://foundry.paradigm.xyz | bash
             source /root/.bashrc
+            foundryup
 
 jobs:
   yarn-install:
