@@ -22,11 +22,7 @@
     "stake": {
       "selectFund": "Select Fund",
       "receiveToken": "Receive an snxAccount token",
-      "receiveTokenTooltip": "You will be minted an NFT that represents your account. You can easily transfer it between wallets.",
-      "howItWorks": {
-        "title": "How it works",
-        "goVote": "Go vote"
-      }
+      "receiveTokenTooltip": "You will be minted an NFT that represents your account. You can easily transfer it between wallets."
     }
   },
   "synths": {

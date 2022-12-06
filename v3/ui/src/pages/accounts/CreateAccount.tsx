@@ -1,5 +1,5 @@
 import { Container, Flex, Text, Link } from '@chakra-ui/react';
-import { Stake } from '../../components/accounts/Stake';
+import { Stake } from '../../components/accounts/Deposit';
 
 export function CreateAccount() {
   return (

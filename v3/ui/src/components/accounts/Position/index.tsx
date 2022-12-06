@@ -1,4 +1,4 @@
-import { StakingStats } from './StakingStats';
+import { StakingStats } from './Callouts';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Spinner, Box } from '@chakra-ui/react';
 import Manage from './Manage';
 import { Rewards } from './Rewards/Rewards';
@@ -6,7 +6,7 @@ import { Pool } from './Pool';
 import { FC } from 'react';
 import { CollateralType } from '../../../utils/types';
 import { formatValue } from '../../../utils/helpers';
-import { useStakingPosition } from '../../../hooks/useStakingPosition';
+import { useStakingPosition } from '../../../hooks/useLiquidityPosition';
 
 interface Props {
   accountId: string;

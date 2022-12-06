@@ -4,7 +4,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import { poolsData } from '../../../utils/constants';
 import { poolsState } from '../../../utils/state';
-import StakerOption from './StakerOption';
+import StakerOption from './DepositorOption';
 
 type PropsType = {
   onClose: () => void;

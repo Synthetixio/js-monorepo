@@ -14,7 +14,7 @@ import { FC } from 'react';
 import { useTokenBalance } from '../../../../hooks/useTokenBalance';
 import { currency } from '../../../../utils/currency';
 import { CollateralType } from '../../../../utils/types';
-import { Balance } from '../../Stake/Balance';
+import { Balance } from '../../Deposit/Balance';
 import { NumberInput } from './NumberInput';
 interface Props {
   collateral: CollateralType;

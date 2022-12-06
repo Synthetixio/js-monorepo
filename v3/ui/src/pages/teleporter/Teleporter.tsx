@@ -24,7 +24,7 @@ import Head from 'react-helmet';
 import { useSetRecoilState } from 'recoil';
 import { useAccount, useContractWrite, useNetwork, useSwitchNetwork } from 'wagmi';
 import { NumberInput } from '../../components/accounts/Position/Manage/NumberInput';
-import { Balance } from '../../components/accounts/Stake/Balance';
+import { Balance } from '../../components/accounts/Deposit/Balance';
 import { routeToChain } from '../../components/NetworkChain';
 import { Transaction } from '../../components/shared/TransactionReview/TransactionReview.types';
 import { useContract } from '../../hooks';

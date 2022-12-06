@@ -1,5 +1,5 @@
 import { Burn } from '../Manage/Burn';
-import { Stake } from '../Manage/Stake';
+import { Stake } from './Deposit';
 import { Heading, Alert, AlertIcon, Box } from '@chakra-ui/react';
 import { formatValue } from '../../../../utils/helpers';
 import { FC } from 'react';

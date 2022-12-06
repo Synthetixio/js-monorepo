@@ -4,7 +4,6 @@ import { useSynthetixRead } from '../../../hooks';
 import EditPosition from '../EditPosition';
 import { Balance } from './Balance';
 import CollateralTypeSelector from './CollateralTypeSelector';
-import HowItWorks from './HowItWorks';
 import { EditIcon, InfoOutlineIcon, LockIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -31,7 +30,7 @@ import { useNetwork } from 'wagmi';
 import { CollateralType, StakingPositionType } from '../../../utils/types';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 import { FC } from 'react';
-import { useStake } from '../../../hooks/useStake';
+import { useStake } from '../../../hooks/useDeposit';
 
 type FormType = {
   collateralType: CollateralType;
@@ -238,7 +237,6 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
           </ModalContent>
         </Modal>
       </FormProvider>
-      {!Boolean(accountId) && <HowItWorks selectedCollateralType={selectedCollateralType} />}
     </>
   );
 };

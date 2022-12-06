@@ -1,4 +1,4 @@
-import { StakingPosition } from './StakingPosition';
+import { StakingPosition } from './LiquidityPosition';
 import { Box, Heading, Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
 import { StakingPositionType } from '../../../utils/types';
 import { FC } from 'react';

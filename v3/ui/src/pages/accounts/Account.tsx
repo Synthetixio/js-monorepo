@@ -1,8 +1,8 @@
 import { Box, Heading, Skeleton, Stack } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { Stake } from '../../components/accounts/Stake';
+import { Stake } from '../../components/accounts/Deposit';
 import { StakingNav } from '../../components/accounts/StakingNav';
-import { StakingPositions } from '../../components/accounts/StakingPositions';
+import { StakingPositions } from '../../components/accounts/LiquidityPositions';
 import { useStakingPositions } from '../../hooks';
 
 export function Account() {
