@@ -73,7 +73,7 @@ const TabContent: FC<TabContentProps> = ({
           {t('migrate-escrow.actions.migrate.action.go-to-escrow-page')}
         </StyledCTA>
       );
-    } else if (escrowedAmount) {
+    } else if (escrowedAmount && escrowedAmount.gt(0)) {
       return (
         <StyledCTA
           blue={true}
