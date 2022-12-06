@@ -74,10 +74,12 @@ commands:
     steps:
       - run:
           name: Install foundry used for cannon and e2e tests
-          working_directory: /tmp/app
+          environment:
+            SHELL: /bin/bash
           command: |-
             curl -L https://foundry.paradigm.xyz | bash
-            source ~/.bashrc
+            export PATH="$PATH:$HOME/.foundry/bin"
+            echo export PATH="$PATH:$HOME/.foundry/bin" > $BASH_ENV
             foundryup
 
 jobs:
@@ -172,9 +174,10 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     steps:
       - checkout
+      - install-foundry
       - yarn-install
       - build-restore
-      - install-foundry
+
       - run:
           name: Build
           command: |-
@@ -198,8 +201,8 @@ jobs:
       NODE_ENV: test
     steps:
       - checkout
-      - yarn-install
       - install-foundry
+      - yarn-install
 
       - run:
           name: Run server localhost:3000
@@ -209,7 +212,6 @@ jobs:
 
       - run:
           name: Run anvil localhost:8545
-          working_directory: /tmp/app
           command: anvil --fork-url https://mainnet.infura.io/v3/$INFURA_KEY
           background: true
 
