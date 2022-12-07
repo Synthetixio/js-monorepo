@@ -154,8 +154,8 @@ jobs:
       - store_artifacts:
           path: 'coverage'
 
-      - run: yarn workspace @snx-v3/subgraphs test
-      - run: yarn workspace @snx-v3/subgraphs test-coverage
+      - run: yarn workspace @snx-v3/subgraphs test:goerli
+      - run: yarn workspace @snx-v3/subgraphs test:goerli --coverage
 
   typecheck:
     working_directory: /tmp/app
