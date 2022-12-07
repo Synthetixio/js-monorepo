@@ -6,7 +6,7 @@ import Big from 'big.js';
 import { CollateralType } from '../utils/types';
 import { BigNumber } from 'ethers';
 
-export const useStakingPosition = (
+export const useLiquidityPosition = (
   accountId: string,
   poolId: string,
   collateral: CollateralType

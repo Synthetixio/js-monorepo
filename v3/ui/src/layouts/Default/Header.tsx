@@ -94,7 +94,7 @@ export default function Header() {
               mx="3"
               fontWeight="semibold"
             >
-              Stake
+              Deposit
             </Link>
             <Link
               _focus={{ boxShadow: 'none' }}
@@ -167,7 +167,7 @@ export default function Header() {
           <DrawerBody>
             <Box mb="3">
               <Link to="/" as={RouterLink} _focus={{ boxShadow: 'none' }} fontWeight="semibold">
-                Stake
+                Deposit
               </Link>
             </Box>
             <Box mb="3">

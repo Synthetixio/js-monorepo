@@ -5,7 +5,7 @@
     "fund": "Fund",
     "connectWallet": "Connect Wallet",
     "unknownFund": "Unknown Fund",
-    "stake": "Stake",
+    "deposit": "Deposit",
     "insufficientFunds": "Insufficient Funds",
     "name": "Name",
     "ticker": "Ticker",
@@ -17,16 +17,12 @@
   },
   "home": {
     "createAccount": {
-      "description": "Stake with Synthetix to back synthetic assets on-chain. You earn cnayield but must also maintain your C-Ratio."
+      "description": "Deposit with Synthetix to back synthetic assets on-chain. You can earn yield but must maintain your collateralization ratio."
     },
-    "stake": {
+    "deposit": {
       "selectFund": "Select Fund",
       "receiveToken": "Receive an snxAccount token",
-      "receiveTokenTooltip": "You will be minted an NFT that represents your account. You can easily transfer it between wallets.",
-      "howItWorks": {
-        "title": "How it works",
-        "goVote": "Go vote"
-      }
+      "receiveTokenTooltip": "You will be minted an NFT that represents your account. You can easily transfer it between wallets."
     }
   },
   "synths": {
@@ -58,7 +54,7 @@
     }
   },
   "not-found": {
-    "page-title": "Not Found | Synthetix Staking",
+    "page-title": "Not Found | Synthetix Depositing",
     "title": "404",
     "subtitle": "Page not found"
   }

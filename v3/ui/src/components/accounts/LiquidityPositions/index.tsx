@@ -1,18 +1,18 @@
-import { StakingPosition } from './StakingPosition';
+import { LiquidityPosition } from './LiquidityPosition';
 import { Box, Heading, Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
-import { StakingPositionType } from '../../../utils/types';
+import { LiquidityPositionType } from '../../../utils/types';
 import { FC } from 'react';
 
 interface Props {
-  positions: Record<string, StakingPositionType>;
+  positions: Record<string, LiquidityPositionType>;
   refetch: () => void;
 }
 
-export const StakingPositions: FC<Props> = ({ positions, refetch }) => {
+export const LiquidityPositions: FC<Props> = ({ positions, refetch }) => {
   return (
     <Box>
       <Heading size="md" mb="3">
-        Staking Positions
+        Liquidity Positions
       </Heading>
 
       <Table size="sm" variant="simple" mb="9">
@@ -36,7 +36,7 @@ export const StakingPositions: FC<Props> = ({ positions, refetch }) => {
         <Tbody>
           {Object.keys(positions).map((positionId) => {
             return (
-              <StakingPosition
+              <LiquidityPosition
                 key={positionId}
                 position={positions[positionId]}
                 refetch={refetch}

@@ -4,7 +4,6 @@ import { useSynthetixRead } from '../../../hooks';
 import EditPosition from '../EditPosition';
 import { Balance } from './Balance';
 import CollateralTypeSelector from './CollateralTypeSelector';
-import HowItWorks from './HowItWorks';
 import { EditIcon, InfoOutlineIcon, LockIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -28,10 +27,10 @@ import { BigNumber, ethers } from 'ethers';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { useNetwork } from 'wagmi';
-import { CollateralType, StakingPositionType } from '../../../utils/types';
+import { CollateralType, LiquidityPositionType } from '../../../utils/types';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 import { FC } from 'react';
-import { useStake } from '../../../hooks/useStake';
+import { useDeposit } from '../../../hooks/useDeposit';
 
 type FormType = {
   collateralType: CollateralType;
@@ -41,11 +40,11 @@ type FormType = {
 
 interface Props {
   accountId?: string;
-  stakingPositions?: Record<string, StakingPositionType>;
+  liquidityPositions?: Record<string, LiquidityPositionType>;
   refetch?: () => void;
 }
 
-export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) => {
+export const Deposit: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
   const [collateralTypes] = useRecoilState(collateralTypesState);
@@ -105,9 +104,9 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
     refetch?.();
     balanceData.refetch();
   };
-  const { isLoading, multiTxn, createAccount } = useStake({
+  const { isLoading, multiTxn, createAccount } = useDeposit({
     accountId,
-    stakingPositions,
+    liquidityPositions,
     amount,
     selectedCollateralType,
     selectedPoolId,
@@ -157,7 +156,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
                     color="blue.200"
                     border="1px solid rgba(255,255,255,0.33)"
                     size="lg"
-                    aria-label="Configure Staking Position"
+                    aria-label="Configure Depositing Position"
                     icon={<LockIcon />}
                   />
                 </Tooltip>
@@ -174,7 +173,7 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
                   {/* @ts-ignore */}
                   {formState.errors.amount?.type === 'insufficientBalance'
                     ? 'Insufficient Balance'
-                    : 'Stake'}
+                    : 'Deposit'}
                 </Button>
               ) : (
                 <Button
@@ -238,7 +237,6 @@ export const Stake: FC<Props> = ({ accountId, stakingPositions = {}, refetch }) 
           </ModalContent>
         </Modal>
       </FormProvider>
-      {!Boolean(accountId) && <HowItWorks selectedCollateralType={selectedCollateralType} />}
     </>
   );
 };

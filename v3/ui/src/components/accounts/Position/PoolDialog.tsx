@@ -67,7 +67,7 @@ export const PoolDialog: FC<Props> = ({
         <ModalHeader>Change Pool</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text mb="6">Select a pool to participate in with this staking position:</Text>
+          <Text mb="6">Select a pool to participate in with this depositing position:</Text>
           <RadioGroup value={pool} onChange={setPool}>
             <Flex
               alignItems="center"

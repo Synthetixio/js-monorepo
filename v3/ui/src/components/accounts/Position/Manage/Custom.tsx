@@ -14,7 +14,7 @@ import { FC } from 'react';
 import { useTokenBalance } from '../../../../hooks/useTokenBalance';
 import { currency } from '../../../../utils/currency';
 import { CollateralType } from '../../../../utils/types';
-import { Balance } from '../../Stake/Balance';
+import { Balance } from '../../Deposit/Balance';
 import { NumberInput } from './NumberInput';
 interface Props {
   collateral: CollateralType;
@@ -119,7 +119,7 @@ export const Custom: FC<Props> = ({
             This adjustment will&nbsp;
             {collateralChange !== 0 && (
               <strong>
-                {collateralChange > 0 ? 'stake' : 'unstake'} {Math.abs(collateralChange)}&nbsp;
+                {collateralChange > 0 ? 'deposit' : 'withdraw'} {Math.abs(collateralChange)}&nbsp;
                 {collateral.symbol.toUpperCase()}
               </strong>
             )}

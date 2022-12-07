@@ -1,5 +1,5 @@
 import { Container, Flex, Text, Link } from '@chakra-ui/react';
-import { Stake } from '../../components/accounts/Stake';
+import { Deposit } from '../../components/accounts/Deposit';
 
 export function CreateAccount() {
   return (
@@ -13,13 +13,13 @@ export function CreateAccount() {
     >
       <Container maxW="container.sm" pt="0" pb="24">
         <Text fontSize="lg" mb="4">
-          Stake with Synthetix to back synthetic assets on-chain. You earn yield but must also
-          maintain your C-Ratio.{' '}
+          Deposit with Synthetix to back synthetic assets on-chain. You can earn yield but must
+          maintain your collateralization ratio..{' '}
           <Link href="https://snx-v3-docs.vercel.app" fontWeight="semibold" color="cyan.500">
             Learn more
           </Link>
         </Text>
-        <Stake />
+        <Deposit />
       </Container>
     </Flex>
   );

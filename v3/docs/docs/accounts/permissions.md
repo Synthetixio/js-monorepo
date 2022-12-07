@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Permissions
 
-Accounts can delegate permissions to addresses other than the owner. This is useful to improve security (by owning the account with a hardware wallet and using a software wallet with reduced permissions for more common activities, like claiming rewards) or for collaboratively managing staking positions.
+Accounts can delegate permissions to addresses other than the owner. This is useful to improve security (by owning the account with a hardware wallet and using a software wallet with reduced permissions for more common activities, like claiming rewards) or for collaboratively managing liquidity positions.
 
 - `ADMIN` - Admins have permission to do everything that the account owner can (including granting and revoking permissions for other addresses) except for transferring account ownership.
 - `WITHDRAW` - Addresses with this permission may call the [`withdraw` function](/technical-reference/smart-contracts#withdraw)) on behalf of the account.

@@ -73,7 +73,7 @@ const TabContent: FC<TabContentProps> = ({
           {t('migrate-escrow.actions.migrate.action.go-to-escrow-page')}
         </StyledCTA>
       );
-    } else if (escrowedAmount) {
+    } else if (escrowedAmount && escrowedAmount.gt(0)) {
       return (
         <StyledCTA
           blue={true}
@@ -85,6 +85,7 @@ const TabContent: FC<TabContentProps> = ({
           {t('migrate-escrow.actions.migrate.action.migrate-button', {
             escrowedAmount: formatCurrency(vestingCurrencyKey, escrowedAmount, {
               currencyKey: vestingCurrencyKey,
+              minDecimals: 2,
             }),
           })}
         </StyledCTA>
@@ -123,6 +124,7 @@ const TabContent: FC<TabContentProps> = ({
 
   return (
     <>
+      <SubHeadline>{t('migrate-escrow.actions.migrate.subtitle')}</SubHeadline>
       <InputContainer>
         <InputBox>
           <SNXLogo width="64" />
@@ -174,6 +176,9 @@ const TabContent: FC<TabContentProps> = ({
   );
 };
 
+const SubHeadline = styled.h4`
+  margin-top: 0;
+`;
 const Data = styled.p`
   color: ${(props) => props.theme.colors.white};
   font-family: ${(props) => props.theme.fonts.extended};

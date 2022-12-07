@@ -2,7 +2,7 @@ import { Text, Box, Flex, Heading } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useTokenBalance } from '../../../../hooks/useTokenBalance';
 import { CollateralType } from '../../../../utils/types';
-import { Balance } from '../../Stake/Balance';
+import { Balance } from '../../Deposit/Balance';
 import { NumberInput } from './NumberInput';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 
 // TODO: This needs to change based on collateral type? At least heading
 
-export const Stake: FC<Props> = ({ collateral, value, onChange }) => {
+export const Deposit: FC<Props> = ({ collateral, value, onChange }) => {
   const balance = useTokenBalance(collateral.address);
 
   return (

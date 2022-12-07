@@ -8,7 +8,7 @@ interface Props {
 }
 
 const permissionColors: Record<string, string> = {
-  stake: 'green',
+  deposit: 'green',
   burn: 'red',
   'claim rewards': 'blue',
 };

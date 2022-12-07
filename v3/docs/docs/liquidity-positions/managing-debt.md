@@ -6,15 +6,15 @@ sidebar_position: 2
 
 ## Collateralization Ratio
 
-Each staking position has a collateralization ratio (or _C-Ratio_). This represents the relationship between the value of the collateral associated with the staking position and the amount of the debt it’s backing. This is represented as a percentage. For example, a C-Ratio of 200% means that the value of the collateral is double the amount of debt it’s backing.
+Each liquidity position has a collateralization ratio (or _C-Ratio_). This represents the relationship between the value of the collateral associated with the liquidity position and the amount of the debt it’s backing. This is represented as a percentage. For example, a C-Ratio of 200% means that the value of the collateral is double the amount of debt it’s backing.
 
-The value of the collateral is calculated based on the price of the collateral reported by an oracle. The value of the debt is the amount of snxUSD minted with this staking position, minus the amount of snxUSD burned with this position, plus/minus the debt/credit it is responsible for by participating in a pool.
+The value of the collateral is calculated based on the price of the collateral reported by an oracle. The value of the debt is the amount of snxUSD minted with this liquidity position, minus the amount of snxUSD burned with this position, plus/minus the debt/credit it is responsible for by participating in a pool.
 
-**If a staking position’s collateralization ratio falls below its minimum collateralization, the position can be [liquidated](/staking-positions/liquidations).** To reduce risk of liquidation, collateralization ratios can be increased by staking additional collateral or burning snxUSD.
+**If a liquidity position’s collateralization ratio falls below its minimum collateralization, the position can be [liquidated](/liquidity-positions/liquidations).** To reduce risk of liquidation, collateralization ratios can be increased by depositing additional collateral or burning snxUSD.
 
 A position’s collateral, debt, and resulting C-Ratio can be retrieved with the [`getPositionCollateral`](/technical-reference/smart-contracts#getpositioncollateral), [`getPositionDebt`](/technical-reference/smart-contracts#getpositiondebt), and [`getPositionCollateralizationRatio`](/technical-reference/smart-contracts#getpositioncollateralizationratio) functions, respectively.
 
-The [`getPositionCollateralizationRatio` function](/technical-reference/smart-contracts#getpositioncollateralizationratio) returns the C-Ratio of the specified staking position. (If the position has more credit than debt, this function returns `0`.) The minimum C-Ratio of a given collateral type can be retrieved with the [`getCollateralType` function](/technical-reference/smart-contracts#getcollateraltype). All of these values are represented as an integer with 18 decimal places.
+The [`getPositionCollateralizationRatio` function](/technical-reference/smart-contracts#getpositioncollateralizationratio) returns the C-Ratio of the specified liquidity position. (If the position has more credit than debt, this function returns `0`.) The minimum C-Ratio of a given collateral type can be retrieved with the [`getCollateralType` function](/technical-reference/smart-contracts#getcollateraltype). All of these values are represented as an integer with 18 decimal places.
 
 All of the functions which reference a position’s debt (such as `getPositionDebt` and `getPositionCollateralizationRatio`) may update cached values in the system, so they are not declared as `view` functions. To use them as such, they can be queried using [`callStatic`](https://docs.ethers.io/v5/single-page/#/v5/api/contract/contract/-%23-contract-callStatic). All values returned by the system will be accurate regardless of the recency of a cache update.
 

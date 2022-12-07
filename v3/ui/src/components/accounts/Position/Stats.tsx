@@ -39,7 +39,7 @@ export default function Stats() {
           <Heading size="md">25% APY</Heading>
           <Text opacity="0.6" fontSize="sm">
             $1,000 earned
-            <Tooltip label="Your fees, earned when the synths in your staking position are exchanged, are automatically deducted from your debt. You can retrieve the earned fees by minting sUSD.">
+            <Tooltip label="Your fees, earned when the synths in your depositing position are exchanged, are automatically deducted from your debt. You can retrieve the earned fees by minting sUSD.">
               <InfoOutlineIcon ml="1" transform="translateY(-1.5px)" />
             </Tooltip>
           </Text>

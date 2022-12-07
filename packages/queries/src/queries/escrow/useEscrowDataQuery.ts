@@ -67,6 +67,7 @@ const useEscrowDataQuery = (
 
       const unorderedSchedule: Schedule = [];
       const claimableEntryIds: Wei[] = [];
+      const migratableEntryIds: Wei[] = [];
 
       (vestingEntries ?? []).forEach(({ escrowAmount, entryID, endTime }: VestingEntry) => {
         const quantity = wei(escrowAmount);
@@ -76,13 +77,16 @@ const useEscrowDataQuery = (
             quantity,
             date: new Date(Number(endTime) * 1000),
           });
+          if (endTime.gt(0)) {
+            migratableEntryIds.push(wei(entryID, 0));
+          }
         }
       });
 
       const schedule = orderBy(unorderedSchedule, 'date', 'asc');
 
-      const claimableEntryIdsInChunk =
-        claimableEntryIds && claimableEntryIds.length > 0 ? chunk(claimableEntryIds, 26) : [];
+      const migratableEntryIdsInChunk =
+        migratableEntryIds.length > 0 ? chunk(migratableEntryIds, 26) : [];
 
       const [
         formattedClaimableAmount,
@@ -99,7 +103,7 @@ const useEscrowDataQuery = (
         totalEscrowed: formattedTotalEscrowed,
         totalVested: formattedTotalVested,
         claimableEntryIds,
-        claimableEntryIdsInChunk,
+        migratableEntryIdsInChunk,
         totalBalancePendingMigration: formattedTotalBalanceMigration,
       };
     },
