@@ -52,6 +52,16 @@ const config: HardhatUserConfig = {
       url: `https://optimism-goerli.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
+    mainnet: {
+      url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    },
+  },
+  cannon: {
+    ipfsEndpoint: 'https://ipfs.infura.io:5001',
+    ipfsAuthorizationHeader: `Basic ${Buffer.from(
+      process.env.INFURA_IPFS_ID + ':' + process.env.INFURA_IPFS_SECRET
+    ).toString('base64')}`,
   },
   paths: {
     artifacts: './artifacts',
