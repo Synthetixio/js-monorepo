@@ -9,7 +9,7 @@ defaultValue = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
 defaultValue = "latest"
 
 [setting.synthetix_version]
-defaultValue = "3.0.0-alpha.3"
+defaultValue = "3.0.0-alpha.4"
 
 [setting.chainlink_version]
 defaultValue = "0.7-mock"
@@ -24,18 +24,21 @@ defaultValue = "10000000"
 defaultValue = "100000000"
 
 [import.snx]
-source = "mintableerc20:<%= settings.erc20_version %>"
+# source = "mintableerc20:<%= settings.erc20_version %>" when cannon problems resolved
+source = "@ipfs:QmesjmjbXHj834SfavKuvWFFmepP3KdDev8vk9Unkz5i3f"
 options.name = "Synthetix Token"
 options.symbol = "SNX"
 
 [import.aggregator_snx]
-source = "chainlink:<%= settings.chainlink_version %>"
+# source = "chainlink:<%= settings.chainlink_version %>" when cannon problems resolved
+source = "@ipfs:QmXdABDDVKr6Xx6SUUf3hPkv5VF4BzUHCk1FA8RF5KzxWf"
 options.salt = "snx"
 options.decimals = "<%= settings.rate_decimals %>"
 options.rate = "<%= settings.snx_rate %>"
 
 [import.aggregator_weth]
-source = "chainlink:<%= settings.chainlink_version %>"
+# source = "chainlink:<%= settings.chainlink_version %>" when cannon problems resolved
+source = "@ipfs:QmXdABDDVKr6Xx6SUUf3hPkv5VF4BzUHCk1FA8RF5KzxWf"
 options.salt = "weth"
 options.decimals = "<%= settings.rate_decimals %>"
 options.rate = "<%= settings.weth_rate %>"
@@ -50,33 +53,53 @@ artifact = "Multicall3"
 [contract.WETH]
 artifact = "WETH9"
 
+[invoke.register_oracle_manager_snx]
+abi = '["function registerNode(bytes32[] parents, uint8 nodeType, bytes parameters) returns (bytes32)", "event NodeRegistered(bytes32 nodeId, bytes32[] parents, uint8 nodeType, bytes parameters)"]'
+target = ["0x4091658278810813463100129c18A503ecfAf65f"]
+func = "registerNode"
+args = [
+    [],
+    3,
+    "0x000000000000000000000000<%= imports.aggregator_snx.contracts.aggregator.address.slice(2) %>"
+]
+factory.oracle_snx_id.event = "NodeRegistered"
+factory.oracle_snx_id.arg = 0
+factory.oracle_snx_id.abiOf = ["synthetix.CoreProxy"]
+
+depends = ["import.aggregator_snx","import.synthetix"]
+
+[invoke.register_oracle_manager_eth]
+abi = '["function registerNode(bytes32[] parents, uint8 nodeType, bytes parameters) returns (bytes32)","event NodeRegistered(bytes32 nodeId, bytes32[] parents, uint8 nodeType, bytes parameters)"]'
+target = ["0x4091658278810813463100129c18A503ecfAf65f"]
+func = "registerNode"
+args = [
+    [],
+    3,
+    "0x000000000000000000000000<%= imports.aggregator_weth.contracts.aggregator.address.slice(2) %>"
+]
+factory.oracle_eth_id.event = "NodeRegistered"
+factory.oracle_eth_id.arg = 0
+factory.oracle_eth_id.abiOf = ["synthetix.CoreProxy"]
+
+
+depends = ["import.aggregator_weth","import.synthetix"]
+
+
 [invoke.register_snx_collateral]
 target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
-args = [
-    "<%= imports.snx.contracts.token.address %>",
-    "<%= imports.aggregator_snx.contracts.aggregator.address %>",
-    "4000000",
-    "2000000",
-    "1000000000000000000",
-    true,
-]
-depends = ["import.synthetix", "import.snx", "import.aggregator_snx"]
+args = [{tokenAddress= "<%=imports.snx.contracts.token.address%>",oracleNodeId= "<%=contracts.oracle_snx_id.address%>",issuanceRatioD18= '4000000',liquidationRatioD18='2000000',liquidationRewardD18= '1000000000000000000',depositingEnabled=true,minDelegationD18= '1000000000000000000'}]
+
+depends = ["import.snx", "invoke.register_oracle_manager_snx"]
 
 [invoke.register_weth_collateral]
 target = ["synthetix.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
-args = [
-    "<%= contracts.WETH.address %>",
-    "<%= imports.aggregator_weth.contracts.aggregator.address %>",
-    "3000000",
-    "1500000",
-    "1000000000000000000",
-    true,
-]
-depends = ["import.synthetix", "contract.WETH", "import.aggregator_weth"]
+args = [{tokenAddress="<%=contracts.WETH.address%>",oracleNodeId= "<%=contracts.oracle_eth_id.address%>",issuanceRatioD18= '3000000',liquidationRatioD18='1500000',liquidationRewardD18= '1000000000000000000',depositingEnabled= true,minDelegationD18= '1000000000000000000'}]
+
+depends = ["contract.WETH", "invoke.register_oracle_manager_eth"]
 
 [invoke.mint_snx]
 target = ["snx.token"]
@@ -84,7 +107,7 @@ func = "mint"
 args = [
     # change to your address for some SNX
     "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-    "200000000000000000000"
+    "200000000000"
 ]
 depends=["import.snx", "import.synthetix"]
 
@@ -132,7 +155,7 @@ target = ["snx.token"]
 func = "mint"
 args = [
     "<%= contracts.snx_rewards.address %>",
-    "200000000000000000000"
+    "2000000000000"
 ]
 depends=["import.synthetix", "contract.snx_rewards"]
 
