@@ -12,6 +12,7 @@ import {
   ThalesIcon,
   BridgeIcon,
   DebtPoolIcon,
+  OvertimeIcon,
 } from '@snx-v2/icons';
 import { BoxLink } from '@snx-v2/BoxLink';
 import { useTranslation } from 'react-i18next';
@@ -172,6 +173,22 @@ const V2Home = () => {
                 description={t('staking-v2.home.utilities.curveDescription')}
                 link="https://curve.fi/"
                 Icon={() => <CurveLogo />}
+                mt={[4, 0, 0]}
+              />
+              <UtilityCard
+                mr={4}
+                title="Polynomial"
+                description={t('staking-v2.home.utilities.polynomialDescription')}
+                link="https://www.polynomial.fi/"
+                Icon={() => <CurveLogo />}
+                mt={[4, 0, 0]}
+              />
+              <UtilityCard
+                mr={4}
+                title="Overtime Markets"
+                description={t('staking-v2.home.utilities.overtimeDescription')}
+                link="https://overtimemarkets.xyz/"
+                Icon={OvertimeIcon}
                 mt={[4, 0, 0]}
               />
             </Flex>
