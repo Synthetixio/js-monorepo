@@ -49,3 +49,5 @@ export * from './CopyIcon';
 export * from './OpenInNew';
 export * from './dSNXIcon';
 export * from './WreckedIcon';
+export * from './OvertimeIcon';
+export * from './PolynomialIcon';
