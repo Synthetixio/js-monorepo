@@ -25,6 +25,8 @@
     "ignorePatterns": [
       "build"
     ],
-    "ignoreMatches": []
+    "ignoreMatches": [
+      "@synthetixio/v3-contracts"
+    ]
   }
 }
