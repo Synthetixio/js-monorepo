@@ -60,7 +60,7 @@ const options2 = {
       position: 'top',
     },
   },
-};
+} as const;
 
 const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
@@ -213,7 +213,7 @@ export function Market() {
         <Heading size="md" mb={2}>
           Liquidity
         </Heading>
-        <Line option={options2} data={data3} />
+        <Line options={options2} data={data3} />
 
         <Heading size="sm" mt={6} mb={1}>
           Liquidity Providers

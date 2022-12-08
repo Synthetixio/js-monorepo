@@ -4,8 +4,9 @@ pragma solidity ^0.8.0;
 import '../interfaces/IRewardDistributor.sol';
 import '../interfaces/IRewardsManagerModule.sol';
 import '../interfaces/IERC20.sol';
+import '@synthetixio/core-contracts/contracts/interfaces/IERC165.sol';
 
-contract RewardDistributorMock is IRewardDistributor {
+contract RewardDistributorMock is IRewardDistributor, IERC165 {
     address private _rewardManager;
     address private _token;
     string private _name;
@@ -59,5 +60,20 @@ contract RewardDistributorMock is IRewardDistributor {
             start,
             duration
         );
+    }
+
+    /**
+     * @dev See {IERC165-supportsInterface}.
+     */
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(IERC165)
+        returns (bool)
+    {
+        return
+            interfaceId == type(IRewardDistributor).interfaceId ||
+            interfaceId == this.supportsInterface.selector;
     }
 }

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "webpack-cli serve",
     "build": "NODE_ENV=production webpack-cli",
-    "typecheck": "tsc --noEmit || echo 'Ignore for now and will fix in the next PR' || true",
+    "typecheck": "tsc --noEmit",
     "standalone-install": "yarn workspaces focus '@synthetixio/v3-ui'",
     "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v3-ui' run build"
   },

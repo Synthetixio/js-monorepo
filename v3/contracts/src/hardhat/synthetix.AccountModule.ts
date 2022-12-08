@@ -1,7 +1,6 @@
-export const address = '0x6F12ed1FF4DA813F60bedcf147F94DAA53F7860b';
+export const address = '0x19a5922E31D38231d2069938c8A51cFBb4D57880';
 export const abi = [
   'error InvalidPermission(bytes32 permission)',
-  'error InvalidPermission()',
   'error OnlyAccountTokenProxy(address origin)',
   'error PermissionDenied(uint128 accountId, bytes32 permission, address target)',
   'error PermissionNotGranted(uint128 accountId, bytes32 permission, address user)',
@@ -9,7 +8,7 @@ export const abi = [
   'error ValueAlreadyInSet()',
   'error ValueNotInSet()',
   'error ZeroAddress()',
-  'event AccountCreated(address indexed sender, uint128 indexed accountId)',
+  'event AccountCreated(uint128 indexed accountId, address indexed owner)',
   'event PermissionGranted(uint128 indexed accountId, bytes32 indexed permission, address indexed user, address sender)',
   'event PermissionRevoked(uint128 indexed accountId, bytes32 indexed permission, address indexed user, address sender)',
   'function createAccount(uint128 requestedAccountId)',

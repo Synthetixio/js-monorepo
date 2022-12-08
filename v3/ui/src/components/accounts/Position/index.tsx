@@ -15,13 +15,11 @@ interface Props {
 }
 
 export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
-  const {
-    isLoading,
-    debt,
-    cRatio,
-    collateralAmount: collateralAmountBN,
-    refetch,
-  } = useLiquidityPosition(accountId, poolId, collateral);
+  const { isLoading, debt, cRatio, collateralAmount, refetch } = useLiquidityPosition(
+    accountId,
+    poolId,
+    collateral
+  );
 
   if (isLoading)
     return (
@@ -30,10 +28,9 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
       </Box>
     );
 
-  const { decimals, price: priceBN, priceDecimals } = collateral;
+  const { price: priceBN, priceDecimals } = collateral;
 
-  const collateralAmount = formatValue(collateralAmountBN, decimals);
-  const price = formatValue(priceBN!, priceDecimals!);
+  const price = formatValue(priceBN || 0, priceDecimals!);
   const collateralValue = collateralAmount * price;
 
   return (

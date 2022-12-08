@@ -1,5 +1,5 @@
 {
-  "address": "0x5D2aAD03Ea3ce5e799Ee7a7776Fa8dD517547C8a",
+  "address": "0x07CFf6adDf97d9Bc722240c8772cFfB0A7eC3DEC",
   "abi": [
     {
       "type": "error",
@@ -8,7 +8,7 @@
     },
     {
       "type": "error",
-      "name": "InconsistentDistribution",
+      "name": "FeatureUnavailable",
       "inputs": []
     },
     {
@@ -59,18 +59,75 @@
     },
     {
       "type": "error",
+      "name": "OverflowInt256ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToUint256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint128ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToInt256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToUint128",
+      "inputs": []
+    },
+    {
+      "type": "error",
       "name": "Unauthorized",
       "inputs": [
         {
           "type": "address",
-          "name": "actual"
+          "name": "addr"
         }
       ]
     },
     {
-      "type": "error",
-      "name": "ZeroValuePerShare",
-      "inputs": []
+      "type": "event",
+      "anonymous": false,
+      "name": "DebtAssociated",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId",
+          "indexed": true
+        },
+        {
+          "type": "uint128",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "uint128",
+          "name": "accountId",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "int256",
+          "name": "updatedDebt",
+          "indexed": false
+        }
+      ]
     },
     {
       "type": "function",
@@ -107,7 +164,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x2f28e27c2e854a8db96803eb6701cede9383b5b3fed27678049ff7834c66ffe0",
+  "deployTxnHash": "0x1ae93a7abed60492d543323d1d79dd1579b4e551f096eabdaa4c4e80f2a41f4f",
   "sourceName": "contracts/modules/core/AssociateDebtModule.sol",
   "contractName": "AssociateDebtModule",
   "deployedOn": "contract.AssociateDebtModule"

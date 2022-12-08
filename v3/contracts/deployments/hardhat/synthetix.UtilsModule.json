@@ -1,25 +1,6 @@
 {
-  "address": "0x63E75eECCe3B553050166fbB154d1c2A76f7C9dc",
+  "address": "0xcd38d2E44CA9ebA41Ee5eaa23D96D5B4b6c647E8",
   "abi": [
-    {
-      "type": "error",
-      "name": "AlreadyInitialized",
-      "inputs": []
-    },
-    {
-      "type": "error",
-      "name": "MismatchAssociatedSystemKind",
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "expected"
-        },
-        {
-          "type": "bytes32",
-          "name": "actual"
-        }
-      ]
-    },
     {
       "type": "error",
       "name": "Unauthorized",
@@ -32,17 +13,13 @@
     },
     {
       "type": "function",
-      "name": "mintInitialSystemToken",
+      "name": "configureOracleManager",
       "constant": false,
       "payable": false,
       "inputs": [
         {
           "type": "address",
-          "name": "to"
-        },
-        {
-          "type": "uint256",
-          "name": "amount"
+          "name": "oracleManagerAddress"
         }
       ],
       "outputs": []
@@ -70,7 +47,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x75be56b624fe4fdd8f81c9c08f2f5d656700f235f58aca87f6cb2a9e20eaae02",
+  "deployTxnHash": "0x8d0b8de7800988c5df26399ba95289399c1f419d12e5e7130717ebb863028014",
   "sourceName": "contracts/modules/core/UtilsModule.sol",
   "contractName": "UtilsModule",
   "deployedOn": "contract.UtilsModule"

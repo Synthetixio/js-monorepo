@@ -1,5 +1,5 @@
 {
-  "address": "0xD98f794E0946aB7DCabcA449AAc75FFdD532b8A8",
+  "address": "0x1E29E3fcC9eE51CEc50392A4940B9A0c5D967981",
   "abi": [
     {
       "type": "error",
@@ -13,12 +13,17 @@
     },
     {
       "type": "error",
-      "name": "EmptyDistribution",
-      "inputs": []
+      "name": "CollateralDepositDisabled",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ]
     },
     {
       "type": "error",
-      "name": "InconsistentDistribution",
+      "name": "EmptyDistribution",
       "inputs": []
     },
     {
@@ -55,21 +60,11 @@
     },
     {
       "type": "error",
-      "name": "InvalidCollateral",
+      "name": "InsufficientDelegation",
       "inputs": [
         {
-          "type": "address",
-          "name": "collateralType"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "InvalidCollateral",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "collateralType"
+          "type": "uint256",
+          "name": "minDelegation"
         }
       ]
     },
@@ -85,20 +80,6 @@
     },
     {
       "type": "error",
-      "name": "InvalidParameters",
-      "inputs": [
-        {
-          "type": "string",
-          "name": "incorrectParameter"
-        },
-        {
-          "type": "string",
-          "name": "help"
-        }
-      ]
-    },
-    {
-      "type": "error",
       "name": "MarketNotFound",
       "inputs": [
         {
@@ -106,6 +87,36 @@
           "name": "marketId"
         }
       ]
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt128ToUint128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToUint256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint128ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToInt256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToUint128",
+      "inputs": []
     },
     {
       "type": "error",
@@ -137,16 +148,6 @@
     },
     {
       "type": "error",
-      "name": "PoolNotFound",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId"
-        }
-      ]
-    },
-    {
-      "type": "error",
       "name": "PositionOutOfBounds",
       "inputs": []
     },
@@ -158,11 +159,6 @@
     {
       "type": "error",
       "name": "ValueNotInSet",
-      "inputs": []
-    },
-    {
-      "type": "error",
-      "name": "ZeroValuePerShare",
       "inputs": []
     },
     {
@@ -222,7 +218,7 @@
         },
         {
           "type": "uint256",
-          "name": "collateralAmount"
+          "name": "newCollateralAmount"
         },
         {
           "type": "uint256",
@@ -421,7 +417,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x8299972723e2be7b483152b1a9cf211bdfcc53338a823865cc20b1113fa3e96a",
+  "deployTxnHash": "0xccd714760ee1343bd59f138d51d6dee4efabfd86c747a92ea66281c402c90cdd",
   "sourceName": "contracts/modules/core/VaultModule.sol",
   "contractName": "VaultModule",
   "deployedOn": "contract.VaultModule"

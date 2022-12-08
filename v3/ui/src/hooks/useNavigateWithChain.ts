@@ -12,11 +12,12 @@ export const useNavigateWithChain = () => {
   const [localChainId] = useRecoilState(chainIdState);
   const chainName = getChainNameById(localChainId);
   const navigate = useNavigate();
+
   return (to: Partial<Path>, options?: NavigateOptions) =>
     navigate(
       {
         ...to,
-        search: `?${createSearchParams({ chain: chainName })}`,
+        search: chainName ? `?${createSearchParams({ chain: chainName })}` : undefined,
       },
       options
     );

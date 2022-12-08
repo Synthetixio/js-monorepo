@@ -1,5 +1,5 @@
 {
-  "address": "0x71Cf3C5eeD6fa49F36fB747BD94dAc2c2218A7f7",
+  "address": "0x86B95d8C4a809d41240C5A3aD8A1Be330fa29039",
   "abi": [
     {
       "type": "error",
@@ -31,6 +31,20 @@
         {
           "type": "uint256",
           "name": "existing"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "MismatchAssociatedSystemKind",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "expected"
+        },
+        {
+          "type": "bytes32",
+          "name": "actual"
         }
       ]
     },
@@ -385,7 +399,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x42d98a6696587b87d7af56b83f08b7accb962db1be6a6a9e9ced2ea269459c9c",
+  "deployTxnHash": "0x0ea7ef246cd7324b45649a1871f7b3b0d644083a03b212229b40236f04b3719e",
   "sourceName": "contracts/modules/usd/USDTokenModule.sol",
   "contractName": "USDTokenModule",
   "deployedOn": "contract.USDTokenModule"

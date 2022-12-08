@@ -1,2 +1,2 @@
-export const address = '0xAb4e6CD86bb96EC011f6cE4C648DE5a0B345Ab32';
+export const address = '0x5D2FA65EE1B72DF40047716c869069161564B8a8';
 export const abi = ['function multicall(bytes[] data) payable returns (bytes[] results)'];

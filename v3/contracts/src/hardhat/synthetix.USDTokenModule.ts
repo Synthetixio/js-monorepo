@@ -1,8 +1,9 @@
-export const address = '0x71Cf3C5eeD6fa49F36fB747BD94dAc2c2218A7f7';
+export const address = '0x86B95d8C4a809d41240C5A3aD8A1Be330fa29039';
 export const abi = [
   'error AlreadyInitialized()',
   'error InsufficientAllowance(uint256 required, uint256 existing)',
   'error InsufficientBalance(uint256 required, uint256 existing)',
+  'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',
   'error Unauthorized(address addr)',
   'event Approval(address indexed owner, address indexed spender, uint256 amount)',
   'event Transfer(address indexed from, address indexed to, uint256 amount)',
