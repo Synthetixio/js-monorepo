@@ -7,7 +7,7 @@
   "version": "0.0.1",
   "scripts": {
     "codegen": "node ./codegen.js",
-    "build": "yarn cannon-build && yarn codegen && tsc --build --verbose",
+    "build": "yarn codegen && tsc --build --verbose",
     "clean": "shx rm -rf ./artifacts ./cache ./coverage ./src/types ./coverage.json",
     "compile": "TS_NODE_TRANSPILE_ONLY=true hardhat compile",
     "test": "echo Skip contract tests || hardhat test",
