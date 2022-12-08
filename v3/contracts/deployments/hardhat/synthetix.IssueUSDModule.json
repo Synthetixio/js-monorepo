@@ -1,14 +1,9 @@
 {
-  "address": "0xa3A11CdA51Cab049BDc5057673d3d421458f5FdC",
+  "address": "0xe2AAa39eDC178a1f6A2840e594b81fd080eFd858",
   "abi": [
     {
       "type": "error",
       "name": "EmptyDistribution",
-      "inputs": []
-    },
-    {
-      "type": "error",
-      "name": "InconsistentDistribution",
       "inputs": []
     },
     {
@@ -69,6 +64,31 @@
     },
     {
       "type": "error",
+      "name": "OverflowInt256ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToUint256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint128ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToInt256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToUint128",
+      "inputs": []
+    },
+    {
+      "type": "error",
       "name": "PermissionDenied",
       "inputs": [
         {
@@ -84,11 +104,6 @@
           "name": "target"
         }
       ]
-    },
-    {
-      "type": "error",
-      "name": "ZeroValuePerShare",
-      "inputs": []
     },
     {
       "type": "event",
@@ -206,7 +221,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x089558a4ce504e99828aa2585219136e90585069ee3f65df2f4860e1f9fb496b",
+  "deployTxnHash": "0x672c3b556e16b8a98779551c6d45cdf19204793fca02d0ea0c2cfcaa3e39ccec",
   "sourceName": "contracts/modules/core/IssueUSDModule.sol",
   "contractName": "IssueUSDModule",
   "deployedOn": "contract.IssueUSDModule"

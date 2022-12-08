@@ -1,6 +1,11 @@
 {
-  "address": "0xbEee4A5A4cEC3f9eBDE95C2f3cFda6D06DAcf770",
+  "address": "0xEDC13308c30c9008E7AeC95042c9cDAD9f401649",
   "abi": [
+    {
+      "type": "error",
+      "name": "CollateralNotFound",
+      "inputs": []
+    },
     {
       "type": "error",
       "name": "FailedTransfer",
@@ -33,7 +38,7 @@
         },
         {
           "type": "uint256",
-          "name": "amountToDeposit"
+          "name": "tokenAmountToDeposit"
         }
       ]
     },
@@ -51,7 +56,7 @@
         },
         {
           "type": "uint256",
-          "name": "amountToWithdraw"
+          "name": "tokenAmountToWithdraw"
         }
       ]
     },
@@ -82,7 +87,7 @@
         },
         {
           "type": "uint256",
-          "name": "amount",
+          "name": "tokenAmount",
           "indexed": false
         },
         {
@@ -109,7 +114,7 @@
         },
         {
           "type": "uint256",
-          "name": "amount",
+          "name": "tokenAmount",
           "indexed": false
         },
         {
@@ -136,7 +141,7 @@
         },
         {
           "type": "uint256",
-          "name": "amount",
+          "name": "systemAmount",
           "indexed": false
         },
         {
@@ -183,7 +188,7 @@
         },
         {
           "type": "uint256",
-          "name": "amount"
+          "name": "tokenAmount"
         }
       ],
       "outputs": []
@@ -206,7 +211,8 @@
       ],
       "outputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": "collateralAmountD18"
         }
       ]
     },
@@ -248,14 +254,14 @@
         },
         {
           "type": "uint256",
-          "name": "amount"
+          "name": "tokenAmount"
         }
       ],
       "outputs": []
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x0c89027eed62b695758b346f3a96778b66ffb961a18fd0f463149cbb8db6833a",
+  "deployTxnHash": "0x54e8f80a79e0503df61b81fef34f71f2f30f92cc2fbf63c6cac38a51f3fbb44f",
   "sourceName": "contracts/modules/core/MarketCollateralModule.sol",
   "contractName": "MarketCollateralModule",
   "deployedOn": "contract.MarketCollateralModule"

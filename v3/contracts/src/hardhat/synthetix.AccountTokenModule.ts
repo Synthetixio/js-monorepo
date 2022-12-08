@@ -1,10 +1,11 @@
-export const address = '0xD9EB9f8BAaD361938E79f8B300D711b09862ec59';
+export const address = '0xEa1b9dCd34C6d83Cd11791Ea68734f618FB5f81d';
 export const abi = [
   'error AlreadyInitialized()',
   'error CannotSelfApprove(address)',
   'error IndexOutOfBounds()',
-  'error InvalidParameters()',
+  'error InvalidParameter(string parameter, string reason)',
   'error InvalidTransferRecipient(address)',
+  'error OverflowUint256ToUint128()',
   'error TokenAlreadyMinted(uint256)',
   'error TokenDoesNotExist(uint256)',
   'error Unauthorized(address addr)',

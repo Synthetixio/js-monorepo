@@ -1,5 +1,5 @@
 {
-  "address": "0x1F653F3FFDaB3c7E3F188f6Cf5083F69e5E74f28",
+  "address": "0x35905b59F9F3BFB2346e9690DD516b2dbe4c9E51",
   "abi": [
     {
       "type": "error",
@@ -8,8 +8,28 @@
     },
     {
       "type": "error",
+      "name": "ImplementationIsSterile",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "implementation"
+        }
+      ]
+    },
+    {
+      "type": "error",
       "name": "NoChange",
       "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "NotAContract",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "contr"
+        }
+      ]
     },
     {
       "type": "error",
@@ -30,6 +50,11 @@
           "name": "addr"
         }
       ]
+    },
+    {
+      "type": "error",
+      "name": "UpgradeSimulationFailed",
+      "inputs": []
     },
     {
       "type": "error",
@@ -66,12 +91,42 @@
       ]
     },
     {
+      "type": "event",
+      "anonymous": false,
+      "name": "Upgraded",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "self",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "implementation",
+          "indexed": false
+        }
+      ]
+    },
+    {
       "type": "function",
       "name": "acceptOwnership",
       "constant": false,
       "payable": false,
       "inputs": [],
       "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getImplementation",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
     },
     {
       "type": "function",
@@ -145,61 +200,6 @@
       "payable": false,
       "inputs": [],
       "outputs": []
-    },
-    {
-      "type": "error",
-      "name": "ImplementationIsSterile",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "implementation"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "NotAContract",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "contr"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "UpgradeSimulationFailed",
-      "inputs": []
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "Upgraded",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "self",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "implementation",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "getImplementation",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "address"
-        }
-      ]
     },
     {
       "type": "function",
@@ -283,7 +283,7 @@
       "outputs": [
         {
           "type": "address",
-          "name": "proxy"
+          "name": "addr"
         },
         {
           "type": "bytes32",
@@ -734,7 +734,7 @@
       ]
     }
   ],
-  "deployTxnHash": "0x8f21c64b2f4616053b26782071e2f567a1b5496b9345d383c06f97a16e59e5e7",
+  "deployTxnHash": "0xa59629fda6b816cc7e77b6daf49d5c386ce772d71d98c05dd9ee4cf8ec19fdaf",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_usd"

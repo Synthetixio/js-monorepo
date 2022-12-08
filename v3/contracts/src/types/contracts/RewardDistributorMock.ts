@@ -29,6 +29,7 @@ export interface RewardDistributorMockInterface extends utils.Interface {
     "initialize(address,address,string)": FunctionFragment;
     "name()": FunctionFragment;
     "payout(uint128,uint128,address,address,uint256)": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
     "token()": FunctionFragment;
   };
 
@@ -38,6 +39,7 @@ export interface RewardDistributorMockInterface extends utils.Interface {
       | "initialize"
       | "name"
       | "payout"
+      | "supportsInterface"
       | "token"
   ): FunctionFragment;
 
@@ -70,6 +72,10 @@ export interface RewardDistributorMockInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
+  encodeFunctionData(
+    functionFragment: "supportsInterface",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
   encodeFunctionData(functionFragment: "token", values?: undefined): string;
 
   decodeFunctionResult(
@@ -79,6 +85,10 @@ export interface RewardDistributorMockInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "payout", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "supportsInterface",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "token", data: BytesLike): Result;
 
   events: {};
@@ -138,6 +148,11 @@ export interface RewardDistributorMock extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    supportsInterface(
+      interfaceId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     token(overrides?: CallOverrides): Promise<[string]>;
   };
 
@@ -168,6 +183,11 @@ export interface RewardDistributorMock extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  supportsInterface(
+    interfaceId: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   token(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
@@ -195,6 +215,11 @@ export interface RewardDistributorMock extends BaseContract {
       arg2: PromiseOrValue<string>,
       sender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    supportsInterface(
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -231,6 +256,11 @@ export interface RewardDistributorMock extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    supportsInterface(
+      interfaceId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     token(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
@@ -260,6 +290,11 @@ export interface RewardDistributorMock extends BaseContract {
       sender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    supportsInterface(
+      interfaceId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;

@@ -1,5 +1,5 @@
 {
-  "address": "0xD9EB9f8BAaD361938E79f8B300D711b09862ec59",
+  "address": "0xEa1b9dCd34C6d83Cd11791Ea68734f618FB5f81d",
   "abi": [
     {
       "type": "error",
@@ -22,8 +22,17 @@
     },
     {
       "type": "error",
-      "name": "InvalidParameters",
-      "inputs": []
+      "name": "InvalidParameter",
+      "inputs": [
+        {
+          "type": "string",
+          "name": "parameter"
+        },
+        {
+          "type": "string",
+          "name": "reason"
+        }
+      ]
     },
     {
       "type": "error",
@@ -33,6 +42,11 @@
           "type": "address"
         }
       ]
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToUint128",
+      "inputs": []
     },
     {
       "type": "error",
@@ -495,7 +509,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x5e45fa6566ff0be61654866a249302ae3a11f405b3301d7460111e3be22efbeb",
+  "deployTxnHash": "0x506cdef88cfd075f47b732189558cec44ea9489ebc8dfbdd0e755e2123e289da",
   "sourceName": "contracts/modules/account/AccountTokenModule.sol",
   "contractName": "AccountTokenModule",
   "deployedOn": "contract.AccountTokenModule"

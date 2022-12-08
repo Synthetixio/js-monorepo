@@ -1,5 +1,5 @@
 {
-  "address": "0x7E3b3e1faE6A4cCcF87E184647c900438E04A81F",
+  "address": "0xF14392aaddb188775048538C4f9bB1ffFb2f2B4e",
   "abi": [
     {
       "type": "error",
@@ -33,7 +33,7 @@
         },
         {
           "type": "bool",
-          "name": "value",
+          "name": "allowAll",
           "indexed": false
         }
       ]
@@ -84,7 +84,7 @@
         },
         {
           "type": "address",
-          "name": "permissioned"
+          "name": "account"
         }
       ],
       "outputs": []
@@ -138,7 +138,7 @@
         },
         {
           "type": "address",
-          "name": "addressToCheck"
+          "name": "account"
         }
       ],
       "outputs": [
@@ -159,7 +159,7 @@
         },
         {
           "type": "address",
-          "name": "permissioned"
+          "name": "account"
         }
       ],
       "outputs": []
@@ -183,7 +183,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x48501bd914577c43724854bfef4d569e1d9d32c392e7de92005d161b3890eff4",
+  "deployTxnHash": "0xe38c31299ac447203f7cd8a29e05c65352bb956cae8d57356236ec32bd04c1d8",
   "sourceName": "contracts/modules/core/FeatureFlagModule.sol",
   "contractName": "FeatureFlagModule",
   "deployedOn": "contract.FeatureFlagModule"

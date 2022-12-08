@@ -1,5 +1,5 @@
 {
-  "address": "0xeBF38ca5534b7EDE4f53C67fF530206BC951AA2a",
+  "address": "0x3Aa751044372B61A46DEC9ae45da645351281a99",
   "abi": [
     {
       "type": "error",
@@ -67,7 +67,7 @@
       "outputs": [
         {
           "type": "address",
-          "name": "proxy"
+          "name": "addr"
         },
         {
           "type": "bytes32",
@@ -152,7 +152,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x55cb009df1916ecc88afd8b0beedea379c5bab3c842ac2bda0e4e590574d55a4",
+  "deployTxnHash": "0xae8d1055275241853cff1f60ef86e5bc5d06252f8133b7d9ba32368ac3e14271",
   "sourceName": "contracts/modules/associated-systems/AssociatedSystemsModule.sol",
   "contractName": "AssociatedSystemsModule",
   "deployedOn": "contract.AssociatedSystemsModule"

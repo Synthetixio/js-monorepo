@@ -286,7 +286,7 @@
     "Synthetix Token",
     "SNX"
   ],
-  "deployTxnHash": "0x823eba906a9fc520dbb860636c0669210cca5e56b8eb04d747485ed7371f5fe3",
+  "deployTxnHash": "0x51f0f412ec9276a1843f5adf8e0c380d07260cc0c8f14f6ddc21a24a833b6dd4",
   "sourceName": "contracts/MintableERC20.sol",
   "contractName": "MintableERC20",
   "deployedOn": "contract.token"

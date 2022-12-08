@@ -1,32 +1,19 @@
 {
-  "address": "0x297AB4d61a6D52b9DeD5338A8601A0b866C11Be4",
+  "address": "0xb4c1E256e6bf4f5b75c9D64033a0bA1e4BA701cA",
   "abi": [
     {
       "type": "error",
-      "name": "EmptyDistribution",
-      "inputs": []
-    },
-    {
-      "type": "error",
-      "name": "FailedTransfer",
+      "name": "AccountNotFound",
       "inputs": [
         {
-          "type": "address",
-          "name": "from"
-        },
-        {
-          "type": "address",
-          "name": "to"
-        },
-        {
-          "type": "uint256",
-          "name": "value"
+          "type": "uint128",
+          "name": "accountId"
         }
       ]
     },
     {
       "type": "error",
-      "name": "InconsistentDistribution",
+      "name": "EmptyDistribution",
       "inputs": []
     },
     {
@@ -38,7 +25,7 @@
           "name": "collateralValue"
         },
         {
-          "type": "uint256",
+          "type": "int256",
           "name": "debt"
         },
         {
@@ -53,15 +40,25 @@
     },
     {
       "type": "error",
-      "name": "InvalidParameters",
+      "name": "InsufficientMappedAmount",
+      "inputs": [
+        {
+          "type": "int256",
+          "name": "scaleModifier"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidParameter",
       "inputs": [
         {
           "type": "string",
-          "name": "incorrectParameter"
+          "name": "parameter"
         },
         {
           "type": "string",
-          "name": "help"
+          "name": "reason"
         }
       ]
     },
@@ -96,7 +93,32 @@
     },
     {
       "type": "error",
-      "name": "ZeroValuePerShare",
+      "name": "OverflowInt128ToUint128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToUint256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint128ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToInt256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToUint128",
       "inputs": []
     },
     {
@@ -120,18 +142,32 @@
           "indexed": true
         },
         {
-          "type": "uint256",
-          "name": "debtLiquidated",
+          "type": "tuple",
+          "name": "liquidationData",
+          "indexed": false,
+          "components": [
+            {
+              "type": "uint256",
+              "name": "debtLiquidated"
+            },
+            {
+              "type": "uint256",
+              "name": "collateralLiquidated"
+            },
+            {
+              "type": "uint256",
+              "name": "amountRewarded"
+            }
+          ]
+        },
+        {
+          "type": "uint128",
+          "name": "liquidateAsAccountId",
           "indexed": false
         },
         {
-          "type": "uint256",
-          "name": "collateralLiquidated",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amountRewarded",
+          "type": "address",
+          "name": "sender",
           "indexed": false
         }
       ]
@@ -152,25 +188,39 @@
           "indexed": true
         },
         {
-          "type": "uint256",
-          "name": "debtLiquidated",
+          "type": "tuple",
+          "name": "liquidationData",
+          "indexed": false,
+          "components": [
+            {
+              "type": "uint256",
+              "name": "debtLiquidated"
+            },
+            {
+              "type": "uint256",
+              "name": "collateralLiquidated"
+            },
+            {
+              "type": "uint256",
+              "name": "amountRewarded"
+            }
+          ]
+        },
+        {
+          "type": "uint128",
+          "name": "liquidateAsAccountId",
           "indexed": false
         },
         {
-          "type": "uint256",
-          "name": "collateralLiquidated",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amountRewarded",
+          "type": "address",
+          "name": "sender",
           "indexed": false
         }
       ]
     },
     {
       "type": "function",
-      "name": "isLiquidatable",
+      "name": "isPositionLiquidatable",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -178,6 +228,27 @@
           "type": "uint128",
           "name": "accountId"
         },
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "isVaultLiquidatable",
+      "constant": false,
+      "payable": false,
+      "inputs": [
         {
           "type": "uint128",
           "name": "poolId"
@@ -210,20 +281,30 @@
         {
           "type": "address",
           "name": "collateralType"
+        },
+        {
+          "type": "uint128",
+          "name": "liquidateAsAccountId"
         }
       ],
       "outputs": [
         {
-          "type": "uint256",
-          "name": "amountRewarded"
-        },
-        {
-          "type": "uint256",
-          "name": "debtLiquidated"
-        },
-        {
-          "type": "uint256",
-          "name": "collateralLiquidated"
+          "type": "tuple",
+          "name": "liquidationData",
+          "components": [
+            {
+              "type": "uint256",
+              "name": "debtLiquidated"
+            },
+            {
+              "type": "uint256",
+              "name": "collateralLiquidated"
+            },
+            {
+              "type": "uint256",
+              "name": "amountRewarded"
+            }
+          ]
         }
       ]
     },
@@ -252,18 +333,28 @@
       ],
       "outputs": [
         {
-          "type": "uint256",
-          "name": "amountLiquidated"
-        },
-        {
-          "type": "uint256",
-          "name": "collateralRewarded"
+          "type": "tuple",
+          "name": "liquidationData",
+          "components": [
+            {
+              "type": "uint256",
+              "name": "debtLiquidated"
+            },
+            {
+              "type": "uint256",
+              "name": "collateralLiquidated"
+            },
+            {
+              "type": "uint256",
+              "name": "amountRewarded"
+            }
+          ]
         }
       ]
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x50341fb20c96c5f4586c4c16aa6c9b094b3be6d959151d65e471f979102f117c",
+  "deployTxnHash": "0x7b4315dd95ecf1cf8a700096f57e715850955e8500638965e99e17c7c8b2d371",
   "sourceName": "contracts/modules/core/LiquidationModule.sol",
   "contractName": "LiquidationModule",
   "deployedOn": "contract.LiquidationModule"

@@ -1,5 +1,5 @@
 {
-  "address": "0x525268dD5cfa17A39839818e9C6375d82d932CC0",
+  "address": "0x038992d85DD56D7A66e0C5dDA6C74Db36974B83c",
   "abi": [
     {
       "type": "error",
@@ -23,15 +23,15 @@
     },
     {
       "type": "error",
-      "name": "InvalidParameters",
+      "name": "InvalidParameter",
       "inputs": [
         {
           "type": "string",
-          "name": "incorrectParameter"
+          "name": "parameter"
         },
         {
           "type": "string",
-          "name": "help"
+          "name": "reason"
         }
       ]
     },
@@ -47,17 +47,32 @@
     },
     {
       "type": "error",
-      "name": "PoolAlreadyExists",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId"
-        }
-      ]
+      "name": "OverflowInt256ToInt128",
+      "inputs": []
     },
     {
       "type": "error",
-      "name": "PoolNotFound",
+      "name": "OverflowInt256ToUint256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint128ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToInt256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToUint128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "PoolAlreadyExists",
       "inputs": [
         {
           "type": "uint128",
@@ -93,23 +108,6 @@
     {
       "type": "event",
       "anonymous": false,
-      "name": "NominatedPoolOwner",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "owner",
-          "indexed": true
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
       "name": "PoolConfigurationSet",
       "inputs": [
         {
@@ -124,15 +122,15 @@
           "components": [
             {
               "type": "uint128",
-              "name": "market"
+              "name": "marketId"
             },
             {
               "type": "uint128",
-              "name": "weight"
+              "name": "weightD18"
             },
             {
               "type": "int128",
-              "name": "maxDebtShareValue"
+              "name": "maxDebtShareValueD18"
             }
           ]
         },
@@ -156,6 +154,11 @@
         {
           "type": "address",
           "name": "owner",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "sender",
           "indexed": true
         }
       ]
@@ -219,11 +222,16 @@
     {
       "type": "event",
       "anonymous": false,
-      "name": "PoolOwnershipAccepted",
+      "name": "PoolOwnerNominated",
       "inputs": [
         {
           "type": "uint128",
           "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "nominatedOwner",
           "indexed": true
         },
         {
@@ -236,7 +244,7 @@
     {
       "type": "event",
       "anonymous": false,
-      "name": "PoolOwnershipRenounced",
+      "name": "PoolOwnershipAccepted",
       "inputs": [
         {
           "type": "uint128",
@@ -329,15 +337,15 @@
           "components": [
             {
               "type": "uint128",
-              "name": "market"
+              "name": "marketId"
             },
             {
               "type": "uint128",
-              "name": "weight"
+              "name": "weightD18"
             },
             {
               "type": "int128",
-              "name": "maxDebtShareValue"
+              "name": "maxDebtShareValueD18"
             }
           ]
         }
@@ -412,7 +420,7 @@
     },
     {
       "type": "function",
-      "name": "renouncePoolOwnership",
+      "name": "revokePoolNomination",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -448,19 +456,19 @@
         },
         {
           "type": "tuple[]",
-          "name": "newDistributions",
+          "name": "newMarketConfigurations",
           "components": [
             {
               "type": "uint128",
-              "name": "market"
+              "name": "marketId"
             },
             {
               "type": "uint128",
-              "name": "weight"
+              "name": "weightD18"
             },
             {
               "type": "int128",
-              "name": "maxDebtShareValue"
+              "name": "maxDebtShareValueD18"
             }
           ]
         }
@@ -486,7 +494,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x3f7c589d3cb04bca551fb9a5bf71af3625d408de6d17518b02c877e04577fe66",
+  "deployTxnHash": "0x424ef02154595999047794b652db11dfa8fb50ebecc80555d116f8ac1b42fe67",
   "sourceName": "contracts/modules/core/PoolModule.sol",
   "contractName": "PoolModule",
   "deployedOn": "contract.PoolModule"

@@ -1,5 +1,5 @@
 {
-  "address": "0x4287e236e0B65255A942F9A57021752CEBa88033",
+  "address": "0xb7D7Cf0e12E631aac5304d2571e63Cd45974F19A",
   "abi": [
     {
       "type": "error",
@@ -8,8 +8,28 @@
     },
     {
       "type": "error",
+      "name": "ImplementationIsSterile",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "implementation"
+        }
+      ]
+    },
+    {
+      "type": "error",
       "name": "NoChange",
       "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "NotAContract",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "contr"
+        }
+      ]
     },
     {
       "type": "error",
@@ -30,6 +50,11 @@
           "name": "addr"
         }
       ]
+    },
+    {
+      "type": "error",
+      "name": "UpgradeSimulationFailed",
+      "inputs": []
     },
     {
       "type": "error",
@@ -66,12 +91,42 @@
       ]
     },
     {
+      "type": "event",
+      "anonymous": false,
+      "name": "Upgraded",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "self",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "implementation",
+          "indexed": false
+        }
+      ]
+    },
+    {
       "type": "function",
       "name": "acceptOwnership",
       "constant": false,
       "payable": false,
       "inputs": [],
       "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getImplementation",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
     },
     {
       "type": "function",
@@ -145,61 +200,6 @@
       "payable": false,
       "inputs": [],
       "outputs": []
-    },
-    {
-      "type": "error",
-      "name": "ImplementationIsSterile",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "implementation"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "NotAContract",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "contr"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "UpgradeSimulationFailed",
-      "inputs": []
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "Upgraded",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "self",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "implementation",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "getImplementation",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "address"
-        }
-      ]
     },
     {
       "type": "function",
@@ -283,7 +283,7 @@
       "outputs": [
         {
           "type": "address",
-          "name": "proxy"
+          "name": "addr"
         },
         {
           "type": "bytes32",
@@ -735,7 +735,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x4bf111facfc8f12d63184df3b6834f8ad64810248a63063306a61cdbc2d7caac",
+  "deployTxnHash": "0x78f5f50924c331c9e76c5347cf628b6e30c5ed4401b0ecd7be9d64febf039579",
   "sourceName": "contracts/routers/chain-13370/USDRouter.sol",
   "contractName": "USDRouter",
   "deployedOn": "contract.USDRouter"

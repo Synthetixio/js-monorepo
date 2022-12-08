@@ -1,5 +1,5 @@
 {
-  "address": "0xc9962c7F2B0951E458252322f4823f3109c93517",
+  "address": "0x5F1E6b6196d6d8Ddf994D3B4FD557678FCcE3da6",
   "abi": [
     {
       "type": "error",
@@ -13,23 +13,11 @@
     },
     {
       "type": "error",
-      "name": "MarketDepositNotApproved",
+      "name": "IncorrectMarketInterface",
       "inputs": [
         {
           "type": "address",
           "name": "market"
-        },
-        {
-          "type": "address",
-          "name": "from"
-        },
-        {
-          "type": "uint256",
-          "name": "requestedAmount"
-        },
-        {
-          "type": "uint256",
-          "name": "approvedAmount"
         }
       ]
     },
@@ -63,6 +51,31 @@
     },
     {
       "type": "error",
+      "name": "OverflowInt256ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToUint256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint128ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToInt256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToUint128",
+      "inputs": []
+    },
+    {
+      "type": "error",
       "name": "Unauthorized",
       "inputs": [
         {
@@ -84,6 +97,11 @@
         {
           "type": "uint128",
           "name": "marketId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "sender",
           "indexed": true
         }
       ]
@@ -110,7 +128,7 @@
         },
         {
           "type": "address",
-          "name": "sender",
+          "name": "market",
           "indexed": true
         }
       ]
@@ -137,7 +155,7 @@
         },
         {
           "type": "address",
-          "name": "sender",
+          "name": "market",
           "indexed": true
         }
       ]
@@ -200,7 +218,7 @@
     },
     {
       "type": "function",
-      "name": "getMarketIssuance",
+      "name": "getMarketNetIssuance",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -236,7 +254,7 @@
     },
     {
       "type": "function",
-      "name": "getMarketTotalBalance",
+      "name": "getMarketTotalDebt",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -329,7 +347,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x24be87f78126a75188cd588eef78dabdd03e57767f63e6936598fac43928f194",
+  "deployTxnHash": "0xbc1557baa991426e0507d7157cdfbadeddef3ac973dfff7657404bb911cd5921",
   "sourceName": "contracts/modules/core/MarketManagerModule.sol",
   "contractName": "MarketManagerModule",
   "deployedOn": "contract.MarketManagerModule"

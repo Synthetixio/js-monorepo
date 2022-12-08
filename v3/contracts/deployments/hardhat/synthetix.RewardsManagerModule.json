@@ -1,33 +1,39 @@
 {
-  "address": "0x342104b67C4D18c4468Cfa1e276ADb0eDc50CA9A",
+  "address": "0xdD82fE409F6c376a8A54540e9B9487956244C8Cb",
   "abi": [
     {
       "type": "error",
-      "name": "InvalidParameters",
+      "name": "InvalidParameter",
       "inputs": [
         {
           "type": "string",
-          "name": "incorrectParameter"
+          "name": "parameter"
         },
         {
           "type": "string",
-          "name": "help"
+          "name": "reason"
         }
       ]
     },
     {
       "type": "error",
-      "name": "InvalidParameters",
-      "inputs": [
-        {
-          "type": "string",
-          "name": "incorrectParameter"
-        },
-        {
-          "type": "string",
-          "name": "help"
-        }
-      ]
+      "name": "OverflowInt256ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToUint256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToInt256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToUint128",
+      "inputs": []
     },
     {
       "type": "error",
@@ -65,6 +71,11 @@
     {
       "type": "error",
       "name": "ValueAlreadyInSet",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ValueNotInSet",
       "inputs": []
     },
     {
@@ -137,6 +148,50 @@
       ]
     },
     {
+      "type": "event",
+      "anonymous": false,
+      "name": "RewardsDistributorRegistered",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "distributor",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "RewardsDistributorRemoved",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "distributor",
+          "indexed": true
+        }
+      ]
+    },
+    {
       "type": "function",
       "name": "claimRewards",
       "constant": false,
@@ -144,15 +199,15 @@
       "inputs": [
         {
           "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
           "name": "poolId"
         },
         {
           "type": "address",
           "name": "collateralType"
-        },
-        {
-          "type": "uint128",
-          "name": "accountId"
         },
         {
           "type": "address",
@@ -184,15 +239,43 @@
           "name": "amount"
         },
         {
-          "type": "uint256",
+          "type": "uint64",
           "name": "start"
         },
         {
-          "type": "uint256",
+          "type": "uint32",
           "name": "duration"
         }
       ],
       "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getClaimableRewards",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint128",
+          "name": "accountId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256[]"
+        },
+        {
+          "type": "address[]"
+        }
+      ]
     },
     {
       "type": "function",
@@ -222,7 +305,7 @@
     },
     {
       "type": "function",
-      "name": "getRewards",
+      "name": "registerRewardsDistributor",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -235,22 +318,15 @@
           "name": "collateralType"
         },
         {
-          "type": "uint128",
-          "name": "accountId"
+          "type": "address",
+          "name": "distributor"
         }
       ],
-      "outputs": [
-        {
-          "type": "uint256[]"
-        },
-        {
-          "type": "address[]"
-        }
-      ]
+      "outputs": []
     },
     {
       "type": "function",
-      "name": "registerRewardsDistributor",
+      "name": "removeRewardsDistributor",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -271,7 +347,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x97f671b2bba2f9b43e1cac03a5f3e44df4940a52d878fb3c8d727ab5e6f7ae42",
+  "deployTxnHash": "0x94efc65b8c4f7805e57b73fac3ed7ad9716cbb78dfa709d638fc1dbfadf1af81",
   "sourceName": "contracts/modules/core/RewardsManagerModule.sol",
   "contractName": "RewardsManagerModule",
   "deployedOn": "contract.RewardsManagerModule"

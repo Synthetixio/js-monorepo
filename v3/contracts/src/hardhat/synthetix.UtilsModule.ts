@@ -1,8 +1,6 @@
-export const address = '0x63E75eECCe3B553050166fbB154d1c2A76f7C9dc';
+export const address = '0xcd38d2E44CA9ebA41Ee5eaa23D96D5B4b6c647E8';
 export const abi = [
-  'error AlreadyInitialized()',
-  'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',
   'error Unauthorized(address addr)',
-  'function mintInitialSystemToken(address to, uint256 amount)',
+  'function configureOracleManager(address oracleManagerAddress)',
   'function registerCcip(address ccipSend, address ccipReceive, address ccipTokenPool)',
 ];

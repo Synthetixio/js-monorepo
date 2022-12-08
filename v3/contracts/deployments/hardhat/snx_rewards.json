@@ -1,5 +1,5 @@
 {
-  "address": "0x0f589A84e9e0C66D22241E1d0Bd7a07Da86A1E19",
+  "address": "0x21007CEFD812D6049374c6051e8ef23D25278730",
   "abi": [
     {
       "type": "error",
@@ -106,6 +106,24 @@
     },
     {
       "type": "function",
+      "name": "supportsInterface",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes4",
+          "name": "interfaceId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "function",
       "name": "token",
       "constant": true,
       "stateMutability": "view",
@@ -119,7 +137,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xf9d8fc896b0d15b016d2975f8f3edeb23d5f3a95fdd0ccac22f5d6939408b714",
+  "deployTxnHash": "0xc3fe47c8e50e39264ed92eb20de86fc744c4c3ecca7c9a9c347cfa13f2f1bb6b",
   "sourceName": "contracts/RewardDistributorMock.sol",
   "contractName": "RewardDistributorMock",
   "deployedOn": "contract.snx_rewards"
