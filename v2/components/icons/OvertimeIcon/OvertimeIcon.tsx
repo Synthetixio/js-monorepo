@@ -1,6 +1,6 @@
 import { Icon, IconProps } from '@chakra-ui/react';
 
-export const OvertimeIcon = ({ width = '29px', height = '31px', ...props }: IconProps) => {
+export const OvertimeIcon = ({ width = '38px', height = '41px', ...props }: IconProps) => {
   return (
     <Icon width={width} height={height} viewBox="0 0 29 31" fill="none" {...props}>
       <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

@@ -15,6 +15,7 @@ export const UtilityCard = ({ Icon, link, title, description, ...props }: Utilit
       bg="linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #0B0B22"
       p={4}
       width={['100%', '260px', '260px']}
+      minH="158px"
       h="fit-content"
       borderRadius="md"
       borderWidth="1px"

@@ -1,5 +1,6 @@
 import { Icon, IconProps } from '@chakra-ui/react';
 
+// TODO: Update this with the correct icon
 export const PolynomialIcon = ({ width = '29px', height = '29px', ...props }: IconProps) => {
   return (
     <Icon width={width} height={height} viewBox="0 0 50 50" fill="none" {...props}>

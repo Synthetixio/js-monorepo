@@ -125,18 +125,18 @@ const V2Home = () => {
             </Box>
           </Container>
         </Box>
-        <Box overflowX="scroll" pb={10} width="100%" px={[2, 0, 0, 0]} bg="navy.900">
+        <Box pb={10} width="100%" px={[2, 0, 0, 0]} bg="navy.900">
           <Container maxW="1200px" bg="transparent" mt={0}>
             <Flex
               bg="navy.900"
               direction={['column', 'row', 'row']}
+              flexFlow="wrap"
+              justifyContent={{ base: 'center', xl: 'flex-start' }}
               height="fit-content"
-              width={['100%', 'fit-content', 'fit-content']}
-              mt={6}
-              pr={['0', '0', '10']}
-              alignItems={['center', 'unset', 'unset']}
+              width="100%"
             >
               <UtilityCard
+                mt={6}
                 mr={4}
                 title="Kwenta"
                 description={t('staking-v2.home.utilities.kwentaDescription')}
@@ -149,7 +149,7 @@ const V2Home = () => {
                 description={t('staking-v2.home.utilities.dHedgeDescription')}
                 link="https://www.dhedge.org/"
                 Icon={DHedgeIcon}
-                mt={[4, 0, 0]}
+                mt={[4, 6, 6]}
               />
               <UtilityCard
                 mr={4}
@@ -157,7 +157,7 @@ const V2Home = () => {
                 description={t('staking-v2.home.utilities.lyraDescription')}
                 link="https://www.lyra.finance/"
                 Icon={LyraIcon}
-                mt={[4, 0, 0]}
+                mt={[4, 6, 6]}
               />
               <UtilityCard
                 mr={4}
@@ -165,23 +165,16 @@ const V2Home = () => {
                 description={t('staking-v2.home.utilities.thalesDescription')}
                 link="https://thalesmarket.io/"
                 Icon={ThalesIcon}
-                mt={[4, 0, 0]}
+                mt={[4, 6, 6]}
               />
+
               <UtilityCard
                 mr={4}
                 title="Curve"
                 description={t('staking-v2.home.utilities.curveDescription')}
                 link="https://curve.fi/"
                 Icon={() => <CurveLogo />}
-                mt={[4, 0, 0]}
-              />
-              <UtilityCard
-                mr={4}
-                title="Polynomial"
-                description={t('staking-v2.home.utilities.polynomialDescription')}
-                link="https://www.polynomial.fi/"
-                Icon={() => <CurveLogo />}
-                mt={[4, 0, 0]}
+                mt={[4, 6, 6]}
               />
               <UtilityCard
                 mr={4}
@@ -189,7 +182,7 @@ const V2Home = () => {
                 description={t('staking-v2.home.utilities.overtimeDescription')}
                 link="https://overtimemarkets.xyz/"
                 Icon={OvertimeIcon}
-                mt={[4, 0, 0]}
+                mt={[4, 6, 6]}
               />
             </Flex>
           </Container>
