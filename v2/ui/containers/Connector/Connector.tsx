@@ -39,6 +39,7 @@ const L2DefaultProvider: SynthetixProvider = loadProvider({
     : '0',
   networkId: NetworkIdByName['mainnet-ovm'],
 });
+
 const transactionNotifier = new TransactionNotifier(L1DefaultProvider);
 
 const useConnector = () => {
@@ -106,7 +107,7 @@ const useConnector = () => {
   }, []);
 
   useEffect(() => {
-    dispatch({ type: AppEvents.APP_READY, payload: Web3Onboard }); //
+    dispatch({ type: AppEvents.APP_READY, payload: Web3Onboard });
   }, []);
 
   useEffect(() => {
@@ -117,11 +118,17 @@ const useConnector = () => {
 
   useEffect(() => {
     const previousWalletsSerialised = localStorage.getItem(LOCAL_STORAGE_KEYS.SELECTED_WALLET);
-    const previousWallets: string[] | null = previousWalletsSerialised
-      ? JSON.parse(previousWalletsSerialised)
-      : null;
 
-    if (onboard && previousWallets) {
+    const previousWallets: string[] = previousWalletsSerialised
+      ? JSON.parse(previousWalletsSerialised)
+      : [];
+
+    // If running in an iframe, attempt to connect with Gnosis
+    if (window.self !== window.top) {
+      previousWallets.push('Gnosis Safe');
+    }
+
+    if (onboard && previousWallets.length > 0) {
       (async () => {
         try {
           await onboard.connectWallet({
