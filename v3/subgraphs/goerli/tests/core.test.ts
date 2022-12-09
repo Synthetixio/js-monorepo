@@ -251,10 +251,10 @@ describe('core tests', () => {
     assert.fieldEquals('Market', '1', 'created_at_block', (now - 1000).toString());
     assert.fieldEquals('Market', '1', 'updated_at', now.toString());
     assert.fieldEquals('Market', '1', 'updated_at_block', (now - 1000).toString());
-    assert.assertNull(store.get('Market', '1')!.get('usd_deposited'));
-    assert.assertNull(store.get('Market', '1')!.get('usd_withdrawn'));
-    assert.assertNull(store.get('Market', '1')!.get('net_issuance'));
-    assert.assertNull(store.get('Market', '1')!.get('reported_debt'));
+    assert.fieldEquals('Market', '1', 'usd_deposited', '0');
+    assert.fieldEquals('Market', '1', 'usd_withdrawn', '0');
+    assert.fieldEquals('Market', '1', 'net_issuance', '0');
+    assert.fieldEquals('Market', '1', 'reported_debt', '0');
     assert.assertNull(store.get('Market', '1')!.get('configurations'));
     assert.notInStore('Market', '2');
   });

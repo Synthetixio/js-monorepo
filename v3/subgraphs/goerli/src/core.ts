@@ -126,6 +126,10 @@ export function handleMarketCreated(event: MarketRegistered): void {
   newMarket.created_at_block = event.block.number;
   newMarket.updated_at = event.block.timestamp;
   newMarket.updated_at_block = event.block.number;
+  newMarket.usd_deposited = BigDecimal.fromString('0');
+  newMarket.usd_withdrawn = BigDecimal.fromString('0');
+  newMarket.net_issuance = BigDecimal.fromString('0');
+  newMarket.reported_debt = BigDecimal.fromString('0');
   newMarket.save();
 }
 
