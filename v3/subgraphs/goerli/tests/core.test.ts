@@ -389,15 +389,23 @@ describe('core tests', () => {
       now + 2000,
       now + 1000
     );
+    const newUsdWithdrawnEvent1 = createMarketUsdWithdrawnEvent(
+      1,
+      Address.fromString(address2),
+      BigInt.fromU64(100),
+      now + 2000,
+      now + 1000
+    );
     handleMarketCreated(newMarketRegisteredEvent);
     handleMarketUsdDeposited(newUsdDepositedEvent);
     handleMarketUsdWithdrawn(newUsdWithdrawnEvent);
+    handleMarketUsdWithdrawn(newUsdWithdrawnEvent1);
     assert.fieldEquals('Market', '1', 'address', address);
     assert.assertNull(store.get('Market', '1')!.get('configurations'));
     assert.fieldEquals('Market', '1', 'reported_debt', '23');
     assert.fieldEquals('Market', '1', 'usd_deposited', '200');
-    assert.fieldEquals('Market', '1', 'usd_withdrawn', '300');
-    assert.fieldEquals('Market', '1', 'net_issuance', '100');
+    assert.fieldEquals('Market', '1', 'usd_withdrawn', '400');
+    assert.fieldEquals('Market', '1', 'net_issuance', '200');
     assert.fieldEquals('Market', '1', 'created_at', now.toString());
     assert.fieldEquals('Market', '1', 'created_at_block', (now - 1000).toString());
     assert.fieldEquals('Market', '1', 'updated_at', (now + 2000).toString());
