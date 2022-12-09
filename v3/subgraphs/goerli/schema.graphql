@@ -27,7 +27,6 @@ type Market @entity {
   net_issuance: BigDecimal!
   reported_debt: BigDecimal!
 }
-}
 
 type MarketConfiguration @entity {
   "Pool id + market id"
