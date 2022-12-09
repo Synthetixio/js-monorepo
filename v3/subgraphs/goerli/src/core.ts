@@ -235,7 +235,6 @@ export function handleMarketUsdWithdrawn(event: MarketUsdWithdrawn): void {
     } else {
       market.usd_withdrawn = market.usd_withdrawn!.plus(event.params.amount.toBigDecimal());
     }
-    market.usd_withdrawn = event.params.amount.toBigDecimal();
     market.updated_at = event.block.timestamp;
     market.updated_at_block = event.block.number;
     if (!market.net_issuance) {
