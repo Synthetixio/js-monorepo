@@ -1,6 +1,13 @@
 import { UtilityCard } from './UtilityCard';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { DHedgeIcon, KwentaIcon, LyraIcon, ThalesIcon, OvertimeIcon } from '@snx-v2/icons';
+import {
+  DHedgeIcon,
+  KwentaIcon,
+  LyraIcon,
+  ThalesIcon,
+  OvertimeIcon,
+  PolynomialIcon,
+} from '@snx-v2/icons';
 import { Image } from '@chakra-ui/react';
 import CurveLogo from '../../ui/assets/svg/app/curve.svg';
 
@@ -17,7 +24,7 @@ export const Tertiary = Template.bind({});
 export const Quaternary = Template.bind({});
 export const Quinary = Template.bind({});
 export const Senary = Template.bind({});
-// export const Septenary = Template.bind({});
+export const Septenary = Template.bind({});
 
 Primary.args = {
   title: 'Kwenta',
@@ -66,11 +73,10 @@ Senary.args = {
   link: 'https://overtimemarkets.xyz/',
 };
 
-// Waiting on icon from polynomial
-// Senary.args = {
-//   title: 'Polynomial',
-//   description:
-//     "Polynomial is an automated DeFi options vault that generates yield by selling directly to Lyra's options AMM",
-//   Icon: PolynomialIcon,
-//   link: 'https://www.polynomial.fi/',
-// };
+Septenary.args = {
+  title: 'Polynomial',
+  description:
+    "Polynomial is an automated DeFi options vault that generates yield by selling directly to Lyra's options AMM",
+  Icon: PolynomialIcon,
+  link: 'https://www.polynomial.fi/',
+};

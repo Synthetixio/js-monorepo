@@ -13,6 +13,7 @@ import {
   BridgeIcon,
   DebtPoolIcon,
   OvertimeIcon,
+  PolynomialIcon,
 } from '@snx-v2/icons';
 import { BoxLink } from '@snx-v2/BoxLink';
 import { useTranslation } from 'react-i18next';
@@ -131,7 +132,12 @@ const V2Home = () => {
               bg="navy.900"
               direction={['column', 'row', 'row']}
               flexFlow="wrap"
-              justifyContent={{ base: 'center', xl: 'flex-start' }}
+              justifyContent={{
+                base: 'center',
+                md: 'flex-start',
+                lg: 'flex-start',
+              }}
+              // alignItems="flex-end"
               height="fit-content"
               width="100%"
             >
@@ -182,6 +188,14 @@ const V2Home = () => {
                 description={t('staking-v2.home.utilities.overtimeDescription')}
                 link="https://overtimemarkets.xyz/"
                 Icon={OvertimeIcon}
+                mt={[4, 6, 6]}
+              />
+              <UtilityCard
+                mr={4}
+                title="Polynomial"
+                description={t('staking-v2.home.utilities.polynomialDescription')}
+                link="https://www.polynomial.fi/"
+                Icon={PolynomialIcon}
                 mt={[4, 6, 6]}
               />
             </Flex>
