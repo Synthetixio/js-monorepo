@@ -35,7 +35,7 @@ type PoolDataResult = {
 
 const gql = (data: TemplateStringsArray) => data[0];
 const PoolsDataDocument = gql`
-  query pool($id: string) {
+  query pool($id: String) {
     pool(id: $id) {
       id
       configurations {
@@ -66,7 +66,7 @@ const formatPool = (pool: RawPool) => {
       maxDebtShareValue: formatGraphBigDecimal(max_debt_share_value),
       market: {
         id: market.id,
-        address: market,
+        address: market.address,
         usdDeposited: formatGraphBigDecimal(market.usd_deposited),
         usdWithdrawn: formatGraphBigDecimal(market.usd_withdrawn),
         netIssuance,
@@ -83,10 +83,10 @@ const formatPool = (pool: RawPool) => {
   };
 };
 
-const getPoolData = async (chainName: string) => {
+const getPoolData = async (chainName: string, id: string) => {
   const res = await fetch(getSubgraphUrl(chainName), {
     method: 'POST',
-    body: JSON.stringify({ query: PoolsDataDocument, variables: { id: 1 } }),
+    body: JSON.stringify({ query: PoolsDataDocument, variables: { id } }),
   });
   const json: { data: PoolDataResult; errors: Error[] } = await res.json();
   if (json.errors) {
@@ -97,14 +97,14 @@ const getPoolData = async (chainName: string) => {
 };
 
 export type PoolData = ReturnType<typeof formatPool>;
-export const useGetPoolData = () => {
+export const useGetPoolData = (id?: string) => {
   const [localChainId] = useRecoilState(chainIdState);
   const chainName = getChainNameById(localChainId);
   return useQuery(
     ['useGetPoolData', chainName],
     async () => {
-      if (!chainName) throw Error('Query expected chainName to be defined');
-      const poolData = await getPoolData(chainName);
+      if (!chainName || !id) throw Error('Query expected chainName and id to be defined');
+      const poolData = await getPoolData(chainName, id);
       const pool = poolData.pool || getMockData().pool;
       return pool ? formatPool(pool) : undefined;
     },
@@ -116,7 +116,7 @@ function getMockData(): PoolDataResult {
   return {
     __typename: 'Query',
     pool: {
-      name: 'MyPool',
+      name: 'Spartan Pool',
       total_weight: '100',
       configurations: [
         {

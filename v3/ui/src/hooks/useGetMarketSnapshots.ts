@@ -5,12 +5,14 @@ import { useQuery } from '@tanstack/react-query';
 import { parseEther } from 'ethers/lib/utils';
 import { calculateMarketPnl } from '../utils/calculations';
 import { getSubgraphUrl } from '../utils/subgraph';
+import { BigNumber } from 'ethers';
+import { values } from '../utils/typescript';
 
 type GraphBigInt = string;
 type GraphBigDecimal = string;
 type RawMarketSnapshot = {
   id: string;
-  marketId: string;
+  market_id: string;
   //configurations: MarketConfiguration[] // recursive
   usd_deposited: GraphBigDecimal;
   usd_withdrawn: GraphBigDecimal;
@@ -26,10 +28,10 @@ type MarketSnapshotsResult = {
 
 const gql = (data: TemplateStringsArray) => data[0];
 const MarketSnapshotsResultDocument = gql`
-    query marketSnapshots($marketIds: string[], $afterTimestamp: string) {
-        marketSnapshots(where: {market_in: $marketIds, timestamp_gte: $afterTimestamp }) {
+    query MarketSnapshots($marketIds: String[], $afterTimestamp: Number) {
+        marketSnapshots(where: {market_id_in: $marketIds, timestamp_gte: $afterTimestamp }) {
             id
-            marketId
+            market_id
             usd_deposited
             usd_withdrawn
             net_issuance
@@ -64,7 +66,7 @@ const formatMarketSnapshot = (marketSnapshot: RawMarketSnapshot) => {
   const reportedDebt = formatGraphBigDecimal(marketSnapshot.reported_debt);
   return {
     id: marketSnapshot.id,
-    marketId: marketSnapshot.marketId,
+    marketId: marketSnapshot.market_id,
     usdDeposited: formatGraphBigDecimal(marketSnapshot.usd_deposited),
     usdWithdrawn: formatGraphBigDecimal(marketSnapshot.usd_withdrawn),
     netIssuance,
@@ -75,14 +77,16 @@ const formatMarketSnapshot = (marketSnapshot: RawMarketSnapshot) => {
 
 type MarketSnapshot = ReturnType<typeof formatMarketSnapshot>;
 
-export const useGetMarketSnapshotsByMarketId = (marketIds: string[], afterTimestamp: number) => {
+export const useGetMarketSnapshotsByMarketId = (afterTimestamp: number, marketIds?: string[]) => {
   const [localChainId] = useRecoilState(chainIdState);
   const chainName = getChainNameById(localChainId);
 
   return useQuery(
-    [marketIds.toString(), afterTimestamp],
+    [marketIds?.toString(), afterTimestamp],
     async () => {
-      if (!chainName) throw Error('Query expected chainName to be defined');
+      if (!chainName || !marketIds) {
+        throw Error('Query expected chainName and marketIds to be defined');
+      }
 
       const { marketSnapshots = getMockData() } = await getMarketSnapshots(
         chainName,
@@ -102,7 +106,10 @@ export const useGetMarketSnapshotsByMarketId = (marketIds: string[], afterTimest
         }, {});
       return marketSnapshotsByMarketId;
     },
-    { enabled: Boolean(chainName) && marketIds.length > 0, staleTime: 60 * 60 * 1000 }
+    {
+      enabled: Boolean(chainName) && Boolean(marketIds && marketIds.length > 0),
+      staleTime: 60 * 60 * 1000,
+    }
   );
 };
 type MarketSnapshotDataFields = Extract<
@@ -111,19 +118,46 @@ type MarketSnapshotDataFields = Extract<
 >;
 export const calculateGrowthForKey = (
   key: MarketSnapshotDataFields,
-  marketSnapshots: MarketSnapshot[]
+  marketSnapshots?: MarketSnapshot[]
 ) => {
-  if (marketSnapshots.length < 3) return undefined;
+  if (!marketSnapshots || marketSnapshots.length < 3) return undefined;
   const first = marketSnapshots[0][key];
   const current = marketSnapshots[marketSnapshots.length - 1][key];
-  return current.sub(first).div(first);
+  const value = current.sub(first);
+  const percentage = value.div(first);
+  return { value, percentage };
+};
+
+export const calculateTotalGrowth = (
+  key: MarketSnapshotDataFields,
+  marketSnapshotById: Record<string, MarketSnapshot[] | undefined>
+) => {
+  const val = values(marketSnapshotById);
+  const firstTotal = val.reduce((acc, val) => {
+    return acc.add(val[0][key]);
+  }, BigNumber.from(0));
+  const currentTotal = val.reduce((acc, val) => {
+    return acc.add(val[val.length - 1][key]);
+  }, BigNumber.from(0));
+  const value = currentTotal.sub(firstTotal);
+  const percentage = value.div(firstTotal);
+  return { value, percentage };
 };
 
 function getMockData() {
   return [
     {
       id: '1-1623456789',
-      marketId: '1',
+      market_id: '1',
+      usd_deposited: '100.45',
+      usd_withdrawn: '40.76',
+      net_issuance: '24.69',
+      reported_debt: '456.78',
+      timestamp: '1623450000',
+    },
+    {
+      id: '1-1623456789',
+      market_id: '1',
       usd_deposited: '123.45',
       usd_withdrawn: '98.76',
       net_issuance: '24.69',
@@ -132,7 +166,7 @@ function getMockData() {
     },
     {
       id: '2-1623456790',
-      marketId: '2',
+      market_id: '2',
       usd_deposited: '234.56',
       usd_withdrawn: '321.98',
       net_issuance: '-87.42',
