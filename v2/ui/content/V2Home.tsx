@@ -137,7 +137,6 @@ const V2Home = () => {
                 md: 'flex-start',
                 lg: 'flex-start',
               }}
-              // alignItems="flex-end"
               height="fit-content"
               width="100%"
             >
