@@ -26,15 +26,15 @@ describe('Market tests', () => {
 
   test('handleMarketCreated', () => {
     // Needs to be here because of Closures
-    const now = new Date(1668448739566).getTime();
+    const now = 10_000;
     const newMarketRegisteredEvent = createMarketCreatedEvent(1, address, now, now - 1000);
     handleMarketCreated(newMarketRegisteredEvent);
     assert.fieldEquals('Market', '1', 'id', '1');
     assert.fieldEquals('Market', '1', 'address', address);
-    assert.fieldEquals('Market', '1', 'created_at', now.toString());
-    assert.fieldEquals('Market', '1', 'created_at_block', (now - 1000).toString());
-    assert.fieldEquals('Market', '1', 'updated_at', now.toString());
-    assert.fieldEquals('Market', '1', 'updated_at_block', (now - 1000).toString());
+    assert.fieldEquals('Market', '1', 'created_at', '10000');
+    assert.fieldEquals('Market', '1', 'created_at_block', '9000');
+    assert.fieldEquals('Market', '1', 'updated_at', '10000');
+    assert.fieldEquals('Market', '1', 'updated_at_block', '9000');
     assert.fieldEquals('Market', '1', 'usd_deposited', '0');
     assert.fieldEquals('Market', '1', 'usd_withdrawn', '0');
     assert.fieldEquals('Market', '1', 'net_issuance', '0');
@@ -45,7 +45,7 @@ describe('Market tests', () => {
 
   test('handles market withdrawals and deposits', () => {
     // Needs to be here because of Closures
-    const now = new Date(1).getTime();
+    const now = 1;
     const newMarketRegisteredEvent = createMarketCreatedEvent(1, address, now, now - 1000);
     const arg = ethereum.Value.fromUnsignedBigInt(BigInt.fromU64(1));
     createMockedFunction(
