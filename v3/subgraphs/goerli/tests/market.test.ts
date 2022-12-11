@@ -78,6 +78,14 @@ describe('Market tests', () => {
     );
     handleMarketCreated(newMarketRegisteredEvent);
     handleMarketUsdDeposited(newUsdDepositedEvent);
+    // Assert Market snapshot is created for the deposit event
+    assert.fieldEquals('MarketSnapshot', '1-1001', 'reported_debt', '23');
+    assert.fieldEquals('MarketSnapshot', '1-1001', 'usd_deposited', '200');
+    assert.fieldEquals('MarketSnapshot', '1-1001', 'usd_withdrawn', '0');
+    assert.fieldEquals('MarketSnapshot', '1-1001', 'net_issuance', '-200');
+    assert.fieldEquals('MarketSnapshot', '1-1001', 'timestamp', '1001');
+    assert.fieldEquals('MarketSnapshot', '1-1001', 'market_id', '1');
+
     handleMarketUsdWithdrawn(newUsdWithdrawnEvent);
     handleMarketUsdWithdrawn(newUsdWithdrawnEvent1);
     /* Assert market */
@@ -87,10 +95,18 @@ describe('Market tests', () => {
     assert.fieldEquals('Market', '1', 'usd_deposited', '200');
     assert.fieldEquals('Market', '1', 'usd_withdrawn', '400');
     assert.fieldEquals('Market', '1', 'net_issuance', '200');
-    assert.fieldEquals('Market', '1', 'created_at', now.toString());
-    assert.fieldEquals('Market', '1', 'created_at_block', (now - 1000).toString());
-    assert.fieldEquals('Market', '1', 'updated_at', (now + 2000).toString());
-    assert.fieldEquals('Market', '1', 'updated_at_block', (now + 1000).toString());
+    assert.fieldEquals('Market', '1', 'created_at', '1');
+    assert.fieldEquals('Market', '1', 'created_at_block', '-999');
+    assert.fieldEquals('Market', '1', 'updated_at', '2001');
+    assert.fieldEquals('Market', '1', 'updated_at_block', '1001');
+
+    // Assert Market snapshot is created for the last withdrawl event
+    assert.fieldEquals('MarketSnapshot', '1-2001', 'reported_debt', '23');
+    assert.fieldEquals('MarketSnapshot', '1-2001', 'usd_deposited', '200');
+    assert.fieldEquals('MarketSnapshot', '1-2001', 'usd_withdrawn', '400');
+    assert.fieldEquals('MarketSnapshot', '1-2001', 'net_issuance', '200');
+    assert.fieldEquals('MarketSnapshot', '1-2001', 'timestamp', '2001');
+    assert.fieldEquals('MarketSnapshot', '1-2001', 'market_id', '1');
     assert.notInStore('Market', '2');
   });
 });

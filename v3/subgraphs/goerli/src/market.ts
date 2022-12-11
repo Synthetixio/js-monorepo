@@ -4,8 +4,8 @@ import {
   MarketUsdDeposited,
   MarketUsdWithdrawn,
 } from '../generated/MarketManagerModule/MarketManagerModule';
-import { Market } from '../generated/schema';
-import { BigDecimal, log } from '@graphprotocol/graph-ts';
+import { Market, MarketSnapshot } from '../generated/schema';
+import { BigDecimal, BigInt, log } from '@graphprotocol/graph-ts';
 
 export function handleMarketCreated(event: MarketRegistered): void {
   const newMarket = new Market(event.params.marketId.toString());
@@ -19,6 +19,25 @@ export function handleMarketCreated(event: MarketRegistered): void {
   newMarket.net_issuance = BigDecimal.fromString('0');
   newMarket.reported_debt = BigDecimal.fromString('0');
   newMarket.save();
+}
+
+function createMarketSnapshot(
+  marketId: string,
+  timestamp: BigInt,
+  usdDeposited: BigDecimal,
+  usdWithdrawn: BigDecimal,
+  netIssuance: BigDecimal,
+  reportedDebt: BigDecimal
+): void {
+  const newMarketSnapshot = new MarketSnapshot(marketId.concat('-').concat(timestamp.toString()));
+  newMarketSnapshot.market_id = marketId;
+  newMarketSnapshot.usd_deposited = usdDeposited;
+  newMarketSnapshot.usd_withdrawn = usdWithdrawn;
+  newMarketSnapshot.net_issuance = netIssuance;
+  newMarketSnapshot.reported_debt = reportedDebt;
+  newMarketSnapshot.timestamp = timestamp;
+
+  newMarketSnapshot.save();
 }
 
 export function handleMarketUsdDeposited(event: MarketUsdDeposited): void {
@@ -44,6 +63,7 @@ export function handleMarketUsdDeposited(event: MarketUsdDeposited): void {
   market.net_issuance = netIssuance;
   market.usd_deposited = usdDeposited;
   market.save();
+  createMarketSnapshot(marketId, timestamp, usdDeposited, usdWithdrawn, netIssuance, reportedDebt);
 }
 
 export function handleMarketUsdWithdrawn(event: MarketUsdWithdrawn): void {
@@ -71,4 +91,6 @@ export function handleMarketUsdWithdrawn(event: MarketUsdWithdrawn): void {
   market.net_issuance = netIssuance;
   market.usd_withdrawn = usdWithdrawn;
   market.save();
+
+  createMarketSnapshot(marketId, timestamp, usdDeposited, usdWithdrawn, netIssuance, reportedDebt);
 }
