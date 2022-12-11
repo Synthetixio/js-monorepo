@@ -28,8 +28,24 @@ type Market @entity {
   reported_debt: BigDecimal!
 }
 
+"""
+A note about why we dont have proper relationship setup for market snapshots:
+When querying relational entities we can't apply any limits/ filers, so if we were to add a proper relationship it would mean that the payload for a pool that include markets and market snapshot the payload would be huge.
+"""
+type MarketSnapshot @entity {
+  "marketId-timestamp"
+  id: ID!
+  timestamp: BigInt!
+  market_id: String!
+  usd_deposited: BigDecimal!
+  usd_withdrawn: BigDecimal!
+  "withdrawn - deposited"
+  net_issuance: BigDecimal!
+  reported_debt: BigDecimal!
+}
+
 type MarketConfiguration @entity {
-  "Pool id + market id"
+  "PoolId-MarketId"
   id: ID!
   pool: Pool!
   market: Market!

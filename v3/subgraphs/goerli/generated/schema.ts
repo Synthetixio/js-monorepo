@@ -302,6 +302,101 @@ export class Market extends Entity {
   }
 }
 
+export class MarketSnapshot extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save MarketSnapshot entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type MarketSnapshot must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('MarketSnapshot', id.toString(), this);
+    }
+  }
+
+  static load(id: string): MarketSnapshot | null {
+    return changetype<MarketSnapshot | null>(store.get('MarketSnapshot', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get market_id(): string {
+    let value = this.get('market_id');
+    return value!.toString();
+  }
+
+  set market_id(value: string) {
+    this.set('market_id', Value.fromString(value));
+  }
+
+  get usd_deposited(): BigDecimal {
+    let value = this.get('usd_deposited');
+    return value!.toBigDecimal();
+  }
+
+  set usd_deposited(value: BigDecimal) {
+    this.set('usd_deposited', Value.fromBigDecimal(value));
+  }
+
+  get usd_withdrawn(): BigDecimal {
+    let value = this.get('usd_withdrawn');
+    return value!.toBigDecimal();
+  }
+
+  set usd_withdrawn(value: BigDecimal) {
+    this.set('usd_withdrawn', Value.fromBigDecimal(value));
+  }
+
+  get net_issuance(): BigDecimal {
+    let value = this.get('net_issuance');
+    return value!.toBigDecimal();
+  }
+
+  set net_issuance(value: BigDecimal) {
+    this.set('net_issuance', Value.fromBigDecimal(value));
+  }
+
+  get reported_debt(): BigDecimal {
+    let value = this.get('reported_debt');
+    return value!.toBigDecimal();
+  }
+
+  set reported_debt(value: BigDecimal) {
+    this.set('reported_debt', Value.fromBigDecimal(value));
+  }
+
+  get pnl(): BigDecimal {
+    let value = this.get('pnl');
+    return value!.toBigDecimal();
+  }
+
+  set pnl(value: BigDecimal) {
+    this.set('pnl', Value.fromBigDecimal(value));
+  }
+}
+
 export class MarketConfiguration extends Entity {
   constructor(id: string) {
     super();
