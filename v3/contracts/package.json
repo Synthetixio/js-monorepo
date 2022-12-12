@@ -8,7 +8,7 @@
   "scripts": {
     "codegen": "node ./codegen.js",
     "build": "yarn codegen && tsc --build --verbose",
-    "clean": "shx rm -rf ./artifacts ./cache ./coverage ./src/types ./coverage.json",
+    "clean": "rm -rf ./artifacts ./cache ./coverage ./src/types ./coverage.json",
     "compile": "TS_NODE_TRANSPILE_ONLY=true hardhat compile",
     "test": "echo Skip contract tests || hardhat test",
     "typechain": "TS_NODE_TRANSPILE_ONLY=true hardhat typechain",
@@ -35,7 +35,6 @@
     "hardhat-gas-reporter": "^1.0.8",
     "hardhat-interact": "^0.2.3",
     "prettier": "^2.7.1",
-    "shx": "^0.3.4",
     "ts-node": "^10.9.1",
     "typechain": "^8.1.0",
     "typescript": "^4.8.2"
