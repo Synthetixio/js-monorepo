@@ -10067,7 +10067,7 @@ __metadata:
     ethereum-waffle: ^3.4.4
     ethers: ^5.7.2
     hardhat: ^2.9.2
-    hardhat-cannon: ^1.1.16
+    hardhat-cannon: ^1.1.20
     hardhat-gas-reporter: ^1.0.8
     hardhat-interact: ^0.2.3
     prettier: ^2.7.1
@@ -11952,7 +11952,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^1.1.18, @usecannon/builder@npm:^1.1.20":
+"@usecannon/builder@npm:^1.1.20":
   version: 1.1.20
   resolution: "@usecannon/builder@npm:1.1.20"
   dependencies:
@@ -11969,7 +11969,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:^1.1.18, @usecannon/cli@npm:^1.1.20":
+"@usecannon/cli@npm:^1.1.20":
   version: 1.1.20
   resolution: "@usecannon/cli@npm:1.1.20"
   dependencies:
@@ -23564,13 +23564,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat-cannon@npm:^1.1.16":
-  version: 1.1.18
-  resolution: "hardhat-cannon@npm:1.1.18"
+"hardhat-cannon@npm:^1.1.20":
+  version: 1.1.20
+  resolution: "hardhat-cannon@npm:1.1.20"
   dependencies:
     "@iarna/toml": ^3.0.0
-    "@usecannon/builder": ^1.1.18
-    "@usecannon/cli": ^1.1.18
+    "@usecannon/builder": ^1.1.20
+    "@usecannon/cli": ^1.1.20
     adm-zip: ^0.5.9
     ajv: ^8.10.0
     chalk: ^4.1.2
@@ -23588,7 +23588,7 @@ __metadata:
     "@nomiclabs/hardhat-ethers": ^2.0.0
     "@nomiclabs/hardhat-etherscan": ^3.0.0
     hardhat: ^2.0.0
-  checksum: a2c74cc90a70757e93f97f467f86e7523a6c682d2585e02317217b2ea45d9800b5777d47c65d93ecac7e31d5dbfddd681459f0364b33a4c4bbdde065143131ea
+  checksum: 11c3efa569adad7c85bc78a3f527aa05629833a0d7423a4189ce94480ac89c5135172927163dbac39061fe3bf0504025fab62d33fbd1f0a73c36db4501db3d0c
   languageName: node
   linkType: hard
 
