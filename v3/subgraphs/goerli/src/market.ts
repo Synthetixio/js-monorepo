@@ -21,25 +21,6 @@ export function handleMarketCreated(event: MarketRegistered): void {
   newMarket.save();
 }
 
-function createMarketSnapshot(
-  marketId: string,
-  timestamp: BigInt,
-  usdDeposited: BigDecimal,
-  usdWithdrawn: BigDecimal,
-  netIssuance: BigDecimal,
-  reportedDebt: BigDecimal
-): void {
-  const newMarketSnapshot = new MarketSnapshot(marketId.concat('-').concat(timestamp.toString()));
-  newMarketSnapshot.market_id = marketId;
-  newMarketSnapshot.usd_deposited = usdDeposited;
-  newMarketSnapshot.usd_withdrawn = usdWithdrawn;
-  newMarketSnapshot.net_issuance = netIssuance;
-  newMarketSnapshot.reported_debt = reportedDebt;
-  newMarketSnapshot.timestamp = timestamp;
-
-  newMarketSnapshot.save();
-}
-
 export function handleMarketUsdDeposited(event: MarketUsdDeposited): void {
   const marketId = event.params.marketId.toString();
   const market = Market.load(marketId);
@@ -51,19 +32,18 @@ export function handleMarketUsdDeposited(event: MarketUsdDeposited): void {
     );
     return;
   }
-  const timestamp = event.block.timestamp;
+
   const usdDeposited = market.usd_deposited.plus(event.params.amount.toBigDecimal());
-  const usdWithdrawn = market.usd_withdrawn; // unchanged
   const contract = MarketManagerModule.bind(event.address);
   const reportedDebt = contract.getMarketReportedDebt(event.params.marketId).toBigDecimal();
   const netIssuance = market.net_issuance.minus(event.params.amount.toBigDecimal());
   market.reported_debt = reportedDebt;
-  market.updated_at = timestamp;
+  market.updated_at = event.block.timestamp;
   market.updated_at_block = event.block.number;
   market.net_issuance = netIssuance;
   market.usd_deposited = usdDeposited;
   market.save();
-  createMarketSnapshot(marketId, timestamp, usdDeposited, usdWithdrawn, netIssuance, reportedDebt);
+  createMarketSnapshotByBlock(market);
 }
 
 export function handleMarketUsdWithdrawn(event: MarketUsdWithdrawn): void {
@@ -80,17 +60,17 @@ export function handleMarketUsdWithdrawn(event: MarketUsdWithdrawn): void {
   }
 
   const timestamp = event.block.timestamp;
-  const usdDeposited = market.usd_deposited; // unchanged
+  const blockNumber = event.block.number;
   const usdWithdrawn = market.usd_withdrawn.plus(event.params.amount.toBigDecimal());
   const contract = MarketManagerModule.bind(event.address);
   const reportedDebt = contract.getMarketReportedDebt(event.params.marketId).toBigDecimal();
   const netIssuance = market.net_issuance.plus(event.params.amount.toBigDecimal());
   market.reported_debt = reportedDebt;
   market.updated_at = timestamp;
-  market.updated_at_block = event.block.number;
+  market.updated_at_block = blockNumber;
   market.net_issuance = netIssuance;
   market.usd_withdrawn = usdWithdrawn;
   market.save();
 
-  createMarketSnapshot(marketId, timestamp, usdDeposited, usdWithdrawn, netIssuance, reportedDebt);
+  createMarketSnapshotByBlock(market);
 }
