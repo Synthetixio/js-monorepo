@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Delegating Credit & Debt
 
-Pools distribute credit and debt between depositrs and markets. Every pool has a vault for each of the accepted collateral types. A pool's owner can decide which market to provide with liquidity.
+Pools distribute credit and debt between depositors and markets. Every pool has a vault for each of the accepted collateral types. A pool's owner can decide which market to provide with liquidity.
 
 ## Creating Pools
 

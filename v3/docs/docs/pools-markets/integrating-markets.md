@@ -4,13 +4,13 @@ sidebar_position: 4
 
 # Integrating Markets
 
-Markets can be integrated with the Synthetix protocol to access liquidity provided by depositrs. Markets report a balance of debt, may deposit snxUSD, and withdraw snxUSD depending on the amount of liquidity delegated to them by pools.
+Markets can be integrated with the Synthetix protocol to access liquidity provided by depositors. Markets report a balance of debt, may deposit snxUSD, and withdraw snxUSD depending on the amount of liquidity delegated to them by pools.
 
 ## Registering Markets
 
 Before a market can interact with the protocol, it must be registered using the [`registerMarket` function](/technical-reference/smart-contracts#registermarket). This function accepts the address of a market, which will be able to deposit and withdraw snxUSD using the ID returned by the function.
 
-Markets must conform to the [`IMarket` interface](https://github.com/Synthetixio/synthetix-v3/blob/main/packages/synthetix-main/contracts/interfaces/external/IMarket.sol). This consists of:
+Markets must conform to the [`IMarket` interface](https://github.com/Synthetixio/synthetix-v3/blob/main/protocol/synthetix/contracts/interfaces/external/IMarket.sol). This consists of:
 
 - `function name(uint128 marketId) external view returns (string memory);` - A function which should return a human-readable name for the given market.
 - `function reportedDebt(uint129 marketId) external view returns (uint);` - A function which should return the total value of debt issued by the market (to be collateralized by the assets in the pools backing it), denominated with 18 decimals places.
