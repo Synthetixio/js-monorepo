@@ -19,6 +19,7 @@ type Market @entity {
   created_at: BigInt!
   created_at_block: BigInt!
   configurations: [MarketConfiguration!] @derivedFrom(field: "market")
+  market_snapshots: [MarketSnapshot!] @derivedFrom(field: "market")
   updated_at: BigInt!
   updated_at_block: BigInt!
   usd_deposited: BigDecimal!
@@ -33,10 +34,12 @@ A note about why we dont have proper relationship setup for market snapshots:
 When querying relational entities we can't apply any limits/ filers, so if we were to add a proper relationship it would mean that the payload for a pool that include markets and market snapshot the payload would be huge.
 """
 type MarketSnapshot @entity {
-  "marketId-timestamp"
+  "marketId-blocknumber"
   id: ID!
   timestamp: BigInt!
-  market_id: String!
+  block_number: BigInt!
+  updates_in_block: BigInt!
+  market: Market!
   usd_deposited: BigDecimal!
   usd_withdrawn: BigDecimal!
   "withdrawn - deposited"
