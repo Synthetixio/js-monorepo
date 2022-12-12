@@ -13,7 +13,9 @@
     "test": "echo Skip contract tests || hardhat test",
     "typechain": "TS_NODE_TRANSPILE_ONLY=true hardhat typechain",
     "cannon-build": "hardhat cannon:build cannonfile.dev.toml --write-deployments ./deployments/hardhat",
-    "write-deployments": "cannon synthetix:3.0.0-alpha.4 --write-deployments ./deployments/goerli"
+    "cannon:hardhat": "cannon synthetix:3.0.0-alpha.4 --write-deployments ./deployments/hardhat",
+    "cannon:goerli": "cannon synthetix:3.0.0-alpha.4 --fork https://goerli.infura.io/v3/$INFURA_KEY --write-deployments ./deployments/goerli",
+    "cannon:optimism-goerli": "cannon synthetix:3.0.0-alpha.4 --fork https://optimism-goerli.infura.io/v3/$INFURA_KEY --write-deployments ./deployments/optimism-goerli"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
