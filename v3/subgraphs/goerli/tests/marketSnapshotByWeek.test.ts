@@ -127,10 +127,10 @@ describe('MarketSnapshotByWeek', () => {
     );
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'market', '1');
 
-    // // Trigger a withdrawal event
+    // Trigger a withdrawal event
     handleMarketUsdWithdrawn(newUsdWithdrawnEventNextWeek);
 
-    // // Assert Market snapshot is created for the withdrawal event
+    // Assert Market snapshot is created for the withdrawal event
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'reported_debt', '23');
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'usd_deposited', '400');
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'usd_withdrawn', '300');
@@ -149,10 +149,10 @@ describe('MarketSnapshotByWeek', () => {
     );
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'market', '1');
 
-    // Trigger another withdrawal in the same block
+    // Trigger another withdrawal in the same week
     handleMarketUsdWithdrawn(newUsdWithdrawnEventNextDay1);
 
-    // Assert Market snapshot can handle withdrawal on the same block
+    // Assert Market snapshot can handle withdrawal on the same week
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'reported_debt', '23');
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'usd_deposited', '400');
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'usd_withdrawn', '400');

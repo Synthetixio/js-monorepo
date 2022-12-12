@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { Market, MarketSnapshotByWeek } from '../generated/schema';
 import { BigInt } from '@graphprotocol/graph-ts';
 

@@ -11,7 +11,7 @@ export function createMarketSnapshotByDay(marketWithLatestValues: Market): void 
   let marketSnapshotByDay = MarketSnapshotByDay.load(marketSnapshotId);
 
   if (!marketSnapshotByDay) {
-    // If we have two events in the same block update the data fields
+    // If we have two events in the same day update the data fields
     marketSnapshotByDay = new MarketSnapshotByDay(marketSnapshotId);
     marketSnapshotByDay.updates_in_period = new BigInt(0);
     marketSnapshotByDay.market = marketWithLatestValues.id;

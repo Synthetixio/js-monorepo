@@ -53,7 +53,9 @@ describe('Market tests', () => {
       'getMarketReportedDebt',
       'getMarketReportedDebt(uint128):(uint256)'
     )
+      // @ts-ignore
       .withArgs([arg])
+      // @ts-ignore
       .returns([ethereum.Value.fromI32(23)]);
     const newUsdDepositedEvent = createMarketUsdDepositedEvent(
       1,

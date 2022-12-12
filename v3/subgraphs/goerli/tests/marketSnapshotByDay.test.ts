@@ -79,10 +79,10 @@ describe('MarketSnapshotByDay', () => {
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'block_number', (now - 1).toString());
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'market', '1');
 
-    // Trigger another deposit in the same block
+    // Trigger another deposit in the same day
     handleMarketUsdDeposited(newUsdDepositedEventOneHourLater);
 
-    // Assert Market snapshot can handle deposits on the same block
+    // Assert Market snapshot can handle deposits on the same day
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'reported_debt', '23');
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'usd_deposited', '400');
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'usd_withdrawn', '0');
@@ -123,10 +123,10 @@ describe('MarketSnapshotByDay', () => {
     );
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'market', '1');
 
-    // Trigger another withdrawal in the same block
+    // Trigger another withdrawal in the same day
     handleMarketUsdWithdrawn(newUsdWithdrawnEventNextDay1);
 
-    // Assert Market snapshot can handle withdrawal on the same block
+    // Assert Market snapshot can handle withdrawal on the same day
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'reported_debt', '23');
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'usd_deposited', '400');
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'usd_withdrawn', '400');
