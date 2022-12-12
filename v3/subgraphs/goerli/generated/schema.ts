@@ -247,6 +247,57 @@ export class Market extends Entity {
     }
   }
 
+  get market_snapshots_by_block(): Array<string> | null {
+    let value = this.get('market_snapshots_by_block');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set market_snapshots_by_block(value: Array<string> | null) {
+    if (!value) {
+      this.unset('market_snapshots_by_block');
+    } else {
+      this.set('market_snapshots_by_block', Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get market_snapshots_by_day(): Array<string> | null {
+    let value = this.get('market_snapshots_by_day');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set market_snapshots_by_day(value: Array<string> | null) {
+    if (!value) {
+      this.unset('market_snapshots_by_day');
+    } else {
+      this.set('market_snapshots_by_day', Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get market_snapshots_by_week(): Array<string> | null {
+    let value = this.get('market_snapshots_by_week');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set market_snapshots_by_week(value: Array<string> | null) {
+    if (!value) {
+      this.unset('market_snapshots_by_week');
+    } else {
+      this.set('market_snapshots_by_week', Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
   get updated_at(): BigInt {
     let value = this.get('updated_at');
     return value!.toBigInt();
@@ -302,7 +353,7 @@ export class Market extends Entity {
   }
 }
 
-export class MarketSnapshot extends Entity {
+export class MarketSnapshotByBlock extends Entity {
   constructor(id: string) {
     super();
     this.set('id', Value.fromString(id));
@@ -310,18 +361,18 @@ export class MarketSnapshot extends Entity {
 
   save(): void {
     let id = this.get('id');
-    assert(id != null, 'Cannot save MarketSnapshot entity without an ID');
+    assert(id != null, 'Cannot save MarketSnapshotByBlock entity without an ID');
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type MarketSnapshot must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type MarketSnapshotByBlock must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set('MarketSnapshot', id.toString(), this);
+      store.set('MarketSnapshotByBlock', id.toString(), this);
     }
   }
 
-  static load(id: string): MarketSnapshot | null {
-    return changetype<MarketSnapshot | null>(store.get('MarketSnapshot', id));
+  static load(id: string): MarketSnapshotByBlock | null {
+    return changetype<MarketSnapshotByBlock | null>(store.get('MarketSnapshotByBlock', id));
   }
 
   get id(): string {
@@ -342,13 +393,31 @@ export class MarketSnapshot extends Entity {
     this.set('timestamp', Value.fromBigInt(value));
   }
 
-  get market_id(): string {
-    let value = this.get('market_id');
+  get block_number(): BigInt {
+    let value = this.get('block_number');
+    return value!.toBigInt();
+  }
+
+  set block_number(value: BigInt) {
+    this.set('block_number', Value.fromBigInt(value));
+  }
+
+  get updates_in_period(): BigInt {
+    let value = this.get('updates_in_period');
+    return value!.toBigInt();
+  }
+
+  set updates_in_period(value: BigInt) {
+    this.set('updates_in_period', Value.fromBigInt(value));
+  }
+
+  get market(): string {
+    let value = this.get('market');
     return value!.toString();
   }
 
-  set market_id(value: string) {
-    this.set('market_id', Value.fromString(value));
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
   }
 
   get usd_deposited(): BigDecimal {
@@ -386,14 +455,213 @@ export class MarketSnapshot extends Entity {
   set reported_debt(value: BigDecimal) {
     this.set('reported_debt', Value.fromBigDecimal(value));
   }
+}
 
-  get pnl(): BigDecimal {
-    let value = this.get('pnl');
+export class MarketSnapshotByDay extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save MarketSnapshotByDay entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type MarketSnapshotByDay must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('MarketSnapshotByDay', id.toString(), this);
+    }
+  }
+
+  static load(id: string): MarketSnapshotByDay | null {
+    return changetype<MarketSnapshotByDay | null>(store.get('MarketSnapshotByDay', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get block_number(): BigInt {
+    let value = this.get('block_number');
+    return value!.toBigInt();
+  }
+
+  set block_number(value: BigInt) {
+    this.set('block_number', Value.fromBigInt(value));
+  }
+
+  get updates_in_period(): BigInt {
+    let value = this.get('updates_in_period');
+    return value!.toBigInt();
+  }
+
+  set updates_in_period(value: BigInt) {
+    this.set('updates_in_period', Value.fromBigInt(value));
+  }
+
+  get market(): string {
+    let value = this.get('market');
+    return value!.toString();
+  }
+
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
+  }
+
+  get usd_deposited(): BigDecimal {
+    let value = this.get('usd_deposited');
     return value!.toBigDecimal();
   }
 
-  set pnl(value: BigDecimal) {
-    this.set('pnl', Value.fromBigDecimal(value));
+  set usd_deposited(value: BigDecimal) {
+    this.set('usd_deposited', Value.fromBigDecimal(value));
+  }
+
+  get usd_withdrawn(): BigDecimal {
+    let value = this.get('usd_withdrawn');
+    return value!.toBigDecimal();
+  }
+
+  set usd_withdrawn(value: BigDecimal) {
+    this.set('usd_withdrawn', Value.fromBigDecimal(value));
+  }
+
+  get net_issuance(): BigDecimal {
+    let value = this.get('net_issuance');
+    return value!.toBigDecimal();
+  }
+
+  set net_issuance(value: BigDecimal) {
+    this.set('net_issuance', Value.fromBigDecimal(value));
+  }
+
+  get reported_debt(): BigDecimal {
+    let value = this.get('reported_debt');
+    return value!.toBigDecimal();
+  }
+
+  set reported_debt(value: BigDecimal) {
+    this.set('reported_debt', Value.fromBigDecimal(value));
+  }
+}
+
+export class MarketSnapshotByWeek extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save MarketSnapshotByWeek entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type MarketSnapshotByWeek must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('MarketSnapshotByWeek', id.toString(), this);
+    }
+  }
+
+  static load(id: string): MarketSnapshotByWeek | null {
+    return changetype<MarketSnapshotByWeek | null>(store.get('MarketSnapshotByWeek', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get block_number(): BigInt {
+    let value = this.get('block_number');
+    return value!.toBigInt();
+  }
+
+  set block_number(value: BigInt) {
+    this.set('block_number', Value.fromBigInt(value));
+  }
+
+  get updates_in_period(): BigInt {
+    let value = this.get('updates_in_period');
+    return value!.toBigInt();
+  }
+
+  set updates_in_period(value: BigInt) {
+    this.set('updates_in_period', Value.fromBigInt(value));
+  }
+
+  get market(): string {
+    let value = this.get('market');
+    return value!.toString();
+  }
+
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
+  }
+
+  get usd_deposited(): BigDecimal {
+    let value = this.get('usd_deposited');
+    return value!.toBigDecimal();
+  }
+
+  set usd_deposited(value: BigDecimal) {
+    this.set('usd_deposited', Value.fromBigDecimal(value));
+  }
+
+  get usd_withdrawn(): BigDecimal {
+    let value = this.get('usd_withdrawn');
+    return value!.toBigDecimal();
+  }
+
+  set usd_withdrawn(value: BigDecimal) {
+    this.set('usd_withdrawn', Value.fromBigDecimal(value));
+  }
+
+  get net_issuance(): BigDecimal {
+    let value = this.get('net_issuance');
+    return value!.toBigDecimal();
+  }
+
+  set net_issuance(value: BigDecimal) {
+    this.set('net_issuance', Value.fromBigDecimal(value));
+  }
+
+  get reported_debt(): BigDecimal {
+    let value = this.get('reported_debt');
+    return value!.toBigDecimal();
+  }
+
+  set reported_debt(value: BigDecimal) {
+    this.set('reported_debt', Value.fromBigDecimal(value));
   }
 }
 
