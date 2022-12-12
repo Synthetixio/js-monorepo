@@ -4,15 +4,11 @@ import {
   MarketUsdDeposited,
   MarketUsdWithdrawn,
 } from '../generated/MarketManagerModule/MarketManagerModule';
-import {
-  Market,
-  MarketSnapshotByBlock,
-  MarketSnapshotByDay,
-  MarketSnapshotByWeek,
-} from '../generated/schema';
-import { BigDecimal, BigInt, log } from '@graphprotocol/graph-ts';
+import { Market } from '../generated/schema';
+import { BigDecimal, log } from '@graphprotocol/graph-ts';
 import { createMarketSnapshotByBlock } from './marketSnapshotByBlock';
 import { createMarketSnapshotByDay } from './marketSnapshotByDay';
+import { createMarketSnapshotByWeek } from './marketSnapshotByWeek';
 
 export function handleMarketCreated(event: MarketRegistered): void {
   const newMarket = new Market(event.params.marketId.toString());
@@ -52,6 +48,7 @@ export function handleMarketUsdDeposited(event: MarketUsdDeposited): void {
   market.save();
   createMarketSnapshotByBlock(market);
   createMarketSnapshotByDay(market);
+  createMarketSnapshotByWeek(market);
 }
 
 export function handleMarketUsdWithdrawn(event: MarketUsdWithdrawn): void {
@@ -82,4 +79,5 @@ export function handleMarketUsdWithdrawn(event: MarketUsdWithdrawn): void {
 
   createMarketSnapshotByBlock(market);
   createMarketSnapshotByDay(market);
+  createMarketSnapshotByWeek(market);
 }
