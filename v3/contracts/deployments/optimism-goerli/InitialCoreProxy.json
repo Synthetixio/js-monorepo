@@ -1,0 +1,238 @@
+{
+  "address": "0xbcE929b1f28E17133Ce7bD5f3477EfF34727E1b6",
+  "abi": [
+    {
+      "type": "error",
+      "name": "AlreadyInitialized",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ImplementationIsSterile",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "implementation"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "NoChange",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "NotAContract",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "contr"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "NotNominated",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "addr"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "addr"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "UpgradeSimulationFailed",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ZeroAddress",
+      "inputs": []
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "OwnerChanged",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "oldOwner",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "newOwner",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "OwnerNominated",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "newOwner",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "Upgraded",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "self",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "implementation",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "acceptOwnership",
+      "constant": false,
+      "payable": false,
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getImplementation",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "initializeOwnerModule",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "initialOwner"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "isOwnerModuleInitialized",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "nominateNewOwner",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "newNominatedOwner"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "nominatedOwner",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "owner",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "renounceNomination",
+      "constant": false,
+      "payable": false,
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "simulateUpgradeTo",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "newImplementation"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "upgradeTo",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "newImplementation"
+        }
+      ],
+      "outputs": []
+    }
+  ],
+  "constructorArgs": [
+    "0x5Eaf47FAddD1B83584426187C262427729f9411b"
+  ],
+  "deployTxnHash": "0x8a6da0862fcd4c4cf4cae6bedf353f5374877c6be70778dea6545a94f2d3f1fa",
+  "sourceName": "contracts/Proxy.sol",
+  "contractName": "Proxy",
+  "deployedOn": "contract.InitialCoreProxy"
+}

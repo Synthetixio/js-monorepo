@@ -1,0 +1,54 @@
+{
+  "address": "0x3FC788Fe70ad90A0058Fc3b16808ea09E131A56C",
+  "abi": [
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "addr"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "configureOracleManager",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "oracleManagerAddress"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "registerCcip",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "ccipSend"
+        },
+        {
+          "type": "address",
+          "name": "ccipReceive"
+        },
+        {
+          "type": "address",
+          "name": "ccipTokenPool"
+        }
+      ],
+      "outputs": []
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0xb4dec5945b2c8eeff6a6f5291e5304a76af06b9b8047f10dd36d1850c665360a",
+  "sourceName": "contracts/modules/core/UtilsModule.sol",
+  "contractName": "UtilsModule",
+  "deployedOn": "contract.UtilsModule"
+}

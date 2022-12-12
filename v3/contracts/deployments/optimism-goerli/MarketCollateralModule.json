@@ -1,0 +1,268 @@
+{
+  "address": "0x7F7A2A40Ae1A5B913942D32f06DDc1E7232c33C3",
+  "abi": [
+    {
+      "type": "error",
+      "name": "CollateralNotFound",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "FailedTransfer",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "from"
+        },
+        {
+          "type": "address",
+          "name": "to"
+        },
+        {
+          "type": "uint256",
+          "name": "value"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InsufficientMarketCollateralDepositable",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "tokenAmountToDeposit"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InsufficientMarketCollateralWithdrawable",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "tokenAmountToWithdraw"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "addr"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "MarketCollateralDeposited",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "tokenAmount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "MarketCollateralWithdrawn",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "tokenAmount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "MaximumMarketCollateralConfigured",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "systemAmount",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "configureMaximumMarketCollateral",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "depositMarketCollateral",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "tokenAmount"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getMarketCollateralAmount",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "collateralAmountD18"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getMaximumMarketCollateral",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "withdrawMarketCollateral",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "tokenAmount"
+        }
+      ],
+      "outputs": []
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0x280e613ff79966845b07b8f94c29f4f6da47e756f35166e14db3591b1d459067",
+  "sourceName": "contracts/modules/core/MarketCollateralModule.sol",
+  "contractName": "MarketCollateralModule",
+  "deployedOn": "contract.MarketCollateralModule"
+}
