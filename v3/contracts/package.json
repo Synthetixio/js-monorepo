@@ -5,6 +5,12 @@
   },
   "description": "peripheral smart contracts for frontend",
   "version": "0.0.1",
+  "main": "./index.js",
+  "files": [
+    "build",
+    "src",
+    "index.js"
+  ],
   "scripts": {
     "codegen": "node ./codegen.js",
     "build": "yarn codegen && tsc --build --verbose",
