@@ -8,6 +8,7 @@
   "main": "./index.js",
   "files": [
     "build",
+    "deployments",
     "src",
     "index.js"
   ],
