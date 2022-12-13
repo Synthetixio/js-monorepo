@@ -6,6 +6,9 @@ const ethers = require('ethers');
 const prettier = require('prettier');
 const { runTypeChain } = require('typechain');
 
+// We don't want to expose internal modules and should only interact with Proxy contracts
+const CONTRACTS_WHITELIST = ['AccountProxy', 'CoreProxy', 'USDProxy'];
+
 async function prepareContracts(network) {
   const deployments = path.join(__dirname, 'deployments', network);
   const contracts = await Promise.all(
@@ -13,8 +16,13 @@ async function prepareContracts(network) {
       await fs.readdir(deployments, { withFileTypes: true })
     )
       .filter((dirent) => dirent.isFile())
-      .filter((dirent) => dirent.name.endsWith('.json'))
       .map((dirent) => path.basename(dirent.name, '.json'))
+      .filter(
+        (item) =>
+          CONTRACTS_WHITELIST.includes(item) ||
+          // manually added contracts start with _
+          item.startsWith('_')
+      )
       .map(async (fileName) => {
         const json = JSON.parse(
           await fs.readFile(path.join(deployments, `${fileName}.json`), 'utf8')
@@ -81,7 +89,8 @@ async function run() {
   const deployed = path.join(__dirname, 'deployments');
   const networks = (await fs.readdir(deployed, { withFileTypes: true }))
     .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
+    .map((dirent) => dirent.name)
+    .concat(['']);
 
   const prettierOptions = JSON.parse(await fs.readFile('../../.prettierrc', 'utf8'));
 
