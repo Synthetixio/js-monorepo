@@ -1,5 +1,5 @@
-import { CheckIcon, ChevronDownIcon, ChevronLeftIcon, SettingsIcon } from '@chakra-ui/icons';
-import { Button, Flex, Link, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { ChevronLeftIcon, SettingsIcon } from '@chakra-ui/icons';
+import { Flex, Link } from '@chakra-ui/react';
 import {
   generatePath,
   Link as RouterLink,
@@ -7,11 +7,8 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { accountsState } from '../../utils/state';
 
 export function DepositingNav() {
-  const [{ accounts: userAccounts }] = useRecoilState(accountsState);
   const { id } = useParams();
   const [search] = useSearchParams();
   const routingSearchParams = `?chain=${search.get('chain')}`;
