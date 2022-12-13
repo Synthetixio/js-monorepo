@@ -48,7 +48,7 @@ describe('MarketSnapshotByWeek', () => {
     const oneDay = <i64>24 * oneHour; // Number of milliseconds in one day
     // @ts-ignore
     const oneWeek = <i64>oneDay * 7; // Number of milliseconds in one day
-    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address, now, now - 1000);
+    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address, now, now - 1);
     const arg = ethereum.Value.fromUnsignedBigInt(BigInt.fromU64(1));
     createMockedFunction(
       Address.fromString(defaultGraphContractAddress),
@@ -96,13 +96,21 @@ describe('MarketSnapshotByWeek', () => {
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'usd_deposited', '200');
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'usd_withdrawn', '0');
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'net_issuance', '-200');
-    assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'timestamp', now.toString());
+    assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'created_at', now.toString());
     assert.fieldEquals(
       'MarketSnapshotByWeek',
       '1-week-2022-0',
-      'block_number',
+      'created_at_block',
       (now - 1).toString()
     );
+    assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'updated_at', now.toString());
+    assert.fieldEquals(
+      'MarketSnapshotByWeek',
+      '1-week-2022-0',
+      'updated_at_block',
+      (now - 1).toString()
+    );
+
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'market', '1');
 
     // Trigger another deposit in the same week
@@ -113,16 +121,24 @@ describe('MarketSnapshotByWeek', () => {
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'usd_deposited', '400');
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'usd_withdrawn', '0');
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'net_issuance', '-400');
+    assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'created_at', now.toString());
     assert.fieldEquals(
       'MarketSnapshotByWeek',
       '1-week-2022-0',
-      'timestamp',
+      'created_at_block',
+      (now - 1).toString()
+    );
+
+    assert.fieldEquals(
+      'MarketSnapshotByWeek',
+      '1-week-2022-0',
+      'updated_at',
       (now + oneHour).toString()
     );
     assert.fieldEquals(
       'MarketSnapshotByWeek',
       '1-week-2022-0',
-      'block_number',
+      'updated_at_block',
       (now + oneHour - 1).toString()
     );
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'market', '1');
@@ -135,16 +151,24 @@ describe('MarketSnapshotByWeek', () => {
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'usd_deposited', '400');
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'usd_withdrawn', '300');
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'net_issuance', '-100');
+    assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'created_at', now.toString());
+    assert.fieldEquals(
+      'MarketSnapshotByWeek',
+      '1-week-2022-0',
+      'created_at_block',
+      (now - 1).toString()
+    );
+
     assert.fieldEquals(
       'MarketSnapshotByWeek',
       '1-week-2022-2',
-      'timestamp',
+      'updated_at',
       (now + oneWeek + oneDay).toString()
     );
     assert.fieldEquals(
       'MarketSnapshotByWeek',
       '1-week-2022-2',
-      'block_number',
+      'updated_at_block',
       (now + oneWeek + oneDay - 1).toString()
     );
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'market', '1');
@@ -157,16 +181,24 @@ describe('MarketSnapshotByWeek', () => {
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'usd_deposited', '400');
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'usd_withdrawn', '400');
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'net_issuance', '0');
+    assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-0', 'created_at', now.toString());
+    assert.fieldEquals(
+      'MarketSnapshotByWeek',
+      '1-week-2022-0',
+      'created_at_block',
+      (now - 1).toString()
+    );
+
     assert.fieldEquals(
       'MarketSnapshotByWeek',
       '1-week-2022-2',
-      'timestamp',
+      'updated_at',
       (now + oneWeek + oneDay + oneDay).toString()
     );
     assert.fieldEquals(
       'MarketSnapshotByWeek',
       '1-week-2022-2',
-      'block_number',
+      'updated_at_block',
       (now + oneWeek + oneDay + oneDay - 1).toString()
     );
     assert.fieldEquals('MarketSnapshotByWeek', '1-week-2022-2', 'market', '1');

@@ -29,7 +29,7 @@ describe('MarketSnapshotByDay', () => {
     const oneHour = <i64>60 * 60 * 1000; // Number of milliseconds in one hour
     // @ts-ignore
     const oneDay = <i64>24 * oneHour; // Number of milliseconds in one day
-    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address, now, now - 1000);
+    const newMarketRegisteredEvent = createMarketCreatedEvent(1, address, now, now - 1);
     const arg = ethereum.Value.fromUnsignedBigInt(BigInt.fromU64(1));
     createMockedFunction(
       Address.fromString(defaultGraphContractAddress),
@@ -75,8 +75,20 @@ describe('MarketSnapshotByDay', () => {
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'usd_deposited', '200');
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'usd_withdrawn', '0');
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'net_issuance', '-200');
-    assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'timestamp', now.toString());
-    assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'block_number', (now - 1).toString());
+    assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'created_at', now.toString());
+    assert.fieldEquals(
+      'MarketSnapshotByDay',
+      '1-2022-01-01',
+      'created_at_block',
+      (now - 1).toString()
+    );
+    assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'updated_at', now.toString());
+    assert.fieldEquals(
+      'MarketSnapshotByDay',
+      '1-2022-01-01',
+      'updated_at_block',
+      (now - 1).toString()
+    );
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'market', '1');
 
     // Trigger another deposit in the same day
@@ -87,16 +99,24 @@ describe('MarketSnapshotByDay', () => {
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'usd_deposited', '400');
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'usd_withdrawn', '0');
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'net_issuance', '-400');
+    assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'created_at', now.toString());
     assert.fieldEquals(
       'MarketSnapshotByDay',
       '1-2022-01-01',
-      'timestamp',
+      'created_at_block',
+      (now - 1).toString()
+    );
+
+    assert.fieldEquals(
+      'MarketSnapshotByDay',
+      '1-2022-01-01',
+      'updated_at',
       (now + oneHour).toString()
     );
     assert.fieldEquals(
       'MarketSnapshotByDay',
       '1-2022-01-01',
-      'block_number',
+      'updated_at_block',
       (now + oneHour - 1).toString()
     );
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-01', 'market', '1');
@@ -109,16 +129,24 @@ describe('MarketSnapshotByDay', () => {
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'usd_deposited', '400');
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'usd_withdrawn', '300');
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'net_issuance', '-100');
+    assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'created_at', now.toString());
     assert.fieldEquals(
       'MarketSnapshotByDay',
       '1-2022-01-02',
-      'timestamp',
+      'created_at_block',
+      (now - 1).toString()
+    );
+
+    assert.fieldEquals(
+      'MarketSnapshotByDay',
+      '1-2022-01-02',
+      'updated_at',
       (now + oneDay + oneHour).toString()
     );
     assert.fieldEquals(
       'MarketSnapshotByDay',
       '1-2022-01-02',
-      'block_number',
+      'updated_at_block',
       (now + oneDay + oneHour - 1).toString()
     );
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'market', '1');
@@ -131,16 +159,24 @@ describe('MarketSnapshotByDay', () => {
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'usd_deposited', '400');
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'usd_withdrawn', '400');
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'net_issuance', '0');
+    assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'created_at', now.toString());
     assert.fieldEquals(
       'MarketSnapshotByDay',
       '1-2022-01-02',
-      'timestamp',
+      'created_at_block',
+      (now - 1).toString()
+    );
+
+    assert.fieldEquals(
+      'MarketSnapshotByDay',
+      '1-2022-01-02',
+      'updated_at',
       (now + oneDay + oneHour + oneHour).toString()
     );
     assert.fieldEquals(
       'MarketSnapshotByDay',
       '1-2022-01-02',
-      'block_number',
+      'updated_at_block',
       (now + oneDay + oneHour + oneHour - 1).toString()
     );
     assert.fieldEquals('MarketSnapshotByDay', '1-2022-01-02', 'market', '1');

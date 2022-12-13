@@ -34,8 +34,10 @@ type Market @entity {
 type MarketSnapshotByBlock @entity {
   "marketId-blocknumber"
   id: ID!
-  timestamp: BigInt!
-  block_number: BigInt!
+  updated_at: BigInt!
+  updated_at_block: BigInt!
+  created_at: BigInt!
+  created_at_block: BigInt!
   updates_in_period: BigInt!
   market: Market!
   usd_deposited: BigDecimal!
@@ -47,8 +49,10 @@ type MarketSnapshotByBlock @entity {
 type MarketSnapshotByDay @entity {
   "marketId-YYYY-MM-DD"
   id: ID!
-  timestamp: BigInt!
-  block_number: BigInt!
+  updated_at: BigInt!
+  updated_at_block: BigInt!
+  created_at: BigInt!
+  created_at_block: BigInt!
   updates_in_period: BigInt!
   market: Market!
   usd_deposited: BigDecimal!
@@ -60,8 +64,10 @@ type MarketSnapshotByDay @entity {
 type MarketSnapshotByWeek @entity {
   "marketId-YYYY-WeekNumber"
   id: ID!
-  timestamp: BigInt!
-  block_number: BigInt!
+  updated_at: BigInt!
+  updated_at_block: BigInt!
+  created_at: BigInt!
+  created_at_block: BigInt!
   updates_in_period: BigInt!
   market: Market!
   usd_deposited: BigDecimal!

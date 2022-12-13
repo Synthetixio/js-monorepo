@@ -42,13 +42,15 @@ export function createMarketSnapshotByWeek(marketWithLatestValues: Market): void
     marketSnapshotByWeek = new MarketSnapshotByWeek(marketSnapshotId);
     marketSnapshotByWeek.updates_in_period = new BigInt(0);
     marketSnapshotByWeek.market = marketWithLatestValues.id;
+    marketSnapshotByWeek.created_at = marketWithLatestValues.created_at;
+    marketSnapshotByWeek.created_at_block = marketWithLatestValues.created_at_block;
   }
   marketSnapshotByWeek.usd_deposited = marketWithLatestValues.usd_deposited;
   marketSnapshotByWeek.usd_withdrawn = marketWithLatestValues.usd_withdrawn;
   marketSnapshotByWeek.net_issuance = marketWithLatestValues.net_issuance;
   marketSnapshotByWeek.reported_debt = marketWithLatestValues.reported_debt;
-  marketSnapshotByWeek.timestamp = marketWithLatestValues.updated_at;
-  marketSnapshotByWeek.block_number = marketWithLatestValues.updated_at_block;
+  marketSnapshotByWeek.updated_at = marketWithLatestValues.updated_at;
+  marketSnapshotByWeek.updated_at_block = marketWithLatestValues.updated_at_block;
   marketSnapshotByWeek.updates_in_period = marketSnapshotByWeek.updates_in_period.plus(
     new BigInt(1)
   );

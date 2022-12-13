@@ -384,22 +384,40 @@ export class MarketSnapshotByBlock extends Entity {
     this.set('id', Value.fromString(value));
   }
 
-  get timestamp(): BigInt {
-    let value = this.get('timestamp');
+  get updated_at(): BigInt {
+    let value = this.get('updated_at');
     return value!.toBigInt();
   }
 
-  set timestamp(value: BigInt) {
-    this.set('timestamp', Value.fromBigInt(value));
+  set updated_at(value: BigInt) {
+    this.set('updated_at', Value.fromBigInt(value));
   }
 
-  get block_number(): BigInt {
-    let value = this.get('block_number');
+  get updated_at_block(): BigInt {
+    let value = this.get('updated_at_block');
     return value!.toBigInt();
   }
 
-  set block_number(value: BigInt) {
-    this.set('block_number', Value.fromBigInt(value));
+  set updated_at_block(value: BigInt) {
+    this.set('updated_at_block', Value.fromBigInt(value));
+  }
+
+  get created_at(): BigInt {
+    let value = this.get('created_at');
+    return value!.toBigInt();
+  }
+
+  set created_at(value: BigInt) {
+    this.set('created_at', Value.fromBigInt(value));
+  }
+
+  get created_at_block(): BigInt {
+    let value = this.get('created_at_block');
+    return value!.toBigInt();
+  }
+
+  set created_at_block(value: BigInt) {
+    this.set('created_at_block', Value.fromBigInt(value));
   }
 
   get updates_in_period(): BigInt {
@@ -488,22 +506,40 @@ export class MarketSnapshotByDay extends Entity {
     this.set('id', Value.fromString(value));
   }
 
-  get timestamp(): BigInt {
-    let value = this.get('timestamp');
+  get updated_at(): BigInt {
+    let value = this.get('updated_at');
     return value!.toBigInt();
   }
 
-  set timestamp(value: BigInt) {
-    this.set('timestamp', Value.fromBigInt(value));
+  set updated_at(value: BigInt) {
+    this.set('updated_at', Value.fromBigInt(value));
   }
 
-  get block_number(): BigInt {
-    let value = this.get('block_number');
+  get updated_at_block(): BigInt {
+    let value = this.get('updated_at_block');
     return value!.toBigInt();
   }
 
-  set block_number(value: BigInt) {
-    this.set('block_number', Value.fromBigInt(value));
+  set updated_at_block(value: BigInt) {
+    this.set('updated_at_block', Value.fromBigInt(value));
+  }
+
+  get created_at(): BigInt {
+    let value = this.get('created_at');
+    return value!.toBigInt();
+  }
+
+  set created_at(value: BigInt) {
+    this.set('created_at', Value.fromBigInt(value));
+  }
+
+  get created_at_block(): BigInt {
+    let value = this.get('created_at_block');
+    return value!.toBigInt();
+  }
+
+  set created_at_block(value: BigInt) {
+    this.set('created_at_block', Value.fromBigInt(value));
   }
 
   get updates_in_period(): BigInt {
@@ -592,22 +628,40 @@ export class MarketSnapshotByWeek extends Entity {
     this.set('id', Value.fromString(value));
   }
 
-  get timestamp(): BigInt {
-    let value = this.get('timestamp');
+  get updated_at(): BigInt {
+    let value = this.get('updated_at');
     return value!.toBigInt();
   }
 
-  set timestamp(value: BigInt) {
-    this.set('timestamp', Value.fromBigInt(value));
+  set updated_at(value: BigInt) {
+    this.set('updated_at', Value.fromBigInt(value));
   }
 
-  get block_number(): BigInt {
-    let value = this.get('block_number');
+  get updated_at_block(): BigInt {
+    let value = this.get('updated_at_block');
     return value!.toBigInt();
   }
 
-  set block_number(value: BigInt) {
-    this.set('block_number', Value.fromBigInt(value));
+  set updated_at_block(value: BigInt) {
+    this.set('updated_at_block', Value.fromBigInt(value));
+  }
+
+  get created_at(): BigInt {
+    let value = this.get('created_at');
+    return value!.toBigInt();
+  }
+
+  set created_at(value: BigInt) {
+    this.set('created_at', Value.fromBigInt(value));
+  }
+
+  get created_at_block(): BigInt {
+    let value = this.get('created_at_block');
+    return value!.toBigInt();
+  }
+
+  set created_at_block(value: BigInt) {
+    this.set('created_at_block', Value.fromBigInt(value));
   }
 
   get updates_in_period(): BigInt {

@@ -14,14 +14,16 @@ export function createMarketSnapshotByBlock(marketWithLatestValues: Market): voi
     marketSnapshotByBlock = new MarketSnapshotByBlock(marketSnapshotId);
     marketSnapshotByBlock.updates_in_period = new BigInt(0);
     marketSnapshotByBlock.market = marketWithLatestValues.id;
+    marketSnapshotByBlock.created_at = marketWithLatestValues.created_at;
+    marketSnapshotByBlock.created_at_block = marketWithLatestValues.created_at_block;
   }
 
   marketSnapshotByBlock.usd_deposited = marketWithLatestValues.usd_deposited;
   marketSnapshotByBlock.usd_withdrawn = marketWithLatestValues.usd_withdrawn;
   marketSnapshotByBlock.net_issuance = marketWithLatestValues.net_issuance;
   marketSnapshotByBlock.reported_debt = marketWithLatestValues.reported_debt;
-  marketSnapshotByBlock.timestamp = marketWithLatestValues.updated_at;
-  marketSnapshotByBlock.block_number = marketWithLatestValues.updated_at_block;
+  marketSnapshotByBlock.updated_at = marketWithLatestValues.updated_at;
+  marketSnapshotByBlock.updated_at_block = marketWithLatestValues.updated_at_block;
   marketSnapshotByBlock.updates_in_period = marketSnapshotByBlock.updates_in_period.plus(
     new BigInt(1)
   );
