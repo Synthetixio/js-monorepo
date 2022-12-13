@@ -6,7 +6,6 @@ import {
 } from '../generated/MarketManagerModule/MarketManagerModule';
 import { Market } from '../generated/schema';
 import { BigDecimal, log } from '@graphprotocol/graph-ts';
-import { createMarketSnapshotByBlock } from './marketSnapshotByBlock';
 import { createMarketSnapshotByDay } from './marketSnapshotByDay';
 import { createMarketSnapshotByWeek } from './marketSnapshotByWeek';
 
@@ -46,7 +45,7 @@ export function handleMarketUsdDeposited(event: MarketUsdDeposited): void {
   market.net_issuance = netIssuance;
   market.usd_deposited = usdDeposited;
   market.save();
-  createMarketSnapshotByBlock(market);
+
   createMarketSnapshotByDay(market);
   createMarketSnapshotByWeek(market);
 }
@@ -77,7 +76,6 @@ export function handleMarketUsdWithdrawn(event: MarketUsdWithdrawn): void {
   market.usd_withdrawn = usdWithdrawn;
   market.save();
 
-  createMarketSnapshotByBlock(market);
   createMarketSnapshotByDay(market);
   createMarketSnapshotByWeek(market);
 }

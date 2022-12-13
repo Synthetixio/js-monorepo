@@ -19,7 +19,7 @@ type Market @entity {
   created_at: BigInt!
   created_at_block: BigInt!
   configurations: [MarketConfiguration!] @derivedFrom(field: "market")
-  market_snapshots_by_block: [MarketSnapshotByBlock!] @derivedFrom(field: "market")
+
   market_snapshots_by_day: [MarketSnapshotByDay!] @derivedFrom(field: "market")
   market_snapshots_by_week: [MarketSnapshotByWeek!] @derivedFrom(field: "market")
   updated_at: BigInt!
@@ -31,21 +31,6 @@ type Market @entity {
   reported_debt: BigDecimal!
 }
 
-type MarketSnapshotByBlock @entity {
-  "marketId-blocknumber"
-  id: ID!
-  updated_at: BigInt!
-  updated_at_block: BigInt!
-  created_at: BigInt!
-  created_at_block: BigInt!
-  updates_in_period: BigInt!
-  market: Market!
-  usd_deposited: BigDecimal!
-  usd_withdrawn: BigDecimal!
-  "withdrawn - deposited"
-  net_issuance: BigDecimal!
-  reported_debt: BigDecimal!
-}
 type MarketSnapshotByDay @entity {
   "marketId-YYYY-MM-DD"
   id: ID!
