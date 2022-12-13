@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Box, Container, Flex, Text, Center } from '@chakra-ui/react';
+import { Box, Container, Flex, Text, Center, SimpleGrid } from '@chakra-ui/react';
 import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
 import { BalanceBox } from '@snx-v2/BalanceBox';
@@ -128,28 +128,15 @@ const V2Home = () => {
         </Box>
         <Box pb={10} width="100%" px={[2, 0, 0, 0]} bg="navy.900">
           <Container maxW="1200px" bg="transparent" mt={0}>
-            <Flex
-              bg="navy.900"
-              direction={['column', 'row', 'row']}
-              flexFlow="wrap"
-              justifyContent={{
-                base: 'center',
-                md: 'flex-start',
-                lg: 'flex-start',
-              }}
-              height="fit-content"
-              width="100%"
-            >
+            <SimpleGrid width="100%" minChildWidth="260px" spacingX="4">
               <UtilityCard
                 mt={6}
-                mr={4}
                 title="Kwenta"
                 description={t('staking-v2.home.utilities.kwentaDescription')}
                 link="https://kwenta.io"
                 Icon={KwentaIcon}
               />
               <UtilityCard
-                mr={4}
                 title="dHedge"
                 description={t('staking-v2.home.utilities.dHedgeDescription')}
                 link="https://www.dhedge.org/"
@@ -157,7 +144,6 @@ const V2Home = () => {
                 mt={[4, 6, 6]}
               />
               <UtilityCard
-                mr={4}
                 title="Lyra"
                 description={t('staking-v2.home.utilities.lyraDescription')}
                 link="https://www.lyra.finance/"
@@ -165,7 +151,6 @@ const V2Home = () => {
                 mt={[4, 6, 6]}
               />
               <UtilityCard
-                mr={4}
                 title="Thales"
                 description={t('staking-v2.home.utilities.thalesDescription')}
                 link="https://thalesmarket.io/"
@@ -174,7 +159,6 @@ const V2Home = () => {
               />
 
               <UtilityCard
-                mr={4}
                 title="Curve"
                 description={t('staking-v2.home.utilities.curveDescription')}
                 link="https://curve.fi/"
@@ -182,7 +166,6 @@ const V2Home = () => {
                 mt={[4, 6, 6]}
               />
               <UtilityCard
-                mr={4}
                 title="Overtime Markets"
                 description={t('staking-v2.home.utilities.overtimeDescription')}
                 link="https://overtimemarkets.xyz/"
@@ -190,14 +173,13 @@ const V2Home = () => {
                 mt={[4, 6, 6]}
               />
               <UtilityCard
-                mr={4}
                 title="Polynomial"
                 description={t('staking-v2.home.utilities.polynomialDescription')}
                 link="https://www.polynomial.fi/"
                 Icon={PolynomialIcon}
                 mt={[4, 6, 6]}
               />
-            </Flex>
+            </SimpleGrid>
           </Container>
         </Box>
       </Box>
