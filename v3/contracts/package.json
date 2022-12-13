@@ -21,17 +21,10 @@
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@typechain/ethers-v5": "^10.1.0",
-    "@types/node": "^18.8.5",
     "@usecannon/cli": "^1.1.20",
-    "dotenv": "^16.0.0",
-    "ethereum-waffle": "^3.4.4",
     "ethers": "^5.7.2",
     "prettier": "^2.7.1",
-    "ts-node": "^10.9.1",
     "typechain": "^8.1.0",
     "typescript": "^4.8.2"
-  },
-  "dependencies": {
-    "@synthetixio/core-contracts": "^1.1.0"
   }
 }
