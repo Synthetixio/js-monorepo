@@ -59,7 +59,7 @@
     "@snx-v2/Welcome": "workspace:^",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
-    "@socket.tech/plugin": "^1.0.0",
+    "@socket.tech/plugin": "^1.0.2",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/contracts-interface": "workspace:*",
     "@synthetixio/optimism-networks": "workspace:*",

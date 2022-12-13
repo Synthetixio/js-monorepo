@@ -8033,14 +8033,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@socket.tech/plugin@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@socket.tech/plugin@npm:1.0.0"
+"@socket.tech/plugin@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@socket.tech/plugin@npm:1.0.2"
   dependencies:
     "@react-spring/web": ^9.5.0
     "@reduxjs/toolkit": ^1.8.2
     "@socket.tech/ll-core": ^0.1.10
-    "@socket.tech/socket-v2-sdk": ^1.21.0
+    "@socket.tech/socket-v2-sdk": ^1.21.3
     ethers: ^5.6.9
     react-feather: ^2.0.10
     react-redux: ^8.0.2
@@ -8048,20 +8048,20 @@ __metadata:
   peerDependencies:
     react: ">=17.0.1"
     react-dom: ">=17.0.1"
-  checksum: 9cbc2065b4442bb8489cabf16d1d97bed7a900ff19007f69fc7d95e3f5cc2d5451242bc116a8017b54650bf9b2180466b75670f3641857d9142dcf68b57057a0
+  checksum: 532c56a7b9bde548768fff4ecb6626284454b37a7c8e513cf8a2a7c7e1b5c67622a50424e6178d61028b3f6d77b8b98a20a4a77f67565b28587865f35834e27e
   languageName: node
   linkType: hard
 
-"@socket.tech/socket-v2-sdk@npm:^1.21.0":
-  version: 1.21.0
-  resolution: "@socket.tech/socket-v2-sdk@npm:1.21.0"
+"@socket.tech/socket-v2-sdk@npm:^1.21.3":
+  version: 1.21.3
+  resolution: "@socket.tech/socket-v2-sdk@npm:1.21.3"
   dependencies:
     "@socket.tech/ll-core": ^0.1.14
     axios: ^0.27.2
     ethers: ^5.6.5
     form-data: ^4.0.0
     tslib: ^2.4.0
-  checksum: f7d03c86ad6fe9158a1ebfc00376c377e7680d2151738b094e8d369e975675527afa33c7549de901039f0dcc2b1a2956f6c79c741c91f55cf955c5b13a490d0f
+  checksum: 48c792a44f6686bdf73819dc1ccecb6bff0c650511ff7b497a5eef3882ad4a26d3d2ec2f3ab06387d22e8532f98f211e80405fa4b3a00c9dc362434ca28d4424
   languageName: node
   linkType: hard
 
@@ -9932,7 +9932,7 @@ __metadata:
     "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
-    "@socket.tech/plugin": ^1.0.0
+    "@socket.tech/plugin": ^1.0.2
     "@storybook/addon-actions": ^6.5.10
     "@storybook/addon-docs": ^6.5.10
     "@storybook/addon-essentials": ^6.5.7
