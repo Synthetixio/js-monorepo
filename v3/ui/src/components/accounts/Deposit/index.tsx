@@ -44,7 +44,16 @@ interface Props {
   refetch?: () => void;
 }
 
-export const Deposit: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
+function ConnectWallet() {
+  const { openConnectModal } = useConnectModal();
+  return (
+    <Button size="lg" px="8" onClick={() => openConnectModal && openConnectModal()}>
+      Connect Wallet
+    </Button>
+  );
+}
+
+export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
   const [collateralTypes] = useRecoilState(collateralTypesState);
@@ -65,8 +74,6 @@ export const Deposit: FC<Props> = ({ accountId, liquidityPositions = {}, refetch
 
   const { isOpen: isOpenPool, onOpen: onOpenPool, onClose: onClosePool } = useDisclosure();
 
-  const { openConnectModal } = useConnectModal();
-
   const selectedCollateralType = useWatch({
     control,
     name: 'collateralType',
@@ -80,9 +87,9 @@ export const Deposit: FC<Props> = ({ accountId, liquidityPositions = {}, refetch
     name: 'amount',
   });
 
-  const isNativeCurrency = selectedCollateralType.symbol === 'eth';
+  const isNativeCurrency = selectedCollateralType?.symbol === 'eth';
 
-  const balanceData = useTokenBalance(selectedCollateralType.address);
+  const balanceData = useTokenBalance(selectedCollateralType?.address);
 
   // add extra step to convert to wrapped token if native (ex. ETH)
   // if (isNativeCurrency) {
@@ -176,14 +183,9 @@ export const Deposit: FC<Props> = ({ accountId, liquidityPositions = {}, refetch
                     : 'Deposit'}
                 </Button>
               ) : (
-                <Button
-                  size="lg"
-                  ml="4"
-                  px="8"
-                  onClick={() => openConnectModal && openConnectModal()}
-                >
-                  Connect Wallet
-                </Button>
+                <Box ml="4">
+                  <ConnectWallet />
+                </Box>
               )}
             </Stack>
 
@@ -237,6 +239,24 @@ export const Deposit: FC<Props> = ({ accountId, liquidityPositions = {}, refetch
           </ModalContent>
         </Modal>
       </FormProvider>
+    </>
+  );
+};
+
+export const Deposit: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
+  const [collateralTypes] = useRecoilState(collateralTypesState);
+  const { chain: activeChain } = useNetwork();
+  const hasWalletConnected = Boolean(activeChain);
+  return (
+    <>
+      {collateralTypes.length > 0 ? (
+        <DepositForm {...{ accountId, liquidityPositions, refetch }} />
+      ) : null}
+      {collateralTypes.length === 0 && !hasWalletConnected ? (
+        <Box textAlign="center">
+          <ConnectWallet />
+        </Box>
+      ) : null}
     </>
   );
 };
