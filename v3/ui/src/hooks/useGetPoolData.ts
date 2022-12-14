@@ -4,34 +4,64 @@ import { getChainNameById } from '../utils/constants';
 import { useQuery } from '@tanstack/react-query';
 import { calculateMarketPnl } from '../utils/calculations';
 import { formatGraphBigDecimal, getSubgraphUrl } from '../utils/subgraph';
+import { z } from 'zod';
+import { BigNumber } from 'ethers';
 
-type GraphBigInt = string;
-type GraphBigDecimal = string;
-type RawMarket = {
-  id: string;
-  address: string;
-  //configurations: MarketConfiguration[] // recursive
-  usd_deposited: GraphBigDecimal;
-  usd_withdrawn: GraphBigDecimal;
-  net_issuance: GraphBigDecimal; // withdrawn - deposited
-  reported_debt: GraphBigDecimal;
-};
-type RawMarketConfiguration = {
-  id: string; //PoolId-MarketId
+const GraphBigIntSchema = z.string().transform((src) => formatGraphBigDecimal(src));
+const GraphBigDecimalSchema = z.string().transform((src) => formatGraphBigDecimal(src));
+
+export const MarketSnapshotByWeekSchema = z
+  .object({
+    id: z.string(),
+    usd_deposited: GraphBigDecimalSchema,
+    usd_withdrawn: GraphBigDecimalSchema,
+    net_issuance: GraphBigDecimalSchema, // withdrawn - deposited
+    reported_debt: GraphBigDecimalSchema,
+    created_at: z.number(),
+    updated_at: z.number(),
+    updates_in_period: z.number(),
+  })
+  .transform((market) => ({
+    ...market,
+    pnl: calculateMarketPnl(market.net_issuance, market.reported_debt),
+  }));
+
+const MarketSchema = z
+  .object({
+    id: z.string(),
+    address: z.string(),
+    //configurations: MarketConfiguration[] // recursive
+    usd_deposited: GraphBigDecimalSchema,
+    usd_withdrawn: GraphBigDecimalSchema,
+    net_issuance: GraphBigDecimalSchema, // withdrawn - deposited
+    reported_debt: GraphBigDecimalSchema,
+    created_at: z.number(),
+    updated_at: z.number(),
+    market_snapshot_by_week: z.array(MarketSnapshotByWeekSchema),
+  })
+  .transform((market) => ({
+    ...market,
+    pnl: calculateMarketPnl(market.net_issuance, market.reported_debt),
+  }));
+
+const MarketConfigurationSchema = z.object({
+  id: z.string(), //PoolId-MarketId
   // Pool: Pool dont think typescript likes recursive types and we dont need it here, so lets not query the pool
-  market: RawMarket;
-  weight: GraphBigInt;
-  max_debt_share_value: GraphBigDecimal;
-};
-type RawPool = {
-  name?: string;
-  total_weight: GraphBigInt;
-  configurations: RawMarketConfiguration[];
-};
-type PoolDataResult = {
-  __typename?: 'Query';
-  pool?: RawPool;
-};
+  market: MarketSchema,
+  weight: GraphBigIntSchema,
+  max_debt_share_value: GraphBigDecimalSchema,
+});
+export const PoolSchema = z.object({
+  name: z.string(),
+  total_weight: GraphBigIntSchema,
+  configurations: z.array(MarketConfigurationSchema),
+});
+
+const PoolDataResultSchema = z.object({
+  data: z.object({
+    pool: z.union([PoolSchema, z.null()]),
+  }),
+});
 
 const gql = (data: TemplateStringsArray) => data[0];
 const PoolsDataDocument = gql`
@@ -49,55 +79,36 @@ const PoolsDataDocument = gql`
           usd_withdrawn
           net_issuance
           reported_debt
+          market_snapshots_by_week(first: 2) {
+            id
+            usd_deposited
+            usd_withdrawn
+            net_issuance
+            reported_debt
+            updated_at
+            created_at
+            updates_in_period
+          }
         }
       }
     }
   }
 `;
 
-const formatPool = (pool: RawPool) => {
-  const configurations = pool.configurations.map(({ id, weight, market, max_debt_share_value }) => {
-    const netIssuance = formatGraphBigDecimal(market.net_issuance);
-    const reportedDebt = formatGraphBigDecimal(market.reported_debt);
-
-    return {
-      id,
-      weight: formatGraphBigDecimal(weight),
-      maxDebtShareValue: formatGraphBigDecimal(max_debt_share_value),
-      market: {
-        id: market.id,
-        address: market.address,
-        usdDeposited: formatGraphBigDecimal(market.usd_deposited),
-        usdWithdrawn: formatGraphBigDecimal(market.usd_withdrawn),
-        netIssuance,
-        reportedDebt,
-        pnl: calculateMarketPnl(netIssuance, reportedDebt),
-      },
-    };
-  });
-
-  return {
-    name: pool.name,
-    totalWeight: formatGraphBigDecimal(pool.total_weight),
-    configurations,
-  };
-};
-
 const getPoolData = async (chainName: string, id: string) => {
   const res = await fetch(getSubgraphUrl(chainName), {
     method: 'POST',
     body: JSON.stringify({ query: PoolsDataDocument, variables: { id } }),
   });
-  const json: { data: PoolDataResult; errors: Error[] } = await res.json();
+  const json = await res.json();
   if (json.errors) {
     const { message } = json.errors[0];
     throw new Error(message);
   }
-  return json.data;
+  return PoolDataResultSchema.parse(json.data);
 };
 
-export type PoolData = ReturnType<typeof formatPool>;
-export const useGetPoolData = (id?: string) => {
+export const useGetPoolData1 = (id?: string) => {
   const [localChainId] = useRecoilState(chainIdState);
   const chainName = getChainNameById(localChainId);
   return useQuery(
@@ -105,47 +116,98 @@ export const useGetPoolData = (id?: string) => {
     async () => {
       if (!chainName || !id) throw Error('Query expected chainName and id to be defined');
       const poolData = await getPoolData(chainName, id);
-      const pool = poolData.pool || getMockData().pool;
-      return pool ? formatPool(pool) : undefined;
+      const pool = poolData.data.pool || getMockData();
+      return pool;
     },
-    { enabled: Boolean(chainName), staleTime: 10000 }
+    { enabled: Boolean(chainName && id), staleTime: 1 }
   );
 };
 
-function getMockData(): PoolDataResult {
+function getMockData(): z.infer<typeof PoolSchema> {
   return {
-    __typename: 'Query',
-    pool: {
-      name: 'Spartan Pool',
-      total_weight: '100',
-      configurations: [
-        {
-          id: 'pool123-market456',
-          market: {
-            id: 'market456',
-            address: '0x123...',
-            usd_deposited: '1000.00',
-            usd_withdrawn: '500.00',
-            net_issuance: '500.00',
-            reported_debt: '10000.00',
-          },
-          weight: '50',
-          max_debt_share_value: '500.00',
+    name: 'Spartan Pool',
+    total_weight: BigNumber.from('100'),
+    configurations: [
+      {
+        id: 'pool123-market456',
+        market: {
+          id: 'market456',
+          address: '0x123...',
+          usd_deposited: BigNumber.from('1000.00'),
+          usd_withdrawn: BigNumber.from('500.00'),
+          net_issuance: BigNumber.from('500.00'),
+          reported_debt: BigNumber.from('10000.00'),
+          pnl: BigNumber.from(9500),
+          created_at: 1,
+          updated_at: 1,
+          market_snapshot_by_week: [
+            {
+              id: '213',
+              usd_deposited: BigNumber.from('1000.00'),
+              usd_withdrawn: BigNumber.from('500.00'),
+              net_issuance: BigNumber.from('500.00'),
+              reported_debt: BigNumber.from('10000.00'),
+              pnl: BigNumber.from('-9500'),
+              created_at: 1,
+              updated_at: 1,
+              updates_in_period: 2,
+            },
+            {
+              id: '213',
+              usd_deposited: BigNumber.from('1000.00'),
+              usd_withdrawn: BigNumber.from('500.00'),
+              net_issuance: BigNumber.from('500.00'),
+              reported_debt: BigNumber.from('100.00'),
+              pnl: BigNumber.from('400'),
+              created_at: 1,
+              updated_at: 1,
+              updates_in_period: 2,
+            },
+          ],
         },
-        {
-          id: 'pool123-market789',
-          market: {
-            id: 'market789',
-            address: '0x456...',
-            usd_deposited: '2000.00',
-            usd_withdrawn: '1500.00',
-            net_issuance: '500.00',
-            reported_debt: '20000.00',
-          },
-          weight: '50',
-          max_debt_share_value: '1000.00',
+        weight: BigNumber.from('50'),
+        max_debt_share_value: BigNumber.from('500.00'),
+      },
+      {
+        id: 'pool123-market789',
+        market: {
+          id: 'market456',
+          address: '0x123...',
+          usd_deposited: BigNumber.from('1000.00'),
+          usd_withdrawn: BigNumber.from('500.00'),
+          net_issuance: BigNumber.from('500.00'),
+          reported_debt: BigNumber.from('10000.00'),
+          pnl: BigNumber.from(9500),
+          created_at: 1,
+          updated_at: 1,
+          market_snapshot_by_week: [
+            {
+              id: '213',
+              usd_deposited: BigNumber.from('1000.00'),
+              usd_withdrawn: BigNumber.from('500.00'),
+              net_issuance: BigNumber.from('500.00'),
+              reported_debt: BigNumber.from('10000.00'),
+              pnl: BigNumber.from('-9500'),
+              created_at: 1,
+              updated_at: 1,
+              updates_in_period: 2,
+            },
+            {
+              id: '213',
+              usd_deposited: BigNumber.from('1000.00'),
+              usd_withdrawn: BigNumber.from('500.00'),
+              net_issuance: BigNumber.from('500.00'),
+              reported_debt: BigNumber.from('100.00'),
+              pnl: BigNumber.from('400'),
+              created_at: 1,
+              updated_at: 1,
+              updates_in_period: 2,
+            },
+          ],
         },
-      ],
-    },
+        weight: BigNumber.from('50'),
+        max_debt_share_value: BigNumber.from('500.00'),
+      },
+    ],
   };
 }
