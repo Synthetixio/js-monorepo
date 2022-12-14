@@ -1,23 +1,10 @@
 import { chain } from 'wagmi';
 
-import { address as SnxTokenGoerliAddress } from '@synthetixio/v3-contracts/build/goerli/snx.token';
-import { address as SnxTokenGoerliOptimismAddress } from '@synthetixio/v3-contracts/build/optimism-goerli/snx.token';
-import { address as SnxTokenHardhatAddress } from '@synthetixio/v3-contracts/build/goerli/snx.token';
-import { address as WethGoerliAddress } from '@synthetixio/v3-contracts/build/goerli/WETH';
-import { address as WethGoerliOptimismAddress } from '@synthetixio/v3-contracts/build/optimism-goerli/WETH';
-import { address as WethHardhatAddress } from '@synthetixio/v3-contracts/build/goerli/WETH';
-
 import { ChainName } from './types';
-
-const hardhatMulticallConfig = {
-  address: '0x2017758D5341a319410f8DdD0a034d0170EE0444',
-  blockCreated: 14353601,
-};
 
 export const chains = {
   goerli: chain.goerli,
   optimismGoerli: chain.optimismGoerli,
-  hardhat: { ...chain.hardhat, multicall: hardhatMulticallConfig, id: 13370 },
 };
 
 export const supportedChains = Object.keys(chains).map((chain) => chains[chain as ChainName]);
@@ -27,86 +14,16 @@ export const getChainById = (chainId: number) =>
 
 export const getChainNameById = (chainId: number) => {
   const chain = getChainById(chainId);
-  return chain?.network.toLowerCase() == 'localhost' ? 'hardhat' : chain?.network;
-};
-
-function getSnxTokenAddress(chainName: string | undefined): string {
-  switch (chainName) {
-    case 'goerli':
-      return SnxTokenGoerliAddress;
-    case 'optimism-goerli':
-      return SnxTokenGoerliOptimismAddress;
-    case 'hardhat':
-      return SnxTokenHardhatAddress;
-    default:
-      throw new Error('Unsupported chain');
-  }
-}
-
-function getWethAddress(chainName: string | undefined): string {
-  switch (chainName) {
-    case 'goerli':
-      return WethGoerliAddress;
-    case 'optimism-goerli':
-      return WethGoerliOptimismAddress;
-    case 'hardhat':
-      return WethHardhatAddress;
-    default:
-      throw new Error('Unsupported chain');
-  }
-}
-
-// TODO: Retrieve from on chain data
-export const localCollateralTypes = (chainId: number) => {
-  const chainName = getChainNameById(chainId);
-  /*
-  Consider injecting token list data here instead of useCollateralTypes.ts
-
-  if (snxContract?.chainId !== LOCALHOST_CHAIN_ID) {
-    // Convert addresses to the data from the token list
-    const tokensForLocalChain = tokenList.tokens.filter(
-      (token) => token.chainId === snxContract?.chainId
-    );
-    console.log(tokensForLocalChain);
-    const enrichedCollateralTypes = data
-      .map((collateralType) =>
-        tokensForLocalChain.find(
-          (token) => token.address === collateralType.address
-        )
-      )
-      .filter(function (element) {
-        return element !== undefined;
-      }) as Array<CollateralType>;
-    setSupportedCollateralTypes(enrichedCollateralTypes);
-  }
-  */
-
-  return [
-    {
-      address: getSnxTokenAddress(chainName),
-      symbol: 'SNX',
-      logoURI:
-        'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F/logo.png',
-      decimals: 18,
-    },
-    {
-      address: getWethAddress(chainName),
-      symbol: 'ETH',
-      logoURI:
-        'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
-      decimals: 18,
-    },
-  ];
+  return chain?.network;
 };
 
 export const contracts = {
-  SYNTHETIX_PROXY: 'synthetix.CoreProxy',
-  SNX_USD_PROXY: 'synthetix.USDProxy',
-  ESNX_PROXY: 'synthetix.ESNXProxy',
-  ACCOUNT_PROXY: 'synthetix.AccountProxy',
-  MULTICALL: 'Multicall',
-  SNX_TOKEN: 'snx.token',
-  SNX_REWARD: 'snx_rewards',
+  SYNTHETIX_PROXY: 'SYNTHETIX_PROXY',
+  SNX_USD_PROXY: 'SNX_USD_PROXY',
+  ACCOUNT_PROXY: 'ACCOUNT_PROXY',
+  MULTICALL: 'MULTICALL',
+  SNX_TOKEN: 'SNX_TOKEN',
+  SNX_REWARD: 'SNX_REWARD',
   WETH: 'WETH',
   CCIP: 'CCIP',
 };

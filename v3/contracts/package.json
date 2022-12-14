@@ -5,44 +5,27 @@
   },
   "description": "peripheral smart contracts for frontend",
   "version": "0.0.1",
+  "main": "./index.js",
+  "files": [
+    "build",
+    "deployments",
+    "src",
+    "index.js"
+  ],
   "scripts": {
     "codegen": "node ./codegen.js",
     "build": "yarn codegen && tsc --build --verbose",
-    "clean": "shx rm -rf ./artifacts ./cache ./coverage ./src/types ./coverage.json",
-    "compile": "TS_NODE_TRANSPILE_ONLY=true hardhat compile",
-    "test": "echo Skip contract tests || hardhat test",
-    "typechain": "TS_NODE_TRANSPILE_ONLY=true hardhat typechain",
-    "cannon-build": "hardhat cannon:build cannonfile.dev.toml --write-deployments ./deployments/hardhat",
-    "write-deployments": "cannon synthetix:3.0.0-alpha.4 --write-deployments ./deployments/goerli"
+    "cannon:goerli": "cannon synthetix:3.0.0-alpha.4 --fork https://goerli.infura.io/v3/$INFURA_KEY --write-deployments ./deployments/goerli",
+    "cannon:optimism-goerli": "cannon synthetix:3.0.0-alpha.4 --fork https://optimism-goerli.infura.io/v3/$INFURA_KEY --write-deployments ./deployments/optimism-goerli"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
-    "@nomiclabs/hardhat-ethers": "^2.0.6",
-    "@nomiclabs/hardhat-etherscan": "^3.0.3",
-    "@nomiclabs/hardhat-waffle": "^2.0.3",
-    "@synthetixio/core-contracts": "^1.1.0",
     "@typechain/ethers-v5": "^10.1.0",
-    "@typechain/hardhat": "^6.1.3",
-    "@types/node": "^18.8.5",
-    "@usecannon/cli": "^1.1.19",
-    "dotenv": "^16.0.0",
-    "ethereum-waffle": "^3.4.4",
+    "@usecannon/cli": "^1.1.20",
     "ethers": "^5.7.2",
-    "hardhat": "^2.9.2",
-    "hardhat-cannon": "^1.1.16",
-    "hardhat-gas-reporter": "^1.0.8",
-    "hardhat-interact": "^0.2.3",
     "prettier": "^2.7.1",
-    "shx": "^0.3.4",
-    "ts-node": "^10.9.1",
     "typechain": "^8.1.0",
     "typescript": "^4.8.2"
-  },
-  "depcheck": {
-    "ignorePatterns": [],
-    "ignoreMatches": [
-      "@synthetixio/core-contracts"
-    ]
   }
 }
