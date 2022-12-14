@@ -1,6 +1,6 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
-export const address = '0x0000000000000000000000000000000000000000';
+export const address = null;
 export const abi = [
   'function name() view returns (string)',
   'function approve(address guy, uint256 wad) returns (bool)',

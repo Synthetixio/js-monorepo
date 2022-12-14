@@ -1,6 +1,6 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
-export const address = '0x0000000000000000000000000000000000000000';
+export const address = null;
 export const abi = [
   'error Unauthorized(address sender)',
   'function distributeRewards(uint128 poolId, address collateralType, uint256 amount, uint256 start, uint256 duration)',

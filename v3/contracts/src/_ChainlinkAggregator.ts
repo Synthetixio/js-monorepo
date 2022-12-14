@@ -1,6 +1,6 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
-export const address = '0x0000000000000000000000000000000000000000';
+export const address = null;
 export const abi = [
   'constructor()',
   'function allRoundDataShouldRevert() view returns (bool)',

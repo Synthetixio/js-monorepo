@@ -1,5 +1,5 @@
 {
-  "address": "0x0000000000000000000000000000000000000000",
+  "address": null,
   "sourceName": "MANUAL",
   "contractName": "ChainlinkAggregator",
   "abi": [
