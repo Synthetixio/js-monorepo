@@ -1,5 +1,5 @@
 {
-  "address": "0xb724F5a1770688ECa5c039CB919E7413304216E6",
+  "address": "0x08eB507bdB20Bb56e8d2f0D6c214cDC3e0c7778F",
   "abi": [
     {
       "type": "error",
@@ -417,7 +417,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x7d792d02588183573b9a15d97ec78b1804873331e1131fd7fd15f4dc5ffc3d0a",
+  "deployTxnHash": "0xf723701c559b1c7c7484b08d14d15abc66ff92ff521e061bb1437294a5c379e1",
   "sourceName": "contracts/modules/core/VaultModule.sol",
   "contractName": "VaultModule",
   "deployedOn": "contract.VaultModule"

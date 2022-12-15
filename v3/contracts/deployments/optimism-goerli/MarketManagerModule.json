@@ -1,5 +1,5 @@
 {
-  "address": "0xeF1365A8CA331e2B666EaD371ea59d006aAc9052",
+  "address": "0x1088dEEFBedC9BDE65ea339995FA56c1d3F1fEe9",
   "abi": [
     {
       "type": "error",
@@ -128,7 +128,7 @@
         },
         {
           "type": "address",
-          "name": "sender",
+          "name": "market",
           "indexed": true
         }
       ]
@@ -155,7 +155,7 @@
         },
         {
           "type": "address",
-          "name": "sender",
+          "name": "market",
           "indexed": true
         }
       ]
@@ -347,7 +347,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x4a71a9f46f90de2644cc43fcb6643d0e6aa03a8ce586883ece21fc0dee04573c",
+  "deployTxnHash": "0xf284f310f3c0da3245f25c9816b7cd85ac2ae596f48222d4d619fa3f0c966f24",
   "sourceName": "contracts/modules/core/MarketManagerModule.sol",
   "contractName": "MarketManagerModule",
   "deployedOn": "contract.MarketManagerModule"

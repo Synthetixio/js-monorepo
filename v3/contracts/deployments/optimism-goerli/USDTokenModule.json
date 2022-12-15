@@ -1,5 +1,5 @@
 {
-  "address": "0x488F7bf5d242796CA5839a44DFA8d65e5B4c2379",
+  "address": "0xD927c1Aa8447960676D31Dcf180cdBe15e0A647f",
   "abi": [
     {
       "type": "error",
@@ -399,7 +399,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xac43152db533b0ace98ebe2c2745135188b6313b84a26ffbb76621538247627e",
+  "deployTxnHash": "0xfdb17c364277a54269102b4234bcba2d9a27eb6178650282e0d87ed2e53cc9e6",
   "sourceName": "contracts/modules/usd/USDTokenModule.sol",
   "contractName": "USDTokenModule",
   "deployedOn": "contract.USDTokenModule"

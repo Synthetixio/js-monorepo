@@ -1,5 +1,5 @@
 {
-  "address": "0x188E9dB1F3Da57b6cea137039aaB3aEd7d91139e",
+  "address": "0x044F57ecccE4408840AAC19a0333a8C10F6593d7",
   "abi": [
     {
       "type": "error",
@@ -11,14 +11,10 @@
       "name": "CannotSelfApprove",
       "inputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": "addr"
         }
       ]
-    },
-    {
-      "type": "error",
-      "name": "IndexOutOfBounds",
-      "inputs": []
     },
     {
       "type": "error",
@@ -39,7 +35,8 @@
       "name": "InvalidTransferRecipient",
       "inputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": "addr"
         }
       ]
     },
@@ -53,7 +50,8 @@
       "name": "TokenAlreadyMinted",
       "inputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": "id"
         }
       ]
     },
@@ -62,7 +60,8 @@
       "name": "TokenDoesNotExist",
       "inputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": "id"
         }
       ]
     },
@@ -509,7 +508,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x83b5c0704fabd6cc8bf2d8161a876bc08e9076901636fbf33cdb553ca50fca24",
+  "deployTxnHash": "0xe37b9aa7140047a91aac072c33c18371402c9dc2c37d2999ab082580087f4833",
   "sourceName": "contracts/modules/account/AccountTokenModule.sol",
   "contractName": "AccountTokenModule",
   "deployedOn": "contract.AccountTokenModule"

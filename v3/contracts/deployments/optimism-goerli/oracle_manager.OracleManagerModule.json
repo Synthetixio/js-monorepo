@@ -1,5 +1,5 @@
 {
-  "address": "0x069543A4972aaA852071BE4cabD8f730aEBD462f",
+  "address": "0x202aeb6Ad253c3b814D1679d14571ED57FD343db",
   "abi": [
     {
       "type": "error",
@@ -179,7 +179,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xd8bc0aff7e292b2cceed4261b2b6629812b8319a2ddfe175e628ae079b93645d",
+  "deployTxnHash": "0xef6f693293825580f5c451d1b4ca8cf55f12c96034dbf55a47d182a1cf5c2695",
   "sourceName": "contracts/modules/OracleManagerModule.sol",
   "contractName": "OracleManagerModule",
   "deployedOn": "contract.OracleManagerModule"

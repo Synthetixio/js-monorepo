@@ -232,14 +232,10 @@
       "name": "CannotSelfApprove",
       "inputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": "addr"
         }
       ]
-    },
-    {
-      "type": "error",
-      "name": "IndexOutOfBounds",
-      "inputs": []
     },
     {
       "type": "error",
@@ -260,7 +256,8 @@
       "name": "InvalidTransferRecipient",
       "inputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": "addr"
         }
       ]
     },
@@ -274,7 +271,8 @@
       "name": "TokenAlreadyMinted",
       "inputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": "id"
         }
       ]
     },
@@ -283,7 +281,8 @@
       "name": "TokenDoesNotExist",
       "inputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": "id"
         }
       ]
     },
@@ -714,7 +713,7 @@
       "outputs": []
     }
   ],
-  "deployTxnHash": "0x296375e5e1f907366269133a821185bdc4db29c041bff03f62778e714dbcedf9",
+  "deployTxnHash": "0xa930086d517f2f821c099808655110b6840c82a756cd60c6e3f56ea667a2ccc1",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_account"

@@ -1,5 +1,5 @@
 {
-  "address": "0x56C94306BF3e8cE0AfA2C56EB07c453Cd6Bec675",
+  "address": "0x893C7AefF7d53B0162560F6B7B5DA5dB7cBF45Ca",
   "abi": [
     {
       "type": "error",
@@ -232,14 +232,10 @@
       "name": "CannotSelfApprove",
       "inputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": "addr"
         }
       ]
-    },
-    {
-      "type": "error",
-      "name": "IndexOutOfBounds",
-      "inputs": []
     },
     {
       "type": "error",
@@ -260,7 +256,8 @@
       "name": "InvalidTransferRecipient",
       "inputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": "addr"
         }
       ]
     },
@@ -274,7 +271,8 @@
       "name": "TokenAlreadyMinted",
       "inputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": "id"
         }
       ]
     },
@@ -283,7 +281,8 @@
       "name": "TokenDoesNotExist",
       "inputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": "id"
         }
       ]
     },
@@ -715,7 +714,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x0f7c7e978da097218054184c9c2f558d7b061b4b455dea3b93c2a292d21adbf7",
+  "deployTxnHash": "0xc475c0bb726b481c7b0682516ea2c8f2f019debd9ae52da6567c4323cfd1f847",
   "sourceName": "contracts/routers/chain-420/AccountRouter.sol",
   "contractName": "AccountRouter",
   "deployedOn": "contract.AccountRouter"

@@ -1,5 +1,5 @@
 {
-  "address": "0xEca36aa7f781a7b6ba4E69927942c667271A8136",
+  "address": "0x98a18F9561583b1290fa2CA30dfa0AfE4385503e",
   "abi": [
     {
       "type": "error",
@@ -249,7 +249,7 @@
         },
         {
           "type": "bool",
-          "name": "value",
+          "name": "allowAll",
           "indexed": false
         }
       ]
@@ -300,7 +300,7 @@
         },
         {
           "type": "address",
-          "name": "permissioned"
+          "name": "account"
         }
       ],
       "outputs": []
@@ -354,7 +354,7 @@
         },
         {
           "type": "address",
-          "name": "addressToCheck"
+          "name": "account"
         }
       ],
       "outputs": [
@@ -375,7 +375,7 @@
         },
         {
           "type": "address",
-          "name": "permissioned"
+          "name": "account"
         }
       ],
       "outputs": []
@@ -406,11 +406,6 @@
           "name": "permission"
         }
       ]
-    },
-    {
-      "type": "error",
-      "name": "InvalidPermission",
-      "inputs": []
     },
     {
       "type": "error",
@@ -469,13 +464,13 @@
       "name": "AccountCreated",
       "inputs": [
         {
-          "type": "address",
-          "name": "sender",
+          "type": "uint128",
+          "name": "accountId",
           "indexed": true
         },
         {
-          "type": "uint128",
-          "name": "accountId",
+          "type": "address",
+          "name": "owner",
           "indexed": true
         }
       ]
@@ -942,7 +937,7 @@
       "outputs": [
         {
           "type": "address",
-          "name": "proxy"
+          "name": "addr"
         },
         {
           "type": "bytes32",
@@ -2023,7 +2018,7 @@
         },
         {
           "type": "address",
-          "name": "sender",
+          "name": "owner",
           "indexed": true
         }
       ]
@@ -2204,7 +2199,7 @@
         },
         {
           "type": "address",
-          "name": "sender",
+          "name": "market",
           "indexed": true
         }
       ]
@@ -2231,7 +2226,7 @@
         },
         {
           "type": "address",
-          "name": "sender",
+          "name": "market",
           "indexed": true
         }
       ]
@@ -3050,6 +3045,28 @@
       ]
     },
     {
+      "type": "event",
+      "anonymous": false,
+      "name": "RewardsDistributorRemoved",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "distributor",
+          "indexed": true
+        }
+      ]
+    },
+    {
       "type": "function",
       "name": "claimRewards",
       "constant": false,
@@ -3057,15 +3074,15 @@
       "inputs": [
         {
           "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
           "name": "poolId"
         },
         {
           "type": "address",
           "name": "collateralType"
-        },
-        {
-          "type": "uint128",
-          "name": "accountId"
         },
         {
           "type": "address",
@@ -3164,6 +3181,27 @@
     {
       "type": "function",
       "name": "registerRewardsDistributor",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "address",
+          "name": "distributor"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "removeRewardsDistributor",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -3492,7 +3530,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x675fbdcf60caa1b7f82e4aef2b4ff88773346a3ace97f9f10d1e11d04905080e",
+  "deployTxnHash": "0x58ee9b87f913c3436ed26f14d368d603c1e9ae316fbbfbdc0bf925bd536c71d7",
   "sourceName": "contracts/routers/chain-420/CoreRouter.sol",
   "contractName": "CoreRouter",
   "deployedOn": "contract.CoreRouter"

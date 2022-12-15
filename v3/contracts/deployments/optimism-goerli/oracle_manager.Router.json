@@ -1,5 +1,5 @@
 {
-  "address": "0x632e7008Fe2DF46DEDd1Fe01580764868C0264A8",
+  "address": "0x2Cd0Bc4FB1879B4693bB86F05B43a73F3Ac567b9",
   "abi": [
     {
       "type": "error",
@@ -405,7 +405,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xc98e84b36c3fb63b464a351d45aa705f0591351c953e524f018548fbc9f28bb1",
+  "deployTxnHash": "0xf16bfc69029699697a53568e83eca2ef71e3beec35571612c6b71b2c4c1ffb2d",
   "sourceName": "contracts/routers/chain-420/Router.sol",
   "contractName": "Router",
   "deployedOn": "contract.Router"

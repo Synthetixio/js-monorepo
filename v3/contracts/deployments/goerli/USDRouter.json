@@ -1,5 +1,5 @@
 {
-  "address": "0xfc75c4EBac3FE9C59266CC35F8170DFff84E1575",
+  "address": "0xBA74C30e6057D48BabECf51d8aCc0043A62D13c8",
   "abi": [
     {
       "type": "error",
@@ -283,7 +283,7 @@
       "outputs": [
         {
           "type": "address",
-          "name": "proxy"
+          "name": "addr"
         },
         {
           "type": "bytes32",
@@ -735,7 +735,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xd7c78ba50d625935152cff80d5aebcde0c06ada6402b33ae8c18e7366366ef91",
+  "deployTxnHash": "0x46938b41005138a5a7e65532e11fd04a7778b0798541ef69c18bf4bd855ffe56",
   "sourceName": "contracts/routers/chain-5/USDRouter.sol",
   "contractName": "USDRouter",
   "deployedOn": "contract.USDRouter"
