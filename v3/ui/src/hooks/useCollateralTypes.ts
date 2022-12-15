@@ -1,120 +1,83 @@
-import { useSynthetixRead } from './useDeploymentRead';
-import { BigNumber } from 'ethers';
-import { useMemo, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { useContractReads, useProvider } from 'wagmi';
-import { collateralTypesState } from '../utils/state';
+import { ethers } from 'ethers';
+import { useProvider } from 'wagmi';
+import { useQuery } from '@tanstack/react-query';
+import * as Erc20 from '@synthetixio/v3-contracts/build/_ERC20';
+import { CoreProxy as CoreProxyGoerli } from '@synthetixio/v3-contracts/build/goerli/CoreProxy';
+import type { CoreProxy as CoreProxyOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/CoreProxy';
 
-import { abi as Erc20Abi } from '@synthetixio/v3-contracts/build/_ERC20';
-import { abi as ChainlinkAggregatorAbi } from '@synthetixio/v3-contracts/build/_ChainlinkAggregator';
+async function importCoreProxy(chainName) {
+  switch (chainName) {
+    case 'goerli':
+      return import('@synthetixio/v3-contracts/build/goerli/CoreProxy');
+    case 'optimism-goerli':
+      return import('@synthetixio/v3-contracts/build/optimism-goerli/CoreProxy');
+    default:
+      throw new Error(`Unsupported chain ${chainName}`);
+  }
+}
 
-export const useCollateralTypes = () => {
-  const [supportedCollateralTypes, setSupportedCollateralTypes] =
-    useRecoilState(collateralTypesState);
-  const [isLoading, setIsLoading] = useState(true);
+async function loadCollateralTypes({ provider }) {
+  const CoreProxy = await importCoreProxy(provider.network.name);
+  const CoreProxyContract = new ethers.Contract(CoreProxy.address, CoreProxy.abi, provider) as
+    | CoreProxyGoerli
+    | CoreProxyOptimismGoerli;
+
+  const tokenConfigs = await CoreProxyContract.getCollateralConfigurations(true);
+
+  const [symbols, prices] = await Promise.all([
+    Promise.all(
+      tokenConfigs.map(async ({ tokenAddress }) => {
+        try {
+          const TokenContract = new ethers.Contract(
+            tokenAddress,
+            Erc20.abi,
+            provider
+          ) as Erc20._ERC20;
+          return await TokenContract.symbol();
+        } catch (e) {
+          console.error(e);
+        }
+        return null;
+      })
+    ),
+    Promise.all(
+      tokenConfigs.map(async ({ tokenAddress }) => {
+        try {
+          return await CoreProxyContract.getCollateralPrice(tokenAddress);
+        } catch (e) {
+          console.error(e);
+        }
+        // Never fail, price can be null
+        return null;
+      })
+    ),
+  ]);
+
+  const tokens = tokenConfigs.map((config, i) => ({
+    depositingEnabled: config.depositingEnabled,
+    issuanceRatioD18: config.issuanceRatioD18,
+    liquidationRatioD18: config.liquidationRatioD18,
+    liquidationRewardD18: config.liquidationRewardD18,
+    minDelegationD18: config.minDelegationD18,
+    oracleNodeId: config.oracleNodeId,
+    tokenAddress: config.tokenAddress,
+    price: prices[i],
+    symbol: symbols[i],
+    // TODO: map symbol to icon
+    logo: 'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F/logo.png',
+  }));
+
+  return tokens;
+}
+
+export function useCollateralTypes() {
   const provider = useProvider();
-
-  // Get this list of collateral types from a network request, use deployments data for now
-  // TODO: Rename this function on chain to getCollateralTypesId, getCollateralTypes can return an array of structs and we can skip the calls in the useContractReads call below
-  useSynthetixRead({
-    functionName: 'getCollateralConfigurations',
-    args: [true],
-    onError() {
-      // TODO: throw up a toast
-      // report to sentry or some other tool
-    },
-    onSuccess(data) {
-      // eslint-disable-next-line no-console
-      console.log('getCollateralConfigurations', { data, Erc20Abi });
-      // TODO: smth smth Erc20Abi
-
-      if (data.length < 1) {
-        setIsLoading(false);
-        return;
-      }
-
-      // symbol: 'ETH',
-      // logoURI:
-      //   'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
-      // decimals: 18,
-
-      // symbol: 'SNX',
-      // logoURI:
-      //   'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F/logo.png',
-      // decimals: 18,
-
-      // const mappedCollateralTypes = localCollateralTypes(localChainId).map((coll) => {
-      //   const onChainCollType = data.find((d) => compareAddress(d.tokenAddress, coll.address));
-      //   return {
-      //     ...coll,
-      //     symbol: coll.symbol.toLowerCase(),
-      //     targetCRatio: onChainCollType?.targetCRatio,
-      //     minimumCRatio: onChainCollType?.minimumCRatio,
-      //     priceFeed: onChainCollType?.priceFeed,
-      //   };
-      // });
-      // setSupportedCollateralTypes(mappedCollateralTypes);
-    },
+  return useQuery({
+    queryKey: [provider.network.name, 'collateralTypes'],
+    queryFn: async () => loadCollateralTypes({ provider }),
+    placeholderData: [],
+    enabled: Boolean(provider.network.name),
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
-
-  const supportedCollateralTypesWithPriceFeeds = supportedCollateralTypes.filter((ct) => {
-    return ct.priceFeed;
-  });
-
-  // This fetches price and price decimal data for the collateral types when the above hook recieves a response
-  const priceCalls = useMemo(() => {
-    if (!supportedCollateralTypesWithPriceFeeds) {
-      return [];
-    }
-
-    const latestRoundData = supportedCollateralTypesWithPriceFeeds.map((ct) => {
-      return {
-        addressOrName: ct?.priceFeed || '',
-        contractInterface: ChainlinkAggregatorAbi,
-        functionName: 'latestRoundData',
-      };
-    });
-
-    const priceDecimals = supportedCollateralTypesWithPriceFeeds.map((ct) => {
-      return {
-        addressOrName: ct.priceFeed || '',
-        contractInterface: ChainlinkAggregatorAbi,
-        functionName: 'decimals',
-      };
-    });
-
-    return [...latestRoundData, ...priceDecimals];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [supportedCollateralTypesWithPriceFeeds, provider]);
-
-  // After the price data is fetched, set the data in recoil and turn off the loading state.
-  useContractReads({
-    contracts: priceCalls,
-    enabled: Boolean(supportedCollateralTypesWithPriceFeeds.length),
-    onSuccess: (data) => {
-      setIsLoading(false);
-      setSupportedCollateralTypes(
-        supportedCollateralTypesWithPriceFeeds.map((ct, i) => {
-          // wagmi types broken
-          // @ts-ignore
-          const priceDecimals = data[i + supportedCollateralTypesWithPriceFeeds.length];
-          const priceData = data[i];
-
-          return {
-            ...ct,
-            price: Array.isArray(priceData) ? priceData[1] : BigNumber.from(0),
-            priceDecimals: Array.isArray(priceDecimals)
-              ? 0
-              : // wagmi types broken
-                // @ts-ignore
-                (priceDecimals as number) || 0,
-          };
-        })
-      );
-    },
-  });
-
-  return {
-    isLoading,
-  };
-};
+}

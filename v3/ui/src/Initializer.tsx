@@ -1,13 +1,9 @@
 import { Spinner } from '@chakra-ui/react';
-import { ReactNode, FC } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { useCollateralTypes, usePools } from './hooks';
 import { useOwnerAccounts } from './hooks/useOwnerAccounts';
 
-type Props = {
-  children?: ReactNode;
-};
-
-export const Initializer: FC<Props> = ({ children }) => {
+export const Initializer: FC<PropsWithChildren> = ({ children }) => {
   const { isLoading: isLoadingCollateralTypes } = useCollateralTypes();
   const { isLoading: isLoadingOwnerAccounts } = useOwnerAccounts();
   const { isLoading: isLoadingPools } = usePools();

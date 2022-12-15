@@ -45,3 +45,5 @@ export const ALCHEMY_KEY_MAPPING: Record<number, string> = {
   10: '-ktIzLrAY_Sf7AAlM1aTuZ-PObMop5sU',
   420: 'lc1tSn8B8fmURkjmZLeyT1ibNpgqlsnr',
 };
+
+export const DEFAULT_REQUEST_REFRESH_INTERVAL = 300000; // 5min

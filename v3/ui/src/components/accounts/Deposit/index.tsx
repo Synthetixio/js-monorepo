@@ -1,4 +1,3 @@
-import { collateralTypesState } from '../../../utils/state';
 import { poolsData } from '../../../utils/constants';
 import { useSynthetixRead } from '../../../hooks';
 import EditPosition from '../EditPosition';
@@ -31,6 +30,7 @@ import { CollateralType, LiquidityPositionType } from '../../../utils/types';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 import { FC } from 'react';
 import { useDeposit } from '../../../hooks/useDeposit';
+import { useCollateralTypes } from '../../../hooks/useCollateralTypes';
 
 type FormType = {
   collateralType: CollateralType;
@@ -56,7 +56,7 @@ function ConnectWallet() {
 export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
-  const [collateralTypes] = useRecoilState(collateralTypesState);
+  const { data: collateralTypes } = useCollateralTypes();
 
   const { data: poolId } = useSynthetixRead({
     functionName: 'getPreferredPool',
@@ -66,7 +66,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
   const methods = useForm<FormType>({
     mode: 'onChange',
     defaultValues: {
-      collateralType: collateralTypes[0],
+      collateralType: collateralTypes?.[0],
       poolId: poolId?.toString() ?? '0',
     },
   });
@@ -244,7 +244,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
 };
 
 export const Deposit: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
-  const [collateralTypes] = useRecoilState(collateralTypesState);
+  const { data: collateralTypes } = useCollateralTypes();
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
   return (

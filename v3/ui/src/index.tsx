@@ -9,13 +9,27 @@ import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/ra
 import { theme, Fonts } from '@synthetixio/v3-theme';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { supportedChains, INFURA_KEY, ALCHEMY_KEY_MAPPING } from './utils/constants';
+import {
+  ALCHEMY_KEY_MAPPING,
+  DEFAULT_REQUEST_REFRESH_INTERVAL,
+  INFURA_KEY,
+  supportedChains,
+} from './utils/constants';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './i18n';
 
 // We have to import into *VAR* and *USE* it so webpack does not remove unused library import
 import * as rainbowkitStyles from '@rainbow-me/rainbowkit/styles.css';
-const queryClient = new QueryClient();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchInterval: DEFAULT_REQUEST_REFRESH_INTERVAL,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const { chains, provider } = configureChains(supportedChains, [
   infuraProvider({ apiKey: INFURA_KEY, priority: 0 }),
@@ -50,27 +64,28 @@ const root = createRoot(container);
 
 root.render(
   <BrowserRouter>
-    <RecoilRoot>
-      <ChakraProvider theme={theme}>
-        <Fonts />
-        <WagmiConfig client={wagmiClient}>
-          <RainbowKitProvider
-            /* @ts-ignore*/
-            styles={rainbowkitStyles}
-            theme={darkTheme({
-              accentColor: 'rgb(49, 130, 206)',
-              accentColorForeground: 'white',
-              borderRadius: 'small',
-              fontStack: 'system',
-            })}
-            chains={chains}
-          >
-            <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient} contextSharing={true}>
+      <RecoilRoot>
+        <ChakraProvider theme={theme}>
+          <Fonts />
+          <WagmiConfig client={wagmiClient}>
+            <RainbowKitProvider
+              /* @ts-ignore*/
+              styles={rainbowkitStyles}
+              theme={darkTheme({
+                accentColor: 'rgb(49, 130, 206)',
+                accentColorForeground: 'white',
+                borderRadius: 'small',
+                fontStack: 'system',
+              })}
+              chains={chains}
+            >
               <Synthetix />
-            </QueryClientProvider>
-          </RainbowKitProvider>
-        </WagmiConfig>
-      </ChakraProvider>
-    </RecoilRoot>
+              <ReactQueryDevtools />
+            </RainbowKitProvider>
+          </WagmiConfig>
+        </ChakraProvider>
+      </RecoilRoot>
+    </QueryClientProvider>
   </BrowserRouter>
 );
