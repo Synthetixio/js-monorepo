@@ -44,7 +44,7 @@ const Wrapper: FC<PropsWithChildren> = ({ children }) => {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, true);
   return STAKING_V2_ENABLED ? (
     <Box bg="navy.900" height="100%" className="v2">
-      <Container pt={4} pb={16} bg="navy.900" maxW="4xl">
+      <Container pt={8} pb={16} bg="navy.900" maxW="4xl">
         <HomeButton />
         {children}
       </Container>
