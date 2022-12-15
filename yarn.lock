@@ -9578,6 +9578,7 @@ __metadata:
     "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useLiquidationData": "workspace:*"
     "@socket.tech/plugin": ^1.0.2
     "@storybook/addon-actions": ^6.5.10
     "@storybook/addon-docs": ^6.5.10
