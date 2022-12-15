@@ -15,8 +15,8 @@
   "scripts": {
     "codegen": "node ./codegen.js",
     "build": "yarn codegen && tsc --build --verbose",
-    "cannon:goerli": "cannon synthetix:3.0.0-alpha.4 --fork https://goerli.infura.io/v3/$INFURA_KEY --write-deployments ./deployments/goerli",
-    "cannon:optimism-goerli": "cannon synthetix:3.0.0-alpha.4 --fork https://optimism-goerli.infura.io/v3/$INFURA_KEY --write-deployments ./deployments/optimism-goerli"
+    "cannon:goerli": "DEBUG='cannon:*' cannon synthetix:3 --fork https://goerli.infura.io/v3/$INFURA_KEY --write-deployments ./deployments/goerli",
+    "cannon:optimism-goerli": "DEBUG='cannon:*' cannon synthetix:3 --fork https://optimism-goerli.infura.io/v3/$INFURA_KEY --write-deployments ./deployments/optimism-goerli"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",

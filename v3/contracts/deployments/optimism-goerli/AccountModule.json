@@ -1,5 +1,5 @@
 {
-  "address": "0x4aFF595044Ac6844151481B031D9A2E291aE37fD",
+  "address": "0xfB1F60Ec81180D101347efE3872255A901e3ee04",
   "abi": [
     {
       "type": "error",
@@ -10,11 +10,6 @@
           "name": "permission"
         }
       ]
-    },
-    {
-      "type": "error",
-      "name": "InvalidPermission",
-      "inputs": []
     },
     {
       "type": "error",
@@ -88,13 +83,13 @@
       "name": "AccountCreated",
       "inputs": [
         {
-          "type": "address",
-          "name": "sender",
+          "type": "uint128",
+          "name": "accountId",
           "indexed": true
         },
         {
-          "type": "uint128",
-          "name": "accountId",
+          "type": "address",
+          "name": "owner",
           "indexed": true
         }
       ]
@@ -356,7 +351,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xd1aeaf861129df28207fc3b5575dcc1d4e7d95c2a159559576c45a65addee05d",
+  "deployTxnHash": "0x1d2029a15301967737513c80fc26db54e1b436e21a9735cbd13530f6cc250d58",
   "sourceName": "contracts/modules/core/AccountModule.sol",
   "contractName": "AccountModule",
   "deployedOn": "contract.AccountModule"

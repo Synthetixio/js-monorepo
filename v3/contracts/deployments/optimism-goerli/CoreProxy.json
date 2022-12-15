@@ -249,7 +249,7 @@
         },
         {
           "type": "bool",
-          "name": "value",
+          "name": "allowAll",
           "indexed": false
         }
       ]
@@ -300,7 +300,7 @@
         },
         {
           "type": "address",
-          "name": "permissioned"
+          "name": "account"
         }
       ],
       "outputs": []
@@ -354,7 +354,7 @@
         },
         {
           "type": "address",
-          "name": "addressToCheck"
+          "name": "account"
         }
       ],
       "outputs": [
@@ -375,7 +375,7 @@
         },
         {
           "type": "address",
-          "name": "permissioned"
+          "name": "account"
         }
       ],
       "outputs": []
@@ -406,11 +406,6 @@
           "name": "permission"
         }
       ]
-    },
-    {
-      "type": "error",
-      "name": "InvalidPermission",
-      "inputs": []
     },
     {
       "type": "error",
@@ -469,13 +464,13 @@
       "name": "AccountCreated",
       "inputs": [
         {
-          "type": "address",
-          "name": "sender",
+          "type": "uint128",
+          "name": "accountId",
           "indexed": true
         },
         {
-          "type": "uint128",
-          "name": "accountId",
+          "type": "address",
+          "name": "owner",
           "indexed": true
         }
       ]
@@ -942,7 +937,7 @@
       "outputs": [
         {
           "type": "address",
-          "name": "proxy"
+          "name": "addr"
         },
         {
           "type": "bytes32",
@@ -2023,7 +2018,7 @@
         },
         {
           "type": "address",
-          "name": "sender",
+          "name": "owner",
           "indexed": true
         }
       ]
@@ -2204,7 +2199,7 @@
         },
         {
           "type": "address",
-          "name": "sender",
+          "name": "market",
           "indexed": true
         }
       ]
@@ -2231,7 +2226,7 @@
         },
         {
           "type": "address",
-          "name": "sender",
+          "name": "market",
           "indexed": true
         }
       ]
@@ -3050,6 +3045,28 @@
       ]
     },
     {
+      "type": "event",
+      "anonymous": false,
+      "name": "RewardsDistributorRemoved",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "distributor",
+          "indexed": true
+        }
+      ]
+    },
+    {
       "type": "function",
       "name": "claimRewards",
       "constant": false,
@@ -3057,15 +3074,15 @@
       "inputs": [
         {
           "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
           "name": "poolId"
         },
         {
           "type": "address",
           "name": "collateralType"
-        },
-        {
-          "type": "uint128",
-          "name": "accountId"
         },
         {
           "type": "address",
@@ -3164,6 +3181,27 @@
     {
       "type": "function",
       "name": "registerRewardsDistributor",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "address",
+          "name": "distributor"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "removeRewardsDistributor",
       "constant": false,
       "payable": false,
       "inputs": [
@@ -3491,7 +3529,7 @@
       ]
     }
   ],
-  "deployTxnHash": "0x8f1ffbc1d0345068046e2ccd0943813b25f4928f8050098347fe2eab7ff78216",
+  "deployTxnHash": "0xb9b7829a899a86744c72f7ae93d206d491d6319d440b14db5f981047aa96441d",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.upgrade_core_proxy"

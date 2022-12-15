@@ -25,7 +25,7 @@ export const abi = [
   'function upgradeTo(address newImplementation)',
   'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',
   'event AssociatedSystemSet(bytes32 indexed kind, bytes32 indexed id, address proxy, address impl)',
-  'function getAssociatedSystem(bytes32 id) view returns (address proxy, bytes32 kind)',
+  'function getAssociatedSystem(bytes32 id) view returns (address addr, bytes32 kind)',
   'function initOrUpgradeNft(bytes32 id, string name, string symbol, string uri, address impl)',
   'function initOrUpgradeToken(bytes32 id, string name, string symbol, uint8 decimals, address impl)',
   'function registerUnmanagedSystem(bytes32 id, address endpoint)',
@@ -405,7 +405,7 @@ export interface USDProxy extends BaseContract {
     getAssociatedSystem(
       id: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<[string, string] & { proxy: string; kind: string }>;
+    ): Promise<[string, string] & { addr: string; kind: string }>;
 
     initOrUpgradeNft(
       id: PromiseOrValue<BytesLike>,
@@ -548,7 +548,7 @@ export interface USDProxy extends BaseContract {
   getAssociatedSystem(
     id: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
-  ): Promise<[string, string] & { proxy: string; kind: string }>;
+  ): Promise<[string, string] & { addr: string; kind: string }>;
 
   initOrUpgradeNft(
     id: PromiseOrValue<BytesLike>,
@@ -684,7 +684,7 @@ export interface USDProxy extends BaseContract {
     getAssociatedSystem(
       id: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<[string, string] & { proxy: string; kind: string }>;
+    ): Promise<[string, string] & { addr: string; kind: string }>;
 
     initOrUpgradeNft(
       id: PromiseOrValue<BytesLike>,

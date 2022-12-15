@@ -283,7 +283,7 @@
       "outputs": [
         {
           "type": "address",
-          "name": "proxy"
+          "name": "addr"
         },
         {
           "type": "bytes32",
@@ -734,7 +734,7 @@
       ]
     }
   ],
-  "deployTxnHash": "0x93aa2b1eec61690b7ca142474eb7cc073c68634614aa6caaadc24da69ed765f8",
+  "deployTxnHash": "0xda290f0cc2e957771b20ba6e7bf14d714bc33bbf13662e5e047bcacc35dc042c",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.init_usd"

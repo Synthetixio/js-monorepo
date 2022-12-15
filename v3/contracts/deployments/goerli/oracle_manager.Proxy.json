@@ -1,5 +1,5 @@
 {
-  "address": "0x4f7b2F2C8c6Ad9E69384BD717CCC9722231476b0",
+  "address": "0x342C21bEB8E4Af8A8974b57F8d841Bf40720AC3e",
   "abi": [
     {
       "type": "error",
@@ -404,7 +404,7 @@
       ]
     }
   ],
-  "deployTxnHash": "0x5bb5b77cf9e1de5248f348fd37e8ff29aea84744063fe935c49fbf439ee4da40",
+  "deployTxnHash": "0x9da7ffda8dac78f60e8057bc7018167bc158f25815e1599c0c51ac3f344b3d8b",
   "sourceName": "",
   "contractName": "",
   "deployedOn": "invoke.upgrade_proxy"

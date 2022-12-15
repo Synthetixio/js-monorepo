@@ -1,5 +1,5 @@
 {
-  "address": "0x3b9F50F4C47A21058D4771036E7d536a1911AA3b",
+  "address": "0x9B224d8dAa1f210B6E90348F026B413aD98EC050",
   "abi": [
     {
       "type": "error",
@@ -71,6 +71,11 @@
     {
       "type": "error",
       "name": "ValueAlreadyInSet",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ValueNotInSet",
       "inputs": []
     },
     {
@@ -165,6 +170,28 @@
       ]
     },
     {
+      "type": "event",
+      "anonymous": false,
+      "name": "RewardsDistributorRemoved",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "distributor",
+          "indexed": true
+        }
+      ]
+    },
+    {
       "type": "function",
       "name": "claimRewards",
       "constant": false,
@@ -172,15 +199,15 @@
       "inputs": [
         {
           "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
           "name": "poolId"
         },
         {
           "type": "address",
           "name": "collateralType"
-        },
-        {
-          "type": "uint128",
-          "name": "accountId"
         },
         {
           "type": "address",
@@ -296,10 +323,31 @@
         }
       ],
       "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "removeRewardsDistributor",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "address",
+          "name": "distributor"
+        }
+      ],
+      "outputs": []
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xa313e0da9b9bbc1c65c4aabb651467c91b86a49af7cf07597cc7201c2c728ed5",
+  "deployTxnHash": "0xf128e37b083b53a501a6e5fa521ac8406e4597f8e82e639c36da6456498f5ac5",
   "sourceName": "contracts/modules/core/RewardsManagerModule.sol",
   "contractName": "RewardsManagerModule",
   "deployedOn": "contract.RewardsManagerModule"

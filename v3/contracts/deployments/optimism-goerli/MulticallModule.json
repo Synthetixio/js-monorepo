@@ -1,5 +1,5 @@
 {
-  "address": "0xF4Aeb5895DDF578eB647Ac40292A00B99A47D13C",
+  "address": "0xD1eC8dD89B684E3259AD1cEC5371593B1a0e2F9f",
   "abi": [
     {
       "type": "function",
@@ -22,7 +22,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xf70bfc81efb3d73c8d6234c086de771d98df79f53eeed1ab93bf12f61b9ee01e",
+  "deployTxnHash": "0x2b87cf4c0cd6c838a6c4917e701b33682efa5e323df00a3a243676fe2d0bf6f1",
   "sourceName": "contracts/modules/core/MulticallModule.sol",
   "contractName": "MulticallModule",
   "deployedOn": "contract.MulticallModule"

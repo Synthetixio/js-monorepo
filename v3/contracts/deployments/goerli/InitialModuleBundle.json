@@ -1,5 +1,5 @@
 {
-  "address": "0x0831dd3d62fF9418C8bd749A4D67c9F47d5FdFe5",
+  "address": "0xEa93F613243e9534f83F62D98726093Dd3B2E39F",
   "abi": [
     {
       "type": "error",
@@ -229,7 +229,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x1ea040940f3a143655aad8e1c733c612f9ab039740bbb0997b647c7cd1eb4d80",
+  "deployTxnHash": "0x225311432b8fe7d8a7551cd8433157c254ce9cb82b7894e17d3aab14046cf129",
   "sourceName": "contracts/modules/InitialModuleBundle.sol",
   "contractName": "InitialModuleBundle",
   "deployedOn": "contract.InitialModuleBundle"

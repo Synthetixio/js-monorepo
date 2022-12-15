@@ -1,5 +1,5 @@
 {
-  "address": "0xBFE2AcC9181f20B6c0A25b1722F490b670775739",
+  "address": "0xA7E37B1b9E5B41AcD3C13c0e2F027715Ccc5D00a",
   "abi": [
     {
       "type": "error",
@@ -221,7 +221,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xa7f8a939217304c067c72c43099c45161d3dfc979bdec331be95388e9dd50375",
+  "deployTxnHash": "0x95e93efc7582158ae7a41710b8a290780891f578b3c8225aff0025b05bd37228",
   "sourceName": "contracts/modules/core/IssueUSDModule.sol",
   "contractName": "IssueUSDModule",
   "deployedOn": "contract.IssueUSDModule"

@@ -25,22 +25,21 @@ export const abi = [
   'function upgradeTo(address newImplementation)',
   'error ValueAlreadyInSet()',
   'error ValueNotInSet()',
-  'event FeatureFlagAllowAllSet(bytes32 feature, bool value)',
+  'event FeatureFlagAllowAllSet(bytes32 feature, bool allowAll)',
   'event FeatureFlagAllowlistAdded(bytes32 feature, address account)',
   'event FeatureFlagAllowlistRemoved(bytes32 feature, address account)',
-  'function addToFeatureFlagAllowlist(bytes32 feature, address permissioned)',
+  'function addToFeatureFlagAllowlist(bytes32 feature, address account)',
   'function getFeatureFlagAllowAll(bytes32 feature) view returns (bool)',
   'function getFeatureFlagAllowlist(bytes32 feature) view returns (address[])',
-  'function isFeatureAllowed(bytes32 feature, address addressToCheck) view returns (bool)',
-  'function removeFromFeatureFlagAllowlist(bytes32 feature, address permissioned)',
+  'function isFeatureAllowed(bytes32 feature, address account) view returns (bool)',
+  'function removeFromFeatureFlagAllowlist(bytes32 feature, address account)',
   'function setFeatureFlagAllowAll(bytes32 feature, bool allowAll)',
   'error InvalidPermission(bytes32 permission)',
-  'error InvalidPermission()',
   'error OnlyAccountTokenProxy(address origin)',
   'error PermissionDenied(uint128 accountId, bytes32 permission, address target)',
   'error PermissionNotGranted(uint128 accountId, bytes32 permission, address user)',
   'error PositionOutOfBounds()',
-  'event AccountCreated(address indexed sender, uint128 indexed accountId)',
+  'event AccountCreated(uint128 indexed accountId, address indexed owner)',
   'event PermissionGranted(uint128 indexed accountId, bytes32 indexed permission, address indexed user, address sender)',
   'event PermissionRevoked(uint128 indexed accountId, bytes32 indexed permission, address indexed user, address sender)',
   'function createAccount(uint128 requestedAccountId)',
@@ -67,7 +66,7 @@ export const abi = [
   'function associateDebt(uint128 marketId, uint128 poolId, address collateralType, uint128 accountId, uint256 amount) returns (int256)',
   'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',
   'event AssociatedSystemSet(bytes32 indexed kind, bytes32 indexed id, address proxy, address impl)',
-  'function getAssociatedSystem(bytes32 id) view returns (address proxy, bytes32 kind)',
+  'function getAssociatedSystem(bytes32 id) view returns (address addr, bytes32 kind)',
   'function initOrUpgradeNft(bytes32 id, string name, string symbol, string uri, address impl)',
   'function initOrUpgradeToken(bytes32 id, string name, string symbol, uint8 decimals, address impl)',
   'function registerUnmanagedSystem(bytes32 id, address endpoint)',
@@ -111,7 +110,7 @@ export const abi = [
   'error InsufficientMarketCollateralWithdrawable(uint128 marketId, address collateralType, uint256 tokenAmountToWithdraw)',
   'event MarketCollateralDeposited(uint128 indexed marketId, address indexed collateralType, uint256 tokenAmount, address indexed sender)',
   'event MarketCollateralWithdrawn(uint128 indexed marketId, address indexed collateralType, uint256 tokenAmount, address indexed sender)',
-  'event MaximumMarketCollateralConfigured(uint128 indexed marketId, address indexed collateralType, uint256 systemAmount, address indexed sender)',
+  'event MaximumMarketCollateralConfigured(uint128 indexed marketId, address indexed collateralType, uint256 systemAmount, address indexed owner)',
   'function configureMaximumMarketCollateral(uint128 marketId, address collateralType, uint256 amount)',
   'function depositMarketCollateral(uint128 marketId, address collateralType, uint256 tokenAmount)',
   'function getMarketCollateralAmount(uint128 marketId, address collateralType) view returns (uint256 collateralAmountD18)',
@@ -120,8 +119,8 @@ export const abi = [
   'error IncorrectMarketInterface(address market)',
   'error NotEnoughLiquidity(uint128 marketId, uint256 amount)',
   'event MarketRegistered(address indexed market, uint128 indexed marketId, address indexed sender)',
-  'event MarketUsdDeposited(uint128 indexed marketId, address indexed target, uint256 amount, address indexed sender)',
-  'event MarketUsdWithdrawn(uint128 indexed marketId, address indexed target, uint256 amount, address indexed sender)',
+  'event MarketUsdDeposited(uint128 indexed marketId, address indexed target, uint256 amount, address indexed market)',
+  'event MarketUsdWithdrawn(uint128 indexed marketId, address indexed target, uint256 amount, address indexed market)',
   'function depositMarketUsd(uint128 marketId, address target, uint256 amount)',
   'function getMarketCollateral(uint128 marketId) view returns (uint256)',
   'function getMarketDebtPerShare(uint128 marketId) returns (int256)',
@@ -167,11 +166,13 @@ export const abi = [
   'event RewardsClaimed(uint128 indexed accountId, uint128 indexed poolId, address indexed collateralType, address distributor, uint256 amount)',
   'event RewardsDistributed(uint128 indexed poolId, address indexed collateralType, address distributor, uint256 amount, uint256 start, uint256 duration)',
   'event RewardsDistributorRegistered(uint128 indexed poolId, address indexed collateralType, address indexed distributor)',
-  'function claimRewards(uint128 poolId, address collateralType, uint128 accountId, address distributor) returns (uint256)',
+  'event RewardsDistributorRemoved(uint128 indexed poolId, address indexed collateralType, address indexed distributor)',
+  'function claimRewards(uint128 accountId, uint128 poolId, address collateralType, address distributor) returns (uint256)',
   'function distributeRewards(uint128 poolId, address collateralType, uint256 amount, uint64 start, uint32 duration)',
   'function getClaimableRewards(uint128 poolId, address collateralType, uint128 accountId) returns (uint256[], address[])',
   'function getRewardRate(uint128 poolId, address collateralType, address distributor) view returns (uint256)',
   'function registerRewardsDistributor(uint128 poolId, address collateralType, address distributor)',
+  'function removeRewardsDistributor(uint128 poolId, address collateralType, address distributor)',
   'function configureOracleManager(address oracleManagerAddress)',
   'function registerCcip(address ccipSend, address ccipReceive, address ccipTokenPool)',
   'error InsufficientDelegation(uint256 minDelegation)',
@@ -297,11 +298,12 @@ export interface CoreProxyInterface extends utils.Interface {
     'setMinLiquidityRatio(uint256)': FunctionFragment;
     'setPoolConfiguration(uint128,(uint128,uint128,int128)[])': FunctionFragment;
     'setPoolName(uint128,string)': FunctionFragment;
-    'claimRewards(uint128,address,uint128,address)': FunctionFragment;
+    'claimRewards(uint128,uint128,address,address)': FunctionFragment;
     'distributeRewards(uint128,address,uint256,uint64,uint32)': FunctionFragment;
     'getClaimableRewards(uint128,address,uint128)': FunctionFragment;
     'getRewardRate(uint128,address,address)': FunctionFragment;
     'registerRewardsDistributor(uint128,address,address)': FunctionFragment;
+    'removeRewardsDistributor(uint128,address,address)': FunctionFragment;
     'configureOracleManager(address)': FunctionFragment;
     'registerCcip(address,address,address)': FunctionFragment;
     'delegateCollateral(uint128,uint128,address,uint256,uint256)': FunctionFragment;
@@ -402,6 +404,7 @@ export interface CoreProxyInterface extends utils.Interface {
       | 'getClaimableRewards'
       | 'getRewardRate'
       | 'registerRewardsDistributor'
+      | 'removeRewardsDistributor'
       | 'configureOracleManager'
       | 'registerCcip'
       | 'delegateCollateral'
@@ -768,8 +771,8 @@ export interface CoreProxyInterface extends utils.Interface {
     functionFragment: 'claimRewards',
     values: [
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
       PromiseOrValue<string>
     ]
   ): string;
@@ -793,6 +796,10 @@ export interface CoreProxyInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: 'registerRewardsDistributor',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'removeRewardsDistributor',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -931,6 +938,7 @@ export interface CoreProxyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'getClaimableRewards', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getRewardRate', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'registerRewardsDistributor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeRewardsDistributor', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'configureOracleManager', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'registerCcip', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'delegateCollateral', data: BytesLike): Result;
@@ -952,7 +960,7 @@ export interface CoreProxyInterface extends utils.Interface {
     'FeatureFlagAllowAllSet(bytes32,bool)': EventFragment;
     'FeatureFlagAllowlistAdded(bytes32,address)': EventFragment;
     'FeatureFlagAllowlistRemoved(bytes32,address)': EventFragment;
-    'AccountCreated(address,uint128)': EventFragment;
+    'AccountCreated(uint128,address)': EventFragment;
     'PermissionGranted(uint128,bytes32,address,address)': EventFragment;
     'PermissionRevoked(uint128,bytes32,address,address)': EventFragment;
     'DebtAssociated(uint128,uint128,address,uint128,uint256,int256)': EventFragment;
@@ -983,6 +991,7 @@ export interface CoreProxyInterface extends utils.Interface {
     'RewardsClaimed(uint128,uint128,address,address,uint256)': EventFragment;
     'RewardsDistributed(uint128,address,address,uint256,uint256,uint256)': EventFragment;
     'RewardsDistributorRegistered(uint128,address,address)': EventFragment;
+    'RewardsDistributorRemoved(uint128,address,address)': EventFragment;
     'DelegationUpdated(uint128,uint128,address,uint256,uint256,address)': EventFragment;
   };
 
@@ -1023,6 +1032,7 @@ export interface CoreProxyInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'RewardsClaimed'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RewardsDistributed'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RewardsDistributorRegistered'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardsDistributorRemoved'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'DelegationUpdated'): EventFragment;
 }
 
@@ -1051,7 +1061,7 @@ export type UpgradedEventFilter = TypedEventFilter<UpgradedEvent>;
 
 export interface FeatureFlagAllowAllSetEventObject {
   feature: string;
-  value: boolean;
+  allowAll: boolean;
 }
 export type FeatureFlagAllowAllSetEvent = TypedEvent<
   [string, boolean],
@@ -1084,10 +1094,10 @@ export type FeatureFlagAllowlistRemovedEventFilter =
   TypedEventFilter<FeatureFlagAllowlistRemovedEvent>;
 
 export interface AccountCreatedEventObject {
-  sender: string;
   accountId: BigNumber;
+  owner: string;
 }
-export type AccountCreatedEvent = TypedEvent<[string, BigNumber], AccountCreatedEventObject>;
+export type AccountCreatedEvent = TypedEvent<[BigNumber, string], AccountCreatedEventObject>;
 
 export type AccountCreatedEventFilter = TypedEventFilter<AccountCreatedEvent>;
 
@@ -1317,7 +1327,7 @@ export interface MaximumMarketCollateralConfiguredEventObject {
   marketId: BigNumber;
   collateralType: string;
   systemAmount: BigNumber;
-  sender: string;
+  owner: string;
 }
 export type MaximumMarketCollateralConfiguredEvent = TypedEvent<
   [BigNumber, string, BigNumber, string],
@@ -1343,7 +1353,7 @@ export interface MarketUsdDepositedEventObject {
   marketId: BigNumber;
   target: string;
   amount: BigNumber;
-  sender: string;
+  market: string;
 }
 export type MarketUsdDepositedEvent = TypedEvent<
   [BigNumber, string, BigNumber, string],
@@ -1356,7 +1366,7 @@ export interface MarketUsdWithdrawnEventObject {
   marketId: BigNumber;
   target: string;
   amount: BigNumber;
-  sender: string;
+  market: string;
 }
 export type MarketUsdWithdrawnEvent = TypedEvent<
   [BigNumber, string, BigNumber, string],
@@ -1512,6 +1522,18 @@ export type RewardsDistributorRegisteredEvent = TypedEvent<
 export type RewardsDistributorRegisteredEventFilter =
   TypedEventFilter<RewardsDistributorRegisteredEvent>;
 
+export interface RewardsDistributorRemovedEventObject {
+  poolId: BigNumber;
+  collateralType: string;
+  distributor: string;
+}
+export type RewardsDistributorRemovedEvent = TypedEvent<
+  [BigNumber, string, string],
+  RewardsDistributorRemovedEventObject
+>;
+
+export type RewardsDistributorRemovedEventFilter = TypedEventFilter<RewardsDistributorRemovedEvent>;
+
 export interface DelegationUpdatedEventObject {
   accountId: BigNumber;
   poolId: BigNumber;
@@ -1590,7 +1612,7 @@ export interface CoreProxy extends BaseContract {
 
     addToFeatureFlagAllowlist(
       feature: PromiseOrValue<BytesLike>,
-      permissioned: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1606,13 +1628,13 @@ export interface CoreProxy extends BaseContract {
 
     isFeatureAllowed(
       feature: PromiseOrValue<BytesLike>,
-      addressToCheck: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     removeFromFeatureFlagAllowlist(
       feature: PromiseOrValue<BytesLike>,
-      permissioned: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1695,7 +1717,7 @@ export interface CoreProxy extends BaseContract {
     getAssociatedSystem(
       id: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<[string, string] & { proxy: string; kind: string }>;
+    ): Promise<[string, string] & { addr: string; kind: string }>;
 
     initOrUpgradeNft(
       id: PromiseOrValue<BytesLike>,
@@ -2054,9 +2076,9 @@ export interface CoreProxy extends BaseContract {
     ): Promise<ContractTransaction>;
 
     claimRewards(
+      accountId: PromiseOrValue<BigNumberish>,
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
-      accountId: PromiseOrValue<BigNumberish>,
       distributor: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -2085,6 +2107,13 @@ export interface CoreProxy extends BaseContract {
     ): Promise<[BigNumber]>;
 
     registerRewardsDistributor(
+      poolId: PromiseOrValue<BigNumberish>,
+      collateralType: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    removeRewardsDistributor(
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
       distributor: PromiseOrValue<string>,
@@ -2197,7 +2226,7 @@ export interface CoreProxy extends BaseContract {
 
   addToFeatureFlagAllowlist(
     feature: PromiseOrValue<BytesLike>,
-    permissioned: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2213,13 +2242,13 @@ export interface CoreProxy extends BaseContract {
 
   isFeatureAllowed(
     feature: PromiseOrValue<BytesLike>,
-    addressToCheck: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   removeFromFeatureFlagAllowlist(
     feature: PromiseOrValue<BytesLike>,
-    permissioned: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2298,7 +2327,7 @@ export interface CoreProxy extends BaseContract {
   getAssociatedSystem(
     id: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
-  ): Promise<[string, string] & { proxy: string; kind: string }>;
+  ): Promise<[string, string] & { addr: string; kind: string }>;
 
   initOrUpgradeNft(
     id: PromiseOrValue<BytesLike>,
@@ -2645,9 +2674,9 @@ export interface CoreProxy extends BaseContract {
   ): Promise<ContractTransaction>;
 
   claimRewards(
+    accountId: PromiseOrValue<BigNumberish>,
     poolId: PromiseOrValue<BigNumberish>,
     collateralType: PromiseOrValue<string>,
-    accountId: PromiseOrValue<BigNumberish>,
     distributor: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -2676,6 +2705,13 @@ export interface CoreProxy extends BaseContract {
   ): Promise<BigNumber>;
 
   registerRewardsDistributor(
+    poolId: PromiseOrValue<BigNumberish>,
+    collateralType: PromiseOrValue<string>,
+    distributor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  removeRewardsDistributor(
     poolId: PromiseOrValue<BigNumberish>,
     collateralType: PromiseOrValue<string>,
     distributor: PromiseOrValue<string>,
@@ -2781,7 +2817,7 @@ export interface CoreProxy extends BaseContract {
 
     addToFeatureFlagAllowlist(
       feature: PromiseOrValue<BytesLike>,
-      permissioned: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2797,13 +2833,13 @@ export interface CoreProxy extends BaseContract {
 
     isFeatureAllowed(
       feature: PromiseOrValue<BytesLike>,
-      addressToCheck: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     removeFromFeatureFlagAllowlist(
       feature: PromiseOrValue<BytesLike>,
-      permissioned: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2882,7 +2918,7 @@ export interface CoreProxy extends BaseContract {
     getAssociatedSystem(
       id: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<[string, string] & { proxy: string; kind: string }>;
+    ): Promise<[string, string] & { addr: string; kind: string }>;
 
     initOrUpgradeNft(
       id: PromiseOrValue<BytesLike>,
@@ -3232,9 +3268,9 @@ export interface CoreProxy extends BaseContract {
     ): Promise<void>;
 
     claimRewards(
+      accountId: PromiseOrValue<BigNumberish>,
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
-      accountId: PromiseOrValue<BigNumberish>,
       distributor: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -3263,6 +3299,13 @@ export interface CoreProxy extends BaseContract {
     ): Promise<BigNumber>;
 
     registerRewardsDistributor(
+      poolId: PromiseOrValue<BigNumberish>,
+      collateralType: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    removeRewardsDistributor(
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
       distributor: PromiseOrValue<string>,
@@ -3359,9 +3402,9 @@ export interface CoreProxy extends BaseContract {
 
     'FeatureFlagAllowAllSet(bytes32,bool)'(
       feature?: null,
-      value?: null
+      allowAll?: null
     ): FeatureFlagAllowAllSetEventFilter;
-    FeatureFlagAllowAllSet(feature?: null, value?: null): FeatureFlagAllowAllSetEventFilter;
+    FeatureFlagAllowAllSet(feature?: null, allowAll?: null): FeatureFlagAllowAllSetEventFilter;
 
     'FeatureFlagAllowlistAdded(bytes32,address)'(
       feature?: null,
@@ -3378,13 +3421,13 @@ export interface CoreProxy extends BaseContract {
       account?: null
     ): FeatureFlagAllowlistRemovedEventFilter;
 
-    'AccountCreated(address,uint128)'(
-      sender?: PromiseOrValue<string> | null,
-      accountId?: PromiseOrValue<BigNumberish> | null
+    'AccountCreated(uint128,address)'(
+      accountId?: PromiseOrValue<BigNumberish> | null,
+      owner?: PromiseOrValue<string> | null
     ): AccountCreatedEventFilter;
     AccountCreated(
-      sender?: PromiseOrValue<string> | null,
-      accountId?: PromiseOrValue<BigNumberish> | null
+      accountId?: PromiseOrValue<BigNumberish> | null,
+      owner?: PromiseOrValue<string> | null
     ): AccountCreatedEventFilter;
 
     'PermissionGranted(uint128,bytes32,address,address)'(
@@ -3570,13 +3613,13 @@ export interface CoreProxy extends BaseContract {
       marketId?: PromiseOrValue<BigNumberish> | null,
       collateralType?: PromiseOrValue<string> | null,
       systemAmount?: null,
-      sender?: PromiseOrValue<string> | null
+      owner?: PromiseOrValue<string> | null
     ): MaximumMarketCollateralConfiguredEventFilter;
     MaximumMarketCollateralConfigured(
       marketId?: PromiseOrValue<BigNumberish> | null,
       collateralType?: PromiseOrValue<string> | null,
       systemAmount?: null,
-      sender?: PromiseOrValue<string> | null
+      owner?: PromiseOrValue<string> | null
     ): MaximumMarketCollateralConfiguredEventFilter;
 
     'MarketRegistered(address,uint128,address)'(
@@ -3594,26 +3637,26 @@ export interface CoreProxy extends BaseContract {
       marketId?: PromiseOrValue<BigNumberish> | null,
       target?: PromiseOrValue<string> | null,
       amount?: null,
-      sender?: PromiseOrValue<string> | null
+      market?: PromiseOrValue<string> | null
     ): MarketUsdDepositedEventFilter;
     MarketUsdDeposited(
       marketId?: PromiseOrValue<BigNumberish> | null,
       target?: PromiseOrValue<string> | null,
       amount?: null,
-      sender?: PromiseOrValue<string> | null
+      market?: PromiseOrValue<string> | null
     ): MarketUsdDepositedEventFilter;
 
     'MarketUsdWithdrawn(uint128,address,uint256,address)'(
       marketId?: PromiseOrValue<BigNumberish> | null,
       target?: PromiseOrValue<string> | null,
       amount?: null,
-      sender?: PromiseOrValue<string> | null
+      market?: PromiseOrValue<string> | null
     ): MarketUsdWithdrawnEventFilter;
     MarketUsdWithdrawn(
       marketId?: PromiseOrValue<BigNumberish> | null,
       target?: PromiseOrValue<string> | null,
       amount?: null,
-      sender?: PromiseOrValue<string> | null
+      market?: PromiseOrValue<string> | null
     ): MarketUsdWithdrawnEventFilter;
 
     'PoolApprovedAdded(uint256)'(poolId?: null): PoolApprovedAddedEventFilter;
@@ -3739,6 +3782,17 @@ export interface CoreProxy extends BaseContract {
       distributor?: PromiseOrValue<string> | null
     ): RewardsDistributorRegisteredEventFilter;
 
+    'RewardsDistributorRemoved(uint128,address,address)'(
+      poolId?: PromiseOrValue<BigNumberish> | null,
+      collateralType?: PromiseOrValue<string> | null,
+      distributor?: PromiseOrValue<string> | null
+    ): RewardsDistributorRemovedEventFilter;
+    RewardsDistributorRemoved(
+      poolId?: PromiseOrValue<BigNumberish> | null,
+      collateralType?: PromiseOrValue<string> | null,
+      distributor?: PromiseOrValue<string> | null
+    ): RewardsDistributorRemovedEventFilter;
+
     'DelegationUpdated(uint128,uint128,address,uint256,uint256,address)'(
       accountId?: PromiseOrValue<BigNumberish> | null,
       poolId?: PromiseOrValue<BigNumberish> | null,
@@ -3794,7 +3848,7 @@ export interface CoreProxy extends BaseContract {
 
     addToFeatureFlagAllowlist(
       feature: PromiseOrValue<BytesLike>,
-      permissioned: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -3810,13 +3864,13 @@ export interface CoreProxy extends BaseContract {
 
     isFeatureAllowed(
       feature: PromiseOrValue<BytesLike>,
-      addressToCheck: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     removeFromFeatureFlagAllowlist(
       feature: PromiseOrValue<BytesLike>,
-      permissioned: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -4218,9 +4272,9 @@ export interface CoreProxy extends BaseContract {
     ): Promise<BigNumber>;
 
     claimRewards(
+      accountId: PromiseOrValue<BigNumberish>,
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
-      accountId: PromiseOrValue<BigNumberish>,
       distributor: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -4249,6 +4303,13 @@ export interface CoreProxy extends BaseContract {
     ): Promise<BigNumber>;
 
     registerRewardsDistributor(
+      poolId: PromiseOrValue<BigNumberish>,
+      collateralType: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    removeRewardsDistributor(
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
       distributor: PromiseOrValue<string>,
@@ -4362,7 +4423,7 @@ export interface CoreProxy extends BaseContract {
 
     addToFeatureFlagAllowlist(
       feature: PromiseOrValue<BytesLike>,
-      permissioned: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -4378,13 +4439,13 @@ export interface CoreProxy extends BaseContract {
 
     isFeatureAllowed(
       feature: PromiseOrValue<BytesLike>,
-      addressToCheck: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     removeFromFeatureFlagAllowlist(
       feature: PromiseOrValue<BytesLike>,
-      permissioned: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -4786,9 +4847,9 @@ export interface CoreProxy extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     claimRewards(
+      accountId: PromiseOrValue<BigNumberish>,
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
-      accountId: PromiseOrValue<BigNumberish>,
       distributor: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -4817,6 +4878,13 @@ export interface CoreProxy extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     registerRewardsDistributor(
+      poolId: PromiseOrValue<BigNumberish>,
+      collateralType: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    removeRewardsDistributor(
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
       distributor: PromiseOrValue<string>,

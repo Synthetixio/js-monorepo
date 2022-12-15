@@ -1,5 +1,5 @@
 {
-  "address": "0x670578Cc861bDEA7A97D8ac75FD8F9Ad9aC2bC48",
+  "address": "0xE9C8e6E599Cc35265a7586BB88FEe8a646c474B6",
   "abi": [
     {
       "type": "error",
@@ -47,7 +47,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x34e6a76bc292fcc31e0e4fa4c270de05a316ce68d821dc3d1d77cae5895a64ed",
+  "deployTxnHash": "0xc42622dba8078504c0dc414847706a17f23935d0fc682a7c0b235e0e3c81c1cf",
   "sourceName": "contracts/modules/core/UtilsModule.sol",
   "contractName": "UtilsModule",
   "deployedOn": "contract.UtilsModule"
