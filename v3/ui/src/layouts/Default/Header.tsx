@@ -35,6 +35,7 @@ import { NetworkController } from '../../components/NetworkController';
 import { useEffect } from 'react';
 import { accountsState } from '../../utils/state';
 import { useRecoilState } from 'recoil';
+import { prettyString } from '../../utils/helpers';
 
 const tradeContent = () => {
   return (
@@ -164,12 +165,7 @@ export default function Header() {
                   w="100%"
                   maxW="180px"
                 >
-                  {id
-                    ? `Account #${id
-                        .substring(0, 3)
-                        .concat('...')
-                        .concat(id.substring(id.length - 3))}`
-                    : 'Create Account'}
+                  {id ? `Account #${prettyString(id, 3, 3)}` : 'Create Account'}
                 </MenuButton>
                 <MenuList fontSize="xs" px="2" bg="black" border="1px solid rgba(255,255,255,0.33)">
                   {userAccounts.map((account) => {
@@ -252,12 +248,7 @@ export default function Header() {
                   maxW="180px"
                   mb="2"
                 >
-                  {id
-                    ? `Account #${id
-                        .substring(0, 3)
-                        .concat('...')
-                        .concat(id.substring(id.length - 3))}`
-                    : 'Create Account'}
+                  {id ? `Account #${prettyString(id, 3, 3)}` : 'Create Account'}
                 </MenuButton>
                 <MenuList fontSize="xs" px="2" bg="black" border="1px solid rgba(255,255,255,0.33)">
                   {userAccounts.map((account) => {
