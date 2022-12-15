@@ -2,7 +2,7 @@ import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { Link, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useRecoilState } from 'recoil';
-import { prettyTString } from '../../utils/helpers';
+import { prettyString } from '../../utils/helpers';
 import { chainIdState } from '../../utils/state';
 
 interface Props {
