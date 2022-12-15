@@ -3,7 +3,6 @@ import { MarketConfiguration, Pool } from '../generated/schema';
 import { BigDecimal, BigInt, log, store } from '@graphprotocol/graph-ts';
 
 const getMarketConfigurationForPoolByMarketId = (pool: Pool): Map<string, string> => {
-  //  This would be great but we cant read derived fields
   const poolMarketIds = pool.market_ids;
 
   let marketIdByMarketId = new Map<string, string>();

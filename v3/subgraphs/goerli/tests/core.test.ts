@@ -71,7 +71,6 @@ describe('core tests', () => {
     assert.assertNull(store.get('Pool', '1')!.get('nominated_owner'));
     assert.assertNull(store.get('Pool', '1')!.get('name'));
     assert.assertNull(store.get('Pool', '1')!.get('total_weight'));
-    assert.assertNull(store.get('Pool', '1')!.get('configurations'));
     assert.notInStore('Pool', '2');
   });
 
@@ -97,7 +96,6 @@ describe('core tests', () => {
     assert.fieldEquals('Pool', '1', 'updated_at_block', now.toString());
     assert.assertNull(store.get('Pool', '1')!.get('name'));
     assert.assertNull(store.get('Pool', '1')!.get('total_weight'));
-    assert.assertNull(store.get('Pool', '1')!.get('configurations'));
     assert.notInStore('Pool', '2');
   });
 
@@ -116,7 +114,6 @@ describe('core tests', () => {
     assert.fieldEquals('Pool', '1', 'updated_at_block', now.toString());
     assert.assertNull(store.get('Pool', '1')!.get('nominated_owner'));
     assert.assertNull(store.get('Pool', '1')!.get('total_weight'));
-    assert.assertNull(store.get('Pool', '1')!.get('configurations'));
     assert.notInStore('Pool', '2');
   });
 
@@ -145,7 +142,6 @@ describe('core tests', () => {
     assert.fieldEquals('Pool', '1', 'updated_at_block', now.toString());
     assert.assertNull(store.get('Pool', '1')!.get('name'));
     assert.assertNull(store.get('Pool', '1')!.get('total_weight'));
-    assert.assertNull(store.get('Pool', '1')!.get('configurations'));
     assert.notInStore('Pool', '2');
   });
 
@@ -173,7 +169,6 @@ describe('core tests', () => {
     assert.fieldEquals('Pool', '1', 'updated_at_block', now.toString());
     assert.assertNull(store.get('Pool', '1')!.get('name'));
     assert.assertNull(store.get('Pool', '1')!.get('total_weight'));
-    assert.assertNull(store.get('Pool', '1')!.get('configurations'));
     assert.notInStore('Pool', '2');
   });
 
@@ -201,7 +196,6 @@ describe('core tests', () => {
     assert.fieldEquals('Pool', '1', 'updated_at_block', now.toString());
     assert.assertNull(store.get('Pool', '1')!.get('name'));
     assert.assertNull(store.get('Pool', '1')!.get('total_weight'));
-    assert.assertNull(store.get('Pool', '1')!.get('configurations'));
     assert.notInStore('Pool', '2');
   });
 
