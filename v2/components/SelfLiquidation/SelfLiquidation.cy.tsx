@@ -51,6 +51,7 @@ describe('SelfLiquidationUi', () => {
             isGasEnabledAndNotFetched={false}
             CRatioProgressBar={defaultProps.CRatioProgressBar}
             CRatioBox={defaultProps.CRatioBox}
+            isLoading={true}
           />
         </QueryClientProvider>
       </Box>
@@ -62,7 +63,7 @@ describe('SelfLiquidationUi', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <QueryClientProvider client={new QueryClient()}>
-          <SelfLiquidationUi {...defaultProps} />
+          <SelfLiquidationUi {...defaultProps} isLoading={false} />
         </QueryClientProvider>
       </Box>
     );
@@ -85,6 +86,7 @@ describe('SelfLiquidationUi', () => {
           <SelfLiquidationUi
             {...defaultProps}
             onSelfLiquidation={cy.spy().as('onSelfLiquidationMock')}
+            isLoading={false}
           />
         </QueryClientProvider>
       </Box>
@@ -104,6 +106,7 @@ describe('SelfLiquidationUi', () => {
             {...defaultProps}
             targetCRatioPercentage={300}
             currentCRatioPercentage={300}
+            isLoading={false}
           />
         </QueryClientProvider>
       </Box>
@@ -118,7 +121,7 @@ describe('SelfLiquidationUi', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <QueryClientProvider client={new QueryClient()}>
-          <SelfLiquidationUi {...defaultProps} gasError={Error('Gas Error')} />
+          <SelfLiquidationUi {...defaultProps} gasError={Error('Gas Error')} isLoading={false} />
         </QueryClientProvider>
       </Box>
     );
@@ -133,7 +136,7 @@ describe('SelfLiquidationUi', () => {
     cy.mount(
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
         <QueryClientProvider client={new QueryClient()}>
-          <SelfLiquidationUi {...defaultProps} isGasEnabledAndNotFetched={true} />
+          <SelfLiquidationUi {...defaultProps} isGasEnabledAndNotFetched={true} isLoading={false} />
         </QueryClientProvider>
       </Box>
     );

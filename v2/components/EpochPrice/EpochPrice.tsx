@@ -43,12 +43,12 @@ export const EpochPrice = ({ epochEnd, snxPrice, isLoading = false }: EpochPrice
             ml={[0, 0, 1.5]}
             width={isLoading ? '40px' : 'unset'}
             height={isLoading ? '10px' : 'unset'}
+            mt={[1, 1, 0]}
             sx={{
               display: 'flex',
               span: {
                 fontFamily: 'mono',
                 fontSize: ['xs', 'xs', '2xs'],
-                mt: [1, 1, 0],
                 lineHeight: '10px',
                 fontWeight: 'bold',
                 color: ['whiteAlpha.900', 'whiteAlpha.900', 'white'],
@@ -59,7 +59,7 @@ export const EpochPrice = ({ epochEnd, snxPrice, isLoading = false }: EpochPrice
           </Skeleton>
         </Flex>
         <Flex
-          alignItems="center"
+          alignItems={['end', 'end', 'center']}
           flexDir={['column', 'column', 'row']}
           justify={['center', 'center', 'end']}
         >
