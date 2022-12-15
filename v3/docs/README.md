@@ -42,7 +42,4 @@ If you are using GitHub pages for hosting, this command is a convenient way to b
 
 ### Updating deployment addresses
 
-```
-cd src/components
-npx @usecannon/cli inspect synthetix:latest --json > deployments.json
-```
+In `src/components`, run `npx @usecannon/cli inspect synthetix:latest --json > deployments.json` and then `npx cannon fetch-deployments synthetix:3 --fork https://optimism-goerli.infura.io/v3/<INFURA_ID> --output ./deployments/<CHAIN_ID>` for each network.

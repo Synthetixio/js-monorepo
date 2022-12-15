@@ -1,0 +1,362 @@
+{
+  "address": "0xfB1F60Ec81180D101347efE3872255A901e3ee04",
+  "abi": [
+    {
+      "type": "error",
+      "name": "InvalidPermission",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "permission"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "OnlyAccountTokenProxy",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "origin"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "PermissionDenied",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "bytes32",
+          "name": "permission"
+        },
+        {
+          "type": "address",
+          "name": "target"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "PermissionNotGranted",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "bytes32",
+          "name": "permission"
+        },
+        {
+          "type": "address",
+          "name": "user"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "PositionOutOfBounds",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ValueAlreadyInSet",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ValueNotInSet",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ZeroAddress",
+      "inputs": []
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "AccountCreated",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "owner",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "PermissionGranted",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "bytes32",
+          "name": "permission",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "user",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "PermissionRevoked",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "bytes32",
+          "name": "permission",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "user",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "createAccount",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "requestedAccountId"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getAccountOwner",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getAccountPermissions",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "tuple[]",
+          "name": "permissions",
+          "components": [
+            {
+              "type": "address",
+              "name": "user"
+            },
+            {
+              "type": "bytes32[]",
+              "name": "permissions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getAccountTokenAddress",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "grantPermission",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "bytes32",
+          "name": "permission"
+        },
+        {
+          "type": "address",
+          "name": "user"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "hasPermission",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "bytes32",
+          "name": "permission"
+        },
+        {
+          "type": "address",
+          "name": "user"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "isAuthorized",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "bytes32",
+          "name": "permission"
+        },
+        {
+          "type": "address",
+          "name": "user"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "notifyAccountTransfer",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "to"
+        },
+        {
+          "type": "uint128",
+          "name": "accountId"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "renouncePermission",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "bytes32",
+          "name": "permission"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "revokePermission",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "bytes32",
+          "name": "permission"
+        },
+        {
+          "type": "address",
+          "name": "user"
+        }
+      ],
+      "outputs": []
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0x1d2029a15301967737513c80fc26db54e1b436e21a9735cbd13530f6cc250d58",
+  "sourceName": "contracts/modules/core/AccountModule.sol",
+  "contractName": "AccountModule",
+  "deployedOn": "contract.AccountModule"
+}

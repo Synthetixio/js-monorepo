@@ -1,0 +1,193 @@
+{
+  "address": "0x2B39BD76Ffa110290D10f81eeEC7AC860e739C27",
+  "abi": [
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "addr"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "ValueAlreadyInSet",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ValueNotInSet",
+      "inputs": []
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "FeatureFlagAllowAllSet",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "feature",
+          "indexed": false
+        },
+        {
+          "type": "bool",
+          "name": "allowAll",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "FeatureFlagAllowlistAdded",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "feature",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "account",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "FeatureFlagAllowlistRemoved",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "feature",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "account",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "addToFeatureFlagAllowlist",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "feature"
+        },
+        {
+          "type": "address",
+          "name": "account"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getFeatureFlagAllowAll",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "feature"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getFeatureFlagAllowlist",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "feature"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address[]",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "isFeatureAllowed",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "feature"
+        },
+        {
+          "type": "address",
+          "name": "account"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "removeFromFeatureFlagAllowlist",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "feature"
+        },
+        {
+          "type": "address",
+          "name": "account"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "setFeatureFlagAllowAll",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "feature"
+        },
+        {
+          "type": "bool",
+          "name": "allowAll"
+        }
+      ],
+      "outputs": []
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0x4e068f6ec6efb8f79caef40e107e93010a7f63e14053ae305619f1e906662aa3",
+  "sourceName": "contracts/modules/core/FeatureFlagModule.sol",
+  "contractName": "FeatureFlagModule",
+  "deployedOn": "contract.FeatureFlagModule"
+}

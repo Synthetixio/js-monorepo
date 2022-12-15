@@ -1,0 +1,428 @@
+{
+  "address": "0x000554f9F3035300fC1A20D21Eb9a2dd14eC028F",
+  "abi": [
+    {
+      "type": "error",
+      "name": "CapacityLocked",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "marketId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "CollateralDepositDisabled",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "EmptyDistribution",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "InsufficientAccountCollateral",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "requestedAmount"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InsufficientCollateralRatio",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "collateralValue"
+        },
+        {
+          "type": "uint256",
+          "name": "debt"
+        },
+        {
+          "type": "uint256",
+          "name": "ratio"
+        },
+        {
+          "type": "uint256",
+          "name": "minRatio"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InsufficientDelegation",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "minDelegation"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidLeverage",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "leverage"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "MarketNotFound",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt128ToUint128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToUint256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint128ToInt128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToInt256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToUint128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "PermissionDenied",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "bytes32",
+          "name": "permission"
+        },
+        {
+          "type": "address",
+          "name": "target"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "PoolNotFound",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "PositionOutOfBounds",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ValueAlreadyInSet",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ValueNotInSet",
+      "inputs": []
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "DelegationUpdated",
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId",
+          "indexed": true
+        },
+        {
+          "type": "uint128",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false
+        },
+        {
+          "type": "uint256",
+          "name": "leverage",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "delegateCollateral",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        },
+        {
+          "type": "uint256",
+          "name": "newCollateralAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "leverage"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getPosition",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "collateralAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "collateralValue"
+        },
+        {
+          "type": "int256",
+          "name": "debt"
+        },
+        {
+          "type": "uint256",
+          "name": "collateralizationRatio"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getPositionCollateral",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "amount"
+        },
+        {
+          "type": "uint256",
+          "name": "value"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getPositionCollateralizationRatio",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getPositionDebt",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "accountId"
+        },
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "int256",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getVaultCollateral",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "amount"
+        },
+        {
+          "type": "uint256",
+          "name": "value"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getVaultCollateralRatio",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getVaultDebt",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "int256",
+          "name": ""
+        }
+      ]
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0xa61442fc831eb5542ede7a46bd46cf632d203ff6bb4b72165381c776f16233b1",
+  "sourceName": "contracts/modules/core/VaultModule.sol",
+  "contractName": "VaultModule",
+  "deployedOn": "contract.VaultModule"
+}

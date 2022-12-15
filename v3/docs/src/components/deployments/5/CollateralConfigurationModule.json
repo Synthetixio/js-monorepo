@@ -1,0 +1,251 @@
+{
+  "address": "0x46010Dc486Fbd334CB3F0a25FA599CcD88b7C69a",
+  "abi": [
+    {
+      "type": "error",
+      "name": "InvalidParameter",
+      "inputs": [
+        {
+          "type": "string",
+          "name": "parameter"
+        },
+        {
+          "type": "string",
+          "name": "reason"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "PositionOutOfBounds",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "addr"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "ValueAlreadyInSet",
+      "inputs": []
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "CollateralConfigured",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "collateralType",
+          "indexed": true
+        },
+        {
+          "type": "tuple",
+          "name": "config",
+          "indexed": false,
+          "components": [
+            {
+              "type": "bool",
+              "name": "depositingEnabled"
+            },
+            {
+              "type": "uint256",
+              "name": "issuanceRatioD18"
+            },
+            {
+              "type": "uint256",
+              "name": "liquidationRatioD18"
+            },
+            {
+              "type": "uint256",
+              "name": "liquidationRewardD18"
+            },
+            {
+              "type": "bytes32",
+              "name": "oracleNodeId"
+            },
+            {
+              "type": "address",
+              "name": "tokenAddress"
+            },
+            {
+              "type": "uint256",
+              "name": "minDelegationD18"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "configureCollateral",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "tuple",
+          "name": "config",
+          "components": [
+            {
+              "type": "bool",
+              "name": "depositingEnabled"
+            },
+            {
+              "type": "uint256",
+              "name": "issuanceRatioD18"
+            },
+            {
+              "type": "uint256",
+              "name": "liquidationRatioD18"
+            },
+            {
+              "type": "uint256",
+              "name": "liquidationRewardD18"
+            },
+            {
+              "type": "bytes32",
+              "name": "oracleNodeId"
+            },
+            {
+              "type": "address",
+              "name": "tokenAddress"
+            },
+            {
+              "type": "uint256",
+              "name": "minDelegationD18"
+            }
+          ]
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getCollateralConfiguration",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "tuple",
+          "components": [
+            {
+              "type": "bool",
+              "name": "depositingEnabled"
+            },
+            {
+              "type": "uint256",
+              "name": "issuanceRatioD18"
+            },
+            {
+              "type": "uint256",
+              "name": "liquidationRatioD18"
+            },
+            {
+              "type": "uint256",
+              "name": "liquidationRewardD18"
+            },
+            {
+              "type": "bytes32",
+              "name": "oracleNodeId"
+            },
+            {
+              "type": "address",
+              "name": "tokenAddress"
+            },
+            {
+              "type": "uint256",
+              "name": "minDelegationD18"
+            }
+          ],
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getCollateralConfigurations",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bool",
+          "name": "hideDisabled"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "tuple[]",
+          "components": [
+            {
+              "type": "bool",
+              "name": "depositingEnabled"
+            },
+            {
+              "type": "uint256",
+              "name": "issuanceRatioD18"
+            },
+            {
+              "type": "uint256",
+              "name": "liquidationRatioD18"
+            },
+            {
+              "type": "uint256",
+              "name": "liquidationRewardD18"
+            },
+            {
+              "type": "bytes32",
+              "name": "oracleNodeId"
+            },
+            {
+              "type": "address",
+              "name": "tokenAddress"
+            },
+            {
+              "type": "uint256",
+              "name": "minDelegationD18"
+            }
+          ],
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getCollateralPrice",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "collateralType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": ""
+        }
+      ]
+    }
+  ],
+  "constructorArgs": [],
+  "deployTxnHash": "0xebd31b2635c8edf46d6900d72470608043c81315c075f7ca3ab831a724efd56b",
+  "sourceName": "contracts/modules/core/CollateralConfigurationModule.sol",
+  "contractName": "CollateralConfigurationModule",
+  "deployedOn": "contract.CollateralConfigurationModule"
+}
