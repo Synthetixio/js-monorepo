@@ -175,7 +175,7 @@
     },
     "self-liquidation": {
       "headline": "Self Liquidate",
-      "sub-headline": "If you are unable to pay down your sUSD debt, you can self liquidate your SNX collateral, with a 40% penalty. Self Liquidation is permanent, and results in the loss of some or all of your collateral. <linkTag>Read more about self liquidation</linkTag>",
+      "sub-headline": "If you are unable to pay down your sUSD debt, you can self liquidate your SNX collateral, with a {{penalty}} penalty. Self Liquidation is permanent, and results in the loss of some or all of your collateral. <linkTag>Read more about self liquidation</linkTag>",
       "amounts-headline": "Self Liquidation calculation, in SNX and USD value",
       "penalty": "Penalty {{penalty}}",
       "back-to-target": "Collateral to be liquidated",
@@ -228,7 +228,7 @@
     },
     "unflag-options": {
       "heading": "Unflag Account",
-      "text": "If you are unable to pay down your sUSD debt, you can self liquidate your SNX collateral, with a 40% penalty. Self Liquidation is permanent, and results in the loss of some or all of your collateral.",
+      "text": "If you are unable to pay down your sUSD debt, you can self liquidate your SNX collateral, with a {{penalty}} penalty. Self Liquidation is permanent, and results in the loss of some or all of your collateral.",
       "recommended": "Recommended",
       "unflag": {
         "heading": "Unflag my account by burning sUSD in order to meet target ratio",

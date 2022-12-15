@@ -10,7 +10,7 @@ const V2Mint = () => {
 
   return (
     <Box bg="navy.900" height="100%">
-      <Container pt={4} pb={16} bg="navy.900" maxW="4xl">
+      <Container pt={8} pb={16} bg="navy.900" maxW="4xl">
         <HomeButton />
         <Mint delegateWalletAddress={delegateWallet?.address} />
       </Container>

@@ -9,5 +9,5 @@ export const parseUnits = (value: BigNumberish, decimals = 18) =>
 export const compareAddress = (add1: string | null = '', add2: string | null = '') =>
   !!add1 && !!add2 && add1.toLowerCase() === add2.toLowerCase();
 
-export const prettyTx = (text: string, startLength = 6, endLength = 4) =>
-  `${text.substr(0, startLength)}...${text.substr(-endLength)}`;
+export const prettyString = (text: string, startLength = 6, endLength = 4) =>
+  `${text.substring(0, startLength)}...${text.substring(text.length - endLength)}`;

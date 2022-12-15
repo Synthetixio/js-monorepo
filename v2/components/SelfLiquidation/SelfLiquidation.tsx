@@ -1,6 +1,16 @@
 import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { FC, ReactElement } from 'react';
-import { Text, Box, Heading, Flex, Skeleton, Button, Center, Link } from '@chakra-ui/react';
+import {
+  Text,
+  Box,
+  Heading,
+  Flex,
+  Skeleton,
+  Button,
+  Center,
+  Link,
+  SkeletonText,
+} from '@chakra-ui/react';
 import { useSelfLiquidationData } from '@snx-v2/useSelfLiquidationData';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { CRatioBox } from '../CRatioBox';
@@ -79,6 +89,7 @@ export const SelfLiquidationUi: FC<{
   gasError: Error | null;
   CRatioProgressBar: ReactElement;
   CRatioBox: ReactElement;
+  isLoading: boolean;
 }> = ({
   selfLiquidationPenaltyPercent,
   selfLiquidationPenaltyUSD,
@@ -95,6 +106,7 @@ export const SelfLiquidationUi: FC<{
   isGasEnabledAndNotFetched,
   CRatioProgressBar,
   CRatioBox,
+  isLoading,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -107,23 +119,32 @@ export const SelfLiquidationUi: FC<{
   return (
     <Box>
       <Heading fontSize="md">{t('staking-v2.self-liquidation.headline')}</Heading>
-      <Text color="whiteAlpha.600">
-        <Trans
-          i18nKey="staking-v2.self-liquidation.sub-headline"
-          values={{ penalty: formattedPenalty }}
-          components={{
-            bold: <b />,
-            linkTag: (
-              <Link
-                display="block"
-                color="cyan"
-                isExternal={true}
-                href={EXTERNAL_LINKS.Synthetix.SIP148Liquidations}
-              />
-            ),
-          }}
-        />
-      </Text>
+      <SkeletonText
+        noOfLines={2}
+        isLoaded={!isLoading}
+        mt={2}
+        lineHeight="20px"
+        skeletonHeight="14px"
+      >
+        <Text color="whiteAlpha.600" lineHeight="20px" fontSize="14px" fontFamily="heading">
+          <Trans
+            i18nKey="staking-v2.self-liquidation.sub-headline"
+            values={{ penalty: formattedPenalty }}
+            components={{
+              bold: <b />,
+              linkTag: (
+                <Link
+                  mt={2}
+                  display="block"
+                  color="cyan"
+                  isExternal={true}
+                  href={EXTERNAL_LINKS.Synthetix.SIP148Liquidations}
+                />
+              ),
+            }}
+          />
+        </Text>
+      </SkeletonText>
       <Flex justifyContent="space-between" my={4} flexWrap="wrap">
         <Flex
           display="flex"
@@ -209,9 +230,14 @@ export const SelfLiquidationUi: FC<{
   );
 };
 export const SelfLiquidation = () => {
-  const { data: selfLiquidationData, refetch } = useSelfLiquidationData();
-  const { data: debtData } = useDebtData();
-  const { data: exchangeRateData } = useExchangeRatesData();
+  const {
+    data: selfLiquidationData,
+    refetch,
+    isLoading: isSelfLiquidationDataLoading,
+  } = useSelfLiquidationData();
+  const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
+  const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
+
   const {
     mutate,
     transactionFee,
@@ -223,6 +249,7 @@ export const SelfLiquidation = () => {
     isGasEnabledAndNotFetched,
     txnHash,
   } = useSelfLiquidationMutation(selfLiquidationData?.totalAmountToLiquidateSNX);
+
   const newCollateral =
     debtData && selfLiquidationData && selfLiquidationData.totalAmountToLiquidateSNX.gt(0)
       ? debtData.collateral.sub(selfLiquidationData?.totalAmountToLiquidateSNX).toNumber()
@@ -236,6 +263,8 @@ export const SelfLiquidation = () => {
     exchangeRateData?.SNX?.toNumber(),
     newDebtBalance
   );
+
+  const isLoading = isSelfLiquidationDataLoading || isDebtDataLoading || isExchangeRateLoading;
 
   return (
     <>
@@ -255,6 +284,7 @@ export const SelfLiquidation = () => {
         currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
         CRatioProgressBar={<CRatioProgressBar newCratioPercentage={newCratioPercentage} />}
         CRatioBox={<CRatioBox newCratioPercentage={newCratioPercentage} />}
+        isLoading={isLoading}
       />
       <SelfLiquidationTransactionModal
         txnHash={txnHash}

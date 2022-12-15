@@ -2,7 +2,7 @@ import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { Link, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useRecoilState } from 'recoil';
-import { prettyTx } from '../../utils/helpers';
+import { prettyString } from '../../utils/helpers';
 import { chainIdState } from '../../utils/state';
 
 interface Props {
@@ -30,7 +30,7 @@ export const Address: FC<Props> = ({ address, displayFullAddress }) => {
   }
 
   // ENS support here?
-  const addressDisplay = displayFullAddress ? address : prettyTx(address);
+  const addressDisplay = displayFullAddress ? address : prettyString(address);
   return (
     <Text>
       {addressDisplay}

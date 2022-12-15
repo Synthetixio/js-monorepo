@@ -1,54 +1,53 @@
 import {
+  AccountCreated,
+  CollateralConfigured,
+  DelegationUpdated,
+  Deposited,
+  Liquidation,
+  PermissionGranted,
+  PermissionRevoked,
+  PoolConfigurationSet,
   PoolCreated,
   PoolNameUpdated,
-  PoolOwnershipAccepted,
-  PoolConfigurationSet,
   PoolNominationRenounced,
   PoolNominationRevoked,
   PoolOwnerNominated,
-} from '../generated/PoolModule/PoolModule';
-import {
-  MarketRegistered,
-  MarketManagerModule,
-  MarketUsdDeposited,
-  MarketUsdWithdrawn,
-} from '../generated/MarketManagerModule/MarketManagerModule';
-import { Deposited, Withdrawn } from '../generated/CollateralModule/CollateralModule';
-import { CollateralConfigured } from '../generated/CollateralConfigurationModule/CollateralConfigurationModule';
-import {
-  AccountCreated,
-  PermissionGranted,
-  PermissionRevoked,
-} from '../generated/AccountModule/AccountModule';
-import {
+  PoolOwnershipAccepted,
   RewardsClaimed as RewardsClaimedEvent,
   RewardsDistributed,
   RewardsDistributorRegistered,
-} from '../generated/RewardsManagerModule/RewardsManagerModule';
-import { Liquidation, VaultLiquidation } from '../generated/LiquidationModule/LiquidationModule';
-import { DelegationUpdated, VaultModule } from '../generated/VaultModule/VaultModule';
-import { UsdMinted, UsdBurned } from '../generated/IssueUSDModule/IssueUSDModule';
+  UsdBurned,
+  UsdMinted,
+  VaultLiquidation,
+  Withdrawn,
+} from '../generated/CoreProxy/CoreProxy';
 import {
-  Pool,
-  Market,
-  CollateralType,
   Account,
   AccountPermissionUsers,
-  Vault,
-  Position,
-  MarketConfiguration,
-  RewardsDistribution,
   AccountRewardsDistributor,
-  RewardsClaimed,
-  RewardsDistributor,
+  CollateralType,
   Liquidation as LiquidationEntity,
+  Market,
+  MarketConfiguration,
+  Pool,
+  Position,
+  RewardsClaimed,
+  RewardsDistribution,
+  RewardsDistributor,
+  Vault,
   VaultLiquidation as VaultLiquidationEntity,
 } from '../generated/schema';
-import { BigDecimal, BigInt, Bytes, store, log } from '@graphprotocol/graph-ts';
+import { BigDecimal, BigInt, Bytes, store } from '@graphprotocol/graph-ts';
 
 ////////////////////
 // Event handlers //
 ////////////////////
+
+/////////////
+// Markets //
+/////////////
+
+export * from './market';
 
 ///////////
 // Pool //
@@ -114,25 +113,6 @@ export function handleNewPoolOwner(event: PoolOwnershipAccepted): void {
     pool.save();
   }
 }
-
-/////////////
-// Market //
-////////////
-
-export function handleMarketCreated(event: MarketRegistered): void {
-  const newMarket = new Market(event.params.marketId.toString());
-  newMarket.address = event.params.market;
-  newMarket.created_at = event.block.timestamp;
-  newMarket.created_at_block = event.block.number;
-  newMarket.updated_at = event.block.timestamp;
-  newMarket.updated_at_block = event.block.number;
-  newMarket.usd_deposited = BigDecimal.fromString('0');
-  newMarket.usd_withdrawn = BigDecimal.fromString('0');
-  newMarket.net_issuance = BigDecimal.fromString('0');
-  newMarket.reported_debt = BigDecimal.fromString('0');
-  newMarket.save();
-}
-
 export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
   const pool = Pool.load(event.params.poolId.toString());
   // Pool will be never undefined, though for safety reasons we are checking for that
@@ -209,60 +189,13 @@ export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
   }
 }
 
-export function handleMarketUsdDeposited(event: MarketUsdDeposited): void {
-  const market = Market.load(event.params.marketId.toString());
-  if (market == null) {
-    log.error(
-      'Something went wrong, got a MarketUsdDeposited event for a market that doesnt exists ' +
-        event.params.marketId.toString(),
-      []
-    );
-    return;
-  }
-  const contract = MarketManagerModule.bind(event.address);
-  const reported_debt = contract.getMarketReportedDebt(event.params.marketId).toBigDecimal();
-  const usd_deposited = market.usd_deposited.plus(event.params.amount.toBigDecimal());
-  const net_issuance = market.net_issuance.minus(event.params.amount.toBigDecimal());
-
-  market.reported_debt = reported_debt;
-  market.updated_at = event.block.timestamp;
-  market.updated_at_block = event.block.number;
-  market.net_issuance = net_issuance;
-  market.usd_deposited = usd_deposited;
-  market.save();
-}
-
-export function handleMarketUsdWithdrawn(event: MarketUsdWithdrawn): void {
-  const market = Market.load(event.params.marketId.toString());
-  if (market == null) {
-    log.error(
-      'Something went wrong, got a MarketUsdWithdrawn event for a market that doesnt exists ' +
-        event.params.marketId.toString(),
-      []
-    );
-    return;
-  }
-
-  const contract = MarketManagerModule.bind(event.address);
-  const reported_debt = contract.getMarketReportedDebt(event.params.marketId).toBigDecimal();
-  const usd_withdrawn = market.usd_withdrawn.plus(event.params.amount.toBigDecimal());
-  const net_issuance = market.net_issuance.plus(event.params.amount.toBigDecimal());
-
-  market.reported_debt = reported_debt;
-  market.updated_at = event.block.timestamp;
-  market.updated_at_block = event.block.number;
-  market.net_issuance = net_issuance;
-  market.usd_withdrawn = usd_withdrawn;
-  market.save();
-}
-
 //////////////
 // Account //
 /////////////
 
 export function handleAccountCreated(event: AccountCreated): void {
   const account = new Account(event.params.accountId.toString());
-  account.owner = event.params.sender;
+  account.owner = event.params.owner;
   account.created_at = event.block.timestamp;
   account.created_at_block = event.block.number;
   account.updated_at = event.block.timestamp;

@@ -2,18 +2,15 @@ import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
 import { newMockEvent } from 'matchstick-as';
 import {
   AccountCreated,
-  PermissionGranted,
-  PermissionRevoked,
-} from '../generated/AccountModule/AccountModule';
-import { Deposited, Withdrawn } from '../generated/CollateralModule/CollateralModule';
-import { CollateralConfigured } from '../generated/CollateralConfigurationModule/CollateralConfigurationModule';
-import { UsdBurned, UsdMinted } from '../generated/IssueUSDModule/IssueUSDModule';
-import {
+  CollateralConfigured,
+  DelegationUpdated,
+  Deposited,
+  Liquidation,
   MarketRegistered,
   MarketUsdDeposited,
   MarketUsdWithdrawn,
-} from '../generated/MarketManagerModule/MarketManagerModule';
-import {
+  PermissionGranted,
+  PermissionRevoked,
   PoolConfigurationSet,
   PoolCreated,
   PoolNameUpdated,
@@ -21,14 +18,14 @@ import {
   PoolNominationRevoked,
   PoolOwnerNominated,
   PoolOwnershipAccepted,
-} from '../generated/PoolModule/PoolModule';
-import { Liquidation, VaultLiquidation } from '../generated/LiquidationModule/LiquidationModule';
-import {
-  RewardsDistributed,
   RewardsClaimed,
+  RewardsDistributed,
   RewardsDistributorRegistered,
-} from '../generated/RewardsManagerModule/RewardsManagerModule';
-import { DelegationUpdated } from '../generated/VaultModule/VaultModule';
+  UsdBurned,
+  UsdMinted,
+  VaultLiquidation,
+  Withdrawn,
+} from '../generated/CoreProxy/CoreProxy';
 import { address } from './constants';
 
 function createBlock(timestamp: i64, blockNumber: i64): Map<string, i64> {
@@ -183,11 +180,12 @@ export function createAccountCreatedEvent(
   const newMarketRegisteredEvent = changetype<AccountCreated>(newMockEvent());
   const block = createBlock(timestamp, blockNumber);
   newMarketRegisteredEvent.parameters = new Array();
-  newMarketRegisteredEvent.parameters.push(
-    new ethereum.EventParam('owner', ethereum.Value.fromAddress(Address.fromString(owner)))
-  );
+
   newMarketRegisteredEvent.parameters.push(
     new ethereum.EventParam('accountId', ethereum.Value.fromI32(id))
+  );
+  newMarketRegisteredEvent.parameters.push(
+    new ethereum.EventParam('owner', ethereum.Value.fromAddress(Address.fromString(owner)))
   );
   newMarketRegisteredEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
   newMarketRegisteredEvent.block.number = BigInt.fromI64(block['blockNumber']);

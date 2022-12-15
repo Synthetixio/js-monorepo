@@ -11,9 +11,9 @@ export function NetworkController() {
   const { connector } = useAccount();
   const location = useLocation();
   const { chains: networkChains } = useNetwork();
+  const wagmiSupportedNetworks = networkChains.map(({ id }) => id);
   const [localChainId] = useRecoilState(chainIdState);
-
-  const chains = networkChains.length ? networkChains : supportedChains;
+  const chains = supportedChains.filter(({ id }) => wagmiSupportedNetworks.includes(id));
   const localChain = chains.find((chain) => chain.id === localChainId);
 
   return (

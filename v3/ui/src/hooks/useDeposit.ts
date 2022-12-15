@@ -48,7 +48,7 @@ export const useDeposit = ({
   const [{ refetchAccounts }] = useRecoilState(accountsState);
 
   const amountBN =
-    Boolean(amount) && Number(amount) > 0
+    Boolean(amount && selectedCollateralType) && Number(amount) > 0
       ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
       : BigNumber.from(0);
 
@@ -57,6 +57,9 @@ export const useDeposit = ({
   const newAccountId = useMemo(() => Math.floor(Math.random() * 10000000000), []);
 
   const calls: MulticallCall[] = useMemo(() => {
+    if (!selectedCollateralType?.address || !selectedCollateralType?.symbol) {
+      return [];
+    }
     const id = accountId ?? newAccountId;
     const key = `${selectedPoolId}-${selectedCollateralType.symbol}`;
     const currentLiquidityPosition = liquidityPositions[key];
@@ -101,8 +104,8 @@ export const useDeposit = ({
     accountId,
     newAccountId,
     selectedPoolId,
-    selectedCollateralType.symbol,
-    selectedCollateralType.address,
+    selectedCollateralType?.symbol,
+    selectedCollateralType?.address,
     liquidityPositions,
     amountBN,
     snxProxy,
@@ -161,7 +164,7 @@ export const useDeposit = ({
   });
 
   const { approve, requireApproval } = useApprove(
-    selectedCollateralType.address,
+    selectedCollateralType?.address,
     amountBN,
     snxProxy?.address,
     {
@@ -229,7 +232,7 @@ export const useDeposit = ({
     });
   }, [
     isNativeCurrency,
-    selectedCollateralType.symbol,
+    selectedCollateralType?.symbol,
     requireApproval,
     setTransaction,
     amountBN,

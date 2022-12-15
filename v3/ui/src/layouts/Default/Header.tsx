@@ -3,7 +3,7 @@ import logomark from './logomark.svg';
 import kwenta from './kwenta.svg';
 import lyra from './lyra.svg';
 import thales from './thales.svg';
-import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { CheckIcon, ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
   Container,
   Flex,
@@ -24,10 +24,18 @@ import {
   DrawerCloseButton,
   DrawerHeader,
   DrawerBody,
+  Menu,
+  MenuButton,
+  Button,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { NetworkController } from '../../components/NetworkController';
 import { useEffect } from 'react';
+import { accountsState } from '../../utils/state';
+import { useRecoilState } from 'recoil';
+import { prettyString } from '../../utils/helpers';
 
 const tradeContent = () => {
   return (
@@ -66,6 +74,10 @@ const tradeContent = () => {
 export default function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
+  const { id } = useParams();
+  const [{ accounts: userAccounts }] = useRecoilState(accountsState);
+  const [search] = useSearchParams();
+  const routingSearchParams = `?chain=${search.get('chain')}`;
 
   useEffect(() => {
     onClose();
@@ -74,7 +86,7 @@ export default function Header() {
   return (
     <>
       <Container mb="8" maxW="container.lg" py="4">
-        <Flex alignItems="center">
+        <Flex alignItems="center" gap="2">
           <Box display={['none', 'none', 'inline-block']}>
             <Link to="/" as={RouterLink} _focus={{ boxShadow: 'none' }}>
               <Image src={logo} alt="Synthetix" width={200} height={14.5} />
@@ -86,7 +98,7 @@ export default function Header() {
             </Link>
           </Box>
           <Spacer />
-          <Box display={['none', 'none', 'none', 'inline-block']}>
+          <Box display={['none', 'none', 'none', 'flex']}>
             <Link
               to="/"
               as={RouterLink}
@@ -119,8 +131,10 @@ export default function Header() {
                 <Link
                   _focus={{ boxShadow: 'none' }}
                   _hover={{ textDecoration: 'none' }}
-                  mx="3"
                   fontWeight="semibold"
+                  display="flex"
+                  alignItems="center"
+                  mx="3"
                 >
                   Trade <ChevronDownIcon />
                 </Link>
@@ -140,6 +154,64 @@ export default function Header() {
             </Popover>
           </Box>
           <Spacer />
+          {id && (
+            <Box display={['none', 'none', 'inline-block']}>
+              <Menu>
+                <MenuButton
+                  size="sm"
+                  as={Button}
+                  variant="outline"
+                  rightIcon={<ChevronDownIcon />}
+                  w="100%"
+                  maxW="180px"
+                >
+                  {id ? `Account #${prettyString(id, 3, 3)}` : 'Create Account'}
+                </MenuButton>
+                <MenuList fontSize="xs" px="2" bg="black" border="1px solid rgba(255,255,255,0.33)">
+                  {userAccounts.map((account) => {
+                    const isCurrentAccount = id === account.toString();
+                    const menuItem = (
+                      <MenuItem
+                        key={account}
+                        _hover={{ bg: 'whiteAlpha.200' }}
+                        _focus={{ bg: 'whiteAlpha.200' }}
+                        _active={{ bg: 'whiteAlpha.200' }}
+                      >
+                        <Flex width="100%" alignItems="center">
+                          {isCurrentAccount && <CheckIcon marginRight={1} />}
+
+                          {account}
+                        </Flex>
+                      </MenuItem>
+                    );
+
+                    return isCurrentAccount ? (
+                      menuItem
+                    ) : (
+                      <RouterLink key={account} to={`/accounts/${account}${routingSearchParams}`}>
+                        {menuItem}
+                      </RouterLink>
+                    );
+                  })}
+                  <MenuItem
+                    _hover={{ bg: 'whiteAlpha.200' }}
+                    _focus={{ bg: 'whiteAlpha.200' }}
+                    _active={{ bg: 'whiteAlpha.200' }}
+                  >
+                    <Link
+                      as={RouterLink}
+                      to={`/accounts/create${routingSearchParams}`}
+                      _focus={{ boxShadow: 'none' }}
+                      _hover={{ textDecoration: 'none' }}
+                      fontWeight="semibold"
+                    >
+                      Create new account
+                    </Link>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </Box>
+          )}
           <Box>
             <NetworkController />
           </Box>
@@ -165,6 +237,63 @@ export default function Header() {
             </Link>
           </DrawerHeader>
           <DrawerBody>
+            {id && (
+              <Menu>
+                <MenuButton
+                  size="sm"
+                  as={Button}
+                  variant="outline"
+                  rightIcon={<ChevronDownIcon />}
+                  w="100%"
+                  maxW="180px"
+                  mb="2"
+                >
+                  {id ? `Account #${prettyString(id, 3, 3)}` : 'Create Account'}
+                </MenuButton>
+                <MenuList fontSize="xs" px="2" bg="black" border="1px solid rgba(255,255,255,0.33)">
+                  {userAccounts.map((account) => {
+                    const isCurrentAccount = id === account.toString();
+                    const menuItem = (
+                      <MenuItem
+                        key={account}
+                        _hover={{ bg: 'whiteAlpha.200' }}
+                        _focus={{ bg: 'whiteAlpha.200' }}
+                        _active={{ bg: 'whiteAlpha.200' }}
+                      >
+                        <Flex width="100%" alignItems="center">
+                          {isCurrentAccount && <CheckIcon marginRight={1} />}
+
+                          {account}
+                        </Flex>
+                      </MenuItem>
+                    );
+
+                    return isCurrentAccount ? (
+                      menuItem
+                    ) : (
+                      <RouterLink key={account} to={`/accounts/${account}${routingSearchParams}`}>
+                        {menuItem}
+                      </RouterLink>
+                    );
+                  })}
+                  <MenuItem
+                    _hover={{ bg: 'whiteAlpha.200' }}
+                    _focus={{ bg: 'whiteAlpha.200' }}
+                    _active={{ bg: 'whiteAlpha.200' }}
+                  >
+                    <Link
+                      as={RouterLink}
+                      to={`/accounts/create${routingSearchParams}`}
+                      _focus={{ boxShadow: 'none' }}
+                      _hover={{ textDecoration: 'none' }}
+                      fontWeight="semibold"
+                    >
+                      Create new account
+                    </Link>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            )}
             <Box mb="3">
               <Link to="/" as={RouterLink} _focus={{ boxShadow: 'none' }} fontWeight="semibold">
                 Deposit

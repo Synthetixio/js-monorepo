@@ -185,21 +185,25 @@ export const UnflagOptions = () => {
   const { data: debtData } = useDebtData();
   const { data: liquidationData } = useLiquidationData();
   const { data: balanceData } = useSynthsBalances();
+
   const sUSDToGetBackToTarget = debtData
     ? debtData.debtBalance.sub(debtData.issuableSynths).toNumber()
     : undefined;
-
   const sUSDBalance = balanceData?.balancesMap.sUSD?.balance.toNumber();
+
   const selfLiquidationPenalty = liquidationData
     ? formatPercent(liquidationData.selfLiquidationPenalty.toNumber())
     : undefined;
+
   const variant = getHealthVariant({
     targetCratioPercentage: debtData?.targetCRatioPercentage.toNumber(),
     liquidationCratioPercentage: debtData?.liquidationRatioPercentage.toNumber(),
     currentCRatioPercentage: debtData?.currentCRatioPercentage.toNumber(),
     targetThreshold: debtData?.targetThreshold.toNumber(),
   });
+
   const canSelfLiquidate = variant !== 'success';
+
   return (
     <UnflagOptionsUi
       selfLiquidationPenalty={selfLiquidationPenalty}
