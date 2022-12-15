@@ -27,7 +27,6 @@ import {
   AccountRewardsDistributor,
   CollateralType,
   Liquidation as LiquidationEntity,
-  Market,
   MarketConfiguration,
   Pool,
   Position,
@@ -37,7 +36,7 @@ import {
   Vault,
   VaultLiquidation as VaultLiquidationEntity,
 } from '../generated/schema';
-import { BigDecimal, BigInt, Bytes, store } from '@graphprotocol/graph-ts';
+import { BigDecimal, BigInt, Bytes, log, store } from '@graphprotocol/graph-ts';
 
 ////////////////////
 // Event handlers //
@@ -113,80 +112,149 @@ export function handleNewPoolOwner(event: PoolOwnershipAccepted): void {
     pool.save();
   }
 }
-export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
-  const pool = Pool.load(event.params.poolId.toString());
-  // Pool will be never undefined, though for safety reasons we are checking for that
-  if (pool !== null) {
-    // Creating a temporarily variable for figuring out which MarketConfiguration entity to delete
-    const oldPoolMarketConfigurationState = new Map<string, string[]>();
-    if (pool.configurations !== null) {
-      oldPoolMarketConfigurationState.set(pool.id, pool.configurations!);
+
+const getMarketConfigurationForPoolByMarketId = (pool: Pool): Map<string, MarketConfiguration> => {
+  //  This would be great but we cant read derived fields
+  const poolMarketIds = pool.market_ids;
+
+  let marketConfigurationsByMarketId = new Map<string, MarketConfiguration>();
+  if (poolMarketIds === null) return marketConfigurationsByMarketId;
+  for (let i = 0; i < poolMarketIds.length; ++i) {
+    const marketId = poolMarketIds.at(i);
+    const marketConfigurationId = pool.id.toString().concat('-').concat(marketId);
+    const marketConfigForPool = MarketConfiguration.load(marketConfigurationId);
+    if (marketConfigForPool) {
+      marketConfigurationsByMarketId.set(marketConfigForPool.market, marketConfigForPool);
     }
-    // Creating a temporarily variable for the pool.total_weight key
-    const totalWeight: BigInt[] = [];
-    // Reset the state because the new configuration from the event is the only source of truth
-    pool.configurations = [];
-    for (let i = 0; i < event.params.markets.length; ++i) {
-      const market = Market.load(event.params.markets.at(i).marketId.toString());
-      if (market) {
-        let marketConfiguration = MarketConfiguration.load(pool.id.concat('-').concat(market.id));
-        if (marketConfiguration === null) {
-          marketConfiguration = new MarketConfiguration(pool.id.concat('-').concat(market.id));
-          marketConfiguration.created_at = event.block.timestamp;
-          marketConfiguration.created_at_block = event.block.number;
-        }
-        marketConfiguration.weight = event.params.markets.at(i).weightD18;
-        marketConfiguration.market = market.id;
-        marketConfiguration.pool = event.params.poolId.toString();
-        marketConfiguration.max_debt_share_value = event.params.markets
-          .at(i)
-          .maxDebtShareValueD18.toBigDecimal();
-        marketConfiguration.updated_at = event.block.timestamp;
-        marketConfiguration.updated_at_block = event.block.number;
-        // If the market doesn't have configurations array, create an array with the current configurations id
-        if (market.configurations === null) {
-          market.configurations = [marketConfiguration.id];
-          // Otherwise check if this configuration id is not included, if so, add it
-        } else if (!market.configurations!.includes(marketConfiguration.id)) {
-          // Set the new state to the current one, to add up the previously added entities
-          const newState = market.configurations!;
-          newState.push(marketConfiguration.id);
-          market.configurations = newState;
-        }
-        // Same as for the market, if empty initialize it
-        if (pool.configurations === null) {
-          pool.configurations = [marketConfiguration.id];
-        } else if (!pool.configurations!.includes(marketConfiguration.id)) {
-          // Set the new state to the current one, to add up the previously added entities
-          const newState = pool.configurations!;
-          newState.push(marketConfiguration.id);
-          pool.configurations = newState;
-        }
-        // If the new MarketConfiguration is not part of the old state, remove it from the store
-        if (oldPoolMarketConfigurationState.has(pool.id)) {
-          const oldMarketConfigs = oldPoolMarketConfigurationState.get(pool.id);
-          for (let j = 0; j < oldMarketConfigs.length; ++j) {
-            const currentOldState = oldPoolMarketConfigurationState.get(pool.id).at(j);
-            if (!pool.configurations!.includes(currentOldState)) {
-              store.remove('MarketConfiguration', currentOldState);
-            }
-          }
-        }
-        totalWeight.push(event.params.markets.at(i).weightD18);
-        market.updated_at = event.block.timestamp;
-        market.updated_at_block = event.block.number;
-        market.save();
-        marketConfiguration.save();
-      }
-    }
-    pool.total_weight = totalWeight.reduce((prev, next) => {
-      prev = prev.plus(next);
-      return prev;
-    }, BigInt.fromU64(0));
-    pool.updated_at = event.block.timestamp;
-    pool.updated_at_block = event.block.number;
-    pool.save();
   }
+  return marketConfigurationsByMarketId;
+};
+const deleteRemovedMarketConfigurations = (
+  event: PoolConfigurationSet,
+  currentMarketConfigurationsInPoolByMarketId: Map<string, MarketConfiguration>
+): void => {
+  if (currentMarketConfigurationsInPoolByMarketId.size === 0) {
+    // no current market set on pool, so nothing to remove
+    return;
+  }
+  const marketsFromEventExistsById = new Map<string, boolean>();
+  for (let i = 0; i < event.params.markets.length; ++i) {
+    const market = event.params.markets.at(i);
+    marketsFromEventExistsById.set(market.marketId.toString(), true);
+  }
+
+  const currentMarketConfigs = currentMarketConfigurationsInPoolByMarketId.values();
+
+  // The event.markets is the source of truth of what markets is connected to the pool
+  // If we currently have a market configuration that shouldn't be there, remove that entity.
+  for (let i = 0; i < currentMarketConfigs.length; ++i) {
+    const marketId = currentMarketConfigs.at(i).market.toString();
+    const marketConfigShouldBeRemoved = !marketsFromEventExistsById.has(marketId);
+    if (marketConfigShouldBeRemoved) {
+      const marketConfigurationId = event.params.poolId.toString().concat('-').concat(marketId);
+      store.remove('MarketConfiguration', marketConfigurationId);
+    }
+  }
+};
+
+const updateMarketConfiguration = (
+  marketConfig: MarketConfiguration,
+  newWeight: BigInt,
+  newMaxDebtShareValue: BigDecimal,
+  blockTimestamp: BigInt,
+  blockNumber: BigInt
+): void => {
+  const oldWeight = marketConfig.weight;
+  const oldMaxDebtShareValue = marketConfig.max_debt_share_value;
+  if (oldWeight === newWeight && oldMaxDebtShareValue === newMaxDebtShareValue) {
+    // No values need to be updated
+    return;
+  }
+  marketConfig.weight = newWeight;
+  marketConfig.max_debt_share_value = newMaxDebtShareValue;
+  marketConfig.updated_at = blockTimestamp;
+  marketConfig.updated_at_block = blockNumber;
+  marketConfig.save();
+};
+const updateExistingMarketConfigurations = (
+  event: PoolConfigurationSet,
+  currentMarketConfigurationsInPoolByMarketId: Map<string, MarketConfiguration>
+): void => {
+  if (currentMarketConfigurationsInPoolByMarketId.size === 0) {
+    // no current market set on pool, so nothing to update
+    return;
+  }
+
+  for (let i = 0; i < event.params.markets.length; ++i) {
+    const newMaxDebtShareValue = event.params.markets.at(i).maxDebtShareValueD18.toBigDecimal();
+    const marketId = event.params.markets.at(i).marketId.toString();
+    if (currentMarketConfigurationsInPoolByMarketId.has(marketId)) {
+      const marketConfig = currentMarketConfigurationsInPoolByMarketId.get(marketId);
+      const newWeight = event.params.markets.at(i).weightD18;
+      const blockTimestamp = event.block.timestamp;
+      const blockNumber = event.block.number;
+      updateMarketConfiguration(
+        marketConfig,
+        newWeight,
+        newMaxDebtShareValue,
+        blockTimestamp,
+        blockNumber
+      );
+    }
+  }
+};
+
+const createNewMarketConfigurations = (
+  event: PoolConfigurationSet,
+  currentMarketConfigurationsInPoolByMarketId: Map<string, MarketConfiguration>
+): void => {
+  const poolId = event.params.poolId.toString();
+  for (let i = 0; i < event.params.markets.length; ++i) {
+    const marketId = event.params.markets.at(i).marketId.toString();
+    if (!currentMarketConfigurationsInPoolByMarketId.has(marketId)) {
+      const marketConfiguration = new MarketConfiguration(poolId.concat('-').concat(marketId));
+      marketConfiguration.market = marketId;
+      marketConfiguration.pool = poolId;
+      marketConfiguration.created_at = event.block.timestamp;
+      marketConfiguration.created_at_block = event.block.number;
+      marketConfiguration.updated_at = event.block.timestamp;
+      marketConfiguration.updated_at_block = event.block.number;
+      marketConfiguration.weight = event.params.markets.at(i).weightD18;
+      marketConfiguration.max_debt_share_value = event.params.markets
+        .at(i)
+        .maxDebtShareValueD18.toBigDecimal();
+
+      marketConfiguration.save();
+    }
+  }
+};
+
+const updatePoolFields = (event: PoolConfigurationSet, pool: Pool): void => {
+  const newTotalWeight = event.params.markets.reduce((sum, x) => {
+    return sum.plus(x.weightD18);
+  }, new BigInt(0));
+  const marketIds = event.params.markets.map<string>((x) => x.marketId.toString());
+  pool.total_weight = newTotalWeight;
+  pool.updated_at = event.block.timestamp;
+  pool.updated_at_block = event.block.number;
+  pool.market_ids = marketIds;
+  pool.save();
+};
+
+export function handlePoolConfigurationSet(event: PoolConfigurationSet): void {
+  const poolId = event.params.poolId.toString();
+  const pool = Pool.load(poolId);
+  // Pool will be never undefined, though for safety reasons we are checking for that
+  if (pool === null) {
+    log.error('Pool id: ' + poolId + ' does not exist', []);
+    return;
+  }
+  const currentMarketConfigsInPoolByMarketId = getMarketConfigurationForPoolByMarketId(pool);
+  // Mutative
+  deleteRemovedMarketConfigurations(event, currentMarketConfigsInPoolByMarketId);
+  updateExistingMarketConfigurations(event, currentMarketConfigsInPoolByMarketId);
+  createNewMarketConfigurations(event, currentMarketConfigsInPoolByMarketId);
+  updatePoolFields(event, pool);
 }
 
 //////////////

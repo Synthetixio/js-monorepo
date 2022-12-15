@@ -266,27 +266,32 @@ describe('core tests', () => {
     handleMarketCreated(newMarketRegisteredEvent);
     handleMarketCreated(newMarketRegisteredEvent2);
     handlePoolConfigurationSet(newPoolConfigurationSetEvent);
+
     assert.fieldEquals('Pool', '1', 'id', '1');
     assert.fieldEquals('Pool', '1', 'total_weight', '75');
     assert.fieldEquals('Pool', '1', 'updated_at', (now + 3000).toString());
     assert.fieldEquals('Pool', '1', 'updated_at_block', (now + 2000).toString());
-    assert.fieldEquals('Pool', '1', 'configurations', '[1-1, 1-2]');
+    assert.fieldEquals('Pool', '1', 'market_ids', '[1, 2]');
     assert.fieldEquals('Pool', '1', 'total_weight', '75');
     assert.assertNull(store.get('Pool', '1')!.get('name'));
     assert.notInStore('Pool', '2');
     assert.fieldEquals('Market', '1', 'id', '1');
-    assert.fieldEquals('Market', '1', 'configurations', '[1-1]');
+    assert.fieldEquals('Pool', '1', 'market_ids', '[1, 2]');
+
+    // Assert market doesn't get updated by configuration event
     assert.fieldEquals('Market', '1', 'created_at', (now + 1000).toString());
     assert.fieldEquals('Market', '1', 'created_at_block', now.toString());
-    assert.fieldEquals('Market', '1', 'updated_at', (now + 3000).toString());
-    assert.fieldEquals('Market', '1', 'updated_at_block', (now + 2000).toString());
+    // The market itself will not receive any updates, only the MarketConfiguration and the Pool
+    assert.fieldEquals('Market', '1', 'updated_at', (now + 1000).toString());
+    assert.fieldEquals('Market', '1', 'updated_at_block', now.toString());
     assert.fieldEquals('Market', '2', 'id', '2');
-    assert.fieldEquals('Market', '2', 'configurations', '[1-2]');
     assert.fieldEquals('Market', '2', 'created_at', (now + 2000).toString());
     assert.fieldEquals('Market', '2', 'created_at_block', (now + 1000).toString());
-    assert.fieldEquals('Market', '2', 'updated_at', (now + 3000).toString());
-    assert.fieldEquals('Market', '2', 'updated_at_block', (now + 2000).toString());
+    assert.fieldEquals('Market', '2', 'updated_at', (now + 2000).toString());
+    assert.fieldEquals('Market', '2', 'updated_at_block', (now + 1000).toString());
     assert.notInStore('Market', '3');
+
+    // Assert market configuration
     assert.fieldEquals('MarketConfiguration', '1-1', 'id', '1-1');
     assert.fieldEquals('MarketConfiguration', '1-1', 'pool', '1');
     assert.fieldEquals('MarketConfiguration', '1-1', 'max_debt_share_value', '812739821');
@@ -303,9 +308,10 @@ describe('core tests', () => {
     assert.fieldEquals('MarketConfiguration', '1-2', 'created_at_block', (now + 2000).toString());
     assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at', (now + 3000).toString());
     assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at_block', (now + 2000).toString());
-    // Fire second event that should update all entities + remove the MarketConfigurations entities that
-    // are not used anymore from the store
+
+    // Fire second event that should update Pool and MarketConfiguration.  Removed MarketConfigurations should also be deleted
     handlePoolConfigurationSet(secondNewPoolConfigurationSetEvent);
+
     assert.notInStore('MarketConfiguration', '1-1');
     assert.fieldEquals('Pool', '1', 'total_weight', '32');
     assert.fieldEquals('MarketConfiguration', '1-2', 'updated_at', (now + 4000).toString());
