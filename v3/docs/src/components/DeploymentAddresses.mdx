@@ -7,26 +7,29 @@ export const DeploymentAddresses = ({ chainId }) => {
   const displayNames = {
     CoreProxy: 'Core System',
     AccountProxy: 'Account Token',
-    SNXProxy: 'SNX Token',
     USDProxy: 'snxUSD Token',
   };
-  const data = deployments.deploys[chainId].main.outputs.contracts;
   const modules = {};
   Object.keys(deployments.deploys[chainId].main.def.run).map((key, index) => {
     let name = key.split('_')[0];
-    const mods = deployments.deploys[chainId].main.def.run[key].depends.map(
-      (mod) => mod.split('.')[1]
-    );
+    const mods = deployments.deploys[chainId].main.def.run[key].depends
+      .map((mod) => mod.split('.')[1])
+      .filter((m) => m != 'InitialModuleBundle');
     modules[name] = mods;
   });
-  const processed = Object.keys(data)
-    .map((key, index) => {
-      const etherscan = etherscanBase[chainId] + data[key].address;
-      return { name: key, address: data[key].address, etherscan };
-    })
-    .filter((contract) => contract.name.includes('Proxy') && contract.name !== 'InitialCoreProxy');
+  const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
   const kebabize = (str) =>
     str.replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? '-' : '') + $.toLowerCase());
+  const processed = ['CoreProxy', 'AccountProxy', 'USDProxy'].map((key, index) => {
+    const address = require(`./deployments/${chainId}/${key}.json`).address;
+    const etherscan = etherscanBase[chainId] + address;
+    return {
+      name: displayNames[key],
+      address,
+      etherscan,
+      modules: modules[key.toLowerCase().replace('proxy', '')],
+    };
+  });
   return (
     <table>
       <thead>
@@ -40,23 +43,18 @@ export const DeploymentAddresses = ({ chainId }) => {
         {processed.map((contract, index) => {
           return (
             <tr key={index}>
-              <td style={{ whiteSpace: 'nowrap' }}>
-                {displayNames[contract.name] || contract.name}
-              </td>
+              <td style={{ whiteSpace: 'nowrap' }}>{contract.name}</td>
               <td>
                 <a target="_blank" href={contract.etherscan}>
                   {contract.address}
                 </a>
               </td>
               <td>
-                {modules[contract.name.replace('Proxy', '').toLowerCase()].map((module, index2) => {
+                {contract.modules.map((module, index2) => {
                   return (
                     <small key={index2}>
                       <a href={'./smart-contracts#' + kebabize(module)}>{module}</a>
-                      {modules[contract.name.replace('Proxy', '').toLowerCase()].length - 1 ==
-                      index2
-                        ? ''
-                        : ', '}
+                      {index2 < contract.modules.length - 1 ? ', ' : ''}
                     </small>
                   );
                 })}
