@@ -15,7 +15,9 @@ const V2Unflag = () => {
         <SkeletonText noOfLines={2} my={4} isLoaded={!isLoading}>
           <Text mb={4} fontSize="xs" color="whiteAlpha.800">
             {t('staking-v2.unflag-options.text', {
-              penalty: formatPercent(liquidationData?.selfLiquidationPenalty || 70),
+              penalty: formatPercent(liquidationData?.selfLiquidationPenalty || 70, {
+                minDecimals: 0,
+              }),
             })}
           </Text>
         </SkeletonText>
