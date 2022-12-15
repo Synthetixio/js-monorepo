@@ -232,9 +232,7 @@
       "outputs": []
     }
   ],
-  "constructorArgs": [
-    "0x0831dd3d62fF9418C8bd749A4D67c9F47d5FdFe5"
-  ],
+  "constructorArgs": ["0x0831dd3d62fF9418C8bd749A4D67c9F47d5FdFe5"],
   "deployTxnHash": "0x577aa6a4f1ebcfa6df81ef15c0f999b704f9c689c2bf36f7e55f178517d0baf3",
   "sourceName": "contracts/Proxy.sol",
   "contractName": "Proxy",

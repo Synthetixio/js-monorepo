@@ -106,42 +106,23 @@
                 "UtilsModule",
                 "VaultModule"
               ],
-              "depends": [
-                "run.core_generate_router"
-              ]
+              "depends": ["run.core_generate_router"]
             },
             "InitialCoreProxy": {
               "artifact": "contracts/Proxy.sol:Proxy",
-              "args": [
-                "<%= contracts.InitialModuleBundle.address %>"
-              ],
-              "abiOf": [
-                "InitialModuleBundle"
-              ],
-              "depends": [
-                "contract.InitialModuleBundle"
-              ]
+              "args": ["<%= contracts.InitialModuleBundle.address %>"],
+              "abiOf": ["InitialModuleBundle"],
+              "depends": ["contract.InitialModuleBundle"]
             },
             "AccountRouter": {
               "artifact": "contracts/routers/chain-<%= chainId %>/AccountRouter.sol:AccountRouter",
-              "abiOf": [
-                "InitialModuleBundle",
-                "AccountTokenModule"
-              ],
-              "depends": [
-                "run.account_generate_router"
-              ]
+              "abiOf": ["InitialModuleBundle", "AccountTokenModule"],
+              "depends": ["run.account_generate_router"]
             },
             "USDRouter": {
               "artifact": "contracts/routers/chain-<%= chainId %>/USDRouter.sol:USDRouter",
-              "abiOf": [
-                "InitialModuleBundle",
-                "AssociatedSystemsModule",
-                "USDTokenModule"
-              ],
-              "depends": [
-                "run.usd_generate_router"
-              ]
+              "abiOf": ["InitialModuleBundle", "AssociatedSystemsModule", "USDTokenModule"],
+              "depends": ["run.usd_generate_router"]
             }
           },
           "run": {
@@ -152,9 +133,7 @@
                 "contracts/routers/chain-<%= chainId %>/CoreRouter.sol:CoreRouter",
                 "<%= JSON.stringify({\n    InitialModuleBundle: contracts.InitialModuleBundle,\n    FeatureFlagModule: contracts.FeatureFlagModule,\n    AccountModule: contracts.AccountModule,\n    AssociateDebtModule: contracts.AssociateDebtModule,\n    AssociatedSystemsModule: contracts.AssociatedSystemsModule,\n    CollateralModule: contracts.CollateralModule,\n    CollateralConfigurationModule: contracts.CollateralConfigurationModule,\n    IssueUSDModule: contracts.IssueUSDModule,\n    LiquidationModule: contracts.LiquidationModule,\n    MarketCollateralModule: contracts.MarketCollateralModule,\n    MarketManagerModule: contracts.MarketManagerModule,\n    MulticallModule: contracts.MulticallModule,\n    PoolConfigurationModule: contracts.PoolConfigurationModule,\n    PoolModule: contracts.PoolModule,\n    RewardsManagerModule: contracts.RewardsManagerModule,\n    UtilsModule: contracts.UtilsModule,\n    VaultModule: contracts.VaultModule,\n  }) %>"
               ],
-              "modified": [
-                "contracts/modules/core"
-              ],
+              "modified": ["contracts/modules/core"],
               "depends": [
                 "contract.InitialModuleBundle",
                 "contract.FeatureFlagModule",
@@ -182,14 +161,8 @@
                 "contracts/routers/chain-<%= chainId %>/AccountRouter.sol:AccountRouter",
                 "<%= JSON.stringify({\n    InitialModuleBundle: contracts.InitialModuleBundle,\n    AccountTokenModule: contracts.AccountTokenModule,\n  }) %>"
               ],
-              "modified": [
-                "contracts/modules/common",
-                "contracts/modules/account"
-              ],
-              "depends": [
-                "contract.InitialModuleBundle",
-                "contract.AccountTokenModule"
-              ]
+              "modified": ["contracts/modules/common", "contracts/modules/account"],
+              "depends": ["contract.InitialModuleBundle", "contract.AccountTokenModule"]
             },
             "usd_generate_router": {
               "exec": "@synthetixio/hardhat-router/utils/cannon",
@@ -198,10 +171,7 @@
                 "contracts/routers/chain-<%= chainId %>/USDRouter.sol:USDRouter",
                 "<%= JSON.stringify({\n    InitialModuleBundle: contracts.InitialModuleBundle,\n    AssociatedSystemsModule: contracts.AssociatedSystemsModule,\n    USDTokenModule: contracts.USDTokenModule,\n  }) %>"
               ],
-              "modified": [
-                "contracts/modules/associated-systems",
-                "contracts/modules/usd"
-              ],
+              "modified": ["contracts/modules/associated-systems", "contracts/modules/usd"],
               "depends": [
                 "contract.InitialModuleBundle",
                 "contract.AssociatedSystemsModule",
@@ -211,46 +181,29 @@
           },
           "invoke": {
             "acquire_ownership": {
-              "target": [
-                "InitialCoreProxy"
-              ],
+              "target": ["InitialCoreProxy"],
               "from": "<%= settings.owner %>",
               "func": "initializeOwnerModule",
-              "args": [
-                "<%= settings.owner %>"
-              ],
-              "depends": [
-                "contract.InitialCoreProxy"
-              ]
+              "args": ["<%= settings.owner %>"],
+              "depends": ["contract.InitialCoreProxy"]
             },
             "upgrade_core_proxy": {
-              "target": [
-                "InitialCoreProxy"
-              ],
+              "target": ["InitialCoreProxy"],
               "abi": "UpgradeModule",
               "from": "<%= settings.owner %>",
               "func": "upgradeTo",
-              "args": [
-                "<%= contracts.CoreRouter.address %>"
-              ],
+              "args": ["<%= contracts.CoreRouter.address %>"],
               "factory": {
                 "CoreProxy": {
-                  "abiOf": [
-                    "CoreRouter"
-                  ],
+                  "abiOf": ["CoreRouter"],
                   "event": "Upgraded",
                   "arg": 0
                 }
               },
-              "depends": [
-                "invoke.acquire_ownership",
-                "contract.CoreRouter"
-              ]
+              "depends": ["invoke.acquire_ownership", "contract.CoreRouter"]
             },
             "init_account": {
-              "target": [
-                "CoreProxy"
-              ],
+              "target": ["CoreProxy"],
               "from": "<%= settings.owner %>",
               "func": "initOrUpgradeNft",
               "args": [
@@ -260,24 +213,17 @@
                 "https://synthetix.io",
                 "<%= contracts.AccountRouter.address %>"
               ],
-              "depends": [
-                "invoke.upgrade_core_proxy",
-                "contract.AccountRouter"
-              ],
+              "depends": ["invoke.upgrade_core_proxy", "contract.AccountRouter"],
               "factory": {
                 "AccountProxy": {
-                  "abiOf": [
-                    "AccountRouter"
-                  ],
+                  "abiOf": ["AccountRouter"],
                   "event": "AssociatedSystemSet",
                   "arg": 2
                 }
               }
             },
             "init_usd": {
-              "target": [
-                "CoreProxy"
-              ],
+              "target": ["CoreProxy"],
               "from": "<%= settings.owner %>",
               "func": "initOrUpgradeToken",
               "args": [
@@ -287,33 +233,21 @@
                 18,
                 "<%= contracts.USDRouter.address %>"
               ],
-              "depends": [
-                "invoke.upgrade_core_proxy",
-                "contract.USDRouter"
-              ],
+              "depends": ["invoke.upgrade_core_proxy", "contract.USDRouter"],
               "factory": {
                 "USDProxy": {
-                  "abiOf": [
-                    "USDRouter"
-                  ],
+                  "abiOf": ["USDRouter"],
                   "event": "AssociatedSystemSet",
                   "arg": 2
                 }
               }
             },
             "set_oracle_manager": {
-              "target": [
-                "CoreProxy"
-              ],
+              "target": ["CoreProxy"],
               "from": "<%= settings.owner %>",
               "func": "configureOracleManager",
-              "args": [
-                "<%= imports.oracle_manager.contracts.Proxy.address %>"
-              ],
-              "depends": [
-                "invoke.upgrade_core_proxy",
-                "import.oracle_manager"
-              ]
+              "args": ["<%= imports.oracle_manager.contracts.Proxy.address %>"],
+              "depends": ["invoke.upgrade_core_proxy", "import.oracle_manager"]
             }
           }
         },
@@ -322,11 +256,7 @@
         },
         "buildVersion": 3,
         "ipfsHash": "Qmb9vno3qYrfEwVXwTyizejqv9z1jYVkNH1BY5twdXqBJ4",
-        "heads": [
-          "invoke.init_account",
-          "invoke.init_usd",
-          "invoke.set_oracle_manager"
-        ]
+        "heads": ["invoke.init_account", "invoke.init_usd", "invoke.set_oracle_manager"]
       }
     },
     "420": {
@@ -435,42 +365,23 @@
                 "UtilsModule",
                 "VaultModule"
               ],
-              "depends": [
-                "run.core_generate_router"
-              ]
+              "depends": ["run.core_generate_router"]
             },
             "InitialCoreProxy": {
               "artifact": "contracts/Proxy.sol:Proxy",
-              "args": [
-                "<%= contracts.InitialModuleBundle.address %>"
-              ],
-              "abiOf": [
-                "InitialModuleBundle"
-              ],
-              "depends": [
-                "contract.InitialModuleBundle"
-              ]
+              "args": ["<%= contracts.InitialModuleBundle.address %>"],
+              "abiOf": ["InitialModuleBundle"],
+              "depends": ["contract.InitialModuleBundle"]
             },
             "AccountRouter": {
               "artifact": "contracts/routers/chain-<%= chainId %>/AccountRouter.sol:AccountRouter",
-              "abiOf": [
-                "InitialModuleBundle",
-                "AccountTokenModule"
-              ],
-              "depends": [
-                "run.account_generate_router"
-              ]
+              "abiOf": ["InitialModuleBundle", "AccountTokenModule"],
+              "depends": ["run.account_generate_router"]
             },
             "USDRouter": {
               "artifact": "contracts/routers/chain-<%= chainId %>/USDRouter.sol:USDRouter",
-              "abiOf": [
-                "InitialModuleBundle",
-                "AssociatedSystemsModule",
-                "USDTokenModule"
-              ],
-              "depends": [
-                "run.usd_generate_router"
-              ]
+              "abiOf": ["InitialModuleBundle", "AssociatedSystemsModule", "USDTokenModule"],
+              "depends": ["run.usd_generate_router"]
             }
           },
           "run": {
@@ -481,9 +392,7 @@
                 "contracts/routers/chain-<%= chainId %>/CoreRouter.sol:CoreRouter",
                 "<%= JSON.stringify({\n    InitialModuleBundle: contracts.InitialModuleBundle,\n    FeatureFlagModule: contracts.FeatureFlagModule,\n    AccountModule: contracts.AccountModule,\n    AssociateDebtModule: contracts.AssociateDebtModule,\n    AssociatedSystemsModule: contracts.AssociatedSystemsModule,\n    CollateralModule: contracts.CollateralModule,\n    CollateralConfigurationModule: contracts.CollateralConfigurationModule,\n    IssueUSDModule: contracts.IssueUSDModule,\n    LiquidationModule: contracts.LiquidationModule,\n    MarketCollateralModule: contracts.MarketCollateralModule,\n    MarketManagerModule: contracts.MarketManagerModule,\n    MulticallModule: contracts.MulticallModule,\n    PoolConfigurationModule: contracts.PoolConfigurationModule,\n    PoolModule: contracts.PoolModule,\n    RewardsManagerModule: contracts.RewardsManagerModule,\n    UtilsModule: contracts.UtilsModule,\n    VaultModule: contracts.VaultModule,\n  }) %>"
               ],
-              "modified": [
-                "contracts/modules/core"
-              ],
+              "modified": ["contracts/modules/core"],
               "depends": [
                 "contract.InitialModuleBundle",
                 "contract.FeatureFlagModule",
@@ -511,14 +420,8 @@
                 "contracts/routers/chain-<%= chainId %>/AccountRouter.sol:AccountRouter",
                 "<%= JSON.stringify({\n    InitialModuleBundle: contracts.InitialModuleBundle,\n    AccountTokenModule: contracts.AccountTokenModule,\n  }) %>"
               ],
-              "modified": [
-                "contracts/modules/common",
-                "contracts/modules/account"
-              ],
-              "depends": [
-                "contract.InitialModuleBundle",
-                "contract.AccountTokenModule"
-              ]
+              "modified": ["contracts/modules/common", "contracts/modules/account"],
+              "depends": ["contract.InitialModuleBundle", "contract.AccountTokenModule"]
             },
             "usd_generate_router": {
               "exec": "@synthetixio/hardhat-router/utils/cannon",
@@ -527,10 +430,7 @@
                 "contracts/routers/chain-<%= chainId %>/USDRouter.sol:USDRouter",
                 "<%= JSON.stringify({\n    InitialModuleBundle: contracts.InitialModuleBundle,\n    AssociatedSystemsModule: contracts.AssociatedSystemsModule,\n    USDTokenModule: contracts.USDTokenModule,\n  }) %>"
               ],
-              "modified": [
-                "contracts/modules/associated-systems",
-                "contracts/modules/usd"
-              ],
+              "modified": ["contracts/modules/associated-systems", "contracts/modules/usd"],
               "depends": [
                 "contract.InitialModuleBundle",
                 "contract.AssociatedSystemsModule",
@@ -540,46 +440,29 @@
           },
           "invoke": {
             "acquire_ownership": {
-              "target": [
-                "InitialCoreProxy"
-              ],
+              "target": ["InitialCoreProxy"],
               "from": "<%= settings.owner %>",
               "func": "initializeOwnerModule",
-              "args": [
-                "<%= settings.owner %>"
-              ],
-              "depends": [
-                "contract.InitialCoreProxy"
-              ]
+              "args": ["<%= settings.owner %>"],
+              "depends": ["contract.InitialCoreProxy"]
             },
             "upgrade_core_proxy": {
-              "target": [
-                "InitialCoreProxy"
-              ],
+              "target": ["InitialCoreProxy"],
               "abi": "UpgradeModule",
               "from": "<%= settings.owner %>",
               "func": "upgradeTo",
-              "args": [
-                "<%= contracts.CoreRouter.address %>"
-              ],
+              "args": ["<%= contracts.CoreRouter.address %>"],
               "factory": {
                 "CoreProxy": {
-                  "abiOf": [
-                    "CoreRouter"
-                  ],
+                  "abiOf": ["CoreRouter"],
                   "event": "Upgraded",
                   "arg": 0
                 }
               },
-              "depends": [
-                "invoke.acquire_ownership",
-                "contract.CoreRouter"
-              ]
+              "depends": ["invoke.acquire_ownership", "contract.CoreRouter"]
             },
             "init_account": {
-              "target": [
-                "CoreProxy"
-              ],
+              "target": ["CoreProxy"],
               "from": "<%= settings.owner %>",
               "func": "initOrUpgradeNft",
               "args": [
@@ -589,24 +472,17 @@
                 "https://synthetix.io",
                 "<%= contracts.AccountRouter.address %>"
               ],
-              "depends": [
-                "invoke.upgrade_core_proxy",
-                "contract.AccountRouter"
-              ],
+              "depends": ["invoke.upgrade_core_proxy", "contract.AccountRouter"],
               "factory": {
                 "AccountProxy": {
-                  "abiOf": [
-                    "AccountRouter"
-                  ],
+                  "abiOf": ["AccountRouter"],
                   "event": "AssociatedSystemSet",
                   "arg": 2
                 }
               }
             },
             "init_usd": {
-              "target": [
-                "CoreProxy"
-              ],
+              "target": ["CoreProxy"],
               "from": "<%= settings.owner %>",
               "func": "initOrUpgradeToken",
               "args": [
@@ -616,33 +492,21 @@
                 18,
                 "<%= contracts.USDRouter.address %>"
               ],
-              "depends": [
-                "invoke.upgrade_core_proxy",
-                "contract.USDRouter"
-              ],
+              "depends": ["invoke.upgrade_core_proxy", "contract.USDRouter"],
               "factory": {
                 "USDProxy": {
-                  "abiOf": [
-                    "USDRouter"
-                  ],
+                  "abiOf": ["USDRouter"],
                   "event": "AssociatedSystemSet",
                   "arg": 2
                 }
               }
             },
             "set_oracle_manager": {
-              "target": [
-                "CoreProxy"
-              ],
+              "target": ["CoreProxy"],
               "from": "<%= settings.owner %>",
               "func": "configureOracleManager",
-              "args": [
-                "<%= imports.oracle_manager.contracts.Proxy.address %>"
-              ],
-              "depends": [
-                "invoke.upgrade_core_proxy",
-                "import.oracle_manager"
-              ]
+              "args": ["<%= imports.oracle_manager.contracts.Proxy.address %>"],
+              "depends": ["invoke.upgrade_core_proxy", "import.oracle_manager"]
             }
           }
         },
@@ -651,11 +515,7 @@
         },
         "buildVersion": 3,
         "ipfsHash": "QmcuNxbmPWDVEPtXTgVhhqjBkHYfXDVrF1EEwVHKYC3fAi",
-        "heads": [
-          "invoke.init_account",
-          "invoke.init_usd",
-          "invoke.set_oracle_manager"
-        ]
+        "heads": ["invoke.init_account", "invoke.init_usd", "invoke.set_oracle_manager"]
       }
     },
     "13370": {
@@ -764,42 +624,23 @@
                 "UtilsModule",
                 "VaultModule"
               ],
-              "depends": [
-                "run.core_generate_router"
-              ]
+              "depends": ["run.core_generate_router"]
             },
             "InitialCoreProxy": {
               "artifact": "contracts/Proxy.sol:Proxy",
-              "args": [
-                "<%= contracts.InitialModuleBundle.address %>"
-              ],
-              "abiOf": [
-                "InitialModuleBundle"
-              ],
-              "depends": [
-                "contract.InitialModuleBundle"
-              ]
+              "args": ["<%= contracts.InitialModuleBundle.address %>"],
+              "abiOf": ["InitialModuleBundle"],
+              "depends": ["contract.InitialModuleBundle"]
             },
             "AccountRouter": {
               "artifact": "contracts/routers/chain-<%= chainId %>/AccountRouter.sol:AccountRouter",
-              "abiOf": [
-                "InitialModuleBundle",
-                "AccountTokenModule"
-              ],
-              "depends": [
-                "run.account_generate_router"
-              ]
+              "abiOf": ["InitialModuleBundle", "AccountTokenModule"],
+              "depends": ["run.account_generate_router"]
             },
             "USDRouter": {
               "artifact": "contracts/routers/chain-<%= chainId %>/USDRouter.sol:USDRouter",
-              "abiOf": [
-                "InitialModuleBundle",
-                "AssociatedSystemsModule",
-                "USDTokenModule"
-              ],
-              "depends": [
-                "run.usd_generate_router"
-              ]
+              "abiOf": ["InitialModuleBundle", "AssociatedSystemsModule", "USDTokenModule"],
+              "depends": ["run.usd_generate_router"]
             }
           },
           "run": {
@@ -810,9 +651,7 @@
                 "contracts/routers/chain-<%= chainId %>/CoreRouter.sol:CoreRouter",
                 "<%= JSON.stringify({\n    InitialModuleBundle: contracts.InitialModuleBundle,\n    FeatureFlagModule: contracts.FeatureFlagModule,\n    AccountModule: contracts.AccountModule,\n    AssociateDebtModule: contracts.AssociateDebtModule,\n    AssociatedSystemsModule: contracts.AssociatedSystemsModule,\n    CollateralModule: contracts.CollateralModule,\n    CollateralConfigurationModule: contracts.CollateralConfigurationModule,\n    IssueUSDModule: contracts.IssueUSDModule,\n    LiquidationModule: contracts.LiquidationModule,\n    MarketCollateralModule: contracts.MarketCollateralModule,\n    MarketManagerModule: contracts.MarketManagerModule,\n    MulticallModule: contracts.MulticallModule,\n    PoolConfigurationModule: contracts.PoolConfigurationModule,\n    PoolModule: contracts.PoolModule,\n    RewardsManagerModule: contracts.RewardsManagerModule,\n    UtilsModule: contracts.UtilsModule,\n    VaultModule: contracts.VaultModule,\n  }) %>"
               ],
-              "modified": [
-                "contracts/modules/core"
-              ],
+              "modified": ["contracts/modules/core"],
               "depends": [
                 "contract.InitialModuleBundle",
                 "contract.FeatureFlagModule",
@@ -840,14 +679,8 @@
                 "contracts/routers/chain-<%= chainId %>/AccountRouter.sol:AccountRouter",
                 "<%= JSON.stringify({\n    InitialModuleBundle: contracts.InitialModuleBundle,\n    AccountTokenModule: contracts.AccountTokenModule,\n  }) %>"
               ],
-              "modified": [
-                "contracts/modules/common",
-                "contracts/modules/account"
-              ],
-              "depends": [
-                "contract.InitialModuleBundle",
-                "contract.AccountTokenModule"
-              ]
+              "modified": ["contracts/modules/common", "contracts/modules/account"],
+              "depends": ["contract.InitialModuleBundle", "contract.AccountTokenModule"]
             },
             "usd_generate_router": {
               "exec": "@synthetixio/hardhat-router/utils/cannon",
@@ -856,10 +689,7 @@
                 "contracts/routers/chain-<%= chainId %>/USDRouter.sol:USDRouter",
                 "<%= JSON.stringify({\n    InitialModuleBundle: contracts.InitialModuleBundle,\n    AssociatedSystemsModule: contracts.AssociatedSystemsModule,\n    USDTokenModule: contracts.USDTokenModule,\n  }) %>"
               ],
-              "modified": [
-                "contracts/modules/associated-systems",
-                "contracts/modules/usd"
-              ],
+              "modified": ["contracts/modules/associated-systems", "contracts/modules/usd"],
               "depends": [
                 "contract.InitialModuleBundle",
                 "contract.AssociatedSystemsModule",
@@ -869,46 +699,29 @@
           },
           "invoke": {
             "acquire_ownership": {
-              "target": [
-                "InitialCoreProxy"
-              ],
+              "target": ["InitialCoreProxy"],
               "from": "<%= settings.owner %>",
               "func": "initializeOwnerModule",
-              "args": [
-                "<%= settings.owner %>"
-              ],
-              "depends": [
-                "contract.InitialCoreProxy"
-              ]
+              "args": ["<%= settings.owner %>"],
+              "depends": ["contract.InitialCoreProxy"]
             },
             "upgrade_core_proxy": {
-              "target": [
-                "InitialCoreProxy"
-              ],
+              "target": ["InitialCoreProxy"],
               "abi": "UpgradeModule",
               "from": "<%= settings.owner %>",
               "func": "upgradeTo",
-              "args": [
-                "<%= contracts.CoreRouter.address %>"
-              ],
+              "args": ["<%= contracts.CoreRouter.address %>"],
               "factory": {
                 "CoreProxy": {
-                  "abiOf": [
-                    "CoreRouter"
-                  ],
+                  "abiOf": ["CoreRouter"],
                   "event": "Upgraded",
                   "arg": 0
                 }
               },
-              "depends": [
-                "invoke.acquire_ownership",
-                "contract.CoreRouter"
-              ]
+              "depends": ["invoke.acquire_ownership", "contract.CoreRouter"]
             },
             "init_account": {
-              "target": [
-                "CoreProxy"
-              ],
+              "target": ["CoreProxy"],
               "from": "<%= settings.owner %>",
               "func": "initOrUpgradeNft",
               "args": [
@@ -918,24 +731,17 @@
                 "https://synthetix.io",
                 "<%= contracts.AccountRouter.address %>"
               ],
-              "depends": [
-                "invoke.upgrade_core_proxy",
-                "contract.AccountRouter"
-              ],
+              "depends": ["invoke.upgrade_core_proxy", "contract.AccountRouter"],
               "factory": {
                 "AccountProxy": {
-                  "abiOf": [
-                    "AccountRouter"
-                  ],
+                  "abiOf": ["AccountRouter"],
                   "event": "AssociatedSystemSet",
                   "arg": 2
                 }
               }
             },
             "init_usd": {
-              "target": [
-                "CoreProxy"
-              ],
+              "target": ["CoreProxy"],
               "from": "<%= settings.owner %>",
               "func": "initOrUpgradeToken",
               "args": [
@@ -945,44 +751,28 @@
                 18,
                 "<%= contracts.USDRouter.address %>"
               ],
-              "depends": [
-                "invoke.upgrade_core_proxy",
-                "contract.USDRouter"
-              ],
+              "depends": ["invoke.upgrade_core_proxy", "contract.USDRouter"],
               "factory": {
                 "USDProxy": {
-                  "abiOf": [
-                    "USDRouter"
-                  ],
+                  "abiOf": ["USDRouter"],
                   "event": "AssociatedSystemSet",
                   "arg": 2
                 }
               }
             },
             "set_oracle_manager": {
-              "target": [
-                "CoreProxy"
-              ],
+              "target": ["CoreProxy"],
               "from": "<%= settings.owner %>",
               "func": "configureOracleManager",
-              "args": [
-                "<%= imports.oracle_manager.contracts.Proxy.address %>"
-              ],
-              "depends": [
-                "invoke.upgrade_core_proxy",
-                "import.oracle_manager"
-              ]
+              "args": ["<%= imports.oracle_manager.contracts.Proxy.address %>"],
+              "depends": ["invoke.upgrade_core_proxy", "import.oracle_manager"]
             }
           }
         },
         "options": {},
         "buildVersion": 3,
         "ipfsHash": "QmbLqxDovnf4z6QMmMQVWPXQnxgMMS3NidZm3Y9cjLq9Bg",
-        "heads": [
-          "invoke.init_account",
-          "invoke.init_usd",
-          "invoke.set_oracle_manager"
-        ]
+        "heads": ["invoke.init_account", "invoke.init_usd", "invoke.set_oracle_manager"]
       }
     }
   },
@@ -1113,42 +903,23 @@
           "UtilsModule",
           "VaultModule"
         ],
-        "depends": [
-          "run.core_generate_router"
-        ]
+        "depends": ["run.core_generate_router"]
       },
       "InitialCoreProxy": {
         "artifact": "contracts/Proxy.sol:Proxy",
-        "args": [
-          "<%= contracts.InitialModuleBundle.address %>"
-        ],
-        "abiOf": [
-          "InitialModuleBundle"
-        ],
-        "depends": [
-          "contract.InitialModuleBundle"
-        ]
+        "args": ["<%= contracts.InitialModuleBundle.address %>"],
+        "abiOf": ["InitialModuleBundle"],
+        "depends": ["contract.InitialModuleBundle"]
       },
       "AccountRouter": {
         "artifact": "contracts/routers/chain-<%= chainId %>/AccountRouter.sol:AccountRouter",
-        "abiOf": [
-          "InitialModuleBundle",
-          "AccountTokenModule"
-        ],
-        "depends": [
-          "run.account_generate_router"
-        ]
+        "abiOf": ["InitialModuleBundle", "AccountTokenModule"],
+        "depends": ["run.account_generate_router"]
       },
       "USDRouter": {
         "artifact": "contracts/routers/chain-<%= chainId %>/USDRouter.sol:USDRouter",
-        "abiOf": [
-          "InitialModuleBundle",
-          "AssociatedSystemsModule",
-          "USDTokenModule"
-        ],
-        "depends": [
-          "run.usd_generate_router"
-        ]
+        "abiOf": ["InitialModuleBundle", "AssociatedSystemsModule", "USDTokenModule"],
+        "depends": ["run.usd_generate_router"]
       }
     },
     "run": {
@@ -1159,9 +930,7 @@
           "contracts/routers/chain-<%= chainId %>/CoreRouter.sol:CoreRouter",
           "<%= JSON.stringify({\n    InitialModuleBundle: contracts.InitialModuleBundle,\n    FeatureFlagModule: contracts.FeatureFlagModule,\n    AccountModule: contracts.AccountModule,\n    AssociateDebtModule: contracts.AssociateDebtModule,\n    AssociatedSystemsModule: contracts.AssociatedSystemsModule,\n    CollateralModule: contracts.CollateralModule,\n    CollateralConfigurationModule: contracts.CollateralConfigurationModule,\n    IssueUSDModule: contracts.IssueUSDModule,\n    LiquidationModule: contracts.LiquidationModule,\n    MarketCollateralModule: contracts.MarketCollateralModule,\n    MarketManagerModule: contracts.MarketManagerModule,\n    MulticallModule: contracts.MulticallModule,\n    PoolConfigurationModule: contracts.PoolConfigurationModule,\n    PoolModule: contracts.PoolModule,\n    RewardsManagerModule: contracts.RewardsManagerModule,\n    UtilsModule: contracts.UtilsModule,\n    VaultModule: contracts.VaultModule,\n  }) %>"
         ],
-        "modified": [
-          "contracts/modules/core"
-        ],
+        "modified": ["contracts/modules/core"],
         "depends": [
           "contract.InitialModuleBundle",
           "contract.FeatureFlagModule",
@@ -1189,14 +958,8 @@
           "contracts/routers/chain-<%= chainId %>/AccountRouter.sol:AccountRouter",
           "<%= JSON.stringify({\n    InitialModuleBundle: contracts.InitialModuleBundle,\n    AccountTokenModule: contracts.AccountTokenModule,\n  }) %>"
         ],
-        "modified": [
-          "contracts/modules/common",
-          "contracts/modules/account"
-        ],
-        "depends": [
-          "contract.InitialModuleBundle",
-          "contract.AccountTokenModule"
-        ]
+        "modified": ["contracts/modules/common", "contracts/modules/account"],
+        "depends": ["contract.InitialModuleBundle", "contract.AccountTokenModule"]
       },
       "usd_generate_router": {
         "exec": "@synthetixio/hardhat-router/utils/cannon",
@@ -1205,10 +968,7 @@
           "contracts/routers/chain-<%= chainId %>/USDRouter.sol:USDRouter",
           "<%= JSON.stringify({\n    InitialModuleBundle: contracts.InitialModuleBundle,\n    AssociatedSystemsModule: contracts.AssociatedSystemsModule,\n    USDTokenModule: contracts.USDTokenModule,\n  }) %>"
         ],
-        "modified": [
-          "contracts/modules/associated-systems",
-          "contracts/modules/usd"
-        ],
+        "modified": ["contracts/modules/associated-systems", "contracts/modules/usd"],
         "depends": [
           "contract.InitialModuleBundle",
           "contract.AssociatedSystemsModule",
@@ -1218,46 +978,29 @@
     },
     "invoke": {
       "acquire_ownership": {
-        "target": [
-          "InitialCoreProxy"
-        ],
+        "target": ["InitialCoreProxy"],
         "from": "<%= settings.owner %>",
         "func": "initializeOwnerModule",
-        "args": [
-          "<%= settings.owner %>"
-        ],
-        "depends": [
-          "contract.InitialCoreProxy"
-        ]
+        "args": ["<%= settings.owner %>"],
+        "depends": ["contract.InitialCoreProxy"]
       },
       "upgrade_core_proxy": {
-        "target": [
-          "InitialCoreProxy"
-        ],
+        "target": ["InitialCoreProxy"],
         "abi": "UpgradeModule",
         "from": "<%= settings.owner %>",
         "func": "upgradeTo",
-        "args": [
-          "<%= contracts.CoreRouter.address %>"
-        ],
+        "args": ["<%= contracts.CoreRouter.address %>"],
         "factory": {
           "CoreProxy": {
-            "abiOf": [
-              "CoreRouter"
-            ],
+            "abiOf": ["CoreRouter"],
             "event": "Upgraded",
             "arg": 0
           }
         },
-        "depends": [
-          "invoke.acquire_ownership",
-          "contract.CoreRouter"
-        ]
+        "depends": ["invoke.acquire_ownership", "contract.CoreRouter"]
       },
       "init_account": {
-        "target": [
-          "CoreProxy"
-        ],
+        "target": ["CoreProxy"],
         "from": "<%= settings.owner %>",
         "func": "initOrUpgradeNft",
         "args": [
@@ -1267,24 +1010,17 @@
           "https://synthetix.io",
           "<%= contracts.AccountRouter.address %>"
         ],
-        "depends": [
-          "invoke.upgrade_core_proxy",
-          "contract.AccountRouter"
-        ],
+        "depends": ["invoke.upgrade_core_proxy", "contract.AccountRouter"],
         "factory": {
           "AccountProxy": {
-            "abiOf": [
-              "AccountRouter"
-            ],
+            "abiOf": ["AccountRouter"],
             "event": "AssociatedSystemSet",
             "arg": 2
           }
         }
       },
       "init_usd": {
-        "target": [
-          "CoreProxy"
-        ],
+        "target": ["CoreProxy"],
         "from": "<%= settings.owner %>",
         "func": "initOrUpgradeToken",
         "args": [
@@ -1294,33 +1030,21 @@
           18,
           "<%= contracts.USDRouter.address %>"
         ],
-        "depends": [
-          "invoke.upgrade_core_proxy",
-          "contract.USDRouter"
-        ],
+        "depends": ["invoke.upgrade_core_proxy", "contract.USDRouter"],
         "factory": {
           "USDProxy": {
-            "abiOf": [
-              "USDRouter"
-            ],
+            "abiOf": ["USDRouter"],
             "event": "AssociatedSystemSet",
             "arg": 2
           }
         }
       },
       "set_oracle_manager": {
-        "target": [
-          "CoreProxy"
-        ],
+        "target": ["CoreProxy"],
         "from": "<%= settings.owner %>",
         "func": "configureOracleManager",
-        "args": [
-          "<%= imports.oracle_manager.contracts.Proxy.address %>"
-        ],
-        "depends": [
-          "invoke.upgrade_core_proxy",
-          "import.oracle_manager"
-        ]
+        "args": ["<%= imports.oracle_manager.contracts.Proxy.address %>"],
+        "depends": ["invoke.upgrade_core_proxy", "import.oracle_manager"]
       }
     }
   },
