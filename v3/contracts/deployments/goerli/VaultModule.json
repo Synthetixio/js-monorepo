@@ -317,7 +317,8 @@
       ],
       "outputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": ""
         }
       ]
     },
@@ -342,7 +343,8 @@
       ],
       "outputs": [
         {
-          "type": "int256"
+          "type": "int256",
+          "name": ""
         }
       ]
     },
@@ -390,7 +392,8 @@
       ],
       "outputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": ""
         }
       ]
     },
@@ -411,7 +414,8 @@
       ],
       "outputs": [
         {
-          "type": "int256"
+          "type": "int256",
+          "name": ""
         }
       ]
     }

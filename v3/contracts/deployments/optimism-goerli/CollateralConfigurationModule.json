@@ -169,7 +169,8 @@
               "type": "uint256",
               "name": "minDelegationD18"
             }
-          ]
+          ],
+          "name": ""
         }
       ]
     },
@@ -217,7 +218,8 @@
               "type": "uint256",
               "name": "minDelegationD18"
             }
-          ]
+          ],
+          "name": ""
         }
       ]
     },
@@ -235,7 +237,8 @@
       ],
       "outputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": ""
         }
       ]
     }

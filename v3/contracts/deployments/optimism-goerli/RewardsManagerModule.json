@@ -216,7 +216,8 @@
       ],
       "outputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": ""
         }
       ]
     },
@@ -270,10 +271,12 @@
       ],
       "outputs": [
         {
-          "type": "uint256[]"
+          "type": "uint256[]",
+          "name": ""
         },
         {
-          "type": "address[]"
+          "type": "address[]",
+          "name": ""
         }
       ]
     },
@@ -299,7 +302,8 @@
       ],
       "outputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": ""
         }
       ]
     },

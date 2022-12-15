@@ -297,7 +297,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": ""
         }
       ]
     },
@@ -315,7 +316,8 @@
       ],
       "outputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": ""
         }
       ]
     },
@@ -347,7 +349,8 @@
               "type": "int128",
               "name": "maxDebtShareValueD18"
             }
-          ]
+          ],
+          "name": ""
         }
       ]
     },
@@ -384,7 +387,8 @@
       ],
       "outputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": ""
         }
       ]
     },

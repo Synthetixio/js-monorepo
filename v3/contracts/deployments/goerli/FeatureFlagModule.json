@@ -103,7 +103,8 @@
       ],
       "outputs": [
         {
-          "type": "bool"
+          "type": "bool",
+          "name": ""
         }
       ]
     },
@@ -121,7 +122,8 @@
       ],
       "outputs": [
         {
-          "type": "address[]"
+          "type": "address[]",
+          "name": ""
         }
       ]
     },
@@ -143,7 +145,8 @@
       ],
       "outputs": [
         {
-          "type": "bool"
+          "type": "bool",
+          "name": ""
         }
       ]
     },
