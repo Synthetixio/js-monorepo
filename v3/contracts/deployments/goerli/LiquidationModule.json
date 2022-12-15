@@ -239,7 +239,8 @@
       ],
       "outputs": [
         {
-          "type": "bool"
+          "type": "bool",
+          "name": ""
         }
       ]
     },
@@ -260,7 +261,8 @@
       ],
       "outputs": [
         {
-          "type": "bool"
+          "type": "bool",
+          "name": ""
         }
       ]
     },

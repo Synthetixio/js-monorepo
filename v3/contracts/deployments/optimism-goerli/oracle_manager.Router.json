@@ -124,7 +124,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": ""
         }
       ]
     },
@@ -150,7 +151,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "bool"
+          "type": "bool",
+          "name": ""
         }
       ]
     },
@@ -176,7 +178,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": ""
         }
       ]
     },
@@ -189,7 +192,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": ""
         }
       ]
     },
@@ -312,7 +316,8 @@
               "type": "bytes",
               "name": "parameters"
             }
-          ]
+          ],
+          "name": ""
         }
       ]
     },
@@ -338,7 +343,8 @@
       ],
       "outputs": [
         {
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": ""
         }
       ]
     },
@@ -374,7 +380,8 @@
               "type": "uint256",
               "name": "liquidityScore"
             }
-          ]
+          ],
+          "name": ""
         }
       ]
     },
@@ -399,7 +406,8 @@
       ],
       "outputs": [
         {
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": ""
         }
       ]
     }

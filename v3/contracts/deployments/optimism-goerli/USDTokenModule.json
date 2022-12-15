@@ -120,7 +120,8 @@
       ],
       "outputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": ""
         }
       ]
     },
@@ -141,7 +142,8 @@
       ],
       "outputs": [
         {
-          "type": "bool"
+          "type": "bool",
+          "name": ""
         }
       ]
     },
@@ -159,7 +161,8 @@
       ],
       "outputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": ""
         }
       ]
     },
@@ -210,7 +213,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "uint8"
+          "type": "uint8",
+          "name": ""
         }
       ]
     },
@@ -244,7 +248,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "bool"
+          "type": "bool",
+          "name": ""
         }
       ]
     },
@@ -274,7 +279,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "string"
+          "type": "string",
+          "name": ""
         }
       ]
     },
@@ -308,7 +314,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "string"
+          "type": "string",
+          "name": ""
         }
       ]
     },
@@ -321,7 +328,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "uint256"
+          "type": "uint256",
+          "name": ""
         }
       ]
     },
@@ -342,7 +350,8 @@
       ],
       "outputs": [
         {
-          "type": "bool"
+          "type": "bool",
+          "name": ""
         }
       ]
     },
@@ -393,7 +402,8 @@
       ],
       "outputs": [
         {
-          "type": "bool"
+          "type": "bool",
+          "name": ""
         }
       ]
     }

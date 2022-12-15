@@ -86,7 +86,8 @@
               "type": "bytes",
               "name": "parameters"
             }
-          ]
+          ],
+          "name": ""
         }
       ]
     },
@@ -112,7 +113,8 @@
       ],
       "outputs": [
         {
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": ""
         }
       ]
     },
@@ -148,7 +150,8 @@
               "type": "uint256",
               "name": "liquidityScore"
             }
-          ]
+          ],
+          "name": ""
         }
       ]
     },
@@ -173,7 +176,8 @@
       ],
       "outputs": [
         {
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": ""
         }
       ]
     }
