@@ -31,7 +31,7 @@ export const useUpdatePool = (
         callArgs: [
           position.accountId,
           position.poolId,
-          position.collateral.address,
+          position.collateral.tokenAddress,
           0,
           utils.parseEther('1'),
         ],
@@ -42,7 +42,7 @@ export const useUpdatePool = (
         callArgs: [
           position.accountId,
           newPoolId,
-          position.collateral.address,
+          position.collateral.tokenAddress,
           amountBN,
           utils.parseEther('1'),
         ],
@@ -52,7 +52,7 @@ export const useUpdatePool = (
     amount,
     newPoolId,
     position.accountId,
-    position.collateral.address,
+    position.collateral.tokenAddress,
     position.collateral.decimals,
     position.poolId,
     snxProxy,

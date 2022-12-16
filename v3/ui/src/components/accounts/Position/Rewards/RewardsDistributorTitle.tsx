@@ -47,7 +47,7 @@ export const RewardsDistributorTitle: FC<Props> = ({
     addressOrName: snxProxy?.address,
     contractInterface: snxProxy?.abi,
     functionName: 'claimRewards',
-    args: [poolId, collateral.address, accountId, distributor],
+    args: [poolId, collateral.tokenAddress, accountId, distributor],
   });
 
   const claim = useCallback(async () => {

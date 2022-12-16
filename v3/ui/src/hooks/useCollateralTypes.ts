@@ -63,6 +63,8 @@ async function loadCollateralTypes({ provider }) {
     tokenAddress: config.tokenAddress,
     price: prices[i],
     symbol: symbols[i],
+    // Looks like we have 18 everywhere and decimals is no longer dynamic value
+    decimals: 18,
     // TODO: map symbol to icon
     logo: 'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F/logo.png',
   }));

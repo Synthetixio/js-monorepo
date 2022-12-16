@@ -25,7 +25,7 @@ export const RewardRate: FC<Props> = ({ distributor, poolId, collateral, decimal
     addressOrName: snxProxy?.address,
     contractInterface: snxProxy?.abi,
     functionName: 'getRewardRate',
-    args: [poolId, collateral.address, distributor],
+    args: [poolId, collateral.tokenAddress, distributor],
   });
 
   const rate = new Big(formatUnits(data?.toString() || 0, decimals + 18));

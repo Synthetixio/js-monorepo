@@ -89,7 +89,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
 
   const isNativeCurrency = selectedCollateralType?.symbol === 'eth';
 
-  const balanceData = useTokenBalance(selectedCollateralType?.address);
+  const balanceData = useTokenBalance(selectedCollateralType?.tokenAddress);
 
   // add extra step to convert to wrapped token if native (ex. ETH)
   // if (isNativeCurrency) {
@@ -200,7 +200,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
                   decimals={selectedCollateralType.decimals}
                   symbol={selectedCollateralType.symbol}
                   onMax={(balance) => setValue('amount', balance)}
-                  address={selectedCollateralType.address}
+                  address={selectedCollateralType.tokenAddress}
                 />
               </Box>
 

@@ -11,11 +11,11 @@ export const useGetRewards = (accountId: string, poolId: string, collateral: Col
   const snxProxy = useSnxProxy();
 
   return useQuery<RewardDistribution[]>(
-    ['rewards', poolId, collateral.address, accountId],
+    ['rewards', poolId, collateral.tokenAddress, accountId],
     async () => {
       try {
         const [[rewards, distributors]] = await Promise.all([
-          snxProxy?.contract?.callStatic?.getRewards(poolId, collateral.address, accountId),
+          snxProxy?.contract?.callStatic?.getRewards(poolId, collateral.tokenAddress, accountId),
         ]);
 
         return (rewards || []).map((reward: any, index: number) => ({

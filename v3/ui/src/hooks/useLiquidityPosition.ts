@@ -19,7 +19,7 @@ export const useLiquidityPosition = (
     addressOrName: snxProxy?.address,
     contractInterface: snxProxy?.abi,
     functionName: fn,
-    args: [accountId, poolId, collateral.address],
+    args: [accountId, poolId, collateral.tokenAddress],
   }));
 
   const { data: queryData, isLoading, refetch } = useContractReads({ contracts: funcCalls });

@@ -40,7 +40,7 @@ export const useLiquidityPositions = (accountId: string) => {
       addressOrName: snxProxy?.address,
       contractInterface: snxProxy?.abi,
       functionName: call.functionName,
-      args: [accountId, call.poolId, call.collateral.address],
+      args: [accountId, call.poolId, call.collateral.tokenAddress],
     })),
   });
   const formatData = () => {

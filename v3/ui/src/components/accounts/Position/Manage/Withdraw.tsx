@@ -35,7 +35,7 @@ export const Withdraw: FC<Props> = ({ collateral, collateralAmount, value, onCha
             balance={parseUnits(collateralAmount, collateral.decimals)}
             decimals={collateral.decimals}
             symbol={collateral.symbol}
-            address={collateral.address}
+            address={collateral.tokenAddress}
           />
         </Flex>
       </Box>
