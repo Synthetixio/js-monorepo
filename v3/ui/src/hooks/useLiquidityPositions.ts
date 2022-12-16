@@ -6,7 +6,7 @@ import { poolsData } from '../utils/constants';
 import { useSynthetixProxyEvent } from './useContractEvent';
 import { CollateralType, LiquidityPositionType } from '../utils/types';
 import { formatValue } from '../utils/helpers';
-import { useCollateralTypes } from './useCollateralTypes';
+import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
 import { BigNumber } from 'ethers';
 
 interface DepositingCall {

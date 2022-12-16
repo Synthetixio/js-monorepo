@@ -23,7 +23,7 @@ import {
 } from '@chakra-ui/react';
 import { FC, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useManagePermissions } from '../../../hooks';
+import { useManagePermissions } from '../../../hooks/useManagePermissions';
 import { prettyString } from '../../../utils/helpers';
 import { AddressInput } from './AddressInput';
 

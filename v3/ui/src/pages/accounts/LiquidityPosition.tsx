@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { useMemo } from 'react';
 import { Position } from '../../components/accounts/Position';
 import { DepositingNav } from '../../components/accounts/DepositingNav';
-import { useCollateralTypes } from '../../hooks/useCollateralTypes';
+import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
 
 export function LiquidityPosition() {
   const { id: accountId, poolId, collateral: collateralSymbol } = useParams();

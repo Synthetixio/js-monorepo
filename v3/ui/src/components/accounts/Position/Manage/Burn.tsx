@@ -1,6 +1,6 @@
 import { Text, Box, Flex, Heading, Alert, AlertIcon } from '@chakra-ui/react';
 import { FC } from 'react';
-import { useContract } from '../../../../hooks';
+import { useContract } from '../../../../hooks/useContract';
 import { useTokenBalance } from '../../../../hooks/useTokenBalance';
 import { contracts } from '../../../../utils/constants';
 

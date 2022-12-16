@@ -4,7 +4,7 @@ import Big from 'big.js';
 import { formatUnits } from 'ethers/lib/utils';
 import { FC } from 'react';
 import { useContractRead } from 'wagmi';
-import { useSnxProxy } from '../../../../hooks';
+import { useSnxProxy } from '../../../../hooks/useContract';
 import { CollateralType } from '../../../../utils/types';
 import { Amount } from '../../../shared/Amount/Amount';
 

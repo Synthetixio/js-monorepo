@@ -2,7 +2,7 @@ import { Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useRecoilState } from 'recoil';
 import { useContractRead } from 'wagmi';
-import { useContract } from '../../../../hooks';
+import { useContract } from '../../../../hooks/useContract';
 import { contracts } from '../../../../utils/constants';
 import { chainIdState } from '../../../../utils/state';
 import { Address } from '../../../shared/Address';

@@ -11,7 +11,7 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useContract } from '../../../hooks';
+import { useContract } from '../../../hooks/useContract';
 import { useState } from 'react';
 import { useContractWrite } from 'wagmi';
 import { AddressInput } from './AddressInput';

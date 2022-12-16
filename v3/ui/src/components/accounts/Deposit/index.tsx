@@ -1,5 +1,5 @@
 import { poolsData } from '../../../utils/constants';
-import { useSynthetixRead } from '../../../hooks';
+import { useSynthetixRead } from '../../../hooks/useDeploymentRead';
 import EditPosition from '../EditPosition';
 import { Balance } from './Balance';
 import CollateralTypeSelector from './CollateralTypeSelector';
@@ -30,7 +30,7 @@ import { CollateralType, LiquidityPositionType } from '../../../utils/types';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 import { FC } from 'react';
 import { useDeposit } from '../../../hooks/useDeposit';
-import { useCollateralTypes } from '../../../hooks/useCollateralTypes';
+import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
 
 type FormType = {
   collateralType: CollateralType;

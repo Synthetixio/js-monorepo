@@ -1,7 +1,8 @@
 import { Box, Button } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { useAccount, useContractWrite } from 'wagmi';
-import { useAccountRead, useContract } from '../../hooks';
+import { useAccountRead } from '../../hooks/useDeploymentRead';
+import { useContract } from '../../hooks/useContract';
 import { contracts } from '../../utils/constants';
 
 export const AcceptNomination = () => {

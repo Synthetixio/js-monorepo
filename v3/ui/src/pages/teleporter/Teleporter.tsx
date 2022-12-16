@@ -27,7 +27,7 @@ import { NumberInput } from '../../components/accounts/Position/Manage/NumberInp
 import { Balance } from '../../components/accounts/Deposit/Balance';
 import { routeToChain } from '../../components/NetworkChain';
 import { Transaction } from '../../components/shared/TransactionReview/TransactionReview.types';
-import { useContract } from '../../hooks';
+import { useContract } from '../../hooks/useContract';
 import { useApprove } from '../../hooks/useApprove';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';

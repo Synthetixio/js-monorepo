@@ -1,9 +1,9 @@
-import { Text, Button, Tr, Td } from '@chakra-ui/react';
+import { Button, Td, Text, Tr } from '@chakra-ui/react';
 import Big from 'big.js';
 import { formatUnits } from 'ethers/lib/utils';
 import { FC, useCallback, useState } from 'react';
 import { useContractRead, useContractWrite, useToken } from 'wagmi';
-import { useContract, useSnxProxy } from '../../../../hooks';
+import { useContract, useSnxProxy } from '../../../../hooks/useContract';
 import { contracts } from '../../../../utils/constants';
 import { CollateralType } from '../../../../utils/types';
 import { Amount } from '../../../shared/Amount/Amount';
