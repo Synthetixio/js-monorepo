@@ -10,6 +10,7 @@ import { useApprove } from './useApprove';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
 import { useUnWrapEth, useWrapEth } from './useWrapEth';
+import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
 
 interface IPosition {
   accountId: string;
@@ -27,8 +28,12 @@ export const useManagePosition = (
   const [isLoading, setIsLoading] = useState(false);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   const collateralChangeBN = parseUnits(Math.abs(collateralChange), position.collateral.decimals);
-  const wethContract = useContract(contracts.WETH);
-  const isNativeCurrency = compareAddress(wethContract?.address, position.collateral.tokenAddress);
+
+  const ethCollateral = useEthCollateralType();
+  const isNativeCurrency = compareAddress(
+    ethCollateral?.tokenAddress,
+    position.collateral.tokenAddress
+  );
 
   const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
   const { unWrap, isLoading: isUnWrapping } = useUnWrapEth();

@@ -1,17 +1,17 @@
 import { ethers } from 'ethers';
 import { useAccount, useBalance, useNetwork } from 'wagmi';
-import { contracts } from '../utils/constants';
 import { compareAddress, formatValue } from '../utils/helpers';
-import { useContract } from './useContract';
+import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
 
 export const useTokenBalance = (token: string | undefined, chainId?: number | undefined) => {
   const { address: accountAddress } = useAccount();
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
-  const wethContract = useContract(contracts.WETH, chainId || activeChain?.id);
+  const ethCollateral = useEthCollateralType();
+
   const { data: balanceData, refetch } = useBalance({
     addressOrName: accountAddress,
-    token: compareAddress(token, wethContract?.address) ? undefined : token,
+    token: compareAddress(token, ethCollateral?.tokenAddress) ? undefined : token,
     enabled: hasWalletConnected,
     chainId: chainId || activeChain?.id,
   });

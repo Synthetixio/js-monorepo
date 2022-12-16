@@ -83,3 +83,8 @@ export function useCollateralTypes() {
     cacheTime: Infinity,
   });
 }
+
+export function useEthCollateralType() {
+  const { data } = useCollateralTypes();
+  return data.find((collateral) => collateral.symbol === 'WETH');
+}
