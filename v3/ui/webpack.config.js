@@ -23,7 +23,14 @@ const htmlPlugin = new HtmlWebpackPlugin({
 
 const babelRule = {
   test: /\.(ts|tsx|js|jsx)$/,
-  include: [/v3\/contracts/, /v3\/theme/, /v3\/ui/],
+  include: [
+    // Need to list all the folders in v3 and outside (if used)
+    /v3\/lib/,
+    /v3\/contracts/,
+    /v3\/components/,
+    /v3\/theme/,
+    /v3\/ui/,
+  ],
   resolve: {
     fullySpecified: false,
   },
