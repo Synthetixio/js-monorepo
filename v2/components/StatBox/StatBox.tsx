@@ -15,14 +15,19 @@ export const StatBox = ({ label, amount, isLoading, ...props }: StatboxProps) =>
       w="33%"
       maxW="325px"
       py="14px"
-      px={6}
+      px={{ base: 2, sm: 6 }}
       borderRadius="base"
       borderWidth="1px"
       borderColor="gray.900"
       bg="whiteAlpha.50"
       {...props}
     >
-      <Text fontFamily="heading" fontWeight="semibold" fontSize="sm" color="gray.500">
+      <Text
+        fontFamily="heading"
+        fontWeight="semibold"
+        fontSize={{ base: 'xs', sm: 'sm' }}
+        color="gray.500"
+      >
         {label}
       </Text>
 
@@ -30,7 +35,12 @@ export const StatBox = ({ label, amount, isLoading, ...props }: StatboxProps) =>
         <Skeleton height="28px" width="50%" mt="8px" />
       ) : (
         <Fade in={!isLoading}>
-          <Text fontFamily="heading" fontWeight="black" fontSize="2xl" color="white">
+          <Text
+            fontFamily="heading"
+            fontWeight="black"
+            fontSize={{ base: 'lg', sm: '2xl' }}
+            color="white"
+          >
             {amount}
           </Text>
         </Fade>

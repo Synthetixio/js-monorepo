@@ -35,7 +35,7 @@ const WalletLayoutUi = ({
       <Heading size="md" textAlign="center">
         {t('staking-v2.wallet.my-wallet')}
       </Heading>
-      <ButtonGroup py={4} display="flex" justifyContent="center">
+      <ButtonGroup py={4} display="flex" justifyContent="center" flexWrap="wrap">
         <WalletTab to="/wallet/balances">{t(`staking-v2.wallet.tabs.balances`)}</WalletTab>
         <WalletTab to="/escrow">{t(`staking-v2.wallet.tabs.escrow`)}</WalletTab>
         <WalletTab to="/history">{t(`staking-v2.wallet.tabs.history`)}</WalletTab>
