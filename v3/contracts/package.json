@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "codegen": "node ./codegen.js",
-    "build": "yarn fetch-deployments && yarn codegen && tsc --build --verbose",
+    "build": "yarn codegen && tsc --build --verbose",
     "start:goerli": "./start.sh goerli",
     "start:optimism-goerli": "./start.sh optimism-goerli",
     "fetch:goerli": "./fetch.sh goerli",
