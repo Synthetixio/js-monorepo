@@ -10,11 +10,12 @@ import { theme, Fonts } from '@synthetixio/v3-theme';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { supportedChains, INFURA_KEY, ALCHEMY_KEY_MAPPING } from './utils/constants';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './i18n';
 
 // We have to import into *VAR* and *USE* it so webpack does not remove unused library import
 import * as rainbowkitStyles from '@rainbow-me/rainbowkit/styles.css';
+const queryClient = new QueryClient();
 
 const { chains, provider } = configureChains(supportedChains, [
   infuraProvider({ apiKey: INFURA_KEY, priority: 0 }),
@@ -64,7 +65,9 @@ root.render(
             })}
             chains={chains}
           >
-            <Synthetix />
+            <QueryClientProvider client={queryClient}>
+              <Synthetix />
+            </QueryClientProvider>
           </RainbowKitProvider>
         </WagmiConfig>
       </ChakraProvider>
