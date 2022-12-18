@@ -1,23 +1,39 @@
-import { BigNumber } from 'ethers';
 import { MarketSnapshotByWeekSchema, PoolSchema } from '../hooks/useGetPoolData';
 import { z } from 'zod';
+import Wei, { wei } from '@synthetixio/wei';
 
-export const calculateMarketPnl = (netIssuance: BigNumber, reportedDebt: BigNumber) =>
+export const calculateMarketPnl = (netIssuance: Wei, reportedDebt: Wei) =>
   reportedDebt.add(netIssuance).mul(-1);
 
 type MarketSnapshotByWeek = z.infer<typeof MarketSnapshotByWeekSchema>;
 export const calculatePnlGrowth = (marketSnapshots?: MarketSnapshotByWeek[]) => {
   if (!marketSnapshots || marketSnapshots.length < 2) return undefined;
-  const first = marketSnapshots[0].pnl;
-  const current = marketSnapshots[marketSnapshots.length - 1].pnl;
-  const value = current.sub(first);
-  const percentage = value.div(first);
+  const start = marketSnapshots[0].pnl;
+  if (start.eq(0)) {
+    // cant grow from 0
+    return undefined;
+  }
+  const end = marketSnapshots[marketSnapshots.length - 1].pnl;
+  const value = start.sub(end);
+  const percentage = value.div(start);
   return { value, percentage };
 };
 
 type PoolData = z.infer<typeof PoolSchema>;
-export const calculateTotalMarketPerformance = (poolData: PoolData) => {
+export const calculatePoolPerformanceLifetime = (poolData: PoolData) => {
   return poolData.configurations.reduce((acc, { market }) => {
     return acc.add(market.pnl);
-  }, BigNumber.from(0));
+  }, wei(0));
+};
+
+export const calculatePoolPerformanceSevenDays = (poolData: PoolData) => {
+  const total = calculatePoolPerformanceLifetime(poolData);
+  const totalSevenDaysAgo = poolData.configurations.reduce((acc, { market }) => {
+    return acc.add(market.market_snapshots_by_week[1]?.pnl || wei(0));
+  }, wei(0));
+
+  return {
+    value: total.sub(totalSevenDaysAgo),
+    growthPercentage: totalSevenDaysAgo.sub(total).div(totalSevenDaysAgo),
+  };
 };
