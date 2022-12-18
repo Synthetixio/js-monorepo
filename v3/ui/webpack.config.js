@@ -30,6 +30,7 @@ const babelRule = {
     /v3\/components/,
     /v3\/theme/,
     /v3\/ui/,
+    /v2\/lib/,
   ],
   resolve: {
     fullySpecified: false,
