@@ -158,7 +158,7 @@ function Markets({
                     <Tr key={id}>
                       <StyledTd isLastItem={isLastItem}>
                         <Text fontSize="sm" display="block">
-                          {marketNamesById?.[market.id] || 'Legacy Market'}
+                          {marketNamesById?.[market.id] || '-'}
                         </Text>
                         <Text fontSize="xs" display="block">
                           ID: {market.id}
@@ -212,6 +212,7 @@ export const Pool = () => {
   }));
   const { data: marketNamesById, isLoading: isLoadingMarketNames } =
     useGetMarketNamesById(marketIdsAndAddresses);
+
   return (
     <>
       <Helmet>
