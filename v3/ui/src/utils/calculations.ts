@@ -6,14 +6,15 @@ export const calculateMarketPnl = (netIssuance: Wei, reportedDebt: Wei) =>
   reportedDebt.add(netIssuance).mul(-1);
 
 type MarketSnapshotByWeek = z.infer<typeof MarketSnapshotByWeekSchema>;
-export const calculatePnlGrowth = (marketSnapshots?: MarketSnapshotByWeek[]) => {
+export const calculateSevenDaysPnlGrowth = (marketSnapshots?: MarketSnapshotByWeek[]) => {
   if (!marketSnapshots || marketSnapshots.length < 2) return undefined;
-  const start = marketSnapshots[0].pnl;
+  const end = marketSnapshots[0].pnl;
+  const start = marketSnapshots[1].pnl;
+
   if (start.eq(0)) {
     // cant grow from 0
     return undefined;
   }
-  const end = marketSnapshots[marketSnapshots.length - 1].pnl;
   const value = start.sub(end);
   const percentage = value.div(start);
   return { value, percentage };
