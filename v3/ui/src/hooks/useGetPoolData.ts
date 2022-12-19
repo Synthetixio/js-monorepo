@@ -128,7 +128,7 @@ function addMockData(pool: Pool | null): Pool | null {
   const usd_withdrawn = wei('1500');
   const usd_deposited = wei('1000');
   const net_issuance = usd_withdrawn.sub(usd_deposited);
-  const reported_debt = wei('1500');
+  const reported_debt = wei('100');
   const market = pool.configurations[0].market;
   const fakeMarket: z.infer<typeof MarketSchema> = {
     ...market,
@@ -153,7 +153,7 @@ function addMockData(pool: Pool | null): Pool | null {
         usd_withdrawn: wei('1000'),
         usd_deposited: wei('1500'),
         net_issuance: wei('500'),
-        reported_debt: wei('400'),
+        reported_debt: wei('50'),
         pnl: calculateMarketPnl(wei('500'), wei('400')),
         updated_at: market.updated_at,
         updates_in_period: 2,
