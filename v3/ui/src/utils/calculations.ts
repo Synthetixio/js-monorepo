@@ -10,14 +10,11 @@ export const calculateSevenDaysPnlGrowth = (marketSnapshots?: MarketSnapshotByWe
   if (!marketSnapshots || marketSnapshots.length < 2) return undefined;
   const end = marketSnapshots[0].pnl;
   const start = marketSnapshots[1].pnl;
-
   if (start.eq(0)) {
     // cant grow from 0
     return undefined;
   }
-  const value = start.sub(end);
-  const percentage = value.div(start);
-  return { value, percentage };
+  return { value: end.sub(start), percentage: end.sub(start).div(start) };
 };
 
 type PoolData = z.infer<typeof PoolSchema>;
@@ -32,9 +29,10 @@ export const calculatePoolPerformanceSevenDays = (poolData: PoolData) => {
   const totalSevenDaysAgo = poolData.configurations.reduce((acc, { market }) => {
     return acc.add(market.market_snapshots_by_week[1]?.pnl || wei(0));
   }, wei(0));
-
   return {
     value: total.sub(totalSevenDaysAgo),
-    growthPercentage: totalSevenDaysAgo.sub(total).div(totalSevenDaysAgo),
+    growthPercentage: totalSevenDaysAgo.eq(0)
+      ? undefined
+      : total.sub(totalSevenDaysAgo).div(totalSevenDaysAgo),
   };
 };
