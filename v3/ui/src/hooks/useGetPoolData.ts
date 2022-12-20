@@ -1,11 +1,9 @@
-import { useRecoilState } from 'recoil';
-import { chainIdState } from '../utils/state';
-import { getChainNameById } from '../utils/constants';
 import { useQuery } from '@tanstack/react-query';
 import { calculateMarketPnl } from '../utils/calculations';
 import { formatGraphBigDecimal, getSubgraphUrl } from '../utils/subgraph';
 import { z } from 'zod';
 import { wei } from '@synthetixio/wei';
+import { useProvider } from 'wagmi';
 
 const GraphBigIntSchema = z.string().transform((src) => formatGraphBigDecimal(src));
 const GraphBigDecimalSchema = z.string().transform((src) => formatGraphBigDecimal(src));
@@ -109,8 +107,9 @@ const getPoolData = async (chainName: string, id: string) => {
 };
 
 export const useGetPoolData = (id?: string) => {
-  const [localChainId] = useRecoilState(chainIdState);
-  const chainName = getChainNameById(localChainId);
+  const provider = useProvider();
+  const chainName = provider.network.name;
+
   return useQuery(
     ['useGetPoolData', chainName, id],
     async () => {
