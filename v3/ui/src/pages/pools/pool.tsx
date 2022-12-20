@@ -218,7 +218,7 @@ export const Pool = () => {
   }));
   const { data: marketNamesById, isLoading: isLoadingMarketNames } =
     useGetMarketNamesById(marketIdsAndAddresses);
-
+  const isLoading = isLoadingPoolData || isLoadingMarketNames;
   return (
     <>
       <Helmet>
@@ -254,11 +254,7 @@ export const Pool = () => {
           </Box>
         </Box>
         <Box w="60%" ml={2}>
-          <Markets
-            marketNamesById={marketNamesById}
-            poolData={poolData}
-            isLoading={isLoadingPoolData || isLoadingMarketNames}
-          />
+          <Markets marketNamesById={marketNamesById} poolData={poolData} isLoading={isLoading} />
         </Box>
       </Flex>
     </>
