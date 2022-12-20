@@ -30,8 +30,8 @@ export const useOwnerAccounts = () => {
   const accountContract = useContract(contracts.ACCOUNT_PROXY);
 
   const { data, refetch } = useContractRead({
-    addressOrName: accountContract?.address,
-    contractInterface: accountContract?.abi || '',
+    address: accountContract?.address,
+    abi: accountContract?.abi,
     functionName: 'balanceOf',
     enabled: Boolean(activeChain && accountContract),
     args: [address],
@@ -49,8 +49,8 @@ export const useOwnerAccounts = () => {
   const tokenCalls = useMemo(() => {
     return data && accountContract
       ? Array.from(Array(data.toNumber()).keys()).map((tokenId: number) => ({
-          addressOrName: accountContract.address,
-          contractInterface: accountContract.abi,
+          address: accountContract.address,
+          abi: accountContract.abi,
           functionName: 'tokenOfOwnerByIndex',
           args: [address, tokenId],
           chainId: accountContract?.chainId,

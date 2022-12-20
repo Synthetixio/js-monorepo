@@ -23,8 +23,8 @@ export const AcceptNomination = () => {
   const accountProxy = useContract(contracts.ACCOUNT_PROXY);
   const { isLoading, write } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: accountProxy?.address,
-    contractInterface: accountProxy?.abi || '',
+    address: accountProxy?.address,
+    abi: accountProxy?.abi,
     functionName: 'transferFrom',
     args: [accountOwner, address, accountId],
   });

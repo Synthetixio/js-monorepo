@@ -1,9 +1,9 @@
 import { createRoot } from 'react-dom/client';
 import { Synthetix } from './App';
-import { createClient, WagmiConfig, configureChains } from 'wagmi';
+import { goerli, createClient, WagmiConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { infuraProvider } from 'wagmi/providers/infura';
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { ChakraProvider } from '@chakra-ui/react';
 import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import { theme, Fonts } from '@synthetixio/v3-theme';
@@ -33,17 +33,7 @@ const queryClient = new QueryClient({
 
 const { chains, provider } = configureChains(supportedChains, [
   infuraProvider({ apiKey: INFURA_KEY, priority: 0 }),
-  jsonRpcProvider({
-    rpc: (chain) => {
-      const alchemyKey = ALCHEMY_KEY_MAPPING[chain.id];
-      return Boolean(alchemyKey)
-        ? {
-            http: `${chain.rpcUrls.alchemy}/${alchemyKey}`,
-          }
-        : null;
-    },
-    priority: 1,
-  }),
+  alchemyProvider({ apiKey: ALCHEMY_KEY_MAPPING[goerli.id], priority: 1 }),
   publicProvider({ priority: 2 }),
 ]);
 
@@ -64,7 +54,7 @@ const root = createRoot(container);
 
 root.render(
   <BrowserRouter>
-    <QueryClientProvider client={queryClient} contextSharing={true}>
+    <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <ChakraProvider theme={theme}>
           <Fonts />

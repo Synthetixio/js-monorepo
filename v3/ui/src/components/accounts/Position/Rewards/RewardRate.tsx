@@ -22,8 +22,8 @@ export const RewardRate: FC<Props> = ({ distributor, poolId, collateral, decimal
   const snxProxy = useSnxProxy();
 
   const { data, isLoading } = useContractRead({
-    addressOrName: snxProxy?.address,
-    contractInterface: snxProxy?.abi || '',
+    address: snxProxy?.address,
+    abi: snxProxy?.abi,
     functionName: 'getRewardRate',
     enabled: Boolean(snxProxy),
     args: [poolId, collateral.tokenAddress, distributor],

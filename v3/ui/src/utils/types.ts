@@ -8,7 +8,7 @@ export type CollateralType = {
   liquidationRewardD18: BigNumber;
   minDelegationD18: BigNumber;
   oracleNodeId: string;
-  tokenAddress: string;
+  tokenAddress: `0x${string}`;
   symbol: string;
   decimals: number;
   price?: BigNumber;

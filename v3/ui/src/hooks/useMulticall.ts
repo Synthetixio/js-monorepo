@@ -95,8 +95,8 @@ export const useMulticall = (
 
   const currentTxn = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: callContract?.address ?? '',
-    contractInterface: callContract?.interface ?? '',
+    address: callContract?.address ?? '',
+    abi: callContract?.interface ?? '',
     functionName: callFunc!,
     args: callArgs,
     overrides,
@@ -129,6 +129,7 @@ export const useMulticall = (
       const txReceipt = await currentTxn.writeAsync();
       await txReceipt.wait();
     } catch (error) {
+      console.error(error);
       setStatus('error');
       throw error;
     }

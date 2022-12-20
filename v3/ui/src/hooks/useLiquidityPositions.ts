@@ -37,8 +37,8 @@ export const useLiquidityPositions = (accountId: string) => {
   const liquidityPositionsQueryResult = useContractReads({
     enabled: Boolean(snxProxy),
     contracts: calls.map((call) => ({
-      addressOrName: snxProxy?.address,
-      contractInterface: snxProxy?.abi || '',
+      address: snxProxy?.address,
+      abi: snxProxy?.abi,
       functionName: call.functionName,
       args: [accountId, call.poolId, call.collateral.tokenAddress],
     })),

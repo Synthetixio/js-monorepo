@@ -1,9 +1,8 @@
 import { BigNumberish } from 'ethers';
 import { useCallback } from 'react';
-import { useAccount, useBalance, useContractWrite } from 'wagmi';
+import { erc20ABI, useAccount, useBalance, useContractWrite } from 'wagmi';
 import { TxConfig } from './useMulticall';
 import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
-import * as Erc20 from '@synthetixio/v3-contracts/build/_ERC20';
 
 export const useWrapEth = (config?: Partial<TxConfig>) => {
   const ethCollateral = useEthCollateralType();
@@ -21,8 +20,8 @@ export const useWrapEth = (config?: Partial<TxConfig>) => {
   const { address: accountAddress } = useAccount();
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: ethCollateral?.tokenAddress || '',
-    contractInterface: Erc20.abi,
+    address: ethCollateral?.tokenAddress || '',
+    abi: erc20ABI,
     functionName: 'deposit',
     args: [],
     enabled: Boolean(ethCollateral?.tokenAddress),
@@ -35,7 +34,7 @@ export const useWrapEth = (config?: Partial<TxConfig>) => {
   });
 
   const { data: balance, refetch } = useBalance({
-    addressOrName: accountAddress,
+    address: accountAddress,
     token: ethCollateral?.tokenAddress,
     enabled: Boolean(ethCollateral?.tokenAddress),
   });
@@ -68,8 +67,8 @@ export const useUnWrapEth = (config?: Partial<TxConfig>) => {
 
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: ethCollateral?.tokenAddress || '',
-    contractInterface: Erc20.abi,
+    address: ethCollateral?.tokenAddress || '',
+    abi: erc20ABI,
     functionName: 'withdraw',
     enabled: Boolean(ethCollateral?.tokenAddress),
     onError: (e) => {

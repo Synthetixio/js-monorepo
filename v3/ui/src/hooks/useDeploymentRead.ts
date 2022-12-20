@@ -19,8 +19,8 @@ export const useDeploymentRead = (contractName: string, config: ConfigType) => {
   const contract = useContract(contractName);
   return useContractRead({
     ...config,
-    addressOrName: contract?.address,
-    contractInterface: contract?.abi || '',
+    address: contract?.address,
+    abi: contract?.abi,
     chainId: contract?.chainId,
   });
 };

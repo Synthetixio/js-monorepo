@@ -81,8 +81,8 @@ export const Teleporter = () => {
 
   const { writeAsync: ccipSend, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: CCIP?.address,
-    contractInterface: CCIP?.abi || '',
+    address: CCIP?.address,
+    abi: CCIP?.abi,
     functionName: 'ccipSend',
     args: [
       to,

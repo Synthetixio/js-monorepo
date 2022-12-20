@@ -16,8 +16,8 @@ export const useLiquidityPosition = (
   const functionNames = ['getPositionCollateral', 'getPositionDebt'];
 
   const funcCalls = functionNames.map((fn) => ({
-    addressOrName: snxProxy?.address,
-    contractInterface: snxProxy?.abi || '',
+    address: snxProxy?.address,
+    abi: snxProxy?.abi,
     functionName: fn,
     args: [accountId, poolId, collateral.tokenAddress],
   }));

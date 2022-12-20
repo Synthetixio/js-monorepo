@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Spinner } from '@chakra-ui/react';
 import { useEffect, useRef, FC } from 'react';
 import { useRecoilState } from 'recoil';
-import { useNetwork, useSwitchNetwork, chain } from 'wagmi';
+import { useNetwork, useSwitchNetwork, goerli } from 'wagmi';
 import { getChainNameById, supportedChains } from '../utils/constants';
 import { chainIdState } from '../utils/state';
 import { useLocation, useSearchParams } from 'react-router-dom';
@@ -11,7 +11,7 @@ type Props = {
   children?: React.ReactElement | React.ReactElement[];
 };
 
-const DEFAULT_CHAIN = chain.goerli;
+const DEFAULT_CHAIN = goerli;
 
 export const routeToChain = (basePath: string, chainId: number) => {
   const chain = getChainNameById(chainId);
