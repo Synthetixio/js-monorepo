@@ -17,9 +17,10 @@ export const RewardsDistributor: FC<Props> = ({ distributor }) => {
 
   const { data } = useContractRead({
     addressOrName: distributor,
-    contractInterface: rewardDistributer?.abi,
+    contractInterface: rewardDistributer?.abi || '',
     chainId: localChainId,
     functionName: 'name',
+    enabled: Boolean(rewardDistributer),
   });
 
   return (

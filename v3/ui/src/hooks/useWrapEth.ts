@@ -21,7 +21,7 @@ export const useWrapEth = (config?: Partial<TxConfig>) => {
   const { address: accountAddress } = useAccount();
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: ethCollateral?.tokenAddress,
+    addressOrName: ethCollateral?.tokenAddress || '',
     contractInterface: Erc20.abi,
     functionName: 'deposit',
     args: [],
@@ -68,7 +68,7 @@ export const useUnWrapEth = (config?: Partial<TxConfig>) => {
 
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: ethCollateral?.tokenAddress,
+    addressOrName: ethCollateral?.tokenAddress || '',
     contractInterface: Erc20.abi,
     functionName: 'withdraw',
     enabled: Boolean(ethCollateral?.tokenAddress),

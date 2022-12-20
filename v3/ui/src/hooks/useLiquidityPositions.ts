@@ -24,7 +24,7 @@ export const useLiquidityPositions = (accountId: string) => {
   const functionNames = ['getPositionCollateral', 'getPositionDebt'];
   functionNames.forEach((functionName) => {
     pools.forEach((poolId) => {
-      supportedCollateralTypes.forEach((collateral) => {
+      supportedCollateralTypes.data?.forEach((collateral) => {
         calls.push({
           poolId,
           collateral,
@@ -35,10 +35,10 @@ export const useLiquidityPositions = (accountId: string) => {
   });
 
   const liquidityPositionsQueryResult = useContractReads({
-    enabled: true,
+    enabled: Boolean(snxProxy),
     contracts: calls.map((call) => ({
       addressOrName: snxProxy?.address,
-      contractInterface: snxProxy?.abi,
+      contractInterface: snxProxy?.abi || '',
       functionName: call.functionName,
       args: [accountId, call.poolId, call.collateral.tokenAddress],
     })),
@@ -66,7 +66,7 @@ export const useLiquidityPositions = (accountId: string) => {
       const { poolId, collateral } = calls[c.index];
       const key = `${poolId}-${collateral.symbol}`;
 
-      const collateralValue = formatValue(c.value.value || 0, collateral.priceDecimals);
+      const collateralValue = formatValue(c.value.value || 0, collateral.decimals);
       const cRatio = !debt.eq(0)
         ? BigNumber.from(collateralValue).mul(100).div(debt)
         : BigNumber.from(0);

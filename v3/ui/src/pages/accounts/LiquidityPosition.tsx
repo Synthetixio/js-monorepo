@@ -1,6 +1,5 @@
 import { Container } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 import { useMemo } from 'react';
 import { Position } from '../../components/accounts/Position';
 import { DepositingNav } from '../../components/accounts/DepositingNav';
@@ -11,8 +10,8 @@ export function LiquidityPosition() {
   const { data: collateralTypes } = useCollateralTypes();
 
   const collateral = useMemo(() => {
-    return collateralTypes.find(
-      (item) => item.symbol.toLowerCase() === collateralSymbol?.toLocaleLowerCase()
+    return collateralTypes?.find(
+      (item) => item.symbol?.toLowerCase() === collateralSymbol?.toLocaleLowerCase()
     );
   }, [collateralTypes, collateralSymbol]);
 

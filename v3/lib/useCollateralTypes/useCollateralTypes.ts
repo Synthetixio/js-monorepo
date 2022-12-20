@@ -1,11 +1,12 @@
-import { ethers } from 'ethers';
+/* eslint-disable no-console */
+import { BigNumber, ethers } from 'ethers';
 import { useProvider } from 'wagmi';
 import { useQuery } from '@tanstack/react-query';
 import * as Erc20 from '@synthetixio/v3-contracts/build/_ERC20';
 import { CoreProxy as CoreProxyGoerli } from '@synthetixio/v3-contracts/build/goerli/CoreProxy';
 import type { CoreProxy as CoreProxyOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/CoreProxy';
 
-async function importCoreProxy(chainName) {
+async function importCoreProxy(chainName: string) {
   switch (chainName) {
     case 'goerli':
       return import('@synthetixio/v3-contracts/build/goerli/CoreProxy');
@@ -16,14 +17,22 @@ async function importCoreProxy(chainName) {
   }
 }
 
-async function loadCollateralTypes({ provider }) {
+async function loadCollateralTypes({ provider }: { provider: ReturnType<typeof useProvider> }) {
   const CoreProxy = await importCoreProxy(provider.network.name);
   const CoreProxyContract = new ethers.Contract(CoreProxy.address, CoreProxy.abi, provider) as
     | CoreProxyGoerli
     | CoreProxyOptimismGoerli;
-
-  const tokenConfigs = await CoreProxyContract.getCollateralConfigurations(true);
-
+  // typeschain messes up the type for when an array is returned from a method
+  const tokenConfigs = (await CoreProxyContract.getCollateralConfigurations(true)) as {
+    depositingEnabled: boolean;
+    issuanceRatioD18: BigNumber;
+    liquidationRatioD18: BigNumber;
+    liquidationRewardD18: BigNumber;
+    oracleNodeId: string;
+    tokenAddress: string;
+    minDelegationD18: BigNumber;
+  }[];
+  // TODO convert to multicall
   const [symbols, prices] = await Promise.all([
     Promise.all(
       tokenConfigs.map(async ({ tokenAddress }) => {
@@ -36,8 +45,8 @@ async function loadCollateralTypes({ provider }) {
           return await TokenContract.symbol();
         } catch (e) {
           console.error(e);
+          throw Error('We expect symbol to be defined');
         }
-        return null;
       })
     ),
     Promise.all(
@@ -48,7 +57,7 @@ async function loadCollateralTypes({ provider }) {
           console.error(e);
         }
         // Never fail, price can be null
-        return null;
+        return undefined;
       })
     ),
   ]);
@@ -64,6 +73,7 @@ async function loadCollateralTypes({ provider }) {
     price: prices[i],
     symbol: symbols[i],
     // Looks like we have 18 everywhere and decimals is no longer dynamic value
+    // TODO, we should look this up incase a collateral with different decimals get added
     decimals: 18,
     // TODO: map symbol to icon
     logo: 'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F/logo.png',
@@ -86,5 +96,5 @@ export function useCollateralTypes() {
 
 export function useEthCollateralType() {
   const { data } = useCollateralTypes();
-  return data.find((collateral) => collateral.symbol === 'WETH');
+  return data?.find((collateral) => collateral.symbol === 'WETH');
 }

@@ -15,8 +15,8 @@ export default function Selector({
   onClick,
   ...rest
 }: PropsWithChildren<SelectorProps>) {
-  let rightIconCloned: ReactElement;
-  let leftIconCloned: ReactElement;
+  let rightIconCloned: ReactElement | undefined;
+  let leftIconCloned: ReactElement | undefined;
   if (rightIcon) {
     rightIconCloned = cloneElement(rightIcon, { w: 3, h: 3 });
   }
@@ -27,8 +27,8 @@ export default function Selector({
     <Button
       p={2}
       onClick={onClick}
-      leftIcon={leftIcon && leftIconCloned}
-      rightIcon={rightIcon && rightIconCloned}
+      leftIcon={leftIconCloned}
+      rightIcon={rightIconCloned}
       size={size}
       _hover={{ background: 'cyan.200', color: 'black' }}
       color={active ? 'black' : 'cyan.500'}

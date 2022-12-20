@@ -24,7 +24,7 @@ export const AcceptNomination = () => {
   const { isLoading, write } = useContractWrite({
     mode: 'recklesslyUnprepared',
     addressOrName: accountProxy?.address,
-    contractInterface: accountProxy?.abi,
+    contractInterface: accountProxy?.abi || '',
     functionName: 'transferFrom',
     args: [accountOwner, address, accountId],
   });
@@ -33,7 +33,6 @@ export const AcceptNomination = () => {
     <Box>
       {address === nominatedOwner && (
         <Button isLoading={isLoading} size="lg" ml="4" px="8" onClick={() => write()}>
-          {/* @ts-ignore */}
           Accept Ownership of {accountId}
         </Button>
       )}

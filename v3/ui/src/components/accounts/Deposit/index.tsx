@@ -24,7 +24,6 @@ import {
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { BigNumber, ethers } from 'ethers';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { useRecoilState } from 'recoil';
 import { useNetwork } from 'wagmi';
 import { CollateralType, LiquidityPositionType } from '../../../utils/types';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
@@ -154,7 +153,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
                   },
                 })}
               />
-              <CollateralTypeSelector collateralTypes={collateralTypes} />
+              <CollateralTypeSelector collateralTypes={collateralTypes || []} />
               {false && (
                 <Tooltip label="Configure Lock Duration">
                   <IconButton
@@ -249,10 +248,10 @@ export const Deposit: FC<Props> = ({ accountId, liquidityPositions = {}, refetch
   const hasWalletConnected = Boolean(activeChain);
   return (
     <>
-      {collateralTypes.length > 0 ? (
+      {collateralTypes && collateralTypes.length > 0 ? (
         <DepositForm {...{ accountId, liquidityPositions, refetch }} />
       ) : null}
-      {collateralTypes.length === 0 && !hasWalletConnected ? (
+      {collateralTypes?.length === 0 && !hasWalletConnected ? (
         <Box textAlign="center">
           <ConnectWallet />
         </Box>

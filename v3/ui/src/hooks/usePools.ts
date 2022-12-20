@@ -7,22 +7,22 @@ import { useContract } from './useContract';
 export const usePools = () => {
   const setPools = useSetRecoilState(poolsState);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
-  const snxContractData = {
-    addressOrName: snxProxy?.address,
-    contractInterface: snxProxy?.abi,
-    chainId: snxProxy?.chainId,
-  };
   const { isLoading } = useContractReads({
     contracts: [
       {
-        ...snxContractData,
+        addressOrName: snxProxy?.address,
+        contractInterface: snxProxy?.abi || '',
+        chainId: snxProxy?.chainId,
         functionName: 'getPreferredPool',
       },
       {
-        ...snxContractData,
+        addressOrName: snxProxy?.address,
+        contractInterface: snxProxy?.abi || '',
+        chainId: snxProxy?.chainId,
         functionName: 'getApprovedPools',
       },
     ],
+    enabled: Boolean(snxProxy),
     onSuccess: (data) => {
       const pools =
         data && Array.isArray(data) && data.length >= 2

@@ -12,6 +12,7 @@ export type CollateralType = {
   symbol: string;
   decimals: number;
   price?: BigNumber;
+  logo: string;
 };
 
 export type ChainName = keyof typeof chains;

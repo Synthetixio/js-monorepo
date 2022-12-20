@@ -63,7 +63,7 @@ export default function CollateralTypeSelector({ collateralTypes }: Props) {
                   alt="collateral image"
                   width="24px"
                   height="24px"
-                  src={collateralType?.logo}
+                  src={collateralType.logo}
                 />
               </Box>
               <Text fontWeight="600">{collateralType?.symbol.toUpperCase()}</Text>
