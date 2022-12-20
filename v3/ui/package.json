@@ -24,6 +24,7 @@
     "@synthetixio/v3-theme": "workspace:*",
     "@synthetixio/wei": "workspace:*",
     "@tanstack/react-query-devtools": "^4.3.5",
+    "@wagmi/chains": "^0.1.5",
     "big.js": "^6.1.1",
     "chart.js": "^3.9.1",
     "ethers": "^5.7.2",

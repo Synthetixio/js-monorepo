@@ -1,12 +1,11 @@
 import { createRoot } from 'react-dom/client';
 import { Synthetix } from './App';
-import { goerli, createClient, WagmiConfig, configureChains } from 'wagmi';
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
-import { infuraProvider } from 'wagmi/providers/infura';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { ChakraProvider } from '@chakra-ui/react';
-import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
-import { theme, Fonts } from '@synthetixio/v3-theme';
+import { darkTheme, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { Fonts, theme } from '@synthetixio/v3-theme';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import {
@@ -32,9 +31,22 @@ const queryClient = new QueryClient({
 });
 
 const { chains, provider } = configureChains(supportedChains, [
-  infuraProvider({ apiKey: INFURA_KEY, priority: 0 }),
-  alchemyProvider({ apiKey: ALCHEMY_KEY_MAPPING[goerli.id], priority: 1 }),
-  publicProvider({ priority: 2 }),
+  jsonRpcProvider({
+    rpc: () => ({ http: `http://localhost:8545` }),
+    priority: 0,
+  }),
+  jsonRpcProvider({
+    rpc: () => ({ http: `https://goerli.infura.io/v3/${INFURA_KEY}` }),
+    priority: 1,
+  }),
+  jsonRpcProvider({
+    rpc: (chain) =>
+      chain.id in ALCHEMY_KEY_MAPPING
+        ? { http: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_KEY_MAPPING[chain.id]}` }
+        : null,
+    priority: 2,
+  }),
+  publicProvider({ priority: 3 }),
 ]);
 
 const { connectors } = getDefaultWallets({
