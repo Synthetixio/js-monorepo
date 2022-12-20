@@ -34,7 +34,7 @@ export const useOwnerAccounts = () => {
     contractInterface: accountContract?.abi || '',
     functionName: 'balanceOf',
     enabled: Boolean(activeChain && accountContract),
-    args: address,
+    args: [address],
     onSuccess: (data) => {
       if (data.toNumber() === 0) {
         setUserAccounts({
