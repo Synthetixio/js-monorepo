@@ -25,8 +25,8 @@ export const MaintainCRatio: FC<Props> = ({
   <>
     <Alert mt={4} mb={10} status="warning">
       <AlertIcon />
-      If your C-Ratio drops below the minimum (
-      {formatValue(collateral.minimumCRatio!.mul(100), 6).toFixed(0)}%), you may be liquidated and
+      If your C-Ratio drops below the liquidation (
+      {formatValue(collateral.liquidationRatioD18.mul(100)).toFixed(0)}%), you may be liquidated and
       lose your collateral.
     </Alert>
     <Heading size="md" mb="5">
