@@ -9,10 +9,17 @@ describe('calculateSevenDaysPnlGrowth', () => {
   test('returns undefined when no previous snapshot missing or 0', () => {
     expect(calculateSevenDaysPnlGrowth()).toBe(undefined);
     expect(calculateSevenDaysPnlGrowth([])).toBe(undefined);
-    expect(calculateSevenDaysPnlGrowth([{ pnl: wei(100) }] as any)).toBe(undefined);
-    expect(calculateSevenDaysPnlGrowth([{ pnl: wei(100) }, { pnl: wei(0) }] as any)).toBe(
-      undefined
-    );
+  });
+  test('return undefined for percentage when the pnl 7days ago is missing or 0', () => {
+    expect(calculateSevenDaysPnlGrowth([{ pnl: wei(100) }] as any)).toEqual({
+      value: wei(100),
+      percentage: undefined,
+    });
+
+    expect(calculateSevenDaysPnlGrowth([{ pnl: wei(100) }, { pnl: wei(0) }] as any)).toEqual({
+      value: wei(100),
+      percentage: undefined,
+    });
   });
   test('calculate positive growth', () => {
     expect(calculateSevenDaysPnlGrowth([{ pnl: wei(100) }, { pnl: wei(50) }] as any)).toEqual({

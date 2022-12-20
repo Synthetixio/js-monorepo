@@ -183,9 +183,15 @@ function Markets({
                             <Text fontSize="sm" display="block">
                               {formatNumberToUsd(growth.value.toNumber())}
                             </Text>
-                            <GreenOrRedText fontSize="xs" value={growth.percentage} display="block">
-                              {formatPercent(growth.percentage.toNumber())}
-                            </GreenOrRedText>
+                            {growth.percentage ? (
+                              <GreenOrRedText
+                                fontSize="xs"
+                                value={growth.percentage}
+                                display="block"
+                              >
+                                {formatPercent(growth.percentage.toNumber())}
+                              </GreenOrRedText>
+                            ) : null}
                           </>
                         )}
                       </StyledTd>
