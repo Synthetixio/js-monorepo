@@ -105,4 +105,14 @@ jobs:
           curl --verbose --header "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST \
             --data @/tmp/futures-keepers.json \
             https://api.github.com/repos/Synthetixio/futures-keepers/actions/workflows/updateDependency.yml/dispatches
- 
+
+      - name: Notify Synthetixio/perps-keepers
+        run: |
+          jq --null-input --compact-output --raw-output '{
+            ref: "develop"
+          }' > /tmp/perps-keepers.json
+          jq < /tmp/perps-keepers.json
+
+          curl --verbose --header "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST \
+            --data @/tmp/perps-keepers.json \
+            https://api.github.com/repos/Synthetixio/perps-keepers/actions/workflows/updateDependency.yml/dispatches
