@@ -95,17 +95,6 @@ jobs:
       # Push without tags
       - run: git push
 
-      - name: Notify Synthetixio/staking
-        run: |
-          jq --null-input --compact-output --raw-output '{
-            ref: "dev"
-          }' > /tmp/staking.json
-          jq < /tmp/staking.json
-
-          curl --verbose --header "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST \
-            --data @/tmp/staking.json \
-            https://api.github.com/repos/Synthetixio/staking/actions/workflows/updateDependency.yml/dispatches
-
       - name: Notify Synthetixio/futures-keepers
         run: |
           jq --null-input --compact-output --raw-output '{
@@ -116,3 +105,4 @@ jobs:
           curl --verbose --header "Authorization: token ${{ secrets.GH_TOKEN_DAPPS }}" --request POST \
             --data @/tmp/futures-keepers.json \
             https://api.github.com/repos/Synthetixio/futures-keepers/actions/workflows/updateDependency.yml/dispatches
+ 
