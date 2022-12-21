@@ -47,9 +47,9 @@ export const useMulticall = (
   // for regular multicall
   const multicall = useContract(contracts.MULTICALL);
 
-  let callContract: ethers.Contract | undefined,
-    callFunc: string | undefined,
-    callArgs: any[] | undefined;
+  let callContract: ethers.Contract | undefined;
+  let callFunc: string | undefined;
+  let callArgs: any[] | undefined;
   if (calls.length && snxProxy && multicall) {
     if (calls.length === 1) {
       // direct call

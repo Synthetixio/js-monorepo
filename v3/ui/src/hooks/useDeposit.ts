@@ -81,7 +81,7 @@ export const useDeposit = ({
         functionName: 'delegateCollateral',
         callArgs: [
           id,
-          Boolean(accountId) ? selectedPoolId : poolId || 0,
+          parseInt(Boolean(accountId) ? selectedPoolId : poolId || '0'),
           selectedCollateralType.tokenAddress,
           amountToDelegate || 0,
           utils.parseEther('1'),
@@ -186,13 +186,6 @@ export const useDeposit = ({
     }
   );
 
-  const exec = useCallback(async () => {
-    try {
-      await approve();
-      await multiTxn.exec();
-    } catch (error) {}
-  }, [approve, multiTxn]);
-
   const setTransaction = useSetRecoilState(transactionState);
 
   const updateTransactions = useCallback(() => {
@@ -243,27 +236,16 @@ export const useDeposit = ({
     multiTxn,
   ]);
 
-  const createAccount = useCallback(
-    async (useDialog = true) => {
-      if (useDialog) {
-        return updateTransactions();
-      }
-      try {
-        setIsLoading(true);
-        //  add extra step to convert to wrapped token if native (ex. ETH)
-        if (isNativeCurrency) {
-          await wrap(amountBN);
-        }
-
-        await exec();
-      } catch (error) {
-        //console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [updateTransactions, isNativeCurrency, exec, wrap, amountBN]
-  );
+  const createAccount = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      await updateTransactions();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [updateTransactions]);
 
   return {
     createAccount,

@@ -86,7 +86,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
     name: 'amount',
   });
 
-  const isNativeCurrency = selectedCollateralType?.symbol === 'eth';
+  const isNativeCurrency = selectedCollateralType?.symbol === 'ETH';
 
   const balanceData = useTokenBalance(selectedCollateralType?.tokenAddress);
 
