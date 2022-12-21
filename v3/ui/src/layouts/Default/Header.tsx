@@ -85,7 +85,7 @@ export default function Header() {
 
   return (
     <>
-      <Container mb="8" maxW="container.lg" py="4">
+      <Container mb="8" maxW="1024px" py="4">
         <Flex alignItems="center" gap="2">
           <Box display={['none', 'none', 'inline-block']}>
             <Link to="/" as={RouterLink} _focus={{ boxShadow: 'none' }}>

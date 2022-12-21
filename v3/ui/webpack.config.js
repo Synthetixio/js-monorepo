@@ -25,11 +25,15 @@ const babelRule = {
   test: /\.(ts|tsx|js|jsx)$/,
   include: [
     // Need to list all the folders in v3 and outside (if used)
+    /v2\/lib/,
+
     /v3\/lib/,
     /v3\/contracts/,
     /v3\/components/,
     /v3\/theme/,
     /v3\/ui/,
+
+    /packages\/wei\/src/,
   ],
   resolve: {
     fullySpecified: false,
@@ -143,6 +147,12 @@ module.exports = {
       new webpack.NormalModuleReplacementPlugin(
         new RegExp(`^@synthetixio/v3-theme$`),
         path.resolve(path.dirname(require.resolve(`@synthetixio/v3-theme/package.json`)), 'src')
+      ),
+    ])
+    .concat([
+      new webpack.NormalModuleReplacementPlugin(
+        new RegExp(`^@synthetixio/wei$`),
+        path.resolve(path.dirname(require.resolve(`@synthetixio/wei/package.json`)), 'src')
       ),
     ])
 

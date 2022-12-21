@@ -9786,8 +9786,10 @@ __metadata:
     "@faker-js/faker": ^7.6.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.7
     "@rainbow-me/rainbowkit": ^0.7.1
+    "@snx-v2/formatters": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     "@types/react": ^18.0.18
     "@types/react-chartjs-2": ^2.5.7
@@ -9805,6 +9807,7 @@ __metadata:
     html-webpack-plugin: ^5.5.0
     i18next: ^21.9.0
     i18next-browser-languagedetector: ^6.1.4
+    jest: ^29.1.2
     react: ^18.2.0
     react-chartjs-2: ^4.3.1
     react-dom: ^18.2.0
@@ -9823,6 +9826,7 @@ __metadata:
     webpack-bundle-analyzer: ^4.6.1
     webpack-cli: ^4.10.0
     webpack-dev-server: ^4.11.1
+    zod: ^3.20.2
   languageName: unknown
   linkType: soft
 
@@ -38321,6 +38325,13 @@ __metadata:
   version: 1.0.0
   resolution: "yocto-queue@npm:1.0.0"
   checksum: 2cac84540f65c64ccc1683c267edce396b26b1e931aa429660aefac8fbe0188167b7aee815a3c22fa59a28a58d898d1a2b1825048f834d8d629f4c2a5d443801
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.20.2":
+  version: 3.20.2
+  resolution: "zod@npm:3.20.2"
+  checksum: 04172f7e9350372684ccd298d4716908edc9113751295b6c4e1b3ea84e2af8997e504b33ba36f4741417bb2a5dc90bfd40501f6b0e7389df10e42a63d6d8366c
   languageName: node
   linkType: hard
 
