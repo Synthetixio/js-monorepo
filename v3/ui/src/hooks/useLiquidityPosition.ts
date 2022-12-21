@@ -17,12 +17,16 @@ export const useLiquidityPosition = (
 
   const funcCalls = functionNames.map((fn) => ({
     addressOrName: snxProxy?.address,
-    contractInterface: snxProxy?.abi,
+    contractInterface: snxProxy?.abi || '',
     functionName: fn,
-    args: [accountId, poolId, collateral.address],
+    args: [accountId, poolId, collateral.tokenAddress],
   }));
 
-  const { data: queryData, isLoading, refetch } = useContractReads({ contracts: funcCalls });
+  const {
+    data: queryData,
+    isLoading,
+    refetch,
+  } = useContractReads({ contracts: funcCalls, enabled: Boolean(snxProxy) });
 
   const formatQueryData = () => {
     if (!queryData) return undefined;
@@ -40,7 +44,7 @@ export const useLiquidityPosition = (
       throw Error('Expected getPositionDebt to return a bignumber');
     }
     const debt = formatValue(debtReturn, 18);
-    const collateralValue = formatValue(collateralReturn.value, collateral.priceDecimals);
+    const collateralValue = formatValue(collateralReturn.value, collateral.decimals);
     const cRatio = debt !== 0 ? Big(collateralValue).mul(100).div(debt).toNumber() : 0;
     const collateralAmount = formatValue(collateralReturn.amount, collateral.decimals);
     return {

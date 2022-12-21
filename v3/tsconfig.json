@@ -19,6 +19,8 @@
   },
 
   "exclude": [
+    "**/docs/**",
+    "**/subgraphs/**",
     "**/node_modules/**",
     "**/coverage/**",
     "**/tests/**",
@@ -26,6 +28,7 @@
     "**/*.test.tsx",
     "**/stories/**",
     "**/build/**",
+    "**/cache/**",
     "**/dist/**"
   ],
 

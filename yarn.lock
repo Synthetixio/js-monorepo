@@ -7688,6 +7688,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/useCollateralTypes@workspace:*, @snx-v3/useCollateralTypes@workspace:v3/lib/useCollateralTypes":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useCollateralTypes@workspace:v3/lib/useCollateralTypes"
+  dependencies:
+    "@synthetixio/v3-contracts": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
+    react: ^18.2.0
+    wagmi: ^0.6.3
+  languageName: unknown
+  linkType: soft
+
 "@socket.tech/ll-core@npm:^0.1.10, @socket.tech/ll-core@npm:^0.1.14":
   version: 0.1.20
   resolution: "@socket.tech/ll-core@npm:0.1.20"
@@ -9787,10 +9799,12 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.7
     "@rainbow-me/rainbowkit": ^0.7.1
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v3/useCollateralTypes": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
+    "@tanstack/react-query-devtools": ^4.3.5
     "@types/react": ^18.0.18
     "@types/react-chartjs-2": ^2.5.7
     "@types/react-helmet": ^6.1.5

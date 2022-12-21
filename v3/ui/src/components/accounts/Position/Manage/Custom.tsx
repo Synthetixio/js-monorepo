@@ -37,7 +37,7 @@ export const Custom: FC<Props> = ({
   debt,
   maxDebt,
 }) => {
-  const balance = useTokenBalance(collateral.address);
+  const balance = useTokenBalance(collateral.tokenAddress);
 
   return (
     <Box mb="4">
@@ -63,7 +63,7 @@ export const Custom: FC<Props> = ({
                 balance={balance.value}
                 decimals={collateral.decimals}
                 symbol={collateral.symbol}
-                address={collateral.address}
+                address={collateral.tokenAddress}
               />
             </Flex>
           </Box>

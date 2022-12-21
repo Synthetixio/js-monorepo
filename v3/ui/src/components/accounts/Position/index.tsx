@@ -28,9 +28,9 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
       </Box>
     );
 
-  const { price: priceBN, priceDecimals } = collateral;
+  const { price: priceBN, decimals } = collateral;
 
-  const price = formatValue(priceBN || 0, priceDecimals!);
+  const price = formatValue(priceBN || 0, decimals!);
   const collateralValue = collateralAmount * price;
 
   return (

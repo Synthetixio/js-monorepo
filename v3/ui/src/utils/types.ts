@@ -2,15 +2,17 @@ import { BigNumber } from 'ethers';
 import { chains } from './constants';
 
 export type CollateralType = {
-  address: string;
+  depositingEnabled: boolean;
+  issuanceRatioD18: BigNumber;
+  liquidationRatioD18: BigNumber;
+  liquidationRewardD18: BigNumber;
+  minDelegationD18: BigNumber;
+  oracleNodeId: string;
+  tokenAddress: string;
   symbol: string;
-  logoURI: string;
   decimals: number;
-  targetCRatio?: BigNumber;
-  minimumCRatio?: BigNumber;
   price?: BigNumber;
-  priceDecimals?: number;
-  priceFeed?: string;
+  logo: string;
 };
 
 export type ChainName = keyof typeof chains;

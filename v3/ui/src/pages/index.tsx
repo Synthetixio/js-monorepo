@@ -2,7 +2,7 @@ import { Container, Flex } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import CreateAccount from '../components/accounts/CreateAccount';
-import { useNavigateWithChain } from '../hooks';
+import { useNavigateWithChain } from '../hooks/useNavigateWithChain';
 import { accountsState } from '../utils/state';
 
 export function Home() {

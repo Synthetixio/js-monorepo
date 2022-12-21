@@ -14,7 +14,7 @@ interface Props {
 // TODO: This needs to change based on collateral type? At least heading
 
 export const Deposit: FC<Props> = ({ collateral, value, onChange }) => {
-  const balance = useTokenBalance(collateral.address);
+  const balance = useTokenBalance(collateral.tokenAddress);
 
   return (
     <>
@@ -36,7 +36,7 @@ export const Deposit: FC<Props> = ({ collateral, value, onChange }) => {
             balance={balance.value}
             decimals={collateral.decimals}
             symbol={collateral.symbol}
-            address={collateral.address}
+            address={collateral.tokenAddress}
           />
         </Flex>
       </Box>

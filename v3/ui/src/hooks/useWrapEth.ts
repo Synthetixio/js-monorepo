@@ -1,20 +1,31 @@
 import { BigNumberish } from 'ethers';
 import { useCallback } from 'react';
 import { useAccount, useBalance, useContractWrite } from 'wagmi';
-import { contracts } from '../utils/constants';
-import { useContract } from './useContract';
 import { TxConfig } from './useMulticall';
+import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
+import * as Erc20 from '@synthetixio/v3-contracts/build/_ERC20';
 
 export const useWrapEth = (config?: Partial<TxConfig>) => {
-  const wethContract = useContract(contracts.WETH);
+  const ethCollateral = useEthCollateralType();
+
+  // TODO: refactor with simple contract interactions later
+  // const provider = useProvider();
+  // const EthContract = useMemo(
+  //   () =>
+  //     ethCollateral?.tokenAddress
+  //       ? (new ethers.Contract(ethCollateral.tokenAddress, Erc20.abi, provider) as Erc20._ERC20)
+  //       : null,
+  //   [ethCollateral?.tokenAddress, provider]
+  // );
 
   const { address: accountAddress } = useAccount();
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: wethContract?.address,
-    contractInterface: wethContract?.abi,
+    addressOrName: ethCollateral?.tokenAddress || '',
+    contractInterface: Erc20.abi,
     functionName: 'deposit',
     args: [],
+    enabled: Boolean(ethCollateral?.tokenAddress),
     onError: (e) => {
       config?.onError && config.onError(e);
     },
@@ -25,7 +36,8 @@ export const useWrapEth = (config?: Partial<TxConfig>) => {
 
   const { data: balance, refetch } = useBalance({
     addressOrName: accountAddress,
-    token: wethContract?.address,
+    token: ethCollateral?.tokenAddress,
+    enabled: Boolean(ethCollateral?.tokenAddress),
   });
 
   const wrap = useCallback(
@@ -52,13 +64,14 @@ export const useWrapEth = (config?: Partial<TxConfig>) => {
 };
 
 export const useUnWrapEth = (config?: Partial<TxConfig>) => {
-  const wethContract = useContract(contracts.WETH);
+  const ethCollateral = useEthCollateralType();
 
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: wethContract?.address,
-    contractInterface: wethContract?.abi,
+    addressOrName: ethCollateral?.tokenAddress || '',
+    contractInterface: Erc20.abi,
     functionName: 'withdraw',
+    enabled: Boolean(ethCollateral?.tokenAddress),
     onError: (e) => {
       config?.onError && config.onError(e);
     },

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Deposit } from '../../components/accounts/Deposit';
 import { DepositingNav } from '../../components/accounts/DepositingNav';
 import { LiquidityPositions } from '../../components/accounts/LiquidityPositions';
-import { useLiquidityPositions } from '../../hooks';
+import { useLiquidityPositions } from '../../hooks/useLiquidityPositions';
 
 export function Account() {
   const { id: accountId } = useParams();

@@ -31,10 +31,10 @@ export const useOwnerAccounts = () => {
 
   const { data, refetch } = useContractRead({
     addressOrName: accountContract?.address,
-    contractInterface: accountContract?.abi,
+    contractInterface: accountContract?.abi || '',
     functionName: 'balanceOf',
-    enabled: !!activeChain,
-    args: address,
+    enabled: Boolean(activeChain && accountContract),
+    args: [address],
     onSuccess: (data) => {
       if (data.toNumber() === 0) {
         setUserAccounts({
@@ -47,16 +47,16 @@ export const useOwnerAccounts = () => {
   });
 
   const tokenCalls = useMemo(() => {
-    return data
+    return data && accountContract
       ? Array.from(Array(data.toNumber()).keys()).map((tokenId: number) => ({
-          addressOrName: accountContract?.address,
-          contractInterface: accountContract?.abi,
+          addressOrName: accountContract.address,
+          contractInterface: accountContract.abi,
           functionName: 'tokenOfOwnerByIndex',
           args: [address, tokenId],
           chainId: accountContract?.chainId,
         }))
       : [];
-  }, [accountContract?.abi, accountContract?.address, accountContract?.chainId, address, data]);
+  }, [accountContract, address, data]);
 
   useContractReads({
     contracts: tokenCalls,

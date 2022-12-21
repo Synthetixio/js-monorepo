@@ -74,9 +74,9 @@ export const DepositingStats: FC<Props> = ({
           </Heading>
         </Skeleton>
         <Text opacity="0.6" fontSize="sm">
-          Minimum{' '}
+          Liquidation Ratio{' '}
           <Amount
-            value={formatValue(collateral.minimumCRatio!.mul(BigNumber.from(100)), 6)}
+            value={formatValue(collateral.liquidationRatioD18.mul(BigNumber.from(100)))}
             suffix="% "
           />
         </Text>

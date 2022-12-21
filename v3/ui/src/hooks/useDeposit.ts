@@ -57,7 +57,7 @@ export const useDeposit = ({
   const newAccountId = useMemo(() => Math.floor(Math.random() * 10000000000), []);
 
   const calls: MulticallCall[] = useMemo(() => {
-    if (!selectedCollateralType?.address || !selectedCollateralType?.symbol) {
+    if (!selectedCollateralType?.tokenAddress || !selectedCollateralType?.symbol) {
       return [];
     }
     const id = accountId ?? newAccountId;
@@ -74,7 +74,7 @@ export const useDeposit = ({
       {
         contract: snxProxy.contract,
         functionName: 'deposit',
-        callArgs: [id, selectedCollateralType.address, amountBN],
+        callArgs: [id, selectedCollateralType.tokenAddress, amountBN],
       },
       {
         contract: snxProxy.contract,
@@ -82,7 +82,7 @@ export const useDeposit = ({
         callArgs: [
           id,
           Boolean(accountId) ? selectedPoolId : poolId || 0,
-          selectedCollateralType.address,
+          selectedCollateralType.tokenAddress,
           amountToDelegate || 0,
           utils.parseEther('1'),
         ],
@@ -105,7 +105,7 @@ export const useDeposit = ({
     newAccountId,
     selectedPoolId,
     selectedCollateralType?.symbol,
-    selectedCollateralType?.address,
+    selectedCollateralType?.tokenAddress,
     liquidityPositions,
     amountBN,
     snxProxy,
@@ -164,7 +164,7 @@ export const useDeposit = ({
   });
 
   const { approve, requireApproval } = useApprove(
-    selectedCollateralType?.address,
+    selectedCollateralType?.tokenAddress,
     amountBN,
     snxProxy?.address,
     {

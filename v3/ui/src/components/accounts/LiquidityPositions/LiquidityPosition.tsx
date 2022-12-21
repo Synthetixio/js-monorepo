@@ -18,10 +18,10 @@ export const LiquidityPosition: FC<Props> = ({ position }) => {
 
   const { collateralAmount: collateralAmountBN, collateralType, cRatio, debt, poolId } = position;
 
-  const { decimals, price: priceBN, priceDecimals } = collateralType;
+  const { decimals, price: priceBN } = collateralType;
 
   const collateralAmount = formatValue(collateralAmountBN, decimals);
-  const price = formatValue(priceBN!, priceDecimals!);
+  const price = priceBN ? formatValue(priceBN) : 0;
   const collateralValue = collateralAmount * price;
 
   const [search] = useSearchParams();
@@ -48,7 +48,7 @@ export const LiquidityPosition: FC<Props> = ({ position }) => {
 
         <Text fontSize="xs" opacity="0.66" mt="1">
           <Amount
-            value={formatValue(collateralType!.minimumCRatio!.mul(BigNumber.from(100)), 6)}
+            value={formatValue(collateralType.liquidationRatioD18.mul(BigNumber.from(100)), 6)}
             suffix="% "
           />
           Min.

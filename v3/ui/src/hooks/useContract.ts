@@ -33,8 +33,6 @@ function getContract(name: string, chainName: string | undefined) {
           return ERC20;
         case contracts.SNX_REWARD:
           return RewardDistributor;
-        case contracts.WETH:
-          return ERC20;
         case contracts.CCIP:
           return goerliCCIP;
         default:
@@ -54,8 +52,6 @@ function getContract(name: string, chainName: string | undefined) {
           return ERC20;
         case contracts.SNX_REWARD:
           return RewardDistributor;
-        case contracts.WETH:
-          return ERC20;
         case contracts.CCIP:
           return optimismGoerliCCIP;
         default:

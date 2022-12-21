@@ -4,7 +4,7 @@ import Big from 'big.js';
 import { formatUnits } from 'ethers/lib/utils';
 import { FC } from 'react';
 import { useContractRead } from 'wagmi';
-import { useSnxProxy } from '../../../../hooks';
+import { useSnxProxy } from '../../../../hooks/useContract';
 import { CollateralType } from '../../../../utils/types';
 import { Amount } from '../../../shared/Amount/Amount';
 
@@ -23,9 +23,10 @@ export const RewardRate: FC<Props> = ({ distributor, poolId, collateral, decimal
 
   const { data, isLoading } = useContractRead({
     addressOrName: snxProxy?.address,
-    contractInterface: snxProxy?.abi,
+    contractInterface: snxProxy?.abi || '',
     functionName: 'getRewardRate',
-    args: [poolId, collateral.address, distributor],
+    enabled: Boolean(snxProxy),
+    args: [poolId, collateral.tokenAddress, distributor],
   });
 
   const rate = new Big(formatUnits(data?.toString() || 0, decimals + 18));

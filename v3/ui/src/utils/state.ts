@@ -1,12 +1,6 @@
 import { atom } from 'recoil';
 import { useContractRead } from 'wagmi';
 import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
-import { CollateralType } from './types';
-
-export const collateralTypesState = atom<Array<CollateralType>>({
-  key: 'collateralTypes',
-  default: [],
-});
 
 export const poolsState = atom<Array<string>>({
   key: 'pools',

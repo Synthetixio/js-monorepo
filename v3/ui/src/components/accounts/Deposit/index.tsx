@@ -1,6 +1,5 @@
-import { collateralTypesState } from '../../../utils/state';
 import { poolsData } from '../../../utils/constants';
-import { useSynthetixRead } from '../../../hooks';
+import { useSynthetixRead } from '../../../hooks/useDeploymentRead';
 import EditPosition from '../EditPosition';
 import { Balance } from './Balance';
 import CollateralTypeSelector from './CollateralTypeSelector';
@@ -25,12 +24,12 @@ import {
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { BigNumber, ethers } from 'ethers';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { useRecoilState } from 'recoil';
 import { useNetwork } from 'wagmi';
 import { CollateralType, LiquidityPositionType } from '../../../utils/types';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 import { FC } from 'react';
 import { useDeposit } from '../../../hooks/useDeposit';
+import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
 
 type FormType = {
   collateralType: CollateralType;
@@ -56,7 +55,7 @@ function ConnectWallet() {
 export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
-  const [collateralTypes] = useRecoilState(collateralTypesState);
+  const { data: collateralTypes } = useCollateralTypes();
 
   const { data: poolId } = useSynthetixRead({
     functionName: 'getPreferredPool',
@@ -66,7 +65,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
   const methods = useForm<FormType>({
     mode: 'onChange',
     defaultValues: {
-      collateralType: collateralTypes[0],
+      collateralType: collateralTypes?.[0],
       poolId: poolId?.toString() ?? '0',
     },
   });
@@ -89,7 +88,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
 
   const isNativeCurrency = selectedCollateralType?.symbol === 'eth';
 
-  const balanceData = useTokenBalance(selectedCollateralType?.address);
+  const balanceData = useTokenBalance(selectedCollateralType?.tokenAddress);
 
   // add extra step to convert to wrapped token if native (ex. ETH)
   // if (isNativeCurrency) {
@@ -154,7 +153,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
                   },
                 })}
               />
-              <CollateralTypeSelector collateralTypes={collateralTypes} />
+              <CollateralTypeSelector collateralTypes={collateralTypes || []} />
               {false && (
                 <Tooltip label="Configure Lock Duration">
                   <IconButton
@@ -200,7 +199,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
                   decimals={selectedCollateralType.decimals}
                   symbol={selectedCollateralType.symbol}
                   onMax={(balance) => setValue('amount', balance)}
-                  address={selectedCollateralType.address}
+                  address={selectedCollateralType.tokenAddress}
                 />
               </Box>
 
@@ -244,15 +243,15 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
 };
 
 export const Deposit: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
-  const [collateralTypes] = useRecoilState(collateralTypesState);
+  const { data: collateralTypes } = useCollateralTypes();
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
   return (
     <>
-      {collateralTypes.length > 0 ? (
+      {collateralTypes && collateralTypes.length > 0 ? (
         <DepositForm {...{ accountId, liquidityPositions, refetch }} />
       ) : null}
-      {collateralTypes.length === 0 && !hasWalletConnected ? (
+      {collateralTypes?.length === 0 && !hasWalletConnected ? (
         <Box textAlign="center">
           <ConnectWallet />
         </Box>

@@ -1,11 +1,12 @@
 import { useRecoilValue } from 'recoil';
 import { useContractReads } from 'wagmi';
-import { collateralTypesState, poolsState } from '../utils/state';
+import { poolsState } from '../utils/state';
 import { useSnxProxy } from './useContract';
 import { poolsData } from '../utils/constants';
 import { useSynthetixProxyEvent } from './useContractEvent';
 import { CollateralType, LiquidityPositionType } from '../utils/types';
 import { formatValue } from '../utils/helpers';
+import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
 import { BigNumber } from 'ethers';
 
 interface DepositingCall {
@@ -16,14 +17,14 @@ interface DepositingCall {
 
 export const useLiquidityPositions = (accountId: string) => {
   const pools = useRecoilValue(poolsState);
-  const supportedCollateralTypes = useRecoilValue(collateralTypesState);
+  const supportedCollateralTypes = useCollateralTypes();
   const snxProxy = useSnxProxy();
 
   const calls: DepositingCall[] = [];
   const functionNames = ['getPositionCollateral', 'getPositionDebt'];
   functionNames.forEach((functionName) => {
     pools.forEach((poolId) => {
-      supportedCollateralTypes.forEach((collateral) => {
+      supportedCollateralTypes.data?.forEach((collateral) => {
         calls.push({
           poolId,
           collateral,
@@ -34,12 +35,12 @@ export const useLiquidityPositions = (accountId: string) => {
   });
 
   const liquidityPositionsQueryResult = useContractReads({
-    enabled: true,
+    enabled: Boolean(snxProxy),
     contracts: calls.map((call) => ({
       addressOrName: snxProxy?.address,
-      contractInterface: snxProxy?.abi,
+      contractInterface: snxProxy?.abi || '',
       functionName: call.functionName,
-      args: [accountId, call.poolId, call.collateral.address],
+      args: [accountId, call.poolId, call.collateral.tokenAddress],
     })),
   });
   const formatData = () => {
@@ -65,7 +66,7 @@ export const useLiquidityPositions = (accountId: string) => {
       const { poolId, collateral } = calls[c.index];
       const key = `${poolId}-${collateral.symbol}`;
 
-      const collateralValue = formatValue(c.value.value || 0, collateral.priceDecimals);
+      const collateralValue = formatValue(c.value.value || 0, collateral.decimals);
       const cRatio = !debt.eq(0)
         ? BigNumber.from(collateralValue).mul(100).div(debt)
         : BigNumber.from(0);

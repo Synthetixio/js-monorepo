@@ -10,6 +10,7 @@ import { useApprove } from './useApprove';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
 import { useUnWrapEth, useWrapEth } from './useWrapEth';
+import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
 
 interface IPosition {
   accountId: string;
@@ -27,8 +28,12 @@ export const useManagePosition = (
   const [isLoading, setIsLoading] = useState(false);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   const collateralChangeBN = parseUnits(Math.abs(collateralChange), position.collateral.decimals);
-  const wethContract = useContract(contracts.WETH);
-  const isNativeCurrency = compareAddress(wethContract?.address, position.collateral.address);
+
+  const ethCollateral = useEthCollateralType();
+  const isNativeCurrency = compareAddress(
+    ethCollateral?.tokenAddress,
+    position.collateral.tokenAddress
+  );
 
   const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
   const { unWrap, isLoading: isUnWrapping } = useUnWrapEth();
@@ -45,7 +50,7 @@ export const useManagePosition = (
         {
           contract: snxProxy?.contract,
           functionName: 'deposit',
-          callArgs: [position.accountId, position.collateral.address, collateralChangeBN],
+          callArgs: [position.accountId, position.collateral.tokenAddress, collateralChangeBN],
         },
         {
           contract: snxProxy.contract,
@@ -53,7 +58,7 @@ export const useManagePosition = (
           callArgs: [
             position.accountId,
             position.poolId,
-            position.collateral.address,
+            position.collateral.tokenAddress,
             currentAmount.add(collateralChangeBN),
             utils.parseEther('1'),
           ],
@@ -66,7 +71,7 @@ export const useManagePosition = (
       list.push({
         contract: snxProxy?.contract,
         functionName: 'burnUsd',
-        callArgs: [position.accountId, position.poolId, position.collateral.address, amount],
+        callArgs: [position.accountId, position.poolId, position.collateral.tokenAddress, amount],
       });
     }
 
@@ -76,7 +81,7 @@ export const useManagePosition = (
       list.push({
         contract: snxProxy?.contract,
         functionName: 'mintUsd',
-        callArgs: [position.accountId, position.poolId, position.collateral.address, amount],
+        callArgs: [position.accountId, position.poolId, position.collateral.tokenAddress, amount],
       });
     }
 
@@ -89,7 +94,7 @@ export const useManagePosition = (
           callArgs: [
             position.accountId,
             position.poolId,
-            position.collateral.address,
+            position.collateral.tokenAddress,
             currentAmount.sub(collateralChangeBN),
             utils.parseEther('1'),
           ],
@@ -97,7 +102,7 @@ export const useManagePosition = (
         {
           contract: snxProxy.contract,
           functionName: 'withdraw',
-          callArgs: [position.accountId, position.collateral.address, collateralChangeBN],
+          callArgs: [position.accountId, position.collateral.tokenAddress, collateralChangeBN],
         }
       );
     }
@@ -109,7 +114,7 @@ export const useManagePosition = (
     debtChange,
     collateralAmount,
     position.collateral.decimals,
-    position.collateral.address,
+    position.collateral.tokenAddress,
     position.accountId,
     position.poolId,
     collateralChangeBN,
@@ -117,7 +122,7 @@ export const useManagePosition = (
 
   const multiTxn = useMulticall(calls);
   const { approve, requireApproval } = useApprove(
-    position.collateral.address,
+    position.collateral.tokenAddress,
     collateralChange > 0 ? collateralChangeBN : 0,
     snxProxy?.address
   );
