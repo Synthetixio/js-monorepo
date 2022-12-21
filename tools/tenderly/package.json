@@ -1,7 +1,7 @@
 {
   "name": "@synthetixio/tenderly",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Nikita <noisekit@btnk.au>",
   "repository": "github:Synthetixio/js-monorepo",
   "license": "MIT",

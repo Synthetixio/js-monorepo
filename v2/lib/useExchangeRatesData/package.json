@@ -2,7 +2,7 @@
   "name": "@snx-v2/useExchangeRatesData",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "@ethersproject/strings": "^5.7.0",
     "@snx-v2/ContractContext": "workspace:*",

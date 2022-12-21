@@ -65,7 +65,7 @@
     "browserslist": "4",
     "caniuse-lite": "1",
     "ethers": "^5.7.2",
-    "synthetix": "^2.78.1"
+    "synthetix": "2.80.3"
   },
   "husky": {
     "hooks": {
