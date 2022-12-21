@@ -6,7 +6,7 @@
     "start": "webpack-cli serve",
     "build": "NODE_ENV=production webpack-cli",
     "test": "NODE_ENV=test jest",
-    "typecheck": "echo SKIP || tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "standalone-install": "yarn workspaces focus '@synthetixio/v3-ui'",
     "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v3-ui' run build"
   },
@@ -65,7 +65,7 @@
     "stream-browserify": "^3.0.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.6",
-    "typescript": "^4.8.2",
+    "typescript": "^4.9.4",
     "webpack": "^5.74.0",
     "webpack-bundle-analyzer": "^4.6.1",
     "webpack-cli": "^4.10.0",

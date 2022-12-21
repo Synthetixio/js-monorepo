@@ -22,7 +22,10 @@ export const getProxySynthSymbol = (provider: Provider, address: string) => {
   );
   return c.symbol();
 };
-export function isObjKey<T>(key: PropertyKey, obj: T): key is keyof T {
+export function isObjKey<T extends Record<string, unknown>>(
+  key: PropertyKey,
+  obj: T
+): key is keyof T {
   return key in obj;
 }
 export function notNill<Value>(value: Value | null | undefined): value is Value {
