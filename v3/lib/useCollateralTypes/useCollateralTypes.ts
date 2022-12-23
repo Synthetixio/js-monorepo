@@ -28,7 +28,7 @@ async function loadCollateralTypes({ provider }: { provider: ReturnType<typeof u
     liquidationRatioD18: BigNumber;
     liquidationRewardD18: BigNumber;
     oracleNodeId: string;
-    tokenAddress: string;
+    tokenAddress: `0x${string}`;
     minDelegationD18: BigNumber;
   }[];
   // TODO convert to multicall
