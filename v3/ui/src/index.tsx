@@ -31,10 +31,10 @@ const queryClient = new QueryClient({
 });
 
 const { chains, provider } = configureChains(supportedChains, [
-  jsonRpcProvider({
-    rpc: () => ({ http: `http://localhost:8545` }),
-    priority: 0,
-  }),
+  // jsonRpcProvider({
+  //   rpc: () => ({ http: `http://localhost:8545` }),
+  //   priority: 0,
+  // }),
   jsonRpcProvider({
     rpc: () => ({ http: `https://goerli.infura.io/v3/${INFURA_KEY}` }),
     priority: 1,
