@@ -1,6 +1,6 @@
-import { Burn } from '../Manage/Burn';
+import { Burn } from './Burn';
 import { Deposit } from './Deposit';
-import { Heading, Alert, AlertIcon, Box } from '@chakra-ui/react';
+import { Alert, AlertIcon, Box, Heading } from '@chakra-ui/react';
 import { formatValue } from '../../../../utils/helpers';
 import { FC } from 'react';
 import { CollateralType } from '../../../../utils/types';
@@ -26,8 +26,8 @@ export const MaintainCRatio: FC<Props> = ({
     <Alert mt={4} mb={10} status="warning">
       <AlertIcon />
       If your C-Ratio drops below the liquidation (
-      {formatValue(collateral.liquidationRatioD18.mul(100)).toFixed(0)}%), you may be liquidated and
-      lose your collateral.
+      {formatValue(collateral.liquidationRatioD18.mul(100), 18).toFixed(0)}%), you may be liquidated
+      and lose your collateral.
     </Alert>
     <Heading size="md" mb="5">
       There are two ways to increase your C-Ratio...

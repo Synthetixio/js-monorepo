@@ -1,21 +1,21 @@
 import { ArrowDownIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import {
-  Image,
   Box,
   Button,
+  Container,
   Flex,
   Heading,
+  Image,
   Input,
-  Menu,
-  MenuButton,
-  Text,
   InputGroup,
   InputRightAddon,
-  Container,
-  MenuList,
+  Menu,
+  MenuButton,
   MenuItem,
-  useToast,
+  MenuList,
   Stack,
+  Text,
+  useToast,
 } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { ethers } from 'ethers';
@@ -32,6 +32,7 @@ import { useApprove } from '../../hooks/useApprove';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';
 import { transactionState } from '../../utils/state';
+import { parseUnits } from '../../utils/helpers';
 import testnetIcon from './testnet.png';
 
 const chains = [
@@ -86,19 +87,13 @@ export const Teleporter = () => {
     functionName: 'ccipSend',
     args: [
       to,
-      [
-        encodeAddress(address),
-        '0x',
-        [snxUsdProxy!.address],
-        [ethers.utils.parseEther(amount.toString())],
-        100000,
-      ],
+      [encodeAddress(address), '0x', [snxUsdProxy!.address], [parseUnits(amount, 0)], 100000],
     ],
   });
 
   const { approve, requireApproval } = useApprove(
     snxUsdProxy?.address,
-    ethers.utils.parseEther(amount.toString()),
+    parseUnits(amount, 0),
     CCIP!.address
   );
 

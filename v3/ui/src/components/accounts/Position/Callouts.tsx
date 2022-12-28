@@ -1,5 +1,5 @@
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { Box, Heading, Text, Grid, GridItem, Tooltip, Skeleton, Flex } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, Heading, Skeleton, Text, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
 import { formatValue } from '../../../utils/helpers';
 import { BigNumber } from 'ethers';
@@ -76,7 +76,7 @@ export const DepositingStats: FC<Props> = ({
         <Text opacity="0.6" fontSize="sm">
           Liquidation Ratio{' '}
           <Amount
-            value={formatValue(collateral.liquidationRatioD18.mul(BigNumber.from(100)))}
+            value={formatValue(collateral.liquidationRatioD18.mul(BigNumber.from(100)), 18)}
             suffix="% "
           />
         </Text>

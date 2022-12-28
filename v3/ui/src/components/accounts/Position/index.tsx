@@ -1,5 +1,5 @@
 import { DepositingStats } from './Callouts';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Spinner, Box } from '@chakra-ui/react';
+import { Box, Spinner, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import Manage from './Manage';
 import { Rewards } from './Rewards/Rewards';
 import { Pool } from './Pool';
@@ -28,9 +28,7 @@ export const Position: FC<Props> = ({ accountId, poolId, collateral }) => {
       </Box>
     );
 
-  const { price: priceBN, decimals } = collateral;
-
-  const price = formatValue(priceBN || 0, decimals!);
+  const price = formatValue(collateral.price || 0, collateral.decimals);
   const collateralValue = collateralAmount * price;
 
   return (

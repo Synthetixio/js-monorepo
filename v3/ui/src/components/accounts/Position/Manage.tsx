@@ -2,11 +2,11 @@ import { Custom } from './Manage/Custom';
 import { Mint } from './Manage/Mint';
 import { Preview } from './Manage/Preview';
 import { Withdraw } from './Manage/Withdraw';
-import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Button } from '@chakra-ui/react';
+import { Box, Button, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
 import { MaintainCRatio } from './Manage/MaintainCRatio';
 import { useCallback, useState } from 'react';
-import { useManagePosition } from '../../../hooks/useManagePosition';
+import { useManagePosition } from './useManagePosition';
 import { Deposit } from './Manage/Deposit';
 import { Burn } from './Manage/Burn';
 import { useValidatePosition } from '../../../hooks/useValidatePosition';
@@ -43,31 +43,27 @@ export default function Manage({
     setDebtChange(0);
   }, []);
 
-  const { exec, isLoading } = useManagePosition(
-    {
-      collateral,
-      accountId,
-      poolId,
-    },
+  const { exec, isLoading } = useManagePosition({
+    collateral,
+    accountId,
+    poolId,
     collateralChange,
     debtChange,
     collateralAmount,
-    () => {
+    refetch: () => {
       reset();
       refetch();
-    }
-  );
-
-  const { isValid, noChange, maxDebt } = useValidatePosition(
-    {
-      collateral,
-      collateralAmount,
-      collateralValue,
-      debt,
     },
+  });
+
+  const { isValid, noChange, maxDebt } = useValidatePosition({
+    collateral,
+    collateralAmount,
+    collateralValue,
+    debt,
     collateralChange,
-    debtChange
-  );
+    debtChange,
+  });
 
   return (
     <Box mt="6" mb="2">
