@@ -84,7 +84,7 @@ export default function Manage({
               collateral={collateral}
               setCollateralChange={setCollateralChange}
               collateralChange={collateralChange}
-              setDebtChange={(value) => setDebtChange(Math.round(value))}
+              setDebtChange={setDebtChange}
               debtChange={debtChange}
               debt={debt}
             />
@@ -98,20 +98,12 @@ export default function Manage({
               />
             </Box>
             <Box mb="6">
-              <Mint
-                onChange={(value) => setDebtChange(Math.round(value))}
-                value={debtChange}
-                max={maxDebt}
-              />
+              <Mint onChange={setDebtChange} value={debtChange} max={maxDebt} />
             </Box>
           </TabPanel>
           <TabPanel>
             <Box mb="6">
-              <Burn
-                value={-debtChange}
-                onChange={(val) => setDebtChange(Math.round(-val))}
-                debt={debt}
-              />
+              <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
             </Box>
             <Box mb="6">
               <Withdraw
@@ -128,7 +120,7 @@ export default function Manage({
               setCollateralChange={setCollateralChange}
               collateralAmount={collateralAmount}
               collateralChange={collateralChange}
-              setDebtChange={(value) => setDebtChange(Math.round(value))}
+              setDebtChange={setDebtChange}
               debtChange={debtChange}
               debt={debt}
               maxDebt={maxDebt}
