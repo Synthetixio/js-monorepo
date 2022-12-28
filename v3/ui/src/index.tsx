@@ -39,14 +39,14 @@ const { chains, provider } = configureChains(supportedChains, [
     rpc: () => ({ http: `https://goerli.infura.io/v3/${INFURA_KEY}` }),
     priority: 1,
   }),
-  jsonRpcProvider({
-    rpc: (chain) =>
-      chain.id in ALCHEMY_KEY_MAPPING
-        ? { http: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_KEY_MAPPING[chain.id]}` }
-        : null,
-    priority: 2,
-  }),
-  publicProvider({ priority: 3 }),
+  // jsonRpcProvider({
+  //   rpc: (chain) =>
+  //     chain.id in ALCHEMY_KEY_MAPPING
+  //       ? { http: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_KEY_MAPPING[chain.id]}` }
+  //       : null,
+  //   priority: 2,
+  // }),
+  // publicProvider({ priority: 3 }),
 ]);
 
 const { connectors } = getDefaultWallets({
