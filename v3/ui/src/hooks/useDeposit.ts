@@ -1,5 +1,6 @@
 import { useToast } from '@chakra-ui/react';
-import { BigNumber, CallOverrides, ethers, utils } from 'ethers';
+import { BigNumber, CallOverrides } from 'ethers';
+import { parseUnits } from '../utils/helpers';
 import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -49,7 +50,7 @@ export const useDeposit = ({
 
   const amountBN =
     Boolean(amount && selectedCollateralType) && Number(amount) > 0
-      ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
+      ? parseUnits(amount, selectedCollateralType.decimals)
       : BigNumber.from(0);
 
   const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
@@ -84,7 +85,7 @@ export const useDeposit = ({
           parseInt(Boolean(accountId) ? selectedPoolId : poolId || '0'),
           selectedCollateralType.tokenAddress,
           amountToDelegate || 0,
-          utils.parseEther('1'),
+          parseUnits(1, 0),
         ],
       },
     ];

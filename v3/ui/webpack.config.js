@@ -98,7 +98,8 @@ const devServer = {
 };
 
 module.exports = {
-  devtool: isProd ? 'source-map' : isTest ? false : 'eval',
+  //  devtool: isProd ? 'source-map' : isTest ? false : 'eval',
+  devtool: isTest ? false : 'source-map',
   devServer,
   mode: isProd ? 'production' : 'development',
   entry: './src/index.tsx',

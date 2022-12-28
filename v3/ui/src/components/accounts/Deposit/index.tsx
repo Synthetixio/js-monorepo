@@ -1,13 +1,13 @@
 import { poolsData } from '../../../utils/constants';
 import { useSynthetixRead } from '../../../hooks/useDeploymentRead';
 import EditPosition from '../EditPosition';
+import { parseUnits } from '../../../utils/helpers';
 import { Balance } from './Balance';
 import CollateralTypeSelector from './CollateralTypeSelector';
 import { EditIcon, InfoOutlineIcon, LockIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
-  Stack,
   IconButton,
   Input,
   Link,
@@ -17,12 +17,13 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Stack,
   Text,
   Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber } from 'ethers';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useNetwork } from 'wagmi';
 import { CollateralType, LiquidityPositionType } from '../../../utils/types';
@@ -145,7 +146,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
                   validate: {
                     insufficientBalance: (v) => {
                       const amountBN = Boolean(v)
-                        ? ethers.utils.parseUnits(v, selectedCollateralType.decimals)
+                        ? parseUnits(v, selectedCollateralType.decimals)
                         : BigNumber.from(0);
                       return balanceData && balanceData.value.gte(amountBN);
                     },

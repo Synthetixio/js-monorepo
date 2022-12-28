@@ -1,4 +1,3 @@
-import { utils } from 'ethers';
 import { useCallback, useMemo, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
@@ -60,14 +59,14 @@ export const useManagePosition = (
             position.poolId,
             position.collateral.tokenAddress,
             currentAmount.add(collateralChangeBN),
-            utils.parseEther('1'),
+            parseUnits(1, 0),
           ],
         }
       );
     }
 
     if (debtChange < 0) {
-      const amount = utils.parseEther(`${-debtChange}`);
+      const amount = parseUnits(-1 * debtChange, position.collateral.decimals);
       list.push({
         contract: snxProxy?.contract,
         functionName: 'burnUsd',
@@ -76,8 +75,7 @@ export const useManagePosition = (
     }
 
     if (debtChange > 0) {
-      const amount = utils.parseEther(`${debtChange}`);
-
+      const amount = parseUnits(debtChange, position.collateral.decimals);
       list.push({
         contract: snxProxy?.contract,
         functionName: 'mintUsd',
@@ -96,7 +94,7 @@ export const useManagePosition = (
             position.poolId,
             position.collateral.tokenAddress,
             currentAmount.sub(collateralChangeBN),
-            utils.parseEther('1'),
+            parseUnits(1, 0),
           ],
         },
         {
