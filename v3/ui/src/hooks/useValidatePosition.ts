@@ -19,8 +19,7 @@ export const useValidatePosition = (
   const newCollateralAmount = collateralAmount + collateralChange;
   const cVal = new Big(collateralValue).div(collateralAmount || 1);
   const newCRatio = newDebt ? cVal.mul(newCollateralAmount).mul(100).div(newDebt).toNumber() : 0;
-
-  const targetCRatio = formatValue(collateral.issuanceRatioD18 || 0, 6) * 100;
+  const targetCRatio = formatValue(collateral.issuanceRatioD18 || 0, 18) * 100;
 
   const maxDebt = useMemo(
     () =>

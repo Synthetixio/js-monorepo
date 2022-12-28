@@ -48,7 +48,10 @@ export const LiquidityPosition: FC<Props> = ({ position }) => {
 
         <Text fontSize="xs" opacity="0.66" mt="1">
           <Amount
-            value={formatValue(collateralType.liquidationRatioD18.mul(BigNumber.from(100)), 6)}
+            value={formatValue(
+              position.collateralType.liquidationRatioD18.mul(BigNumber.from(100)),
+              18
+            )}
             suffix="% "
           />
           Min.
