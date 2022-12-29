@@ -7689,9 +7689,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/subgraph-goerli@workspace:v3/subgraphs/goerli":
+"@snx-v3/subgraphs@workspace:v3/subgraphs":
   version: 0.0.0-use.local
-  resolution: "@snx-v3/subgraph-goerli@workspace:v3/subgraphs/goerli"
+  resolution: "@snx-v3/subgraphs@workspace:v3/subgraphs"
   dependencies:
     "@graphprotocol/graph-cli": ^0.35.0
     "@graphprotocol/graph-ts": ^0.28.1
