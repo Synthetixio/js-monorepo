@@ -19,7 +19,8 @@
     "start:optimism-goerli": "./start.sh optimism-goerli",
     "fetch:goerli": "./fetch.sh goerli",
     "fetch:optimism-goerli": "./fetch.sh optimism-goerli",
-    "fetch-deployments": "yarn fetch:goerli && yarn fetch:optimism-goerli",
+    "fetch:metadata": "./fetch-metadata.sh",
+    "fetch-deployments": "yarn fetch:metadata && yarn fetch:goerli && yarn fetch:optimism-goerli",
     "cannon": "cannon"
   },
   "devDependencies": {

@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Synthetix Documentation',
-  tagline: 'The Derivates Liquidity Protocol',
+  tagline: 'The Derivatives Liquidity Protocol',
   url: 'https://docs.synthetix.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',

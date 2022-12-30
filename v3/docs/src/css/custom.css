@@ -28,6 +28,10 @@
   --ifm-navbar-background-color: #10101e;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html[data-theme='dark'] {
   background: black;
 }
