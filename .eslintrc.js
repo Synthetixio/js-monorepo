@@ -54,7 +54,7 @@ module.exports = {
       },
 
       extends: ['plugin:react/recommended'],
-      plugins: ['react', 'react-hooks'],
+      plugins: ['react', 'react-hooks', '@tanstack/query'],
 
       settings: {
         react: {
@@ -70,9 +70,10 @@ module.exports = {
         quotes: 'off',
         'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
         'react/prop-types': 'off', // using ts
-        // react-hooks
         'react-hooks/rules-of-hooks': 'error',
         'react-hooks/exhaustive-deps': 'error',
+        '@tanstack/query/exhaustive-deps': 'error',
+        '@tanstack/query/prefer-query-object-syntax': 'error',
       },
     },
 
