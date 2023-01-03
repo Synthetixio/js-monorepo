@@ -71,7 +71,7 @@ export function useCollateralTypes() {
   const provider = useProvider();
   const { data: CoreProxyContract } = useCoreProxy();
   return useQuery({
-    queryKey: [provider.network.name, 'collateralTypes', '12'],
+    queryKey: [provider.network.name, 'collateralTypes'],
     queryFn: async () => {
       if (!CoreProxyContract) {
         throw Error('Query should not be enabled when CoreProxyContract missing');
