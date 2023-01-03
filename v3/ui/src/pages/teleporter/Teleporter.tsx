@@ -25,7 +25,6 @@ import { useSetRecoilState } from 'recoil';
 import { useAccount, useContractWrite, useNetwork, useSwitchNetwork } from 'wagmi';
 import { NumberInput } from '../../components/accounts/Position/Manage/NumberInput';
 import { Balance } from '../../components/accounts/Deposit/Balance';
-import { routeToChain } from '../../components/NetworkChain';
 import { Transaction } from '../../components/shared/TransactionReview/TransactionReview.types';
 import { useContract } from '../../hooks/useContract';
 import { useApprove } from '../../hooks/useApprove';
@@ -59,12 +58,7 @@ export const Teleporter = () => {
   const { openConnectModal } = useConnectModal();
   const [amount, setAmount] = useState(0);
 
-  const { switchNetwork } = useSwitchNetwork({
-    onSuccess: (data) => {
-      routeToChain(location.pathname, data.id);
-    },
-  });
-
+  const { switchNetwork } = useSwitchNetwork();
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
 

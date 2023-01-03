@@ -1,27 +1,15 @@
 import { Button, Flex, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useRecoilState } from 'recoil';
-import { useAccount, useNetwork } from 'wagmi';
-import { routeToChain } from './NetworkChain';
-import { useLocation } from 'react-router-dom';
-import { chainIdState } from '../utils/state';
-import { supportedChains } from '../utils/constants';
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
 
 export function NetworkController() {
   const { connector } = useAccount();
-  const location = useLocation();
-  const { chains: networkChains } = useNetwork();
-  const wagmiSupportedNetworks = networkChains.map(({ id }) => id);
-  const [localChainId] = useRecoilState(chainIdState);
-  const chains = supportedChains.filter(({ id }) => wagmiSupportedNetworks.includes(id));
-  const localChain = chains.find((chain) => chain.id === localChainId);
+  const { chains } = useNetwork();
+  const { switchNetwork } = useSwitchNetwork();
 
   return (
     <ConnectButton.Custom>
-      {(data) => {
-        const { account, chain, openAccountModal, openChainModal, openConnectModal, mounted } =
-          data;
-
+      {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
         return (
           <Flex
             {...(!mounted && {
@@ -97,48 +85,31 @@ export function NetworkController() {
                       )}
                     </div>
                   )}
-                  {chain?.name || localChain?.name}
+                  {chain?.name}
                 </MenuButton>
                 <MenuList px={2} minW="0" bg="black" border="1px solid rgba(255,255,255,0.33)">
-                  {chains &&
-                    chains.map((chainOption) => (
-                      <MenuItem
-                        borderRadius="sm"
-                        key={chainOption.id}
-                        alignItems="left"
-                        mb={1}
-                        flexDirection="column"
-                        _hover={{ bg: 'gray.900' }}
-                        _focus={{ bg: 'gray.900' }}
-                        _active={{ bg: 'gray.900' }}
-                        onClick={() => {
-                          routeToChain(location.pathname, chainOption.id);
-                        }}
-                        fontWeight="600"
-                      >
-                        {/* chainOption.hasIcon && (
-                          <div
-                            style={{
-                              background: chainOption.iconBackground,
-                              width: 20,
-                              height: 20,
-                              borderRadius: 999,
-                              overflow: 'hidden',
-                              marginRight: 8,
-                            }}
-                          >
-                            {chainOption.iconUrl && (
-                              <img
-                                alt={chainOption.name ?? 'Chain icon'}
-                                src={chainOption.iconUrl}
-                                style={{ width: 20, height: 20 }}
-                              />
-                            )}
-                          </div>
-                            ) */}
-                        {chainOption.name}
-                      </MenuItem>
-                    ))}
+                  {chains.map((chainOption) => (
+                    <MenuItem
+                      borderRadius="sm"
+                      key={chainOption.id}
+                      alignItems="left"
+                      mb={1}
+                      flexDirection="column"
+                      _hover={{ bg: 'gray.900' }}
+                      _focus={{ bg: 'gray.900' }}
+                      _active={{ bg: 'gray.900' }}
+                      onClick={() => {
+                        // TODO: 1. ask wallet to switch chain, if connected
+                        // TODO: 2. if not connected, update wagmi chain
+                        if (switchNetwork) {
+                          switchNetwork(chainOption.id);
+                        }
+                      }}
+                      fontWeight="600"
+                    >
+                      {chainOption.name}
+                    </MenuItem>
+                  ))}
                 </MenuList>
               </Menu>
             )}
@@ -176,7 +147,6 @@ export function NetworkController() {
                   data-testid="account-button"
                 >
                   {account.displayName}
-                  {false && account?.displayBalance ? ` (${account?.displayBalance})` : ''}
                 </Button>
               );
             })()}

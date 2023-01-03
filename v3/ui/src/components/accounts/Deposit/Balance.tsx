@@ -1,8 +1,7 @@
 import { Badge, Link, Text } from '@chakra-ui/react';
 import { BigNumber, utils } from 'ethers';
 import { FC, useMemo } from 'react';
-import { useRecoilState } from 'recoil';
-import { chainIdState } from '../../../utils/state';
+import { useProvider } from 'wagmi';
 import { Amount } from '../../shared/Amount/Amount';
 
 interface Props {
@@ -14,19 +13,19 @@ interface Props {
 }
 
 export const Balance: FC<Props> = ({ balance, decimals, symbol, address, onMax }) => {
-  const [localChainId] = useRecoilState(chainIdState);
+  const provider = useProvider();
 
   const buyAssetLink = useMemo(() => {
-    if (localChainId === 1) {
+    if (provider.network.chainId === 1) {
       return `https://app.1inch.io/#/1/unified/swap/ETH/${symbol.toUpperCase()}`;
-    } else if (localChainId === 10) {
+    } else if (provider.network.chainId === 10) {
       return `https://app.1inch.io/#/10/unified/swap/ETH/${symbol.toUpperCase()}`;
-    } else if (localChainId === 5) {
+    } else if (provider.network.chainId === 5) {
       return `https://goerli.etherscan.io/address/${address}#writeContract`;
-    } else if (localChainId === 420) {
+    } else if (provider.network.chainId === 420) {
       return `https://goerli-optimism.etherscan.io/address/${address}#writeContract`;
     }
-  }, [address, localChainId, symbol]);
+  }, [address, provider.network.chainId, symbol]);
 
   const formattedBalance = utils.formatUnits(balance, decimals);
   return (

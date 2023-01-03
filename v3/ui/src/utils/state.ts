@@ -18,11 +18,6 @@ export const accountsState = atom<{
   },
 });
 
-export const chainIdState = atom({
-  key: 'localChainId',
-  default: 0,
-});
-
 interface TransactionState {
   transactions: Transaction[];
   isOpen: boolean;

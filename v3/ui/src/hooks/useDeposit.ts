@@ -5,8 +5,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
-import { contracts, getChainById } from '../utils/constants';
-import { accountsState, chainIdState, transactionState } from '../utils/state';
+import { contracts } from '../utils/constants';
+import { accountsState, transactionState } from '../utils/state';
 import { CollateralType, LiquidityPositionType } from '../utils/types';
 import { useApprove } from './useApprove';
 import { useContract } from './useContract';
@@ -35,9 +35,6 @@ export const useDeposit = ({
   onSuccess,
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [localChainId] = useRecoilState(chainIdState);
-  const chain = getChainById(localChainId);
-
   const navigate = useNavigate();
 
   const toast = useToast({
@@ -143,7 +140,7 @@ export const useDeposit = ({
       await Promise.all([refetchAccounts!({ cancelRefetch: Boolean(accountId) })]);
       if (!Boolean(accountId)) {
         navigate(
-          `/accounts/${newAccountId}/positions/${selectedCollateralType.symbol}/${selectedPoolId}?chain=${chain?.network}`
+          `/accounts/${newAccountId}/positions/${selectedCollateralType.symbol}/${selectedPoolId}`
         );
       } else {
         // TODO: get language from noah

@@ -2,19 +2,22 @@ import { Container, Flex } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import CreateAccount from '../components/accounts/CreateAccount';
-import { useNavigateWithChain } from '../hooks/useNavigateWithChain';
 import { accountsState } from '../utils/state';
+import { useNavigate } from 'react-router-dom';
 
 export function Home() {
-  const navigate = useNavigateWithChain();
-  const [{ accounts }] = useRecoilState(accountsState);
+  const navigate = useNavigate();
+  const [
+    {
+      accounts: [account],
+    },
+  ] = useRecoilState(accountsState);
 
   useEffect(() => {
-    if (accounts.length) {
-      navigate({ pathname: `/accounts/${accounts[0]}` });
+    if (account) {
+      navigate({ pathname: `/accounts/${account}` });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [account, navigate]);
 
   return (
     <Flex

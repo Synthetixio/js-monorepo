@@ -5,32 +5,32 @@ import lyra from './lyra.svg';
 import thales from './thales.svg';
 import { CheckIcon, ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
-  Container,
-  Flex,
   Box,
-  Link,
-  Spacer,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  Image,
-  PopoverBody,
-  Text,
-  IconButton,
-  useDisclosure,
+  Button,
+  Container,
   Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerHeader,
   DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Flex,
+  IconButton,
+  Image,
+  Link,
   Menu,
   MenuButton,
-  Button,
-  MenuList,
   MenuItem,
+  MenuList,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Spacer,
+  Text,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { Link as RouterLink, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useParams } from 'react-router-dom';
 import { NetworkController } from '../../components/NetworkController';
 import { useEffect } from 'react';
 import { accountsState } from '../../utils/state';
@@ -76,8 +76,6 @@ export default function Header() {
   const location = useLocation();
   const { id } = useParams();
   const [{ accounts: userAccounts }] = useRecoilState(accountsState);
-  const [search] = useSearchParams();
-  const routingSearchParams = `?chain=${search.get('chain')}`;
 
   useEffect(() => {
     onClose();
@@ -188,7 +186,7 @@ export default function Header() {
                     return isCurrentAccount ? (
                       menuItem
                     ) : (
-                      <RouterLink key={account} to={`/accounts/${account}${routingSearchParams}`}>
+                      <RouterLink key={account} to={`/accounts/${account}`}>
                         {menuItem}
                       </RouterLink>
                     );
@@ -200,7 +198,7 @@ export default function Header() {
                   >
                     <Link
                       as={RouterLink}
-                      to={`/accounts/create${routingSearchParams}`}
+                      to="/accounts/create"
                       _focus={{ boxShadow: 'none' }}
                       _hover={{ textDecoration: 'none' }}
                       fontWeight="semibold"
@@ -271,7 +269,7 @@ export default function Header() {
                     return isCurrentAccount ? (
                       menuItem
                     ) : (
-                      <RouterLink key={account} to={`/accounts/${account}${routingSearchParams}`}>
+                      <RouterLink key={account} to={`/accounts/${account}`}>
                         {menuItem}
                       </RouterLink>
                     );
@@ -283,7 +281,7 @@ export default function Header() {
                   >
                     <Link
                       as={RouterLink}
-                      to={`/accounts/create${routingSearchParams}`}
+                      to="/accounts/create"
                       _focus={{ boxShadow: 'none' }}
                       _hover={{ textDecoration: 'none' }}
                       fontWeight="semibold"

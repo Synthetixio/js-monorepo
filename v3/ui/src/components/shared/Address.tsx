@@ -1,9 +1,9 @@
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { Link, Text } from '@chakra-ui/react';
+import { etherscanLink } from '@snx-v3/etherscanLink';
 import { FC } from 'react';
-import { useRecoilState } from 'recoil';
+import { useProvider } from 'wagmi';
 import { prettyString } from '../../utils/helpers';
-import { chainIdState } from '../../utils/state';
 
 interface Props {
   address?: string;
@@ -11,23 +11,8 @@ interface Props {
 }
 
 export const Address: FC<Props> = ({ address, displayFullAddress }) => {
-  const [localChainId] = useRecoilState(chainIdState);
+  const provider = useProvider();
   if (!address) return null;
-
-  let url;
-  switch (localChainId) {
-    case 5:
-      url = `https://goerli.etherscan.io/address/${address}`;
-      break;
-    case 5:
-      url = `https://optimistic.etherscan.io/${address}`;
-      break;
-    case 420:
-      url = `https://goerli-optimism.etherscan.io/address/${address}`;
-      break;
-    default:
-      url = `https://etherscan.io/address/${address}`;
-  }
 
   // ENS support here?
   const addressDisplay = displayFullAddress ? address : prettyString(address);
@@ -35,7 +20,7 @@ export const Address: FC<Props> = ({ address, displayFullAddress }) => {
     <Text>
       {addressDisplay}
       <Link
-        href={url}
+        href={etherscanLink({ chain: provider.network.name, address })}
         isExternal
         color="cyan.500"
         ml="1.5"

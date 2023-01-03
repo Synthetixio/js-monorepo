@@ -1,18 +1,9 @@
 import { ChevronLeftIcon, SettingsIcon } from '@chakra-ui/icons';
 import { Flex, Link } from '@chakra-ui/react';
-import {
-  generatePath,
-  Link as RouterLink,
-  useMatch,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { generatePath, Link as RouterLink, useMatch, useParams } from 'react-router-dom';
 
 export function DepositingNav() {
   const { id } = useParams();
-  const [search] = useSearchParams();
-  const routingSearchParams = `?chain=${search.get('chain')}`;
-
   const innerPage = !useMatch('/accounts/:id');
 
   return (
@@ -20,10 +11,7 @@ export function DepositingNav() {
       {innerPage ? (
         <Link
           as={RouterLink}
-          to={generatePath('/accounts/:id/*', {
-            id,
-            '*': routingSearchParams,
-          })}
+          to={generatePath('/accounts/:id', { id })}
           fontSize="xs"
           fontWeight="normal"
           color="cyan.500"
@@ -34,10 +22,7 @@ export function DepositingNav() {
       ) : (
         <Link
           as={RouterLink}
-          to={generatePath('/accounts/:id/settings/*', {
-            id,
-            '*': routingSearchParams,
-          })}
+          to={generatePath('/accounts/:id/settings', { id })}
           ml="auto"
           fontSize="xs"
           fontWeight="normal"
