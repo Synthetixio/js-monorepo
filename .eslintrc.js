@@ -47,7 +47,7 @@ module.exports = {
 
   overrides: [
     {
-      files: ['v3/ui/**/*', 'v3/components/**/*', 'v3/components/**/*', 'v3/theme/**/*'],
+      files: ['v3/ui/**/*', 'v3/components/**/*', 'v3/lib/**/*', 'v3/theme/**/*'],
 
       env: {
         browser: true,
@@ -72,7 +72,7 @@ module.exports = {
         'react/prop-types': 'off', // using ts
         'react-hooks/rules-of-hooks': 'error',
         'react-hooks/exhaustive-deps': 'error',
-        '@tanstack/query/exhaustive-deps': 'error',
+        '@tanstack/query/exhaustive-deps': 'off', // not smart enough, does not take into account `enabled` and global imports
         '@tanstack/query/prefer-query-object-syntax': 'error',
       },
     },

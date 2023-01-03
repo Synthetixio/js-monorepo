@@ -18,20 +18,17 @@ export const useCoreProxy = () => {
   const provider = useProvider();
   const { data: signer } = useSigner();
 
-  const networkName = provider.network.name;
-
-  return useQuery(
-    [networkName, { withSigner: Boolean(signer) }, 'CoreProxy'],
-    async () => {
+  return useQuery({
+    queryKey: [provider.network.name, { withSigner: Boolean(signer) }, 'CoreProxy'],
+    queryFn: async () => {
       const CoreProxy = await importCoreProxy(provider.network.name);
       return new ethers.Contract(CoreProxy.address, CoreProxy.abi, signer || provider) as
         | CoreProxyGoerli
         | CoreProxyOptimismGoerli;
     },
-    {
-      staleTime: Infinity,
-      cacheTime: Infinity,
-    }
-  );
+    enabled: Boolean(provider.network.name && (signer || provider)),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
 };
 export type CoreProxyContractType = CoreProxyGoerli | CoreProxyOptimismGoerli;
