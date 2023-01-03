@@ -110,12 +110,17 @@ export const useGetPoolData = (id?: string) => {
   const provider = useProvider();
   const chainName = provider.network.name;
 
-  return useQuery({ queryKey: ['useGetPoolData', chainName, id], queryFn: async () => {
+  return useQuery({
+    queryKey: ['useGetPoolData', chainName, id],
+    queryFn: async () => {
       if (!chainName || !id) throw Error('Query expected chainName and id to be defined');
       const poolData = await getPoolData(chainName, id);
       const pool = addMockData(poolData.data.pool);
       return pool;
-    }, enabled: Boolean(chainName && id), staleTime: 10000 });
+    },
+    enabled: Boolean(chainName && id),
+    staleTime: 10000,
+  });
 };
 
 function addMockData(pool: Pool | null): Pool | null {

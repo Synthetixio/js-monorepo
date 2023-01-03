@@ -1,18 +1,19 @@
-import { address as CoreProxyAddressGoerli } from '@synthetixio/v3-contracts/deployments/goerli/CoreProxy.json';
-import { address as AccountProxyAddressGoerli } from '@synthetixio/v3-contracts/deployments/goerli/AccountProxy.json';
-import { address as USDProxyAddressGoerli } from '@synthetixio/v3-contracts/deployments/goerli/USDProxy.json';
-import { address as CoreProxyAddressOptimismGoerli } from '@synthetixio/v3-contracts/deployments/optimism-goerli/CoreProxy.json';
-import { address as AccountProxyAddressOptimismGoerli } from '@synthetixio/v3-contracts/deployments/optimism-goerli/AccountProxy.json';
-import { address as USDProxyAddressOptimismGoerli } from '@synthetixio/v3-contracts/deployments/optimism-goerli/USDProxy.json';
+import { default as CoreProxyGoerli } from '@synthetixio/v3-contracts/deployments/goerli/CoreProxy.json';
+import { default as AccountProxyGoerli } from '@synthetixio/v3-contracts/deployments/goerli/AccountProxy.json';
+import { default as USDProxyGoerli } from '@synthetixio/v3-contracts/deployments/goerli/USDProxy.json';
+import { default as CoreProxyOptimismGoerli } from '@synthetixio/v3-contracts/deployments/optimism-goerli/CoreProxy.json';
+import { default as AccountProxyOptimismGoerli } from '@synthetixio/v3-contracts/deployments/optimism-goerli/AccountProxy.json';
+import { default as USDProxyOptimismGoerli } from '@synthetixio/v3-contracts/deployments/optimism-goerli/USDProxy.json';
+
 export const deploymentAddresses = {
   goerli: {
-    CoreProxy: CoreProxyAddressGoerli,
-    AccountProxy: AccountProxyAddressGoerli,
-    USDProxy: USDProxyAddressGoerli,
+    CoreProxy: CoreProxyGoerli.address,
+    AccountProxy: AccountProxyGoerli.address,
+    USDProxy: USDProxyGoerli.address,
   },
   'optimism-goerli': {
-    CoreProxy: CoreProxyAddressOptimismGoerli,
-    AccountProxy: AccountProxyAddressOptimismGoerli,
-    USDProxy: USDProxyAddressOptimismGoerli,
+    CoreProxy: CoreProxyOptimismGoerli.address,
+    AccountProxy: AccountProxyOptimismGoerli.address,
+    USDProxy: USDProxyOptimismGoerli.address,
   },
 };
