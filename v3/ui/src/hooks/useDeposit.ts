@@ -1,5 +1,5 @@
 import { useToast } from '@chakra-ui/react';
-import { BigNumber, CallOverrides } from 'ethers';
+import { CallOverrides } from 'ethers';
 import { parseUnits } from '../utils/helpers';
 import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -48,7 +48,7 @@ export const useDeposit = ({
   const amountBN =
     Boolean(amount && selectedCollateralType) && Number(amount) > 0
       ? parseUnits(amount, selectedCollateralType.decimals)
-      : BigNumber.from(0);
+      : parseUnits(0);
 
   const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
 
@@ -63,7 +63,7 @@ export const useDeposit = ({
     const currentLiquidityPosition = liquidityPositions[key];
 
     const amountToDelegate = Boolean(accountId)
-      ? (currentLiquidityPosition?.collateralAmount || BigNumber.from(0)).add(amountBN)
+      ? (currentLiquidityPosition?.collateralAmount || parseUnits(0)).add(amountBN)
       : amountBN;
 
     if (!snxProxy) return [];

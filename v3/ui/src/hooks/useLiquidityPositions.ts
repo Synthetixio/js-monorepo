@@ -5,7 +5,7 @@ import { useSnxProxy } from './useContract';
 import { poolsData } from '../utils/constants';
 import { useSynthetixProxyEvent } from './useContractEvent';
 import { CollateralType, LiquidityPositionType } from '../utils/types';
-import { formatValue } from '../utils/helpers';
+import { parseUnits } from '../utils/helpers';
 import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
 import { BigNumber } from 'ethers';
 
@@ -66,10 +66,8 @@ export const useLiquidityPositions = (accountId: string) => {
       const { poolId, collateral } = calls[c.index];
       const key = `${poolId}-${collateral.symbol}`;
 
-      const collateralValue = formatValue(c.value.value || 0, collateral.decimals);
-      const cRatio = !debt.eq(0)
-        ? BigNumber.from(collateralValue).mul(100).div(debt)
-        : BigNumber.from(0);
+      const collateralValue = c.value.value ?? parseUnits(0);
+      const cRatio = debt.eq(0) ? parseUnits(0) : collateralValue.mul(100).div(debt);
 
       positions[key] = {
         id: key,

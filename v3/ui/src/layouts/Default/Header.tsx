@@ -177,7 +177,6 @@ export default function Header() {
                       >
                         <Flex width="100%" alignItems="center">
                           {isCurrentAccount && <CheckIcon marginRight={1} />}
-
                           {account}
                         </Flex>
                       </MenuItem>
@@ -260,7 +259,6 @@ export default function Header() {
                       >
                         <Flex width="100%" alignItems="center">
                           {isCurrentAccount && <CheckIcon marginRight={1} />}
-
                           {account}
                         </Flex>
                       </MenuItem>
