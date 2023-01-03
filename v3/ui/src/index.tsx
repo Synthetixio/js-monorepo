@@ -40,12 +40,17 @@ const { connectors } = getDefaultWallets({
   chains,
 });
 
+const noop = () => null;
 const wagmiClient = createClient({
   queryClient,
   autoConnect: true,
   persister: null,
   // @ts-ignore
-  storage: null,
+  storage: {
+    getItem: noop,
+    setItem: noop,
+    removeItem: noop,
+  },
   provider,
   connectors,
 });
