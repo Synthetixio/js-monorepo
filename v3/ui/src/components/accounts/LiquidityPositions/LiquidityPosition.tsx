@@ -35,7 +35,7 @@ export const LiquidityPosition: FC<Props> = ({ position }) => {
         </>
       </Td>
       <Td py="4">
-        <Amount value={formatValue(position.debt, position.collateralType.decimals)} prefix="$" />
+        <Amount value={formatValue(position.debt, 18)} prefix="$" />
         <Text fontSize="xs" opacity="0.66" mt="1">
           $X net issuance
         </Text>
