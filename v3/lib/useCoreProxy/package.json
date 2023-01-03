@@ -7,6 +7,6 @@
     "@synthetixio/v3-contracts": "workspace:*",
     "@tanstack/react-query": "^4.3.4",
     "ethers": "^5.7.2",
-    "wagmi": "^0.6.3"
+    "wagmi": "^0.9.4"
   }
 }
