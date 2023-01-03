@@ -1,4 +1,3 @@
-import React from 'react';
 import { etherscanLink } from './lib/etherscanLink';
 export function AddressLink({ chain, address }) {
   return (

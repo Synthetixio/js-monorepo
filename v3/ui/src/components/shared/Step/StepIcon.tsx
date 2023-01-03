@@ -1,12 +1,12 @@
 import { chakra, Flex, forwardRef, Spinner } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import React, { useMemo } from 'react';
+import { useMemo, ReactNode } from 'react';
 import { StepStatus } from '../TransactionReview/TransactionReview.types';
 import { CheckIcon, CloseIcon } from './Icons';
 
 interface StepIconProps {
   status?: StepStatus;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 const MotionFlex = motion(Flex);

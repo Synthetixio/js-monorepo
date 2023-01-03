@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type { ReactElement } from 'react';
 import { Spinner } from '@chakra-ui/react';
 import { useEffect, useRef, FC } from 'react';
 import { useRecoilState } from 'recoil';
@@ -8,7 +8,7 @@ import { chainIdState } from '../utils/state';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
 type Props = {
-  children?: React.ReactElement | React.ReactElement[];
+  children?: ReactElement | ReactElement[];
 };
 
 const DEFAULT_CHAIN = goerli;

@@ -1,5 +1,5 @@
+import { FC } from 'react';
 import { Box, Container, Flex } from '@chakra-ui/react';
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { NetworkChain } from '../../components/NetworkChain';
 import { MultipleTransactionModal } from '../../components/shared/TransactionReview/MultipleTransactionModal';
@@ -7,7 +7,7 @@ import { Initializer } from '../../Initializer';
 import Footer from './Footer';
 import Header from './Header';
 
-export const DefaultLayout: React.FC = () => (
+export const DefaultLayout: FC = () => (
   <Box
     as="main"
     background="black"

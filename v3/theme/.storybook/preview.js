@@ -1,6 +1,5 @@
 import { theme, Fonts } from '../src';
 import { Box } from '@chakra-ui/react';
-import React from 'react';
 
 export const parameters = {
   chakra: {

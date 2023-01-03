@@ -1,4 +1,3 @@
-import React from 'react';
 import { deploymentAddresses } from './lib/deploymentAddresses';
 import { modules } from './lib/modules';
 import { kebabize } from './lib/kebabize';

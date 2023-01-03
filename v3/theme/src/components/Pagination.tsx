@@ -60,8 +60,8 @@ export default function Pagination({
   };
 
   return (
-    <Flex alignItems={'center'} gap="2">
-      <Text fontSize={'sm'} fontFamily="body" color="gray.700">
+    <Flex alignItems="center" gap="2">
+      <Text fontSize="sm" fontFamily="body" color="gray.700">
         {text}
       </Text>
       <Box borderWidth="1px" borderStyle="solid" borderColor="gray.900" borderRadius="6px">
@@ -72,7 +72,7 @@ export default function Pagination({
             setCurrentPage([1, newPageSize]);
           }}
           iconColor="cyan.500"
-          size={'sm'}
+          size="sm"
         >
           {dropdownOptions.map((option) => (
             <option value={option} key={option}>
@@ -81,7 +81,7 @@ export default function Pagination({
           ))}
         </Select>
       </Box>
-      <Text fontFamily="body" color="white" fontSize={'sm'}>
+      <Text fontFamily="body" color="white" fontSize="sm">
         {currentPage[0]}-{currentPage[1]} of {maxLength}
       </Text>
       <IconButton
