@@ -10,6 +10,6 @@
     "react-i18next": "^11.18.3"
   },
   "devDependencies": {
-    "@storybook/react": "^6.5.10"
+    "@storybook/react": "^6.5.15"
   }
 }
