@@ -1,5 +1,6 @@
 import { useToast } from '@chakra-ui/react';
-import { BigNumber, CallOverrides, ethers, utils } from 'ethers';
+import { BigNumber, CallOverrides } from 'ethers';
+import { parseUnits } from '../utils/helpers';
 import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -49,7 +50,7 @@ export const useDeposit = ({
 
   const amountBN =
     Boolean(amount && selectedCollateralType) && Number(amount) > 0
-      ? ethers.utils.parseUnits(amount, selectedCollateralType.decimals)
+      ? parseUnits(amount, selectedCollateralType.decimals)
       : BigNumber.from(0);
 
   const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
@@ -81,10 +82,10 @@ export const useDeposit = ({
         functionName: 'delegateCollateral',
         callArgs: [
           id,
-          Boolean(accountId) ? selectedPoolId : poolId || 0,
+          parseInt(Boolean(accountId) ? selectedPoolId : poolId || '0'),
           selectedCollateralType.tokenAddress,
           amountToDelegate || 0,
-          utils.parseEther('1'),
+          parseUnits(1, 18),
         ],
       },
     ];
@@ -186,13 +187,6 @@ export const useDeposit = ({
     }
   );
 
-  const exec = useCallback(async () => {
-    try {
-      await approve();
-      await multiTxn.exec();
-    } catch (error) {}
-  }, [approve, multiTxn]);
-
   const setTransaction = useSetRecoilState(transactionState);
 
   const updateTransactions = useCallback(() => {
@@ -243,27 +237,16 @@ export const useDeposit = ({
     multiTxn,
   ]);
 
-  const createAccount = useCallback(
-    async (useDialog = true) => {
-      if (useDialog) {
-        return updateTransactions();
-      }
-      try {
-        setIsLoading(true);
-        //  add extra step to convert to wrapped token if native (ex. ETH)
-        if (isNativeCurrency) {
-          await wrap(amountBN);
-        }
-
-        await exec();
-      } catch (error) {
-        //console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [updateTransactions, isNativeCurrency, exec, wrap, amountBN]
-  );
+  const createAccount = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      await updateTransactions();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [updateTransactions]);
 
   return {
     createAccount,

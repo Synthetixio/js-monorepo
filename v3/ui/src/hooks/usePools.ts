@@ -10,14 +10,14 @@ export const usePools = () => {
   const { isLoading } = useContractReads({
     contracts: [
       {
-        addressOrName: snxProxy?.address,
-        contractInterface: snxProxy?.abi || '',
+        address: snxProxy?.address,
+        abi: snxProxy?.abi,
         chainId: snxProxy?.chainId,
         functionName: 'getPreferredPool',
       },
       {
-        addressOrName: snxProxy?.address,
-        contractInterface: snxProxy?.abi || '',
+        address: snxProxy?.address,
+        abi: snxProxy?.abi,
         chainId: snxProxy?.chainId,
         functionName: 'getApprovedPools',
       },

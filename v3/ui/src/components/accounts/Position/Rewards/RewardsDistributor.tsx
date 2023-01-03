@@ -16,8 +16,8 @@ export const RewardsDistributor: FC<Props> = ({ distributor }) => {
   const rewardDistributer = useContract(contracts.SNX_REWARD);
 
   const { data } = useContractRead({
-    addressOrName: distributor,
-    contractInterface: rewardDistributer?.abi || '',
+    address: distributor,
+    abi: rewardDistributer?.abi,
     chainId: localChainId,
     functionName: 'name',
     enabled: Boolean(rewardDistributer),

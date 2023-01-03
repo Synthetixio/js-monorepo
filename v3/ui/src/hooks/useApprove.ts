@@ -15,8 +15,8 @@ export const useApprove = (
 
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: contractAddress,
-    contractInterface: erc20ABI,
+    address: contractAddress,
+    abi: erc20ABI,
     functionName: 'approve',
     args: [spender, amount],
     onError: (e) => {
@@ -28,8 +28,8 @@ export const useApprove = (
   });
 
   const { data: allowance, refetch: refetchAllowance } = useContractRead({
-    addressOrName: contractAddress,
-    contractInterface: erc20ABI,
+    address: contractAddress,
+    abi: erc20ABI,
     functionName: 'allowance',
     args: [accountAddress, spender],
     enabled: hasWalletConnected && !!contractAddress,

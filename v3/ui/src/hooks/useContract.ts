@@ -5,16 +5,13 @@ import { contracts, getChainNameById } from '../utils/constants';
 import { chainIdState } from '../utils/state';
 
 import * as goerliCCIP from '@synthetixio/v3-contracts/build/goerli/_CCIP';
-import * as goerliMulticall3 from '@synthetixio/v3-contracts/build/goerli/_Multicall3';
 import * as goerliAccountProxy from '@synthetixio/v3-contracts/build/goerli/AccountProxy';
 import * as goerliCoreProxy from '@synthetixio/v3-contracts/build/goerli/CoreProxy';
 import * as goerliUSDProxy from '@synthetixio/v3-contracts/build/goerli/USDProxy';
 import * as optimismGoerliCCIP from '@synthetixio/v3-contracts/build/optimism-goerli/_CCIP';
-import * as optimismGoerliMulticall3 from '@synthetixio/v3-contracts/build/optimism-goerli/_Multicall3';
 import * as optimismGoerliAccountProxy from '@synthetixio/v3-contracts/build/optimism-goerli/AccountProxy';
 import * as optimismGoerliCoreProxy from '@synthetixio/v3-contracts/build/optimism-goerli/CoreProxy';
 import * as optimismGoerliUSDProxy from '@synthetixio/v3-contracts/build/optimism-goerli/USDProxy';
-import * as ERC20 from '@synthetixio/v3-contracts/build/_ERC20';
 import * as RewardDistributor from '@synthetixio/v3-contracts/build/_RewardDistributor';
 
 function getContract(name: string, chainName: string | undefined) {
@@ -27,10 +24,6 @@ function getContract(name: string, chainName: string | undefined) {
           return goerliUSDProxy;
         case contracts.ACCOUNT_PROXY:
           return goerliAccountProxy;
-        case contracts.MULTICALL:
-          return goerliMulticall3;
-        case contracts.SNX_TOKEN:
-          return ERC20;
         case contracts.SNX_REWARD:
           return RewardDistributor;
         case contracts.CCIP:
@@ -46,10 +39,6 @@ function getContract(name: string, chainName: string | undefined) {
           return optimismGoerliUSDProxy;
         case contracts.ACCOUNT_PROXY:
           return optimismGoerliAccountProxy;
-        case contracts.MULTICALL:
-          return optimismGoerliMulticall3;
-        case contracts.SNX_TOKEN:
-          return ERC20;
         case contracts.SNX_REWARD:
           return RewardDistributor;
         case contracts.CCIP:

@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
 import { BigNumber, ethers } from 'ethers';
-import { useProvider } from 'wagmi';
+import { erc20ABI, useProvider } from 'wagmi';
 import { useQuery } from '@tanstack/react-query';
-import * as Erc20 from '@synthetixio/v3-contracts/build/_ERC20';
 import { CoreProxy as CoreProxyGoerli } from '@synthetixio/v3-contracts/build/goerli/CoreProxy';
 import type { CoreProxy as CoreProxyOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/CoreProxy';
 
@@ -29,7 +28,7 @@ async function loadCollateralTypes({ provider }: { provider: ReturnType<typeof u
     liquidationRatioD18: BigNumber;
     liquidationRewardD18: BigNumber;
     oracleNodeId: string;
-    tokenAddress: string;
+    tokenAddress: `0x${string}`;
     minDelegationD18: BigNumber;
   }[];
   // TODO convert to multicall
@@ -37,11 +36,7 @@ async function loadCollateralTypes({ provider }: { provider: ReturnType<typeof u
     Promise.all(
       tokenConfigs.map(async ({ tokenAddress }) => {
         try {
-          const TokenContract = new ethers.Contract(
-            tokenAddress,
-            Erc20.abi,
-            provider
-          ) as Erc20._ERC20;
+          const TokenContract = new ethers.Contract(tokenAddress, erc20ABI, provider);
           return await TokenContract.symbol();
         } catch (e) {
           console.error(e);

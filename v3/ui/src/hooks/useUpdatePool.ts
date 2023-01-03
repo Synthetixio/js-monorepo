@@ -1,5 +1,4 @@
-import { utils } from 'ethers';
-import { parseUnits } from 'ethers/lib/utils';
+import { parseUnits } from '../utils/helpers';
 import { useMemo } from 'react';
 import { contracts } from '../utils/constants';
 import { CollateralType } from '../utils/types';
@@ -23,7 +22,7 @@ export const useUpdatePool = (
   const calls: MulticallCall[] = useMemo(() => {
     if (!snxProxy || position.poolId === newPoolId) return [];
 
-    const amountBN = parseUnits(amount.toString(), position.collateral.decimals);
+    const amountBN = parseUnits(amount, position.collateral.decimals);
     return [
       {
         contract: snxProxy.contract,
@@ -33,7 +32,7 @@ export const useUpdatePool = (
           position.poolId,
           position.collateral.tokenAddress,
           0,
-          utils.parseEther('1'),
+          parseUnits(1, 18),
         ],
       },
       {
@@ -44,7 +43,7 @@ export const useUpdatePool = (
           newPoolId,
           position.collateral.tokenAddress,
           amountBN,
-          utils.parseEther('1'),
+          parseUnits(1, 18),
         ],
       },
     ];

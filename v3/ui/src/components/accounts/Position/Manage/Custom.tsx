@@ -54,7 +54,7 @@ export const Custom: FC<Props> = ({
                 onChange={(val) => {
                   setCollateralChange(val - collateralAmount);
                 }}
-                max={balance.formatedValue + collateralAmount}
+                max={balance.formattedValue + collateralAmount}
               />
             </Flex>
             <Flex alignItems="center">

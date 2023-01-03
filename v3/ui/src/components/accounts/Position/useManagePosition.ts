@@ -1,39 +1,39 @@
-import { utils } from 'ethers';
 import { useCallback, useMemo, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
-import { contracts } from '../utils/constants';
-import { compareAddress, parseUnits } from '../utils/helpers';
-import { transactionState } from '../utils/state';
-import { CollateralType } from '../utils/types';
-import { useApprove } from './useApprove';
-import { useContract } from './useContract';
-import { MulticallCall, useMulticall } from './useMulticall';
-import { useUnWrapEth, useWrapEth } from './useWrapEth';
+import { Transaction } from '../../shared/TransactionReview/TransactionReview.types';
+import { contracts } from '../../../utils/constants';
+import { compareAddress, parseUnits } from '../../../utils/helpers';
+import { transactionState } from '../../../utils/state';
+import { CollateralType } from '../../../utils/types';
+import { useApprove } from '../../../hooks/useApprove';
+import { useContract } from '../../../hooks/useContract';
+import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
+import { useUnWrapEth, useWrapEth } from '../../../hooks/useWrapEth';
 import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
 
-interface IPosition {
+export const useManagePosition = ({
+  accountId,
+  poolId,
+  collateral,
+  collateralChange,
+  debtChange,
+  collateralAmount,
+  refetch,
+}: {
   accountId: string;
   poolId: string;
   collateral: CollateralType;
-}
-
-export const useManagePosition = (
-  position: IPosition,
-  collateralChange: number,
-  debtChange: number,
-  collateralAmount: number,
-  refetch?: () => void
-) => {
+  collateralChange: number;
+  debtChange: number;
+  collateralAmount: number;
+  refetch?: () => void;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
-  const collateralChangeBN = parseUnits(Math.abs(collateralChange), position.collateral.decimals);
+  const collateralChangeBN = parseUnits(Math.abs(collateralChange), collateral.decimals);
 
   const ethCollateral = useEthCollateralType();
-  const isNativeCurrency = compareAddress(
-    ethCollateral?.tokenAddress,
-    position.collateral.tokenAddress
-  );
+  const isNativeCurrency = compareAddress(ethCollateral?.tokenAddress, collateral.tokenAddress);
 
   const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
   const { unWrap, isLoading: isUnWrapping } = useUnWrapEth();
@@ -44,65 +44,64 @@ export const useManagePosition = (
     if (!snxProxy) return [];
 
     if (collateralChange > 0) {
-      const currentAmount = parseUnits(collateralAmount, position.collateral.decimals);
+      const currentAmount = parseUnits(collateralAmount, collateral.decimals);
 
       list.push(
         {
           contract: snxProxy?.contract,
           functionName: 'deposit',
-          callArgs: [position.accountId, position.collateral.tokenAddress, collateralChangeBN],
+          callArgs: [accountId, collateral.tokenAddress, collateralChangeBN],
         },
         {
           contract: snxProxy.contract,
           functionName: 'delegateCollateral',
           callArgs: [
-            position.accountId,
-            position.poolId,
-            position.collateral.tokenAddress,
+            accountId,
+            poolId,
+            collateral.tokenAddress,
             currentAmount.add(collateralChangeBN),
-            utils.parseEther('1'),
+            parseUnits(1, 18),
           ],
         }
       );
     }
 
     if (debtChange < 0) {
-      const amount = utils.parseEther(`${-debtChange}`);
+      const amount = parseUnits(-1 * debtChange, collateral.decimals);
       list.push({
         contract: snxProxy?.contract,
         functionName: 'burnUsd',
-        callArgs: [position.accountId, position.poolId, position.collateral.tokenAddress, amount],
+        callArgs: [accountId, poolId, collateral.tokenAddress, amount],
       });
     }
 
     if (debtChange > 0) {
-      const amount = utils.parseEther(`${debtChange}`);
-
+      const amount = parseUnits(debtChange, collateral.decimals);
       list.push({
         contract: snxProxy?.contract,
         functionName: 'mintUsd',
-        callArgs: [position.accountId, position.poolId, position.collateral.tokenAddress, amount],
+        callArgs: [accountId, poolId, collateral.tokenAddress, amount],
       });
     }
 
     if (collateralChange < 0) {
-      const currentAmount = parseUnits(collateralAmount, position.collateral.decimals);
+      const currentAmount = parseUnits(collateralAmount, collateral.decimals);
       list.push(
         {
           contract: snxProxy.contract,
           functionName: 'delegateCollateral',
           callArgs: [
-            position.accountId,
-            position.poolId,
-            position.collateral.tokenAddress,
+            accountId,
+            poolId,
+            collateral.tokenAddress,
             currentAmount.sub(collateralChangeBN),
-            utils.parseEther('1'),
+            parseUnits(1, 18),
           ],
         },
         {
           contract: snxProxy.contract,
           functionName: 'withdraw',
-          callArgs: [position.accountId, position.collateral.tokenAddress, collateralChangeBN],
+          callArgs: [accountId, collateral.tokenAddress, collateralChangeBN],
         }
       );
     }
@@ -113,16 +112,16 @@ export const useManagePosition = (
     collateralChange,
     debtChange,
     collateralAmount,
-    position.collateral.decimals,
-    position.collateral.tokenAddress,
-    position.accountId,
-    position.poolId,
+    collateral.decimals,
+    collateral.tokenAddress,
+    accountId,
+    poolId,
     collateralChangeBN,
   ]);
 
   const multiTxn = useMulticall(calls);
   const { approve, requireApproval } = useApprove(
-    position.collateral.tokenAddress,
+    collateral.tokenAddress,
     collateralChange > 0 ? collateralChangeBN : 0,
     snxProxy?.address
   );
@@ -130,9 +129,9 @@ export const useManagePosition = (
   const multicallTitles = useMemo(() => {
     const title: string[] = [];
     if (collateralChange > 0) {
-      title.push('Deposit ' + position.collateral.symbol.toUpperCase());
+      title.push('Deposit ' + collateral.symbol.toUpperCase());
     } else if (collateralChange < 0) {
-      title.push('Withdraw ' + position.collateral.symbol.toUpperCase());
+      title.push('Withdraw ' + collateral.symbol.toUpperCase());
     }
 
     if (debtChange > 0) {
@@ -142,7 +141,7 @@ export const useManagePosition = (
     }
 
     return title;
-  }, [collateralChange, debtChange, position.collateral.symbol]);
+  }, [collateralChange, debtChange, collateral.symbol]);
 
   const setTransaction = useSetRecoilState(transactionState);
 
@@ -164,10 +163,10 @@ export const useManagePosition = (
 
     if (collateralChange > 0 && requireApproval) {
       transactions.push({
-        title: 'Approve ' + position.collateral.symbol.toUpperCase() + ' transfer',
+        title: 'Approve ' + collateral.symbol.toUpperCase() + ' transfer',
         call: async (infiniteApproval) => await approve(infiniteApproval),
         checkboxLabel: requireApproval
-          ? `Approve unlimited ${position.collateral.symbol.toUpperCase()} transfers to Synthetix.`
+          ? `Approve unlimited ${collateral.symbol.toUpperCase()} transfers to Synthetix.`
           : undefined,
       });
     }
@@ -200,7 +199,7 @@ export const useManagePosition = (
     collateralChangeBN,
     wrapEthBalance?.value,
     wrap,
-    position.collateral.symbol,
+    collateral.symbol,
     approve,
     multiTxn,
     unWrap,

@@ -14,14 +14,11 @@ interface Props {
 }
 
 export const LiquidityPosition: FC<Props> = ({ position }) => {
-  // If the connected wallet doesn’t own this account token, remove/disable the interactivity
-
-  const { collateralAmount: collateralAmountBN, collateralType, cRatio, debt, poolId } = position;
-
-  const { decimals, price: priceBN } = collateralType;
-
-  const collateralAmount = formatValue(collateralAmountBN, decimals);
-  const price = priceBN ? formatValue(priceBN) : 0;
+  // If the connected wallet doesn't own this account token, remove/disable the interactivity
+  const collateralAmount = formatValue(position.collateralAmount, position.collateralType.decimals);
+  const price = position.collateralType.price
+    ? formatValue(position.collateralType.price, position.collateralType.decimals)
+    : 0;
   const collateralValue = collateralAmount * price;
 
   const [search] = useSearchParams();
@@ -33,22 +30,28 @@ export const LiquidityPosition: FC<Props> = ({ position }) => {
         <>
           <Amount value={collateralValue} prefix="$" />
           <Text fontSize="xs" opacity="0.66" mt="1">
-            <Amount value={collateralAmount} suffix={`${collateralType.symbol.toUpperCase()} `} />
+            <Amount
+              value={collateralAmount}
+              suffix={`${position.collateralType.symbol.toUpperCase()} `}
+            />
           </Text>
         </>
       </Td>
       <Td py="4">
-        <Amount value={debt} prefix="$" />
+        <Amount value={position.debt} prefix="$" />
         <Text fontSize="xs" opacity="0.66" mt="1">
           $X net issuance
         </Text>
       </Td>
       <Td py="4">
-        {cRatio.eq(0) ? <>No Debt</> : <Amount value={cRatio} suffix="%" />}
+        {position.cRatio.eq(0) ? <>No Debt</> : <Amount value={position.cRatio} suffix="%" />}
 
         <Text fontSize="xs" opacity="0.66" mt="1">
           <Amount
-            value={formatValue(collateralType.liquidationRatioD18.mul(BigNumber.from(100)), 6)}
+            value={formatValue(
+              position.collateralType.liquidationRatioD18.mul(BigNumber.from(100)),
+              18
+            )}
             suffix="% "
           />
           Min.
@@ -58,7 +61,7 @@ export const LiquidityPosition: FC<Props> = ({ position }) => {
       <Td>
         {poolsData[position.poolId.toString()]?.name}{' '}
         <Text fontSize="xs" opacity="0.66" mt="1">
-          ID: {poolId}
+          ID: {position.poolId}
         </Text>
       </Td>
       <Td>

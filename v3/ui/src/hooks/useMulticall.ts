@@ -42,61 +42,32 @@ export const useMulticall = (
 ) => {
   const [status, setStatus] = useState<MulticallStatusType>('idle');
 
-  // for synthetix multicall
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
-  // for regular multicall
-  const multicall = useContract(contracts.MULTICALL);
-
-  let callContract: ethers.Contract | undefined,
-    callFunc: string | undefined,
-    callArgs: any[] | undefined;
-  if (calls.length && snxProxy && multicall) {
+  let callContract: ethers.Contract | undefined;
+  let callFunc: string | undefined;
+  let callArgs: any[] | undefined;
+  if (calls.length && snxProxy) {
     if (calls.length === 1) {
       // direct call
       callContract = calls[0].contract;
       callFunc = calls[0].functionName;
       callArgs = calls[0].callArgs;
     } else if (calls.length > 1) {
-      if (calls.find((c) => c.contract.address !== snxProxy?.address)) {
-        // Multicall3
-        callContract = multicall.contract;
-        callFunc = 'aggregate3Value';
-
-        callArgs = [
-          calls.map((call) => {
-            const callData = call.contract.interface.encodeFunctionData(
-              call.functionName,
-              call.callArgs || []
-            );
-            return {
-              target: call.contract.address,
-              callData,
-              allowFailure: false,
-              value: 0,
-            };
-          }),
-        ];
-      } else {
-        // Synthetix Multicall
-        callContract = snxProxy.contract;
-        callFunc = 'multicall';
-        callArgs = [
-          calls.map((call) => {
-            const callData = call.contract.interface.encodeFunctionData(
-              call.functionName,
-              call.callArgs || []
-            );
-            return callData;
-          }),
-        ];
-      }
+      callContract = snxProxy.contract;
+      callFunc = 'multicall';
+      callArgs = [
+        calls.map((call) =>
+          call.contract.interface.encodeFunctionData(call.functionName, call.callArgs || [])
+        ),
+      ];
     }
   }
 
   const currentTxn = useContractWrite({
+    enabled: Boolean(calls.length && snxProxy),
     mode: 'recklesslyUnprepared',
-    addressOrName: callContract?.address ?? '',
-    contractInterface: callContract?.interface ?? '',
+    address: callContract?.address ?? '',
+    abi: callContract?.interface ?? '',
     functionName: callFunc!,
     args: callArgs,
     overrides,
@@ -129,6 +100,7 @@ export const useMulticall = (
       const txReceipt = await currentTxn.writeAsync();
       await txReceipt.wait();
     } catch (error) {
+      console.error(error);
       setStatus('error');
       throw error;
     }

@@ -32,8 +32,8 @@ export const useContractEvent = (contractName: string, config: ConfigType) => {
 
   return useWagmiContractEvent({
     ...config,
-    addressOrName: contract?.address,
-    contractInterface: contract?.abi || '',
+    address: contract?.address,
+    abi: contract?.abi,
     chainId: contract?.chainId,
   });
 };

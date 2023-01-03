@@ -32,8 +32,8 @@ export const RewardsDistributorTitle: FC<Props> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const { data: rewardToken } = useContractRead({
-    addressOrName: distributor,
-    contractInterface: snxReward?.abi || '',
+    address: distributor,
+    abi: snxReward?.abi,
     functionName: 'token',
     enabled: Boolean(snxReward),
   });
@@ -45,8 +45,8 @@ export const RewardsDistributorTitle: FC<Props> = ({
 
   const { writeAsync } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: snxProxy?.address,
-    contractInterface: snxProxy?.abi || '',
+    address: snxProxy?.address,
+    abi: snxProxy?.abi,
     functionName: 'claimRewards',
 
     args: [poolId, collateral.tokenAddress, accountId, distributor],

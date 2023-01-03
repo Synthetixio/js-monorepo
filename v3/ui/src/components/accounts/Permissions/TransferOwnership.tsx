@@ -26,8 +26,8 @@ export const TransferOwnership = () => {
   const accountProxy = useContract(contracts.ACCOUNT_PROXY);
   const { write, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: accountProxy?.address,
-    contractInterface: accountProxy?.abi || '',
+    address: accountProxy?.address,
+    abi: accountProxy?.abi,
     functionName: 'approve',
     args: [address, accountId],
   });

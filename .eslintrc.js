@@ -23,7 +23,7 @@ module.exports = {
     'no-undef': 'error',
     'prefer-const': 'error',
     semi: ['error', 'always'],
-    'no-console': 'error',
+    'no-console': ['error', { allow: ['error'] }],
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-var-requires': 'off',

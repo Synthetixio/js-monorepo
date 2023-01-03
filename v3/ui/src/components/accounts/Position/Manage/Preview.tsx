@@ -1,4 +1,4 @@
-import { Text, Box, Tooltip } from '@chakra-ui/react';
+import { Box, Text, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
 import { CollateralType } from '../../../../utils/types';
 import { useValidatePosition } from '../../../../hooks/useValidatePosition';
@@ -28,16 +28,14 @@ export const Preview: FC<Props> = ({
   collateralChange,
   debtChange,
 }) => {
-  const { newDebt, newCollateralAmount, newCRatio, isValid, targetCRatio } = useValidatePosition(
-    {
-      collateral,
-      collateralAmount,
-      collateralValue,
-      debt,
-    },
+  const { newDebt, newCollateralAmount, newCRatio, isValid, targetCRatio } = useValidatePosition({
+    collateral,
+    collateralAmount,
+    collateralValue,
+    debt,
     collateralChange,
-    debtChange
-  );
+    debtChange,
+  });
 
   return (
     <Box mb="4" p="4">
