@@ -21,7 +21,7 @@ export const useCoreProxy = () => {
   const networkName = provider.network.name;
 
   return useQuery(
-    ['useCoreProxy', networkName, { withSigner: Boolean(signer) }],
+    [networkName, { withSigner: Boolean(signer) }, 'CoreProxy'],
     async () => {
       const CoreProxy = await importCoreProxy(provider.network.name);
       return new ethers.Contract(CoreProxy.address, CoreProxy.abi, signer || provider) as
