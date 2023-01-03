@@ -32,7 +32,7 @@ export const useUpdatePool = (
           position.poolId,
           position.collateral.tokenAddress,
           0,
-          parseUnits(1, 0),
+          parseUnits(1, 18),
         ],
       },
       {
@@ -43,7 +43,7 @@ export const useUpdatePool = (
           newPoolId,
           position.collateral.tokenAddress,
           amountBN,
-          parseUnits(1, 0),
+          parseUnits(1, 18),
         ],
       },
     ];

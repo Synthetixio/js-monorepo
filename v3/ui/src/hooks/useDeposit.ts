@@ -85,7 +85,7 @@ export const useDeposit = ({
           parseInt(Boolean(accountId) ? selectedPoolId : poolId || '0'),
           selectedCollateralType.tokenAddress,
           amountToDelegate || 0,
-          parseUnits(1, 0),
+          parseUnits(1, 18),
         ],
       },
     ];

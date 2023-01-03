@@ -60,7 +60,7 @@ export const useManagePosition = ({
             poolId,
             collateral.tokenAddress,
             currentAmount.add(collateralChangeBN),
-            parseUnits(1, 0),
+            parseUnits(1, 18),
           ],
         }
       );
@@ -95,7 +95,7 @@ export const useManagePosition = ({
             poolId,
             collateral.tokenAddress,
             currentAmount.sub(collateralChangeBN),
-            parseUnits(1, 0),
+            parseUnits(1, 18),
           ],
         },
         {
