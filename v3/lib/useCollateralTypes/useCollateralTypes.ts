@@ -2,25 +2,15 @@
 import { BigNumber, ethers } from 'ethers';
 import { erc20ABI, useProvider } from 'wagmi';
 import { useQuery } from '@tanstack/react-query';
-import { CoreProxy as CoreProxyGoerli } from '@synthetixio/v3-contracts/build/goerli/CoreProxy';
-import type { CoreProxy as CoreProxyOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/CoreProxy';
+import { useCoreProxy, CoreProxyContractType } from '@snx-v3/useCoreProxy';
 
-async function importCoreProxy(chainName: string) {
-  switch (chainName) {
-    case 'goerli':
-      return import('@synthetixio/v3-contracts/build/goerli/CoreProxy');
-    case 'optimism-goerli':
-      return import('@synthetixio/v3-contracts/build/optimism-goerli/CoreProxy');
-    default:
-      throw new Error(`Unsupported chain ${chainName}`);
-  }
-}
-
-async function loadCollateralTypes({ provider }: { provider: ReturnType<typeof useProvider> }) {
-  const CoreProxy = await importCoreProxy(provider.network.name);
-  const CoreProxyContract = new ethers.Contract(CoreProxy.address, CoreProxy.abi, provider) as
-    | CoreProxyGoerli
-    | CoreProxyOptimismGoerli;
+async function loadCollateralTypes({
+  CoreProxyContract,
+  provider,
+}: {
+  CoreProxyContract: CoreProxyContractType;
+  provider: ReturnType<typeof useProvider>;
+}) {
   // typeschain messes up the type for when an array is returned from a method
   const tokenConfigs = (await CoreProxyContract.getCollateralConfigurations(true)) as {
     depositingEnabled: boolean;
@@ -79,11 +69,17 @@ async function loadCollateralTypes({ provider }: { provider: ReturnType<typeof u
 
 export function useCollateralTypes() {
   const provider = useProvider();
+  const { data: CoreProxyContract } = useCoreProxy();
   return useQuery({
     queryKey: [provider.network.name, 'collateralTypes'],
-    queryFn: async () => loadCollateralTypes({ provider }),
+    queryFn: async () => {
+      if (!CoreProxyContract) {
+        throw Error('Query should not be enabled when CoreProxyContract missing');
+      }
+      return loadCollateralTypes({ CoreProxyContract, provider });
+    },
     placeholderData: [],
-    enabled: Boolean(provider.network.name),
+    enabled: Boolean(CoreProxyContract && provider.network.name),
     staleTime: Infinity,
     cacheTime: Infinity,
   });
