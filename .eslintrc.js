@@ -47,7 +47,7 @@ module.exports = {
 
   overrides: [
     {
-      files: ['v3/ui/**/*'],
+      files: ['v3/ui/**/*', 'v3/components/**/*', 'v3/components/**/*', 'v3/theme/**/*'],
 
       env: {
         browser: true,
