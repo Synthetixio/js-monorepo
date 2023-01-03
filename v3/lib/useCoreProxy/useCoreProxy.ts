@@ -14,7 +14,7 @@ export async function importCoreProxy(chainName: string) {
       throw new Error(`Unsupported chain ${chainName}`);
   }
 }
-export const useGetCoreProxy = () => {
+export const useCoreProxy = () => {
   const provider = useProvider();
   const { data: signer } = useSigner();
 

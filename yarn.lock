@@ -7733,7 +7733,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useCollateralTypes@workspace:v3/lib/useCollateralTypes"
   dependencies:
-    "@snx-v3/useGetCoreProxy": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.7.2
@@ -7742,9 +7742,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/useGetCoreProxy@workspace:*, @snx-v3/useGetCoreProxy@workspace:v3/lib/useGetCoreProxy":
+"@snx-v3/useCoreProxy@workspace:*, @snx-v3/useCoreProxy@workspace:v3/lib/useCoreProxy":
   version: 0.0.0-use.local
-  resolution: "@snx-v3/useGetCoreProxy@workspace:v3/lib/useGetCoreProxy"
+  resolution: "@snx-v3/useCoreProxy@workspace:v3/lib/useCoreProxy"
   dependencies:
     "@synthetixio/v3-contracts": "workspace:*"
     "@tanstack/react-query": ^4.3.4

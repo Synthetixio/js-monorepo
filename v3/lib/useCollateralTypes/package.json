@@ -4,7 +4,7 @@
   "main": "index.ts",
   "version": "0.0.2",
   "dependencies": {
-    "@snx-v3/useGetCoreProxy": "workspace:*",
+    "@snx-v3/useCoreProxy": "workspace:*",
     "@synthetixio/v3-contracts": "workspace:*",
     "@tanstack/react-query": "^4.3.4",
     "ethers": "^5.7.2",

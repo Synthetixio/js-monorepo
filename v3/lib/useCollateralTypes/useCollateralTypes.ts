@@ -2,7 +2,7 @@
 import { BigNumber, ethers } from 'ethers';
 import { erc20ABI, useProvider } from 'wagmi';
 import { useQuery } from '@tanstack/react-query';
-import { useGetCoreProxy, CoreProxyContractType } from '@snx-v3/useGetCoreProxy';
+import { useCoreProxy, CoreProxyContractType } from '@snx-v3/useCoreProxy';
 
 async function loadCollateralTypes({
   CoreProxyContract,
@@ -69,7 +69,7 @@ async function loadCollateralTypes({
 
 export function useCollateralTypes() {
   const provider = useProvider();
-  const { data: CoreProxyContract } = useGetCoreProxy();
+  const { data: CoreProxyContract } = useCoreProxy();
   return useQuery({
     queryKey: [provider.network.name, 'collateralTypes', '12'],
     queryFn: async () => {
