@@ -47,14 +47,14 @@ module.exports = {
 
   overrides: [
     {
-      files: ['v3/ui/**/*'],
+      files: ['v3/ui/**/*', 'v3/components/**/*', 'v3/lib/**/*', 'v3/theme/**/*'],
 
       env: {
         browser: true,
       },
 
       extends: ['plugin:react/recommended'],
-      plugins: ['react', 'react-hooks'],
+      plugins: ['react', 'react-hooks', '@tanstack/query'],
 
       settings: {
         react: {
@@ -70,9 +70,10 @@ module.exports = {
         quotes: 'off',
         'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
         'react/prop-types': 'off', // using ts
-        // react-hooks
         'react-hooks/rules-of-hooks': 'error',
         'react-hooks/exhaustive-deps': 'error',
+        '@tanstack/query/exhaustive-deps': 'off', // not smart enough, does not take into account `enabled` and global imports
+        '@tanstack/query/prefer-query-object-syntax': 'error',
       },
     },
 

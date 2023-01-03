@@ -1,6 +1,5 @@
 import { InfoIcon } from '@chakra-ui/icons';
 import Selector from '../components/Selector';
-import React from 'react';
 import { ButtonProps } from '@chakra-ui/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 

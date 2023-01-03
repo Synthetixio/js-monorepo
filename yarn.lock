@@ -9911,6 +9911,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/eslint-plugin-query@npm:^4.20.8":
+  version: 4.20.8
+  resolution: "@tanstack/eslint-plugin-query@npm:4.20.8"
+  checksum: e50b9e9221d230e83d67cfd1b34f066c263fbe11efe7cb2e9595fa9b4c154ec8fc572d2a3645914d79022f6126b47012474c3feaed970cd6bd8b2000fd030b2f
+  languageName: node
+  linkType: hard
+
 "@tanstack/match-sorter-utils@npm:^8.1.1":
   version: 8.1.1
   resolution: "@tanstack/match-sorter-utils@npm:8.1.1"
@@ -32962,6 +32969,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@synthetixio/deps": "workspace:*"
     "@synthetixio/download-cci-coverage": "workspace:*"
+    "@tanstack/eslint-plugin-query": ^4.20.8
     "@types/jest": ^29.1.2
     "@typescript-eslint/eslint-plugin": ^5.40.0
     "@typescript-eslint/parser": ^5.40.0

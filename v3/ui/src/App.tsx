@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import { FC, Suspense, useEffect } from 'react';
 import { Spinner, useColorMode } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
 import { DefaultLayout } from './layouts/Default';
@@ -17,7 +17,7 @@ import { Pool } from './pages/pools/pool';
 import { Teleporter } from './pages/teleporter/Teleporter';
 import { NotFoundPage } from './pages/404';
 
-export const Synthetix: React.FC = () => {
+export const Synthetix: FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {

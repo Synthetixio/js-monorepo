@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -30,7 +31,7 @@ import { Link } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import Wei from '@synthetixio/wei';
 
-const StyledTh: React.FC<TableCellProps> = (props) => (
+const StyledTh: FC<TableCellProps> = (props) => (
   <Th
     sx={{
       paddingBottom: 1,
@@ -44,7 +45,7 @@ const StyledTh: React.FC<TableCellProps> = (props) => (
   />
 );
 
-const StyledTd: React.FC<TableCellProps & { isLastItem: boolean }> = (props) => (
+const StyledTd: FC<TableCellProps & { isLastItem: boolean }> = (props) => (
   <Td
     sx={{
       borderBottom: props.isLastItem ? 'none' : '1px',
