@@ -30,6 +30,7 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 import { Link } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import Wei from '@synthetixio/wei';
+import { useVaultCollaterals } from '@snx-v3/useVaultCollaterals';
 
 const StyledTh: FC<TableCellProps> = (props) => (
   <Th
@@ -45,10 +46,10 @@ const StyledTh: FC<TableCellProps> = (props) => (
   />
 );
 
-const StyledTd: FC<TableCellProps & { isLastItem: boolean }> = (props) => (
+const StyledTd: FC<TableCellProps & { isLastItem: boolean }> = ({ isLastItem, ...props }) => (
   <Td
     sx={{
-      borderBottom: props.isLastItem ? 'none' : '1px',
+      borderBottom: isLastItem ? 'none' : '1px',
       borderBottomColor: 'gray.900',
       paddingLeft: 2,
       paddingRight: 2,
@@ -219,6 +220,9 @@ export const Pool = () => {
   }));
   const { data: marketNamesById, isLoading: isLoadingMarketNames } =
     useGetMarketNamesById(marketIdsAndAddresses);
+
+  const x = useVaultCollaterals(id ? parseFloat(id) : undefined);
+  console.log(x.data);
   const isLoading = isLoadingPoolData || isLoadingMarketNames;
   return (
     <>

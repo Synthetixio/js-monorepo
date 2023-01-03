@@ -22,6 +22,7 @@
     "@snx-v3/etherscanLink": "workspace:*",
     "@snx-v3/useCollateralTypes": "workspace:*",
     "@snx-v3/usePools": "workspace:*",
+    "@snx-v3/useVaultCollaterals": "workspace:*",
     "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "@synthetixio/wei": "workspace:*",
