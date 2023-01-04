@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
 import type { _Multicall3 as MulticallGoerli } from '@synthetixio/v3-contracts/build/goerli/_Multicall3';
 import type { _Multicall3 as MulticallOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/_Multicall3';
-import { useProvider, useSigner } from 'wagmi';
+import { useProvider, useSigner } from '@snx-v3/useBlockchain';
 
 export async function importMulticall(chainName: string) {
   switch (chainName) {
@@ -16,7 +16,7 @@ export async function importMulticall(chainName: string) {
 }
 export const useExternalMulticall = () => {
   const provider = useProvider();
-  const { data: signer } = useSigner();
+  const signer = useSigner();
 
   return useQuery({
     queryKey: [provider.network.name, { withSigner: Boolean(signer) }, 'ExternalMulticall'],
