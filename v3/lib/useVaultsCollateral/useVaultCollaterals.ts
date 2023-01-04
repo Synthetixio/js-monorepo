@@ -63,6 +63,5 @@ export const useVaultCollaterals = (poolId?: number) => {
       });
     },
     enabled: Boolean(collateralTypes?.length && CoreProxyContract && poolId),
-    staleTime: 300000,
   });
 };

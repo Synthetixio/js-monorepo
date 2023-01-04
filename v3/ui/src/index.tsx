@@ -7,7 +7,11 @@ import { darkTheme, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/ra
 import { Fonts, theme } from '@synthetixio/v3-theme';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { DEFAULT_REQUEST_REFRESH_INTERVAL, INFURA_KEY } from './utils/constants';
+import {
+  DEFAULT_QUERY_REFRESH_INTERVAL,
+  DEFAULT_QUERY_STALE_TIME,
+  INFURA_KEY,
+} from './utils/constants';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './i18n';
@@ -18,7 +22,8 @@ import * as rainbowkitStyles from '@rainbow-me/rainbowkit/styles.css';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchInterval: DEFAULT_REQUEST_REFRESH_INTERVAL,
+      refetchInterval: DEFAULT_QUERY_REFRESH_INTERVAL,
+      staleTime: DEFAULT_QUERY_STALE_TIME,
       refetchOnWindowFocus: false,
     },
   },

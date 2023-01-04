@@ -24,4 +24,5 @@ export const ALCHEMY_KEY_MAPPING: Record<number, string> = {
   420: 'lc1tSn8B8fmURkjmZLeyT1ibNpgqlsnr',
 };
 
-export const DEFAULT_REQUEST_REFRESH_INTERVAL = 300000; // 5min
+export const DEFAULT_QUERY_REFRESH_INTERVAL = 600_000; // 10min
+export const DEFAULT_QUERY_STALE_TIME = 300_000; // 5min

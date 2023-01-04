@@ -119,7 +119,6 @@ export const useGetPoolData = (id?: string) => {
       return pool;
     },
     enabled: Boolean(chainName && id),
-    staleTime: 10000,
   });
 };
 
