@@ -3,12 +3,10 @@ import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { wei } from '@synthetixio/wei';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
+import { ZodBigNumber } from '@snx-v3/customZodSchemas';
 
 const VaultCollateralSchema = z
-  .object({
-    value: z.string(),
-    amount: z.string(),
-  })
+  .object({ value: ZodBigNumber, amount: ZodBigNumber })
   .transform(({ value, amount }) => ({ value: wei(value), amount: wei(amount) }));
 
 export const useVaultCollaterals = (poolId?: number) => {
@@ -27,7 +25,7 @@ export const useVaultCollaterals = (poolId?: number) => {
           poolId,
           collateralTypes[0].tokenAddress
         );
-        const { value, amount } = VaultCollateralSchema.parse(result);
+        const { value, amount } = VaultCollateralSchema.parse({ ...result });
 
         return [
           {
@@ -48,9 +46,11 @@ export const useVaultCollaterals = (poolId?: number) => {
       // We can make it behave like a view function by using callStatic
       const multicallResult = await CoreProxyContract.callStatic.multicall(calls);
       return multicallResult.map((bytes, i) => {
-        const { value, amount } = VaultCollateralSchema.parse(
-          CoreProxyContract.interface.decodeFunctionResult('getVaultCollateral', bytes)
+        const decoded = CoreProxyContract.interface.decodeFunctionResult(
+          'getVaultCollateral',
+          bytes
         );
+        const { value, amount } = VaultCollateralSchema.parse({ ...decoded });
 
         return { value, amount, collateralType: collateralTypes[i] };
       });
