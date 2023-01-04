@@ -80,8 +80,6 @@ export function useCollateralTypes() {
     },
     placeholderData: [],
     enabled: Boolean(CoreProxyContract && network.name),
-    staleTime: Infinity,
-    cacheTime: Infinity,
   });
 }
 
