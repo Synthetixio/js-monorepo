@@ -1,0 +1,12 @@
+{
+  "name": "@snx-v3/useExternalMulticall",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@synthetixio/v3-contracts": "workspace:*",
+    "@tanstack/react-query": "^4.3.4",
+    "ethers": "^5.7.2",
+    "wagmi": "^0.9.4"
+  }
+}
