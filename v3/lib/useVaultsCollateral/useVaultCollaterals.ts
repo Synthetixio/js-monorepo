@@ -5,10 +5,14 @@ import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { ZodBigNumber } from '@snx-v3/customZodSchemas';
 
+function notNill<Value>(value: Value | null | undefined): value is Value {
+  return value !== null && value !== undefined;
+}
 const VaultCollateralSchema = z
   .object({ value: ZodBigNumber, amount: ZodBigNumber })
   .transform(({ value, amount }) => ({ value: wei(value), amount: wei(amount) }));
 
+const WETH_ORACLE_BROKEN = true;
 export const useVaultCollaterals = (poolId?: number) => {
   const { data: collateralTypes } = useCollateralTypes();
   const { data: CoreProxyContract } = useCoreProxy();
@@ -36,12 +40,15 @@ export const useVaultCollaterals = (poolId?: number) => {
         ];
       }
 
-      const calls = collateralTypes.map((collateralType) => {
-        return CoreProxyContract.interface.encodeFunctionData('getVaultCollateral', [
-          poolId,
-          collateralType.tokenAddress,
-        ]);
-      });
+      const calls = collateralTypes
+        .map((collateralType) => {
+          if (WETH_ORACLE_BROKEN && collateralType.symbol === 'WETH') return;
+          return CoreProxyContract.interface.encodeFunctionData('getVaultCollateral', [
+            poolId,
+            collateralType.tokenAddress,
+          ]);
+        })
+        .filter(notNill);
       // `getVaultCollateral` is not a normal view function, it updates some state too
       // We can make it behave like a view function by using callStatic
       const multicallResult = await CoreProxyContract.callStatic.multicall(calls);
