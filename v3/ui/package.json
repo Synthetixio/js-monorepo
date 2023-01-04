@@ -21,6 +21,7 @@
     "@snx-v2/formatters": "workspace:*",
     "@snx-v3/etherscanLink": "workspace:*",
     "@snx-v3/useCollateralTypes": "workspace:*",
+    "@snx-v3/usePools": "workspace:*",
     "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "@synthetixio/wei": "workspace:*",
@@ -40,7 +41,7 @@
     "react-i18next": "^11.18.3",
     "react-router-dom": "^6.3.0",
     "recoil": "^0.7.4",
-    "wagmi": "^0.9.4",
+    "wagmi": "^0.9.6",
     "zod": "^3.20.2"
   },
   "devDependencies": {

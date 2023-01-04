@@ -2,11 +2,6 @@ import { atom } from 'recoil';
 import { useContractRead } from 'wagmi';
 import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
 
-export const poolsState = atom<Array<string>>({
-  key: 'pools',
-  default: [],
-});
-
 type RefetchType = ReturnType<typeof useContractRead>['refetch'];
 export const accountsState = atom<{
   accounts: Array<number>;

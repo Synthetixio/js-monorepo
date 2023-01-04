@@ -1,20 +1,3 @@
-import { goerli, optimismGoerli } from '@wagmi/chains';
-
-export const chains = {
-  goerli,
-  optimismGoerli,
-};
-
-export const supportedChains = Object.values(chains);
-
-export const getChainById = (chainId: number) =>
-  supportedChains.find((chain) => chain.id === chainId);
-
-export const getChainNameById = (chainId: number) => {
-  const chain = getChainById(chainId);
-  return chain?.network;
-};
-
 export const contracts = {
   SYNTHETIX_PROXY: 'SYNTHETIX_PROXY',
   SNX_USD_PROXY: 'SNX_USD_PROXY',

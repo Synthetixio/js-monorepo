@@ -1,7 +1,7 @@
-import { Spinner } from '@chakra-ui/react';
 import { FC, PropsWithChildren } from 'react';
-import { usePools } from './hooks/usePools';
+import { Spinner } from '@chakra-ui/react';
 import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
+import { usePools } from '@snx-v3/usePools';
 import { useOwnerAccounts } from './hooks/useOwnerAccounts';
 
 export const Initializer: FC<PropsWithChildren> = ({ children }) => {

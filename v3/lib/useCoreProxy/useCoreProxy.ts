@@ -1,8 +1,8 @@
-import { ethers } from 'ethers';
+import { Contract } from '@ethersproject/contracts';
 import { useQuery } from '@tanstack/react-query';
 import type { CoreProxy as CoreProxyGoerli } from '@synthetixio/v3-contracts/build/goerli/CoreProxy';
 import type { CoreProxy as CoreProxyOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/CoreProxy';
-import { useProvider, useSigner } from 'wagmi';
+import { useNetwork, useProvider, useSigner } from '@snx-v3/useBlockchain';
 
 export async function importCoreProxy(chainName: string) {
   switch (chainName) {
@@ -15,18 +15,20 @@ export async function importCoreProxy(chainName: string) {
   }
 }
 export const useCoreProxy = () => {
+  const network = useNetwork();
   const provider = useProvider();
-  const { data: signer } = useSigner();
+  const signer = useSigner();
+  const signerOrProvider = signer || provider;
 
   return useQuery({
-    queryKey: [provider.network.name, { withSigner: Boolean(signer) }, 'CoreProxy'],
-    queryFn: async () => {
-      const CoreProxy = await importCoreProxy(provider.network.name);
-      return new ethers.Contract(CoreProxy.address, CoreProxy.abi, signer || provider) as
+    queryKey: [network.name, { withSigner: Boolean(signer) }, 'CoreProxy'],
+    queryFn: async function () {
+      const CoreProxy = await importCoreProxy(network.name);
+      return new Contract(CoreProxy.address, CoreProxy.abi, signerOrProvider) as
         | CoreProxyGoerli
         | CoreProxyOptimismGoerli;
     },
-    enabled: Boolean(provider.network.name && (signer || provider)),
+    enabled: Boolean(network.name && signerOrProvider),
     staleTime: Infinity,
     cacheTime: Infinity,
   });

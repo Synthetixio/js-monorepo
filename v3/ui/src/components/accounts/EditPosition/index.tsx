@@ -1,9 +1,8 @@
 import { Box, Button, RadioGroup } from '@chakra-ui/react';
+import { usePools } from '@snx-v3/usePools';
 import { useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { useRecoilValue } from 'recoil';
 import { poolsData } from '../../../utils/constants';
-import { poolsState } from '../../../utils/state';
 import DepositrOption from './DepositorOption';
 
 type PropsType = {
@@ -11,7 +10,7 @@ type PropsType = {
 };
 
 export default function EditPosition({ onClose }: PropsType) {
-  const pools = useRecoilValue(poolsState);
+  const { data: pools } = usePools();
   const { setValue } = useFormContext();
   const poolValue = useWatch({
     name: 'poolId',

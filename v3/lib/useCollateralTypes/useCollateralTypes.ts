@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { BigNumber, ethers } from 'ethers';
-import { erc20ABI, useProvider } from 'wagmi';
+import { erc20ABI } from 'wagmi';
+import { useProvider, useNetwork } from '@snx-v3/useBlockchain';
 import { useQuery } from '@tanstack/react-query';
 import { useCoreProxy, CoreProxyContractType } from '@snx-v3/useCoreProxy';
 
@@ -47,7 +48,7 @@ async function loadCollateralTypes({
     ),
   ]);
 
-  const tokens = tokenConfigs.map((config, i) => ({
+  return tokenConfigs.map((config, i) => ({
     depositingEnabled: config.depositingEnabled,
     issuanceRatioD18: config.issuanceRatioD18,
     liquidationRatioD18: config.liquidationRatioD18,
@@ -63,15 +64,14 @@ async function loadCollateralTypes({
     // TODO: map symbol to icon
     logo: 'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F/logo.png',
   }));
-
-  return tokens;
 }
 
 export function useCollateralTypes() {
   const provider = useProvider();
+  const network = useNetwork();
   const { data: CoreProxyContract } = useCoreProxy();
   return useQuery({
-    queryKey: [provider.network.name, 'collateralTypes'],
+    queryKey: [network.name, 'collateralTypes'],
     queryFn: async () => {
       if (!CoreProxyContract) {
         throw Error('Query should not be enabled when CoreProxyContract missing');
@@ -79,7 +79,7 @@ export function useCollateralTypes() {
       return loadCollateralTypes({ CoreProxyContract, provider });
     },
     placeholderData: [],
-    enabled: Boolean(CoreProxyContract && provider.network.name),
+    enabled: Boolean(CoreProxyContract && network.name),
     staleTime: Infinity,
     cacheTime: Infinity,
   });
