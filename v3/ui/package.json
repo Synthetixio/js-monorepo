@@ -19,6 +19,7 @@
     "@faker-js/faker": "^7.6.0",
     "@rainbow-me/rainbowkit": "^0.8.1",
     "@snx-v2/formatters": "workspace:*",
+    "@snx-v3/etherscanLink": "workspace:*",
     "@snx-v3/useCollateralTypes": "workspace:*",
     "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",

@@ -44,6 +44,8 @@ const noop = () => null;
 const wagmiClient = createClient({
   queryClient,
   autoConnect: true,
+  persister: null,
+  // @ts-ignore
   storage: {
     getItem: noop,
     setItem: noop,

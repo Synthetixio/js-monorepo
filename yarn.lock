@@ -7715,6 +7715,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/etherscanLink@workspace:*, @snx-v3/etherscanLink@workspace:v3/lib/etherscanLink":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/etherscanLink@workspace:v3/lib/etherscanLink"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/subgraphs@workspace:v3/subgraphs":
   version: 0.0.0-use.local
   resolution: "@snx-v3/subgraphs@workspace:v3/subgraphs"
@@ -9838,6 +9844,7 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@rainbow-me/rainbowkit": ^0.8.1
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"

@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from '@chakra-ui/icons';
 import { Link, Td, Text, Tr } from '@chakra-ui/react';
 import { BigNumber } from 'ethers';
-import { Link as RouterLink, useSearchParams } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { formatValue } from '../../../utils/helpers';
 import { LiquidityPositionType } from '../../../utils/types';
 import { poolsData } from '../../../utils/constants';
@@ -21,9 +21,6 @@ export const LiquidityPosition: FC<Props> = ({ position }) => {
     : 0;
   const collateralValue = collateralAmount * price;
 
-  const [search] = useSearchParams();
-  const routingSearchParams = `?chain=${search.get('chain')}`;
-
   return (
     <Tr>
       <Td py="4">
@@ -38,7 +35,7 @@ export const LiquidityPosition: FC<Props> = ({ position }) => {
         </>
       </Td>
       <Td py="4">
-        <Amount value={position.debt} prefix="$" />
+        <Amount value={formatValue(position.debt, 18)} prefix="$" />
         <Text fontSize="xs" opacity="0.66" mt="1">
           $X net issuance
         </Text>
@@ -67,7 +64,7 @@ export const LiquidityPosition: FC<Props> = ({ position }) => {
       <Td>
         <Link
           as={RouterLink}
-          to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.poolId}${routingSearchParams}`}
+          to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.poolId}`}
           color="cyan.500"
           display="inline-block"
           transform="translateY(-1.5px)"

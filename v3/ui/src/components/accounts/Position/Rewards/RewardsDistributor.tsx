@@ -1,10 +1,8 @@
 import { Text } from '@chakra-ui/react';
 import { FC } from 'react';
-import { useRecoilState } from 'recoil';
-import { useContractRead } from 'wagmi';
+import { useContractRead, useProvider } from 'wagmi';
 import { useContract } from '../../../../hooks/useContract';
 import { contracts } from '../../../../utils/constants';
-import { chainIdState } from '../../../../utils/state';
 import { Address } from '../../../shared/Address';
 
 interface Props {
@@ -12,20 +10,20 @@ interface Props {
 }
 
 export const RewardsDistributor: FC<Props> = ({ distributor }) => {
-  const [localChainId] = useRecoilState(chainIdState);
+  const provider = useProvider();
   const rewardDistributer = useContract(contracts.SNX_REWARD);
 
-  const { data } = useContractRead({
+  const { data: name } = useContractRead({
     address: distributor,
     abi: rewardDistributer?.abi,
-    chainId: localChainId,
+    chainId: provider.network.chainId,
     functionName: 'name',
     enabled: Boolean(rewardDistributer),
   });
 
   return (
     <>
-      <span>{data}</span>
+      <span>{name}</span>
       <Text fontSize="xs" opacity="0.66" mt="1">
         <Address address={distributor} />
       </Text>

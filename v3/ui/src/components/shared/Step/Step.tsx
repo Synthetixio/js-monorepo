@@ -1,11 +1,10 @@
 import { Flex } from '@chakra-ui/react';
-import { FC, ReactNode } from 'react';
+import { PropsWithChildren } from 'react';
 import { StepIcon } from './StepIcon';
 import { StepStatus } from '../TransactionReview/TransactionReview.types';
 
 interface StepProps {
   status: StepStatus;
-  children: ReactNode;
 }
 
 export const statusColor = {
@@ -15,7 +14,7 @@ export const statusColor = {
   [StepStatus.Upcoming]: 'gray.700',
 };
 
-export const Step: FC<StepProps> = ({ status, children }) => {
+export function Step({ status, children }: PropsWithChildren<StepProps>) {
   return (
     <Flex
       width={10}
@@ -30,4 +29,4 @@ export const Step: FC<StepProps> = ({ status, children }) => {
       <StepIcon status={status}>{children}</StepIcon>
     </Flex>
   );
-};
+}

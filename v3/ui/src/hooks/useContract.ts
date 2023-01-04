@@ -1,8 +1,6 @@
 import { ethers } from 'ethers';
-import { useRecoilState } from 'recoil';
 import { useProvider } from 'wagmi';
-import { contracts, getChainNameById } from '../utils/constants';
-import { chainIdState } from '../utils/state';
+import { contracts } from '../utils/constants';
 
 import * as goerliCCIP from '@synthetixio/v3-contracts/build/goerli/_CCIP';
 import * as goerliAccountProxy from '@synthetixio/v3-contracts/build/goerli/AccountProxy';
@@ -52,18 +50,16 @@ function getContract(name: string, chainName: string | undefined) {
 }
 
 // Similar to https://wagmi.sh/docs/hooks/useContract, but its aware of the currently selected network.
-export const useContract = (name: string, chainId?: number) => {
-  const [localChainId] = useRecoilState(chainIdState);
+export const useContract = (name: string) => {
   const provider = useProvider();
-  const chainName = getChainNameById(chainId || localChainId);
-  const contractInfo = getContract(name, chainName);
+  const contractInfo = getContract(name, provider.network.name);
   if (!contractInfo) return null;
   // TODO: useQuery + await import()
   return {
     address: contractInfo.address,
     abi: contractInfo.abi,
     contract: new ethers.Contract(contractInfo.address, contractInfo.abi, provider),
-    chainId: localChainId,
+    chainId: provider.network.chainId,
   };
 };
 
