@@ -7721,6 +7721,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/format@workspace:*, @snx-v3/format@workspace:v3/lib/format":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/format@workspace:v3/lib/format"
+  dependencies:
+    "@synthetixio/wei": "workspace:*"
+    ethers: ^5.7.2
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/subgraphs@workspace:v3/subgraphs":
   version: 0.0.0-use.local
   resolution: "@snx-v3/subgraphs@workspace:v3/subgraphs"

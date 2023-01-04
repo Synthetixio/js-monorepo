@@ -1,0 +1,10 @@
+{
+  "name": "@snx-v3/format",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@synthetixio/wei": "workspace:*",
+    "ethers": "^5.7.2"
+  }
+}
