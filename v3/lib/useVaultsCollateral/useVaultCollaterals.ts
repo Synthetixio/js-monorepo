@@ -2,6 +2,14 @@ import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { wei } from '@synthetixio/wei';
 import { useQuery } from '@tanstack/react-query';
+import { z } from 'zod';
+
+const VaultCollateralSchema = z
+  .object({
+    value: z.string(),
+    amount: z.string(),
+  })
+  .transform(({ value, amount }) => ({ value: wei(value), amount: wei(amount) }));
 
 export const useVaultCollaterals = (poolId?: number) => {
   const { data: collateralTypes } = useCollateralTypes();
@@ -15,14 +23,16 @@ export const useVaultCollaterals = (poolId?: number) => {
       }
       // If there's only 1 collateral type, just call getVaultCollateral without multicall
       if (collateralTypes.length === 1) {
-        const { value, amount } = await CoreProxyContract.callStatic.getVaultCollateral(
+        const result = await CoreProxyContract.callStatic.getVaultCollateral(
           poolId,
           collateralTypes[0].tokenAddress
         );
+        const { value, amount } = VaultCollateralSchema.parse(result);
+
         return [
           {
-            value: wei(value),
-            amount: wei(amount),
+            value,
+            amount,
             collateralType: collateralTypes[0],
           },
         ];
@@ -38,16 +48,11 @@ export const useVaultCollaterals = (poolId?: number) => {
       // We can make it behave like a view function by using callStatic
       const multicallResult = await CoreProxyContract.callStatic.multicall(calls);
       return multicallResult.map((bytes, i) => {
-        const decodedResult = CoreProxyContract.interface.decodeFunctionResult(
-          'getVaultCollateral',
-          bytes
-          // Typechain not smart enough to type `decodeFunctionResult`
-        ) as unknown as Awaited<ReturnType<typeof CoreProxyContract.getVaultCollateral>>;
-        return {
-          value: wei(decodedResult.value),
-          amount: wei(decodedResult.amount),
-          collateralType: collateralTypes[i],
-        };
+        const { value, amount } = VaultCollateralSchema.parse(
+          CoreProxyContract.interface.decodeFunctionResult('getVaultCollateral', bytes)
+        );
+
+        return { value, amount, collateralType: collateralTypes[i] };
       });
     },
     enabled: Boolean(collateralTypes?.length && CoreProxyContract && poolId),
