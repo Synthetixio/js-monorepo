@@ -19,10 +19,13 @@ export const useVaultCollaterals = (poolId?: number) => {
           poolId,
           collateralTypes[0].tokenAddress
         );
-        return {
-          value: wei(value),
-          amount: wei(amount),
-        };
+        return [
+          {
+            value: wei(value),
+            amount: wei(amount),
+            collateralType: collateralTypes[0],
+          },
+        ];
       }
 
       const calls = collateralTypes.map((collateralType) => {
@@ -34,7 +37,7 @@ export const useVaultCollaterals = (poolId?: number) => {
       // `getVaultCollateral` is not a normal view function, it updates some state too
       // We can make it behave like a view function by using callStatic
       const multicallResult = await CoreProxyContract.callStatic.multicall(calls);
-      return multicallResult.map((bytes) => {
+      return multicallResult.map((bytes, i) => {
         const decodedResult = CoreProxyContract.interface.decodeFunctionResult(
           'getVaultCollateral',
           bytes
@@ -43,10 +46,11 @@ export const useVaultCollaterals = (poolId?: number) => {
         return {
           value: wei(decodedResult.value),
           amount: wei(decodedResult.amount),
+          collateralType: collateralTypes[i],
         };
       });
     },
     enabled: Boolean(collateralTypes?.length && CoreProxyContract && poolId),
-    staleTime: 100000,
+    staleTime: 300000,
   });
 };
