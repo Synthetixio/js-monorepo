@@ -47,10 +47,11 @@ const MarketConfigurationSchema = z.object({
 });
 export const PoolSchema = z.object({
   id: z.string(),
-  name: z.union([z.string(), z.null()]),
+  name: z.union([z.string(), z.null()]).transform((name) => name || 'Unnamed Pool'),
   total_weight: GraphBigIntSchema,
   configurations: z.array(MarketConfigurationSchema),
 });
+
 export type Pool = z.infer<typeof PoolSchema>;
 
 const PoolDataResultSchema = z.object({
@@ -119,7 +120,6 @@ export const useGetPoolData = (id?: string) => {
       return pool;
     },
     enabled: Boolean(chainName && id),
-    staleTime: 10000,
   });
 };
 
