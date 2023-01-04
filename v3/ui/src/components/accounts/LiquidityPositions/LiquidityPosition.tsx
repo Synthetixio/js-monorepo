@@ -2,7 +2,7 @@ import { ArrowRightIcon } from '@chakra-ui/icons';
 import { Link, Td, Text, Tr } from '@chakra-ui/react';
 import { BigNumber } from 'ethers';
 import { Link as RouterLink } from 'react-router-dom';
-import { formatValue } from '../../../utils/helpers';
+import { formatValue } from '@snx-v3/format';
 import { LiquidityPositionType } from '../../../utils/types';
 import { poolsData } from '../../../utils/constants';
 import { FC } from 'react';
@@ -15,10 +15,8 @@ interface Props {
 
 export const LiquidityPosition: FC<Props> = ({ position }) => {
   // If the connected wallet doesn't own this account token, remove/disable the interactivity
-  const collateralAmount = formatValue(position.collateralAmount, position.collateralType.decimals);
-  const price = position.collateralType.price
-    ? formatValue(position.collateralType.price, position.collateralType.decimals)
-    : 0;
+  const collateralAmount = formatValue(position.collateralAmount);
+  const price = position.collateralType.price ? formatValue(position.collateralType.price) : 0;
   const collateralValue = collateralAmount * price;
 
   return (

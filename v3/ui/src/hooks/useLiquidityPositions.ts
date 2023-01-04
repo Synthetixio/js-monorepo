@@ -6,7 +6,7 @@ import { useSnxProxy } from './useContract';
 import { poolsData } from '../utils/constants';
 import { useSynthetixProxyEvent } from './useContractEvent';
 import { CollateralType, LiquidityPositionType } from '../utils/types';
-import { parseUnits } from '../utils/helpers';
+import { parseUnits } from '@snx-v3/format';
 
 interface DepositingCall {
   poolId: string;

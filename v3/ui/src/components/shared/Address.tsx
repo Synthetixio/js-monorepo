@@ -3,7 +3,7 @@ import { Link, Text } from '@chakra-ui/react';
 import { etherscanLink } from '@snx-v3/etherscanLink';
 import { FC } from 'react';
 import { useProvider } from 'wagmi';
-import { prettyString } from '../../utils/helpers';
+import { prettyString } from '@snx-v3/format';
 
 interface Props {
   address?: string;

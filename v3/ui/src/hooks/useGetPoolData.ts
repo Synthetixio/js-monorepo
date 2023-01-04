@@ -3,7 +3,7 @@ import { calculateMarketPnl } from '../utils/calculations';
 import { formatGraphBigDecimal, getSubgraphUrl } from '../utils/subgraph';
 import { z } from 'zod';
 import { wei } from '@synthetixio/wei';
-import { useProvider } from 'wagmi';
+import { useNetwork } from '@snx-v3/useBlockchain';
 
 const GraphBigIntSchema = z.string().transform((src) => formatGraphBigDecimal(src));
 const GraphBigDecimalSchema = z.string().transform((src) => formatGraphBigDecimal(src));
@@ -107,19 +107,17 @@ const getPoolData = async (chainName: string, id: string) => {
   return PoolDataResultSchema.parse(json);
 };
 
-export const useGetPoolData = (id?: string) => {
-  const provider = useProvider();
-  const chainName = provider.network.name;
+export const useGetPoolData = (poolId?: string) => {
+  const network = useNetwork();
 
   return useQuery({
-    queryKey: ['useGetPoolData', chainName, id],
+    queryKey: [network.name, 'pool', { poolId }],
     queryFn: async () => {
-      if (!chainName || !id) throw Error('Query expected chainName and id to be defined');
-      const poolData = await getPoolData(chainName, id);
-      const pool = addMockData(poolData.data.pool);
-      return pool;
+      if (!network.name || !poolId) throw Error('OMG!');
+      const poolData = await getPoolData(network.name, poolId);
+      return addMockData(poolData.data.pool);
     },
-    enabled: Boolean(chainName && id),
+    enabled: Boolean(network.name && poolId),
   });
 };
 

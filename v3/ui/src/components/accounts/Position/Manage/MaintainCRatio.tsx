@@ -1,7 +1,7 @@
 import { Burn } from './Burn';
 import { Deposit } from './Deposit';
 import { Alert, AlertIcon, Box, Heading } from '@chakra-ui/react';
-import { formatValue } from '../../../../utils/helpers';
+import { formatValue } from '@snx-v3/format';
 import { FC } from 'react';
 import { CollateralType } from '../../../../utils/types';
 

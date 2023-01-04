@@ -24,7 +24,7 @@ import {
 import { FC, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useManagePermissions } from '../../../hooks/useManagePermissions';
-import { prettyString } from '../../../utils/helpers';
+import { prettyString } from '@snx-v3/format';
 import { AddressInput } from './AddressInput';
 
 type Props =

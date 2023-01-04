@@ -39,7 +39,6 @@ export const Burn: FC<Props> = ({ onChange, value, debt }) => {
             <Balance
               balance={balance.value}
               onMax={() => onChange(Math.min(balance.formattedValue, debt) || 0)}
-              decimals={balance.decimals}
               symbol="snxUsd"
               address={snxUsdProxy?.address}
             />

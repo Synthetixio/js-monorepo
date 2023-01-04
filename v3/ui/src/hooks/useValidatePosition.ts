@@ -1,6 +1,6 @@
 import Big from 'big.js';
 import { useMemo } from 'react';
-import { formatValue } from '../utils/helpers';
+import { formatValue } from '@snx-v3/format';
 import { CollateralType } from '../utils/types';
 
 export const useValidatePosition = ({

@@ -1,7 +1,7 @@
 import { useContractReads } from 'wagmi';
 import { useSnxProxy } from './useContract';
 import { poolsData } from '../utils/constants';
-import { formatValue } from '../utils/helpers';
+import { formatValue } from '@snx-v3/format';
 import Big from 'big.js';
 import { CollateralType } from '../utils/types';
 import { BigNumber } from 'ethers';
@@ -44,9 +44,9 @@ export const useLiquidityPosition = (
       throw Error('Expected getPositionDebt to return a bignumber');
     }
     const debt = formatValue(debtReturn, 18);
-    const collateralValue = formatValue(collateralReturn.value, collateral.decimals);
+    const collateralValue = formatValue(collateralReturn.value);
     const cRatio = debt !== 0 ? Big(collateralValue).mul(100).div(debt).toNumber() : 0;
-    const collateralAmount = formatValue(collateralReturn.amount, collateral.decimals);
+    const collateralAmount = formatValue(collateralReturn.amount);
     return {
       collateralAmount,
       cRatio,

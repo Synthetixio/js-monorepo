@@ -1,28 +1,49 @@
-import { useQuery } from 'wagmi';
-import { useSnxProxy } from './useContract';
+import { useQuery } from '@tanstack/react-query';
 import { CollateralType } from '../utils/types';
+import { useNetwork } from '@snx-v3/useBlockchain';
+import { useCoreProxy } from '@snx-v3/useCoreProxy';
 
 interface RewardDistribution {
   value: string;
   distributor: string;
 }
 
-export const useGetRewards = (accountId: string, poolId: string, collateral: CollateralType) => {
-  const snxProxy = useSnxProxy();
+export const useRewards = ({
+  accountId,
+  poolId,
+  collateral,
+}: {
+  accountId: string;
+  poolId: string;
+  collateral: CollateralType;
+}) => {
+  const network = useNetwork();
+  const { data: CoreProxy } = useCoreProxy();
 
-  return useQuery<RewardDistribution[]>(
-    ['rewards', poolId, collateral.tokenAddress, accountId],
-    async () => {
-      try {
-        const [[rewards, distributors]] = await Promise.all([
-          snxProxy?.contract?.callStatic?.getRewards(poolId, collateral.tokenAddress, accountId),
-        ]);
+  return useQuery<RewardDistribution[]>({
+    queryKey: [
+      network.name,
+      'rewards',
+      { poolId },
+      { token: collateral.tokenAddress },
+      { accountId },
+    ],
+    queryFn: async () => {
+      if (!CoreProxy) throw new Error('OMG');
 
-        return (rewards || []).map((reward: any, index: number) => ({
-          distributor: distributors[index],
-          value: reward?.toString(),
-        }));
-      } catch (error) {}
-    }
-  );
+      // TODO: getRewards is not a functon!
+      // const [rewards, distributors] = await CoreProxy.callStatic.getRewards(
+      //   poolId,
+      //   collateral.tokenAddress,
+      //   accountId
+      // );
+      // return (rewards || []).map((reward: any, index: number) => ({
+      //   distributor: distributors[index],
+      //   value: reward?.toString(),
+      // }));
+      return [];
+    },
+    placeholderData: [],
+    enabled: Boolean(network.name && poolId && collateral.tokenAddress && accountId),
+  });
 };

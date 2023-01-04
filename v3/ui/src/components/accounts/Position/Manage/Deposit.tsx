@@ -34,7 +34,6 @@ export const Deposit: FC<Props> = ({ collateral, value, onChange }) => {
           <Balance
             onMax={(balance) => onChange(parseFloat(balance) || 0)}
             balance={balance.value}
-            decimals={collateral.decimals}
             symbol={collateral.symbol}
             address={collateral.tokenAddress}
           />

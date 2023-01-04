@@ -61,7 +61,6 @@ export const Custom: FC<Props> = ({
               <Balance
                 onMax={(balance) => setCollateralChange(parseFloat(balance) || 0)}
                 balance={balance.value}
-                decimals={collateral.decimals}
                 symbol={collateral.symbol}
                 address={collateral.tokenAddress}
               />

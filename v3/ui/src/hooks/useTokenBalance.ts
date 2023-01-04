@@ -1,5 +1,5 @@
 import { useAccount, useBalance, useNetwork } from 'wagmi';
-import { compareAddress, formatValue, parseUnits } from '../utils/helpers';
+import { compareAddress, formatValue, parseUnits } from '@snx-v3/format';
 import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
 
 export const useTokenBalance = (token: `0x${string}` | undefined, chainId?: number | undefined) => {
@@ -17,8 +17,7 @@ export const useTokenBalance = (token: `0x${string}` | undefined, chainId?: numb
 
   return {
     value: balanceData?.value || parseUnits(0),
-    decimals: balanceData?.decimals || 18,
-    formattedValue: formatValue(balanceData?.value || 0, balanceData?.decimals || 18),
+    formattedValue: formatValue(balanceData?.value || 0),
     refetch,
   };
 };

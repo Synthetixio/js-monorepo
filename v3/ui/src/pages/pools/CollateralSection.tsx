@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { FC } from 'react';
 import { wei } from '@synthetixio/wei';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
-import { formatValue } from '../../utils/helpers';
+import { formatValue } from '@snx-v3/format';
 
 const calculateTvl = (vaultCollaterals: ReturnType<typeof useVaultCollaterals>['data']) => {
   const zeroValues = { value: wei(0), amount: wei(0) };
