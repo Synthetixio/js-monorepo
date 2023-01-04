@@ -46,13 +46,14 @@ export const CollateralSectionUi: FC<{
         {vaultCollaterals.map((vaultCollateral) => {
           return (
             <Flex
+              key={vaultCollateral.collateralType.tokenAddress}
               bg="whiteAlpha.50"
               borderColor="gray.900"
               borderWidth="1px"
               borderRadius="base"
               paddingX={4}
               paddingY={2}
-              width={'50%'}
+              width="50%"
               flexDirection="column"
             >
               <Text fontWeight={800} color="white" fontSize="2xl">

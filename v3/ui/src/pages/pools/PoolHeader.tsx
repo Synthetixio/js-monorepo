@@ -26,5 +26,6 @@ export const PoolHeaderUi = ({
 export const PoolHeader = () => {
   const { id } = useParams();
   const { data: poolData, isLoading: isLoadingPoolData } = useGetPoolData(id);
+  console.log(poolData);
   return <PoolHeaderUi poolId={poolData?.id} poolName={poolData?.name} />;
 };
