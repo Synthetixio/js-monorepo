@@ -1,7 +1,7 @@
 import { Box, Text, Table, Thead, Tbody, Tr, Th, Spinner } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useRewards } from '../../../../hooks/useRewards';
-import { CollateralType } from '../../../../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { RewardsDistributorTitle } from './RewardsDistributorTitle';
 
 interface Props {

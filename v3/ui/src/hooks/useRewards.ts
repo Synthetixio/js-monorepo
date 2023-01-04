@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { CollateralType } from '../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useNetwork } from '@snx-v3/useBlockchain';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 

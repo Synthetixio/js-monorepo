@@ -1,7 +1,7 @@
 import { Text, Box, Flex, Heading } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useTokenBalance } from '../../../../hooks/useTokenBalance';
-import { CollateralType } from '../../../../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '../../Deposit/Balance';
 import { NumberInput } from './NumberInput';
 

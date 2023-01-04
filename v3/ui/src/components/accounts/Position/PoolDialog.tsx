@@ -20,7 +20,7 @@ import { FC, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useUpdatePool } from '../../../hooks/useUpdatePool';
 import { poolsData } from '../../../utils/constants';
-import { CollateralType } from '../../../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 
 interface Props {
   accountId: string;

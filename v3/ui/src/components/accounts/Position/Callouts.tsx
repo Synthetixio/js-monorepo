@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { formatValue } from '@snx-v3/format';
 import { BigNumber } from 'ethers';
 import { currency } from '../../../utils/currency';
-import { CollateralType } from '../../../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Amount } from '../../shared/Amount/Amount';
 
 interface Props {

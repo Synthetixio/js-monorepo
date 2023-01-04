@@ -13,7 +13,7 @@ import {
 import { FC } from 'react';
 import { useTokenBalance } from '../../../../hooks/useTokenBalance';
 import { currency } from '../../../../utils/currency';
-import { CollateralType } from '../../../../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '../../Deposit/Balance';
 import { NumberInput } from './NumberInput';
 interface Props {

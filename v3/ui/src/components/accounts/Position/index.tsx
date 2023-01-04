@@ -4,7 +4,7 @@ import Manage from './Manage';
 import { Rewards } from './Rewards/Rewards';
 import { Pool } from './Pool';
 import { FC } from 'react';
-import { CollateralType } from '../../../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { formatValue } from '@snx-v3/format';
 import { useLiquidityPosition } from '../../../hooks/useLiquidityPosition';
 

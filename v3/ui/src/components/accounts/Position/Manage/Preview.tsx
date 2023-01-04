@@ -1,10 +1,10 @@
 import { Box, Text, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
-import { CollateralType } from '../../../../utils/types';
 import { useValidatePosition } from '../../../../hooks/useValidatePosition';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { CRatio } from './CRatio';
 import { Amount } from '../../../shared/Amount/Amount';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 
 interface Props {
   collateral: CollateralType;

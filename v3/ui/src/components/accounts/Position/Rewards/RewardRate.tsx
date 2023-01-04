@@ -1,7 +1,7 @@
 import { InfoIcon } from '@chakra-ui/icons';
 import { Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
-import { CollateralType } from '../../../../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { parseUnits } from '@snx-v3/format';
 import { Amount } from '../../../shared/Amount/Amount';
 import { useQuery } from '@tanstack/react-query';

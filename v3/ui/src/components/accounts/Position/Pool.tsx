@@ -17,7 +17,7 @@ import {
 import { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { poolsData } from '../../../utils/constants';
-import { CollateralType } from '../../../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { PoolDialog } from './PoolDialog';
 
 interface Props {

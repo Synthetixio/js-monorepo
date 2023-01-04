@@ -1,7 +1,7 @@
 import { parseUnits } from '@snx-v3/format';
 import { useMemo } from 'react';
 import { contracts } from '../utils/constants';
-import { CollateralType } from '../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
 

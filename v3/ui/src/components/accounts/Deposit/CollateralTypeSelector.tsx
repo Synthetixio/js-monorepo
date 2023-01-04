@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Box, Text, Flex, Menu, MenuButton, MenuList, MenuItem, Image } from '@chakra-ui/react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { CollateralType } from '../../../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 
 type Props = {
   collateralTypes: CollateralType[];

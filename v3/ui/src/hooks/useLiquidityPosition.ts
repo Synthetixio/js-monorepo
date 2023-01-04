@@ -3,7 +3,7 @@ import { useSnxProxy } from './useContract';
 import { poolsData } from '../utils/constants';
 import { formatValue } from '@snx-v3/format';
 import Big from 'big.js';
-import { CollateralType } from '../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { BigNumber } from 'ethers';
 
 export const useLiquidityPosition = (
