@@ -7774,6 +7774,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/useExternalMulticall@workspace:*, @snx-v3/useExternalMulticall@workspace:v3/lib/useExternalMulticall":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useExternalMulticall@workspace:v3/lib/useExternalMulticall"
+  dependencies:
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/v3-contracts": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useMarketNamesById@workspace:*, @snx-v3/useMarketNamesById@workspace:v3/lib/useMarketNamesById":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useMarketNamesById@workspace:v3/lib/useMarketNamesById"
+  dependencies:
+    "@snx-v3/useExternalMulticall": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
+    zod: ^3.20.2
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/usePools@workspace:*, @snx-v3/usePools@workspace:v3/lib/usePools":
   version: 0.0.0-use.local
   resolution: "@snx-v3/usePools@workspace:v3/lib/usePools"
@@ -9900,6 +9922,7 @@ __metadata:
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/useMarketNamesById": "workspace:*"
     "@snx-v3/usePools": "workspace:*"
     "@snx-v3/useVaultCollaterals": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
