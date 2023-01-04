@@ -1,9 +1,10 @@
 export interface Node {
-  oracleNodeType: string;
-  nodeType: 'input' | 'default' | 'output';
+  type: OracleNodeTypes;
   id: string;
   parents: string[];
-  parameters: unknown;
+  parameters: any[];
   position: { x: number; y: number };
   data: { label: string };
 }
+
+export type OracleNodeTypes = 'chainLink' | 'pyth' | 'reducer';

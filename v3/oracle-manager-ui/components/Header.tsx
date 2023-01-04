@@ -1,16 +1,24 @@
 import { Button, Divider, Flex, Heading, useDisclosure } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { FC, useState } from 'react';
+import { FC } from 'react';
+import { useRecoilState } from 'recoil';
+import { nodesState } from '../state/nodes';
 import { NodeFormModule } from './NodeFormModule';
 
 export const Header: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [nodeType, setNodeType] = useState('');
+  const [nodes] = useRecoilState(nodesState);
   return (
     <>
       <Flex as="header" p="2" flexDir="column" w="100%" gap="2">
         <Flex w="100%" justifyContent="space-evenly">
           <Heading>SNX Oracle Manager</Heading>
+          <Button
+            variant="outline"
+            onClick={() => localStorage.setItem('oracleManagerUI', JSON.stringify(nodes))}
+          >
+            Save
+          </Button>
           <Button onClick={onOpen}>Add Node</Button>
           <ConnectButton />
         </Flex>

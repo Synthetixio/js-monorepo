@@ -16,7 +16,12 @@ import 'reactflow/dist/style.css';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 import { Node } from '../utils/types';
+import { ChainLinkNode } from './ChainLinkNode';
 import { NodeFormModule } from './NodeFormModule';
+import { PythNode } from './PythNode';
+import { ReducerNode } from './ReducerNode';
+
+const NODE_TYPES = { chainLink: ChainLinkNode, pyth: PythNode, reducer: ReducerNode };
 
 export const Chart: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,17 +36,19 @@ export const Chart: FC = () => {
   };
   const onEdgesChange = (changes: EdgeChange[]) => {
     const appliedChanges = applyEdgeChanges(changes, edges);
-    setEdges(edges.filter((edge) => edge.id !== appliedChanges[0].id));
-    setInitNodes((state) => {
-      const removeParent = state.findIndex((node) => node.id === appliedChanges[0].target);
-      return state.map((node, index) => {
-        if (index === removeParent) {
-          return {
-            ...node,
-            parents: node.parents.filter((parent) => parent !== appliedChanges[0].source),
-          };
-        }
-        return node;
+    appliedChanges.forEach((updatedEdge) => {
+      setEdges(edges.filter((edge) => edge.id !== updatedEdge.id));
+      setInitNodes((state) => {
+        const removeParent = state.findIndex((node) => node.id === updatedEdge.target);
+        return state.map((node, index) => {
+          if (index === removeParent) {
+            return {
+              ...node,
+              parents: node.parents.filter((parent) => parent !== updatedEdge.source),
+            };
+          }
+          return node;
+        });
       });
     });
   };
@@ -68,12 +75,14 @@ export const Chart: FC = () => {
     });
 
   useEffect(() => setNodes(initNodes), [initNodes.toString()]);
+
   return (
     <Box w="100%" h="500px">
       <Text textAlign="center" fontWeight="bold">
-        The bottom of the Node is always the downstream output and the top is the receiving end
+        The bottom of the node is always the downstream output and the top is the receiving end
       </Text>
       <ReactFlow
+        nodeTypes={NODE_TYPES}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
@@ -87,15 +96,9 @@ export const Chart: FC = () => {
             color: 'black',
           },
         }}
-        onNodeClick={(event) => {
-          if ('dataset' in event.target) {
-            const id = (event.target.dataset as DOMStringMap)?.id;
-            const node = initNodes.find((n) => n.id === id);
-            if (node) {
-              setNodeToUpdate(node);
-              onOpen();
-            }
-          }
+        onNodeClick={(_, node) => {
+          setNodeToUpdate(node as Node);
+          onOpen();
         }}
       >
         <Background />

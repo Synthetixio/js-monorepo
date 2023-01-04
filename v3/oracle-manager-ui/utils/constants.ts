@@ -90,3 +90,89 @@ export const ALCHEMY_KEY_MAPPING: Record<number, string> = {
   10: '-ktIzLrAY_Sf7AAlM1aTuZ-PObMop5sU',
   420: 'lc1tSn8B8fmURkjmZLeyT1ibNpgqlsnr',
 };
+
+export const ORACLE_NODE_TYPES: {
+  value: string;
+  label: string;
+  numberOfParents: number;
+  parameters: {
+    type: string;
+    name: string;
+    options?: string[];
+  }[];
+}[] = [
+  {
+    value: 'chainLink',
+    label: 'Chain Link',
+    numberOfParents: 0,
+    parameters: [
+      { type: 'string', name: 'Address' },
+      { type: 'number', name: 'TWAP time interval in seconds' },
+      { type: 'number', name: 'Decimals' },
+    ],
+  },
+  {
+    value: 'externalNode',
+    label: 'External Node',
+    numberOfParents: Infinity,
+    parameters: [{ type: 'string', name: 'Address' }],
+  },
+  {
+    value: 'priceCircuitBreaker',
+    label: 'Price Circuit Breaker',
+    numberOfParents: 2,
+    parameters: [{ type: 'number', name: 'Deviation tolerance' }],
+  },
+  {
+    value: 'pyth',
+    label: 'Pyth',
+    numberOfParents: 0,
+    parameters: [
+      {
+        type: 'string',
+        name: 'Address',
+      },
+      {
+        type: 'string',
+        name: 'Price feed id',
+      },
+    ],
+  },
+  {
+    value: 'reducer',
+    label: 'Reducer',
+    numberOfParents: Infinity,
+    parameters: [
+      { type: 'union', name: 'Operation', options: ['max', 'min', 'mean', 'median', 'recent'] },
+    ],
+  },
+  {
+    value: 'stalenessFallbackReducer',
+    label: 'Staleness Fallback Reducer',
+    numberOfParents: 2, // 1 or two parents => if two parents if one is stale, use the second parent
+    parameters: [{ type: 'number', name: 'Staleness tolerance' }],
+  },
+  {
+    value: 'uniswap',
+    label: 'Uniswap',
+    numberOfParents: 0,
+    parameters: [
+      {
+        type: 'string',
+        name: 'First token',
+      },
+      {
+        type: 'string',
+        name: 'Second token',
+      },
+      {
+        type: 'string',
+        name: 'Pool address',
+      },
+      {
+        type: 'number',
+        name: 'Seconds ago',
+      },
+    ],
+  },
+];
