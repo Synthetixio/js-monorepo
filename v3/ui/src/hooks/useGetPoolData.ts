@@ -45,14 +45,12 @@ const MarketConfigurationSchema = z.object({
   weight: GraphBigIntSchema,
   max_debt_share_value: GraphBigDecimalSchema,
 });
-export const PoolSchema = z
-  .object({
-    id: z.string(),
-    name: z.union([z.string(), z.null()]),
-    total_weight: GraphBigIntSchema,
-    configurations: z.array(MarketConfigurationSchema),
-  })
-  .transform((pool) => ({ ...pool, name: pool.name || 'Unnamed Pool' }));
+export const PoolSchema = z.object({
+  id: z.string(),
+  name: z.union([z.string(), z.null()]).transform((name) => name || 'Unnamed Pool'),
+  total_weight: GraphBigIntSchema,
+  configurations: z.array(MarketConfigurationSchema),
+});
 
 export type Pool = z.infer<typeof PoolSchema>;
 
