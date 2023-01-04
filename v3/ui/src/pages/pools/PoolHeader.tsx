@@ -2,19 +2,13 @@ import { Flex, Heading, Text } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { useGetPoolData } from '../../hooks/useGetPoolData';
 
-export const PoolHeaderUi = ({
-  poolName,
-  poolId,
-}: {
-  poolName?: string | null;
-  poolId?: string;
-}) => {
-  const poolNameWithDefault = poolName === null ? 'Unnamed Pool' : poolName;
+export const PoolHeaderUi = ({ poolName, poolId }: { poolName?: string; poolId?: string }) => {
+  if (!poolId || !poolName) return null;
   return (
     <Flex flexDirection="column">
       <Text fontSize="sm">Current Pool</Text>
       <Heading fontWeight={700} fontSize="xl">
-        {poolNameWithDefault}
+        {poolName}
       </Heading>
       <Text fontSize="sm" color="gray.400">
         Pool #{poolId}
@@ -25,6 +19,6 @@ export const PoolHeaderUi = ({
 
 export const PoolHeader = () => {
   const { id } = useParams();
-  const { data: poolData, isLoading: isLoadingPoolData } = useGetPoolData(id);
+  const { data: poolData } = useGetPoolData(id);
   return <PoolHeaderUi poolId={poolData?.id} poolName={poolData?.name} />;
 };
