@@ -3,7 +3,7 @@ import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { wei } from '@synthetixio/wei';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
-import { ZodBigNumber } from '@snx-v3/customZodSchemas';
+import { ZodBigNumber } from '@snx-v3/zod';
 
 function notNill<Value>(value: Value | null | undefined): value is Value {
   return value !== null && value !== undefined;

@@ -1,5 +1,5 @@
 {
-  "name": "@snx-v3/customZodSchemas",
+  "name": "@snx-v3/zod",
   "private": true,
   "main": "index.ts",
   "version": "0.0.1",

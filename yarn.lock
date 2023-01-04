@@ -7702,15 +7702,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/customZodSchemas@workspace:*, @snx-v3/customZodSchemas@workspace:v3/lib/customZodSchemas":
-  version: 0.0.0-use.local
-  resolution: "@snx-v3/customZodSchemas@workspace:v3/lib/customZodSchemas"
-  dependencies:
-    ethers: ^5.7.2
-    zod: ^3.20.2
-  languageName: unknown
-  linkType: soft
-
 "@snx-v3/docs@workspace:v3/docs":
   version: 0.0.0-use.local
   resolution: "@snx-v3/docs@workspace:v3/docs"
@@ -7789,11 +7780,20 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useVaultCollaterals@workspace:v3/lib/useVaultsCollateral"
   dependencies:
-    "@snx-v3/customZodSchemas": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/zod": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
+    zod: ^3.20.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/zod@workspace:*, @snx-v3/zod@workspace:v3/lib/zod":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/zod@workspace:v3/lib/zod"
+  dependencies:
+    ethers: ^5.7.2
     zod: ^3.20.2
   languageName: unknown
   linkType: soft
