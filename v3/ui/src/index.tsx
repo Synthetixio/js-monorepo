@@ -7,7 +7,7 @@ import { darkTheme, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/ra
 import { Fonts, theme } from '@synthetixio/v3-theme';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { DEFAULT_REQUEST_REFRESH_INTERVAL, INFURA_KEY, supportedChains } from './utils/constants';
+import { DEFAULT_REQUEST_REFRESH_INTERVAL, INFURA_KEY } from './utils/constants';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './i18n';
@@ -24,16 +24,20 @@ const queryClient = new QueryClient({
   },
 });
 
-const { chains, provider } = configureChains(supportedChains, [
-  // jsonRpcProvider({
-  //   rpc: () => ({ http: `http://localhost:8545` }),
-  //   priority: 0,
-  // }),
-  jsonRpcProvider({
-    rpc: () => ({ http: `https://goerli.infura.io/v3/${INFURA_KEY}` }),
-    priority: 1,
-  }),
-]);
+import { goerli, optimismGoerli } from '@wagmi/chains';
+const { chains, provider } = configureChains(
+  [goerli, optimismGoerli],
+  [
+    // jsonRpcProvider({
+    //   rpc: () => ({ http: `http://localhost:8545` }),
+    //   priority: 0,
+    // }),
+    jsonRpcProvider({
+      rpc: () => ({ http: `https://goerli.infura.io/v3/${INFURA_KEY}` }),
+      priority: 1,
+    }),
+  ]
+);
 
 const { connectors } = getDefaultWallets({
   appName: 'Synthetix',

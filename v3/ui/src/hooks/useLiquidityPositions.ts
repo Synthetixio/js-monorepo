@@ -1,13 +1,12 @@
-import { useRecoilValue } from 'recoil';
+import { BigNumber } from 'ethers';
 import { useContractReads } from 'wagmi';
-import { poolsState } from '../utils/state';
+import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
+import { usePools } from '@snx-v3/usePools';
 import { useSnxProxy } from './useContract';
 import { poolsData } from '../utils/constants';
 import { useSynthetixProxyEvent } from './useContractEvent';
 import { CollateralType, LiquidityPositionType } from '../utils/types';
 import { parseUnits } from '../utils/helpers';
-import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
-import { BigNumber } from 'ethers';
 
 interface DepositingCall {
   poolId: string;
@@ -16,7 +15,7 @@ interface DepositingCall {
 }
 
 export const useLiquidityPositions = (accountId: string) => {
-  const pools = useRecoilValue(poolsState);
+  const { data: pools } = usePools();
   const supportedCollateralTypes = useCollateralTypes();
   const snxProxy = useSnxProxy();
 

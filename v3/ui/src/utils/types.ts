@@ -1,5 +1,4 @@
 import { BigNumber } from 'ethers';
-import { chains } from './constants';
 
 export type CollateralType = {
   depositingEnabled: boolean;
@@ -14,8 +13,6 @@ export type CollateralType = {
   price?: BigNumber;
   logo: string;
 };
-
-export type ChainName = keyof typeof chains;
 
 export type LiquidityPositionType = {
   id: string;

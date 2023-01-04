@@ -1,26 +1,25 @@
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import {
-  Text,
   Box,
-  Link,
+  Button,
   Flex,
   Heading,
+  Link,
   Modal,
-  ModalOverlay,
+  ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalHeader,
-  ModalCloseButton,
-  ModalBody,
+  ModalOverlay,
   Radio,
-  Button,
   RadioGroup,
+  Text,
 } from '@chakra-ui/react';
+import { usePools } from '@snx-v3/usePools';
 import { FC, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import { useUpdatePool } from '../../../hooks/useUpdatePool';
 import { poolsData } from '../../../utils/constants';
-import { poolsState } from '../../../utils/state';
 import { CollateralType } from '../../../utils/types';
 
 interface Props {
@@ -44,7 +43,7 @@ export const PoolDialog: FC<Props> = ({
   debt,
 }) => {
   const navigate = useNavigate();
-  const pools = useRecoilValue(poolsState);
+  const { data: pools } = usePools();
   const [pool, setPool] = useState(poolId);
   const { exec, isValid, isLoading } = useUpdatePool(
     {
