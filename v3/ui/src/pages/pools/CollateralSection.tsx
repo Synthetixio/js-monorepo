@@ -41,53 +41,51 @@ export const CollateralSectionUi: FC<{
         </Text>
       </Box>
       <Flex>
-        {vaultCollaterals.map((vaultCollateral) => {
-          return (
-            <Flex
-              key={vaultCollateral.collateralType.tokenAddress}
-              bg="whiteAlpha.50"
-              borderColor="gray.900"
-              borderWidth="1px"
-              borderRadius="base"
-              paddingX={4}
-              paddingY={2}
-              width="50%"
-              flexDirection="column"
-            >
-              <Text fontWeight={800} color="white" fontSize="2xl">
-                {vaultCollateral.collateralType.symbol}
-              </Text>
-              <Text fontSize="sm" color="gray.400" fontWeight="400">
-                Price
-              </Text>
-              <Text fontSize="xs" color="gray.400" fontWeight="400">
-                {vaultCollateral.collateralType.price
-                  ? formatNumberToUsd(formatValue(vaultCollateral.collateralType.price))
-                  : '-'}
-              </Text>
-              <Text mt={2} fontSize="sm" fontWeight="700" color="gray.500">
-                TVL
-              </Text>
-              <Text fontSize="xl" fontWeight={700} color="white">
-                {formatNumber(vaultCollateral.amount.toNumber())}{' '}
-                {vaultCollateral.collateralType.symbol}
-              </Text>
-              <Text fontSize="sm" color="gray.500" fontWeight="400">
-                {formatNumberToUsd(vaultCollateral.value.toNumber())}
-              </Text>
-              <Text mt={2} fontSize="sm" fontWeight="700" color="gray.500">
-                MY TOTAL
-              </Text>
-              <Text fontSize="xl" fontWeight={700} color="white">
-                TODO
-              </Text>
-              <Text fontSize="sm" color="gray.500" fontWeight="400">
-                TODO
-              </Text>
-              <Button mt={1}>Deposit</Button>
-            </Flex>
-          );
-        })}
+        {vaultCollaterals.map((vaultCollateral) => (
+          <Flex
+            key={vaultCollateral.collateralType.tokenAddress}
+            bg="whiteAlpha.50"
+            borderColor="gray.900"
+            borderWidth="1px"
+            borderRadius="base"
+            paddingX={4}
+            paddingY={2}
+            width="50%"
+            flexDirection="column"
+          >
+            <Text fontWeight={800} color="white" fontSize="2xl">
+              {vaultCollateral.collateralType.symbol}
+            </Text>
+            <Text fontSize="sm" color="gray.400" fontWeight="400">
+              Price
+            </Text>
+            <Text fontSize="xs" color="gray.400" fontWeight="400">
+              {vaultCollateral.collateralType.price
+                ? formatNumberToUsd(formatValue(vaultCollateral.collateralType.price))
+                : '-'}
+            </Text>
+            <Text mt={2} fontSize="sm" fontWeight="700" color="gray.500">
+              TVL
+            </Text>
+            <Text fontSize="xl" fontWeight={700} color="white">
+              {formatNumber(vaultCollateral.amount.toNumber())}{' '}
+              {vaultCollateral.collateralType.symbol}
+            </Text>
+            <Text fontSize="sm" color="gray.500" fontWeight="400">
+              {formatNumberToUsd(vaultCollateral.value.toNumber())}
+            </Text>
+            <Text mt={2} fontSize="sm" fontWeight="700" color="gray.500">
+              MY TOTAL
+            </Text>
+            <Text fontSize="xl" fontWeight={700} color="white">
+              TODO
+            </Text>
+            <Text fontSize="sm" color="gray.500" fontWeight="400">
+              TODO
+            </Text>
+            <Button mt={1}>Deposit</Button>
+          </Flex>
+        ))}
       </Flex>
     </Box>
   );
