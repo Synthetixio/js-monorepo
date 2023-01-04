@@ -4,20 +4,20 @@ import { useNetwork } from '@snx-v3/useBlockchain';
 
 export const usePools = () => {
   const network = useNetwork();
-  const { data: CoreProxyContract } = useCoreProxy();
+  const { data: CoreProxy } = useCoreProxy();
   return useQuery({
     queryKey: [network.name, 'pools'],
     queryFn: async () => {
-      if (!CoreProxyContract) throw new Error('CoreProxy');
+      if (!CoreProxy) throw new Error('CoreProxy');
       const [preferredPool, approvedPools] = await Promise.all([
-        CoreProxyContract.getPreferredPool(),
-        CoreProxyContract.getApprovedPools(),
+        CoreProxy.getPreferredPool(),
+        CoreProxy.getApprovedPools(),
       ]);
       return [preferredPool]
         .concat(approvedPools.filter((id) => !id.eq(preferredPool)))
         .map((id) => id.toString());
     },
     placeholderData: [],
-    enabled: Boolean(CoreProxyContract && network.name),
+    enabled: Boolean(CoreProxy && network.name),
   });
 };

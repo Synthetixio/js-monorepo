@@ -31,7 +31,7 @@ import { useApprove } from '../../hooks/useApprove';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';
 import { transactionState } from '../../utils/state';
-import { parseUnits } from '../../utils/helpers';
+import { parseUnits } from '@snx-v3/format';
 import testnetIcon from './testnet.png';
 
 const chains = [
@@ -231,7 +231,6 @@ export const Teleporter = () => {
                 <Balance
                   onMax={(balance) => setAmount(parseFloat(balance) || 0)}
                   balance={balance.value}
-                  decimals={balance.decimals}
                   symbol="snxUsd"
                   address={snxUsdProxy?.address}
                 />

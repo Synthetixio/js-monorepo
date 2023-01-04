@@ -1,18 +1,18 @@
 import { Badge, Link, Text } from '@chakra-ui/react';
-import { BigNumber, utils } from 'ethers';
+import { BigNumber } from 'ethers';
 import { FC, useMemo } from 'react';
 import { useProvider } from 'wagmi';
 import { Amount } from '../../shared/Amount/Amount';
+import { formatValue } from '@snx-v3/format';
 
 interface Props {
   balance: BigNumber;
-  decimals: number;
   symbol: string;
   address: string;
   onMax?: (balance: string) => void;
 }
 
-export const Balance: FC<Props> = ({ balance, decimals, symbol, address, onMax }) => {
+export const Balance: FC<Props> = ({ balance, symbol, address, onMax }) => {
   const provider = useProvider();
 
   const buyAssetLink = useMemo(() => {
@@ -27,7 +27,7 @@ export const Balance: FC<Props> = ({ balance, decimals, symbol, address, onMax }
     }
   }, [address, provider.network.chainId, symbol]);
 
-  const formattedBalance = utils.formatUnits(balance, decimals);
+  const formattedBalance = formatValue(balance);
   return (
     <Text display="flex" gap={2} alignItems="center" fontSize="xs">
       Balance:

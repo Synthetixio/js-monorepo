@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import { CallOverrides } from 'ethers';
-import { parseUnits } from '../utils/helpers';
+import { parseUnits } from '@snx-v3/format';
 import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -47,7 +47,7 @@ export const useDeposit = ({
 
   const amountBN =
     Boolean(amount && selectedCollateralType) && Number(amount) > 0
-      ? parseUnits(amount, selectedCollateralType.decimals)
+      ? parseUnits(amount)
       : parseUnits(0);
 
   const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();

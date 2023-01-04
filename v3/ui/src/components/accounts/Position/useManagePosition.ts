@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { Transaction } from '../../shared/TransactionReview/TransactionReview.types';
 import { contracts } from '../../../utils/constants';
-import { compareAddress, parseUnits } from '../../../utils/helpers';
+import { compareAddress, parseUnits } from '@snx-v3/format';
 import { transactionState } from '../../../utils/state';
 import { CollateralType } from '../../../utils/types';
 import { useApprove } from '../../../hooks/useApprove';
@@ -30,7 +30,7 @@ export const useManagePosition = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
-  const collateralChangeBN = parseUnits(Math.abs(collateralChange), collateral.decimals);
+  const collateralChangeBN = parseUnits(Math.abs(collateralChange));
 
   const ethCollateral = useEthCollateralType();
   const isNativeCurrency = compareAddress(ethCollateral?.tokenAddress, collateral.tokenAddress);
@@ -44,7 +44,7 @@ export const useManagePosition = ({
     if (!snxProxy) return [];
 
     if (collateralChange > 0) {
-      const currentAmount = parseUnits(collateralAmount, collateral.decimals);
+      const currentAmount = parseUnits(collateralAmount);
 
       list.push(
         {
@@ -67,7 +67,7 @@ export const useManagePosition = ({
     }
 
     if (debtChange < 0) {
-      const amount = parseUnits(-1 * debtChange, collateral.decimals);
+      const amount = parseUnits(-1 * debtChange);
       list.push({
         contract: snxProxy?.contract,
         functionName: 'burnUsd',
@@ -76,7 +76,7 @@ export const useManagePosition = ({
     }
 
     if (debtChange > 0) {
-      const amount = parseUnits(debtChange, collateral.decimals);
+      const amount = parseUnits(debtChange);
       list.push({
         contract: snxProxy?.contract,
         functionName: 'mintUsd',
@@ -85,7 +85,7 @@ export const useManagePosition = ({
     }
 
     if (collateralChange < 0) {
-      const currentAmount = parseUnits(collateralAmount, collateral.decimals);
+      const currentAmount = parseUnits(collateralAmount);
       list.push(
         {
           contract: snxProxy.contract,
@@ -112,7 +112,6 @@ export const useManagePosition = ({
     collateralChange,
     debtChange,
     collateralAmount,
-    collateral.decimals,
     collateral.tokenAddress,
     accountId,
     poolId,

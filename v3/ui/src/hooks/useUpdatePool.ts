@@ -1,4 +1,4 @@
-import { parseUnits } from '../utils/helpers';
+import { parseUnits } from '@snx-v3/format';
 import { useMemo } from 'react';
 import { contracts } from '../utils/constants';
 import { CollateralType } from '../utils/types';
@@ -22,7 +22,7 @@ export const useUpdatePool = (
   const calls: MulticallCall[] = useMemo(() => {
     if (!snxProxy || position.poolId === newPoolId) return [];
 
-    const amountBN = parseUnits(amount, position.collateral.decimals);
+    const amountBN = parseUnits(amount);
     return [
       {
         contract: snxProxy.contract,
@@ -52,7 +52,6 @@ export const useUpdatePool = (
     newPoolId,
     position.accountId,
     position.collateral.tokenAddress,
-    position.collateral.decimals,
     position.poolId,
     snxProxy,
   ]);

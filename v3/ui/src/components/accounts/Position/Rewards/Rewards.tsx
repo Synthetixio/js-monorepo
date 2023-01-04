@@ -1,6 +1,6 @@
 import { Box, Text, Table, Thead, Tbody, Tr, Th, Spinner } from '@chakra-ui/react';
 import { FC } from 'react';
-import { useGetRewards } from '../../../../hooks/useRewards';
+import { useRewards } from '../../../../hooks/useRewards';
 import { CollateralType } from '../../../../utils/types';
 import { RewardsDistributorTitle } from './RewardsDistributorTitle';
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const Rewards: FC<Props> = ({ poolId, collateral, accountId }) => {
-  const { data: rewards, isLoading, refetch } = useGetRewards(accountId, poolId, collateral);
+  const { data: rewards, isLoading, refetch } = useRewards({ accountId, poolId, collateral });
 
   if (isLoading) return <Spinner />;
 

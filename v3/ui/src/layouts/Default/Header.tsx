@@ -35,7 +35,7 @@ import { NetworkController } from '../../components/NetworkController';
 import { useEffect } from 'react';
 import { accountsState } from '../../utils/state';
 import { useRecoilState } from 'recoil';
-import { prettyString } from '../../utils/helpers';
+import { prettyString } from '@snx-v3/format';
 
 const tradeContent = () => {
   return (

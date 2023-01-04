@@ -1,7 +1,7 @@
 import { poolsData } from '../../../utils/constants';
 import { useSynthetixRead } from '../../../hooks/useDeploymentRead';
 import EditPosition from '../EditPosition';
-import { parseUnits } from '../../../utils/helpers';
+import { parseUnits } from '@snx-v3/format';
 import { Balance } from './Balance';
 import CollateralTypeSelector from './CollateralTypeSelector';
 import { EditIcon, InfoOutlineIcon, LockIcon } from '@chakra-ui/icons';
@@ -145,9 +145,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
                 {...register('amount', {
                   validate: {
                     insufficientBalance: (v) => {
-                      const amountBN = Boolean(v)
-                        ? parseUnits(v, selectedCollateralType.decimals)
-                        : BigNumber.from(0);
+                      const amountBN = Boolean(v) ? parseUnits(v) : BigNumber.from(0);
                       return balanceData && balanceData.value.gte(amountBN);
                     },
                     nonZero: (v) => Boolean(v) && v !== '0',
@@ -197,7 +195,6 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
               <Box mr="auto">
                 <Balance
                   balance={balanceData?.value}
-                  decimals={selectedCollateralType.decimals}
                   symbol={selectedCollateralType.symbol}
                   onMax={(balance) => setValue('amount', balance)}
                   address={selectedCollateralType.tokenAddress}

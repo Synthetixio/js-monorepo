@@ -9,7 +9,6 @@ export type CollateralType = {
   oracleNodeId: string;
   tokenAddress: `0x${string}`;
   symbol: string;
-  decimals: number;
   price?: BigNumber;
   logo: string;
 };

@@ -1,7 +1,7 @@
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { Box, Flex, Grid, GridItem, Heading, Skeleton, Text, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
-import { formatValue } from '../../../utils/helpers';
+import { formatValue } from '@snx-v3/format';
 import { BigNumber } from 'ethers';
 import { currency } from '../../../utils/currency';
 import { CollateralType } from '../../../utils/types';
