@@ -7,15 +7,13 @@ import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
 import { formatValue } from '../../utils/helpers';
 
 const calculateTvl = (vaultCollaterals: ReturnType<typeof useVaultCollaterals>['data']) => {
-  if (!vaultCollaterals) return;
-  return vaultCollaterals.reduce(
-    (acc, { value, amount }) => {
-      acc.value = acc.value.add(value);
-      acc.amount = acc.amount.add(amount);
-      return acc;
-    },
-    { value: wei(0), amount: wei(0) }
-  );
+  const zeroValues = { value: wei(0), amount: wei(0) };
+  if (!vaultCollaterals) return zeroValues;
+  return vaultCollaterals.reduce((acc, { value, amount }) => {
+    acc.value = acc.value.add(value);
+    acc.amount = acc.amount.add(amount);
+    return acc;
+  }, zeroValues);
 };
 export const CollateralSectionUi: FC<{
   vaultCollaterals: ReturnType<typeof useVaultCollaterals>['data'];
@@ -39,7 +37,7 @@ export const CollateralSectionUi: FC<{
           TOTAL POOL TVL
         </Text>
         <Text fontWeight={700} fontSize="2xl" color="white">
-          {tvl?.value ? formatNumberToUsd(tvl.value.toNumber()) : 0}
+          {formatNumberToUsd(tvl.value.toNumber())}
         </Text>
       </Box>
       <Flex>
