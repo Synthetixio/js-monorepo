@@ -40,7 +40,12 @@ export const useLiquidityPosition = ({
   return useQuery({
     queryKey: [
       'LiquidityPosition',
-      { collateralAddress: collateral.tokenAddress, poolId, accountId },
+      {
+        collateralAddress: collateral.tokenAddress,
+        poolId,
+        accountId,
+        CoreProxy: CoreProxy?.address,
+      },
     ],
     queryFn: async () => {
       if (!CoreProxy || !accountId || !poolId) throw Error('Query should not be enabled');
