@@ -2,7 +2,6 @@ import { Box, Button, RadioGroup } from '@chakra-ui/react';
 import { usePools } from '@snx-v3/usePools';
 import { useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { poolsData } from '../../../utils/constants';
 import DepositrOption from './DepositorOption';
 
 type PropsType = {
@@ -28,14 +27,13 @@ export default function EditPosition({ onClose }: PropsType) {
           }}
           value={selectedPool || poolValue}
         >
-          {pools.map((option) => {
-            const { name } = poolsData[option];
+          {pools?.map((pool) => {
             return (
               <DepositrOption
                 checked={selectedPool ? selectedPool : poolValue}
-                name={name}
-                value={option}
-                key={option}
+                name={pool.name}
+                value={pool.id}
+                key={pool.id}
               />
             );
           })}
