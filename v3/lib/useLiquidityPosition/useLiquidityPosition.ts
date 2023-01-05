@@ -11,7 +11,7 @@ const PositionCollateralSchema = z.object({
 });
 const DebtSchema = ZodBigNumber.transform((x) => wei(x));
 
-const selectData = ({
+export const selectPosition = ({
   collateral,
   debt,
 }: {
@@ -84,7 +84,7 @@ export const useLiquidityPosition = ({
       if (!CoreProxy || !accountId || !poolId) throw Error('Query should not be enabled');
       return loadPosition({ CoreProxy, accountId, poolId, tokenAddress: collateral.tokenAddress });
     },
-    select: selectData,
+    select: selectPosition,
     enabled: Boolean(CoreProxy && poolId && accountId),
   });
 };
