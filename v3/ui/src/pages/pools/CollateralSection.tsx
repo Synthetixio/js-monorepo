@@ -91,7 +91,7 @@ export const CollateralSectionUi: FC<{
   );
 };
 export const CollateralSection = () => {
-  const { id } = useParams();
-  const { data: vaultCollaterals } = useVaultCollaterals(id ? parseFloat(id) : undefined);
-  return <CollateralSectionUi vaultCollaterals={vaultCollaterals} />;
+  const { poolId, id: accountId } = useParams();
+  const { data: vaultCollaterals } = useVaultCollaterals(poolId ? parseFloat(poolId) : undefined);
+
 };

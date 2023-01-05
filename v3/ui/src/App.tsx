@@ -39,9 +39,10 @@ export const Synthetix: FC = () => {
           <Route path="/accounts/:id/settings" element={<Settings />} />
           <Route path="/accounts/:id" element={<Account />} />
           <Route path="/accounts/create" element={<CreateAccount />} />
+          <Route path="/accounts/:id/pools/:poolId" element={<Pool />} />
+          <Route path="/pools/:poolId" element={<Pool />} />
           <Route path="/markets/create" element={<CreateMarket />} />
           <Route path="/markets/:address" element={<Market />} />
-          <Route path="/pools/:id" element={<Pool />} />
           <Route path="/teleporter" element={<Teleporter />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFoundPage />} />

@@ -51,7 +51,7 @@ export const Pool: FC<Props> = ({
           </Heading>
           <Text fontSize="sm">
             <span style={{ opacity: 0.8 }}>Pool #{poolId}</span>
-            <RouterLink to={`/pools/${poolId}`}>
+            <RouterLink to={`/accounts/${accountId}/pools/${poolId}`}>
               <Link color="cyan.500" ml="1" display="inline-block" transform="translateY(-2px)">
                 <ExternalLinkIcon />
               </Link>

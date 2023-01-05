@@ -18,7 +18,7 @@ export const PoolHeaderUi = ({ poolName, poolId }: { poolName?: string; poolId?:
 };
 
 export const PoolHeader = () => {
-  const { id } = useParams();
-  const { data: poolData } = useGetPoolData(id);
+  const { poolId } = useParams();
+  const { data: poolData } = useGetPoolData(poolId);
   return <PoolHeaderUi poolId={poolData?.id} poolName={poolData?.name} />;
 };
