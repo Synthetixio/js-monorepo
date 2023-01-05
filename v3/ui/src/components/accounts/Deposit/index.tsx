@@ -29,18 +29,13 @@ import { useDeposit } from '../../../hooks/useDeposit';
 import { useCollateralTypes, CollateralType } from '@snx-v3/useCollateralTypes';
 import { LiquidityPositionsById } from '@snx-v3/useLiquidityPositions';
 import { usePools } from '@snx-v3/usePools';
+import { usePreferredPool } from '@snx-v3/usePreferredPool';
 
 type FormType = {
   collateralType: CollateralType;
   amount: string;
   poolId: string;
 };
-
-interface Props {
-  accountId?: string;
-  liquidityPositions?: LiquidityPositionsById;
-  refetch?: () => void;
-}
 
 function ConnectWallet() {
   const { openConnectModal } = useConnectModal();
@@ -51,12 +46,16 @@ function ConnectWallet() {
   );
 }
 
-export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
+export const DepositForm: FC<{
+  accountId?: string;
+  liquidityPositions?: LiquidityPositionsById;
+  refetch?: () => void;
+  preferredPoolId: string;
+  collateralTypes: CollateralType[];
+}> = ({ accountId, preferredPoolId, collateralTypes, liquidityPositions = {}, refetch }) => {
   const { data: pools } = usePools();
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
-  const { data: collateralTypes } = useCollateralTypes();
-  const preferredPoolId = pools?.[0].id || '1';
 
   // on loading dropdown and token amount maybe use https://chakra-ui.com/docs/components/feedback/skeleton
 
@@ -207,14 +206,25 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
   );
 };
 
-export const Deposit: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
+export const Deposit: FC<{
+  accountId?: string;
+  liquidityPositions: LiquidityPositionsById;
+  refetch: () => void;
+}> = ({ accountId, liquidityPositions = {}, refetch }) => {
   const { data: collateralTypes } = useCollateralTypes();
+  const { data: preferredPool } = usePreferredPool();
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
   return (
     <>
-      {collateralTypes && collateralTypes.length > 0 ? (
-        <DepositForm {...{ accountId, liquidityPositions, refetch }} />
+      {collateralTypes && collateralTypes.length > 0 && preferredPool ? (
+        <DepositForm
+          accountId={accountId}
+          liquidityPositions={liquidityPositions}
+          refetch={refetch}
+          preferredPoolId={preferredPool.id}
+          collateralTypes={collateralTypes}
+        />
       ) : null}
       {collateralTypes?.length === 0 && !hasWalletConnected ? (
         <Box textAlign="center">

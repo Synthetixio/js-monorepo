@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { CoreProxyContractType, useCoreProxy } from '@snx-v3/useCoreProxy';
 import { z } from 'zod';
 import { ZodBigNumber } from '@snx-v3/zod';
+import { usePreferredPool } from '@snx-v3/usePreferredPool';
 
 const PoolIdsSchema = z.array(ZodBigNumber.transform((x) => x.toString()));
 const PoolSchema = z.object({
@@ -27,20 +28,18 @@ const loadPoolNames = async ({
 };
 export const usePools = () => {
   const { data: CoreProxyContract } = useCoreProxy();
+  const { data: preferredPool } = usePreferredPool();
   return useQuery({
-    queryKey: [{ CoreProxyContract: CoreProxyContract?.address }, 'pools'],
+    queryKey: [{ CoreProxyContract: CoreProxyContract?.address, preferredPool }, 'pools'],
     queryFn: async () => {
-      if (!CoreProxyContract) throw new Error('CoreProxy');
-      const [preferredPool, approvedPools] = await Promise.all([
-        CoreProxyContract.getPreferredPool(),
-        CoreProxyContract.getApprovedPools(),
-      ]);
-      const poolIds = [preferredPool].concat(approvedPools.filter((id) => !id.eq(preferredPool)));
-      return await loadPoolNames({
-        CoreProxyContract: CoreProxyContract,
-        poolIds: PoolIdsSchema.parse(poolIds),
+      if (!CoreProxyContract || !preferredPool) throw new Error('Query should not be enabled');
+      const approvedPoolIds = await CoreProxyContract.getApprovedPools();
+      const approvedPools = await loadPoolNames({
+        CoreProxyContract,
+        poolIds: PoolIdsSchema.parse(approvedPoolIds),
       });
+      return [preferredPool].concat(approvedPools.filter(({ id }) => id !== preferredPool.id));
     },
-    enabled: Boolean(CoreProxyContract),
+    enabled: Boolean(CoreProxyContract && preferredPool),
   });
 };
