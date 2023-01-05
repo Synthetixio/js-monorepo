@@ -22,3 +22,10 @@ export function useNetwork() {
     name: provider.network.name,
   };
 }
+
+export function useAccount(): { address: string } {
+  const account = wagmi.useAccount();
+  return {
+    address: account.address as string,
+  };
+}

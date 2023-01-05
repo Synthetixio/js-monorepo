@@ -1,23 +1,18 @@
 import { Container, Flex } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
 import CreateAccount from '../components/accounts/CreateAccount';
-import { accountsState } from '../utils/state';
-import { useNavigate } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
+import { useAccounts } from '@snx-v3/useAccounts';
 
 export function Home() {
   const navigate = useNavigate();
-  const [
-    {
-      accounts: [account],
-    },
-  ] = useRecoilState(accountsState);
+  const { data: accounts } = useAccounts();
 
   useEffect(() => {
-    if (account) {
-      navigate({ pathname: `/accounts/${account}` });
+    if (accounts && accounts.length > 0) {
+      navigate(generatePath('/accounts/:id', { id: accounts[0] }));
     }
-  }, [account, navigate]);
+  }, [accounts, navigate]);
 
   return (
     <Flex

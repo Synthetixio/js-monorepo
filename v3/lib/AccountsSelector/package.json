@@ -1,0 +1,13 @@
+{
+  "name": "@snx-v3/AccountsSelector",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.9",
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v3/format": "workspace:*",
+    "@snx-v3/useAccounts": "workspace:*",
+    "react-router-dom": "^6.3.0"
+  }
+}

@@ -1,28 +1,19 @@
 import { useToast } from '@chakra-ui/react';
 import { CallOverrides } from 'ethers';
 import { parseUnits } from '@snx-v3/format';
+import { useAccounts } from '@snx-v3/useAccounts';
+import type { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
 import { contracts } from '../utils/constants';
-import { accountsState, transactionState } from '../utils/state';
-import { CollateralType, LiquidityPositionType } from '../utils/types';
+import { transactionState } from '../utils/state';
+import { LiquidityPositionType } from '../utils/types';
 import { useApprove } from './useApprove';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
 import { useWrapEth } from './useWrapEth';
-
-interface Props {
-  accountId?: string;
-  liquidityPositions: Record<string, LiquidityPositionType>;
-  amount: string;
-  selectedCollateralType: CollateralType;
-  selectedPoolId: string;
-  poolId?: string;
-  isNativeCurrency: boolean;
-  onSuccess: () => void;
-}
 
 export const useDeposit = ({
   accountId,
@@ -33,7 +24,16 @@ export const useDeposit = ({
   isNativeCurrency,
   poolId,
   onSuccess,
-}: Props) => {
+}: {
+  accountId?: string;
+  liquidityPositions: Record<string, LiquidityPositionType>;
+  amount: string;
+  selectedCollateralType: CollateralType;
+  selectedPoolId: string;
+  poolId?: string;
+  isNativeCurrency: boolean;
+  onSuccess: () => void;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ export const useDeposit = ({
   });
 
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
-  const [{ refetchAccounts }] = useRecoilState(accountsState);
+  const { refetch: refetchAccounts } = useAccounts();
 
   const amountBN =
     Boolean(amount && selectedCollateralType) && Number(amount) > 0
@@ -137,7 +137,7 @@ export const useDeposit = ({
     onSuccess: async () => {
       toast.closeAll();
       onSuccess();
-      await Promise.all([refetchAccounts!({ cancelRefetch: Boolean(accountId) })]);
+      await refetchAccounts();
       if (!Boolean(accountId)) {
         navigate(
           `/accounts/${newAccountId}/positions/${selectedCollateralType.symbol}/${selectedPoolId}`

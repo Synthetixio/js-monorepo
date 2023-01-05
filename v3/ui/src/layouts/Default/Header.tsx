@@ -33,11 +33,11 @@ import {
 import { Link as RouterLink, useLocation, useParams } from 'react-router-dom';
 import { NetworkController } from '../../components/NetworkController';
 import { useEffect } from 'react';
-import { accountsState } from '../../utils/state';
-import { useRecoilState } from 'recoil';
 import { prettyString } from '@snx-v3/format';
+import { useAccounts } from '@snx-v3/useAccounts';
+import { AccountsSelector } from '@snx-v3/AccountsSelector';
 
-const tradeContent = () => {
+function ExternalLinks() {
   return (
     <>
       <a href="https://kwenta.eth.limo" target="_blank" rel="noreferrer">
@@ -69,13 +69,13 @@ const tradeContent = () => {
       </a>
     </>
   );
-};
+}
 
 export default function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
   const { id } = useParams();
-  const [{ accounts: userAccounts }] = useRecoilState(accountsState);
+  const { data: accounts = [] } = useAccounts();
 
   useEffect(() => {
     onClose();
@@ -146,69 +146,16 @@ export default function Header() {
                   borderRadius="md"
                   p="5"
                 >
-                  {tradeContent()}
+                  <ExternalLinks />
                 </PopoverBody>
               </PopoverContent>
             </Popover>
           </Box>
-          <Spacer />
-          {id && (
-            <Box display={['none', 'none', 'inline-block']}>
-              <Menu>
-                <MenuButton
-                  size="sm"
-                  as={Button}
-                  variant="outline"
-                  rightIcon={<ChevronDownIcon />}
-                  w="100%"
-                  maxW="180px"
-                >
-                  {id ? `Account #${prettyString(id, 3, 3)}` : 'Create Account'}
-                </MenuButton>
-                <MenuList fontSize="xs" px="2" bg="black" border="1px solid rgba(255,255,255,0.33)">
-                  {userAccounts.map((account) => {
-                    const isCurrentAccount = id === account.toString();
-                    const menuItem = (
-                      <MenuItem
-                        key={account}
-                        _hover={{ bg: 'whiteAlpha.200' }}
-                        _focus={{ bg: 'whiteAlpha.200' }}
-                        _active={{ bg: 'whiteAlpha.200' }}
-                      >
-                        <Flex width="100%" alignItems="center">
-                          {isCurrentAccount && <CheckIcon marginRight={1} />}
-                          {account}
-                        </Flex>
-                      </MenuItem>
-                    );
 
-                    return isCurrentAccount ? (
-                      menuItem
-                    ) : (
-                      <RouterLink key={account} to={`/accounts/${account}`}>
-                        {menuItem}
-                      </RouterLink>
-                    );
-                  })}
-                  <MenuItem
-                    _hover={{ bg: 'whiteAlpha.200' }}
-                    _focus={{ bg: 'whiteAlpha.200' }}
-                    _active={{ bg: 'whiteAlpha.200' }}
-                  >
-                    <Link
-                      as={RouterLink}
-                      to="/accounts/create"
-                      _focus={{ boxShadow: 'none' }}
-                      _hover={{ textDecoration: 'none' }}
-                      fontWeight="semibold"
-                    >
-                      Create new account
-                    </Link>
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            </Box>
-          )}
+          <Spacer />
+
+          <AccountsSelector />
+
           <Box>
             <NetworkController />
           </Box>
@@ -248,7 +195,7 @@ export default function Header() {
                   {id ? `Account #${prettyString(id, 3, 3)}` : 'Create Account'}
                 </MenuButton>
                 <MenuList fontSize="xs" px="2" bg="black" border="1px solid rgba(255,255,255,0.33)">
-                  {userAccounts.map((account) => {
+                  {accounts.map((account) => {
                     const isCurrentAccount = id === account.toString();
                     const menuItem = (
                       <MenuItem
@@ -326,7 +273,7 @@ export default function Header() {
             >
               Trade
             </Text>
-            {tradeContent()}
+            <ExternalLinks />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
