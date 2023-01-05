@@ -62,10 +62,7 @@ export const useLiquidityPosition = ({
         'getPositionCollateral',
         bytesCollateral
       );
-      const decodedDebt = CoreProxy.interface.decodeFunctionResult(
-        'getPositionDebt',
-        bytesCollateral
-      )[0];
+      const decodedDebt = CoreProxy.interface.decodeFunctionResult('getPositionDebt', bytesDebt)[0];
 
       return {
         debt: DebtSchema.parse(decodedDebt),
