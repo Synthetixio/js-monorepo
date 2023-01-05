@@ -7788,12 +7788,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useCollateralTypes@workspace:v3/lib/useCollateralTypes"
   dependencies:
-    "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/zod": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.7.2
     react: ^18.2.0
     wagmi: ^0.9.6
+    zod: ^3.20.2
   languageName: unknown
   linkType: soft
 
@@ -7832,6 +7834,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/useLiquidityPositions@workspace:*, @snx-v3/useLiquidityPositions@workspace:v3/lib/useLiquidityPositions":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useLiquidityPositions@workspace:v3/lib/useLiquidityPositions"
+  dependencies:
+    "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/useLiquidityPosition": "workspace:*"
+    "@snx-v3/usePools": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/useMarketNamesById@workspace:*, @snx-v3/useMarketNamesById@workspace:v3/lib/useMarketNamesById":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useMarketNamesById@workspace:v3/lib/useMarketNamesById"
@@ -7847,10 +7862,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/usePools@workspace:v3/lib/usePools"
   dependencies:
-    "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/zod": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
+    zod: ^3.20.2
   languageName: unknown
   linkType: soft
 
@@ -9972,6 +9988,7 @@ __metadata:
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/useLiquidityPosition": "workspace:*"
+    "@snx-v3/useLiquidityPositions": "workspace:*"
     "@snx-v3/useMarketNamesById": "workspace:*"
     "@snx-v3/usePools": "workspace:*"
     "@snx-v3/useVaultCollaterals": "workspace:*"
