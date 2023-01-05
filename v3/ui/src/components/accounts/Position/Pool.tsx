@@ -39,7 +39,7 @@ export const Pool: FC<Props> = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data: pools } = usePools();
-  const pool = pools?.find((pool) => pool.id == poolId);
+  const pool = pools?.find((pool) => pool.id === poolId);
   return (
     <Box my="4">
       <Flex mb="6">
