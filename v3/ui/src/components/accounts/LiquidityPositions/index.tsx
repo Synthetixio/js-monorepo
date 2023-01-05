@@ -1,10 +1,10 @@
 import { LiquidityPosition } from './LiquidityPosition';
 import { Box, Heading, Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
-import { LiquidityPositionType } from '../../../utils/types';
 import { FC } from 'react';
+import { LiquidityPositionsById } from '@snx-v3/useLiquidityPositions';
 
 interface Props {
-  positions: Record<string, LiquidityPositionType>;
+  positions: LiquidityPositionsById;
   refetch: () => void;
 }
 
@@ -34,15 +34,9 @@ export const LiquidityPositions: FC<Props> = ({ positions, refetch }) => {
           </Tr>
         </Thead>
         <Tbody>
-          {Object.keys(positions).map((positionId) => {
-            return (
-              <LiquidityPosition
-                key={positionId}
-                position={positions[positionId]}
-                refetch={refetch}
-              />
-            );
-          })}
+          {Object.values(positions).map((position) => (
+            <LiquidityPosition key={position.id} position={position} refetch={refetch} />
+          ))}
         </Tbody>
       </Table>
     </Box>

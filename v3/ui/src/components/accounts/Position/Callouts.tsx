@@ -1,8 +1,6 @@
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { Box, Flex, Grid, GridItem, Heading, Skeleton, Text, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
-import { formatValue } from '@snx-v3/format';
-import { BigNumber } from 'ethers';
 import { currency } from '../../../utils/currency';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Amount } from '../../shared/Amount/Amount';
@@ -75,10 +73,7 @@ export const DepositingStats: FC<Props> = ({
         </Skeleton>
         <Text opacity="0.6" fontSize="sm">
           Liquidation Ratio{' '}
-          <Amount
-            value={formatValue(collateral.liquidationRatioD18.mul(BigNumber.from(100)), 18)}
-            suffix="% "
-          />
+          <Amount value={collateral.liquidationRatioD18.mul(100).toNumber()} suffix="% " />
         </Text>
       </GridItem>
       <GridItem mb="3">
