@@ -45,7 +45,7 @@ export const Balance: FC<Props> = ({ balance, symbol, address, onMax }) => {
           variant="outline"
           onClick={(e) => {
             e.preventDefault();
-            onMax(formattedBalance);
+            onMax(formattedBalance.toString());
           }}
         >
           Use Max
