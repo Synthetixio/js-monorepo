@@ -21,7 +21,8 @@ const loadPoolNames = async ({
   const multicallResult = await CoreProxyContract.callStatic.multicall(calls);
   return multicallResult.map((bytes, i) => {
     const decodedName = CoreProxyContract.interface.decodeFunctionResult('getPoolName', bytes)[0];
-    return PoolSchema.parse({ id: poolIds[i], name: decodedName });
+
+    return PoolSchema.parse({ id: poolIds[i], name: decodedName || undefined });
   });
 };
 export const usePools = () => {
