@@ -1,6 +1,6 @@
+// TODO use wei instead of big
 import Big from 'big.js';
 import { useMemo } from 'react';
-import { formatValue } from '@snx-v3/format';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 
 export const useValidatePosition = ({
@@ -22,7 +22,7 @@ export const useValidatePosition = ({
   const newCollateralAmount = collateralAmount + collateralChange;
   const cVal = new Big(collateralValue).div(collateralAmount || 1);
   const newCRatio = newDebt ? cVal.mul(newCollateralAmount).mul(100).div(newDebt).toNumber() : 0;
-  const targetCRatio = formatValue(collateral.issuanceRatioD18 || 0, 18) * 100;
+  const targetCRatio = collateral.issuanceRatioD18.mul(100).toNumber();
 
   const maxDebt = useMemo(
     () =>

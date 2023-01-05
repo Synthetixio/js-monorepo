@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FC } from 'react';
 import { wei } from '@synthetixio/wei';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
-import { formatValue } from '@snx-v3/format';
 import { AccountVaultCollateral } from './AccountVaultCollateral';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 
@@ -66,7 +65,7 @@ export const CollateralSectionUi: FC<{
             </Text>
             <Text fontSize="xs" color="gray.400" fontWeight="400">
               {vaultCollateral.collateralType.price
-                ? formatNumberToUsd(formatValue(vaultCollateral.collateralType.price))
+                ? formatNumberToUsd(vaultCollateral.collateralType.price.toNumber())
                 : '-'}
             </Text>
             <Text mt={2} fontSize="sm" fontWeight="700" color="gray.500">

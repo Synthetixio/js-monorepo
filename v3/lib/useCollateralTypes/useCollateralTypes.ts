@@ -1,63 +1,81 @@
-/* eslint-disable no-console */
-import { BigNumber, ethers } from 'ethers';
-import { erc20ABI } from 'wagmi';
-import { useProvider, useNetwork } from '@snx-v3/useBlockchain';
+import { utils } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
 import { useCoreProxy, CoreProxyContractType } from '@snx-v3/useCoreProxy';
+import { z } from 'zod';
+import { ZodBigNumber } from '@snx-v3/zod';
+import { wei } from '@synthetixio/wei';
+import { useExternalMulticall, MulticallContractType } from '../useExternalMulticall';
 
-export type CollateralType = {
-  depositingEnabled: boolean;
-  issuanceRatioD18: BigNumber;
-  liquidationRatioD18: BigNumber;
-  liquidationRewardD18: BigNumber;
-  minDelegationD18: BigNumber;
-  oracleNodeId: string;
-  tokenAddress: `0x${string}`;
-  symbol: string;
-  price?: BigNumber;
-  logo: string;
-};
-async function loadCollateralTypes({
+const CollateralConfigurationSchema = z.object({
+  depositingEnabled: z.boolean(),
+  issuanceRatioD18: ZodBigNumber.transform((x) => wei(x)),
+  liquidationRatioD18: ZodBigNumber.transform((x) => wei(x)),
+  liquidationRewardD18: ZodBigNumber.transform((x) => wei(x)),
+  oracleNodeId: z.string(),
+  tokenAddress: z.string().startsWith('0x'), // As of current version in zod this will be a string: https://github.com/colinhacks/zod/issues/1747
+  minDelegationD18: ZodBigNumber.transform((x) => wei(x)),
+});
+const CollateralTypeSchema = CollateralConfigurationSchema.extend({
+  symbol: z.string(),
+  price: ZodBigNumber.transform((x) => wei(x)),
+  logo: z.string(),
+});
+
+export type CollateralType = z.infer<typeof CollateralTypeSchema>;
+
+const SymbolSchema = z.string();
+const ERC20Interface = new utils.Interface(['function symbol() view returns (string)']);
+
+async function loadSymbols({
+  MulticallContract,
+  tokenConfigs,
+}: {
+  MulticallContract: MulticallContractType;
+  tokenConfigs: z.infer<typeof CollateralConfigurationSchema>[];
+}) {
+  const calls = tokenConfigs.map((tokenConfig) => ({
+    target: tokenConfig.tokenAddress,
+    callData: ERC20Interface.encodeFunctionData('symbol'),
+  }));
+  const multicallResult = await MulticallContract.callStatic.aggregate(calls);
+  return multicallResult.returnData.map((bytes) =>
+    SymbolSchema.parse(ERC20Interface.decodeFunctionResult('symbol', bytes)[0])
+  );
+}
+const PriceSchema = ZodBigNumber.transform((x) => wei(x));
+async function loadPrices({
   CoreProxyContract,
-  provider,
+  tokenConfigs,
 }: {
   CoreProxyContract: CoreProxyContractType;
-  provider: ReturnType<typeof useProvider>;
+  tokenConfigs: z.infer<typeof CollateralConfigurationSchema>[];
+}) {
+  const calls = tokenConfigs.map((x) =>
+    CoreProxyContract.interface.encodeFunctionData('getCollateralPrice', [x.tokenAddress])
+  );
+  const multicallResult = await CoreProxyContract.callStatic.multicall(calls);
+  return multicallResult.map((bytes) => {
+    const decoded = CoreProxyContract.interface.decodeFunctionResult(
+      'getCollateralPrice',
+      bytes
+    )[0];
+    return PriceSchema.parse(decoded);
+  });
+}
+
+async function loadCollateralTypes({
+  CoreProxyContract,
+  MulticallContract,
+}: {
+  CoreProxyContract: CoreProxyContractType;
+  MulticallContract: MulticallContractType;
 }): Promise<CollateralType[]> {
-  // typeschain messes up the type for when an array is returned from a method
-  const tokenConfigs = (await CoreProxyContract.getCollateralConfigurations(true)) as {
-    depositingEnabled: boolean;
-    issuanceRatioD18: BigNumber;
-    liquidationRatioD18: BigNumber;
-    liquidationRewardD18: BigNumber;
-    oracleNodeId: string;
-    tokenAddress: `0x${string}`;
-    minDelegationD18: BigNumber;
-  }[];
-  // TODO convert to multicall
+  const tokenConfigsRaw = (await CoreProxyContract.getCollateralConfigurations(true)) as object[];
+  const tokenConfigs = tokenConfigsRaw.map((x) => CollateralConfigurationSchema.parse({ ...x }));
+
   const [symbols, prices] = await Promise.all([
-    Promise.all(
-      tokenConfigs.map(async ({ tokenAddress }) => {
-        try {
-          const TokenContract = new ethers.Contract(tokenAddress, erc20ABI, provider);
-          return await TokenContract.symbol();
-        } catch (e) {
-          console.error(e);
-          throw Error('We expect symbol to be defined');
-        }
-      })
-    ),
-    Promise.all(
-      tokenConfigs.map(async ({ tokenAddress }) => {
-        try {
-          return await CoreProxyContract.getCollateralPrice(tokenAddress);
-        } catch (e) {
-          console.error(e);
-        }
-        // Never fail, price can be null
-        return undefined;
-      })
-    ),
+    loadSymbols({ MulticallContract, tokenConfigs }),
+    loadPrices({ CoreProxyContract, tokenConfigs }),
   ]);
 
   return tokenConfigs.map((config, i) => ({
@@ -76,19 +94,21 @@ async function loadCollateralTypes({
 }
 
 export function useCollateralTypes() {
-  const provider = useProvider();
-  const network = useNetwork();
   const { data: CoreProxyContract } = useCoreProxy();
+  const { data: MulticallContract } = useExternalMulticall();
   return useQuery({
-    queryKey: [network.name, 'collateralTypes'],
+    queryKey: [
+      { Multicall: MulticallContract?.address, CoreProxy: CoreProxyContract?.address },
+      'collateralTypes',
+    ],
     queryFn: async () => {
-      if (!CoreProxyContract) {
-        throw Error('Query should not be enabled when CoreProxyContract missing');
+      if (!CoreProxyContract || !MulticallContract) {
+        throw Error('Query should not be enabled when contracts missing');
       }
-      return loadCollateralTypes({ CoreProxyContract, provider });
+      return loadCollateralTypes({ CoreProxyContract, MulticallContract });
     },
     placeholderData: [],
-    enabled: Boolean(CoreProxyContract && network.name),
+    enabled: Boolean(CoreProxyContract && MulticallContract),
   });
 }
 

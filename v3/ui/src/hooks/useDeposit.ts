@@ -9,11 +9,11 @@ import { useSetRecoilState } from 'recoil';
 import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
 import { contracts } from '../utils/constants';
 import { transactionState } from '../utils/state';
-import { LiquidityPositionType } from '../utils/types';
 import { useApprove } from './useApprove';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
 import { useWrapEth } from './useWrapEth';
+import { LiquidityPositionsById } from '@snx-v3/useLiquidityPositions';
 
 export const useDeposit = ({
   accountId,
@@ -26,7 +26,7 @@ export const useDeposit = ({
   onSuccess,
 }: {
   accountId?: string;
-  liquidityPositions: Record<string, LiquidityPositionType>;
+  liquidityPositions: LiquidityPositionsById;
   amount: string;
   selectedCollateralType: CollateralType;
   selectedPoolId: string;
@@ -59,11 +59,11 @@ export const useDeposit = ({
       return [];
     }
     const id = accountId ?? newAccountId;
-    const key = `${selectedPoolId}-${selectedCollateralType.symbol}`;
+    const key = `${selectedPoolId}-${selectedCollateralType.symbol}` as const;
     const currentLiquidityPosition = liquidityPositions[key];
 
     const amountToDelegate = Boolean(accountId)
-      ? (currentLiquidityPosition?.collateralAmount || parseUnits(0)).add(amountBN)
+      ? (currentLiquidityPosition?.collateralAmount.toBN() || parseUnits(0)).add(amountBN)
       : amountBN;
 
     if (!snxProxy) return [];

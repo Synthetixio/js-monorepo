@@ -19,7 +19,6 @@ import { usePools } from '@snx-v3/usePools';
 import { FC, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useUpdatePool } from '../../../hooks/useUpdatePool';
-import { poolsData } from '../../../utils/constants';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 
 interface Props {
@@ -84,25 +83,25 @@ export const PoolDialog: FC<Props> = ({
                 </Heading>
               </Box>
             </Flex>
-            {pools.map((poolId) => (
+            {pools?.map(({ id, name }) => (
               <Flex
-                key={poolId}
+                key={id}
                 alignItems="center"
                 mb="2.5"
                 pb="2.5"
                 borderBottom="1px solid rgba(255,255,255,0.3)"
-                onClick={() => updatePool(poolId)}
+                onClick={() => updatePool(id)}
               >
                 <Box>
-                  <Radio disabled={debt > 0} value={poolId} size="lg" colorScheme="orange" />
+                  <Radio disabled={debt > 0} value={id} size="lg" colorScheme="orange" />
                 </Box>
                 <Box flex="1" pl="3">
                   <Heading size="sm" mb="0.5">
-                    {poolsData[poolId]?.name}
+                    {name}
                   </Heading>
                   <Text fontSize="xs" display="block" color="gray.400">
-                    Pool #{poolId}{' '}
-                    <RouterLink to={`/pools/${poolId}`}>
+                    Pool #{id}{' '}
+                    <RouterLink to={`/pools/${id}`}>
                       <Link
                         color="cyan.500"
                         ml="1"

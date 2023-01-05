@@ -6,15 +6,6 @@ export const contracts = {
   CCIP: 'CCIP',
 };
 
-export const poolsData: Record<string, { name: string }> = {
-  1: {
-    name: 'Spartan Council',
-  },
-  0: {
-    name: 'None',
-  },
-};
-
 export const INFURA_KEY = '23087ce9f88c44d1b1c54fd7c07c65fb';
 
 export const ALCHEMY_KEY_MAPPING: Record<number, string> = {

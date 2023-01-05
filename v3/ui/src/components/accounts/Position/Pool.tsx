@@ -16,9 +16,9 @@ import {
 } from '@chakra-ui/react';
 import { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { poolsData } from '../../../utils/constants';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { PoolDialog } from './PoolDialog';
+import { usePools } from '@snx-v3/usePools';
 
 interface Props {
   accountId: string;
@@ -38,7 +38,8 @@ export const Pool: FC<Props> = ({
   refetch,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const pool = poolsData[poolId.toString()];
+  const { data: pools } = usePools();
+  const pool = pools?.find((pool) => pool.id === poolId);
   return (
     <Box my="4">
       <Flex mb="6">

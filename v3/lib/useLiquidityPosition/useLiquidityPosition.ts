@@ -1,5 +1,5 @@
 import { CollateralType } from '@snx-v3/useCollateralTypes';
-import { useCoreProxy } from '@snx-v3/useCoreProxy';
+import { CoreProxyContractType, useCoreProxy } from '@snx-v3/useCoreProxy';
 import { ZodBigNumber } from '@snx-v3/zod';
 import { wei } from '@synthetixio/wei';
 import { useQuery } from '@tanstack/react-query';
@@ -11,7 +11,7 @@ const PositionCollateralSchema = z.object({
 });
 const DebtSchema = ZodBigNumber.transform((x) => wei(x));
 
-const selectData = ({
+export const selectPosition = ({
   collateral,
   debt,
 }: {
@@ -24,6 +24,39 @@ const selectData = ({
     collateralValue: collateral.value,
     cRatio,
     debt,
+  };
+};
+
+export const loadPosition = async ({
+  CoreProxy,
+  accountId,
+  poolId,
+  tokenAddress,
+}: {
+  CoreProxy: CoreProxyContractType;
+  accountId: string;
+  poolId: string;
+  tokenAddress: string;
+}) => {
+  const calls = [
+    CoreProxy.interface.encodeFunctionData('getPositionCollateral', [
+      accountId,
+      poolId,
+      tokenAddress,
+    ]),
+    CoreProxy.interface.encodeFunctionData('getPositionDebt', [accountId, poolId, tokenAddress]),
+  ];
+
+  const [bytesCollateral, bytesDebt] = await CoreProxy.callStatic.multicall(calls);
+  const decodedCollateral = CoreProxy.interface.decodeFunctionResult(
+    'getPositionCollateral',
+    bytesCollateral
+  );
+  const decodedDebt = CoreProxy.interface.decodeFunctionResult('getPositionDebt', bytesDebt)[0];
+
+  return {
+    debt: DebtSchema.parse(decodedDebt),
+    collateral: PositionCollateralSchema.parse({ ...decodedCollateral }),
   };
 };
 
@@ -49,32 +82,9 @@ export const useLiquidityPosition = ({
     ],
     queryFn: async () => {
       if (!CoreProxy || !accountId || !poolId) throw Error('Query should not be enabled');
-      const calls = [
-        CoreProxy.interface.encodeFunctionData('getPositionCollateral', [
-          accountId,
-          poolId,
-          collateral.tokenAddress,
-        ]),
-        CoreProxy.interface.encodeFunctionData('getPositionDebt', [
-          accountId,
-          poolId,
-          collateral.tokenAddress,
-        ]),
-      ];
-
-      const [bytesCollateral, bytesDebt] = await CoreProxy.callStatic.multicall(calls);
-      const decodedCollateral = CoreProxy.interface.decodeFunctionResult(
-        'getPositionCollateral',
-        bytesCollateral
-      );
-      const decodedDebt = CoreProxy.interface.decodeFunctionResult('getPositionDebt', bytesDebt)[0];
-
-      return {
-        debt: DebtSchema.parse(decodedDebt),
-        collateral: PositionCollateralSchema.parse({ ...decodedCollateral }),
-      };
+      return loadPosition({ CoreProxy, accountId, poolId, tokenAddress: collateral.tokenAddress });
     },
-    select: selectData,
+    select: selectPosition,
     enabled: Boolean(CoreProxy && poolId && accountId),
   });
 };

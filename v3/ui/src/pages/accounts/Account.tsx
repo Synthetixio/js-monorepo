@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import { Deposit } from '../../components/accounts/Deposit';
 import { DepositingNav } from '../../components/accounts/DepositingNav';
 import { LiquidityPositions } from '../../components/accounts/LiquidityPositions';
-import { useLiquidityPositions } from '../../hooks/useLiquidityPositions';
+import { useLiquidityPositions } from '@snx-v3/useLiquidityPositions';
 
 export function Account() {
   const { id: accountId } = useParams();
-  const { data: liquidityPositions, isLoading, refetch } = useLiquidityPositions(accountId || '');
+  const { data: liquidityPositions, isLoading, refetch } = useLiquidityPositions({ accountId });
 
   return (
     <Box>
