@@ -1,14 +1,11 @@
-import { poolsData } from '../../../utils/constants';
-import { useSynthetixRead } from '../../../hooks/useDeploymentRead';
 import EditPosition from '../EditPosition';
 import { parseUnits } from '@snx-v3/format';
 import { Balance } from './Balance';
 import CollateralTypeSelector from './CollateralTypeSelector';
-import { EditIcon, InfoOutlineIcon, LockIcon } from '@chakra-ui/icons';
+import { EditIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
-  IconButton,
   Input,
   Link,
   Modal,
@@ -26,11 +23,12 @@ import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { BigNumber } from 'ethers';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useNetwork } from 'wagmi';
-import { CollateralType, LiquidityPositionType } from '../../../utils/types';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 import { FC } from 'react';
 import { useDeposit } from '../../../hooks/useDeposit';
-import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
+import { useCollateralTypes, CollateralType } from '@snx-v3/useCollateralTypes';
+import { LiquidityPositionsById } from '@snx-v3/useLiquidityPositions';
+import { usePools } from '@snx-v3/usePools';
 
 type FormType = {
   collateralType: CollateralType;
@@ -40,7 +38,7 @@ type FormType = {
 
 interface Props {
   accountId?: string;
-  liquidityPositions?: Record<string, LiquidityPositionType>;
+  liquidityPositions?: LiquidityPositionsById;
   refetch?: () => void;
 }
 
@@ -54,20 +52,19 @@ function ConnectWallet() {
 }
 
 export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, refetch }) => {
+  const { data: pools } = usePools();
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
   const { data: collateralTypes } = useCollateralTypes();
+  const preferredPoolId = pools?.[0].id || '1';
 
-  const { data: poolId } = useSynthetixRead({
-    functionName: 'getPreferredPool',
-  });
   // on loading dropdown and token amount maybe use https://chakra-ui.com/docs/components/feedback/skeleton
 
   const methods = useForm<FormType>({
     mode: 'onChange',
     defaultValues: {
       collateralType: collateralTypes?.[0],
-      poolId: poolId?.toString() ?? '0',
+      poolId: preferredPoolId,
     },
   });
   const { handleSubmit, register, formState, reset, control, setValue } = methods;
@@ -88,19 +85,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
   });
 
   const isNativeCurrency = selectedCollateralType?.symbol === 'ETH';
-
   const balanceData = useTokenBalance(selectedCollateralType?.tokenAddress);
-
-  // add extra step to convert to wrapped token if native (ex. ETH)
-  // if (isNativeCurrency) {
-  //   calls[0].unshift([
-  //     collateralContract!.contract,
-  //     'deposit',
-  //     [],
-  //     { value: amount || 0 },
-  //   ]);
-  //   overrides.value = amount!;
-  // }
 
   const onSuccess = () => {
     reset({
@@ -117,7 +102,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
     amount,
     selectedCollateralType,
     selectedPoolId,
-    poolId: poolId?.toString(),
+    poolId: preferredPoolId,
     isNativeCurrency,
     onSuccess,
   });
@@ -153,19 +138,6 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
                 })}
               />
               <CollateralTypeSelector collateralTypes={collateralTypes || []} />
-              {false && (
-                <Tooltip label="Configure Lock Duration">
-                  <IconButton
-                    ml="3"
-                    bg="blue.900"
-                    color="blue.200"
-                    border="1px solid rgba(255,255,255,0.33)"
-                    size="lg"
-                    aria-label="Configure Depositing Position"
-                    icon={<LockIcon />}
-                  />
-                </Tooltip>
-              )}
               {hasWalletConnected ? (
                 <Button
                   isLoading={multiTxn.status === 'pending' || isLoading}
@@ -175,7 +147,6 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
                   px="8"
                   type="submit"
                 >
-                  {/* @ts-ignore */}
                   {formState.errors.amount?.type === 'insufficientBalance'
                     ? 'Insufficient Balance'
                     : 'Deposit'}
@@ -204,11 +175,7 @@ export const DepositForm: FC<Props> = ({ accountId, liquidityPositions = {}, ref
               {Boolean(accountId) ? (
                 <Text fontSize="xs" ml="auto">
                   Pool:{' '}
-                  {selectedPoolId
-                    ? poolsData[selectedPoolId]
-                      ? poolsData[selectedPoolId]?.name
-                      : 'Unknown Pool'
-                    : 'None'}{' '}
+                  {selectedPoolId ? pools?.find((x) => x.id === selectedPoolId)?.name : 'None'}{' '}
                   <Link color="cyan.500">
                     <EditIcon onClick={onOpenPool} style={{ transform: 'translateY(-2px)' }} />
                   </Link>
