@@ -1,12 +1,11 @@
 import { Box, Text, useDisclosure, useToast } from '@chakra-ui/react';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import ReactFlow, {
   Background,
   useEdgesState,
   addEdge,
   Connection,
   applyNodeChanges,
-  applyEdgeChanges,
   NodeChange,
   EdgeChange,
   MarkerType,
@@ -28,25 +27,29 @@ export const Chart: FC = () => {
   const [nodes, setNodes] = useRecoilState(nodesState);
   const [nodeToUpdate, setNodeToUpdate] = useState<undefined | Node>(undefined);
   const [edges, setEdges] = useEdgesState([]);
+
   const onNodesChange = (changes: NodeChange[]) =>
     setNodes(applyNodeChanges(changes, nodes) as Node[]);
+
   const onEdgesChange = (changes: EdgeChange[]) => {
-    const appliedChanges = applyEdgeChanges(changes, edges);
-    appliedChanges.forEach((updatedEdge) => {
-      setEdges(edges.filter((edge) => edge.id !== updatedEdge.id));
+    if ('id' in changes[0]) {
+      const ids = changes[0].id.split('-');
+      const source = ids[1];
+      const target = ids[2];
+      setEdges(edges.filter((edge) => edge.source !== source));
+
       setNodes((state) => {
-        const removeParent = state.findIndex((node) => node.id === updatedEdge.target);
-        return state.map((node, index) => {
-          if (index === removeParent) {
-            return {
-              ...node,
-              parents: node.parents.filter((parent) => parent !== updatedEdge.source),
-            };
+        return state.map((node) => {
+          if (node.parents.includes(source)) {
+            return { ...node, parents: node.parents.filter((parent) => parent !== source) };
+          }
+          if (node.parents.includes(target)) {
+            return { ...node, parents: node.parents.filter((parent) => parent !== target) };
           }
           return node;
         });
       });
-    });
+    }
   };
 
   const onConnect = (params: Connection) => {
@@ -57,7 +60,7 @@ export const Chart: FC = () => {
         setNodes((state) => {
           const targetNode = state.find((node) => node.id === edge.target);
           return state.map((node) => {
-            if (targetNode) {
+            if (targetNode?.id === node.id) {
               if (targetNode.type === 'reducer' && targetNode.parents.length >= 2) {
                 toast({
                   title: 'Reducer node only can have two inputs',
@@ -83,6 +86,22 @@ export const Chart: FC = () => {
     });
   };
 
+  useEffect(() => {
+    nodes.forEach((node) => {
+      if (node.parents.length) {
+        node.parents.forEach((parent) => {
+          if (!edges.find((edge) => edge.source === parent)) {
+            setEdges((eds) => {
+              return addEdge(
+                { source: parent, target: node.id, sourceHandle: null, targetHandle: null },
+                eds
+              );
+            });
+          }
+        });
+      }
+    });
+  }, [nodes.toString()]);
   return (
     <Box w="100%" h="500px">
       <Text textAlign="center" fontWeight="bold">

@@ -48,14 +48,29 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
     setNodeParents([]);
   };
 
-  const setChainLinkParameters = (value: string, index: number) => {};
-  const setPythParameters = (value: string, index: number) => {};
+  const setChainLinkParameters = (value: string, index: number) => {
+    setNodeParameters((state) => {
+      let newState = JSON.parse(JSON.stringify(state));
+      newState[index] = index >= 1 ? Number(value) : value;
+      return newState;
+    });
+  };
+
+  const setPythParameters = (value: string, index: number) => {
+    setNodeParameters((state) => {
+      state[index] = value;
+      return state;
+    });
+  };
 
   const customFormForOracleType = useMemo(() => {
     if (oracleNodeType === 'reducer') {
       return (
         <Flex flexDir="column" gap="2" py="2" key="reducer">
-          <CheckboxGroup onChange={(event) => setNodeParents(event.map((e) => String(e)))}>
+          <CheckboxGroup
+            onChange={(event) => setNodeParents(event.map((e) => String(e)))}
+            value={[...nodeParents]}
+          >
             <Flex flexWrap="wrap" gap="2">
               {nodes.map((exitingNode) => {
                 if (exitingNode.id !== node?.id) {
@@ -71,6 +86,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
           </CheckboxGroup>
           <Select
             placeholder="Select Operation"
+            value={nodeParameters[0]}
             onChange={(e) => setNodeParameters([e.target.value])}
           >
             {ORACLE_NODE_TYPES.at(4)!.parameters[0].options?.map((operation) => (
@@ -85,7 +101,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
         <Flex flexDir="column" gap="2" py="2" key="chainlink">
           {ORACLE_NODE_TYPES.at(0)?.parameters.map((parameter, index) => (
             <Input
-              placeholder={parameter.name}
+              placeholder={nodeParameters[index] || parameter.name}
               onChange={(e) => setChainLinkParameters(e.target.value, index)}
             />
           ))}
@@ -97,7 +113,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
         <Flex flexDir="column" gap="2" py="2" key="pyth">
           {ORACLE_NODE_TYPES.at(3)!.parameters.map((parameter, index) => (
             <Input
-              placeholder={parameter.name}
+              placeholder={nodeParameters[index] || parameter.name}
               onChange={(e) => setPythParameters(e.target.value, index)}
             />
           ))}
@@ -124,9 +140,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
             <Select
               value={oracleNodeType}
               onChange={(e) => {
-                if (e.target.value) {
-                  setOracleNodeType(e.target.value as OracleNodeTypes);
-                }
+                setOracleNodeType(e.target.value as OracleNodeTypes);
               }}
             >
               {ORACLE_NODE_TYPES.map((type) => (
@@ -195,6 +209,8 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                       .toString()
                       .concat(new Date().getSeconds().toString()),
                     position: { x: 200, y: 100 },
+                    source: '',
+                    target: '',
                   },
                 ]);
                 resetInputs();

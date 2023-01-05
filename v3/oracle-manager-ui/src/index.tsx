@@ -3,7 +3,7 @@ import { createClient, WagmiConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, ToastProvider } from '@chakra-ui/react';
 import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import { theme, Fonts } from '@synthetixio/v3-theme';
 import { RecoilRoot } from 'recoil';
@@ -46,22 +46,24 @@ const root = createRoot(container);
 root.render(
   <RecoilRoot>
     <ChakraProvider theme={theme}>
-      <Fonts />
-      <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider
-          /* @ts-ignore*/
-          styles={rainbowkitStyles}
-          theme={darkTheme({
-            accentColor: 'rgb(49, 130, 206)',
-            accentColorForeground: 'white',
-            borderRadius: 'small',
-            fontStack: 'system',
-          })}
-          chains={chains}
-        >
-          <App />
-        </RainbowKitProvider>
-      </WagmiConfig>
+      <ToastProvider>
+        <Fonts />
+        <WagmiConfig client={wagmiClient}>
+          <RainbowKitProvider
+            /* @ts-ignore*/
+            styles={rainbowkitStyles}
+            theme={darkTheme({
+              accentColor: 'rgb(49, 130, 206)',
+              accentColorForeground: 'white',
+              borderRadius: 'small',
+              fontStack: 'system',
+            })}
+            chains={chains}
+          >
+            <App />
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </ToastProvider>
     </ChakraProvider>
   </RecoilRoot>
 );
