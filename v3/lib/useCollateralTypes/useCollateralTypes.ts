@@ -1,5 +1,4 @@
 import { utils } from 'ethers';
-import { erc20ABI } from 'wagmi';
 import { useQuery } from '@tanstack/react-query';
 import { useCoreProxy, CoreProxyContractType } from '@snx-v3/useCoreProxy';
 import { z } from 'zod';
@@ -25,6 +24,8 @@ const CollateralTypeSchema = CollateralConfigurationSchema.extend({
 export type CollateralType = z.infer<typeof CollateralTypeSchema>;
 
 const SymbolSchema = z.string();
+const ERC20Interface = new utils.Interface(['function symbol() view returns (string)']);
+
 async function loadSymbols({
   MulticallContract,
   tokenConfigs,
@@ -32,7 +33,6 @@ async function loadSymbols({
   MulticallContract: MulticallContractType;
   tokenConfigs: z.infer<typeof CollateralConfigurationSchema>[];
 }) {
-  const ERC20Interface = new utils.Interface(erc20ABI);
   const calls = tokenConfigs.map((tokenConfig) => ({
     target: tokenConfig.tokenAddress,
     callData: ERC20Interface.encodeFunctionData('symbol'),
