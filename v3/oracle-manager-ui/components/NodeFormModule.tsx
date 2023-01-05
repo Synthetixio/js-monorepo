@@ -54,12 +54,16 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
   const customFormForOracleType = useMemo(() => {
     if (oracleNodeType === 'reducer') {
       return (
-        <Flex flexDir="column" gap="2" py="2">
+        <Flex flexDir="column" gap="2" py="2" key="reducer">
           <CheckboxGroup onChange={(event) => setNodeParents(event.map((e) => String(e)))}>
             <Flex flexWrap="wrap" gap="2">
               {nodes.map((exitingNode) => {
                 if (exitingNode.id !== node?.id) {
-                  return <Checkbox value={exitingNode.id}>{exitingNode.data.label}</Checkbox>;
+                  return (
+                    <Checkbox value={exitingNode.id} key={exitingNode.id}>
+                      {exitingNode.data.label}
+                    </Checkbox>
+                  );
                 }
                 return;
               })}
@@ -78,7 +82,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
     }
     if (oracleNodeType === 'chainLink' || !oracleNodeType) {
       return (
-        <Flex flexDir="column" gap="2" py="2">
+        <Flex flexDir="column" gap="2" py="2" key="chainlink">
           {ORACLE_NODE_TYPES.at(0)?.parameters.map((parameter, index) => (
             <Input
               placeholder={parameter.name}
@@ -90,7 +94,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
     }
     if (oracleNodeType === 'pyth') {
       return (
-        <Flex flexDir="column" gap="2" py="2">
+        <Flex flexDir="column" gap="2" py="2" key="pyth">
           {ORACLE_NODE_TYPES.at(3)!.parameters.map((parameter, index) => (
             <Input
               placeholder={parameter.name}

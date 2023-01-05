@@ -1,4 +1,7 @@
-export interface Node {
+import { Edge } from 'reactflow';
+
+export type Node = CustomNode & Edge<any>;
+interface CustomNode {
   type: OracleNodeTypes;
   id: string;
   parents: string[];

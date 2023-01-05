@@ -20,7 +20,13 @@ export const ReducerNode: FC<{ data: { label: string }; id: string }> = ({ data,
       <Text>Reducer Node</Text>
       {node && <Text>Operation: {node.parameters[0]}</Text>}
       {data.label && <Text>{data.label}</Text>}
-      <Handle type="source" position={Position.Top} style={{ background: 'gray' }}></Handle>
+      <Handle
+        type="target"
+        position={Position.Top}
+        style={{ background: 'gray' }}
+        isValidConnection={() => true}
+        isConnectable
+      ></Handle>
       <Handle type="source" position={Position.Bottom} style={{ background: 'gray' }}></Handle>
     </Box>
   );

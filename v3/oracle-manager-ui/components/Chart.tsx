@@ -1,8 +1,7 @@
-import { Box, Text, useDisclosure } from '@chakra-ui/react';
-import { FC, useEffect, useState } from 'react';
+import { Box, Text, useDisclosure, useToast } from '@chakra-ui/react';
+import { FC, useState } from 'react';
 import ReactFlow, {
   Background,
-  useNodesState,
   useEdgesState,
   addEdge,
   Connection,
@@ -24,21 +23,18 @@ import { ReducerNode } from './ReducerNode';
 const NODE_TYPES = { chainLink: ChainLinkNode, pyth: PythNode, reducer: ReducerNode };
 
 export const Chart: FC = () => {
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [initNodes, setInitNodes] = useRecoilState(nodesState);
+  const [nodes, setNodes] = useRecoilState(nodesState);
   const [nodeToUpdate, setNodeToUpdate] = useState<undefined | Node>(undefined);
-  const [nodes, setNodes] = useNodesState(initNodes);
   const [edges, setEdges] = useEdgesState([]);
-  const onNodesChange = (changes: NodeChange[]) => {
-    const appliedChanges = applyNodeChanges(changes, nodes);
-    setNodes(appliedChanges);
-    setInitNodes(appliedChanges as Node[]);
-  };
+  const onNodesChange = (changes: NodeChange[]) =>
+    setNodes(applyNodeChanges(changes, nodes) as Node[]);
   const onEdgesChange = (changes: EdgeChange[]) => {
     const appliedChanges = applyEdgeChanges(changes, edges);
     appliedChanges.forEach((updatedEdge) => {
       setEdges(edges.filter((edge) => edge.id !== updatedEdge.id));
-      setInitNodes((state) => {
+      setNodes((state) => {
         const removeParent = state.findIndex((node) => node.id === updatedEdge.target);
         return state.map((node, index) => {
           if (index === removeParent) {
@@ -52,14 +48,26 @@ export const Chart: FC = () => {
       });
     });
   };
-  const onConnect = (params: Connection) =>
+
+  const onConnect = (params: Connection) => {
     setEdges((eds) => {
       const addedEdge = addEdge(params, eds);
+      let edgeNotToAdd: string[] = [];
       addedEdge.forEach((edge) => {
-        setInitNodes((state) => {
-          const updatedNodeIndex = state.findIndex((node) => node.id === edge.target);
-          return state.map((node, index) => {
-            if (index === updatedNodeIndex) {
+        setNodes((state) => {
+          const targetNode = state.find((node) => node.id === edge.target);
+          return state.map((node) => {
+            if (targetNode) {
+              if (targetNode.type === 'reducer' && targetNode.parents.length >= 2) {
+                toast({
+                  title: 'Reducer node only can have two inputs',
+                  status: 'error',
+                  duration: 9000,
+                  isClosable: true,
+                });
+                edgeNotToAdd.push(edge.id);
+                return node;
+              }
               return {
                 ...node,
                 parents: node.parents.includes(edge.source)
@@ -71,10 +79,9 @@ export const Chart: FC = () => {
           });
         });
       });
-      return addedEdge;
+      return addedEdge.filter((edge) => !edgeNotToAdd.includes(edge.id));
     });
-
-  useEffect(() => setNodes(initNodes), [initNodes.toString()]);
+  };
 
   return (
     <Box w="100%" h="500px">
