@@ -5,14 +5,10 @@ import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { ZodBigNumber } from '@snx-v3/zod';
 
-function notNill<Value>(value: Value | null | undefined): value is Value {
-  return value !== null && value !== undefined;
-}
 const VaultCollateralSchema = z
   .object({ value: ZodBigNumber, amount: ZodBigNumber })
   .transform(({ value, amount }) => ({ value: wei(value), amount: wei(amount) }));
 
-const WETH_ORACLE_BROKEN = true;
 export const useVaultCollaterals = (poolId?: number) => {
   const { data: collateralTypes } = useCollateralTypes();
   const { data: CoreProxyContract } = useCoreProxy();
@@ -23,32 +19,13 @@ export const useVaultCollaterals = (poolId?: number) => {
       if (!CoreProxyContract || !collateralTypes || !poolId) {
         throw Error('Query should not be enabled when missing contract or collateral types');
       }
-      // If there's only 1 collateral type, just call getVaultCollateral without multicall
-      if (collateralTypes.length === 1) {
-        const result = await CoreProxyContract.callStatic.getVaultCollateral(
+
+      const calls = collateralTypes.map((collateralType) =>
+        CoreProxyContract.interface.encodeFunctionData('getVaultCollateral', [
           poolId,
-          collateralTypes[0].tokenAddress
-        );
-        const { value, amount } = VaultCollateralSchema.parse({ ...result });
-
-        return [
-          {
-            value,
-            amount,
-            collateralType: collateralTypes[0],
-          },
-        ];
-      }
-
-      const calls = collateralTypes
-        .map((collateralType) => {
-          if (WETH_ORACLE_BROKEN && collateralType.symbol === 'WETH') return;
-          return CoreProxyContract.interface.encodeFunctionData('getVaultCollateral', [
-            poolId,
-            collateralType.tokenAddress,
-          ]);
-        })
-        .filter(notNill);
+          collateralType.tokenAddress,
+        ])
+      );
       // `getVaultCollateral` is not a normal view function, it updates some state too
       // We can make it behave like a view function by using callStatic
       const multicallResult = await CoreProxyContract.callStatic.multicall(calls);
