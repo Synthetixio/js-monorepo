@@ -1,7 +1,7 @@
 import { Box, Spinner, Text, Flex, Button } from '@chakra-ui/react';
 import { useVaultCollaterals } from '@snx-v3/useVaultCollaterals';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Component, FC, ReactElement } from 'react';
+import { FC } from 'react';
 import { wei } from '@synthetixio/wei';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
 import { formatValue } from '@snx-v3/format';

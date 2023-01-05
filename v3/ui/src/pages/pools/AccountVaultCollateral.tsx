@@ -20,14 +20,14 @@ const AccountVaultCollateralUi: FC<{
         MY TOTAL
       </Text>
       {isLoading ? (
-        <Skeleton h={6} w={'full'} />
+        <Skeleton h={6} w="full" />
       ) : (
         <Text fontSize="xl" fontWeight={700} color="white">
           {formatNumber(collateralAmount)} {collateralSymbol}
         </Text>
       )}
       {isLoading ? (
-        <Skeleton my={1} h={4} w={'full'} />
+        <Skeleton my={1} h={4} w="full" />
       ) : (
         <Text fontSize="sm" color="gray.500" fontWeight="400">
           {formatNumberToUsd(collateralValue)}
