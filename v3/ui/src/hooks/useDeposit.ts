@@ -8,14 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
 import { contracts } from '../utils/constants';
-
 import { transactionState } from '../utils/state';
 import { useApprove } from './useApprove';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
 import { useWrapEth } from './useWrapEth';
 import { LiquidityPositionsById } from '@snx-v3/useLiquidityPositions';
-import { CollateralType } from '@snx-v3/useCollateralTypes';
 
 export const useDeposit = ({
   accountId,
