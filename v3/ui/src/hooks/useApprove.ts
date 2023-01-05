@@ -1,6 +1,7 @@
 import { BigNumberish, ethers } from 'ethers';
 import { useCallback, useMemo } from 'react';
-import { erc20ABI, useAccount, useContractRead, useContractWrite, useNetwork } from 'wagmi';
+import { erc20ABI, useContractRead, useContractWrite, useNetwork } from 'wagmi';
+import { useAccount } from '@snx-v3/useBlockchain';
 import { TxConfig } from './useMulticall';
 
 export const useApprove = (

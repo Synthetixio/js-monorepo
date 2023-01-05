@@ -27,12 +27,17 @@ const getPermissionDiff = (
   return { grants, revokes };
 };
 
-export const useManagePermissions = (
-  accountId: string,
-  target: string,
-  existing: Permissions = [],
-  selected: Permissions = []
-) => {
+export const useManagePermissions = ({
+  accountId,
+  target,
+  existing = [],
+  selected = [],
+}: {
+  accountId?: string;
+  target: string;
+  existing: Permissions;
+  selected: Permissions;
+}) => {
   const { grants, revokes } = getPermissionDiff(existing, selected);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
 

@@ -16,7 +16,7 @@ import {
 import { utils } from 'ethers';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAccount } from 'wagmi';
+import { useAccount } from '@snx-v3/useBlockchain';
 import { useAccountRead, useSynthetixRead } from '../../../hooks/useDeploymentRead';
 import { useSynthetixProxyEvent } from '../../../hooks/useContractEvent';
 import { Address } from '../../shared/Address';
@@ -29,12 +29,12 @@ export default function Permissions() {
 
   // Only show edit icon if current account is owner or modify permissions
   const { address: accountAddress } = useAccount();
-  const { id: accountId } = useParams();
+  const params = useParams();
 
   const { isLoading: loadingAccountPermissions, data: permissionData } = useSynthetixRead({
     functionName: 'getAccountPermissions',
-    args: [accountId],
-    enabled: Boolean(accountId),
+    args: [params.accountId],
+    enabled: Boolean(params.accountId),
     select: (data) => {
       return data.reduce(
         (acc, { user, permissions }) => ({
@@ -57,7 +57,7 @@ export default function Permissions() {
     listener: (event) => {
       const [eventAccountId, permission, target] = event;
 
-      if (accountId === eventAccountId.toString()) {
+      if (params.accountId === eventAccountId.toString()) {
         setAccountPermissions((currentPermissions) => {
           const parsedPermission = utils.parseBytes32String(permission);
           const targetPermissions = currentPermissions[target];
@@ -81,7 +81,7 @@ export default function Permissions() {
     eventName: 'PermissionRevoked',
     listener: (event) => {
       const [eventAccountId, permission, target] = event;
-      if (accountId === eventAccountId.toString()) {
+      if (params.accountId === eventAccountId.toString()) {
         setAccountPermissions((currentPermissions) => {
           const targetPermissions = currentPermissions[target];
           return {
@@ -97,8 +97,8 @@ export default function Permissions() {
 
   const { isLoading: loadingOwner, data: accountOwner } = useAccountRead({
     functionName: 'ownerOf',
-    args: [accountId],
-    enabled: Boolean(accountId),
+    args: [params.accountId],
+    enabled: Boolean(params.accountId),
     cacheTime: 0,
   });
 

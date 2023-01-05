@@ -31,18 +31,18 @@ export const Synthetix: FC = () => {
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route
-            path="/accounts/:id/positions/:collateral/:poolId"
+            path="/accounts/:accountId/positions/:collateral/:poolId"
             element={<LiquidityPosition />}
           />
-          <Route path="/accounts/:id/collateral" element={<Collateral />} />
-          <Route path="/accounts/:id/accept-nomination" element={<AcceptNomination />} />
-          <Route path="/accounts/:id/settings" element={<Settings />} />
-          <Route path="/accounts/:id" element={<Account />} />
+          <Route path="/accounts/:accountId/collateral" element={<Collateral />} />
+          <Route path="/accounts/:accountId/accept-nomination" element={<AcceptNomination />} />
+          <Route path="/accounts/:accountId/settings" element={<Settings />} />
+          <Route path="/accounts/:accountId" element={<Account />} />
           <Route path="/accounts/create" element={<CreateAccount />} />
-          <Route path="/accounts/:id/pools/:poolId" element={<Pool />} />
+          <Route path="/accounts/:accountId/pools/:poolId" element={<Pool />} />
           <Route path="/pools/:poolId" element={<Pool />} />
           <Route path="/markets/create" element={<CreateMarket />} />
-          <Route path="/markets/:address" element={<Market />} />
+          <Route path="/markets/:marketId" element={<Market />} />
           <Route path="/teleporter" element={<Teleporter />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFoundPage />} />

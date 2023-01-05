@@ -1,6 +1,6 @@
 import { ExternalLinkIcon, InfoIcon } from '@chakra-ui/icons';
 import { Heading, Box, Text, Flex, Radio, Link, Tooltip } from '@chakra-ui/react';
-import { Link as NavLink } from 'react-router-dom';
+import { Link as NavLink, generatePath } from 'react-router-dom';
 
 type PropsType = {
   name: string;
@@ -31,7 +31,7 @@ export default function DepositrOption({ name, value, checked = false }: PropsTy
           ) : (
             <Link
               as={NavLink}
-              to={`/pools/${value}`}
+              to={generatePath('/pools/:poolId', { poolId: value })}
               color="cyan.500"
               display="inline-block"
               transform="translateY(-1.5px)"

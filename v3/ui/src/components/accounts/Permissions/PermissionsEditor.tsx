@@ -21,36 +21,32 @@ import {
   ModalOverlay,
   useDisclosure,
 } from '@chakra-ui/react';
-import { FC, useMemo, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useMemo, useRef, useState } from 'react';
 import { useManagePermissions } from '../../../hooks/useManagePermissions';
 import { prettyString } from '@snx-v3/format';
 import { AddressInput } from './AddressInput';
+import { useParams } from 'react-router-dom';
 
-type Props =
-  | {
-      address: string;
-      permissions: Array<string>;
-    }
-  | Record<string, never>;
-
-export const PermissionsEditor: FC<Props> = ({
+export function PermissionsEditor({
   address: existingAddress,
   permissions: existingPermissions,
-}) => {
+}: {
+  address: string;
+  permissions: Array<string>;
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isAlertOpen, onOpen: onAlertOpen, onClose: onAlertClose } = useDisclosure();
   const cancelRef = useRef(null);
-  const { id: accountId } = useParams();
-  const [permissions, setPermissions] = useState<Array<string>>(existingPermissions);
-  const [address, setAddress] = useState<string>(existingAddress ?? '');
+  const [permissions, setPermissions] = useState(existingPermissions);
+  const [address, setAddress] = useState(existingAddress ?? '');
 
-  const { exec, status } = useManagePermissions(
-    accountId!,
-    address,
-    existingPermissions,
-    permissions
-  );
+  const params = useParams();
+  const { exec, status } = useManagePermissions({
+    accountId: params.accountId,
+    target: address,
+    existing: existingPermissions,
+    selected: permissions,
+  });
   const isExecuting = useMemo(() => status === 'pending', [status]);
   const onAlertCancel = () => {
     setPermissions(existingPermissions); // reset
@@ -185,4 +181,4 @@ export const PermissionsEditor: FC<Props> = ({
       </AlertDialog>
     </>
   );
-};
+}

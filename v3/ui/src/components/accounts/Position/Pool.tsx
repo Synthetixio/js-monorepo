@@ -1,21 +1,21 @@
-import { ExternalLinkIcon, EditIcon, ArrowRightIcon } from '@chakra-ui/icons';
+import { ArrowRightIcon, EditIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import {
-  Text,
   Box,
-  Link,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  Heading,
-  useDisclosure,
   Button,
   Flex,
+  Heading,
+  Link,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { FC } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { generatePath, Link as RouterLink } from 'react-router-dom';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { PoolDialog } from './PoolDialog';
 import { usePools } from '@snx-v3/usePools';
@@ -52,7 +52,12 @@ export const Pool: FC<Props> = ({
           </Heading>
           <Text fontSize="sm">
             <span style={{ opacity: 0.8 }}>Pool #{poolId}</span>
-            <RouterLink to={`/accounts/${accountId}/pools/${poolId}`}>
+            <RouterLink
+              to={generatePath('/accounts/:accountId/pools/:poolId', {
+                accountId,
+                poolId,
+              })}
+            >
               <Link color="cyan.500" ml="1" display="inline-block" transform="translateY(-2px)">
                 <ExternalLinkIcon />
               </Link>
@@ -119,7 +124,7 @@ export const Pool: FC<Props> = ({
             <Td>
               <Link
                 as={RouterLink}
-                to={`/markets/${0}`}
+                to={generatePath('/markets/:marketId', { marketId: '0' })}
                 color="cyan.500"
                 display="inline-block"
                 transform="translateY(-1.5px)"
@@ -145,7 +150,7 @@ export const Pool: FC<Props> = ({
             <Td>
               <Link
                 as={RouterLink}
-                to={`/markets/${0}`}
+                to={generatePath('/markets/:marketId', { marketId: '0' })}
                 color="cyan.500"
                 display="inline-block"
                 transform="translateY(-1.5px)"
@@ -171,7 +176,7 @@ export const Pool: FC<Props> = ({
             <Td>
               <Link
                 as={RouterLink}
-                to={`/markets/${0}`}
+                to={generatePath('/markets/:marketId', { marketId: '0' })}
                 color="cyan.500"
                 display="inline-block"
                 transform="translateY(-1.5px)"
@@ -197,7 +202,7 @@ export const Pool: FC<Props> = ({
             <Td>
               <Link
                 as={RouterLink}
-                to={`/markets/${0}`}
+                to={generatePath('/markets/:marketId', { marketId: '0' })}
                 color="cyan.500"
                 display="inline-block"
                 transform="translateY(-1.5px)"
@@ -223,7 +228,7 @@ export const Pool: FC<Props> = ({
             <Td>
               <Link
                 as={RouterLink}
-                to={`/markets/${0}`}
+                to={generatePath('/markets/:marketId', { marketId: '0' })}
                 color="cyan.500"
                 display="inline-block"
                 transform="translateY(-1.5px)"

@@ -20,8 +20,8 @@ import { useParams } from 'react-router-dom';
 
 export const TransferOwnership = () => {
   const { isOpen: isOwnerOpen, onOpen: onOwnerOpen, onClose: onOwnerClose } = useDisclosure();
-  const { id: accountId } = useParams();
-  const [address, setAddress] = useState<string>('');
+  const params = useParams();
+  const [address, setAddress] = useState('');
 
   const accountProxy = useContract(contracts.ACCOUNT_PROXY);
   const { write, isLoading } = useContractWrite({
@@ -29,7 +29,7 @@ export const TransferOwnership = () => {
     address: accountProxy?.address,
     abi: accountProxy?.abi,
     functionName: 'approve',
-    args: [address, accountId],
+    args: [address, params.accountId],
   });
 
   return (

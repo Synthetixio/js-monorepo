@@ -10,7 +10,7 @@ export function Home() {
 
   useEffect(() => {
     if (accounts && accounts.length > 0) {
-      navigate(generatePath('/accounts/:id', { id: accounts[0] }));
+      navigate(generatePath('/accounts/:accountId', { accountId: accounts[0] }));
     }
   }, [accounts, navigate]);
 

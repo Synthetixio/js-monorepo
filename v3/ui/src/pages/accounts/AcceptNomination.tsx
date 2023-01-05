@@ -1,23 +1,25 @@
 import { Box, Button } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { useAccount, useContractWrite } from 'wagmi';
+import { useContractWrite } from 'wagmi';
+import { useCallback } from 'react';
+import { useAccount } from '@snx-v3/useBlockchain';
 import { useAccountRead } from '../../hooks/useDeploymentRead';
 import { useContract } from '../../hooks/useContract';
 import { contracts } from '../../utils/constants';
 
 export const AcceptNomination = () => {
-  const { id: accountId } = useParams();
+  const params = useParams();
   const { address } = useAccount();
 
   const { data: nominatedOwner } = useAccountRead({
     functionName: 'getApproved',
-    args: [accountId],
+    args: [params.accountId],
   });
 
   const { data: accountOwner } = useAccountRead({
     functionName: 'ownerOf',
-    args: [accountId],
-    enabled: Boolean(accountId),
+    args: [params.accountId],
+    enabled: Boolean(params.accountId),
   });
 
   const accountProxy = useContract(contracts.ACCOUNT_PROXY);
@@ -26,14 +28,20 @@ export const AcceptNomination = () => {
     address: accountProxy?.address,
     abi: accountProxy?.abi,
     functionName: 'transferFrom',
-    args: [accountOwner, address, accountId],
+    args: [accountOwner, address, params.accountId],
   });
+
+  const onClick = useCallback(() => {
+    if (write) {
+      write();
+    }
+  }, [write]);
 
   return (
     <Box>
       {address === nominatedOwner && (
-        <Button isLoading={isLoading} size="lg" ml="4" px="8" onClick={() => write()}>
-          Accept Ownership of {accountId}
+        <Button isLoading={isLoading} size="lg" ml="4" px="8" onClick={onClick}>
+          Accept Ownership of {params.accountId}
         </Button>
       )}
     </Box>
