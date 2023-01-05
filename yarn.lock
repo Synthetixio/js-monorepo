@@ -7862,9 +7862,20 @@ __metadata:
   resolution: "@snx-v3/usePools@workspace:v3/lib/usePools"
   dependencies:
     "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/usePreferredPool": "workspace:*"
     "@snx-v3/zod": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
+    zod: ^3.20.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/usePreferredPool@workspace:*, @snx-v3/usePreferredPool@workspace:v3/lib/usePreferredPool":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/usePreferredPool@workspace:v3/lib/usePreferredPool"
+  dependencies:
+    "@snx-v3/useCoreProxy": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     zod: ^3.20.2
   languageName: unknown
   linkType: soft
@@ -9990,6 +10001,7 @@ __metadata:
     "@snx-v3/useLiquidityPositions": "workspace:*"
     "@snx-v3/useMarketNamesById": "workspace:*"
     "@snx-v3/usePools": "workspace:*"
+    "@snx-v3/usePreferredPool": "workspace:*"
     "@snx-v3/useVaultCollaterals": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"

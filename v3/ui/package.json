@@ -30,6 +30,7 @@
     "@snx-v3/useLiquidityPositions": "workspace:*",
     "@snx-v3/useMarketNamesById": "workspace:*",
     "@snx-v3/usePools": "workspace:*",
+    "@snx-v3/usePreferredPool": "workspace:*",
     "@snx-v3/useVaultCollaterals": "workspace:*",
     "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
