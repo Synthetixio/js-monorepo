@@ -38,7 +38,6 @@ export const usePools = () => {
         .map((id) => id.toString());
       return await loadPoolNames({ CoreProxyContract: CoreProxyContract, poolIds });
     },
-    placeholderData: [],
     enabled: Boolean(CoreProxyContract),
   });
 };
