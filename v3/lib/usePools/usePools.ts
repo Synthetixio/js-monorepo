@@ -3,8 +3,9 @@ import { CoreProxyContractType, useCoreProxy } from '@snx-v3/useCoreProxy';
 import { z } from 'zod';
 import { ZodBigNumber } from '@snx-v3/zod';
 
+const PoolIdsSchema = z.array(ZodBigNumber.transform((x) => x.toString()));
 const PoolSchema = z.object({
-  id: ZodBigNumber.transform((x) => x.toString()),
+  id: z.string(),
   name: z.string().default('Unnamed Pool'),
 });
 const loadPoolNames = async ({
@@ -33,10 +34,11 @@ export const usePools = () => {
         CoreProxyContract.getPreferredPool(),
         CoreProxyContract.getApprovedPools(),
       ]);
-      const poolIds = [preferredPool]
-        .concat(approvedPools.filter((id) => !id.eq(preferredPool)))
-        .map((id) => id.toString());
-      return await loadPoolNames({ CoreProxyContract: CoreProxyContract, poolIds });
+      const poolIds = [preferredPool].concat(approvedPools.filter((id) => !id.eq(preferredPool)));
+      return await loadPoolNames({
+        CoreProxyContract: CoreProxyContract,
+        poolIds: PoolIdsSchema.parse(poolIds),
+      });
     },
     enabled: Boolean(CoreProxyContract),
   });
