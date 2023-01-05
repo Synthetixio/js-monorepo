@@ -1,0 +1,12 @@
+{
+  "name": "@snx-v3/useAccounts",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.2",
+  "dependencies": {
+    "@snx-v3/useAccountProxy": "workspace:*",
+    "@snx-v3/useBlockchain": "workspace:*",
+    "@tanstack/react-query": "^4.3.4",
+    "react": "^18.2.0"
+  }
+}

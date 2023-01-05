@@ -7702,6 +7702,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/AccountsSelector@workspace:*, @snx-v3/AccountsSelector@workspace:v3/lib/AccountsSelector":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/AccountsSelector@workspace:v3/lib/AccountsSelector"
+  dependencies:
+    "@chakra-ui/icons": ^2.0.9
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/format": "workspace:*"
+    "@snx-v3/useAccounts": "workspace:*"
+    react-router-dom: ^6.3.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/docs@workspace:v3/docs":
   version: 0.0.0-use.local
   resolution: "@snx-v3/docs@workspace:v3/docs"
@@ -7739,6 +7751,28 @@ __metadata:
     "@synthetixio/v3-contracts": "workspace:*"
     matchstick-as: ^0.5.0
     prettier: ^2.8.1
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useAccountProxy@workspace:*, @snx-v3/useAccountProxy@workspace:v3/lib/useAccountProxy":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useAccountProxy@workspace:v3/lib/useAccountProxy"
+  dependencies:
+    "@ethersproject/contracts": ^5.7.0
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/v3-contracts": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useAccounts@workspace:*, @snx-v3/useAccounts@workspace:v3/lib/useAccounts":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useAccounts@workspace:v3/lib/useAccounts"
+  dependencies:
+    "@snx-v3/useAccountProxy": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -9930,8 +9964,10 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@rainbow-me/rainbowkit": ^0.8.1
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v3/AccountsSelector": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
+    "@snx-v3/useAccounts": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
