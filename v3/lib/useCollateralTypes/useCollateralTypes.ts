@@ -17,7 +17,7 @@ const CollateralConfigurationSchema = z.object({
 });
 const CollateralTypeSchema = CollateralConfigurationSchema.extend({
   symbol: z.string(),
-  price: z.union([z.undefined(), ZodBigNumber]).transform((x) => (x ? wei(x) : undefined)),
+  price: ZodBigNumber.transform((x) => wei(x)),
   logo: z.string(),
 });
 
