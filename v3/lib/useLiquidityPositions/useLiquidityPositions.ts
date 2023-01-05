@@ -21,10 +21,7 @@ export type LiquidityPositionsById = {
 };
 
 const selectPositions = (positions: LiquidityPositionType[]) =>
-  positions.reduce((acc: LiquidityPositionsById, position) => {
-    acc[position.id] = position;
-    return acc;
-  }, {});
+  Object.fromEntries(positions.map((position) => [position.id, position]));
 
 export const useLiquidityPositions = ({ accountId }: { accountId?: string }) => {
   const { data: CoreProxy } = useCoreProxy();
