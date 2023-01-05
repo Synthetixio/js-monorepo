@@ -1,7 +1,7 @@
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { ZodBigNumber } from '@snx-v3/zod';
-import Wei, { wei } from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 
