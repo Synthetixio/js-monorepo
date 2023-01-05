@@ -4,7 +4,7 @@ import { Transaction } from '../../shared/TransactionReview/TransactionReview.ty
 import { contracts } from '../../../utils/constants';
 import { compareAddress, parseUnits } from '@snx-v3/format';
 import { transactionState } from '../../../utils/state';
-import { CollateralType } from '../../../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useApprove } from '../../../hooks/useApprove';
 import { useContract } from '../../../hooks/useContract';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';

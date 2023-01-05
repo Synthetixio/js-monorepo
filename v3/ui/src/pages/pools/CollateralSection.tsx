@@ -1,10 +1,12 @@
 import { Box, Spinner, Text, Flex, Button } from '@chakra-ui/react';
 import { useVaultCollaterals } from '@snx-v3/useVaultCollaterals';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FC } from 'react';
 import { wei } from '@synthetixio/wei';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
 import { formatValue } from '@snx-v3/format';
+import { AccountVaultCollateral } from './AccountVaultCollateral';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 
 const calculateTvl = (vaultCollaterals: ReturnType<typeof useVaultCollaterals>['data']) => {
   const zeroValues = { value: wei(0), amount: wei(0) };
@@ -17,7 +19,10 @@ const calculateTvl = (vaultCollaterals: ReturnType<typeof useVaultCollaterals>['
 };
 export const CollateralSectionUi: FC<{
   vaultCollaterals: ReturnType<typeof useVaultCollaterals>['data'];
-}> = ({ vaultCollaterals }) => {
+  accountId?: string;
+  AccountVaultCollateral: FC<{ collateral: CollateralType }>;
+}> = ({ vaultCollaterals, accountId, AccountVaultCollateral }) => {
+  const navigate = useNavigate();
   if (!vaultCollaterals) return <Spinner />;
   const tvl = calculateTvl(vaultCollaterals);
   return (
@@ -74,16 +79,11 @@ export const CollateralSectionUi: FC<{
             <Text fontSize="sm" color="gray.500" fontWeight="400">
               {formatNumberToUsd(vaultCollateral.value.toNumber())}
             </Text>
-            <Text mt={2} fontSize="sm" fontWeight="700" color="gray.500">
-              MY TOTAL
-            </Text>
-            <Text fontSize="xl" fontWeight={700} color="white">
-              TODO
-            </Text>
-            <Text fontSize="sm" color="gray.500" fontWeight="400">
-              TODO
-            </Text>
-            <Button mt={1}>Deposit</Button>
+            {accountId ? (
+              <AccountVaultCollateral collateral={vaultCollateral.collateralType} />
+            ) : (
+              <Button onClick={() => navigate('/')}>Deposit</Button>
+            )}
           </Flex>
         ))}
       </Flex>
@@ -91,7 +91,14 @@ export const CollateralSectionUi: FC<{
   );
 };
 export const CollateralSection = () => {
-  const { id } = useParams();
-  const { data: vaultCollaterals } = useVaultCollaterals(id ? parseFloat(id) : undefined);
-  return <CollateralSectionUi vaultCollaterals={vaultCollaterals} />;
+  const { poolId, id: accountId } = useParams();
+  const { data: vaultCollaterals } = useVaultCollaterals(poolId ? parseFloat(poolId) : undefined);
+
+  return (
+    <CollateralSectionUi
+      vaultCollaterals={vaultCollaterals}
+      accountId={accountId}
+      AccountVaultCollateral={AccountVaultCollateral}
+    />
+  );
 };

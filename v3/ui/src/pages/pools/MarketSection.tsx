@@ -205,8 +205,8 @@ export function MarketSectionUi({
   );
 }
 export const MarketSection = () => {
-  const { id } = useParams();
-  const { data: poolData, isLoading: isLoadingPoolData } = useGetPoolData(id);
+  const { poolId } = useParams();
+  const { data: poolData, isLoading: isLoadingPoolData } = useGetPoolData(poolId);
 
   const marketIdsAndAddresses = poolData?.configurations.map(({ market }) => ({
     marketId: market.id,

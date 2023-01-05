@@ -4,39 +4,42 @@ import Manage from './Manage';
 import { Rewards } from './Rewards/Rewards';
 import { Pool } from './Pool';
 import { FC } from 'react';
-import { CollateralType } from '../../../utils/types';
-import { formatValue } from '@snx-v3/format';
-import { useLiquidityPosition } from '../../../hooks/useLiquidityPosition';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
+import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 
 export const Position: FC<{
   accountId: string;
   poolId: string;
   collateral: CollateralType;
 }> = ({ accountId, poolId, collateral }) => {
-  const { isLoading, debt, cRatio, collateralAmount, refetch } = useLiquidityPosition(
+  const { isLoading, data, refetch } = useLiquidityPosition({
     accountId,
     poolId,
-    collateral
-  );
+    collateral,
+  });
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <Box my="8" textAlign="center">
         <Spinner />
       </Box>
     );
+  }
 
-  const price = formatValue(collateral.price || 0);
-  const collateralValue = collateralAmount * price;
+  const { debt, cRatio, collateralAmount, collateralValue } = data || {};
+  const debtNumber = debt?.toNumber() || 0;
+  const cRatioNumber = cRatio?.toNumber() || 0;
+  const collateralAmountNumber = collateralAmount?.toNumber() || 0;
+  const collateralValueNumber = collateralValue?.toNumber() || 0;
 
   return (
     <>
       <DepositingStats
         collateral={collateral}
-        collateralValue={collateralValue}
-        collateralAmount={collateralAmount}
-        debt={debt}
-        cRatio={cRatio}
+        collateralValue={collateralValueNumber}
+        collateralAmount={collateralAmountNumber}
+        debt={debtNumber}
+        cRatio={cRatioNumber}
       />
 
       <Tabs isFitted isLazy>
@@ -49,10 +52,10 @@ export const Position: FC<{
         <TabPanels>
           <TabPanel>
             <Manage
-              collateralValue={collateralValue}
-              collateralAmount={collateralAmount}
-              debt={debt}
-              cRatio={cRatio}
+              collateralValue={collateralValueNumber}
+              collateralAmount={collateralAmountNumber}
+              debt={debtNumber}
+              cRatio={cRatioNumber}
               accountId={accountId}
               poolId={poolId}
               collateral={collateral}
@@ -61,11 +64,11 @@ export const Position: FC<{
           </TabPanel>
           <TabPanel>
             <Pool
-              collateralAmount={collateralAmount}
+              collateralAmount={collateralAmountNumber}
               accountId={accountId}
               poolId={poolId}
               collateral={collateral}
-              debt={debt}
+              debt={debtNumber}
               refetch={refetch}
             />
           </TabPanel>

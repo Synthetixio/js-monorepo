@@ -17,7 +17,7 @@ import {
 import { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { poolsData } from '../../../utils/constants';
-import { CollateralType } from '../../../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { PoolDialog } from './PoolDialog';
 
 interface Props {
@@ -51,7 +51,7 @@ export const Pool: FC<Props> = ({
           </Heading>
           <Text fontSize="sm">
             <span style={{ opacity: 0.8 }}>Pool #{poolId}</span>
-            <RouterLink to={`/pools/${poolId}`}>
+            <RouterLink to={`/accounts/${accountId}/pools/${poolId}`}>
               <Link color="cyan.500" ml="1" display="inline-block" transform="translateY(-2px)">
                 <ExternalLinkIcon />
               </Link>

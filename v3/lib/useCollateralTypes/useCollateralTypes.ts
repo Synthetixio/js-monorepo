@@ -5,13 +5,25 @@ import { useProvider, useNetwork } from '@snx-v3/useBlockchain';
 import { useQuery } from '@tanstack/react-query';
 import { useCoreProxy, CoreProxyContractType } from '@snx-v3/useCoreProxy';
 
+export type CollateralType = {
+  depositingEnabled: boolean;
+  issuanceRatioD18: BigNumber;
+  liquidationRatioD18: BigNumber;
+  liquidationRewardD18: BigNumber;
+  minDelegationD18: BigNumber;
+  oracleNodeId: string;
+  tokenAddress: `0x${string}`;
+  symbol: string;
+  price?: BigNumber;
+  logo: string;
+};
 async function loadCollateralTypes({
   CoreProxyContract,
   provider,
 }: {
   CoreProxyContract: CoreProxyContractType;
   provider: ReturnType<typeof useProvider>;
-}) {
+}): Promise<CollateralType[]> {
   // typeschain messes up the type for when an array is returned from a method
   const tokenConfigs = (await CoreProxyContract.getCollateralConfigurations(true)) as {
     depositingEnabled: boolean;

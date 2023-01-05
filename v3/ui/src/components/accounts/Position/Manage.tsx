@@ -11,7 +11,7 @@ import { Deposit } from './Manage/Deposit';
 import { Burn } from './Manage/Burn';
 import { useValidatePosition } from '../../../hooks/useValidatePosition';
 import { useTranslation } from 'react-i18next';
-import { CollateralType } from '../../../utils/types';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
 
 interface Props {
   accountId: string;
