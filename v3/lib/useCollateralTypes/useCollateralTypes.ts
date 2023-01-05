@@ -22,7 +22,7 @@ const CollateralTypeSchema = CollateralConfigurationSchema.extend({
   logo: z.string(),
 });
 
-export type CollateralType = z.infer<typeof CollateralTypeSchema>;
+export type CollateralType = z.infer<typeof CollateralTypeSchema> & { tokenAddress: `0x${string}` };
 
 const SymbolSchema = z.string();
 async function loadSymbols({
