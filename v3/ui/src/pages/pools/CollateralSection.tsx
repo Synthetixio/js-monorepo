@@ -45,7 +45,7 @@ export const CollateralSectionUi: FC<{
           {formatNumberToUsd(tvl.value.toNumber())}
         </Text>
       </Box>
-      <Flex>
+      <Flex justifyContent="space-between">
         {vaultCollaterals.map((vaultCollateral) => (
           <Flex
             key={vaultCollateral.collateralType.tokenAddress}
@@ -55,7 +55,7 @@ export const CollateralSectionUi: FC<{
             borderRadius="base"
             paddingX={4}
             paddingY={2}
-            width="50%"
+            width="48%"
             flexDirection="column"
           >
             <Text fontWeight={800} color="white" fontSize="2xl">
