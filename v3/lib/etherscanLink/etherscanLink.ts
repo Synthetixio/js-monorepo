@@ -1,10 +1,4 @@
-export function etherscanLink({
-  chain,
-  address,
-}: {
-  chain: string;
-  address: `0x${string}`;
-}): string {
+export function etherscanLink({ chain, address }: { chain: string; address: string }): string {
   switch (chain) {
     case 'goerli':
       return `https://goerli.etherscan.io/address/${address}`;

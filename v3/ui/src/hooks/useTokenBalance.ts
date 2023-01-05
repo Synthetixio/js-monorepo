@@ -1,8 +1,10 @@
 import { useAccount, useBalance, useNetwork } from 'wagmi';
 import { compareAddress, formatValue, parseUnits } from '@snx-v3/format';
 import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
+import { assertAddressType } from '../utils/ts-helpers';
 
-export const useTokenBalance = (token: `0x${string}` | undefined, chainId?: number | undefined) => {
+export const useTokenBalance = (token: string | undefined, chainId?: number | undefined) => {
+  const tokenAddress = assertAddressType(token) ? token : undefined;
   const { address: accountAddress } = useAccount();
   const { chain: activeChain } = useNetwork();
   const hasWalletConnected = Boolean(activeChain);
@@ -10,7 +12,7 @@ export const useTokenBalance = (token: `0x${string}` | undefined, chainId?: numb
 
   const { data: balanceData, refetch } = useBalance({
     address: accountAddress,
-    token: compareAddress(token, ethCollateral?.tokenAddress) ? undefined : token,
+    token: compareAddress(tokenAddress, ethCollateral?.tokenAddress) ? undefined : tokenAddress,
     enabled: hasWalletConnected,
     chainId: chainId || activeChain?.id,
   });
