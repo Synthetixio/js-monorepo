@@ -1,6 +1,6 @@
-import { BigNumberish } from 'ethers';
+import { BigNumber } from 'ethers';
 import { useCallback } from 'react';
-import { erc20ABI, useBalance, useContractWrite } from 'wagmi';
+import { useBalance, useContractWrite } from 'wagmi';
 import { useAccount } from '@snx-v3/useBlockchain';
 import { TxConfig } from './useMulticall';
 import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
@@ -58,32 +58,40 @@ export const useWrapEth = (config?: Partial<TxConfig>) => {
     },
   });
 
-  const { data: balance, refetch } = useBalance({
-    address: accountAddress,
-    token: ethCollateral?.tokenAddress,
+  const { data: ethBalance, refetch: refetchETHBal } = useBalance({
+    address: accountAddress as `0x${string}`,
+  });
+  const { data: wETHBalance, refetch: refetchWETHBal } = useBalance({
+    address: accountAddress as `0x${string}`,
+    token: ethCollateral?.tokenAddress as `0x${string}`,
     enabled: Boolean(ethCollateral?.tokenAddress),
   });
 
   const wrap = useCallback(
-    async (amount: BigNumberish, useBalance = false) => {
-      if (!useBalance || balance?.value.lt(amount)) {
-        const txReceipt = await writeAsync({
-          recklesslySetUnpreparedOverrides: {
-            value: amount,
-          },
-        });
-        await txReceipt.wait();
-      }
-      refetch();
+    async (amount: BigNumber, useExistingWETHBal = false) => {
+      if (useExistingWETHBal) return;
+      if (!ethBalance) return;
+      if (ethBalance.value.lt(amount)) return;
+      if (!writeAsync) return;
+
+      const txReceipt = await writeAsync({
+        recklesslySetUnpreparedOverrides: {
+          value: amount,
+        },
+      });
+      await txReceipt.wait();
+
+      refetchETHBal();
+      refetchWETHBal();
       config?.onSuccess && config.onSuccess();
     },
-    [balance?.value, config, refetch, writeAsync]
+    [ethBalance, config, refetchETHBal, refetchWETHBal, writeAsync]
   );
 
   return {
     isLoading,
     wrap,
-    balance,
+    balance: wETHBalance,
   };
 };
 
@@ -104,7 +112,8 @@ export const useUnWrapEth = (config?: Partial<TxConfig>) => {
   });
 
   const unWrap = useCallback(
-    async (amount: BigNumberish) => {
+    async (amount: BigNumber) => {
+      if (!writeAsync) return;
       const txReceipt = await writeAsync({
         recklesslySetUnpreparedArgs: [amount],
       });
