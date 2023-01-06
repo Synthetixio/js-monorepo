@@ -10,6 +10,7 @@ import { useContract } from '../../../hooks/useContract';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
 import { useUnWrapEth, useWrapEth } from '../../../hooks/useWrapEth';
 import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
+import { BigNumber } from 'ethers';
 
 export const useManagePosition = ({
   accountId,
@@ -121,7 +122,7 @@ export const useManagePosition = ({
   const multiTxn = useMulticall(calls);
   const { approve, requireApproval } = useApprove(
     collateral.tokenAddress,
-    collateralChange > 0 ? collateralChangeBN : 0,
+    collateralChange > 0 ? collateralChangeBN : BigNumber.from(0),
     snxProxy?.address
   );
 

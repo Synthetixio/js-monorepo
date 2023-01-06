@@ -7776,6 +7776,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/useAllowance@workspace:*, @snx-v3/useAllowance@workspace:v3/lib/useAllowance":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useAllowance@workspace:v3/lib/useAllowance"
+  dependencies:
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/zod": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/useBlockchain@workspace:*, @snx-v3/useBlockchain@workspace:v3/lib/useBlockchain":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useBlockchain@workspace:v3/lib/useBlockchain"
@@ -9994,6 +10006,7 @@ __metadata:
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
     "@snx-v3/useAccounts": "workspace:*"
+    "@snx-v3/useAllowance": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
