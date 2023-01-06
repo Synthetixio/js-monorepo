@@ -108,7 +108,6 @@ export const ORACLE_NODE_TYPES: {
     parameters: [
       { type: 'string', name: 'Address' },
       { type: 'number', name: 'TWAP time interval in seconds' },
-      { type: 'number', name: 'Decimals' },
     ],
   },
   {
@@ -120,7 +119,7 @@ export const ORACLE_NODE_TYPES: {
   {
     value: 'priceCircuitBreaker',
     label: 'Price Circuit Breaker',
-    numberOfParents: 2,
+    numberOfParents: 3,
     parameters: [{ type: 'number', name: 'Deviation tolerance' }],
   },
   {

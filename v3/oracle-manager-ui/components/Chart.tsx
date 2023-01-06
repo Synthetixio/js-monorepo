@@ -15,11 +15,21 @@ import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 import { Node } from '../utils/types';
 import { ChainLinkNode } from './ChainLinkNode';
+import { ExternalNode } from './ExternalNode';
 import { NodeFormModule } from './NodeFormModule';
+import { PriceDeviationCircuitBreakerNode } from './PriceDeviationCircuitBreakerNode';
 import { PythNode } from './PythNode';
 import { ReducerNode } from './ReducerNode';
+import { UniswapNode } from './UniswapNode';
 
-const NODE_TYPES = { chainLink: ChainLinkNode, pyth: PythNode, reducer: ReducerNode };
+const NODE_TYPES = {
+  chainLink: ChainLinkNode,
+  pyth: PythNode,
+  reducer: ReducerNode,
+  uniswap: UniswapNode,
+  priceDeviationCircuitBreakerNode: PriceDeviationCircuitBreakerNode,
+  externalNode: ExternalNode,
+};
 
 export const Chart: FC = () => {
   const toast = useToast();

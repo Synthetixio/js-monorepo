@@ -1,7 +1,5 @@
 import {
   Button,
-  Checkbox,
-  CheckboxGroup,
   Flex,
   Input,
   Modal,
@@ -13,121 +11,74 @@ import {
   ModalOverlay,
   Select,
 } from '@chakra-ui/react';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 import { ORACLE_NODE_TYPES } from '../utils/constants';
-import { Node, OracleNodeTypes } from '../utils/types';
+import { Node } from '../utils/types';
 import { useToast } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
+import { ChainLinkForm } from './ChainLinkForm';
+import { ReducerForm } from './ReducerForm';
+import { PythForm } from './PythForm';
 
 export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: Node }> = ({
   isOpen,
   onClose,
   node,
 }) => {
+  const { register, watch, getValues, setValue } = useForm({
+    defaultValues: {
+      oracleNodeType: node?.type || 'chainLink',
+      nodeParents: node?.parents || [],
+      nodeParameters: node?.parameters || [],
+      nodeLabel: node?.data.label || '',
+    },
+  });
+
   const [nodes, setNodes] = useRecoilState(nodesState);
-  const [oracleNodeType, setOracleNodeType] = useState(node?.type || undefined);
-  const [nodeLabel, setNodeLabel] = useState(node?.data.label);
-  const [nodeParents, setNodeParents] = useState(node?.parents || []);
-  const [nodeParameters, setNodeParameters] = useState(node?.parameters || []);
   const toast = useToast();
 
-  useEffect(() => {
-    if (node) {
-      setOracleNodeType(node.type);
-      setNodeLabel(node.data.label);
-      setNodeParents(node.parents);
-      setNodeParameters(node.parameters);
-    }
-  }, [node]);
-
-  const resetInputs = () => {
-    setOracleNodeType(undefined);
-    setNodeLabel(undefined);
-    setNodeParameters([]);
-    setNodeParents([]);
-  };
-
-  const setChainLinkParameters = (value: string, index: number) => {
-    setNodeParameters((state) => {
-      let newState = JSON.parse(JSON.stringify(state));
-      newState[index] = index >= 1 ? Number(value) : value;
-      return newState;
-    });
-  };
-
-  const setPythParameters = (value: string, index: number) => {
-    setNodeParameters((state) => {
-      state[index] = value;
-      return state;
-    });
-  };
-
-  const customFormForOracleType = useMemo(() => {
-    if (oracleNodeType === 'reducer') {
+  const componentByOracleType = useMemo(() => {
+    console.log(watch('oracleNodeType'));
+    const type = getValues('oracleNodeType');
+    if (type === 'chainLink')
       return (
-        <Flex flexDir="column" gap="2" py="2" key="reducer">
-          <CheckboxGroup
-            onChange={(event) => setNodeParents(event.map((e) => String(e)))}
-            value={[...nodeParents]}
-          >
-            <Flex flexWrap="wrap" gap="2">
-              {nodes.map((exitingNode) => {
-                if (exitingNode.id !== node?.id) {
-                  return (
-                    <Checkbox value={exitingNode.id} key={exitingNode.id}>
-                      {exitingNode.data.label}
-                    </Checkbox>
-                  );
-                }
-                return;
-              })}
-            </Flex>
-          </CheckboxGroup>
-          <Select
-            placeholder="Select Operation"
-            value={nodeParameters[0]}
-            onChange={(e) => setNodeParameters([e.target.value])}
-          >
-            {ORACLE_NODE_TYPES.at(4)!.parameters[0].options?.map((operation) => (
-              <option value={operation}>{operation}</option>
-            ))}
-          </Select>
-        </Flex>
+        <ChainLinkForm
+          address={node?.parameters[0]}
+          twap={node?.parameters[1].twap}
+          getValuesFromForm={(address, twap) => {
+            setValue('nodeParameters', [address, twap]);
+          }}
+        />
       );
-    }
-    if (oracleNodeType === 'chainLink' || !oracleNodeType) {
+    if (type === 'reducer')
       return (
-        <Flex flexDir="column" gap="2" py="2" key="chainlink">
-          {ORACLE_NODE_TYPES.at(0)?.parameters.map((parameter, index) => (
-            <Input
-              placeholder={nodeParameters[index] || parameter.name}
-              onChange={(e) => setChainLinkParameters(e.target.value, index)}
-            />
-          ))}
-        </Flex>
+        <ReducerForm
+          operation={node?.parameters[0]}
+          node={node}
+          getValuesFromForm={(operation, parents) => {
+            setValue('nodeParameters', [operation]);
+            setValue('nodeParents', parents);
+          }}
+        />
       );
-    }
-    if (oracleNodeType === 'pyth') {
+    if (type === 'pyth')
       return (
-        <Flex flexDir="column" gap="2" py="2" key="pyth">
-          {ORACLE_NODE_TYPES.at(3)!.parameters.map((parameter, index) => (
-            <Input
-              placeholder={nodeParameters[index] || parameter.name}
-              onChange={(e) => setPythParameters(e.target.value, index)}
-            />
-          ))}
-        </Flex>
+        <PythForm
+          address={node?.parameters[0]}
+          priceFeedId={node?.parameters[1]}
+          getValuesFromForm={(address, priceFeedId) => {
+            setValue('nodeParameters', [address, priceFeedId]);
+          }}
+        />
       );
-    }
-    return <>Implement me</>;
-  }, [oracleNodeType]);
+  }, [watch('oracleNodeType')]);
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={() => {
-        resetInputs();
         onClose();
       }}
     >
@@ -137,22 +88,15 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
         <ModalCloseButton />
         <ModalBody>
           <Flex flexDir="column">
-            <Select
-              value={oracleNodeType}
-              onChange={(e) => {
-                setOracleNodeType(e.target.value as OracleNodeTypes);
-              }}
-            >
-              {ORACLE_NODE_TYPES.map((type) => (
-                <option value={type.value}>{type.label}</option>
-              ))}
-            </Select>
-            {customFormForOracleType}
-            <Input
-              value={nodeLabel}
-              placeholder="Node Name"
-              onChange={(e) => setNodeLabel(e.target.value)}
-            />
+            {!node && (
+              <Select {...register('oracleNodeType')}>
+                {ORACLE_NODE_TYPES.map((type) => (
+                  <option value={type.value}>{type.label}</option>
+                ))}
+              </Select>
+            )}
+            {componentByOracleType}
+            <Input placeholder="Node name" {...register('nodeLabel')} />
           </Flex>
         </ModalBody>
         <ModalFooter>
@@ -180,30 +124,28 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
           )}
           <Button
             onClick={() => {
+              console.log(getValues());
               if (node) {
                 setNodes((state) =>
                   state
                     .filter((s) => s.id !== node.id)
                     .concat({
                       ...node,
-                      type: oracleNodeType!,
-                      parents: nodeParents,
-                      parameters: nodeParameters,
-                      data: { label: nodeLabel || '' },
+                      type: getValues('oracleNodeType'),
+                      parents: getValues('nodeParents'),
+                      parameters: getValues('nodeParameters'),
+                      data: { label: getValues('nodeLabel') || '' },
                     })
                 );
-                resetInputs();
                 onClose();
-              } else if (oracleNodeType && nodeLabel) {
+              } else if (!node) {
                 setNodes([
                   ...nodes,
                   {
-                    type: oracleNodeType,
-                    parents: nodeParents,
-                    parameters: nodeParameters,
-                    data: {
-                      label: nodeLabel,
-                    },
+                    type: getValues('oracleNodeType'),
+                    parents: getValues('nodeParents'),
+                    parameters: getValues('nodeParameters'),
+                    data: { label: getValues('nodeLabel') || '' },
                     id: new Date()
                       .getMinutes()
                       .toString()
@@ -213,7 +155,6 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                     target: '',
                   },
                 ]);
-                resetInputs();
                 onClose();
               } else {
                 toast({

@@ -11,6 +11,7 @@
     "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/oracle-manager-ui' run build"
   },
   "dependencies": {
+    "@chakra-ui/icon": "^3.0.11",
     "@chakra-ui/react": "^2.4.6",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",

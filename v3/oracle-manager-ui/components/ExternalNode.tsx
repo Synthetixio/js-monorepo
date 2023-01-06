@@ -4,27 +4,34 @@ import { Handle, Position } from 'reactflow';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 
-export const ChainLinkNode: FC<{ data: { label: string }; id: string }> = ({ data, id }) => {
+export const ExternalNode: FC<{ data: { label: string }; id: string }> = ({ data, id }) => {
   const [nodes] = useRecoilState(nodesState);
   const node = nodes.find((node) => node.id === id);
   return (
     <Box
-      bg="#375bd2"
+      bg="white"
       borderRadius="5px"
       p="3"
       display="flex"
       flexDirection="column"
       alignItems="center"
+      color="black"
     >
-      <Text>Chain Link</Text>
+      <Text>External Node</Text>
       {data.label && <Text>{data.label}</Text>}
-      <Text fontSize="xx-small">Address: {node?.parameters[0]}</Text>
-      <Text>TWAP: {node?.parameters[1]}</Text>
+      <Text fontSize="xx-small">Node Address: {node?.parameters[0]}</Text>
       <Handle
         type="source"
         isValidConnection={() => true}
         position={Position.Bottom}
-        style={{ background: '#375bd2' }}
+        style={{ background: 'white' }}
+        isConnectable
+      ></Handle>
+      <Handle
+        type="target"
+        isValidConnection={() => true}
+        position={Position.Top}
+        style={{ background: 'white' }}
         isConnectable
       ></Handle>
     </Box>
