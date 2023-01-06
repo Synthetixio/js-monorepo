@@ -1,25 +1,21 @@
-import { BigNumberish, ethers } from 'ethers';
-import { useCallback, useMemo } from 'react';
-import { erc20ABI, useContractRead, useContractWrite, useNetwork } from 'wagmi';
-import { useAccount } from '@snx-v3/useBlockchain';
+import { BigNumber, ethers } from 'ethers';
+import { useCallback } from 'react';
+import { erc20ABI, useContractWrite } from 'wagmi';
 import { TxConfig } from './useMulticall';
+import { useAllowance } from '@snx-v3/useAllowance';
 
 export const useApprove = (
   contractAddress: string,
-  amount: BigNumberish,
+  amount: BigNumber,
   spender: string,
   config?: Partial<TxConfig>
 ) => {
-  const { address: accountAddress } = useAccount();
-  const { chain: activeChain } = useNetwork();
-  const hasWalletConnected = Boolean(activeChain);
-
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
     address: contractAddress,
     abi: erc20ABI,
     functionName: 'approve',
-    args: [spender, amount],
+    args: [spender as `0x${string}`, amount],
     onError: (e) => {
       config?.onError && config.onError(e);
     },
@@ -28,31 +24,25 @@ export const useApprove = (
     },
   });
 
-  const { data: allowance, refetch: refetchAllowance } = useContractRead({
-    address: contractAddress,
-    abi: erc20ABI,
-    functionName: 'allowance',
-    args: [accountAddress, spender],
-    enabled: hasWalletConnected && !!contractAddress,
-  });
+  const { data: allowance, refetch: refetchAllowance } = useAllowance({ contractAddress, spender });
 
-  const sufficientAllowance = useMemo(() => {
-    return allowance && allowance.gte(amount);
-  }, [allowance, amount]);
+  const sufficientAllowance = Boolean(allowance?.gte(amount));
 
   const approve = useCallback(
     async (infiniteApproval = false) => {
-      if (!sufficientAllowance || infiniteApproval) {
-        const txReceipt = await writeAsync({
-          recklesslySetUnpreparedArgs: [
-            spender,
-            infiniteApproval ? ethers.constants.MaxUint256 : amount,
-          ],
-        });
-        await txReceipt.wait();
-        refetchAllowance();
-        config?.onSuccess && config.onSuccess();
-      }
+      if (sufficientAllowance) return;
+      if (infiniteApproval) return;
+      if (!writeAsync) return;
+
+      const txReceipt = await writeAsync({
+        recklesslySetUnpreparedArgs: [
+          spender as `0x${string}`,
+          infiniteApproval ? ethers.constants.MaxUint256 : amount,
+        ],
+      });
+      await txReceipt.wait();
+      refetchAllowance();
+      config?.onSuccess && config.onSuccess();
     },
     [amount, config, refetchAllowance, spender, sufficientAllowance, writeAsync]
   );

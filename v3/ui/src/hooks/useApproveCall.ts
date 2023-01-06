@@ -1,11 +1,11 @@
-import { BigNumberish } from 'ethers';
+import { BigNumber } from 'ethers';
 import { useCallback } from 'react';
 import { useApprove } from './useApprove';
 import { TxConfig } from './useMulticall';
 
 export const useApproveCall = (
   contractAddress: string,
-  amount: BigNumberish,
+  amount: BigNumber,
   spender: string,
   call: () => Promise<void>,
   config?: Partial<TxConfig>

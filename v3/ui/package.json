@@ -23,6 +23,7 @@
     "@snx-v3/etherscanLink": "workspace:*",
     "@snx-v3/format": "workspace:*",
     "@snx-v3/useAccounts": "workspace:*",
+    "@snx-v3/useAllowance": "workspace:*",
     "@snx-v3/useBlockchain": "workspace:*",
     "@snx-v3/useCollateralTypes": "workspace:*",
     "@snx-v3/useCoreProxy": "workspace:*",
