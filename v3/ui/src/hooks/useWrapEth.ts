@@ -5,6 +5,31 @@ import { useAccount } from '@snx-v3/useBlockchain';
 import { TxConfig } from './useMulticall';
 import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
 
+const minimalWETHABI = [
+  {
+    constant: false,
+    inputs: [],
+    name: 'deposit',
+    outputs: [],
+    payable: true,
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: 'wad',
+        type: 'uint256',
+      },
+    ],
+    name: 'withdraw',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+];
 export const useWrapEth = (config?: Partial<TxConfig>) => {
   const ethCollateral = useEthCollateralType();
 
@@ -22,10 +47,9 @@ export const useWrapEth = (config?: Partial<TxConfig>) => {
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
     address: ethCollateral?.tokenAddress || '',
-    abi: erc20ABI,
+    abi: minimalWETHABI,
     functionName: 'deposit',
     args: [],
-    enabled: Boolean(ethCollateral?.tokenAddress),
     onError: (e) => {
       config?.onError && config.onError(e);
     },
@@ -68,10 +92,9 @@ export const useUnWrapEth = (config?: Partial<TxConfig>) => {
 
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    address: ethCollateral?.tokenAddress || '',
-    abi: erc20ABI,
+    address: ethCollateral?.tokenAddress,
+    abi: minimalWETHABI,
     functionName: 'withdraw',
-    enabled: Boolean(ethCollateral?.tokenAddress),
     onError: (e) => {
       config?.onError && config.onError(e);
     },
