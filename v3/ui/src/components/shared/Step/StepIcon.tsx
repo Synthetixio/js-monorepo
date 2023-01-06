@@ -1,11 +1,11 @@
 import { chakra, Flex, forwardRef, Spinner } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { useMemo, ReactNode } from 'react';
-import { StepStatus } from '../TransactionReview/TransactionReview.types';
+import { ReactNode, useMemo } from 'react';
+import { TransactionStatus } from '@snx-v3/useTransactionState';
 import { CheckIcon, CloseIcon } from './Icons';
 
 interface StepIconProps {
-  status?: StepStatus;
+  status?: TransactionStatus;
   children?: ReactNode;
 }
 
@@ -24,18 +24,18 @@ const animationConfig = {
 
 export const StepIcon = forwardRef<StepIconProps, 'div'>(({ status, children }, ref) => {
   return useMemo(() => {
-    if (status === StepStatus.Error) {
+    if (status === 'error') {
       return <AnimatedCloseIcon color="white" {...animationConfig} />;
     }
 
-    if (status === StepStatus.Completed) {
+    if (status === 'completed') {
       return (
         <MotionFlex {...animationConfig}>
           <CheckIcon color="white" />
         </MotionFlex>
       );
     }
-    if (status === StepStatus.Current) {
+    if (status === 'current') {
       return <Spinner color="white" width={6} height={6} />;
     }
 

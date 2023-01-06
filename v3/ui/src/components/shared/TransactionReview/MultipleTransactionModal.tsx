@@ -7,32 +7,29 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { FC, useCallback } from 'react';
-import { useRecoilState } from 'recoil';
-import { transactionState } from '../../../utils/state';
 import { MultipleTransactionReview } from './MultipleTransactionReview';
+import { useClearTransactionState, useTransactionState } from '@snx-v3/useTransactionState';
 
-export const MultipleTransactionModal: FC = () => {
-  const [transaction, setTransaction] = useRecoilState(transactionState);
-
-  const onClose = useCallback(() => {
-    setTransaction({
-      transactions: [],
-      isOpen: false,
-    });
-  }, [setTransaction]);
+export function MultipleTransactionModal() {
+  const { data: transactionState } = useTransactionState();
+  const clearTransactionState = useClearTransactionState();
 
   return (
-    <Modal size="lg" isOpen={transaction.isOpen} onClose={onClose} closeOnOverlayClick={false}>
+    <Modal
+      size="lg"
+      isOpen={Boolean(transactionState?.isOpen)}
+      onClose={clearTransactionState}
+      closeOnOverlayClick={false}
+    >
       <ModalOverlay />
       <ModalContent bg="black" color="white">
-        <ModalHeader>{transaction.title || 'Complete this action'}</ModalHeader>
+        <ModalHeader>Complete this action</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text mb="2">{transaction.subtitle || 'Please execute the following transactions:'}</Text>
-          <MultipleTransactionReview onSuccess={onClose} />
+          <Text mb="2">Please execute the following transactions:</Text>
+          <MultipleTransactionReview onSuccess={clearTransactionState} />
         </ModalBody>
       </ModalContent>
     </Modal>
   );
-};
+}

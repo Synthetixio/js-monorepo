@@ -4,11 +4,9 @@ import { parseUnits } from '@snx-v3/format';
 import { useAccounts } from '@snx-v3/useAccounts';
 import type { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useCallback, useMemo, useState } from 'react';
-import { useNavigate, generatePath } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
-import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
+import { generatePath, useNavigate } from 'react-router-dom';
+import { useSetTransactionState } from '@snx-v3/useTransactionState';
 import { contracts } from '../utils/constants';
-import { transactionState } from '../utils/state';
 import { useApprove } from './useApprove';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
@@ -188,30 +186,34 @@ export const useDeposit = ({
     }
   );
 
-  const setTransaction = useSetRecoilState(transactionState);
+  const setTransactionState = useSetTransactionState();
 
   const updateTransactions = useCallback(() => {
-    const transactions: Transaction[] = [];
+    const transactions = [];
 
     if (isNativeCurrency) {
       transactions.push({
         title: 'Wrap ETH',
         subtitle: amountBN.gt(wrapEthBalance?.value || 0)
           ? 'You must wrap your ether before depositing.'
-          : undefined,
-        call: async (useBalance) => await wrap(amountBN, useBalance),
+          : '',
+        call: async (useBalance?: boolean) => await wrap(amountBN, useBalance),
         checkboxLabel: amountBN.gt(wrapEthBalance?.value || 0)
-          ? undefined
+          ? ''
           : `Skip this step and use my existing ${amount} wETH.`,
+        checked: false,
       });
     }
+
     if (requireApproval) {
       transactions.push({
         title: 'Approve ' + selectedCollateralType.symbol.toUpperCase() + ' transfer',
-        call: async (infiniteApproval) => await approve(infiniteApproval),
+        subtitle: '',
+        call: async (infiniteApproval?: boolean) => await approve(infiniteApproval),
         checkboxLabel: requireApproval
           ? `Approve unlimited ${selectedCollateralType.symbol.toUpperCase()} transfers to Synthetix.`
-          : undefined,
+          : '',
+        checked: false,
       });
     }
 
@@ -219,17 +221,20 @@ export const useDeposit = ({
       title: 'Deposit ' + selectedCollateralType.symbol.toUpperCase(),
       subtitle: `This will transfer your ${selectedCollateralType.symbol.toUpperCase()} to Synthetix.`,
       call: async () => await multiTxn.exec(),
+      checkboxLabel: '',
+      checked: false,
     });
 
-    setTransaction({
+    setTransactionState({
       transactions,
       isOpen: true,
+      onSuccess: () => null,
     });
   }, [
     isNativeCurrency,
     selectedCollateralType?.symbol,
     requireApproval,
-    setTransaction,
+    setTransactionState,
     amountBN,
     wrapEthBalance?.value,
     amount,

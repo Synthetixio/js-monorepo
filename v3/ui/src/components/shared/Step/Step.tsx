@@ -1,20 +1,16 @@
 import { Flex } from '@chakra-ui/react';
 import { PropsWithChildren } from 'react';
 import { StepIcon } from './StepIcon';
-import { StepStatus } from '../TransactionReview/TransactionReview.types';
-
-interface StepProps {
-  status: StepStatus;
-}
+import { TransactionStatus } from '@snx-v3/useTransactionState';
 
 export const statusColor = {
-  [StepStatus.Completed]: 'green.700',
-  [StepStatus.Error]: 'red.700',
-  [StepStatus.Current]: 'gray.700',
-  [StepStatus.Upcoming]: 'gray.700',
+  completed: 'green.700',
+  error: 'red.700',
+  current: 'gray.700',
+  upcoming: 'gray.700',
 };
 
-export function Step({ status, children }: PropsWithChildren<StepProps>) {
+export function Step({ status, children }: PropsWithChildren<{ status: TransactionStatus }>) {
   return (
     <Flex
       width={10}

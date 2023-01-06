@@ -6,7 +6,6 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { darkTheme, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { Fonts, theme } from '@synthetixio/v3-theme';
 import { BrowserRouter } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
 import {
   DEFAULT_QUERY_REFRESH_INTERVAL,
   DEFAULT_QUERY_STALE_TIME,
@@ -18,6 +17,7 @@ import './i18n';
 
 // We have to import into *VAR* and *USE* it so webpack does not remove unused library import
 import * as rainbowkitStyles from '@rainbow-me/rainbowkit/styles.css';
+import { goerli, optimismGoerli } from '@wagmi/chains';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,7 +29,6 @@ const queryClient = new QueryClient({
   },
 });
 
-import { goerli, optimismGoerli } from '@wagmi/chains';
 const { chains, provider } = configureChains(
   [goerli, optimismGoerli],
   [
@@ -71,27 +70,25 @@ const root = createRoot(container);
 root.render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
-      <RecoilRoot>
-        <ChakraProvider theme={theme}>
-          <Fonts />
-          <WagmiConfig client={wagmiClient}>
-            <RainbowKitProvider
-              /* @ts-ignore*/
-              styles={rainbowkitStyles}
-              theme={darkTheme({
-                accentColor: 'rgb(49, 130, 206)',
-                accentColorForeground: 'white',
-                borderRadius: 'small',
-                fontStack: 'system',
-              })}
-              chains={chains}
-            >
-              <Synthetix />
-              <ReactQueryDevtools />
-            </RainbowKitProvider>
-          </WagmiConfig>
-        </ChakraProvider>
-      </RecoilRoot>
+      <ChakraProvider theme={theme}>
+        <Fonts />
+        <WagmiConfig client={wagmiClient}>
+          <RainbowKitProvider
+            /* @ts-ignore*/
+            styles={rainbowkitStyles}
+            theme={darkTheme({
+              accentColor: 'rgb(49, 130, 206)',
+              accentColorForeground: 'white',
+              borderRadius: 'small',
+              fontStack: 'system',
+            })}
+            chains={chains}
+          >
+            <Synthetix />
+            <ReactQueryDevtools />
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </ChakraProvider>
     </QueryClientProvider>
   </BrowserRouter>
 );
