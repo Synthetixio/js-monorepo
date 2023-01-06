@@ -3,6 +3,7 @@ import { useContract } from './useContract';
 import ethers, { Contract } from 'ethers';
 import { useCallback, useState } from 'react';
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
+import { useExternalMulticall } from '@snx-v3/useExternalMulticall';
 
 // contact, funcion name, arguments
 export type MulticallCall = {
@@ -41,7 +42,7 @@ export const useMulticall = (
   config?: Partial<TxConfig>
 ) => {
   const [status, setStatus] = useState<MulticallStatusType>('idle');
-
+  const { data: Multicall } = useExternalMulticall();
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   let callContract: ethers.Contract | undefined;
   let callFunc: string | undefined;
@@ -52,6 +53,24 @@ export const useMulticall = (
       callContract = calls[0].contract;
       callFunc = calls[0].functionName;
       callArgs = calls[0].callArgs;
+    } else if (calls.find((c) => c.contract.address !== snxProxy?.address)) {
+      callContract = Multicall;
+      callFunc = 'aggregate3Value';
+
+      callArgs = [
+        calls.map((call) => {
+          const callData = call.contract.interface.encodeFunctionData(
+            call.functionName,
+            call.callArgs || []
+          );
+          return {
+            target: call.contract.address,
+            callData,
+            allowFailure: false,
+            value: 0,
+          };
+        }),
+      ];
     } else if (calls.length > 1) {
       callContract = snxProxy.contract;
       callFunc = 'multicall';
@@ -62,7 +81,7 @@ export const useMulticall = (
       ];
     }
   }
-
+  console.log(calls);
   const currentTxn = useContractWrite({
     enabled: Boolean(calls.length && snxProxy),
     mode: 'recklesslyUnprepared',
