@@ -110,7 +110,7 @@ const getPoolData = async (chainName: string, id: string) => {
 export const useGetPoolData = (poolId?: string) => {
   const network = useNetwork();
 
-  return useQuery<Pool | undefined>({
+  return useQuery({
     queryKey: [network.name, 'pool', { poolId }],
     queryFn: async () => {
       if (!network.name || !poolId) throw Error('OMG!');

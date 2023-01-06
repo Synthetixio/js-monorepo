@@ -5,7 +5,7 @@ import { useAccount } from '@snx-v3/useBlockchain';
 export function useAccounts() {
   const { address } = useAccount();
   const { data: AccountProxy } = useAccountProxy();
-  return useQuery<string[]>({
+  return useQuery({
     queryKey: [{ AccountProxy: AccountProxy?.address }, 'accounts'],
     queryFn: async function () {
       if (!AccountProxy) throw new Error('Should be disabled');
