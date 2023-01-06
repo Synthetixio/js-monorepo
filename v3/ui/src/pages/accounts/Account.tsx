@@ -32,7 +32,11 @@ export function Account() {
       <Heading size="md" mb="3">
         Deposit Collateral
       </Heading>
-      <Deposit liquidityPositions={liquidityPositions} refetch={refetch} />
+      <Deposit
+        liquidityPositions={liquidityPositions}
+        refetch={refetch}
+        accountId={params.accountId}
+      />
     </Box>
   );
 }
