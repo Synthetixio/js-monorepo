@@ -115,14 +115,16 @@ export const useGetPoolData = (poolId?: string) => {
     queryFn: async () => {
       if (!network.name || !poolId) throw Error('OMG!');
       const poolData = await getPoolData(network.name, poolId);
+      if (!poolData.data.pool) {
+        return undefined;
+      }
       return addMockData(poolData.data.pool);
     },
     enabled: Boolean(network.name && poolId),
   });
 };
 
-function addMockData(pool: Pool | null): Pool | null {
-  if (!pool) return null;
+function addMockData(pool: Pool): Pool {
   const usd_withdrawn = wei('1500');
   const usd_deposited = wei('1000');
   const net_issuance = usd_withdrawn.sub(usd_deposited);

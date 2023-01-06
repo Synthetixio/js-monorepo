@@ -3,11 +3,6 @@ import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useNetwork } from '@snx-v3/useBlockchain';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 
-interface RewardDistribution {
-  value: string;
-  distributor: string;
-}
-
 export const useRewards = ({
   accountId,
   poolId,
@@ -20,7 +15,7 @@ export const useRewards = ({
   const network = useNetwork();
   const { data: CoreProxy } = useCoreProxy();
 
-  return useQuery<RewardDistribution[]>({
+  return useQuery({
     queryKey: [
       network.name,
       'rewards',

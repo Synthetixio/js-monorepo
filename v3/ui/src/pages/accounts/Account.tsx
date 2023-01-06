@@ -6,8 +6,12 @@ import { LiquidityPositions } from '../../components/accounts/LiquidityPositions
 import { useLiquidityPositions } from '@snx-v3/useLiquidityPositions';
 
 export function Account() {
-  const { id: accountId } = useParams();
-  const { data: liquidityPositions, isLoading, refetch } = useLiquidityPositions({ accountId });
+  const params = useParams();
+  const {
+    data: liquidityPositions,
+    isLoading,
+    refetch,
+  } = useLiquidityPositions({ accountId: params.accountId });
 
   return (
     <Box>
@@ -18,15 +22,7 @@ export function Account() {
           position="relative"
         >
           <Stack position="absolute" top="0" left="0" width="100%">
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
-            <Skeleton height="10px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
+            <Skeleton height="30px" isLoaded={!isLoading && Boolean(liquidityPositions)} />
           </Stack>
         </Box>
       )}
@@ -36,11 +32,7 @@ export function Account() {
       <Heading size="md" mb="3">
         Deposit Collateral
       </Heading>
-      <Deposit
-        accountId={accountId}
-        liquidityPositions={liquidityPositions ?? {}}
-        refetch={refetch}
-      />
+      <Deposit liquidityPositions={liquidityPositions} refetch={refetch} />
     </Box>
   );
 }

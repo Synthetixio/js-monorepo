@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { usePools } from '@snx-v3/usePools';
 import { FC, useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { generatePath, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useUpdatePool } from '../../../hooks/useUpdatePool';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 
@@ -52,7 +52,7 @@ export const PoolDialog: FC<Props> = ({
     },
     collateralAmount,
     pool,
-    () => navigate(`/accounts/${accountId}`)
+    () => navigate(generatePath('/accounts/:accountId', { accountId }))
   );
   const updatePool = (newPool: string) => {
     if (debt <= 0) setPool(newPool);
@@ -101,7 +101,7 @@ export const PoolDialog: FC<Props> = ({
                   </Heading>
                   <Text fontSize="xs" display="block" color="gray.400">
                     Pool #{id}{' '}
-                    <RouterLink to={`/pools/${id}`}>
+                    <RouterLink to={generatePath('/pools/:poolId', { poolId: id })}>
                       <Link
                         color="cyan.500"
                         ml="1"
@@ -139,7 +139,7 @@ export const PoolDialog: FC<Props> = ({
                 </Heading>
                 <Text fontSize="xs" display="block" color="gray.400">
                   Pool #2
-                  <RouterLink to={`/pools/${poolId}`}>
+                  <RouterLink to={generatePath('/pools/:poolId', { poolId })}>
                     <Link
                       color="cyan.500"
                       ml="1"
@@ -176,7 +176,7 @@ export const PoolDialog: FC<Props> = ({
                 </Heading>
                 <Text fontSize="xs" display="block" color="gray.400">
                   Pool #3
-                  <RouterLink to={`/pools/${poolId}`}>
+                  <RouterLink to={generatePath('/pools/:poolId', { poolId })}>
                     <Link
                       color="cyan.500"
                       ml="1"
@@ -213,7 +213,7 @@ export const PoolDialog: FC<Props> = ({
                 </Heading>
                 <Text fontSize="xs" display="block" color="gray.400">
                   Pool #4
-                  <RouterLink to={`/pools/${poolId}`}>
+                  <RouterLink to={generatePath('/pools/:poolId', { poolId })}>
                     <Link
                       color="cyan.500"
                       ml="1"

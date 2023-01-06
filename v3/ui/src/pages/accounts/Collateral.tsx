@@ -1,11 +1,8 @@
 import { Heading, Text } from '@chakra-ui/react';
-import { Deposit } from '../../components/accounts/Deposit/index';
-import { useParams } from 'react-router-dom';
+import { Deposit } from '../../components/accounts/Deposit';
 import { Helmet } from 'react-helmet';
 
 export function Collateral() {
-  const { id: _id } = useParams();
-
   return (
     <>
       <Helmet>

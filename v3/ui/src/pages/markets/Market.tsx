@@ -1,9 +1,7 @@
-import { Flex, Box, Stack, Skeleton, Heading } from '@chakra-ui/react';
+import { Box, Flex, Heading, Skeleton, Stack } from '@chakra-ui/react';
 import { Helmet } from 'react-helmet';
 
 export function Market() {
-  //const { id } = useParams();
-
   return (
     <>
       <Helmet>

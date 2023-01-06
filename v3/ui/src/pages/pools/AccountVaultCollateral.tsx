@@ -1,8 +1,8 @@
 import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { FC } from 'react';
-import { Text, Button, Skeleton } from '@chakra-ui/react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Button, Skeleton, Text } from '@chakra-ui/react';
+import { useNavigate, useParams, generatePath } from 'react-router-dom';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
 
 const AccountVaultCollateralUi: FC<{
@@ -35,7 +35,13 @@ const AccountVaultCollateralUi: FC<{
       )}
       <Button
         onClick={() => {
-          navigate(`/accounts/${accountId}/positions/${collateralSymbol}/${poolId}`);
+          navigate(
+            generatePath('/accounts/:accountId/positions/:collateral/:poolId', {
+              accountId,
+              collateral: collateralSymbol,
+              poolId,
+            })
+          );
         }}
         mt={1}
       >
@@ -46,18 +52,22 @@ const AccountVaultCollateralUi: FC<{
 };
 
 export const AccountVaultCollateral: FC<{ collateral: CollateralType }> = ({ collateral }) => {
-  const { poolId, id: accountId } = useParams();
-  const { data, isLoading } = useLiquidityPosition({ accountId, poolId, collateral });
+  const params = useParams();
+  const { data, isLoading } = useLiquidityPosition({
+    accountId: params.accountId,
+    poolId: params.poolId,
+    collateral,
+  });
 
-  if (!poolId || !accountId) return null;
+  if (!params.poolId || !params.accountId) return null;
   return (
     <AccountVaultCollateralUi
       collateralAmount={data?.collateralAmount.toNumber() || 0}
       collateralValue={data?.collateralValue.toNumber() || 0}
       collateralSymbol={collateral.symbol}
       isLoading={isLoading}
-      poolId={poolId}
-      accountId={accountId}
+      poolId={params.poolId}
+      accountId={params.accountId}
     />
   );
 };

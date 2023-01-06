@@ -7702,9 +7702,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/AccountsSelector@workspace:*, @snx-v3/AccountsSelector@workspace:v3/lib/AccountsSelector":
+"@snx-v3/AccountsSelector@workspace:*, @snx-v3/AccountsSelector@workspace:v3/components/AccountsSelector":
   version: 0.0.0-use.local
-  resolution: "@snx-v3/AccountsSelector@workspace:v3/lib/AccountsSelector"
+  resolution: "@snx-v3/AccountsSelector@workspace:v3/components/AccountsSelector"
   dependencies:
     "@chakra-ui/icons": ^2.0.9
     "@chakra-ui/react": ^2.2.8

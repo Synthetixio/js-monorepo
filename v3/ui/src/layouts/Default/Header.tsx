@@ -3,10 +3,9 @@ import logomark from './logomark.svg';
 import kwenta from './kwenta.svg';
 import lyra from './lyra.svg';
 import thales from './thales.svg';
-import { CheckIcon, ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
   Box,
-  Button,
   Container,
   Drawer,
   DrawerBody,
@@ -18,10 +17,6 @@ import {
   IconButton,
   Image,
   Link,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Popover,
   PopoverBody,
   PopoverContent,
@@ -30,11 +25,9 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { Link as RouterLink, useLocation, useParams } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { NetworkController } from '../../components/NetworkController';
 import { useEffect } from 'react';
-import { prettyString } from '@snx-v3/format';
-import { useAccounts } from '@snx-v3/useAccounts';
 import { AccountsSelector } from '@snx-v3/AccountsSelector';
 
 function ExternalLinks() {
@@ -74,8 +67,6 @@ function ExternalLinks() {
 export default function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
-  const { id } = useParams();
-  const { data: accounts = [] } = useAccounts();
 
   useEffect(() => {
     onClose();
@@ -154,7 +145,9 @@ export default function Header() {
 
           <Spacer />
 
-          <AccountsSelector />
+          <Box display={['none', 'none', 'inline-block']}>
+            <AccountsSelector />
+          </Box>
 
           <Box>
             <NetworkController />
@@ -181,62 +174,7 @@ export default function Header() {
             </Link>
           </DrawerHeader>
           <DrawerBody>
-            {id && (
-              <Menu>
-                <MenuButton
-                  size="sm"
-                  as={Button}
-                  variant="outline"
-                  rightIcon={<ChevronDownIcon />}
-                  w="100%"
-                  maxW="180px"
-                  mb="2"
-                >
-                  {id ? `Account #${prettyString(id, 3, 3)}` : 'Create Account'}
-                </MenuButton>
-                <MenuList fontSize="xs" px="2" bg="black" border="1px solid rgba(255,255,255,0.33)">
-                  {accounts.map((account) => {
-                    const isCurrentAccount = id === account.toString();
-                    const menuItem = (
-                      <MenuItem
-                        key={account}
-                        _hover={{ bg: 'whiteAlpha.200' }}
-                        _focus={{ bg: 'whiteAlpha.200' }}
-                        _active={{ bg: 'whiteAlpha.200' }}
-                      >
-                        <Flex width="100%" alignItems="center">
-                          {isCurrentAccount && <CheckIcon marginRight={1} />}
-                          {account}
-                        </Flex>
-                      </MenuItem>
-                    );
-
-                    return isCurrentAccount ? (
-                      menuItem
-                    ) : (
-                      <RouterLink key={account} to={`/accounts/${account}`}>
-                        {menuItem}
-                      </RouterLink>
-                    );
-                  })}
-                  <MenuItem
-                    _hover={{ bg: 'whiteAlpha.200' }}
-                    _focus={{ bg: 'whiteAlpha.200' }}
-                    _active={{ bg: 'whiteAlpha.200' }}
-                  >
-                    <Link
-                      as={RouterLink}
-                      to="/accounts/create"
-                      _focus={{ boxShadow: 'none' }}
-                      _hover={{ textDecoration: 'none' }}
-                      fontWeight="semibold"
-                    >
-                      Create new account
-                    </Link>
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            )}
+            <AccountsSelector />
             <Box mb="3">
               <Link to="/" as={RouterLink} _focus={{ boxShadow: 'none' }} fontWeight="semibold">
                 Deposit

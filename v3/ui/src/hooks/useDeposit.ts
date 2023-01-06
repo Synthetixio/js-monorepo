@@ -4,7 +4,7 @@ import { parseUnits } from '@snx-v3/format';
 import { useAccounts } from '@snx-v3/useAccounts';
 import type { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useCallback, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, generatePath } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { Transaction } from '../components/shared/TransactionReview/TransactionReview.types';
 import { contracts } from '../utils/constants';
@@ -52,7 +52,7 @@ export const useDeposit = ({
 
   const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
 
-  const newAccountId = useMemo(() => Math.floor(Math.random() * 10000000000), []);
+  const newAccountId = useMemo(() => `${Math.floor(Math.random() * 10000000000)}`, []);
 
   const calls: MulticallCall[] = useMemo(() => {
     if (!selectedCollateralType?.tokenAddress || !selectedCollateralType?.symbol) {
@@ -140,7 +140,11 @@ export const useDeposit = ({
       await refetchAccounts();
       if (!Boolean(accountId)) {
         navigate(
-          `/accounts/${newAccountId}/positions/${selectedCollateralType.symbol}/${selectedPoolId}`
+          generatePath('/accounts/:accountId/positions/:collateral/:poolId', {
+            accountId: newAccountId,
+            collateral: selectedCollateralType.symbol,
+            poolId: selectedPoolId,
+          })
         );
       } else {
         // TODO: get language from noah

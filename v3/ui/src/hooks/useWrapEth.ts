@@ -1,6 +1,7 @@
 import { BigNumberish } from 'ethers';
 import { useCallback } from 'react';
-import { erc20ABI, useAccount, useBalance, useContractWrite } from 'wagmi';
+import { erc20ABI, useBalance, useContractWrite } from 'wagmi';
+import { useAccount } from '@snx-v3/useBlockchain';
 import { TxConfig } from './useMulticall';
 import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
 

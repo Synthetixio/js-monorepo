@@ -3,15 +3,15 @@ import { Flex, Link } from '@chakra-ui/react';
 import { generatePath, Link as RouterLink, useMatch, useParams } from 'react-router-dom';
 
 export function DepositingNav() {
-  const { id } = useParams();
-  const innerPage = !useMatch('/accounts/:id');
+  const params = useParams();
+  const innerPage = !useMatch('/accounts/:accountId');
 
   return (
     <Flex alignItems="center" mb="10">
       {innerPage ? (
         <Link
           as={RouterLink}
-          to={generatePath('/accounts/:id', { id })}
+          to={generatePath('/accounts/:accountId', { accountId: params.accountId })}
           fontSize="xs"
           fontWeight="normal"
           color="cyan.500"
@@ -22,7 +22,7 @@ export function DepositingNav() {
       ) : (
         <Link
           as={RouterLink}
-          to={generatePath('/accounts/:id/settings', { id })}
+          to={generatePath('/accounts/:accountId/settings', { accountId: params.accountId })}
           ml="auto"
           fontSize="xs"
           fontWeight="normal"
@@ -33,34 +33,6 @@ export function DepositingNav() {
           &nbsp;&nbsp;Account Settings
         </Link>
       )}
-
-      {/* {false && router.route.split('/').length == 3 && (
-        <NextLink href={`/accounts/${id}/settings`} passHref>
-          <Link
-            ml="auto"
-            fontSize="xs"
-            fontWeight="normal"
-            color="cyan.500"
-            _hover={{ textDecoration: 'none' }}
-          >
-            <SettingsIcon transform="translateY(-1px)" />
-            &nbsp;&nbsp;Account Settings
-          </Link>
-        </NextLink>
-      )}
-      {false && (
-        <NextLink href={`/accounts/${id}`} passHref>
-          <Link
-            ml="auto"
-            fontSize="xs"
-            fontWeight="normal"
-            color="cyan.500"
-            _hover={{ textDecoration: 'none' }}
-          >
-            <ChevronLeftIcon transform="translateY(-1px)" /> Return to overview
-          </Link>
-        </NextLink>
-      )} */}
     </Flex>
   );
 }

@@ -6,21 +6,21 @@ import { DepositingNav } from '../../components/accounts/DepositingNav';
 import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
 
 export function LiquidityPosition() {
-  const { id: accountId, poolId, collateral: collateralSymbol } = useParams();
+  const params = useParams();
   const { data: collateralTypes } = useCollateralTypes();
 
   const collateral = useMemo(() => {
     return collateralTypes?.find(
-      (item) => item.symbol?.toLowerCase() === collateralSymbol?.toLocaleLowerCase()
+      (item) => item.symbol?.toLowerCase() === params.collateral?.toLocaleLowerCase()
     );
-  }, [collateralTypes, collateralSymbol]);
+  }, [collateralTypes, params.collateral]);
 
-  if (!collateral || !poolId || !accountId) return null;
+  if (!collateral || !params.poolId || !params.accountId) return null;
 
   return (
     <Container>
       <DepositingNav />
-      <Position collateral={collateral} poolId={poolId} accountId={accountId} />
+      <Position collateral={collateral} poolId={params.poolId} accountId={params.accountId} />
     </Container>
   );
 }

@@ -90,13 +90,15 @@ export const CollateralSectionUi: FC<{
   );
 };
 export const CollateralSection = () => {
-  const { poolId, id: accountId } = useParams();
-  const { data: vaultCollaterals } = useVaultCollaterals(poolId ? parseFloat(poolId) : undefined);
+  const params = useParams();
+  const { data: vaultCollaterals } = useVaultCollaterals(
+    params.poolId ? parseFloat(params.poolId) : undefined
+  );
 
   return (
     <CollateralSectionUi
       vaultCollaterals={vaultCollaterals}
-      accountId={accountId}
+      accountId={params.accountId}
       AccountVaultCollateral={AccountVaultCollateral}
     />
   );

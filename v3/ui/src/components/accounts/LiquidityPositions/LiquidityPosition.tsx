@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from '@chakra-ui/icons';
 import { Link, Td, Text, Tr } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { generatePath, Link as RouterLink } from 'react-router-dom';
 import { FC } from 'react';
 import { Amount } from '../../shared/Amount/Amount';
 import { LiquidityPositionType } from '@snx-v3/useLiquidityPositions';
@@ -59,7 +59,11 @@ export const LiquidityPosition: FC<Props> = ({ position }) => {
       <Td>
         <Link
           as={RouterLink}
-          to={`/accounts/${position.accountId}/positions/${position.collateralType.symbol}/${position.poolId}`}
+          to={generatePath('/accounts/:accountId/positions/:collateral/:poolId', {
+            accountId: position.accountId,
+            collateral: position.collateralType.symbol,
+            poolId: position.poolId,
+          })}
           color="cyan.500"
           display="inline-block"
           transform="translateY(-1.5px)"
