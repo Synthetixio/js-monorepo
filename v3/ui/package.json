@@ -32,6 +32,7 @@
     "@snx-v3/useMarketNamesById": "workspace:*",
     "@snx-v3/usePools": "workspace:*",
     "@snx-v3/usePreferredPool": "workspace:*",
+    "@snx-v3/useTransactionState": "workspace:*",
     "@snx-v3/useVaultCollaterals": "workspace:*",
     "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
@@ -51,7 +52,6 @@
     "react-hook-form": "^7.34.0",
     "react-i18next": "^11.18.3",
     "react-router-dom": "^6.3.0",
-    "recoil": "^0.7.4",
     "wagmi": "^0.9.6",
     "zod": "^3.20.2"
   },

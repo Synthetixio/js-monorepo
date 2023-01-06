@@ -21,19 +21,17 @@ import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { ethers } from 'ethers';
 import { useMemo, useState } from 'react';
 import Head from 'react-helmet';
-import { useSetRecoilState } from 'recoil';
 import { useContractWrite, useNetwork, useSwitchNetwork } from 'wagmi';
 import { useAccount } from '@snx-v3/useBlockchain';
 import { NumberInput } from '../../components/accounts/Position/Manage/NumberInput';
 import { Balance } from '../../components/accounts/Deposit/Balance';
-import { Transaction } from '../../components/shared/TransactionReview/TransactionReview.types';
 import { useContract } from '../../hooks/useContract';
 import { useApprove } from '../../hooks/useApprove';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';
-import { transactionState } from '../../utils/state';
 import { parseUnits } from '@snx-v3/format';
 import testnetIcon from './testnet.png';
+import { useSetTransactionState } from '@snx-v3/useTransactionState';
 
 const chains = [
   {
@@ -55,7 +53,6 @@ const encodeAddress = (address: string | undefined) => {
 export const Teleporter = () => {
   const { address } = useAccount();
   const toast = useToast();
-  const setTransaction = useSetRecoilState(transactionState);
   const { openConnectModal } = useConnectModal();
   const [amount, setAmount] = useState(0);
 
@@ -92,16 +89,18 @@ export const Teleporter = () => {
     CCIP!.address
   );
 
+  const setTransactionState = useSetTransactionState();
+
   const submit = async () => {
-    const transactions: Transaction[] = [];
+    const transactions = [];
 
     if (requireApproval) {
       transactions.push({
         title: 'Approve snxUSD transfer',
-        call: async (infiniteApproval) => await approve(infiniteApproval),
-        checkboxLabel: requireApproval
-          ? `Approve unlimited snxUSD transfers to Synthetix.`
-          : undefined,
+        subtitle: '',
+        call: async (infiniteApproval?: boolean) => await approve(infiniteApproval),
+        checkboxLabel: requireApproval ? `Approve unlimited snxUSD transfers to Synthetix.` : '',
+        checked: false,
       });
     }
 
@@ -109,6 +108,9 @@ export const Teleporter = () => {
       title: 'Teleport snxUSD',
       subtitle: `This will transfer your snxUSD to the ${toChain?.label} network.`,
       call: async () => {
+        if (!ccipSend) {
+          return;
+        }
         const txReceipt = await ccipSend();
         toast.closeAll();
         toast({
@@ -122,11 +124,14 @@ export const Teleporter = () => {
         await txReceipt.wait();
         balance.refetch();
       },
+      checkboxLabel: '',
+      checked: false,
     });
 
-    setTransaction({
+    setTransactionState({
       transactions,
       isOpen: true,
+      onSuccess: () => null,
     });
   };
 
