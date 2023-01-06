@@ -208,7 +208,7 @@ export const DepositForm: FC<{
 
 export const Deposit: FC<{
   accountId?: string;
-  liquidityPositions: LiquidityPositionsById;
+  liquidityPositions?: LiquidityPositionsById;
   refetch: () => void;
 }> = ({ accountId, liquidityPositions = {}, refetch }) => {
   const { data: collateralTypes } = useCollateralTypes();
