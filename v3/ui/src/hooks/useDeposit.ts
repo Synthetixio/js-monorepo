@@ -19,7 +19,7 @@ export const useDeposit = ({
   amount,
   selectedCollateralType,
   selectedPoolId,
-  isNativeCurrency,
+  isWrappedEth,
   poolId,
   onSuccess,
 }: {
@@ -29,7 +29,7 @@ export const useDeposit = ({
   selectedCollateralType: CollateralType;
   selectedPoolId: string;
   poolId?: string;
-  isNativeCurrency: boolean;
+  isWrappedEth: boolean;
   onSuccess: () => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -191,7 +191,7 @@ export const useDeposit = ({
   const updateTransactions = useCallback(() => {
     const transactions = [];
 
-    if (isNativeCurrency) {
+    if (isWrappedEth) {
       transactions.push({
         title: 'Wrap ETH',
         subtitle: amountBN.gt(wrapEthBalance?.value || 0)
@@ -231,7 +231,7 @@ export const useDeposit = ({
       onSuccess: () => null,
     });
   }, [
-    isNativeCurrency,
+    isWrappedEth,
     selectedCollateralType?.symbol,
     requireApproval,
     setTransactionState,

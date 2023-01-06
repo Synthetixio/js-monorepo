@@ -83,7 +83,7 @@ export const DepositForm: FC<{
     name: 'amount',
   });
 
-  const isNativeCurrency = selectedCollateralType?.symbol === 'ETH';
+  const isWrappedEth = selectedCollateralType?.symbol === 'WETH';
   const balanceData = useTokenBalance(selectedCollateralType?.tokenAddress);
 
   const onSuccess = () => {
@@ -102,7 +102,7 @@ export const DepositForm: FC<{
     selectedCollateralType,
     selectedPoolId,
     poolId: preferredPoolId,
-    isNativeCurrency,
+    isWrappedEth,
     onSuccess,
   });
 
