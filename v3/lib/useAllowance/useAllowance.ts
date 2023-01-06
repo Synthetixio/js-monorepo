@@ -5,7 +5,7 @@ import { ZodBigNumber } from '@snx-v3/zod';
 import { wei } from '@synthetixio/wei';
 
 const AllowanceSchema = ZodBigNumber.transform((x) => wei(x));
-const abi = 'function allowance(address, address) view returns (uint256)';
+const abi = ['function allowance(address, address) view returns (uint256)'];
 export const useAllowance = ({
   contractAddress,
   spender,
