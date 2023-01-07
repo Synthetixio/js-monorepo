@@ -34,7 +34,7 @@ export const Deposit: FC<Props> = ({ collateral, value, onChange }) => {
           <Balance
             onMax={(balance) => onChange(parseFloat(balance) || 0)}
             balance={balance.value}
-            symbol={collateral.symbol}
+            symbol={collateral.symbol === 'WETH' ? 'ETH' : collateral.symbol}
             address={collateral.tokenAddress}
           />
         </Flex>

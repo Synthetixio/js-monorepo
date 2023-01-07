@@ -12,7 +12,7 @@ export const useTokenBalance = (token: string | undefined, chainId?: number | un
   const ethCollateral = useEthCollateralType();
 
   const { data: balanceData, refetch } = useBalance({
-    address,
+    address: address as `0x${string}`,
     token: compareAddress(tokenAddress, ethCollateral?.tokenAddress) ? undefined : tokenAddress,
     enabled: hasWalletConnected,
     chainId: chainId || activeChain?.id,

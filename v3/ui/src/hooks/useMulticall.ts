@@ -1,8 +1,8 @@
-import { contracts } from '../utils/constants';
-import { useContract } from './useContract';
 import ethers, { Contract } from 'ethers';
 import { useCallback, useState } from 'react';
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
+import { useExternalMulticall } from '@snx-v3/useExternalMulticall';
+import { useCoreProxy } from '@snx-v3/useCoreProxy';
 
 // contact, funcion name, arguments
 export type MulticallCall = {
@@ -41,19 +41,38 @@ export const useMulticall = (
   config?: Partial<TxConfig>
 ) => {
   const [status, setStatus] = useState<MulticallStatusType>('idle');
+  const { data: Multicall } = useExternalMulticall();
+  const { data: CoreProxy } = useCoreProxy();
 
-  const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   let callContract: ethers.Contract | undefined;
   let callFunc: string | undefined;
   let callArgs: any[] | undefined;
-  if (calls.length && snxProxy) {
+  if (calls.length && CoreProxy) {
     if (calls.length === 1) {
       // direct call
       callContract = calls[0].contract;
       callFunc = calls[0].functionName;
       callArgs = calls[0].callArgs;
+    } else if (calls.find((c) => c.contract.address !== CoreProxy?.address)) {
+      callContract = Multicall;
+      callFunc = 'aggregate3Value';
+
+      callArgs = [
+        calls.map((call) => {
+          const callData = call.contract.interface.encodeFunctionData(
+            call.functionName,
+            call.callArgs || []
+          );
+          return {
+            target: call.contract.address,
+            callData,
+            allowFailure: false,
+            value: 0,
+          };
+        }),
+      ];
     } else if (calls.length > 1) {
-      callContract = snxProxy.contract;
+      callContract = CoreProxy;
       callFunc = 'multicall';
       callArgs = [
         calls.map((call) =>
@@ -64,7 +83,7 @@ export const useMulticall = (
   }
 
   const currentTxn = useContractWrite({
-    enabled: Boolean(calls.length && snxProxy),
+    enabled: Boolean(calls.length && CoreProxy),
     mode: 'recklesslyUnprepared',
     address: callContract?.address ?? '',
     abi: callContract?.interface ?? '',
