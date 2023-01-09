@@ -7788,6 +7788,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/useApprove@workspace:*, @snx-v3/useApprove@workspace:v3/lib/useApprove":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useApprove@workspace:v3/lib/useApprove"
+  dependencies:
+    "@snx-v2/txnReducer": "workspace:*"
+    "@snx-v2/useGasOptions": "workspace:*"
+    "@snx-v3/useAllowance": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/useBlockchain@workspace:*, @snx-v3/useBlockchain@workspace:v3/lib/useBlockchain":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useBlockchain@workspace:v3/lib/useBlockchain"
@@ -10017,6 +10031,7 @@ __metadata:
     "@snx-v3/format": "workspace:*"
     "@snx-v3/useAccounts": "workspace:*"
     "@snx-v3/useAllowance": "workspace:*"
+    "@snx-v3/useApprove": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
