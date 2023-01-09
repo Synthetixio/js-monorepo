@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 import { useAllowance } from '@snx-v3/useAllowance';
-import { useGasOptions } from '@snx-v2/useGasOptions';
+import { useGasOptions } from '@snx-v3/useGasOptions';
 import { BigNumber, ethers } from 'ethers';
 import { useMutation } from '@tanstack/react-query';
 import { useSigner } from '@snx-v3/useBlockchain';

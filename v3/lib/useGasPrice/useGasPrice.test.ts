@@ -1,4 +1,4 @@
-import { GWEI_DECIMALS } from '@snx-v2/Constants';
+import { GWEI_DECIMALS } from '@snx-v3/Constants';
 import { wei } from '@synthetixio/wei';
 
 describe('useGasPrice', () => {
@@ -26,7 +26,7 @@ describe('useGasPrice', () => {
     jest.doMock('@tanstack/react-query', () => reactQuery);
     jest.doMock('@snx-v3/useBlockchain', () => ({ useNetwork }));
 
-    jest.doMock('@snx-v2/useGasPrice', () => ({ useGasPrice }));
+    jest.doMock('@snx-v3/useGasPrice', () => ({ useGasPrice }));
     jest.doMock('@ethersproject/providers', () => ({ InfuraProvider }));
 
     ({ useGasPrice } = await import('./useGasPrice'));

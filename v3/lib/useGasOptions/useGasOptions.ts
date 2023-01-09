@@ -5,8 +5,7 @@ import { QueryKey, useQuery } from '@tanstack/react-query';
 import { useOptimismLayer1Fee } from '@snx-v3/useOptimismLayer1Fee';
 import Wei, { wei } from '@synthetixio/wei';
 import { useNetwork } from '@snx-v3/useBlockchain';
-
-const GWEI_DECIMALS = 9;
+import { GWEI_DECIMALS } from '@snx-v3/Constants';
 
 // Note it looks like gas limit estimation is coming in higher slightly higher than what gets used according to etherscan
 // Will try without a buffer, if we get user report of out of gas we can increase it again.

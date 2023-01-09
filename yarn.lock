@@ -7714,6 +7714,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/Constants@workspace:*, @snx-v3/Constants@workspace:v3/lib/Constants":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/Constants@workspace:v3/lib/Constants"
+  dependencies:
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/docs@workspace:v3/docs":
   version: 0.0.0-use.local
   resolution: "@snx-v3/docs@workspace:v3/docs"
@@ -7793,9 +7801,9 @@ __metadata:
   resolution: "@snx-v3/useApprove@workspace:v3/lib/useApprove"
   dependencies:
     "@snx-v2/txnReducer": "workspace:*"
-    "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v3/useAllowance": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useGasOptions": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.7.2
     react: ^18.2.0
@@ -7846,13 +7854,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/useGasOptions@workspace:v3/lib/useGasOptions":
+"@snx-v3/useGasOptions@workspace:*, @snx-v3/useGasOptions@workspace:v3/lib/useGasOptions":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useGasOptions@workspace:v3/lib/useGasOptions"
   dependencies:
     "@ethersproject/bignumber": ^5.7.0
     "@ethersproject/contracts": ^5.7.0
-    "@snx-v2/Constants": "workspace:*"
+    "@snx-v3/Constants": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useGasPrice": "workspace:*"
     "@snx-v3/useOptimismLayer1Fee": "workspace:*"
@@ -7868,7 +7876,7 @@ __metadata:
   dependencies:
     "@ethersproject/bignumber": ^5.7.0
     "@ethersproject/providers": ^5.7.2
-    "@snx-v2/Constants": "workspace:*"
+    "@snx-v3/Constants": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
