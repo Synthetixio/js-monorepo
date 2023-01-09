@@ -140,7 +140,7 @@ export const ORACLE_NODE_TYPES: {
   {
     value: 'reducer',
     label: 'Reducer',
-    numberOfParents: Infinity,
+    numberOfParents: 2,
     parameters: [
       { type: 'union', name: 'Operation', options: ['max', 'min', 'mean', 'median', 'recent'] },
     ],

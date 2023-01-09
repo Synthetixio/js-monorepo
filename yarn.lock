@@ -11267,7 +11267,6 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@babel/runtime-corejs3": ^7.19.4
     "@chakra-ui/icon": ^3.0.11
-    "@chakra-ui/icons": ^2.0.9
     "@chakra-ui/react": ^2.4.6
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
@@ -34291,6 +34290,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.34.0":
+  version: 7.34.0
+  resolution: "react-hook-form@npm:7.34.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: 2b4a6f6ca5b3f729b88aa14a1a8c47ba86405d9c5fef2560b1dc85ac6fe1b105326571b8e1e857f8d8f3449636062d2d6201809918b5bb37f6f8f0b9c6cd6e2c
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:^7.41.5":
+  version: 7.41.5
+  resolution: "react-hook-form@npm:7.41.5"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: ca28b2deb4fdbf120ff726f4d66366711725df03b677f52b2577a69bf761e409644bf06b8342dbc2dd5cdfdb05efecdbc2361799f405a35d65911fd0b4d8bdde
+  languageName: node
+  linkType: hard
+
 "react-i18next@npm:^11.18.3":
   version: 11.18.3
   resolution: "react-i18next@npm:11.18.3"
@@ -35894,7 +35911,8 @@ __metadata:
     jest-junit: ^15.0.0
     lint-staged: ^13.1.0
     nyc: ^15.1.0
-    prettier: ^2.8.1
+    prettier: ^2.7.1
+    react-hook-form: ^7.41.5
     typescript: ^4.9.4
   languageName: unknown
   linkType: soft

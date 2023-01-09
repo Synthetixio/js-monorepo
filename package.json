@@ -81,6 +81,7 @@
   },
   "packageManager": "yarn@3.2.1",
   "dependencies": {
-    "ethers": "^5.7.2"
+    "ethers": "^5.7.2",
+    "react-hook-form": "^7.41.5"
   }
 }

@@ -11,7 +11,7 @@ import {
   ModalOverlay,
   Select,
 } from '@chakra-ui/react';
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 import { ORACLE_NODE_TYPES } from '../utils/constants';
@@ -29,24 +29,29 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
 }) => {
   const { register, watch, getValues, setValue } = useForm({
     defaultValues: {
-      oracleNodeType: node?.type || 'chainLink',
+      oracleNodeType: node?.type,
       nodeParents: node?.parents || [],
       nodeParameters: node?.parameters || [],
       nodeLabel: node?.data.label || '',
     },
   });
-
   const [nodes, setNodes] = useRecoilState(nodesState);
   const toast = useToast();
-
+  useEffect(() => {
+    if (node?.type) {
+      setValue('oracleNodeType', node?.type);
+      setValue('nodeParents', node?.parents);
+      setValue('nodeParameters', node?.parameters);
+      setValue('nodeLabel', node?.data.label);
+    }
+  }, [node?.type]);
   const componentByOracleType = useMemo(() => {
-    console.log(watch('oracleNodeType'));
     const type = getValues('oracleNodeType');
     if (type === 'chainLink')
       return (
         <ChainLinkForm
           address={node?.parameters[0]}
-          twap={node?.parameters[1].twap}
+          twap={node?.parameters[1]}
           getValuesFromForm={(address, twap) => {
             setValue('nodeParameters', [address, twap]);
           }}
@@ -79,6 +84,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
     <Modal
       isOpen={isOpen}
       onClose={() => {
+        setValue('nodeLabel', '');
         onClose();
       }}
     >
@@ -131,7 +137,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                     .filter((s) => s.id !== node.id)
                     .concat({
                       ...node,
-                      type: getValues('oracleNodeType'),
+                      type: getValues('oracleNodeType')!,
                       parents: getValues('nodeParents'),
                       parameters: getValues('nodeParameters'),
                       data: { label: getValues('nodeLabel') || '' },
@@ -142,7 +148,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                 setNodes([
                   ...nodes,
                   {
-                    type: getValues('oracleNodeType'),
+                    type: getValues('oracleNodeType')!,
                     parents: getValues('nodeParents'),
                     parameters: getValues('nodeParameters'),
                     data: { label: getValues('nodeLabel') || '' },

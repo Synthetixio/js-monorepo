@@ -12,6 +12,7 @@ export const ChainLinkForm: FC<{
     const twap = Number(getValues('twap'));
     getValuesFromForm(getValues('address'), twap);
   }, [watch()]);
+  console.log(twap);
   return (
     <>
       <Input {...register('address')} placeholder="Address"></Input>
