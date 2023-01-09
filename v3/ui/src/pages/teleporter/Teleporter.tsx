@@ -26,7 +26,7 @@ import { useAccount } from '@snx-v3/useBlockchain';
 import { NumberInput } from '../../components/accounts/Position/Manage/NumberInput';
 import { Balance } from '../../components/accounts/Deposit/Balance';
 import { useContract } from '../../hooks/useContract';
-import { useApprove } from '../../hooks/useApprove';
+import { useApprove } from '@snx-v3/useApprove';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';
 import { parseUnits } from '@snx-v3/format';
@@ -83,11 +83,11 @@ export const Teleporter = () => {
     ],
   });
 
-  const { approve, requireApproval } = useApprove(
-    snxUsdProxy?.address,
-    parseUnits(amount, 0),
-    CCIP!.address
-  );
+  const { approve, requireApproval } = useApprove({
+    contractAddress: snxUsdProxy?.address,
+    amount: parseUnits(amount, 18),
+    spender: CCIP!.address,
+  });
 
   const setTransactionState = useSetTransactionState();
 
@@ -98,7 +98,7 @@ export const Teleporter = () => {
       transactions.push({
         title: 'Approve snxUSD transfer',
         subtitle: '',
-        call: async (infiniteApproval?: boolean) => await approve(infiniteApproval),
+        call: async (infiniteApproval?: boolean) => await approve(Boolean(infiniteApproval)),
         checkboxLabel: requireApproval ? `Approve unlimited snxUSD transfers to Synthetix.` : '',
         checked: false,
       });
