@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useSynthetix } from '@snx-v2/useSynthetixContracts';
 import { useGasOptions } from '@snx-v2/useGasOptions';
 import { BigNumber } from '@ethersproject/bignumber';
-import { initialState, reducer } from '@snx-v2/txnReducer';
+import { initialState, reducer } from '@snx-v3/txnReducer';
 
 type MintArgs = {
   amount: BigNumber;

@@ -7,7 +7,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { useSetTransactionState } from '@snx-v3/useTransactionState';
 import { contracts } from '../utils/constants';
-import { useApprove } from './useApprove';
+import { useApprove } from '@snx-v3/useApprove';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
 import { useWrapEth } from './useWrapEth';
@@ -164,9 +164,11 @@ export const useDeposit = ({
   });
 
   const { approve, requireApproval } = useApprove(
-    selectedCollateralType?.tokenAddress,
-    amountBN,
-    snxProxy?.address,
+    {
+      contractAddress: selectedCollateralType?.tokenAddress,
+      amount: amountBN,
+      spender: snxProxy?.address,
+    },
     {
       onMutate: () => {
         toast({
@@ -209,7 +211,7 @@ export const useDeposit = ({
       transactions.push({
         title: 'Approve ' + selectedCollateralType.symbol.toUpperCase() + ' transfer',
         subtitle: '',
-        call: async (infiniteApproval?: boolean) => await approve(infiniteApproval),
+        call: async (infiniteApproval?: boolean) => await approve(Boolean(infiniteApproval)),
         checkboxLabel: requireApproval
           ? `Approve unlimited ${selectedCollateralType.symbol.toUpperCase()} transfers to Synthetix.`
           : '',

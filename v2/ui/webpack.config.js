@@ -65,6 +65,7 @@ const babelRule = {
     /v2\/cypress/,
     /v2\/ui/,
     /v3\/theme/,
+    /v3\/lib/,
 
     /packages\/[^\/]+\/src/,
     /tools\/[^\/]+\/src/,

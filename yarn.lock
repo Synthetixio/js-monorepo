@@ -6694,11 +6694,11 @@ __metadata:
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useBurnMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.15
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
@@ -6917,12 +6917,12 @@ __metadata:
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useMintMutation": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.15
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
@@ -6986,13 +6986,13 @@ __metadata:
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
     "@snx-v2/useClaimRewardsMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useGetLiquidationRewards": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.15
     "@tanstack/react-query": ^4.3.4
     date-fns: ^2.19.0
@@ -7017,11 +7017,11 @@ __metadata:
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSelfLiquidationData": "workspace:*"
     "@snx-v2/useSelfLiquidationMutation": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.15
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
@@ -7309,12 +7309,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/txnReducer@workspace:*, @snx-v2/txnReducer@workspace:v2/lib/txnReducer":
-  version: 0.0.0-use.local
-  resolution: "@snx-v2/txnReducer@workspace:v2/lib/txnReducer"
-  languageName: unknown
-  linkType: soft
-
 "@snx-v2/useApr@workspace:*, @snx-v2/useApr@workspace:v2/lib/useApr":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useApr@workspace:v2/lib/useApr"
@@ -7330,9 +7324,9 @@ __metadata:
   resolution: "@snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation"
   dependencies:
     "@ethersproject/bignumber": ^5.7.0
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -7343,9 +7337,9 @@ __metadata:
   resolution: "@snx-v2/useClaimLiquidatorRewardsMutation@workspace:v2/lib/useClaimLiquidatorRewardsMutation"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -7355,9 +7349,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useClaimRewardsMutation@workspace:v2/lib/useClaimRewardsMutation"
   dependencies:
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -7573,9 +7567,9 @@ __metadata:
   resolution: "@snx-v2/useMintMutation@workspace:v2/lib/useMintMutation"
   dependencies:
     "@ethersproject/bignumber": ^5.7.0
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -7629,9 +7623,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSelfLiquidationMutation@workspace:v2/lib/useSelfLiquidationMutation"
   dependencies:
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
@@ -7714,6 +7708,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/Constants@workspace:*, @snx-v3/Constants@workspace:v3/lib/Constants":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/Constants@workspace:v3/lib/Constants"
+  dependencies:
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/docs@workspace:v3/docs":
   version: 0.0.0-use.local
   resolution: "@snx-v3/docs@workspace:v3/docs"
@@ -7754,6 +7756,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/txnReducer@workspace:*, @snx-v3/txnReducer@workspace:v3/lib/txnReducer":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/txnReducer@workspace:v3/lib/txnReducer"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/useAccountProxy@workspace:*, @snx-v3/useAccountProxy@workspace:v3/lib/useAccountProxy":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useAccountProxy@workspace:v3/lib/useAccountProxy"
@@ -7785,6 +7793,20 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.7.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useApprove@workspace:*, @snx-v3/useApprove@workspace:v3/lib/useApprove":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useApprove@workspace:v3/lib/useApprove"
+  dependencies:
+    "@snx-v3/txnReducer": "workspace:*"
+    "@snx-v3/useAllowance": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useGasOptions": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -7832,6 +7854,36 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/useGasOptions@workspace:*, @snx-v3/useGasOptions@workspace:v3/lib/useGasOptions":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useGasOptions@workspace:v3/lib/useGasOptions"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@ethersproject/contracts": ^5.7.0
+    "@snx-v3/Constants": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useGasPrice": "workspace:*"
+    "@snx-v3/useOptimismLayer1Fee": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useGasPrice@workspace:*, @snx-v3/useGasPrice@workspace:v3/lib/useGasPrice":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useGasPrice@workspace:v3/lib/useGasPrice"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@ethersproject/providers": ^5.7.2
+    "@snx-v3/Constants": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/useLiquidityPosition@workspace:*, @snx-v3/useLiquidityPosition@workspace:v3/lib/useLiquidityPosition":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useLiquidityPosition@workspace:v3/lib/useLiquidityPosition"
@@ -7866,6 +7918,21 @@ __metadata:
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.7.2
     zod: ^3.20.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useOptimismLayer1Fee@workspace:*, @snx-v3/useOptimismLayer1Fee@workspace:v3/lib/useOptimismLayer1Fee":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useOptimismLayer1Fee@workspace:v3/lib/useOptimismLayer1Fee"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@ethersproject/contracts": ^5.7.0
+    "@ethersproject/providers": ^5.7.2
+    "@ethersproject/transactions": ^5.7.0
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -10013,10 +10080,11 @@ __metadata:
     "@rainbow-me/rainbowkit": ^0.8.1
     "@snx-v2/formatters": "workspace:*"
     "@snx-v3/AccountsSelector": "workspace:*"
+    "@snx-v3/Constants": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
     "@snx-v3/useAccounts": "workspace:*"
-    "@snx-v3/useAllowance": "workspace:*"
+    "@snx-v3/useApprove": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
@@ -10037,6 +10105,7 @@ __metadata:
     "@types/react-chartjs-2": ^2.5.7
     "@types/react-helmet": ^6.1.6
     "@wagmi/chains": ^0.1.5
+    babel-jest: ^29.3.1
     babel-loader: ^8.3.0
     babel-plugin-istanbul: ^6.1.1
     big.js: ^6.1.1
@@ -10051,6 +10120,7 @@ __metadata:
     i18next: ^21.9.0
     i18next-browser-languagedetector: ^6.1.4
     jest: ^29.3.1
+    jest-environment-jsdom: ^29.3.1
     react: ^18.2.0
     react-chartjs-2: ^4.3.1
     react-dom: ^18.2.0

@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { contracts } from '../../../utils/constants';
 import { compareAddress, parseUnits } from '@snx-v3/format';
 import { CollateralType, useEthCollateralType } from '@snx-v3/useCollateralTypes';
-import { useApprove } from '../../../hooks/useApprove';
+import { useApprove } from '@snx-v3/useApprove';
 import { useContract } from '../../../hooks/useContract';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
 import { useUnWrapEth, useWrapEth } from '../../../hooks/useWrapEth';
@@ -117,11 +117,11 @@ export const useManagePosition = ({
   ]);
 
   const multiTxn = useMulticall(calls);
-  const { approve, requireApproval } = useApprove(
-    collateral.tokenAddress,
-    collateralChange > 0 ? collateralChangeBN : BigNumber.from(0),
-    snxProxy?.address
-  );
+  const { approve, requireApproval } = useApprove({
+    contractAddress: collateral.tokenAddress,
+    amount: collateralChange > 0 ? collateralChangeBN : BigNumber.from(0),
+    spender: snxProxy?.address,
+  });
 
   const multicallTitles = useMemo(() => {
     const title: string[] = [];
@@ -162,7 +162,7 @@ export const useManagePosition = ({
       transactions.push({
         title: `Approve ${collateral.symbol.toUpperCase()} transfer`,
         subtitle: '',
-        call: async (infiniteApproval?: boolean) => await approve(infiniteApproval),
+        call: async (infiniteApproval?: boolean) => await approve(Boolean(infiniteApproval)),
         checkboxLabel: requireApproval
           ? `Approve unlimited ${collateral.symbol.toUpperCase()} transfers to Synthetix.`
           : '',
@@ -223,7 +223,7 @@ export const useManagePosition = ({
         if (isNativeCurrency && collateralChange > 0) {
           await wrap(collateralChangeBN);
         }
-        await approve();
+        await approve(false);
         await multiTxn.exec();
         if (isNativeCurrency && collateralChange < 0) {
           await unWrap(collateralChangeBN);

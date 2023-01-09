@@ -10,7 +10,7 @@ import {
   DEFAULT_QUERY_REFRESH_INTERVAL,
   DEFAULT_QUERY_STALE_TIME,
   INFURA_KEY,
-} from './utils/constants';
+} from '@snx-v3/Constants';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './i18n';
