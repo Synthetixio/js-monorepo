@@ -10080,6 +10080,7 @@ __metadata:
     "@rainbow-me/rainbowkit": ^0.8.1
     "@snx-v2/formatters": "workspace:*"
     "@snx-v3/AccountsSelector": "workspace:*"
+    "@snx-v3/Constants": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
     "@snx-v3/useAccounts": "workspace:*"
