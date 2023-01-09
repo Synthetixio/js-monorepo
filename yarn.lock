@@ -6694,11 +6694,11 @@ __metadata:
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useBurnMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.15
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
@@ -6917,12 +6917,12 @@ __metadata:
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useMintMutation": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.15
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
@@ -6986,13 +6986,13 @@ __metadata:
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
     "@snx-v2/useClaimRewardsMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useGetLiquidationRewards": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.15
     "@tanstack/react-query": ^4.3.4
     date-fns: ^2.19.0
@@ -7017,11 +7017,11 @@ __metadata:
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSelfLiquidationData": "workspace:*"
     "@snx-v2/useSelfLiquidationMutation": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.15
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
@@ -7309,12 +7309,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/txnReducer@workspace:*, @snx-v2/txnReducer@workspace:v2/lib/txnReducer":
-  version: 0.0.0-use.local
-  resolution: "@snx-v2/txnReducer@workspace:v2/lib/txnReducer"
-  languageName: unknown
-  linkType: soft
-
 "@snx-v2/useApr@workspace:*, @snx-v2/useApr@workspace:v2/lib/useApr":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useApr@workspace:v2/lib/useApr"
@@ -7330,9 +7324,9 @@ __metadata:
   resolution: "@snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation"
   dependencies:
     "@ethersproject/bignumber": ^5.7.0
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -7343,9 +7337,9 @@ __metadata:
   resolution: "@snx-v2/useClaimLiquidatorRewardsMutation@workspace:v2/lib/useClaimLiquidatorRewardsMutation"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -7355,9 +7349,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useClaimRewardsMutation@workspace:v2/lib/useClaimRewardsMutation"
   dependencies:
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -7573,9 +7567,9 @@ __metadata:
   resolution: "@snx-v2/useMintMutation@workspace:v2/lib/useMintMutation"
   dependencies:
     "@ethersproject/bignumber": ^5.7.0
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
@@ -7629,9 +7623,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSelfLiquidationMutation@workspace:v2/lib/useSelfLiquidationMutation"
   dependencies:
-    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
@@ -7762,6 +7756,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/txnReducer@workspace:*, @snx-v3/txnReducer@workspace:v3/lib/txnReducer":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/txnReducer@workspace:v3/lib/txnReducer"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/useAccountProxy@workspace:*, @snx-v3/useAccountProxy@workspace:v3/lib/useAccountProxy":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useAccountProxy@workspace:v3/lib/useAccountProxy"
@@ -7800,7 +7800,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useApprove@workspace:v3/lib/useApprove"
   dependencies:
-    "@snx-v2/txnReducer": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
     "@snx-v3/useAllowance": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useGasOptions": "workspace:*"

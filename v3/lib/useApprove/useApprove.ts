@@ -4,7 +4,7 @@ import { useGasOptions } from '@snx-v3/useGasOptions';
 import { BigNumber, ethers } from 'ethers';
 import { useMutation } from '@tanstack/react-query';
 import { useSigner } from '@snx-v3/useBlockchain';
-import { initialState, reducer } from '@snx-v2/txnReducer';
+import { initialState, reducer } from '@snx-v3/txnReducer';
 
 const approveAbi = ['function approve(address spender, uint256 amount) returns (bool)'];
 
