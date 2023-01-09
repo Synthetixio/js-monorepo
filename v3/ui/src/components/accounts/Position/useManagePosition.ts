@@ -26,7 +26,6 @@ export const useManagePosition = ({
   collateralAmount: number;
   refetch?: () => void;
 }) => {
-
   const [isLoading, setIsLoading] = useState(false);
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   const collateralChangeBN = parseUnits(Math.abs(collateralChange));

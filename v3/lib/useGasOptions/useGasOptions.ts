@@ -61,8 +61,8 @@ export const useGasOptions = <T>(
   const ethPrice = wei(1000); // TODO  figure out how to get eth price, we can fetch collateralTypes then call getCollateralPrice maybe?
   const keyForTransactionArgs = 'transactionArgs' in args ? args.transactionArgs : undefined;
 
-  return useQuery(
-    [
+  return useQuery({
+    queryKey: [
       ...(args.queryKeys || []),
       optimismLayerOneFeesQuery.data,
       gasPriceQuery.data,
@@ -70,7 +70,7 @@ export const useGasOptions = <T>(
       gasSpeed,
       keyForTransactionArgs,
     ],
-    async () => {
+    queryFn: async () => {
       if (!args.populateTransaction) {
         throw Error('Query should not be enable when getGasLimit is missing');
       }
@@ -108,6 +108,6 @@ export const useGasOptions = <T>(
         ),
       };
     },
-    { enabled: Boolean(args.populateTransaction && networkId) }
-  );
+    enabled: Boolean(args.populateTransaction && networkId),
+  });
 };

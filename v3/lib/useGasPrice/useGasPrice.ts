@@ -34,9 +34,9 @@ const getGasPriceFromProvider = async (provider: InfuraProvider) => {
 export const useGasPrice = () => {
   const { id: networkId, name: networkName } = useNetwork();
 
-  return useQuery(
-    ['useGasPrice', networkId],
-    async () => {
+  return useQuery({
+    queryKey: ['useGasPrice', networkId],
+    queryFn: async () => {
       if (!networkId) throw Error('Network id required');
       const provider = new InfuraProvider(networkId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID);
       try {
@@ -57,8 +57,7 @@ export const useGasPrice = () => {
         throw new Error(`Could not fetch and compute network fee. ${e}`);
       }
     },
-    {
-      enabled: Boolean(networkId),
-    }
-  );
+
+    enabled: Boolean(networkId),
+  });
 };

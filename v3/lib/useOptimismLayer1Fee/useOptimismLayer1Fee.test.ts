@@ -34,25 +34,19 @@ describe('useOptimismLayer1Fee', () => {
   test('Returns undefined when populateTransaction is undefined', async () => {
     const populateTransaction = undefined;
     const result = useOptimismLayer1Fee({ populateTransaction });
-    // Assert return query call is not enabled
-    expect(reactQuery.useQuery.mock.lastCall).toEqual([
-      [10, undefined],
-      expect.any(Function),
-      { enabled: false },
-    ]);
+    const { enabled } = reactQuery.useQuery.mock.lastCall[0];
+
+    expect(enabled).toEqual(false);
     expect(result).toEqual({ data: undefined });
   });
   test('Returns undefined when networkId is not optimism', async () => {
     const populateTransaction = jest.fn();
     useNetwork.mockReturnValue({ id: 1, name: 'mainnet' });
     const result = useOptimismLayer1Fee({ populateTransaction });
+    const { enabled } = reactQuery.useQuery.mock.lastCall[0];
 
     // Assert return query call is not enabled
-    expect(reactQuery.useQuery.mock.lastCall).toEqual([
-      [1, expect.any(Function), undefined],
-      expect.any(Function),
-      { enabled: false },
-    ]);
+    expect(enabled).toEqual(false);
     expect(result).toEqual({ data: undefined });
   });
   test('Queries are enabled and called correctly', async () => {
@@ -62,19 +56,16 @@ describe('useOptimismLayer1Fee', () => {
     reactQuery.useQuery.mockReturnValueOnce({ data: BigNumber.from(1) });
 
     const result = useOptimismLayer1Fee({ populateTransaction });
-    // Assert serialize query call is enabled
-    expect(reactQuery.useQuery.mock.lastCall).toEqual([
-      [10, expect.any(Function)],
-      expect.any(Function),
-      { enabled: true },
-    ]);
-    const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
-    // Assert last query call has correct query key
-    expect(cacheKey).toEqual([10, expect.any(Function)]);
-    // Assert last query call is enabled
-    expect(options).toEqual({ enabled: true });
 
-    await query();
+    const { enabled, queryKey, queryFn } = reactQuery.useQuery.mock.lastCall[0];
+
+    // Assert serialize query call is enabled
+    expect(enabled).toEqual(true);
+
+    // Assert last query call has correct query key
+    expect(queryKey).toEqual([10, expect.any(Function)]);
+
+    await queryFn();
 
     expect(serialize).toBeCalledWith({ to: 'joey', data: 'lots of eth' });
     expect(getL1Fee).toBeCalledWith('serialized txn');

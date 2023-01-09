@@ -65,20 +65,20 @@ describe('useGasOptions', () => {
   test('Returns undefined values when populateTransaction is undefined', async () => {
     const populateTransaction = undefined;
     const result = useGasOptions({ populateTransaction });
-    const [cacheKey, _query, options] = reactQuery.useQuery.mock.lastCall;
+    const { queryKey, enabled } = reactQuery.useQuery.mock.lastCall[0];
     expect(result.data).toEqual(undefined);
-    expect(cacheKey).toEqual([undefined, gasPricesMainnetMockData, 1, 'average']);
-    expect(options).toEqual({ enabled: false });
+    expect(queryKey).toEqual([undefined, gasPricesMainnetMockData, 1, 'average']);
+    expect(enabled).toEqual(false);
   });
 
   test('Returns gas options mainnet', async () => {
     useGasOptions({ populateTransaction, queryKeys: ['mykey'] });
+    const { queryKey, queryFn, enabled } = reactQuery.useQuery.mock.lastCall[0];
 
-    const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual(['mykey', undefined, gasPricesMainnetMockData, 1, 'average']);
-    expect(options).toEqual({ enabled: true });
+    expect(queryKey).toEqual(['mykey', undefined, gasPricesMainnetMockData, 1, 'average']);
+    expect(enabled).toEqual(true);
 
-    const queryResult = await query();
+    const queryResult = await queryFn();
     expect(queryResult).toEqual({
       gasLimit: wei(600000, GWEI_DECIMALS).toBN(), // 500000 * 1.2
       gasOptionsForTransaction: {
@@ -101,11 +101,11 @@ describe('useGasOptions', () => {
 
     useGasOptions({ populateTransaction });
 
-    const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
-    expect(cacheKey).toEqual([wei(0.00000001), gasPricesOptimismMockData, 10, 'average']);
-    expect(options).toEqual({ enabled: true });
+    const { queryKey, queryFn, enabled } = reactQuery.useQuery.mock.lastCall[0];
+    expect(queryKey).toEqual([wei(0.00000001), gasPricesOptimismMockData, 10, 'average']);
+    expect(enabled).toEqual(true);
 
-    const queryResult = await query();
+    const queryResult = await queryFn();
     expect(queryResult).toEqual({
       gasLimit: wei(600000, GWEI_DECIMALS).toBN(), // 500000 * 1.2
       gasOptionsForTransaction: {
