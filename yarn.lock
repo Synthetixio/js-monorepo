@@ -7846,6 +7846,36 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/useGasOptions@workspace:v3/lib/useGasOptions":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useGasOptions@workspace:v3/lib/useGasOptions"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@ethersproject/contracts": ^5.7.0
+    "@snx-v2/Constants": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useGasPrice": "workspace:*"
+    "@snx-v3/useOptimismLayer1Fee": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useGasPrice@workspace:*, @snx-v3/useGasPrice@workspace:v3/lib/useGasPrice":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useGasPrice@workspace:v3/lib/useGasPrice"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@ethersproject/providers": ^5.7.2
+    "@snx-v2/Constants": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/useLiquidityPosition@workspace:*, @snx-v3/useLiquidityPosition@workspace:v3/lib/useLiquidityPosition":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useLiquidityPosition@workspace:v3/lib/useLiquidityPosition"
@@ -7880,6 +7910,21 @@ __metadata:
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.7.2
     zod: ^3.20.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useOptimismLayer1Fee@workspace:*, @snx-v3/useOptimismLayer1Fee@workspace:v3/lib/useOptimismLayer1Fee":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useOptimismLayer1Fee@workspace:v3/lib/useOptimismLayer1Fee"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@ethersproject/contracts": ^5.7.0
+    "@ethersproject/providers": ^5.7.2
+    "@ethersproject/transactions": ^5.7.0
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -10051,6 +10096,7 @@ __metadata:
     "@types/react-chartjs-2": ^2.5.7
     "@types/react-helmet": ^6.1.6
     "@wagmi/chains": ^0.1.5
+    babel-jest: ^29.3.1
     babel-loader: ^8.3.0
     babel-plugin-istanbul: ^6.1.1
     big.js: ^6.1.1
@@ -10065,6 +10111,7 @@ __metadata:
     i18next: ^21.9.0
     i18next-browser-languagedetector: ^6.1.4
     jest: ^29.3.1
+    jest-environment-jsdom: ^29.3.1
     react: ^18.2.0
     react-chartjs-2: ^4.3.1
     react-dom: ^18.2.0
