@@ -96,8 +96,13 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
           <Flex flexDir="column">
             {!node && (
               <Select {...register('oracleNodeType')}>
+                <option value="" selected disabled hidden>
+                  Choose here
+                </option>
                 {ORACLE_NODE_TYPES.map((type) => (
-                  <option value={type.value}>{type.label}</option>
+                  <option value={type.value} key={type.value}>
+                    {type.label}
+                  </option>
                 ))}
               </Select>
             )}
