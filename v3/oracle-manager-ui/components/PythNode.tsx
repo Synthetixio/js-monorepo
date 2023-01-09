@@ -18,7 +18,7 @@ export const PythNode: FC<{ data: { label: string }; id: string }> = ({ data, id
       alignItems="center"
     >
       <Text>Pyth</Text>
-      {data.label && <Text>{data.label}</Text>}
+      {data.label && <Text>Name: {data.label}</Text>}
       <Text fontSize="xx-small">Address: {node?.parameters[0]}</Text>
       <Text>Price feed: {node?.parameters[1]}</Text>
       <Handle

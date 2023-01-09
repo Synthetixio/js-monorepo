@@ -148,7 +148,7 @@ export const ORACLE_NODE_TYPES: {
   {
     value: 'stalenessFallbackReducer',
     label: 'Staleness Fallback Reducer',
-    numberOfParents: 2, // 1 or two parents => if two parents if one is stale, use the second parent
+    numberOfParents: 2,
     parameters: [{ type: 'number', name: 'Staleness tolerance' }],
   },
   {

@@ -1,23 +1,22 @@
-import { Checkbox, Select, Text, useToast } from '@chakra-ui/react';
+import { Checkbox, Input, Text, useToast } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
-import { ORACLE_NODE_TYPES } from '../utils/constants';
 import { Node } from '../utils/types';
 
-export const ReducerForm: FC<{
-  operation: string;
+export const PriceDeviationCircuitBreakerForm: FC<{
+  tolerance: number;
   node?: Node;
-  getValuesFromForm: (operation: string, parents: string[]) => void;
-}> = ({ operation, getValuesFromForm, node }) => {
-  const [nodes] = useRecoilState(nodesState);
+  getValuesFromForm: (tolerance: number, parents: string[]) => void;
+}> = ({ tolerance, node, getValuesFromForm }) => {
   const { register, watch, getValues, setValue } = useForm({
-    defaultValues: { operation: operation || 'max', parents: node?.parents || [] },
+    defaultValues: { tolerance, parents: node?.parents || [] },
   });
+  const [nodes] = useRecoilState(nodesState);
   const toast = useToast();
   useEffect(() => {
-    getValuesFromForm(getValues('operation'), getValues('parents'));
+    getValuesFromForm(getValues('tolerance'), getValues('parents'));
   }, [watch()]);
   return (
     <>
@@ -31,9 +30,9 @@ export const ReducerForm: FC<{
               isChecked={getValues('parents').includes(existingNode.id)}
               onChange={(e) => {
                 const state = getValues('parents');
-                if (state.length >= 2) {
+                if (state.length >= 3) {
                   toast({
-                    title: 'Only two parents are allowed',
+                    title: 'Only three parents are allowed',
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
@@ -53,11 +52,7 @@ export const ReducerForm: FC<{
           );
         }
       })}
-      <Select {...register('operation')}>
-        {ORACLE_NODE_TYPES.at(4)?.parameters[0]?.options?.map((option) => (
-          <option value={option}>{option}</option>
-        ))}
-      </Select>
+      <Input {...register('tolerance')} placeholder="Deviation Tolerance" type="number"></Input>
     </>
   );
 };

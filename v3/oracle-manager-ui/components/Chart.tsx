@@ -20,6 +20,7 @@ import { NodeFormModule } from './NodeFormModule';
 import { PriceDeviationCircuitBreakerNode } from './PriceDeviationCircuitBreakerNode';
 import { PythNode } from './PythNode';
 import { ReducerNode } from './ReducerNode';
+import { StalenessFallbackReducerNode } from './StalenessFallbackReducerNode';
 import { UniswapNode } from './UniswapNode';
 
 const NODE_TYPES = {
@@ -29,6 +30,7 @@ const NODE_TYPES = {
   uniswap: UniswapNode,
   priceDeviationCircuitBreakerNode: PriceDeviationCircuitBreakerNode,
   externalNode: ExternalNode,
+  stalenessFallbackReducer: StalenessFallbackReducerNode,
 };
 
 export const Chart: FC = () => {
@@ -112,10 +114,14 @@ export const Chart: FC = () => {
       }
     });
   }, [nodes.toString()]);
+  console.log(nodes);
   return (
     <Box w="100%" h="500px">
       <Text textAlign="center" fontWeight="bold">
         The bottom of the node is always the downstream output and the top is the receiving end
+      </Text>
+      <Text textAlign="center" fontWeight="bold">
+        Click on the black connection lines to disconnect a parent node from a child node
       </Text>
       <ReactFlow
         nodeTypes={NODE_TYPES}

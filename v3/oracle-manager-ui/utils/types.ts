@@ -10,4 +10,11 @@ interface CustomNode {
   data: { label: string };
 }
 
-export type OracleNodeTypes = 'chainLink' | 'pyth' | 'reducer';
+export type OracleNodeTypes =
+  | 'chainLink'
+  | 'pyth'
+  | 'reducer'
+  | 'externalNode'
+  | 'stalenessFallbackReducer'
+  | 'uniswap'
+  | 'priceDeviationCircuitBreaker';

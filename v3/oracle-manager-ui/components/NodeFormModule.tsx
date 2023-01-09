@@ -21,6 +21,10 @@ import { useForm } from 'react-hook-form';
 import { ChainLinkForm } from './ChainLinkForm';
 import { ReducerForm } from './ReducerForm';
 import { PythForm } from './PythForm';
+import { ExternalNodeForm } from './ExternalNodeForm';
+import { StalenessFallbackReducerForm } from './StalenessFallbackReducerForm';
+import { UniswapForm } from './UniswapForm';
+import { PriceDeviationCircuitBreakerForm } from './PriceDeviationCircuitBreakerForm';
 
 export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: Node }> = ({
   isOpen,
@@ -75,6 +79,52 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
           priceFeedId={node?.parameters[1]}
           getValuesFromForm={(address, priceFeedId) => {
             setValue('nodeParameters', [address, priceFeedId]);
+          }}
+        />
+      );
+    if (type === 'externalNode')
+      return (
+        <ExternalNodeForm
+          node={node}
+          address={node?.parameters[0]}
+          getValuesFromForm={(address, parents) => {
+            setValue('nodeParameters', [address]);
+            setValue('nodeParents', parents);
+          }}
+        />
+      );
+    if (type === 'stalenessFallbackReducer')
+      return (
+        <StalenessFallbackReducerForm
+          node={node}
+          staleness={node?.parameters[0]}
+          getValuesFromForm={(staleness, parents) => {
+            setValue('nodeParameters', [staleness]);
+            setValue('nodeParents', parents);
+          }}
+        />
+      );
+    if (type === 'priceDeviationCircuitBreaker')
+      return (
+        <PriceDeviationCircuitBreakerForm
+          node={node}
+          tolerance={node?.parameters[0]}
+          getValuesFromForm={(tolerance, parents) => {
+            setValue('nodeParameters', [tolerance]);
+            setValue('nodeParents', parents);
+          }}
+        />
+      );
+    if (type === 'uniswap')
+      return (
+        <UniswapForm
+          node={node}
+          tokenOne={node?.parameters[0]}
+          tokenTwo={node?.parameters[1]}
+          pool={node?.parameters[2]}
+          secondsAgo={node?.parameters[3]}
+          getValuesFromForm={(tokenOne, tokenTwo, pool, secondsAgo) => {
+            setValue('nodeParameters', [tokenOne, tokenTwo, pool, secondsAgo]);
           }}
         />
       );
@@ -135,7 +185,6 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
           )}
           <Button
             onClick={() => {
-              console.log(getValues());
               if (node) {
                 setNodes((state) =>
                   state
@@ -157,10 +206,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                     parents: getValues('nodeParents'),
                     parameters: getValues('nodeParameters'),
                     data: { label: getValues('nodeLabel') || '' },
-                    id: new Date()
-                      .getMinutes()
-                      .toString()
-                      .concat(new Date().getSeconds().toString()),
+                    id: Math.random().toString(16).slice(2),
                     position: { x: 200, y: 100 },
                     source: '',
                     target: '',

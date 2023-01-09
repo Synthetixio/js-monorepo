@@ -18,8 +18,8 @@ export const UniswapNode: FC<{ data: { label: string }; id: string }> = ({ data,
     >
       <Text>Uniswap</Text>
       {data.label && <Text>{data.label}</Text>}
-      <Text fontSize="xx-small">Token address: {node?.parameters[0]}</Text>
-      <Text fontSize="xx-small">Stablecoin address: {node?.parameters[1]}</Text>
+      <Text fontSize="xx-small">Token One: {node?.parameters[0]}</Text>
+      <Text fontSize="xx-small">Token Two: {node?.parameters[1]}</Text>
       <Text fontSize="xx-small">Pool: {node?.parameters[2]}</Text>
       <Text>Seconds ago: {node?.parameters[3]}</Text>
       <Handle

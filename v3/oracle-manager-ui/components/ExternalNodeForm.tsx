@@ -1,27 +1,25 @@
-import { Checkbox, Select, Text, useToast } from '@chakra-ui/react';
+import { Checkbox, Input, Text } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
-import { ORACLE_NODE_TYPES } from '../utils/constants';
 import { Node } from '../utils/types';
 
-export const ReducerForm: FC<{
-  operation: string;
+export const ExternalNodeForm: FC<{
+  address: string;
   node?: Node;
-  getValuesFromForm: (operation: string, parents: string[]) => void;
-}> = ({ operation, getValuesFromForm, node }) => {
-  const [nodes] = useRecoilState(nodesState);
+  getValuesFromForm: (address: string, parents: string[]) => void;
+}> = ({ address, node, getValuesFromForm }) => {
   const { register, watch, getValues, setValue } = useForm({
-    defaultValues: { operation: operation || 'max', parents: node?.parents || [] },
+    defaultValues: { address, parents: node?.parents || [] },
   });
-  const toast = useToast();
+  const [nodes] = useRecoilState(nodesState);
   useEffect(() => {
-    getValuesFromForm(getValues('operation'), getValues('parents'));
+    getValuesFromForm(getValues('address'), getValues('parents'));
   }, [watch()]);
   return (
     <>
-      {!node && <Text>Parents</Text>}
+      <Text>Parents</Text>
       {nodes.map((existingNode) => {
         if (!node) {
           return (
@@ -31,14 +29,7 @@ export const ReducerForm: FC<{
               isChecked={getValues('parents').includes(existingNode.id)}
               onChange={(e) => {
                 const state = getValues('parents');
-                if (state.length >= 2) {
-                  toast({
-                    title: 'Only two parents are allowed',
-                    status: 'error',
-                    duration: 9000,
-                    isClosable: true,
-                  });
-                } else if (state.includes(e.target.value)) {
+                if (state.includes(e.target.value)) {
                   setValue(
                     'parents',
                     state.filter((parent) => parent !== e.target.value)
@@ -53,11 +44,7 @@ export const ReducerForm: FC<{
           );
         }
       })}
-      <Select {...register('operation')}>
-        {ORACLE_NODE_TYPES.at(4)?.parameters[0]?.options?.map((option) => (
-          <option value={option}>{option}</option>
-        ))}
-      </Select>
+      <Input {...register('address')} placeholder="Address"></Input>
     </>
   );
 };

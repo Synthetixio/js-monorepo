@@ -18,8 +18,8 @@ export const ReducerNode: FC<{ data: { label: string }; id: string }> = ({ data,
     >
       <Text fontSize="xx-small">Only two inputs are possible</Text>
       <Text>Reducer Node</Text>
+      {data.label && <Text>Name: {data.label}</Text>}
       {node && <Text>Operation: {node.parameters[0]}</Text>}
-      {data.label && <Text>{data.label}</Text>}
       <Handle
         type="target"
         position={Position.Top}
