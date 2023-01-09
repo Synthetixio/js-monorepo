@@ -18,20 +18,16 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { ethers } from 'ethers';
 import { useMemo, useState } from 'react';
 import Head from 'react-helmet';
-import { useContractWrite, useNetwork, useSwitchNetwork } from 'wagmi';
-import { useAccount } from '@snx-v3/useBlockchain';
+import { useNetwork, useSwitchNetwork } from 'wagmi';
 import { NumberInput } from '../../components/accounts/Position/Manage/NumberInput';
 import { Balance } from '../../components/accounts/Deposit/Balance';
 import { useContract } from '../../hooks/useContract';
-import { useApprove } from '@snx-v3/useApprove';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';
-import { parseUnits } from '@snx-v3/format';
 import testnetIcon from './testnet.png';
-import { useSetTransactionState } from '@snx-v3/useTransactionState';
+import { TeleporterModal } from './TeleporterModal';
 
 const chains = [
   {
@@ -46,12 +42,9 @@ const chains = [
   },
 ];
 
-const encodeAddress = (address: string | undefined) => {
-  return address ? ethers.utils.defaultAbiCoder.encode(['address'], [address]) : undefined;
-};
-
 export const Teleporter = () => {
-  const { address } = useAccount();
+  const [isOpen, setIsOpen] = useState(false);
+
   const toast = useToast();
   const { openConnectModal } = useConnectModal();
   const [amount, setAmount] = useState(0);
@@ -65,75 +58,11 @@ export const Teleporter = () => {
   const [from, setFrom] = useState(teleportChains[0].id);
   const [to, setTo] = useState(teleportChains[1].id);
 
-  const CCIP = useContract(contracts.CCIP, from);
-  const snxUsdProxy = useContract(contracts.SNX_USD_PROXY, from);
+  const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
   const balance = useTokenBalance(snxUsdProxy?.address, from);
 
   const fromChain = useMemo(() => chains.find((chain) => chain.id === from), [from]);
   const toChain = useMemo(() => chains.find((chain) => chain.id === to), [to]);
-
-  const { writeAsync: ccipSend, isLoading } = useContractWrite({
-    mode: 'recklesslyUnprepared',
-    address: CCIP?.address,
-    abi: CCIP?.abi,
-    functionName: 'ccipSend',
-    args: [
-      to,
-      [encodeAddress(address), '0x', [snxUsdProxy!.address], [parseUnits(amount, 0)], 100000],
-    ],
-  });
-
-  const { approve, requireApproval } = useApprove({
-    contractAddress: snxUsdProxy?.address,
-    amount: parseUnits(amount, 18),
-    spender: CCIP!.address,
-  });
-
-  const setTransactionState = useSetTransactionState();
-
-  const submit = async () => {
-    const transactions = [];
-
-    if (requireApproval) {
-      transactions.push({
-        title: 'Approve snxUSD transfer',
-        subtitle: '',
-        call: async (infiniteApproval?: boolean) => await approve(Boolean(infiniteApproval)),
-        checkboxLabel: requireApproval ? `Approve unlimited snxUSD transfers to Synthetix.` : '',
-        checked: false,
-      });
-    }
-
-    transactions.push({
-      title: 'Teleport snxUSD',
-      subtitle: `This will transfer your snxUSD to the ${toChain?.label} network.`,
-      call: async () => {
-        if (!ccipSend) {
-          return;
-        }
-        const txReceipt = await ccipSend();
-        toast.closeAll();
-        toast({
-          title: 'Teleportation initiated',
-          description: 'Your balance on the destination chain will be updated in a few minutes.',
-          status: 'info',
-          isClosable: true,
-          duration: 9000,
-        });
-        setAmount(0);
-        await txReceipt.wait();
-        balance.refetch();
-      },
-      checkboxLabel: '',
-      checked: false,
-    });
-
-    setTransactionState({
-      transactions,
-      isOpen: true,
-      onSuccess: () => null,
-    });
-  };
 
   return (
     <>
@@ -344,21 +273,20 @@ export const Teleporter = () => {
                 toast.closeAll();
                 if (activeChain?.id !== from) {
                   toast({
-                    title: 'Connect to ' + fromChain?.label,
+                    title: `Connect to ${fromChain?.label}`,
                     description: `Please connect to ${fromChain?.label} network`,
                     status: 'info',
                     isClosable: true,
                   });
                   switchNetwork?.(420);
                 } else {
-                  await submit();
+                  setIsOpen(true);
                 }
               }}
               size="lg"
               px="8"
               type="submit"
               disabled={activeChain?.id === from && amount <= 0}
-              isLoading={isLoading}
             >
               {activeChain?.id !== from ? 'Switch to ' + fromChain?.label : 'Teleport'}
             </Button>
@@ -369,6 +297,8 @@ export const Teleporter = () => {
           )}
         </Flex>
       </Container>
+
+      <TeleporterModal amount={amount} isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };

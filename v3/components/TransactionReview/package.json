@@ -1,0 +1,11 @@
+{
+  "name": "@snx-v3/TransactionReview",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/icon": "^3.0.11",
+    "@chakra-ui/react": "^2.2.8",
+    "react": "^18.2.0"
+  }
+}
