@@ -34,7 +34,7 @@ export const useApprove = (
     amount: BigNumber;
     spender: string;
   },
-  eventHandlers: { onSuccess?: () => void; onMutate?: () => void; onError?: (e: Error) => void }
+  eventHandlers?: { onSuccess?: () => void; onMutate?: () => void; onError?: (e: Error) => void }
 ) => {
   const [txnState, dispatch] = useReducer(reducer, initialState);
   const { data: allowance, refetch: refetchAllowance } = useAllowance({ contractAddress, spender });
@@ -71,7 +71,6 @@ export const useApprove = (
       await txn.wait();
       dispatch({ type: 'success' });
     } catch (error: any) {
-      debugger;
       dispatch({ type: 'error', payload: { error } });
       throw error;
     }
