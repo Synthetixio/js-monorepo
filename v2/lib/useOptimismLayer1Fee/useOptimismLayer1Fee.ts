@@ -24,20 +24,26 @@ const getOptimismLayerOneFees = async (serializedTxn: string, networkId: number 
 
   return wei(await OptimismGasPriceOracleContract.getL1Fee(serializedTxn));
 };
-export const useOptimismLayer1Fee = ({
-  populateTransaction,
-}: {
-  populateTransaction?: () => Promise<PopulatedTransaction>;
-}) => {
+export const useOptimismLayer1Fee = <T>(
+  args:
+    | {
+        populateTransaction?: (args: T) => Promise<PopulatedTransaction>;
+        transactionArgs: T;
+      }
+    | { populateTransaction?: () => Promise<PopulatedTransaction> }
+) => {
   const { networkId } = useContext(ContractContext);
-
+  const keyForTransactionArgs = 'transactionArgs' in args ? args.transactionArgs : undefined;
   return useQuery(
-    [networkId, populateTransaction],
+    [networkId, args.populateTransaction, keyForTransactionArgs],
     async () => {
-      if (!populateTransaction) {
+      if (!args.populateTransaction) {
         throw Error('populateTransaction missing, query should not be enabled');
       }
-      const tx = await populateTransaction();
+      const tx =
+        'transactionArgs' in args
+          ? await args.populateTransaction(args.transactionArgs)
+          : await args.populateTransaction();
 
       // serialize will throw if from is set on the transaction..
       const { from: _from, ...txWithoutFrom } = tx;
@@ -45,6 +51,6 @@ export const useOptimismLayer1Fee = ({
 
       return await getOptimismLayerOneFees(serializedTxn, networkId);
     },
-    { enabled: Boolean(populateTransaction && isNetworkIdOvm(networkId)) }
+    { enabled: Boolean(args.populateTransaction && isNetworkIdOvm(networkId)) }
   );
 };

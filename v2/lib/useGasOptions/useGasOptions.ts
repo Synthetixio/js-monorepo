@@ -48,25 +48,39 @@ const getTransactionPrice = (
   return txPrice;
 };
 
-export const useGasOptions = ({
-  populateTransaction,
-  queryKeys = [],
-}: {
-  populateTransaction?: () => Promise<PopulatedTransaction>;
-  queryKeys: QueryKey;
-}) => {
+export const useGasOptions = <T>(
+  args:
+    | {
+        populateTransaction?: (arg: T) => Promise<PopulatedTransaction>;
+        queryKeys: QueryKey;
+        transactionArgs: T;
+      }
+    | { populateTransaction?: () => Promise<PopulatedTransaction>; queryKeys: QueryKey }
+) => {
   const { networkId } = useContext(ContractContext);
   const { gasSpeed } = useContext(GasSpeedContext);
   const gasPriceQuery = useGasPrice();
-  const optimismLayerOneFeesQuery = useOptimismLayer1Fee({ populateTransaction });
+  const optimismLayerOneFeesQuery = useOptimismLayer1Fee(args);
   const { data: exchangeRatesData } = useExchangeRatesData();
+  const keyForTransactionArgs = 'transactionArgs' in args ? args.transactionArgs : undefined;
+
   return useQuery(
-    [...queryKeys, optimismLayerOneFeesQuery.data, gasPriceQuery.data, networkId, gasSpeed],
+    [
+      ...args.queryKeys,
+      optimismLayerOneFeesQuery.data,
+      gasPriceQuery.data,
+      networkId,
+      gasSpeed,
+      keyForTransactionArgs,
+    ],
     async () => {
-      if (!populateTransaction) {
+      if (!args.populateTransaction) {
         throw Error('Query should not be enable when getGasLimit is missing');
       }
-      const populatedTransaction = await populateTransaction();
+      const populatedTransaction =
+        'transactionArgs' in args
+          ? await args.populateTransaction(args.transactionArgs)
+          : await args.populateTransaction();
       const gasLimitRaw = populatedTransaction.gasLimit;
       const gasLimit = wei(gasLimitRaw ?? 0, GWEI_DECIMALS)
         .mul(GAS_LIMIT_BUFFER)
@@ -97,6 +111,6 @@ export const useGasOptions = ({
         ),
       };
     },
-    { enabled: Boolean(populateTransaction && networkId), staleTime: 10000 }
+    { enabled: Boolean(args.populateTransaction && networkId), staleTime: 10000 }
   );
 };
