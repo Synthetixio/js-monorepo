@@ -29,6 +29,7 @@ export const RewardsDistributorTitle: FC<{
   });
 
   const { data: token } = useToken({
+    // @ts-ignore
     address: rewardToken?.toString(),
     enabled: !!rewardToken,
   });
@@ -43,6 +44,7 @@ export const RewardsDistributorTitle: FC<{
   });
 
   const claim = useCallback(async () => {
+    if (!writeAsync) return;
     try {
       setIsLoading(true);
       const txReceipt = await writeAsync();

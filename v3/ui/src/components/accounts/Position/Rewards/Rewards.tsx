@@ -32,8 +32,11 @@ export const Rewards: FC<Props> = ({ poolId, collateral, accountId }) => {
         <Tbody>
           {rewards.map((reward) => (
             <RewardsDistributorTitle
+              // @ts-ignore
               key={reward.distributor}
+              // @ts-ignore
               value={reward.value}
+              // @ts-ignore
               distributor={reward.distributor}
               poolId={poolId}
               collateral={collateral}
