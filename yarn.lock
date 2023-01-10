@@ -7725,9 +7725,8 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v3/Amount": "workspace:*"
-    "@snx-v3/format": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
-    ethers: ^5.7.2
+    "@synthetixio/wei": "workspace:*"
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7863,6 +7862,19 @@ __metadata:
     "@tanstack/react-query": ^4.3.4
     ethers: ^5.7.2
     react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useBalance@workspace:*, @snx-v3/useBalance@workspace:v3/lib/useBalance":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useBalance@workspace:v3/lib/useBalance"
+  dependencies:
+    "@ethersproject/providers": ^5.7.2
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/zod": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
   languageName: unknown
   linkType: soft
 
@@ -10158,6 +10170,7 @@ __metadata:
     "@snx-v3/format": "workspace:*"
     "@snx-v3/useAccounts": "workspace:*"
     "@snx-v3/useApprove": "workspace:*"
+    "@snx-v3/useBalance": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
