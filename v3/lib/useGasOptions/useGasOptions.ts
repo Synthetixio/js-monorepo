@@ -65,12 +65,12 @@ export const useGasOptions = <T>(
   return useQuery({
     queryKey: [
       ...(args.queryKeys || []),
-      optimismLayerOneFeesQuery.data,
+      optimismLayerOneFeesQuery.data?.toNumber(),
       gasPriceQuery.data,
       networkId,
       gasSpeed,
       keyForTransactionArgs,
-      ethPrice,
+      ethPrice?.toNumber(),
     ],
     queryFn: async () => {
       if (!args.populateTransaction) {
