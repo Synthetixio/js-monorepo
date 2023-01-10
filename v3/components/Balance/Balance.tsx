@@ -30,11 +30,10 @@ export function Balance({
     }
   }, [address, network.name, symbol]);
 
-  const formattedBalance = formatValue(balance);
   return (
     <Text display="flex" gap={2} alignItems="center" fontSize="xs">
       Balance:
-      <Amount value={formattedBalance} suffix={` ${symbol.toUpperCase()}`} />
+      <Amount value={balance} suffix={` ${symbol.toUpperCase()}`} />
       {balance.eq(0) && buyAssetLink && (
         <Link href={buyAssetLink} isExternal>
           <Badge ml="1" variant="outline" transform="translateY(-1px)">
@@ -48,7 +47,7 @@ export function Balance({
           variant="outline"
           onClick={(e) => {
             e.preventDefault();
-            onMax(formattedBalance.toString());
+            onMax(formatValue(balance).toString());
           }}
         >
           Use Max

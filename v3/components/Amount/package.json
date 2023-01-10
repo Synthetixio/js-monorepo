@@ -6,7 +6,7 @@
   "dependencies": {
     "@chakra-ui/react": "^2.2.8",
     "@snx-v3/format": "workspace:*",
-    "ethers": "^5.7.2",
+    "@synthetixio/wei": "workspace:*",
     "react": "^18.2.0"
   }
 }

@@ -1,7 +1,7 @@
 import { Tooltip } from '@chakra-ui/react';
-import { BigNumber } from 'ethers';
 import { useMemo } from 'react';
-import { currency, parseUnits, formatValue } from '@snx-v3/format';
+import { currency, formatValue, parseUnits } from '@snx-v3/format';
+import { WeiSource } from '@synthetixio/wei';
 
 export function Amount({
   value,
@@ -9,7 +9,7 @@ export function Amount({
   suffix = '',
 }: {
   prefix?: string;
-  value: BigNumber;
+  value: WeiSource;
   suffix?: string;
 }) {
   const { formattedValue, isPrecise } = useMemo(() => {

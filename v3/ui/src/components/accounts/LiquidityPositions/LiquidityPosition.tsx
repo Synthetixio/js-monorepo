@@ -11,41 +11,30 @@ interface Props {
 }
 
 export const LiquidityPosition: FC<Props> = ({ position }) => {
-  // If the connected wallet doesn't own this account token, remove/disable the interactivity
-  const collateralAmount = position.collateralAmount.toNumber();
-  const collateralValue = position.collateralValue.toNumber();
-
   return (
     <Tr>
       <Td py="4">
         <>
-          <Amount value={collateralValue} prefix="$" />
+          <Amount value={position.collateralValue} prefix="$" />
           <Text fontSize="xs" opacity="0.66" mt="1">
             <Amount
-              value={collateralAmount}
+              value={position.collateralAmount}
               suffix={`${position.collateralType.symbol.toUpperCase()} `}
             />
           </Text>
         </>
       </Td>
       <Td py="4">
-        <Amount value={position.debt.toNumber()} prefix="$" />
+        <Amount value={position.debt} prefix="$" />
         <Text fontSize="xs" opacity="0.66" mt="1">
           $X net issuance
         </Text>
       </Td>
       <Td py="4">
-        {position.cRatio.eq(0) ? (
-          <>No Debt</>
-        ) : (
-          <Amount value={position.cRatio.toNumber()} suffix="%" />
-        )}
+        {position.cRatio.eq(0) ? <>No Debt</> : <Amount value={position.cRatio} suffix="%" />}
 
         <Text fontSize="xs" opacity="0.66" mt="1">
-          <Amount
-            value={position.collateralType.liquidationRatioD18.mul(100).toNumber()}
-            suffix="% "
-          />
+          <Amount value={position.collateralType.liquidationRatioD18.mul(100)} suffix="% " />
           Min.
         </Text>
       </Td>
