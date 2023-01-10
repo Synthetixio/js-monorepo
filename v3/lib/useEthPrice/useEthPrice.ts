@@ -8,7 +8,13 @@ export const useEthPrice = () => {
   const { data: CoreProxy } = useCoreProxy();
 
   return useQuery({
-    queryKey: [{ collateralTypes: collateralTypes, CoreProxy: CoreProxy?.address }, 'eth-price'],
+    queryKey: [
+      {
+        collateralTypes: collateralTypes?.map((x) => x.tokenAddress),
+        CoreProxy: CoreProxy?.address,
+      },
+      'eth-price',
+    ],
     queryFn: () => {
       if (!CoreProxy || !collateralTypes) throw Error('Query should not be enabled');
       const ethCollateral = collateralTypes.find((x) => x.symbol === 'WETH');
