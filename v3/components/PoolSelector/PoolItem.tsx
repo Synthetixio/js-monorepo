@@ -1,18 +1,12 @@
 import { ExternalLinkIcon, InfoIcon } from '@chakra-ui/icons';
-import { Heading, Box, Text, Flex, Radio, Link, Tooltip } from '@chakra-ui/react';
-import { Link as NavLink, generatePath } from 'react-router-dom';
+import { Box, Flex, Heading, Link, Radio, Text, Tooltip } from '@chakra-ui/react';
+import { generatePath, Link as NavLink } from 'react-router-dom';
 
-type PropsType = {
-  name: string;
-  value: string;
-  checked?: boolean;
-};
-
-export default function DepositrOption({ name, value, checked = false }: PropsType) {
+export function PoolItem({ name, value }: { name: string; value: string }) {
   return (
     <Flex alignItems="center" mb="2.5" pb="2.5" borderBottom="1px solid rgba(255,255,255,0.3)">
       <Box>
-        <Radio size="lg" name={name} colorScheme="orange" checked={checked} value={value} />
+        <Radio size="lg" name={name} colorScheme="orange" value={value} />
       </Box>
       <Box flex="1" pl="3">
         <Heading size="sm" mb="0.5">
@@ -42,16 +36,6 @@ export default function DepositrOption({ name, value, checked = false }: PropsTy
           )}
         </Text>
       </Box>
-      {/*
-      <Box pl="4">
-        <Text fontSize="xs">
-          Projected Rewards: <strong>20% APY</strong> (SNX)
-        </Text>
-        <Text fontSize="xs">
-          Projected Fees: <strong>20% APY</strong> (sUSD)
-        </Text>
-      </Box>
-      */}
     </Flex>
   );
 }

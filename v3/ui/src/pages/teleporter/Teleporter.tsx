@@ -22,7 +22,7 @@ import { useMemo, useState } from 'react';
 import Head from 'react-helmet';
 import { useNetwork, useSwitchNetwork } from 'wagmi';
 import { NumberInput } from '../../components/accounts/Position/Manage/NumberInput';
-import { Balance } from '../../components/accounts/Deposit/Balance';
+import { Balance } from '@snx-v3/Balance';
 import { useContract } from '../../hooks/useContract';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';

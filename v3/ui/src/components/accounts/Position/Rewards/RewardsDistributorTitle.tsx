@@ -5,7 +5,7 @@ import { useContractRead, useContractWrite, useToken } from 'wagmi';
 import { useContract, useSnxProxy } from '../../../../hooks/useContract';
 import { contracts } from '../../../../utils/constants';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
-import { Amount } from '../../../shared/Amount/Amount';
+import { Amount } from '@snx-v3/Amount';
 import { RewardRate } from './RewardRate';
 import { RewardsDistributor } from './RewardsDistributor';
 

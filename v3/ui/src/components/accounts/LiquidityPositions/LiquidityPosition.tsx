@@ -2,7 +2,7 @@ import { ArrowRightIcon } from '@chakra-ui/icons';
 import { Link, Td, Text, Tr } from '@chakra-ui/react';
 import { generatePath, Link as RouterLink } from 'react-router-dom';
 import { FC } from 'react';
-import { Amount } from '../../shared/Amount/Amount';
+import { Amount } from '@snx-v3/Amount';
 import { LiquidityPositionType } from '@snx-v3/useLiquidityPositions';
 
 interface Props {

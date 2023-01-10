@@ -1,9 +1,9 @@
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { Box, Flex, Grid, GridItem, Heading, Skeleton, Text, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
-import { currency } from '../../../utils/currency';
+import { currency } from '@snx-v3/format';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
-import { Amount } from '../../shared/Amount/Amount';
+import { Amount } from '@snx-v3/Amount';
 
 interface Props {
   collateral: CollateralType;

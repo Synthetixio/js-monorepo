@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { useValidatePosition } from '../../../../hooks/useValidatePosition';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { CRatio } from './CRatio';
-import { Amount } from '../../../shared/Amount/Amount';
+import { Amount } from '@snx-v3/Amount';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 
 interface Props {

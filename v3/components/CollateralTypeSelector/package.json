@@ -1,0 +1,11 @@
+{
+  "name": "@snx-v3/CollateralTypeSelector",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.9",
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v3/useCollateralTypes": "workspace:*"
+  }
+}

@@ -1,6 +1,6 @@
 import { Badge, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
-import { Amount } from '../../../shared/Amount/Amount';
+import { Amount } from '@snx-v3/Amount';
 
 interface Props {
   CRatio: number;

@@ -7708,11 +7708,57 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/Amount@workspace:*, @snx-v3/Amount@workspace:v3/components/Amount":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/Amount@workspace:v3/components/Amount"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/format": "workspace:*"
+    ethers: ^5.7.2
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/Balance@workspace:*, @snx-v3/Balance@workspace:v3/components/Balance":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/Balance@workspace:v3/components/Balance"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/Amount": "workspace:*"
+    "@snx-v3/format": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    ethers: ^5.7.2
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/CollateralTypeSelector@workspace:*, @snx-v3/CollateralTypeSelector@workspace:v3/components/CollateralTypeSelector":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/CollateralTypeSelector@workspace:v3/components/CollateralTypeSelector"
+  dependencies:
+    "@chakra-ui/icons": ^2.0.9
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/useCollateralTypes": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/Constants@workspace:*, @snx-v3/Constants@workspace:v3/lib/Constants":
   version: 0.0.0-use.local
   resolution: "@snx-v3/Constants@workspace:v3/lib/Constants"
   dependencies:
     react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/PoolSelector@workspace:*, @snx-v3/PoolSelector@workspace:v3/components/PoolSelector":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/PoolSelector@workspace:v3/components/PoolSelector"
+  dependencies:
+    "@chakra-ui/icons": ^2.0.9
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/usePools": "workspace:*"
+    react: ^18.2.0
+    react-router-dom: ^6.3.0
   languageName: unknown
   linkType: soft
 
@@ -10102,7 +10148,11 @@ __metadata:
     "@rainbow-me/rainbowkit": ^0.8.1
     "@snx-v2/formatters": "workspace:*"
     "@snx-v3/AccountsSelector": "workspace:*"
+    "@snx-v3/Amount": "workspace:*"
+    "@snx-v3/Balance": "workspace:*"
+    "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/Constants": "workspace:*"
+    "@snx-v3/PoolSelector": "workspace:*"
     "@snx-v3/TransactionReview": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
@@ -10147,7 +10197,6 @@ __metadata:
     react-chartjs-2: ^4.3.1
     react-dom: ^18.2.0
     react-helmet: ^6.1.0
-    react-hook-form: ^7.34.0
     react-i18next: ^11.18.3
     react-refresh: ^0.14.0
     react-router-dom: ^6.3.0
@@ -31824,15 +31873,6 @@ __metadata:
   peerDependencies:
     react: ">=16.3.0"
   checksum: a4998479dab7fc1c2799eddefb1870a9d881b5f71cfdf97979a9882e42f4bb50402d55335f308f461e735e01a06f46b16cc7b4e6bcb22c7a4a6f85a753c5c106
-  languageName: node
-  linkType: hard
-
-"react-hook-form@npm:^7.34.0":
-  version: 7.34.0
-  resolution: "react-hook-form@npm:7.34.0"
-  peerDependencies:
-    react: ^16.8.0 || ^17 || ^18
-  checksum: 2b4a6f6ca5b3f729b88aa14a1a8c47ba86405d9c5fef2560b1dc85ac6fe1b105326571b8e1e857f8d8f3449636062d2d6201809918b5bb37f6f8f0b9c6cd6e2c
   languageName: node
   linkType: hard
 

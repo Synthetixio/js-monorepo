@@ -12,9 +12,9 @@ import {
 } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useTokenBalance } from '../../../../hooks/useTokenBalance';
-import { currency } from '../../../../utils/currency';
+import { currency } from '@snx-v3/format';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
-import { Balance } from '../../Deposit/Balance';
+import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from './NumberInput';
 interface Props {
   collateral: CollateralType;
