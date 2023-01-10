@@ -2,7 +2,7 @@ import { Text, Box, Flex, Heading } from '@chakra-ui/react';
 import { FC } from 'react';
 import { parseUnits } from '@snx-v3/format';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
-import { Balance } from '../../Deposit/Balance';
+import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from './NumberInput';
 
 interface Props {

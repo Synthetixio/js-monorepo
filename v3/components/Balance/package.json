@@ -1,0 +1,14 @@
+{
+  "name": "@snx-v3/Balance",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v3/Amount": "workspace:*",
+    "@snx-v3/format": "workspace:*",
+    "@snx-v3/useBlockchain": "workspace:*",
+    "ethers": "^5.7.2",
+    "react": "^18.2.0"
+  }
+}

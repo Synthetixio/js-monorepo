@@ -3,7 +3,7 @@ import { Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { parseUnits } from '@snx-v3/format';
-import { Amount } from '../../../shared/Amount/Amount';
+import { Amount } from '@snx-v3/Amount';
 import { useQuery } from '@tanstack/react-query';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { useNetwork } from '@snx-v3/useBlockchain';

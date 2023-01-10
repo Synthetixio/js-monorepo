@@ -4,7 +4,7 @@ import { useContract } from '../../../../hooks/useContract';
 import { useTokenBalance } from '../../../../hooks/useTokenBalance';
 import { contracts } from '../../../../utils/constants';
 
-import { Balance } from '../../Deposit/Balance';
+import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from './NumberInput';
 
 interface Props {

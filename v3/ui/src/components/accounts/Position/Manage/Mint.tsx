@@ -1,7 +1,7 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { Text, Box, Tooltip, Flex, Heading, Badge } from '@chakra-ui/react';
 import { FC } from 'react';
-import { currency } from '../../../../utils/currency';
+import { currency } from '@snx-v3/format';
 import { NumberInput } from './NumberInput';
 
 interface Props {

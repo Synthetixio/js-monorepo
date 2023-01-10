@@ -3,12 +3,13 @@
  * disable thousand separation: { useGrouping: false }
  * @param  {number|string} value
  * @param  {Intl.NumberFormatOptions} options?
+ * @param  {number} minimumDigitsToShowAfterZeros?
  */
-export const currency = (
+export function currency(
   value: number | string,
   options?: Intl.NumberFormatOptions,
   minimumDigitsToShowAfterZeros = 2
-) => {
+) {
   try {
     const stringValue = value.toString();
     const floatNumber = parseFloat(stringValue);
@@ -31,4 +32,4 @@ export const currency = (
   } catch (error) {
     return value + '';
   }
-};
+}
