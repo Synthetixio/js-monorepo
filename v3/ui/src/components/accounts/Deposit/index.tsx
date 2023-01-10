@@ -13,7 +13,7 @@ export function Deposit({
 }: {
   accountId?: string;
   liquidityPositions?: LiquidityPositionsById;
-  refetch: () => void;
+  refetch?: () => void;
 }) {
   const { data: collateralTypes } = useCollateralTypes();
   const { data: preferredPool } = usePreferredPool();
