@@ -155,7 +155,7 @@ export const Teleporter = () => {
                     value={amount}
                     onChange={setAmount}
                     border="1px"
-                    max={balance.formattedValue}
+                    max={balance.value.toNumber()}
                     borderRightRadius="none"
                   />
                   <InputRightAddon borderColor="gray.800" bg="whiteAlpha.100">

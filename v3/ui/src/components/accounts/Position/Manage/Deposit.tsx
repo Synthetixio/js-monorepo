@@ -28,7 +28,7 @@ export const Deposit: FC<Props> = ({ collateral, value, onChange }) => {
 
       <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
-          <NumberInput value={value} onChange={onChange} max={balance.formattedValue} />
+          <NumberInput value={value} onChange={onChange} max={balance.value.toNumber()} />
         </Flex>
         <Flex alignItems="center">
           <Balance

@@ -1,9 +1,8 @@
 import { Badge, Link, Text } from '@chakra-ui/react';
-import { BigNumber } from 'ethers';
 import { useMemo } from 'react';
 import { useNetwork } from '@snx-v3/useBlockchain';
 import { Amount } from '@snx-v3/Amount';
-import { formatValue } from '@snx-v3/format';
+import Wei from '@synthetixio/wei';
 
 export function Balance({
   balance,
@@ -11,7 +10,7 @@ export function Balance({
   address,
   onMax,
 }: {
-  balance: BigNumber;
+  balance: Wei;
   symbol: string;
   address: string;
   onMax?: (balance: string) => void;
@@ -47,7 +46,7 @@ export function Balance({
           variant="outline"
           onClick={(e) => {
             e.preventDefault();
-            onMax(formatValue(balance).toString());
+            onMax(balance.toString());
           }}
         >
           Use Max

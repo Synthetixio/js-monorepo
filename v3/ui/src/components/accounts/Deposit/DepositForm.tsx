@@ -98,7 +98,7 @@ export function DepositForm({
             onChange={(e) => {
               setAmount(e.target.value);
               const currentAmount = parseUnits(e.target.value || 0);
-              if (currentAmount.gte(balanceData.value)) {
+              if (currentAmount.gte(balanceData.value.toBN())) {
                 e.target.setCustomValidity('Insufficient Balance');
               } else if (currentAmount.gt(0)) {
                 e.target.setCustomValidity('');
