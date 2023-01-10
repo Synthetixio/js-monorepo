@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { Handle, Position } from 'reactflow';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
+import { NodeStateButton } from './NodeStateButton';
 
 export const ReducerNode: FC<{ data: { label: string }; id: string }> = ({ data, id }) => {
   const [nodes] = useRecoilState(nodesState);
@@ -17,7 +18,8 @@ export const ReducerNode: FC<{ data: { label: string }; id: string }> = ({ data,
       alignItems="center"
     >
       <Text fontSize="xx-small">Only two inputs are possible</Text>
-      <Text>Reducer Node</Text>
+      <Text>Reducer </Text>
+      {node && <NodeStateButton node={node} />}
       {data.label && <Text>Name: {data.label}</Text>}
       {node && <Text>Operation: {node.parameters[0]}</Text>}
       <Handle

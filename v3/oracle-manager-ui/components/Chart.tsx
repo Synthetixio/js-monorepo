@@ -13,6 +13,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
+import { ORACLE_NODE_TYPES } from '../utils/constants';
 import { Node } from '../utils/types';
 import { ChainLinkNode } from './ChainLinkNode';
 import { ExternalNode } from './ExternalNode';
@@ -24,13 +25,13 @@ import { StalenessFallbackReducerNode } from './StalenessFallbackReducerNode';
 import { UniswapNode } from './UniswapNode';
 
 const NODE_TYPES = {
-  chainLink: ChainLinkNode,
-  pyth: PythNode,
-  reducer: ReducerNode,
-  uniswap: UniswapNode,
-  priceDeviationCircuitBreakerNode: PriceDeviationCircuitBreakerNode,
-  externalNode: ExternalNode,
-  stalenessFallbackReducer: StalenessFallbackReducerNode,
+  [ORACLE_NODE_TYPES[0].value]: ChainLinkNode,
+  [ORACLE_NODE_TYPES[3].value]: PythNode,
+  [ORACLE_NODE_TYPES[4].value]: ReducerNode,
+  [ORACLE_NODE_TYPES[6].value]: UniswapNode,
+  [ORACLE_NODE_TYPES[2].value]: PriceDeviationCircuitBreakerNode,
+  [ORACLE_NODE_TYPES[1].value]: ExternalNode,
+  [ORACLE_NODE_TYPES[5].value]: StalenessFallbackReducerNode,
 };
 
 export const Chart: FC = () => {
@@ -49,7 +50,6 @@ export const Chart: FC = () => {
       const source = ids[1];
       const target = ids[2];
       setEdges(edges.filter((edge) => edge.source !== source));
-
       setNodes((state) => {
         return state.map((node) => {
           if (node.parents.includes(source)) {
@@ -66,35 +66,40 @@ export const Chart: FC = () => {
 
   const onConnect = (params: Connection) => {
     setEdges((eds) => {
-      const addedEdge = addEdge(params, eds);
-      let edgeNotToAdd: string[] = [];
-      addedEdge.forEach((edge) => {
-        setNodes((state) => {
-          const targetNode = state.find((node) => node.id === edge.target);
-          return state.map((node) => {
-            if (targetNode?.id === node.id) {
-              if (targetNode.type === 'reducer' && targetNode.parents.length >= 2) {
-                toast({
-                  title: 'Reducer node only can have two inputs',
-                  status: 'error',
-                  duration: 9000,
-                  isClosable: true,
-                });
-                edgeNotToAdd.push(edge.id);
-                return node;
-              }
-              return {
-                ...node,
-                parents: node.parents.includes(edge.source)
-                  ? node.parents
-                  : [...node.parents, edge.source],
-              };
+      let shouldAddEdge = false;
+      setNodes((state) => {
+        const targetNode = state.find((node) => node.id === params.target);
+        const settings = ORACLE_NODE_TYPES.find((type) => type.nodeType === targetNode?.typeId);
+        if (targetNode && settings) {
+          if (targetNode.parents.length >= settings.numberOfParents) {
+            toast({
+              title: 'Node reached max parents',
+              status: 'error',
+              duration: 9000,
+              isClosable: true,
+            });
+            return state;
+          }
+          shouldAddEdge = true;
+          return state.map((s) => {
+            if (s.id === targetNode.id) {
+              return { ...s, parents: [...s.parents, params.target!] };
             }
-            return node;
+            return s;
           });
+        }
+        toast({
+          title: 'Could not find node?',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
         });
+        return state;
       });
-      return addedEdge.filter((edge) => !edgeNotToAdd.includes(edge.id));
+      if (shouldAddEdge) {
+        return addEdge(params, eds);
+      }
+      return eds;
     });
   };
 
@@ -113,10 +118,10 @@ export const Chart: FC = () => {
         });
       }
     });
-  }, [nodes.toString()]);
+  }, []);
   console.log(nodes);
   return (
-    <Box w="100%" h="500px">
+    <Box w="100%" h="800px">
       <Text textAlign="center" fontWeight="bold">
         The bottom of the node is always the downstream output and the top is the receiving end
       </Text>

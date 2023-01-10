@@ -1,6 +1,79 @@
 import { Chain } from 'wagmi';
 export const supportedChains: Chain[] = [
   {
+    id: 1,
+    network: 'homestead',
+    name: 'Ethereum',
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+    rpcUrls: {
+      alchemy: {
+        http: ['https://eth-mainnet.g.alchemy.com/v2'],
+        webSocket: ['wss://eth-mainnet.g.alchemy.com/v2'],
+      },
+      infura: {
+        http: ['https://mainnet.infura.io/v3'],
+        webSocket: ['wss://mainnet.infura.io/ws/v3'],
+      },
+      default: {
+        http: ['https://cloudflare-eth.com'],
+      },
+    },
+    blockExplorers: {
+      etherscan: {
+        name: 'Etherscan',
+        url: 'https://etherscan.io',
+      },
+      default: {
+        name: 'Etherscan',
+        url: 'https://etherscan.io',
+      },
+    },
+    contracts: {
+      ensRegistry: {
+        address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      },
+      multicall3: {
+        address: '0xca11bde05977b3631167028862be2a173976ca11',
+        blockCreated: 14353601,
+      },
+    },
+  },
+  {
+    id: 10,
+    name: 'Optimism',
+    network: 'optimism',
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+    rpcUrls: {
+      alchemy: {
+        http: ['https://opt-mainnet.g.alchemy.com/v2'],
+        webSocket: ['wss://opt-mainnet.g.alchemy.com/v2'],
+      },
+      infura: {
+        http: ['https://optimism-mainnet.infura.io/v3'],
+        webSocket: ['wss://optimism-mainnet.infura.io/ws/v3'],
+      },
+      default: {
+        http: ['https://mainnet.optimism.io'],
+      },
+    },
+    blockExplorers: {
+      etherscan: {
+        name: 'Etherscan',
+        url: 'https://optimistic.etherscan.io',
+      },
+      default: {
+        name: 'Etherscan',
+        url: 'https://optimistic.etherscan.io',
+      },
+    },
+    contracts: {
+      multicall3: {
+        address: '0xca11bde05977b3631167028862be2a173976ca11',
+        blockCreated: 4286263,
+      },
+    },
+  },
+  {
     id: 5,
     network: 'goerli',
     name: 'Goerli',
@@ -94,6 +167,7 @@ export const ALCHEMY_KEY_MAPPING: Record<number, string> = {
 export const ORACLE_NODE_TYPES: {
   value: string;
   label: string;
+  nodeType: number;
   numberOfParents: number;
   parameters: {
     type: string;
@@ -104,6 +178,7 @@ export const ORACLE_NODE_TYPES: {
   {
     value: 'chainLink',
     label: 'Chain Link',
+    nodeType: 3,
     numberOfParents: 0,
     parameters: [
       { type: 'string', name: 'Address' },
@@ -113,18 +188,21 @@ export const ORACLE_NODE_TYPES: {
   {
     value: 'externalNode',
     label: 'External Node',
-    numberOfParents: Infinity,
+    nodeType: 2,
+    numberOfParents: Number.MAX_SAFE_INTEGER,
     parameters: [{ type: 'string', name: 'Address' }],
   },
   {
-    value: 'priceCircuitBreaker',
-    label: 'Price Circuit Breaker',
+    value: 'priceDeviationCircuitBreaker',
+    label: 'Price Deviation Circuit Breaker',
+    nodeType: 6,
     numberOfParents: 3,
     parameters: [{ type: 'number', name: 'Deviation tolerance' }],
   },
   {
     value: 'pyth',
     label: 'Pyth',
+    nodeType: 5,
     numberOfParents: 0,
     parameters: [
       {
@@ -135,25 +213,33 @@ export const ORACLE_NODE_TYPES: {
         type: 'string',
         name: 'Price feed id',
       },
+      { type: 'boolean', name: 'Use EMA' },
     ],
   },
   {
     value: 'reducer',
     label: 'Reducer',
+    nodeType: 1,
     numberOfParents: 2,
     parameters: [
-      { type: 'union', name: 'Operation', options: ['max', 'min', 'mean', 'median', 'recent'] },
+      {
+        type: 'union',
+        name: 'Operation',
+        options: ['max', 'min', 'mean', 'median', 'recent', 'mul', 'div'],
+      },
     ],
   },
   {
-    value: 'stalenessFallbackReducer',
-    label: 'Staleness Fallback Reducer',
+    value: 'stalenessCircuitBreaker',
+    label: 'Staleness Circuit Breaker',
+    nodeType: 7,
     numberOfParents: 2,
     parameters: [{ type: 'number', name: 'Staleness tolerance' }],
   },
   {
     value: 'uniswap',
     label: 'Uniswap',
+    nodeType: 4,
     numberOfParents: 0,
     parameters: [
       {

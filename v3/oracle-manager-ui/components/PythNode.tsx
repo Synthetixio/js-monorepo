@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { Handle, Position } from 'reactflow';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
+import { NodeStateButton } from './NodeStateButton';
 
 export const PythNode: FC<{ data: { label: string }; id: string }> = ({ data, id }) => {
   const [nodes] = useRecoilState(nodesState);
@@ -18,9 +19,11 @@ export const PythNode: FC<{ data: { label: string }; id: string }> = ({ data, id
       alignItems="center"
     >
       <Text>Pyth</Text>
+      {node && <NodeStateButton node={node} />}
       {data.label && <Text>Name: {data.label}</Text>}
       <Text fontSize="xx-small">Address: {node?.parameters[0]}</Text>
       <Text>Price feed: {node?.parameters[1]}</Text>
+      <Text>Use EMA: {node?.parameters[2].toString()}</Text>
       <Handle
         type="source"
         position={Position.Bottom}

@@ -1,6 +1,7 @@
-import { Input } from '@chakra-ui/react';
+import { Input, Text } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { ORACLE_NODE_TYPES } from '../utils/constants';
 
 export const ChainLinkForm: FC<{
   address: string;
@@ -9,14 +10,23 @@ export const ChainLinkForm: FC<{
 }> = ({ address, twap, getValuesFromForm }) => {
   const { register, getValues, watch } = useForm({ defaultValues: { address, twap } });
   useEffect(() => {
-    const twap = Number(getValues('twap'));
-    getValuesFromForm(getValues('address'), twap);
+    getValuesFromForm(getValues('address'), getValues('twap'));
   }, [watch()]);
-  console.log(twap);
+
   return (
     <>
-      <Input {...register('address')} placeholder="Address"></Input>
-      <Input {...register('twap')} placeholder="TWAP in seconds" type="number"></Input>
+      <Text>{ORACLE_NODE_TYPES[0].parameters[0].name}</Text>
+      <Input
+        {...register('address')}
+        placeholder={ORACLE_NODE_TYPES[0].parameters[0].name}
+        type="text"
+      />
+      <Text>{ORACLE_NODE_TYPES[0].parameters[1].name}</Text>
+      <Input
+        {...register('twap', { valueAsNumber: true })}
+        placeholder={ORACLE_NODE_TYPES[0].parameters[1].name}
+        type="number"
+      />
     </>
   );
 };

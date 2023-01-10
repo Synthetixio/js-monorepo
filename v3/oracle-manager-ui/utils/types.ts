@@ -2,6 +2,7 @@ import { Edge } from 'reactflow';
 
 export type Node = CustomNode & Edge<any>;
 interface CustomNode {
+  typeId: number;
   type: OracleNodeTypes;
   id: string;
   parents: string[];
@@ -15,6 +16,6 @@ export type OracleNodeTypes =
   | 'pyth'
   | 'reducer'
   | 'externalNode'
-  | 'stalenessFallbackReducer'
+  | 'stalenessCircuitBreaker'
   | 'uniswap'
   | 'priceDeviationCircuitBreaker';

@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { Handle, Position } from 'reactflow';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
+import { NodeStateButton } from './NodeStateButton';
 
 export const PriceDeviationCircuitBreakerNode: FC<{ data: { label: string }; id: string }> = ({
   data,
@@ -21,7 +22,8 @@ export const PriceDeviationCircuitBreakerNode: FC<{ data: { label: string }; id:
       color="white"
     >
       <Text>Price Deviation Circuit Breaker</Text>
-      {data.label && <Text>{data.label}</Text>}
+      {node && <NodeStateButton node={node} />}
+      {data.label && <Text>Name: {data.label}</Text>}
       <Text>Deviation Tolerance: {node?.parameters[0]}</Text>
       <Handle
         type="source"

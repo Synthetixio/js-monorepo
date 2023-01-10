@@ -10,12 +10,13 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
+  Text,
 } from '@chakra-ui/react';
 import { FC, useEffect, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 import { ORACLE_NODE_TYPES } from '../utils/constants';
-import { Node } from '../utils/types';
+import { Node, OracleNodeTypes } from '../utils/types';
 import { useToast } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { ChainLinkForm } from './ChainLinkForm';
@@ -65,10 +66,8 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
       return (
         <ReducerForm
           operation={node?.parameters[0]}
-          node={node}
-          getValuesFromForm={(operation, parents) => {
+          getValuesFromForm={(operation) => {
             setValue('nodeParameters', [operation]);
-            setValue('nodeParents', parents);
           }}
         />
       );
@@ -77,41 +76,36 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
         <PythForm
           address={node?.parameters[0]}
           priceFeedId={node?.parameters[1]}
-          getValuesFromForm={(address, priceFeedId) => {
-            setValue('nodeParameters', [address, priceFeedId]);
+          useEma={node?.parameters[2]}
+          getValuesFromForm={(address, priceFeedId, useEma) => {
+            setValue('nodeParameters', [address, priceFeedId, useEma]);
           }}
         />
       );
     if (type === 'externalNode')
       return (
         <ExternalNodeForm
-          node={node}
           address={node?.parameters[0]}
-          getValuesFromForm={(address, parents) => {
+          getValuesFromForm={(address) => {
             setValue('nodeParameters', [address]);
-            setValue('nodeParents', parents);
           }}
         />
       );
-    if (type === 'stalenessFallbackReducer')
+    if (type === 'stalenessCircuitBreaker')
       return (
         <StalenessFallbackReducerForm
-          node={node}
           staleness={node?.parameters[0]}
-          getValuesFromForm={(staleness, parents) => {
+          getValuesFromForm={(staleness) => {
             setValue('nodeParameters', [staleness]);
-            setValue('nodeParents', parents);
           }}
         />
       );
     if (type === 'priceDeviationCircuitBreaker')
       return (
         <PriceDeviationCircuitBreakerForm
-          node={node}
           tolerance={node?.parameters[0]}
-          getValuesFromForm={(tolerance, parents) => {
+          getValuesFromForm={(tolerance) => {
             setValue('nodeParameters', [tolerance]);
-            setValue('nodeParents', parents);
           }}
         />
       );
@@ -157,6 +151,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
               </Select>
             )}
             {componentByOracleType}
+            <Text>Node name</Text>
             <Input placeholder="Node name" {...register('nodeLabel')} />
           </Flex>
         </ModalBody>
@@ -191,6 +186,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                     .filter((s) => s.id !== node.id)
                     .concat({
                       ...node,
+                      typeId: typeToTypeId(getValues('oracleNodeType')!),
                       type: getValues('oracleNodeType')!,
                       parents: getValues('nodeParents'),
                       parameters: getValues('nodeParameters'),
@@ -203,6 +199,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                   ...nodes,
                   {
                     type: getValues('oracleNodeType')!,
+                    typeId: typeToTypeId(getValues('oracleNodeType')!),
                     parents: getValues('nodeParents'),
                     parameters: getValues('nodeParameters'),
                     data: { label: getValues('nodeLabel') || '' },
@@ -230,3 +227,22 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
     </Modal>
   );
 };
+
+function typeToTypeId(type: OracleNodeTypes) {
+  switch (type) {
+    case 'chainLink':
+      return ORACLE_NODE_TYPES[0].nodeType;
+    case 'reducer':
+      return ORACLE_NODE_TYPES[4].nodeType;
+    case 'externalNode':
+      return ORACLE_NODE_TYPES[1].nodeType;
+    case 'pyth':
+      return ORACLE_NODE_TYPES[3].nodeType;
+    case 'uniswap':
+      return ORACLE_NODE_TYPES[6].nodeType;
+    case 'stalenessCircuitBreaker':
+      return ORACLE_NODE_TYPES[5].nodeType;
+    case 'priceDeviationCircuitBreaker':
+      return ORACLE_NODE_TYPES[2].nodeType;
+  }
+}

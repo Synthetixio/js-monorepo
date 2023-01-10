@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { Handle, Position } from 'reactflow';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
+import { NodeStateButton } from './NodeStateButton';
 
 export const StalenessFallbackReducerNode: FC<{ data: { label: string }; id: string }> = ({
   data,
@@ -19,13 +20,21 @@ export const StalenessFallbackReducerNode: FC<{ data: { label: string }; id: str
       flexDirection="column"
       alignItems="center"
     >
-      <Text>Fallback</Text>
-      {data.label && <Text>{data.label}</Text>}
-      <Text fontSize="xx-small">Staleness: {node?.parameters[0]}</Text>
+      <Text>Staleness Circuit Breaker</Text>
+      {node && <NodeStateButton node={node} />}
+      {data.label && <Text>Name: {data.label}</Text>}
+      <Text>Staleness: {node?.parameters[0]}</Text>
       <Handle
         type="source"
         isValidConnection={() => true}
         position={Position.Bottom}
+        style={{ background: 'darkgreen' }}
+        isConnectable
+      ></Handle>
+      <Handle
+        type="target"
+        isValidConnection={() => true}
+        position={Position.Top}
         style={{ background: 'darkgreen' }}
         isConnectable
       ></Handle>

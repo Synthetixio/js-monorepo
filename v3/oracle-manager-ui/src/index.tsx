@@ -40,8 +40,8 @@ const wagmiClient = createClient({
 });
 
 const container = document.querySelector('#app');
-// @ts-ignore
-const root = createRoot(container);
+
+const root = createRoot(container!);
 
 root.render(
   <RecoilRoot>

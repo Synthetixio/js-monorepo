@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { Handle, Position } from 'reactflow';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
+import { NodeStateButton } from './NodeStateButton';
 
 export const ExternalNode: FC<{ data: { label: string }; id: string }> = ({ data, id }) => {
   const [nodes] = useRecoilState(nodesState);
@@ -18,7 +19,8 @@ export const ExternalNode: FC<{ data: { label: string }; id: string }> = ({ data
       color="black"
     >
       <Text>External Node</Text>
-      {data.label && <Text>{data.label}</Text>}
+      {node && <NodeStateButton node={node} />}
+      {data.label && <Text>Name: {data.label}</Text>}
       <Text fontSize="xx-small">Node Address: {node?.parameters[0]}</Text>
       <Handle
         type="source"
