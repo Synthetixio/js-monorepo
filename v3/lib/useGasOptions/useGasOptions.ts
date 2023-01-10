@@ -6,6 +6,7 @@ import { useOptimismLayer1Fee } from '@snx-v3/useOptimismLayer1Fee';
 import Wei, { wei } from '@synthetixio/wei';
 import { useNetwork } from '@snx-v3/useBlockchain';
 import { GWEI_DECIMALS } from '@snx-v3/Constants';
+import { useEthPrice } from '@snx-v3/useEthPrice';
 
 // Note it looks like gas limit estimation is coming in higher slightly higher than what gets used according to etherscan
 // Will try without a buffer, if we get user report of out of gas we can increase it again.
@@ -58,17 +59,18 @@ export const useGasOptions = <T>(
   const { gasSpeed } = { gasSpeed: 'average' } as const; // TODO create a GasSpeed context in v3. Currently no UI for this.
   const gasPriceQuery = useGasPrice();
   const optimismLayerOneFeesQuery = useOptimismLayer1Fee(args);
-  const ethPrice = wei(1000); // TODO  figure out how to get eth price, we can fetch collateralTypes then call getCollateralPrice maybe?
+  const { data: ethPrice } = useEthPrice();
   const keyForTransactionArgs = 'transactionArgs' in args ? args.transactionArgs : undefined;
 
   return useQuery({
     queryKey: [
       ...(args.queryKeys || []),
-      optimismLayerOneFeesQuery.data,
+      optimismLayerOneFeesQuery.data?.toNumber(),
       gasPriceQuery.data,
       networkId,
       gasSpeed,
       keyForTransactionArgs,
+      ethPrice?.toNumber(),
     ],
     queryFn: async () => {
       if (!args.populateTransaction) {
