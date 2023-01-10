@@ -7853,6 +7853,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/useEthPrice@workspace:*, @snx-v3/useEthPrice@workspace:v3/lib/useEthPrice":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useEthPrice@workspace:v3/lib/useEthPrice"
+  dependencies:
+    "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/useExternalMulticall@workspace:*, @snx-v3/useExternalMulticall@workspace:v3/lib/useExternalMulticall":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useExternalMulticall@workspace:v3/lib/useExternalMulticall"
@@ -7872,6 +7883,7 @@ __metadata:
     "@ethersproject/contracts": ^5.7.0
     "@snx-v3/Constants": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useEthPrice": "workspace:*"
     "@snx-v3/useGasPrice": "workspace:*"
     "@snx-v3/useOptimismLayer1Fee": "workspace:*"
     "@synthetixio/wei": "workspace:*"
