@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from 'react';
 import { Spinner } from '@chakra-ui/react';
-import { useProvider } from 'wagmi';
+import { useProvider } from '@snx-v3/useBlockchain';
 
 export const NetworkChain: FC<PropsWithChildren> = ({ children }) => {
   const provider = useProvider();
