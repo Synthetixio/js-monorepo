@@ -6,7 +6,7 @@
     "start": "webpack-cli serve",
     "build": "NODE_ENV=production webpack-cli",
     "test": "NODE_ENV=test jest",
-    "typecheck": "echo true || tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "standalone-install": "yarn workspaces focus '@synthetixio/v3-ui'",
     "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v3-ui' run build"
   },
