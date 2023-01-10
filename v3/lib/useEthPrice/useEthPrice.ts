@@ -10,7 +10,7 @@ export const useEthPrice = () => {
   return useQuery({
     queryKey: [
       {
-        collateralTypes: collateralTypes?.map((x) => x.tokenAddress),
+        collateralTypes: collateralTypes?.map((x) => x.tokenAddress).sort(),
         CoreProxy: CoreProxy?.address,
       },
       'eth-price',
