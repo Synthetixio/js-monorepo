@@ -1,7 +1,7 @@
 import { Amount } from '@snx-v3/Amount';
 import { Text, Tr, Td, Button, Image } from '@chakra-ui/react';
 import { useLiquidityPosition, LiquidityPosition } from '@snx-v3/useLiquidityPosition';
-import { generatePath, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { generatePath, useNavigate, useSearchParams } from 'react-router-dom';
 import { FC } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useSigner } from '@snx-v3/useBlockchain';
@@ -54,7 +54,7 @@ const VaultRowUi: FC<{
                 );
                 return;
               }
-              if (accountId && !liquidityPosition) {
+              if (accountId && liquidityPosition?.collateralAmount.gt(0)) {
                 // Deposit to existing account
                 navigate(
                   generatePath('/deposit/:collateralSymbol/:poolId?accountId=:accountId', {
@@ -75,7 +75,7 @@ const VaultRowUi: FC<{
               );
             }}
           >
-            {liquidityPosition ? 'Manage' : 'Deposit'}
+            {liquidityPosition?.collateralAmount.gt(0) ? 'Manage' : 'Deposit'}
           </Button>
         ) : (
           <Button onClick={openConnectModal}>Connect</Button>
@@ -96,6 +96,7 @@ export const VaultRow: FC<{ collateralType: CollateralType; poolId: string }> = 
     collateral: collateralType,
     poolId,
   });
+  console.log(collateralType.symbol, liquidityPosition);
   const signer = useSigner();
   return (
     <VaultRowUi
