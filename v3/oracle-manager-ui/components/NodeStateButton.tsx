@@ -52,7 +52,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
 
   const findParentNode = (parentId: string) => {
     const parentNode = nodes.find((node) => node.id === parentId);
-    if (parentNode?.parents.length === 0) {
+    if (parentNode) {
       return hashId(parentNode, []);
     }
     return '';
