@@ -1,62 +1,41 @@
-import { parseUnits } from '@snx-v3/format';
-import { Balance } from '@snx-v3/Balance';
-import { EditIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Button,
-  Input,
-  Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  Stack,
-  Text,
-  Tooltip,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Input, Text } from '@chakra-ui/react';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 import { useDeposit } from '../../../hooks/useDeposit';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
-import { LiquidityPositionsById } from '@snx-v3/useLiquidityPositions';
 import { CollateralTypeSelector } from '@snx-v3/CollateralTypeSelector';
-import { PoolSelector } from '@snx-v3/PoolSelector';
-import { usePools } from '@snx-v3/usePools';
-import { useCallback, useState, FormEvent } from 'react';
+import { useCallback, useState, FormEvent, useRef } from 'react';
+import { generatePath, useNavigate } from 'react-router-dom';
+import { wei } from '@synthetixio/wei';
+import { numberWithCommas } from '@snx-v2/formatters';
+import { PercentBadges } from './PercentBadges';
+import { Amount } from '@snx-v3/Amount';
 
 export function DepositForm({
   accountId,
-  preferredPoolId,
-  collateralTypes,
-  liquidityPositions = {},
+  poolId,
+  activeCollateralType,
   onSuccess,
 }: {
   accountId?: string;
-  liquidityPositions?: LiquidityPositionsById;
   onSuccess?: () => void;
-  preferredPoolId: string;
-  collateralTypes: CollateralType[];
+  poolId: string;
+  activeCollateralType: CollateralType;
 }) {
-  const { data: pools } = usePools();
-
-  const { isOpen: isOpenPool, onOpen: onOpenPool, onClose: onClosePool } = useDisclosure();
-
-  const [poolId, setPoolId] = useState(preferredPoolId);
-  const [collateralType, setCollateralType] = useState<CollateralType>(collateralTypes?.[0]);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
   const [amount, setAmount] = useState('');
+  const [activeBadge, setActiveBadge] = useState(0);
 
-  const balanceData = useTokenBalance(collateralType?.tokenAddress);
+  const balanceData = useTokenBalance(activeCollateralType.tokenAddress);
 
   const { isLoading, multiTxn, createAccount } = useDeposit({
     accountId,
-    liquidityPositions,
+    liquidityPositions: {},
     amount,
-    selectedCollateralType: collateralType,
+    selectedCollateralType: activeCollateralType,
     selectedPoolId: poolId,
-    poolId: preferredPoolId,
-    isWrappedEth: collateralType?.symbol === 'WETH',
+    poolId: poolId,
+    isWrappedEth: activeCollateralType?.symbol === 'WETH',
     onSuccess: async () => {
       await balanceData.refetch();
       onSuccess?.();
@@ -76,100 +55,111 @@ export function DepositForm({
 
   return (
     <>
-      <Box
-        as="form"
-        bg="whiteAlpha.200"
-        mb="8"
-        p="6"
-        pb="4"
-        borderRadius="12px"
-        onSubmit={onSubmit}
-      >
-        <Stack direction={['column', 'column', 'row']} spacing="20px" mb="3">
-          <Input
-            minHeight="48px"
-            flex="1"
-            type="number"
-            size="lg"
-            placeholder="0.0"
-            id="amount"
-            min="0"
-            required
-            onChange={(e) => {
-              setAmount(e.target.value);
-              const currentAmount = parseUnits(e.target.value || 0);
-              if (currentAmount.gte(balanceData.value.toBN())) {
-                e.target.setCustomValidity('Insufficient Balance');
-              } else if (currentAmount.gt(0)) {
-                e.target.setCustomValidity('');
-              } else {
-                e.target.setCustomValidity('Value is required');
-              }
-            }}
-          />
-          <CollateralTypeSelector
-            collateralType={collateralType}
-            setCollateralType={setCollateralType}
-          />
-          <Button
-            isLoading={multiTxn.status === 'pending' || isLoading}
-            size="lg"
-            ml="4"
-            px="8"
-            type="submit"
-          >
-            Deposit
-          </Button>
-        </Stack>
-
-        <Stack
-          direction={['column-reverse', 'column-reverse', 'row']}
-          spacing="10px"
-          alignItems="center"
-        >
-          <Box mr="auto">
-            <Balance
-              balance={balanceData?.value}
-              symbol={collateralType.symbol}
-              onMax={(balance) => setAmount(balance)}
-              address={collateralType.tokenAddress}
-            />
-          </Box>
-
-          {Boolean(accountId) ? (
-            <Text fontSize="xs" ml="auto">
-              Pool: {poolId ? pools?.find((x) => x.id === poolId)?.name : 'None'}{' '}
-              <Link color="cyan.500">
-                <EditIcon onClick={onOpenPool} style={{ transform: 'translateY(-2px)' }} />
-              </Link>
-            </Text>
-          ) : (
-            <Text fontSize="xs" ml="auto">
-              Receive an snxAccount token{' '}
-              <Tooltip label="You will be minted an NFT that represents your account. You can easily transfer it between wallets.">
-                <InfoOutlineIcon transform="translateY(-1px)" />
-              </Tooltip>
-            </Text>
-          )}
-        </Stack>
-      </Box>
-
-      <Modal size="2xl" isOpen={isOpenPool} onClose={onClosePool}>
-        <ModalOverlay />
-        <ModalContent bg="black" color="white">
-          <ModalHeader>Select Pool</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <PoolSelector
-              poolId={poolId}
-              setPoolId={(value: string) => {
-                setPoolId(value);
-                onClosePool();
+      <Box as="form" bg="navy.900" mb="8" onSubmit={onSubmit}>
+        <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2}>
+          <Flex justifyContent="space-between">
+            <CollateralTypeSelector
+              collateralType={activeCollateralType}
+              setCollateralType={(newCollateralType) => {
+                if (newCollateralType.symbol === activeCollateralType.symbol) return;
+                setActiveBadge(0);
+                setAmount('');
+                inputRef.current?.focus();
+                navigate(
+                  accountId
+                    ? generatePath('/deposit/:collateralSymbol/:poolId?accountId=:accountId', {
+                        accountId,
+                        poolId: poolId,
+                        collateralSymbol: newCollateralType.symbol,
+                      })
+                    : generatePath('/deposit/:collateralSymbol/:poolId', {
+                        poolId: poolId,
+                        collateralSymbol: newCollateralType.symbol,
+                      })
+                );
               }}
             />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+            <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>
+              <Input
+                ref={inputRef}
+                borderWidth="0px"
+                type="text"
+                inputMode="decimal"
+                maxLength={18}
+                textAlign="end"
+                p={0}
+                outline="none"
+                fontFamily="heading"
+                fontSize="xl"
+                fontWeight="black"
+                lineHeight="2xl"
+                color="white"
+                height="unset"
+                autoFocus={true}
+                placeholder="Enter Amount"
+                _focus={{ boxShadow: 'none !important' }}
+                _placeholder={{ color: 'whiteAlpha.700' }}
+                min="0"
+                required
+                value={numberWithCommas(amount)}
+                onChange={(e) => {
+                  const value = e.target.value.replaceAll(',', '');
+                  if (!/^[0-9]*(\.[0-9]{0,2})?$/.test(value)) {
+                    return;
+                  }
+                  setActiveBadge(0);
+                  setAmount(value);
+                  const currentAmount = wei(value);
+                  if (currentAmount.gte(balanceData.value.toBN())) {
+                    e.target.setCustomValidity('Insufficient Balance');
+                  } else if (currentAmount.gt(0)) {
+                    e.target.setCustomValidity('');
+                  } else {
+                    e.target.setCustomValidity('Value is required');
+                  }
+                }}
+              />
+              <Flex justifyContent="flex-end" fontSize="xs">
+                <Flex
+                  cursor="pointer"
+                  onClick={() => {
+                    setAmount(balanceData.value.toString());
+                  }}
+                >
+                  <Text mr={1}>Balance:</Text>
+                  <Amount
+                    value={balanceData.value}
+                    suffix={` ${activeCollateralType.symbol.toUpperCase()}`}
+                  />
+                </Flex>
+              </Flex>
+            </Flex>
+          </Flex>
+          <PercentBadges
+            disabled={balanceData.value.eq(0)}
+            onBadgePress={(badgeNum) => {
+              setActiveBadge(badgeNum);
+              if (badgeNum === 1) {
+                // Make sure we're not left with dust
+                setAmount(balanceData.value.toString());
+              } else {
+                setAmount(balanceData.value.mul(badgeNum).toString(2));
+              }
+            }}
+            activeBadge={activeBadge}
+          />
+        </Box>
+        <Button
+          mt={4}
+          size="sm"
+          isLoading={multiTxn.status === 'pending' || isLoading}
+          px="8"
+          type="submit"
+          w="full"
+        >
+          Deposit Collateral
+        </Button>
+      </Box>
     </>
   );
 }
