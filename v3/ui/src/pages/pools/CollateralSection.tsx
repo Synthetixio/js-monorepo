@@ -1,6 +1,6 @@
 import { Box, Spinner, Text, Flex, Button } from '@chakra-ui/react';
 import { useVaultCollaterals } from '@snx-v3/useVaultCollaterals';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { FC } from 'react';
 import { wei } from '@synthetixio/wei';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
@@ -91,6 +91,8 @@ export const CollateralSectionUi: FC<{
 };
 export const CollateralSection = () => {
   const params = useParams();
+  const [queryParams] = useSearchParams();
+
   const { data: vaultCollaterals } = useVaultCollaterals(
     params.poolId ? parseFloat(params.poolId) : undefined
   );
@@ -98,7 +100,7 @@ export const CollateralSection = () => {
   return (
     <CollateralSectionUi
       vaultCollaterals={vaultCollaterals}
-      accountId={params.accountId}
+      accountId={queryParams.get('accountId') || undefined}
       AccountVaultCollateral={AccountVaultCollateral}
     />
   );
