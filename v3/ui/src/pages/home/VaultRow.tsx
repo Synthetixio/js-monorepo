@@ -89,7 +89,8 @@ export const VaultRow: FC<{ collateralType: CollateralType; poolId: string }> = 
   collateralType,
   poolId,
 }) => {
-  const { accountId } = useParams();
+  const [query] = useSearchParams();
+  const accountId = query.get('accountId') || undefined;
   const { data: liquidityPosition } = useLiquidityPosition({
     accountId,
     collateral: collateralType,
