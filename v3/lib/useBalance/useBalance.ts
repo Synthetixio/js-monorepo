@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useAccount, useProvider } from '@snx-v3/useBlockchain';
+import { useAccount, useNetwork, useProvider } from '@snx-v3/useBlockchain';
 import { Contract } from 'ethers';
 import { ZodBigNumber } from '@snx-v3/zod';
 import { wei } from '@synthetixio/wei';
@@ -16,13 +16,14 @@ export const useBalance = ({
 }) => {
   const { address: accountAddress } = useAccount();
   const connectedProvider = useProvider();
+  const network = useNetwork();
 
   return useQuery({
     queryKey: [{ tokenAddress, networkId, accountAddress }, 'balance'],
     queryFn: async () => {
       if (!tokenAddress) throw Error('Query should not be enabled');
       const provider =
-        connectedProvider.network.chainId === networkId
+        network.id === networkId
           ? connectedProvider
           : new InfuraProvider(networkId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID);
       if (tokenAddress === 'ETH') {
