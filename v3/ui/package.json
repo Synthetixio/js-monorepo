@@ -24,7 +24,6 @@
     "@snx-v3/Balance": "workspace:*",
     "@snx-v3/CollateralTypeSelector": "workspace:*",
     "@snx-v3/Constants": "workspace:*",
-    "@snx-v3/PoolSelector": "workspace:*",
     "@snx-v3/TransactionReview": "workspace:*",
     "@snx-v3/etherscanLink": "workspace:*",
     "@snx-v3/format": "workspace:*",

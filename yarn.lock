@@ -7749,7 +7749,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/PoolSelector@workspace:*, @snx-v3/PoolSelector@workspace:v3/components/PoolSelector":
+"@snx-v3/PoolSelector@workspace:v3/components/PoolSelector":
   version: 0.0.0-use.local
   resolution: "@snx-v3/PoolSelector@workspace:v3/components/PoolSelector"
   dependencies:
@@ -10164,7 +10164,6 @@ __metadata:
     "@snx-v3/Balance": "workspace:*"
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/Constants": "workspace:*"
-    "@snx-v3/PoolSelector": "workspace:*"
     "@snx-v3/TransactionReview": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
