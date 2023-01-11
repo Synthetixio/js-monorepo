@@ -1,153 +1,25 @@
 import { Chain } from 'wagmi';
+import { mainnet, optimism, optimismGoerli, goerli, localhost } from 'wagmi/chains';
+
 export const supportedChains: Chain[] = [
+  mainnet,
+  optimism,
+  optimismGoerli,
+  goerli,
   {
-    id: 1,
-    network: 'homestead',
-    name: 'Ethereum',
-    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+    id: 13370,
+    name: 'Hardhat',
+    network: 'hardhat',
+    nativeCurrency: {
+      decimals: 18,
+      name: 'Ether',
+      symbol: 'ETH',
+    },
     rpcUrls: {
-      alchemy: {
-        http: ['https://eth-mainnet.g.alchemy.com/v2'],
-        webSocket: ['wss://eth-mainnet.g.alchemy.com/v2'],
-      },
-      infura: {
-        http: ['https://mainnet.infura.io/v3'],
-        webSocket: ['wss://mainnet.infura.io/ws/v3'],
-      },
-      default: {
-        http: ['https://cloudflare-eth.com'],
-      },
-    },
-    blockExplorers: {
-      etherscan: {
-        name: 'Etherscan',
-        url: 'https://etherscan.io',
-      },
-      default: {
-        name: 'Etherscan',
-        url: 'https://etherscan.io',
-      },
-    },
-    contracts: {
-      ensRegistry: {
-        address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-      },
-      multicall3: {
-        address: '0xca11bde05977b3631167028862be2a173976ca11',
-        blockCreated: 14353601,
-      },
+      default: { http: ['http://127.0.0.1:8545'] },
     },
   },
-  {
-    id: 10,
-    name: 'Optimism',
-    network: 'optimism',
-    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-    rpcUrls: {
-      alchemy: {
-        http: ['https://opt-mainnet.g.alchemy.com/v2'],
-        webSocket: ['wss://opt-mainnet.g.alchemy.com/v2'],
-      },
-      infura: {
-        http: ['https://optimism-mainnet.infura.io/v3'],
-        webSocket: ['wss://optimism-mainnet.infura.io/ws/v3'],
-      },
-      default: {
-        http: ['https://mainnet.optimism.io'],
-      },
-    },
-    blockExplorers: {
-      etherscan: {
-        name: 'Etherscan',
-        url: 'https://optimistic.etherscan.io',
-      },
-      default: {
-        name: 'Etherscan',
-        url: 'https://optimistic.etherscan.io',
-      },
-    },
-    contracts: {
-      multicall3: {
-        address: '0xca11bde05977b3631167028862be2a173976ca11',
-        blockCreated: 4286263,
-      },
-    },
-  },
-  {
-    id: 5,
-    network: 'goerli',
-    name: 'Goerli',
-    nativeCurrency: { name: 'Goerli Ether', symbol: 'ETH', decimals: 18 },
-    rpcUrls: {
-      alchemy: {
-        http: ['https://eth-goerli.g.alchemy.com/v2'],
-        webSocket: ['wss://eth-goerli.g.alchemy.com/v2'],
-      },
-      infura: {
-        http: ['https://goerli.infura.io/v3'],
-        webSocket: ['wss://goerli.infura.io/ws/v3'],
-      },
-      default: {
-        http: ['https://rpc.ankr.com/eth_goerli'],
-      },
-    },
-    blockExplorers: {
-      etherscan: {
-        name: 'Etherscan',
-        url: 'https://goerli.etherscan.io',
-      },
-      default: {
-        name: 'Etherscan',
-        url: 'https://goerli.etherscan.io',
-      },
-    },
-    contracts: {
-      ensRegistry: {
-        address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-      },
-      multicall3: {
-        address: '0xca11bde05977b3631167028862be2a173976ca11',
-        blockCreated: 6507670,
-      },
-    },
-    testnet: true,
-  },
-  {
-    id: 420,
-    name: 'Optimism Goerli',
-    network: 'optimism-goerli',
-    nativeCurrency: { name: 'Goerli Ether', symbol: 'ETH', decimals: 18 },
-    rpcUrls: {
-      alchemy: {
-        http: ['https://opt-goerli.g.alchemy.com/v2'],
-        webSocket: ['wss://opt-goerli.g.alchemy.com/v2'],
-      },
-      infura: {
-        http: ['https://optimism-goerli.infura.io/v3'],
-        webSocket: ['wss://optimism-goerli.infura.io/ws/v3'],
-      },
-      default: {
-        http: ['https://goerli.optimism.io'],
-      },
-    },
-    blockExplorers: {
-      etherscan: {
-        name: 'Etherscan',
-        url: 'https://goerli-optimism.etherscan.io',
-      },
-      default: {
-        name: 'Etherscan',
-        url: 'https://goerli-optimism.etherscan.io',
-      },
-    },
-    contracts: {
-      multicall3: {
-        address: '0xca11bde05977b3631167028862be2a173976ca11',
-        blockCreated: 49461,
-      },
-    },
-    testnet: true,
-  },
+  localhost,
 ];
 
 export const contracts = {

@@ -83,7 +83,7 @@ export const Chart: FC = () => {
           shouldAddEdge = true;
           return state.map((s) => {
             if (s.id === targetNode.id) {
-              return { ...s, parents: [...s.parents, params.target!] };
+              return { ...s, parents: [...s.parents, params.source!] };
             }
             return s;
           });

@@ -1,4 +1,5 @@
-import { BigNumber, Contract, providers, Signer, utils } from 'ethers';
+import { Contract, utils } from 'ethers';
+import ProxyAbi from '../deployments/Proxy.json';
 
 function resolveNetworkIdToProxyAddress(networkId: number) {
   switch (networkId) {
@@ -11,24 +12,24 @@ function resolveNetworkIdToProxyAddress(networkId: number) {
   }
 }
 
-function encodeBytesByNodeType(id: number, parameters: any[]) {
+export function encodeBytesByNodeType(id: number, parameters: any[]) {
   switch (id) {
     case 1:
-      return utils.defaultAbiCoder.encode(['string'], parameters);
+      return utils.defaultAbiCoder.encode(['address'], parameters);
     case 2:
-      return utils.defaultAbiCoder.encode(['string'], parameters);
+      return utils.defaultAbiCoder.encode(['address'], parameters);
     case 3:
-      return utils.defaultAbiCoder.encode(['tuple(string, uint)'], [parameters]);
+      return utils.defaultAbiCoder.encode(['tuple(address, uint)'], [parameters]);
     case 4:
-      return utils.defaultAbiCoder.encode(['tuple(string, string, string, uint)'], [parameters]);
+      return utils.defaultAbiCoder.encode(['tuple(address, address, string, uint)'], [parameters]);
     case 5:
-      return utils.defaultAbiCoder.encode(['tuple(string, string, bool)'], [parameters]);
+      return utils.defaultAbiCoder.encode(['tuple(address, string, boolean)'], [parameters]);
     case 6:
       return utils.defaultAbiCoder.encode(['uint'], parameters);
     case 7:
       return utils.defaultAbiCoder.encode(['uint'], parameters);
     default:
-      return '0x';
+      return '';
   }
 }
 
@@ -36,11 +37,15 @@ export function hashId(nodeType: number, parameters: any[], parents: string[]) {
   return utils.keccak256(
     utils.defaultAbiCoder.encode(
       ['uint256', 'bytes', 'string[]'],
-      [nodeType, encodeBytesByNodeType(nodeType, parameters), parents]
+      [
+        nodeType,
+        encodeBytesByNodeType(nodeType, parameters),
+        parents.map((parent) => utils.formatBytes32String(parent)),
+      ]
     )
   );
 }
 
 export const getNodeModuleContract = (signerOrProvider: any, networkId: number) => {
-  return new Contract(resolveNetworkIdToProxyAddress(networkId), [], signerOrProvider);
+  return new Contract(resolveNetworkIdToProxyAddress(networkId), ProxyAbi.abi, signerOrProvider);
 };
