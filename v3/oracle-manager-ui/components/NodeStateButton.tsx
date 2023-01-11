@@ -18,17 +18,22 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
         if (chainId) {
           const contract = getNodeModuleContract(signer.data, chainId);
           setContract(contract);
-
-          const hashedId = hashId(node.typeId, node.parameters, node.parents);
-          try {
-            const nodeId = await contract.getNode(hashedId);
-            if (nodeId) {
-              setNodeState('nodeRegistered');
-            }
-          } catch (error) {
-            console.error(error);
-            setNodeState('registerNode');
-          }
+          const nodeId = await contract.getNodeId(
+            node.typeId,
+            encodeBytesByNodeType(node.typeId, node.parameters),
+            node.parents
+          );
+          console.log(nodeId);
+          //   const hashedId = hashId(node.typeId, node.parameters, node.parents);
+          //   try {
+          //     const nodeId = await contract.getNode(hashedId);
+          //     if (nodeId) {
+          //       setNodeState('nodeRegistered');
+          //     }
+          //   } catch (error) {
+          //     console.error(error);
+          //     setNodeState('registerNode');
+          //   }
         }
       };
       fetchNodeState();
@@ -52,13 +57,6 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
       onClick={(e) => {
         e.stopPropagation();
         if (nodeState === 'registerNode' && contract) {
-          contract
-            .getNodeId(
-              node.typeId,
-              encodeBytesByNodeType(node.typeId, node.parameters),
-              node.parents
-            )
-            .then();
           // contract.registerNode(
           //   node.typeId,
           //   encodeBytesByNodeType(node.typeId, node.parameters),

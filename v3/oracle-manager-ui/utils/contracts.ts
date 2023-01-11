@@ -15,7 +15,7 @@ function resolveNetworkIdToProxyAddress(networkId: number) {
 export function encodeBytesByNodeType(id: number, parameters: any[]) {
   switch (id) {
     case 1:
-      return utils.defaultAbiCoder.encode(['address'], parameters);
+      return utils.defaultAbiCoder.encode(['string'], parameters);
     case 2:
       return utils.defaultAbiCoder.encode(['address'], parameters);
     case 3:
@@ -23,7 +23,7 @@ export function encodeBytesByNodeType(id: number, parameters: any[]) {
     case 4:
       return utils.defaultAbiCoder.encode(['tuple(address, address, string, uint)'], [parameters]);
     case 5:
-      return utils.defaultAbiCoder.encode(['tuple(address, string, boolean)'], [parameters]);
+      return utils.defaultAbiCoder.encode(['tuple(address, string, bool)'], [parameters]);
     case 6:
       return utils.defaultAbiCoder.encode(['uint'], parameters);
     case 7:
