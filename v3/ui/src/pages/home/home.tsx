@@ -41,7 +41,7 @@ export const HomeUi: FC<{
         </Button>
       </Flex>
       <Divider mt={4} bg="gray.900" />
-      <Box p={4} bg="navy.900" mt={8}>
+      <Box p={4} bg="navy.900" mt={8} borderWidth="1px" borderColor="gray.900" borderRadius="base">
         <Flex justifyContent="space-between">
           <Flex alignItems="baseline" justifyContent="flex-start">
             <Heading>{preferredPool.name}</Heading>
