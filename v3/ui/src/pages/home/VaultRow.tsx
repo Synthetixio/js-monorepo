@@ -43,7 +43,7 @@ const VaultRowUi: FC<{
         {isConnected ? (
           <Button
             onClick={() => {
-              if (accountId && liquidityPosition) {
+              if (accountId && liquidityPosition?.collateralAmount.gt(0)) {
                 // Manage existing position
                 navigate(
                   generatePath('accounts/:accountId/positions/:collateralSymbol/:poolId', {
@@ -96,7 +96,6 @@ export const VaultRow: FC<{ collateralType: CollateralType; poolId: string }> = 
     collateral: collateralType,
     poolId,
   });
-  console.log(collateralType.symbol, liquidityPosition);
   const signer = useSigner();
   return (
     <VaultRowUi
