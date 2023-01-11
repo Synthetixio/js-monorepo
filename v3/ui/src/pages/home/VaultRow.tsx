@@ -1,7 +1,7 @@
 import { Amount } from '@snx-v3/Amount';
 import { Text, Tr, Td, Button, Image } from '@chakra-ui/react';
 import { useLiquidityPosition, LiquidityPosition } from '@snx-v3/useLiquidityPosition';
-import { generatePath, useNavigate, useParams } from 'react-router-dom';
+import { generatePath, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { FC } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useSigner } from '@snx-v3/useBlockchain';
@@ -16,7 +16,7 @@ const VaultRowUi: FC<{
 }> = ({ collateralType, liquidityPosition, isConnected, accountId, poolId }) => {
   const navigate = useNavigate();
   const { openConnectModal } = useConnectModal();
-
+  const symbol = collateralType.symbol === 'WETH' ? 'ETH' : collateralType.symbol;
   return (
     <Tr>
       <Td>
@@ -25,7 +25,7 @@ const VaultRowUi: FC<{
         <Text fontSize="xs" opacity="0.66" mt="1">
           <Amount
             value={liquidityPosition ? liquidityPosition.collateralAmount : '0'}
-            suffix={`${collateralType.symbol.toUpperCase()} `}
+            suffix={` ${symbol}`}
           />
         </Text>
       </Td>
