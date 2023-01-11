@@ -58,7 +58,7 @@ export const HomeUi: FC<{
                       poolId: preferredPool.id,
                       accountId,
                     })
-                  : generatePath('pools/:poolId', {
+                  : generatePath('/pools/:poolId', {
                       poolId: preferredPool.id,
                     })
               )
