@@ -579,4 +579,14 @@ export const theme = extendTheme({
       xl: '1280px',
     },
   },
+  styles: {
+    global: {
+      body: {
+        bg: 'navy.900',
+        backgroundSize: '8px 8px',
+        backgroundImage:
+          'repeating-linear-gradient(135deg, rgba(48, 48, 55, 0.44) 0px, rgb(11, 11, 34) 1px, transparent 0px, transparent 50%);',
+      },
+    },
+  },
 });

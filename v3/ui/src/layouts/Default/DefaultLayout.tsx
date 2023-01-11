@@ -10,7 +10,6 @@ import Header from './Header';
 export const DefaultLayout: FC = () => (
   <Box
     as="main"
-    background="black"
     minHeight="100vh"
     color="rgba(255,255,255,0.85)"
     display="flex"
