@@ -4,26 +4,26 @@ import ProxyAbi from '../deployments/Proxy.json';
 function resolveNetworkIdToProxyAddress(networkId: number) {
   switch (networkId) {
     case 5:
-      return '0x0E9628026e53f4c805073d85554A87dBd2011268';
+      return ProxyAbi.address;
     case 420:
-      return '0xbcE929b1f28E17133Ce7bD5f3477EfF34727E1b6';
+      return ProxyAbi.address;
     default:
-      return '0x0E9628026e53f4c805073d85554A87dBd2011268';
+      return ProxyAbi.address;
   }
 }
 
 export function encodeBytesByNodeType(id: number, parameters: any[]) {
   switch (id) {
     case 1:
-      return utils.defaultAbiCoder.encode(['string'], parameters);
+      return utils.defaultAbiCoder.encode(['uint'], parameters);
     case 2:
       return utils.defaultAbiCoder.encode(['address'], parameters);
     case 3:
-      return utils.defaultAbiCoder.encode(['tuple(address, uint)'], [parameters]);
+      return utils.defaultAbiCoder.encode(['address', 'uint'], parameters);
     case 4:
-      return utils.defaultAbiCoder.encode(['tuple(address, address, string, uint)'], [parameters]);
+      return utils.defaultAbiCoder.encode(['address', 'address', 'address', 'uint'], parameters);
     case 5:
-      return utils.defaultAbiCoder.encode(['tuple(address, string, bool)'], [parameters]);
+      return utils.defaultAbiCoder.encode(['address', 'string', 'bool'], parameters);
     case 6:
       return utils.defaultAbiCoder.encode(['uint'], parameters);
     case 7:

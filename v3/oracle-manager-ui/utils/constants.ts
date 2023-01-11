@@ -44,7 +44,7 @@ export const ORACLE_NODE_TYPES: {
   parameters: {
     type: string;
     name: string;
-    options?: string[];
+    options?: { value: number; label: string }[];
   }[];
 }[] = [
   {
@@ -97,7 +97,15 @@ export const ORACLE_NODE_TYPES: {
       {
         type: 'union',
         name: 'Operation',
-        options: ['max', 'min', 'mean', 'median', 'recent', 'mul', 'div'],
+        options: [
+          { value: 0, label: 'RECENT' },
+          { value: 1, label: 'MIN' },
+          { value: 2, label: 'MAX' },
+          { value: 3, label: 'MEAN' },
+          { value: 4, label: 'MEDIAN' },
+          { value: 5, label: 'MUL' },
+          { value: 6, label: 'DIV' },
+        ],
       },
     ],
   },
