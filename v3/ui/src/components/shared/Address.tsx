@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const Address: FC<Props> = ({ address, displayFullAddress }) => {
-  const { name: networkName } = useNetwork();
+  const network = useNetwork();
   if (!address) return null;
 
   // ENS support here?
@@ -20,7 +20,7 @@ export const Address: FC<Props> = ({ address, displayFullAddress }) => {
     <Text>
       {addressDisplay}
       <Link
-        href={etherscanLink({ chain: networkName, address })}
+        href={etherscanLink({ chain: network.name, address })}
         isExternal
         color="cyan.500"
         ml="1.5"
