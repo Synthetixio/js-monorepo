@@ -20,7 +20,7 @@ import {
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useMemo, useState } from 'react';
 import Head from 'react-helmet';
-import { useNetwork, useSwitchNetwork } from 'wagmi';
+import { useSwitchNetwork } from 'wagmi';
 import { NumberInput } from '../../components/accounts/Position/Manage/NumberInput';
 import { Balance } from '@snx-v3/Balance';
 import { useContract } from '../../hooks/useContract';
@@ -28,6 +28,7 @@ import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';
 import testnetIcon from './testnet.png';
 import { TeleporterModal } from './TeleporterModal';
+import { useNetwork, useSigner } from '@snx-v3/useBlockchain';
 
 const chains = [
   {
@@ -50,10 +51,11 @@ export const Teleporter = () => {
   const [amount, setAmount] = useState(0);
 
   const { switchNetwork } = useSwitchNetwork();
-  const { chain: activeChain } = useNetwork();
-  const hasWalletConnected = Boolean(activeChain);
+  const network = useNetwork();
+  const signer = useSigner();
+  const hasWalletConnected = Boolean(signer);
 
-  const teleportChains = chains.sort((chain) => (chain.id === activeChain?.id ? -1 : 1));
+  const teleportChains = chains.sort((chain) => (chain.id === network?.id ? -1 : 1));
 
   const [from, setFrom] = useState(teleportChains[0].id);
   const [to, setTo] = useState(teleportChains[1].id);
@@ -153,7 +155,7 @@ export const Teleporter = () => {
                     value={amount}
                     onChange={setAmount}
                     border="1px"
-                    max={balance.formattedValue}
+                    max={balance.value.toNumber()}
                     borderRightRadius="none"
                   />
                   <InputRightAddon borderColor="gray.800" bg="whiteAlpha.100">
@@ -271,7 +273,7 @@ export const Teleporter = () => {
             <Button
               onClick={async () => {
                 toast.closeAll();
-                if (activeChain?.id !== from) {
+                if (network?.id !== from) {
                   toast({
                     title: `Connect to ${fromChain?.label}`,
                     description: `Please connect to ${fromChain?.label} network`,
@@ -286,9 +288,9 @@ export const Teleporter = () => {
               size="lg"
               px="8"
               type="submit"
-              disabled={activeChain?.id === from && amount <= 0}
+              disabled={network?.id === from && amount <= 0}
             >
-              {activeChain?.id !== from ? 'Switch to ' + fromChain?.label : 'Teleport'}
+              {network?.id !== from ? 'Switch to ' + fromChain?.label : 'Teleport'}
             </Button>
           ) : (
             <Button onClick={openConnectModal} size="lg" px="8">

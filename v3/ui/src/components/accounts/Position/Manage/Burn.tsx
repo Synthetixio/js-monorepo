@@ -32,13 +32,13 @@ export const Burn: FC<Props> = ({ onChange, value, debt }) => {
             <NumberInput
               value={value}
               onChange={onChange}
-              max={Math.min(balance.formattedValue, debt)}
+              max={Math.min(balance.value.toNumber(), debt)}
             />
           </Flex>
           <Flex alignItems="center">
             <Balance
               balance={balance.value}
-              onMax={() => onChange(Math.min(balance.formattedValue, debt) || 0)}
+              onMax={() => onChange(Math.min(balance.value.toNumber(), debt) || 0)}
               symbol="snxUsd"
               address={snxUsdProxy?.address}
             />

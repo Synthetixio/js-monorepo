@@ -1,4 +1,4 @@
-import ethers, { Contract } from 'ethers';
+import ethers, { Contract, Overrides } from 'ethers';
 import { useCallback, useState } from 'react';
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
 import { useExternalMulticall } from '@snx-v3/useExternalMulticall';
@@ -37,7 +37,7 @@ type MulticallStatusType = 'idle' | 'pending' | 'success' | 'error';
  */
 export const useMulticall = (
   calls: MulticallCall[],
-  overrides: ContractWriteParams[0]['overrides'] = {},
+  overrides?: Overrides,
   config?: Partial<TxConfig>
 ) => {
   const [status, setStatus] = useState<MulticallStatusType>('idle');
@@ -86,9 +86,11 @@ export const useMulticall = (
     enabled: Boolean(calls.length && CoreProxy),
     mode: 'recklesslyUnprepared',
     address: callContract?.address ?? '',
+    // @ts-ignore
     abi: callContract?.interface ?? '',
     functionName: callFunc!,
     args: callArgs,
+    // @ts-ignore
     overrides,
     onMutate: () => {
       config?.onMutate && config.onMutate();
@@ -114,6 +116,7 @@ export const useMulticall = (
   });
 
   const exec = useCallback(async () => {
+    if (!currentTxn.writeAsync) return;
     try {
       setStatus('pending');
       const txReceipt = await currentTxn.writeAsync();

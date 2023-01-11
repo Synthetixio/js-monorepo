@@ -30,10 +30,13 @@ export const useContractEvent = (contractName: string, config: ConfigType) => {
   //   resetEvents();
   // }, [config.eventName, contract, provider]);
 
-  return useWagmiContractEvent({
-    ...config,
-    address: contract?.address,
-    abi: contract?.abi,
-    chainId: contract?.chainId,
-  });
+  return useWagmiContractEvent(
+    // @ts-ignore
+    {
+      ...config,
+      address: contract?.address,
+      abi: contract?.abi,
+      chainId: contract?.chainId,
+    }
+  );
 };

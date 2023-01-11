@@ -1,9 +1,9 @@
 import { Text, Box, Flex, Heading } from '@chakra-ui/react';
 import { FC } from 'react';
-import { parseUnits } from '@snx-v3/format';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from './NumberInput';
+import { wei } from '@synthetixio/wei';
 
 interface Props {
   collateral: CollateralType;
@@ -32,7 +32,7 @@ export const Withdraw: FC<Props> = ({ collateral, collateralAmount, value, onCha
         <Flex alignItems="center">
           <Balance
             onMax={(balance) => onChange(parseFloat(balance) || 0)}
-            balance={parseUnits(collateralAmount)}
+            balance={wei(collateralAmount)}
             symbol={collateral.symbol}
             address={collateral.tokenAddress}
           />

@@ -29,6 +29,7 @@ export const MultipleTransactionReview: FC<Props> = ({ onSuccess }) => {
       }
       for (; i < transactionState.transactions.length; i++) {
         setStep(i);
+        // @ts-ignore
         await transactionState.transactions[i].call(transactionState.transactions[i].checked);
       }
       transactionState.onSuccess?.();
@@ -61,7 +62,9 @@ export const MultipleTransactionReview: FC<Props> = ({ onSuccess }) => {
 
   const setChecked = (index: number) => (checked: boolean) => {
     const newList = [...transactionState.transactions];
+    // @ts-ignore
     newList[index] = {
+      // @ts-ignore
       ...newList[index],
       checked,
     };

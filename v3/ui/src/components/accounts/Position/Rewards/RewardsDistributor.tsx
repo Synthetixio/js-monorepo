@@ -23,6 +23,7 @@ export const RewardsDistributor: FC<Props> = ({ distributor }) => {
 
   return (
     <>
+      {/* @ts-ignore */}
       <span>{name}</span>
       <Text fontSize="xs" opacity="0.66" mt="1">
         <Address address={distributor} />

@@ -1,9 +1,9 @@
 import { Button, Flex } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useAccount } from 'wagmi';
+import { useAccount } from '@snx-v3/useBlockchain';
 
 export function NetworkController() {
-  const { connector } = useAccount();
+  const { address } = useAccount();
 
   return (
     <ConnectButton.Custom>
@@ -19,7 +19,7 @@ export function NetworkController() {
               },
             })}
           >
-            {connector ? (
+            {address ? (
               <Button
                 variant="outline"
                 colorScheme="gray"
