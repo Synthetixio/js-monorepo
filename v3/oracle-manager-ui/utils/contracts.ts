@@ -1,5 +1,6 @@
 import { Contract, utils } from 'ethers';
 import ProxyAbi from '../deployments/Proxy.json';
+import { Node } from './types';
 
 function resolveNetworkIdToProxyAddress(networkId: number) {
   switch (networkId) {
@@ -33,15 +34,11 @@ export function encodeBytesByNodeType(id: number, parameters: any[]) {
   }
 }
 
-export function hashId(nodeType: number, parameters: any[], parents: string[]) {
+export function hashId(node: Node, parents: string[]) {
   return utils.keccak256(
     utils.defaultAbiCoder.encode(
-      ['uint256', 'bytes', 'string[]'],
-      [
-        nodeType,
-        encodeBytesByNodeType(nodeType, parameters),
-        parents.map((parent) => utils.formatBytes32String(parent)),
-      ]
+      ['uint256', 'bytes', 'bytes32[]'],
+      [node.typeId, encodeBytesByNodeType(node.typeId, node.parameters), parents]
     )
   );
 }

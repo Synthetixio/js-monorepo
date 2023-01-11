@@ -1,12 +1,15 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
-import { Contract } from 'ethers';
+import { Contract, utils } from 'ethers';
 import type { providers } from 'ethers';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useAccount, useSigner } from 'wagmi';
 import { encodeBytesByNodeType, getNodeModuleContract, hashId } from '../utils/contracts';
 import { Node } from '../utils/types';
+import { useRecoilState } from 'recoil';
+import { nodesState } from '../state/nodes';
 
 export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
+  const [nodes] = useRecoilState(nodesState);
   const [nodeState, setNodeState] = useState<'registerNode' | 'nodeRegistered'>('registerNode');
   const [contract, setContract] = useState<null | Contract>(null);
   const [nodeId, setNodeId] = useState('');
@@ -21,14 +24,12 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
         if (chainId) {
           const contract = getNodeModuleContract(signer.data, chainId);
           setContract(contract);
+          const hashedId = hashId(node, node.parents.map(findParentNode));
           try {
-            const nodeId = await contract.getNodeId(
-              node.typeId,
-              encodeBytesByNodeType(node.typeId, node.parameters),
-              node.parents
-            );
-            if (nodeId) {
-              setNodeId(nodeId);
+            const node = await contract.getNode(hashedId);
+            if (node[0] > 0) {
+              const nodeID = await contract.getNodeId(node[0], node[1], node[2]);
+              setNodeId(nodeID);
               setNodeState('nodeRegistered');
             } else {
               setNodeState('registerNode');
@@ -49,18 +50,26 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
     node.parents.toString(),
   ]);
 
+  const findParentNode = (parentId: string) => {
+    const parentNode = nodes.find((node) => node.id === parentId);
+    if (parentNode?.parents.length === 0) {
+      return hashId(parentNode, []);
+    }
+    return '';
+  };
+
   const handleButtonClick = async () => {
     if (nodeState === 'registerNode' && contract) {
       const tx: providers.TransactionResponse = await contract.registerNode(
         node.typeId,
         encodeBytesByNodeType(node.typeId, node.parameters),
-        node.parents
+        node.parents.map(findParentNode)
       );
       await tx.wait(1);
       const nodeID = await contract.getNodeId(
         node.typeId,
         encodeBytesByNodeType(node.typeId, node.parameters),
-        node.parents
+        node.parents.map(findParentNode)
       );
       if (nodeID) {
         setNodeId(nodeID);
@@ -68,7 +77,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
       }
     }
     if (nodeState === 'nodeRegistered' && contract) {
-      const price = await contract.process(hashId(node.typeId, node.parameters, node.parents));
+      const price = await contract.process(hashId(node, node.parents.map(findParentNode)));
       setPrice(price[0].toString());
     }
   };
