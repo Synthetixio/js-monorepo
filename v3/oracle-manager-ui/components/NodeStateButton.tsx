@@ -53,7 +53,11 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
         e.stopPropagation();
         if (nodeState === 'registerNode' && contract) {
           contract
-            .getNodeId(node.typeId, encodeBytesByNodeType(node.typeId, node.parameters), node)
+            .getNodeId(
+              node.typeId,
+              encodeBytesByNodeType(node.typeId, node.parameters),
+              node.parents
+            )
             .then();
           // contract.registerNode(
           //   node.typeId,
