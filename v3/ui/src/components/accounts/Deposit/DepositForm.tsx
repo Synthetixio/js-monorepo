@@ -4,7 +4,7 @@ import { useDeposit } from '../../../hooks/useDeposit';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { CollateralTypeSelector } from '@snx-v3/CollateralTypeSelector';
 import { useCallback, useState, FormEvent, useRef } from 'react';
-import { generatePath, useNavigate } from 'react-router-dom';
+import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
 import { wei } from '@synthetixio/wei';
 import { numberWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
@@ -65,18 +65,13 @@ export function DepositForm({
                 setActiveBadge(0);
                 setAmount('');
                 inputRef.current?.focus();
-                navigate(
-                  accountId
-                    ? generatePath('/deposit/:collateralSymbol/:poolId?accountId=:accountId', {
-                        accountId,
-                        poolId: poolId,
-                        collateralSymbol: newCollateralType.symbol,
-                      })
-                    : generatePath('/deposit/:collateralSymbol/:poolId', {
-                        poolId: poolId,
-                        collateralSymbol: newCollateralType.symbol,
-                      })
-                );
+                navigate({
+                  pathname: generatePath('/deposit/:collateralSymbol/:poolId', {
+                    poolId: poolId,
+                    collateralSymbol: newCollateralType.symbol,
+                  }),
+                  search: accountId ? createSearchParams({ accountId }).toString() : '',
+                });
               }}
             />
             <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>

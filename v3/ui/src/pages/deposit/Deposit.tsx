@@ -1,8 +1,9 @@
 import { Box, Button, Divider, Flex, Heading, Spinner, Text } from '@chakra-ui/react';
 import { CollateralType, useCollateralTypes } from '@snx-v3/useCollateralTypes';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
+import { useParams } from '@snx-v3/useParams';
 import { FC } from 'react';
-import { generatePath, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
 import { DepositForm } from '../../components/accounts/Deposit/DepositForm';
 
 const DepositUi: FC<{
@@ -76,16 +77,10 @@ const DepositUi: FC<{
                 <Button
                   size="sm"
                   onClick={() =>
-                    navigate(
-                      accountId
-                        ? generatePath('/pools/:poolId?accountId=:accountId', {
-                            poolId: preferredPool.id,
-                            accountId,
-                          })
-                        : generatePath('/pools/:poolId', {
-                            poolId: preferredPool.id,
-                          })
-                    )
+                    navigate({
+                      pathname: generatePath('/pools/:poolId', { poolId: preferredPool.id }),
+                      search: accountId ? createSearchParams({ accountId }).toString() : '',
+                    })
                   }
                   variant="outline"
                 >
@@ -115,7 +110,6 @@ const DepositUi: FC<{
 
 export const Deposit = () => {
   const params = useParams();
-  const [queryParams] = useSearchParams();
   const { data: collateralTypes } = useCollateralTypes();
   const { data: preferredPool } = usePreferredPool();
   const activeCollateralType = collateralTypes?.find((x) => x.symbol === params.collateralSymbol);
@@ -124,7 +118,7 @@ export const Deposit = () => {
     <DepositUi
       activeCollateralType={activeCollateralType}
       preferredPool={preferredPool}
-      accountId={queryParams.get('accountId') || undefined}
+      accountId={params.accountId}
     />
   );
 };

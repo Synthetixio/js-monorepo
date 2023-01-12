@@ -29,3 +29,8 @@ export function useAccount(): { address: string } {
     address: account.address as string,
   };
 }
+
+export function useIsConnected(): boolean {
+  const account = wagmi.useAccount();
+  return Boolean(account.address);
+}

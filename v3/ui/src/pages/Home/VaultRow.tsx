@@ -1,23 +1,33 @@
 import { Amount } from '@snx-v3/Amount';
-import { Text, Tr, Td, Button, Image } from '@chakra-ui/react';
-import { useLiquidityPosition, LiquidityPosition } from '@snx-v3/useLiquidityPosition';
-import { generatePath, useNavigate } from 'react-router-dom';
+import { Button, Image, Td, Text, Tr } from '@chakra-ui/react';
+import { LiquidityPosition, useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
+import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { FC } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
-import { useSigner } from '@snx-v3/useBlockchain';
+import { useIsConnected } from '@snx-v3/useBlockchain';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useParams } from '@snx-v3/useParams';
 
-const VaultRowUi: FC<{
+function VaultRowUi({
+  collateralType,
+  liquidityPosition,
+  accountId,
+  poolId,
+  navigate,
+  isConnected,
+  openConnectModal,
+}: {
   collateralType: CollateralType;
   liquidityPosition?: LiquidityPosition;
-  isConnected: boolean;
   accountId?: string;
   poolId: string;
-}> = ({ collateralType, liquidityPosition, isConnected, accountId, poolId }) => {
-  const navigate = useNavigate();
-  const { openConnectModal } = useConnectModal();
+  navigate: NavigateFunction;
+  isConnected: boolean;
+  openConnectModal?: () => void;
+}) {
   const symbol = collateralType.symbol === 'WETH' ? 'ETH' : collateralType.symbol;
+  const hasLiquidity = accountId && liquidityPosition && liquidityPosition.collateralAmount.gt(0);
+
   return (
     <Tr>
       <Td>
@@ -41,71 +51,69 @@ const VaultRowUi: FC<{
       </Td>
       <Td>TODO</Td>
       <Td>
-        {isConnected ? (
+        {isConnected && hasLiquidity ? (
           <Button
-            onClick={() => {
-              if (accountId && liquidityPosition?.collateralAmount.gt(0)) {
-                // Manage existing position
-                navigate(
-                  generatePath('accounts/:accountId/positions/:collateralSymbol/:poolId', {
-                    accountId,
-                    poolId,
-                    collateralSymbol: collateralType.symbol,
-                  })
-                );
-                return;
-              }
-              if (accountId && liquidityPosition?.collateralAmount.gt(0)) {
-                // Deposit to existing account
-                navigate(
-                  generatePath('/deposit/:collateralSymbol/:poolId?accountId=:accountId', {
-                    accountId,
-                    poolId,
-                    collateralSymbol: collateralType.symbol,
-                  })
-                );
-                return;
-              }
-
-              // Deposit to without account. Not that it's the same deposit page, just withoput account id as query param
+            onClick={() =>
               navigate(
-                generatePath('/deposit/:collateralSymbol/:poolId', {
+                generatePath('/accounts/:accountId/positions/:collateralSymbol/:poolId', {
+                  accountId,
                   poolId,
                   collateralSymbol: collateralType.symbol,
                 })
-              );
-            }}
+              )
+            }
           >
-            {liquidityPosition?.collateralAmount.gt(0) ? 'Manage' : 'Deposit'}
+            Manage
           </Button>
-        ) : (
+        ) : null}
+
+        {isConnected && !hasLiquidity ? (
+          <Button
+            onClick={() =>
+              navigate({
+                pathname: generatePath('/deposit/:collateralSymbol/:poolId', {
+                  poolId: poolId,
+                  collateralSymbol: collateralType.symbol,
+                }),
+                search: accountId ? createSearchParams({ accountId }).toString() : '',
+              })
+            }
+          >
+            Deposit
+          </Button>
+        ) : null}
+
+        {!isConnected && openConnectModal ? (
           <Button onClick={openConnectModal}>Connect</Button>
-        )}
+        ) : null}
       </Td>
     </Tr>
   );
-};
+}
 
 export const VaultRow: FC<{ collateralType: CollateralType; poolId: string }> = ({
   collateralType,
   poolId,
 }) => {
   const params = useParams();
-
   const accountId = params.accountId;
   const { data: liquidityPosition } = useLiquidityPosition({
     accountId,
     collateral: collateralType,
     poolId,
   });
-  const signer = useSigner();
+  const navigate = useNavigate();
+  const { openConnectModal } = useConnectModal();
+  const isConnected = useIsConnected();
   return (
     <VaultRowUi
       collateralType={collateralType}
       liquidityPosition={liquidityPosition}
-      isConnected={Boolean(signer)}
       accountId={accountId}
       poolId={poolId}
+      navigate={navigate}
+      isConnected={isConnected}
+      openConnectModal={openConnectModal}
     />
   );
 };
