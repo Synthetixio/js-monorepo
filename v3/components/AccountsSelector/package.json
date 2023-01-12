@@ -8,6 +8,7 @@
     "@chakra-ui/react": "^2.2.8",
     "@snx-v3/format": "workspace:*",
     "@snx-v3/useAccounts": "workspace:*",
+    "@snx-v3/useParams": "workspace:*",
     "react-router-dom": "^6.3.0"
   }
 }

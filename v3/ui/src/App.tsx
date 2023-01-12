@@ -5,7 +5,6 @@ import { DefaultLayout } from './layouts/Default';
 import { Home } from './pages/home';
 import { Deposit } from './pages/deposit';
 import {
-  Account,
   CreateAccount,
   Settings,
   Collateral,
@@ -39,7 +38,6 @@ export const Synthetix: FC = () => {
           <Route path="/accounts/:accountId/collateral" element={<Collateral />} />
           <Route path="/accounts/:accountId/accept-nomination" element={<AcceptNomination />} />
           <Route path="/accounts/:accountId/settings" element={<Settings />} />
-          <Route path="/accounts/:accountId" element={<Account />} />
           <Route path="/accounts/create" element={<CreateAccount />} />
           <Route path="/pools/:poolId" element={<Pool />} />
           <Route path="/markets/create" element={<CreateMarket />} />

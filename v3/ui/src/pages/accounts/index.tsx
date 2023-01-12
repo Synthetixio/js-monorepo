@@ -1,4 +1,3 @@
-export * from './Account';
 export * from './CreateAccount';
 export * from './Settings';
 export * from './Collateral';

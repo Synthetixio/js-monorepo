@@ -5,14 +5,14 @@ import { generatePath, Link as RouterLink, useMatch } from 'react-router-dom';
 
 export function DepositingNav() {
   const params = useParams();
-  const innerPage = !useMatch('/accounts/:accountId');
+  const innerPage = !useMatch('/');
 
   return (
     <Flex alignItems="center" mb="10">
       {innerPage ? (
         <Link
           as={RouterLink}
-          to={generatePath('/accounts/:accountId', { accountId: params.accountId })}
+          to={generatePath('/?accountId=:accountId', { accountId: params.accountId })}
           fontSize="xs"
           fontWeight="normal"
           color="cyan.500"
