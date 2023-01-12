@@ -9,23 +9,24 @@ const BalanceSchema = ZodBigNumber.transform((x) => wei(x));
 const abi = ['function balanceOf(address) view returns (uint256)'];
 export const useBalance = ({
   tokenAddress,
-  networkId,
+  customNetwork,
 }: {
   tokenAddress?: string | 'ETH';
-  networkId?: number;
+  customNetwork?: number;
 }) => {
   const { address: accountAddress } = useAccount();
   const connectedProvider = useProvider();
   const network = useNetwork();
 
   return useQuery({
-    queryKey: [{ tokenAddress, networkId, accountAddress }, 'balance'],
+    queryKey: [{ tokenAddress, networkId: customNetwork || network.id, accountAddress }, 'balance'],
     queryFn: async () => {
       if (!tokenAddress) throw Error('Query should not be enabled');
       const provider =
-        network.id === networkId
+        !customNetwork || customNetwork === network.id
           ? connectedProvider
-          : new InfuraProvider(networkId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID);
+          : new InfuraProvider(customNetwork, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID);
+
       if (tokenAddress === 'ETH') {
         // if token is ETH get ETH balance from provider
         const balBn = await provider.getBalance(accountAddress);
