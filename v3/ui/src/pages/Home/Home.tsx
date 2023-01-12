@@ -1,31 +1,37 @@
 import {
-  Text,
+  Box,
+  Button,
+  Divider,
   Flex,
   Heading,
   Table,
   Tbody,
+  Text,
   Th,
   Thead,
   Tr,
-  Button,
-  Box,
-  Divider,
 } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
-import { generatePath, useNavigate, useSearchParams } from 'react-router-dom';
+import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { useAccounts } from '@snx-v3/useAccounts';
-import { useCollateralTypes, CollateralType } from '@snx-v3/useCollateralTypes';
+import { CollateralType, useCollateralTypes } from '@snx-v3/useCollateralTypes';
 import { VaultRow } from './VaultRow';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
 import { useParams } from '@snx-v3/useParams';
 
-export const HomeUi: FC<{
+export function HomeUi({
+  collateralTypes,
+  preferredPool,
+  accountId,
+  VaultRow,
+  navigate,
+}: {
   collateralTypes: CollateralType[];
   preferredPool: { name: string; id: string };
   accountId?: string;
   VaultRow: FC<{ collateralType: CollateralType; poolId: string }>;
-}> = ({ collateralTypes, preferredPool, accountId, VaultRow }) => {
-  const navigate = useNavigate();
+  navigate: NavigateFunction;
+}) {
   return (
     <Flex height="100%" flexDirection="column">
       <Flex alignItems="flex-end">
@@ -53,16 +59,12 @@ export const HomeUi: FC<{
           <Button
             size="sm"
             onClick={() =>
-              navigate(
-                accountId
-                  ? generatePath('/pools/:poolId?accountId=:accountId', {
-                      poolId: preferredPool.id,
-                      accountId,
-                    })
-                  : generatePath('/pools/:poolId', {
-                      poolId: preferredPool.id,
-                    })
-              )
+              navigate({
+                pathname: generatePath('/pools/:poolId', {
+                  poolId: preferredPool.id,
+                }),
+                search: accountId ? createSearchParams({ accountId }).toString() : '',
+              })
             }
             variant="outline"
           >
@@ -100,28 +102,33 @@ export const HomeUi: FC<{
       </Box>
     </Flex>
   );
-};
-export const Home = () => {
-  const { data: accounts } = useAccounts();
-  const { data: collateralTypes } = useCollateralTypes();
+}
+export function Home() {
+  const { data: accounts = [] } = useAccounts();
+  const { data: collateralTypes = [] } = useCollateralTypes();
   const { data: preferredPool } = usePreferredPool();
-  const [_queryParams, setQueryParams] = useSearchParams();
   const params = useParams();
+  const navigate = useNavigate();
+  const [accountId] = accounts;
 
   useEffect(() => {
-    if (params.accountId) return;
-    if (accounts && accounts.length > 0) {
-      setQueryParams({ accountId: accounts[0] });
+    if (!params.accountId && accountId) {
+      navigate({
+        pathname: generatePath('/'),
+        search: createSearchParams({ accountId }).toString(),
+      });
     }
-  }, [accounts, params, setQueryParams]);
+  }, [navigate, accountId, params.accountId]);
 
   if (!collateralTypes || !preferredPool) return null;
+
   return (
     <HomeUi
       collateralTypes={collateralTypes}
       VaultRow={VaultRow}
       preferredPool={preferredPool}
       accountId={params.accountId}
+      navigate={navigate}
     />
   );
-};
+}

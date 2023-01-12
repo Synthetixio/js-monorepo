@@ -1,14 +1,19 @@
 import { CheckIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { Button, Flex, Link, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
-import { generatePath, Link as RouterLink } from 'react-router-dom';
+import { createSearchParams, generatePath, Link as RouterLink } from 'react-router-dom';
 import { prettyString } from '@snx-v3/format';
-import { useAccounts } from '@snx-v3/useAccounts';
 import { useParams } from '@snx-v3/useParams';
+import { useAccounts } from '@snx-v3/useAccounts';
 
 function AccountMenuItem({ accountId }: { accountId: string }) {
   const params = useParams();
   return (
-    <RouterLink to={generatePath('/?accountId=:accountId', { accountId })}>
+    <RouterLink
+      to={{
+        pathname: generatePath('/'),
+        search: accountId ? createSearchParams({ accountId }).toString() : '',
+      }}
+    >
       <MenuItem
         _hover={{ bg: 'whiteAlpha.200' }}
         _focus={{ bg: 'whiteAlpha.200' }}

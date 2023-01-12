@@ -9,6 +9,6 @@
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "react": "^18.2.0",
     "react-i18next": "^11.18.3",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.6.2"
   }
 }

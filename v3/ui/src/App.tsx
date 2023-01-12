@@ -2,7 +2,7 @@ import { FC, Suspense, useEffect } from 'react';
 import { Spinner, useColorMode } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
 import { DefaultLayout } from './layouts/Default';
-import { Home } from './pages/home';
+import { Home } from './pages/Home';
 import { Deposit } from './pages/deposit';
 import {
   CreateAccount,
