@@ -103,17 +103,25 @@ const Button: ComponentStyleConfig = {
     outline: (props) => {
       if (props.colorScheme === 'gray') {
         return {
-          color: 'white.500',
+          color: 'whiteAlpha.800',
           borderColor: 'gray.900',
+          _hover: { bg: 'rgba(255, 255, 255, 0.12)' }, // white 0.12 opacity
+          _active: { bg: 'rgba(255, 255, 255, 0.24)' }, //white 0.24 opacity
         };
       }
       return {
-        color: `${props.colorScheme}.500`,
+        color: 'cyan.500', // needed for storybook for some reason
+        border: '1px solid', // needed for storybook for some reason
+        borderColor: 'cyan.500', // needed for storybook for some reason
+        _hover: { bg: 'rgb(0, 209, 255, 0.12)' }, // cyan.500 0.12 opacity
+        _active: { bg: 'rgb(0, 209, 255, 0.24)' }, // cyan.500 0.24 opacity
       };
     },
-    ghost: (props) => ({
-      color: `${props.colorScheme}.500`,
-    }),
+    ghost: {
+      color: 'cyan.500', // needed for storybook for some reason
+      _hover: { bg: 'rgb(0, 209, 255, 0.12)' }, // cyan.500 0.12 opacity
+      _active: { bg: 'rgb(0, 209, 255, 0.24)' }, // cyan.500 0.24 opacity
+    },
   },
 };
 const Input: ComponentStyleConfig = {
@@ -245,6 +253,19 @@ const Badge: ComponentStyleConfig = {
       borderColor: `${props.colorScheme}.500`,
       color: `${props.colorScheme}.500`,
     }),
+    percent: {
+      color: 'cyan.500',
+      bg: 'whiteAlpha.300',
+      fontFamily: 'heading',
+      py: 1,
+      px: 2,
+      borderRadius: 'base',
+      borderWidth: '1px',
+      borderColor: 'transparent',
+      width: '100%',
+      textAlign: 'center',
+      userSelect: 'none',
+    },
   },
 };
 const Tag: ComponentStyleConfig = {
@@ -569,6 +590,16 @@ export const theme = extendTheme({
       md: '768px',
       lg: '1024px',
       xl: '1280px',
+    },
+  },
+  styles: {
+    global: {
+      body: {
+        bg: 'navy.900',
+        backgroundSize: '8px 8px',
+        backgroundImage:
+          'repeating-linear-gradient(135deg, rgba(48, 48, 55, 0.44) 0px, rgb(11, 11, 34) 1px, transparent 0px, transparent 50%);',
+      },
     },
   },
 });

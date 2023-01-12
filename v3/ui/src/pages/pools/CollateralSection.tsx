@@ -1,11 +1,12 @@
 import { Box, Spinner, Text, Flex, Button } from '@chakra-ui/react';
 import { useVaultCollaterals } from '@snx-v3/useVaultCollaterals';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FC } from 'react';
 import { wei } from '@synthetixio/wei';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
 import { AccountVaultCollateral } from './AccountVaultCollateral';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
+import { useParams } from '@snx-v3/useParams';
 
 const calculateTvl = (vaultCollaterals: ReturnType<typeof useVaultCollaterals>['data']) => {
   const zeroValues = { value: wei(0), amount: wei(0) };
@@ -91,6 +92,7 @@ export const CollateralSectionUi: FC<{
 };
 export const CollateralSection = () => {
   const params = useParams();
+
   const { data: vaultCollaterals } = useVaultCollaterals(
     params.poolId ? parseFloat(params.poolId) : undefined
   );

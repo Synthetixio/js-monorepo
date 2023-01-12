@@ -26,6 +26,7 @@ export const selectPosition = ({
     debt,
   };
 };
+export type LiquidityPosition = ReturnType<typeof selectPosition>;
 
 export const loadPosition = async ({
   CoreProxy,

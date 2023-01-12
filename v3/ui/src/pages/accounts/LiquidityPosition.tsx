@@ -1,5 +1,5 @@
 import { Container } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@snx-v3/useParams';
 import { useMemo } from 'react';
 import { Position } from '../../components/accounts/Position';
 import { DepositingNav } from '../../components/accounts/DepositingNav';

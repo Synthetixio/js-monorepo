@@ -23,7 +23,7 @@ import {
 } from '../../utils/calculations';
 import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import Wei from '@synthetixio/wei';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@snx-v3/useParams';
 import { useMarketNamesById } from '@snx-v3/useMarketNamesById';
 import { useGetPoolData } from '../../hooks/useGetPoolData';
 

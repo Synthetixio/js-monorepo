@@ -1,5 +1,5 @@
 import { Box, Heading, Skeleton, Stack } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@snx-v3/useParams';
 import { Deposit } from '../../components/accounts/Deposit';
 import { DepositingNav } from '../../components/accounts/DepositingNav';
 import { LiquidityPositions } from '../../components/accounts/LiquidityPositions';

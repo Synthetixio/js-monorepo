@@ -2,7 +2,8 @@ import { FC, Suspense, useEffect } from 'react';
 import { Spinner, useColorMode } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
 import { DefaultLayout } from './layouts/Default';
-import { Home } from './pages';
+import { Home } from './pages/home';
+import { Deposit } from './pages/deposit';
 import {
   Account,
   CreateAccount,
@@ -34,12 +35,12 @@ export const Synthetix: FC = () => {
             path="/accounts/:accountId/positions/:collateral/:poolId"
             element={<LiquidityPosition />}
           />
+          <Route path="/deposit/:collateralSymbol/:poolId" element={<Deposit />} />
           <Route path="/accounts/:accountId/collateral" element={<Collateral />} />
           <Route path="/accounts/:accountId/accept-nomination" element={<AcceptNomination />} />
           <Route path="/accounts/:accountId/settings" element={<Settings />} />
           <Route path="/accounts/:accountId" element={<Account />} />
           <Route path="/accounts/create" element={<CreateAccount />} />
-          <Route path="/accounts/:accountId/pools/:poolId" element={<Pool />} />
           <Route path="/pools/:poolId" element={<Pool />} />
           <Route path="/markets/create" element={<CreateMarket />} />
           <Route path="/markets/:marketId" element={<Market />} />

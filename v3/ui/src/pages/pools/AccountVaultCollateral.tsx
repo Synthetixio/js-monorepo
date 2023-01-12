@@ -2,8 +2,9 @@ import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { FC } from 'react';
 import { Button, Skeleton, Text } from '@chakra-ui/react';
-import { useNavigate, useParams, generatePath } from 'react-router-dom';
+import { useNavigate, generatePath } from 'react-router-dom';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
+import { useParams } from '@snx-v3/useParams';
 
 const AccountVaultCollateralUi: FC<{
   collateralValue: number;

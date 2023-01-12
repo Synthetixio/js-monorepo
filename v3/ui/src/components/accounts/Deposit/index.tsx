@@ -24,6 +24,8 @@ export function Deposit({
       {collateralTypes && collateralTypes.length > 0 && preferredPool ? (
         <DepositForm
           accountId={accountId}
+          // This whole component will change and maybe even removed as new designs gets implemented
+          // @ts-ignore
           liquidityPositions={liquidityPositions}
           onSuccess={refetch}
           preferredPoolId={preferredPool.id}
