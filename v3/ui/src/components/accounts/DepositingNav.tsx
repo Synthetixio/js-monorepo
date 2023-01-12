@@ -1,6 +1,7 @@
 import { ChevronLeftIcon, SettingsIcon } from '@chakra-ui/icons';
 import { Flex, Link } from '@chakra-ui/react';
-import { generatePath, Link as RouterLink, useMatch, useParams } from 'react-router-dom';
+import { useParams } from '@snx-v3/useParams';
+import { generatePath, Link as RouterLink, useMatch } from 'react-router-dom';
 
 export function DepositingNav() {
   const params = useParams();

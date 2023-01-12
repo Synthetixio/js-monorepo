@@ -1,11 +1,12 @@
 import { Amount } from '@snx-v3/Amount';
 import { Text, Tr, Td, Button, Image } from '@chakra-ui/react';
 import { useLiquidityPosition, LiquidityPosition } from '@snx-v3/useLiquidityPosition';
-import { generatePath, useNavigate, useSearchParams } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
 import { FC } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useSigner } from '@snx-v3/useBlockchain';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useParams } from '@snx-v3/useParams';
 
 const VaultRowUi: FC<{
   collateralType: CollateralType;
@@ -89,8 +90,9 @@ export const VaultRow: FC<{ collateralType: CollateralType; poolId: string }> = 
   collateralType,
   poolId,
 }) => {
-  const [query] = useSearchParams();
-  const accountId = query.get('accountId') || undefined;
+  const params = useParams();
+
+  const accountId = params.accountId;
   const { data: liquidityPosition } = useLiquidityPosition({
     accountId,
     collateral: collateralType,

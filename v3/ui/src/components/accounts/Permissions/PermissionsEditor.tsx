@@ -25,7 +25,7 @@ import { useMemo, useRef, useState } from 'react';
 import { useManagePermissions } from '../../../hooks/useManagePermissions';
 import { prettyString } from '@snx-v3/format';
 import { AddressInput } from './AddressInput';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@snx-v3/useParams';
 
 export function PermissionsEditor({
   address: existingAddress,

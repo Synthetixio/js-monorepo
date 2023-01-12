@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { utils } from 'ethers';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@snx-v3/useParams';
 import { useAccount } from '@snx-v3/useBlockchain';
 import { useAccountRead, useSynthetixRead } from '../../../hooks/useDeploymentRead';
 import { useSynthetixProxyEvent } from '../../../hooks/useContractEvent';
