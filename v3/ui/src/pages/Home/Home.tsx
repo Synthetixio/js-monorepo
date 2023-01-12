@@ -88,7 +88,7 @@ export function HomeUi({
                 C-Ratio
               </Th>
               <Th color="whiteAlpha.800" pb="2">
-                Performance
+                Issuance Ratio
               </Th>
               <Th color="whiteAlpha.800" pb="2"></Th>
             </Tr>
