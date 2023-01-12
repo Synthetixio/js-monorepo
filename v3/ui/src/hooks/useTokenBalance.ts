@@ -10,7 +10,7 @@ export const useTokenBalance = (token: string | undefined, chainId?: number | un
 
   const { data: balanceData, refetch } = useBalance({
     tokenAddress: compareAddress(tokenAddress, ethCollateral?.tokenAddress) ? 'ETH' : tokenAddress,
-    networkId: chainId,
+    customNetwork: chainId,
   });
 
   return {
