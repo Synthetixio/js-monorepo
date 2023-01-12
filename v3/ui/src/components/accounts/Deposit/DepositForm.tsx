@@ -1,7 +1,6 @@
 import { Box, Button, Flex, Input, Text } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
-import { usePreferredPool } from '@snx-v3/usePreferredPool';
+import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useIsConnected } from '@snx-v3/useBlockchain';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 import { CollateralTypeSelector } from '@snx-v3/CollateralTypeSelector';
@@ -14,19 +13,19 @@ import { Amount } from '@snx-v3/Amount';
 import { useParams } from '@snx-v3/useParams';
 import { DepositModal } from './DepositModal';
 
-export function Deposit() {
-  const { data: collateralTypes } = useCollateralTypes();
-  const { data: preferredPool } = usePreferredPool();
+export function DepositForm() {
   const isConnected = useIsConnected();
   const { openConnectModal } = useConnectModal();
 
   const params = useParams();
+  const collateralType = useCollateralType(params.collateralSymbol);
+
   const inputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
   const [amount, setAmount] = useState('');
   const [activeBadge, setActiveBadge] = useState(0);
 
-  const balanceData = useTokenBalance(collateralTypes?.[0]?.tokenAddress);
+  const balanceData = useTokenBalance(collateralType?.tokenAddress);
 
   const [isOpenDeposit, setIsOpenDeposit] = useState(false);
   const onSubmit = useCallback(async (e: FormEvent) => {
@@ -36,6 +35,30 @@ export function Deposit() {
       setIsOpenDeposit(true);
     }
   }, []);
+
+  const onChangeCollateral = useCallback(
+    (collateralSymbol: string) => {
+      if (!params.poolId) {
+        return;
+      }
+      if (`${params.collateralSymbol}`.toLowerCase() === `${collateralSymbol}`.toLowerCase()) {
+        return;
+      }
+      setActiveBadge(0);
+      setAmount('');
+      inputRef.current?.focus();
+      navigate({
+        pathname: generatePath('/deposit/:collateralSymbol/:poolId', {
+          poolId: params.poolId,
+          collateralSymbol,
+        }),
+        search: params.accountId
+          ? createSearchParams({ accountId: params.accountId }).toString()
+          : '',
+      });
+    },
+    [navigate, params.accountId, params.collateralSymbol, params.poolId]
+  );
 
   if (!isConnected) {
     return (
@@ -47,7 +70,7 @@ export function Deposit() {
     );
   }
 
-  if (!preferredPool || !collateralTypes || !collateralTypes.length) {
+  if (!params.poolId || !params.collateralSymbol || !collateralType) {
     return null;
   }
 
@@ -57,22 +80,8 @@ export function Deposit() {
         <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2}>
           <Flex justifyContent="space-between">
             <CollateralTypeSelector
-              collateralType={collateralTypes[0]}
-              setCollateralType={(newCollateralType) => {
-                if (newCollateralType.symbol === collateralTypes[0].symbol) return;
-                setActiveBadge(0);
-                setAmount('');
-                inputRef.current?.focus();
-                navigate({
-                  pathname: generatePath('/deposit/:collateralSymbol/:poolId', {
-                    poolId: poolId,
-                    collateralSymbol: newCollateralType.symbol,
-                  }),
-                  search: params.accountId
-                    ? createSearchParams({ accountId: params.accountId }).toString()
-                    : '',
-                });
-              }}
+              collateralSymbol={params.collateralSymbol}
+              onChange={onChangeCollateral}
             />
             <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>
               <Input
@@ -124,7 +133,7 @@ export function Deposit() {
                   <Text mr={1}>Balance:</Text>
                   <Amount
                     value={balanceData.value}
-                    suffix={` ${activeCollateralType.symbol.toUpperCase()}`}
+                    suffix={` ${collateralType.symbol.toUpperCase()}`}
                   />
                 </Flex>
               </Flex>
@@ -149,13 +158,16 @@ export function Deposit() {
         </Button>
       </Box>
 
-      <DepositModal
-        amount={amount}
-        poolId={poolId}
-        collateralType={collateralTypes[0]}
-        isOpen={isOpenDeposit}
-        setIsOpen={setIsOpenDeposit}
-      />
+      {params.accountId && params.poolId && collateralType && amount ? (
+        <DepositModal
+          accountId={params.accountId}
+          poolId={params.poolId}
+          collateralType={collateralType}
+          amount={amount}
+          isOpen={isOpenDeposit}
+          setIsOpen={setIsOpenDeposit}
+        />
+      ) : null}
     </>
   );
 }

@@ -1,5 +1,5 @@
 import { Container, Flex, Text, Link } from '@chakra-ui/react';
-import { Deposit } from '../../components/accounts/Deposit';
+import { DepositForm } from '../../components/accounts/Deposit';
 
 export function CreateAccount() {
   return (
@@ -19,7 +19,7 @@ export function CreateAccount() {
             Learn more
           </Link>
         </Text>
-        <Deposit />
+        <DepositForm />
       </Container>
     </Flex>
   );

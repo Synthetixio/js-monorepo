@@ -1,12 +1,12 @@
 import { useBalance } from '@snx-v3/useBalance';
 import { compareAddress } from '@snx-v3/format';
-import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
+import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { assertAddressType } from '../utils/ts-helpers';
 import { wei } from '@synthetixio/wei';
 
-export const useTokenBalance = (token: string | undefined, chainId?: number | undefined) => {
+export const useTokenBalance = (token?: string, chainId?: number) => {
   const tokenAddress = assertAddressType(token) ? token : undefined;
-  const ethCollateral = useEthCollateralType();
+  const ethCollateral = useCollateralType('WETH');
 
   const { data: balanceData, refetch } = useBalance({
     tokenAddress: compareAddress(tokenAddress, ethCollateral?.tokenAddress) ? 'ETH' : tokenAddress,

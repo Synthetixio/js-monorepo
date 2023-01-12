@@ -15,7 +15,7 @@ import { parseUnits } from '@snx-v3/format';
 import { useAccounts } from '@snx-v3/useAccounts';
 import type { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useCallback, useMemo, useState } from 'react';
-import { generatePath, useNavigate, useParams } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
 import { contracts } from '../../../utils/constants';
 import { useApprove } from '@snx-v3/useApprove';
 import { useContract } from '../../../hooks/useContract';
@@ -25,12 +25,14 @@ import { TransactionReview, TransactionStatus } from '@snx-v3/TransactionReview'
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 
 export function DepositModal({
+  accountId,
   amount,
   poolId,
   collateralType,
   isOpen,
   setIsOpen,
 }: {
+  accountId: string;
   amount: string;
   poolId: string;
   collateralType: CollateralType;
@@ -38,9 +40,6 @@ export function DepositModal({
   setIsOpen: (isOpen: boolean) => void;
 }) {
   const navigate = useNavigate();
-  const params = useParams();
-
-  const accountId = params.accountId;
 
   const toast = useToast({
     isClosable: true,

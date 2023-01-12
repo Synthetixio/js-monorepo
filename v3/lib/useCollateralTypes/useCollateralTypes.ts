@@ -2,6 +2,7 @@ import { utils } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
 import { useCoreProxy, CoreProxyContractType } from '@snx-v3/useCoreProxy';
 import { z } from 'zod';
+import { useMemo } from 'react';
 import { ZodBigNumber } from '@snx-v3/zod';
 import { wei } from '@synthetixio/wei';
 import { useExternalMulticall, MulticallContractType } from '../useExternalMulticall';
@@ -112,7 +113,17 @@ export function useCollateralTypes() {
   });
 }
 
-export function useEthCollateralType() {
-  const { data } = useCollateralTypes();
-  return data?.find((collateral) => collateral.symbol === 'WETH');
+export function useCollateralType(collateralSymbol?: string) {
+  const { data: collateralTypes } = useCollateralTypes();
+  return useMemo(() => {
+    if (!collateralTypes || !collateralTypes?.length) {
+      return;
+    }
+    if (!collateralSymbol) {
+      return collateralTypes[0];
+    }
+    return collateralTypes.find(
+      (collateral) => `${collateral.symbol}`.toLowerCase() === `${collateralSymbol}`.toLowerCase()
+    );
+  }, [collateralTypes, collateralSymbol]);
 }

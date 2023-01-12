@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useBalance, useContractWrite } from 'wagmi';
 import { useAccount } from '@snx-v3/useBlockchain';
 import { TxConfig } from './useMulticall';
-import { useEthCollateralType } from '@snx-v3/useCollateralTypes';
+import { useCollateralType } from '@snx-v3/useCollateralTypes';
 
 const minimalWETHABI = [
   {
@@ -31,7 +31,7 @@ const minimalWETHABI = [
   },
 ];
 export const useWrapEth = (config?: Partial<TxConfig>) => {
-  const ethCollateral = useEthCollateralType();
+  const ethCollateral = useCollateralType('WETH');
 
   // TODO: refactor with simple contract interactions later
   // const provider = useProvider();
@@ -96,7 +96,7 @@ export const useWrapEth = (config?: Partial<TxConfig>) => {
 };
 
 export const useUnWrapEth = (config?: Partial<TxConfig>) => {
-  const ethCollateral = useEthCollateralType();
+  const ethCollateral = useCollateralType('WETH');
 
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
