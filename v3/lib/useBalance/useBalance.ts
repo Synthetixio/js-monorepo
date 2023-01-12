@@ -25,7 +25,7 @@ export const useBalance = ({
       const provider =
         !customNetwork || customNetwork === network.id
           ? connectedProvider
-          : new InfuraProvider(network.id, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID);
+          : new InfuraProvider(customNetwork, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID);
 
       if (tokenAddress === 'ETH') {
         // if token is ETH get ETH balance from provider
