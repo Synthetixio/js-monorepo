@@ -34,7 +34,7 @@ export function HomeUi({
 }) {
   return (
     <Flex height="100%" flexDirection="column">
-      <Flex alignItems="flex-end">
+      <Flex alignItems="flex-end" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
         <Box flexGrow={1} mr={12}>
           <Heading>Welcome to Synthetix V3</Heading>
           <Text>
@@ -43,20 +43,25 @@ export function HomeUi({
             quick introduction first.
           </Text>
         </Box>
-        <Button variant="outline" minW="unset" size="sm">
+        <Button variant="outline" minW="unset" size="sm" mt={{ base: 2, md: 0 }}>
           Read Introduction
         </Button>
       </Flex>
       <Divider mt={4} bg="gray.900" />
       <Box p={4} bg="navy.900" mt={8} borderWidth="1px" borderColor="gray.900" borderRadius="base">
-        <Flex justifyContent="space-between">
-          <Flex alignItems="baseline" justifyContent="flex-start">
+        <Flex justifyContent="space-between" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
+          <Flex
+            alignItems="baseline"
+            justifyContent="flex-start"
+            flexDirection={{ base: 'column', md: 'row' }}
+          >
             <Heading>{preferredPool.name}</Heading>
-            <Text color="gray.400" ml={2}>
+            <Text color="gray.400" ml={{ base: 0, md: 2 }}>
               Pool #{preferredPool.id}
             </Text>
           </Flex>
           <Button
+            mt={{ base: 2, md: 0 }}
             size="sm"
             onClick={() =>
               navigate({
@@ -75,30 +80,32 @@ export function HomeUi({
           The Spartan Council Pool is the primary pool of Synthetix. All collateral will be
           deposited in this pool by default.
         </Text>
-        <Table mt={8} size="sm" variant="simple" mb="9">
-          <Thead>
-            <Tr>
-              <Th color="whiteAlpha.800" pb="2">
-                Collateral
-              </Th>
-              <Th color="whiteAlpha.800" pb="2">
-                Debt
-              </Th>
-              <Th color="whiteAlpha.800" pb="2">
-                C-Ratio
-              </Th>
-              <Th color="whiteAlpha.800" pb="2">
-                Issuance Ratio
-              </Th>
-              <Th color="whiteAlpha.800" pb="2"></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {collateralTypes.map((c) => (
-              <VaultRow key={c.tokenAddress} collateralType={c} poolId={preferredPool.id} />
-            ))}
-          </Tbody>
-        </Table>
+        <Box overflowX="auto">
+          <Table mt={8} size="sm" variant="simple" mb="9">
+            <Thead>
+              <Tr>
+                <Th color="whiteAlpha.800" pb="2">
+                  Collateral
+                </Th>
+                <Th color="whiteAlpha.800" pb="2">
+                  Debt
+                </Th>
+                <Th color="whiteAlpha.800" pb="2">
+                  C-Ratio
+                </Th>
+                <Th color="whiteAlpha.800" pb="2">
+                  Issuance Ratio
+                </Th>
+                <Th color="whiteAlpha.800" pb="2"></Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {collateralTypes.map((c) => (
+                <VaultRow key={c.tokenAddress} collateralType={c} poolId={preferredPool.id} />
+              ))}
+            </Tbody>
+          </Table>
+        </Box>
       </Box>
     </Flex>
   );
