@@ -1,11 +1,12 @@
 import { Amount } from '@snx-v3/Amount';
 import { Text, Tr, Td, Button, Image } from '@chakra-ui/react';
 import { useLiquidityPosition, LiquidityPosition } from '@snx-v3/useLiquidityPosition';
-import { generatePath, useNavigate, useParams } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
 import { FC } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useSigner } from '@snx-v3/useBlockchain';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useParams } from '@snx-v3/useParams';
 
 const VaultRowUi: FC<{
   collateralType: CollateralType;
@@ -16,7 +17,7 @@ const VaultRowUi: FC<{
 }> = ({ collateralType, liquidityPosition, isConnected, accountId, poolId }) => {
   const navigate = useNavigate();
   const { openConnectModal } = useConnectModal();
-
+  const symbol = collateralType.symbol === 'WETH' ? 'ETH' : collateralType.symbol;
   return (
     <Tr>
       <Td>
@@ -25,7 +26,7 @@ const VaultRowUi: FC<{
         <Text fontSize="xs" opacity="0.66" mt="1">
           <Amount
             value={liquidityPosition ? liquidityPosition.collateralAmount : '0'}
-            suffix={`${collateralType.symbol.toUpperCase()} `}
+            suffix={` ${symbol}`}
           />
         </Text>
       </Td>
@@ -43,7 +44,7 @@ const VaultRowUi: FC<{
         {isConnected ? (
           <Button
             onClick={() => {
-              if (accountId && liquidityPosition) {
+              if (accountId && liquidityPosition?.collateralAmount.gt(0)) {
                 // Manage existing position
                 navigate(
                   generatePath('accounts/:accountId/positions/:collateralSymbol/:poolId', {
@@ -54,7 +55,7 @@ const VaultRowUi: FC<{
                 );
                 return;
               }
-              if (accountId && !liquidityPosition) {
+              if (accountId && liquidityPosition?.collateralAmount.gt(0)) {
                 // Deposit to existing account
                 navigate(
                   generatePath('/deposit/:collateralSymbol/:poolId?accountId=:accountId', {
@@ -75,7 +76,7 @@ const VaultRowUi: FC<{
               );
             }}
           >
-            {liquidityPosition ? 'Manage' : 'Deposit'}
+            {liquidityPosition?.collateralAmount.gt(0) ? 'Manage' : 'Deposit'}
           </Button>
         ) : (
           <Button onClick={openConnectModal}>Connect</Button>
@@ -89,7 +90,9 @@ export const VaultRow: FC<{ collateralType: CollateralType; poolId: string }> = 
   collateralType,
   poolId,
 }) => {
-  const { accountId } = useParams();
+  const params = useParams();
+
+  const accountId = params.accountId;
   const { data: liquidityPosition } = useLiquidityPosition({
     accountId,
     collateral: collateralType,

@@ -17,6 +17,7 @@ import { useAccounts } from '@snx-v3/useAccounts';
 import { useCollateralTypes, CollateralType } from '@snx-v3/useCollateralTypes';
 import { VaultRow } from './VaultRow';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
+import { useParams } from '@snx-v3/useParams';
 
 export const HomeUi: FC<{
   collateralTypes: CollateralType[];
@@ -41,7 +42,7 @@ export const HomeUi: FC<{
         </Button>
       </Flex>
       <Divider mt={4} bg="gray.900" />
-      <Box p={4} bg="navy.900" mt={8}>
+      <Box p={4} bg="navy.900" mt={8} borderWidth="1px" borderColor="gray.900" borderRadius="base">
         <Flex justifyContent="space-between">
           <Flex alignItems="baseline" justifyContent="flex-start">
             <Heading>{preferredPool.name}</Heading>
@@ -58,7 +59,7 @@ export const HomeUi: FC<{
                       poolId: preferredPool.id,
                       accountId,
                     })
-                  : generatePath('pools/:poolId', {
+                  : generatePath('/pools/:poolId', {
                       poolId: preferredPool.id,
                     })
               )
@@ -104,14 +105,15 @@ export const Home = () => {
   const { data: accounts } = useAccounts();
   const { data: collateralTypes } = useCollateralTypes();
   const { data: preferredPool } = usePreferredPool();
-  const [queryParams, setQueryParams] = useSearchParams();
-  const accountId = queryParams.get('accountId');
+  const [_queryParams, setQueryParams] = useSearchParams();
+  const params = useParams();
+
   useEffect(() => {
-    if (accountId) return;
+    if (params.accountId) return;
     if (accounts && accounts.length > 0) {
       setQueryParams({ accountId: accounts[0] });
     }
-  }, [accounts, accountId, setQueryParams]);
+  }, [accounts, params, setQueryParams]);
 
   if (!collateralTypes || !preferredPool) return null;
   return (
@@ -119,7 +121,7 @@ export const Home = () => {
       collateralTypes={collateralTypes}
       VaultRow={VaultRow}
       preferredPool={preferredPool}
-      accountId={queryParams.get('accountId') || undefined}
+      accountId={params.accountId}
     />
   );
 };

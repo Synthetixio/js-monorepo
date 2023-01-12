@@ -13,18 +13,11 @@ export function CollateralTypeSelectorUI({
 }) {
   return (
     <Menu>
-      <MenuButton
-        minHeight="48px"
-        border="1px solid rgba(255,255,255,0.33)"
-        borderRadius="6px"
-        alignItems="center"
-        cursor="pointer"
-        type="button"
-      >
+      <MenuButton minHeight="48px" alignItems="center" cursor="pointer" type="button">
         <Flex>
           {collateralType ? (
             <>
-              <Box w="24px" h="24px" borderRadius="12px" overflow="hidden" ml="3.5" mr="2">
+              <Box w="24px" h="24px" borderRadius="12px" overflow="hidden" mr="2">
                 <Image
                   alt="collateral image"
                   width="24px"

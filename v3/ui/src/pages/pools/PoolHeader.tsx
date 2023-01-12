@@ -1,5 +1,5 @@
 import { Flex, Heading, Text } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@snx-v3/useParams';
 import { useGetPoolData, Pool } from '../../hooks/useGetPoolData';
 
 export const PoolHeaderUi = ({ pool }: { pool?: Pool }) => {
