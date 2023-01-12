@@ -44,10 +44,14 @@ export const ClaimRewardsBtn: FC<{
           variant !== 'success' ? false : Boolean(!canClaim || isGasEnabledAndNotFetched || error)
         }
         w={['100%', '100%', '100%', '80px']}
+        fontFamily="heading"
+        fontSize="14px"
+        fontWeight="700"
         ml={[6, 6, 6, 4]}
         onClick={() => {
           variant === 'success' ? handleSubmit() : navigate('/staking/burn');
         }}
+        color="black"
       >
         {variant === 'success' ? 'Claim' : 'Maintain'}
       </Button>

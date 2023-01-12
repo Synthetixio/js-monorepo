@@ -171,6 +171,12 @@
       "liquidation-rewards": {
         "title": "Synthetix",
         "description": "Liquidation Rewards"
+      },
+      "trading-fees": {
+        "title": "Synthetix",
+        "description": "Trading Fees",
+        "burned": "Fees Burned",
+        "repays": "Repays debt Automatically"
       }
     },
     "self-liquidation": {

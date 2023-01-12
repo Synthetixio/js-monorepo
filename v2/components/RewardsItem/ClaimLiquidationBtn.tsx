@@ -36,6 +36,10 @@ export const ClaimLiquidationBtn: FC<{ amountSNX?: number }> = ({ amountSNX }) =
         w={['100%', '100%', '100%', '80px']}
         ml={[4, 4, 4, 4]}
         onClick={handleSubmit}
+        fontFamily="heading"
+        fontSize="14px"
+        fontWeight="700"
+        color="black"
       >
         Claim
       </Button>

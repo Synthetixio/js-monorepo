@@ -15,9 +15,8 @@ import { useTranslation } from 'react-i18next';
 import { CountDown } from '@snx-v2/CountDown';
 import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
 import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
-import { SNXIcon, InfoOutline } from '@snx-v2/icons';
+import { InfoOutline, TradingFeesIcon, StakingRewardsIcon, WreckedIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
 import { formatNumber, formatPercent } from '@snx-v2/formatters';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import intervalToDuration from 'date-fns/intervalToDuration';
@@ -32,8 +31,7 @@ interface RewardsItemProps extends FlexProps {
   title: string;
   description: string;
   apyReturn: string | null;
-  stakedBalance: string | null;
-  endDate: Date | null;
+  endDate: Date | null | string;
   percentCompleted?: number;
   RewardBalance: FC;
   RewardsBadge?: FC | null;
@@ -47,7 +45,7 @@ export const RewardsItemUI = ({
   title,
   description,
   apyReturn,
-  stakedBalance,
+
   endDate,
   percentCompleted,
   RewardBalance,
@@ -95,11 +93,17 @@ export const RewardsItemUI = ({
         </Flex>
         {isLoading ? (
           <Flex direction="column" justifyContent="center" width="90%" minWidth="80px" ml={0}>
-            <Skeleton width={['100%', '100%', '100%', '60px']} height="16px" />
+            <Skeleton width={{ base: '100%', lg: '175px' }} height="16px" />
           </Flex>
         ) : (
           <Fade in={!isLoading}>
-            <Flex direction="column" justifyContent="center" minWidth="80px" ml={[6, 6, 6, 0]}>
+            <Flex
+              direction="column"
+              justifyContent="center"
+              minWidth="80px"
+              width={{ base: '80px', lg: '210px' }}
+              ml={[6, 6, 6, 0]}
+            >
               <>
                 <Text
                   fontFamily="heading"
@@ -120,38 +124,6 @@ export const RewardsItemUI = ({
       </Flex>
       {/* Second Group */}
       <Flex alignItems="center" width={['100%', '100%', '100%', 'initial']} mt={[4, 4, 4, 0]}>
-        {isLoading ? (
-          <Flex
-            direction="column"
-            minWidth={['182px', '182px', '182px', '120px']}
-            mr={[0, 10, 10, 4]}
-          >
-            <Skeleton width={['100%', '100%', '100%', '100px']} mr={2} height="16px" />
-          </Flex>
-        ) : (
-          <Fade in={!isLoading}>
-            <Flex
-              direction="column"
-              minWidth={['182px', '182px', '182px', '120px']}
-              mr={[0, 10, 10, 4]}
-            >
-              <>
-                <Text
-                  fontFamily="heading"
-                  fontSize="sm"
-                  fontWeight="700"
-                  lineHeight="5"
-                  color="whiteAlpha.900"
-                >
-                  {stakedBalance || '—'}
-                </Text>
-                <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
-                  {stakedBalance ? t('staking-v2.earn.staked') : '—'}
-                </Text>
-              </>
-            </Flex>
-          </Fade>
-        )}
         {/* Date Group */}
         {isLoading ? (
           <Flex width="100%">
@@ -159,34 +131,8 @@ export const RewardsItemUI = ({
           </Flex>
         ) : (
           <Fade in={!isLoading}>
-            {endDate ? (
-              <Flex direction="column" justifyContent="space-between" w="210px" mx={[6, 6, 6, 5]}>
-                <Progress
-                  w="100%"
-                  variant="white"
-                  height="5px"
-                  min={0}
-                  max={100}
-                  value={percentCompleted}
-                />
-                <Flex justifyContent="space-between" alignItems="center" mt={2.25}>
-                  <Text fontFamily="heading" fontWeight="700" fontSize="xs" color="whiteAlpha.600">
-                    {t('staking-v2.earn.remaining')}
-                  </Text>
-                  <CountDown
-                    sx={{
-                      color: 'green.400',
-                      fontWeight: '700',
-                      fontFamily: 'heading',
-                      fontSize: 'xs',
-                      lineHeight: '4',
-                    }}
-                    toDate={endDate}
-                  />
-                </Flex>
-              </Flex>
-            ) : (
-              <Flex direction="column" minW="210px" mx={[6, 6, 6, 5]}>
+            {typeof endDate === 'string' ? (
+              <Flex direction="column" minW="210px" mx={[0, 0, 0, 5]}>
                 <Text
                   fontFamily="heading"
                   fontSize="xs"
@@ -194,9 +140,61 @@ export const RewardsItemUI = ({
                   lineHeight="4"
                   color="whiteAlpha.600"
                 >
-                  {t('staking-v2.earn.does-not-expire')}
+                  {endDate}
                 </Text>
               </Flex>
+            ) : (
+              <>
+                {endDate ? (
+                  <Flex
+                    direction="column"
+                    justifyContent="space-between"
+                    w="210px"
+                    mx={[0, 0, 0, 5]}
+                  >
+                    <Progress
+                      w="100%"
+                      variant="white"
+                      height="5px"
+                      min={0}
+                      max={100}
+                      value={percentCompleted}
+                    />
+                    <Flex justifyContent="space-between" alignItems="center" mt={2.25}>
+                      <Text
+                        fontFamily="heading"
+                        fontWeight="700"
+                        fontSize="xs"
+                        color="whiteAlpha.600"
+                      >
+                        {t('staking-v2.earn.remaining')}
+                      </Text>
+                      <CountDown
+                        sx={{
+                          color: 'green.400',
+                          fontWeight: '700',
+                          fontFamily: 'heading',
+                          fontSize: 'xs',
+                          lineHeight: '4',
+                        }}
+                        toDate={endDate}
+                      />
+                    </Flex>
+                  </Flex>
+                ) : (
+                  <Flex direction="column" minW="210px" mx={[0, 0, 0, 5]}>
+                    <Text
+                      fontFamily="heading"
+                      fontSize="xs"
+                      fontWeight={700}
+                      lineHeight="4"
+                      color="whiteAlpha.600"
+                    >
+                      {t('staking-v2.earn.does-not-expire')}
+                    </Text>
+                  </Flex>
+                )}
+              </>
             )}
           </Fade>
         )}
@@ -283,12 +281,6 @@ export const Rewards = () => {
   const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
   const { data: aprData } = useApr();
 
-  const stakedSnx = calculateStakedSnx({
-    targetCRatio: debtData?.targetCRatio,
-    currentCRatio: debtData?.currentCRatio,
-    collateral: debtData?.collateral,
-  });
-
   const variant = getHealthVariant({
     currentCRatioPercentage: debtData?.currentCRatioPercentage.toNumber(),
     liquidationCratioPercentage: debtData?.liquidationRatioPercentage.toNumber(),
@@ -303,11 +295,79 @@ export const Rewards = () => {
     <Box my={8}>
       <Divider my={4} />
       <RewardsItemUI
-        Icon={() => <SNXIcon height="40px" width="40px" />}
+        Icon={() => (
+          <Flex
+            bg="navy.900"
+            height="38px"
+            width="38px"
+            justifyContent="center"
+            alignItems="center"
+            borderRadius="full"
+          >
+            <TradingFeesIcon height="36px" width="36px" />
+          </Flex>
+        )}
+        title={t('staking-v2.earn.trading-fees.title')}
+        description={t('staking-v2.earn.trading-fees.description')}
+        apyReturn={aprData !== undefined ? formatPercent(aprData.toNumber()) : ''}
+        endDate={t('staking-v2.earn.trading-fees.repays')}
+        isLoading={isLoading}
+        RewardBalance={() => {
+          return (
+            <Flex flexDirection="column">
+              <Text fontFamily="heading" fontSize="xs" color="whiteAlpha.500">
+                {/* Fee amount here */}
+                ~200 sUSD / week
+              </Text>
+            </Flex>
+          );
+        }}
+        RewardsBadge={() => {
+          return (
+            <Badge
+              py={0.5}
+              px={1}
+              fontSize="2xs"
+              variant="gray"
+              mt={0.5}
+              w="fit-content"
+              fontWeight="700"
+            >
+              <InfoOutline color="gray.500" mb="1.75px" mr="2px" height="12px" width="12px" />
+              {t('staking-v2.earn.trading-fees.burned')}
+            </Badge>
+          );
+        }}
+        claimBtn={
+          <Button
+            w={['100%', '100%', '100%', '80px']}
+            variant="outline"
+            ml={[6, 6, 6, 4]}
+            fontFamily="heading"
+            fontSize="14px"
+            fontWeight="700"
+          >
+            More Info
+          </Button>
+        }
+      />
+      <Divider my={4} />
+      <RewardsItemUI
+        Icon={() => (
+          <Flex
+            bg="navy.900"
+            height="38px"
+            width="38px"
+            justifyContent="center"
+            alignItems="center"
+            borderRadius="full"
+          >
+            <StakingRewardsIcon height="34px" width="34px" />
+          </Flex>
+        )}
         title={t('staking-v2.earn.staking-rewards.title')}
         description={t('staking-v2.earn.staking-rewards.description')}
         apyReturn={aprData !== undefined ? formatPercent(aprData.toNumber()) : ''}
-        stakedBalance={`${formatNumber(stakedSnx.toNumber()).toString()} SNX`}
         endDate={feePoolData?.nextFeePeriodStartDate || null}
         percentCompleted={percentEpochCompleted(
           feePoolData?.nextFeePeriodStartDate,
@@ -344,9 +404,9 @@ export const Rewards = () => {
         }}
         RewardsBadge={() => {
           const onTarget = variant === 'success';
-
           const hasClaimed = rewardsData?.hasClaimed;
           const nothingToClaim = rewardsData?.nothingToClaim;
+
           if (!hasClaimed && nothingToClaim) {
             return null;
           }
@@ -382,11 +442,21 @@ export const Rewards = () => {
       />
       <Divider my={4} />
       <RewardsItemUI
-        Icon={() => <SNXIcon height="40px" width="40px" />}
+        Icon={() => (
+          <Flex
+            bg="navy.900"
+            height="38px"
+            width="38px"
+            justifyContent="center"
+            alignItems="center"
+            borderRadius="full"
+          >
+            <WreckedIcon height="34px" width="34px" />
+          </Flex>
+        )}
         title={t('staking-v2.earn.liquidation-rewards.title')}
         description={t('staking-v2.earn.liquidation-rewards.description')}
         apyReturn={null}
-        stakedBalance={`${formatNumber(stakedSnx.toNumber()).toString()} SNX`}
         endDate={null}
         isLoading={isLoading}
         RewardBalance={() => {
@@ -416,41 +486,6 @@ export const Rewards = () => {
         claimBtn={<ClaimLiquidationBtn amountSNX={liquidationData?.liquidatorRewards.toNumber()} />}
       />
       <Divider my={4} />
-      {/* Curve disabled for now */}
-      {/* <RewardsItemUI
-        Icon={() => (
-          <Box
-            bg="black"
-            borderRadius="full"
-            w="37px"
-            h="37px"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <CurveIcon height="24px" width="24px" />
-          </Box>
-        )}
-        title="Curve"
-        description="sUSD CPT Rewards"
-        apyReturn="24.00%"
-        stakedBalance={null}
-        endDate={null}
-        isLoading={false}
-        rewardBalance=""
-        claimBtn={
-          <Button
-            onClick={() => {
-              console.log('Curve');
-            }}
-            w={['100%', '100%', '100%', '80px']}
-            ml={[6, 6, 6, 4]}
-          >
-            Claim
-          </Button>
-        }
-      /> */}
-      {/* <Divider my={4} /> */}
     </Box>
   );
 };
