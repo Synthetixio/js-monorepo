@@ -13,7 +13,7 @@ const DepositUi: FC<{
   const navigate = useNavigate();
   return (
     <Flex height="100%" flexDirection="column">
-      <Flex alignItems="flex-end">
+      <Flex alignItems="flex-end" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
         <Box flexGrow={1} mr={12}>
           <Heading fontSize="xl">Welcome to Synthetix V3</Heading>
           <Text>
@@ -22,17 +22,17 @@ const DepositUi: FC<{
             quick introduction first.
           </Text>
         </Box>
-        <Button variant="outline" minW="unset" size="sm">
+        <Button variant="outline" minW="unset" size="sm" mt={{ base: 2, md: 0 }}>
           Read Introduction
         </Button>
       </Flex>
       <Divider mt={4} bg="gray.900" />
-      <Flex>
+      <Flex flexWrap={{ base: 'wrap', md: 'nowrap' }}>
         <Box
           p={4}
           mt={8}
           bg="navy.900"
-          mr={2}
+          mr={{ base: 0, md: 2 }}
           borderWidth="1px"
           borderColor="gray.900"
           borderRadius="base"
@@ -56,7 +56,7 @@ const DepositUi: FC<{
           }
         </Box>
         <Box
-          ml={2}
+          ml={{ base: 0, md: 2 }}
           p={4}
           mt={8}
           bg="navy.900"
