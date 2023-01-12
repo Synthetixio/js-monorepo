@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useState } from 'react';
 import {
   Box,
   Text,
@@ -24,6 +24,7 @@ import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { ClaimRewardsBtn } from './ClaimRewardsBtn';
 import { ClaimLiquidationBtn } from './ClaimLiquidationBtn';
 import { useApr } from '@snx-v2/useApr';
+import { TradingFeesModal } from './TradingFeesModal';
 
 interface RewardsItemProps extends FlexProps {
   isLoading: boolean;
@@ -274,6 +275,7 @@ function percentEpochCompleted(nextStartDate?: Date, duration?: number) {
 
 export const Rewards = () => {
   const { t } = useTranslation();
+  const [isFeesModalOpen, setFeesModalOpen] = useState(false);
 
   const { data: debtData, isLoading: isDebtLoading } = useDebtData();
   const { data: liquidationData, isLoading: isLiquidationLoading } = useGetLiquidationRewards();
@@ -292,200 +294,206 @@ export const Rewards = () => {
     isDebtLoading || isLiquidationLoading || isRewardsLoading || isFeePoolDataLoading;
 
   return (
-    <Box my={8}>
-      <Divider my={4} />
-      <RewardsItemUI
-        Icon={() => (
-          <Flex
-            bg="navy.900"
-            height="38px"
-            width="38px"
-            justifyContent="center"
-            alignItems="center"
-            borderRadius="full"
-          >
-            <TradingFeesIcon height="36px" width="36px" />
-          </Flex>
-        )}
-        title={t('staking-v2.earn.trading-fees.title')}
-        description={t('staking-v2.earn.trading-fees.description')}
-        apyReturn={aprData !== undefined ? formatPercent(aprData.toNumber()) : ''}
-        endDate={t('staking-v2.earn.trading-fees.repays')}
-        isLoading={isLoading}
-        RewardBalance={() => {
-          return (
-            <Flex flexDirection="column">
-              <Text fontFamily="heading" fontSize="xs" color="whiteAlpha.500">
-                {/* Fee amount here */}
-                ~200 sUSD / week
-              </Text>
-            </Flex>
-          );
-        }}
-        RewardsBadge={() => {
-          return (
-            <Badge
-              py={0.5}
-              px={1}
-              fontSize="2xs"
-              variant="gray"
-              mt={0.5}
-              w="fit-content"
-              fontWeight="700"
+    <>
+      <TradingFeesModal isOpen={isFeesModalOpen} onClose={() => setFeesModalOpen(false)} />
+      <Box my={8}>
+        <Divider my={4} />
+        <RewardsItemUI
+          Icon={() => (
+            <Flex
+              bg="navy.900"
+              height="38px"
+              width="38px"
+              justifyContent="center"
+              alignItems="center"
+              borderRadius="full"
             >
-              <InfoOutline color="gray.500" mb="1.75px" mr="2px" height="12px" width="12px" />
-              {t('staking-v2.earn.trading-fees.burned')}
-            </Badge>
-          );
-        }}
-        claimBtn={
-          <Button
-            w={['100%', '100%', '100%', '80px']}
-            variant="outline"
-            ml={[6, 6, 6, 4]}
-            fontFamily="heading"
-            fontSize="14px"
-            fontWeight="700"
-          >
-            More Info
-          </Button>
-        }
-      />
-      <Divider my={4} />
-      <RewardsItemUI
-        Icon={() => (
-          <Flex
-            bg="navy.900"
-            height="38px"
-            width="38px"
-            justifyContent="center"
-            alignItems="center"
-            borderRadius="full"
-          >
-            <StakingRewardsIcon height="34px" width="34px" />
-          </Flex>
-        )}
-        title={t('staking-v2.earn.staking-rewards.title')}
-        description={t('staking-v2.earn.staking-rewards.description')}
-        apyReturn={aprData !== undefined ? formatPercent(aprData.toNumber()) : ''}
-        endDate={feePoolData?.nextFeePeriodStartDate || null}
-        percentCompleted={percentEpochCompleted(
-          feePoolData?.nextFeePeriodStartDate,
-          feePoolData?.feePeriodDuration
-        )}
-        isLoading={isLoading}
-        RewardBalance={() => {
-          if (rewardsData?.hasClaimed) {
-            return null;
-          }
-          if (rewardsData?.nothingToClaim)
+              <TradingFeesIcon height="36px" width="36px" />
+            </Flex>
+          )}
+          title={t('staking-v2.earn.trading-fees.title')}
+          description={t('staking-v2.earn.trading-fees.description')}
+          apyReturn={aprData !== undefined ? formatPercent(aprData.toNumber()) : ''}
+          endDate={t('staking-v2.earn.trading-fees.repays')}
+          isLoading={isLoading}
+          RewardBalance={() => {
             return (
-              <>
-                <Text
-                  fontFamily="heading"
-                  fontSize="sm"
-                  fontWeight="700"
-                  lineHeight="5"
-                  color="whiteAlpha.900"
-                >
-                  —
+              <Flex flexDirection="column">
+                <Text fontFamily="heading" fontSize="xs" color="whiteAlpha.500">
+                  {/* Fee amount here */}
+                  ~200 sUSD / week
                 </Text>
-                <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
-                  —
-                </Text>
-              </>
+              </Flex>
             );
-          return (
-            <Flex flexDirection="column">
-              <span>{formatNumber(rewardsData?.sUSDRewards.toNumber() || 0)} sUSD</span>
-              <span>{formatNumber(rewardsData?.snxRewards.toNumber() || 0)} SNX</span>
-            </Flex>
-          );
-        }}
-        RewardsBadge={() => {
-          const onTarget = variant === 'success';
-          const hasClaimed = rewardsData?.hasClaimed;
-          const nothingToClaim = rewardsData?.nothingToClaim;
-
-          if (!hasClaimed && nothingToClaim) {
-            return null;
+          }}
+          RewardsBadge={() => {
+            return (
+              <Badge
+                py={0.5}
+                px={1}
+                fontSize="2xs"
+                variant="gray"
+                mt={0.5}
+                w="fit-content"
+                fontWeight="700"
+              >
+                <InfoOutline color="gray.500" mb="1.75px" mr="2px" height="12px" width="12px" />
+                {t('staking-v2.earn.trading-fees.burned')}
+              </Badge>
+            );
+          }}
+          claimBtn={
+            <Button
+              w={['100%', '100%', '100%', '80px']}
+              variant="outline"
+              ml={[6, 6, 6, 4]}
+              fontFamily="heading"
+              fontSize="14px"
+              fontWeight="700"
+              onClick={() => setFeesModalOpen(true)}
+            >
+              More Info
+            </Button>
           }
-          return (
-            <Badge
-              py={0.5}
-              px={1}
-              fontSize="2xs"
-              variant={!onTarget ? 'warning' : hasClaimed ? 'gray' : 'success'}
-              mt={0.5}
-              w="fit-content"
-              fontWeight="700"
+        />
+        <Divider my={4} />
+        <RewardsItemUI
+          Icon={() => (
+            <Flex
+              bg="navy.900"
+              height="38px"
+              width="38px"
+              justifyContent="center"
+              alignItems="center"
+              borderRadius="full"
             >
-              {variant === 'warning' ||
-                (variant === 'error' && (
-                  <InfoOutline color="warning" mb="1.75px" mr="2px" height="12px" width="12px" />
-                ))}
-              {!onTarget
-                ? t('staking-v2.earn.badges.maintain')
-                : rewardsData?.hasClaimed
-                ? t('staking-v2.earn.badges.claimed')
-                : t('staking-v2.earn.badges.claimable')}
-            </Badge>
-          );
-        }}
-        claimBtn={
-          <ClaimRewardsBtn
-            variant={variant}
-            amountSNX={rewardsData?.snxRewards.toNumber()}
-            amountsUSD={rewardsData?.sUSDRewards.toNumber()}
-          />
-        }
-      />
-      <Divider my={4} />
-      <RewardsItemUI
-        Icon={() => (
-          <Flex
-            bg="navy.900"
-            height="38px"
-            width="38px"
-            justifyContent="center"
-            alignItems="center"
-            borderRadius="full"
-          >
-            <WreckedIcon height="34px" width="34px" />
-          </Flex>
-        )}
-        title={t('staking-v2.earn.liquidation-rewards.title')}
-        description={t('staking-v2.earn.liquidation-rewards.description')}
-        apyReturn={null}
-        endDate={null}
-        isLoading={isLoading}
-        RewardBalance={() => {
-          if (liquidationData?.liquidatorRewards.lt(0.01)) return <>-</>;
-          return <>{formatNumber(liquidationData?.liquidatorRewards?.toNumber() || 0)} SNX</>;
-        }}
-        RewardsBadge={() => {
-          const nothingToClaim = liquidationData?.liquidatorRewards.lt(0.01);
-          const hasClaimed = false; // TODO figure out a way to know if a user has ever claimed liq rewards
-          if (nothingToClaim && !hasClaimed) return null;
-          return (
-            <Badge
-              py={0.5}
-              px={1}
-              fontSize="2xs"
-              variant={hasClaimed ? 'gray' : 'success'}
-              mt={0.5}
-              w="fit-content"
-              fontWeight="700"
+              <StakingRewardsIcon height="34px" width="34px" />
+            </Flex>
+          )}
+          title={t('staking-v2.earn.staking-rewards.title')}
+          description={t('staking-v2.earn.staking-rewards.description')}
+          apyReturn={aprData !== undefined ? formatPercent(aprData.toNumber()) : ''}
+          endDate={feePoolData?.nextFeePeriodStartDate || null}
+          percentCompleted={percentEpochCompleted(
+            feePoolData?.nextFeePeriodStartDate,
+            feePoolData?.feePeriodDuration
+          )}
+          isLoading={isLoading}
+          RewardBalance={() => {
+            if (rewardsData?.hasClaimed) {
+              return null;
+            }
+            if (rewardsData?.nothingToClaim)
+              return (
+                <>
+                  <Text
+                    fontFamily="heading"
+                    fontSize="sm"
+                    fontWeight="700"
+                    lineHeight="5"
+                    color="whiteAlpha.900"
+                  >
+                    —
+                  </Text>
+                  <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
+                    —
+                  </Text>
+                </>
+              );
+            return (
+              <Flex flexDirection="column">
+                <span>{formatNumber(rewardsData?.sUSDRewards.toNumber() || 0)} sUSD</span>
+                <span>{formatNumber(rewardsData?.snxRewards.toNumber() || 0)} SNX</span>
+              </Flex>
+            );
+          }}
+          RewardsBadge={() => {
+            const onTarget = variant === 'success';
+            const hasClaimed = rewardsData?.hasClaimed;
+            const nothingToClaim = rewardsData?.nothingToClaim;
+
+            if (!hasClaimed && nothingToClaim) {
+              return null;
+            }
+            return (
+              <Badge
+                py={0.5}
+                px={1}
+                fontSize="2xs"
+                variant={!onTarget ? 'warning' : hasClaimed ? 'gray' : 'success'}
+                mt={0.5}
+                w="fit-content"
+                fontWeight="700"
+              >
+                {variant === 'warning' ||
+                  (variant === 'error' && (
+                    <InfoOutline color="warning" mb="1.75px" mr="2px" height="12px" width="12px" />
+                  ))}
+                {!onTarget
+                  ? t('staking-v2.earn.badges.maintain')
+                  : rewardsData?.hasClaimed
+                  ? t('staking-v2.earn.badges.claimed')
+                  : t('staking-v2.earn.badges.claimable')}
+              </Badge>
+            );
+          }}
+          claimBtn={
+            <ClaimRewardsBtn
+              variant={variant}
+              amountSNX={rewardsData?.snxRewards.toNumber()}
+              amountsUSD={rewardsData?.sUSDRewards.toNumber()}
+            />
+          }
+        />
+        <Divider my={4} />
+        <RewardsItemUI
+          Icon={() => (
+            <Flex
+              bg="navy.900"
+              height="38px"
+              width="38px"
+              justifyContent="center"
+              alignItems="center"
+              borderRadius="full"
             >
-              {hasClaimed
-                ? t('staking-v2.earn.badges.claimed')
-                : t('staking-v2.earn.badges.claimable')}
-            </Badge>
-          );
-        }}
-        claimBtn={<ClaimLiquidationBtn amountSNX={liquidationData?.liquidatorRewards.toNumber()} />}
-      />
-      <Divider my={4} />
-    </Box>
+              <WreckedIcon height="34px" width="34px" />
+            </Flex>
+          )}
+          title={t('staking-v2.earn.liquidation-rewards.title')}
+          description={t('staking-v2.earn.liquidation-rewards.description')}
+          apyReturn={null}
+          endDate={null}
+          isLoading={isLoading}
+          RewardBalance={() => {
+            if (liquidationData?.liquidatorRewards.lt(0.01)) return <>-</>;
+            return <>{formatNumber(liquidationData?.liquidatorRewards?.toNumber() || 0)} SNX</>;
+          }}
+          RewardsBadge={() => {
+            const nothingToClaim = liquidationData?.liquidatorRewards.lt(0.01);
+            const hasClaimed = false; // TODO figure out a way to know if a user has ever claimed liq rewards
+            if (nothingToClaim && !hasClaimed) return null;
+            return (
+              <Badge
+                py={0.5}
+                px={1}
+                fontSize="2xs"
+                variant={hasClaimed ? 'gray' : 'success'}
+                mt={0.5}
+                w="fit-content"
+                fontWeight="700"
+              >
+                {hasClaimed
+                  ? t('staking-v2.earn.badges.claimed')
+                  : t('staking-v2.earn.badges.claimable')}
+              </Badge>
+            );
+          }}
+          claimBtn={
+            <ClaimLiquidationBtn amountSNX={liquidationData?.liquidatorRewards.toNumber()} />
+          }
+        />
+        <Divider my={4} />
+      </Box>
+    </>
   );
 };
