@@ -15,6 +15,7 @@ import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 import { ORACLE_NODE_TYPES } from '../utils/constants';
 import { Node } from '../utils/types';
+import { oracleTypeFromTypeId } from '../utils/url';
 import { ChainLinkNode } from './ChainLinkNode';
 import { ExternalNode } from './ExternalNode';
 import { NodeFormModule } from './NodeFormModule';
@@ -36,6 +37,8 @@ const NODE_TYPES = {
 
 export const Chart: FC = () => {
   const toast = useToast();
+  const params = new URLSearchParams(window.location.search);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [nodes, setNodes] = useRecoilState(nodesState);
   const [nodeToUpdate, setNodeToUpdate] = useState<undefined | Node>(undefined);
@@ -104,20 +107,64 @@ export const Chart: FC = () => {
   };
 
   useEffect(() => {
-    nodes.forEach((node) => {
-      if (node.parents.length) {
-        node.parents.forEach((parent) => {
-          if (!edges.find((edge) => edge.source === parent)) {
-            setEdges((eds) => {
-              return addEdge(
-                { source: parent, target: node.id, sourceHandle: null, targetHandle: null },
-                eds
-              );
+    if (!!params.values().next().value) {
+      const stateObject: Partial<{
+        tid: string;
+        id: string;
+        loc: string;
+        pam: string;
+        par: string;
+      }> = Object.fromEntries(params.entries());
+      const typeIds: number[] = JSON.parse(stateObject?.tid || '[]');
+      const ids: string[] = JSON.parse(stateObject?.id || '[]');
+      const locations: { x: string; y: string }[] = JSON.parse(stateObject?.loc || '[]');
+      const parameters: any[][] = JSON.parse(stateObject?.pam || '[]');
+      const parents: string[][] = JSON.parse(stateObject?.par || '[]');
+
+      setNodes(() => {
+        const newState = typeIds.map((id, index) => ({
+          id: ids[index],
+          typeId: id,
+          position: { x: Number(locations[index].x), y: Number(locations[index].y) },
+          parameters: parameters[index],
+          parents: parents[index],
+          data: { label: '?' },
+          source: '',
+          target: '',
+          type: oracleTypeFromTypeId(id),
+        }));
+        newState.forEach((node) => {
+          if (node.parents.length) {
+            node.parents.forEach((parent) => {
+              if (!edges.find((edge) => edge.source === parent)) {
+                setEdges((eds) => {
+                  return addEdge(
+                    { source: parent, target: node.id, sourceHandle: null, targetHandle: null },
+                    eds
+                  );
+                });
+              }
             });
           }
         });
-      }
-    });
+        return newState;
+      });
+    } else {
+      nodes.forEach((node) => {
+        if (node.parents.length) {
+          node.parents.forEach((parent) => {
+            if (!edges.find((edge) => edge.source === parent)) {
+              setEdges((eds) => {
+                return addEdge(
+                  { source: parent, target: node.id, sourceHandle: null, targetHandle: null },
+                  eds
+                );
+              });
+            }
+          });
+        }
+      });
+    }
   }, []);
   console.log(nodes);
   return (

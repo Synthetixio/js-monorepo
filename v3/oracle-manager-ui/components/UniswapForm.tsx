@@ -11,7 +11,7 @@ export const UniswapForm: FC<{
   secondsAgo: number;
   node?: Node;
   getValuesFromForm: (tokenOne: string, tokenTwo: string, pool: string, secondsAgo: number) => void;
-}> = ({ tokenOne, tokenTwo, pool, secondsAgo, getValuesFromForm, node }) => {
+}> = ({ tokenOne, tokenTwo, pool, secondsAgo, getValuesFromForm }) => {
   const { register, watch, getValues } = useForm({
     defaultValues: { tokenOne, tokenTwo, pool, secondsAgo },
   });

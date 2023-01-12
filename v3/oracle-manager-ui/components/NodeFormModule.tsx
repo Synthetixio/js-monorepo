@@ -40,6 +40,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
       nodeLabel: node?.data.label || '',
     },
   });
+
   const [nodes, setNodes] = useRecoilState(nodesState);
   const toast = useToast();
   useEffect(() => {

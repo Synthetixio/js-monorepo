@@ -3,6 +3,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { FC } from 'react';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
+import { convertStateToQueryParam } from '../utils/url';
 import { NodeFormModule } from './NodeFormModule';
 
 export const Header: FC = () => {
@@ -18,6 +19,9 @@ export const Header: FC = () => {
             onClick={() => localStorage.setItem('oracleManagerUI', JSON.stringify(nodes))}
           >
             Save
+          </Button>
+          <Button variant="outline" onClick={() => convertStateToQueryParam(nodes)}>
+            Share State
           </Button>
           <Button onClick={onOpen}>Add Node</Button>
           <ConnectButton />
