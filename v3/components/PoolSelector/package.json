@@ -8,6 +8,6 @@
     "@chakra-ui/react": "^2.2.8",
     "@snx-v3/usePools": "workspace:*",
     "react": "^18.2.0",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.6.2"
   }
 }
