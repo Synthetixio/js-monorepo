@@ -5,7 +5,6 @@ import { DefaultLayout } from './layouts/Default';
 import { Home } from './pages/home';
 import { Deposit } from './pages/deposit';
 import {
-  Account,
   CreateAccount,
   Settings,
   Collateral,
