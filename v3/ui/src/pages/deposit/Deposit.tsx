@@ -4,7 +4,7 @@ import { usePreferredPool } from '@snx-v3/usePreferredPool';
 import { useParams } from '@snx-v3/useParams';
 import { FC } from 'react';
 import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
-import { DepositForm } from '../../components/accounts/Deposit/DepositForm';
+import { Deposit } from '../../components/accounts/Deposit/Deposit';
 
 const DepositUi: FC<{
   activeCollateralType: CollateralType;
@@ -48,7 +48,7 @@ const DepositUi: FC<{
           </Heading>
           {
             preferredPool ? (
-              <DepositForm
+              <Deposit
                 poolId={preferredPool.id}
                 accountId={accountId}
                 activeCollateralType={activeCollateralType}

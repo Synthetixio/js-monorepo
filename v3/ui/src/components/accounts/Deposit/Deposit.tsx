@@ -1,57 +1,55 @@
 import { Box, Button, Flex, Input, Text } from '@chakra-ui/react';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
+import { usePreferredPool } from '@snx-v3/usePreferredPool';
+import { useIsConnected } from '@snx-v3/useBlockchain';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
-import { useDeposit } from '../../../hooks/useDeposit';
-import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { CollateralTypeSelector } from '@snx-v3/CollateralTypeSelector';
-import { useCallback, useState, FormEvent, useRef } from 'react';
+import { FormEvent, useCallback, useRef, useState } from 'react';
 import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
 import { wei } from '@synthetixio/wei';
 import { numberWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
 import { Amount } from '@snx-v3/Amount';
+import { useParams } from '@snx-v3/useParams';
+import { DepositModal } from './DepositModal';
 
-export function DepositForm({
-  accountId,
-  poolId,
-  activeCollateralType,
-  onSuccess,
-}: {
-  accountId?: string;
-  onSuccess?: () => void;
-  poolId: string;
-  activeCollateralType: CollateralType;
-}) {
+export function Deposit() {
+  const { data: collateralTypes } = useCollateralTypes();
+  const { data: preferredPool } = usePreferredPool();
+  const isConnected = useIsConnected();
+  const { openConnectModal } = useConnectModal();
+
+  const params = useParams();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
   const [amount, setAmount] = useState('');
   const [activeBadge, setActiveBadge] = useState(0);
 
-  const balanceData = useTokenBalance(activeCollateralType.tokenAddress);
+  const balanceData = useTokenBalance(collateralTypes?.[0]?.tokenAddress);
 
-  const { isLoading, multiTxn, createAccount } = useDeposit({
-    accountId,
-    liquidityPositions: {},
-    amount,
-    selectedCollateralType: activeCollateralType,
-    selectedPoolId: poolId,
-    poolId: poolId,
-    isWrappedEth: activeCollateralType?.symbol === 'WETH',
-    onSuccess: async () => {
-      await balanceData.refetch();
-      onSuccess?.();
-    },
-  });
+  const [isOpenDeposit, setIsOpenDeposit] = useState(false);
+  const onSubmit = useCallback(async (e: FormEvent) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    if (form.reportValidity()) {
+      setIsOpenDeposit(true);
+    }
+  }, []);
 
-  const onSubmit = useCallback(
-    async (e: FormEvent) => {
-      e.preventDefault();
-      const form = e.target as HTMLFormElement;
-      if (form.reportValidity()) {
-        await createAccount();
-      }
-    },
-    [createAccount]
-  );
+  if (!isConnected) {
+    return (
+      <Box textAlign="center">
+        <Button size="lg" px="8" onClick={() => openConnectModal && openConnectModal()}>
+          Connect Wallet
+        </Button>
+      </Box>
+    );
+  }
+
+  if (!preferredPool || !collateralTypes || !collateralTypes.length) {
+    return null;
+  }
 
   return (
     <>
@@ -59,9 +57,9 @@ export function DepositForm({
         <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2}>
           <Flex justifyContent="space-between">
             <CollateralTypeSelector
-              collateralType={activeCollateralType}
+              collateralType={collateralTypes[0]}
               setCollateralType={(newCollateralType) => {
-                if (newCollateralType.symbol === activeCollateralType.symbol) return;
+                if (newCollateralType.symbol === collateralTypes[0].symbol) return;
                 setActiveBadge(0);
                 setAmount('');
                 inputRef.current?.focus();
@@ -70,7 +68,9 @@ export function DepositForm({
                     poolId: poolId,
                     collateralSymbol: newCollateralType.symbol,
                   }),
-                  search: accountId ? createSearchParams({ accountId }).toString() : '',
+                  search: params.accountId
+                    ? createSearchParams({ accountId: params.accountId }).toString()
+                    : '',
                 });
               }}
             />
@@ -144,17 +144,18 @@ export function DepositForm({
             activeBadge={activeBadge}
           />
         </Box>
-        <Button
-          mt={4}
-          size="sm"
-          isLoading={multiTxn.status === 'pending' || isLoading}
-          px="8"
-          type="submit"
-          w="full"
-        >
+        <Button disabled={isOpenDeposit} mt={4} size="sm" px="8" type="submit" w="full">
           Deposit Collateral
         </Button>
       </Box>
+
+      <DepositModal
+        amount={amount}
+        poolId={poolId}
+        collateralType={collateralTypes[0]}
+        isOpen={isOpenDeposit}
+        setIsOpen={setIsOpenDeposit}
+      />
     </>
   );
 }
