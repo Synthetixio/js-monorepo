@@ -7,7 +7,7 @@ const prettier = require('prettier');
 const { runTypeChain } = require('typechain');
 
 // We don't want to expose internal modules and should only interact with Proxy contracts
-const CONTRACTS_WHITELIST = ['AccountProxy', 'CoreProxy', 'USDProxy'];
+const CONTRACTS_WHITELIST = ['AccountProxy', 'CoreProxy', 'USDProxy', 'oracle_manager.Proxy'];
 
 async function prepareContracts(network) {
   const deployments = path.join(__dirname, 'deployments', network);
