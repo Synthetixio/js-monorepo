@@ -22,6 +22,7 @@ export const RewardsDistributorTitle: FC<{
   const [isLoading, setIsLoading] = useState(false);
 
   const { data: rewardToken } = useContractRead({
+    // @ts-ignore
     address: distributor,
     abi: snxReward?.abi,
     functionName: 'token',
