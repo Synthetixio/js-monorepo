@@ -163,6 +163,7 @@ export function DepositModal({
       });
     },
   });
+  console.log(`collateralType`, collateralType);
 
   const {
     approve,
@@ -217,6 +218,7 @@ export function DepositModal({
       } catch (e) {
         console.error(e);
         setFailed(true);
+        setProcessing(false);
         return;
       }
     }
@@ -227,6 +229,7 @@ export function DepositModal({
     } catch (e) {
       console.error(e);
       setFailed(true);
+      setProcessing(false);
       return;
     }
 
@@ -243,7 +246,18 @@ export function DepositModal({
   ]);
 
   return (
-    <Modal size="lg" isOpen={isOpen} onClose={() => setIsOpen(false)} closeOnOverlayClick={false}>
+    <Modal
+      size="lg"
+      isOpen={isOpen}
+      onClose={() => {
+        setStep(0);
+        setCompleted(false);
+        setFailed(false);
+        setProcessing(false);
+        setIsOpen(false);
+      }}
+      closeOnOverlayClick={false}
+    >
       <ModalOverlay />
       <ModalContent bg="black" color="white">
         <ModalHeader>Complete this action</ModalHeader>

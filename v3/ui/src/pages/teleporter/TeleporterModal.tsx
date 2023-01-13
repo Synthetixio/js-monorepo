@@ -112,6 +112,7 @@ export function TeleporterModal({
       } catch (e) {
         console.error(e);
         setFailed(true);
+        setProcessing(false);
         return;
       }
     }
@@ -136,6 +137,7 @@ export function TeleporterModal({
     } catch (e) {
       console.error(e);
       setFailed(true);
+      setProcessing(false);
       return;
     }
 
@@ -155,7 +157,18 @@ export function TeleporterModal({
   ]);
 
   return (
-    <Modal size="lg" isOpen={isOpen} onClose={() => setIsOpen(false)} closeOnOverlayClick={false}>
+    <Modal
+      size="lg"
+      isOpen={isOpen}
+      onClose={() => {
+        setStep(0);
+        setCompleted(false);
+        setFailed(false);
+        setProcessing(false);
+        setIsOpen(false);
+      }}
+      closeOnOverlayClick={false}
+    >
       <ModalOverlay />
       <ModalContent bg="black" color="white">
         <ModalHeader>Complete this action</ModalHeader>
