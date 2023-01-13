@@ -308,6 +308,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/core@npm:^7.19.3":
+  version: 7.20.12
+  resolution: "@babel/core@npm:7.20.12"
+  dependencies:
+    "@ampproject/remapping": ^2.1.0
+    "@babel/code-frame": ^7.18.6
+    "@babel/generator": ^7.20.7
+    "@babel/helper-compilation-targets": ^7.20.7
+    "@babel/helper-module-transforms": ^7.20.11
+    "@babel/helpers": ^7.20.7
+    "@babel/parser": ^7.20.7
+    "@babel/template": ^7.20.7
+    "@babel/traverse": ^7.20.12
+    "@babel/types": ^7.20.7
+    convert-source-map: ^1.7.0
+    debug: ^4.1.0
+    gensync: ^1.0.0-beta.2
+    json5: ^2.2.2
+    semver: ^6.3.0
+  checksum: 62e6c3e2149a70b5c9729ef5f0d3e2e97e9dcde89fc039c8d8e3463d5d7ba9b29ee84d10faf79b61532ac1645aa62f2bd42338320617e6e3a8a4d8e2a27076e7
+  languageName: node
+  linkType: hard
+
 "@babel/generator@npm:^7.12.11, @babel/generator@npm:^7.12.5, @babel/generator@npm:^7.14.0, @babel/generator@npm:^7.18.13, @babel/generator@npm:^7.18.7, @babel/generator@npm:^7.20.7, @babel/generator@npm:^7.7.2":
   version: 7.20.7
   resolution: "@babel/generator@npm:7.20.7"
@@ -1513,7 +1536,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-runtime@npm:^7.18.6, @babel/plugin-transform-runtime@npm:^7.19.6, @babel/plugin-transform-runtime@npm:^7.5.5":
+"@babel/plugin-transform-runtime@npm:^7.18.6, @babel/plugin-transform-runtime@npm:^7.19.1, @babel/plugin-transform-runtime@npm:^7.19.6, @babel/plugin-transform-runtime@npm:^7.5.5":
   version: 7.19.6
   resolution: "@babel/plugin-transform-runtime@npm:7.19.6"
   dependencies:
@@ -1778,7 +1801,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime-corejs3@npm:^7.10.2, @babel/runtime-corejs3@npm:^7.18.6, @babel/runtime-corejs3@npm:^7.20.7":
+"@babel/runtime-corejs3@npm:^7.10.2, @babel/runtime-corejs3@npm:^7.18.6, @babel/runtime-corejs3@npm:^7.19.4, @babel/runtime-corejs3@npm:^7.20.7":
   version: 7.20.7
   resolution: "@babel/runtime-corejs3@npm:7.20.7"
   dependencies:
@@ -1850,6 +1873,24 @@ __metadata:
     debug: ^4.1.0
     globals: ^11.1.0
   checksum: 8e36dfc76b8f7aafa01b98130c0257e3148eb7132e4b599be565bddae5faec7e20a0f92786a829a8d962a0bf5652fe0019cadd85716d70d140785dec640ff6f7
+  languageName: node
+  linkType: hard
+
+"@babel/traverse@npm:^7.20.12":
+  version: 7.20.12
+  resolution: "@babel/traverse@npm:7.20.12"
+  dependencies:
+    "@babel/code-frame": ^7.18.6
+    "@babel/generator": ^7.20.7
+    "@babel/helper-environment-visitor": ^7.18.9
+    "@babel/helper-function-name": ^7.19.0
+    "@babel/helper-hoist-variables": ^7.18.6
+    "@babel/helper-split-export-declaration": ^7.18.6
+    "@babel/parser": ^7.20.7
+    "@babel/types": ^7.20.7
+    debug: ^4.1.0
+    globals: ^11.1.0
+  checksum: d758b355ab4f1e87984524b67785fa23d74e8a45d2ceb8bcf4d5b2b0cd15ee160db5e68c7078808542805774ca3802e2eafb1b9638afa4cd7f9ecabd0ca7fd56
   languageName: node
   linkType: hard
 
@@ -3078,31 +3119,6 @@ __metadata:
   linkType: hard
 
 "@coinbase/wallet-sdk@npm:^3.0.5, @coinbase/wallet-sdk@npm:^3.5.4, @coinbase/wallet-sdk@npm:^3.6.0":
-  version: 3.6.3
-  resolution: "@coinbase/wallet-sdk@npm:3.6.3"
-  dependencies:
-    "@metamask/safe-event-emitter": 2.0.0
-    "@solana/web3.js": ^1.70.1
-    bind-decorator: ^1.0.11
-    bn.js: ^5.1.1
-    buffer: ^6.0.3
-    clsx: ^1.1.0
-    eth-block-tracker: 4.4.3
-    eth-json-rpc-filters: 4.2.2
-    eth-rpc-errors: 4.0.2
-    json-rpc-engine: 6.1.0
-    keccak: ^3.0.1
-    preact: ^10.5.9
-    qs: ^6.10.3
-    rxjs: ^6.6.3
-    sha.js: ^2.4.11
-    stream-browserify: ^3.0.0
-    util: ^0.12.4
-  checksum: f2ffd553f64ced32b9e9cf7fd2ec5708a5a8a4c4e5726787d3499db50cc135912c8565ec3c349b716ad8e9c7efeea682a265ffc365c78074a81345d35347621d
-  languageName: node
-  linkType: hard
-
-"@coinbase/wallet-sdk@npm:^3.5.4, @coinbase/wallet-sdk@npm:^3.6.0":
   version: 3.6.3
   resolution: "@coinbase/wallet-sdk@npm:3.6.3"
   dependencies:
@@ -6210,7 +6226,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.10, @pmmmwh/react-refresh-webpack-plugin@npm:^0.5.3":
+"@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.10, @pmmmwh/react-refresh-webpack-plugin@npm:^0.5.3, @pmmmwh/react-refresh-webpack-plugin@npm:^0.5.7":
   version: 0.5.10
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.10"
   dependencies:
@@ -6387,25 +6403,6 @@ __metadata:
   version: 1.1.0
   resolution: "@protobufjs/utf8@npm:1.1.0"
   checksum: f9bf3163d13aaa3b6f5e6fbf37a116e094ea021c0e1f2a7ccd0e12a29e2ce08dafba4e8b36e13f8ed7397e1591610ce880ed1289af4d66cf4ace8a36a9557278
-  languageName: node
-  linkType: hard
-
-"@rainbow-me/rainbowkit@npm:^0.8.1":
-  version: 0.8.1
-  resolution: "@rainbow-me/rainbowkit@npm:0.8.1"
-  dependencies:
-    "@vanilla-extract/css": 1.9.1
-    "@vanilla-extract/dynamic": 2.0.2
-    "@vanilla-extract/sprinkles": 1.5.0
-    clsx: 1.1.1
-    qrcode: 1.5.0
-    react-remove-scroll: 2.5.4
-  peerDependencies:
-    ethers: ">=5.5.1"
-    react: ">=17"
-    react-dom: ">=17"
-    wagmi: 0.9.x
-  checksum: dfc0898094815c0f3517076354b7b32a70dd1bb82973bc024c63710bb79cd84b49da1dd5f7623caa09c03944b9cf5792ed3f20941408cd07895a75279ec62d50
   languageName: node
   linkType: hard
 
@@ -8273,30 +8270,6 @@ __metadata:
   linkType: hard
 
 "@solana/web3.js@npm:^1.70.1":
-  version: 1.70.2
-  resolution: "@solana/web3.js@npm:1.70.2"
-  dependencies:
-    "@babel/runtime": ^7.12.5
-    "@noble/ed25519": ^1.7.0
-    "@noble/hashes": ^1.1.2
-    "@noble/secp256k1": ^1.6.3
-    "@solana/buffer-layout": ^4.0.0
-    agentkeepalive: ^4.2.1
-    bigint-buffer: ^1.1.5
-    bn.js: ^5.0.0
-    borsh: ^0.7.0
-    bs58: ^4.0.1
-    buffer: 6.0.1
-    fast-stable-stringify: ^1.0.0
-    jayson: ^3.4.4
-    node-fetch: 2
-    rpc-websockets: ^7.5.0
-    superstruct: ^0.14.2
-  checksum: 37eedbd8358eea0f2f4017703f0dff097a0616a5e315dab7c37c6178c945b6e95b9a7238671e06491172c64fd74e8f2bd1735b783c00ca0104a015ce756d7c53
-  languageName: node
-  linkType: hard
-
-"@solana/web3.js@npm:^1.70.1":
   version: 1.73.0
   resolution: "@solana/web3.js@npm:1.73.0"
   dependencies:
@@ -8490,9 +8463,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-actions@npm:6.5.10, @storybook/addon-actions@npm:^6.5.10":
-  version: 6.5.10
-  resolution: "@storybook/addon-actions@npm:6.5.10"
+"@storybook/addon-actions@npm:6.5.15, @storybook/addon-actions@npm:^6.5.15":
+  version: 6.5.15
+  resolution: "@storybook/addon-actions@npm:6.5.15"
   dependencies:
     "@storybook/addons": 6.5.15
     "@storybook/api": 6.5.15
@@ -10668,26 +10641,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.3.4":
-  version: 4.3.4
-  resolution: "@tanstack/query-core@npm:4.3.4"
-  checksum: d8cbe18a297114a0e63f3a9bbf0885d8f0a9ff081edf79cc98c59ca555511bfc824dc82da82826dcb870c076224ead1a4420bea505ae10baf406b6400bf1b46d
-  languageName: node
-  linkType: hard
-
 "@tanstack/query-persist-client-core@npm:4.20.4":
   version: 4.20.4
   resolution: "@tanstack/query-persist-client-core@npm:4.20.4"
   peerDependencies:
     "@tanstack/query-core": 4.20.4
   checksum: f242b9e44a4fc8a647b8ac7bf19f3f570183940cba187d65a7a908743c5e617042ce46a000a4ecbcaf3ba75b6b6d4934a280c7b40340518eec6243dfb2da5faf
-  languageName: node
-  linkType: hard
-
-"@tanstack/query-sync-storage-persister@npm:^4.0.10":
-  version: 4.0.10
-  resolution: "@tanstack/query-sync-storage-persister@npm:4.0.10"
-  checksum: 03835595780386a15caf6e884682b8cb8d0a02a6d071dcb1b0c8fa9fa6e0dc4827cbdc7f328aa7e52ed800297312db81eb61ab83dc8c06c40a3a96bb92fb6fce
   languageName: node
   linkType: hard
 
@@ -10725,20 +10684,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query-persist-client@npm:^4.14.5":
+"@tanstack/react-query@npm:^4.14.5":
   version: 4.20.4
-  resolution: "@tanstack/react-query-persist-client@npm:4.20.4"
-  dependencies:
-    "@tanstack/query-persist-client-core": 4.20.4
-  peerDependencies:
-    "@tanstack/react-query": 4.20.4
-  checksum: 37a3ffb1bad2a252f2aec7e6abe7c7ee3a23ea4679dc797bec395a7357fc59561c18bbd6a4d2a9a952f3ac50f979db5464169318ce84e30276460e2058939c90
-  languageName: node
-  linkType: hard
-
-"@tanstack/react-query@npm:^4.0.10, @tanstack/react-query@npm:^4.3.4":
-  version: 4.3.4
-  resolution: "@tanstack/react-query@npm:4.3.4"
+  resolution: "@tanstack/react-query@npm:4.20.4"
   dependencies:
     "@tanstack/query-core": 4.20.4
     use-sync-external-store: ^1.2.0
@@ -10755,9 +10703,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^4.14.5":
-  version: 4.20.4
-  resolution: "@tanstack/react-query@npm:4.20.4"
+"@tanstack/react-query@npm:^4.3.4":
+  version: 4.3.4
+  resolution: "@tanstack/react-query@npm:4.3.4"
   dependencies:
     "@tanstack/query-core": 4.20.4
     use-sync-external-store: ^1.2.0
@@ -12091,7 +12039,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.26":
+"@types/react@npm:*, @types/react@npm:^18.0.18, @types/react@npm:^18.0.26":
   version: 18.0.26
   resolution: "@types/react@npm:18.0.26"
   dependencies:
@@ -12820,6 +12768,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wagmi/chains@npm:^0.1.5":
+  version: 0.1.9
+  resolution: "@wagmi/chains@npm:0.1.9"
+  checksum: da2dcfccb105cebe0b6c58604adffaa99c6a9179782716d0be8ff0c4eeb6a88d23f4e09c22bdb85e0157fdbe7baea3c4244e582cc4512f98527c3432eadc5f36
+  languageName: node
+  linkType: hard
+
+"@wagmi/connectors@npm:0.1.2":
+  version: 0.1.2
+  resolution: "@wagmi/connectors@npm:0.1.2"
+  dependencies:
+    "@coinbase/wallet-sdk": ^3.5.4
+    "@ledgerhq/connect-kit-loader": ^1.0.1
+    "@walletconnect/ethereum-provider": ^1.8.0
+    abitype: ^0.1.8
+    eventemitter3: ^4.0.7
+  peerDependencies:
+    "@wagmi/core": 0.8.x
+    ethers: ^5.0.0
+  peerDependenciesMeta:
+    "@wagmi/core":
+      optional: true
+  checksum: 4819cc494f15b4b3dd6e8e57b597121dda8193f39f321ece1a498a50e5e6f97d7addb03f80c8d00545bb5bc0a5c5516369c5d2d875bce05f13e8c1c4e0a267aa
+  languageName: node
+  linkType: hard
+
 "@wagmi/connectors@npm:0.1.3":
   version: 0.1.3
   resolution: "@wagmi/connectors@npm:0.1.3"
@@ -12838,47 +12812,6 @@ __metadata:
     "@wagmi/core":
       optional: true
   checksum: d3d204784fefc7bb12b4fdfffd0c676d2855ca10724bd84c821b8cd77c1e16cfdd320c267f98e73145e6b8ec7e4044024c535634e668b4ccfb768d7c78089b55
-  languageName: node
-  linkType: hard
-
-"@wagmi/core@npm:0.8.9":
-  version: 0.8.9
-  resolution: "@wagmi/core@npm:0.8.9"
-  dependencies:
-    "@wagmi/chains": 0.1.7
-    "@wagmi/connectors": 0.1.3
-    abitype: ^0.2.5
-    eventemitter3: ^4.0.7
-    zustand: ^4.1.4
-  peerDependencies:
-    "@coinbase/wallet-sdk": ">=3.6.0"
-    "@walletconnect/ethereum-provider": ">=1.7.5"
-    ethers: ">=5.5.1"
-  peerDependenciesMeta:
-    "@coinbase/wallet-sdk":
-      optional: true
-    "@walletconnect/ethereum-provider":
-      optional: true
-  checksum: 6c023554fcc62aec63ba0c17f321a86f95ba3d2b0b083b7b9a3f09b3532251e04b0a5dfac5fb34efaab0a2848736179db5e7733fd900eeb97fc4739b10d851a6
-  languageName: node
-  linkType: hard
-
-"@wagmi/core@npm:^0.5.3":
-  version: 0.5.3
-  resolution: "@wagmi/core@npm:0.5.3"
-  dependencies:
-    "@coinbase/wallet-sdk": ^3.5.4
-    "@ledgerhq/connect-kit-loader": ^1.0.1
-    "@walletconnect/ethereum-provider": ^1.8.0
-    abitype: ^0.1.8
-    eventemitter3: ^4.0.7
-  peerDependencies:
-    "@wagmi/core": 0.8.x
-    ethers: ^5.0.0
-  peerDependenciesMeta:
-    "@wagmi/core":
-      optional: true
-  checksum: 4819cc494f15b4b3dd6e8e57b597121dda8193f39f321ece1a498a50e5e6f97d7addb03f80c8d00545bb5bc0a5c5516369c5d2d875bce05f13e8c1c4e0a267aa
   languageName: node
   linkType: hard
 
@@ -12901,6 +12834,28 @@ __metadata:
     "@walletconnect/ethereum-provider":
       optional: true
   checksum: 8149056bacbb0fe4b8152d5dac5ba8c0073f51ab9dc1c6c344e6960e2dd86ec39a3a90163a7df1fc2878dabccabd8cebdea109da8ea9a649159daf33636a2beb
+  languageName: node
+  linkType: hard
+
+"@wagmi/core@npm:0.8.9":
+  version: 0.8.9
+  resolution: "@wagmi/core@npm:0.8.9"
+  dependencies:
+    "@wagmi/chains": 0.1.7
+    "@wagmi/connectors": 0.1.3
+    abitype: ^0.2.5
+    eventemitter3: ^4.0.7
+    zustand: ^4.1.4
+  peerDependencies:
+    "@coinbase/wallet-sdk": ">=3.6.0"
+    "@walletconnect/ethereum-provider": ">=1.7.5"
+    ethers: ">=5.5.1"
+  peerDependenciesMeta:
+    "@coinbase/wallet-sdk":
+      optional: true
+    "@walletconnect/ethereum-provider":
+      optional: true
+  checksum: 6c023554fcc62aec63ba0c17f321a86f95ba3d2b0b083b7b9a3f09b3532251e04b0a5dfac5fb34efaab0a2848736179db5e7733fd900eeb97fc4739b10d851a6
   languageName: node
   linkType: hard
 
@@ -13003,7 +12958,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/ethereum-provider@npm:^1.7.8, @walletconnect/ethereum-provider@npm:^1.8.0":
+"@walletconnect/ethereum-provider@npm:^1.8.0":
   version: 1.8.0
   resolution: "@walletconnect/ethereum-provider@npm:1.8.0"
   dependencies:
@@ -13900,6 +13855,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@webpack-cli/configtest@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@webpack-cli/configtest@npm:1.2.0"
+  peerDependencies:
+    webpack: 4.x.x || 5.x.x
+    webpack-cli: 4.x.x
+  checksum: a2726cd9ec601d2b57e5fc15e0ebf5200a8892065e735911269ac2038e62be4bfc176ea1f88c2c46ff09b4d05d4c10ae045e87b3679372483d47da625a327e28
+  languageName: node
+  linkType: hard
+
 "@webpack-cli/configtest@npm:^2.0.1":
   version: 2.0.1
   resolution: "@webpack-cli/configtest@npm:2.0.1"
@@ -13910,6 +13875,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@webpack-cli/info@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "@webpack-cli/info@npm:1.5.0"
+  dependencies:
+    envinfo: ^7.7.3
+  peerDependencies:
+    webpack-cli: 4.x.x
+  checksum: 7f56fe037cd7d1fd5c7428588519fbf04a0cad33925ee4202ffbafd00f8ec1f2f67d991245e687d50e0f3e23f7b7814273d56cb9f7da4b05eed47c8d815c6296
+  languageName: node
+  linkType: hard
+
 "@webpack-cli/info@npm:^2.0.1":
   version: 2.0.1
   resolution: "@webpack-cli/info@npm:2.0.1"
@@ -13917,6 +13893,18 @@ __metadata:
     webpack: 5.x.x
     webpack-cli: 5.x.x
   checksum: b8fba49fee10d297c2affb0b064c9a81e9038d75517c6728fb85f9fb254cae634e5d33e696dac5171e6944ae329d85fddac72f781c7d833f7e9dfe43151ce60d
+  languageName: node
+  linkType: hard
+
+"@webpack-cli/serve@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@webpack-cli/serve@npm:1.7.0"
+  peerDependencies:
+    webpack-cli: 4.x.x
+  peerDependenciesMeta:
+    webpack-dev-server:
+      optional: true
+  checksum: d475e8effa23eb7ff9a48b14d4de425989fd82f906ce71c210921cc3852327c22873be00c35e181a25a6bd03d424ae2b83e7f3b3f410ac7ee31b128ab4ac7713
   languageName: node
   linkType: hard
 
@@ -18172,7 +18160,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^7.2.0":
+"commander@npm:^7.0.0, commander@npm:^7.2.0":
   version: 7.2.0
   resolution: "commander@npm:7.2.0"
   checksum: 53501cbeee61d5157546c0bef0fedb6cdfc763a882136284bed9a07225f09a14b82d2a84e7637edfd1a679fb35ed9502fd58ef1d091e6287f60d790147f68ddc
@@ -27112,7 +27100,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^29.3.1":
+"jest@npm:^29.1.2, jest@npm:^29.3.1":
   version: 29.3.1
   resolution: "jest@npm:29.3.1"
   dependencies:
@@ -27519,6 +27507,15 @@ __metadata:
   bin:
     json5: lib/cli.js
   checksum: 74b8a23b102a6f2bf2d224797ae553a75488b5adbaee9c9b6e5ab8b510a2fc6e38f876d4c77dea672d4014a44b2399e15f2051ac2b37b87f74c0c7602003543b
+  languageName: node
+  linkType: hard
+
+"json5@npm:^2.2.2":
+  version: 2.2.3
+  resolution: "json5@npm:2.2.3"
+  bin:
+    json5: lib/cli.js
+  checksum: 2a7436a93393830bce797d4626275152e37e877b265e94ca69c99e3d20c2b9dab021279146a39cdb700e71b2dd32a4cebd1514cd57cee102b1af906ce5040349
   languageName: node
   linkType: hard
 
@@ -33097,15 +33094,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.34.0":
-  version: 7.34.0
-  resolution: "react-hook-form@npm:7.34.0"
-  peerDependencies:
-    react: ^16.8.0 || ^17 || ^18
-  checksum: 2b4a6f6ca5b3f729b88aa14a1a8c47ba86405d9c5fef2560b1dc85ac6fe1b105326571b8e1e857f8d8f3449636062d2d6201809918b5bb37f6f8f0b9c6cd6e2c
-  languageName: node
-  linkType: hard
-
 "react-hook-form@npm:^7.41.5":
   version: 7.41.5
   resolution: "react-hook-form@npm:7.41.5"
@@ -33854,6 +33842,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rechoir@npm:^0.7.0":
+  version: 0.7.1
+  resolution: "rechoir@npm:0.7.1"
+  dependencies:
+    resolve: ^1.9.0
+  checksum: 2a04aab4e28c05fcd6ee6768446bc8b859d8f108e71fc7f5bcbc5ef25e53330ce2c11d10f82a24591a2df4c49c4f61feabe1fd11f844c66feedd4cd7bb61146a
+  languageName: node
+  linkType: hard
+
 "rechoir@npm:^0.8.0":
   version: 0.8.0
   resolution: "rechoir@npm:0.8.0"
@@ -34509,7 +34506,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@npm:^1.1.6, resolve@npm:^1.10.0, resolve@npm:^1.10.1, resolve@npm:^1.13.1, resolve@npm:^1.14.2, resolve@npm:^1.18.1, resolve@npm:^1.19.0, resolve@npm:^1.20.0, resolve@npm:^1.22.0, resolve@npm:^1.3.2, resolve@npm:~1.22.0":
+"resolve@npm:^1.1.6, resolve@npm:^1.10.0, resolve@npm:^1.10.1, resolve@npm:^1.13.1, resolve@npm:^1.14.2, resolve@npm:^1.18.1, resolve@npm:^1.19.0, resolve@npm:^1.20.0, resolve@npm:^1.22.0, resolve@npm:^1.3.2, resolve@npm:^1.9.0, resolve@npm:~1.22.0":
   version: 1.22.1
   resolution: "resolve@npm:1.22.1"
   dependencies:
@@ -34535,7 +34532,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.1.6#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.13.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.18.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.19.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.3.2#~builtin<compat/resolve>, resolve@patch:resolve@~1.22.0#~builtin<compat/resolve>":
+"resolve@patch:resolve@^1.1.6#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.13.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.18.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.19.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.3.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.9.0#~builtin<compat/resolve>, resolve@patch:resolve@~1.22.0#~builtin<compat/resolve>":
   version: 1.22.1
   resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=07638b"
   dependencies:
@@ -34718,7 +34715,7 @@ __metadata:
     jest-junit: ^15.0.0
     lint-staged: ^13.1.0
     nyc: ^15.1.0
-    prettier: ^2.7.1
+    prettier: ^2.8.1
     react-hook-form: ^7.41.5
     typescript: ^4.9.4
   languageName: unknown
@@ -38773,9 +38770,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wagmi@npm:^0.6.3":
-  version: 0.6.3
-  resolution: "wagmi@npm:0.6.3"
+"wagmi@npm:^0.9.6":
+  version: 0.9.6
+  resolution: "wagmi@npm:0.9.6"
   dependencies:
     "@coinbase/wallet-sdk": ^3.6.0
     "@tanstack/query-sync-storage-persister": ^4.14.5
@@ -39205,7 +39202,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-bundle-analyzer@npm:^4.5.0, webpack-bundle-analyzer@npm:^4.7.0":
+"webpack-bundle-analyzer@npm:^4.5.0, webpack-bundle-analyzer@npm:^4.6.1, webpack-bundle-analyzer@npm:^4.7.0":
   version: 4.7.0
   resolution: "webpack-bundle-analyzer@npm:4.7.0"
   dependencies:
@@ -39221,6 +39218,39 @@ __metadata:
   bin:
     webpack-bundle-analyzer: lib/bin/analyzer.js
   checksum: 4ce3b379c61ce16b2219756843407cc99f2b82cd191f653043f1b705a3e32b3af03834af0dfded98ab852313a892a148bed1a8effaacd6440f028c19f41581f3
+  languageName: node
+  linkType: hard
+
+"webpack-cli@npm:^4.10.0":
+  version: 4.10.0
+  resolution: "webpack-cli@npm:4.10.0"
+  dependencies:
+    "@discoveryjs/json-ext": ^0.5.0
+    "@webpack-cli/configtest": ^1.2.0
+    "@webpack-cli/info": ^1.5.0
+    "@webpack-cli/serve": ^1.7.0
+    colorette: ^2.0.14
+    commander: ^7.0.0
+    cross-spawn: ^7.0.3
+    fastest-levenshtein: ^1.0.12
+    import-local: ^3.0.2
+    interpret: ^2.2.0
+    rechoir: ^0.7.0
+    webpack-merge: ^5.7.3
+  peerDependencies:
+    webpack: 4.x.x || 5.x.x
+  peerDependenciesMeta:
+    "@webpack-cli/generators":
+      optional: true
+    "@webpack-cli/migrate":
+      optional: true
+    webpack-bundle-analyzer:
+      optional: true
+    webpack-dev-server:
+      optional: true
+  bin:
+    webpack-cli: bin/cli.js
+  checksum: 2ff5355ac348e6b40f2630a203b981728834dca96d6d621be96249764b2d0fc01dd54edfcc37f02214d02935de2cf0eefd6ce689d970d154ef493f01ba922390
   languageName: node
   linkType: hard
 
@@ -39458,7 +39488,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:>=4.43.0 <6.0.0, webpack@npm:^5.73.0, webpack@npm:^5.75.0, webpack@npm:^5.9.0":
+"webpack@npm:>=4.43.0 <6.0.0, webpack@npm:^5.73.0, webpack@npm:^5.74.0, webpack@npm:^5.75.0, webpack@npm:^5.9.0":
   version: 5.75.0
   resolution: "webpack@npm:5.75.0"
   dependencies:
@@ -40217,23 +40247,6 @@ __metadata:
   version: 3.20.2
   resolution: "zod@npm:3.20.2"
   checksum: 04172f7e9350372684ccd298d4716908edc9113751295b6c4e1b3ea84e2af8997e504b33ba36f4741417bb2a5dc90bfd40501f6b0e7389df10e42a63d6d8366c
-  languageName: node
-  linkType: hard
-
-"zustand@npm:^4.1.4":
-  version: 4.2.0
-  resolution: "zustand@npm:4.2.0"
-  dependencies:
-    use-sync-external-store: 1.2.0
-  peerDependencies:
-    immer: ">=9.0"
-    react: ">=16.8"
-  peerDependenciesMeta:
-    immer:
-      optional: true
-    react:
-      optional: true
-  checksum: 70f9c9272c7ee6534d16e23e1f273822fdf4cb17a9865db588946ed250a51e169f8b0dcaf0a8d15e866239182263c015bca644756a69314ea1da4fe61ba1b67f
   languageName: node
   linkType: hard
 
