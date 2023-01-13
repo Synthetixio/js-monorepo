@@ -22,19 +22,25 @@ export function DepositForm() {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
-  const [amount, setAmount] = useState('');
+  const [inputAmount, setInputAmount] = useState('');
+  const [amount, setAmount] = useState(wei(0));
   const [activeBadge, setActiveBadge] = useState(0);
 
   const balanceData = useTokenBalance(collateralType?.tokenAddress);
 
   const [isOpenDeposit, setIsOpenDeposit] = useState(false);
-  const onSubmit = useCallback(async (e: FormEvent) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    if (form.reportValidity()) {
+  const onSubmit = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
+      const form = e.target as HTMLFormElement;
+      if (!form.reportValidity()) {
+        return;
+      }
+      setAmount(wei(inputAmount));
       setIsOpenDeposit(true);
-    }
-  }, []);
+    },
+    [inputAmount]
+  );
 
   const onChangeCollateral = useCallback(
     (collateralSymbol: string) => {
@@ -45,7 +51,8 @@ export function DepositForm() {
         return;
       }
       setActiveBadge(0);
-      setAmount('');
+      setAmount(wei(0));
+      setInputAmount('');
       inputRef.current?.focus();
       navigate({
         pathname: generatePath('/deposit/:collateralSymbol/:poolId', {
@@ -102,28 +109,27 @@ export function DepositForm() {
                 _focus={{ boxShadow: 'none !important' }}
                 _placeholder={{ color: 'whiteAlpha.700' }}
                 required
-                value={numberWithCommas(amount)}
+                value={numberWithCommas(inputAmount)}
                 onChange={(e) => {
                   const value = e.target.value.replaceAll(',', '');
                   setActiveBadge(0);
-                  setAmount(value);
-                  const currentAmount = wei(value || 0);
-                  if (currentAmount.gte(balanceData.value.toBN())) {
-                    e.target.setCustomValidity('Insufficient Balance');
-                  } else if (currentAmount.gt(0)) {
-                    e.target.setCustomValidity('');
-                  } else {
-                    e.target.setCustomValidity('Value is required');
+                  setInputAmount(value);
+                  try {
+                    const currentAmount = wei(value || 0);
+                    if (currentAmount.gte(balanceData.value.toBN())) {
+                      e.target.setCustomValidity('Insufficient balance');
+                    } else if (currentAmount.gt(0)) {
+                      e.target.setCustomValidity('');
+                    } else {
+                      e.target.setCustomValidity('Value is required');
+                    }
+                  } catch (_error) {
+                    e.target.setCustomValidity('Invalid value');
                   }
                 }}
               />
               <Flex justifyContent="flex-end" fontSize="xs">
-                <Flex
-                  cursor="pointer"
-                  onClick={() => {
-                    setAmount(balanceData.value.toString());
-                  }}
-                >
+                <Flex cursor="pointer" onClick={() => setInputAmount(balanceData.value.toString())}>
                   <Text mr={1}>Balance:</Text>
                   <Amount
                     value={balanceData.value}
@@ -139,9 +145,9 @@ export function DepositForm() {
               setActiveBadge(badgeNum);
               if (badgeNum === 1) {
                 // Make sure we're not left with dust
-                setAmount(balanceData.value.toString());
+                setInputAmount(balanceData.value.toString());
               } else {
-                setAmount(balanceData.value.mul(badgeNum).toString(2));
+                setInputAmount(balanceData.value.mul(badgeNum).toString(2));
               }
             }}
             activeBadge={activeBadge}
@@ -152,7 +158,7 @@ export function DepositForm() {
         </Button>
       </Box>
 
-      {params.accountId && params.poolId && collateralType && amount ? (
+      {params.accountId && params.poolId && collateralType && amount.gt(0) ? (
         <DepositModal
           accountId={params.accountId}
           poolId={params.poolId}

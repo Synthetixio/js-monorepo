@@ -24,6 +24,7 @@ import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
 import { useWrapEth } from '../../../hooks/useWrapEth';
 import { Multistep } from '@snx-v3/Multistep';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
+import { Wei, wei } from '@synthetixio/wei';
 
 export function DepositModal({
   accountId,
@@ -34,7 +35,7 @@ export function DepositModal({
   setIsOpen,
 }: {
   accountId: string;
-  amount: string;
+  amount: Wei;
   poolId: string;
   collateralType: CollateralType;
   isOpen: boolean;
@@ -54,11 +55,10 @@ export function DepositModal({
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
 
   const { wrap, balance: wrapEthBalance, isLoading: wrapEthLoading } = useWrapEth();
-  const amountBN = parseUnits(amount);
   const wrapAmount =
-    collateralType?.symbol === 'WETH' && amountBN.gt(wrapEthBalance?.value || 0)
-      ? amountBN.sub(wrapEthBalance?.value || 0)
-      : parseUnits(0);
+    collateralType?.symbol === 'WETH' && amount.gt(wrapEthBalance?.value || 0)
+      ? amount.sub(wrapEthBalance?.value || 0)
+      : wei(0);
 
   const newAccountId = useMemo(() => `${Math.floor(Math.random() * 10000000000)}`, []);
 
@@ -72,8 +72,8 @@ export function DepositModal({
     const currentLiquidityPosition = liquidityPositions[key];
 
     const amountToDelegate = Boolean(accountId)
-      ? (currentLiquidityPosition?.collateralAmount.toBN() || parseUnits(0)).add(amountBN)
-      : amountBN;
+      ? amount.add(currentLiquidityPosition?.collateralAmount.toBN() || wei(0))
+      : amount;
 
     if (!snxProxy) return [];
 
@@ -81,7 +81,7 @@ export function DepositModal({
       {
         contract: snxProxy.contract,
         functionName: 'deposit',
-        callArgs: [id, collateralType.tokenAddress, amountBN],
+        callArgs: [id, collateralType.tokenAddress, amount],
       },
       {
         contract: snxProxy.contract,
@@ -114,7 +114,7 @@ export function DepositModal({
     collateralType.symbol,
     collateralType.tokenAddress,
     liquidityPositions,
-    amountBN,
+    amount,
     snxProxy,
   ]);
 
@@ -179,7 +179,7 @@ export function DepositModal({
   } = useApprove(
     {
       contractAddress: collateralType?.tokenAddress,
-      amount: amountBN,
+      amount: amount.toBN(),
       spender: snxProxy?.address,
     },
     {
@@ -224,7 +224,7 @@ export function DepositModal({
     setStep('wrap');
     if (collateralType?.symbol === 'WETH' && wrapAmount.gt(0)) {
       try {
-        await wrap(wrapAmount);
+        await wrap(wrapAmount.toBN());
       } catch (e) {
         console.error(e);
         setFailed(true);
@@ -293,13 +293,13 @@ export function DepositModal({
             subtitle={
               wrapAmount.eq(0) ? (
                 <Text as="div">
-                  <Amount value={formatValue(amountBN)} suffix={` ${collateralType.symbol}`} /> from
-                  balance will be used.
+                  <Amount value={formatValue(amount.toBN())} suffix={` ${collateralType.symbol}`} />{' '}
+                  from balance will be used.
                 </Text>
               ) : (
                 <Text as="div">
-                  You must wrap additional <Amount value={formatValue(wrapAmount)} suffix=" ETH" />{' '}
-                  before depositing.
+                  You must wrap additional{' '}
+                  <Amount value={formatValue(wrapAmount.toBN())} suffix=" ETH" /> before depositing.
                 </Text>
               )
             }
