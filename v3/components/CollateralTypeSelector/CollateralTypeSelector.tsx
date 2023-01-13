@@ -1,15 +1,15 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Box, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
-import { CollateralType, useCollateralTypes } from '@snx-v3/useCollateralTypes';
+import { CollateralType, useCollateralTypes, useCollateralType } from '@snx-v3/useCollateralTypes';
 
 export function CollateralTypeSelectorUI({
-  collateralType,
-  setCollateralType,
   collateralTypes,
+  collateralType,
+  onChange,
 }: {
-  collateralType?: CollateralType;
-  setCollateralType: (collateralType: CollateralType) => void;
   collateralTypes: CollateralType[];
+  collateralType?: CollateralType;
+  onChange: (collateralSymbol: string) => void;
 }) {
   return (
     <Menu>
@@ -44,7 +44,7 @@ export function CollateralTypeSelectorUI({
             _hover={{ bg: 'gray.800' }}
             _focus={{ bg: 'gray.800' }}
             _active={{ bg: 'gray.800' }}
-            onClick={() => setCollateralType(collateral)}
+            onClick={() => onChange(collateral.symbol)}
           >
             <Flex flexDirection="row">
               <Box w="24px" h="24px" borderRadius="12px" overflow="hidden" mr="2">
@@ -60,17 +60,18 @@ export function CollateralTypeSelectorUI({
 }
 
 export function CollateralTypeSelector({
-  collateralType,
-  setCollateralType,
+  collateralSymbol,
+  onChange,
 }: {
-  collateralType?: CollateralType;
-  setCollateralType: (collateralType: CollateralType) => void;
+  collateralSymbol?: string;
+  onChange: (collateralSymbol: string) => void;
 }) {
   const { data: collateralTypes = [] } = useCollateralTypes();
+  const collateralType = useCollateralType(collateralSymbol);
   return (
     <CollateralTypeSelectorUI
+      onChange={onChange}
       collateralType={collateralType}
-      setCollateralType={setCollateralType}
       collateralTypes={collateralTypes}
     />
   );

@@ -1,5 +1,5 @@
 {
-  "name": "@snx-v3/TransactionReview",
+  "name": "@snx-v3/Multistep",
   "private": true,
   "main": "index.ts",
   "version": "0.0.1",

@@ -19,7 +19,7 @@ import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';
 import { parseUnits } from '@snx-v3/format';
 import testnetIcon from './testnet.png';
-import { TransactionReview, TransactionStatus } from '@snx-v3/TransactionReview';
+import { Multistep } from '@snx-v3/Multistep';
 
 const chains = [
   {
@@ -49,6 +49,10 @@ export function TeleporterModal({
 }) {
   const { address } = useAccount();
   const toast = useToast();
+
+  const [processing, setProcessing] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   const { chain: activeChain } = useNetwork();
 
@@ -85,31 +89,41 @@ export function TeleporterModal({
     spender: CCIP!.address,
   });
 
-  const [status, setStatus] = useState<TransactionStatus>('idle');
+  const [step, setStep] = useState<'idle' | 'approve' | 'transfer'>('idle');
 
   const [infiniteApproval, setInfiniteApproval] = useState(false);
+
+  const onClose = useCallback(() => {
+    setStep('idle');
+    setCompleted(false);
+    setFailed(false);
+    setProcessing(false);
+    setIsOpen(false);
+  }, [setIsOpen]);
+
   const onSubmit = useCallback(async () => {
-    if (status === 'completed') {
-      // Close window
-      setIsOpen(false);
+    if (completed) {
+      onClose();
       return;
     }
 
-    setStatus('processing');
+    setFailed(false);
+    setProcessing(true);
 
-    // Step 1
+    setStep('approve');
     if (requireApproval) {
       try {
         await approve(infiniteApproval);
         await refetchAllowance();
       } catch (e) {
         console.error(e);
-        setStatus('failed');
+        setFailed(true);
+        setProcessing(false);
         return;
       }
     }
 
-    // Step 2
+    setStep('transfer');
     try {
       if (!ccipSend) throw new Error('CCIP contract not ready');
       if (!(amount > 0)) throw new Error('Amount must be greater than zero');
@@ -127,26 +141,28 @@ export function TeleporterModal({
       await balance.refetch();
     } catch (e) {
       console.error(e);
-      setStatus('failed');
+      setFailed(true);
+      setProcessing(false);
       return;
     }
 
-    setStatus('completed');
+    setProcessing(false);
+    setCompleted(true);
   }, [
     amount,
     approve,
     balance,
     ccipSend,
+    completed,
     infiniteApproval,
+    onClose,
     refetchAllowance,
     requireApproval,
-    setIsOpen,
-    status,
     toast,
   ]);
 
   return (
-    <Modal size="lg" isOpen={isOpen} onClose={() => setIsOpen(false)} closeOnOverlayClick={false}>
+    <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
       <ModalOverlay />
       <ModalContent bg="black" color="white">
         <ModalHeader>Complete this action</ModalHeader>
@@ -154,31 +170,46 @@ export function TeleporterModal({
         <ModalBody>
           <Text mb="2">Please execute the following transactions:</Text>
 
-          <TransactionReview
+          <Multistep
             step={1}
             title="Approve snxUSD transfer"
-            status={requireApproval ? status : 'completed'}
-            checkbox={{
-              label: 'Approve unlimited snxUSD transfers to Synthetix',
+            status={{
+              failed: step === 'approve' && failed,
+              success: !requireApproval,
+              loading: approvalLoading,
+            }}
+            checkboxLabel="Approve unlimited snxUSD transfers to Synthetix"
+            checkboxProps={{
               isChecked: infiniteApproval,
               onChange: (e) => setInfiniteApproval(e.target.checked),
             }}
-            isLoading={approvalLoading}
           />
 
-          <TransactionReview
+          <Multistep
             step={2}
             title="Teleport snxUSD"
-            status={requireApproval ? 'idle' : status}
             subtitle={`This will transfer your snxUSD to the ${toChain?.label} network.`}
-            isLoading={teleportingLoading}
+            status={{
+              failed: step === 'transfer' && failed,
+              success: completed,
+              loading: teleportingLoading,
+              disabled: requireApproval,
+            }}
           />
 
-          <Button disabled={status === 'processing'} onClick={onSubmit} width="100%" my="4">
-            {status === 'idle' ? 'Start' : null}
-            {status === 'completed' ? 'Done' : null}
-            {status === 'failed' ? 'Retry' : null}
-            {status === 'processing' ? 'Processing...' : null}
+          <Button disabled={processing} onClick={onSubmit} width="100%" my="4">
+            {(() => {
+              switch (true) {
+                case failed:
+                  return 'Retry';
+                case processing:
+                  return 'Processing...';
+                case completed:
+                  return 'Done';
+                default:
+                  return 'Start';
+              }
+            })()}
           </Button>
         </ModalBody>
       </ModalContent>

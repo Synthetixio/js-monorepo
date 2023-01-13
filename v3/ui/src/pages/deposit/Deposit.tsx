@@ -1,17 +1,16 @@
-import { Box, Button, Divider, Flex, Heading, Spinner, Text } from '@chakra-ui/react';
-import { CollateralType, useCollateralTypes } from '@snx-v3/useCollateralTypes';
+import { Box, Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
 import { useParams } from '@snx-v3/useParams';
 import { FC } from 'react';
-import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
-import { DepositForm } from '../../components/accounts/Deposit/DepositForm';
+import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
+import { DepositForm } from '../../components/accounts/Deposit';
 
 const DepositUi: FC<{
-  activeCollateralType: CollateralType;
+  collateralSymbol?: string;
   preferredPool?: { name: string; id: string };
   accountId?: string;
-}> = ({ preferredPool, accountId, activeCollateralType }) => {
-  const navigate = useNavigate();
+  navigate: NavigateFunction;
+}> = ({ preferredPool, accountId, collateralSymbol, navigate }) => {
   return (
     <Flex height="100%" flexDirection="column">
       <Flex alignItems="flex-end" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
@@ -44,17 +43,9 @@ const DepositUi: FC<{
             decreases your C-Ratio.
           </Text>
           <Heading mt={4} mb={2} size="sm">
-            Deposit {activeCollateralType.symbol}
+            Deposit {collateralSymbol}
           </Heading>
-          {
-            preferredPool ? (
-              <DepositForm
-                poolId={preferredPool.id}
-                accountId={accountId}
-                activeCollateralType={activeCollateralType}
-              />
-            ) : null // todo skeleton
-          }
+          <DepositForm />
         </Box>
         <Box
           ml={{ base: 0, md: 2 }}
@@ -110,15 +101,14 @@ const DepositUi: FC<{
 
 export const Deposit = () => {
   const params = useParams();
-  const { data: collateralTypes } = useCollateralTypes();
   const { data: preferredPool } = usePreferredPool();
-  const activeCollateralType = collateralTypes?.find((x) => x.symbol === params.collateralSymbol);
-  if (!activeCollateralType) return <Spinner />;
+  const navigate = useNavigate();
   return (
     <DepositUi
-      activeCollateralType={activeCollateralType}
+      collateralSymbol={params.collateralSymbol}
       preferredPool={preferredPool}
       accountId={params.accountId}
+      navigate={navigate}
     />
   );
 };

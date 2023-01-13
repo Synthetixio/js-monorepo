@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { contracts } from '../../../utils/constants';
 import { compareAddress, parseUnits } from '@snx-v3/format';
-import { CollateralType, useEthCollateralType } from '@snx-v3/useCollateralTypes';
+import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useApprove } from '@snx-v3/useApprove';
 import { useContract } from '../../../hooks/useContract';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
@@ -30,7 +30,7 @@ export const useManagePosition = ({
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
   const collateralChangeBN = parseUnits(Math.abs(collateralChange));
 
-  const ethCollateral = useEthCollateralType();
+  const ethCollateral = useCollateralType('WETH');
   const isNativeCurrency = compareAddress(ethCollateral?.tokenAddress, collateral.tokenAddress);
 
   const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
@@ -150,7 +150,11 @@ export const useManagePosition = ({
         subtitle: collateralChangeBN.gt(wrapEthBalance?.value || 0)
           ? 'You must wrap your ether before depositing.'
           : '',
-        call: async (useBalance?: boolean) => await wrap(collateralChangeBN, useBalance),
+        call: async (useBalance?: boolean) => {
+          if (!useBalance) {
+            await wrap(collateralChangeBN);
+          }
+        },
         checkboxLabel: collateralChangeBN.gt(wrapEthBalance?.value || 0)
           ? ''
           : `Skip this step and use my existing ${collateralChange} wETH.`,
