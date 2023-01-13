@@ -18,14 +18,15 @@ export const CloseIcon = createIcon({
 });
 
 export function StepIcon({ status, children }: PropsWithChildren<{ status: TransactionStatus }>) {
-  switch (status) {
-    case 'failed':
+  switch (true) {
+    case status.failed:
       return <CloseIcon color="white" />;
-    case 'completed':
+    case status.success:
       return <CheckIcon color="white" />;
-    case 'processing':
+    case status.loading:
       return <Spinner color="white" width={6} height={6} />;
-    case 'idle':
+    case status.disabled:
+    default:
       return (
         <Box
           __css={{

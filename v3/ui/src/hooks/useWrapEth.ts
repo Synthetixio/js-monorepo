@@ -68,8 +68,7 @@ export const useWrapEth = (config?: Partial<TxConfig>) => {
   });
 
   const wrap = useCallback(
-    async (amount: BigNumber, useExistingWETHBal = false) => {
-      if (useExistingWETHBal) return;
+    async (amount: BigNumber) => {
       if (!ethBalance) return;
       if (ethBalance.value.lt(amount)) return;
       if (!writeAsync) return;

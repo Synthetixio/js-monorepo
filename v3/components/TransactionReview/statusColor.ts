@@ -1,14 +1,17 @@
 import { TransactionStatus } from './TransactionStatus';
 
 export function statusColor(status: TransactionStatus): string {
-  switch (status) {
-    case 'idle':
-      return 'gray.700';
-    case 'processing':
-      return 'gray.700';
-    case 'failed':
+  switch (true) {
+    // order matters
+    case status.failed:
       return 'red.700';
-    case 'completed':
+    case status.disabled:
+      return 'gray.700';
+    case status.loading:
+      return 'gray.700';
+    case status.success:
       return 'green.700';
+    default:
+      return 'gray.700';
   }
 }

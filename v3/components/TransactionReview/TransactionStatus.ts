@@ -1,1 +1,6 @@
-export type TransactionStatus = 'idle' | 'processing' | 'failed' | 'completed';
+export type TransactionStatus = {
+  failed?: boolean;
+  disabled?: boolean;
+  loading?: boolean;
+  success?: boolean;
+};

@@ -20,8 +20,7 @@ import { contracts } from '../../../utils/constants';
 import { useApprove } from '@snx-v3/useApprove';
 import { useContract } from '../../../hooks/useContract';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
-import { useWrapEth } from '../../../hooks/useWrapEth';
-import { TransactionReview, TransactionStatus } from '@snx-v3/TransactionReview';
+import { TransactionReview } from '@snx-v3/TransactionReview';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 
 export function DepositModal({
@@ -46,12 +45,13 @@ export function DepositModal({
     duration: 9000,
   });
 
+  const [processing, setProcessing] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [failed, setFailed] = useState(false);
+
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
 
-  const amountBN =
-    Boolean(amount && collateralType) && Number(amount) > 0 ? parseUnits(amount) : parseUnits(0);
-
-  const { wrap, balance: wrapEthBalance, isLoading: wrapEthLoading } = useWrapEth();
+  const amountBN = parseUnits(amount);
 
   const newAccountId = useMemo(() => `${Math.floor(Math.random() * 10000000000)}`, []);
 
@@ -84,7 +84,7 @@ export function DepositModal({
           parseInt(Boolean(accountId) ? poolId : poolId || '0'),
           collateralType.tokenAddress,
           amountToDelegate || 0,
-          parseUnits(1, 18),
+          parseUnits(1),
         ],
       },
     ];
@@ -139,9 +139,8 @@ export function DepositModal({
     onSuccess: async () => {
       toast.closeAll();
       await Promise.all([balanceRefetch(), refetchAccounts()]);
-
-      setIsOpen(false);
-
+      setProcessing(false);
+      setCompleted(true);
       if (!Boolean(accountId)) {
         navigate(
           generatePath('/accounts/:accountId/positions/:collateral/:poolId', {
@@ -197,62 +196,41 @@ export function DepositModal({
     }
   );
 
-  const [skipWrappingEth, setSkipWrappingEth] = useState(false);
   const [infiniteApproval, setInfiniteApproval] = useState(false);
-  const [status, setStatus] = useState<TransactionStatus>('idle');
+  const [step, setStep] = useState<0 | 1 | 2>(0);
 
   const onSubmit = useCallback(async () => {
-    if (status === 'completed') {
-      // Close window
+    if (completed) {
+      // Reset state and close the window
+      setStep(0);
+      setFailed(false);
       setIsOpen(false);
       return;
     }
 
-    setStatus('processing');
+    setFailed(false);
+    setProcessing(true);
 
-    // Step 1, maybe wrapping ETH
-    if (collateralType?.symbol === 'WETH') {
-      try {
-        await wrap(amountBN, skipWrappingEth);
-      } catch (e) {
-        console.error(e);
-        setStatus('failed');
-        return;
-      }
-    }
-
-    // Step 2, get token approval
+    setStep(1);
     if (requireApproval) {
       try {
         await approve(Boolean(infiniteApproval));
       } catch (e) {
         console.error(e);
-        setStatus('failed');
+        setFailed(true);
         return;
       }
     }
-    // step 3, deposit collateral
+
+    setStep(2);
     try {
       await multiTxn.exec();
     } catch (e) {
       console.error(e);
-      setStatus('failed');
+      setFailed(true);
       return;
     }
-
-    setStatus('completed');
-  }, [
-    status,
-    collateralType?.symbol,
-    requireApproval,
-    setIsOpen,
-    wrap,
-    amountBN,
-    skipWrappingEth,
-    approve,
-    infiniteApproval,
-    multiTxn,
-  ]);
+  }, [completed, requireApproval, setIsOpen, approve, infiniteApproval, multiTxn]);
 
   return (
     <Modal size="lg" isOpen={isOpen} onClose={() => setIsOpen(false)} closeOnOverlayClick={false}>
@@ -265,48 +243,45 @@ export function DepositModal({
 
           <TransactionReview
             step={1}
-            title="Wrap ETH"
-            subtitle={
-              amountBN.gt(wrapEthBalance?.value || 0)
-                ? 'You must wrap your ether before depositing.'
-                : ''
-            }
-            status={collateralType?.symbol === 'WETH' ? status : 'completed'}
-            checkbox={{
-              label: amountBN.gt(wrapEthBalance?.value || 0)
-                ? ''
-                : `Skip this step and use my existing ${amount} wETH.`,
-              isChecked: skipWrappingEth,
-              onChange: (e) => setSkipWrappingEth(e.target.checked),
+            title={`Approve ${collateralType.symbol.toUpperCase()} transfer`}
+            status={{
+              failed: step === 1 && failed,
+              success: !requireApproval,
+              loading: approvalLoading,
             }}
-            isLoading={wrapEthLoading}
+            checkboxLabel={`Approve unlimited ${collateralType.symbol.toUpperCase()} transfers to Synthetix.`}
+            checkboxProps={{
+              isChecked: infiniteApproval,
+              onChange: (e) => setInfiniteApproval(e.target.checked),
+            }}
           />
 
           <TransactionReview
             step={2}
-            title={`Approve ${collateralType.symbol.toUpperCase()} transfer`}
-            status={requireApproval ? status : 'completed'}
-            checkbox={{
-              label: `Approve unlimited ${collateralType.symbol.toUpperCase()} transfers to Synthetix.`,
-              isChecked: infiniteApproval,
-              onChange: (e) => setInfiniteApproval(e.target.checked),
-            }}
-            isLoading={approvalLoading}
-          />
-
-          <TransactionReview
-            step={3}
             title={`Deposit ${collateralType.symbol.toUpperCase()}`}
             subtitle={`This will transfer your ${collateralType.symbol.toUpperCase()} to Synthetix.`}
-            status={requireApproval ? status : 'completed'}
-            isLoading={multiTxn.isLoading}
+            status={{
+              failed: step === 2 && failed,
+              disabled: requireApproval,
+              success: completed,
+              loading: multiTxn.isLoading,
+            }}
           />
 
-          <Button disabled={status === 'processing'} onClick={onSubmit} width="100%" my="4">
-            {status === 'idle' ? 'Start' : null}
-            {status === 'completed' ? 'Done' : null}
-            {status === 'failed' ? 'Retry' : null}
-            {status === 'processing' ? 'Processing...' : null}
+          <Button disabled={processing} onClick={onSubmit} width="100%" my="4">
+            {(() => {
+              switch (true) {
+                // order matters
+                case failed:
+                  return 'Retry';
+                case processing:
+                  return 'Processing...';
+                case completed:
+                  return 'Done';
+                default:
+                  return 'Start';
+              }
+            })()}
           </Button>
         </ModalBody>
       </ModalContent>

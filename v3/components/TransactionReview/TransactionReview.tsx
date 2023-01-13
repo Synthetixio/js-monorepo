@@ -1,28 +1,37 @@
-import { ChangeEvent } from 'react';
-import { Box, Checkbox, Flex, Text } from '@chakra-ui/react';
+import { ChangeEvent, PropsWithChildren } from 'react';
+import { Box, Checkbox, Flex, Text, CheckboxProps } from '@chakra-ui/react';
 import { Step } from './Step';
 import { statusColor } from './statusColor';
 import { TransactionStatus } from './TransactionStatus';
 
+function TransactionCheckbox({ children, ...props }: PropsWithChildren<CheckboxProps>) {
+  return (
+    <Flex mt="0.5">
+      <Checkbox size="sm" {...props}>
+        <Box fontSize="xs" opacity="0.66">
+          {children}
+        </Box>
+      </Checkbox>
+    </Flex>
+  );
+}
+
 export function TransactionReview({
   step,
-  status,
   title,
   subtitle,
-  checkbox,
-  isLoading,
-}: {
+  checkboxLabel,
+  checkboxProps,
+  status,
+  children,
+}: PropsWithChildren<{
   step: number;
-  status: TransactionStatus;
   title: string;
   subtitle?: string;
-  checkbox?: {
-    label: string;
-    isChecked: boolean;
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  };
-  isLoading: boolean;
-}) {
+  checkboxLabel?: string;
+  checkboxProps?: CheckboxProps;
+  status: TransactionStatus;
+}>) {
   return (
     <Flex
       position="relative"
@@ -39,27 +48,15 @@ export function TransactionReview({
       <Step status={status}>{step}</Step>
       <Flex direction="column">
         <Text>{title}</Text>
-
         {subtitle ? (
           <Text fontSize="xs" opacity="0.66">
             {subtitle}
           </Text>
         ) : null}
-
-        {checkbox ? (
-          <Flex mt="0.5">
-            <Checkbox
-              isChecked={checkbox.isChecked}
-              onChange={checkbox.onChange}
-              size="sm"
-              disabled={status === 'completed' || status === 'processing' || isLoading}
-            >
-              <Box fontSize="xs" opacity="0.66">
-                {checkbox.label}
-              </Box>
-            </Checkbox>
-          </Flex>
+        {checkboxLabel ? (
+          <TransactionCheckbox {...checkboxProps}>{checkboxLabel}</TransactionCheckbox>
         ) : null}
+        {children}
       </Flex>
     </Flex>
   );
