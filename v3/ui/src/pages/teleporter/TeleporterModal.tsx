@@ -19,7 +19,7 @@ import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';
 import { parseUnits } from '@snx-v3/format';
 import testnetIcon from './testnet.png';
-import { TransactionReview } from '@snx-v3/TransactionReview';
+import { Multistep } from '@snx-v3/Multistep';
 
 const chains = [
   {
@@ -170,7 +170,7 @@ export function TeleporterModal({
         <ModalBody>
           <Text mb="2">Please execute the following transactions:</Text>
 
-          <TransactionReview
+          <Multistep
             step={1}
             title="Approve snxUSD transfer"
             status={{
@@ -185,7 +185,7 @@ export function TeleporterModal({
             }}
           />
 
-          <TransactionReview
+          <Multistep
             step={2}
             title="Teleport snxUSD"
             subtitle={`This will transfer your snxUSD to the ${toChain?.label} network.`}

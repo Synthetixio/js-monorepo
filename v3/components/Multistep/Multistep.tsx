@@ -2,9 +2,9 @@ import { PropsWithChildren, ReactElement } from 'react';
 import { Box, Checkbox, CheckboxProps, Flex, Text } from '@chakra-ui/react';
 import { Step } from './Step';
 import { statusColor } from './statusColor';
-import { TransactionStatus } from './TransactionStatus';
+import { MultistepStatus } from './MultistepStatus';
 
-function TransactionCheckbox({ children, ...props }: PropsWithChildren<CheckboxProps>) {
+function StepCheckbox({ children, ...props }: PropsWithChildren<CheckboxProps>) {
   return (
     <Flex mt="0.5">
       <Checkbox size="sm" {...props}>
@@ -16,7 +16,7 @@ function TransactionCheckbox({ children, ...props }: PropsWithChildren<CheckboxP
   );
 }
 
-export function TransactionReview({
+export function Multistep({
   step,
   title,
   subtitle,
@@ -30,7 +30,7 @@ export function TransactionReview({
   subtitle?: string | ReactElement;
   checkboxLabel?: string;
   checkboxProps?: CheckboxProps;
-  status: TransactionStatus;
+  status: MultistepStatus;
 }>) {
   return (
     <Flex
@@ -53,9 +53,7 @@ export function TransactionReview({
             {subtitle}
           </Text>
         ) : null}
-        {checkboxLabel ? (
-          <TransactionCheckbox {...checkboxProps}>{checkboxLabel}</TransactionCheckbox>
-        ) : null}
+        {checkboxLabel ? <StepCheckbox {...checkboxProps}>{checkboxLabel}</StepCheckbox> : null}
         {children}
       </Flex>
     </Flex>

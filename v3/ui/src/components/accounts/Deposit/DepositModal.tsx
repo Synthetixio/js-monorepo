@@ -22,7 +22,7 @@ import { useApprove } from '@snx-v3/useApprove';
 import { useContract } from '../../../hooks/useContract';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
 import { useWrapEth } from '../../../hooks/useWrapEth';
-import { TransactionReview } from '@snx-v3/TransactionReview';
+import { Multistep } from '@snx-v3/Multistep';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 
 export function DepositModal({
@@ -287,7 +287,7 @@ export function DepositModal({
         <ModalBody>
           <Text mb="2">Please execute the following transactions:</Text>
 
-          <TransactionReview
+          <Multistep
             step={1}
             title="Wrap"
             subtitle={
@@ -311,7 +311,7 @@ export function DepositModal({
             }}
           />
 
-          <TransactionReview
+          <Multistep
             step={2}
             title={`Approve ${collateralType.symbol} transfer`}
             status={{
@@ -326,7 +326,7 @@ export function DepositModal({
             }}
           />
 
-          <TransactionReview
+          <Multistep
             step={3}
             title={`Deposit ${collateralType.symbol}`}
             subtitle={`This will transfer your ${collateralType.symbol} to Synthetix.`}

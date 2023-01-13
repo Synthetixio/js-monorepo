@@ -1,6 +1,6 @@
-import { TransactionStatus } from './TransactionStatus';
+import { MultistepStatus } from './MultistepStatus';
 
-export function statusColor(status: TransactionStatus): string {
+export function statusColor(status: MultistepStatus): string {
   switch (true) {
     // order matters
     case status.failed:

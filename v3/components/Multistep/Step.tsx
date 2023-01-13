@@ -1,10 +1,10 @@
 import { Flex } from '@chakra-ui/react';
 import { PropsWithChildren } from 'react';
-import { TransactionStatus } from './TransactionStatus';
+import { MultistepStatus } from './MultistepStatus';
 import { StepIcon } from './StepIcon';
 import { statusColor } from './statusColor';
 
-export function Step({ status, children }: PropsWithChildren<{ status: TransactionStatus }>) {
+export function Step({ status, children }: PropsWithChildren<{ status: MultistepStatus }>) {
   return (
     <Flex
       width={10}

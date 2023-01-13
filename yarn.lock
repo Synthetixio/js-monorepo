@@ -7757,6 +7757,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/Multistep@workspace:*, @snx-v3/Multistep@workspace:v3/components/Multistep":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/Multistep@workspace:v3/components/Multistep"
+  dependencies:
+    "@chakra-ui/icon": ^3.0.11
+    "@chakra-ui/react": ^2.2.8
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/PoolSelector@workspace:v3/components/PoolSelector":
   version: 0.0.0-use.local
   resolution: "@snx-v3/PoolSelector@workspace:v3/components/PoolSelector"
@@ -7766,16 +7776,6 @@ __metadata:
     "@snx-v3/usePools": "workspace:*"
     react: ^18.2.0
     react-router-dom: ^6.6.2
-  languageName: unknown
-  linkType: soft
-
-"@snx-v3/TransactionReview@workspace:*, @snx-v3/TransactionReview@workspace:v3/components/TransactionReview":
-  version: 0.0.0-use.local
-  resolution: "@snx-v3/TransactionReview@workspace:v3/components/TransactionReview"
-  dependencies:
-    "@chakra-ui/icon": ^3.0.11
-    "@chakra-ui/react": ^2.2.8
-    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -10181,7 +10181,7 @@ __metadata:
     "@snx-v3/Balance": "workspace:*"
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/Constants": "workspace:*"
-    "@snx-v3/TransactionReview": "workspace:*"
+    "@snx-v3/Multistep": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
     "@snx-v3/useAccounts": "workspace:*"

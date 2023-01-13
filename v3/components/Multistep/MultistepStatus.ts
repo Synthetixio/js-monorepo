@@ -1,4 +1,4 @@
-export type TransactionStatus = {
+export type MultistepStatus = {
   failed?: boolean;
   disabled?: boolean;
   loading?: boolean;
