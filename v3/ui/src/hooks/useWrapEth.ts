@@ -46,6 +46,7 @@ export const useWrapEth = (config?: Partial<TxConfig>) => {
   const { address: accountAddress } = useAccount();
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
+    // @ts-ignore
     address: ethCollateral?.tokenAddress || '',
     abi: minimalWETHABI,
     functionName: 'deposit',
@@ -99,6 +100,7 @@ export const useUnWrapEth = (config?: Partial<TxConfig>) => {
 
   const { writeAsync, isLoading } = useContractWrite({
     mode: 'recklesslyUnprepared',
+    // @ts-ignore
     address: ethCollateral?.tokenAddress,
     abi: minimalWETHABI,
     functionName: 'withdraw',

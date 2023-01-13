@@ -52,7 +52,11 @@ input AccountFlaggedForLiquidation_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -142,7 +146,11 @@ input AccountLiquidated_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -164,7 +172,11 @@ input AccountLiquidated_filter {
   id_not_in: [ID!]
   liquidator: Bytes
   liquidator_contains: Bytes
+  liquidator_gt: Bytes
+  liquidator_gte: Bytes
   liquidator_in: [Bytes!]
+  liquidator_lt: Bytes
+  liquidator_lte: Bytes
   liquidator_not: Bytes
   liquidator_not_contains: Bytes
   liquidator_not_in: [Bytes!]
@@ -219,7 +231,11 @@ input AccountRemovedFromLiquidation_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -385,7 +401,11 @@ input AtomicSynthExchange_filter {
   timestamp_not_in: [BigInt!]
   toAddress: Bytes
   toAddress_contains: Bytes
+  toAddress_gt: Bytes
+  toAddress_gte: Bytes
   toAddress_in: [Bytes!]
+  toAddress_lt: Bytes
+  toAddress_lte: Bytes
   toAddress_not: Bytes
   toAddress_not_contains: Bytes
   toAddress_not_in: [Bytes!]
@@ -477,7 +497,11 @@ input Burned_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -734,7 +758,11 @@ input CollateralDeposited_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -828,7 +856,11 @@ input CollateralWithdrawn_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -1250,7 +1282,11 @@ input DebtSnapshot_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -1445,7 +1481,11 @@ input DelegatedWallet_filter {
   _change_block: BlockChangedFilter
   authoriser: Bytes
   authoriser_contains: Bytes
+  authoriser_gt: Bytes
+  authoriser_gte: Bytes
   authoriser_in: [Bytes!]
+  authoriser_lt: Bytes
+  authoriser_lte: Bytes
   authoriser_not: Bytes
   authoriser_not_contains: Bytes
   authoriser_not_in: [Bytes!]
@@ -1467,7 +1507,11 @@ input DelegatedWallet_filter {
   canMint_not_in: [Boolean!]
   delegate: Bytes
   delegate_contains: Bytes
+  delegate_gt: Bytes
+  delegate_gte: Bytes
   delegate_in: [Bytes!]
+  delegate_lt: Bytes
+  delegate_lte: Bytes
   delegate_not: Bytes
   delegate_not_contains: Bytes
   delegate_not_in: [Bytes!]
@@ -1545,7 +1589,11 @@ input ExchangeEntryAppended_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -1567,7 +1615,11 @@ input ExchangeEntryAppended_filter {
   amount_not_in: [BigDecimal!]
   dest: Bytes
   dest_contains: Bytes
+  dest_gt: Bytes
+  dest_gte: Bytes
   dest_in: [Bytes!]
+  dest_lt: Bytes
+  dest_lte: Bytes
   dest_not: Bytes
   dest_not_contains: Bytes
   dest_not_in: [Bytes!]
@@ -1605,7 +1657,11 @@ input ExchangeEntryAppended_filter {
   roundIdForSrc_not_in: [BigInt!]
   src: Bytes
   src_contains: Bytes
+  src_gt: Bytes
+  src_gte: Bytes
   src_in: [Bytes!]
+  src_lt: Bytes
+  src_lte: Bytes
   src_not: Bytes
   src_not_contains: Bytes
   src_not_in: [Bytes!]
@@ -1698,7 +1754,11 @@ input ExchangeEntrySettled_filter {
   destRoundIdAtPeriodEnd_not: BigInt
   destRoundIdAtPeriodEnd_not_in: [BigInt!]
   dest_contains: Bytes
+  dest_gt: Bytes
+  dest_gte: Bytes
   dest_in: [Bytes!]
+  dest_lt: Bytes
+  dest_lte: Bytes
   dest_not: Bytes
   dest_not_contains: Bytes
   dest_not_in: [Bytes!]
@@ -1712,7 +1772,11 @@ input ExchangeEntrySettled_filter {
   exchangeTimestamp_not_in: [BigInt!]
   from: Bytes
   from_contains: Bytes
+  from_gt: Bytes
+  from_gte: Bytes
   from_in: [Bytes!]
+  from_lt: Bytes
+  from_lte: Bytes
   from_not: Bytes
   from_not_contains: Bytes
   from_not_in: [Bytes!]
@@ -1750,7 +1814,11 @@ input ExchangeEntrySettled_filter {
   srcRoundIdAtPeriodEnd_not: BigInt
   srcRoundIdAtPeriodEnd_not_in: [BigInt!]
   src_contains: Bytes
+  src_gt: Bytes
+  src_gte: Bytes
   src_in: [Bytes!]
+  src_lt: Bytes
+  src_lte: Bytes
   src_not: Bytes
   src_not_contains: Bytes
   src_not_in: [Bytes!]
@@ -1943,7 +2011,11 @@ input ExchangeRebate_filter {
   block_not_in: [BigInt!]
   currencyKey: Bytes
   currencyKey_contains: Bytes
+  currencyKey_gt: Bytes
+  currencyKey_gte: Bytes
   currencyKey_in: [Bytes!]
+  currencyKey_lt: Bytes
+  currencyKey_lte: Bytes
   currencyKey_not: Bytes
   currencyKey_not_contains: Bytes
   currencyKey_not_in: [Bytes!]
@@ -2050,7 +2122,11 @@ input ExchangeReclaim_filter {
   block_not_in: [BigInt!]
   currencyKey: Bytes
   currencyKey_contains: Bytes
+  currencyKey_gt: Bytes
+  currencyKey_gte: Bytes
   currencyKey_in: [Bytes!]
+  currencyKey_lt: Bytes
+  currencyKey_lte: Bytes
   currencyKey_not: Bytes
   currencyKey_not_contains: Bytes
   currencyKey_not_in: [Bytes!]
@@ -2471,7 +2547,11 @@ input FeesClaimed_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -2653,7 +2733,11 @@ input Issued_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -2779,7 +2863,11 @@ input LatestRate_filter {
   _change_block: BlockChangedFilter
   aggregator: Bytes
   aggregator_contains: Bytes
+  aggregator_gt: Bytes
+  aggregator_gte: Bytes
   aggregator_in: [Bytes!]
+  aggregator_lt: Bytes
+  aggregator_lte: Bytes
   aggregator_not: Bytes
   aggregator_not_contains: Bytes
   aggregator_not_in: [Bytes!]
@@ -2850,7 +2938,11 @@ input LatestSynthBalance_filter {
   account_starts_with_nocase: String
   address: Bytes
   address_contains: Bytes
+  address_gt: Bytes
+  address_gte: Bytes
   address_in: [Bytes!]
+  address_lt: Bytes
+  address_lte: Bytes
   address_not: Bytes
   address_not_contains: Bytes
   address_not_in: [Bytes!]
@@ -3001,7 +3093,11 @@ input LoanLiquidated_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -3015,7 +3111,11 @@ input LoanLiquidated_filter {
   id_not_in: [ID!]
   liquidator: Bytes
   liquidator_contains: Bytes
+  liquidator_gt: Bytes
+  liquidator_gte: Bytes
   liquidator_in: [Bytes!]
+  liquidator_lt: Bytes
+  liquidator_lte: Bytes
   liquidator_not: Bytes
   liquidator_not_contains: Bytes
   liquidator_not_in: [Bytes!]
@@ -3089,7 +3189,11 @@ input LoanPartiallyLiquidated_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -3119,7 +3223,11 @@ input LoanPartiallyLiquidated_filter {
   liquidatedCollateral_not_in: [BigDecimal!]
   liquidator: Bytes
   liquidator_contains: Bytes
+  liquidator_gt: Bytes
+  liquidator_gte: Bytes
   liquidator_in: [Bytes!]
+  liquidator_lt: Bytes
+  liquidator_lte: Bytes
   liquidator_not: Bytes
   liquidator_not_contains: Bytes
   liquidator_not_in: [Bytes!]
@@ -3190,7 +3298,11 @@ input LoanRepaid_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -3252,7 +3364,11 @@ input Loan_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -5069,7 +5185,11 @@ input RateUpdate_filter {
   block_not_in: [BigInt!]
   currencyKey: Bytes
   currencyKey_contains: Bytes
+  currencyKey_gt: Bytes
+  currencyKey_gte: Bytes
   currencyKey_in: [Bytes!]
+  currencyKey_lt: Bytes
+  currencyKey_lte: Bytes
   currencyKey_not: Bytes
   currencyKey_not_contains: Bytes
   currencyKey_not_in: [Bytes!]
@@ -5781,7 +5901,11 @@ input ShortContract_filter {
   issueFeeRate_not_in: [BigDecimal!]
   manager: Bytes
   manager_contains: Bytes
+  manager_gt: Bytes
+  manager_gte: Bytes
   manager_in: [Bytes!]
+  manager_lt: Bytes
+  manager_lte: Bytes
   manager_not: Bytes
   manager_not_contains: Bytes
   manager_not_in: [Bytes!]
@@ -5910,7 +6034,11 @@ input ShortLiquidation_filter {
   liquidatedCollateral_not_in: [BigDecimal!]
   liquidator: Bytes
   liquidator_contains: Bytes
+  liquidator_gt: Bytes
+  liquidator_gte: Bytes
   liquidator_in: [Bytes!]
+  liquidator_lt: Bytes
+  liquidator_lte: Bytes
   liquidator_not: Bytes
   liquidator_not_contains: Bytes
   liquidator_not_in: [Bytes!]
@@ -6096,7 +6224,11 @@ input Short_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -6127,7 +6259,11 @@ input Short_filter {
   collateralLockedAmount_not: BigDecimal
   collateralLockedAmount_not_in: [BigDecimal!]
   collateralLocked_contains: Bytes
+  collateralLocked_gt: Bytes
+  collateralLocked_gte: Bytes
   collateralLocked_in: [Bytes!]
+  collateralLocked_lt: Bytes
+  collateralLocked_lte: Bytes
   collateralLocked_not: Bytes
   collateralLocked_not_contains: Bytes
   collateralLocked_not_in: [Bytes!]
@@ -6192,7 +6328,11 @@ input Short_filter {
   synthBorrowedAmount_not: BigDecimal
   synthBorrowedAmount_not_in: [BigDecimal!]
   synthBorrowed_contains: Bytes
+  synthBorrowed_gt: Bytes
+  synthBorrowed_gte: Bytes
   synthBorrowed_in: [Bytes!]
+  synthBorrowed_lt: Bytes
+  synthBorrowed_lte: Bytes
   synthBorrowed_not: Bytes
   synthBorrowed_not_contains: Bytes
   synthBorrowed_not_in: [Bytes!]
@@ -7918,7 +8058,11 @@ input SynthBalance_filter {
   account_starts_with_nocase: String
   address: Bytes
   address_contains: Bytes
+  address_gt: Bytes
+  address_gte: Bytes
   address_in: [Bytes!]
+  address_lt: Bytes
+  address_lte: Bytes
   address_not: Bytes
   address_not_contains: Bytes
   address_not_in: [Bytes!]
@@ -8002,7 +8146,11 @@ input SynthByCurrencyKey_filter {
   id_not_in: [ID!]
   proxyAddress: Bytes
   proxyAddress_contains: Bytes
+  proxyAddress_gt: Bytes
+  proxyAddress_gte: Bytes
   proxyAddress_in: [Bytes!]
+  proxyAddress_lt: Bytes
+  proxyAddress_lte: Bytes
   proxyAddress_not: Bytes
   proxyAddress_not_contains: Bytes
   proxyAddress_not_in: [Bytes!]
@@ -8128,7 +8276,11 @@ input SynthExchange_filter {
   timestamp_not_in: [BigInt!]
   toAddress: Bytes
   toAddress_contains: Bytes
+  toAddress_gt: Bytes
+  toAddress_gte: Bytes
   toAddress_in: [Bytes!]
+  toAddress_lt: Bytes
+  toAddress_lte: Bytes
   toAddress_not: Bytes
   toAddress_not_contains: Bytes
   toAddress_not_in: [Bytes!]

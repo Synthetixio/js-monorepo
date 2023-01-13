@@ -85,6 +85,7 @@ export const useMulticall = (
   const currentTxn = useContractWrite({
     enabled: Boolean(calls.length && CoreProxy),
     mode: 'recklesslyUnprepared',
+    // @ts-ignore
     address: callContract?.address ?? '',
     // @ts-ignore
     abi: callContract?.interface ?? '',

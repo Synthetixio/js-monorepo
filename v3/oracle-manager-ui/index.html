@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="initial-scale=1, width=device-width" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta name="description" content="Synthetix V3 Oracle Manager" />
+    <title>Synthetix V3 Oracle Manager</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      (function () {
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src =
+          window.localStorage.UNSAFE_IMPORT === 'true' ? '/main.js' : `/main.js?_=${Date.now()}`;
+        document.body.appendChild(script);
+      })();
+    </script>
+  </body>
+</html>
