@@ -19,7 +19,7 @@ import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { contracts } from '../../utils/constants';
 import { parseUnits } from '@snx-v3/format';
 import testnetIcon from './testnet.png';
-import { TransactionReview, TransactionStatus } from '@snx-v3/TransactionReview';
+import { TransactionReview } from '@snx-v3/TransactionReview';
 
 const chains = [
   {
@@ -49,6 +49,10 @@ export function TeleporterModal({
 }) {
   const { address } = useAccount();
   const toast = useToast();
+
+  const [processing, setProcessing] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   const { chain: activeChain } = useNetwork();
 
@@ -85,31 +89,35 @@ export function TeleporterModal({
     spender: CCIP!.address,
   });
 
-  const [status, setStatus] = useState<TransactionStatus>('idle');
+  const [step, setStep] = useState<0 | 1 | 2>(0);
 
   const [infiniteApproval, setInfiniteApproval] = useState(false);
   const onSubmit = useCallback(async () => {
-    if (status === 'completed') {
-      // Close window
+    if (completed) {
+      // Reset state and close the window
+      setStep(0);
+      setFailed(false);
       setIsOpen(false);
       return;
     }
 
-    setStatus('processing');
+    setFailed(false);
+    setProcessing(true);
 
-    // Step 1
+    setStep(1);
     if (requireApproval) {
       try {
         await approve(infiniteApproval);
         await refetchAllowance();
       } catch (e) {
         console.error(e);
-        setStatus('failed');
+        setFailed(true);
         return;
       }
     }
 
     // Step 2
+    setStep(2);
     try {
       if (!ccipSend) throw new Error('CCIP contract not ready');
       if (!(amount > 0)) throw new Error('Amount must be greater than zero');
@@ -127,21 +135,22 @@ export function TeleporterModal({
       await balance.refetch();
     } catch (e) {
       console.error(e);
-      setStatus('failed');
+      setFailed(true);
       return;
     }
 
-    setStatus('completed');
+    setProcessing(false);
+    setCompleted(true);
   }, [
     amount,
     approve,
     balance,
     ccipSend,
+    completed,
     infiniteApproval,
     refetchAllowance,
     requireApproval,
     setIsOpen,
-    status,
     toast,
   ]);
 
@@ -157,28 +166,43 @@ export function TeleporterModal({
           <TransactionReview
             step={1}
             title="Approve snxUSD transfer"
-            status={requireApproval ? status : 'completed'}
-            checkbox={{
-              label: 'Approve unlimited snxUSD transfers to Synthetix',
+            status={{
+              failed: step === 1 && failed,
+              success: !requireApproval,
+              loading: approvalLoading,
+            }}
+            checkboxLabel="Approve unlimited snxUSD transfers to Synthetix"
+            checkboxProps={{
               isChecked: infiniteApproval,
               onChange: (e) => setInfiniteApproval(e.target.checked),
             }}
-            isLoading={approvalLoading}
           />
 
           <TransactionReview
             step={2}
             title="Teleport snxUSD"
-            status={requireApproval ? 'idle' : status}
             subtitle={`This will transfer your snxUSD to the ${toChain?.label} network.`}
-            isLoading={teleportingLoading}
+            status={{
+              failed: step === 2 && failed,
+              success: completed,
+              loading: teleportingLoading,
+              disabled: requireApproval,
+            }}
           />
 
-          <Button disabled={status === 'processing'} onClick={onSubmit} width="100%" my="4">
-            {status === 'idle' ? 'Start' : null}
-            {status === 'completed' ? 'Done' : null}
-            {status === 'failed' ? 'Retry' : null}
-            {status === 'processing' ? 'Processing...' : null}
+          <Button disabled={processing} onClick={onSubmit} width="100%" my="4">
+            {(() => {
+              switch (true) {
+                case failed:
+                  return 'Retry';
+                case processing:
+                  return 'Processing...';
+                case completed:
+                  return 'Done';
+                default:
+                  return 'Start';
+              }
+            })()}
           </Button>
         </ModalBody>
       </ModalContent>

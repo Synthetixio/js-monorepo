@@ -150,7 +150,11 @@ export const useManagePosition = ({
         subtitle: collateralChangeBN.gt(wrapEthBalance?.value || 0)
           ? 'You must wrap your ether before depositing.'
           : '',
-        call: async (useBalance?: boolean) => await wrap(collateralChangeBN, useBalance),
+        call: async (useBalance?: boolean) => {
+          if (!useBalance) {
+            await wrap(collateralChangeBN);
+          }
+        },
         checkboxLabel: collateralChangeBN.gt(wrapEthBalance?.value || 0)
           ? ''
           : `Skip this step and use my existing ${collateralChange} wETH.`,

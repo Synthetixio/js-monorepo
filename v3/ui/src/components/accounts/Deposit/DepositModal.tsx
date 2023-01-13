@@ -117,7 +117,6 @@ export function DepositModal({
   const multiTxn = useMulticall(calls, overrides, {
     onMutate: () => {
       toast.closeAll();
-
       if (!Boolean(accountId)) {
         toast({
           title: 'Create your account',
@@ -139,8 +138,6 @@ export function DepositModal({
     onSuccess: async () => {
       toast.closeAll();
       await Promise.all([balanceRefetch(), refetchAccounts()]);
-      setProcessing(false);
-      setCompleted(true);
       if (!Boolean(accountId)) {
         navigate(
           generatePath('/accounts/:accountId/positions/:collateral/:poolId', {
@@ -170,6 +167,7 @@ export function DepositModal({
   const {
     approve,
     requireApproval,
+    refetchAllowance,
     isLoading: approvalLoading,
   } = useApprove(
     {
@@ -215,6 +213,7 @@ export function DepositModal({
     if (requireApproval) {
       try {
         await approve(Boolean(infiniteApproval));
+        await refetchAllowance();
       } catch (e) {
         console.error(e);
         setFailed(true);
@@ -230,7 +229,18 @@ export function DepositModal({
       setFailed(true);
       return;
     }
-  }, [completed, requireApproval, setIsOpen, approve, infiniteApproval, multiTxn]);
+
+    setProcessing(false);
+    setCompleted(true);
+  }, [
+    completed,
+    requireApproval,
+    setIsOpen,
+    approve,
+    infiniteApproval,
+    refetchAllowance,
+    multiTxn,
+  ]);
 
   return (
     <Modal size="lg" isOpen={isOpen} onClose={() => setIsOpen(false)} closeOnOverlayClick={false}>
@@ -271,7 +281,6 @@ export function DepositModal({
           <Button disabled={processing} onClick={onSubmit} width="100%" my="4">
             {(() => {
               switch (true) {
-                // order matters
                 case failed:
                   return 'Retry';
                 case processing:

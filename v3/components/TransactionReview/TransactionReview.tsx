@@ -1,5 +1,5 @@
-import { ChangeEvent, PropsWithChildren } from 'react';
-import { Box, Checkbox, Flex, Text, CheckboxProps } from '@chakra-ui/react';
+import { PropsWithChildren } from 'react';
+import { Box, Checkbox, CheckboxProps, Flex, Text } from '@chakra-ui/react';
 import { Step } from './Step';
 import { statusColor } from './statusColor';
 import { TransactionStatus } from './TransactionStatus';
