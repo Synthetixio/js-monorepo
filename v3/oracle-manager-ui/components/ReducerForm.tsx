@@ -11,13 +11,17 @@ export const ReducerForm: FC<{
     defaultValues: { operation: operation || 0 },
   });
   useEffect(() => {
+    // eslint-disable-next-line
     getValuesFromForm(getValues('operation'));
-  }, [watch()]);
+    // eslint-disable-next-line
+  }, [watch('operation')]);
   return (
     <>
       <Select {...register('operation', { valueAsNumber: true })}>
         {ORACLE_NODE_TYPES[4].parameters[0].options!.map((option) => (
-          <option value={option.value}>{option.label}</option>
+          <option value={option.value} key={option.value}>
+            {option.label}
+          </option>
         ))}
       </Select>
     </>

@@ -10,7 +10,9 @@ export const ChainLinkForm: FC<{
 }> = ({ address, twap, getValuesFromForm }) => {
   const { register, getValues, watch } = useForm({ defaultValues: { address, twap } });
   useEffect(() => {
+    // eslint-disable-next-line
     getValuesFromForm(getValues('address'), getValues('twap'));
+    // eslint-disable-next-line
   }, [watch()]);
 
   return (

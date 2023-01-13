@@ -50,9 +50,11 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
       setValue('nodeParameters', node?.parameters);
       setValue('nodeLabel', node?.data.label);
     }
-  }, [node?.type]);
+  }, [node?.type, setValue, node?.parents, node?.data.label, node?.parameters]);
+
+  const type = watch('oracleNodeType');
+
   const componentByOracleType = useMemo(() => {
-    const type = getValues('oracleNodeType');
     if (type === 'chainLink')
       return (
         <ChainLinkForm
@@ -123,7 +125,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
           }}
         />
       );
-  }, [watch('oracleNodeType')]);
+  }, [type, node, setValue]);
 
   return (
     <Modal

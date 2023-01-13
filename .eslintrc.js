@@ -47,7 +47,13 @@ module.exports = {
 
   overrides: [
     {
-      files: ['v3/ui/**/*', 'v3/components/**/*', 'v3/lib/**/*', 'v3/theme/**/*'],
+      files: [
+        'v3/ui/**/*',
+        'v3/components/**/*',
+        'v3/lib/**/*',
+        'v3/theme/**/*',
+        'v3/oracle-manager-ui/**/*',
+      ],
 
       env: {
         browser: true,

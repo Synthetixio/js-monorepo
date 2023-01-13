@@ -13,7 +13,9 @@ export const PythForm: FC<{
     defaultValues: { address, priceFeedId, useEma },
   });
   useEffect(() => {
+    // eslint-disable-next-line
     getValuesFromForm(getValues('address'), getValues('priceFeedId'), getValues('useEma'));
+    // eslint-disable-next-line
   }, [watch()]);
   return (
     <>

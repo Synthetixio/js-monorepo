@@ -11,7 +11,9 @@ export const PriceDeviationCircuitBreakerForm: FC<{
     defaultValues: { tolerance },
   });
   useEffect(() => {
+    // eslint-disable-next-line
     getValuesFromForm(getValues('tolerance'));
+    // eslint-disable-next-line
   }, [watch()]);
   return (
     <>

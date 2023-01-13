@@ -17,12 +17,14 @@ export const UniswapForm: FC<{
   });
 
   useEffect(() => {
+    // eslint-disable-next-line
     getValuesFromForm(
       getValues('tokenOne'),
       getValues('tokenTwo'),
       getValues('pool'),
       getValues('secondsAgo')
     );
+    // eslint-disable-next-line
   }, [watch()]);
   return (
     <>

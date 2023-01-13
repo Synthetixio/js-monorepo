@@ -165,8 +165,8 @@ export const Chart: FC = () => {
         }
       });
     }
+    // eslint-disable-next-line
   }, []);
-  console.log(nodes);
   return (
     <Box w="100%" h="800px">
       <Text textAlign="center" fontWeight="bold">

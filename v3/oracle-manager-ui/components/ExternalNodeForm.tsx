@@ -12,7 +12,9 @@ export const ExternalNodeForm: FC<{
   });
 
   useEffect(() => {
+    // eslint-disable-next-line
     getValuesFromForm(getValues('address'));
+    // eslint-disable-next-line
   }, [watch()]);
   return (
     <>

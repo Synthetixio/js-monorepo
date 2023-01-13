@@ -1,5 +1,5 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
-import { Contract, utils } from 'ethers';
+import { Contract } from 'ethers';
 import type { providers } from 'ethers';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useAccount, useSigner } from 'wagmi';
@@ -16,6 +16,17 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   const [price, setPrice] = useState('0');
   const signer = useSigner();
   const { isConnected } = useAccount();
+
+  const findParentNode = useCallback(
+    (parentId: string) => {
+      const parentNode = nodes.find((node) => node.id === parentId);
+      if (parentNode) {
+        return hashId(parentNode, []);
+      }
+      return '';
+    },
+    [nodes]
+  );
 
   useEffect(() => {
     if (isConnected && signer.data) {
@@ -43,20 +54,15 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
       fetchNodeState();
     }
   }, [
+    node,
     isConnected,
     signer.isSuccess,
+    signer.data,
+    findParentNode,
     node.typeId,
-    node.parameters.toString(),
-    node.parents.toString(),
+    node.parameters,
+    node.parents,
   ]);
-
-  const findParentNode = (parentId: string) => {
-    const parentNode = nodes.find((node) => node.id === parentId);
-    if (parentNode) {
-      return hashId(parentNode, []);
-    }
-    return '';
-  };
 
   const handleButtonClick = async () => {
     if (nodeState === 'registerNode' && contract) {
@@ -87,7 +93,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
     if (nodeState === 'registerNode') return <Text>Register Node</Text>;
     if (nodeState === 'nodeRegistered') return <Text>Click for price update</Text>;
     return 'Something went wrong';
-  }, [nodeState]);
+  }, [nodeState, isConnected]);
 
   return (
     <Flex flexDir="column" alignItems="center">
