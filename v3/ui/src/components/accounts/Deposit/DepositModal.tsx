@@ -1,4 +1,3 @@
-import { useLiquidityPositions } from '@snx-v3/useLiquidityPositions';
 import {
   Button,
   Modal,
@@ -10,16 +9,19 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { CallOverrides } from 'ethers';
-import { parseUnits } from '@snx-v3/format';
-import { useAccounts } from '@snx-v3/useAccounts';
-import type { CollateralType } from '@snx-v3/useCollateralTypes';
+import { formatValue, parseUnits } from '@snx-v3/format';
 import { useCallback, useMemo, useState } from 'react';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
+import { Amount } from '@snx-v3/Amount';
+import { useLiquidityPositions } from '@snx-v3/useLiquidityPositions';
+import { CallOverrides } from 'ethers';
+import { useAccounts } from '@snx-v3/useAccounts';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { contracts } from '../../../utils/constants';
 import { useApprove } from '@snx-v3/useApprove';
 import { useContract } from '../../../hooks/useContract';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
+import { useWrapEth } from '../../../hooks/useWrapEth';
 import { TransactionReview } from '@snx-v3/TransactionReview';
 import { useTokenBalance } from '../../../hooks/useTokenBalance';
 
@@ -51,7 +53,12 @@ export function DepositModal({
 
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
 
+  const { wrap, balance: wrapEthBalance, isLoading: wrapEthLoading } = useWrapEth();
   const amountBN = parseUnits(amount);
+  const wrapAmount =
+    collateralType?.symbol === 'WETH' && amountBN.gt(wrapEthBalance?.value || 0)
+      ? amountBN.sub(wrapEthBalance?.value || 0)
+      : parseUnits(0);
 
   const newAccountId = useMemo(() => `${Math.floor(Math.random() * 10000000000)}`, []);
 
@@ -163,7 +170,6 @@ export function DepositModal({
       });
     },
   });
-  console.log(`collateralType`, collateralType);
 
   const {
     approve,
@@ -196,21 +202,44 @@ export function DepositModal({
   );
 
   const [infiniteApproval, setInfiniteApproval] = useState(false);
-  const [step, setStep] = useState<0 | 1 | 2>(0);
+  const [step, setStep] = useState<'idle' | 'wrap' | 'approve' | 'deposit'>('idle');
+
+  const onClose = useCallback(() => {
+    setStep('idle');
+    setCompleted(false);
+    setFailed(false);
+    setProcessing(false);
+    setIsOpen(false);
+  }, [setIsOpen]);
 
   const onSubmit = useCallback(async () => {
     if (completed) {
-      // Reset state and close the window
-      setStep(0);
-      setFailed(false);
-      setIsOpen(false);
+      onClose();
       return;
     }
 
     setFailed(false);
     setProcessing(true);
 
-    setStep(1);
+    setStep('wrap');
+    if (collateralType?.symbol === 'WETH' && wrapAmount.gt(0)) {
+      try {
+        await wrap(wrapAmount);
+      } catch (e) {
+        console.error(e);
+        setFailed(true);
+        toast.closeAll();
+        toast({
+          title: 'Wrapping ETH failed',
+          description: 'Please try again.',
+          status: 'error',
+        });
+        return;
+      }
+    }
+
+    // Step 2, get token approval
+    setStep('approve');
     if (requireApproval) {
       try {
         await approve(Boolean(infiniteApproval));
@@ -223,7 +252,7 @@ export function DepositModal({
       }
     }
 
-    setStep(2);
+    setStep('deposit');
     try {
       await multiTxn.exec();
     } catch (e) {
@@ -237,8 +266,12 @@ export function DepositModal({
     setCompleted(true);
   }, [
     completed,
+    collateralType?.symbol,
+    wrapAmount,
     requireApproval,
-    setIsOpen,
+    onClose,
+    wrap,
+    toast,
     approve,
     infiniteApproval,
     refetchAllowance,
@@ -246,18 +279,7 @@ export function DepositModal({
   ]);
 
   return (
-    <Modal
-      size="lg"
-      isOpen={isOpen}
-      onClose={() => {
-        setStep(0);
-        setCompleted(false);
-        setFailed(false);
-        setProcessing(false);
-        setIsOpen(false);
-      }}
-      closeOnOverlayClick={false}
-    >
+    <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
       <ModalOverlay />
       <ModalContent bg="black" color="white">
         <ModalHeader>Complete this action</ModalHeader>
@@ -267,13 +289,37 @@ export function DepositModal({
 
           <TransactionReview
             step={1}
-            title={`Approve ${collateralType.symbol.toUpperCase()} transfer`}
+            title="Wrap"
+            subtitle={
+              wrapAmount.eq(0) ? (
+                <Text as="div">
+                  <Amount value={formatValue(amountBN)} suffix={` ${collateralType.symbol}`} /> from
+                  balance will be used.
+                </Text>
+              ) : (
+                <Text as="div">
+                  You must wrap additional <Amount value={formatValue(wrapAmount)} suffix=" ETH" />{' '}
+                  before depositing.
+                </Text>
+              )
+            }
             status={{
-              failed: step === 1 && failed,
-              success: !requireApproval,
-              loading: approvalLoading,
+              failed: step === 'wrap' && failed,
+              disabled: collateralType?.symbol !== 'WETH',
+              success: wrapAmount.eq(0),
+              loading: (step === 'wrap' && processing) || wrapEthLoading,
             }}
-            checkboxLabel={`Approve unlimited ${collateralType.symbol.toUpperCase()} transfers to Synthetix.`}
+          />
+
+          <TransactionReview
+            step={2}
+            title={`Approve ${collateralType.symbol} transfer`}
+            status={{
+              failed: step === 'approve' && failed,
+              success: !requireApproval,
+              loading: (step === 'approve' && processing) || approvalLoading,
+            }}
+            checkboxLabel={`Approve unlimited ${collateralType.symbol} transfers to Synthetix.`}
             checkboxProps={{
               isChecked: infiniteApproval,
               onChange: (e) => setInfiniteApproval(e.target.checked),
@@ -281,14 +327,14 @@ export function DepositModal({
           />
 
           <TransactionReview
-            step={2}
-            title={`Deposit ${collateralType.symbol.toUpperCase()}`}
-            subtitle={`This will transfer your ${collateralType.symbol.toUpperCase()} to Synthetix.`}
+            step={3}
+            title={`Deposit ${collateralType.symbol}`}
+            subtitle={`This will transfer your ${collateralType.symbol} to Synthetix.`}
             status={{
-              failed: step === 2 && failed,
+              failed: step === 'deposit' && failed,
               disabled: requireApproval,
               success: completed,
-              loading: multiTxn.isLoading,
+              loading: (step === 'deposit' && processing) || multiTxn.isLoading,
             }}
           />
 

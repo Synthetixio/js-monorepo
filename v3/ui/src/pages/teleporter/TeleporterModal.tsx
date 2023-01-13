@@ -89,22 +89,28 @@ export function TeleporterModal({
     spender: CCIP!.address,
   });
 
-  const [step, setStep] = useState<0 | 1 | 2>(0);
+  const [step, setStep] = useState<'idle' | 'approve' | 'transfer'>('idle');
 
   const [infiniteApproval, setInfiniteApproval] = useState(false);
+
+  const onClose = useCallback(() => {
+    setStep('idle');
+    setCompleted(false);
+    setFailed(false);
+    setProcessing(false);
+    setIsOpen(false);
+  }, [setIsOpen]);
+
   const onSubmit = useCallback(async () => {
     if (completed) {
-      // Reset state and close the window
-      setStep(0);
-      setFailed(false);
-      setIsOpen(false);
+      onClose();
       return;
     }
 
     setFailed(false);
     setProcessing(true);
 
-    setStep(1);
+    setStep('approve');
     if (requireApproval) {
       try {
         await approve(infiniteApproval);
@@ -117,8 +123,7 @@ export function TeleporterModal({
       }
     }
 
-    // Step 2
-    setStep(2);
+    setStep('transfer');
     try {
       if (!ccipSend) throw new Error('CCIP contract not ready');
       if (!(amount > 0)) throw new Error('Amount must be greater than zero');
@@ -150,25 +155,14 @@ export function TeleporterModal({
     ccipSend,
     completed,
     infiniteApproval,
+    onClose,
     refetchAllowance,
     requireApproval,
-    setIsOpen,
     toast,
   ]);
 
   return (
-    <Modal
-      size="lg"
-      isOpen={isOpen}
-      onClose={() => {
-        setStep(0);
-        setCompleted(false);
-        setFailed(false);
-        setProcessing(false);
-        setIsOpen(false);
-      }}
-      closeOnOverlayClick={false}
-    >
+    <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
       <ModalOverlay />
       <ModalContent bg="black" color="white">
         <ModalHeader>Complete this action</ModalHeader>
@@ -180,7 +174,7 @@ export function TeleporterModal({
             step={1}
             title="Approve snxUSD transfer"
             status={{
-              failed: step === 1 && failed,
+              failed: step === 'approve' && failed,
               success: !requireApproval,
               loading: approvalLoading,
             }}
@@ -196,7 +190,7 @@ export function TeleporterModal({
             title="Teleport snxUSD"
             subtitle={`This will transfer your snxUSD to the ${toChain?.label} network.`}
             status={{
-              failed: step === 2 && failed,
+              failed: step === 'transfer' && failed,
               success: completed,
               loading: teleportingLoading,
               disabled: requireApproval,

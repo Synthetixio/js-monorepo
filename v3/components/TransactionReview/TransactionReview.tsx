@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactElement } from 'react';
 import { Box, Checkbox, CheckboxProps, Flex, Text } from '@chakra-ui/react';
 import { Step } from './Step';
 import { statusColor } from './statusColor';
@@ -26,8 +26,8 @@ export function TransactionReview({
   children,
 }: PropsWithChildren<{
   step: number;
-  title: string;
-  subtitle?: string;
+  title: string | ReactElement;
+  subtitle?: string | ReactElement;
   checkboxLabel?: string;
   checkboxProps?: CheckboxProps;
   status: TransactionStatus;
@@ -49,7 +49,7 @@ export function TransactionReview({
       <Flex direction="column">
         <Text>{title}</Text>
         {subtitle ? (
-          <Text fontSize="xs" opacity="0.66">
+          <Text as="div" fontSize="xs" opacity="0.66">
             {subtitle}
           </Text>
         ) : null}
