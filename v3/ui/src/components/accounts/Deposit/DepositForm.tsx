@@ -88,8 +88,6 @@ export function DepositForm() {
                 ref={inputRef}
                 borderWidth="0px"
                 type="text"
-                inputMode="decimal"
-                maxLength={18}
                 textAlign="end"
                 p={0}
                 outline="none"
@@ -103,17 +101,13 @@ export function DepositForm() {
                 placeholder="Enter Amount"
                 _focus={{ boxShadow: 'none !important' }}
                 _placeholder={{ color: 'whiteAlpha.700' }}
-                min="0"
                 required
                 value={numberWithCommas(amount)}
                 onChange={(e) => {
                   const value = e.target.value.replaceAll(',', '');
-                  if (!/^[0-9]*(\.[0-9]{0,2})?$/.test(value)) {
-                    return;
-                  }
                   setActiveBadge(0);
                   setAmount(value);
-                  const currentAmount = wei(value);
+                  const currentAmount = wei(value || 0);
                   if (currentAmount.gte(balanceData.value.toBN())) {
                     e.target.setCustomValidity('Insufficient Balance');
                   } else if (currentAmount.gt(0)) {
