@@ -1,5 +1,6 @@
 import { Amount } from '@snx-v3/Amount';
-import { Button, Image, Td, Text, Tr } from '@chakra-ui/react';
+import { Button, Image, Td, Text, Tooltip, Tr } from '@chakra-ui/react';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { LiquidityPosition, useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { FC } from 'react';
@@ -32,24 +33,38 @@ function VaultRowUi({
     <Tr>
       <Td>
         <Image alt="collateral image" width="24px" height="24px" src={collateralType.logo} />
-        <Amount value={liquidityPosition ? liquidityPosition.collateralValue : '0'} prefix="$" />
+        {liquidityPosition?.collateralValue.gt(0) ? (
+          <Amount value={liquidityPosition.collateralValue} prefix="$" />
+        ) : (
+          '-'
+        )}
         <Text fontSize="xs" opacity="0.66" mt="1">
-          <Amount
-            value={liquidityPosition ? liquidityPosition.collateralAmount : '0'}
-            suffix={` ${symbol}`}
-          />
+          {liquidityPosition?.collateralValue.gt(0) ? (
+            <Amount value={liquidityPosition.collateralAmount} suffix={` ${symbol}`} />
+          ) : (
+            '-'
+          )}
         </Text>
       </Td>
       <Td>
-        <Amount value={liquidityPosition ? liquidityPosition.debt : '0'} prefix="$" />
+        {liquidityPosition?.debt.gt(0) ? <Amount value={liquidityPosition.debt} prefix="$" /> : '-'}
       </Td>
       <Td>
-        <Amount value={liquidityPosition ? liquidityPosition.cRatio : '0'} suffix="%" />
-        <Text fontSize="xs" opacity="0.66" mt="1">
-          <Amount value={liquidityPosition ? collateralType.liquidationRatioD18 : '0'} suffix="%" />
-        </Text>
+        {liquidityPosition?.cRatio.gt(0) ? (
+          <Amount value={liquidityPosition.cRatio} suffix="%" />
+        ) : (
+          '-'
+        )}
       </Td>
-      <Td>TODO</Td>
+      <Td>
+        <Amount value={collateralType.issuanceRatioD18.mul(100)} suffix="%" />
+        <Tooltip label="Liquidation Ratio">
+          <Text fontSize="xs" opacity="0.66" mt="1">
+            <Amount value={collateralType.liquidationRatioD18.mul(100)} suffix="%" />{' '}
+            <InfoOutlineIcon ml="1" transform="translateY(-1.5px)" />
+          </Text>
+        </Tooltip>
+      </Td>
       <Td>
         {isConnected && hasLiquidity ? (
           <Button
