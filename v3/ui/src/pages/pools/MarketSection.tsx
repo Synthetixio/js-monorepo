@@ -58,12 +58,13 @@ export function MarketSectionUi({
   marketNamesById,
 }: {
   isLoading: boolean;
-  poolData?: Pool | null;
+  poolData?: Pool;
   marketNamesById?: Record<string, string | undefined>;
 }) {
-  if (isLoading || !poolData) return <Spinner />;
   const sevenDaysPerformance = calculatePoolPerformanceSevenDays(poolData);
   const lifeTimePerformance = calculatePoolPerformanceLifetime(poolData);
+  if (isLoading || !sevenDaysPerformance || !lifeTimePerformance) return <Spinner />;
+
   return (
     <Box padding={4} pb={0} borderColor="gray.900" borderWidth="1px" borderRadius="base">
       <Text fontSize="xl" fontWeight={700} mb={2}>
@@ -134,7 +135,9 @@ export function MarketSectionUi({
               </Tr>
             </Thead>
             <Tbody>
-              {poolData.configurations.length === 0 ? (
+              {/* TODO skeleton */}
+              {!poolData && <Spinner />}
+              {poolData?.configurations.length === 0 ? (
                 <Tr w="full">
                   <Td colSpan={4} border="none">
                     <Text textAlign="center" mt={4}>
@@ -143,7 +146,7 @@ export function MarketSectionUi({
                   </Td>
                 </Tr>
               ) : (
-                poolData.configurations.map(({ id, market, max_debt_share_value, weight }, i) => {
+                poolData?.configurations.map(({ id, market, max_debt_share_value, weight }, i) => {
                   const isLastItem = i + 1 === poolData.configurations.length;
                   const growth = calculateSevenDaysPnlGrowth(market.market_snapshots_by_week);
                   return (
@@ -212,6 +215,10 @@ export const MarketSection = () => {
   const isLoading = isLoadingPoolData || isLoadingMarketNames;
 
   return (
-    <MarketSectionUi marketNamesById={marketNamesById} poolData={poolData} isLoading={isLoading} />
+    <MarketSectionUi
+      marketNamesById={marketNamesById}
+      poolData={poolData || undefined}
+      isLoading={isLoading}
+    />
   );
 };
