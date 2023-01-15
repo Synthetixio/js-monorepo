@@ -7890,6 +7890,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/GreenOrRedText@workspace:*, @snx-v3/GreenOrRedText@workspace:v3/components/GreenOrRedText":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/GreenOrRedText@workspace:v3/components/GreenOrRedText"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@synthetixio/wei": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/Multistep@workspace:*, @snx-v3/Multistep@workspace:v3/components/Multistep":
   version: 0.0.0-use.local
   resolution: "@snx-v3/Multistep@workspace:v3/components/Multistep"
@@ -10548,6 +10557,7 @@ __metadata:
     "@snx-v3/Balance": "workspace:*"
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/Constants": "workspace:*"
+    "@snx-v3/GreenOrRedText": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"

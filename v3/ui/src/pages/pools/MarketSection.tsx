@@ -13,7 +13,6 @@ import {
   Thead,
   Tr,
   Tbody,
-  TextProps,
 } from '@chakra-ui/react';
 import { Pool } from '../../hooks/useGetPoolData';
 import {
@@ -22,14 +21,10 @@ import {
   calculatePoolPerformanceLifetime,
 } from '../../utils/calculations';
 import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
-import Wei from '@synthetixio/wei';
 import { useParams } from '@snx-v3/useParams';
 import { useMarketNamesById } from '@snx-v3/useMarketNamesById';
 import { useGetPoolData } from '../../hooks/useGetPoolData';
-
-const GreenOrRedText = (props: TextProps & { value: Wei }) => (
-  <Text color={props.value.gte(0) ? 'green.500' : 'red.400'} {...props}></Text>
-);
+import { GreenOrRedText } from '@snx-v3/GreenOrRedText';
 
 const StyledTh: FC<TableCellProps> = (props) => (
   <Th
