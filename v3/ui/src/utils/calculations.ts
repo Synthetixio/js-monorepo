@@ -20,13 +20,16 @@ export const calculatePoolPerformanceLifetime = (poolData: Pool) => {
   }, wei(0));
 };
 
-export const calculatePoolPerformanceSevenDays = (poolData: Pool) => {
+export const calculatePoolPerformanceSevenDays = (poolData?: Pool) => {
+  if (!poolData) {
+    return undefined;
+  }
   const total = calculatePoolPerformanceLifetime(poolData);
   const totalSevenDaysAgo = poolData.configurations.reduce((acc, { market }) => {
     return acc.add(market.market_snapshots_by_week[1]?.pnl || wei(0));
   }, wei(0));
   return {
-    value: total.sub(totalSevenDaysAgo),
+    value: total.sub(totalSevenDaysAgo), // Not that this value does not take into account that other pools might have exposure to markets
     growthPercentage: totalSevenDaysAgo.eq(0)
       ? undefined
       : total.sub(totalSevenDaysAgo).div(totalSevenDaysAgo),

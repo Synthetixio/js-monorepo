@@ -1,17 +1,24 @@
-import { Box, Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
+import { Box, Button, Divider, Flex, Heading, Skeleton, Text, Tooltip } from '@chakra-ui/react';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
 import { useParams } from '@snx-v3/useParams';
 import { FC, useEffect } from 'react';
 import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { DepositForm } from '../../components/accounts/Deposit';
 import { useAccounts } from '@snx-v3/useAccounts';
+import { useGetPoolData } from '../../hooks/useGetPoolData';
+import { calculatePoolPerformanceSevenDays } from '../../utils/calculations';
+import { formatPercent } from '@snx-v2/formatters';
+import { GreenOrRedText } from '@snx-v3/GreenOrRedText';
+import { wei } from '@synthetixio/wei';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 
 const DepositUi: FC<{
   collateralSymbol?: string;
   preferredPool?: { name: string; id: string };
   accountId?: string;
+  sevenDaysPoolPerformance?: number;
   navigate: NavigateFunction;
-}> = ({ preferredPool, accountId, collateralSymbol, navigate }) => {
+}> = ({ preferredPool, accountId, collateralSymbol, navigate, sevenDaysPoolPerformance }) => {
   return (
     <Flex height="100%" flexDirection="column">
       <Flex alignItems="flex-end" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
@@ -86,13 +93,20 @@ const DepositUi: FC<{
             deposited in this pool by default.
           </Text>
           <Box mt={4} p={4} border="1px" borderColor="gray.500" borderRadius="base">
-            <Heading fontSize="md">Performance</Heading>
-            <Text color="green.500" fontSize="2xl" fontWeight="bold">
-              TODO
-            </Text>
-            <Text color="green.500" fontSize="md" fontWeight="bold">
-              TODO
-            </Text>
+            <Heading fontSize="md" alignItems="center" display="flex">
+              Performance Last 7 Days{' '}
+              <Tooltip label="Average growth of all markets in the pool for the last 7 days">
+                <InfoOutlineIcon ml={1} />
+              </Tooltip>
+            </Heading>
+            <GreenOrRedText
+              color="green.500"
+              fontSize="2xl"
+              fontWeight="bold"
+              value={sevenDaysPoolPerformance || wei(0)}
+            >
+              {sevenDaysPoolPerformance ? formatPercent(sevenDaysPoolPerformance) : <Skeleton />}
+            </GreenOrRedText>
           </Box>
         </Box>
       </Flex>
@@ -103,6 +117,8 @@ const DepositUi: FC<{
 export const Deposit = () => {
   const params = useParams();
   const { data: preferredPool } = usePreferredPool();
+  const { data: poolData } = useGetPoolData(preferredPool?.id);
+  const sevenDaysPoolPerformance = calculatePoolPerformanceSevenDays(poolData);
   const navigate = useNavigate();
 
   const { data: accounts = [] } = useAccounts();
@@ -125,6 +141,7 @@ export const Deposit = () => {
       preferredPool={preferredPool}
       accountId={params.accountId}
       navigate={navigate}
+      sevenDaysPoolPerformance={sevenDaysPoolPerformance?.growthPercentage?.toNumber()}
     />
   );
 };
