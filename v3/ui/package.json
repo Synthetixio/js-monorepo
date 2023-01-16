@@ -25,6 +25,7 @@
     "@snx-v3/CollateralTypeSelector": "workspace:*",
     "@snx-v3/Constants": "workspace:*",
     "@snx-v3/Multistep": "workspace:*",
+    "@snx-v3/TrendText": "workspace:*",
     "@snx-v3/etherscanLink": "workspace:*",
     "@snx-v3/format": "workspace:*",
     "@snx-v3/useAccounts": "workspace:*",

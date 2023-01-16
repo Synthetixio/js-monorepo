@@ -1,17 +1,24 @@
-import { Box, Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
+import { Box, Button, Divider, Flex, Heading, Skeleton, Text, Tooltip } from '@chakra-ui/react';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
 import { useParams } from '@snx-v3/useParams';
 import { FC, useEffect } from 'react';
 import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { DepositForm } from '../../components/accounts/Deposit';
 import { useAccounts } from '@snx-v3/useAccounts';
+import { useGetPoolData } from '../../hooks/useGetPoolData';
+import { calculatePoolPerformanceSevenDays } from '../../utils/calculations';
+import { formatPercent } from '@snx-v2/formatters';
+import { TrendText } from '@snx-v3/TrendText';
+import { wei } from '@synthetixio/wei';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 
 const DepositUi: FC<{
   collateralSymbol?: string;
   preferredPool?: { name: string; id: string };
   accountId?: string;
+  sevenDaysPoolPerformance?: number;
   navigate: NavigateFunction;
-}> = ({ preferredPool, accountId, collateralSymbol, navigate }) => {
+}> = ({ preferredPool, accountId, collateralSymbol, navigate, sevenDaysPoolPerformance }) => {
   return (
     <Flex height="100%" flexDirection="column">
       <Flex alignItems="flex-end" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
@@ -57,42 +64,54 @@ const DepositUi: FC<{
           borderColor="gray.900"
           borderRadius="base"
         >
-          {
-            preferredPool ? (
-              <Flex justifyContent="space-between">
-                <Flex flexDirection="column">
-                  <Heading fontSize="xl">{preferredPool.name}</Heading>
-                  <Text fontSize="sm" color="gray.400">
-                    Pool #{preferredPool.id}
-                  </Text>
-                </Flex>
-                <Button
-                  size="sm"
-                  onClick={() =>
-                    navigate({
-                      pathname: generatePath('/pools/:poolId', { poolId: preferredPool.id }),
-                      search: accountId ? createSearchParams({ accountId }).toString() : '',
-                    })
-                  }
-                  variant="outline"
-                >
-                  See Pool
-                </Button>
+          {preferredPool ? (
+            <Flex justifyContent="space-between">
+              <Flex flexDirection="column">
+                <Heading fontSize="xl">{preferredPool.name}</Heading>
+                <Text fontSize="sm" color="gray.400">
+                  Pool #{preferredPool.id}
+                </Text>
               </Flex>
-            ) : null // TODO skeleton
-          }
+              <Button
+                size="sm"
+                onClick={() =>
+                  navigate({
+                    pathname: generatePath('/pools/:poolId', { poolId: preferredPool.id }),
+                    search: accountId ? createSearchParams({ accountId }).toString() : '',
+                  })
+                }
+                variant="outline"
+              >
+                See Pool
+              </Button>
+            </Flex>
+          ) : (
+            <Flex justifyContent="space-between">
+              <Box>
+                <Skeleton w={16} height={8} />
+                <Skeleton mt={1} w={8} height={6} />
+              </Box>
+              <Skeleton w={16} height={6} />
+            </Flex>
+          )}
           <Text color="gray.400" mt={2} fontSize="sm">
             The Spartan Council Pool is the primary pool of Synthetix. All collateral will be
             deposited in this pool by default.
           </Text>
           <Box mt={4} p={4} border="1px" borderColor="gray.500" borderRadius="base">
-            <Heading fontSize="md">Performance</Heading>
-            <Text color="green.500" fontSize="2xl" fontWeight="bold">
-              TODO
-            </Text>
-            <Text color="green.500" fontSize="md" fontWeight="bold">
-              TODO
-            </Text>
+            <Heading fontSize="md" alignItems="center" display="flex">
+              Performance Last 7 Days{' '}
+              <Tooltip label="Average growth of all markets in the pool for the last 7 days">
+                <InfoOutlineIcon ml={1} />
+              </Tooltip>
+            </Heading>
+            <TrendText fontSize="2xl" fontWeight="bold" value={sevenDaysPoolPerformance || wei(0)}>
+              {sevenDaysPoolPerformance ? (
+                formatPercent(sevenDaysPoolPerformance)
+              ) : (
+                <Skeleton mt={1} w={16} height={9} />
+              )}
+            </TrendText>
           </Box>
         </Box>
       </Flex>
@@ -103,6 +122,9 @@ const DepositUi: FC<{
 export const Deposit = () => {
   const params = useParams();
   const { data: preferredPool } = usePreferredPool();
+  const { data: poolData } = useGetPoolData(preferredPool?.id);
+  const sevenDaysPoolPerformance = calculatePoolPerformanceSevenDays(poolData);
+
   const navigate = useNavigate();
 
   const { data: accounts = [] } = useAccounts();
@@ -125,6 +147,7 @@ export const Deposit = () => {
       preferredPool={preferredPool}
       accountId={params.accountId}
       navigate={navigate}
+      sevenDaysPoolPerformance={sevenDaysPoolPerformance?.growthPercentage?.toNumber()}
     />
   );
 };

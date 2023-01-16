@@ -13,7 +13,6 @@ import {
   Thead,
   Tr,
   Tbody,
-  TextProps,
 } from '@chakra-ui/react';
 import { Pool } from '../../hooks/useGetPoolData';
 import {
@@ -22,14 +21,10 @@ import {
   calculatePoolPerformanceLifetime,
 } from '../../utils/calculations';
 import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
-import Wei from '@synthetixio/wei';
 import { useParams } from '@snx-v3/useParams';
 import { useMarketNamesById } from '@snx-v3/useMarketNamesById';
 import { useGetPoolData } from '../../hooks/useGetPoolData';
-
-const GreenOrRedText = (props: TextProps & { value: Wei }) => (
-  <Text color={props.value.gte(0) ? 'green.500' : 'red.400'} {...props}></Text>
-);
+import { TrendText } from '@snx-v3/TrendText';
 
 const StyledTh: FC<TableCellProps> = (props) => (
   <Th
@@ -63,12 +58,13 @@ export function MarketSectionUi({
   marketNamesById,
 }: {
   isLoading: boolean;
-  poolData?: Pool | null;
+  poolData?: Pool;
   marketNamesById?: Record<string, string | undefined>;
 }) {
-  if (isLoading || !poolData) return <Spinner />;
   const sevenDaysPerformance = calculatePoolPerformanceSevenDays(poolData);
   const lifeTimePerformance = calculatePoolPerformanceLifetime(poolData);
+  if (isLoading || !sevenDaysPerformance || !lifeTimePerformance) return <Spinner />;
+
   return (
     <Box padding={4} pb={0} borderColor="gray.900" borderWidth="1px" borderRadius="base">
       <Text fontSize="xl" fontWeight={700} mb={2}>
@@ -88,7 +84,7 @@ export function MarketSectionUi({
           <Text color="gray.500" fontSize="xs">
             PERFORMANCE 7 DAYS
           </Text>
-          <GreenOrRedText
+          <TrendText
             value={sevenDaysPerformance.value}
             display="flex"
             alignItems="center"
@@ -96,11 +92,11 @@ export function MarketSectionUi({
           >
             {formatNumberToUsd(sevenDaysPerformance.value.toNumber())}{' '}
             <InfoOutlineIcon height="16px" width="16px" color="white" ml={1} />
-          </GreenOrRedText>
+          </TrendText>
           {sevenDaysPerformance.growthPercentage ? (
-            <GreenOrRedText value={sevenDaysPerformance.growthPercentage}>
+            <TrendText value={sevenDaysPerformance.growthPercentage}>
               {formatPercent(sevenDaysPerformance.growthPercentage.toNumber())}
-            </GreenOrRedText>
+            </TrendText>
           ) : null}
         </Box>
         <Box
@@ -116,15 +112,10 @@ export function MarketSectionUi({
           <Text color="gray.500" fontSize="xs">
             PERFORMANCE LIFETIME
           </Text>
-          <GreenOrRedText
-            value={lifeTimePerformance}
-            display="flex"
-            alignItems="center"
-            fontSize="2xl"
-          >
+          <TrendText value={lifeTimePerformance} display="flex" alignItems="center" fontSize="2xl">
             {formatNumberToUsd(lifeTimePerformance.toNumber())}{' '}
             <InfoOutlineIcon height="16px" width="16px" color="white" ml={1} />
-          </GreenOrRedText>
+          </TrendText>
         </Box>
       </Flex>
       <Flex>
@@ -139,7 +130,9 @@ export function MarketSectionUi({
               </Tr>
             </Thead>
             <Tbody>
-              {poolData.configurations.length === 0 ? (
+              {/* TODO skeleton */}
+              {!poolData && <Spinner />}
+              {poolData?.configurations.length === 0 ? (
                 <Tr w="full">
                   <Td colSpan={4} border="none">
                     <Text textAlign="center" mt={4}>
@@ -148,7 +141,7 @@ export function MarketSectionUi({
                   </Td>
                 </Tr>
               ) : (
-                poolData.configurations.map(({ id, market, max_debt_share_value, weight }, i) => {
+                poolData?.configurations.map(({ id, market, max_debt_share_value, weight }, i) => {
                   const isLastItem = i + 1 === poolData.configurations.length;
                   const growth = calculateSevenDaysPnlGrowth(market.market_snapshots_by_week);
                   return (
@@ -181,13 +174,9 @@ export function MarketSectionUi({
                               {formatNumberToUsd(growth.value.toNumber())}
                             </Text>
                             {growth.percentage ? (
-                              <GreenOrRedText
-                                fontSize="xs"
-                                value={growth.percentage}
-                                display="block"
-                              >
+                              <TrendText fontSize="xs" value={growth.percentage} display="block">
                                 {formatPercent(growth.percentage.toNumber())}
-                              </GreenOrRedText>
+                              </TrendText>
                             ) : null}
                           </>
                         )}
