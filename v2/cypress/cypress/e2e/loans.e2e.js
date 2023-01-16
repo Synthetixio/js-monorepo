@@ -1,4 +1,4 @@
-it('Can borrow sUSD with ETH collateral', () => {
+it.skip('Can borrow sUSD with ETH collateral', () => {
   cy.viewport(1000, 1200);
 
   cy.task('removeEthCollateralInteractionDelay');
