@@ -7890,15 +7890,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/GreenOrRedText@workspace:*, @snx-v3/GreenOrRedText@workspace:v3/components/GreenOrRedText":
-  version: 0.0.0-use.local
-  resolution: "@snx-v3/GreenOrRedText@workspace:v3/components/GreenOrRedText"
-  dependencies:
-    "@chakra-ui/react": ^2.2.8
-    "@synthetixio/wei": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
 "@snx-v3/Multistep@workspace:*, @snx-v3/Multistep@workspace:v3/components/Multistep":
   version: 0.0.0-use.local
   resolution: "@snx-v3/Multistep@workspace:v3/components/Multistep"
@@ -7918,6 +7909,24 @@ __metadata:
     "@snx-v3/usePools": "workspace:*"
     react: ^18.2.0
     react-router-dom: ^6.6.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/TrendText@workspace:*, @snx-v3/TrendText@workspace:v3/components/TrendText":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/TrendText@workspace:v3/components/TrendText"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@synthetixio/wei": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/TrendText@workspace:v3/components/TrendText":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/TrendText@workspace:v3/components/TrendText"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@synthetixio/wei": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -10557,8 +10566,8 @@ __metadata:
     "@snx-v3/Balance": "workspace:*"
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/Constants": "workspace:*"
-    "@snx-v3/GreenOrRedText": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
+    "@snx-v3/TrendText": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
     "@snx-v3/useAccounts": "workspace:*"

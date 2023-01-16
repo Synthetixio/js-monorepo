@@ -8,7 +8,7 @@ import { useAccounts } from '@snx-v3/useAccounts';
 import { useGetPoolData } from '../../hooks/useGetPoolData';
 import { calculatePoolPerformanceSevenDays } from '../../utils/calculations';
 import { formatPercent } from '@snx-v2/formatters';
-import { GreenOrRedText } from '@snx-v3/GreenOrRedText';
+import { TrendText } from '@snx-v3/TrendText';
 import { wei } from '@synthetixio/wei';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 
@@ -105,7 +105,7 @@ const DepositUi: FC<{
                 <InfoOutlineIcon ml={1} />
               </Tooltip>
             </Heading>
-            <GreenOrRedText
+            <TrendText
               color="green.500"
               fontSize="2xl"
               fontWeight="bold"
@@ -116,7 +116,7 @@ const DepositUi: FC<{
               ) : (
                 <Skeleton mt={1} w={16} height={9} />
               )}
-            </GreenOrRedText>
+            </TrendText>
           </Box>
         </Box>
       </Flex>

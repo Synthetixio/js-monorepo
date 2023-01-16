@@ -24,7 +24,7 @@ import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { useParams } from '@snx-v3/useParams';
 import { useMarketNamesById } from '@snx-v3/useMarketNamesById';
 import { useGetPoolData } from '../../hooks/useGetPoolData';
-import { GreenOrRedText } from '@snx-v3/GreenOrRedText';
+import { TrendText } from '@snx-v3/TrendText';
 
 const StyledTh: FC<TableCellProps> = (props) => (
   <Th
@@ -84,7 +84,7 @@ export function MarketSectionUi({
           <Text color="gray.500" fontSize="xs">
             PERFORMANCE 7 DAYS
           </Text>
-          <GreenOrRedText
+          <TrendText
             value={sevenDaysPerformance.value}
             display="flex"
             alignItems="center"
@@ -92,11 +92,11 @@ export function MarketSectionUi({
           >
             {formatNumberToUsd(sevenDaysPerformance.value.toNumber())}{' '}
             <InfoOutlineIcon height="16px" width="16px" color="white" ml={1} />
-          </GreenOrRedText>
+          </TrendText>
           {sevenDaysPerformance.growthPercentage ? (
-            <GreenOrRedText value={sevenDaysPerformance.growthPercentage}>
+            <TrendText value={sevenDaysPerformance.growthPercentage}>
               {formatPercent(sevenDaysPerformance.growthPercentage.toNumber())}
-            </GreenOrRedText>
+            </TrendText>
           ) : null}
         </Box>
         <Box
@@ -112,15 +112,10 @@ export function MarketSectionUi({
           <Text color="gray.500" fontSize="xs">
             PERFORMANCE LIFETIME
           </Text>
-          <GreenOrRedText
-            value={lifeTimePerformance}
-            display="flex"
-            alignItems="center"
-            fontSize="2xl"
-          >
+          <TrendText value={lifeTimePerformance} display="flex" alignItems="center" fontSize="2xl">
             {formatNumberToUsd(lifeTimePerformance.toNumber())}{' '}
             <InfoOutlineIcon height="16px" width="16px" color="white" ml={1} />
-          </GreenOrRedText>
+          </TrendText>
         </Box>
       </Flex>
       <Flex>
@@ -179,13 +174,9 @@ export function MarketSectionUi({
                               {formatNumberToUsd(growth.value.toNumber())}
                             </Text>
                             {growth.percentage ? (
-                              <GreenOrRedText
-                                fontSize="xs"
-                                value={growth.percentage}
-                                display="block"
-                              >
+                              <TrendText fontSize="xs" value={growth.percentage} display="block">
                                 {formatPercent(growth.percentage.toNumber())}
-                              </GreenOrRedText>
+                              </TrendText>
                             ) : null}
                           </>
                         )}
