@@ -2,7 +2,7 @@ import { Box, Button, Flex, Input, Text } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useIsConnected } from '@snx-v3/useBlockchain';
-import { useTokenBalance } from '../../../hooks/useTokenBalance';
+import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { CollateralTypeSelector } from '@snx-v3/CollateralTypeSelector';
 import { FormEvent, useCallback, useRef, useState } from 'react';
 import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
@@ -26,7 +26,7 @@ export function DepositForm() {
   const [amount, setAmount] = useState(wei(0));
   const [activeBadge, setActiveBadge] = useState(0);
 
-  const balanceData = useTokenBalance(collateralType?.tokenAddress);
+  const tokenBalance = useTokenBalance(collateralType?.tokenAddress);
 
   const [isOpenDeposit, setIsOpenDeposit] = useState(false);
   const onSubmit = useCallback(
@@ -116,7 +116,7 @@ export function DepositForm() {
                   setInputAmount(value);
                   try {
                     const currentAmount = wei(value || 0);
-                    if (currentAmount.gte(balanceData.value.toBN())) {
+                    if (tokenBalance.data?.lt(currentAmount)) {
                       e.target.setCustomValidity('Insufficient balance');
                     } else if (currentAmount.gt(0)) {
                       e.target.setCustomValidity('');
@@ -129,25 +129,33 @@ export function DepositForm() {
                 }}
               />
               <Flex justifyContent="flex-end" fontSize="xs">
-                <Flex cursor="pointer" onClick={() => setInputAmount(balanceData.value.toString())}>
+                <Flex
+                  cursor="pointer"
+                  onClick={() => {
+                    if (!tokenBalance.data) {
+                      return;
+                    }
+                    setInputAmount(tokenBalance.data.toString());
+                  }}
+                >
                   <Text mr={1}>Balance:</Text>
-                  <Amount
-                    value={balanceData.value}
-                    suffix={` ${collateralType.symbol.toUpperCase()}`}
-                  />
+                  <Amount value={tokenBalance.data} suffix={` ${collateralType.symbol}`} />
                 </Flex>
               </Flex>
             </Flex>
           </Flex>
           <PercentBadges
-            disabled={balanceData.value.eq(0)}
+            disabled={tokenBalance.data ? tokenBalance.data.eq(0) : false}
             onBadgePress={(badgeNum) => {
+              if (!tokenBalance.data) {
+                return;
+              }
               setActiveBadge(badgeNum);
               if (badgeNum === 1) {
                 // Make sure we're not left with dust
-                setInputAmount(balanceData.value.toString());
+                setInputAmount(tokenBalance.data.toString());
               } else {
-                setInputAmount(balanceData.value.mul(badgeNum).toString(2));
+                setInputAmount(tokenBalance.data.mul(badgeNum).toString(2));
               }
             }}
             activeBadge={activeBadge}

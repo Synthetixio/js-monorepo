@@ -28,7 +28,7 @@ export const DepositingStats: FC<Props> = ({
         </Text>
         <Heading size="md">
           <Skeleton isLoaded={collateralAmount !== undefined}>
-            <Amount value={collateralAmount} suffix={` ${collateral.symbol.toUpperCase()} `} />
+            <Amount value={collateralAmount} suffix={` ${collateral.symbol} `} />
           </Skeleton>
         </Heading>
         <Text opacity="0.6" fontSize="sm">

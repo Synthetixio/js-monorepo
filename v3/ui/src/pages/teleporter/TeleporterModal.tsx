@@ -15,7 +15,7 @@ import { useContractWrite, useNetwork } from 'wagmi';
 import { useAccount } from '@snx-v3/useBlockchain';
 import { useContract } from '../../hooks/useContract';
 import { useApprove } from '@snx-v3/useApprove';
-import { useTokenBalance } from '../../hooks/useTokenBalance';
+import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { contracts } from '../../utils/constants';
 import { parseUnits } from '@snx-v3/format';
 import testnetIcon from './testnet.png';
@@ -60,7 +60,7 @@ export function TeleporterModal({
 
   const CCIP = useContract(contracts.CCIP);
   const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
-  const balance = useTokenBalance(snxUsdProxy?.address, teleportChains[0].id);
+  const tokenBalance = useTokenBalance(snxUsdProxy?.address, teleportChains[0].id);
 
   const toChain = useMemo(
     () => chains.find((chain) => chain.id === teleportChains[1].id),
@@ -138,7 +138,7 @@ export function TeleporterModal({
         duration: 9000,
       });
       await txReceipt.wait();
-      await balance.refetch();
+      await tokenBalance.refetch();
     } catch (e) {
       console.error(e);
       setFailed(true);
@@ -151,7 +151,7 @@ export function TeleporterModal({
   }, [
     amount,
     approve,
-    balance,
+    tokenBalance,
     ccipSend,
     completed,
     infiniteApproval,

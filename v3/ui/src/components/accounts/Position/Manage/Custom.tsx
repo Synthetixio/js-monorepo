@@ -11,7 +11,7 @@ import {
   AlertIcon,
 } from '@chakra-ui/react';
 import { FC } from 'react';
-import { useTokenBalance } from '../../../../hooks/useTokenBalance';
+import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { currency } from '@snx-v3/format';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '@snx-v3/Balance';
@@ -37,7 +37,7 @@ export const Custom: FC<Props> = ({
   debt,
   maxDebt,
 }) => {
-  const balance = useTokenBalance(collateral.tokenAddress);
+  const tokenBalance = useTokenBalance(collateral.tokenAddress);
 
   return (
     <Box mb="4">
@@ -54,13 +54,13 @@ export const Custom: FC<Props> = ({
                 onChange={(val) => {
                   setCollateralChange(val - collateralAmount);
                 }}
-                max={balance.value.add(collateralAmount).toNumber()}
+                max={tokenBalance.data?.add(collateralAmount).toNumber()}
               />
             </Flex>
             <Flex alignItems="center">
               <Balance
-                onMax={(balance) => setCollateralChange(parseFloat(balance) || 0)}
-                balance={balance.value}
+                onMax={(bal) => setCollateralChange(parseFloat(bal) || 0)}
+                balance={tokenBalance.data}
                 symbol={collateral.symbol}
                 address={collateral.tokenAddress}
               />
@@ -119,7 +119,7 @@ export const Custom: FC<Props> = ({
             {collateralChange !== 0 && (
               <strong>
                 {collateralChange > 0 ? 'deposit' : 'withdraw'} {Math.abs(collateralChange)}&nbsp;
-                {collateral.symbol.toUpperCase()}
+                {collateral.symbol}
               </strong>
             )}
             {collateralChange !== 0 && debtChange !== 0 && `\u00A0and\u00A0`}

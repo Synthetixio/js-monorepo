@@ -16,7 +16,7 @@ export const Withdraw: FC<Props> = ({ collateral, collateralAmount, value, onCha
   return (
     <>
       <Heading fontSize="md" mb="1">
-        Withdraw {collateral.symbol.toUpperCase()}
+        Withdraw {collateral.symbol}
       </Heading>
       <Text fontSize="sm" mb="2">
         Retrieve your collateral from the protocol. This decreases your C-Ratio and increases your

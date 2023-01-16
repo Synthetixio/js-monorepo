@@ -19,7 +19,7 @@ export const LiquidityPosition: FC<Props> = ({ position }) => {
           <Text fontSize="xs" opacity="0.66" mt="1">
             <Amount
               value={position.collateralAmount}
-              suffix={`${position.collateralType.symbol.toUpperCase()} `}
+              suffix={`${position.collateralType.symbol} `}
             />
           </Text>
         </>

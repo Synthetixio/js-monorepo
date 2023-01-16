@@ -1,7 +1,7 @@
 import { Text, Box, Flex, Heading, Alert, AlertIcon } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useContract } from '../../../../hooks/useContract';
-import { useTokenBalance } from '../../../../hooks/useTokenBalance';
+import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { contracts } from '../../../../utils/constants';
 
 import { Balance } from '@snx-v3/Balance';
@@ -15,7 +15,7 @@ interface Props {
 
 export const Burn: FC<Props> = ({ onChange, value, debt }) => {
   const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
-  const balance = useTokenBalance(snxUsdProxy?.address);
+  const tokenBalance = useTokenBalance(snxUsdProxy?.address);
 
   return (
     <>
@@ -32,13 +32,18 @@ export const Burn: FC<Props> = ({ onChange, value, debt }) => {
             <NumberInput
               value={value}
               onChange={onChange}
-              max={Math.min(balance.value.toNumber(), debt)}
+              max={tokenBalance.data ? Math.min(tokenBalance.data.toNumber(), debt) : debt}
             />
           </Flex>
           <Flex alignItems="center">
             <Balance
-              balance={balance.value}
-              onMax={() => onChange(Math.min(balance.value.toNumber(), debt) || 0)}
+              balance={tokenBalance.data}
+              onMax={() => {
+                if (!tokenBalance.data) {
+                  return;
+                }
+                onChange(Math.min(tokenBalance.data.toNumber(), debt));
+              }}
               symbol="snxUsd"
               address={snxUsdProxy?.address}
             />

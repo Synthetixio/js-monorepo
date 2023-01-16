@@ -126,9 +126,9 @@ export const useManagePosition = ({
   const multicallTitles = useMemo(() => {
     const title: string[] = [];
     if (collateralChange > 0) {
-      title.push('Deposit ' + collateral.symbol.toUpperCase());
+      title.push('Deposit ' + collateral.symbol);
     } else if (collateralChange < 0) {
-      title.push('Withdraw ' + collateral.symbol.toUpperCase());
+      title.push('Withdraw ' + collateral.symbol);
     }
 
     if (debtChange > 0) {
@@ -164,11 +164,11 @@ export const useManagePosition = ({
 
     if (collateralChange > 0 && requireApproval) {
       transactions.push({
-        title: `Approve ${collateral.symbol.toUpperCase()} transfer`,
+        title: `Approve ${collateral.symbol} transfer`,
         subtitle: '',
         call: async (infiniteApproval?: boolean) => await approve(Boolean(infiniteApproval)),
         checkboxLabel: requireApproval
-          ? `Approve unlimited ${collateral.symbol.toUpperCase()} transfers to Synthetix.`
+          ? `Approve unlimited ${collateral.symbol} transfers to Synthetix.`
           : '',
         checked: false,
       });

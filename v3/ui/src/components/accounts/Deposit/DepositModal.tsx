@@ -23,7 +23,7 @@ import { useContract } from '../../../hooks/useContract';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
 import { useWrapEth } from '../../../hooks/useWrapEth';
 import { Multistep } from '@snx-v3/Multistep';
-import { useTokenBalance } from '../../../hooks/useTokenBalance';
+import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { Wei, wei } from '@synthetixio/wei';
 
 export function DepositModal({
@@ -118,8 +118,8 @@ export function DepositModal({
     snxProxy,
   ]);
 
-  const { refetch: balanceRefetch } = useTokenBalance(collateralType?.tokenAddress);
-  const { refetch: refetchAccounts } = useAccounts();
+  const tokenBalance = useTokenBalance(collateralType.tokenAddress);
+  const accounts = useAccounts();
   const overrides: CallOverrides = {};
   const multiTxn = useMulticall(calls, overrides, {
     onMutate: () => {
@@ -144,7 +144,7 @@ export function DepositModal({
     },
     onSuccess: async () => {
       toast.closeAll();
-      await Promise.all([balanceRefetch(), refetchAccounts()]);
+      await Promise.all([tokenBalance.refetch(), accounts.refetch()]);
       if (!Boolean(accountId)) {
         navigate(
           generatePath('/accounts/:accountId/positions/:collateral/:poolId', {
