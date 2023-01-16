@@ -50,8 +50,8 @@ export const Preview: FC<Props> = ({
       <Box py="2" borderBottom="1px solid rgba(255,255,255,0.2)">
         <strong>Collateral</strong>
         <Text color={getColor(newCollateralAmount, collateralAmount)} float="right">
-          <Amount value={collateralAmount} suffix={` ${collateral.symbol.toUpperCase()}`} /> →{' '}
-          <Amount value={newCollateralAmount} suffix={` ${collateral.symbol.toUpperCase()}`} />
+          <Amount value={collateralAmount} suffix={` ${collateral.symbol}`} /> →{' '}
+          <Amount value={newCollateralAmount} suffix={` ${collateral.symbol}`} />
         </Text>
       </Box>
       <Box py="2" borderBottom="1px solid rgba(255,255,255,0.2)">

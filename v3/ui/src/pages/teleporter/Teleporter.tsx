@@ -24,7 +24,7 @@ import { useSwitchNetwork } from 'wagmi';
 import { NumberInput } from '../../components/accounts/Position/Manage/NumberInput';
 import { Balance } from '@snx-v3/Balance';
 import { useContract } from '../../hooks/useContract';
-import { useTokenBalance } from '../../hooks/useTokenBalance';
+import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { contracts } from '../../utils/constants';
 import testnetIcon from './testnet.png';
 import { TeleporterModal } from './TeleporterModal';
@@ -61,7 +61,7 @@ export const Teleporter = () => {
   const [to, setTo] = useState(teleportChains[1].id);
 
   const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
-  const balance = useTokenBalance(snxUsdProxy?.address, from);
+  const tokenBalance = useTokenBalance(snxUsdProxy?.address, from);
 
   const fromChain = useMemo(() => chains.find((chain) => chain.id === from), [from]);
   const toChain = useMemo(() => chains.find((chain) => chain.id === to), [to]);
@@ -155,7 +155,7 @@ export const Teleporter = () => {
                     value={amount}
                     onChange={setAmount}
                     border="1px"
-                    max={balance.value.toNumber()}
+                    max={tokenBalance.data?.toNumber()}
                     borderRightRadius="none"
                   />
                   <InputRightAddon borderColor="gray.800" bg="whiteAlpha.100">
@@ -166,9 +166,9 @@ export const Teleporter = () => {
 
               <Flex alignItems="center" justifyContent="flex-end">
                 <Balance
-                  onMax={(balance) => setAmount(parseFloat(balance) || 0)}
-                  balance={balance.value}
-                  symbol="snxUsd"
+                  onMax={(bal) => setAmount(parseFloat(bal) || 0)}
+                  balance={tokenBalance.data}
+                  symbol="snxUSD"
                   address={snxUsdProxy?.address}
                 />
               </Flex>

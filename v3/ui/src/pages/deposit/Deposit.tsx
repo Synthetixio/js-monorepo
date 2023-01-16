@@ -1,9 +1,10 @@
 import { Box, Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
 import { useParams } from '@snx-v3/useParams';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { DepositForm } from '../../components/accounts/Deposit';
+import { useAccounts } from '@snx-v3/useAccounts';
 
 const DepositUi: FC<{
   collateralSymbol?: string;
@@ -103,6 +104,21 @@ export const Deposit = () => {
   const params = useParams();
   const { data: preferredPool } = usePreferredPool();
   const navigate = useNavigate();
+
+  const { data: accounts = [] } = useAccounts();
+  const [accountId] = accounts;
+  useEffect(() => {
+    if (!params.accountId && accountId && params.collateralSymbol && params.poolId) {
+      navigate({
+        pathname: generatePath('/deposit/:collateralSymbol/:poolId', {
+          collateralSymbol: params.collateralSymbol,
+          poolId: params.poolId,
+        }),
+        search: createSearchParams({ accountId }).toString(),
+      });
+    }
+  }, [navigate, accountId, params.accountId, params.collateralSymbol, params.poolId]);
+
   return (
     <DepositUi
       collateralSymbol={params.collateralSymbol}

@@ -23,7 +23,8 @@ import { useContract } from '../../../hooks/useContract';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
 import { useWrapEth } from '../../../hooks/useWrapEth';
 import { Multistep } from '@snx-v3/Multistep';
-import { useTokenBalance } from '../../../hooks/useTokenBalance';
+import { useTokenBalance } from '@snx-v3/useTokenBalance';
+import { useEthBalance } from '@snx-v3/useEthBalance';
 import { Wei, wei } from '@synthetixio/wei';
 
 export function DepositModal({
@@ -34,7 +35,7 @@ export function DepositModal({
   isOpen,
   setIsOpen,
 }: {
-  accountId: string;
+  accountId?: string;
   amount: Wei;
   poolId: string;
   collateralType: CollateralType;
@@ -81,7 +82,7 @@ export function DepositModal({
       {
         contract: snxProxy.contract,
         functionName: 'deposit',
-        callArgs: [id, collateralType.tokenAddress, amount],
+        callArgs: [id, collateralType.tokenAddress, amount.toBN()],
       },
       {
         contract: snxProxy.contract,
@@ -90,7 +91,7 @@ export function DepositModal({
           id,
           parseInt(Boolean(accountId) ? poolId : poolId || '0'),
           collateralType.tokenAddress,
-          amountToDelegate || 0,
+          amountToDelegate.toBN() || 0,
           parseUnits(1),
         ],
       },
@@ -118,8 +119,9 @@ export function DepositModal({
     snxProxy,
   ]);
 
-  const { refetch: balanceRefetch } = useTokenBalance(collateralType?.tokenAddress);
-  const { refetch: refetchAccounts } = useAccounts();
+  const ethBalance = useEthBalance();
+  const tokenBalance = useTokenBalance(collateralType.tokenAddress);
+  const accounts = useAccounts();
   const overrides: CallOverrides = {};
   const multiTxn = useMulticall(calls, overrides, {
     onMutate: () => {
@@ -144,7 +146,7 @@ export function DepositModal({
     },
     onSuccess: async () => {
       toast.closeAll();
-      await Promise.all([balanceRefetch(), refetchAccounts()]);
+      await Promise.all([ethBalance.refetch(), tokenBalance.refetch(), accounts.refetch()]);
       if (!Boolean(accountId)) {
         navigate(
           generatePath('/accounts/:accountId/positions/:collateral/:poolId', {
