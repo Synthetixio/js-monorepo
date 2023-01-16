@@ -206,10 +206,6 @@ export const MarketSection = () => {
   const isLoading = isLoadingPoolData || isLoadingMarketNames;
 
   return (
-    <MarketSectionUi
-      marketNamesById={marketNamesById}
-      poolData={poolData || undefined}
-      isLoading={isLoading}
-    />
+    <MarketSectionUi marketNamesById={marketNamesById} poolData={poolData} isLoading={isLoading} />
   );
 };
