@@ -36,12 +36,15 @@ function Container() {
     return [ethLoanContract, ethLoanStateContract, collateralManagerContract];
   }, [isAppReady, signer, synthetixjs, walletAddress]);
 
-  const minCratioQuery = useQuery({
-    queryKey: ['minCratio'],
+  const { data: settingsQuery } = useQuery({
+    queryKey: ['minCratio', 'canOpenLoans', ethLoanContract?.address],
     queryFn: async () => {
-      if (!ethLoanContract) return wei(0);
-      const minCratio = await ethLoanContract.minCratio();
-      return wei(minCratio);
+      if (!ethLoanContract) return { minCratio: wei(0), canOpenLoans: false };
+      const [minCratio, canOpenLoans] = await Promise.all([
+        ethLoanContract.minCratio(),
+        ethLoanContract.canOpenLoans(),
+      ]);
+      return { minCratio: wei(minCratio), canOpenLoans: canOpenLoans as boolean };
     },
     enabled: Boolean(ethLoanContract),
   });
@@ -289,7 +292,8 @@ function Container() {
     interestRate: rateAndDelayQueries.data?.borrowRate || wei(0),
     issueFeeRate: rateAndDelayQueries.data?.issueFeeRate || wei(0),
     interactionDelay: rateAndDelayQueries.data?.interactionDelay || wei(0),
-    minCRatio: minCratioQuery.data,
+    minCRatio: settingsQuery?.minCratio,
+    canOpenLoans: settingsQuery?.canOpenLoans,
     pendingWithdrawals,
     reloadPendingWithdrawals,
     ethLoanContract,

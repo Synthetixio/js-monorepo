@@ -56,7 +56,7 @@ const BorrowSynthsTab: FC<BorrowSynthsTabProps> = () => {
   const [txModalOpen, setTxModalOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const { minCRatio } = Loans.useContainer();
+  const { minCRatio, canOpenLoans } = Loans.useContainer();
   const { useExchangeRatesQuery, useSynthetixTxn, useTokensBalancesQuery } = useSynthetixQueries();
 
   const [gasPrice, setGasPrice] = useState<GasPrice | undefined>(undefined);
@@ -113,7 +113,8 @@ const BorrowSynthsTab: FC<BorrowSynthsTabProps> = () => {
       debtAsset &&
       !hasLowCollateralAmount &&
       !hasLowCRatio &&
-      !hasInsufficientCollateral
+      !hasInsufficientCollateral &&
+      canOpenLoans
   );
 
   const openTxn = useSynthetixTxn(
@@ -155,8 +156,13 @@ const BorrowSynthsTab: FC<BorrowSynthsTabProps> = () => {
   return (
     <>
       <FormContainer data-testid="loans form">
+        {canOpenLoans === false && (
+          <ErrorMessage>Opening of loans is currently disabled</ErrorMessage>
+        )}
         <InputsContainer>
           <AssetInput
+            selectDisabled={!canOpenLoans}
+            inputDisabled={!canOpenLoans}
             label="loans.tabs.new.debt.label"
             asset={debtAsset}
             setAsset={setDebtAsset}
@@ -167,6 +173,8 @@ const BorrowSynthsTab: FC<BorrowSynthsTabProps> = () => {
           />
           <InputsDivider />
           <AssetInput
+            selectDisabled={!canOpenLoans}
+            inputDisabled={!canOpenLoans}
             label="loans.tabs.new.collateral.label"
             asset={collateralAsset}
             setAsset={setCollateralAsset}
