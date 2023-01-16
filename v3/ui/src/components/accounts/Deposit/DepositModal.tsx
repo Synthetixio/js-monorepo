@@ -34,7 +34,7 @@ export function DepositModal({
   isOpen,
   setIsOpen,
 }: {
-  accountId: string;
+  accountId?: string;
   amount: Wei;
   poolId: string;
   collateralType: CollateralType;

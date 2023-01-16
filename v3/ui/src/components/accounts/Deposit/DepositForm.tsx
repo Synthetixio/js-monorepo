@@ -93,13 +93,6 @@ export function DepositForm() {
     return null;
   }
 
-  console.log(
-    `params.accountId && params.poolId && collateralType && amount.gt(0)`,
-    params.accountId,
-    params.poolId,
-    collateralType,
-    amount.gt(0)
-  );
   return (
     <>
       <Box as="form" bg="navy.900" mb="8" onSubmit={onSubmit}>
@@ -189,7 +182,7 @@ export function DepositForm() {
         </Button>
       </Box>
 
-      {params.accountId && params.poolId && collateralType && amount.gt(0) ? (
+      {params.poolId && collateralType && amount.gt(0) ? (
         <DepositModal
           accountId={params.accountId}
           poolId={params.poolId}
