@@ -32,6 +32,7 @@
     "@snx-v3/useBlockchain": "workspace:*",
     "@snx-v3/useCollateralTypes": "workspace:*",
     "@snx-v3/useCoreProxy": "workspace:*",
+    "@snx-v3/useEthBalance": "workspace:*",
     "@snx-v3/useExternalMulticall": "workspace:*",
     "@snx-v3/useLiquidityPosition": "workspace:*",
     "@snx-v3/useLiquidityPositions": "workspace:*",
