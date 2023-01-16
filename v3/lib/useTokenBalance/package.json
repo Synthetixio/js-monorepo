@@ -1,10 +1,11 @@
 {
-  "name": "@snx-v3/useBalance",
+  "name": "@snx-v3/useTokenBalance",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",
+    "@snx-v3/assertAddressType": "workspace:*",
     "@snx-v3/useBlockchain": "workspace:*",
     "@snx-v3/zod": "workspace:*",
     "@synthetixio/wei": "workspace:*",
