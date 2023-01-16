@@ -24,6 +24,7 @@ import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
 import { useWrapEth } from '../../../hooks/useWrapEth';
 import { Multistep } from '@snx-v3/Multistep';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
+import { useEthBalance } from '@snx-v3/useEthBalance';
 import { Wei, wei } from '@synthetixio/wei';
 
 export function DepositModal({
@@ -118,6 +119,7 @@ export function DepositModal({
     snxProxy,
   ]);
 
+  const ethBalance = useEthBalance();
   const tokenBalance = useTokenBalance(collateralType.tokenAddress);
   const accounts = useAccounts();
   const overrides: CallOverrides = {};
@@ -144,7 +146,7 @@ export function DepositModal({
     },
     onSuccess: async () => {
       toast.closeAll();
-      await Promise.all([tokenBalance.refetch(), accounts.refetch()]);
+      await Promise.all([ethBalance.refetch(), tokenBalance.refetch(), accounts.refetch()]);
       if (!Boolean(accountId)) {
         navigate(
           generatePath('/accounts/:accountId/positions/:collateral/:poolId', {
