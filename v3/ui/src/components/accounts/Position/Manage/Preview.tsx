@@ -17,7 +17,7 @@ interface Props {
 }
 
 const getColor = (v1: number, v2: number) =>
-  v1 === v2 ? 'gray.400' : v1 > v2 ? 'green.400' : 'red.400';
+  v1 === v2 ? 'gray.400' : v1 > v2 ? 'success' : 'error';
 
 export const Preview: FC<Props> = ({
   collateral,

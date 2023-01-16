@@ -105,12 +105,7 @@ const DepositUi: FC<{
                 <InfoOutlineIcon ml={1} />
               </Tooltip>
             </Heading>
-            <TrendText
-              color="green.500"
-              fontSize="2xl"
-              fontWeight="bold"
-              value={sevenDaysPoolPerformance || wei(0)}
-            >
+            <TrendText fontSize="2xl" fontWeight="bold" value={sevenDaysPoolPerformance || wei(0)}>
               {sevenDaysPoolPerformance ? (
                 formatPercent(sevenDaysPoolPerformance)
               ) : (

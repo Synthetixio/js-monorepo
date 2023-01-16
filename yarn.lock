@@ -7921,15 +7921,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/TrendText@workspace:v3/components/TrendText":
-  version: 0.0.0-use.local
-  resolution: "@snx-v3/TrendText@workspace:v3/components/TrendText"
-  dependencies:
-    "@chakra-ui/react": ^2.2.8
-    "@synthetixio/wei": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
 "@snx-v3/assertAddressType@workspace:*, @snx-v3/assertAddressType@workspace:v3/lib/assertAddressType":
   version: 0.0.0-use.local
   resolution: "@snx-v3/assertAddressType@workspace:v3/lib/assertAddressType"
