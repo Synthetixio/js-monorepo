@@ -14,7 +14,7 @@ export function Amount({
 }) {
   const { formattedValue, preciseValue } = useMemo(() => {
     if (!value) {
-      return { formattedValue: '~', preciseValue: '~' };
+      return { formattedValue: '-', preciseValue: '-' };
     }
     const parsedValue = parseUnits(value);
     const formattedValue = currency(formatValue(parsedValue));
