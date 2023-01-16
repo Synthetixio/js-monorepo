@@ -16,17 +16,6 @@ export const useTokenBalance = (address?: string, networkId?: number) => {
 
   const tokenAddress = assertAddressType(address) ? address : undefined;
 
-  // const { data: balanceData, refetch } = useBalance({
-  //   tokenAddress: assertAddressType(tokenAddress) ? tokenAddress : undefined,
-  //   customNetwork: chainId,
-  // });
-  //
-  // return {
-  //   value: balanceData || wei(0),
-  //   formattedValue: balanceData?.toString(2),
-  //   refetch,
-  // };
-
   return useQuery({
     queryKey: [{ networkId: networkId ?? network.id, accountAddress }, 'tokenBalance'],
     queryFn: async () => {

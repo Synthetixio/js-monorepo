@@ -81,7 +81,7 @@ export function DepositModal({
       {
         contract: snxProxy.contract,
         functionName: 'deposit',
-        callArgs: [id, collateralType.tokenAddress, amount],
+        callArgs: [id, collateralType.tokenAddress, amount.toBN()],
       },
       {
         contract: snxProxy.contract,
@@ -90,7 +90,7 @@ export function DepositModal({
           id,
           parseInt(Boolean(accountId) ? poolId : poolId || '0'),
           collateralType.tokenAddress,
-          amountToDelegate || 0,
+          amountToDelegate.toBN() || 0,
           parseUnits(1),
         ],
       },
