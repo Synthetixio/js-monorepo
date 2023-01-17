@@ -26,6 +26,7 @@ import { useMarketNamesById } from '@snx-v3/useMarketNamesById';
 import { useGetPoolData } from '../../hooks/useGetPoolData';
 import { TrendText } from '@snx-v3/TrendText';
 import { BorderBox } from '@snx-v3/BorderBox';
+import Wei from '@synthetixio/wei';
 
 const StyledTh: FC<TableCellProps> = (props) => (
   <Th
@@ -69,6 +70,17 @@ const LoadingRow = () => (
     </StyledTd>
   </Tr>
 );
+
+const TotalValue: FC<{ value?: Wei; isLoading: boolean }> = ({ value, isLoading }) => {
+  if (isLoading) return <Skeleton w={16} h={8} mt={1} />;
+  if (!value) return <>-</>;
+  return (
+    <TrendText value={value} display="flex" alignItems="center" fontSize="2xl" fontWeight="800">
+      {formatNumberToUsd(value.toNumber())}{' '}
+    </TrendText>
+  );
+};
+
 export function MarketSectionUi({
   poolData,
   marketNamesById,
@@ -113,24 +125,8 @@ export function MarketSectionUi({
               <InfoOutlineIcon w="10px" h="10px" />
             </Tooltip>
           </Text>
-          {sevenDaysPerformance?.value ? (
-            <TrendText
-              value={sevenDaysPerformance.value}
-              display="flex"
-              alignItems="center"
-              fontSize="2xl"
-              fontWeight="800"
-            >
-              {formatNumberToUsd(sevenDaysPerformance.value.toNumber())}{' '}
-            </TrendText>
-          ) : (
-            '-'
-          )}
-          {sevenDaysPerformance?.growthPercentage ? (
-            <TrendText fontWeight="800" fontSize="lg" value={sevenDaysPerformance.growthPercentage}>
-              {formatPercent(sevenDaysPerformance.growthPercentage.toNumber())}
-            </TrendText>
-          ) : null}
+          <TotalValue value={sevenDaysPerformance?.value} isLoading={!poolDataFetched} />
+          <TotalValue value={sevenDaysPerformance?.growthPercentage} isLoading={!poolDataFetched} />
         </BorderBox>
         <BorderBox paddingY={2} paddingX={4} flexGrow="1">
           <Text
@@ -146,19 +142,7 @@ export function MarketSectionUi({
               <InfoOutlineIcon w="10px" h="10px" />
             </Tooltip>
           </Text>
-          {lifeTimePerformance ? (
-            <TrendText
-              value={lifeTimePerformance}
-              display="flex"
-              alignItems="center"
-              fontSize="2xl"
-              fontWeight="800"
-            >
-              {formatNumberToUsd(lifeTimePerformance.toNumber())}
-            </TrendText>
-          ) : (
-            '-'
-          )}
+          <TotalValue value={lifeTimePerformance} isLoading={!poolDataFetched} />
         </BorderBox>
       </Flex>
       <Flex>
