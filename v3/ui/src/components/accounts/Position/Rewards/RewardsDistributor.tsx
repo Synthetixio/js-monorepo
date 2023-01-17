@@ -14,7 +14,6 @@ export const RewardsDistributor: FC<Props> = ({ distributor }) => {
   const rewardDistributer = useContract(contracts.SNX_REWARD);
 
   const { data: name } = useContractRead({
-    // @ts-ignore
     address: distributor,
     abi: rewardDistributer?.abi,
     chainId: provider.network.chainId,
