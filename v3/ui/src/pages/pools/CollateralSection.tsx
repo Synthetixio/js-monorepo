@@ -9,12 +9,17 @@ import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useParams } from '@snx-v3/useParams';
 import { BorderBox } from '@snx-v3/BorderBox';
 
-const calculateTvl = (vaultCollaterals: ReturnType<typeof useVaultCollaterals>['data']) => {
-  const zeroValues = { value: wei(0), amount: wei(0) };
+export const calculateVaultTotals = (
+  vaultCollaterals: ReturnType<typeof useVaultsData>['data']
+) => {
+  const zeroValues = { collateral: { value: wei(0), amount: wei(0) }, debt: wei(0) };
   if (!vaultCollaterals) return zeroValues;
-  return vaultCollaterals.reduce((acc, { value, amount }) => {
-    acc.value = acc.value.add(value);
-    acc.amount = acc.amount.add(amount);
+  return vaultCollaterals.reduce((acc, { collateral, debt }) => {
+    acc.collateral = {
+      value: acc.collateral.value.add(collateral.value),
+      amount: acc.collateral.amount.add(collateral.amount),
+    };
+    acc.debt = acc.debt.add(debt);
     return acc;
   }, zeroValues);
 };
