@@ -122,12 +122,7 @@ export function HomeUi({
               mt={{ base: 2, md: 0 }}
               size="sm"
               onClick={() =>
-                navigate({
-                  pathname: generatePath('/pools/:poolId', {
-                    poolId: preferredPool.id,
-                  }),
-                  search: accountId ? createSearchParams({ accountId }).toString() : '',
-                })
+                navigate({ pathname: generatePath('/pools/:poolId', { poolId: preferredPool.id }) })
               }
               variant="outline"
             >
