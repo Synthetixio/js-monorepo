@@ -19,6 +19,7 @@
     "@faker-js/faker": "^7.6.0",
     "@rainbow-me/rainbowkit": "^0.8.1",
     "@snx-v2/formatters": "workspace:*",
+    "@snx-v3/AccountNav": "workspace:*",
     "@snx-v3/AccountsSelector": "workspace:*",
     "@snx-v3/Amount": "workspace:*",
     "@snx-v3/Balance": "workspace:*",

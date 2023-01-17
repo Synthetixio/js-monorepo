@@ -7782,6 +7782,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/AccountNav@workspace:*, @snx-v3/AccountNav@workspace:v3/components/AccountNav":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/AccountNav@workspace:v3/components/AccountNav"
+  dependencies:
+    "@chakra-ui/icons": ^2.0.9
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/useParams": "workspace:*"
+    react: ^18.2.0
+    react-router-dom: ^6.6.2
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/AccountsSelector@workspace:*, @snx-v3/AccountsSelector@workspace:v3/components/AccountsSelector":
   version: 0.0.0-use.local
   resolution: "@snx-v3/AccountsSelector@workspace:v3/components/AccountsSelector"
@@ -10335,6 +10347,7 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@rainbow-me/rainbowkit": ^0.8.1
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v3/AccountNav": "workspace:*"
     "@snx-v3/AccountsSelector": "workspace:*"
     "@snx-v3/Amount": "workspace:*"
     "@snx-v3/Balance": "workspace:*"

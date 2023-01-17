@@ -3,7 +3,7 @@ import { Flex, Link } from '@chakra-ui/react';
 import { useParams } from '@snx-v3/useParams';
 import { createSearchParams, generatePath, Link as RouterLink, useMatch } from 'react-router-dom';
 
-export function DepositingNav() {
+export function AccountNav() {
   const params = useParams();
   const innerPage = !useMatch('/');
 
