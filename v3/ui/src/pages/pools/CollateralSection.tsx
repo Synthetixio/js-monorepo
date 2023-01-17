@@ -1,4 +1,4 @@
-import { Spinner, Text, Flex, Image, Tooltip, Box, Skeleton } from '@chakra-ui/react';
+import { Text, Flex, Image, Tooltip, Box, Skeleton } from '@chakra-ui/react';
 import { useVaultsData } from '@snx-v3/useVaultsData';
 import { FC } from 'react';
 import { wei } from '@synthetixio/wei';
