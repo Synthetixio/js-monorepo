@@ -1,5 +1,5 @@
 {
-  "name": "@snx-v3/useVaultCollaterals",
+  "name": "@snx-v3/useVaultsData",
   "private": true,
   "main": "index.ts",
   "version": "0.0.1",

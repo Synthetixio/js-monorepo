@@ -8202,9 +8202,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/useVaultCollaterals@workspace:*, @snx-v3/useVaultCollaterals@workspace:v3/lib/useVaultsCollateral":
+"@snx-v3/useVaultsData@workspace:*, @snx-v3/useVaultsData@workspace:v3/lib/useVaultsData":
   version: 0.0.0-use.local
-  resolution: "@snx-v3/useVaultCollaterals@workspace:v3/lib/useVaultsCollateral"
+  resolution: "@snx-v3/useVaultsData@workspace:v3/lib/useVaultsData"
   dependencies:
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
@@ -10384,7 +10384,7 @@ __metadata:
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useTransactionState": "workspace:*"
     "@snx-v3/useValidatePosition": "workspace:*"
-    "@snx-v3/useVaultCollaterals": "workspace:*"
+    "@snx-v3/useVaultsData": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
     "@synthetixio/wei": "workspace:*"
