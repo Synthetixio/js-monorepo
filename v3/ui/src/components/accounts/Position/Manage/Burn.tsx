@@ -6,11 +6,12 @@ import { contracts } from '../../../../utils/constants';
 
 import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from './NumberInput';
+import { Wei } from '@synthetixio/wei';
 
 interface Props {
   onChange: (value: number) => void;
   value: number;
-  debt: number;
+  debt: Wei;
 }
 
 export const Burn: FC<Props> = ({ onChange, value, debt }) => {
@@ -32,7 +33,11 @@ export const Burn: FC<Props> = ({ onChange, value, debt }) => {
             <NumberInput
               value={value}
               onChange={onChange}
-              max={tokenBalance.data ? Math.min(tokenBalance.data.toNumber(), debt) : debt}
+              max={
+                tokenBalance.data
+                  ? Math.min(tokenBalance.data.toNumber(), debt.toNumber())
+                  : debt.toNumber()
+              }
             />
           </Flex>
           <Flex alignItems="center">
@@ -42,7 +47,7 @@ export const Burn: FC<Props> = ({ onChange, value, debt }) => {
                 if (!tokenBalance.data) {
                   return;
                 }
-                onChange(Math.min(tokenBalance.data.toNumber(), debt));
+                onChange(Math.min(tokenBalance.data.toNumber(), debt.toNumber()));
               }}
               symbol="snxUsd"
               address={snxUsdProxy?.address}

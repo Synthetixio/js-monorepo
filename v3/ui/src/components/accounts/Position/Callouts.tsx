@@ -4,22 +4,15 @@ import { FC } from 'react';
 import { currency } from '@snx-v3/format';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Amount } from '@snx-v3/Amount';
+import { Wei } from '@synthetixio/wei';
 
-interface Props {
+export const DepositingStats: FC<{
   collateral: CollateralType;
-  collateralAmount: number;
-  collateralValue: number;
-  debt: number;
-  cRatio: number;
-}
-
-export const DepositingStats: FC<Props> = ({
-  collateral,
-  debt,
-  collateralAmount,
-  collateralValue,
-  cRatio,
-}) => (
+  collateralAmount?: Wei;
+  collateralValue?: Wei;
+  debt?: Wei;
+  cRatio?: Wei;
+}> = ({ collateral, debt, collateralAmount, collateralValue, cRatio }) => (
   <Box>
     <Grid mb="1" textAlign="center" templateColumns="repeat(4, 1fr)">
       <GridItem mb="3">

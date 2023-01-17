@@ -4,6 +4,7 @@ import { Alert, AlertIcon, Box, Heading } from '@chakra-ui/react';
 import { FC } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { formatPercent } from '@snx-v2/formatters';
+import { Wei } from '@synthetixio/wei';
 
 interface Props {
   collateral: CollateralType;
@@ -11,7 +12,7 @@ interface Props {
   collateralChange: number;
   setDebtChange: (value: number) => void;
   debtChange: number;
-  debt: number;
+  debt: Wei;
 }
 
 export const MaintainCRatio: FC<Props> = ({

@@ -3,13 +3,13 @@ import { FC } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from './NumberInput';
-import { wei } from '@synthetixio/wei';
+import { Wei, wei } from '@synthetixio/wei';
 
 interface Props {
   collateral: CollateralType;
   onChange: (value: number) => void;
   value: number;
-  collateralAmount: number;
+  collateralAmount: Wei;
 }
 
 export const Withdraw: FC<Props> = ({ collateral, collateralAmount, value, onChange }) => {
@@ -26,7 +26,7 @@ export const Withdraw: FC<Props> = ({ collateral, collateralAmount, value, onCha
       <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <form>
           <Flex mb="3">
-            <NumberInput value={value} onChange={onChange} max={collateralAmount} />
+            <NumberInput value={value} onChange={onChange} max={collateralAmount.toNumber()} />
           </Flex>
         </form>
         <Flex alignItems="center">

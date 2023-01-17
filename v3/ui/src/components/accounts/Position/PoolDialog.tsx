@@ -16,23 +16,13 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { usePools } from '@snx-v3/usePools';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { generatePath, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useUpdatePool } from '../../../hooks/useUpdatePool';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
+import { Wei } from '@synthetixio/wei';
 
-interface Props {
-  accountId: string;
-  poolId: string;
-  collateral: CollateralType;
-  collateralAmount: number;
-  debt: number;
-  refetch: () => void;
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export const PoolDialog: FC<Props> = ({
+export function PoolDialog({
   isOpen,
   onClose,
   poolId,
@@ -40,22 +30,31 @@ export const PoolDialog: FC<Props> = ({
   accountId,
   collateral,
   debt,
-}) => {
+}: {
+  accountId: string;
+  poolId: string;
+  collateral: CollateralType;
+  collateralAmount?: Wei;
+  debt?: Wei;
+  refetch: () => void;
+  isOpen: boolean;
+  onClose: () => void;
+}) {
   const navigate = useNavigate();
   const { data: pools } = usePools();
   const [pool, setPool] = useState(poolId);
-  const { exec, isValid, isLoading } = useUpdatePool(
-    {
-      collateral,
-      poolId,
-      accountId,
-    },
+  const { exec, isValid, isLoading } = useUpdatePool({
+    collateral,
+    poolId,
+    accountId,
     collateralAmount,
-    pool,
-    () => navigate(generatePath('/accounts/:accountId', { accountId }))
-  );
+    newPoolId: pool,
+    onSuccess: () => navigate(generatePath('/accounts/:accountId', { accountId })),
+  });
   const updatePool = (newPool: string) => {
-    if (debt <= 0) setPool(newPool);
+    if (!debt || debt.lte(0)) {
+      setPool(newPool);
+    }
   };
 
   return (
@@ -75,7 +74,7 @@ export const PoolDialog: FC<Props> = ({
               onClick={() => updatePool('0')}
             >
               <Box>
-                <Radio disabled={debt > 0} value="0" size="lg" colorScheme="orange" />
+                <Radio disabled={!debt || debt.gt(0)} value="0" size="lg" colorScheme="orange" />
               </Box>
               <Box flex="1" pl="3">
                 <Heading size="sm" mb="0.5">
@@ -93,7 +92,7 @@ export const PoolDialog: FC<Props> = ({
                 onClick={() => updatePool(id)}
               >
                 <Box>
-                  <Radio disabled={debt > 0} value={id} size="lg" colorScheme="orange" />
+                  <Radio disabled={!debt || debt.gt(0)} value={id} size="lg" colorScheme="orange" />
                 </Box>
                 <Box flex="1" pl="3">
                   <Heading size="sm" mb="0.5">
@@ -238,7 +237,7 @@ export const PoolDialog: FC<Props> = ({
 
           <Button
             isLoading={isLoading}
-            disabled={!isValid || debt > 0}
+            disabled={!isValid || !debt || debt.gt(0)}
             onClick={exec}
             w="100%"
             my="5"
@@ -249,4 +248,4 @@ export const PoolDialog: FC<Props> = ({
       </ModalContent>
     </Modal>
   );
-};
+}

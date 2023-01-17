@@ -16,15 +16,17 @@ import { currency } from '@snx-v3/format';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from './NumberInput';
+import { Wei, wei } from '@synthetixio/wei';
+
 interface Props {
   collateral: CollateralType;
   setCollateralChange: (value: number) => void;
   collateralChange: number;
-  collateralAmount: number;
+  collateralAmount: Wei;
   setDebtChange: (value: number) => void;
   debtChange: number;
-  debt: number;
-  maxDebt: number;
+  debt: Wei;
+  maxDebt: Wei;
 }
 
 export const Custom: FC<Props> = ({
@@ -50,9 +52,9 @@ export const Custom: FC<Props> = ({
           <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
             <Flex mb="3">
               <NumberInput
-                value={collateralAmount + collateralChange}
+                value={collateralAmount.add(collateralChange).toNumber()}
                 onChange={(val) => {
-                  setCollateralChange(val - collateralAmount);
+                  setCollateralChange(wei(val).sub(collateralAmount).toNumber());
                 }}
                 max={tokenBalance.data?.add(collateralAmount).toNumber()}
               />
@@ -76,22 +78,20 @@ export const Custom: FC<Props> = ({
             <form>
               <Flex mb="3">
                 <NumberInput
-                  value={debt + debtChange}
-                  onChange={(val) => {
-                    setDebtChange(val - debt);
-                  }}
-                  max={maxDebt + debt}
+                  value={debt.add(debtChange).toNumber()}
+                  onChange={(val) => setDebtChange(wei(val).sub(debt).toNumber())}
+                  max={maxDebt.add(debt).toNumber()}
                 />
               </Flex>
             </form>
             <Flex alignItems="center">
               <Box>
                 <Text fontSize="xs">
-                  Max Mint: ${currency(maxDebt)}
+                  Max Mint: ${currency(maxDebt.toNumber())}
                   <Tooltip label="You can't mint snxUSD that takes your C-Ratio below the target c-ratio of 300%.">
                     <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
                   </Tooltip>
-                  {maxDebt !== 0 && (
+                  {maxDebt.eq(0) ? null : (
                     <Badge
                       transform="translateY(-2px)"
                       ml="2"
@@ -99,7 +99,7 @@ export const Custom: FC<Props> = ({
                       variant="outline"
                       onClick={(e) => {
                         e.preventDefault();
-                        setDebtChange(maxDebt);
+                        setDebtChange(maxDebt.toNumber());
                       }}
                     >
                       Use Max

@@ -1,6 +1,6 @@
 import { DepositingStats } from './Callouts';
 import { Box, Spinner, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import Manage from './Manage';
+import { Manage } from './Manage';
 import { Rewards } from './Rewards/Rewards';
 import { Pool } from './Pool';
 import { FC } from 'react';
@@ -12,13 +12,13 @@ export const Position: FC<{
   poolId: string;
   collateral: CollateralType;
 }> = ({ accountId, poolId, collateral }) => {
-  const { isLoading, data, refetch } = useLiquidityPosition({
+  const liquidityPosition = useLiquidityPosition({
     accountId,
     poolId,
     tokenAddress: collateral.tokenAddress,
   });
 
-  if (isLoading) {
+  if (liquidityPosition.isLoading) {
     return (
       <Box my="8" textAlign="center">
         <Spinner />
@@ -26,20 +26,14 @@ export const Position: FC<{
     );
   }
 
-  const { debt, cRatio, collateralAmount, collateralValue } = data || {};
-  const debtNumber = debt?.toNumber() || 0;
-  const cRatioNumber = cRatio?.toNumber() || 0;
-  const collateralAmountNumber = collateralAmount?.toNumber() || 0;
-  const collateralValueNumber = collateralValue?.toNumber() || 0;
-
   return (
     <>
       <DepositingStats
         collateral={collateral}
-        collateralValue={collateralValueNumber}
-        collateralAmount={collateralAmountNumber}
-        debt={debtNumber}
-        cRatio={cRatioNumber}
+        collateralValue={liquidityPosition.data?.collateralValue}
+        collateralAmount={liquidityPosition.data?.collateralAmount}
+        debt={liquidityPosition.data?.debt}
+        cRatio={liquidityPosition.data?.cRatio}
       />
 
       <Tabs isFitted isLazy>
@@ -52,24 +46,24 @@ export const Position: FC<{
         <TabPanels>
           <TabPanel>
             <Manage
-              collateralValue={collateralValueNumber}
-              collateralAmount={collateralAmountNumber}
-              debt={debtNumber}
-              cRatio={cRatioNumber}
+              collateralValue={liquidityPosition.data?.collateralValue}
+              collateralAmount={liquidityPosition.data?.collateralAmount}
+              debt={liquidityPosition.data?.debt}
+              cRatio={liquidityPosition.data?.cRatio}
               accountId={accountId}
               poolId={poolId}
               collateral={collateral}
-              refetch={refetch}
+              refetch={liquidityPosition.refetch}
             />
           </TabPanel>
           <TabPanel>
             <Pool
-              collateralAmount={collateralAmountNumber}
+              collateralAmount={liquidityPosition.data?.collateralAmount}
               accountId={accountId}
               poolId={poolId}
               collateral={collateral}
-              debt={debtNumber}
-              refetch={refetch}
+              debt={liquidityPosition.data?.debt}
+              refetch={liquidityPosition.refetch}
             />
           </TabPanel>
           <TabPanel>

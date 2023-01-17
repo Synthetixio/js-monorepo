@@ -1,13 +1,16 @@
 import { useCallback, useMemo, useState } from 'react';
 import { contracts } from '../../../utils/constants';
+import { getContract } from '../../../hooks/useContract';
 import { compareAddress, parseUnits } from '@snx-v3/format';
 import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useApprove } from '@snx-v3/useApprove';
-import { useContract } from '../../../hooks/useContract';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
 import { useUnWrapEth, useWrapEth } from '../../../hooks/useWrapEth';
 import { useSetTransactionState } from '@snx-v3/useTransactionState';
 import { BigNumber } from 'ethers';
+import { useCoreProxy } from '@snx-v3/useCoreProxy';
+import { useNetwork } from '@snx-v3/useBlockchain';
+import { Wei } from '@synthetixio/wei';
 
 export const useManagePosition = ({
   accountId,
@@ -18,20 +21,23 @@ export const useManagePosition = ({
   collateralAmount,
   refetch,
 }: {
-  accountId: string;
-  poolId: string;
-  collateral: CollateralType;
+  accountId?: string;
+  poolId?: string;
+  collateral?: CollateralType;
   collateralChange: number;
   debtChange: number;
-  collateralAmount: number;
+  collateralAmount?: Wei;
   refetch?: () => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
+  const { data: CoreProxy } = useCoreProxy();
+  const network = useNetwork();
+  const SYNTHETIX_PROXY = getContract(contracts.SYNTHETIX_PROXY, network.name);
+
   const collateralChangeBN = parseUnits(Math.abs(collateralChange));
 
   const ethCollateral = useCollateralType('WETH');
-  const isNativeCurrency = compareAddress(ethCollateral?.tokenAddress, collateral.tokenAddress);
+  const isNativeCurrency = compareAddress(ethCollateral?.tokenAddress, collateral?.tokenAddress);
 
   const { wrap, balance: wrapEthBalance, isLoading: isWrapping } = useWrapEth();
   const { unWrap, isLoading: isUnWrapping } = useUnWrapEth();
@@ -39,25 +45,23 @@ export const useManagePosition = ({
   const calls: MulticallCall[] = useMemo(() => {
     const list: MulticallCall[] = [];
 
-    if (!snxProxy) return [];
+    if (!(CoreProxy && collateralAmount && collateral)) return [];
 
     if (collateralChange > 0) {
-      const currentAmount = parseUnits(collateralAmount);
-
       list.push(
         {
-          contract: snxProxy?.contract,
+          contract: CoreProxy,
           functionName: 'deposit',
           callArgs: [accountId, collateral.tokenAddress, collateralChangeBN],
         },
         {
-          contract: snxProxy.contract,
+          contract: CoreProxy,
           functionName: 'delegateCollateral',
           callArgs: [
             accountId,
             poolId,
             collateral.tokenAddress,
-            currentAmount.add(collateralChangeBN),
+            collateralAmount.add(collateralChangeBN).toBN(),
             parseUnits(1, 18),
           ],
         }
@@ -67,7 +71,7 @@ export const useManagePosition = ({
     if (debtChange < 0) {
       const amount = parseUnits(-1 * debtChange);
       list.push({
-        contract: snxProxy?.contract,
+        contract: CoreProxy,
         functionName: 'burnUsd',
         callArgs: [accountId, poolId, collateral.tokenAddress, amount],
       });
@@ -76,28 +80,27 @@ export const useManagePosition = ({
     if (debtChange > 0) {
       const amount = parseUnits(debtChange);
       list.push({
-        contract: snxProxy?.contract,
+        contract: CoreProxy,
         functionName: 'mintUsd',
         callArgs: [accountId, poolId, collateral.tokenAddress, amount],
       });
     }
 
     if (collateralChange < 0) {
-      const currentAmount = parseUnits(collateralAmount);
       list.push(
         {
-          contract: snxProxy.contract,
+          contract: CoreProxy,
           functionName: 'delegateCollateral',
           callArgs: [
             accountId,
             poolId,
             collateral.tokenAddress,
-            currentAmount.sub(collateralChangeBN),
+            collateralAmount.sub(collateralChangeBN).toBN(),
             parseUnits(1, 18),
           ],
         },
         {
-          contract: snxProxy.contract,
+          contract: CoreProxy,
           functionName: 'withdraw',
           callArgs: [accountId, collateral.tokenAddress, collateralChangeBN],
         }
@@ -106,25 +109,28 @@ export const useManagePosition = ({
 
     return list;
   }, [
-    snxProxy,
+    CoreProxy,
+    collateralAmount,
+    collateral,
     collateralChange,
     debtChange,
-    collateralAmount,
-    collateral.tokenAddress,
     accountId,
-    poolId,
     collateralChangeBN,
+    poolId,
   ]);
 
   const multiTxn = useMulticall(calls);
   const { approve, requireApproval } = useApprove({
-    contractAddress: collateral.tokenAddress,
+    contractAddress: collateral?.tokenAddress,
     amount: collateralChange > 0 ? collateralChangeBN : BigNumber.from(0),
-    spender: snxProxy?.address,
+    spender: SYNTHETIX_PROXY.address,
   });
 
   const multicallTitles = useMemo(() => {
     const title: string[] = [];
+    if (!collateral?.symbol) {
+      return title;
+    }
     if (collateralChange > 0) {
       title.push('Deposit ' + collateral.symbol);
     } else if (collateralChange < 0) {
@@ -138,7 +144,7 @@ export const useManagePosition = ({
     }
 
     return title;
-  }, [collateralChange, debtChange, collateral.symbol]);
+  }, [collateralChange, debtChange, collateral?.symbol]);
 
   const setTransactionState = useSetTransactionState();
   const updateTransactions = useCallback(() => {
@@ -162,7 +168,7 @@ export const useManagePosition = ({
       });
     }
 
-    if (collateralChange > 0 && requireApproval) {
+    if (collateral?.symbol && collateralChange > 0 && requireApproval) {
       transactions.push({
         title: `Approve ${collateral.symbol} transfer`,
         subtitle: '',
@@ -210,7 +216,7 @@ export const useManagePosition = ({
     collateralChangeBN,
     wrapEthBalance?.value,
     wrap,
-    collateral.symbol,
+    collateral?.symbol,
     approve,
     multiTxn,
     unWrap,
