@@ -1,4 +1,4 @@
-import { Box, Spinner, Text, Flex, Button } from '@chakra-ui/react';
+import { Spinner, Text, Flex, Button } from '@chakra-ui/react';
 import { useVaultCollaterals } from '@snx-v3/useVaultCollaterals';
 import { useNavigate } from 'react-router-dom';
 import { FC } from 'react';
