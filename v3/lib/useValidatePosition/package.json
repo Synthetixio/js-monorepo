@@ -1,0 +1,11 @@
+{
+  "name": "@snx-v3/useValidatePosition",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@snx-v3/useCollateralTypes": "workspace:*",
+    "big.js": "^6.1.1",
+    "react": "^18.2.0"
+  }
+}

@@ -8192,6 +8192,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/useValidatePosition@workspace:*, @snx-v3/useValidatePosition@workspace:v3/lib/useValidatePosition":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useValidatePosition@workspace:v3/lib/useValidatePosition"
+  dependencies:
+    "@snx-v3/useCollateralTypes": "workspace:*"
+    big.js: ^6.1.1
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/useVaultCollaterals@workspace:*, @snx-v3/useVaultCollaterals@workspace:v3/lib/useVaultsCollateral":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useVaultCollaterals@workspace:v3/lib/useVaultsCollateral"
@@ -10373,6 +10383,7 @@ __metadata:
     "@snx-v3/usePreferredPool": "workspace:*"
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useTransactionState": "workspace:*"
+    "@snx-v3/useValidatePosition": "workspace:*"
     "@snx-v3/useVaultCollaterals": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
@@ -10386,7 +10397,6 @@ __metadata:
     babel-jest: ^29.3.1
     babel-loader: ^8.3.0
     babel-plugin-istanbul: ^6.1.1
-    big.js: ^6.1.1
     bn.js: ^5.2.1
     chart.js: ^3.9.1
     core-js: 3
