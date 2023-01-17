@@ -1,17 +1,18 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import { Text, Box, Tooltip, Flex, Heading, Badge } from '@chakra-ui/react';
-import { FC } from 'react';
+import { Badge, Box, Flex, Heading, Text, Tooltip } from '@chakra-ui/react';
 import { currency } from '@snx-v3/format';
 import { NumberInput } from './NumberInput';
 import { Wei } from '@synthetixio/wei';
 
-interface Props {
+export function Mint({
+  onChange,
+  value,
+  max,
+}: {
   onChange: (value: number) => void;
   value: number;
   max: Wei;
-}
-
-export const Mint: FC<Props> = ({ onChange, value, max }) => {
+}) {
   return (
     <>
       <Heading fontSize="md" mb="1">
@@ -56,4 +57,4 @@ export const Mint: FC<Props> = ({ onChange, value, max }) => {
       </Box>
     </>
   );
-};
+}

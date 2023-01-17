@@ -3,15 +3,18 @@ import { Box, Spinner, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-u
 import { Manage } from './Manage';
 import { Rewards } from './Rewards/Rewards';
 import { Pool } from './Pool';
-import { FC } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 
-export const Position: FC<{
+export function Position({
+  accountId,
+  poolId,
+  collateral,
+}: {
   accountId: string;
   poolId: string;
   collateral: CollateralType;
-}> = ({ accountId, poolId, collateral }) => {
+}) {
   const liquidityPosition = useLiquidityPosition({
     accountId,
     poolId,
@@ -73,4 +76,4 @@ export const Position: FC<{
       </Tabs>
     </>
   );
-};
+}

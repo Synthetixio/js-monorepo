@@ -1,16 +1,15 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
-  Box,
-  Heading,
-  SimpleGrid,
-  Flex,
-  Tooltip,
-  Text,
-  Badge,
   Alert,
   AlertIcon,
+  Badge,
+  Box,
+  Flex,
+  Heading,
+  SimpleGrid,
+  Text,
+  Tooltip,
 } from '@chakra-ui/react';
-import { FC } from 'react';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { currency } from '@snx-v3/format';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
@@ -18,18 +17,7 @@ import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from './NumberInput';
 import { Wei, wei } from '@synthetixio/wei';
 
-interface Props {
-  collateral: CollateralType;
-  setCollateralChange: (value: number) => void;
-  collateralChange: number;
-  collateralAmount: Wei;
-  setDebtChange: (value: number) => void;
-  debtChange: number;
-  debt: Wei;
-  maxDebt: Wei;
-}
-
-export const Custom: FC<Props> = ({
+export function Custom({
   collateral,
   collateralChange,
   collateralAmount,
@@ -38,7 +26,16 @@ export const Custom: FC<Props> = ({
   debtChange,
   debt,
   maxDebt,
-}) => {
+}: {
+  collateral: CollateralType;
+  setCollateralChange: (value: number) => void;
+  collateralChange: number;
+  collateralAmount: Wei;
+  setDebtChange: (value: number) => void;
+  debtChange: number;
+  debt: Wei;
+  maxDebt: Wei;
+}) {
   const tokenBalance = useTokenBalance(collateral.tokenAddress);
 
   return (
@@ -134,4 +131,4 @@ export const Custom: FC<Props> = ({
       )}
     </Box>
   );
-};
+}

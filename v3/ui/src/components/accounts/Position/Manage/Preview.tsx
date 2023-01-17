@@ -6,7 +6,15 @@ import { Amount } from '@snx-v3/Amount';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Wei } from '@synthetixio/wei';
 
-const getColor = (v1: Wei, v2: Wei) => (v1.eq(v2) ? 'gray.400' : v1.gt(v2) ? 'success' : 'error');
+function getColor(v1: Wei, v2: Wei) {
+  if (v1.eq(v2)) {
+    return 'gray.400';
+  }
+  if (v1.gt(v2)) {
+    return 'success';
+  }
+  return 'error';
+}
 
 export function Preview({
   collateral,

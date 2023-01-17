@@ -1,5 +1,4 @@
-import { Text, Box, Flex, Heading, Alert, AlertIcon } from '@chakra-ui/react';
-import { FC } from 'react';
+import { Alert, AlertIcon, Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { useContract } from '../../../../hooks/useContract';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { contracts } from '../../../../utils/constants';
@@ -8,13 +7,15 @@ import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from './NumberInput';
 import { Wei } from '@synthetixio/wei';
 
-interface Props {
+export function Burn({
+  onChange,
+  value,
+  debt,
+}: {
   onChange: (value: number) => void;
   value: number;
   debt: Wei;
-}
-
-export const Burn: FC<Props> = ({ onChange, value, debt }) => {
+}) {
   const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
   const tokenBalance = useTokenBalance(snxUsdProxy?.address);
 
@@ -62,4 +63,4 @@ export const Burn: FC<Props> = ({ onChange, value, debt }) => {
       )}
     </>
   );
-};
+}
