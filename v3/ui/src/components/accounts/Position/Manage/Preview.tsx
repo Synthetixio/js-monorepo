@@ -1,6 +1,6 @@
 import { Box, Text, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
-import { useValidatePosition } from '../../../../hooks/useValidatePosition';
+import { useValidatePosition } from '@snx-v3/useValidatePosition';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { CRatio } from './CRatio';
 import { Amount } from '@snx-v3/Amount';

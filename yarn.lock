@@ -7782,6 +7782,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/AccountNav@workspace:*, @snx-v3/AccountNav@workspace:v3/components/AccountNav":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/AccountNav@workspace:v3/components/AccountNav"
+  dependencies:
+    "@chakra-ui/icons": ^2.0.9
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/useParams": "workspace:*"
+    react: ^18.2.0
+    react-router-dom: ^6.6.2
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/AccountsSelector@workspace:*, @snx-v3/AccountsSelector@workspace:v3/components/AccountsSelector":
   version: 0.0.0-use.local
   resolution: "@snx-v3/AccountsSelector@workspace:v3/components/AccountsSelector"
@@ -8177,6 +8189,16 @@ __metadata:
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
     zod: ^3.20.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useValidatePosition@workspace:*, @snx-v3/useValidatePosition@workspace:v3/lib/useValidatePosition":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useValidatePosition@workspace:v3/lib/useValidatePosition"
+  dependencies:
+    "@snx-v3/useCollateralTypes": "workspace:*"
+    big.js: ^6.1.1
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -10335,6 +10357,7 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@rainbow-me/rainbowkit": ^0.8.1
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v3/AccountNav": "workspace:*"
     "@snx-v3/AccountsSelector": "workspace:*"
     "@snx-v3/Amount": "workspace:*"
     "@snx-v3/Balance": "workspace:*"
@@ -10360,6 +10383,7 @@ __metadata:
     "@snx-v3/usePreferredPool": "workspace:*"
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useTransactionState": "workspace:*"
+    "@snx-v3/useValidatePosition": "workspace:*"
     "@snx-v3/useVaultCollaterals": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
@@ -10373,7 +10397,6 @@ __metadata:
     babel-jest: ^29.3.1
     babel-loader: ^8.3.0
     babel-plugin-istanbul: ^6.1.1
-    big.js: ^6.1.1
     bn.js: ^5.2.1
     chart.js: ^3.9.1
     core-js: 3
