@@ -71,8 +71,8 @@ export function MarketSectionUi({
       <Text fontSize="xl" fontWeight={700} mb={2}>
         Markets
       </Text>
-      <Flex>
-        <BorderBox paddingY={2} paddingX={4} mr={2} w="50%">
+      <Flex gap={4} flexDirection={{ base: 'column', sm: 'row' }}>
+        <BorderBox paddingY={2} paddingX={4} flexGrow="1">
           <Text fontSize="md" color="white" display="flex" gap={1} alignItems="center">
             LAST 7 DAYS{' '}
             <Tooltip label="Market's performance in the last seven days">
@@ -94,7 +94,7 @@ export function MarketSectionUi({
             </TrendText>
           ) : null}
         </BorderBox>
-        <BorderBox paddingY={2} paddingX={4} ml={2} w="50%">
+        <BorderBox paddingY={2} paddingX={4} flexGrow="1">
           <Text color="gray.500" fontSize="xs">
             PERFORMANCE LIFETIME
           </Text>

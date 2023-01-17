@@ -37,7 +37,10 @@ export const CollateralSectionUi: FC<{
         {poolName}
       </Text>
       <BorderBox padding={4} mt={4}>
-        <Flex justifyContent="space-between">
+        <Flex
+          justifyContent="space-between"
+          flexDirection={{ base: 'row', md: 'column', lg: 'row' }}
+        >
           <Text
             display="flex"
             alignItems="center"
@@ -55,7 +58,10 @@ export const CollateralSectionUi: FC<{
             {formatNumberToUsd(totalCollateral.value.toNumber())}
           </Text>
         </Flex>
-        <Flex justifyContent="space-between">
+        <Flex
+          justifyContent="space-between"
+          flexDirection={{ base: 'row', md: 'column', lg: 'row' }}
+        >
           <Text
             display="flex"
             alignItems="center"
