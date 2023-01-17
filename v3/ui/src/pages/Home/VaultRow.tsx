@@ -114,8 +114,8 @@ export const VaultRow: FC<{ collateralType: CollateralType; poolId: string }> = 
   const accountId = params.accountId;
   const { data: liquidityPosition } = useLiquidityPosition({
     accountId,
-    collateral: collateralType,
     poolId,
+    tokenAddress: collateralType?.tokenAddress,
   });
   const navigate = useNavigate();
   const { openConnectModal } = useConnectModal();

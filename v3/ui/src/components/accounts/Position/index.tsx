@@ -15,7 +15,7 @@ export const Position: FC<{
   const { isLoading, data, refetch } = useLiquidityPosition({
     accountId,
     poolId,
-    collateral,
+    tokenAddress: collateral.tokenAddress,
   });
 
   if (isLoading) {

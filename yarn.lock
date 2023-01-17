@@ -8069,7 +8069,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useLiquidityPosition@workspace:v3/lib/useLiquidityPosition"
   dependencies:
-    "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/zod": "workspace:*"
     "@synthetixio/wei": "workspace:*"
