@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import {
-  Box,
   Flex,
   Spinner,
   Table,
@@ -13,6 +12,7 @@ import {
   Thead,
   Tr,
   Tbody,
+  Tooltip,
 } from '@chakra-ui/react';
 import { Pool } from '../../hooks/useGetPoolData';
 import {
@@ -67,26 +67,29 @@ export function MarketSectionUi({
   if (isLoading || !sevenDaysPerformance || !lifeTimePerformance) return <Spinner />;
 
   return (
-    <Box padding={4} pb={0} borderColor="gray.900" borderWidth="1px" borderRadius="base">
+    <BorderBox padding={4} pb={0}>
       <Text fontSize="xl" fontWeight={700} mb={2}>
         Markets
       </Text>
       <Flex>
         <BorderBox paddingY={2} paddingX={4} mr={2} w="50%">
-          <Text color="gray.500" fontSize="xs">
-            PERFORMANCE 7 DAYS
+          <Text fontSize="md" color="white" display="flex" gap={1} alignItems="center">
+            LAST 7 DAYS{' '}
+            <Tooltip label="Market's performance in the last seven days">
+              <InfoOutlineIcon w="10px" h="10px" />
+            </Tooltip>
           </Text>
           <TrendText
             value={sevenDaysPerformance.value}
             display="flex"
             alignItems="center"
             fontSize="2xl"
+            fontWeight="800"
           >
             {formatNumberToUsd(sevenDaysPerformance.value.toNumber())}{' '}
-            <InfoOutlineIcon height="16px" width="16px" color="white" ml={1} />
           </TrendText>
           {sevenDaysPerformance.growthPercentage ? (
-            <TrendText value={sevenDaysPerformance.growthPercentage}>
+            <TrendText fontWeight="800" fontSize="lg" value={sevenDaysPerformance.growthPercentage}>
               {formatPercent(sevenDaysPerformance.growthPercentage.toNumber())}
             </TrendText>
           ) : null}
@@ -95,9 +98,14 @@ export function MarketSectionUi({
           <Text color="gray.500" fontSize="xs">
             PERFORMANCE LIFETIME
           </Text>
-          <TrendText value={lifeTimePerformance} display="flex" alignItems="center" fontSize="2xl">
-            {formatNumberToUsd(lifeTimePerformance.toNumber())}{' '}
-            <InfoOutlineIcon height="16px" width="16px" color="white" ml={1} />
+          <TrendText
+            value={lifeTimePerformance}
+            display="flex"
+            alignItems="center"
+            fontSize="2xl"
+            fontWeight="800"
+          >
+            {formatNumberToUsd(lifeTimePerformance.toNumber())}
           </TrendText>
         </BorderBox>
       </Flex>
@@ -106,10 +114,10 @@ export function MarketSectionUi({
           <Table variant="simple">
             <Thead>
               <Tr>
-                <StyledTh>MARKET</StyledTh>
-                <StyledTh>ALLOCATION</StyledTh>
-                <StyledTh>PNL 7 DAYS</StyledTh>
-                <StyledTh>PNL LIFETIME</StyledTh>
+                <StyledTh>Market</StyledTh>
+                <StyledTh>Pool Allocation</StyledTh>
+                <StyledTh>Last 7 Days</StyledTh>
+                <StyledTh>Lifetime</StyledTh>
               </Tr>
             </Thead>
             <Tbody>
@@ -124,11 +132,11 @@ export function MarketSectionUi({
                   </Td>
                 </Tr>
               ) : (
-                poolData?.configurations.map(({ id, market, max_debt_share_value, weight }, i) => {
+                poolData?.configurations.map(({ id, market, weight }, i) => {
                   const isLastItem = i + 1 === poolData.configurations.length;
                   const growth = calculateSevenDaysPnlGrowth(market.market_snapshots_by_week);
                   return (
-                    <Tr key={id}>
+                    <Tr key={id} color="gray.500">
                       <StyledTd isLastItem={isLastItem}>
                         <Text fontSize="sm" display="block">
                           {marketNamesById?.[market.id] || '-'}
@@ -139,13 +147,7 @@ export function MarketSectionUi({
                       </StyledTd>
                       <StyledTd isLastItem={isLastItem}>
                         <Text fontSize="sm" display="block">
-                          {formatPercent(weight.toNumber())} of collateral
-                        </Text>
-                        <Text fontSize="xs" display="block">
-                          Max debt:
-                        </Text>
-                        <Text fontSize="xs">
-                          {formatNumberToUsd(max_debt_share_value.toNumber())}
+                          {formatPercent(weight.toNumber())}
                         </Text>
                       </StyledTd>
                       <StyledTd isLastItem={isLastItem}>
@@ -173,7 +175,7 @@ export function MarketSectionUi({
           </Table>
         </TableContainer>
       </Flex>
-    </Box>
+    </BorderBox>
   );
 }
 export const MarketSection = () => {
