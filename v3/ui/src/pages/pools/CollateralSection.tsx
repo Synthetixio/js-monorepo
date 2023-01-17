@@ -94,57 +94,62 @@ export const CollateralSectionUi: FC<{
             <Skeleton mt={2} w="full" height={24} />
           </Box>
         ) : (
-          vaultCollaterals.map((vaultCollateral) => (
-            <Box
-              key={vaultCollateral.collateralType.tokenAddress}
-              display="flex"
-              paddingX={4}
-              paddingY={2}
-              flexDirection="column"
-              borderBottom="1px"
-              borderColor="gray.900"
-              _last={{ borderBottom: 'none' }}
-            >
-              <Flex color="white" display="flex" gap={1} alignItems="center">
-                <Image
-                  alt="collateral image"
-                  width="30px"
-                  height="30px"
-                  src={vaultCollateral.collateralType.logo}
-                />
-                <Text fontWeight={700} fontSize="xl">
-                  {vaultCollateral.collateralType.symbol}
-                </Text>
-                <Text fontSize="sm" color="gray.400" fontWeight="400">
-                  {vaultCollateral.collateralType.price
-                    ? formatNumberToUsd(vaultCollateral.collateralType.price.toNumber())
-                    : '-'}
-                </Text>
-              </Flex>
-              <Flex justifyContent="space-between">
-                <Flex flexDirection="column">
-                  <Text mt={2} fontSize="sm" color="gray.500">
-                    Total Value Locked
+          vaultCollaterals.map((vaultCollateral) => {
+            const symbol =
+              vaultCollateral.collateralType.symbol === 'WETH'
+                ? 'ETH'
+                : vaultCollateral.collateralType.symbol;
+            return (
+              <Box
+                key={vaultCollateral.collateralType.tokenAddress}
+                display="flex"
+                paddingX={4}
+                paddingY={2}
+                flexDirection="column"
+                borderBottom="1px"
+                borderColor="gray.900"
+                _last={{ borderBottom: 'none' }}
+              >
+                <Flex color="white" display="flex" gap={1} alignItems="center">
+                  <Image
+                    alt="collateral image"
+                    width="30px"
+                    height="30px"
+                    src={vaultCollateral.collateralType.logo}
+                  />
+                  <Text fontWeight={700} fontSize="xl">
+                    {symbol}
                   </Text>
-                  <Text fontSize="md" fontWeight={700} color="white">
-                    {formatNumber(vaultCollateral.collateral.amount.toNumber())}{' '}
-                    {vaultCollateral.collateralType.symbol}
-                  </Text>
-                  <Text fontSize="sm" color="gray.500" fontWeight="400">
-                    {formatNumberToUsd(vaultCollateral.collateral.value.toNumber())}
+                  <Text fontSize="sm" color="gray.400" fontWeight="400">
+                    {vaultCollateral.collateralType.price
+                      ? formatNumberToUsd(vaultCollateral.collateralType.price.toNumber())
+                      : '-'}
                   </Text>
                 </Flex>
-                <Flex flexDirection="column">
-                  <Text mt={2} fontSize="sm" color="gray.500">
-                    Vault Debt
-                  </Text>
-                  <Text fontSize="md" fontWeight={700} color="white">
-                    {formatNumberToUsd(vaultCollateral.debt.toNumber())}
-                  </Text>
+                <Flex justifyContent="space-between">
+                  <Flex flexDirection="column">
+                    <Text mt={2} fontSize="sm" color="gray.500">
+                      Total Value Locked
+                    </Text>
+                    <Text fontSize="md" fontWeight={700} color="white">
+                      {formatNumber(vaultCollateral.collateral.amount.toNumber())} {symbol}
+                    </Text>
+                    <Text fontSize="sm" color="gray.500" fontWeight="400">
+                      {formatNumberToUsd(vaultCollateral.collateral.value.toNumber())}
+                    </Text>
+                  </Flex>
+                  <Flex flexDirection="column">
+                    <Text mt={2} fontSize="sm" color="gray.500">
+                      Vault Debt
+                    </Text>
+                    <Text fontSize="md" fontWeight={700} color="white">
+                      {formatNumberToUsd(vaultCollateral.debt.toNumber())}
+                    </Text>
+                  </Flex>
                 </Flex>
-              </Flex>
-            </Box>
-          ))
+              </Box>
+            );
+          })
         )}
       </Flex>
     </BorderBox>
