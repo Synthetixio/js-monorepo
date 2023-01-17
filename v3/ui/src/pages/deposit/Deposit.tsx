@@ -26,9 +26,9 @@ const DepositUi: FC<{
         <Box flexGrow={1} mr={12}>
           <Heading fontSize="xl">Welcome to Synthetix V3</Heading>
           <Text>
-            Deposit your collateral (SNX and/or ETH) to borrow snxUSD and contribute to the network
-            collateral. If you have never staked on Synthetix V3 before, please read through this
-            quick introduction first.
+            Deposit your collateral to borrow snxUSD and contribute to the network collateral. If
+            you have never staked on Synthetix V3 before, please read through this quick
+            introduction first.
           </Text>
         </Box>
         <Button variant="outline" minW="unset" size="sm" mt={{ base: 2, md: 0 }}>
