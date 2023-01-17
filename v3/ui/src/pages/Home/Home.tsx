@@ -20,9 +20,15 @@ import { CollateralType, useCollateralTypes } from '@snx-v3/useCollateralTypes';
 import { VaultRow } from './VaultRow';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
 import { useParams } from '@snx-v3/useParams';
+import { BorderBox } from '@snx-v3/BorderBox';
+import { useLiquidityPositions, LiquidityPositionType } from '@snx-v3/useLiquidityPositions';
+import { formatNumberToUsd } from '@snx-v2/formatters';
 
 const LoadingRow = () => (
   <Tr>
+    <Td>
+      <Skeleton w="full" height={8} />
+    </Td>
     <Td>
       <Skeleton w="full" height={8} />
     </Td>
@@ -47,13 +53,24 @@ export function HomeUi({
   accountId,
   VaultRow,
   navigate,
+  liquidityPositions,
 }: {
   collateralTypes?: CollateralType[];
   preferredPool?: { name: string; id: string };
   accountId?: string;
   VaultRow: FC<{ collateralType: CollateralType; poolId: string }>;
   navigate: NavigateFunction;
+  liquidityPositions?: LiquidityPositionType[];
 }) {
+  const { totalCollateral, totalDebt } =
+    liquidityPositions?.reduce(
+      (acc, val) => {
+        acc.totalCollateral = acc.totalCollateral + val.collateralValue.toNumber();
+        acc.totalDebt = acc.totalDebt + val.debt.toNumber();
+        return acc;
+      },
+      { totalCollateral: 0, totalDebt: 0 }
+    ) || {};
   return (
     <Flex height="100%" flexDirection="column">
       <Flex alignItems="flex-end" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
@@ -70,7 +87,21 @@ export function HomeUi({
         </Button>
       </Flex>
       <Divider mt={4} bg="gray.900" />
-      <Box p={4} bg="navy.900" mt={8} borderWidth="1px" borderColor="gray.900" borderRadius="base">
+      <Flex mt={8} justifyContent="center" gap={4} flexDirection={{ base: 'column', md: 'row' }}>
+        <BorderBox flexGrow={1} px={4} py={2}>
+          <Text fontSize="sm">Total Collateral</Text>
+          <Text fontSize="2xl">{totalCollateral ? formatNumberToUsd(totalCollateral) : '-'}</Text>
+        </BorderBox>
+        <BorderBox flexGrow={1} px={4} py={2}>
+          <Text fontSize="sm">Total debt</Text>
+          <Text fontSize="2xl">{totalDebt ? formatNumberToUsd(totalDebt) : '-'}</Text>
+        </BorderBox>
+        <BorderBox flexGrow={1} px={4} py={2}>
+          <Text fontSize="sm">-</Text>
+          <Text fontSize="2xl">-</Text>
+        </BorderBox>
+      </Flex>
+      <BorderBox p={4} mt={8}>
         <Flex
           justifyContent="space-between"
           flexWrap={{ base: 'wrap', md: 'nowrap' }}
@@ -126,6 +157,9 @@ export function HomeUi({
                 <Th color="whiteAlpha.800" pb="2">
                   Issuance Ratio
                 </Th>
+                <Th color="whiteAlpha.800" pb="2">
+                  Liquidation Ratio
+                </Th>
                 <Th color="whiteAlpha.800" pb="2"></Th>
               </Tr>
             </Thead>
@@ -143,7 +177,7 @@ export function HomeUi({
             </Tbody>
           </Table>
         </Box>
-      </Box>
+      </BorderBox>
     </Flex>
   );
 }
@@ -151,9 +185,13 @@ export function Home() {
   const { data: accounts = [] } = useAccounts();
   const { data: collateralTypes = [] } = useCollateralTypes();
   const { data: preferredPool } = usePreferredPool();
+
   const params = useParams();
   const navigate = useNavigate();
   const [accountId] = accounts;
+  const { data: liquidityPositionsById } = useLiquidityPositions({
+    accountId: params.accountId,
+  });
 
   useEffect(() => {
     if (!params.accountId && accountId) {
@@ -166,6 +204,9 @@ export function Home() {
 
   return (
     <HomeUi
+      liquidityPositions={
+        liquidityPositionsById ? Object.values(liquidityPositionsById) : undefined
+      }
       collateralTypes={collateralTypes}
       VaultRow={VaultRow}
       preferredPool={preferredPool}
