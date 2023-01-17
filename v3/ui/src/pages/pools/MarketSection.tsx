@@ -68,10 +68,13 @@ export function MarketSectionUi({
 
   return (
     <BorderBox padding={4} pb={0}>
-      <Text fontSize="xl" fontWeight={700} mb={2}>
+      <Text fontSize="xl" fontWeight={700}>
         Markets
       </Text>
-      <Flex gap={4} flexDirection={{ base: 'column', sm: 'row' }}>
+      <Text color="gray.400" fontSize="sm">
+        {poolData?.name}
+      </Text>
+      <Flex mt={4} gap={4} flexDirection={{ base: 'column', sm: 'row' }}>
         <BorderBox paddingY={2} paddingX={4} flexGrow="1">
           <Text fontSize="md" color="white" display="flex" gap={1} alignItems="center">
             LAST 7 DAYS{' '}
