@@ -57,7 +57,7 @@ export const AccountVaultCollateral: FC<{ collateral: CollateralType }> = ({ col
   const { data, isLoading } = useLiquidityPosition({
     accountId: params.accountId,
     poolId: params.poolId,
-    collateral,
+    tokenAddress: collateral?.tokenAddress,
   });
 
   if (!params.poolId || !params.accountId) return null;

@@ -1,4 +1,3 @@
-import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { CoreProxyContractType, useCoreProxy } from '@snx-v3/useCoreProxy';
 import { ZodBigNumber } from '@snx-v3/zod';
 import { wei } from '@synthetixio/wei';
@@ -62,11 +61,11 @@ export const loadPosition = async ({
 };
 
 export const useLiquidityPosition = ({
-  collateral,
+  tokenAddress,
   accountId,
   poolId,
 }: {
-  collateral: CollateralType;
+  tokenAddress?: string;
   accountId?: string;
   poolId?: string;
 }) => {
@@ -75,17 +74,18 @@ export const useLiquidityPosition = ({
     queryKey: [
       'LiquidityPosition',
       {
-        collateralAddress: collateral.tokenAddress,
+        tokenAddress,
         poolId,
         accountId,
         CoreProxy: CoreProxy?.address,
       },
     ],
     queryFn: async () => {
-      if (!CoreProxy || !accountId || !poolId) throw Error('Query should not be enabled');
-      return loadPosition({ CoreProxy, accountId, poolId, tokenAddress: collateral.tokenAddress });
+      if (!CoreProxy || !accountId || !poolId || !tokenAddress)
+        throw Error('Query should not be enabled');
+      return loadPosition({ CoreProxy, accountId, poolId, tokenAddress });
     },
     select: selectPosition,
-    enabled: Boolean(CoreProxy && poolId && accountId),
+    enabled: Boolean(CoreProxy && poolId && accountId && tokenAddress),
   });
 };
