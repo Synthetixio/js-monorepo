@@ -1,10 +1,9 @@
 import { parseUnits } from '@snx-v3/format';
 import { useMemo } from 'react';
-import { contracts } from '../utils/constants';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
-import { useContract } from './useContract';
-import { MulticallCall, useMulticall } from './useMulticall';
+import { MulticallCall, useMulticall } from '../../hooks/useMulticall';
 import { Wei } from '@synthetixio/wei';
+import { useCoreProxy } from '@snx-v3/useCoreProxy';
 
 export function useUpdatePool({
   accountId,
@@ -14,26 +13,27 @@ export function useUpdatePool({
   newPoolId,
   onSuccess,
 }: {
-  accountId: string;
-  poolId: string;
-  collateral: CollateralType;
+  accountId?: string;
+  poolId?: string;
+  collateral?: CollateralType;
   collateralAmount?: Wei;
-  newPoolId: string;
+  newPoolId?: string;
   onSuccess?: () => void;
 }) {
-  const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
+  const { data: CoreProxy } = useCoreProxy();
 
   const calls: MulticallCall[] = useMemo(() => {
-    if (!snxProxy || poolId === newPoolId || !collateralAmount) return [];
+    if (!CoreProxy || poolId === newPoolId || !collateralAmount || !collateral?.tokenAddress)
+      return [];
 
     return [
       {
-        contract: snxProxy.contract,
+        contract: CoreProxy,
         functionName: 'delegateCollateral',
         callArgs: [accountId, poolId, collateral.tokenAddress, 0, parseUnits(1, 18)],
       },
       {
-        contract: snxProxy.contract,
+        contract: CoreProxy,
         functionName: 'delegateCollateral',
         callArgs: [
           accountId,
@@ -44,7 +44,7 @@ export function useUpdatePool({
         ],
       },
     ];
-  }, [collateralAmount, newPoolId, accountId, collateral.tokenAddress, poolId, snxProxy]);
+  }, [CoreProxy, poolId, newPoolId, collateralAmount, collateral?.tokenAddress, accountId]);
 
   return useMulticall(calls, undefined, {
     onSuccess,

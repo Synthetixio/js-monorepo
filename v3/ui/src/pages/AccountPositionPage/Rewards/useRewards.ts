@@ -1,30 +1,34 @@
 import { useQuery } from '@tanstack/react-query';
-import { CollateralType } from '@snx-v3/useCollateralTypes';
-import { useNetwork } from '@snx-v3/useBlockchain';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
+
+export type Reward = {
+  distributor: string;
+  value: string;
+};
 
 export const useRewards = ({
   accountId,
   poolId,
-  collateral,
+  tokenAddress,
 }: {
-  accountId: string;
-  poolId: string;
-  collateral: CollateralType;
+  accountId?: string;
+  poolId?: string;
+  tokenAddress?: string;
 }) => {
-  const network = useNetwork();
   const { data: CoreProxy } = useCoreProxy();
 
   return useQuery({
     queryKey: [
-      network.name,
-      'rewards',
-      { poolId },
-      { token: collateral.tokenAddress },
-      { accountId },
+      'Rewards',
+      {
+        accountId,
+        poolId,
+        tokenAddress,
+        CoreProxy: CoreProxy?.address,
+      },
     ],
     queryFn: async () => {
-      if (!CoreProxy) throw new Error('OMG');
+      if (!(CoreProxy && poolId && tokenAddress && accountId)) throw new Error('OMG');
 
       // TODO: getRewards is not a functon!
       // const [rewards, distributors] = await CoreProxy.callStatic.getRewards(
@@ -36,9 +40,10 @@ export const useRewards = ({
       //   distributor: distributors[index],
       //   value: reward?.toString(),
       // }));
-      return [];
+      const rewards: Reward[] = [];
+      return rewards;
     },
     placeholderData: [],
-    enabled: Boolean(network.name && poolId && collateral.tokenAddress && accountId),
+    enabled: Boolean(CoreProxy && poolId && tokenAddress && accountId),
   });
 };

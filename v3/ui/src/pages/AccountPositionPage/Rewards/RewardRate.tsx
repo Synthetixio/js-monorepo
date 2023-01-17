@@ -1,7 +1,5 @@
 import { InfoIcon } from '@chakra-ui/icons';
 import { Tooltip } from '@chakra-ui/react';
-import { FC } from 'react';
-import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { parseUnits } from '@snx-v3/format';
 import { Amount } from '@snx-v3/Amount';
 import { useQuery } from '@tanstack/react-query';
@@ -10,29 +8,36 @@ import { useNetwork } from '@snx-v3/useBlockchain';
 
 const WEEK_SECONDS = 604800;
 
-export const RewardRate: FC<{
-  poolId: string;
-  collateral: CollateralType;
-  distributor: string;
+export function RewardRate({
+  distributor,
+  poolId,
+  symbol,
+  tokenAddress,
+}: {
+  poolId?: string;
+  distributor?: string;
   symbol?: string;
-}> = ({ distributor, poolId, collateral, symbol }) => {
+  tokenAddress?: string;
+}) {
   const network = useNetwork();
   const { data: CoreProxy } = useCoreProxy();
   const { data: rewardRate, isLoading } = useQuery({
     queryKey: [
-      network.name,
-      'rewardRate',
-      { poolId },
-      { tokenAddress: collateral.tokenAddress },
+      'RewardRate',
+      {
+        poolId,
+        tokenAddress,
+        CoreProxy: CoreProxy?.address,
+      },
       { distributor },
     ],
     queryFn: async () => {
-      if (!CoreProxy) throw new Error('OMG');
-      const value = await CoreProxy.getRewardRate(poolId, collateral.tokenAddress, distributor);
+      if (!(CoreProxy && poolId && tokenAddress && distributor)) throw new Error('OMG');
+      const value = await CoreProxy.getRewardRate(poolId, tokenAddress, distributor);
       return parseUnits(value);
     },
     placeholderData: parseUnits(0),
-    enabled: Boolean(CoreProxy && network.name && poolId && collateral.tokenAddress && distributor),
+    enabled: Boolean(CoreProxy && network.name && poolId && tokenAddress && distributor),
   });
 
   if (!rewardRate || isLoading) {
@@ -54,4 +59,4 @@ export const RewardRate: FC<{
       Earning <Amount value={rewardRate.mul(WEEK_SECONDS).toString()} /> {symbol} per week
     </>
   );
-};
+}

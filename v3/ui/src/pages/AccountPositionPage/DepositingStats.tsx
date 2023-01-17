@@ -1,23 +1,19 @@
 import { InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { Box, Flex, Grid, GridItem, Heading, Skeleton, Text, Tooltip } from '@chakra-ui/react';
 import { currency } from '@snx-v3/format';
-import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Amount } from '@snx-v3/Amount';
-import { Wei } from '@synthetixio/wei';
+import { useParams } from '@snx-v3/useParams';
+import { useCollateralType } from '@snx-v3/useCollateralTypes';
+import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 
-export function DepositingStats({
-  collateral,
-  debt,
-  collateralAmount,
-  collateralValue,
-  cRatio,
-}: {
-  collateral: CollateralType;
-  collateralAmount?: Wei;
-  collateralValue?: Wei;
-  debt?: Wei;
-  cRatio?: Wei;
-}) {
+export function DepositingStats() {
+  const params = useParams();
+  const collateralType = useCollateralType(params.collateralSymbol);
+  const liquidityPosition = useLiquidityPosition({
+    accountId: params.accountId,
+    poolId: params.poolId,
+    tokenAddress: collateralType?.tokenAddress,
+  });
   return (
     <Box>
       <Grid mb="1" textAlign="center" templateColumns="repeat(4, 1fr)">
@@ -26,21 +22,24 @@ export function DepositingStats({
             Collateral
           </Text>
           <Heading size="md">
-            <Skeleton isLoaded={collateralAmount !== undefined}>
-              <Amount value={collateralAmount} suffix={` ${collateral.symbol} `} />
+            <Skeleton isLoaded={liquidityPosition.isFetched}>
+              <Amount
+                value={liquidityPosition.data?.collateralAmount}
+                suffix={` ${collateralType?.symbol} `}
+              />
             </Skeleton>
           </Heading>
           <Text opacity="0.6" fontSize="sm">
-            <Amount value={collateralValue} prefix="$" />
+            <Amount value={liquidityPosition.data?.collateralValue} prefix="$" />
           </Text>
         </GridItem>
         <GridItem mb="3">
           <Text fontSize="sm" fontWeight="semibold">
             Debt
           </Text>
-          <Skeleton isLoaded={debt !== undefined}>
+          <Skeleton isLoaded={liquidityPosition.isFetched}>
             <Heading size="md">
-              <Amount value={debt} prefix="$" />
+              <Amount value={liquidityPosition.data?.debt} prefix="$" />
             </Heading>
           </Skeleton>
           <Text opacity="0.6" fontSize="sm">
@@ -54,10 +53,10 @@ export function DepositingStats({
           <Text fontSize="sm" fontWeight="semibold">
             C-Ratio
           </Text>
-          <Skeleton isLoaded={true}>
+          <Skeleton isLoaded={liquidityPosition.isFetched}>
             <Heading size="md">
               <Flex alignItems="center" justify="center">
-                {Number(debt?.toString() || 0) === 0 ? (
+                {Number(liquidityPosition.data?.debt.toString() || 0) === 0 ? (
                   <>
                     <Text>No Debt</Text>
                     <Tooltip label="You will have a C-Ratio once you’ve accrued some debt. You are not currently at risk of liquidation.">
@@ -65,14 +64,14 @@ export function DepositingStats({
                     </Tooltip>
                   </>
                 ) : (
-                  <Amount value={cRatio} suffix="%" />
+                  <Amount value={liquidityPosition.data?.cRatio} suffix="%" />
                 )}
               </Flex>
             </Heading>
           </Skeleton>
           <Text opacity="0.6" fontSize="sm">
             Liquidation Ratio{' '}
-            <Amount value={collateral.liquidationRatioD18.mul(100).toNumber()} suffix="% " />
+            <Amount value={collateralType?.liquidationRatioD18.mul(100).toNumber()} suffix="% " />
           </Text>
         </GridItem>
         <GridItem mb="3">

@@ -1,8 +1,7 @@
 import { Alert, AlertIcon, Box, Flex, Heading, Text } from '@chakra-ui/react';
-import { useContract } from '../../../../hooks/useContract';
+import { useContract } from '../../../hooks/useContract';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
-import { contracts } from '../../../../utils/constants';
-
+import { contracts } from '../../../utils/constants';
 import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from './NumberInput';
 import { Wei } from '@synthetixio/wei';
@@ -50,7 +49,7 @@ export function Burn({
                 }
                 onChange(Math.min(tokenBalance.data.toNumber(), debt.toNumber()));
               }}
-              symbol="snxUsd"
+              symbol="snxUSD"
               address={snxUsdProxy?.address}
             />
           </Flex>

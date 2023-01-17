@@ -10,28 +10,19 @@ import { Deposit } from './Manage/Deposit';
 import { Burn } from './Manage/Burn';
 import { useValidatePosition } from '@snx-v3/useValidatePosition';
 import { useTranslation } from 'react-i18next';
-import { CollateralType } from '@snx-v3/useCollateralTypes';
-import { Wei } from '@synthetixio/wei';
+import { useCollateralType } from '@snx-v3/useCollateralTypes';
+import { useParams } from '@snx-v3/useParams';
+import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 
-export function Manage({
-  collateral,
-  accountId,
-  poolId,
-  collateralAmount,
-  collateralValue,
-  debt,
-  cRatio,
-  refetch,
-}: {
-  accountId: string;
-  poolId: string;
-  collateral: CollateralType;
-  collateralAmount?: Wei;
-  collateralValue?: Wei;
-  debt?: Wei;
-  cRatio?: Wei;
-  refetch: () => void;
-}) {
+export function Manage() {
+  const params = useParams();
+  const collateralType = useCollateralType(params.collateralSymbol);
+  const liquidityPosition = useLiquidityPosition({
+    accountId: params.accountId,
+    poolId: params.poolId,
+    tokenAddress: collateralType?.tokenAddress,
+  });
+
   const { t } = useTranslation();
   const [collateralChange, setCollateralChange] = useState(0);
   const [debtChange, setDebtChange] = useState(0);
@@ -42,28 +33,28 @@ export function Manage({
   }, []);
 
   const { exec, isLoading } = useManagePosition({
-    collateral,
-    accountId,
-    poolId,
+    accountId: params.accountId,
+    poolId: params.poolId,
+    collateralType,
     collateralChange,
     debtChange,
-    collateralAmount,
+    collateralAmount: liquidityPosition.data?.collateralAmount,
     refetch: () => {
       reset();
-      refetch();
+      liquidityPosition.refetch();
     },
   });
 
   const { isValid, noChange, maxDebt } = useValidatePosition({
-    collateral,
-    collateralAmount,
-    collateralValue,
-    debt,
+    collateral: collateralType,
+    collateralAmount: liquidityPosition.data?.collateralAmount,
+    collateralValue: liquidityPosition.data?.collateralValue,
+    debt: liquidityPosition.data?.debt,
     collateralChange,
     debtChange,
   });
 
-  if (!(collateralAmount && collateralValue && debt && cRatio)) {
+  if (!(collateralType && liquidityPosition.data)) {
     return null;
   }
 
@@ -79,12 +70,12 @@ export function Manage({
         <TabPanels>
           <TabPanel>
             <MaintainCRatio
-              collateral={collateral}
+              collateral={collateralType}
               setCollateralChange={setCollateralChange}
               collateralChange={collateralChange}
               setDebtChange={setDebtChange}
               debtChange={debtChange}
-              debt={debt}
+              debt={liquidityPosition.data.debt}
             />
           </TabPanel>
           <TabPanel>
@@ -92,7 +83,7 @@ export function Manage({
               <Deposit
                 onChange={setCollateralChange}
                 value={collateralChange}
-                collateral={collateral}
+                collateral={collateralType}
               />
             </Box>
             <Box mb="6">
@@ -101,12 +92,16 @@ export function Manage({
           </TabPanel>
           <TabPanel>
             <Box mb="6">
-              <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
+              <Burn
+                value={-debtChange}
+                onChange={(val) => setDebtChange(-val)}
+                debt={liquidityPosition.data.debt}
+              />
             </Box>
             <Box mb="6">
               <Withdraw
-                collateral={collateral}
-                collateralAmount={collateralAmount}
+                collateral={collateralType}
+                collateralAmount={liquidityPosition.data.collateralAmount}
                 onChange={(val) => setCollateralChange(-val)}
                 value={-collateralChange}
               />
@@ -114,13 +109,13 @@ export function Manage({
           </TabPanel>
           <TabPanel>
             <Custom
-              collateral={collateral}
+              collateral={collateralType}
               setCollateralChange={setCollateralChange}
-              collateralAmount={collateralAmount}
+              collateralAmount={liquidityPosition.data.collateralAmount}
               collateralChange={collateralChange}
               setDebtChange={setDebtChange}
               debtChange={debtChange}
-              debt={debt}
+              debt={liquidityPosition.data.debt}
               maxDebt={maxDebt}
             />
           </TabPanel>
@@ -128,11 +123,11 @@ export function Manage({
       </Tabs>
 
       <Preview
-        collateral={collateral}
-        collateralAmount={collateralAmount}
-        collateralValue={collateralValue}
-        debt={debt}
-        cRatio={cRatio}
+        collateral={collateralType}
+        collateralAmount={liquidityPosition.data.collateralAmount}
+        collateralValue={liquidityPosition.data.collateralValue}
+        debt={liquidityPosition.data.debt}
+        cRatio={liquidityPosition.data.cRatio}
         collateralChange={collateralChange}
         debtChange={debtChange}
       />
