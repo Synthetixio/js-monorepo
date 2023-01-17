@@ -204,7 +204,6 @@ export function Home() {
       collateralTypes={collateralTypes}
       VaultRow={VaultRow}
       preferredPool={preferredPool}
-      accountId={params.accountId}
       navigate={navigate}
     />
   );
