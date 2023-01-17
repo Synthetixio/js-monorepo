@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import {
   Flex,
-  Spinner,
   Table,
   TableCellProps,
   TableContainer,
@@ -13,6 +12,7 @@ import {
   Tr,
   Tbody,
   Tooltip,
+  Skeleton,
 } from '@chakra-ui/react';
 import { Pool } from '../../hooks/useGetPoolData';
 import {
@@ -41,7 +41,7 @@ const StyledTh: FC<TableCellProps> = (props) => (
   />
 );
 
-const StyledTd: FC<TableCellProps & { isLastItem: boolean }> = ({ isLastItem, ...props }) => (
+const StyledTd: FC<TableCellProps & { isLastItem?: boolean }> = ({ isLastItem, ...props }) => (
   <Td
     sx={{
       borderBottom: isLastItem ? 'none' : '1px',
@@ -53,21 +53,45 @@ const StyledTd: FC<TableCellProps & { isLastItem: boolean }> = ({ isLastItem, ..
   />
 );
 
+const LoadingRow = () => (
+  <Tr>
+    <StyledTd>
+      <Skeleton w="full" height={8} />
+    </StyledTd>
+    <StyledTd>
+      <Skeleton w="full" height={8} />
+    </StyledTd>
+    <StyledTd>
+      <Skeleton w="full" height={8} />
+    </StyledTd>
+    <StyledTd>
+      <Skeleton w="full" height={8} />
+    </StyledTd>
+  </Tr>
+);
 export function MarketSectionUi({
-  isLoading,
   poolData,
   marketNamesById,
+  poolId,
+  poolDataFetched,
 }: {
-  isLoading: boolean;
   poolData?: Pool;
   marketNamesById?: Record<string, string | undefined>;
+  poolId?: string;
+  poolDataFetched: boolean;
 }) {
   const sevenDaysPerformance = calculatePoolPerformanceSevenDays(poolData);
   const lifeTimePerformance = calculatePoolPerformanceLifetime(poolData);
-  if (isLoading || !sevenDaysPerformance || !lifeTimePerformance) return <Spinner />;
 
+  if (poolDataFetched && !poolData) {
+    return (
+      <BorderBox padding={4}>
+        <Text>Pool with id: {poolId} does not exists</Text>
+      </BorderBox>
+    );
+  }
   return (
-    <BorderBox padding={4} pb={0}>
+    <BorderBox padding={4}>
       <Text fontSize="xl" fontWeight={700}>
         Markets
       </Text>
@@ -76,40 +100,65 @@ export function MarketSectionUi({
       </Text>
       <Flex mt={4} gap={4} flexDirection={{ base: 'column', sm: 'row' }}>
         <BorderBox paddingY={2} paddingX={4} flexGrow="1">
-          <Text fontSize="md" color="white" display="flex" gap={1} alignItems="center">
+          <Text
+            fontSize="md"
+            color="white"
+            display="flex"
+            gap={1}
+            alignItems="center"
+            fontWeight={700}
+          >
             LAST 7 DAYS{' '}
             <Tooltip label="Market's performance in the last seven days">
               <InfoOutlineIcon w="10px" h="10px" />
             </Tooltip>
           </Text>
-          <TrendText
-            value={sevenDaysPerformance.value}
-            display="flex"
-            alignItems="center"
-            fontSize="2xl"
-            fontWeight="800"
-          >
-            {formatNumberToUsd(sevenDaysPerformance.value.toNumber())}{' '}
-          </TrendText>
-          {sevenDaysPerformance.growthPercentage ? (
+          {sevenDaysPerformance?.value ? (
+            <TrendText
+              value={sevenDaysPerformance.value}
+              display="flex"
+              alignItems="center"
+              fontSize="2xl"
+              fontWeight="800"
+            >
+              {formatNumberToUsd(sevenDaysPerformance.value.toNumber())}{' '}
+            </TrendText>
+          ) : (
+            '-'
+          )}
+          {sevenDaysPerformance?.growthPercentage ? (
             <TrendText fontWeight="800" fontSize="lg" value={sevenDaysPerformance.growthPercentage}>
               {formatPercent(sevenDaysPerformance.growthPercentage.toNumber())}
             </TrendText>
           ) : null}
         </BorderBox>
         <BorderBox paddingY={2} paddingX={4} flexGrow="1">
-          <Text color="gray.500" fontSize="xs">
-            PERFORMANCE LIFETIME
-          </Text>
-          <TrendText
-            value={lifeTimePerformance}
+          <Text
+            fontWeight={700}
+            fontSize="md"
+            color="white"
             display="flex"
+            gap={1}
             alignItems="center"
-            fontSize="2xl"
-            fontWeight="800"
           >
-            {formatNumberToUsd(lifeTimePerformance.toNumber())}
-          </TrendText>
+            Performance Lifetime
+            <Tooltip label="Market's lifetime performance">
+              <InfoOutlineIcon w="10px" h="10px" />
+            </Tooltip>
+          </Text>
+          {lifeTimePerformance ? (
+            <TrendText
+              value={lifeTimePerformance}
+              display="flex"
+              alignItems="center"
+              fontSize="2xl"
+              fontWeight="800"
+            >
+              {formatNumberToUsd(lifeTimePerformance.toNumber())}
+            </TrendText>
+          ) : (
+            '-'
+          )}
         </BorderBox>
       </Flex>
       <Flex>
@@ -124,8 +173,7 @@ export function MarketSectionUi({
               </Tr>
             </Thead>
             <Tbody>
-              {/* TODO skeleton */}
-              {!poolData && <Spinner />}
+              {!poolData && <LoadingRow />}
               {poolData?.configurations.length === 0 ? (
                 <Tr w="full">
                   <Td colSpan={4} border="none">
@@ -183,17 +231,20 @@ export function MarketSectionUi({
 }
 export const MarketSection = () => {
   const params = useParams();
-  const { data: poolData, isLoading: isLoadingPoolData } = useGetPoolData(params.poolId);
+  const { data: poolData, isFetched: poolDataFetched } = useGetPoolData(params.poolId);
 
   const marketIdsAndAddresses = poolData?.configurations.map(({ market }) => ({
     marketId: market.id,
     address: market.address,
   }));
-  const { data: marketNamesById, isLoading: isLoadingMarketNames } =
-    useMarketNamesById(marketIdsAndAddresses);
-  const isLoading = isLoadingPoolData || isLoadingMarketNames;
+  const { data: marketNamesById } = useMarketNamesById(marketIdsAndAddresses);
 
   return (
-    <MarketSectionUi marketNamesById={marketNamesById} poolData={poolData} isLoading={isLoading} />
+    <MarketSectionUi
+      marketNamesById={marketNamesById}
+      poolData={poolData}
+      poolDataFetched={poolDataFetched}
+      poolId={params.poolId}
+    />
   );
 };
