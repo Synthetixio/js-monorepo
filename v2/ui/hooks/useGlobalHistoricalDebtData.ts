@@ -27,17 +27,19 @@ interface DHedgePerformanceResponse {
   data: {
     tokenPriceHistory: {
       history: {
-        performance: string;
+        adjustedTokenPrice: string;
         timestamp: string;
       }[];
     };
   };
   errors: any[];
 }
+
 enum EvenBlockType {
   STAKING_TRANSACTION = 'STAKING_TRANSACTION',
   DHEDGE_ITEM = 'DHEDGE_ITEM',
 }
+
 type EventBlocks = Array<{
   type: EvenBlockType;
   timestamp: number;
@@ -47,6 +49,7 @@ type EventBlocks = Array<{
 const useGlobalHistoricalDebtData = (): HistoricalGlobalDebtAndIssuance => {
   const { isMainnet } = Connector.useContainer();
   const poolAddress = isMainnet ? dSNXPoolAddressMainnet : dSNXPoolAddressOptimism;
+
   const dHedgeData = useQuery<DHedgePerformanceResponse>(
     ['dhedge', dHedgeAPIUrl, poolAddress],
     async () => {
@@ -60,8 +63,8 @@ const useGlobalHistoricalDebtData = (): HistoricalGlobalDebtAndIssuance => {
           query: `{
               tokenPriceHistory (address:"${poolAddress}", period:"1m") {
                 history {
-                  performance,
-                  timestamp
+                  timestamp,
+                  adjustedTokenPrice
               }
             }
           }`,
@@ -75,21 +78,27 @@ const useGlobalHistoricalDebtData = (): HistoricalGlobalDebtAndIssuance => {
       refetchOnMount: false,
     }
   );
+
+  console.log('dHedgeData', dHedgeData);
   const { subgraph } = useSynthetixQueries();
+
   const dailyIssued = subgraph.useGetDailyIssueds(
     { orderBy: 'id', orderDirection: 'desc' },
     { id: true, totalDebt: true }
   );
+
   const dailyBurned = subgraph.useGetDailyBurneds(
     { orderBy: 'id', orderDirection: 'desc' },
     { id: true, totalDebt: true }
   );
+
   const isLoaded =
     dailyIssued.isSuccess &&
     dailyBurned.isSuccess &&
     dHedgeData.isSuccess &&
     !dHedgeData.data.errors?.length &&
     dHedgeData.data;
+
   if (!isLoaded) {
     return { isLoading: true, data: [] };
   }
@@ -98,7 +107,7 @@ const useGlobalHistoricalDebtData = (): HistoricalGlobalDebtAndIssuance => {
     dHedgeData.data?.data.tokenPriceHistory.history
       .map((history) => ({
         type: EvenBlockType.DHEDGE_ITEM,
-        value: wei(Number(history.performance) * 100),
+        value: wei(Number(history.adjustedTokenPrice) * 100),
         // we are getting the timestamps in milliseconds while our data is in seconds
         timestamp: Math.floor(Number(history.timestamp) / 1000),
       }))
@@ -110,6 +119,7 @@ const useGlobalHistoricalDebtData = (): HistoricalGlobalDebtAndIssuance => {
       type: EvenBlockType.STAKING_TRANSACTION,
       value: x.totalDebt,
     })) ?? [];
+
   const dailyBurnedData =
     dailyBurned.data?.map((x) => ({
       timestamp: Number(x.id),
@@ -123,15 +133,20 @@ const useGlobalHistoricalDebtData = (): HistoricalGlobalDebtAndIssuance => {
     'timestamp',
     'asc'
   );
+
   const firstIndexOfDHedgeInformation =
     eventBlocks.findIndex((x) => EvenBlockType.DHEDGE_ITEM === x.type) - 1;
+
   const trimmedEventBlocks = eventBlocks.slice(
     firstIndexOfDHedgeInformation - 1,
     eventBlocks.length - 1
   );
+
   const data: HistoricalGlobalDebtAndIssuanceData[] = [];
+
   let lastKnownDebtPoolPrice = wei(0);
   let lastKnownPerformance = wei(0);
+
   trimmedEventBlocks.forEach((event) => {
     if (event.type === EvenBlockType.STAKING_TRANSACTION) {
       lastKnownDebtPoolPrice = event.value;
