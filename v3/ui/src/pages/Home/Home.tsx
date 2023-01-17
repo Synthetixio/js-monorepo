@@ -39,6 +39,9 @@ const LoadingRow = () => (
       <Skeleton w="full" height={8} />
     </Td>
     <Td>
+      <Skeleton w="full" height={8} />
+    </Td>
+    <Td>
       <Skeleton minWidth={16} height={8} />
     </Td>
   </Tr>
@@ -153,6 +156,9 @@ export function HomeUi({
                 </Th>
                 <Th color="whiteAlpha.800" pb="2">
                   Issuance Ratio
+                </Th>
+                <Th color="whiteAlpha.800" pb="2">
+                  Liquidation Ratio
                 </Th>
                 <Th color="whiteAlpha.800" pb="2"></Th>
               </Tr>
