@@ -8192,16 +8192,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/useValidatePosition@workspace:*, @snx-v3/useValidatePosition@workspace:v3/lib/useValidatePosition":
-  version: 0.0.0-use.local
-  resolution: "@snx-v3/useValidatePosition@workspace:v3/lib/useValidatePosition"
-  dependencies:
-    "@snx-v3/useCollateralTypes": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
-    react: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
 "@snx-v3/useVaultsData@workspace:*, @snx-v3/useVaultsData@workspace:v3/lib/useVaultsData":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useVaultsData@workspace:v3/lib/useVaultsData"
@@ -8212,6 +8202,14 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     zod: ^3.20.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/validatePosition@workspace:*, @snx-v3/validatePosition@workspace:v3/lib/validatePosition":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/validatePosition@workspace:v3/lib/validatePosition"
+  dependencies:
+    "@synthetixio/wei": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -10383,8 +10381,8 @@ __metadata:
     "@snx-v3/usePreferredPool": "workspace:*"
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useTransactionState": "workspace:*"
-    "@snx-v3/useValidatePosition": "workspace:*"
     "@snx-v3/useVaultsData": "workspace:*"
+    "@snx-v3/validatePosition": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
     "@synthetixio/wei": "workspace:*"

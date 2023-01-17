@@ -4,11 +4,11 @@ import { Preview } from './Manage/Preview';
 import { Withdraw } from './Manage/Withdraw';
 import { Box, Button, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { MaintainCRatio } from './Manage/MaintainCRatio';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useManagePosition } from './useManagePosition';
 import { Deposit } from './Manage/Deposit';
 import { Burn } from './Manage/Burn';
-import { useValidatePosition } from '@snx-v3/useValidatePosition';
+import { validatePosition } from '@snx-v3/validatePosition';
 import { useTranslation } from 'react-i18next';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useParams } from '@snx-v3/useParams';
@@ -45,14 +45,25 @@ export function Manage() {
     },
   });
 
-  const { isValid, noChange, maxDebt } = useValidatePosition({
-    collateral: collateralType,
-    collateralAmount: liquidityPosition.data?.collateralAmount,
-    collateralValue: liquidityPosition.data?.collateralValue,
-    debt: liquidityPosition.data?.debt,
-    collateralChange,
-    debtChange,
-  });
+  const { isValid, maxDebt } = useMemo(
+    () =>
+      validatePosition({
+        issuanceRatioD18: collateralType?.issuanceRatioD18,
+        collateralAmount: liquidityPosition.data?.collateralAmount,
+        collateralValue: liquidityPosition.data?.collateralValue,
+        debt: liquidityPosition.data?.debt,
+        collateralChange,
+        debtChange,
+      }),
+    [
+      collateralType?.issuanceRatioD18,
+      liquidityPosition.data?.collateralAmount,
+      liquidityPosition.data?.collateralValue,
+      liquidityPosition.data?.debt,
+      collateralChange,
+      debtChange,
+    ]
+  );
 
   if (!(collateralType && liquidityPosition.data)) {
     return null;
@@ -134,7 +145,7 @@ export function Manage() {
       <Box px="4">
         <Button
           isLoading={isLoading}
-          disabled={!isValid || noChange || isLoading}
+          disabled={!isValid || (!debtChange && !collateralChange) || isLoading}
           onClick={() => exec()}
           size="lg"
           width="100%"

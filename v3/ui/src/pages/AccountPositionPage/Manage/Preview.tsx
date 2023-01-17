@@ -1,6 +1,7 @@
 import { Box, Text, Tooltip } from '@chakra-ui/react';
-import { useValidatePosition } from '@snx-v3/useValidatePosition';
+import { validatePosition } from '@snx-v3/validatePosition';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { useMemo } from 'react';
 import { CRatio } from './CRatio';
 import { Amount } from '@snx-v3/Amount';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
@@ -40,14 +41,25 @@ export function Preview({
   collateralChange: number;
   debtChange: number;
 }) {
-  const { newDebt, newCollateralAmount, newCRatio, isValid, targetCRatio } = useValidatePosition({
-    collateral,
-    collateralAmount,
-    collateralValue,
-    debt,
-    collateralChange,
-    debtChange,
-  });
+  const { newDebt, newCollateralAmount, newCRatio, isValid, targetCRatio } = useMemo(
+    () =>
+      validatePosition({
+        issuanceRatioD18: collateral?.issuanceRatioD18,
+        collateralAmount,
+        collateralValue,
+        debt,
+        collateralChange,
+        debtChange,
+      }),
+    [
+      collateral?.issuanceRatioD18,
+      collateralAmount,
+      collateralChange,
+      collateralValue,
+      debt,
+      debtChange,
+    ]
+  );
 
   return (
     <Box mb="4" p="4">
