@@ -4,6 +4,6 @@
   "main": "index.ts",
   "version": "0.0.2",
   "dependencies": {
-    "wagmi": "^0.10.2"
+    "wagmi": "^0.9.6"
   }
 }
