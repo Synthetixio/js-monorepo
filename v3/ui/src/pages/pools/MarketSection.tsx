@@ -25,6 +25,7 @@ import { useParams } from '@snx-v3/useParams';
 import { useMarketNamesById } from '@snx-v3/useMarketNamesById';
 import { useGetPoolData } from '../../hooks/useGetPoolData';
 import { TrendText } from '@snx-v3/TrendText';
+import { BorderBox } from '@snx-v3/BorderBox';
 
 const StyledTh: FC<TableCellProps> = (props) => (
   <Th
@@ -71,16 +72,7 @@ export function MarketSectionUi({
         Markets
       </Text>
       <Flex>
-        <Box
-          borderColor="gray.900"
-          borderWidth="1px"
-          borderRadius="base"
-          bg="whiteAlpha.50"
-          paddingY={2}
-          paddingX={4}
-          mr={2}
-          w="50%"
-        >
+        <BorderBox paddingY={2} paddingX={4} mr={2} w="50%">
           <Text color="gray.500" fontSize="xs">
             PERFORMANCE 7 DAYS
           </Text>
@@ -98,17 +90,8 @@ export function MarketSectionUi({
               {formatPercent(sevenDaysPerformance.growthPercentage.toNumber())}
             </TrendText>
           ) : null}
-        </Box>
-        <Box
-          borderColor="gray.900"
-          borderWidth="1px"
-          borderRadius="base"
-          bg="whiteAlpha.50"
-          paddingY={2}
-          paddingX={4}
-          ml={2}
-          w="50%"
-        >
+        </BorderBox>
+        <BorderBox paddingY={2} paddingX={4} ml={2} w="50%">
           <Text color="gray.500" fontSize="xs">
             PERFORMANCE LIFETIME
           </Text>
@@ -116,7 +99,7 @@ export function MarketSectionUi({
             {formatNumberToUsd(lifeTimePerformance.toNumber())}{' '}
             <InfoOutlineIcon height="16px" width="16px" color="white" ml={1} />
           </TrendText>
-        </Box>
+        </BorderBox>
       </Flex>
       <Flex>
         <TableContainer w="100%">

@@ -20,6 +20,7 @@ import { CollateralType, useCollateralTypes } from '@snx-v3/useCollateralTypes';
 import { VaultRow } from './VaultRow';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
 import { useParams } from '@snx-v3/useParams';
+import { BorderBox } from '@snx-v3/BorderBox';
 
 const LoadingRow = () => (
   <Tr>
@@ -70,7 +71,7 @@ export function HomeUi({
         </Button>
       </Flex>
       <Divider mt={4} bg="gray.900" />
-      <Box p={4} bg="navy.900" mt={8} borderWidth="1px" borderColor="gray.900" borderRadius="base">
+      <BorderBox p={4} mt={8}>
         <Flex
           justifyContent="space-between"
           flexWrap={{ base: 'wrap', md: 'nowrap' }}
@@ -143,7 +144,7 @@ export function HomeUi({
             </Tbody>
           </Table>
         </Box>
-      </Box>
+      </BorderBox>
     </Flex>
   );
 }

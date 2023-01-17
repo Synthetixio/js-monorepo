@@ -11,6 +11,7 @@ import { formatPercent } from '@snx-v2/formatters';
 import { TrendText } from '@snx-v3/TrendText';
 import { wei } from '@synthetixio/wei';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { BorderBox } from '@snx-v3/BorderBox';
 
 const DepositUi: FC<{
   collateralSymbol?: string;
@@ -36,15 +37,7 @@ const DepositUi: FC<{
       </Flex>
       <Divider mt={4} bg="gray.900" />
       <Flex flexWrap={{ base: 'wrap', md: 'nowrap' }}>
-        <Box
-          p={4}
-          mt={8}
-          bg="navy.900"
-          mr={{ base: 0, md: 2 }}
-          borderWidth="1px"
-          borderColor="gray.900"
-          borderRadius="base"
-        >
+        <BorderBox p={4} mt={8} mr={{ base: 0, md: 2 }}>
           <Heading fontSize="xl">Deposit Collateral</Heading>
           <Text fontSize="sm">
             Take an interest-free loan against your collateral. This increases your debt and
@@ -54,16 +47,8 @@ const DepositUi: FC<{
             Deposit {collateralSymbol}
           </Heading>
           <DepositForm />
-        </Box>
-        <Box
-          ml={{ base: 0, md: 2 }}
-          p={4}
-          mt={8}
-          bg="navy.900"
-          borderWidth="1px"
-          borderColor="gray.900"
-          borderRadius="base"
-        >
+        </BorderBox>
+        <BorderBox ml={{ base: 0, md: 2 }} p={4} mt={8}>
           {preferredPool ? (
             <Flex justifyContent="space-between">
               <Flex flexDirection="column">
@@ -113,7 +98,7 @@ const DepositUi: FC<{
               )}
             </TrendText>
           </Box>
-        </Box>
+        </BorderBox>
       </Flex>
     </Flex>
   );
