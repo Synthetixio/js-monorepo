@@ -15,29 +15,15 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { generatePath, Link as RouterLink } from 'react-router-dom';
-import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { PoolDialog } from './PoolDialog';
-import { usePools } from '@snx-v3/usePools';
-import { Wei } from '@synthetixio/wei';
+import { useParams } from '@snx-v3/useParams';
+import { useGetPoolData } from '../../hooks/useGetPoolData';
 
-export function Pool({
-  poolId,
-  collateralAmount,
-  accountId,
-  collateral,
-  debt,
-  refetch,
-}: {
-  accountId: string;
-  poolId: string;
-  collateral: CollateralType;
-  collateralAmount?: Wei;
-  debt?: Wei;
-  refetch: () => void;
-}) {
+export function Pool() {
+  const params = useParams();
+  const poolData = useGetPoolData(params.poolId);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data: pools } = usePools();
-  const pool = pools?.find((pool) => pool.id === poolId);
   return (
     <Box my="4">
       <Flex mb="6">
@@ -46,20 +32,25 @@ export function Pool({
             Current Pool
           </Text>
           <Heading size="lg" mb="1">
-            {pool?.name}
+            {poolData.data?.name}
           </Heading>
           <Text fontSize="sm">
-            <span style={{ opacity: 0.8 }}>Pool #{poolId}</span>
-            <RouterLink
-              to={generatePath('/accounts/:accountId/pools/:poolId', {
-                accountId,
-                poolId,
-              })}
-            >
-              <Link color="cyan.500" ml="1" display="inline-block" transform="translateY(-2px)">
+            <span style={{ opacity: 0.8 }}>Pool #{params.poolId}</span>
+            {params.accountId && params.poolId ? (
+              <Link
+                as={RouterLink}
+                to={generatePath('/accounts/:accountId/pools/:poolId', {
+                  accountId: params.accountId,
+                  poolId: params.poolId,
+                })}
+                color="cyan.500"
+                ml="1"
+                display="inline-block"
+                transform="translateY(-2px)"
+              >
                 <ExternalLinkIcon />
               </Link>
-            </RouterLink>
+            ) : null}
           </Text>
         </Box>
         <Box ml="auto">
@@ -75,16 +66,8 @@ export function Pool({
         </Box>
       </Flex>
 
-      <PoolDialog
-        collateralAmount={collateralAmount}
-        accountId={accountId}
-        poolId={poolId}
-        collateral={collateral}
-        refetch={refetch}
-        isOpen={isOpen}
-        debt={debt}
-        onClose={onClose}
-      />
+      <PoolDialog isOpen={isOpen} onClose={onClose} />
+
       <Heading size="md" mb="1">
         Markets
       </Heading>
@@ -109,7 +92,7 @@ export function Pool({
             <Td py="4">
               Synthetic&nbsp;Bitcoin
               <Text fontSize="xs" opacity="0.66" mt="1">
-                ID: {poolId}
+                ID: {params.poolId}
               </Text>
             </Td>
             <Td py="4">
