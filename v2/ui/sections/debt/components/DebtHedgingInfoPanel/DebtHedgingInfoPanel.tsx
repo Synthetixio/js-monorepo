@@ -29,7 +29,7 @@ const DebtHedgingInfoPanel: React.FC<DebtHedgingInfoPanelProps> = ({ hidden }) =
           <br />
           <Trans
             i18nKey="debt.actions.manage.info-panel.toros"
-            components={[<StyledLink href={EXTERNAL_LINKS.dHedge.toros} />]}
+            components={[<StyledLink href={EXTERNAL_LINKS.Toros.dSNXPool} />]}
           />
         </InfoPanelBody>
         {/* TODO: Fix this chart */}
