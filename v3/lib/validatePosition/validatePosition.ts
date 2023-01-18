@@ -1,4 +1,4 @@
-import { Wei, WeiSource, wei } from '@synthetixio/wei';
+import { Wei, wei } from '@synthetixio/wei';
 
 export const validatePosition = ({
   issuanceRatioD18,
@@ -12,8 +12,8 @@ export const validatePosition = ({
   collateralAmount?: Wei;
   collateralValue?: Wei;
   debt?: Wei;
-  collateralChange: number;
-  debtChange: number;
+  collateralChange: Wei;
+  debtChange: Wei;
 }) => {
   const targetCRatio = issuanceRatioD18 ? issuanceRatioD18.mul(100) : wei(100);
   const newDebt = wei(debt || 0).add(debtChange || 0);

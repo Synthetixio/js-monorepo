@@ -11,15 +11,13 @@ export function Burn({
   value,
   debt,
 }: {
-  onChange: (value: number) => void;
-  value: number;
+  onChange: (value: Wei) => void;
+  value: Wei;
   debt: Wei;
 }) {
   const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
   const tokenBalance = useTokenBalance(snxUsdProxy?.address);
-  const max = tokenBalance.data
-    ? Math.min(tokenBalance.data.toNumber(), debt.toNumber())
-    : debt.toNumber();
+  const max = tokenBalance.data ? (tokenBalance.data.lt(debt) ? tokenBalance.data : debt) : debt;
 
   return (
     <>
@@ -38,12 +36,7 @@ export function Burn({
           <Flex alignItems="center">
             <Balance
               balance={tokenBalance.data}
-              onMax={() => {
-                if (!tokenBalance.data) {
-                  return;
-                }
-                onChange(Math.min(tokenBalance.data.toNumber(), debt.toNumber()));
-              }}
+              onMax={() => (tokenBalance.data ? onChange(tokenBalance.data) : null)}
               symbol="snxUSD"
               address={snxUsdProxy?.address}
             />

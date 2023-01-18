@@ -5,6 +5,7 @@ import { Amount } from '@snx-v3/Amount';
 import { useParams } from '@snx-v3/useParams';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
+import { wei } from '@synthetixio/wei';
 
 export function DepositingStats() {
   const params = useParams();
@@ -71,7 +72,7 @@ export function DepositingStats() {
           </Skeleton>
           <Text opacity="0.6" fontSize="sm">
             Liquidation Ratio{' '}
-            <Amount value={collateralType?.liquidationRatioD18.mul(100).toNumber()} suffix="% " />
+            <Amount value={collateralType?.liquidationRatioD18.mul(100)} suffix="% " />
           </Text>
         </GridItem>
         <GridItem mb="3">
@@ -81,7 +82,7 @@ export function DepositingStats() {
           {/* TODO: when subgraph is ready */}
           <Heading size="md">X% APY</Heading>
           <Text opacity="0.6" fontSize="sm">
-            ${currency(0)} earned
+            ${currency(wei(0))} earned
             <Tooltip label="Your yield is automatically deducted from your debt. You can retrieve the earned fees by minting snxUSD.">
               <InfoOutlineIcon ml="1" transform="translateY(-1.5px)" />
             </Tooltip>

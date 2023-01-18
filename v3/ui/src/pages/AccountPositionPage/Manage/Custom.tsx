@@ -15,7 +15,7 @@ import { currency } from '@snx-v3/format';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from '@snx-v3/NumberInput';
-import { Wei, wei } from '@synthetixio/wei';
+import { Wei } from '@synthetixio/wei';
 
 export function Custom({
   collateral,
@@ -28,15 +28,16 @@ export function Custom({
   maxDebt,
 }: {
   collateral: CollateralType;
-  setCollateralChange: (value: number) => void;
-  collateralChange: number;
+  setCollateralChange: (value: Wei) => void;
+  collateralChange: Wei;
   collateralAmount: Wei;
-  setDebtChange: (value: number) => void;
-  debtChange: number;
+  setDebtChange: (value: Wei) => void;
+  debtChange: Wei;
   debt: Wei;
   maxDebt: Wei;
 }) {
   const tokenBalance = useTokenBalance(collateral.tokenAddress);
+  const max = tokenBalance.data ? tokenBalance.data.add(collateralAmount) : undefined;
 
   return (
     <Box mb="4">
@@ -49,16 +50,14 @@ export function Custom({
           <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
             <Flex mb="3">
               <NumberInput
-                value={collateralAmount.add(collateralChange).toNumber()}
-                onChange={(val) => {
-                  setCollateralChange(wei(val).sub(collateralAmount).toNumber());
-                }}
-                max={tokenBalance.data?.add(collateralAmount).toNumber()}
+                value={collateralAmount.add(collateralChange)}
+                onChange={(val) => setCollateralChange(val.sub(collateralAmount))}
+                max={max}
               />
             </Flex>
             <Flex alignItems="center">
               <Balance
-                onMax={(bal) => setCollateralChange(parseFloat(bal) || 0)}
+                onMax={setCollateralChange}
                 balance={tokenBalance.data}
                 symbol={collateral.symbol}
                 address={collateral.tokenAddress}
@@ -75,16 +74,16 @@ export function Custom({
             <form>
               <Flex mb="3">
                 <NumberInput
-                  value={debt.add(debtChange).toNumber()}
-                  onChange={(val) => setDebtChange(wei(val).sub(debt).toNumber())}
-                  max={maxDebt.add(debt).toNumber()}
+                  value={debt.add(debtChange)}
+                  onChange={(val) => setDebtChange(val.sub(debt))}
+                  max={maxDebt.add(debt)}
                 />
               </Flex>
             </form>
             <Flex alignItems="center">
               <Box>
                 <Text fontSize="xs">
-                  Max Mint: ${currency(maxDebt.toNumber())}
+                  Max Mint: ${currency(maxDebt)}
                   <Tooltip label="You can't mint snxUSD that takes your C-Ratio below the target c-ratio of 300%.">
                     <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
                   </Tooltip>
@@ -96,7 +95,7 @@ export function Custom({
                       variant="outline"
                       onClick={(e) => {
                         e.preventDefault();
-                        setDebtChange(maxDebt.toNumber());
+                        setDebtChange(maxDebt);
                       }}
                     >
                       Use Max
@@ -108,21 +107,23 @@ export function Custom({
           </Box>
         </Box>
       </SimpleGrid>
-      {(collateralChange !== 0 || debtChange !== 0) && (
+      {collateralChange.eq(0) && debtChange.eq(0) ? null : (
         <Alert>
           <AlertIcon />
           <Box>
-            This adjustment will&nbsp;
-            {collateralChange !== 0 && (
+            This adjustment will{' '}
+            {collateralChange.eq(0) ? null : (
               <strong>
-                {collateralChange > 0 ? 'deposit' : 'withdraw'} {Math.abs(collateralChange)}&nbsp;
+                {collateralChange.gt(0) ? 'deposit' : 'withdraw'}{' '}
+                {Math.abs(collateralChange.toNumber())}&nbsp;
                 {collateral.symbol}
               </strong>
             )}
-            {collateralChange !== 0 && debtChange !== 0 && `\u00A0and\u00A0`}
-            {debtChange !== 0 && (
+            {!collateralChange.eq(0) && !debtChange.eq(0) ? `\u00A0and\u00A0` : null}
+            {debtChange.eq(0) ? null : (
               <strong>
-                {debtChange > 0 ? 'mint' : 'burn'} {Math.abs(debtChange)} snxUSD
+                {debtChange.gt(0) ? 'mint' : 'burn'} {Math.abs(debtChange.toNumber())}
+                &nbsp;snxUSD
               </strong>
             )}
             .

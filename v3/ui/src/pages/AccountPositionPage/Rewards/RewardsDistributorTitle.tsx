@@ -1,5 +1,4 @@
 import { Button, Td, Text, Tr } from '@chakra-ui/react';
-import { formatValue, parseUnits } from '@snx-v3/format';
 import { useCallback, useState } from 'react';
 import { useContractRead, useContractWrite, useToken } from 'wagmi';
 import { getContract } from '../../../hooks/useContract';
@@ -11,6 +10,7 @@ import { RewardsDistributor } from './RewardsDistributor';
 import { useNetwork } from '@snx-v3/useBlockchain';
 import { Reward, useRewards } from './useRewards';
 import { useParams } from '@snx-v3/useParams';
+import { wei } from '@synthetixio/wei';
 
 export function RewardsDistributorTitle({ reward }: { reward: Reward }) {
   const params = useParams();
@@ -66,8 +66,7 @@ export function RewardsDistributorTitle({ reward }: { reward: Reward }) {
         <RewardsDistributor distributor={reward.distributor} />
       </Td>
       <Td py="4">
-        {token && <Amount value={formatValue(reward.value)} suffix={` ${token.symbol}`} />}{' '}
-        available
+        {token && <Amount value={wei(reward.value)} suffix={` ${token.symbol}`} />} available
         <Text fontSize="xs" opacity="0.66" mt="1">
           <RewardRate
             poolId={params.poolId}
@@ -79,14 +78,14 @@ export function RewardsDistributorTitle({ reward }: { reward: Reward }) {
       </Td>
       <Td isNumeric>
         <Button
-          disabled={parseUnits(reward.value).eq(0)}
+          disabled={wei(reward.value).eq(0)}
           isLoading={isLoading}
           onClick={() => claim()}
           size="sm"
           colorScheme="green"
         >
           <Text mr={1}>Claim</Text>
-          {token && <Amount value={formatValue(reward.value)} suffix={` ${token.symbol}`} />}
+          {token && <Amount value={wei(reward.value)} suffix={` ${token.symbol}`} />}
         </Button>
       </Td>
     </Tr>

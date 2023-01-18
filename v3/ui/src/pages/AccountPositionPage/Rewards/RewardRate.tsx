@@ -1,10 +1,10 @@
 import { InfoIcon } from '@chakra-ui/icons';
 import { Tooltip } from '@chakra-ui/react';
-import { parseUnits } from '@snx-v3/format';
 import { Amount } from '@snx-v3/Amount';
 import { useQuery } from '@tanstack/react-query';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { useNetwork } from '@snx-v3/useBlockchain';
+import { wei } from '@synthetixio/wei';
 
 const WEEK_SECONDS = 604800;
 
@@ -34,9 +34,9 @@ export function RewardRate({
     queryFn: async () => {
       if (!(CoreProxy && poolId && tokenAddress && distributor)) throw new Error('OMG');
       const value = await CoreProxy.getRewardRate(poolId, tokenAddress, distributor);
-      return parseUnits(value);
+      return wei(value);
     },
-    placeholderData: parseUnits(0),
+    placeholderData: wei(0),
     enabled: Boolean(CoreProxy && network.name && poolId && tokenAddress && distributor),
   });
 
@@ -56,7 +56,7 @@ export function RewardRate({
 
   return (
     <>
-      Earning <Amount value={rewardRate.mul(WEEK_SECONDS).toString()} /> {symbol} per week
+      Earning <Amount value={rewardRate.mul(WEEK_SECONDS)} /> {symbol} per week
     </>
   );
 }

@@ -3,14 +3,18 @@ import { Badge, Box, Flex, Heading, Text, Tooltip } from '@chakra-ui/react';
 import { currency } from '@snx-v3/format';
 import { NumberInput } from '@snx-v3/NumberInput';
 import { Wei } from '@synthetixio/wei';
+import { CollateralType } from '@snx-v3/useCollateralTypes';
+import { formatPercent } from '@snx-v2/formatters';
 
 export function Mint({
-  onChange,
+  collateral,
   value,
+  onChange,
   max,
 }: {
-  onChange: (value: number) => void;
-  value: number;
+  collateral: CollateralType;
+  value: Wei;
+  onChange: (value: Wei) => void;
   max: Wei;
 }) {
   return (
@@ -25,15 +29,17 @@ export function Mint({
 
       <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
-          <NumberInput value={value} onChange={onChange} max={max.toNumber()} />
+          <NumberInput value={value} onChange={onChange} max={max} />
         </Flex>
         <Flex alignItems="center">
           <Box>
             <Text fontSize="xs">
-              Max Mint: ${currency(max.toNumber())}
+              Max Mint: ${currency(max)}
               <Tooltip
                 color="white"
-                label="You can't mint snxUSD that takes your C-Ratio below the target c-ratio of 300%."
+                label={`You can't mint snxUSD that takes your C-Ratio below the target c-ratio of ${formatPercent(
+                  collateral.liquidationRatioD18.toNumber()
+                )}.`}
               >
                 <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
               </Tooltip>
@@ -43,10 +49,7 @@ export function Mint({
                   ml="2"
                   as="button"
                   variant="outline"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onChange(max.toNumber());
-                  }}
+                  onClick={() => onChange(max)}
                 >
                   Use Max
                 </Badge>

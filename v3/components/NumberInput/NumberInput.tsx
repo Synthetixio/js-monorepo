@@ -1,33 +1,47 @@
 import { Input, InputProps } from '@chakra-ui/react';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { Wei, wei } from '@synthetixio/wei';
 
-interface NumberInputProps extends Omit<InputProps, 'onChange'> {
-  onChange: (value: number) => void;
-  value: number;
-  max?: number;
-}
-
-export function NumberInput({ value, onChange, max, ...props }: NumberInputProps) {
-  const [inputValue, setInputValue] = useState(value > 0 ? `${value}` : '');
+export function NumberInput({
+  value,
+  onChange,
+  max,
+  InputProps,
+}: {
+  onChange?: (value: Wei) => void;
+  value: Wei;
+  max?: Wei;
+  InputProps?: InputProps;
+}) {
+  const [inputValue, setInputValue] = useState(value.gt(0) ? value.toString() : '');
 
   const onInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   }, []);
 
   useEffect(() => {
+    if (!onChange) {
+      return;
+    }
     const t = setTimeout(() => {
-      const value = parseFloat(inputValue) || 0;
-      if (max === undefined) {
-        return onChange(value);
+      const nextValue = wei(inputValue.replaceAll(',', '') || 0);
+      if (value.eq(nextValue)) {
+        return;
       }
-      return onChange(Math.min(max, value));
+      if (max === undefined) {
+        return onChange(nextValue);
+      }
+      if (nextValue.gt(max)) {
+        return onChange(max);
+      }
+      return onChange(nextValue);
     }, 300);
     return () => clearTimeout(t);
-  }, [inputValue, max, onChange]);
+  }, [value, inputValue, max, onChange]);
 
   useEffect(() => {
     const t = setTimeout(() => {
-      setInputValue(value > 0 ? `${value}` : '');
+      setInputValue(value.gt(0) ? `${value.toNumber()}` : '');
     }, 100);
     return () => clearTimeout(t);
   }, [value]);
@@ -41,8 +55,8 @@ export function NumberInput({ value, onChange, max, ...props }: NumberInputProps
       min="0"
       value={inputValue}
       onChange={onInputChange}
-      disabled={max === 0}
-      {...props}
+      disabled={max?.eq(0)}
+      {...InputProps}
     />
   );
 }

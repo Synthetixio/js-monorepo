@@ -7871,6 +7871,7 @@ __metadata:
   resolution: "@snx-v3/NumberInput@workspace:v3/components/NumberInput"
   dependencies:
     "@chakra-ui/react": ^2.2.8
+    "@synthetixio/wei": "workspace:*"
     react: ^18.2.0
   languageName: unknown
   linkType: soft

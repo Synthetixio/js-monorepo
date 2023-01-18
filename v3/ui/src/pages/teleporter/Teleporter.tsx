@@ -6,7 +6,6 @@ import {
   Flex,
   Heading,
   Image,
-  Input,
   InputGroup,
   InputRightAddon,
   Menu,
@@ -29,6 +28,7 @@ import { contracts } from '../../utils/constants';
 import testnetIcon from './testnet.png';
 import { TeleporterModal } from './TeleporterModal';
 import { useNetwork, useSigner } from '@snx-v3/useBlockchain';
+import { wei } from '@synthetixio/wei';
 
 const chains = [
   {
@@ -48,7 +48,7 @@ export const Teleporter = () => {
 
   const toast = useToast();
   const { openConnectModal } = useConnectModal();
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(wei(0));
 
   const { switchNetwork } = useSwitchNetwork();
   const network = useNetwork();
@@ -71,7 +71,7 @@ export const Teleporter = () => {
       <Head>
         <title>Teleport snxUSD</title>
       </Head>
-      <Container maxW="lg">
+      <Container mb="8" maxW="1024px" py="4">
         <Flex height="100%" direction="column" flex="1" py={[4, 6, 12]}>
           <Heading size="lg" mb="3">
             Teleport snxUSD
@@ -144,19 +144,21 @@ export const Teleporter = () => {
 
                 <InputGroup size="lg" ml="6">
                   <NumberInput
-                    flex="1"
-                    type="number"
-                    placeholder="0.0"
-                    id="amount"
-                    step="any"
-                    min="0"
-                    textAlign="right"
-                    borderColor="gray.800"
+                    InputProps={{
+                      size: 'lg',
+                      type: 'number',
+                      placeholder: '0.0',
+                      id: 'amount',
+                      min: '0',
+                      textAlign: 'right',
+                      borderColor: 'gray.800',
+                      border: '1px',
+                      borderTopRightRadius: 'none',
+                      borderBottomRightRadius: 'none',
+                    }}
                     value={amount}
                     onChange={setAmount}
-                    border="1px"
-                    max={tokenBalance.data?.toNumber()}
-                    borderRightRadius="none"
+                    max={tokenBalance.data}
                   />
                   <InputRightAddon borderColor="gray.800" bg="whiteAlpha.100">
                     snxUSD
@@ -166,7 +168,7 @@ export const Teleporter = () => {
 
               <Flex alignItems="center" justifyContent="flex-end">
                 <Balance
-                  onMax={(bal) => setAmount(parseFloat(bal) || 0)}
+                  onMax={setAmount}
                   balance={tokenBalance.data}
                   symbol="snxUSD"
                   address={snxUsdProxy?.address}
@@ -240,21 +242,25 @@ export const Teleporter = () => {
                 </Menu>
 
                 <InputGroup size="lg" ml="6">
-                  <Input
-                    flex="1"
-                    type="number"
-                    placeholder="0.0"
-                    id="amount"
-                    step="any"
-                    min="0"
-                    textAlign="right"
-                    border="none"
-                    isReadOnly
-                    pointerEvents="none"
-                    bg="whiteAlpha.50"
-                    borderRight="1px solid #262626"
+                  <NumberInput
+                    InputProps={{
+                      isReadOnly: true,
+                      pointerEvents: 'none',
+                      bg: 'whiteAlpha.50',
+                      size: 'lg',
+                      type: 'number',
+                      placeholder: '0.0',
+                      id: 'amount',
+                      min: '0',
+                      textAlign: 'right',
+                      border: 'none',
+                      borderRight: '1px solid #262626',
+                      borderTopRightRadius: 'none',
+                      borderBottomRightRadius: 'none',
+                    }}
                     value={amount}
                   />
+
                   <InputRightAddon border="none" bg="whiteAlpha.100">
                     snxUSD
                   </InputRightAddon>
@@ -288,7 +294,7 @@ export const Teleporter = () => {
               size="lg"
               px="8"
               type="submit"
-              disabled={network?.id === from && amount <= 0}
+              disabled={network?.id === from && amount.lte(0)}
             >
               {network?.id !== from ? 'Switch to ' + fromChain?.label : 'Teleport'}
             </Button>

@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useParams } from '@snx-v3/useParams';
 import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
+import { wei } from '@synthetixio/wei';
 
 export function Manage() {
   const params = useParams();
@@ -24,12 +25,12 @@ export function Manage() {
   });
 
   const { t } = useTranslation();
-  const [collateralChange, setCollateralChange] = useState(0);
-  const [debtChange, setDebtChange] = useState(0);
+  const [collateralChange, setCollateralChange] = useState(wei(0));
+  const [debtChange, setDebtChange] = useState(wei(0));
 
   const reset = useCallback(() => {
-    setCollateralChange(0);
-    setDebtChange(0);
+    setCollateralChange(wei(0));
+    setDebtChange(wei(0));
   }, []);
 
   const { exec, isLoading } = useManagePosition({
@@ -98,21 +99,26 @@ export function Manage() {
               />
             </Box>
             <Box mb="6">
-              <Mint onChange={setDebtChange} value={debtChange} max={maxDebt} />
+              <Mint
+                value={debtChange}
+                onChange={setDebtChange}
+                max={maxDebt}
+                collateral={collateralType}
+              />
             </Box>
           </TabPanel>
           <TabPanel>
             <Box mb="6">
               <Burn
-                value={debtChange * -1}
-                onChange={(val) => setDebtChange(val * -1)}
+                value={debtChange.mul(-1)}
+                onChange={(val) => setDebtChange(val.mul(-1))}
                 debt={liquidityPosition.data.debt}
               />
             </Box>
             <Box mb="6">
               <Withdraw
-                value={collateralChange * -1}
-                onChange={(val) => setCollateralChange(val * -1)}
+                value={collateralChange.mul(-1)}
+                onChange={(val) => setCollateralChange(val.mul(-1))}
                 collateral={collateralType}
                 collateralAmount={liquidityPosition.data.collateralAmount}
               />
