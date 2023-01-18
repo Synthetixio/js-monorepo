@@ -41,14 +41,7 @@ export function Balance({
         </Link>
       )}
       {onMax && balance?.gt(0) && (
-        <Badge
-          as="button"
-          variant="outline"
-          onClick={(e) => {
-            e.preventDefault();
-            onMax(balance.toString());
-          }}
-        >
+        <Badge as="button" variant="outline" onClick={() => onMax(balance.toString())}>
           Use Max
         </Badge>
       )}

@@ -10,7 +10,7 @@ import { useSetTransactionState } from '@snx-v3/useTransactionState';
 import { BigNumber } from 'ethers';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { useNetwork } from '@snx-v3/useBlockchain';
-import { Wei } from '@synthetixio/wei';
+import { Wei, wei } from '@synthetixio/wei';
 
 export const useManagePosition = ({
   accountId,
@@ -90,6 +90,9 @@ export const useManagePosition = ({
     }
 
     if (collateralChange < 0) {
+      const newCollateralValue = collateralAmount.sub(collateralChangeBN).lt(0)
+        ? wei(0).toBN()
+        : collateralAmount.sub(collateralChangeBN).toBN();
       list.push(
         {
           contract: CoreProxy,
@@ -98,7 +101,7 @@ export const useManagePosition = ({
             accountId,
             poolId,
             collateralType.tokenAddress,
-            collateralAmount.sub(collateralChangeBN).toBN(),
+            newCollateralValue,
             parseUnits(1, 18),
           ],
         },

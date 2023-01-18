@@ -104,17 +104,17 @@ export function Manage() {
           <TabPanel>
             <Box mb="6">
               <Burn
-                value={-debtChange}
-                onChange={(val) => setDebtChange(-val)}
+                value={debtChange * -1}
+                onChange={(val) => setDebtChange(val * -1)}
                 debt={liquidityPosition.data.debt}
               />
             </Box>
             <Box mb="6">
               <Withdraw
+                value={collateralChange * -1}
+                onChange={(val) => setCollateralChange(val * -1)}
                 collateral={collateralType}
                 collateralAmount={liquidityPosition.data.collateralAmount}
-                onChange={(val) => setCollateralChange(-val)}
-                value={-collateralChange}
               />
             </Box>
           </TabPanel>
