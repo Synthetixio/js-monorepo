@@ -1,33 +1,38 @@
 import { Box, Text, Tooltip } from '@chakra-ui/react';
-import { FC } from 'react';
 import { useValidatePosition } from '@snx-v3/useValidatePosition';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { CRatio } from './CRatio';
 import { Amount } from '@snx-v3/Amount';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
+import { Wei } from '@synthetixio/wei';
 
-interface Props {
-  collateral: CollateralType;
-  collateralAmount: number;
-  collateralValue: number;
-  debt: number;
-  cRatio: number;
-  collateralChange: number;
-  debtChange: number;
+function getColor(v1: Wei, v2: Wei) {
+  if (v1.eq(v2)) {
+    return 'gray.400';
+  }
+  if (v1.gt(v2)) {
+    return 'success';
+  }
+  return 'error';
 }
 
-const getColor = (v1: number, v2: number) =>
-  v1 === v2 ? 'gray.400' : v1 > v2 ? 'success' : 'error';
-
-export const Preview: FC<Props> = ({
+export function Preview({
   collateral,
   collateralAmount,
   collateralValue,
-  cRatio,
   debt,
+  cRatio,
   collateralChange,
   debtChange,
-}) => {
+}: {
+  collateral: CollateralType;
+  collateralAmount: Wei;
+  collateralValue: Wei;
+  debt: Wei;
+  cRatio: Wei;
+  collateralChange: number;
+  debtChange: number;
+}) {
   const { newDebt, newCollateralAmount, newCRatio, isValid, targetCRatio } = useValidatePosition({
     collateral,
     collateralAmount,
@@ -76,4 +81,4 @@ export const Preview: FC<Props> = ({
       </Box>
     </Box>
   );
-};
+}

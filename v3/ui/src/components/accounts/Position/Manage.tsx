@@ -3,7 +3,6 @@ import { Mint } from './Manage/Mint';
 import { Preview } from './Manage/Preview';
 import { Withdraw } from './Manage/Withdraw';
 import { Box, Button, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-
 import { MaintainCRatio } from './Manage/MaintainCRatio';
 import { useCallback, useState } from 'react';
 import { useManagePosition } from './useManagePosition';
@@ -12,19 +11,9 @@ import { Burn } from './Manage/Burn';
 import { useValidatePosition } from '@snx-v3/useValidatePosition';
 import { useTranslation } from 'react-i18next';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
+import { Wei } from '@synthetixio/wei';
 
-interface Props {
-  accountId: string;
-  poolId: string;
-  collateral: CollateralType;
-  collateralAmount: number;
-  collateralValue: number;
-  debt: number;
-  cRatio: number;
-  refetch: () => void;
-}
-
-export default function Manage({
+export function Manage({
   collateral,
   accountId,
   poolId,
@@ -33,7 +22,16 @@ export default function Manage({
   debt,
   cRatio,
   refetch,
-}: Props) {
+}: {
+  accountId: string;
+  poolId: string;
+  collateral: CollateralType;
+  collateralAmount?: Wei;
+  collateralValue?: Wei;
+  debt?: Wei;
+  cRatio?: Wei;
+  refetch: () => void;
+}) {
   const { t } = useTranslation();
   const [collateralChange, setCollateralChange] = useState(0);
   const [debtChange, setDebtChange] = useState(0);
@@ -64,6 +62,10 @@ export default function Manage({
     collateralChange,
     debtChange,
   });
+
+  if (!(collateralAmount && collateralValue && debt && cRatio)) {
+    return null;
+  }
 
   return (
     <Box mt="6" mb="2">

@@ -1,18 +1,20 @@
-import { Text, Box, Flex, Heading } from '@chakra-ui/react';
-import { FC } from 'react';
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from './NumberInput';
-import { wei } from '@synthetixio/wei';
+import { Wei, wei } from '@synthetixio/wei';
 
-interface Props {
+export function Withdraw({
+  collateral,
+  collateralAmount,
+  value,
+  onChange,
+}: {
   collateral: CollateralType;
   onChange: (value: number) => void;
   value: number;
-  collateralAmount: number;
-}
-
-export const Withdraw: FC<Props> = ({ collateral, collateralAmount, value, onChange }) => {
+  collateralAmount: Wei;
+}) {
   return (
     <>
       <Heading fontSize="md" mb="1">
@@ -26,7 +28,7 @@ export const Withdraw: FC<Props> = ({ collateral, collateralAmount, value, onCha
       <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <form>
           <Flex mb="3">
-            <NumberInput value={value} onChange={onChange} max={collateralAmount} />
+            <NumberInput value={value} onChange={onChange} max={collateralAmount.toNumber()} />
           </Flex>
         </form>
         <Flex alignItems="center">
@@ -40,4 +42,4 @@ export const Withdraw: FC<Props> = ({ collateral, collateralAmount, value, onCha
       </Box>
     </>
   );
-};
+}

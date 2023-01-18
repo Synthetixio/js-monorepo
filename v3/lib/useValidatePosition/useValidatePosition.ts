@@ -1,7 +1,5 @@
-// TODO use wei instead of big
-import Big from 'big.js';
-import { useMemo } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
+import { Wei, wei } from '@synthetixio/wei';
 
 export const useValidatePosition = ({
   collateral,
@@ -11,33 +9,29 @@ export const useValidatePosition = ({
   collateralChange,
   debtChange,
 }: {
-  collateral: CollateralType;
-  collateralAmount: number;
-  collateralValue: number;
-  debt: number;
+  collateral?: CollateralType;
+  collateralAmount?: Wei;
+  collateralValue?: Wei;
+  debt?: Wei;
   collateralChange: number;
   debtChange: number;
 }) => {
-  const newDebt = debt + debtChange;
-  const newCollateralAmount = collateralAmount + collateralChange;
-  const cVal = new Big(collateralValue).div(collateralAmount || 1);
-  const newCRatio = newDebt ? cVal.mul(newCollateralAmount).mul(100).div(newDebt).toNumber() : 0;
-  const targetCRatio = collateral.issuanceRatioD18.mul(100).toNumber();
+  const newDebt = wei(debt || 0).add(debtChange || 0);
+  const newCollateralAmount = wei(collateralAmount || 0).add(collateralChange || 0);
+  const cVal = wei(collateralValue || 0).div(collateralAmount || 1);
+  const newCRatio = newDebt.gt(0) ? cVal.mul(newCollateralAmount).mul(100).div(newDebt) : wei(0);
+  const targetCRatio = collateral?.issuanceRatioD18.mul(100) || wei(100);
+  const maybeMaxDebt = wei(newCollateralAmount)
+    .mul(cVal)
+    .mul(100)
+    .div(targetCRatio)
+    .sub(debt || 0);
 
-  const maxDebt = useMemo(
-    () =>
-      Math.max(
-        0,
-        new Big(newCollateralAmount).mul(cVal).mul(100).div(targetCRatio).minus(debt).toNumber()
-      ),
-    [cVal, newCollateralAmount, debt, targetCRatio]
-  );
+  const maxDebt = maybeMaxDebt.gte(0) ? maybeMaxDebt : wei(0);
 
-  const isValid = useMemo(
-    () =>
-      (newCRatio >= targetCRatio || newCRatio <= 0) && (newDebt === 0 || newCollateralAmount > 0),
-    [newCRatio, newCollateralAmount, newDebt, targetCRatio]
-  );
+  const isValid =
+    (newCRatio.gte(targetCRatio) || newCRatio.lte(0)) &&
+    (newDebt.eq(0) || newCollateralAmount.gt(0));
 
   return {
     noChange: !debtChange && !collateralChange,

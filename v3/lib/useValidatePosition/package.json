@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "dependencies": {
     "@snx-v3/useCollateralTypes": "workspace:*",
-    "big.js": "^6.1.1",
+    "@synthetixio/wei": "workspace:*",
     "react": "^18.2.0"
   }
 }

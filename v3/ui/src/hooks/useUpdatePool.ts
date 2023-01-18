@@ -4,59 +4,49 @@ import { contracts } from '../utils/constants';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useContract } from './useContract';
 import { MulticallCall, useMulticall } from './useMulticall';
+import { Wei } from '@synthetixio/wei';
 
-interface IPosition {
+export function useUpdatePool({
+  accountId,
+  poolId,
+  collateral,
+  collateralAmount,
+  newPoolId,
+  onSuccess,
+}: {
   accountId: string;
   poolId: string;
   collateral: CollateralType;
-}
-
-export const useUpdatePool = (
-  position: IPosition,
-  amount: string | number,
-  newPoolId: string,
-  onSuccess?: () => void
-) => {
+  collateralAmount?: Wei;
+  newPoolId: string;
+  onSuccess?: () => void;
+}) {
   const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
 
   const calls: MulticallCall[] = useMemo(() => {
-    if (!snxProxy || position.poolId === newPoolId) return [];
+    if (!snxProxy || poolId === newPoolId || !collateralAmount) return [];
 
-    const amountBN = parseUnits(amount);
     return [
       {
         contract: snxProxy.contract,
         functionName: 'delegateCollateral',
-        callArgs: [
-          position.accountId,
-          position.poolId,
-          position.collateral.tokenAddress,
-          0,
-          parseUnits(1, 18),
-        ],
+        callArgs: [accountId, poolId, collateral.tokenAddress, 0, parseUnits(1, 18)],
       },
       {
         contract: snxProxy.contract,
         functionName: 'delegateCollateral',
         callArgs: [
-          position.accountId,
+          accountId,
           newPoolId,
-          position.collateral.tokenAddress,
-          amountBN,
+          collateral.tokenAddress,
+          collateralAmount.toBN(),
           parseUnits(1, 18),
         ],
       },
     ];
-  }, [
-    amount,
-    newPoolId,
-    position.accountId,
-    position.collateral.tokenAddress,
-    position.poolId,
-    snxProxy,
-  ]);
+  }, [collateralAmount, newPoolId, accountId, collateral.tokenAddress, poolId, snxProxy]);
 
   return useMulticall(calls, undefined, {
     onSuccess,
   });
-};
+}
