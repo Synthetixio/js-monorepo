@@ -3,7 +3,7 @@ import { useContract } from '../../../hooks/useContract';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { contracts } from '../../../utils/constants';
 import { Balance } from '@snx-v3/Balance';
-import { NumberInput } from './NumberInput';
+import { NumberInput } from '@snx-v3/NumberInput';
 import { Wei } from '@synthetixio/wei';
 
 export function Burn({

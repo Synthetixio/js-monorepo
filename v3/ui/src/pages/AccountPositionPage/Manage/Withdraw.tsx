@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '@snx-v3/Balance';
-import { NumberInput } from './NumberInput';
+import { NumberInput } from '@snx-v3/NumberInput';
 import { Wei, wei } from '@synthetixio/wei';
 
 export function Withdraw({

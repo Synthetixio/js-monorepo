@@ -1,7 +1,7 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { Badge, Box, Flex, Heading, Text, Tooltip } from '@chakra-ui/react';
 import { currency } from '@snx-v3/format';
-import { NumberInput } from './NumberInput';
+import { NumberInput } from '@snx-v3/NumberInput';
 import { Wei } from '@synthetixio/wei';
 
 export function Mint({

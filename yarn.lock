@@ -7866,6 +7866,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/NumberInput@workspace:*, @snx-v3/NumberInput@workspace:v3/components/NumberInput":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/NumberInput@workspace:v3/components/NumberInput"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/PoolSelector@workspace:v3/components/PoolSelector":
   version: 0.0.0-use.local
   resolution: "@snx-v3/PoolSelector@workspace:v3/components/PoolSelector"
@@ -10363,6 +10372,7 @@ __metadata:
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/Constants": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
+    "@snx-v3/NumberInput": "workspace:*"
     "@snx-v3/TrendText": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
