@@ -21,7 +21,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useMemo, useState } from 'react';
 import Head from 'react-helmet';
 import { useSwitchNetwork } from 'wagmi';
-import { NumberInput } from '../../components/accounts/Position/Manage/NumberInput';
+import { NumberInput } from '../AccountPositionPage/Manage/NumberInput';
 import { Balance } from '@snx-v3/Balance';
 import { useContract } from '../../hooks/useContract';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';

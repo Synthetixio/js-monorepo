@@ -1,9 +1,9 @@
 import { Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useContractRead, useProvider } from 'wagmi';
-import { useContract } from '../../../../hooks/useContract';
-import { contracts } from '../../../../utils/constants';
-import { Address } from '../../../shared/Address';
+import { useContract } from '../../../hooks/useContract';
+import { contracts } from '../../../utils/constants';
+import { Address } from '../../../components/shared/Address';
 
 interface Props {
   distributor: string;
