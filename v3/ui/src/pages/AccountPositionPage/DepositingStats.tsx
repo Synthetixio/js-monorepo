@@ -25,7 +25,7 @@ export function DepositingStats() {
             <Skeleton isLoaded={liquidityPosition.isFetched}>
               <Amount
                 value={liquidityPosition.data?.collateralAmount}
-                suffix={` ${collateralType?.symbol} `}
+                suffix={` ${collateralType?.displaySymbol} `}
               />
             </Skeleton>
           </Heading>

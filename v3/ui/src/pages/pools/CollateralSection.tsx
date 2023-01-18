@@ -95,10 +95,6 @@ export const CollateralSectionUi: FC<{
           </Box>
         ) : (
           vaultCollaterals.map((vaultCollateral) => {
-            const symbol =
-              vaultCollateral.collateralType.symbol === 'WETH'
-                ? 'ETH'
-                : vaultCollateral.collateralType.symbol;
             return (
               <Box
                 key={vaultCollateral.collateralType.tokenAddress}
@@ -118,7 +114,7 @@ export const CollateralSectionUi: FC<{
                     src={vaultCollateral.collateralType.logo}
                   />
                   <Text fontWeight={700} fontSize="xl">
-                    {symbol}
+                    {vaultCollateral.collateralType.displaySymbol}
                   </Text>
                   <Text fontSize="sm" color="gray.400" fontWeight="400">
                     {vaultCollateral.collateralType.price
@@ -132,7 +128,8 @@ export const CollateralSectionUi: FC<{
                       Total Value Locked
                     </Text>
                     <Text fontSize="md" fontWeight={700} color="white">
-                      {formatNumber(vaultCollateral.collateral.amount.toNumber())} {symbol}
+                      {formatNumber(vaultCollateral.collateral.amount.toNumber())}{' '}
+                      {vaultCollateral.collateralType.displaySymbol}
                     </Text>
                     <Text fontSize="sm" color="gray.500" fontWeight="400">
                       {formatNumberToUsd(vaultCollateral.collateral.value.toNumber())}

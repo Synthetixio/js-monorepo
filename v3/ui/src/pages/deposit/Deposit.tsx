@@ -12,14 +12,21 @@ import { TrendText } from '@snx-v3/TrendText';
 import { wei } from '@synthetixio/wei';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { BorderBox } from '@snx-v3/BorderBox';
+import { useCollateralType } from '@snx-v3/useCollateralTypes';
 
 const DepositUi: FC<{
-  collateralSymbol?: string;
+  collateralDisplaySymbol?: string;
   preferredPool?: { name: string; id: string };
   accountId?: string;
   sevenDaysPoolPerformance?: number;
   navigate: NavigateFunction;
-}> = ({ preferredPool, accountId, collateralSymbol, navigate, sevenDaysPoolPerformance }) => {
+}> = ({
+  preferredPool,
+  accountId,
+  collateralDisplaySymbol,
+  navigate,
+  sevenDaysPoolPerformance,
+}) => {
   return (
     <Flex height="100%" flexDirection="column">
       <Flex alignItems="flex-end" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
@@ -44,7 +51,7 @@ const DepositUi: FC<{
             decreases your C-Ratio.
           </Text>
           <Heading mt={4} mb={2} size="sm">
-            Deposit {collateralSymbol}
+            Deposit {collateralDisplaySymbol}
           </Heading>
           <DepositForm />
         </BorderBox>
@@ -108,6 +115,7 @@ export const Deposit = () => {
   const params = useParams();
   const { data: preferredPool } = usePreferredPool();
   const { data: poolData } = useGetPoolData(preferredPool?.id);
+  const collateralType = useCollateralType(params.collateralSymbol);
   const sevenDaysPoolPerformance = calculatePoolPerformanceSevenDays(poolData);
 
   const navigate = useNavigate();
@@ -128,7 +136,7 @@ export const Deposit = () => {
 
   return (
     <DepositUi
-      collateralSymbol={params.collateralSymbol}
+      collateralDisplaySymbol={collateralType?.displaySymbol}
       preferredPool={preferredPool}
       accountId={params.accountId}
       navigate={navigate}
