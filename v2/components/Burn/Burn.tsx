@@ -477,7 +477,10 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     // Even if the sUSD balance might be bigger than the users debt we still send the complete balance to the contract
     // We do this to avoid users having sUSD dust incase the debt fluctuates.
     // The contract will only burn whats needed to clear the debt.
-    amount: activePreset === 'max' ? wei(susdBalance || 0).toBN() : wei(burnAmountSusd || 0).toBN(),
+    amount:
+      activePreset === 'max' || activePreset === 'debtBalance'
+        ? wei(susdBalance || 0).toBN()
+        : wei(burnAmountSusd || 0).toBN(),
     delegateAddress: delegateWalletAddress,
     toTarget: activePreset === 'toTarget',
   });
