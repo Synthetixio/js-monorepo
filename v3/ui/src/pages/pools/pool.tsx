@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Divider, Flex } from '@chakra-ui/react';
 import { Helmet } from 'react-helmet';
 import { PoolHeader } from './PoolHeader';
 import { Link as ReactRouterLink } from 'react-router-dom';
@@ -28,12 +28,14 @@ export const Pool = () => {
       >
         <ArrowBackIcon mr={1} /> Account Overview
       </Link>
-      <Flex>
-        <Box w="40%" mr={2}>
-          <PoolHeader />
+      <PoolHeader />
+      <Divider my={8} bg="gray.900" />
+
+      <Flex gap={4} flexDirection={{ base: 'column', md: 'row' }}>
+        <Box flexGrow={1}>
           <CollateralSection />
         </Box>
-        <Box w="60%" ml={2}>
+        <Box flexGrow={1}>
           <MarketSection />
         </Box>
       </Flex>

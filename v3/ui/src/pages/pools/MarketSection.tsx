@@ -1,9 +1,7 @@
 import { FC } from 'react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import {
-  Box,
   Flex,
-  Spinner,
   Table,
   TableCellProps,
   TableContainer,
@@ -13,6 +11,8 @@ import {
   Thead,
   Tr,
   Tbody,
+  Tooltip,
+  Skeleton,
 } from '@chakra-ui/react';
 import { Pool } from '../../hooks/useGetPoolData';
 import {
@@ -26,6 +26,7 @@ import { useMarketNamesById } from '@snx-v3/useMarketNamesById';
 import { useGetPoolData } from '../../hooks/useGetPoolData';
 import { TrendText } from '@snx-v3/TrendText';
 import { BorderBox } from '@snx-v3/BorderBox';
+import Wei from '@synthetixio/wei';
 
 const StyledTh: FC<TableCellProps> = (props) => (
   <Th
@@ -41,7 +42,7 @@ const StyledTh: FC<TableCellProps> = (props) => (
   />
 );
 
-const StyledTd: FC<TableCellProps & { isLastItem: boolean }> = ({ isLastItem, ...props }) => (
+const StyledTd: FC<TableCellProps & { isLastItem?: boolean }> = ({ isLastItem, ...props }) => (
   <Td
     sx={{
       borderBottom: isLastItem ? 'none' : '1px',
@@ -53,52 +54,98 @@ const StyledTd: FC<TableCellProps & { isLastItem: boolean }> = ({ isLastItem, ..
   />
 );
 
+const LoadingRow = () => (
+  <Tr>
+    <StyledTd>
+      <Skeleton w="full" height={8} />
+    </StyledTd>
+    <StyledTd>
+      <Skeleton w="full" height={8} />
+    </StyledTd>
+    <StyledTd>
+      <Skeleton w="full" height={8} />
+    </StyledTd>
+    <StyledTd>
+      <Skeleton w="full" height={8} />
+    </StyledTd>
+    <StyledTd>
+      <Skeleton w="full" height={8} />
+    </StyledTd>
+  </Tr>
+);
+
+const TotalValue: FC<{ value?: Wei; isLoading: boolean }> = ({ value, isLoading }) => {
+  if (isLoading) return <Skeleton w={16} h={8} mt={1} />;
+  if (!value) return <>-</>;
+  return (
+    <TrendText value={value} display="flex" alignItems="center" fontSize="2xl" fontWeight="800">
+      {formatNumberToUsd(value.toNumber())}{' '}
+    </TrendText>
+  );
+};
+
 export function MarketSectionUi({
-  isLoading,
   poolData,
   marketNamesById,
+  poolId,
+  poolDataFetched,
 }: {
-  isLoading: boolean;
   poolData?: Pool;
   marketNamesById?: Record<string, string | undefined>;
+  poolId?: string;
+  poolDataFetched: boolean;
 }) {
   const sevenDaysPerformance = calculatePoolPerformanceSevenDays(poolData);
   const lifeTimePerformance = calculatePoolPerformanceLifetime(poolData);
-  if (isLoading || !sevenDaysPerformance || !lifeTimePerformance) return <Spinner />;
 
+  if (poolDataFetched && !poolData) {
+    return (
+      <BorderBox padding={4}>
+        <Text>Pool with id: {poolId} does not exists</Text>
+      </BorderBox>
+    );
+  }
   return (
-    <Box padding={4} pb={0} borderColor="gray.900" borderWidth="1px" borderRadius="base">
-      <Text fontSize="xl" fontWeight={700} mb={2}>
+    <BorderBox padding={4}>
+      <Text fontSize="xl" fontWeight={700}>
         Markets
       </Text>
-      <Flex>
-        <BorderBox paddingY={2} paddingX={4} mr={2} w="50%">
-          <Text color="gray.500" fontSize="xs">
-            PERFORMANCE 7 DAYS
-          </Text>
-          <TrendText
-            value={sevenDaysPerformance.value}
+      <Text color="gray.400" fontSize="sm">
+        {poolData?.name}
+      </Text>
+      <Flex mt={4} gap={4} flexDirection={{ base: 'column', sm: 'row' }}>
+        <BorderBox paddingY={2} paddingX={4} flexGrow="1">
+          <Text
+            fontSize="md"
+            color="white"
             display="flex"
+            gap={1}
             alignItems="center"
-            fontSize="2xl"
+            fontWeight={700}
           >
-            {formatNumberToUsd(sevenDaysPerformance.value.toNumber())}{' '}
-            <InfoOutlineIcon height="16px" width="16px" color="white" ml={1} />
-          </TrendText>
-          {sevenDaysPerformance.growthPercentage ? (
-            <TrendText value={sevenDaysPerformance.growthPercentage}>
-              {formatPercent(sevenDaysPerformance.growthPercentage.toNumber())}
-            </TrendText>
-          ) : null}
-        </BorderBox>
-        <BorderBox paddingY={2} paddingX={4} ml={2} w="50%">
-          <Text color="gray.500" fontSize="xs">
-            PERFORMANCE LIFETIME
+            LAST 7 DAYS{' '}
+            <Tooltip label="Market's performance in the last seven days">
+              <InfoOutlineIcon w="10px" h="10px" />
+            </Tooltip>
           </Text>
-          <TrendText value={lifeTimePerformance} display="flex" alignItems="center" fontSize="2xl">
-            {formatNumberToUsd(lifeTimePerformance.toNumber())}{' '}
-            <InfoOutlineIcon height="16px" width="16px" color="white" ml={1} />
-          </TrendText>
+          <TotalValue value={sevenDaysPerformance?.value} isLoading={!poolDataFetched} />
+          <TotalValue value={sevenDaysPerformance?.growthPercentage} isLoading={!poolDataFetched} />
+        </BorderBox>
+        <BorderBox paddingY={2} paddingX={4} flexGrow="1">
+          <Text
+            fontWeight={700}
+            fontSize="md"
+            color="white"
+            display="flex"
+            gap={1}
+            alignItems="center"
+          >
+            Performance Lifetime
+            <Tooltip label="Market's lifetime performance">
+              <InfoOutlineIcon w="10px" h="10px" />
+            </Tooltip>
+          </Text>
+          <TotalValue value={lifeTimePerformance} isLoading={!poolDataFetched} />
         </BorderBox>
       </Flex>
       <Flex>
@@ -106,15 +153,15 @@ export function MarketSectionUi({
           <Table variant="simple">
             <Thead>
               <Tr>
-                <StyledTh>MARKET</StyledTh>
-                <StyledTh>ALLOCATION</StyledTh>
-                <StyledTh>PNL 7 DAYS</StyledTh>
-                <StyledTh>PNL LIFETIME</StyledTh>
+                <StyledTh>Market</StyledTh>
+                <StyledTh>Pool Allocation</StyledTh>
+                <StyledTh>Max Debt</StyledTh>
+                <StyledTh>Last 7 Days</StyledTh>
+                <StyledTh>Lifetime</StyledTh>
               </Tr>
             </Thead>
             <Tbody>
-              {/* TODO skeleton */}
-              {!poolData && <Spinner />}
+              {!poolData && <LoadingRow />}
               {poolData?.configurations.length === 0 ? (
                 <Tr w="full">
                   <Td colSpan={4} border="none">
@@ -124,11 +171,11 @@ export function MarketSectionUi({
                   </Td>
                 </Tr>
               ) : (
-                poolData?.configurations.map(({ id, market, max_debt_share_value, weight }, i) => {
+                poolData?.configurations.map(({ id, market, weight, max_debt_share_value }, i) => {
                   const isLastItem = i + 1 === poolData.configurations.length;
                   const growth = calculateSevenDaysPnlGrowth(market.market_snapshots_by_week);
                   return (
-                    <Tr key={id}>
+                    <Tr key={id} color="gray.500">
                       <StyledTd isLastItem={isLastItem}>
                         <Text fontSize="sm" display="block">
                           {marketNamesById?.[market.id] || '-'}
@@ -139,13 +186,14 @@ export function MarketSectionUi({
                       </StyledTd>
                       <StyledTd isLastItem={isLastItem}>
                         <Text fontSize="sm" display="block">
-                          {formatPercent(weight.toNumber())} of collateral
+                          {formatPercent(weight.toNumber())}
                         </Text>
-                        <Text fontSize="xs" display="block">
-                          Max debt:
-                        </Text>
-                        <Text fontSize="xs">
-                          {formatNumberToUsd(max_debt_share_value.toNumber())}
+                      </StyledTd>
+                      <StyledTd isLastItem={isLastItem}>
+                        <Text fontSize="sm" display="block">
+                          {max_debt_share_value.gt(Number.MAX_SAFE_INTEGER)
+                            ? 'Unlimited'
+                            : formatNumberToUsd(max_debt_share_value.toNumber())}
                         </Text>
                       </StyledTd>
                       <StyledTd isLastItem={isLastItem}>
@@ -173,22 +221,25 @@ export function MarketSectionUi({
           </Table>
         </TableContainer>
       </Flex>
-    </Box>
+    </BorderBox>
   );
 }
 export const MarketSection = () => {
   const params = useParams();
-  const { data: poolData, isLoading: isLoadingPoolData } = useGetPoolData(params.poolId);
+  const { data: poolData, isFetched: poolDataFetched } = useGetPoolData(params.poolId);
 
   const marketIdsAndAddresses = poolData?.configurations.map(({ market }) => ({
     marketId: market.id,
     address: market.address,
   }));
-  const { data: marketNamesById, isLoading: isLoadingMarketNames } =
-    useMarketNamesById(marketIdsAndAddresses);
-  const isLoading = isLoadingPoolData || isLoadingMarketNames;
+  const { data: marketNamesById } = useMarketNamesById(marketIdsAndAddresses);
 
   return (
-    <MarketSectionUi marketNamesById={marketNamesById} poolData={poolData} isLoading={isLoading} />
+    <MarketSectionUi
+      marketNamesById={marketNamesById}
+      poolData={poolData}
+      poolDataFetched={poolDataFetched}
+      poolId={params.poolId}
+    />
   );
 };

@@ -46,7 +46,7 @@
     "@snx-v3/useTokenBalance": "workspace:*",
     "@snx-v3/useTransactionState": "workspace:*",
     "@snx-v3/useValidatePosition": "workspace:*",
-    "@snx-v3/useVaultCollaterals": "workspace:*",
+    "@snx-v3/useVaultsData": "workspace:*",
     "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "@synthetixio/wei": "workspace:*",

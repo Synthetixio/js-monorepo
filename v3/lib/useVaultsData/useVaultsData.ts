@@ -8,8 +8,9 @@ import { ZodBigNumber } from '@snx-v3/zod';
 const VaultCollateralSchema = z
   .object({ value: ZodBigNumber, amount: ZodBigNumber })
   .transform(({ value, amount }) => ({ value: wei(value), amount: wei(amount) }));
+const VaultDebtSchema = ZodBigNumber.transform((x) => wei(x));
 
-export const useVaultCollaterals = (poolId?: number) => {
+export const useVaultsData = (poolId?: number) => {
   const { data: collateralTypes } = useCollateralTypes();
   const { data: CoreProxyContract } = useCoreProxy();
 
@@ -20,23 +21,43 @@ export const useVaultCollaterals = (poolId?: number) => {
         throw Error('Query should not be enabled when missing contract or collateral types');
       }
 
-      const calls = collateralTypes.map((collateralType) =>
+      const collateralCalls = collateralTypes.map((collateralType) =>
         CoreProxyContract.interface.encodeFunctionData('getVaultCollateral', [
           poolId,
           collateralType.tokenAddress,
         ])
       );
+      const debtCalls = collateralTypes.map((collateralType) =>
+        CoreProxyContract.interface.encodeFunctionData('getVaultDebt', [
+          poolId,
+          collateralType.tokenAddress,
+        ])
+      );
+      const calls = collateralCalls.concat(debtCalls);
       // `getVaultCollateral` is not a normal view function, it updates some state too
       // We can make it behave like a view function by using callStatic
       const multicallResult = await CoreProxyContract.callStatic.multicall(calls);
-      return multicallResult.map((bytes, i) => {
-        const decoded = CoreProxyContract.interface.decodeFunctionResult(
+      const collateralResult = multicallResult.slice(0, collateralCalls.length);
+      const debtResult = multicallResult.slice(collateralCalls.length);
+
+      return collateralResult.map((bytes, i) => {
+        const debtBytes = debtResult[i];
+        const decodedDebt = CoreProxyContract.interface.decodeFunctionResult(
+          'getVaultDebt',
+          debtBytes
+        );
+
+        const decodedCollateral = CoreProxyContract.interface.decodeFunctionResult(
           'getVaultCollateral',
           bytes
         );
-        const { value, amount } = VaultCollateralSchema.parse({ ...decoded });
-
-        return { value, amount, collateralType: collateralTypes[i] };
+        const collateral = VaultCollateralSchema.parse({ ...decodedCollateral });
+        const debt = VaultDebtSchema.parse(decodedDebt[0]);
+        return {
+          debt,
+          collateral,
+          collateralType: collateralTypes[i],
+        };
       });
     },
     enabled: Boolean(collateralTypes?.length && CoreProxyContract && poolId),
