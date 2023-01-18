@@ -41,7 +41,15 @@ export function NumberInput({
 
   useEffect(() => {
     const t = setTimeout(() => {
-      setInputValue(value.gt(0) ? `${value.toNumber()}` : '');
+      if (value.eq(0)) {
+        return setInputValue('');
+      }
+      // Cleanup trailing precision zeroes
+      const float = parseFloat(value.toString());
+      if (float === value.toNumber()) {
+        return setInputValue(`${float}`);
+      }
+      return setInputValue(value.toString());
     }, 100);
     return () => clearTimeout(t);
   }, [value]);
@@ -49,10 +57,9 @@ export function NumberInput({
   return (
     <Input
       flex="1"
-      type="number"
+      type="text"
       border="none"
       placeholder="0.0"
-      min="0"
       value={inputValue}
       onChange={onInputChange}
       disabled={max?.eq(0)}
