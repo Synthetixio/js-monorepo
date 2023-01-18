@@ -26,7 +26,7 @@ export function CollateralTypeSelectorUI({
                 />
               </Box>
               <Text fontWeight="600" mr="2">
-                {collateralType.symbol}
+                {collateralType.displaySymbol}
               </Text>
             </>
           ) : null}
@@ -50,7 +50,7 @@ export function CollateralTypeSelectorUI({
               <Box w="24px" h="24px" borderRadius="12px" overflow="hidden" mr="2">
                 <Image alt="collateral image" width="24px" height="24px" src={collateral.logo} />
               </Box>
-              <Text fontWeight="600">{collateral?.symbol}</Text>
+              <Text fontWeight="600">{collateral?.displaySymbol}</Text>
             </Flex>
           </MenuItem>
         ))}

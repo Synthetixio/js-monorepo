@@ -25,7 +25,6 @@ function VaultRowUi({
   isConnected: boolean;
   openConnectModal?: () => void;
 }) {
-  const symbol = collateralType.symbol === 'WETH' ? 'ETH' : collateralType.symbol;
   const hasLiquidity = accountId && liquidityPosition && liquidityPosition.collateralAmount.gt(0);
 
   return (
@@ -39,7 +38,10 @@ function VaultRowUi({
         )}
         <Text fontSize="xs" opacity="0.66" mt="1">
           {liquidityPosition?.collateralValue.gt(0) ? (
-            <Amount value={liquidityPosition.collateralAmount} suffix={` ${symbol}`} />
+            <Amount
+              value={liquidityPosition.collateralAmount}
+              suffix={` ${collateralType.displaySymbol}`}
+            />
           ) : (
             '-'
           )}
