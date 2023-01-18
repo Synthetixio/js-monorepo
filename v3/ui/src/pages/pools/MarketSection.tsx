@@ -68,6 +68,9 @@ const LoadingRow = () => (
     <StyledTd>
       <Skeleton w="full" height={8} />
     </StyledTd>
+    <StyledTd>
+      <Skeleton w="full" height={8} />
+    </StyledTd>
   </Tr>
 );
 
@@ -152,6 +155,7 @@ export function MarketSectionUi({
               <Tr>
                 <StyledTh>Market</StyledTh>
                 <StyledTh>Pool Allocation</StyledTh>
+                <StyledTh>Max Debt</StyledTh>
                 <StyledTh>Last 7 Days</StyledTh>
                 <StyledTh>Lifetime</StyledTh>
               </Tr>
@@ -167,7 +171,7 @@ export function MarketSectionUi({
                   </Td>
                 </Tr>
               ) : (
-                poolData?.configurations.map(({ id, market, weight }, i) => {
+                poolData?.configurations.map(({ id, market, weight, max_debt_share_value }, i) => {
                   const isLastItem = i + 1 === poolData.configurations.length;
                   const growth = calculateSevenDaysPnlGrowth(market.market_snapshots_by_week);
                   return (
@@ -183,6 +187,13 @@ export function MarketSectionUi({
                       <StyledTd isLastItem={isLastItem}>
                         <Text fontSize="sm" display="block">
                           {formatPercent(weight.toNumber())}
+                        </Text>
+                      </StyledTd>
+                      <StyledTd isLastItem={isLastItem}>
+                        <Text fontSize="sm" display="block">
+                          {max_debt_share_value.gt(Number.MAX_SAFE_INTEGER)
+                            ? 'Unlimited'
+                            : formatNumberToUsd(max_debt_share_value.toNumber())}
                         </Text>
                       </StyledTd>
                       <StyledTd isLastItem={isLastItem}>
