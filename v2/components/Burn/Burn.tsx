@@ -107,7 +107,7 @@ export const BurnUi = ({
   const onChange = (currency: 'susd' | 'snx') => (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(',', '');
     onPresetClick(null);
-    if (/^[0-9]*(\.[0-9]{0,2})?$/.test(value)) {
+    if (/^[0-9]*(\.[0-9]{0,18})?$/.test(value)) {
       return currency === 'susd' ? onBurnAmountSusdChange(value) : onUnstakeAmountChange(value);
     }
   };
