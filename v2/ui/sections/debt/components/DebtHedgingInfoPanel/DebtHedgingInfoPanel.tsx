@@ -1,6 +1,6 @@
 import { Trans, useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import DebtHedgingChart from './DebtHedgingChart';
+// import DebtHedgingChart from './DebtHedgingChart';
 import { ExternalLink, FlexDivCol } from '@snx-v1/styles';
 import media from 'styled-media-query';
 import { EXTERNAL_LINKS } from 'constants/links';
@@ -26,8 +26,14 @@ const DebtHedgingInfoPanel: React.FC<DebtHedgingInfoPanelProps> = ({ hidden }) =
           />
           <br />
           <TextContainer>{t('debt.actions.manage.info-panel.dsnx-warning')}</TextContainer>
+          <br />
+          <Trans
+            i18nKey="debt.actions.manage.info-panel.toros"
+            components={[<StyledLink href={EXTERNAL_LINKS.dHedge.toros} />]}
+          />
         </InfoPanelBody>
-        <DebtHedgingChart />
+        {/* TODO: Fix this chart */}
+        {/* <DebtHedgingChart /> */}
       </InfoPanelContainer>
     </>
   );
