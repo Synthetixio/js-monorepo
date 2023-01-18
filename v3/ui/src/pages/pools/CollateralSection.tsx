@@ -1,4 +1,4 @@
-import { Box, Spinner, Text, Flex, Button } from '@chakra-ui/react';
+import { Spinner, Text, Flex, Button } from '@chakra-ui/react';
 import { useVaultCollaterals } from '@snx-v3/useVaultCollaterals';
 import { useNavigate } from 'react-router-dom';
 import { FC } from 'react';
@@ -7,6 +7,7 @@ import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
 import { AccountVaultCollateral } from './AccountVaultCollateral';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useParams } from '@snx-v3/useParams';
+import { BorderBox } from '@snx-v3/BorderBox';
 
 const calculateTvl = (vaultCollaterals: ReturnType<typeof useVaultCollaterals>['data']) => {
   const zeroValues = { value: wei(0), amount: wei(0) };
@@ -26,33 +27,24 @@ export const CollateralSectionUi: FC<{
   if (!vaultCollaterals) return <Spinner />;
   const tvl = calculateTvl(vaultCollaterals);
   return (
-    <Box mt={4} borderColor="gray.900" borderWidth="1px" borderRadius="base" padding={4}>
+    <BorderBox mt={4} padding={4}>
       <Text fontWeight={700} fontSize="xl">
         Collateral Types
       </Text>
-      <Box
-        borderColor="gray.900"
-        borderWidth="1px"
-        borderRadius="base"
-        padding={4}
-        bg="whiteAlpha.50"
-        mb={2}
-      >
+      <BorderBox padding={4} mb={2}>
         <Text fontWeight={700} fontSize="xl" color="gray.500">
           TOTAL POOL TVL
         </Text>
         <Text fontWeight={700} fontSize="2xl" color="white">
           {formatNumberToUsd(tvl.value.toNumber())}
         </Text>
-      </Box>
+      </BorderBox>
       <Flex justifyContent="space-between">
         {vaultCollaterals.map((vaultCollateral) => (
-          <Flex
+          <BorderBox
             key={vaultCollateral.collateralType.tokenAddress}
+            display="flex"
             bg="whiteAlpha.50"
-            borderColor="gray.900"
-            borderWidth="1px"
-            borderRadius="base"
             paddingX={4}
             paddingY={2}
             width="48%"
@@ -84,10 +76,10 @@ export const CollateralSectionUi: FC<{
             ) : (
               <Button onClick={() => navigate('/')}>Deposit</Button>
             )}
-          </Flex>
+          </BorderBox>
         ))}
       </Flex>
-    </Box>
+    </BorderBox>
   );
 };
 export const CollateralSection = () => {

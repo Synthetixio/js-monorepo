@@ -14,29 +14,27 @@ import {
   Tr,
   useDisclosure,
 } from '@chakra-ui/react';
-import { FC } from 'react';
 import { generatePath, Link as RouterLink } from 'react-router-dom';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { PoolDialog } from './PoolDialog';
 import { usePools } from '@snx-v3/usePools';
+import { Wei } from '@synthetixio/wei';
 
-interface Props {
-  accountId: string;
-  poolId: string;
-  collateral: CollateralType;
-  collateralAmount: number;
-  debt: number;
-  refetch: () => void;
-}
-
-export const Pool: FC<Props> = ({
+export function Pool({
   poolId,
   collateralAmount,
   accountId,
   collateral,
   debt,
   refetch,
-}) => {
+}: {
+  accountId: string;
+  poolId: string;
+  collateral: CollateralType;
+  collateralAmount?: Wei;
+  debt?: Wei;
+  refetch: () => void;
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data: pools } = usePools();
   const pool = pools?.find((pool) => pool.id === poolId);
@@ -241,4 +239,4 @@ export const Pool: FC<Props> = ({
       </Table>
     </Box>
   );
-};
+}

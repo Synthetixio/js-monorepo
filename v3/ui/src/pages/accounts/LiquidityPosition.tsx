@@ -2,7 +2,7 @@ import { Container } from '@chakra-ui/react';
 import { useParams } from '@snx-v3/useParams';
 import { useMemo } from 'react';
 import { Position } from '../../components/accounts/Position';
-import { DepositingNav } from '../../components/accounts/DepositingNav';
+import { AccountNav } from '@snx-v3/AccountNav';
 import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
 
 export function LiquidityPosition() {
@@ -19,7 +19,7 @@ export function LiquidityPosition() {
 
   return (
     <Container>
-      <DepositingNav />
+      <AccountNav />
       <Position collateral={collateral} poolId={params.poolId} accountId={params.accountId} />
     </Container>
   );

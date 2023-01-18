@@ -10,8 +10,8 @@ export const useAllowance = ({
   contractAddress,
   spender,
 }: {
-  contractAddress: string;
-  spender: string;
+  contractAddress?: string;
+  spender?: string;
 }) => {
   const { address: accountAddress } = useAccount();
   const provider = useProvider();
@@ -22,6 +22,7 @@ export const useAllowance = ({
       'allowance',
     ],
     queryFn: async () => {
+      if (!(contractAddress && spender)) throw new Error('OMG');
       const contract = new Contract(contractAddress, abi, provider);
       const allowance = await contract.allowance(accountAddress, spender);
       return AllowanceSchema.parse(allowance);

@@ -1,33 +1,23 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
-  Box,
-  Heading,
-  SimpleGrid,
-  Flex,
-  Tooltip,
-  Text,
-  Badge,
   Alert,
   AlertIcon,
+  Badge,
+  Box,
+  Flex,
+  Heading,
+  SimpleGrid,
+  Text,
+  Tooltip,
 } from '@chakra-ui/react';
-import { FC } from 'react';
-import { useTokenBalance } from '../../../../hooks/useTokenBalance';
+import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { currency } from '@snx-v3/format';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from './NumberInput';
-interface Props {
-  collateral: CollateralType;
-  setCollateralChange: (value: number) => void;
-  collateralChange: number;
-  collateralAmount: number;
-  setDebtChange: (value: number) => void;
-  debtChange: number;
-  debt: number;
-  maxDebt: number;
-}
+import { Wei, wei } from '@synthetixio/wei';
 
-export const Custom: FC<Props> = ({
+export function Custom({
   collateral,
   collateralChange,
   collateralAmount,
@@ -36,8 +26,17 @@ export const Custom: FC<Props> = ({
   debtChange,
   debt,
   maxDebt,
-}) => {
-  const balance = useTokenBalance(collateral.tokenAddress);
+}: {
+  collateral: CollateralType;
+  setCollateralChange: (value: number) => void;
+  collateralChange: number;
+  collateralAmount: Wei;
+  setDebtChange: (value: number) => void;
+  debtChange: number;
+  debt: Wei;
+  maxDebt: Wei;
+}) {
+  const tokenBalance = useTokenBalance(collateral.tokenAddress);
 
   return (
     <Box mb="4">
@@ -50,17 +49,17 @@ export const Custom: FC<Props> = ({
           <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
             <Flex mb="3">
               <NumberInput
-                value={collateralAmount + collateralChange}
+                value={collateralAmount.add(collateralChange).toNumber()}
                 onChange={(val) => {
-                  setCollateralChange(val - collateralAmount);
+                  setCollateralChange(wei(val).sub(collateralAmount).toNumber());
                 }}
-                max={balance.value.add(collateralAmount).toNumber()}
+                max={tokenBalance.data?.add(collateralAmount).toNumber()}
               />
             </Flex>
             <Flex alignItems="center">
               <Balance
-                onMax={(balance) => setCollateralChange(parseFloat(balance) || 0)}
-                balance={balance.value}
+                onMax={(bal) => setCollateralChange(parseFloat(bal) || 0)}
+                balance={tokenBalance.data}
                 symbol={collateral.symbol}
                 address={collateral.tokenAddress}
               />
@@ -76,22 +75,20 @@ export const Custom: FC<Props> = ({
             <form>
               <Flex mb="3">
                 <NumberInput
-                  value={debt + debtChange}
-                  onChange={(val) => {
-                    setDebtChange(val - debt);
-                  }}
-                  max={maxDebt + debt}
+                  value={debt.add(debtChange).toNumber()}
+                  onChange={(val) => setDebtChange(wei(val).sub(debt).toNumber())}
+                  max={maxDebt.add(debt).toNumber()}
                 />
               </Flex>
             </form>
             <Flex alignItems="center">
               <Box>
                 <Text fontSize="xs">
-                  Max Mint: ${currency(maxDebt)}
+                  Max Mint: ${currency(maxDebt.toNumber())}
                   <Tooltip label="You can't mint snxUSD that takes your C-Ratio below the target c-ratio of 300%.">
                     <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
                   </Tooltip>
-                  {maxDebt !== 0 && (
+                  {maxDebt.eq(0) ? null : (
                     <Badge
                       transform="translateY(-2px)"
                       ml="2"
@@ -99,7 +96,7 @@ export const Custom: FC<Props> = ({
                       variant="outline"
                       onClick={(e) => {
                         e.preventDefault();
-                        setDebtChange(maxDebt);
+                        setDebtChange(maxDebt.toNumber());
                       }}
                     >
                       Use Max
@@ -119,7 +116,7 @@ export const Custom: FC<Props> = ({
             {collateralChange !== 0 && (
               <strong>
                 {collateralChange > 0 ? 'deposit' : 'withdraw'} {Math.abs(collateralChange)}&nbsp;
-                {collateral.symbol.toUpperCase()}
+                {collateral.symbol}
               </strong>
             )}
             {collateralChange !== 0 && debtChange !== 0 && `\u00A0and\u00A0`}
@@ -134,4 +131,4 @@ export const Custom: FC<Props> = ({
       )}
     </Box>
   );
-};
+}

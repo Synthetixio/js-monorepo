@@ -70,11 +70,7 @@ input Burned_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
-  account_gt: Bytes
-  account_gte: Bytes
   account_in: [Bytes!]
-  account_lt: Bytes
-  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -299,11 +295,7 @@ input DebtSnapshot_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
-  account_gt: Bytes
-  account_gte: Bytes
   account_in: [Bytes!]
-  account_lt: Bytes
-  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -386,11 +378,7 @@ input FeesClaimed_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
-  account_gt: Bytes
-  account_gte: Bytes
   account_in: [Bytes!]
-  account_lt: Bytes
-  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -465,11 +453,7 @@ input Issued_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
-  account_gt: Bytes
-  account_gte: Bytes
   account_in: [Bytes!]
-  account_lt: Bytes
-  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]

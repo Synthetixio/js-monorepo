@@ -9,14 +9,20 @@ export function Amount({
   suffix = '',
 }: {
   prefix?: string;
-  value: WeiSource;
+  value?: WeiSource;
   suffix?: string;
 }) {
-  const { formattedValue, isPrecise } = useMemo(() => {
+  const { formattedValue, preciseValue } = useMemo(() => {
+    if (!value) {
+      return { formattedValue: '-', preciseValue: '-' };
+    }
     const parsedValue = parseUnits(value);
     const formattedValue = currency(formatValue(parsedValue));
     const cleanNumber = parseUnits(formattedValue.replaceAll(',', ''));
-    return { formattedValue, isPrecise: parsedValue.eq(cleanNumber) };
+    return {
+      formattedValue,
+      preciseValue: parsedValue.eq(cleanNumber) ? formattedValue : value.toString(),
+    };
   }, [value]);
 
   return (
@@ -24,11 +30,11 @@ export function Amount({
       label={
         <>
           {prefix}
-          {value.toString()}
+          {preciseValue}
           {suffix}
         </>
       }
-      isDisabled={isPrecise}
+      isDisabled={formattedValue === preciseValue}
     >
       <span>
         {prefix}

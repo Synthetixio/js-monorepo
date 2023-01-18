@@ -10,7 +10,7 @@ export function Balance({
   address,
   onMax,
 }: {
-  balance: Wei;
+  balance?: Wei;
   symbol: string;
   address: string;
   onMax?: (balance: string) => void;
@@ -32,15 +32,15 @@ export function Balance({
   return (
     <Text display="flex" gap={2} alignItems="center" fontSize="xs">
       Balance:
-      <Amount value={balance} suffix={` ${symbol.toUpperCase()}`} />
-      {balance.eq(0) && buyAssetLink && (
+      <Amount value={balance} suffix={` ${symbol}`} />
+      {balance && balance.eq(0) && buyAssetLink && (
         <Link href={buyAssetLink} isExternal>
           <Badge ml="1" variant="outline" transform="translateY(-1px)">
             Buy {symbol}
           </Badge>
         </Link>
       )}
-      {onMax && !balance.eq(0) && (
+      {onMax && balance?.gt(0) && (
         <Badge
           as="button"
           variant="outline"

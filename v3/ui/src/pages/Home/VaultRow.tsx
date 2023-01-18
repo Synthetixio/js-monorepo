@@ -32,24 +32,35 @@ function VaultRowUi({
     <Tr>
       <Td>
         <Image alt="collateral image" width="24px" height="24px" src={collateralType.logo} />
-        <Amount value={liquidityPosition ? liquidityPosition.collateralValue : '0'} prefix="$" />
+        {liquidityPosition?.collateralValue.gt(0) ? (
+          <Amount value={liquidityPosition.collateralValue} prefix="$" />
+        ) : (
+          '-'
+        )}
         <Text fontSize="xs" opacity="0.66" mt="1">
-          <Amount
-            value={liquidityPosition ? liquidityPosition.collateralAmount : '0'}
-            suffix={` ${symbol}`}
-          />
+          {liquidityPosition?.collateralValue.gt(0) ? (
+            <Amount value={liquidityPosition.collateralAmount} suffix={` ${symbol}`} />
+          ) : (
+            '-'
+          )}
         </Text>
       </Td>
       <Td>
-        <Amount value={liquidityPosition ? liquidityPosition.debt : '0'} prefix="$" />
+        {liquidityPosition?.debt.gt(0) ? <Amount value={liquidityPosition.debt} prefix="$" /> : '-'}
       </Td>
       <Td>
-        <Amount value={liquidityPosition ? liquidityPosition.cRatio : '0'} suffix="%" />
-        <Text fontSize="xs" opacity="0.66" mt="1">
-          <Amount value={liquidityPosition ? collateralType.liquidationRatioD18 : '0'} suffix="%" />
-        </Text>
+        {liquidityPosition?.cRatio.gt(0) ? (
+          <Amount value={liquidityPosition.cRatio} suffix="%" />
+        ) : (
+          '-'
+        )}
       </Td>
-      <Td>TODO</Td>
+      <Td>
+        <Amount value={collateralType.issuanceRatioD18.mul(100)} suffix="%" />
+      </Td>
+      <Td>
+        <Amount value={collateralType.liquidationRatioD18.mul(100)} suffix="%" />
+      </Td>
       <Td>
         {isConnected && hasLiquidity ? (
           <Button
@@ -99,8 +110,8 @@ export const VaultRow: FC<{ collateralType: CollateralType; poolId: string }> = 
   const accountId = params.accountId;
   const { data: liquidityPosition } = useLiquidityPosition({
     accountId,
-    collateral: collateralType,
     poolId,
+    tokenAddress: collateralType?.tokenAddress,
   });
   const navigate = useNavigate();
   const { openConnectModal } = useConnectModal();

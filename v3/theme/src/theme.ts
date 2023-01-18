@@ -489,6 +489,9 @@ export const theme = extendTheme({
       800: '#001F6F',
       900: '#0B0B22',
     },
+    error: '#FF4A60', // red.400,
+    success: '#34EDB3', //green.500
+    warning: '#FC8738', // orange.500
   },
   shadows: {
     outline: '0 0 0 3px rgba(0, 209, 255, 1)',

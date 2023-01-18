@@ -4,6 +4,7 @@ import { FC } from 'react';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 import { convertStateToQueryParam } from '../utils/url';
+import { GitHubIcon } from './GitHubIcon';
 import { NodeFormModule } from './NodeFormModule';
 
 export const Header: FC = () => {
@@ -13,7 +14,7 @@ export const Header: FC = () => {
   return (
     <>
       <Flex as="header" p="2" flexDir="column" w="100%" gap="2">
-        <Flex w="100%" justifyContent="space-evenly">
+        <Flex w="100%" justifyContent="space-evenly" alignItems="center">
           <Heading>SNX Oracle Manager</Heading>
           <Button
             variant="outline"
@@ -37,6 +38,7 @@ export const Header: FC = () => {
           </Button>
           <Button onClick={onOpen}>Add Node</Button>
           <ConnectButton />
+          <GitHubIcon />
         </Flex>
         <Divider borderColor="cyan.500" />
       </Flex>

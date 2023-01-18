@@ -346,12 +346,6 @@ const Table: ComponentMultiStyleConfig = {
 };
 
 export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
-  colors: {
-    ...chakraTheme.colors,
-    error: chakraTheme.colors.red['400'],
-    success: chakraTheme.colors.green['500'],
-    warning: chakraTheme.colors.orange['500'],
-  },
   components: {
     Progress,
     Button,

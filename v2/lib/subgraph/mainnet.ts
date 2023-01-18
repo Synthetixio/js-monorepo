@@ -66,11 +66,7 @@ export type Burned_Filter = {
   _change_block?: InputMaybe<BlockChangedFilter>;
   account?: InputMaybe<Scalars['Bytes']>;
   account_contains?: InputMaybe<Scalars['Bytes']>;
-  account_gt?: InputMaybe<Scalars['Bytes']>;
-  account_gte?: InputMaybe<Scalars['Bytes']>;
   account_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  account_lt?: InputMaybe<Scalars['Bytes']>;
-  account_lte?: InputMaybe<Scalars['Bytes']>;
   account_not?: InputMaybe<Scalars['Bytes']>;
   account_not_contains?: InputMaybe<Scalars['Bytes']>;
   account_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -258,11 +254,7 @@ export type DebtSnapshot_Filter = {
   _change_block?: InputMaybe<BlockChangedFilter>;
   account?: InputMaybe<Scalars['Bytes']>;
   account_contains?: InputMaybe<Scalars['Bytes']>;
-  account_gt?: InputMaybe<Scalars['Bytes']>;
-  account_gte?: InputMaybe<Scalars['Bytes']>;
   account_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  account_lt?: InputMaybe<Scalars['Bytes']>;
-  account_lte?: InputMaybe<Scalars['Bytes']>;
   account_not?: InputMaybe<Scalars['Bytes']>;
   account_not_contains?: InputMaybe<Scalars['Bytes']>;
   account_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -342,11 +334,7 @@ export type FeesClaimed_Filter = {
   _change_block?: InputMaybe<BlockChangedFilter>;
   account?: InputMaybe<Scalars['Bytes']>;
   account_contains?: InputMaybe<Scalars['Bytes']>;
-  account_gt?: InputMaybe<Scalars['Bytes']>;
-  account_gte?: InputMaybe<Scalars['Bytes']>;
   account_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  account_lt?: InputMaybe<Scalars['Bytes']>;
-  account_lte?: InputMaybe<Scalars['Bytes']>;
   account_not?: InputMaybe<Scalars['Bytes']>;
   account_not_contains?: InputMaybe<Scalars['Bytes']>;
   account_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -418,11 +406,7 @@ export type Issued_Filter = {
   _change_block?: InputMaybe<BlockChangedFilter>;
   account?: InputMaybe<Scalars['Bytes']>;
   account_contains?: InputMaybe<Scalars['Bytes']>;
-  account_gt?: InputMaybe<Scalars['Bytes']>;
-  account_gte?: InputMaybe<Scalars['Bytes']>;
   account_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  account_lt?: InputMaybe<Scalars['Bytes']>;
-  account_lte?: InputMaybe<Scalars['Bytes']>;
   account_not?: InputMaybe<Scalars['Bytes']>;
   account_not_contains?: InputMaybe<Scalars['Bytes']>;
   account_not_in?: InputMaybe<Array<Scalars['Bytes']>>;

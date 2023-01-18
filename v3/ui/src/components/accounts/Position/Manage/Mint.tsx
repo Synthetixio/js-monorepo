@@ -1,16 +1,18 @@
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import { Text, Box, Tooltip, Flex, Heading, Badge } from '@chakra-ui/react';
-import { FC } from 'react';
+import { Badge, Box, Flex, Heading, Text, Tooltip } from '@chakra-ui/react';
 import { currency } from '@snx-v3/format';
 import { NumberInput } from './NumberInput';
+import { Wei } from '@synthetixio/wei';
 
-interface Props {
+export function Mint({
+  onChange,
+  value,
+  max,
+}: {
   onChange: (value: number) => void;
   value: number;
-  max: number;
-}
-
-export const Mint: FC<Props> = ({ onChange, value, max }) => {
+  max: Wei;
+}) {
   return (
     <>
       <Heading fontSize="md" mb="1">
@@ -23,19 +25,19 @@ export const Mint: FC<Props> = ({ onChange, value, max }) => {
 
       <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
-          <NumberInput value={value} onChange={onChange} max={max} />
+          <NumberInput value={value} onChange={onChange} max={max.toNumber()} />
         </Flex>
         <Flex alignItems="center">
           <Box>
             <Text fontSize="xs">
-              Max Mint: ${currency(max)}
+              Max Mint: ${currency(max.toNumber())}
               <Tooltip
                 color="white"
                 label="You can't mint snxUSD that takes your C-Ratio below the target c-ratio of 300%."
               >
                 <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
               </Tooltip>
-              {max !== 0 && (
+              {max.gt(0) ? (
                 <Badge
                   transform="translateY(-1px)"
                   ml="2"
@@ -43,16 +45,16 @@ export const Mint: FC<Props> = ({ onChange, value, max }) => {
                   variant="outline"
                   onClick={(e) => {
                     e.preventDefault();
-                    onChange(max);
+                    onChange(max.toNumber());
                   }}
                 >
                   Use Max
                 </Badge>
-              )}
+              ) : null}
             </Text>
           </Box>
         </Flex>
       </Box>
     </>
   );
-};
+}

@@ -2,9 +2,10 @@ import { Box, Button, Flex, Input, Text } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useIsConnected } from '@snx-v3/useBlockchain';
-import { useTokenBalance } from '../../../hooks/useTokenBalance';
+import { useTokenBalance } from '@snx-v3/useTokenBalance';
+import { useEthBalance } from '@snx-v3/useEthBalance';
 import { CollateralTypeSelector } from '@snx-v3/CollateralTypeSelector';
-import { FormEvent, useCallback, useRef, useState } from 'react';
+import { FormEvent, useCallback, useRef, useState, useMemo } from 'react';
 import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
 import { wei } from '@synthetixio/wei';
 import { numberWithCommas } from '@snx-v2/formatters';
@@ -26,7 +27,18 @@ export function DepositForm() {
   const [amount, setAmount] = useState(wei(0));
   const [activeBadge, setActiveBadge] = useState(0);
 
-  const balanceData = useTokenBalance(collateralType?.tokenAddress);
+  const tokenBalance = useTokenBalance(collateralType?.tokenAddress);
+  const ethBalance = useEthBalance();
+
+  const combinedTokenBalance = useMemo(() => {
+    if (collateralType?.symbol !== 'WETH') {
+      return tokenBalance.data;
+    }
+    if (!tokenBalance.data || !ethBalance.data) {
+      return undefined;
+    }
+    return tokenBalance.data.add(ethBalance.data);
+  }, [collateralType?.symbol, tokenBalance.data, ethBalance.data]);
 
   const [isOpenDeposit, setIsOpenDeposit] = useState(false);
   const onSubmit = useCallback(
@@ -116,7 +128,7 @@ export function DepositForm() {
                   setInputAmount(value);
                   try {
                     const currentAmount = wei(value || 0);
-                    if (currentAmount.gte(balanceData.value.toBN())) {
+                    if (combinedTokenBalance?.lt(currentAmount)) {
                       e.target.setCustomValidity('Insufficient balance');
                     } else if (currentAmount.gt(0)) {
                       e.target.setCustomValidity('');
@@ -129,36 +141,48 @@ export function DepositForm() {
                 }}
               />
               <Flex justifyContent="flex-end" fontSize="xs">
-                <Flex cursor="pointer" onClick={() => setInputAmount(balanceData.value.toString())}>
-                  <Text mr={1}>Balance:</Text>
-                  <Amount
-                    value={balanceData.value}
-                    suffix={` ${collateralType.symbol.toUpperCase()}`}
-                  />
+                <Flex
+                  gap="1"
+                  cursor="pointer"
+                  onClick={() => {
+                    if (!combinedTokenBalance) {
+                      return;
+                    }
+                    setInputAmount(combinedTokenBalance.toString());
+                  }}
+                >
+                  <Text>Balance:</Text>
+                  <Amount value={tokenBalance.data} suffix={` ${collateralType.symbol}`} />
+                  {collateralType?.symbol === 'WETH' ? (
+                    <Amount value={ethBalance.data} suffix={` ETH`} />
+                  ) : null}
                 </Flex>
               </Flex>
             </Flex>
           </Flex>
           <PercentBadges
-            disabled={balanceData.value.eq(0)}
+            disabled={combinedTokenBalance ? combinedTokenBalance.eq(0) : false}
             onBadgePress={(badgeNum) => {
+              if (!combinedTokenBalance) {
+                return;
+              }
               setActiveBadge(badgeNum);
               if (badgeNum === 1) {
                 // Make sure we're not left with dust
-                setInputAmount(balanceData.value.toString());
+                setInputAmount(combinedTokenBalance.toString());
               } else {
-                setInputAmount(balanceData.value.mul(badgeNum).toString(2));
+                setInputAmount(combinedTokenBalance.mul(badgeNum).toString(2));
               }
             }}
             activeBadge={activeBadge}
           />
         </Box>
-        <Button disabled={isOpenDeposit} mt={4} size="sm" px="8" type="submit" w="full">
+        <Button mt={4} size="sm" px="8" type="submit" w="full">
           Deposit Collateral
         </Button>
       </Box>
 
-      {params.accountId && params.poolId && collateralType && amount.gt(0) ? (
+      {params.poolId && collateralType && amount.gt(0) ? (
         <DepositModal
           accountId={params.accountId}
           poolId={params.poolId}
