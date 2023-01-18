@@ -522,10 +522,10 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         }
         setActivePreset('max');
 
-        const burnAmountString = formatNumber(
+        const burnAmountString = numberWithCommas(
           debtData.debtBalance.gt(sUSDBalanceWithDefault)
-            ? sUSDBalanceWithDefault
-            : debtData.debtBalance.toNumber()
+            ? sUSDBalanceWithDefault.toString()
+            : debtData.debtBalance.toString()
         );
         const snxUnstakingAmount = formatNumber(stakedSnx.toNumber());
         setBurnAmountSusd(burnAmountString);
@@ -542,7 +542,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
         }
         setActivePreset('sUSDBalance');
 
-        const burnAmountString = formatNumber(sUSDBalanceWithDefault);
+        const burnAmountString = numberWithCommas(sUSDBalanceWithDefault.toString());
         const snxUnstakingAmount = calculateUnstakingAmountFromBurn({
           burnAmount: sUSDBalanceWithDefault,
           targetCRatio: debtData.targetCRatio.toNumber(),
@@ -565,9 +565,9 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
           return;
         }
         setActivePreset('debtBalance');
-        const burnAmountString = formatNumber(debtData.debtBalance.toNumber());
+        const burnAmountString = numberWithCommas(debtData.debtBalance.toString());
         const snxUnstakingAmount = calculateUnstakingAmountFromBurn({
-          burnAmount: sUSDBalanceWithDefault,
+          burnAmount: debtData.debtBalance.toNumber(),
           targetCRatio: debtData.targetCRatio.toNumber(),
           collateralPrice: snxPrice,
           debtBalance: debtData.debtBalance.toNumber(),
