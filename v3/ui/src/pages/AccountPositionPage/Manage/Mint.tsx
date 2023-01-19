@@ -10,13 +10,16 @@ export function Mint({
   collateral,
   value,
   onChange,
-  max,
+  maxDebt,
 }: {
   collateral: CollateralType;
   value: Wei;
   onChange: (value: Wei) => void;
-  max: Wei;
+  maxDebt: Wei;
 }) {
+  // TODO: disable submit button if `max.lt(value)` after redesign
+  // const max = maxDebt;
+
   return (
     <>
       <Heading fontSize="md" mb="1">
@@ -29,12 +32,12 @@ export function Mint({
 
       <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
-          <NumberInput value={value} onChange={onChange} max={max} />
+          <NumberInput value={value} onChange={onChange} />
         </Flex>
         <Flex alignItems="center">
           <Box>
             <Text fontSize="xs">
-              Max Mint: ${currency(max)}
+              Max Mint: ${currency(maxDebt)}
               <Tooltip
                 color="white"
                 label={`You can't mint snxUSD that takes your C-Ratio below the target c-ratio of ${formatPercent(
@@ -43,13 +46,14 @@ export function Mint({
               >
                 <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
               </Tooltip>
-              {max.gt(0) ? (
+              {maxDebt.gt(0) ? (
                 <Badge
                   transform="translateY(-1px)"
                   ml="2"
                   as="button"
+                  type="button"
                   variant="outline"
-                  onClick={() => onChange(max)}
+                  onClick={() => onChange(maxDebt)}
                 >
                   Use Max
                 </Badge>

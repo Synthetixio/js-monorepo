@@ -17,7 +17,9 @@ export function Burn({
 }) {
   const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
   const tokenBalance = useTokenBalance(snxUsdProxy?.address);
-  const max = tokenBalance.data ? (tokenBalance.data.lt(debt) ? tokenBalance.data : debt) : debt;
+
+  // TODO: disable submit button if `max.lt(value)` after redesign
+  // const max = tokenBalance.data ? (tokenBalance.data.lt(debt) ? tokenBalance.data : debt) : debt;
 
   return (
     <>
@@ -31,7 +33,7 @@ export function Burn({
       {debt ? (
         <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
           <Flex mb="3">
-            <NumberInput value={value} onChange={onChange} max={max} />
+            <NumberInput value={value} onChange={onChange} />
           </Flex>
           <Flex alignItems="center">
             <Balance

@@ -84,97 +84,89 @@ export const Teleporter = () => {
             <Text lineHeight="1" fontSize="sm" fontWeight={600} mb="2.5" color="gray.300">
               From
             </Text>
-            <form>
-              <Stack direction={['column', 'column', 'row']} spacing="20px" mb="3">
-                <Menu>
-                  <MenuButton
-                    minHeight="48px"
-                    minWidth={['0px', '200px']}
-                    borderWidth="1px"
-                    borderColor="gray.800"
-                    borderRadius="6px"
-                    alignItems="center"
-                    cursor="pointer"
-                    type="button"
-                  >
-                    <Flex alignItems="center" justify="space-between" mx={2}>
-                      <Flex>
-                        <Image
-                          alt={fromChain?.label}
-                          width="24px"
-                          height="24px"
-                          mr={2}
-                          src={fromChain?.logo}
-                        />
-                        <Text fontWeight="600">{fromChain?.label}</Text>
-                      </Flex>
-                      <ChevronDownIcon opacity="0.66" w="5" h="5" />
+            <Stack direction={['column', 'column', 'row']} spacing="20px" mb="3">
+              <Menu>
+                <MenuButton
+                  minHeight="48px"
+                  minWidth={['0px', '200px']}
+                  borderWidth="1px"
+                  borderColor="gray.800"
+                  borderRadius="6px"
+                  alignItems="center"
+                  cursor="pointer"
+                  type="button"
+                >
+                  <Flex alignItems="center" justify="space-between" mx={2}>
+                    <Flex>
+                      <Image
+                        alt={fromChain?.label}
+                        width="24px"
+                        height="24px"
+                        mr={2}
+                        src={fromChain?.logo}
+                      />
+                      <Text fontWeight="600">{fromChain?.label}</Text>
                     </Flex>
-                  </MenuButton>
-                  <MenuList background="black">
-                    {teleportChains.map((chain) => (
-                      <MenuItem
-                        onClick={() => {
-                          if (to === chain.id) {
-                            const id = teleportChains.find((item) => item.id !== to)?.id;
-                            if (!id) {
-                              return;
-                            }
-                            setTo(id);
+                    <ChevronDownIcon opacity="0.66" w="5" h="5" />
+                  </Flex>
+                </MenuButton>
+                <MenuList background="black">
+                  {teleportChains.map((chain) => (
+                    <MenuItem
+                      onClick={() => {
+                        if (to === chain.id) {
+                          const id = teleportChains.find((item) => item.id !== to)?.id;
+                          if (!id) {
+                            return;
                           }
-                          setFrom(chain.id);
-                        }}
-                        display="flex"
-                        alignItems="center"
-                        key={chain.id}
-                      >
-                        <Image
-                          alt={chain.label}
-                          width="24px"
-                          height="24px"
-                          mr={2}
-                          src={chain.logo}
-                        />
+                          setTo(id);
+                        }
+                        setFrom(chain.id);
+                      }}
+                      display="flex"
+                      alignItems="center"
+                      key={chain.id}
+                    >
+                      <Image alt={chain.label} width="24px" height="24px" mr={2} src={chain.logo} />
 
-                        <Text fontWeight="600">{chain.label}</Text>
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </Menu>
+                      <Text fontWeight="600">{chain.label}</Text>
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
 
-                <InputGroup size="lg" ml="6">
-                  <NumberInput
-                    InputProps={{
-                      size: 'lg',
-                      type: 'number',
-                      placeholder: '0.0',
-                      id: 'amount',
-                      min: '0',
-                      textAlign: 'right',
-                      borderColor: 'gray.800',
-                      border: '1px',
-                      borderTopRightRadius: 'none',
-                      borderBottomRightRadius: 'none',
-                    }}
-                    value={amount}
-                    onChange={setAmount}
-                    max={tokenBalance.data}
-                  />
-                  <InputRightAddon borderColor="gray.800" bg="whiteAlpha.100">
-                    snxUSD
-                  </InputRightAddon>
-                </InputGroup>
-              </Stack>
-
-              <Flex alignItems="center" justifyContent="flex-end">
-                <Balance
-                  onMax={setAmount}
-                  balance={tokenBalance.data}
-                  symbol="snxUSD"
-                  address={snxUsdProxy?.address}
+              <InputGroup size="lg" ml="6">
+                <NumberInput
+                  InputProps={{
+                    size: 'lg',
+                    type: 'number',
+                    placeholder: '0.0',
+                    id: 'amount',
+                    min: '0',
+                    textAlign: 'right',
+                    borderColor: 'gray.800',
+                    border: '1px',
+                    borderTopRightRadius: 'none',
+                    borderBottomRightRadius: 'none',
+                  }}
+                  value={amount}
+                  onChange={setAmount}
+                  max={tokenBalance.data}
                 />
-              </Flex>
-            </form>
+                <InputRightAddon borderColor="gray.800" bg="whiteAlpha.100">
+                  snxUSD
+                </InputRightAddon>
+              </InputGroup>
+            </Stack>
+
+            <Flex alignItems="center" justifyContent="flex-end">
+              <Balance
+                onMax={setAmount}
+                balance={tokenBalance.data}
+                symbol="snxUSD"
+                address={snxUsdProxy?.address}
+              />
+            </Flex>
           </Box>
 
           <ArrowDownIcon w={5} h={5} mx="auto" mt="6" mb="5" opacity="0.66" />
@@ -183,96 +175,88 @@ export const Teleporter = () => {
             <Text lineHeight="1" fontSize="sm" fontWeight={600} mb="2.5" color="gray.300">
               To
             </Text>
-            <form>
-              <Stack direction={['column', 'column', 'row']} spacing="20px" mb="3">
-                <Menu>
-                  <MenuButton
-                    minHeight="48px"
-                    minWidth={['0px', '200px']}
-                    borderWidth="1px"
-                    borderColor="gray.800"
-                    borderRadius="6px"
-                    alignItems="center"
-                    cursor="pointer"
-                    type="button"
-                  >
-                    <Flex alignItems="center" justify="space-between" mx={2}>
-                      <Flex>
-                        <Image
-                          alt={toChain?.label}
-                          width="24px"
-                          height="24px"
-                          mr={2}
-                          src={toChain?.logo}
-                        />
-                        <Text fontWeight="600">{toChain?.label}</Text>
-                      </Flex>
-                      <ChevronDownIcon opacity="0.66" w="5" h="5" />
+            <Stack direction={['column', 'column', 'row']} spacing="20px" mb="3">
+              <Menu>
+                <MenuButton
+                  minHeight="48px"
+                  minWidth={['0px', '200px']}
+                  borderWidth="1px"
+                  borderColor="gray.800"
+                  borderRadius="6px"
+                  alignItems="center"
+                  cursor="pointer"
+                  type="button"
+                >
+                  <Flex alignItems="center" justify="space-between" mx={2}>
+                    <Flex>
+                      <Image
+                        alt={toChain?.label}
+                        width="24px"
+                        height="24px"
+                        mr={2}
+                        src={toChain?.logo}
+                      />
+                      <Text fontWeight="600">{toChain?.label}</Text>
                     </Flex>
-                  </MenuButton>
-                  <MenuList background="black">
-                    {teleportChains.map((chain) => (
-                      <MenuItem
-                        onClick={() => {
-                          if (from === chain.id) {
-                            const id = teleportChains.find((item) => item.id !== from)?.id;
-                            if (!id) {
-                              return;
-                            }
-                            setFrom(id);
+                    <ChevronDownIcon opacity="0.66" w="5" h="5" />
+                  </Flex>
+                </MenuButton>
+                <MenuList background="black">
+                  {teleportChains.map((chain) => (
+                    <MenuItem
+                      onClick={() => {
+                        if (from === chain.id) {
+                          const id = teleportChains.find((item) => item.id !== from)?.id;
+                          if (!id) {
+                            return;
                           }
-                          setTo(chain.id);
-                        }}
-                        display="flex"
-                        alignItems="center"
-                        key={chain.id}
-                      >
-                        <Image
-                          alt={chain.label}
-                          width="24px"
-                          height="24px"
-                          mr={2}
-                          src={chain.logo}
-                        />
+                          setFrom(id);
+                        }
+                        setTo(chain.id);
+                      }}
+                      display="flex"
+                      alignItems="center"
+                      key={chain.id}
+                    >
+                      <Image alt={chain.label} width="24px" height="24px" mr={2} src={chain.logo} />
 
-                        <Text fontWeight="600">{chain.label}</Text>
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </Menu>
+                      <Text fontWeight="600">{chain.label}</Text>
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
 
-                <InputGroup size="lg" ml="6">
-                  <NumberInput
-                    InputProps={{
-                      isReadOnly: true,
-                      pointerEvents: 'none',
-                      bg: 'whiteAlpha.50',
-                      size: 'lg',
-                      type: 'number',
-                      placeholder: '0.0',
-                      id: 'amount',
-                      min: '0',
-                      textAlign: 'right',
-                      border: 'none',
-                      borderRight: '1px solid #262626',
-                      borderTopRightRadius: 'none',
-                      borderBottomRightRadius: 'none',
-                    }}
-                    value={amount}
-                  />
+              <InputGroup size="lg" ml="6">
+                <NumberInput
+                  InputProps={{
+                    isReadOnly: true,
+                    pointerEvents: 'none',
+                    bg: 'whiteAlpha.50',
+                    size: 'lg',
+                    type: 'number',
+                    placeholder: '0.0',
+                    id: 'amount',
+                    min: '0',
+                    textAlign: 'right',
+                    border: 'none',
+                    borderRight: '1px solid #262626',
+                    borderTopRightRadius: 'none',
+                    borderBottomRightRadius: 'none',
+                  }}
+                  value={amount}
+                />
 
-                  <InputRightAddon border="none" bg="whiteAlpha.100">
-                    snxUSD
-                  </InputRightAddon>
-                </InputGroup>
-              </Stack>
+                <InputRightAddon border="none" bg="whiteAlpha.100">
+                  snxUSD
+                </InputRightAddon>
+              </InputGroup>
+            </Stack>
 
-              <Flex alignItems="center">
-                <Text fontSize="xs" textAlign="right" ml="auto" color="gray.300">
-                  Fee: $0 {/*<InfoOutlineIcon ml="1" transform="translateY(-1px)" />*/}
-                </Text>
-              </Flex>
-            </form>
+            <Flex alignItems="center">
+              <Text fontSize="xs" textAlign="right" ml="auto" color="gray.300">
+                Fee: $0 {/*<InfoOutlineIcon ml="1" transform="translateY(-1px)" />*/}
+              </Text>
+            </Flex>
           </Box>
 
           {hasWalletConnected ? (

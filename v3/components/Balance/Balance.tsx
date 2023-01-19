@@ -41,7 +41,7 @@ export function Balance({
         </Link>
       )}
       {onMax && balance?.gt(0) && (
-        <Badge as="button" variant="outline" onClick={() => onMax(balance)}>
+        <Badge as="button" type="button" variant="outline" onClick={() => onMax(balance)}>
           Use Max
         </Badge>
       )}

@@ -4,7 +4,7 @@ import { Preview } from './Manage/Preview';
 import { Withdraw } from './Manage/Withdraw';
 import { Box, Button, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { MaintainCRatio } from './Manage/MaintainCRatio';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, FormEvent } from 'react';
 import { useManagePosition } from './useManagePosition';
 import { Deposit } from './Manage/Deposit';
 import { Burn } from './Manage/Burn';
@@ -66,12 +66,24 @@ export function Manage() {
     ]
   );
 
+  const onSubmit = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+      const form = e.target as HTMLFormElement;
+      if (!form.reportValidity() || !isValid) {
+        return;
+      }
+      exec();
+    },
+    [exec, isValid]
+  );
+
   if (!(collateralType && liquidityPosition.data)) {
     return null;
   }
 
   return (
-    <Box mt="6" mb="2">
+    <Box as="form" mt="6" mb="2" onSubmit={onSubmit}>
       <Tabs isLazy onChange={reset} size="sm" variant="soft-rounded">
         <TabList justifyContent="space-between">
           <Tab>{t('position.manage.maintain')}</Tab>
@@ -102,7 +114,7 @@ export function Manage() {
               <Mint
                 value={debtChange}
                 onChange={setDebtChange}
-                max={maxDebt}
+                maxDebt={maxDebt}
                 collateral={collateralType}
               />
             </Box>
@@ -150,9 +162,9 @@ export function Manage() {
       />
       <Box px="4">
         <Button
+          type="submit"
           isLoading={isLoading}
           disabled={!isValid || (!debtChange && !collateralChange) || isLoading}
-          onClick={() => exec()}
           size="lg"
           width="100%"
           mb="2"
