@@ -140,23 +140,40 @@ export function DepositForm() {
                   }
                 }}
               />
-              <Flex justifyContent="flex-end" fontSize="xs">
+              <Flex
+                flexDirection="column"
+                alignItems="flex-end"
+                fontSize="xs"
+                color="whiteAlpha.700"
+              >
                 <Flex
                   gap="1"
                   cursor="pointer"
                   onClick={() => {
-                    if (!combinedTokenBalance) {
+                    if (!tokenBalance.data) {
                       return;
                     }
-                    setInputAmount(combinedTokenBalance.toString());
+                    setInputAmount(tokenBalance.data.toString());
                   }}
                 >
-                  <Text>Balance:</Text>
-                  <Amount value={tokenBalance.data} suffix={` ${collateralType.symbol}`} />
-                  {collateralType?.symbol === 'WETH' ? (
-                    <Amount value={ethBalance.data} suffix={` ETH`} />
-                  ) : null}
+                  <Text>{collateralType.symbol} Balance:</Text>
+                  <Amount value={tokenBalance.data} />
                 </Flex>
+                {collateralType?.symbol === 'WETH' ? (
+                  <Flex
+                    gap="1"
+                    cursor="pointer"
+                    onClick={() => {
+                      if (!ethBalance.data) {
+                        return;
+                      }
+                      setInputAmount(ethBalance.data.toString());
+                    }}
+                  >
+                    <Text>ETH Balance:</Text>
+                    <Amount value={ethBalance.data} />
+                  </Flex>
+                ) : null}
               </Flex>
             </Flex>
           </Flex>
