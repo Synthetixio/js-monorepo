@@ -1,4 +1,4 @@
-import { Text, Flex, Image, Tooltip, Box, Skeleton } from '@chakra-ui/react';
+import { Text, Flex, Tooltip, Box, Skeleton } from '@chakra-ui/react';
 import { useVaultsData } from '@snx-v3/useVaultsData';
 import { FC } from 'react';
 import { wei } from '@synthetixio/wei';
@@ -7,6 +7,7 @@ import { useParams } from '@snx-v3/useParams';
 import { BorderBox } from '@snx-v3/BorderBox';
 import { InfoIcon } from '@chakra-ui/icons';
 import { useGetPoolData } from '../../hooks/useGetPoolData';
+import { CollateralIcon } from '@snx-v3/icons';
 
 export const calculateVaultTotals = (vaultsData: ReturnType<typeof useVaultsData>['data']) => {
   const zeroValues = { collateral: { value: wei(0), amount: wei(0) }, debt: wei(0) };
@@ -105,11 +106,10 @@ export const CollateralSectionUi: FC<{
                 _last={{ borderBottom: 'none' }}
               >
                 <Flex color="white" display="flex" gap={1} alignItems="center">
-                  <Image
-                    alt="collateral image"
+                  <CollateralIcon
                     width="30px"
                     height="30px"
-                    src={vaultCollateral.collateralType.logo}
+                    symbol={vaultCollateral.collateralType.symbol}
                   />
                   <Text fontWeight={700} fontSize="xl">
                     {vaultCollateral.collateralType.displaySymbol}

@@ -1,5 +1,5 @@
 import { Amount } from '@snx-v3/Amount';
-import { Button, Image, Td, Text, Tr } from '@chakra-ui/react';
+import { Button, Td, Text, Tr } from '@chakra-ui/react';
 import { LiquidityPosition, useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { FC } from 'react';
@@ -7,6 +7,7 @@ import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useIsConnected } from '@snx-v3/useBlockchain';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useParams } from '@snx-v3/useParams';
+import { CollateralIcon } from '@snx-v3/icons';
 
 function VaultRowUi({
   collateralType,
@@ -30,7 +31,7 @@ function VaultRowUi({
   return (
     <Tr>
       <Td>
-        <Image alt="collateral image" width="24px" height="24px" src={collateralType.logo} />
+        <CollateralIcon width="24px" height="24px" symbol={collateralType.symbol} />
         {liquidityPosition?.collateralValue.gt(0) ? (
           <Amount value={liquidityPosition.collateralValue} prefix="$" />
         ) : (

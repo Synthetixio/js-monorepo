@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { Box, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
+import { Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { CollateralType, useCollateralTypes, useCollateralType } from '@snx-v3/useCollateralTypes';
+import { CollateralIcon } from '@snx-v3/icons';
 
 export function CollateralTypeSelectorUI({
   collateralTypes,
@@ -17,15 +18,8 @@ export function CollateralTypeSelectorUI({
         <Flex>
           {collateralType ? (
             <>
-              <Box w="24px" h="24px" borderRadius="12px" overflow="hidden" mr="2">
-                <Image
-                  alt="collateral image"
-                  width="24px"
-                  height="24px"
-                  src={collateralType.logo}
-                />
-              </Box>
-              <Text fontWeight="600" mr="2">
+              <CollateralIcon symbol={collateralType.symbol} width="24px" height="24px" />
+              <Text fontWeight="600" mx="2">
                 {collateralType.displaySymbol}
               </Text>
             </>
@@ -47,10 +41,10 @@ export function CollateralTypeSelectorUI({
             onClick={() => onChange(collateral.symbol)}
           >
             <Flex flexDirection="row">
-              <Box w="24px" h="24px" borderRadius="12px" overflow="hidden" mr="2">
-                <Image alt="collateral image" width="24px" height="24px" src={collateral.logo} />
-              </Box>
-              <Text fontWeight="600">{collateral?.displaySymbol}</Text>
+              <CollateralIcon symbol={collateral.symbol} width="24px" height="24px" />
+              <Text ml="2" fontWeight="600">
+                {collateral?.displaySymbol}
+              </Text>
             </Flex>
           </MenuItem>
         ))}
