@@ -183,6 +183,11 @@ export function DepositForm() {
               if (!combinedTokenBalance) {
                 return;
               }
+              if (activeBadge === badgeNum) {
+                setInputAmount('');
+                setActiveBadge(undefined);
+                return;
+              }
               setActiveBadge(badgeNum);
               if (badgeNum === 1) {
                 // Make sure we're not left with dust
