@@ -7838,6 +7838,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/CollateralIcon@workspace:*, @snx-v3/CollateralIcon@workspace:v3/components/CollateralIcon":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/CollateralIcon@workspace:v3/components/CollateralIcon"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/icons": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/CollateralTypeSelector@workspace:*, @snx-v3/CollateralTypeSelector@workspace:v3/components/CollateralTypeSelector":
   version: 0.0.0-use.local
   resolution: "@snx-v3/CollateralTypeSelector@workspace:v3/components/CollateralTypeSelector"
@@ -7928,6 +7937,18 @@ __metadata:
   dependencies:
     "@synthetixio/wei": "workspace:*"
     ethers: ^5.7.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/icons@workspace:*, @snx-v3/icons@workspace:v3/components/icons":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/icons@workspace:v3/components/icons"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    react: ^18.2.0
+  peerDependencies:
+    "@chakra-ui/react": 2
+    react: 18
   languageName: unknown
   linkType: soft
 
@@ -10370,6 +10391,7 @@ __metadata:
     "@snx-v3/Amount": "workspace:*"
     "@snx-v3/Balance": "workspace:*"
     "@snx-v3/BorderBox": "workspace:*"
+    "@snx-v3/CollateralIcon": "workspace:*"
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/Constants": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
