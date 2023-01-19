@@ -68,9 +68,6 @@ const LoadingRow = () => (
     <StyledTd>
       <Skeleton w="full" height={8} />
     </StyledTd>
-    <StyledTd>
-      <Skeleton w="full" height={8} />
-    </StyledTd>
   </Tr>
 );
 
@@ -155,7 +152,6 @@ export function MarketSectionUi({
               <Tr>
                 <StyledTh>Market</StyledTh>
                 <StyledTh>Pool Allocation</StyledTh>
-                <StyledTh>Max Debt</StyledTh>
                 <StyledTh>Last 7 Days</StyledTh>
                 <StyledTh>Lifetime</StyledTh>
               </Tr>
@@ -184,17 +180,16 @@ export function MarketSectionUi({
                           ID: {market.id}
                         </Text>
                       </StyledTd>
-                      <StyledTd isLastItem={isLastItem}>
-                        <Text fontSize="sm" display="block">
-                          {formatPercent(weight.toNumber())}
-                        </Text>
-                      </StyledTd>
-                      <StyledTd isLastItem={isLastItem}>
-                        <Text fontSize="sm" display="block">
-                          {max_debt_share_value.gt(Number.MAX_SAFE_INTEGER)
-                            ? 'Unlimited'
-                            : formatNumberToUsd(max_debt_share_value.toNumber())}
-                        </Text>
+                      <StyledTd isLastItem={isLastItem} fontSize="sm">
+                        <Text display="block">{formatPercent(weight.toNumber())}</Text>
+                        <Flex flexWrap="wrap" maxW="135px">
+                          <Text mr={1}>Max Debt:</Text>
+                          <Text>
+                            {max_debt_share_value.gt(Number.MAX_SAFE_INTEGER)
+                              ? 'Unlimited'
+                              : formatNumberToUsd(max_debt_share_value.toNumber())}
+                          </Text>
+                        </Flex>
                       </StyledTd>
                       <StyledTd isLastItem={isLastItem}>
                         {!growth ? (
