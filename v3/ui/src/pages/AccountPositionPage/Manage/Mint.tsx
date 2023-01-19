@@ -40,8 +40,8 @@ export function Mint({
               Max Mint: ${currency(maxDebt)}
               <Tooltip
                 color="white"
-                label={`You can't mint snxUSD that takes your C-Ratio below the target c-ratio of ${formatPercent(
-                  collateral.liquidationRatioD18.toNumber()
+                label={`You can't mint snxUSD that takes your C-Ratio below the issuance ratio of ${formatPercent(
+                  collateral.issuanceRatioD18.toNumber()
                 )}.`}
               >
                 <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
