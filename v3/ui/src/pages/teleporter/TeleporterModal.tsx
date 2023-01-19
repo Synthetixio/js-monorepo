@@ -20,6 +20,7 @@ import { contracts } from '../../utils/constants';
 import { parseUnits } from '@snx-v3/format';
 import testnetIcon from './testnet.png';
 import { Multistep } from '@snx-v3/Multistep';
+import { Wei } from '@synthetixio/wei';
 
 const chains = [
   {
@@ -43,7 +44,7 @@ export function TeleporterModal({
   isOpen,
   setIsOpen,
 }: {
-  amount: number;
+  amount: Wei;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }) {
@@ -126,7 +127,7 @@ export function TeleporterModal({
     setStep('transfer');
     try {
       if (!ccipSend) throw new Error('CCIP contract not ready');
-      if (!(amount > 0)) throw new Error('Amount must be greater than zero');
+      if (amount.lte(0)) throw new Error('Amount must be greater than zero');
 
       const txReceipt = await ccipSend();
       toast.closeAll();

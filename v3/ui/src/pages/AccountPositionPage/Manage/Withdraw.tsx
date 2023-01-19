@@ -1,8 +1,8 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '@snx-v3/Balance';
-import { NumberInput } from './NumberInput';
-import { Wei, wei } from '@synthetixio/wei';
+import { NumberInput } from '@snx-v3/NumberInput';
+import { Wei } from '@synthetixio/wei';
 
 export function Withdraw({
   collateral,
@@ -11,10 +11,12 @@ export function Withdraw({
   onChange,
 }: {
   collateral: CollateralType;
-  onChange: (value: number) => void;
-  value: number;
+  onChange: (value: Wei) => void;
+  value: Wei;
   collateralAmount: Wei;
 }) {
+  const max = collateralAmount;
+
   return (
     <>
       <Heading fontSize="md" mb="1">
@@ -26,15 +28,13 @@ export function Withdraw({
       </Text>
 
       <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
-        <form>
-          <Flex mb="3">
-            <NumberInput value={value} onChange={onChange} max={collateralAmount.toNumber()} />
-          </Flex>
-        </form>
+        <Flex mb="3">
+          <NumberInput value={value} onChange={onChange} max={max} />
+        </Flex>
         <Flex alignItems="center">
           <Balance
-            onMax={(balance) => onChange(parseFloat(balance) || 0)}
-            balance={wei(collateralAmount)}
+            onMax={onChange}
+            balance={collateralAmount}
             symbol={collateral.symbol}
             address={collateral.tokenAddress}
           />

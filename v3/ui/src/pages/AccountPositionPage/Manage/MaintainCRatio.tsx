@@ -14,10 +14,10 @@ export function MaintainCRatio({
   debt,
 }: {
   collateral: CollateralType;
-  setCollateralChange: (value: number) => void;
-  collateralChange: number;
-  setDebtChange: (value: number) => void;
-  debtChange: number;
+  setCollateralChange: (value: Wei) => void;
+  collateralChange: Wei;
+  setDebtChange: (value: Wei) => void;
+  debtChange: Wei;
   debt: Wei;
 }) {
   return (
@@ -25,8 +25,8 @@ export function MaintainCRatio({
       <Alert mt={4} mb={10} status="warning">
         <AlertIcon />
         If your C-Ratio drops below the liquidation (
-        {formatPercent(collateral.liquidationRatioD18.toNumber())}), you may be liquidated and lose
-        your collateral.
+        {formatPercent(collateral.liquidationRatioD18.toNumber())}
+        ), you may be liquidated and lose your collateral.
       </Alert>
       <Heading size="md" mb="5">
         There are two ways to increase your C-Ratio...
@@ -35,7 +35,11 @@ export function MaintainCRatio({
         <Deposit collateral={collateral} value={collateralChange} onChange={setCollateralChange} />
       </Box>
       <Box mb="6">
-        <Burn value={-debtChange} onChange={(val) => setDebtChange(-val)} debt={debt} />
+        <Burn
+          value={debtChange.mul(-1)}
+          onChange={(val) => setDebtChange(val.mul(-1))}
+          debt={debt}
+        />
       </Box>
     </>
   );

@@ -1,6 +1,7 @@
 import { Box, Text, Tooltip } from '@chakra-ui/react';
-import { useValidatePosition } from '@snx-v3/useValidatePosition';
+import { validatePosition } from '@snx-v3/validatePosition';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { useMemo } from 'react';
 import { CRatio } from './CRatio';
 import { Amount } from '@snx-v3/Amount';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
@@ -16,6 +17,9 @@ function isEqual(v1: Wei, v2: Wei) {
 function getColor(v1: Wei, v2: Wei) {
   if (isEqual(v1, v2)) {
     return 'gray.400';
+  }
+  if (v1.eq(0)) {
+    return 'success';
   }
   if (v1.gt(v2)) {
     return 'success';
@@ -37,17 +41,28 @@ export function Preview({
   collateralValue: Wei;
   debt: Wei;
   cRatio: Wei;
-  collateralChange: number;
-  debtChange: number;
+  collateralChange: Wei;
+  debtChange: Wei;
 }) {
-  const { newDebt, newCollateralAmount, newCRatio, isValid, targetCRatio } = useValidatePosition({
-    collateral,
-    collateralAmount,
-    collateralValue,
-    debt,
-    collateralChange,
-    debtChange,
-  });
+  const { newDebt, newCollateralAmount, newCRatio, isValid, targetCRatio } = useMemo(
+    () =>
+      validatePosition({
+        issuanceRatioD18: collateral?.issuanceRatioD18,
+        collateralAmount,
+        collateralValue,
+        debt,
+        collateralChange,
+        debtChange,
+      }),
+    [
+      collateral?.issuanceRatioD18,
+      collateralAmount,
+      collateralChange,
+      collateralValue,
+      debt,
+      debtChange,
+    ]
+  );
 
   return (
     <Box mb="4" p="4">
@@ -84,10 +99,10 @@ export function Preview({
       <Box py="2" borderBottom="1px solid rgba(255,255,255,0.2)">
         <strong>C-Ratio</strong>
         <Text color={getColor(newCRatio, cRatio)} float="right">
-          <CRatio CRatio={cRatio} debt={debt} />
+          <CRatio cRatio={cRatio} debt={debt} />
           {isEqual(newCRatio, cRatio) ? null : (
             <>
-              → <CRatio CRatio={newCRatio} debt={newDebt} />
+              → <CRatio cRatio={newCRatio} debt={newDebt} />
             </>
           )}
           {!isValid && (

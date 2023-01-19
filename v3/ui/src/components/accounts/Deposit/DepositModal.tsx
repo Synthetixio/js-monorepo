@@ -9,7 +9,6 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { formatValue, parseUnits } from '@snx-v3/format';
 import { useCallback, useMemo, useState } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Amount } from '@snx-v3/Amount';
@@ -92,7 +91,7 @@ export function DepositModal({
           parseInt(Boolean(accountId) ? poolId : poolId || '0'),
           collateralType.tokenAddress,
           amountToDelegate.toBN() || 0,
-          parseUnits(1),
+          wei(1).toBN(),
         ],
       },
     ];
@@ -295,13 +294,13 @@ export function DepositModal({
             subtitle={
               wrapAmount.eq(0) ? (
                 <Text as="div">
-                  <Amount value={formatValue(amount.toBN())} suffix={` ${collateralType.symbol}`} />{' '}
-                  from balance will be used.
+                  <Amount value={amount} suffix={` ${collateralType.symbol}`} /> from balance will
+                  be used.
                 </Text>
               ) : (
                 <Text as="div">
-                  You must wrap additional{' '}
-                  <Amount value={formatValue(wrapAmount.toBN())} suffix=" ETH" /> before depositing.
+                  You must wrap additional <Amount value={wrapAmount} suffix=" ETH" /> before
+                  depositing.
                 </Text>
               )
             }
