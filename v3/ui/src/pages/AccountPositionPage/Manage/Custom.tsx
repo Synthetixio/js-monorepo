@@ -38,9 +38,10 @@ export function Custom({
 }) {
   const tokenBalance = useTokenBalance(collateral.tokenAddress);
 
-  // TODO: disable submit button if `max.lt(value)` after redesign
-  //const collateralMaxValue = tokenBalance.data ? tokenBalance.data.add(collateralAmount) : undefined;
-  //const debtMaxValue = maxDebt.add(debt);
+  const collateralMaxValue = tokenBalance.data
+    ? tokenBalance.data.add(collateralAmount)
+    : undefined;
+  const debtMaxValue = maxDebt.add(debt);
 
   return (
     <Box mb="4">
@@ -55,6 +56,7 @@ export function Custom({
               <NumberInput
                 value={collateralAmount.add(collateralChange)}
                 onChange={(val) => setCollateralChange(val.sub(collateralAmount))}
+                max={collateralMaxValue}
               />
             </Flex>
             <Flex alignItems="center">
@@ -77,6 +79,7 @@ export function Custom({
               <NumberInput
                 value={debt.add(debtChange)}
                 onChange={(val) => setDebtChange(val.sub(debt))}
+                max={debtMaxValue}
               />
             </Flex>
             <Flex alignItems="center">

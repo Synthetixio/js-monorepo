@@ -14,9 +14,7 @@ interface Props {
 
 export const Deposit: FC<Props> = ({ collateral, value, onChange }) => {
   const balance = useTokenBalance(collateral.tokenAddress);
-
-  // TODO: disable submit button if `max.lt(value)` after redesign
-  // const max = balance.data;
+  const max = balance.data;
 
   return (
     <>
@@ -30,7 +28,7 @@ export const Deposit: FC<Props> = ({ collateral, value, onChange }) => {
 
       <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
-          <NumberInput value={value} onChange={onChange} />
+          <NumberInput value={value} onChange={onChange} max={max} />
         </Flex>
         <Flex alignItems="center">
           <Balance

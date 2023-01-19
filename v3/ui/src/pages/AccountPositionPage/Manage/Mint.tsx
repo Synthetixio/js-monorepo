@@ -17,8 +17,7 @@ export function Mint({
   onChange: (value: Wei) => void;
   maxDebt: Wei;
 }) {
-  // TODO: disable submit button if `max.lt(value)` after redesign
-  // const max = maxDebt;
+  const max = maxDebt;
 
   return (
     <>
@@ -32,7 +31,7 @@ export function Mint({
 
       <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
-          <NumberInput value={value} onChange={onChange} />
+          <NumberInput value={value} onChange={onChange} max={max} />
         </Flex>
         <Flex alignItems="center">
           <Box>

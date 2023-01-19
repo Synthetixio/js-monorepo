@@ -15,8 +15,7 @@ export function Withdraw({
   value: Wei;
   collateralAmount: Wei;
 }) {
-  // TODO: disable submit button if `max.lt(value)` after redesign
-  // const max=collateralAmount
+  const max = collateralAmount;
 
   return (
     <>
@@ -30,7 +29,7 @@ export function Withdraw({
 
       <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
-          <NumberInput value={value} onChange={onChange} />
+          <NumberInput value={value} onChange={onChange} max={max} />
         </Flex>
         <Flex alignItems="center">
           <Balance

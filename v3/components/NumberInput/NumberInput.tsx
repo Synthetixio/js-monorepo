@@ -5,6 +5,7 @@ import { Wei, wei } from '@synthetixio/wei';
 export function NumberInput({
   value,
   onChange,
+  max,
   InputProps,
 }: {
   onChange?: (value: Wei) => void;
@@ -24,15 +25,21 @@ export function NumberInput({
       let nextValue = value;
       try {
         nextValue = wei(e.target.value || 0);
-        e.target.setCustomValidity('');
       } catch (_err) {
         e.target.setCustomValidity('Invalid number');
       }
+
+      if (max?.gte(0) && nextValue.gt(max)) {
+        e.target.setCustomValidity('Value greater than max');
+      } else {
+        e.target.setCustomValidity('');
+      }
+
       if (!value.eq(nextValue)) {
         onChange(nextValue);
       }
     },
-    [onChange, value]
+    [max, onChange, value]
   );
 
   useEffect(() => {
