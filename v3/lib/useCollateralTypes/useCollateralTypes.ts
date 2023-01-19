@@ -20,7 +20,6 @@ const CollateralTypeSchema = CollateralConfigurationSchema.extend({
   symbol: z.string(),
   displaySymbol: z.string(),
   price: ZodBigNumber.transform((x) => wei(x)),
-  logo: z.string(),
 });
 
 export type CollateralType = z.infer<typeof CollateralTypeSchema>;
@@ -91,8 +90,6 @@ async function loadCollateralTypes({
     price: prices[i],
     symbol: symbols[i],
     displaySymbol: symbols[i] === 'WETH' ? 'ETH' : symbols[i],
-    // TODO: map symbol to icon
-    logo: 'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F/logo.png',
   }));
 }
 
