@@ -1,4 +1,5 @@
-import { EthereumIcon, SNXIcon } from '@snx-v3/icons';
+import { EthereumIcon } from '../EthereumIcon';
+import { SNXIcon } from '../SNXIcon';
 import { IconProps } from '@chakra-ui/react';
 
 interface CollateralIconProps extends IconProps {

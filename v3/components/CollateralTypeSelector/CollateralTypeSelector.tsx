@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { CollateralType, useCollateralTypes, useCollateralType } from '@snx-v3/useCollateralTypes';
-import { CollateralIcon } from '../CollateralIcon';
+import { CollateralIcon } from '@snx-v3/icons';
 
 export function CollateralTypeSelectorUI({
   collateralTypes,

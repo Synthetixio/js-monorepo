@@ -7,7 +7,7 @@ import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { useIsConnected } from '@snx-v3/useBlockchain';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useParams } from '@snx-v3/useParams';
-import { CollateralIcon } from '@snx-v3/CollateralIcon';
+import { CollateralIcon } from '@snx-v3/icons';
 
 function VaultRowUi({
   collateralType,

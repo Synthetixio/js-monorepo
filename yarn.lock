@@ -7838,21 +7838,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/CollateralIcon@workspace:*, @snx-v3/CollateralIcon@workspace:v3/components/CollateralIcon":
-  version: 0.0.0-use.local
-  resolution: "@snx-v3/CollateralIcon@workspace:v3/components/CollateralIcon"
-  dependencies:
-    "@chakra-ui/react": ^2.2.8
-    "@snx-v3/icons": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
 "@snx-v3/CollateralTypeSelector@workspace:*, @snx-v3/CollateralTypeSelector@workspace:v3/components/CollateralTypeSelector":
   version: 0.0.0-use.local
   resolution: "@snx-v3/CollateralTypeSelector@workspace:v3/components/CollateralTypeSelector"
   dependencies:
     "@chakra-ui/icons": ^2.0.9
     "@chakra-ui/react": ^2.2.8
+    "@snx-v3/icons": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
   languageName: unknown
   linkType: soft
@@ -10391,7 +10383,6 @@ __metadata:
     "@snx-v3/Amount": "workspace:*"
     "@snx-v3/Balance": "workspace:*"
     "@snx-v3/BorderBox": "workspace:*"
-    "@snx-v3/CollateralIcon": "workspace:*"
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/Constants": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
@@ -10399,6 +10390,7 @@ __metadata:
     "@snx-v3/TrendText": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
+    "@snx-v3/icons": "workspace:*"
     "@snx-v3/useAccounts": "workspace:*"
     "@snx-v3/useApprove": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"

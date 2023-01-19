@@ -7,7 +7,7 @@ import { useParams } from '@snx-v3/useParams';
 import { BorderBox } from '@snx-v3/BorderBox';
 import { InfoIcon } from '@chakra-ui/icons';
 import { useGetPoolData } from '../../hooks/useGetPoolData';
-import { CollateralIcon } from '@snx-v3/CollateralIcon';
+import { CollateralIcon } from '@snx-v3/icons';
 
 export const calculateVaultTotals = (
   vaultCollaterals: ReturnType<typeof useVaultsData>['data']
