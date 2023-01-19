@@ -16,6 +16,7 @@ import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '@snx-v3/Balance';
 import { NumberInput } from '@snx-v3/NumberInput';
 import { Wei } from '@synthetixio/wei';
+import { formatPercent } from '@snx-v2/formatters';
 
 export function Custom({
   collateral,
@@ -86,7 +87,11 @@ export function Custom({
               <Box>
                 <Text fontSize="xs">
                   Max Mint: ${currency(maxDebt)}
-                  <Tooltip label="You can't mint snxUSD that takes your C-Ratio below the target c-ratio of 300%.">
+                  <Tooltip
+                    label={`You can't mint snxUSD that takes your C-Ratio below the issuance ratio of ${formatPercent(
+                      collateral.issuanceRatioD18.toNumber()
+                    )}.`}
+                  >
                     <QuestionOutlineIcon transform="translateY(-1.5px)" ml="1" />
                   </Tooltip>
                   {maxDebt.eq(0) ? null : (
