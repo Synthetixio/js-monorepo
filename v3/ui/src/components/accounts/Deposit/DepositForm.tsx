@@ -98,10 +98,12 @@ export function DepositForm() {
       <Box as="form" bg="navy.900" mb="8" onSubmit={onSubmit}>
         <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2}>
           <Flex justifyContent="space-between">
-            <CollateralTypeSelector
-              collateralSymbol={params.collateralSymbol}
-              onChange={onChangeCollateral}
-            />
+            <Flex alignItems="center">
+              <CollateralTypeSelector
+                collateralSymbol={params.collateralSymbol}
+                onChange={onChangeCollateral}
+              />
+            </Flex>
             <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>
               <Input
                 ref={inputRef}
