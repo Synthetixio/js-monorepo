@@ -187,7 +187,7 @@ export function DepositForm() {
               }
               if (activeBadge === badgeNum) {
                 setInputAmount('');
-                setActiveBadge(undefined);
+                setActiveBadge(0);
                 return;
               }
               setActiveBadge(badgeNum);
