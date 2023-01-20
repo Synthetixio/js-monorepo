@@ -1,6 +1,25 @@
-import { Button, Flex } from '@chakra-ui/react';
+import { Box, Button, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { EthereumIcon, OptimismIcon, FailedIcon, ChevronUp, ChevronDown } from '@snx-v2/icons';
 import { useAccount } from '@snx-v3/useBlockchain';
+import { NetworkId } from '@synthetixio/contracts-interface';
+import { switchNetwork } from '@wagmi/core';
+
+const activeIcon = (currentNetwork: number) => {
+  switch (currentNetwork) {
+    case 1:
+      return { icon: <EthereumIcon />, name: 'Ethereum' };
+    case 10:
+      return { icon: <OptimismIcon />, name: 'Optimism' };
+    case 5:
+      return { icon: <EthereumIcon />, name: 'Goerli Testnet' };
+    case 420:
+      return { icon: <OptimismIcon />, name: 'Optimistic Goerli' };
+
+    default:
+      return { icon: <FailedIcon width="24px" height="24px" />, name: 'Unsupported Network' };
+  }
+};
 
 export function NetworkController() {
   const { address } = useAccount();
@@ -8,6 +27,8 @@ export function NetworkController() {
   return (
     <ConnectButton.Custom>
       {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
+        console.log('Chian is', chain);
+        const { name, icon } = activeIcon(chain?.id || 1);
         return (
           <Flex
             {...(!mounted && {
@@ -19,6 +40,42 @@ export function NetworkController() {
               },
             })}
           >
+            <Menu>
+              {({ isOpen }) => (
+                <>
+                  <MenuButton
+                    as={Button}
+                    variant="outline"
+                    colorScheme="gray"
+                    sx={{ '> span': { display: 'flex', alignItems: 'center' } }}
+                  >
+                    {icon}
+
+                    <Box display={{ base: 'none', md: 'block' }}>
+                      <Text variant="nav" fontSize="sm" fontWeight={700} ml={1.5} mr={2}>
+                        {name}
+                      </Text>
+                      {isOpen ? <ChevronUp color="cyan" /> : <ChevronDown color="cyan.500" />}
+                    </Box>
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem onClick={() => console.log('To mainnet')}>
+                      <EthereumIcon />
+                      <Text variant="nav" ml={2}>
+                        Ethereum Mainnet
+                      </Text>
+                    </MenuItem>
+                    <MenuItem onClick={() => console.log('To optimism')}>
+                      <OptimismIcon />
+                      <Text variant="nav" ml={2}>
+                        Optimism
+                      </Text>
+                    </MenuItem>
+                  </MenuList>
+                </>
+              )}
+            </Menu>
+
             {address ? (
               <Button
                 variant="outline"

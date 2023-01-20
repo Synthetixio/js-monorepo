@@ -7856,6 +7856,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/Header@workspace:v3/components/Header":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/Header@workspace:v3/components/Header"
+  dependencies:
+    "@chakra-ui/icon": ^3.0.11
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/useBlockchain": "workspace:*"
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/Icons@workspace:*, @snx-v3/Icons@workspace:v3/components/Icons":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/Icons@workspace:v3/components/Icons"
+  dependencies:
+    "@chakra-ui/icons": ^2.0.9
+    "@chakra-ui/react": ^2.2.8
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/Multistep@workspace:*, @snx-v3/Multistep@workspace:v3/components/Multistep":
   version: 0.0.0-use.local
   resolution: "@snx-v3/Multistep@workspace:v3/components/Multistep"
@@ -10364,6 +10384,7 @@ __metadata:
     "@snx-v3/BorderBox": "workspace:*"
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/Constants": "workspace:*"
+    "@snx-v3/Icons": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
     "@snx-v3/TrendText": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
