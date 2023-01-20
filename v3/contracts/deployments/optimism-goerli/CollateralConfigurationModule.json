@@ -1,5 +1,5 @@
 {
-  "address": "0x45B8DfE5Ba620713597Ea44698C91cE515b650c3",
+  "address": "0xf7b6f25ED860125a315d642BAF925eACB001A0FC",
   "abi": [
     {
       "type": "error",
@@ -14,6 +14,11 @@
           "name": "reason"
         }
       ]
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToUint256",
+      "inputs": []
     },
     {
       "type": "error",
@@ -242,10 +247,5 @@
         }
       ]
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xbe232f1681341a73a41b3f93a78f819f351ce99c0b0f628619f5867c7dae5b48",
-  "sourceName": "contracts/modules/core/CollateralConfigurationModule.sol",
-  "contractName": "CollateralConfigurationModule",
-  "deployedOn": "contract.CollateralConfigurationModule"
+  ]
 }

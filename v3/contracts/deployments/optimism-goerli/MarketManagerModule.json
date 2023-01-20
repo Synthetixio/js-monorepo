@@ -1,5 +1,5 @@
 {
-  "address": "0x1088dEEFBedC9BDE65ea339995FA56c1d3F1fEe9",
+  "address": "0x63B88cf97F4df8bdEa5f501d5b68B68ED523314e",
   "abi": [
     {
       "type": "error",
@@ -277,7 +277,7 @@
     },
     {
       "type": "function",
-      "name": "getWithdrawableUsd",
+      "name": "getWithdrawableMarketUsd",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -352,10 +352,5 @@
       ],
       "outputs": []
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xf284f310f3c0da3245f25c9816b7cd85ac2ae596f48222d4d619fa3f0c966f24",
-  "sourceName": "contracts/modules/core/MarketManagerModule.sol",
-  "contractName": "MarketManagerModule",
-  "deployedOn": "contract.MarketManagerModule"
+  ]
 }

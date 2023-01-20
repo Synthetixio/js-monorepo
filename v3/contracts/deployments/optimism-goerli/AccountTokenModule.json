@@ -1,5 +1,5 @@
 {
-  "address": "0x4d1E7bA05F7855Eb55C05DEe1ab0fa01dc39EC09",
+  "address": "0x1DD583dAaF12f24AD286c2ef5A741a2a3FE35279",
   "abi": [
     {
       "type": "error",
@@ -518,10 +518,5 @@
       ],
       "outputs": []
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xb4049b4d0855528fe1dd195097efb6f1d6eb6d5d58ce44013c33ec7122653eb3",
-  "sourceName": "contracts/modules/account/AccountTokenModule.sol",
-  "contractName": "AccountTokenModule",
-  "deployedOn": "contract.AccountTokenModule"
+  ]
 }

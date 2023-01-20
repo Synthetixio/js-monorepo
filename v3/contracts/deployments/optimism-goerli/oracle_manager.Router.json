@@ -411,10 +411,5 @@
         }
       ]
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xf16bfc69029699697a53568e83eca2ef71e3beec35571612c6b71b2c4c1ffb2d",
-  "sourceName": "contracts/routers/chain-420/Router.sol",
-  "contractName": "Router",
-  "deployedOn": "contract.Router"
+  ]
 }

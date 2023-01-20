@@ -124,7 +124,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": ""
         }
       ]
     },
@@ -150,7 +151,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "bool"
+          "type": "bool",
+          "name": ""
         }
       ]
     },
@@ -176,7 +178,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": ""
         }
       ]
     },
@@ -189,7 +192,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": ""
         }
       ]
     },
@@ -227,12 +231,5 @@
       ],
       "outputs": []
     }
-  ],
-  "constructorArgs": [
-    "0xe24fbfA8AACbF2dB1f52BB0d729627BD573dED67"
-  ],
-  "deployTxnHash": "0xcd9a02420749bf34d967fff4c4dd62c00beb712de42045d0d5490bb35f62485a",
-  "sourceName": "contracts/Proxy.sol",
-  "contractName": "Proxy",
-  "deployedOn": "contract.Proxy"
+  ]
 }

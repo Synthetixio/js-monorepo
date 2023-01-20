@@ -1,5 +1,5 @@
 {
-  "address": "0x08eB507bdB20Bb56e8d2f0D6c214cDC3e0c7778F",
+  "address": "0x2f02150dFC62ae867d8c1b682521218EFb252570",
   "abi": [
     {
       "type": "error",
@@ -90,6 +90,11 @@
     },
     {
       "type": "error",
+      "name": "OverflowInt128ToInt32",
+      "inputs": []
+    },
+    {
+      "type": "error",
       "name": "OverflowInt128ToUint128",
       "inputs": []
     },
@@ -105,6 +110,11 @@
     },
     {
       "type": "error",
+      "name": "OverflowInt32ToUint32",
+      "inputs": []
+    },
+    {
+      "type": "error",
       "name": "OverflowUint128ToInt128",
       "inputs": []
     },
@@ -116,6 +126,16 @@
     {
       "type": "error",
       "name": "OverflowUint256ToUint128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint32ToInt32",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint64ToInt64",
       "inputs": []
     },
     {
@@ -419,10 +439,5 @@
         }
       ]
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xf723701c559b1c7c7484b08d14d15abc66ff92ff521e061bb1437294a5c379e1",
-  "sourceName": "contracts/modules/core/VaultModule.sol",
-  "contractName": "VaultModule",
-  "deployedOn": "contract.VaultModule"
+  ]
 }
