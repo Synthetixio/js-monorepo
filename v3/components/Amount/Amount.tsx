@@ -1,7 +1,7 @@
 import { Tooltip } from '@chakra-ui/react';
 import { useMemo } from 'react';
-import { currency, formatValue, parseUnits } from '@snx-v3/format';
-import { WeiSource } from '@synthetixio/wei';
+import { currency } from '@snx-v3/format';
+import { Wei, wei } from '@synthetixio/wei';
 
 export function Amount({
   value,
@@ -9,19 +9,18 @@ export function Amount({
   suffix = '',
 }: {
   prefix?: string;
-  value?: WeiSource;
+  value?: Wei;
   suffix?: string;
 }) {
   const { formattedValue, preciseValue } = useMemo(() => {
     if (!value) {
       return { formattedValue: '-', preciseValue: '-' };
     }
-    const parsedValue = parseUnits(value);
-    const formattedValue = currency(formatValue(parsedValue));
-    const cleanNumber = parseUnits(formattedValue.replaceAll(',', ''));
+    const formattedValue = currency(value);
+    const cleanNumber = wei(formattedValue.replaceAll(',', ''));
     return {
       formattedValue,
-      preciseValue: parsedValue.eq(cleanNumber) ? formattedValue : value.toString(),
+      preciseValue: value.eq(cleanNumber) ? formattedValue : value.toString(),
     };
   }, [value]);
 

@@ -1,30 +1,25 @@
-/**
- * show currency symbol: { style: "currency", currency: "USD" } |
- * disable thousand separation: { useGrouping: false }
- * @param  {number|string} value
- * @param  {Intl.NumberFormatOptions} options?
- * @param  {number} minimumDigitsToShowAfterZeros?
- */
+import { Wei } from '@synthetixio/wei';
+
 export function currency(
-  value: number | string,
+  value: Wei,
   options?: Intl.NumberFormatOptions,
   minimumDigitsToShowAfterZeros = 2
 ) {
   try {
     const stringValue = value.toString();
-    const floatNumber = parseFloat(stringValue);
+    const numberValue = value.toNumber();
 
     const decimals =
-      floatNumber < 0
-        ? -floatNumber - Math.floor(-floatNumber)
-        : floatNumber - Math.floor(floatNumber);
+      numberValue < 0
+        ? -numberValue - Math.floor(-numberValue)
+        : numberValue - Math.floor(numberValue);
     const zeroDecimals = decimals !== 0 ? -Math.floor(Math.log10(decimals) + 1) : 0;
 
     const maximumFractionDigits = zeroDecimals + minimumDigitsToShowAfterZeros;
 
-    return isNaN(floatNumber)
+    return isNaN(numberValue)
       ? stringValue
-      : floatNumber.toLocaleString('en-US', {
+      : numberValue.toLocaleString('en-US', {
           minimumFractionDigits: 0,
           maximumFractionDigits,
           ...options,

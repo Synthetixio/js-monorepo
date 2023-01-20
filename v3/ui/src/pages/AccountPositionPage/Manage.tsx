@@ -4,15 +4,16 @@ import { Preview } from './Manage/Preview';
 import { Withdraw } from './Manage/Withdraw';
 import { Box, Button, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { MaintainCRatio } from './Manage/MaintainCRatio';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState, FormEvent } from 'react';
 import { useManagePosition } from './useManagePosition';
 import { Deposit } from './Manage/Deposit';
 import { Burn } from './Manage/Burn';
-import { useValidatePosition } from '@snx-v3/useValidatePosition';
+import { validatePosition } from '@snx-v3/validatePosition';
 import { useTranslation } from 'react-i18next';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useParams } from '@snx-v3/useParams';
 import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
+import { wei } from '@synthetixio/wei';
 
 export function Manage() {
   const params = useParams();
@@ -24,12 +25,12 @@ export function Manage() {
   });
 
   const { t } = useTranslation();
-  const [collateralChange, setCollateralChange] = useState(0);
-  const [debtChange, setDebtChange] = useState(0);
+  const [collateralChange, setCollateralChange] = useState(wei(0));
+  const [debtChange, setDebtChange] = useState(wei(0));
 
   const reset = useCallback(() => {
-    setCollateralChange(0);
-    setDebtChange(0);
+    setCollateralChange(wei(0));
+    setDebtChange(wei(0));
   }, []);
 
   const { exec, isLoading } = useManagePosition({
@@ -45,21 +46,44 @@ export function Manage() {
     },
   });
 
-  const { isValid, noChange, maxDebt } = useValidatePosition({
-    collateral: collateralType,
-    collateralAmount: liquidityPosition.data?.collateralAmount,
-    collateralValue: liquidityPosition.data?.collateralValue,
-    debt: liquidityPosition.data?.debt,
-    collateralChange,
-    debtChange,
-  });
+  const { isValid, maxDebt } = useMemo(
+    () =>
+      validatePosition({
+        issuanceRatioD18: collateralType?.issuanceRatioD18,
+        collateralAmount: liquidityPosition.data?.collateralAmount,
+        collateralValue: liquidityPosition.data?.collateralValue,
+        debt: liquidityPosition.data?.debt,
+        collateralChange,
+        debtChange,
+      }),
+    [
+      collateralType?.issuanceRatioD18,
+      liquidityPosition.data?.collateralAmount,
+      liquidityPosition.data?.collateralValue,
+      liquidityPosition.data?.debt,
+      collateralChange,
+      debtChange,
+    ]
+  );
+
+  const onSubmit = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+      const form = e.target as HTMLFormElement;
+      if (!form.reportValidity() || !isValid) {
+        return;
+      }
+      exec();
+    },
+    [exec, isValid]
+  );
 
   if (!(collateralType && liquidityPosition.data)) {
     return null;
   }
 
   return (
-    <Box mt="6" mb="2">
+    <Box as="form" mt="6" mb="2" onSubmit={onSubmit}>
       <Tabs isLazy onChange={reset} size="sm" variant="soft-rounded">
         <TabList justifyContent="space-between">
           <Tab>{t('position.manage.maintain')}</Tab>
@@ -87,23 +111,28 @@ export function Manage() {
               />
             </Box>
             <Box mb="6">
-              <Mint onChange={setDebtChange} value={debtChange} max={maxDebt} />
+              <Mint
+                value={debtChange}
+                onChange={setDebtChange}
+                maxDebt={maxDebt}
+                collateral={collateralType}
+              />
             </Box>
           </TabPanel>
           <TabPanel>
             <Box mb="6">
               <Burn
-                value={-debtChange}
-                onChange={(val) => setDebtChange(-val)}
+                value={debtChange.mul(-1)}
+                onChange={(val) => setDebtChange(val.mul(-1))}
                 debt={liquidityPosition.data.debt}
               />
             </Box>
             <Box mb="6">
               <Withdraw
+                value={collateralChange.mul(-1)}
+                onChange={(val) => setCollateralChange(val.mul(-1))}
                 collateral={collateralType}
                 collateralAmount={liquidityPosition.data.collateralAmount}
-                onChange={(val) => setCollateralChange(-val)}
-                value={-collateralChange}
               />
             </Box>
           </TabPanel>
@@ -133,9 +162,9 @@ export function Manage() {
       />
       <Box px="4">
         <Button
+          type="submit"
           isLoading={isLoading}
-          disabled={!isValid || noChange || isLoading}
-          onClick={() => exec()}
+          disabled={!isValid || (!debtChange && !collateralChange) || isLoading}
           size="lg"
           width="100%"
           mb="2"

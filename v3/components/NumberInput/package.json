@@ -1,10 +1,10 @@
 {
-  "name": "@snx-v3/useValidatePosition",
+  "name": "@snx-v3/NumberInput",
   "private": true,
   "main": "index.ts",
   "version": "0.0.1",
   "dependencies": {
-    "@snx-v3/useCollateralTypes": "workspace:*",
+    "@chakra-ui/react": "^2.2.8",
     "@synthetixio/wei": "workspace:*",
     "react": "^18.2.0"
   }

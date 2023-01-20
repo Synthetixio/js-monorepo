@@ -98,10 +98,12 @@ export function DepositForm() {
       <Box as="form" bg="navy.900" mb="8" onSubmit={onSubmit}>
         <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2}>
           <Flex justifyContent="space-between">
-            <CollateralTypeSelector
-              collateralSymbol={params.collateralSymbol}
-              onChange={onChangeCollateral}
-            />
+            <Flex alignItems="center">
+              <CollateralTypeSelector
+                collateralSymbol={params.collateralSymbol}
+                onChange={onChangeCollateral}
+              />
+            </Flex>
             <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>
               <Input
                 ref={inputRef}
@@ -140,23 +142,40 @@ export function DepositForm() {
                   }
                 }}
               />
-              <Flex justifyContent="flex-end" fontSize="xs">
+              <Flex
+                flexDirection="column"
+                alignItems="flex-end"
+                fontSize="xs"
+                color="whiteAlpha.700"
+              >
                 <Flex
                   gap="1"
                   cursor="pointer"
                   onClick={() => {
-                    if (!combinedTokenBalance) {
+                    if (!tokenBalance.data) {
                       return;
                     }
-                    setInputAmount(combinedTokenBalance.toString());
+                    setInputAmount(tokenBalance.data.toString());
                   }}
                 >
-                  <Text>Balance:</Text>
-                  <Amount value={tokenBalance.data} suffix={` ${collateralType.symbol}`} />
-                  {collateralType?.symbol === 'WETH' ? (
-                    <Amount value={ethBalance.data} suffix={` ETH`} />
-                  ) : null}
+                  <Text>{collateralType.symbol} Balance:</Text>
+                  <Amount value={tokenBalance.data} />
                 </Flex>
+                {collateralType?.symbol === 'WETH' ? (
+                  <Flex
+                    gap="1"
+                    cursor="pointer"
+                    onClick={() => {
+                      if (!ethBalance.data) {
+                        return;
+                      }
+                      setInputAmount(ethBalance.data.toString());
+                    }}
+                  >
+                    <Text>ETH Balance:</Text>
+                    <Amount value={ethBalance.data} />
+                  </Flex>
+                ) : null}
               </Flex>
             </Flex>
           </Flex>
@@ -164,6 +183,11 @@ export function DepositForm() {
             disabled={combinedTokenBalance ? combinedTokenBalance.eq(0) : false}
             onBadgePress={(badgeNum) => {
               if (!combinedTokenBalance) {
+                return;
+              }
+              if (activeBadge === badgeNum) {
+                setInputAmount('');
+                setActiveBadge(0);
                 return;
               }
               setActiveBadge(badgeNum);

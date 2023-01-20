@@ -47,7 +47,11 @@ const MarketConfigurationSchema = z.object({
 });
 export const PoolSchema = z.object({
   id: z.string(),
-  name: z.union([z.string(), z.null()]).transform((name) => name || 'Unnamed Pool'),
+  name: z.union([z.string(), z.null()]).transform((name) => {
+    if (!name) return 'Unnamed Pool';
+    // TODO remove once new contract deployed
+    return name.includes('�') ? 'Spartan Pool' : name;
+  }),
   total_weight: GraphBigIntSchema,
   configurations: z.array(MarketConfigurationSchema),
 });

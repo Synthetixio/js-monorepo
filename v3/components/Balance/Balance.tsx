@@ -13,7 +13,7 @@ export function Balance({
   balance?: Wei;
   symbol: string;
   address: string;
-  onMax?: (balance: string) => void;
+  onMax?: (balance: Wei) => void;
 }) {
   const network = useNetwork();
   const buyAssetLink = useMemo(() => {
@@ -41,14 +41,7 @@ export function Balance({
         </Link>
       )}
       {onMax && balance?.gt(0) && (
-        <Badge
-          as="button"
-          variant="outline"
-          onClick={(e) => {
-            e.preventDefault();
-            onMax(balance.toString());
-          }}
-        >
+        <Badge as="button" type="button" variant="outline" onClick={() => onMax(balance)}>
           Use Max
         </Badge>
       )}

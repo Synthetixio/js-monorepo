@@ -50,7 +50,6 @@ const LoadingRow = () => (
 export function HomeUi({
   collateralTypes,
   preferredPool,
-  accountId,
   VaultRow,
   navigate,
   liquidityPositions,
@@ -77,9 +76,9 @@ export function HomeUi({
         <Box flexGrow={1} mr={12}>
           <Heading>Welcome to Synthetix V3</Heading>
           <Text>
-            Deposit your collateral (SNX and/or ETH) to borrow snxUSD and contribute to the network
-            collateral. If you have never staked on Synthetix V3 before, please read through this
-            quick introduction first.
+            Deposit your collateral to borrow snxUSD and contribute to the network collateral. If
+            you have never staked on Synthetix V3 before, please read through this quick
+            introduction first.
           </Text>
         </Box>
         <Button variant="outline" minW="unset" size="sm" mt={{ base: 2, md: 0 }}>
@@ -122,12 +121,7 @@ export function HomeUi({
               mt={{ base: 2, md: 0 }}
               size="sm"
               onClick={() =>
-                navigate({
-                  pathname: generatePath('/pools/:poolId', {
-                    poolId: preferredPool.id,
-                  }),
-                  search: accountId ? createSearchParams({ accountId }).toString() : '',
-                })
+                navigate({ pathname: generatePath('/pools/:poolId', { poolId: preferredPool.id }) })
               }
               variant="outline"
             >
@@ -210,7 +204,6 @@ export function Home() {
       collateralTypes={collateralTypes}
       VaultRow={VaultRow}
       preferredPool={preferredPool}
-      accountId={params.accountId}
       navigate={navigate}
     />
   );

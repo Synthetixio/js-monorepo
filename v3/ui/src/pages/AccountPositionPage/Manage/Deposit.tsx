@@ -1,18 +1,20 @@
-import { Text, Box, Flex, Heading } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Balance } from '@snx-v3/Balance';
-import { NumberInput } from './NumberInput';
+import { NumberInput } from '@snx-v3/NumberInput';
+import { Wei } from '@synthetixio/wei';
 
 interface Props {
   collateral: CollateralType;
-  onChange: (value: number) => void;
-  value: number;
+  onChange: (value: Wei) => void;
+  value: Wei;
 }
 
 export const Deposit: FC<Props> = ({ collateral, value, onChange }) => {
   const balance = useTokenBalance(collateral.tokenAddress);
+  const max = balance.data;
 
   return (
     <>
@@ -26,11 +28,11 @@ export const Deposit: FC<Props> = ({ collateral, value, onChange }) => {
 
       <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
         <Flex mb="3">
-          <NumberInput value={value} onChange={onChange} max={balance.data?.toNumber()} />
+          <NumberInput value={value} onChange={onChange} max={max} />
         </Flex>
         <Flex alignItems="center">
           <Balance
-            onMax={(balance) => onChange(parseFloat(balance) || 0)}
+            onMax={onChange}
             balance={balance.data}
             symbol={collateral.symbol}
             address={collateral.tokenAddress}

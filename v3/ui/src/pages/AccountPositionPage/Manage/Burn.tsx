@@ -3,7 +3,7 @@ import { useContract } from '../../../hooks/useContract';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { contracts } from '../../../utils/constants';
 import { Balance } from '@snx-v3/Balance';
-import { NumberInput } from './NumberInput';
+import { NumberInput } from '@snx-v3/NumberInput';
 import { Wei } from '@synthetixio/wei';
 
 export function Burn({
@@ -11,12 +11,13 @@ export function Burn({
   value,
   debt,
 }: {
-  onChange: (value: number) => void;
-  value: number;
+  onChange: (value: Wei) => void;
+  value: Wei;
   debt: Wei;
 }) {
   const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
   const tokenBalance = useTokenBalance(snxUsdProxy?.address);
+  const max = tokenBalance.data ? (tokenBalance.data.lt(debt) ? tokenBalance.data : debt) : debt;
 
   return (
     <>
@@ -30,25 +31,12 @@ export function Burn({
       {debt ? (
         <Box bg="whiteAlpha.200" mb="2" p="6" pb="4" borderRadius="12px">
           <Flex mb="3">
-            <NumberInput
-              value={value}
-              onChange={onChange}
-              max={
-                tokenBalance.data
-                  ? Math.min(tokenBalance.data.toNumber(), debt.toNumber())
-                  : debt.toNumber()
-              }
-            />
+            <NumberInput value={value} onChange={onChange} max={max} />
           </Flex>
           <Flex alignItems="center">
             <Balance
               balance={tokenBalance.data}
-              onMax={() => {
-                if (!tokenBalance.data) {
-                  return;
-                }
-                onChange(Math.min(tokenBalance.data.toNumber(), debt.toNumber()));
-              }}
+              onMax={() => (tokenBalance.data ? onChange(tokenBalance.data) : null)}
               symbol="snxUSD"
               address={snxUsdProxy?.address}
             />
