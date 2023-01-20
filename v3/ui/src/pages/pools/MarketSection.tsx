@@ -168,6 +168,7 @@ export function MarketSectionUi({
                 </Tr>
               ) : (
                 poolData?.configurations.map(({ id, market, weight, max_debt_share_value }, i) => {
+                  const totalWeight = poolData.total_weight;
                   const isLastItem = i + 1 === poolData.configurations.length;
                   const growth = calculateSevenDaysPnlGrowth(market.market_snapshots_by_week);
                   return (
@@ -181,7 +182,9 @@ export function MarketSectionUi({
                         </Text>
                       </StyledTd>
                       <StyledTd isLastItem={isLastItem} fontSize="sm">
-                        <Text display="block">{formatPercent(weight.toNumber())}</Text>
+                        <Text display="block">
+                          {formatPercent(weight.div(totalWeight).toNumber())}
+                        </Text>
                         <Flex flexWrap="wrap" maxW="135px">
                           <Text mr={1}>Max Debt:</Text>
                           <Text>
