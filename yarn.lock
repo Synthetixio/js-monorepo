@@ -7857,17 +7857,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/Header@workspace:v3/components/Header":
-  version: 0.0.0-use.local
-  resolution: "@snx-v3/Header@workspace:v3/components/Header"
-  dependencies:
-    "@chakra-ui/icon": ^3.0.11
-    "@chakra-ui/react": ^2.2.8
-    "@snx-v3/useBlockchain": "workspace:*"
-    react: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
 "@snx-v3/Multistep@workspace:*, @snx-v3/Multistep@workspace:v3/components/Multistep":
   version: 0.0.0-use.local
   resolution: "@snx-v3/Multistep@workspace:v3/components/Multistep"
@@ -7943,9 +7932,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/icons@workspace:*, @snx-v3/icons@workspace:v3/components/Icons":
+"@snx-v3/icons@workspace:*, @snx-v3/icons@workspace:v3/components/icons":
   version: 0.0.0-use.local
-  resolution: "@snx-v3/icons@workspace:v3/components/Icons"
+  resolution: "@snx-v3/icons@workspace:v3/components/icons"
   dependencies:
     "@chakra-ui/icons": ^2.0.9
     "@chakra-ui/react": ^2.2.8
