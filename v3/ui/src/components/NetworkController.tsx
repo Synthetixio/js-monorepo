@@ -9,8 +9,7 @@ import {
   WalletIcon,
 } from '@snx-v3/icons';
 import { useAccount } from '@snx-v3/useBlockchain';
-
-import { switchNetwork } from '@wagmi/core';
+import { useSwitchNetwork } from 'wagmi';
 
 const activeIcon = (currentNetwork: number) => {
   switch (currentNetwork) {
@@ -30,6 +29,7 @@ const activeIcon = (currentNetwork: number) => {
 
 export function NetworkController() {
   const { address } = useAccount();
+  const { switchNetwork } = useSwitchNetwork();
 
   return (
     <ConnectButton.Custom>
@@ -75,8 +75,8 @@ export function NetworkController() {
                   <MenuList>
                     <MenuItem
                       onClick={() => {
-                        if (address) {
-                          switchNetwork({ chainId: 1 });
+                        if (address && switchNetwork) {
+                          switchNetwork(1);
                         } else {
                           openConnectModal();
                         }
@@ -89,8 +89,8 @@ export function NetworkController() {
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
-                        if (address) {
-                          switchNetwork({ chainId: 10 });
+                        if (address && switchNetwork) {
+                          switchNetwork(10);
                         } else {
                           openConnectModal();
                         }
