@@ -24,12 +24,6 @@ import { ActionsContainer as Container } from './common-styles';
 import { wei } from '@synthetixio/wei';
 import useLiquidationRewards from 'hooks/useLiquidationRewards';
 import getSynthetixRewardTile from './getSynthetixRewardTile';
-import Currency from 'components/Currency';
-import { CryptoCurrency } from 'constants/currency';
-import { LP } from 'sections/earn/types';
-import { CurrencyIconType } from 'components/Currency/CurrencyIcon/CurrencyIcon';
-import useLPData from 'hooks/useLPData';
-import { notNill } from 'utils/ts-helpers';
 import Connector from 'containers/Connector';
 
 const LayoutLayerTwo: FC = () => {
@@ -40,8 +34,6 @@ const LayoutLayerTwo: FC = () => {
   const liquidationRewardsQuery = useLiquidationRewards(walletAddress);
   const { stakingRewards, tradingRewards } = useUserStakingData(walletAddress);
   const { currentCRatio, targetCRatio } = useStakingCalculations();
-
-  const lpData = useLPData();
 
   const liquidationRewards = liquidationRewardsQuery.data ?? wei(0);
   const stakingAndTradingRewards = stakingRewards.add(tradingRewards);
@@ -77,32 +69,8 @@ const LayoutLayerTwo: FC = () => {
         externalLink: EXTERNAL_LINKS.Trading.Kwenta,
         isDisabled: false,
       },
-      lpData[LP.CURVE_sUSD].APR && {
-        icon: (
-          <GlowingCircle variant="green" size="md">
-            <Currency.Icon
-              currencyKey={CryptoCurrency.CRV}
-              type={CurrencyIconType.TOKEN}
-              width="28"
-              height="28"
-            />
-          </GlowingCircle>
-        ),
-        title: t('dashboard.actions.earn.title', {
-          percent: formatPercent(lpData[LP.CURVE_sUSD].APR, { minDecimals: 1 }),
-        }),
-        copy: t('dashboard.actions.earn.copy', {
-          asset: 'Curve sUSD Pool Token',
-          supplier: 'Curve Finance',
-        }),
-        tooltip: t('common.tooltip.external', { link: 'Curve Finance' }),
-        externalLink: ROUTES.Earn.sUSD_EXTERNAL_OPTIMISM,
-        isDisabled: lpData[LP.CURVE_sUSD].APR.eq(0),
-      },
-    ]
-      .filter(notNill)
-      .map((cell, i) => ({ ...cell, gridArea: `tile-${i + 1}` }));
-  }, [currentCRatio, targetCRatio, t, stakingAndTradingRewards, liquidationRewards, lpData]);
+    ].map((cell, i) => ({ ...cell, gridArea: `tile-${i + 1}` }));
+  }, [currentCRatio, targetCRatio, t, stakingAndTradingRewards, liquidationRewards]);
 
   return (
     <StyledContainer>
