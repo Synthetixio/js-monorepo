@@ -54,6 +54,7 @@
     "@synthetixio/wei": "workspace:*",
     "@tanstack/react-query-devtools": "^4.3.5",
     "@wagmi/chains": "^0.1.5",
+    "@wagmi/core": "latest",
     "babel-jest": "^29.3.1",
     "chart.js": "^3.9.1",
     "ethers": "^5.7.2",
