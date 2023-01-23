@@ -17,12 +17,13 @@ async function readContracts(deploymentsDir) {
       .map((dirent) => path.basename(dirent.name, '.json'))
       .map(async (fileName) => {
         const filePath = path.join(deploymentsDir, `${fileName}.json`);
-        const { address, abi } = JSON.parse(await fs.readFile(filePath, 'utf8'));
+        const { address, abi, deployTxnHash } = JSON.parse(await fs.readFile(filePath, 'utf8'));
         return {
           filePath,
           fileName,
           address,
           abi,
+          deployTxnHash,
         };
       })
   );
@@ -41,7 +42,7 @@ function prepareContract({ filePath, fileName, address, abi }) {
 
 async function regenerateJson(jsons) {
   await Promise.all(
-    jsons.map(async ({ filePath, address, abi }) => {
+    jsons.map(async ({ filePath, address, abi, deployTxnHash }) => {
       abi.forEach((item) => {
         item.outputs?.forEach((output) => {
           if (!('name' in output)) {
@@ -49,7 +50,11 @@ async function regenerateJson(jsons) {
           }
         });
       });
-      await fs.writeFile(filePath, JSON.stringify({ address, abi }, null, 2), 'utf8');
+      await fs.writeFile(
+        filePath,
+        JSON.stringify({ address, abi, deployTxnHash }, null, 2),
+        'utf8'
+      );
     })
   );
 }

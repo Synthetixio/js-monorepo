@@ -407,5 +407,6 @@
         }
       ]
     }
-  ]
+  ],
+  "deployTxnHash": "0x55410682bc0b423e22e2a211ed15299ed523fd2838fd2f073d7271f84f5d71ec"
 }

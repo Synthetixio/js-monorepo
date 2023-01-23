@@ -747,5 +747,6 @@
         }
       ]
     }
-  ]
+  ],
+  "deployTxnHash": "0xdc43078cd47db9f0643f192de5fc07c0cfbcadcc86cfd9c1b88b27f718cdb460"
 }
