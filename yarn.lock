@@ -7825,10 +7825,6 @@ __metadata:
   resolution: "@snx-v3/icons@workspace:v3/components/icons"
   dependencies:
     "@chakra-ui/react": ^2.2.8
-    react: ^18.2.0
-  peerDependencies:
-    "@chakra-ui/react": 2
-    react: 18
   languageName: unknown
   linkType: soft
 

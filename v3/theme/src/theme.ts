@@ -1,4 +1,9 @@
-import { ComponentStyleConfig, defineStyle, extendTheme } from '@chakra-ui/react';
+import {
+  ComponentMultiStyleConfig,
+  ComponentStyleConfig,
+  defineStyle,
+  extendTheme,
+} from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 
 const gradients = {
@@ -124,12 +129,59 @@ const Button: ComponentStyleConfig = {
     },
   },
 };
+
+const Menu: ComponentMultiStyleConfig = {
+  parts: ['button', 'list', 'item'],
+  baseStyle: {
+    button: {
+      color: 'white',
+      span: {
+        display: 'flex',
+        alignItems: 'center',
+        px: 2,
+      },
+      height: '100%',
+    },
+    list: {
+      mt: 2,
+      bgColor: 'navy.900',
+      padding: 0,
+      border: 'none',
+      borderRadius: 'md',
+      py: 0,
+    },
+    item: {
+      bgColor: 'blackAlpha.300',
+      color: 'whiteAlpha.900',
+      p: 3,
+      _hover: {
+        bgColor: 'whiteAlpha.400',
+      },
+      _active: {
+        bgColor: 'navy.900',
+      },
+      _first: {
+        borderTopLeftRadius: 'md',
+        borderTopRightRadius: 'md',
+      },
+      _last: {
+        borderBottomLeftRadius: 'md',
+        borderBottomRightRadius: 'md',
+      },
+      _focus: {
+        bgColor: 'blackAlpha.400',
+      },
+    },
+  },
+};
+
 const Input: ComponentStyleConfig = {
   defaultProps: {
     focusBorderColor: 'cyan.500',
     errorBorderColor: 'red.500',
   },
 };
+
 const Select: ComponentStyleConfig = {
   defaultProps: {
     focusBorderColor: 'cyan.500',
@@ -137,6 +189,7 @@ const Select: ComponentStyleConfig = {
     errorBorderColor: 'red.500',
   },
 };
+
 const NumberInput: ComponentStyleConfig = {
   defaultProps: {
     focusBorderColor: 'cyan.500',
@@ -173,12 +226,14 @@ const Alert: ComponentStyleConfig = {
     },
   },
 };
+
 const Skeleton: ComponentStyleConfig = {
   defaultProps: {
     startColor: 'gray.900',
     endColor: 'gray.800',
   },
 };
+
 const Checkbox: ComponentStyleConfig = {
   defaultProps: {
     colorScheme: 'cyan',
@@ -208,6 +263,7 @@ const Checkbox: ComponentStyleConfig = {
     },
   },
 };
+
 const Radio: ComponentStyleConfig = {
   defaultProps: {
     colorScheme: 'cyan',
@@ -237,6 +293,7 @@ const Radio: ComponentStyleConfig = {
     },
   },
 };
+
 const Badge: ComponentStyleConfig = {
   defaultProps: {
     colorScheme: 'cyan',
@@ -268,6 +325,7 @@ const Badge: ComponentStyleConfig = {
     },
   },
 };
+
 const Tag: ComponentStyleConfig = {
   defaultProps: {
     colorScheme: 'cyan',
@@ -282,6 +340,7 @@ const Tag: ComponentStyleConfig = {
     }),
   },
 };
+
 const Accordion: ComponentStyleConfig = {
   baseStyle: {
     container: {
@@ -532,6 +591,7 @@ export const theme = extendTheme({
     Tooltip,
     Switch,
     Spinner,
+    Menu,
   },
   // To be imported and used with the bgGradient prop
   // See: https://chakra-ui.com/docs/styled-system/gradient#background-gradient-api
