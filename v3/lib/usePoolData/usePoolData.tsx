@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import { calculateMarketPnl } from '@snx-v3/calculations';
 import { getSubgraphUrl } from '@snx-v3/Constants';
 import { z } from 'zod';
-import { wei } from '@synthetixio/wei';
+import Wei, { wei } from '@synthetixio/wei';
 import { useNetwork } from '@snx-v3/useBlockchain';
 
 const GraphBigIntSchema = z.string().transform((src) => wei(src));
 const GraphBigDecimalSchema = z.string().transform((src) => wei(src));
+
+const calculateMarketPnl = (netIssuance: Wei, reportedDebt: Wei) =>
+  reportedDebt.add(netIssuance).mul(-1);
 
 export const MarketSnapshotByWeekSchema = z
   .object({

@@ -8086,7 +8086,6 @@ __metadata:
   resolution: "@snx-v3/usePoolData@workspace:v3/lib/usePoolData"
   dependencies:
     "@snx-v3/Constants": "workspace:*"
-    "@snx-v3/calculations": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
