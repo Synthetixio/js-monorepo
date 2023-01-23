@@ -1,5 +1,5 @@
 {
-  "address": "0x000554f9F3035300fC1A20D21Eb9a2dd14eC028F",
+  "address": "0x090f69A3fAd37717C219862EB4Cd7C5202A16a14",
   "abi": [
     {
       "type": "error",
@@ -184,10 +184,5 @@
       ],
       "outputs": []
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x476da164639288a4c76a69b7d17fa2392ebf7854666b257f2e16753f72f772b2",
-  "sourceName": "contracts/modules/core/FeatureFlagModule.sol",
-  "contractName": "FeatureFlagModule",
-  "deployedOn": "contract.FeatureFlagModule"
+  ]
 }

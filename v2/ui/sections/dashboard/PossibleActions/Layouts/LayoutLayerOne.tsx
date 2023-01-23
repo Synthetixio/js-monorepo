@@ -4,8 +4,6 @@ import styled from 'styled-components';
 
 import ROUTES from 'constants/routes';
 import { EXTERNAL_LINKS } from 'constants/links';
-import useLPData from 'hooks/useLPData';
-import { CryptoCurrency } from 'constants/currency';
 import { formatPercent } from 'utils/formatters/number';
 
 import KwentaIcon from 'assets/svg/app/kwenta.svg';
@@ -16,13 +14,10 @@ import { GlowingCircle } from '@snx-v1/styles';
 import media from '@snx-v1/media';
 
 import GridBox, { GridBoxProps } from 'components/GridBox/Gridbox';
-import Currency from 'components/Currency';
 
 import useUserStakingData from 'hooks/useUserStakingData';
 
 import useStakingCalculations from 'sections/staking/hooks/useStakingCalculations';
-import { LP } from 'sections/earn/types';
-import { CurrencyIconType } from 'components/Currency/CurrencyIcon/CurrencyIcon';
 
 import { ActionsContainer as Container } from './common-styles';
 import { wei } from '@synthetixio/wei';
@@ -38,7 +33,6 @@ const LayoutLayerOne: FC = () => {
 
   const liquidationRewardsQuery = useLiquidationRewards(walletAddress);
 
-  const lpData = useLPData();
   const { stakingRewards, tradingRewards } = useUserStakingData(walletAddress);
   const { currentCRatio, targetCRatio } = useStakingCalculations();
   const liquidationRewards = liquidationRewardsQuery.data ?? wei(0);
@@ -83,32 +77,10 @@ const LayoutLayerOne: FC = () => {
         copy: t('dashboard.actions.migrate.copy'),
         link: ROUTES.EscrowMigrate.Home,
       },
-      lpData[LP.CURVE_sUSD].APR && {
-        icon: (
-          <GlowingCircle variant="green" size="md">
-            <Currency.Icon
-              currencyKey={CryptoCurrency.CRV}
-              type={CurrencyIconType.TOKEN}
-              width="28"
-              height="28"
-            />
-          </GlowingCircle>
-        ),
-        title: t('dashboard.actions.earn.title', {
-          percent: formatPercent(lpData[LP.CURVE_sUSD].APR, { minDecimals: 1 }),
-        }),
-        copy: t('dashboard.actions.earn.copy', {
-          asset: 'Curve sUSD Pool Token',
-          supplier: 'Curve Finance',
-        }),
-        tooltip: t('common.tooltip.external', { link: 'Curve Finance' }),
-        externalLink: ROUTES.Earn.sUSD_EXTERNAL,
-        isDisabled: lpData[LP.CURVE_sUSD].APR.eq(0),
-      },
     ]
       .filter(notNill)
       .map((cell, i) => ({ ...cell, gridArea: `tile-${i + 1}` }));
-  }, [t, lpData, currentCRatio, targetCRatio, stakingAndTradingRewards, liquidationRewards]);
+  }, [t, currentCRatio, targetCRatio, stakingAndTradingRewards, liquidationRewards]);
 
   return (
     <StyledContainer>

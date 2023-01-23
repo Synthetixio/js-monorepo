@@ -231,12 +231,5 @@
       ],
       "outputs": []
     }
-  ],
-  "constructorArgs": [
-    "0xf3032a46dE4f67219215C5Bd9BdCC8F1669e79CF"
-  ],
-  "deployTxnHash": "0x14d56622c3a935a3b4eaccebdc4c6a8b4da7d0972ba51a5623c9fe59c12503a1",
-  "sourceName": "contracts/Proxy.sol",
-  "contractName": "Proxy",
-  "deployedOn": "contract.InitialProxy"
+  ]
 }

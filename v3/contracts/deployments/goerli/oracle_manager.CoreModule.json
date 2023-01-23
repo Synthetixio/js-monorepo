@@ -231,10 +231,5 @@
       ],
       "outputs": []
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xb7f30d913169df02d1910fc8d10c3cb082ec8bb3136adf6a7b855fcd41405b90",
-  "sourceName": "contracts/modules/CoreModule.sol",
-  "contractName": "CoreModule",
-  "deployedOn": "contract.CoreModule"
+  ]
 }

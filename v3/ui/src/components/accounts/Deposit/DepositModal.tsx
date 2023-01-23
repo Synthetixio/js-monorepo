@@ -64,12 +64,12 @@ export function DepositModal({
 
   const { data: liquidityPositions } = useLiquidityPositions({ accountId });
   const calls: MulticallCall[] = useMemo(() => {
-    if (!collateralType?.tokenAddress || !collateralType?.symbol || !liquidityPositions) {
+    if (!collateralType?.tokenAddress || !collateralType?.symbol) {
       return [];
     }
     const id = accountId ?? newAccountId;
     const key = `${poolId}-${collateralType.symbol}` as const;
-    const currentLiquidityPosition = liquidityPositions[key];
+    const currentLiquidityPosition = liquidityPositions?.[key];
 
     const amountToDelegate = Boolean(accountId)
       ? amount.add(currentLiquidityPosition?.collateralAmount.toBN() || wei(0))

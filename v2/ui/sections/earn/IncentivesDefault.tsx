@@ -2,23 +2,18 @@ import { FC, useMemo } from 'react';
 import Wei from '@synthetixio/wei';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
 
 import ROUTES from 'constants/routes';
 import { CryptoCurrency } from 'constants/currency';
 import media from '@snx-v1/media';
-import { delegateWalletState } from 'store/wallet';
 import useFeePeriodTimeAndProgress from 'hooks/useFeePeriodTimeAndProgress';
 import IncentivesTable, { NOT_APPLICABLE } from './IncentivesTable';
 import ClaimTab from './ClaimTab';
 import LiquidationTab from './LiquidationTab';
-import { LP, Tab } from './types';
+import { Tab } from './types';
 import { DesktopOrTabletView } from 'components/Media';
 import Connector from 'containers/Connector';
-import useCurveSusdPoolQuery from 'queries/liquidityPools/useCurveSusdPoolQuery';
-import { notNill } from 'utils/ts-helpers';
-import { CurrencyIconType } from 'components/Currency/CurrencyIcon/CurrencyIcon';
 import { useGetTVL } from 'hooks/useGetTVL';
 
 type IncentivesProps = {
@@ -46,9 +41,7 @@ const Incentives: FC<IncentivesProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const delegateWallet = useRecoilValue(delegateWalletState);
   const { isWalletConnected } = Connector.useContainer();
-  const curvesUSDPoolQuery = useCurveSusdPoolQuery();
   const tvlQuery = useGetTVL();
 
   const { nextFeePeriodStarts, currentFeePeriodStarted } = useFeePeriodTimeAndProgress();
@@ -58,7 +51,6 @@ const Incentives: FC<IncentivesProps> = ({
   const { pool } = useParams();
   const activeTab = isWalletConnected && VALID_TABS.includes(pool as Tab) ? (pool as Tab) : null;
 
-  const curveData = curvesUSDPoolQuery.data;
   const incentives = useMemo(
     () =>
       isWalletConnected
@@ -100,31 +92,7 @@ const Incentives: FC<IncentivesProps> = ({
               tab: Tab.LIQUIDATION_REWARDS,
               neverExpires: true,
             },
-            // This component in used for both delegate wallets and optimism, we only want curve incentives to show up for non delegated wallets
-            !delegateWallet?.address && curveData !== undefined
-              ? {
-                  title: t('earn.incentives.options.curve.title'),
-                  subtitle: t('earn.incentives.options.curve.subtitle'),
-                  apr: curveData.APR,
-                  tvl: curveData.TVL,
-                  staked: {
-                    balance: undefined,
-                    asset: CryptoCurrency.CRV,
-                    ticker: LP.CURVE_sUSD,
-                    type: CurrencyIconType.TOKEN,
-                  },
-                  rewards: undefined,
-                  periodStarted: 0,
-                  periodFinish: Number.MAX_SAFE_INTEGER,
-                  claimed: NOT_APPLICABLE,
-                  now,
-                  route: ROUTES.Earn.sUSD_LP,
-                  tab: Tab.sUSD_LP,
-                  externalLink: ROUTES.Earn.sUSD_EXTERNAL_OPTIMISM,
-                  neverExpires: true,
-                }
-              : undefined,
-          ].filter(notNill)
+          ]
         : [],
     [
       isWalletConnected,
@@ -138,8 +106,6 @@ const Incentives: FC<IncentivesProps> = ({
       hasClaimed,
       now,
       liquidationRewards,
-      delegateWallet?.address,
-      curveData,
     ]
   );
 

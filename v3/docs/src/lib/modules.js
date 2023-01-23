@@ -1,18 +1,19 @@
-import metadata from '@synthetixio/v3-contracts/deployments/metadata.json';
+import metadataGoerli from '@synthetixio/v3-contracts/metadata/goerli/metadata.json';
+import metadataOptimismGoerli from '@synthetixio/v3-contracts/metadata/optimism-goerli/metadata.json';
+
 function transformDeps(deps) {
-  return deps
-    .filter((d) => d !== 'contract.InitialModuleBundle')
-    .map((d) => d.replace('contract.', ''));
+  return deps.filter((d) => d !== 'InitialModuleBundle');
 }
+
 export const modules = {
   goerli: {
-    CoreProxy: transformDeps(metadata.deploys[5].main.def.run.core_generate_router.depends),
-    AccountProxy: transformDeps(metadata.deploys[5].main.def.run.account_generate_router.depends),
-    USDProxy: transformDeps(metadata.deploys[5].main.def.run.usd_generate_router.depends),
+    CoreProxy: transformDeps(metadataGoerli.def.router.CoreRouter.contracts),
+    AccountProxy: transformDeps(metadataGoerli.def.router.AccountRouter.contracts),
+    USDProxy: transformDeps(metadataGoerli.def.router.USDRouter.contracts),
   },
   'optimism-goerli': {
-    CoreProxy: transformDeps(metadata.deploys[420].main.def.run.core_generate_router.depends),
-    AccountProxy: transformDeps(metadata.deploys[420].main.def.run.account_generate_router.depends),
-    USDProxy: transformDeps(metadata.deploys[420].main.def.run.usd_generate_router.depends),
+    CoreProxy: transformDeps(metadataOptimismGoerli.def.router.CoreRouter.contracts),
+    AccountProxy: transformDeps(metadataOptimismGoerli.def.router.AccountRouter.contracts),
+    USDProxy: transformDeps(metadataOptimismGoerli.def.router.USDRouter.contracts),
   },
 };

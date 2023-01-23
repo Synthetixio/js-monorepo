@@ -1,5 +1,5 @@
 {
-  "address": "0x6875D30aFa231580844109EFDf30ee5535E910FB",
+  "address": "0xdBE114Ef3054Ad9Ed2A3b6beee538433f72BAfc2",
   "abi": [
     {
       "type": "error",
@@ -134,10 +134,5 @@
       ],
       "outputs": []
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x4e38740228c644f38c91e52891fe740ce658c4dd3d232b3879bf38a73d26767a",
-  "sourceName": "contracts/modules/core/PoolConfigurationModule.sol",
-  "contractName": "PoolConfigurationModule",
-  "deployedOn": "contract.PoolConfigurationModule"
+  ]
 }
