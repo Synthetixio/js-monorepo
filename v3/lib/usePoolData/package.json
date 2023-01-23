@@ -1,0 +1,14 @@
+{
+  "name": "@snx-v3/usePoolData",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.2",
+  "dependencies": {
+    "@snx-v3/Constants": "workspace:*",
+    "@snx-v3/useBlockchain": "workspace:*",
+    "@synthetixio/wei": "workspace:*",
+    "@tanstack/react-query": "^4.3.4",
+    "react": "^18.2.0",
+    "zod": "^3.20.2"
+  }
+}

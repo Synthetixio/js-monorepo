@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import { calculateMarketPnl } from '../utils/calculations';
-import { formatGraphBigDecimal, getSubgraphUrl } from '../utils/subgraph';
+import { getSubgraphUrl } from '@snx-v3/Constants';
 import { z } from 'zod';
-import { wei } from '@synthetixio/wei';
+import Wei, { wei } from '@synthetixio/wei';
 import { useNetwork } from '@snx-v3/useBlockchain';
 
-const GraphBigIntSchema = z.string().transform((src) => formatGraphBigDecimal(src));
-const GraphBigDecimalSchema = z.string().transform((src) => formatGraphBigDecimal(src));
+const GraphBigIntSchema = z.string().transform((src) => wei(src));
+const GraphBigDecimalSchema = z.string().transform((src) => wei(src));
+
+const calculateMarketPnl = (netIssuance: Wei, reportedDebt: Wei) =>
+  reportedDebt.add(netIssuance).mul(-1);
 
 export const MarketSnapshotByWeekSchema = z
   .object({
@@ -111,7 +113,7 @@ const getPoolData = async (chainName: string, id: string) => {
   return PoolDataResultSchema.parse(json);
 };
 
-export const useGetPoolData = (poolId?: string) => {
+export const usePoolData = (poolId?: string) => {
   const network = useNetwork();
 
   return useQuery({

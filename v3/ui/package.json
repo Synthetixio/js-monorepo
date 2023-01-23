@@ -28,7 +28,9 @@
     "@snx-v3/Constants": "workspace:*",
     "@snx-v3/Multistep": "workspace:*",
     "@snx-v3/NumberInput": "workspace:*",
+    "@snx-v3/PoolBox": "workspace:*",
     "@snx-v3/TrendText": "workspace:*",
+    "@snx-v3/calculations": "workspace:*",
     "@snx-v3/etherscanLink": "workspace:*",
     "@snx-v3/format": "workspace:*",
     "@snx-v3/icons": "workspace:*",
@@ -43,6 +45,7 @@
     "@snx-v3/useLiquidityPositions": "workspace:*",
     "@snx-v3/useMarketNamesById": "workspace:*",
     "@snx-v3/useParams": "workspace:*",
+    "@snx-v3/usePoolData": "workspace:*",
     "@snx-v3/usePools": "workspace:*",
     "@snx-v3/usePreferredPool": "workspace:*",
     "@snx-v3/useTokenBalance": "workspace:*",
@@ -66,8 +69,7 @@
     "react-helmet": "^6.1.0",
     "react-i18next": "^11.18.3",
     "react-router-dom": "^6.6.2",
-    "wagmi": "^0.9.6",
-    "zod": "^3.20.2"
+    "wagmi": "^0.9.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.7",

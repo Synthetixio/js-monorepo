@@ -7765,6 +7765,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/PoolBox@workspace:*, @snx-v3/PoolBox@workspace:v3/components/PoolBox":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/PoolBox@workspace:v3/components/PoolBox"
+  dependencies:
+    "@chakra-ui/icons": ^2.0.9
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/BorderBox": "workspace:*"
+    "@snx-v3/TrendText": "workspace:*"
+    "@snx-v3/calculations": "workspace:*"
+    "@snx-v3/format": "workspace:*"
+    "@snx-v3/useParams": "workspace:*"
+    "@snx-v3/usePoolData": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    react: ^18.2.0
+    react-router-dom: ^6.6.2
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/PoolSelector@workspace:v3/components/PoolSelector":
   version: 0.0.0-use.local
   resolution: "@snx-v3/PoolSelector@workspace:v3/components/PoolSelector"
@@ -7789,6 +7807,16 @@ __metadata:
 "@snx-v3/assertAddressType@workspace:*, @snx-v3/assertAddressType@workspace:v3/lib/assertAddressType":
   version: 0.0.0-use.local
   resolution: "@snx-v3/assertAddressType@workspace:v3/lib/assertAddressType"
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/calculations@workspace:*, @snx-v3/calculations@workspace:v3/lib/calculations":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/calculations@workspace:v3/lib/calculations"
+  dependencies:
+    "@snx-v3/usePoolData": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    zod: ^3.20.2
   languageName: unknown
   linkType: soft
 
@@ -8050,6 +8078,19 @@ __metadata:
   dependencies:
     react: ^18.2.0
     react-router-dom: ^6.6.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/usePoolData@workspace:*, @snx-v3/usePoolData@workspace:v3/lib/usePoolData":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/usePoolData@workspace:v3/lib/usePoolData"
+  dependencies:
+    "@snx-v3/Constants": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    react: ^18.2.0
+    zod: ^3.20.2
   languageName: unknown
   linkType: soft
 
@@ -10272,7 +10313,9 @@ __metadata:
     "@snx-v3/Constants": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
     "@snx-v3/NumberInput": "workspace:*"
+    "@snx-v3/PoolBox": "workspace:*"
     "@snx-v3/TrendText": "workspace:*"
+    "@snx-v3/calculations": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
     "@snx-v3/icons": "workspace:*"
@@ -10287,6 +10330,7 @@ __metadata:
     "@snx-v3/useLiquidityPositions": "workspace:*"
     "@snx-v3/useMarketNamesById": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
+    "@snx-v3/usePoolData": "workspace:*"
     "@snx-v3/usePools": "workspace:*"
     "@snx-v3/usePreferredPool": "workspace:*"
     "@snx-v3/useTokenBalance": "workspace:*"
@@ -10332,7 +10376,6 @@ __metadata:
     webpack-bundle-analyzer: ^4.7.0
     webpack-cli: ^5.0.1
     webpack-dev-server: ^4.11.1
-    zod: ^3.20.2
   languageName: unknown
   linkType: soft
 

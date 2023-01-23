@@ -1,9 +1,6 @@
-import { MarketSnapshotByWeekSchema, Pool } from '../hooks/useGetPoolData';
+import type { MarketSnapshotByWeekSchema, Pool } from '@snx-v3/usePoolData';
 import { z } from 'zod';
-import Wei, { wei } from '@synthetixio/wei';
-
-export const calculateMarketPnl = (netIssuance: Wei, reportedDebt: Wei) =>
-  reportedDebt.add(netIssuance).mul(-1);
+import { wei } from '@synthetixio/wei';
 
 type MarketSnapshotByWeek = z.infer<typeof MarketSnapshotByWeekSchema>;
 export const calculateSevenDaysPnlGrowth = (marketSnapshots?: MarketSnapshotByWeek[]) => {
