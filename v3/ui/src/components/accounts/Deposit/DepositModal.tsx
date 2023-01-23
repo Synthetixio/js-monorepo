@@ -117,7 +117,6 @@ export function DepositModal({
     amount,
     snxProxy,
   ]);
-  console.log(calls);
 
   const ethBalance = useEthBalance();
   const tokenBalance = useTokenBalance(collateralType.tokenAddress);
