@@ -4,11 +4,8 @@
   "main": "index.ts",
   "version": "0.0.1",
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.9",
     "@chakra-ui/react": "^2.2.8",
     "@snx-v3/format": "workspace:*",
-    "@snx-v3/useAccounts": "workspace:*",
-    "@snx-v3/useParams": "workspace:*",
-    "react-router-dom": "^6.6.2"
+    "@snx-v3/useParams": "workspace:*"
   }
 }
