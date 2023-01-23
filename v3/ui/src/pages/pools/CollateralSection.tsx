@@ -6,7 +6,7 @@ import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatte
 import { useParams } from '@snx-v3/useParams';
 import { BorderBox } from '@snx-v3/BorderBox';
 import { InfoIcon } from '@chakra-ui/icons';
-import { useGetPoolData } from '../../hooks/useGetPoolData';
+import { usePoolData } from '@snx-v3/usePoolData';
 import { CollateralIcon } from '@snx-v3/icons';
 
 export const calculateVaultTotals = (vaultsData: ReturnType<typeof useVaultsData>['data']) => {
@@ -167,7 +167,7 @@ export const CollateralSection = () => {
   const params = useParams();
 
   const { data: vaultsData } = useVaultsData(params.poolId ? parseFloat(params.poolId) : undefined);
-  const { data: pool } = useGetPoolData(params.poolId);
+  const { data: pool } = usePoolData(params.poolId);
 
   return <CollateralSectionUi vaultsData={vaultsData} poolName={pool?.name} />;
 };

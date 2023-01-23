@@ -14,16 +14,15 @@ import {
   Tooltip,
   Skeleton,
 } from '@chakra-ui/react';
-import { Pool } from '../../hooks/useGetPoolData';
+import { Pool, usePoolData } from '@snx-v3/usePoolData';
 import {
   calculateSevenDaysPnlGrowth,
   calculatePoolPerformanceSevenDays,
   calculatePoolPerformanceLifetime,
-} from '../../utils/calculations';
+} from '@snx-v3/calculations';
 import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { useParams } from '@snx-v3/useParams';
 import { useMarketNamesById } from '@snx-v3/useMarketNamesById';
-import { useGetPoolData } from '../../hooks/useGetPoolData';
 import { TrendText } from '@snx-v3/TrendText';
 import { BorderBox } from '@snx-v3/BorderBox';
 import Wei from '@synthetixio/wei';
@@ -225,7 +224,7 @@ export function MarketSectionUi({
 }
 export const MarketSection = () => {
   const params = useParams();
-  const { data: poolData, isFetched: poolDataFetched } = useGetPoolData(params.poolId);
+  const { data: poolData, isFetched: poolDataFetched } = usePoolData(params.poolId);
 
   const marketIdsAndAddresses = poolData?.configurations.map(({ market }) => ({
     marketId: market.id,

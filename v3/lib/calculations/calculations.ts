@@ -1,4 +1,4 @@
-import { MarketSnapshotByWeekSchema, Pool } from '../hooks/useGetPoolData';
+import type { MarketSnapshotByWeekSchema, Pool } from '@snx-v3/usePoolData';
 import { z } from 'zod';
 import Wei, { wei } from '@synthetixio/wei';
 

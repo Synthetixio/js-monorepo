@@ -5,8 +5,8 @@ import { FC, useEffect } from 'react';
 import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { DepositForm } from '../../components/accounts/Deposit';
 import { useAccounts } from '@snx-v3/useAccounts';
-import { useGetPoolData } from '../../hooks/useGetPoolData';
-import { calculatePoolPerformanceSevenDays } from '../../utils/calculations';
+import { usePoolData } from '@snx-v3/usePoolData';
+import { calculatePoolPerformanceSevenDays } from '@snx-v3/calculations';
 import { formatPercent } from '@snx-v2/formatters';
 import { TrendText } from '@snx-v3/TrendText';
 import { wei } from '@synthetixio/wei';
@@ -114,7 +114,7 @@ const DepositUi: FC<{
 export const Deposit = () => {
   const params = useParams();
   const { data: preferredPool } = usePreferredPool();
-  const { data: poolData } = useGetPoolData(preferredPool?.id);
+  const { data: poolData } = usePoolData(preferredPool?.id);
   const collateralType = useCollateralType(params.collateralSymbol);
   const sevenDaysPoolPerformance = calculatePoolPerformanceSevenDays(poolData);
 

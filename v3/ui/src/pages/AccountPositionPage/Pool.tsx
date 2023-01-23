@@ -17,11 +17,11 @@ import {
 import { generatePath, Link as RouterLink } from 'react-router-dom';
 import { PoolDialog } from './PoolDialog';
 import { useParams } from '@snx-v3/useParams';
-import { useGetPoolData } from '../../hooks/useGetPoolData';
+import { usePoolData } from '@snx-v3/usePoolData';
 
 export function Pool() {
   const params = useParams();
-  const poolData = useGetPoolData(params.poolId);
+  const poolData = usePoolData(params.poolId);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
