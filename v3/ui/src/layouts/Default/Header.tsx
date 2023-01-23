@@ -28,7 +28,7 @@ export default function Header() {
             </Link>
           </Box>
           <Flex justifyContent="center" alignItems="center">
-            <Box display={{ base: 'none', md: 'inline-block' }} pr={4}>
+            <Box display={{ base: 'none', md: 'inline-block' }} mr={3}>
               <AccountsSelector />
             </Box>
             <NetworkController />
