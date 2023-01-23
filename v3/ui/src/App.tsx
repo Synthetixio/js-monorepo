@@ -3,6 +3,7 @@ import { Spinner, useColorMode } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
 import { DefaultLayout } from './layouts/Default';
 import { Home } from './pages/Home';
+import { Manage } from './pages/Manage';
 import { Deposit } from './pages/deposit';
 import { CreateAccount, Settings, Collateral, AcceptNomination } from './pages/accounts';
 import { AccountPositionPage } from './pages/AccountPositionPage';
@@ -28,6 +29,10 @@ export const Synthetix: FC = () => {
           <Route
             path="/accounts/:accountId/positions/:collateral/:poolId"
             element={<AccountPositionPage />}
+          />
+          <Route
+            path="new/accounts/:accountId/positions/:collateral/:poolId"
+            element={<Manage />}
           />
           <Route path="/deposit/:collateralSymbol/:poolId" element={<Deposit />} />
           <Route path="/accounts/:accountId/collateral" element={<Collateral />} />
