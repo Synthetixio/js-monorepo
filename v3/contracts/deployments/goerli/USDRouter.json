@@ -1,5 +1,5 @@
 {
-  "address": "0xBA74C30e6057D48BabECf51d8aCc0043A62D13c8",
+  "address": "0xb3158Da20593eC5c2a557D313dCb7196226F5a26",
   "abi": [
     {
       "type": "error",
@@ -747,10 +747,5 @@
         }
       ]
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x46938b41005138a5a7e65532e11fd04a7778b0798541ef69c18bf4bd855ffe56",
-  "sourceName": "contracts/routers/chain-5/USDRouter.sol",
-  "contractName": "USDRouter",
-  "deployedOn": "contract.USDRouter"
+  ]
 }

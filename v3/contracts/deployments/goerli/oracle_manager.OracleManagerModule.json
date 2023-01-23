@@ -181,10 +181,5 @@
         }
       ]
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x420d9970aa878603a2212ae24509143e46008286008afc2b60043ef254eb05a6",
-  "sourceName": "contracts/modules/OracleManagerModule.sol",
-  "contractName": "OracleManagerModule",
-  "deployedOn": "contract.OracleManagerModule"
+  ]
 }

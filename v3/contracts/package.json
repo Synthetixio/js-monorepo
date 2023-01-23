@@ -4,7 +4,7 @@
     "access": "public"
   },
   "description": "peripheral smart contracts for frontend",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0-alpha.7",
   "main": "./index.js",
   "files": [
     "build",
@@ -19,15 +19,14 @@
     "start:optimism-goerli": "./start.sh optimism-goerli",
     "fetch:goerli": "./fetch.sh goerli",
     "fetch:optimism-goerli": "./fetch.sh optimism-goerli",
-    "fetch:metadata": "./fetch-metadata.sh",
-    "fetch-deployments": "yarn fetch:metadata && yarn fetch:goerli && yarn fetch:optimism-goerli",
+    "fetch-deployments": "yarn fetch:goerli && yarn fetch:optimism-goerli",
     "cannon": "cannon"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@typechain/ethers-v5": "^10.1.0",
-    "@usecannon/cli": "^1.1.23",
+    "@usecannon/cli": "^2.0.0-alpha.7",
     "ethers": "^5.7.2",
     "prettier": "^2.8.1",
     "typechain": "^8.1.0",

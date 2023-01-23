@@ -1,5 +1,5 @@
 {
-  "address": "0xCbf9F85011450fEecdbf6b86D0f694eE227f461B",
+  "address": "0x1df2F5962592f544F1bFdFa93ffEE069727d8DA3",
   "abi": [
     {
       "type": "error",
@@ -59,6 +59,11 @@
           "name": "tokenAmountToWithdraw"
         }
       ]
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToUint256",
+      "inputs": []
     },
     {
       "type": "error",
@@ -218,6 +223,25 @@
     },
     {
       "type": "function",
+      "name": "getMarketCollateralValue",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
       "name": "getMaximumMarketCollateral",
       "constant": true,
       "stateMutability": "view",
@@ -260,10 +284,5 @@
       ],
       "outputs": []
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xcf777a51bdf58c878e84966abb95ca834ae23dd928f65ab9d5892449ffc9d894",
-  "sourceName": "contracts/modules/core/MarketCollateralModule.sol",
-  "contractName": "MarketCollateralModule",
-  "deployedOn": "contract.MarketCollateralModule"
+  ]
 }

@@ -32,5 +32,3 @@ export const abi = [
   'function process(bytes32 nodeId) view returns (tuple(int256 price, uint256 timestamp, uint256 volatilityScore, uint256 liquidityScore))',
   'function registerNode(bytes32[] parents, uint8 nodeType, bytes parameters) returns (bytes32)',
 ];
-export const name = '';
-export const source = '';

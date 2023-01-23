@@ -124,7 +124,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": ""
         }
       ]
     },
@@ -150,7 +151,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "bool"
+          "type": "bool",
+          "name": ""
         }
       ]
     },
@@ -176,7 +178,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": ""
         }
       ]
     },
@@ -189,7 +192,8 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "address"
+          "type": "address",
+          "name": ""
         }
       ]
     },
@@ -227,10 +231,5 @@
       ],
       "outputs": []
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x21c87c9ecba5ba85e92f86d3e3bc29de4ffefb18b72ade97cfcfc63c73f3e285",
-  "sourceName": "contracts/CoreModule.sol",
-  "contractName": "CoreModule",
-  "deployedOn": "contract.CoreModule"
+  ]
 }

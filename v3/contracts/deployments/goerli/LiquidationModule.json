@@ -1,5 +1,5 @@
 {
-  "address": "0xf3032a46dE4f67219215C5Bd9BdCC8F1669e79CF",
+  "address": "0x5fDa66Ed855EA186ed6719F866775079E8957334",
   "abi": [
     {
       "type": "error",
@@ -41,12 +41,7 @@
     {
       "type": "error",
       "name": "InsufficientMappedAmount",
-      "inputs": [
-        {
-          "type": "int256",
-          "name": "scaleModifier"
-        }
-      ]
+      "inputs": []
     },
     {
       "type": "error",
@@ -354,10 +349,5 @@
         }
       ]
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x6b7b7d29cb37dcf33ba84909ec156f43982a5a3959e5d822c57f26d7d1aaa18c",
-  "sourceName": "contracts/modules/core/LiquidationModule.sol",
-  "contractName": "LiquidationModule",
-  "deployedOn": "contract.LiquidationModule"
+  ]
 }

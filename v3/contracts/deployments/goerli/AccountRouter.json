@@ -1,5 +1,5 @@
 {
-  "address": "0xAAc61303Ff187D13Ea525A4E01Af71F592422200",
+  "address": "0xD00a601eafC2C131F46105827AFB02b925Adf62A",
   "abi": [
     {
       "type": "error",
@@ -728,10 +728,5 @@
       ],
       "outputs": []
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xdc09c5fd67959c466730226b070fcf209283b9fb6be4dbfd968cd94896d8ad0c",
-  "sourceName": "contracts/routers/chain-5/AccountRouter.sol",
-  "contractName": "AccountRouter",
-  "deployedOn": "contract.AccountRouter"
+  ]
 }

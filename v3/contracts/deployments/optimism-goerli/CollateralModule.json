@@ -1,5 +1,5 @@
 {
-  "address": "0xAAc61303Ff187D13Ea525A4E01Af71F592422200",
+  "address": "0xD03212270B11D7CD0A12167a236efaDc4d858bdD",
   "abi": [
     {
       "type": "error",
@@ -71,6 +71,11 @@
     {
       "type": "error",
       "name": "OverflowUint256ToUint128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToUint64",
       "inputs": []
     },
     {
@@ -296,10 +301,5 @@
       ],
       "outputs": []
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x54c4f36e58237b26ac286ee0f3df92cfefbe489189b17e9a0e3b8c82e0e31226",
-  "sourceName": "contracts/modules/core/CollateralModule.sol",
-  "contractName": "CollateralModule",
-  "deployedOn": "contract.CollateralModule"
+  ]
 }

@@ -9,38 +9,49 @@ const { runTypeChain } = require('typechain');
 // We don't want to expose internal modules and should only interact with Proxy contracts
 const CONTRACTS_WHITELIST = ['AccountProxy', 'CoreProxy', 'USDProxy', 'oracle_manager.Proxy'];
 
-async function prepareContracts(network) {
-  const deployments = path.join(__dirname, 'deployments', network);
-  const contracts = await Promise.all(
-    (
-      await fs.readdir(deployments, { withFileTypes: true })
-    )
+async function readContracts(deploymentsDir) {
+  const files = await fs.readdir(deploymentsDir, { withFileTypes: true });
+  return await Promise.all(
+    files
       .filter((dirent) => dirent.isFile())
       .map((dirent) => path.basename(dirent.name, '.json'))
-      .filter(
-        (item) =>
-          CONTRACTS_WHITELIST.includes(item) ||
-          // manually added contracts start with _
-          item.startsWith('_')
-      )
       .map(async (fileName) => {
-        const json = JSON.parse(
-          await fs.readFile(path.join(deployments, `${fileName}.json`), 'utf8')
-        );
+        const filePath = path.join(deploymentsDir, `${fileName}.json`);
+        const { address, abi } = JSON.parse(await fs.readFile(filePath, 'utf8'));
         return {
+          filePath,
           fileName,
-          ...json,
+          address,
+          abi,
         };
       })
   );
-  return contracts.map((contract) => {
-    const iface = new ethers.utils.Interface(contract.abi);
-    contract.name = contract.contractName;
-    contract.source = contract.sourceName;
-    contract.jsonAbi = contract.abi;
-    contract.abi = iface.format(ethers.utils.FormatTypes.full);
-    return contract;
-  });
+}
+
+function prepareContract({ filePath, fileName, address, abi }) {
+  const iface = new ethers.utils.Interface(abi);
+  return {
+    filePath,
+    fileName,
+    address,
+    abi: iface.format(ethers.utils.FormatTypes.full),
+    jsonAbi: abi,
+  };
+}
+
+async function regenerateJson(jsons) {
+  await Promise.all(
+    jsons.map(async ({ filePath, address, abi }) => {
+      abi.forEach((item) => {
+        item.outputs?.forEach((output) => {
+          if (!('name' in output)) {
+            output.name = '';
+          }
+        });
+      });
+      await fs.writeFile(filePath, JSON.stringify({ address, abi }, null, 2), 'utf8');
+    })
+  );
 }
 
 async function generateContracts({ network, contracts, prettierOptions }) {
@@ -52,7 +63,7 @@ async function generateContracts({ network, contracts, prettierOptions }) {
     const content =
       '// !!! DO NOT EDIT !!! Automatically generated file\n\n' +
       Object.entries(contract)
-        .filter(([name]) => ['name', 'source', 'address', 'abi'].includes(name))
+        .filter(([name]) => ['address', 'abi'].includes(name))
         .map(([name, value]) => `export const ${name} = ${JSON.stringify(value, null, 2)};`)
         .concat([types])
         .join('\n');
@@ -64,9 +75,6 @@ async function generateContracts({ network, contracts, prettierOptions }) {
 async function generateTypes({ network, contracts, prettierOptions }) {
   const files = [];
   for await (const contract of contracts) {
-    if (!Array.isArray(contract.jsonAbi) || contract.jsonAbi.length < 1) {
-      continue;
-    }
     const json = path.resolve(`cache/${network}/types/${contract.fileName}.json`);
     await fs.writeFile(json, JSON.stringify(contract.jsonAbi));
     files.push(json);
@@ -89,14 +97,24 @@ async function run() {
   const deployed = path.join(__dirname, 'deployments');
   const networks = (await fs.readdir(deployed, { withFileTypes: true }))
     .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name)
-    .concat(['']);
+    .map((dirent) => dirent.name);
 
   const prettierOptions = JSON.parse(await fs.readFile('../../.prettierrc', 'utf8'));
 
   for await (const network of networks) {
-    const contracts = await prepareContracts(network);
+    const jsons = await readContracts(path.join(__dirname, 'deployments', network));
     await fs.mkdir(`cache/${network}/types`, { recursive: true });
+    await regenerateJson(jsons);
+    const contractsV3 = jsons
+      .filter((json) => CONTRACTS_WHITELIST.includes(json.fileName))
+      .map(prepareContract);
+
+    const manualJsons = await readContracts(path.join(__dirname, 'manual', network));
+    await fs.mkdir(`cache/${network}/types`, { recursive: true });
+    const contractsCustom = manualJsons.map(prepareContract);
+
+    const contracts = [].concat(contractsV3, contractsCustom);
+
     await generateTypes({ network, contracts, prettierOptions });
     await fs.mkdir(`src/${network}`, { recursive: true });
     await generateContracts({ network, contracts, prettierOptions });

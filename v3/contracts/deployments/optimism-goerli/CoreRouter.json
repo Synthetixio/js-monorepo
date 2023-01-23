@@ -1,5 +1,5 @@
 {
-  "address": "0x98a18F9561583b1290fa2CA30dfa0AfE4385503e",
+  "address": "0x660c0C73599e1C69C3d5d58d0795D8b4e9ded7CC",
   "abi": [
     {
       "type": "error",
@@ -1095,6 +1095,11 @@
       "inputs": []
     },
     {
+      "type": "error",
+      "name": "OverflowUint256ToUint64",
+      "inputs": []
+    },
+    {
       "type": "event",
       "anonymous": false,
       "name": "Deposited",
@@ -1674,12 +1679,7 @@
     {
       "type": "error",
       "name": "InsufficientMappedAmount",
-      "inputs": [
-        {
-          "type": "int256",
-          "name": "scaleModifier"
-        }
-      ]
+      "inputs": []
     },
     {
       "type": "error",
@@ -2108,6 +2108,25 @@
     },
     {
       "type": "function",
+      "name": "getMarketCollateralValue",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
       "name": "getMaximumMarketCollateral",
       "constant": true,
       "stateMutability": "view",
@@ -2367,7 +2386,7 @@
     },
     {
       "type": "function",
-      "name": "getWithdrawableUsd",
+      "name": "getWithdrawableMarketUsd",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -2986,6 +3005,26 @@
       "outputs": []
     },
     {
+      "type": "error",
+      "name": "OverflowInt128ToInt32",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt32ToUint32",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint32ToInt32",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint64ToInt64",
+      "inputs": []
+    },
+    {
       "type": "event",
       "anonymous": false,
       "name": "RewardsClaimed",
@@ -3568,10 +3607,5 @@
         }
       ]
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x58ee9b87f913c3436ed26f14d368d603c1e9ae316fbbfbdc0bf925bd536c71d7",
-  "sourceName": "contracts/routers/chain-420/CoreRouter.sol",
-  "contractName": "CoreRouter",
-  "deployedOn": "contract.CoreRouter"
+  ]
 }

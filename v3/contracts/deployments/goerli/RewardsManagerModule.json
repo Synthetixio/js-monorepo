@@ -1,5 +1,5 @@
 {
-  "address": "0x9B224d8dAa1f210B6E90348F026B413aD98EC050",
+  "address": "0x1b7F5D6D91A13330B31a2E3071B3efbb93bA493d",
   "abi": [
     {
       "type": "error",
@@ -17,6 +17,11 @@
     },
     {
       "type": "error",
+      "name": "OverflowInt128ToInt32",
+      "inputs": []
+    },
+    {
+      "type": "error",
       "name": "OverflowInt256ToInt128",
       "inputs": []
     },
@@ -27,12 +32,27 @@
     },
     {
       "type": "error",
+      "name": "OverflowInt32ToUint32",
+      "inputs": []
+    },
+    {
+      "type": "error",
       "name": "OverflowUint256ToInt256",
       "inputs": []
     },
     {
       "type": "error",
       "name": "OverflowUint256ToUint128",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint32ToInt32",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint64ToInt64",
       "inputs": []
     },
     {
@@ -349,10 +369,5 @@
       ],
       "outputs": []
     }
-  ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xf128e37b083b53a501a6e5fa521ac8406e4597f8e82e639c36da6456498f5ac5",
-  "sourceName": "contracts/modules/core/RewardsManagerModule.sol",
-  "contractName": "RewardsManagerModule",
-  "deployedOn": "contract.RewardsManagerModule"
+  ]
 }

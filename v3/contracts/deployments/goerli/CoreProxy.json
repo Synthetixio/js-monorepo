@@ -1,5 +1,5 @@
 {
-  "address": "0x0E9628026e53f4c805073d85554A87dBd2011268",
+  "address": "0xF2CE6299806462Ad101136428b696eD06fBa1E48",
   "abi": [
     {
       "type": "error",
@@ -1095,6 +1095,11 @@
       "inputs": []
     },
     {
+      "type": "error",
+      "name": "OverflowUint256ToUint64",
+      "inputs": []
+    },
+    {
       "type": "event",
       "anonymous": false,
       "name": "Deposited",
@@ -1674,12 +1679,7 @@
     {
       "type": "error",
       "name": "InsufficientMappedAmount",
-      "inputs": [
-        {
-          "type": "int256",
-          "name": "scaleModifier"
-        }
-      ]
+      "inputs": []
     },
     {
       "type": "error",
@@ -2108,6 +2108,25 @@
     },
     {
       "type": "function",
+      "name": "getMarketCollateralValue",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint128",
+          "name": "marketId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "type": "function",
       "name": "getMaximumMarketCollateral",
       "constant": true,
       "stateMutability": "view",
@@ -2367,7 +2386,7 @@
     },
     {
       "type": "function",
-      "name": "getWithdrawableUsd",
+      "name": "getWithdrawableMarketUsd",
       "constant": true,
       "stateMutability": "view",
       "payable": false,
@@ -2986,6 +3005,26 @@
       "outputs": []
     },
     {
+      "type": "error",
+      "name": "OverflowInt128ToInt32",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt32ToUint32",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint32ToInt32",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint64ToInt64",
+      "inputs": []
+    },
+    {
       "type": "event",
       "anonymous": false,
       "name": "RewardsClaimed",
@@ -3568,9 +3607,5 @@
         }
       ]
     }
-  ],
-  "deployTxnHash": "0x8790974c79cccdbcf85ef2f0bd4c730009a9adbaf1a849064b00c9e6ae728396",
-  "sourceName": "",
-  "contractName": "",
-  "deployedOn": "invoke.upgrade_core_proxy"
+  ]
 }
