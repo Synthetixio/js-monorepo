@@ -1,0 +1,490 @@
+{
+  "address": "0xAB9528e2Ec98CFc928aF8BE2EC21aab72D281ec4",
+  "abi": [
+    {
+      "type": "error",
+      "name": "AlreadyInitialized",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ImplementationIsSterile",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "implementation"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "NoChange",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "NotAContract",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "contr"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "NotNominated",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "addr"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "addr"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "UpgradeSimulationFailed",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ZeroAddress",
+      "inputs": []
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "OwnerChanged",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "oldOwner",
+          "indexed": false
+        },
+        {
+          "type": "address",
+          "name": "newOwner",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "OwnerNominated",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "newOwner",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "Upgraded",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "self",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "implementation",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "acceptOwnership",
+      "constant": false,
+      "payable": false,
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getImplementation",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "initializeOwnerModule",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "initialOwner"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "isOwnerModuleInitialized",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "nominateNewOwner",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "newNominatedOwner"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "nominatedOwner",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "owner",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "renounceNomination",
+      "constant": false,
+      "payable": false,
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "simulateUpgradeTo",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "newImplementation"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "upgradeTo",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "address",
+          "name": "newImplementation"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "error",
+      "name": "DeviationToleranceExceeded",
+      "inputs": [
+        {
+          "type": "int256",
+          "name": "deviation"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "IncorrectExternalNodeInterface",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "externalNode"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidNodeDefinition",
+      "inputs": [
+        {
+          "type": "tuple",
+          "name": "nodeType",
+          "components": [
+            {
+              "type": "uint8",
+              "name": "nodeType"
+            },
+            {
+              "type": "bytes",
+              "name": "parameters"
+            },
+            {
+              "type": "bytes32[]",
+              "name": "parents"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidPrice",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "NodeNotRegistered",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "nodeId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt256ToUint256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowInt56ToInt24",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToInt256",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint256ToUint160",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OverflowUint56ToInt56",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "StalenessToleranceExceeded",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "UnprocessableNode",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "nodeId"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "UnsupportedOperation",
+      "inputs": [
+        {
+          "type": "uint8",
+          "name": "operation"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "NodeRegistered",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "nodeId",
+          "indexed": false
+        },
+        {
+          "type": "uint8",
+          "name": "nodeType",
+          "indexed": false
+        },
+        {
+          "type": "bytes",
+          "name": "parameters",
+          "indexed": false
+        },
+        {
+          "type": "bytes32[]",
+          "name": "parents",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getNode",
+      "constant": true,
+      "stateMutability": "pure",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "nodeId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "tuple",
+          "components": [
+            {
+              "type": "uint8",
+              "name": "nodeType"
+            },
+            {
+              "type": "bytes",
+              "name": "parameters"
+            },
+            {
+              "type": "bytes32[]",
+              "name": "parents"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "getNodeId",
+      "constant": true,
+      "stateMutability": "pure",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint8",
+          "name": "nodeType"
+        },
+        {
+          "type": "bytes",
+          "name": "parameters"
+        },
+        {
+          "type": "bytes32[]",
+          "name": "parents"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bytes32"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "process",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "nodeId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "tuple",
+          "components": [
+            {
+              "type": "int256",
+              "name": "price"
+            },
+            {
+              "type": "uint256",
+              "name": "timestamp"
+            },
+            {
+              "type": "uint256",
+              "name": "__slotAvailableForFutureUse1"
+            },
+            {
+              "type": "uint256",
+              "name": "__slotAvailableForFutureUse2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "registerNode",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "uint8",
+          "name": "nodeType"
+        },
+        {
+          "type": "bytes",
+          "name": "parameters"
+        },
+        {
+          "type": "bytes32[]",
+          "name": "parents"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bytes32"
+        }
+      ]
+    }
+  ],
+  "deployedOn": "router.OracleRouter",
+  "deployTxnHash": "0xad05757c7d6dbfa7c7e6a13421fcca4d7c2f901a27d03e800494514ed6e54f23",
+  "contractName": "OracleRouter",
+  "sourceName": "OracleRouter.sol"
+}

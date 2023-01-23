@@ -1,25 +1,13 @@
 import { Chain } from 'wagmi';
-import { mainnet, optimism, optimismGoerli, goerli, localhost } from 'wagmi/chains';
+import { mainnet, hardhat, optimism, optimismGoerli, goerli, localhost } from 'wagmi/chains';
 
 export const supportedChains: Chain[] = [
-  mainnet,
-  optimism,
+  // mainnet,
+  // optimism,
   optimismGoerli,
   goerli,
-  {
-    id: 13370,
-    name: 'Hardhat',
-    network: 'hardhat',
-    nativeCurrency: {
-      decimals: 18,
-      name: 'Ether',
-      symbol: 'ETH',
-    },
-    rpcUrls: {
-      default: { http: ['http://127.0.0.1:8545'] },
-    },
-  },
-  localhost,
+  // hardhat
+  // localhost,
 ];
 
 export const contracts = {

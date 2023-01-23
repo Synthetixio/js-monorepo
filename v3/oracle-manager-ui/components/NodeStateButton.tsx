@@ -98,6 +98,8 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   return (
     <Flex flexDir="column" alignItems="center">
       <Button
+        size="xs"
+        variant="outline"
         onClick={(e) => {
           e.stopPropagation();
           handleButtonClick();

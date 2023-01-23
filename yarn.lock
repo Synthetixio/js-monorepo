@@ -9836,6 +9836,7 @@ __metadata:
     react-dom: ^18.2.0
     react-hook-form: ^7.41.5
     react-refresh: ^0.14.0
+    react-router-dom: ^6.6.2
     reactflow: ^11.4.0
     recoil: ^0.7.4
     stream-browserify: ^3.0.0

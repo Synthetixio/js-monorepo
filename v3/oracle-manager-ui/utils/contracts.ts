@@ -1,15 +1,16 @@
 import { Contract, utils } from 'ethers';
-import ProxyAbi from '../deployments/Proxy.json';
+import ProxyAbiOPGoerli from '../deployments/420/Proxy.json';
+import ProxyAbiGoerli from '../deployments/5/Proxy.json';
 import { Node } from './types';
 
 function resolveNetworkIdToProxyAddress(networkId: number) {
   switch (networkId) {
     case 5:
-      return ProxyAbi.address;
+      return ProxyAbiGoerli.address;
     case 420:
-      return ProxyAbi.address;
+      return ProxyAbiOPGoerli.address;
     default:
-      return ProxyAbi.address;
+      return ProxyAbiGoerli.address;
   }
 }
 
@@ -44,5 +45,10 @@ export function hashId(node: Node, parents: string[]) {
 }
 
 export const getNodeModuleContract = (signerOrProvider: any, networkId: number) => {
-  return new Contract(resolveNetworkIdToProxyAddress(networkId), ProxyAbi.abi, signerOrProvider);
+  console.log(resolveNetworkIdToProxyAddress(networkId));
+  return new Contract(
+    resolveNetworkIdToProxyAddress(networkId),
+    ProxyAbiGoerli.abi,
+    signerOrProvider
+  );
 };
