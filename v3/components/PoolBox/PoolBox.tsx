@@ -18,7 +18,7 @@ const PoolBoxUi: FC<{
   sevenDaysPoolPerformance?: Wei;
 }> = ({ poolName, poolId, accountId, navigate, sevenDaysPoolPerformance }) => {
   return (
-    <BorderBox p={4}>
+    <BorderBox h="100%" p={4}>
       {poolId ? (
         <Flex justifyContent="space-between">
           <Flex flexDirection="column">

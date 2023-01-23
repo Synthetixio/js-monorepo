@@ -9,6 +9,7 @@ import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
 import { FC } from 'react';
 import { CollateralIcon } from '@snx-v3/icons';
 import { currency } from '@snx-v3/format';
+import { PoolBox } from '@snx-v3/PoolBox';
 
 export const ManageUi: FC<{
   liquidityPosition: LiquidityPosition;
@@ -94,9 +95,7 @@ export const ManageUi: FC<{
               </Text>
             </Flex>
           </BorderBox>
-          <BorderBox px={4} py={2}>
-            Pool Box should be split out to a component from deposit page
-          </BorderBox>
+          <PoolBox />
         </Flex>
       </Flex>
     </Box>
