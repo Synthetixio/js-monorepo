@@ -12,6 +12,7 @@ import { FC, FormEvent, PropsWithChildren, useCallback, useContext } from 'react
 import { useSearchParams } from 'react-router-dom';
 import { Borrow } from './Borrow';
 import { useManagePosition } from '../AccountPositionPage/useManagePosition';
+import { Repay } from './Repay';
 
 const ActionButton: FC<
   PropsWithChildren<{
@@ -49,7 +50,7 @@ const Action: FC<{ manageAction: string }> = ({ manageAction }) => {
     case 'deposit':
       return <Text>Deposit</Text>;
     case 'repay':
-      return <Text>Repay</Text>;
+      return <Repay />;
     case 'withdraw':
       return <Text>Withdraw</Text>;
 
