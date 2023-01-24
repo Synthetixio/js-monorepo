@@ -28,6 +28,7 @@
     "@snx-v3/BorderBox": "workspace:*",
     "@snx-v3/CollateralTypeSelector": "workspace:*",
     "@snx-v3/Constants": "workspace:*",
+    "@snx-v3/ManagePositionContext": "workspace:*",
     "@snx-v3/Multistep": "workspace:*",
     "@snx-v3/NumberInput": "workspace:*",
     "@snx-v3/PoolBox": "workspace:*",
