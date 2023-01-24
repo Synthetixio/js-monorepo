@@ -10,6 +10,7 @@ import { FC } from 'react';
 import { CollateralIcon } from '@snx-v3/icons';
 import { currency } from '@snx-v3/format';
 import { PoolBox } from '@snx-v3/PoolBox';
+import { ManageAction } from './ManageActions';
 
 export const ManageUi: FC<{
   liquidityPosition: LiquidityPosition;
@@ -51,6 +52,7 @@ export const ManageUi: FC<{
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna.
           </Text>
+          <ManageAction />
         </BorderBox>
         <Flex minW="450px" direction="column" gap={2}>
           <BorderBox px={4} py={2} display="flex" gap={1} flexDirection="column">
