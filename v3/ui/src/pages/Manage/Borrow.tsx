@@ -31,7 +31,12 @@ const BorrowUi: FC<{
           snxUSD
         </Text>
         <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>
-          <NumberInput value={debtChange} onChange={(val) => setDebtChange(val)} max={maxDebt} />
+          <NumberInput
+            InputProps={{ isRequired: true }}
+            value={debtChange}
+            onChange={(val) => setDebtChange(val)}
+            max={maxDebt}
+          />
           <Flex flexDirection="column" alignItems="flex-end" fontSize="xs" color="whiteAlpha.700">
             <Flex
               gap="1"
