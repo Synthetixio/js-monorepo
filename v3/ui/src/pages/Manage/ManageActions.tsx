@@ -5,6 +5,7 @@ import { BorrowIcon, DollarCircle } from '@snx-v3/icons';
 import { useParams } from '@snx-v3/useParams';
 import { FC, PropsWithChildren } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { Borrow } from './Borrow';
 
 const ActionButton: FC<
   PropsWithChildren<{
@@ -38,7 +39,7 @@ const ActionButton: FC<
 const Action: FC<{ manageAction: string }> = ({ manageAction }) => {
   switch (manageAction) {
     case 'borrow':
-      return <Text>Borrow</Text>;
+      return <Borrow />;
     case 'deposit':
       return <Text>Deposit</Text>;
     case 'repay':
