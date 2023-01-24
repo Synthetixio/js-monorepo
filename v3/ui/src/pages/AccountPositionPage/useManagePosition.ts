@@ -136,9 +136,9 @@ export const useManagePosition = ({
     }
 
     if (debtChange.gt(0)) {
-      title.push('Mint snxUSD');
+      title.push('Borrow snxUSD');
     } else if (debtChange.lt(0)) {
-      title.push('Burn snxUSD');
+      title.push('Repay snxUSD');
     }
 
     return title;
