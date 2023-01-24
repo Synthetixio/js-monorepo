@@ -136,7 +136,7 @@ export function NetworkController() {
               <Button
                 onClick={openConnectModal}
                 type="button"
-                size={['sm', 'sm', 'sm', 'md']}
+                size="md"
                 ml={2}
                 data-testid="connect-wallet-button"
               >
