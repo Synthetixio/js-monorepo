@@ -1,13 +1,13 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { useCollateralType } from '@snx-v3/useCollateralTypes';
+import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useIsConnected } from '@snx-v3/useBlockchain';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { useEthBalance } from '@snx-v3/useEthBalance';
 import { CollateralTypeSelector } from '@snx-v3/CollateralTypeSelector';
 import { FormEvent, useCallback, useRef, useState, useMemo } from 'react';
-import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
-import { wei } from '@synthetixio/wei';
+import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
+import Wei, { wei } from '@synthetixio/wei';
 import { PercentBadges } from './PercentBadges';
 import { Amount } from '@snx-v3/Amount';
 import { useParams } from '@snx-v3/useParams';
@@ -15,30 +15,41 @@ import { DepositModal } from './DepositModal';
 import { CollateralIcon } from '@snx-v3/icons';
 import { NumberInput } from '@snx-v3/NumberInput';
 
-export function DepositForm(props: { staticCollateral?: boolean }) {
-  const isConnected = useIsConnected();
-  const { openConnectModal } = useConnectModal();
-  const params = useParams();
-  const collateralType = useCollateralType(params.collateralSymbol);
-
+export function DepositFormUi({
+  collateralType,
+  ethBalance,
+  tokenBalance,
+  isConnected,
+  openConnectModal,
+  staticCollateral,
+  poolId,
+  accountId,
+  navigate,
+}: {
+  staticCollateral?: boolean;
+  openConnectModal: (() => void) | undefined;
+  isConnected: boolean;
+  collateralType?: CollateralType;
+  tokenBalance?: Wei;
+  ethBalance?: Wei;
+  poolId?: string;
+  accountId?: string;
+  navigate: NavigateFunction;
+}) {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const navigate = useNavigate();
   const [inputAmount, setInputAmount] = useState(wei(0));
   const [amount, setAmount] = useState(wei(0));
   const [activeBadge, setActiveBadge] = useState(0);
 
-  const tokenBalance = useTokenBalance(collateralType?.tokenAddress);
-  const ethBalance = useEthBalance();
-
   const combinedTokenBalance = useMemo(() => {
     if (collateralType?.symbol !== 'WETH') {
-      return tokenBalance.data;
+      return tokenBalance;
     }
-    if (!tokenBalance.data || !ethBalance.data) {
+    if (!tokenBalance || !ethBalance) {
       return undefined;
     }
-    return tokenBalance.data.add(ethBalance.data);
-  }, [collateralType?.symbol, tokenBalance.data, ethBalance.data]);
+    return tokenBalance.add(ethBalance);
+  }, [collateralType?.symbol, tokenBalance, ethBalance]);
 
   const [isOpenDeposit, setIsOpenDeposit] = useState(false);
   const onSubmit = useCallback(
@@ -56,10 +67,10 @@ export function DepositForm(props: { staticCollateral?: boolean }) {
 
   const onChangeCollateral = useCallback(
     (collateralSymbol: string) => {
-      if (!params.poolId) {
+      if (!poolId) {
         return;
       }
-      if (`${params.collateralSymbol}`.toLowerCase() === `${collateralSymbol}`.toLowerCase()) {
+      if (`${collateralType?.symbol}`.toLowerCase() === `${collateralSymbol}`.toLowerCase()) {
         return;
       }
       setActiveBadge(0);
@@ -68,15 +79,13 @@ export function DepositForm(props: { staticCollateral?: boolean }) {
       inputRef.current?.focus();
       navigate({
         pathname: generatePath('/deposit/:collateralSymbol/:poolId', {
-          poolId: params.poolId,
+          poolId: poolId,
           collateralSymbol,
         }),
-        search: params.accountId
-          ? createSearchParams({ accountId: params.accountId }).toString()
-          : '',
+        search: accountId ? createSearchParams({ accountId }).toString() : '',
       });
     },
-    [navigate, params.accountId, params.collateralSymbol, params.poolId]
+    [navigate, accountId, collateralType?.symbol, poolId]
   );
 
   if (!isConnected) {
@@ -89,7 +98,7 @@ export function DepositForm(props: { staticCollateral?: boolean }) {
     );
   }
 
-  if (!params.poolId || !params.collateralSymbol || !collateralType) {
+  if (!poolId || !collateralType) {
     return null;
   }
 
@@ -99,7 +108,7 @@ export function DepositForm(props: { staticCollateral?: boolean }) {
         <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2}>
           <Flex justifyContent="space-between">
             <Flex alignItems="center">
-              {props.staticCollateral ? (
+              {staticCollateral ? (
                 <>
                   <CollateralIcon symbol={collateralType.symbol} width="24px" height="24px" />
                   <Text fontWeight="600" mx="2">
@@ -108,7 +117,7 @@ export function DepositForm(props: { staticCollateral?: boolean }) {
                 </>
               ) : (
                 <CollateralTypeSelector
-                  collateralSymbol={params.collateralSymbol}
+                  collateralSymbol={collateralType.symbol}
                   onChange={onChangeCollateral}
                 />
               )}
@@ -131,28 +140,28 @@ export function DepositForm(props: { staticCollateral?: boolean }) {
                   gap="1"
                   cursor="pointer"
                   onClick={() => {
-                    if (!tokenBalance.data) {
+                    if (!tokenBalance) {
                       return;
                     }
-                    setInputAmount(tokenBalance.data);
+                    setInputAmount(tokenBalance);
                   }}
                 >
                   <Text>{collateralType.symbol} Balance:</Text>
-                  <Amount value={tokenBalance.data} />
+                  <Amount value={tokenBalance} />
                 </Flex>
                 {collateralType?.symbol === 'WETH' ? (
                   <Flex
                     gap="1"
                     cursor="pointer"
                     onClick={() => {
-                      if (!ethBalance.data) {
+                      if (!ethBalance) {
                         return;
                       }
-                      setInputAmount(ethBalance.data);
+                      setInputAmount(ethBalance);
                     }}
                   >
                     <Text>ETH Balance:</Text>
-                    <Amount value={ethBalance.data} />
+                    <Amount value={ethBalance} />
                   </Flex>
                 ) : null}
               </Flex>
@@ -185,10 +194,10 @@ export function DepositForm(props: { staticCollateral?: boolean }) {
         </Button>
       </Box>
 
-      {params.poolId && collateralType && amount.gt(0) ? (
+      {poolId && collateralType && amount.gt(0) ? (
         <DepositModal
-          accountId={params.accountId}
-          poolId={params.poolId}
+          accountId={accountId}
+          poolId={poolId}
           collateralType={collateralType}
           amount={amount}
           isOpen={isOpenDeposit}
@@ -198,3 +207,26 @@ export function DepositForm(props: { staticCollateral?: boolean }) {
     </>
   );
 }
+
+export const DepositForm = (props: { staticCollateral?: boolean }) => {
+  const navigate = useNavigate();
+  const isConnected = useIsConnected();
+  const { openConnectModal } = useConnectModal();
+  const params = useParams();
+  const collateralType = useCollateralType(params.collateralSymbol);
+  const tokenBalance = useTokenBalance(collateralType?.tokenAddress);
+  const ethBalance = useEthBalance();
+  return (
+    <DepositFormUi
+      staticCollateral={props.staticCollateral}
+      isConnected={isConnected}
+      openConnectModal={openConnectModal}
+      collateralType={collateralType}
+      tokenBalance={tokenBalance.data}
+      ethBalance={ethBalance.data}
+      poolId={params.poolId}
+      accountId={params.accountId}
+      navigate={navigate}
+    />
+  );
+};
