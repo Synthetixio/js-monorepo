@@ -16,15 +16,14 @@ import { useLiquidityPositions } from '@snx-v3/useLiquidityPositions';
 import { CallOverrides } from 'ethers';
 import { useAccounts } from '@snx-v3/useAccounts';
 import { generatePath, useNavigate } from 'react-router-dom';
-import { contracts } from '../../../utils/constants';
 import { useApprove } from '@snx-v3/useApprove';
-import { useContract } from '../../../hooks/useContract';
 import { MulticallCall, useMulticall } from '../../../hooks/useMulticall';
 import { useWrapEth } from '../../../hooks/useWrapEth';
 import { Multistep } from '@snx-v3/Multistep';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { useEthBalance } from '@snx-v3/useEthBalance';
 import { Wei, wei } from '@synthetixio/wei';
+import { useCoreProxy } from '@snx-v3/useCoreProxy';
 
 export function DepositModal({
   accountId,
@@ -42,7 +41,7 @@ export function DepositModal({
   setIsOpen: (isOpen: boolean) => void;
 }) {
   const navigate = useNavigate();
-
+  const { data: CoreProxy } = useCoreProxy();
   const toast = useToast({
     isClosable: true,
     duration: 9000,
@@ -51,8 +50,6 @@ export function DepositModal({
   const [processing, setProcessing] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [failed, setFailed] = useState(false);
-
-  const snxProxy = useContract(contracts.SYNTHETIX_PROXY);
 
   const { wrap, balance: wrapEthBalance, isLoading: wrapEthLoading } = useWrapEth();
   const wrapAmount =
@@ -75,16 +72,16 @@ export function DepositModal({
       ? amount.add(currentLiquidityPosition?.collateralAmount.toBN() || wei(0))
       : amount;
 
-    if (!snxProxy) return [];
+    if (!CoreProxy) return [];
 
     const depositingCalls: MulticallCall[] = [
       {
-        contract: snxProxy.contract,
+        contract: CoreProxy,
         functionName: 'deposit',
         callArgs: [id, collateralType.tokenAddress, amount.toBN()],
       },
       {
-        contract: snxProxy.contract,
+        contract: CoreProxy,
         functionName: 'delegateCollateral',
         callArgs: [
           id,
@@ -100,7 +97,7 @@ export function DepositModal({
 
     if (!Boolean(accountId)) {
       initialCalls.push({
-        contract: snxProxy.contract,
+        contract: CoreProxy,
         functionName: 'createAccount',
         callArgs: [newAccountId],
       });
@@ -115,7 +112,7 @@ export function DepositModal({
     collateralType.tokenAddress,
     liquidityPositions,
     amount,
-    snxProxy,
+    CoreProxy,
   ]);
 
   const ethBalance = useEthBalance();
@@ -181,7 +178,7 @@ export function DepositModal({
     {
       contractAddress: collateralType?.tokenAddress,
       amount: amount.toBN(),
-      spender: snxProxy?.address,
+      spender: CoreProxy?.address,
     },
     {
       onMutate: () => {
