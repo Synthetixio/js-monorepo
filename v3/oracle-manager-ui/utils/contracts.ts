@@ -13,7 +13,6 @@ function resolveNetworkIdToProxyAddress(networkId: number) {
       return ProxyAbiGoerli.address;
   }
 }
-
 export function encodeBytesByNodeType(id: number, parameters: any[]) {
   switch (id) {
     case 1:
@@ -21,11 +20,11 @@ export function encodeBytesByNodeType(id: number, parameters: any[]) {
     case 2:
       return utils.defaultAbiCoder.encode(['address'], parameters);
     case 3:
-      return utils.defaultAbiCoder.encode(['address', 'uint'], parameters);
+      return utils.defaultAbiCoder.encode(['address', 'uint', 'uint8'], parameters);
     case 4:
       return utils.defaultAbiCoder.encode(['address', 'address', 'address', 'uint'], parameters);
     case 5:
-      return utils.defaultAbiCoder.encode(['address', 'string', 'bool'], parameters);
+      return utils.defaultAbiCoder.encode(['address', 'bytes32', 'bool'], parameters);
     case 6:
       return utils.defaultAbiCoder.encode(['uint'], parameters);
     case 7:
@@ -45,7 +44,6 @@ export function hashId(node: Node, parents: string[]) {
 }
 
 export const getNodeModuleContract = (signerOrProvider: any, networkId: number) => {
-  console.log(resolveNetworkIdToProxyAddress(networkId));
   return new Contract(
     resolveNetworkIdToProxyAddress(networkId),
     ProxyAbiGoerli.abi,

@@ -60,8 +60,9 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
         <ChainLinkForm
           address={node?.parameters[0]}
           twap={node?.parameters[1]}
-          getValuesFromForm={(address, twap) => {
-            setValue('nodeParameters', [address, twap]);
+          decimals={node?.parameters[2]}
+          getValuesFromForm={(address, twap, decimals) => {
+            setValue('nodeParameters', [address, twap, decimals]);
           }}
         />
       );

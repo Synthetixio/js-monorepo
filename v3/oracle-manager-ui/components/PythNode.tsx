@@ -101,7 +101,7 @@ export const PythNode: FC<{ data: { label: string }; id: string }> = ({ data, id
             Price Feed:
           </Text>
           <Text fontSize="xs" color="whiteAlpha.800">
-            {node?.parameters[1]}
+            {shortAddress(node?.parameters[1])}
           </Text>
         </Flex>
         <Flex gap="2">

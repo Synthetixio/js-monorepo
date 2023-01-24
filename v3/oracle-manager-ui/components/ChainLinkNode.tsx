@@ -84,6 +84,14 @@ export const ChainLinkNode: FC<{ data: { label: string }; id: string }> = ({ dat
             {node?.parameters[1]} Seconds
           </Text>
         </Flex>
+        <Flex gap="2">
+          <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
+            Decimals:
+          </Text>
+          <Text fontSize="xs" color="whiteAlpha.800">
+            {node?.parameters[2]}
+          </Text>
+        </Flex>
       </Flex>
       {node && <NodeStateButton node={node} />}
       <Handle

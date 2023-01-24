@@ -1,21 +1,22 @@
-import { Button, Flex, Text } from '@chakra-ui/react';
-import { Contract } from 'ethers';
-import type { providers } from 'ethers';
+import { Button, Flex, Text, useToast } from '@chakra-ui/react';
+import { providers, utils } from 'ethers';
 import { FC, useCallback, useEffect, useState } from 'react';
-import { useAccount, useSigner } from 'wagmi';
+import { useAccount, useNetwork, useSigner } from 'wagmi';
 import { encodeBytesByNodeType, getNodeModuleContract, hashId } from '../utils/contracts';
 import { Node } from '../utils/types';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
+import { shortAddress } from '../utils/addresses';
 
 export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   const [nodes] = useRecoilState(nodesState);
   const [nodeState, setNodeState] = useState<'registerNode' | 'nodeRegistered'>('registerNode');
-  const [contract, setContract] = useState<null | Contract>(null);
   const [nodeId, setNodeId] = useState('');
   const [price, setPrice] = useState('0');
-  const signer = useSigner();
+  const { data: signer } = useSigner();
+  const { chain } = useNetwork();
   const { isConnected } = useAccount();
+  const toast = useToast();
 
   const findParentNode = useCallback(
     (parentId: string) => {
@@ -29,12 +30,10 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   );
 
   useEffect(() => {
-    if (isConnected && signer.data) {
+    if (isConnected && signer) {
       const fetchNodeState = async () => {
-        const chainId = await signer.data?.getChainId();
-        if (chainId) {
-          const contract = getNodeModuleContract(signer.data, chainId);
-          setContract(contract);
+        if (chain?.id) {
+          const contract = getNodeModuleContract(signer, chain.id);
           const hashedId = hashId(node, node.parents.map(findParentNode));
           try {
             const node = await contract.getNode(hashedId);
@@ -42,11 +41,17 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
               const nodeID = await contract.getNodeId(node[0], node[1], node[2]);
               setNodeId(nodeID);
               setNodeState('nodeRegistered');
+              const price = await contract.process(nodeId);
+              setPrice(utils.formatEther(price[0]));
+              setInterval(async () => {
+                const price = await contract.process(nodeId);
+                setPrice(utils.formatEther(price[0]));
+              }, 10000);
             } else {
               setNodeState('registerNode');
             }
           } catch (error) {
-            console.error(error);
+            console.error('getNode errored', error);
             setNodeState('registerNode');
           }
         }
@@ -56,59 +61,86 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   }, [
     node,
     isConnected,
-    signer.isSuccess,
-    signer.data,
+    signer,
+    chain?.id,
     findParentNode,
     node.typeId,
     node.parameters,
     node.parents,
+    nodeId,
   ]);
 
   const handleButtonClick = async () => {
-    if (nodeState === 'registerNode' && contract) {
-      const tx: providers.TransactionResponse = await contract.registerNode(
-        node.typeId,
-        encodeBytesByNodeType(node.typeId, node.parameters),
-        node.parents.map(findParentNode)
-      );
-      await tx.wait(1);
-      const nodeID = await contract.getNodeId(
-        node.typeId,
-        encodeBytesByNodeType(node.typeId, node.parameters),
-        node.parents.map(findParentNode)
-      );
-      if (nodeID) {
-        setNodeId(nodeID);
-        setNodeState('nodeRegistered');
+    if (nodeState === 'registerNode') {
+      const chainId = await signer?.getChainId();
+      if (chainId) {
+        const contract = getNodeModuleContract(signer, chainId);
+        const tx: providers.TransactionResponse = await contract.registerNode(
+          node.typeId,
+          encodeBytesByNodeType(node.typeId, node.parameters),
+          node.parents.map(findParentNode)
+        );
+        await tx.wait(1);
+        const nodeID = await contract.getNodeId(
+          node.typeId,
+          encodeBytesByNodeType(node.typeId, node.parameters),
+          node.parents.map(findParentNode)
+        );
+        if (nodeID) {
+          setNodeId(nodeID);
+          setNodeState('nodeRegistered');
+        }
       }
-    }
-    if (nodeState === 'nodeRegistered' && contract) {
-      const price = await contract.process(hashId(node, node.parents.map(findParentNode)));
-      setPrice(price[0].toString());
     }
   };
 
   const renderText = useCallback(() => {
     if (!isConnected) return <Text>Please connect your wallet</Text>;
     if (nodeState === 'registerNode') return <Text>Register Node</Text>;
-    if (nodeState === 'nodeRegistered') return <Text>Click for price update</Text>;
+    if (nodeState === 'nodeRegistered') return '';
     return 'Something went wrong';
   }, [nodeState, isConnected]);
 
   return (
     <Flex flexDir="column" alignItems="center">
-      <Button
-        size="xs"
-        variant="outline"
+      {nodeState !== 'nodeRegistered' && (
+        <Button
+          size="xs"
+          variant="outline"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleButtonClick();
+          }}
+        >
+          {renderText()}
+        </Button>
+      )}
+      {price !== '0' && (
+        <Flex gap="2">
+          <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
+            Price:
+          </Text>
+          <Text fontSize="xs" color="whiteAlpha.800">
+            {price}
+          </Text>
+        </Flex>
+      )}
+      <Text
+        fontSize="xx-small"
+        mt="2"
+        _hover={{ opacity: 0.5 }}
         onClick={(e) => {
           e.stopPropagation();
-          handleButtonClick();
+          toast({
+            title: 'Copy ID to clipboard',
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          });
         }}
       >
-        {renderText()}
-      </Button>
-      <Text>{price !== '0' && price}</Text>
-      <Text fontSize="xx-small">{!!nodeId && <Text>Node ID: {nodeId}</Text>}</Text>
+        {!!nodeId && <Text>Node ID: {shortAddress(nodeId)}</Text>}
+      </Text>
     </Flex>
   );
 };
