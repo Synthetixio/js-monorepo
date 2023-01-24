@@ -1,5 +1,5 @@
 import { Chain } from 'wagmi';
-import { mainnet, hardhat, optimism, optimismGoerli, goerli, localhost } from 'wagmi/chains';
+import { optimismGoerli, goerli } from 'wagmi/chains';
 
 export const supportedChains: Chain[] = [
   // mainnet,
