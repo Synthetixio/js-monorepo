@@ -49,7 +49,7 @@ const BorrowUi: FC<{
           </Flex>
         </Flex>
       </BorderBox>
-      <Button>Borrow snxUSD</Button>
+      <Button type="submit">Borrow snxUSD</Button>
     </Flex>
   );
 };
