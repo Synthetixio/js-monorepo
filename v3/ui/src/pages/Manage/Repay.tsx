@@ -53,7 +53,7 @@ export const RepayUi: FC<{
           </Flex>
         </Flex>
       </BorderBox>
-      <Button type="submit">Borrow snxUSD</Button>
+      <Button type="submit">Repay snxUSD</Button>
     </Flex>
   );
 };
