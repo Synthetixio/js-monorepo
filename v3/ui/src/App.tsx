@@ -31,7 +31,7 @@ export const Synthetix: FC = () => {
             element={<AccountPositionPage />}
           />
           <Route
-            path="new/accounts/:accountId/positions/:collateral/:poolId"
+            path="new/accounts/:accountId/positions/:collateralSymbol/:poolId"
             element={<Manage />}
           />
           <Route path="/deposit/:collateralSymbol/:poolId" element={<Deposit />} />
