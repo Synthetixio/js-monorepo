@@ -69,7 +69,7 @@ export const StalenessFallbackReducerNode: FC<{ data: { label: string }; id: str
       </Flex>
       {node && <NodeStateButton node={node} />}
       <Handle
-        type="source"
+        type="target"
         isValidConnection={() => true}
         position={Position.Top}
         style={{ background: '#077250' }}

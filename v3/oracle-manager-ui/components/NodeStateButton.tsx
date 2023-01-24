@@ -13,6 +13,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   const [nodeState, setNodeState] = useState<'registerNode' | 'nodeRegistered'>('registerNode');
   const [nodeId, setNodeId] = useState('');
   const [price, setPrice] = useState('0');
+  const [time, setTime] = useState(new Date());
   const { data: signer } = useSigner();
   const { chain } = useNetwork();
   const { isConnected } = useAccount();
@@ -43,16 +44,30 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
               setNodeState('nodeRegistered');
               const price = await contract.process(nodeId);
               setPrice(utils.formatEther(price[0]));
+              setTime(() => {
+                const newDate = new Date(1970, 0, 1);
+                newDate.setSeconds(price[1].toNumber());
+                return newDate;
+              });
               setInterval(async () => {
                 const price = await contract.process(nodeId);
+                setTime(() => {
+                  const newDate = new Date(1970, 0, 1);
+                  newDate.setSeconds(price[1].toNumber());
+                  return newDate;
+                });
                 setPrice(utils.formatEther(price[0]));
               }, 10000);
             } else {
               setNodeState('registerNode');
+              setPrice('');
+              setTime(new Date());
             }
           } catch (error) {
             console.error('getNode errored', error);
             setNodeState('registerNode');
+            setPrice('');
+            setTime(new Date());
           }
         }
       };
@@ -115,13 +130,19 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
           {renderText()}
         </Button>
       )}
-      {price !== '0' && (
-        <Flex gap="2">
+      {price !== '0' && !!price && (
+        <Flex gap="2" flexDir="column">
           <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
             Price:
           </Text>
           <Text fontSize="xs" color="whiteAlpha.800">
             {price}
+          </Text>
+          <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
+            Timestamp:
+          </Text>
+          <Text fontSize="xs" color="whiteAlpha.800">
+            {time.toLocaleTimeString()} - {time.toLocaleDateString()}
           </Text>
         </Flex>
       )}
