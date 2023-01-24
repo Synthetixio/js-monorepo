@@ -59,7 +59,20 @@ export function NumberInput({
       flex="1"
       type="text"
       border="none"
-      placeholder="0.0"
+      borderWidth="0px"
+      textAlign="end"
+      p={0}
+      outline="none"
+      fontFamily="heading"
+      fontSize="xl"
+      fontWeight="black"
+      lineHeight="2xl"
+      color="white"
+      height="unset"
+      autoFocus={true}
+      placeholder="Enter Amount"
+      _focus={{ boxShadow: 'none !important' }}
+      _placeholder={{ color: 'whiteAlpha.700' }}
       value={inputValue}
       onChange={onInputChange}
       {...InputProps}

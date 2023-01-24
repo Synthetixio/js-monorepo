@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useIsConnected } from '@snx-v3/useBlockchain';
@@ -8,22 +8,22 @@ import { CollateralTypeSelector } from '@snx-v3/CollateralTypeSelector';
 import { FormEvent, useCallback, useRef, useState, useMemo } from 'react';
 import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
 import { wei } from '@synthetixio/wei';
-import { numberWithCommas } from '@snx-v2/formatters';
 import { PercentBadges } from './PercentBadges';
 import { Amount } from '@snx-v3/Amount';
 import { useParams } from '@snx-v3/useParams';
 import { DepositModal } from './DepositModal';
+import { CollateralIcon } from '@snx-v3/icons';
+import { NumberInput } from '@snx-v3/NumberInput';
 
-export function DepositForm() {
+export function DepositForm(props: { staticCollateral?: boolean }) {
   const isConnected = useIsConnected();
   const { openConnectModal } = useConnectModal();
-
   const params = useParams();
   const collateralType = useCollateralType(params.collateralSymbol);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
-  const [inputAmount, setInputAmount] = useState('');
+  const [inputAmount, setInputAmount] = useState(wei(0));
   const [amount, setAmount] = useState(wei(0));
   const [activeBadge, setActiveBadge] = useState(0);
 
@@ -64,7 +64,7 @@ export function DepositForm() {
       }
       setActiveBadge(0);
       setAmount(wei(0));
-      setInputAmount('');
+      setInputAmount(wei(0));
       inputRef.current?.focus();
       navigate({
         pathname: generatePath('/deposit/:collateralSymbol/:poolId', {
@@ -105,41 +105,11 @@ export function DepositForm() {
               />
             </Flex>
             <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>
-              <Input
-                ref={inputRef}
-                borderWidth="0px"
-                type="text"
-                textAlign="end"
-                p={0}
-                outline="none"
-                fontFamily="heading"
-                fontSize="xl"
-                fontWeight="black"
-                lineHeight="2xl"
-                color="white"
-                height="unset"
-                autoFocus={true}
-                placeholder="Enter Amount"
-                _focus={{ boxShadow: 'none !important' }}
-                _placeholder={{ color: 'whiteAlpha.700' }}
-                required
-                value={numberWithCommas(inputAmount)}
-                onChange={(e) => {
-                  const value = e.target.value.replaceAll(',', '');
+              <NumberInput
+                value={inputAmount}
+                onChange={(value) => {
                   setActiveBadge(0);
                   setInputAmount(value);
-                  try {
-                    const currentAmount = wei(value || 0);
-                    if (combinedTokenBalance?.lt(currentAmount)) {
-                      e.target.setCustomValidity('Insufficient balance');
-                    } else if (currentAmount.gt(0)) {
-                      e.target.setCustomValidity('');
-                    } else {
-                      e.target.setCustomValidity('Value is required');
-                    }
-                  } catch (_error) {
-                    e.target.setCustomValidity('Invalid value');
-                  }
                 }}
               />
               <Flex
@@ -155,7 +125,7 @@ export function DepositForm() {
                     if (!tokenBalance.data) {
                       return;
                     }
-                    setInputAmount(tokenBalance.data.toString());
+                    setInputAmount(tokenBalance.data);
                   }}
                 >
                   <Text>{collateralType.symbol} Balance:</Text>
@@ -169,7 +139,7 @@ export function DepositForm() {
                       if (!ethBalance.data) {
                         return;
                       }
-                      setInputAmount(ethBalance.data.toString());
+                      setInputAmount(ethBalance.data);
                     }}
                   >
                     <Text>ETH Balance:</Text>
@@ -186,16 +156,16 @@ export function DepositForm() {
                 return;
               }
               if (activeBadge === badgeNum) {
-                setInputAmount('');
+                setInputAmount(wei(0));
                 setActiveBadge(0);
                 return;
               }
               setActiveBadge(badgeNum);
               if (badgeNum === 1) {
                 // Make sure we're not left with dust
-                setInputAmount(combinedTokenBalance.toString());
+                setInputAmount(combinedTokenBalance);
               } else {
-                setInputAmount(combinedTokenBalance.mul(badgeNum).toString(2));
+                setInputAmount(combinedTokenBalance.mul(badgeNum));
               }
             }}
             activeBadge={activeBadge}
