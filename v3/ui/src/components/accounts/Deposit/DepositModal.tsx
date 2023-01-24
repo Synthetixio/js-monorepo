@@ -178,7 +178,7 @@ export function DepositModal({
     {
       contractAddress: collateralType?.tokenAddress,
       amount: amount.toBN(),
-      spender: snxProxy?.address,
+      spender: CoreProxy?.address,
     },
     {
       onMutate: () => {
