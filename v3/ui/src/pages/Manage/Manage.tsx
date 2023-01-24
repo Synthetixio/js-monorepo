@@ -11,6 +11,7 @@ import { CollateralIcon } from '@snx-v3/icons';
 import { currency } from '@snx-v3/format';
 import { PoolBox } from '@snx-v3/PoolBox';
 import { ManageAction } from './ManageActions';
+import { ManagePositionProvider } from '@snx-v3/ManagePositionContext';
 
 export const ManageUi: FC<{
   liquidityPosition: LiquidityPosition;
@@ -115,5 +116,9 @@ export const Manage = () => {
   if (!collateralType || !liquidityPosition) {
     return <Spinner />; // TODO skeleton
   }
-  return <ManageUi liquidityPosition={liquidityPosition} collateralType={collateralType} />;
+  return (
+    <ManagePositionProvider>
+      <ManageUi liquidityPosition={liquidityPosition} collateralType={collateralType} />
+    </ManagePositionProvider>
+  );
 };
