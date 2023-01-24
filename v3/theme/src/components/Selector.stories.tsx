@@ -1,7 +1,7 @@
 import { InfoIcon } from '@chakra-ui/icons';
-import Selector from '../components/Selector';
+import Selector from './Selector';
 import { ButtonProps } from '@chakra-ui/react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 export default {
   title: 'Selector',

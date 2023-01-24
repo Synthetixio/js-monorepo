@@ -50,6 +50,7 @@ pids
 **/.coverage_contracts
 **/dist
 **/node_modules
+**/storybook-static
 
 staged-txns.txt
 
