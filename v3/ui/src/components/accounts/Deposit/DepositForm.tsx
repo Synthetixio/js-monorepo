@@ -99,10 +99,19 @@ export function DepositForm(props: { staticCollateral?: boolean }) {
         <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" p={2}>
           <Flex justifyContent="space-between">
             <Flex alignItems="center">
-              <CollateralTypeSelector
-                collateralSymbol={params.collateralSymbol}
-                onChange={onChangeCollateral}
-              />
+              {props.staticCollateral ? (
+                <>
+                  <CollateralIcon symbol={collateralType.symbol} width="24px" height="24px" />
+                  <Text fontWeight="600" mx="2">
+                    {collateralType.displaySymbol}
+                  </Text>
+                </>
+              ) : (
+                <CollateralTypeSelector
+                  collateralSymbol={params.collateralSymbol}
+                  onChange={onChangeCollateral}
+                />
+              )}
             </Flex>
             <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>
               <NumberInput
