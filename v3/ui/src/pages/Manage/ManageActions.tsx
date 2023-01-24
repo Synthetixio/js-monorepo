@@ -137,7 +137,11 @@ export const ManageAction = () => {
   return (
     <ManageActionUi
       onSubmit={onSubmit}
-      setActiveAction={(action) => setQueryParam({ manageAction: action })}
+      setActiveAction={(action) => {
+        setCollateralChange(wei(0));
+        setDebtChange(wei(0));
+        setQueryParam({ manageAction: action });
+      }}
       manageAction={params.manageAction}
     />
   );
