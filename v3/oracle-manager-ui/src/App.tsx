@@ -16,12 +16,16 @@ import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 import { convertStateToQueryParam } from '../utils/url';
 import { NodeFormModule } from '../components/NodeFormModule';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 export const App: FC = () => {
   const [nodes] = useRecoilState(nodesState);
   const { colorMode, toggleColorMode } = useColorMode();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { register, getValues } = useForm({ defaultValues: { search: '' } });
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (colorMode === 'light') {
@@ -41,8 +45,28 @@ export const App: FC = () => {
             Search for existing Nodes here:
           </Text>
           <Flex>
-            <Input placeholder="Enter Node ID" bg="whiteAlpha.300" minW="340px" />
-            <Button variant="outline">Search</Button>
+            <Input
+              placeholder="Enter Node ID"
+              bg="whiteAlpha.300"
+              minW="340px"
+              {...register('search')}
+            />
+            <Button
+              variant="outline"
+              onClick={() => {
+                const nodeId = getValues('search').trim();
+                if (nodeId.startsWith('0x')) navigate('node/' + nodeId);
+                else
+                  toast({
+                    title: 'Invalid node id',
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                  });
+              }}
+            >
+              Search
+            </Button>
           </Flex>
         </Flex>
       </Flex>
@@ -87,15 +111,7 @@ export const App: FC = () => {
         </Flex>
       </Flex>
       <NodeFormModule isOpen={isOpen} onClose={onClose} />
-      <Box
-        bg="whiteAlpha.50"
-        borderStyle="solid"
-        borderColor="gray.900"
-        borderWidth="1px"
-        borderRadius="3px"
-      >
-        <Chart />
-      </Box>
+      <Chart />
     </Box>
   );
 };

@@ -166,9 +166,18 @@ export const Chart: FC = () => {
       });
     }
     // eslint-disable-next-line
-  }, []);
+  }, [nodes]);
   return (
-    <Box w="100%" h="800px" position="relative">
+    <Box
+      bg="whiteAlpha.50"
+      borderStyle="solid"
+      borderColor="gray.900"
+      borderWidth="1px"
+      borderRadius="3px"
+      w="100%"
+      h="800px"
+      position="relative"
+    >
       <ReactFlow
         nodeTypes={NODE_TYPES}
         nodes={nodes}

@@ -13,6 +13,7 @@ import * as rainbowkitStyles from '@rainbow-me/rainbowkit/styles.css';
 import { App } from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Header } from '../components/Header';
+import { RegisteredNode } from './RegisteredNode';
 
 const { chains, provider } = configureChains(supportedChains, [
   infuraProvider({ apiKey: INFURA_KEY, priority: 0 }),
@@ -57,6 +58,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
   },
+  { path: 'node/:nodeId', element: <RegisteredNode /> },
 ]);
 const container = document.querySelector('#app');
 

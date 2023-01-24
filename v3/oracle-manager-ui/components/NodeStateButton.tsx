@@ -152,6 +152,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
         _hover={{ opacity: 0.5 }}
         onClick={(e) => {
           e.stopPropagation();
+          navigator.clipboard.writeText(nodeId);
           toast({
             title: 'Copy ID to clipboard',
             status: 'success',

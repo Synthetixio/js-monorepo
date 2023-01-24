@@ -137,8 +137,8 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
       }}
     >
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>{node ? `Update Node ${node.id}` : 'New Node'}</ModalHeader>
+      <ModalContent bg="gray.900">
+        <ModalHeader textAlign="center">{node ? `Update Node ${node.id}` : 'New Node'}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Flex flexDir="column">
@@ -160,72 +160,77 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
           </Flex>
         </ModalBody>
         <ModalFooter>
-          {node && (
+          <Flex justifyContent="center" width="100%">
+            {node && (
+              <Button
+                variant="outline"
+                mr="2"
+                onClick={() => {
+                  setNodes((state) => {
+                    const newState = state
+                      .filter((s) => s.id !== node.id)
+                      .map((s) => {
+                        if (s.parents.includes(node.id)) {
+                          return {
+                            ...s,
+                            parents: s.parents.filter((parent) => parent !== node.id),
+                          };
+                        }
+                        return s;
+                      });
+                    return newState;
+                  });
+                  onClose();
+                }}
+              >
+                Delete Node
+              </Button>
+            )}
             <Button
-              variant="outline"
-              mr="2"
               onClick={() => {
-                setNodes((state) => {
-                  const newState = state
-                    .filter((s) => s.id !== node.id)
-                    .map((s) => {
-                      if (s.parents.includes(node.id)) {
-                        return { ...s, parents: s.parents.filter((parent) => parent !== node.id) };
-                      }
-                      return s;
-                    });
-                  return newState;
-                });
-                onClose();
-              }}
-            >
-              Delete Node
-            </Button>
-          )}
-          <Button
-            onClick={() => {
-              if (node) {
-                setNodes((state) =>
-                  state
-                    .filter((s) => s.id !== node.id)
-                    .concat({
-                      ...node,
-                      typeId: typeToTypeId(getValues('oracleNodeType')!),
+                if (node) {
+                  setNodes((state) =>
+                    state
+                      .filter((s) => s.id !== node.id)
+                      .concat({
+                        ...node,
+                        typeId: typeToTypeId(getValues('oracleNodeType')!),
+                        type: getValues('oracleNodeType')!,
+                        parents: getValues('nodeParents'),
+                        parameters: getValues('nodeParameters'),
+                        data: { label: getValues('nodeLabel') || '' },
+                      })
+                  );
+                  onClose();
+                } else if (!node) {
+                  setNodes([
+                    ...nodes,
+                    {
                       type: getValues('oracleNodeType')!,
+                      typeId: typeToTypeId(getValues('oracleNodeType')!),
                       parents: getValues('nodeParents'),
                       parameters: getValues('nodeParameters'),
                       data: { label: getValues('nodeLabel') || '' },
-                    })
-                );
-                onClose();
-              } else if (!node) {
-                setNodes([
-                  ...nodes,
-                  {
-                    type: getValues('oracleNodeType')!,
-                    typeId: typeToTypeId(getValues('oracleNodeType')!),
-                    parents: getValues('nodeParents'),
-                    parameters: getValues('nodeParameters'),
-                    data: { label: getValues('nodeLabel') || '' },
-                    id: Math.random().toString(16).slice(2),
-                    position: { x: 200, y: 100 },
-                    source: '',
-                    target: '',
-                  },
-                ]);
-                onClose();
-              } else {
-                toast({
-                  title: 'Node type or label not defined',
-                  status: 'error',
-                  duration: 9000,
-                  isClosable: true,
-                });
-              }
-            }}
-          >
-            Save Node
-          </Button>
+                      id: Math.random().toString(16).slice(2),
+                      position: { x: 200, y: 100 },
+                      source: '',
+                      target: '',
+                    },
+                  ]);
+                  onClose();
+                } else {
+                  toast({
+                    title: 'Node type or label not defined',
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                  });
+                }
+              }}
+            >
+              Save Node
+            </Button>
+          </Flex>
         </ModalFooter>
       </ModalContent>
     </Modal>

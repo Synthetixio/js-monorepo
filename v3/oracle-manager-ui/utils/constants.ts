@@ -37,7 +37,7 @@ export const ORACLE_NODE_TYPES: {
 }[] = [
   {
     value: 'chainLink',
-    label: 'Chain Link',
+    label: 'ChainLink',
     nodeType: 3,
     numberOfParents: 0,
     parameters: [
