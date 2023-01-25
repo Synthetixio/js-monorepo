@@ -56,13 +56,17 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
                 return newDate;
               });
               interval = setInterval(async () => {
-                const price = await contract.process(nodeId);
-                setTime(() => {
-                  const newDate = new Date(1970, 0, 1);
-                  newDate.setSeconds(price[1].toNumber());
-                  return newDate;
-                });
-                setPrice(utils.formatEther(price[0]));
+                try {
+                  const price = await contract.process(nodeID);
+                  setTime(() => {
+                    const newDate = new Date(1970, 0, 1);
+                    newDate.setSeconds(price[1].toNumber());
+                    return newDate;
+                  });
+                  setPrice(utils.formatEther(price[0]));
+                } catch (error) {
+                  console.error('interval for price fetching errored ', error);
+                }
               }, 10000);
             } else {
               setNodeState('registerNode');

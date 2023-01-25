@@ -26,6 +26,7 @@ import { ExternalNodeForm } from './ExternalNodeForm';
 import { StalenessFallbackReducerForm } from './StalenessFallbackReducerForm';
 import { UniswapForm } from './UniswapForm';
 import { PriceDeviationCircuitBreakerForm } from './PriceDeviationCircuitBreakerForm';
+import { hashId } from '../utils/contracts';
 
 export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: Node }> = ({
   isOpen,
@@ -203,18 +204,22 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                   );
                   onClose();
                 } else if (!node) {
+                  const newNode = {
+                    type: getValues('oracleNodeType')!,
+                    typeId: typeToTypeId(getValues('oracleNodeType')!),
+                    parents: getValues('nodeParents'),
+                    parameters: getValues('nodeParameters'),
+                    data: { label: getValues('nodeLabel') || '' },
+                    id: '',
+                    position: { x: 200, y: 100 },
+                    source: '',
+                    target: '',
+                  };
                   setNodes([
                     ...nodes,
                     {
-                      type: getValues('oracleNodeType')!,
-                      typeId: typeToTypeId(getValues('oracleNodeType')!),
-                      parents: getValues('nodeParents'),
-                      parameters: getValues('nodeParameters'),
-                      data: { label: getValues('nodeLabel') || '' },
-                      id: Math.random().toString(16).slice(2),
-                      position: { x: 200, y: 100 },
-                      source: '',
-                      target: '',
+                      ...newNode,
+                      id: hashId(newNode, newNode.parents),
                     },
                   ]);
                   onClose();
