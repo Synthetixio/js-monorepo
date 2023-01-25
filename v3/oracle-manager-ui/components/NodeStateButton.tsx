@@ -8,6 +8,8 @@ import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 import { shortAddress } from '../utils/addresses';
 
+let interval: any;
+
 export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   const [nodes] = useRecoilState(nodesState);
   const [nodeState, setNodeState] = useState<'registerNode' | 'nodeRegistered'>('registerNode');
@@ -37,9 +39,13 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
           const contract = getNodeModuleContract(signer, chain.id);
           const hashedId = hashId(node, node.parents.map(findParentNode));
           try {
-            const node = await contract.getNode(hashedId);
-            if (node[0] > 0) {
-              const nodeID = await contract.getNodeId(node[0], node[1], node[2]);
+            const nodeFromChain = await contract.getNode(hashedId);
+            if (nodeFromChain[0] > 0) {
+              const nodeID = await contract.getNodeId(
+                nodeFromChain[0],
+                nodeFromChain[1],
+                nodeFromChain[2]
+              );
               setNodeId(nodeID);
               setNodeState('nodeRegistered');
               const price = await contract.process(nodeId);
@@ -49,7 +55,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
                 newDate.setSeconds(price[1].toNumber());
                 return newDate;
               });
-              setInterval(async () => {
+              interval = setInterval(async () => {
                 const price = await contract.process(nodeId);
                 setTime(() => {
                   const newDate = new Date(1970, 0, 1);
@@ -62,12 +68,16 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
               setNodeState('registerNode');
               setPrice('');
               setTime(new Date());
+              setNodeId('');
+              clearInterval(interval);
             }
           } catch (error) {
             console.error('getNode errored', error);
             setNodeState('registerNode');
             setPrice('');
             setTime(new Date());
+            setNodeId('');
+            clearInterval(interval);
           }
         }
       };
