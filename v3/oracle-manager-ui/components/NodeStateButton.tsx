@@ -48,7 +48,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
               );
               setNodeId(nodeID);
               setNodeState('nodeRegistered');
-              const price = await contract.process(nodeId);
+              const price = await contract.process(nodeID);
               setPrice(utils.formatEther(price[0]));
               setTime(() => {
                 const newDate = new Date(1970, 0, 1);
@@ -72,7 +72,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
               clearInterval(interval);
             }
           } catch (error) {
-            console.error('getNode errored', error);
+            console.error(error);
             setNodeState('registerNode');
             setPrice('');
             setTime(new Date());
