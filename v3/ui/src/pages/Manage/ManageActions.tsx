@@ -14,6 +14,7 @@ import { Borrow } from './Borrow';
 import { useManagePosition } from '../AccountPositionPage/useManagePosition';
 import { Repay } from './Repay';
 import { Withdraw } from './Withdraw';
+import { Deposit } from './Deposit';
 
 const ActionButton: FC<
   PropsWithChildren<{
@@ -49,7 +50,7 @@ const Action: FC<{ manageAction: string }> = ({ manageAction }) => {
     case 'borrow':
       return <Borrow />;
     case 'deposit':
-      return <Text>Deposit</Text>;
+      return <Deposit />;
     case 'repay':
       return <Repay />;
     case 'withdraw':
