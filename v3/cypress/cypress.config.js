@@ -1,7 +1,5 @@
 const { defineConfig } = require('cypress');
 
-console.log(`require('@snx-v3/ui/webpack.config')`, require('@snx-v3/ui/webpack.config'));
-
 module.exports = defineConfig({
   reporter: 'junit',
   reporterOptions: {
