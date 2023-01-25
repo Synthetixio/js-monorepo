@@ -91,7 +91,7 @@ export const ManageUi: FC<{
             </Text>
             <Flex justifyContent="space-between" alignItems="center">
               <Text color="gray.50" fontSize="2xl" fontWeight="800">
-                {currency(liquidityPosition.cRatio, { style: 'percent' })}
+                {currency(liquidityPosition.cRatio.div(100), { style: 'percent' })}
               </Text>
               <Text fontWeight="400" color="gray.500" fontSize="md">
                 {currency(collateralType.liquidationRatioD18, { style: 'percent' })}

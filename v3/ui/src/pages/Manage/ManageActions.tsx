@@ -1,5 +1,5 @@
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Flex } from '@chakra-ui/react';
 import { BorderBox } from '@snx-v3/BorderBox';
 import { BorrowIcon, DollarCircle } from '@snx-v3/icons';
 import { ManagePositionContext } from '@snx-v3/ManagePositionContext';
@@ -11,9 +11,10 @@ import { wei } from '@synthetixio/wei';
 import { FC, FormEvent, PropsWithChildren, useCallback, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Borrow } from './Borrow';
-import { useManagePosition } from '../AccountPositionPage/useManagePosition';
+import { useManagePosition } from './useManagePosition';
 import { Repay } from './Repay';
 import { Withdraw } from './Withdraw';
+import { Deposit } from './Deposit';
 
 const ActionButton: FC<
   PropsWithChildren<{
@@ -49,7 +50,7 @@ const Action: FC<{ manageAction: string }> = ({ manageAction }) => {
     case 'borrow':
       return <Borrow />;
     case 'deposit':
-      return <Text>Deposit</Text>;
+      return <Deposit />;
     case 'repay':
       return <Repay />;
     case 'withdraw':
