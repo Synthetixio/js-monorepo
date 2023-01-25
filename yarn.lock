@@ -7019,7 +7019,7 @@ __metadata:
     "@snx-cy/printBrowserLogs": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/v2-ui": "workspace:*"
-    cypress: ^10.10.0
+    cypress: ^12.4.0
     ethers: ^5.7.2
     react-router-dom: ^6.6.2
   languageName: unknown
@@ -7667,7 +7667,7 @@ __metadata:
     "@snx-v3/ui": "workspace:*"
     "@synthetixio/v2-ui": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
-    cypress: ^10.10.0
+    cypress: ^12.4.0
     ethers: ^5.7.2
     react-router-dom: ^6.6.2
   languageName: unknown
@@ -17232,9 +17232,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^10.10.0":
-  version: 10.10.0
-  resolution: "cypress@npm:10.10.0"
+"cypress@npm:^12.4.0":
+  version: 12.4.0
+  resolution: "cypress@npm:12.4.0"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -17280,7 +17280,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 668a32534a527dba79754abbf98af176b80c539a12ec00058932ba2a19c794c7888323e59e738c30f726ad740c5451c31d02548a0cb7c1b1c8ad01c55a984ca2
+  checksum: 34eeb48547e3bea3312e71147ddc87a08fe90cef92434194621a9bf7747026471b01e41f1ded3a406db4fbb2e70c03d7e5d0df011227f969882550fe64a7d5d1
   languageName: node
   linkType: hard
 
