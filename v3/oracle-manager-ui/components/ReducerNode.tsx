@@ -28,7 +28,7 @@ export const ReducerNode: FC<{ data: { label: string }; id: string }> = ({ data,
           icon={<CloseIcon />}
           onClick={(e) => {
             e.stopPropagation();
-            setNodes((state) => state.filter((existingNode) => existingNode.id !== node.id));
+            setNodes((state) => state.filter((existingNode) => existingNode.id !== node?.id));
           }}
           aria-label="close"
           variant="ghost"
