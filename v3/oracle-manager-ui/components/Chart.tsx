@@ -35,7 +35,7 @@ const NODE_TYPES = {
   [ORACLE_NODE_TYPES[5].value]: StalenessFallbackReducerNode,
 };
 
-export const Chart: FC = () => {
+export const Chart: FC<{ cannotRemoveEdges?: boolean }> = ({ cannotRemoveEdges }) => {
   const toast = useToast();
   const params = new URLSearchParams(window.location.search);
 
@@ -48,22 +48,24 @@ export const Chart: FC = () => {
     setNodes(applyNodeChanges(changes, nodes) as Node[]);
 
   const onEdgesChange = (changes: EdgeChange[]) => {
-    if ('id' in changes[0]) {
-      const ids = changes[0].id.split('-');
-      const source = ids[1];
-      const target = ids[2];
-      setEdges(edges.filter((edge) => edge.source !== source));
-      setNodes((state) => {
-        return state.map((node) => {
-          if (node.parents.includes(source)) {
-            return { ...node, parents: node.parents.filter((parent) => parent !== source) };
-          }
-          if (node.parents.includes(target)) {
-            return { ...node, parents: node.parents.filter((parent) => parent !== target) };
-          }
-          return node;
+    if (!cannotRemoveEdges) {
+      if ('id' in changes[0]) {
+        const ids = changes[0].id.split('-');
+        const source = ids[1];
+        const target = ids[2];
+        setEdges(edges.filter((edge) => edge.source !== source));
+        setNodes((state) => {
+          return state.map((node) => {
+            if (node.parents.includes(source)) {
+              return { ...node, parents: node.parents.filter((parent) => parent !== source) };
+            }
+            if (node.parents.includes(target)) {
+              return { ...node, parents: node.parents.filter((parent) => parent !== target) };
+            }
+            return node;
+          });
         });
-      });
+      }
     }
   };
 
@@ -187,7 +189,11 @@ export const Chart: FC = () => {
         onConnect={onConnect}
         fitView
         defaultEdgeOptions={{
-          style: { strokeWidth: 2, stroke: '#B0B0C2', strokeDasharray: '5,5' },
+          style: {
+            strokeWidth: 2,
+            stroke: '#B0B0C2',
+            strokeDasharray: '5,5',
+          },
           markerEnd: {
             type: MarkerType.ArrowClosed,
             color: '#B0B0C2',

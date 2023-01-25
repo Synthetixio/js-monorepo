@@ -13,14 +13,17 @@ import {
 } from '../utils/contracts';
 import { OracleNodeTypes } from '../utils/types';
 
+let x = 0;
+let y = 0;
+
 export const RegisteredNode: FC = () => {
-  const [_, setNodes] = useRecoilState(nodesState);
+  const [, setNodes] = useRecoilState(nodesState);
   const param = useParams();
   const nodeID = param?.nodeId;
   const { data: signer } = useSigner();
   const { chain } = useNetwork();
 
-  const fetchNode = async (id: string, index?: number) => {
+  const fetchNode = async (id: string) => {
     if (signer && chain?.id) {
       const contract = getNodeModuleContract(signer, chain.id);
       const node = await contract.getNode(id);
@@ -28,6 +31,8 @@ export const RegisteredNode: FC = () => {
       setNodes((state) => {
         const exists = state.find((state) => state.id === id);
         if (!exists) {
+          x -= 200;
+          y -= 200;
           return [
             ...state,
             {
@@ -38,12 +43,7 @@ export const RegisteredNode: FC = () => {
               source: '',
               target: '',
               type: nodeInformationByNodeIds(node.nodeType).slug as OracleNodeTypes,
-              position: index
-                ? {
-                    x: index === 0 ? 0 : -1 * (index * 100),
-                    y: index === 0 ? 0 : -1 * (index * 100),
-                  }
-                : { x: 0, y: 0 },
+              position: { x, y },
               typeId: node.nodeType,
             },
           ];
@@ -51,7 +51,7 @@ export const RegisteredNode: FC = () => {
         return state;
       });
       if (node.parents.length) {
-        node.parents.map((id: string, index: number) => fetchNode(id, index));
+        node.parents.map((id: string) => fetchNode(id));
       }
     }
   };
@@ -62,7 +62,8 @@ export const RegisteredNode: FC = () => {
       fetchNode(nodeID);
     }
     // eslint-disable-next-line
-  }, [nodeID]);
+  }, [nodeID, signer]);
+
   return (
     <Flex p="10" flexDir="column" gap="5">
       <Link href="/" color="cyan.500">
@@ -79,7 +80,7 @@ export const RegisteredNode: FC = () => {
           {nodeID}
         </Text>
       </Flex>
-      <Chart />
+      <Chart cannotRemoveEdges />
     </Flex>
   );
 };
