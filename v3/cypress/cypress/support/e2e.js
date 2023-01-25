@@ -8,7 +8,7 @@ beforeEach(() => {
 
   cy.intercept('https://analytics.synthetix.io/matomo.js', { statusCode: 204 }).as('matomo');
 
-  // Because we are working with tenderly fork, subgraph becomes irrelevant
+  // Because we are working with local fork, subgraph becomes irrelevant
   cy.intercept('https://api.thegraph.com/**', (req) => {
     return subgraph(req);
   }).as('subgraph');
