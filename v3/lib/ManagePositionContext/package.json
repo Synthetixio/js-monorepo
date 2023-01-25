@@ -1,0 +1,10 @@
+{
+  "name": "@snx-v3/ManagePositionContext",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@synthetixio/wei": "workspace:*",
+    "react": "^18.2.0"
+  }
+}

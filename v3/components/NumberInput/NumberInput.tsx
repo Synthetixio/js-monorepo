@@ -18,6 +18,7 @@ export function NumberInput({
   const onInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value);
+      e.target.setCustomValidity('');
       if (!onChange) {
         // Could be a read-only input
         return;
@@ -31,8 +32,6 @@ export function NumberInput({
 
       if (max?.gte(0) && nextValue.gt(max)) {
         e.target.setCustomValidity('Value greater than max');
-      } else {
-        e.target.setCustomValidity('');
       }
 
       if (!value.eq(nextValue)) {
