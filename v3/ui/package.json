@@ -31,6 +31,7 @@
     "@snx-v3/ManagePositionContext": "workspace:*",
     "@snx-v3/Multistep": "workspace:*",
     "@snx-v3/NumberInput": "workspace:*",
+    "@snx-v3/PercentBadges": "workspace:*",
     "@snx-v3/PoolBox": "workspace:*",
     "@snx-v3/TrendText": "workspace:*",
     "@snx-v3/calculations": "workspace:*",

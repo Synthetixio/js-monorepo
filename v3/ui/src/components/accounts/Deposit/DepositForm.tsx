@@ -8,7 +8,7 @@ import { CollateralTypeSelector } from '@snx-v3/CollateralTypeSelector';
 import { FormEvent, useCallback, useRef, useState, useMemo } from 'react';
 import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import Wei, { wei } from '@synthetixio/wei';
-import { PercentBadges } from './PercentBadges';
+import { PercentBadges } from '@snx-v3/PercentBadges';
 import { Amount } from '@snx-v3/Amount';
 import { useParams } from '@snx-v3/useParams';
 import { DepositModal } from './DepositModal';
