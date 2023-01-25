@@ -53,6 +53,7 @@
     "@snx-v3/usePreferredPool": "workspace:*",
     "@snx-v3/useTokenBalance": "workspace:*",
     "@snx-v3/useTransactionState": "workspace:*",
+    "@snx-v3/useUSDProxy": "workspace:*",
     "@snx-v3/useVaultsData": "workspace:*",
     "@snx-v3/validatePosition": "workspace:*",
     "@synthetixio/v3-contracts": "workspace:*",

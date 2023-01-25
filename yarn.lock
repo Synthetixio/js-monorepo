@@ -7739,6 +7739,7 @@ __metadata:
     "@snx-v3/usePreferredPool": "workspace:*"
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useTransactionState": "workspace:*"
+    "@snx-v3/useUSDProxy": "workspace:*"
     "@snx-v3/useVaultsData": "workspace:*"
     "@snx-v3/validatePosition": "workspace:*"
     "@storybook/addon-essentials": ^6.5.15
@@ -8052,6 +8053,17 @@ __metadata:
     "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
     zod: ^3.20.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useUSDProxy@workspace:*, @snx-v3/useUSDProxy@workspace:v3/lib/useUSDProxy":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useUSDProxy@workspace:v3/lib/useUSDProxy"
+  dependencies:
+    "@ethersproject/contracts": ^5.7.0
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/v3-contracts": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
   languageName: unknown
   linkType: soft
 
