@@ -30,6 +30,7 @@ const babelRule = {
     /v3\/lib/,
     /v3\/contracts/,
     /v3\/components/,
+    /v3\/cypress/,
     /v3\/theme/,
     /v3\/ui/,
 
