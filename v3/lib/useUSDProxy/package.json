@@ -1,0 +1,12 @@
+{
+  "name": "@snx-v3/useUSDProxy",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@ethersproject/contracts": "^5.7.0",
+    "@snx-v3/useBlockchain": "workspace:*",
+    "@synthetixio/v3-contracts": "workspace:*",
+    "@tanstack/react-query": "^4.3.4"
+  }
+}

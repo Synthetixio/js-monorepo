@@ -5,8 +5,10 @@ import { DollarCircle } from '@snx-v3/icons';
 import { ManagePositionContext } from '@snx-v3/ManagePositionContext';
 import { NumberInput } from '@snx-v3/NumberInput';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
+import { useUSDProxy } from '@snx-v3/useUSDProxy';
 import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
-import Wei from '@synthetixio/wei';
+import { useTokenBalance } from '@snx-v3/useTokenBalance';
+import Wei, { wei } from '@synthetixio/wei';
 import { FC, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -59,6 +61,7 @@ export const RepayUi: FC<{
 };
 export const Repay = () => {
   const { debtChange, setDebtChange } = useContext(ManagePositionContext);
+  const { data: USDProxy } = useUSDProxy();
   const params = useParams();
   const collateralType = useCollateralType(params.collateralType);
   const { data: liquidityPosition } = useLiquidityPosition({
@@ -66,8 +69,13 @@ export const Repay = () => {
     accountId: params.accountId,
     poolId: params.poolId,
   });
+  const { data: balance } = useTokenBalance(USDProxy?.address);
 
   return (
-    <RepayUi setDebtChange={setDebtChange} debtChange={debtChange} max={liquidityPosition?.debt} />
+    <RepayUi
+      setDebtChange={setDebtChange}
+      debtChange={debtChange}
+      max={Wei.min(liquidityPosition?.debt || wei(0), balance || wei(0))}
+    />
   );
 };
