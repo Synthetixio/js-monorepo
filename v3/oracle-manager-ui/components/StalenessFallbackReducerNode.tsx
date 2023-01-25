@@ -1,6 +1,7 @@
 import { CloseIcon } from '@chakra-ui/icons';
 import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
 import { FC } from 'react';
+import { useParams } from 'react-router-dom';
 import { Handle, Position } from 'reactflow';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
@@ -11,6 +12,7 @@ export const StalenessFallbackReducerNode: FC<{ data: { label: string }; id: str
   id,
 }) => {
   const [nodes, setNodes] = useRecoilState(nodesState);
+  const params = useParams();
   const node = nodes.find((node) => node.id === id);
   return (
     <Box
@@ -27,10 +29,24 @@ export const StalenessFallbackReducerNode: FC<{ data: { label: string }; id: str
           Breaker
         </Text>
         <IconButton
+          disabled={!!params.nodeId}
           icon={<CloseIcon />}
           onClick={(e) => {
             e.stopPropagation();
-            setNodes((state) => state.filter((existingNode) => existingNode.id !== node?.id));
+            setNodes((state) => {
+              const newState = state
+                .filter((s) => s.id !== node.id)
+                .map((s) => {
+                  if (s.parents.includes(node.id)) {
+                    return {
+                      ...s,
+                      parents: s.parents.filter((parent) => parent !== node.id),
+                    };
+                  }
+                  return s;
+                });
+              return newState;
+            });
           }}
           aria-label="close"
           variant="ghost"

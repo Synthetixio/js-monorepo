@@ -36,9 +36,9 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
     if (isConnected && signer) {
       const fetchNodeState = async () => {
         if (chain?.id) {
-          const contract = getNodeModuleContract(signer, chain.id);
-          const hashedId = hashId(node, node.parents.map(findParentNode));
           try {
+            const contract = getNodeModuleContract(signer, chain.id);
+            const hashedId = hashId(node, node.parents.map(findParentNode));
             const nodeFromChain = await contract.getNode(hashedId);
             if (nodeFromChain[0] > 0) {
               const nodeID = await contract.getNodeId(
@@ -83,17 +83,8 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
       };
       fetchNodeState();
     }
-  }, [
-    node,
-    isConnected,
-    signer,
-    chain?.id,
-    findParentNode,
-    node.typeId,
-    node.parameters,
-    node.parents,
-    nodeId,
-  ]);
+    // eslint-disable-next-line
+  }, [isConnected, signer, chain?.id, node.typeId, node.parameters, node.parents]);
 
   const handleButtonClick = async () => {
     if (nodeState === 'registerNode') {
