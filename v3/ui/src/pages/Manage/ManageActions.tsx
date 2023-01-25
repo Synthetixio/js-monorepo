@@ -13,6 +13,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Borrow } from './Borrow';
 import { useManagePosition } from '../AccountPositionPage/useManagePosition';
 import { Repay } from './Repay';
+import { Withdraw } from './Withdraw';
 
 const ActionButton: FC<
   PropsWithChildren<{
@@ -52,7 +53,7 @@ const Action: FC<{ manageAction: string }> = ({ manageAction }) => {
     case 'repay':
       return <Repay />;
     case 'withdraw':
-      return <Text>Withdraw</Text>;
+      return <Withdraw />;
 
     default:
       return null;
