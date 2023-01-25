@@ -1,14 +1,14 @@
 import '@cypress/code-coverage/support';
 import { ethers } from 'ethers';
-import { subgraph } from '../lib/subgraph';
 import { onLogAdded } from '@snx-cy/onLogAdded';
+import { subgraph } from '../lib/subgraph';
 
 beforeEach(() => {
   cy.on('log:added', onLogAdded);
 
   cy.intercept('https://analytics.synthetix.io/matomo.js', { statusCode: 204 }).as('matomo');
 
-  // Because we are working with tenderly fork, subgraph becomes irrelevant
+  // Because we are working with local fork, subgraph becomes irrelevant
   cy.intercept('https://api.thegraph.com/**', (req) => {
     return subgraph(req);
   }).as('subgraph');
@@ -17,6 +17,11 @@ beforeEach(() => {
     req.url = 'http://127.0.0.1:8545';
     req.continue();
   }).as('mainnet');
+
+  cy.intercept('https://goerli.infura.io/v3/*', (req) => {
+    req.url = 'http://127.0.0.1:8545';
+    req.continue();
+  }).as('goerli');
   //  cy.intercept(' https://optimism-mainnet.infura.io/v3/*', { statusCode: 404 }).as('optimism');
 
   cy.on('window:before:load', (win) => {

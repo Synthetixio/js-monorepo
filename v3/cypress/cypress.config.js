@@ -13,7 +13,7 @@ module.exports = defineConfig({
     devServer: {
       framework: 'react',
       bundler: 'webpack',
-      webpackConfig: require('@synthetixio/v2-ui/webpack.config'),
+      webpackConfig: require('@snx-v3/ui/webpack.config'),
     },
     setupNodeEvents(on, config) {
       require('@cypress/code-coverage/task')(on, config);
@@ -32,10 +32,6 @@ module.exports = defineConfig({
       }
       on('task', {
         ...require('./cypress/tasks/forkReset'),
-        ...require('./cypress/tasks/removeMinimumStakeTime'),
-        ...require('./cypress/tasks/removeEthCollateralInteractionDelay'),
-        ...require('./cypress/tasks/getSnx'),
-        ...require('./cypress/tasks/mintSusd'),
       });
 
       return config;

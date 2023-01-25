@@ -29,18 +29,26 @@ import { useParams } from '@snx-v3/useParams';
 //   );
 // }
 
-export function AccountsSelector() {
-  const params = useParams();
+export function AccountsSelectorUi({ accountId }: { accountId?: string }) {
   // const { data: accounts = [] } = useAccounts();
 
-  if (!params.accountId) {
+  if (!accountId) {
     return null;
   }
 
   return (
     <Fade in={true}>
-      <Button size="sm" height="40px" as={Button} variant="outline" w="100%" maxW="180px" h="36px">
-        {`Account #${prettyString(params.accountId, 3, 3)}`}
+      <Button
+        size="sm"
+        height="40px"
+        as={Button}
+        variant="outline"
+        w="100%"
+        maxW="180px"
+        h="36px"
+        data-testid="current account id"
+      >
+        {`Account #${prettyString(accountId, 3, 3)}`}
       </Button>
     </Fade>
     // Temporarily disable account selector menu
@@ -72,4 +80,9 @@ export function AccountsSelector() {
     //   </MenuList>
     // </Menu>
   );
+}
+
+export function AccountsSelector() {
+  const params = useParams();
+  return <AccountsSelectorUi accountId={params.accountId} />;
 }
