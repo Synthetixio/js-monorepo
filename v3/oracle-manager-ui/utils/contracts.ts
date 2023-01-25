@@ -2,6 +2,7 @@ import { Contract, utils } from 'ethers';
 import ProxyAbiOPGoerli from '../deployments/420/Proxy.json';
 import ProxyAbiGoerli from '../deployments/5/Proxy.json';
 import { Node } from './types';
+import { ORACLE_NODE_TYPES } from './constants';
 
 function resolveNetworkIdToProxyAddress(networkId: number) {
   switch (networkId) {
@@ -37,13 +38,13 @@ export function encodeBytesByNodeType(id: number, parameters: any[]) {
 export function decodeBytesByNodeType(id: number, parameters: any[]) {
   switch (id) {
     case 1:
-      // TODO @MF map number to operation
-      // {ORACLE_NODE_TYPES[4].parameters[0].options!.map((option) => (
-      //   <option value={option.value} key={option.value}>
-      //     {option.label}
-      //   </option>
-      // ))}
-      return utils.defaultAbiCoder.decode(['uint'], parameters);
+      return utils.defaultAbiCoder.decode(['uint'], parameters).map((operation) => {
+        const option = ORACLE_NODE_TYPES[4].parameters[0].options!.find(
+          (option) => option.value === Number(operation.toString())
+        );
+        if (option) return option.value;
+        return operation;
+      });
     case 2:
       return utils.defaultAbiCoder.decode(['address'], parameters);
     case 3:
