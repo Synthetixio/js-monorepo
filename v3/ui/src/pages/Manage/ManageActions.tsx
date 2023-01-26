@@ -8,7 +8,7 @@ import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 import { useParams } from '@snx-v3/useParams';
 import { validatePosition } from '@snx-v3/validatePosition';
 import { wei } from '@synthetixio/wei';
-import { FC, FormEvent, PropsWithChildren, useCallback, useContext } from 'react';
+import { FC, FormEvent, PropsWithChildren, useCallback, useContext, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Borrow } from './Borrow';
 import { useManagePosition } from './useManagePosition';
@@ -142,6 +142,28 @@ export const ManageAction = () => {
     },
     [exec, isValid]
   );
+
+  useEffect(() => {
+    // This is just for initial state, if we have a manage action selected return
+    if (params.manageAction) return;
+    if (!liquidityPosition.data) return;
+    if (!collateralType) return;
+    const cRatio = liquidityPosition.data.cRatio.div(100);
+    const canBorrow = cRatio.gt(collateralType.issuanceRatioD18);
+    if (canBorrow) {
+      setQueryParam({ manageAction: 'borrow' });
+      return;
+    }
+    const cRatioIsCloseToLiqRatio = cRatio.mul(0.9).lt(collateralType.liquidationRatioD18);
+    if (cRatioIsCloseToLiqRatio) {
+      setQueryParam({ manageAction: 'repay' });
+      return;
+    }
+
+    setQueryParam({ manageAction: 'deposit' });
+  }, [collateralType, liquidityPosition.data, params.manageAction, setQueryParam]);
+
+  const parsedActionParam = ManageActionSchema.safeParse(params.manageAction);
   return (
     <ManageActionUi
       onSubmit={onSubmit}
