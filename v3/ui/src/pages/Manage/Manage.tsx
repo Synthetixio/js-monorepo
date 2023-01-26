@@ -3,7 +3,6 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Link } from '@chakra-ui/react';
 import { BorderBox } from '@snx-v3/BorderBox';
-import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 import { useParams } from '@snx-v3/useParams';
 import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
 import { FC } from 'react';
