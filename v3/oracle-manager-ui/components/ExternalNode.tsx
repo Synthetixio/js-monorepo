@@ -32,12 +32,12 @@ export const ExternalNode: FC<{ data: { label: string }; id: string }> = ({ data
             e.stopPropagation();
             setNodes((state) => {
               const newState = state
-                .filter((s) => s.id !== node.id)
+                .filter((s) => s.id !== node?.id)
                 .map((s) => {
-                  if (s.parents.includes(node.id)) {
+                  if (s.parents.includes(node?.id || '')) {
                     return {
                       ...s,
-                      parents: s.parents.filter((parent) => parent !== node.id),
+                      parents: s.parents.filter((parent) => parent !== node?.id),
                     };
                   }
                   return s;
