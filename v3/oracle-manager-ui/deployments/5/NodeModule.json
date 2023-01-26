@@ -1,5 +1,5 @@
 {
-  "address": "0x4dF7C6E58011d0c483292d6CF333e865a121451a",
+  "address": "0xe3477EA138Dd2d7b0E507D7c1F9C297d17Bb4388",
   "abi": [
     {
       "type": "error",
@@ -18,6 +18,30 @@
         {
           "type": "address",
           "name": "externalNode"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidNodeDefinition",
+      "inputs": [
+        {
+          "type": "tuple",
+          "name": "nodeType",
+          "components": [
+            {
+              "type": "uint8",
+              "name": "nodeType"
+            },
+            {
+              "type": "bytes",
+              "name": "parameters"
+            },
+            {
+              "type": "bytes32[]",
+              "name": "parents"
+            }
+          ]
         }
       ]
     },
@@ -68,11 +92,11 @@
     },
     {
       "type": "error",
-      "name": "UnsupportedNodeType",
+      "name": "UnprocessableNode",
       "inputs": [
         {
-          "type": "uint8",
-          "name": "nodeType"
+          "type": "bytes32",
+          "name": "nodeId"
         }
       ]
     },
@@ -141,8 +165,7 @@
               "type": "bytes32[]",
               "name": "parents"
             }
-          ],
-          "name": ""
+          ]
         }
       ]
     },
@@ -168,8 +191,7 @@
       ],
       "outputs": [
         {
-          "type": "bytes32",
-          "name": ""
+          "type": "bytes32"
         }
       ]
     },
@@ -199,14 +221,13 @@
             },
             {
               "type": "uint256",
-              "name": "__slotAvailableForFutureUse_1"
+              "name": "__slotAvailableForFutureUse1"
             },
             {
               "type": "uint256",
-              "name": "__slotAvailableForFutureUse_2"
+              "name": "__slotAvailableForFutureUse2"
             }
-          ],
-          "name": ""
+          ]
         }
       ]
     },
@@ -231,14 +252,13 @@
       ],
       "outputs": [
         {
-          "type": "bytes32",
-          "name": ""
+          "type": "bytes32"
         }
       ]
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xe4cfb8e395ef04e2ddfd32962c6a84981f91131059c893a2001f1ec04c6a6d92",
+  "deployTxnHash": "0xeada1b7e9513ba9df1a5a6cde1dff779508b339e57374297b55943920871d78d",
   "sourceName": "contracts/modules/NodeModule.sol",
   "contractName": "NodeModule",
   "deployedOn": "contract.NodeModule"

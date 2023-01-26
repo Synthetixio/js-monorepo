@@ -1,5 +1,7 @@
-import { Box, Text } from '@chakra-ui/react';
+import { CloseIcon } from '@chakra-ui/icons';
+import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
 import { FC } from 'react';
+import { useParams } from 'react-router-dom';
 import { Handle, Position } from 'reactflow';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
@@ -9,33 +11,91 @@ export const StalenessFallbackReducerNode: FC<{ data: { label: string }; id: str
   data,
   id,
 }) => {
-  const [nodes] = useRecoilState(nodesState);
+  const [nodes, setNodes] = useRecoilState(nodesState);
+  const params = useParams();
   const node = nodes.find((node) => node.id === id);
   return (
     <Box
-      bg="darkgreen"
-      borderRadius="5px"
+      bg="green.800"
+      borderRadius="4px"
       p="3"
       display="flex"
       flexDirection="column"
       alignItems="center"
     >
-      <Text>Staleness Circuit Breaker</Text>
+      <Flex gap="2" alignItems="center" mb="2" width="100%">
+        <Text fontSize="lg" fontWeight="bold" mr="auto">
+          Staleness Circuit <br />
+          Breaker
+        </Text>
+        <IconButton
+          disabled={!!params.nodeId}
+          icon={<CloseIcon />}
+          onClick={(e) => {
+            e.stopPropagation();
+            setNodes((state) => {
+              const newState = state
+                .filter((s) => s.id !== node?.id)
+                .map((s) => {
+                  if (s.parents.includes(node?.id || '')) {
+                    return {
+                      ...s,
+                      parents: s.parents.filter((parent) => parent !== node?.id),
+                    };
+                  }
+                  return s;
+                });
+              return newState;
+            });
+          }}
+          aria-label="close"
+          variant="ghost"
+          size="xs"
+        />
+      </Flex>
+      <Flex
+        flexDirection="column"
+        gap="4"
+        bg="green.900"
+        p="5"
+        borderWidth="1px"
+        borderStyle="solid"
+        borderColor="whiteAlpha.400"
+        borderRadius="4px"
+        mb="2"
+      >
+        {data.label && (
+          <Flex gap="2">
+            <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
+              Name:
+            </Text>
+            <Text fontSize="xs" color="whiteAlpha.800">
+              {data.label}
+            </Text>
+          </Flex>
+        )}
+        <Flex gap="2">
+          <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
+            Staleness:
+          </Text>
+          <Text fontSize="xs" color="whiteAlpha.800">
+            {node?.parameters[0]} Seconds
+          </Text>
+        </Flex>
+      </Flex>
       {node && <NodeStateButton node={node} />}
-      {data.label && <Text>Name: {data.label}</Text>}
-      <Text>Staleness: {node?.parameters[0]}</Text>
-      <Handle
-        type="source"
-        isValidConnection={() => true}
-        position={Position.Bottom}
-        style={{ background: 'darkgreen' }}
-        isConnectable
-      ></Handle>
       <Handle
         type="target"
         isValidConnection={() => true}
         position={Position.Top}
-        style={{ background: 'darkgreen' }}
+        style={{ background: '#077250' }}
+        isConnectable
+      ></Handle>
+      <Handle
+        type="source"
+        isValidConnection={() => true}
+        position={Position.Bottom}
+        style={{ background: '#077250' }}
         isConnectable
       ></Handle>
     </Box>

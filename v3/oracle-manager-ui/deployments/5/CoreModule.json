@@ -1,5 +1,5 @@
 {
-  "address": "0xF34F2700A6A3923259DfA5b35362e2B6e6Eb7958",
+  "address": "0xfcf640BC85E17229E70b895a62e661eCadFEAda8",
   "abi": [
     {
       "type": "error",
@@ -124,8 +124,7 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "address",
-          "name": ""
+          "type": "address"
         }
       ]
     },
@@ -151,8 +150,7 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "bool",
-          "name": ""
+          "type": "bool"
         }
       ]
     },
@@ -178,8 +176,7 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "address",
-          "name": ""
+          "type": "address"
         }
       ]
     },
@@ -192,8 +189,7 @@
       "inputs": [],
       "outputs": [
         {
-          "type": "address",
-          "name": ""
+          "type": "address"
         }
       ]
     },
@@ -232,9 +228,9 @@
       "outputs": []
     }
   ],
-  "constructorArgs": ["0x4B223515f54007C5B5150f1bAEaD9Cbf8603de27"],
-  "deployTxnHash": "0x951931360c1cb69d14b1898075c4b53eebfd0fdb203f7b0a15cf8bc57ed604a4",
-  "sourceName": "contracts/Proxy.sol",
-  "contractName": "Proxy",
-  "deployedOn": "contract.InitialProxy"
+  "constructorArgs": [],
+  "deployTxnHash": "0x5311080d580a0b964ebc336cea060d698505fbde90ea4cf2d44112cb3cdce48a",
+  "sourceName": "contracts/modules/CoreModule.sol",
+  "contractName": "CoreModule",
+  "deployedOn": "contract.CoreModule"
 }

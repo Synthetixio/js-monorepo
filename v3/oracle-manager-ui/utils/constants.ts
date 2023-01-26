@@ -1,25 +1,13 @@
 import { Chain } from 'wagmi';
-import { mainnet, optimism, optimismGoerli, goerli, localhost } from 'wagmi/chains';
+import { optimismGoerli, goerli } from 'wagmi/chains';
 
 export const supportedChains: Chain[] = [
-  mainnet,
-  optimism,
+  // mainnet,
+  // optimism,
   optimismGoerli,
   goerli,
-  {
-    id: 13370,
-    name: 'Hardhat',
-    network: 'hardhat',
-    nativeCurrency: {
-      decimals: 18,
-      name: 'Ether',
-      symbol: 'ETH',
-    },
-    rpcUrls: {
-      default: { http: ['http://127.0.0.1:8545'] },
-    },
-  },
-  localhost,
+  // hardhat
+  // localhost,
 ];
 
 export const contracts = {
@@ -49,12 +37,13 @@ export const ORACLE_NODE_TYPES: {
 }[] = [
   {
     value: 'chainLink',
-    label: 'Chain Link',
+    label: 'ChainLink',
     nodeType: 3,
     numberOfParents: 0,
     parameters: [
       { type: 'string', name: 'Address' },
       { type: 'number', name: 'TWAP time interval in seconds' },
+      { type: 'number', name: 'Decimals' },
     ],
   },
   {

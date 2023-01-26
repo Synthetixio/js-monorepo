@@ -11,6 +11,7 @@
     "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/oracle-manager-ui' run build"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.9",
     "@chakra-ui/react": "^2.2.8",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
@@ -21,6 +22,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.41.5",
+    "react-router-dom": "^6.6.2",
     "reactflow": "^11.4.0",
     "recoil": "^0.7.4",
     "wagmi": "^0.9.6"

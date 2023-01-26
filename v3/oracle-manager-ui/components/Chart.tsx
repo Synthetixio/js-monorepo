@@ -35,7 +35,7 @@ const NODE_TYPES = {
   [ORACLE_NODE_TYPES[5].value]: StalenessFallbackReducerNode,
 };
 
-export const Chart: FC = () => {
+export const Chart: FC<{ cannotRemoveEdges?: boolean }> = ({ cannotRemoveEdges }) => {
   const toast = useToast();
   const params = new URLSearchParams(window.location.search);
 
@@ -48,22 +48,24 @@ export const Chart: FC = () => {
     setNodes(applyNodeChanges(changes, nodes) as Node[]);
 
   const onEdgesChange = (changes: EdgeChange[]) => {
-    if ('id' in changes[0]) {
-      const ids = changes[0].id.split('-');
-      const source = ids[1];
-      const target = ids[2];
-      setEdges(edges.filter((edge) => edge.source !== source));
-      setNodes((state) => {
-        return state.map((node) => {
-          if (node.parents.includes(source)) {
-            return { ...node, parents: node.parents.filter((parent) => parent !== source) };
-          }
-          if (node.parents.includes(target)) {
-            return { ...node, parents: node.parents.filter((parent) => parent !== target) };
-          }
-          return node;
+    if (!cannotRemoveEdges) {
+      if ('id' in changes[0]) {
+        const ids = changes[0].id.split('-');
+        const source = ids[1];
+        const target = ids[2];
+        setEdges(edges.filter((edge) => edge.source !== source));
+        setNodes((state) => {
+          return state.map((node) => {
+            if (node.parents.includes(source)) {
+              return { ...node, parents: node.parents.filter((parent) => parent !== source) };
+            }
+            if (node.parents.includes(target)) {
+              return { ...node, parents: node.parents.filter((parent) => parent !== target) };
+            }
+            return node;
+          });
         });
-      });
+      }
     }
   };
 
@@ -166,15 +168,18 @@ export const Chart: FC = () => {
       });
     }
     // eslint-disable-next-line
-  }, []);
+  }, [nodes]);
   return (
-    <Box w="100%" h="800px">
-      <Text textAlign="center" fontWeight="bold">
-        The bottom of the node is always the downstream output and the top is the receiving end
-      </Text>
-      <Text textAlign="center" fontWeight="bold">
-        Click on the black connection lines to disconnect a parent node from a child node
-      </Text>
+    <Box
+      bg="whiteAlpha.50"
+      borderStyle="solid"
+      borderColor="gray.900"
+      borderWidth="1px"
+      borderRadius="3px"
+      w="100%"
+      h="800px"
+      position="relative"
+    >
       <ReactFlow
         nodeTypes={NODE_TYPES}
         nodes={nodes}
@@ -184,10 +189,14 @@ export const Chart: FC = () => {
         onConnect={onConnect}
         fitView
         defaultEdgeOptions={{
-          style: { strokeWidth: 3, stroke: 'black' },
+          style: {
+            strokeWidth: 2,
+            stroke: '#B0B0C2',
+            strokeDasharray: '5,5',
+          },
           markerEnd: {
             type: MarkerType.ArrowClosed,
-            color: 'black',
+            color: '#B0B0C2',
           },
         }}
         onNodeClick={(_, node) => {
@@ -205,6 +214,11 @@ export const Chart: FC = () => {
         }}
         node={nodeToUpdate}
       />
+      {!nodes.length && (
+        <Text position="absolute" top="50%" right="50%" transform="translate(50%, 50%)">
+          Add your first Node to get started
+        </Text>
+      )}
     </Box>
   );
 };

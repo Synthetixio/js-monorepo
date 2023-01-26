@@ -3,7 +3,7 @@ import { createClient, WagmiConfig, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
-import { ChakraProvider, ToastProvider } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme, ToastProvider } from '@chakra-ui/react';
 import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import { theme, Fonts } from '@synthetixio/v3-theme';
 import { RecoilRoot } from 'recoil';
@@ -11,6 +11,9 @@ import { ALCHEMY_KEY_MAPPING, INFURA_KEY, supportedChains } from '../utils/const
 // We have to import into *VAR* and *USE* it so webpack does not remove unused library import
 import * as rainbowkitStyles from '@rainbow-me/rainbowkit/styles.css';
 import { App } from './App';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Header } from '../components/Header';
+import { RegisteredNode } from './RegisteredNode';
 
 const { chains, provider } = configureChains(supportedChains, [
   infuraProvider({ apiKey: INFURA_KEY, priority: 0 }),
@@ -28,6 +31,17 @@ const { chains, provider } = configureChains(supportedChains, [
   publicProvider({ priority: 2 }),
 ]);
 
+const customTheme = extendTheme({
+  ...theme,
+  styles: {
+    global: {
+      body: {
+        bg: 'navy.900',
+      },
+    },
+  },
+});
+
 const { connectors } = getDefaultWallets({
   appName: 'Synthetix',
   chains,
@@ -39,13 +53,20 @@ const wagmiClient = createClient({
   connectors,
 });
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+  },
+  { path: 'node/:nodeId', element: <RegisteredNode /> },
+]);
 const container = document.querySelector('#app');
 
 const root = createRoot(container!);
 
 root.render(
   <RecoilRoot>
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={customTheme}>
       <ToastProvider>
         <Fonts />
         <WagmiConfig client={wagmiClient}>
@@ -60,7 +81,8 @@ root.render(
             })}
             chains={chains}
           >
-            <App />
+            <Header />
+            <RouterProvider router={router} />
           </RainbowKitProvider>
         </WagmiConfig>
       </ToastProvider>
