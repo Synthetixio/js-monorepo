@@ -15,11 +15,16 @@ import { useManagePosition } from './useManagePosition';
 import { Repay } from './Repay';
 import { Withdraw } from './Withdraw';
 import { Deposit } from './Deposit';
+import { z } from 'zod';
+
+const validActions = ['borrow', 'deposit', 'repay', 'withdraw'] as const;
+const ManageActionSchema = z.enum(validActions);
+type ManageAction = z.infer<typeof ManageActionSchema>;
 
 const ActionButton: FC<
   PropsWithChildren<{
-    onClick: (action: string) => void;
-    action: string;
+    onClick: (action: ManageAction) => void;
+    action: ManageAction;
     activeAction?: string;
   }>
 > = ({ children, action, activeAction, onClick }) => (
@@ -45,7 +50,7 @@ const ActionButton: FC<
   </BorderBox>
 );
 
-const Action: FC<{ manageAction: string }> = ({ manageAction }) => {
+const Action: FC<{ manageAction: ManageAction }> = ({ manageAction }) => {
   switch (manageAction) {
     case 'borrow':
       return <Borrow />;
@@ -62,8 +67,8 @@ const Action: FC<{ manageAction: string }> = ({ manageAction }) => {
 };
 
 const ManageActionUi: FC<{
-  setActiveAction: (action: string) => void;
-  manageAction?: string;
+  setActiveAction: (action: ManageAction) => void;
+  manageAction?: ManageAction;
   onSubmit: (e: FormEvent) => void;
 }> = ({ setActiveAction, manageAction, onSubmit }) => {
   return (
@@ -145,7 +150,7 @@ export const ManageAction = () => {
         setDebtChange(wei(0));
         setQueryParam({ manageAction: action });
       }}
-      manageAction={params.manageAction}
+      manageAction={parsedActionParam.success ? parsedActionParam.data : undefined}
     />
   );
 };
