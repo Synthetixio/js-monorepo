@@ -47,6 +47,7 @@ export function AccountsSelectorUi({ accountId }: { accountId?: string }) {
         maxW="180px"
         h="36px"
         data-testid="current account id"
+        data-accountId={accountId}
       >
         {`Account #${prettyString(accountId, 3, 3)}`}
       </Button>

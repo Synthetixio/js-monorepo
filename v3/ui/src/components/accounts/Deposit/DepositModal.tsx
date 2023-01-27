@@ -282,7 +282,7 @@ export const DepositModal: DepositModalProps = ({
   return (
     <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
       <ModalOverlay />
-      <ModalContent bg="black" color="white">
+      <ModalContent bg="black" color="white" data-testid="deposit modal">
         <ModalHeader>Complete this action</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -339,7 +339,13 @@ export const DepositModal: DepositModalProps = ({
             }}
           />
 
-          <Button disabled={processing} onClick={onSubmit} width="100%" my="4">
+          <Button
+            disabled={processing}
+            onClick={onSubmit}
+            width="100%"
+            my="4"
+            data-testid="deposit submit button"
+          >
             {(() => {
               switch (true) {
                 case failed:

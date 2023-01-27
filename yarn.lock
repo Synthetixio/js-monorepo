@@ -7667,6 +7667,7 @@ __metadata:
     "@snx-cy/printBrowserLogs": "workspace:*"
     "@snx-v3/ui": "workspace:*"
     "@synthetixio/v2-ui": "workspace:*"
+    "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
     cypress: ^12.4.0
     ethers: ^5.7.2
