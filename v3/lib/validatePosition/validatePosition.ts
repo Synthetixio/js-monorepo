@@ -17,6 +17,8 @@ export const validatePosition = ({
 }) => {
   const targetCRatio = issuanceRatioD18 ? issuanceRatioD18 : wei(1);
   const newDebt = wei(debt || 0).add(debtChange);
+  const newCollateralAmount = wei(collateralAmount || 0).add(collateralChange);
+
   const collateralPrice = wei(collateralValue || 0).div(
     collateralAmount?.gt(0) ? collateralAmount : wei(1)
   );
