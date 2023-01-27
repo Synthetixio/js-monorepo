@@ -1,5 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber';
-import { Web3Provider, InfuraProvider, StaticJsonRpcProvider } from '@ethersproject/providers';
+import {
+  Web3Provider,
+  InfuraProvider,
+  StaticJsonRpcProvider,
+  FallbackProviderConfig,
+  AlchemyProvider,
+  FallbackProvider,
+} from '@ethersproject/providers';
 import { hexStripZeros } from '@ethersproject/bytes';
 import {
   L1_TO_L2_NETWORK_MAPPER,
@@ -10,14 +17,45 @@ import { ERRORS } from './constants';
 import type { ProviderConfig, SynthetixProvider } from './types';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 
-const loadProvider = ({ networkId = 1, infuraId, provider }: ProviderConfig): SynthetixProvider => {
+export const PROVIDER_STALL_TIMEOUT = 750;
+export const PROVIDER_DEFAULT_WEIGHT = 1;
+
+const loadProvider = ({
+  networkId = 1,
+  infuraId,
+  alchemyId,
+  provider,
+}: ProviderConfig): SynthetixProvider => {
+  const providersConfig: FallbackProviderConfig[] = [];
+
   if (provider) {
-    return new Web3Provider(provider);
+    providersConfig.push({
+      provider: new Web3Provider(provider),
+      priority: 30,
+      stallTimeout: PROVIDER_STALL_TIMEOUT,
+      weight: PROVIDER_DEFAULT_WEIGHT,
+    });
   }
+
   if (infuraId) {
-    return new InfuraProvider(networkId, infuraId);
+    providersConfig.push({
+      provider: new InfuraProvider(networkId, infuraId),
+      priority: 10,
+      stallTimeout: PROVIDER_STALL_TIMEOUT,
+      weight: PROVIDER_DEFAULT_WEIGHT,
+    });
   }
-  throw new Error(ERRORS.noWeb3Provider);
+
+  if (alchemyId) {
+    providersConfig.push({
+      provider: new AlchemyProvider(networkId, alchemyId),
+      priority: 20,
+      stallTimeout: PROVIDER_STALL_TIMEOUT,
+      weight: PROVIDER_DEFAULT_WEIGHT,
+    });
+  }
+
+  return new FallbackProvider(providersConfig);
 };
 
 const getOptimismProvider = ({ networkId }: { networkId: number }): StaticJsonRpcProvider => {

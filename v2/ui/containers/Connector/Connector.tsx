@@ -24,11 +24,13 @@ const defaultNetwork: Network = {
   name: NetworkNameById[NetworkIdByName.mainnet],
   useOvm: getIsOVM(NetworkIdByName.mainnet),
 };
+
 // Ethereum Mainnet
 const L1DefaultProvider: SynthetixProvider = loadProvider({
   infuraId: process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
     ? process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
     : '0',
+  alchemyId: process.env?.NEXT_PUBLIC_ALCHEMY_MAINNET_KEY || '0',
   networkId: NetworkIdByName.mainnet,
 });
 
@@ -37,6 +39,7 @@ const L2DefaultProvider: SynthetixProvider = loadProvider({
   infuraId: process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
     ? process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
     : '0',
+  alchemyId: process.env?.NEXT_PUBLIC_ALCHEMY_OVM_KEY || '0',
   networkId: NetworkIdByName['mainnet-ovm'],
 });
 
