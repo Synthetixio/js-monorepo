@@ -53,7 +53,7 @@ function VaultRowUi({
       </Td>
       <Td>
         {liquidityPosition?.cRatio.gt(0) ? (
-          <Amount value={liquidityPosition.cRatio} suffix="%" />
+          <Amount value={liquidityPosition.cRatio.mul(100)} suffix="%" />
         ) : (
           '-'
         )}

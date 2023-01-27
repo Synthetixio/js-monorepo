@@ -3,20 +3,16 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Link } from '@chakra-ui/react';
 import { BorderBox } from '@snx-v3/BorderBox';
-import { useLiquidityPosition, LiquidityPosition } from '@snx-v3/useLiquidityPosition';
 import { useParams } from '@snx-v3/useParams';
 import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
 import { FC } from 'react';
 import { CollateralIcon } from '@snx-v3/icons';
-import { currency } from '@snx-v3/format';
-import { PoolBox } from '@snx-v3/PoolBox';
+
 import { ManageAction } from './ManageActions';
 import { ManagePositionProvider } from '@snx-v3/ManagePositionContext';
+import { ManageStats } from './ManageStats';
 
-export const ManageUi: FC<{
-  liquidityPosition: LiquidityPosition;
-  collateralType: CollateralType;
-}> = ({ liquidityPosition, collateralType }) => {
+export const ManageUi: FC<{ collateralType: CollateralType }> = ({ collateralType }) => {
   return (
     <Box>
       <Link
@@ -55,51 +51,9 @@ export const ManageUi: FC<{
           </Text>
           <ManageAction />
         </BorderBox>
-        <Flex minW="450px" direction="column" gap={2}>
-          <BorderBox px={4} py={2} display="flex" gap={1} flexDirection="column">
-            <Text color="gray.500" fontSize="sm">
-              Collateral
-            </Text>
-            <Flex justifyContent="space-between" alignItems="center">
-              <Text color="gray.50" fontSize="2xl" fontWeight="800">
-                {currency(liquidityPosition.collateralAmount)}
-              </Text>
-              <Text fontWeight="400" color="gray.500" fontSize="md">
-                {currency(liquidityPosition.collateralValue, {
-                  currency: 'USD',
-                  style: 'currency',
-                })}
-              </Text>
-            </Flex>
-          </BorderBox>
-          <BorderBox px={4} py={2} display="flex" gap={1} flexDirection="column">
-            <Text color="gray.500" fontSize="sm">
-              Debt
-            </Text>
-            <Flex justifyContent="space-between" alignItems="center">
-              <Text color="gray.50" fontSize="2xl" fontWeight="800">
-                {currency(liquidityPosition.debt)}
-              </Text>
-              <Text fontWeight="400" color="gray.500" fontSize="md">
-                TODO Net Issuance (do we want this?)
-              </Text>
-            </Flex>
-          </BorderBox>
-          <BorderBox px={4} py={2} display="flex" gap={1} flexDirection="column">
-            <Text color="gray.500" fontSize="sm">
-              C-RATIO
-            </Text>
-            <Flex justifyContent="space-between" alignItems="center">
-              <Text color="gray.50" fontSize="2xl" fontWeight="800">
-                {currency(liquidityPosition.cRatio.div(100), { style: 'percent' })}
-              </Text>
-              <Text fontWeight="400" color="gray.500" fontSize="md">
-                {currency(collateralType.liquidationRatioD18, { style: 'percent' })}
-              </Text>
-            </Flex>
-          </BorderBox>
-          <PoolBox />
-        </Flex>
+        <Box minW="450px">
+          <ManageStats />
+        </Box>
       </Flex>
     </Box>
   );
@@ -108,17 +62,13 @@ export const ManageUi: FC<{
 export const Manage = () => {
   const params = useParams();
   const collateralType = useCollateralType(params.collateral);
-  const { data: liquidityPosition } = useLiquidityPosition({
-    tokenAddress: collateralType?.tokenAddress,
-    accountId: params.accountId,
-    poolId: params.poolId,
-  });
-  if (!collateralType || !liquidityPosition) {
+
+  if (!collateralType) {
     return <Spinner />; // TODO skeleton
   }
   return (
     <ManagePositionProvider>
-      <ManageUi liquidityPosition={liquidityPosition} collateralType={collateralType} />
+      <ManageUi collateralType={collateralType} />
     </ManagePositionProvider>
   );
 };

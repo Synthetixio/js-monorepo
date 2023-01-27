@@ -148,7 +148,7 @@ export const ManageAction = () => {
     if (params.manageAction) return;
     if (!liquidityPosition.data) return;
     if (!collateralType) return;
-    const cRatio = liquidityPosition.data.cRatio.div(100);
+    const cRatio = liquidityPosition.data.cRatio;
     const canBorrow = cRatio.gt(collateralType.issuanceRatioD18);
     if (canBorrow) {
       setQueryParam({ manageAction: 'borrow' });

@@ -17,7 +17,7 @@ export const selectPosition = ({
   collateral: z.infer<typeof PositionCollateralSchema>;
   debt: z.infer<typeof DebtSchema>;
 }) => {
-  const cRatio = debt.eq(0) ? wei(0) : collateral.value.mul(100).div(debt);
+  const cRatio = debt.eq(0) ? wei(0) : collateral.value.div(debt);
   return {
     collateralAmount: collateral.amount,
     collateralValue: collateral.value,
