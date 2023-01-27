@@ -85,8 +85,8 @@ export const ManageStatsUi: FC<{
         </Text>
         <Flex justifyContent="space-between" alignItems="center">
           <ChangeStat
-            value={liquidityPosition.cRatio.div(100)}
-            newValue={newCratio.div(100)}
+            value={liquidityPosition.cRatio}
+            newValue={newCratio}
             formatFn={(val: Wei) => currency(val, { style: 'percent' })}
             hasChanges={hasChanges}
           />
