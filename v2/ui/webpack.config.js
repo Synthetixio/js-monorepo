@@ -228,6 +228,12 @@ module.exports = {
         'process.env.NEXT_PUBLIC_BOARDROOM_KEY': JSON.stringify(
           process.env.NEXT_PUBLIC_BOARDROOM_KEY
         ),
+        'process.env.NEXT_PUBLIC_ALCHEMY_MAINNET_KEY': JSON.stringify(
+          process.env.NEXT_PUBLIC_ALCHEMY_MAINNET_KEY
+        ),
+        'process.env.NEXT_PUBLIC_ALCHEMY_OVM_KEY': JSON.stringify(
+          process.env.NEXT_PUBLIC_ALCHEMY_OVM_KEY
+        ),
       }),
     ])
     .concat(isProd ? [] : isTest ? [] : [new ReactRefreshWebpackPlugin({ overlay: false })])
