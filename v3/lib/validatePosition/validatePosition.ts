@@ -37,7 +37,6 @@ export const validatePosition = ({
   return {
     isValid,
     hasChanges: !collateralChange.eq(0) || !debtChange.eq(0),
-    targetCRatio,
     newCRatio,
     newDebt,
     newCollateralAmount,
