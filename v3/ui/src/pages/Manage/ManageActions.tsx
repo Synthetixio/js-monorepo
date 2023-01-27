@@ -8,18 +8,23 @@ import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 import { useParams } from '@snx-v3/useParams';
 import { validatePosition } from '@snx-v3/validatePosition';
 import { wei } from '@synthetixio/wei';
-import { FC, FormEvent, PropsWithChildren, useCallback, useContext } from 'react';
+import { FC, FormEvent, PropsWithChildren, useCallback, useContext, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Borrow } from './Borrow';
 import { useManagePosition } from './useManagePosition';
 import { Repay } from './Repay';
 import { Withdraw } from './Withdraw';
 import { Deposit } from './Deposit';
+import { z } from 'zod';
+
+const validActions = ['borrow', 'deposit', 'repay', 'withdraw'] as const;
+const ManageActionSchema = z.enum(validActions);
+type ManageAction = z.infer<typeof ManageActionSchema>;
 
 const ActionButton: FC<
   PropsWithChildren<{
-    onClick: (action: string) => void;
-    action: string;
+    onClick: (action: ManageAction) => void;
+    action: ManageAction;
     activeAction?: string;
   }>
 > = ({ children, action, activeAction, onClick }) => (
@@ -45,7 +50,7 @@ const ActionButton: FC<
   </BorderBox>
 );
 
-const Action: FC<{ manageAction: string }> = ({ manageAction }) => {
+const Action: FC<{ manageAction: ManageAction }> = ({ manageAction }) => {
   switch (manageAction) {
     case 'borrow':
       return <Borrow />;
@@ -62,8 +67,8 @@ const Action: FC<{ manageAction: string }> = ({ manageAction }) => {
 };
 
 const ManageActionUi: FC<{
-  setActiveAction: (action: string) => void;
-  manageAction?: string;
+  setActiveAction: (action: ManageAction) => void;
+  manageAction?: ManageAction;
   onSubmit: (e: FormEvent) => void;
 }> = ({ setActiveAction, manageAction, onSubmit }) => {
   return (
@@ -137,6 +142,28 @@ export const ManageAction = () => {
     },
     [exec, isValid]
   );
+
+  useEffect(() => {
+    // This is just for initial state, if we have a manage action selected return
+    if (params.manageAction) return;
+    if (!liquidityPosition.data) return;
+    if (!collateralType) return;
+    const cRatio = liquidityPosition.data.cRatio;
+    const canBorrow = cRatio.gt(collateralType.issuanceRatioD18);
+    if (canBorrow) {
+      setQueryParam({ manageAction: 'borrow' });
+      return;
+    }
+    const cRatioIsCloseToLiqRatio = cRatio.mul(0.9).lt(collateralType.liquidationRatioD18);
+    if (cRatioIsCloseToLiqRatio) {
+      setQueryParam({ manageAction: 'repay' });
+      return;
+    }
+
+    setQueryParam({ manageAction: 'deposit' });
+  }, [collateralType, liquidityPosition.data, params.manageAction, setQueryParam]);
+
+  const parsedActionParam = ManageActionSchema.safeParse(params.manageAction);
   return (
     <ManageActionUi
       onSubmit={onSubmit}
@@ -145,7 +172,7 @@ export const ManageAction = () => {
         setDebtChange(wei(0));
         setQueryParam({ manageAction: action });
       }}
-      manageAction={params.manageAction}
+      manageAction={parsedActionParam.success ? parsedActionParam.data : undefined}
     />
   );
 };
