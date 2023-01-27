@@ -4,14 +4,17 @@ import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useIsConnected } from '@snx-v3/useBlockchain';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { useEthBalance } from '@snx-v3/useEthBalance';
-import { CollateralTypeSelector } from '@snx-v3/CollateralTypeSelector';
-import { FormEvent, useCallback, useRef, useState, useMemo } from 'react';
+import {
+  CollateralTypeSelector,
+  CollateralTypeSelectorProps,
+} from '@snx-v3/CollateralTypeSelector';
+import { FormEvent, useCallback, useMemo, useRef, useState } from 'react';
 import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
-import Wei, { wei } from '@synthetixio/wei';
+import { Wei, wei } from '@synthetixio/wei';
 import { PercentBadges } from '@snx-v3/PercentBadges';
 import { Amount } from '@snx-v3/Amount';
 import { useParams } from '@snx-v3/useParams';
-import { DepositModal } from './DepositModal';
+import { DepositModal, DepositModalProps } from './DepositModal';
 import { CollateralIcon } from '@snx-v3/icons';
 import { NumberInput } from '@snx-v3/NumberInput';
 
@@ -25,6 +28,8 @@ export function DepositFormUi({
   poolId,
   accountId,
   navigate,
+  DepositModal,
+  CollateralTypeSelector,
 }: {
   staticCollateral?: boolean;
   openConnectModal: (() => void) | undefined;
@@ -35,6 +40,8 @@ export function DepositFormUi({
   poolId?: string;
   accountId?: string;
   navigate: NavigateFunction;
+  DepositModal: DepositModalProps;
+  CollateralTypeSelector: CollateralTypeSelectorProps;
 }) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [inputAmount, setInputAmount] = useState(wei(0));
@@ -227,6 +234,8 @@ export const DepositForm = (props: { staticCollateral?: boolean }) => {
       poolId={params.poolId}
       accountId={params.accountId}
       navigate={navigate}
+      DepositModal={DepositModal}
+      CollateralTypeSelector={CollateralTypeSelector}
     />
   );
 };

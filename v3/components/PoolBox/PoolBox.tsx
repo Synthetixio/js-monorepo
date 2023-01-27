@@ -1,10 +1,10 @@
-import { Box, Flex, Text, Heading, Button, Skeleton, Tooltip } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Skeleton, Text, Tooltip } from '@chakra-ui/react';
 import { BorderBox } from '@snx-v3/BorderBox';
 import { FC } from 'react';
 import { usePoolData } from '@snx-v3/usePoolData';
 import { calculatePoolPerformanceSevenDays } from '@snx-v3/calculations';
 import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
-import { wei, Wei } from '@synthetixio/wei';
+import { Wei } from '@synthetixio/wei';
 import { useParams } from '@snx-v3/useParams';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { TrendText } from '@snx-v3/TrendText';

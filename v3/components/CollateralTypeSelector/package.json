@@ -7,6 +7,7 @@
     "@chakra-ui/icons": "^2.0.9",
     "@chakra-ui/react": "^2.2.8",
     "@snx-v3/icons": "workspace:*",
-    "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useCollateralTypes": "workspace:*",
+    "react": "^18.2.0"
   }
 }
