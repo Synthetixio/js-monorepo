@@ -1,17 +1,14 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
-import { CollateralType, useCollateralTypes, useCollateralType } from '@snx-v3/useCollateralTypes';
+import { CollateralType, useCollateralType, useCollateralTypes } from '@snx-v3/useCollateralTypes';
 import { CollateralIcon } from '@snx-v3/icons';
+import { FC } from 'react';
 
-export function CollateralTypeSelectorUI({
-  collateralTypes,
-  collateralType,
-  onChange,
-}: {
+export const CollateralTypeSelectorUI: FC<{
   collateralTypes: CollateralType[];
   collateralType?: CollateralType;
   onChange: (collateralSymbol: string) => void;
-}) {
+}> = ({ collateralTypes, collateralType, onChange }) => {
   return (
     <Menu>
       <MenuButton minHeight="48px" alignItems="center" cursor="pointer" type="button">
@@ -51,15 +48,17 @@ export function CollateralTypeSelectorUI({
       </MenuList>
     </Menu>
   );
-}
+};
 
-export function CollateralTypeSelector({
-  collateralSymbol,
-  onChange,
-}: {
+export type CollateralTypeSelectorProps = FC<{
   collateralSymbol?: string;
   onChange: (collateralSymbol: string) => void;
-}) {
+}>;
+
+export const CollateralTypeSelector: CollateralTypeSelectorProps = ({
+  collateralSymbol,
+  onChange,
+}) => {
   const { data: collateralTypes = [] } = useCollateralTypes();
   const collateralType = useCollateralType(collateralSymbol);
   return (
@@ -69,4 +68,4 @@ export function CollateralTypeSelector({
       collateralTypes={collateralTypes}
     />
   );
-}
+};

@@ -24,22 +24,25 @@ import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { useEthBalance } from '@snx-v3/useEthBalance';
 import { Wei, wei } from '@synthetixio/wei';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
+import { FC } from 'react';
 
-export function DepositModal({
-  accountId,
-  amount,
-  poolId,
-  collateralType,
-  isOpen,
-  setIsOpen,
-}: {
+export type DepositModalProps = FC<{
   accountId?: string;
   amount: Wei;
   poolId: string;
   collateralType: CollateralType;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-}) {
+}>;
+
+export const DepositModal: DepositModalProps = ({
+  accountId,
+  amount,
+  poolId,
+  collateralType,
+  isOpen,
+  setIsOpen,
+}) => {
   const navigate = useNavigate();
   const { data: CoreProxy } = useCoreProxy();
   const toast = useToast({
@@ -354,4 +357,4 @@ export function DepositModal({
       </ModalContent>
     </Modal>
   );
-}
+};

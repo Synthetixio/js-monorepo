@@ -9,7 +9,11 @@ import { BorderBox } from '@snx-v3/BorderBox';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { PoolBox } from '@snx-v3/PoolBox';
 
-const DepositUi: FC<{ collateralDisplaySymbol?: string }> = ({ collateralDisplaySymbol }) => {
+const DepositUi: FC<{ collateralDisplaySymbol?: string; DepositForm: FC; PoolBox: FC }> = ({
+  collateralDisplaySymbol,
+  PoolBox,
+  DepositForm,
+}) => {
   return (
     <Flex height="100%" flexDirection="column">
       <Flex alignItems="flex-end" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
@@ -65,5 +69,11 @@ export const Deposit = () => {
     }
   }, [navigate, accountId, params.accountId, params.collateralSymbol, params.poolId]);
 
-  return <DepositUi collateralDisplaySymbol={collateralType?.displaySymbol} />;
+  return (
+    <DepositUi
+      collateralDisplaySymbol={collateralType?.displaySymbol}
+      DepositForm={DepositForm}
+      PoolBox={PoolBox}
+    />
+  );
 };
