@@ -108,7 +108,7 @@ export const DepositModal: DepositModalProps = ({
   const currentCollateral = liquidityPosition?.collateralAmount || wei(0);
   const { exec: execDeposit, isLoading: depositLoading } = useDeposit(
     {
-      accountId: accountId,
+      accountId: accountId || newAccountId,
       poolId: poolId,
       collateralTypeAddress: collateralType.tokenAddress,
       collateralChange: amount,
