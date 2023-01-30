@@ -93,10 +93,9 @@ export const Withdraw = () => {
   // To get the max withdrawable collateral we look at the new debt and the issuance ratio.
   // This gives us the amount in dollar. We then divide by the collateral price.
   // To avoid the transaction failing due to small price deviations, we also apply a 2% buffer by multiplying with 0.98
-  const maxCollateral = newDebt
-    .mul(collateralType.issuanceRatioD18)
-    .div(collateralType.price)
-    .mul(0.98);
+  const maxCollateral = newDebt.eq(0)
+    ? liquidityPosition?.collateralAmount
+    : newDebt.mul(collateralType.issuanceRatioD18).div(collateralType.price).mul(0.98);
 
   return (
     <WithdrawUi

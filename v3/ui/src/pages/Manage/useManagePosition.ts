@@ -85,7 +85,7 @@ export const useManagePosition = ({
     }
 
     if (collateralChange.lt(0)) {
-      const newCollateralValue = collateralAmount.sub(collateralChange).toBN();
+      const newCollateralValue = collateralAmount.add(collateralChange).toBN();
       list.push(
         {
           contract: CoreProxy,
