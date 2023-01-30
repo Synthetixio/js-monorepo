@@ -7632,6 +7632,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/RepayTxnModal@workspace:*, @snx-v3/RepayTxnModal@workspace:v3/components/RepayTxnModal":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/RepayTxnModal@workspace:v3/components/RepayTxnModal"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/Amount": "workspace:*"
+    "@snx-v3/Multistep": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/TrendText@workspace:*, @snx-v3/TrendText@workspace:v3/components/TrendText":
   version: 0.0.0-use.local
   resolution: "@snx-v3/TrendText@workspace:v3/components/TrendText"
@@ -7762,6 +7775,7 @@ __metadata:
     "@snx-v3/NumberInput": "workspace:*"
     "@snx-v3/PercentBadges": "workspace:*"
     "@snx-v3/PoolBox": "workspace:*"
+    "@snx-v3/RepayTxnModal": "workspace:*"
     "@snx-v3/TrendText": "workspace:*"
     "@snx-v3/calculations": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
@@ -7782,6 +7796,7 @@ __metadata:
     "@snx-v3/usePoolData": "workspace:*"
     "@snx-v3/usePools": "workspace:*"
     "@snx-v3/usePreferredPool": "workspace:*"
+    "@snx-v3/useRepay": "workspace:*"
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useTransactionState": "workspace:*"
     "@snx-v3/useUSDProxy": "workspace:*"
@@ -8095,6 +8110,21 @@ __metadata:
     "@snx-v3/useCoreProxy": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     zod: ^3.20.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useRepay@workspace:*, @snx-v3/useRepay@workspace:v3/lib/useRepay":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useRepay@workspace:v3/lib/useRepay"
+  dependencies:
+    "@snx-v3/txnReducer": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/useGasOptions": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 

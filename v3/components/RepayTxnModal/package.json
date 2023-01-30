@@ -6,7 +6,9 @@
   "dependencies": {
     "@chakra-ui/react": "^2.2.8",
     "@snx-v3/Amount": "workspace:*",
+    "@snx-v3/Multistep": "workspace:*",
     "@snx-v3/txnReducer": "workspace:*",
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": "workspace:*",
+    "react": "^18.2.0"
   }
 }
