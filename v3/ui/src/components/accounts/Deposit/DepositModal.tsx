@@ -86,9 +86,9 @@ export const DepositModal: DepositModalProps = ({
       onMutate: () => {
         toast({
           title: 'Approve collateral for transfer',
-          description: accountId ? 
-            'The next transaction will deposit this collateral.' :
-            'The next transaction will create your account and and deposit this collateral',
+          description: accountId
+            ? 'The next transaction will deposit this collateral.'
+            : 'The next transaction will create your account and and deposit this collateral',
           status: 'info',
         });
       },
