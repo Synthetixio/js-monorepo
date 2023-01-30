@@ -68,14 +68,6 @@ export const useManagePosition = ({
       );
     }
 
-    if (debtChange.lt(0)) {
-      list.push({
-        contract: CoreProxy,
-        functionName: 'burnUsd',
-        callArgs: [accountId, poolId, collateralType.tokenAddress, debtChange.mul(-1).toBN()],
-      });
-    }
-
     if (debtChange.gt(0)) {
       list.push({
         contract: CoreProxy,
