@@ -119,23 +119,17 @@ export const DepositModal: DepositModalProps = ({
     {
       onMutate: () => {
         toast.closeAll();
-        if (!Boolean(accountId)) {
-          toast({
-            title: 'Create your account',
-            description: "You'll be redirected once your account is created.",
-            status: 'info',
-            isClosable: true,
-            duration: 9000,
-          });
-        } else {
-          toast({
-            title: 'Update your collateral',
-            description: 'Your deposited collateral amounts have been updated.',
-            status: 'info',
-            isClosable: true,
-            duration: 9000,
-          });
-        }
+
+        toast({
+          title: Boolean(accountId)
+            ? 'Depositing your collateral'
+            : 'Creating your account and depositing collateral',
+          description:
+            "You'll be redirected to the manage position page once the transaction is confirmed.",
+          status: 'info',
+          isClosable: true,
+          duration: 9000,
+        });
       },
       onSuccess: async () => {
         toast.closeAll();
@@ -145,22 +139,20 @@ export const DepositModal: DepositModalProps = ({
           accounts.refetch(),
           refetchLiquidityPosition(),
         ]);
-        if (!Boolean(accountId)) {
-          navigate(
-            generatePath('/accounts/:accountId/positions/:collateralType/:poolId', {
-              accountId: newAccountId,
-              collateralType: collateralType.symbol,
-              poolId: poolId,
-            })
-          );
-        } else {
-          toast({
-            title: 'Success',
-            description: 'Your deposited collateral amounts have been updated.',
-            status: 'success',
-            duration: 5000,
-          });
-        }
+
+        toast({
+          title: 'Success',
+          description: 'Your deposited collateral amounts have been updated.',
+          status: 'success',
+          duration: 5000,
+        });
+        navigate(
+          generatePath('/accounts/:accountId/positions/:collateralType/:poolId', {
+            accountId: newAccountId,
+            collateralType: collateralType.symbol,
+            poolId: poolId,
+          })
+        );
       },
       onError: () => {
         toast({
