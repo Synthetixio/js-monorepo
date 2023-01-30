@@ -1,0 +1,12 @@
+{
+  "name": "@snx-v3/RepayTxnModal",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v3/Amount": "workspace:*",
+    "@snx-v3/txnReducer": "workspace:*",
+    "@synthetixio/wei": "workspace:*"
+  }
+}

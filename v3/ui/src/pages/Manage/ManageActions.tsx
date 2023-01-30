@@ -25,6 +25,7 @@ import { Withdraw } from './Withdraw';
 import { Deposit } from './Deposit';
 import { z } from 'zod';
 import { useRepay } from '@snx-v3/useRepay';
+import { RepayTxnModal } from '@snx-v3/RepayTxnModal';
 
 const validActions = ['borrow', 'deposit', 'repay', 'withdraw'] as const;
 const ManageActionSchema = z.enum(validActions);
@@ -204,6 +205,7 @@ export const ManageAction = () => {
   }, [collateralType, liquidityPosition.data, params.manageAction, setQueryParam]);
 
   return (
+    <>
       <ManageActionUi
         onSubmit={onSubmit}
         setActiveAction={(action) => {
@@ -212,5 +214,19 @@ export const ManageAction = () => {
           setQueryParam({ manageAction: action });
         }}
         manageAction={parsedAction || undefined}
+      />
+      <RepayTxnModal
+        amount={debtChange.abs()}
+        onClose={() => {
+          setCollateralChange(wei(0));
+          setDebtChange(wei(0));
+          setTxnModalOpen(null);
+          settleRepay();
+        }}
+        executeTransaction={executeTransaction}
+        txnStatus={repayTxnState.txnStatus}
+        txnModalOpen={txnModalOpen === 'repay'}
+      />
+    </>
   );
 };
