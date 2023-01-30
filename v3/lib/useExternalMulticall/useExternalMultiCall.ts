@@ -14,6 +14,7 @@ export async function importMulticall(chainName: string) {
       throw new Error(`Unsupported chain ${chainName}`);
   }
 }
+
 export const useExternalMulticall = () => {
   const network = useNetwork();
   const provider = useProvider();
@@ -28,7 +29,7 @@ export const useExternalMulticall = () => {
         | MulticallGoerli
         | MulticallOptimismGoerli;
     },
-    enabled: Boolean(provider.network.name && (signer || provider)),
+    enabled: Boolean(network.name && (signer || provider)),
     staleTime: Infinity,
     cacheTime: Infinity,
   });

@@ -4,7 +4,7 @@ import type { CoreProxy as CoreProxyGoerli } from '@synthetixio/v3-contracts/bui
 import type { CoreProxy as CoreProxyOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/CoreProxy';
 import { useNetwork, useProvider, useSigner } from '@snx-v3/useBlockchain';
 
-export async function importCoreProxy(chainName: string | undefined) {
+export async function importCoreProxy(chainName: string) {
   switch (chainName) {
     case 'goerli':
       return import('@synthetixio/v3-contracts/build/goerli/CoreProxy');

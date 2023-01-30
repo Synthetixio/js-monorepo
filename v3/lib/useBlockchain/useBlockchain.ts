@@ -19,8 +19,8 @@ export function useNetwork() {
   const { chain } = wagmi.useNetwork();
 
   return {
-    id: chain?.network,
-    name: chain?.name.toLowerCase(),
+    id: Number(chain?.network) || 1,
+    name: chain?.name.toLowerCase() || 'mainnet',
     isSupported: !chain?.unsupported,
   };
 }

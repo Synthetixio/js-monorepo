@@ -26,7 +26,7 @@ export const useTokenBalance = (address?: string, networkId?: number) => {
       if (!network.isSupported) throw new Error('Unsupported Network');
       if (!tokenAddress || !accountAddress) throw Error('Query should not be enabled');
       const provider =
-        networkId && String(networkId) !== network.id
+        networkId && networkId !== network.id
           ? new InfuraProvider(networkId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID)
           : connectedProvider;
       const contract = new Contract(tokenAddress, abi, provider);

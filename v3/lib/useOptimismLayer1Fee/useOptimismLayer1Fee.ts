@@ -6,11 +6,12 @@ import { wei } from '@synthetixio/wei';
 import { useQuery } from '@tanstack/react-query';
 import { useNetwork } from '@snx-v3/useBlockchain';
 
-const isNetworkOvm = (networkName: string) => networkName.includes('optimism');
+const isNetworkOvm = (networkName: string | undefined) => networkName?.includes('optimism');
+
 const getOptimismLayerOneFees = async (
   serializedTxn: string,
   networkId: number,
-  networkName: string
+  networkName: string | undefined
 ) => {
   const isOvm = isNetworkOvm(networkName);
 
@@ -22,6 +23,7 @@ const getOptimismLayerOneFees = async (
 
   return wei(await OptimismGasPriceOracleContract.getL1Fee(serializedTxn));
 };
+
 export const useOptimismLayer1Fee = <T>(
   args:
     | {
@@ -30,11 +32,14 @@ export const useOptimismLayer1Fee = <T>(
       }
     | { populateTransaction?: () => Promise<PopulatedTransaction> }
 ) => {
-  const { id: networkId, name: networkName } = useNetwork();
+  const network = useNetwork();
+
   const keyForTransactionArgs = 'transactionArgs' in args ? args.transactionArgs : undefined;
+
   return useQuery({
-    queryKey: [networkId, args.populateTransaction, keyForTransactionArgs],
+    queryKey: [network.id, args.populateTransaction, keyForTransactionArgs],
     queryFn: async () => {
+      if (!network.isSupported) throw new Error('Unsupported Network');
       if (!args.populateTransaction) {
         throw Error('populateTransaction missing, query should not be enabled');
       }
@@ -47,8 +52,8 @@ export const useOptimismLayer1Fee = <T>(
       const { from: _from, ...txWithoutFrom } = tx;
       const serializedTxn = serialize(txWithoutFrom);
 
-      return await getOptimismLayerOneFees(serializedTxn, networkId, networkName);
+      return await getOptimismLayerOneFees(serializedTxn, Number(network?.id), network?.name);
     },
-    enabled: Boolean(args.populateTransaction && isNetworkOvm(networkName)),
+    enabled: Boolean(args.populateTransaction && isNetworkOvm(network.name)),
   });
 };

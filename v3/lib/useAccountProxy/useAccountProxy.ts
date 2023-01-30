@@ -6,7 +6,7 @@ import { useNetwork, useProvider, useSigner } from '@snx-v3/useBlockchain';
 
 export type AccountProxy = AccountProxyGoerli | AccountProxyOptimismGoerli;
 
-export async function importAccount(chainName: string | undefined) {
+export async function importAccount(chainName: string) {
   switch (chainName) {
     case 'goerli':
       return await import('@synthetixio/v3-contracts/build/goerli/AccountProxy');
