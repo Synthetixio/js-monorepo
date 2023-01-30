@@ -86,7 +86,9 @@ export const DepositModal: DepositModalProps = ({
       onMutate: () => {
         toast({
           title: 'Approve collateral for transfer',
-          description: 'The next transaction will create your account and deposit this collateral.',
+          description: `The next transaction will ${
+            !accountId ? 'create your account and ' : ''
+          } deposit this collateral.`,
           status: 'info',
         });
       },
@@ -145,9 +147,9 @@ export const DepositModal: DepositModalProps = ({
         ]);
         if (!Boolean(accountId)) {
           navigate(
-            generatePath('/accounts/:accountId/positions/:collateral/:poolId', {
+            generatePath('/accounts/:accountId/positions/:collateralType/:poolId', {
               accountId: newAccountId,
-              collateral: collateralType.symbol,
+              collateralType: collateralType.symbol,
               poolId: poolId,
             })
           );
