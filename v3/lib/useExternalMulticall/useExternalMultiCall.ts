@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
 import type { Multicall3 as MulticallGoerli } from '@synthetixio/v3-contracts/build/goerli/Multicall3';
 import type { Multicall3 as MulticallOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/Multicall3';
-import { useProvider, useSigner } from '@snx-v3/useBlockchain';
+import { useNetwork, useProvider, useSigner } from '@snx-v3/useBlockchain';
 
 export async function importMulticall(chainName: string) {
   switch (chainName) {
@@ -15,12 +15,14 @@ export async function importMulticall(chainName: string) {
   }
 }
 export const useExternalMulticall = () => {
+  const network = useNetwork();
   const provider = useProvider();
   const signer = useSigner();
 
   return useQuery({
-    queryKey: [provider.network.name, { withSigner: Boolean(signer) }, 'ExternalMulticall'],
+    queryKey: [network.name, { withSigner: Boolean(signer) }, 'ExternalMulticall'],
     queryFn: async () => {
+      if (!network.isSupported) throw new Error('Unsupported Network');
       const Multicall = await importMulticall(provider.network.name);
       return new ethers.Contract(Multicall.address, Multicall.abi, signer || provider) as
         | MulticallGoerli

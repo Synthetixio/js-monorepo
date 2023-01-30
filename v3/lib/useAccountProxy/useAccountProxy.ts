@@ -6,7 +6,7 @@ import { useNetwork, useProvider, useSigner } from '@snx-v3/useBlockchain';
 
 export type AccountProxy = AccountProxyGoerli | AccountProxyOptimismGoerli;
 
-export async function importAccount(chainName: string) {
+export async function importAccount(chainName: string | undefined) {
   switch (chainName) {
     case 'goerli':
       return await import('@synthetixio/v3-contracts/build/goerli/AccountProxy');
@@ -27,7 +27,8 @@ export function useAccountProxy() {
   return useQuery({
     queryKey: [network.name, { withSigner }, 'AccountProxy'],
     queryFn: async function () {
-      const { address, abi } = await importAccount(network.name);
+      if (!network.isSupported) throw new Error('Unsupported Network');
+      const { address, abi } = await importAccount(network?.name);
       return new Contract(address, abi, signerOrProvider) as AccountProxy;
     },
     enabled: Boolean(network.name && signerOrProvider),

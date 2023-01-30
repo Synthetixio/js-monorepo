@@ -1,14 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import { CoreProxyContractType, useCoreProxy } from '@snx-v3/useCoreProxy';
+import { useNetwork } from '@snx-v3/useBlockchain';
 import { z } from 'zod';
 import { ZodBigNumber } from '@snx-v3/zod';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
 
 const PoolIdsSchema = z.array(ZodBigNumber.transform((x) => x.toString()));
+
 const PoolSchema = z.object({
   id: z.string(),
   name: z.string().default('Unnamed Pool'),
 });
+
 const loadPoolNames = async ({
   CoreProxyContract,
   poolIds,
@@ -26,12 +29,16 @@ const loadPoolNames = async ({
     return PoolSchema.parse({ id: poolIds[i], name: decodedName || undefined });
   });
 };
+
 export const usePools = () => {
+  const network = useNetwork();
   const { data: CoreProxyContract } = useCoreProxy();
   const { data: preferredPool } = usePreferredPool();
+
   return useQuery({
-    queryKey: [{ CoreProxyContract: CoreProxyContract?.address, preferredPool }, 'pools'],
+    queryKey: [network.name, 'pools'],
     queryFn: async () => {
+      if (!network.isSupported) throw new Error('Unsupported Network');
       if (!CoreProxyContract || !preferredPool) throw new Error('Query should not be enabled');
       const approvedPoolIds = await CoreProxyContract.getApprovedPools();
       const approvedPools = await loadPoolNames({

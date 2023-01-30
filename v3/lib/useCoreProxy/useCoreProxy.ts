@@ -4,7 +4,7 @@ import type { CoreProxy as CoreProxyGoerli } from '@synthetixio/v3-contracts/bui
 import type { CoreProxy as CoreProxyOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/CoreProxy';
 import { useNetwork, useProvider, useSigner } from '@snx-v3/useBlockchain';
 
-export async function importCoreProxy(chainName: string) {
+export async function importCoreProxy(chainName: string | undefined) {
   switch (chainName) {
     case 'goerli':
       return import('@synthetixio/v3-contracts/build/goerli/CoreProxy');
@@ -14,6 +14,7 @@ export async function importCoreProxy(chainName: string) {
       throw new Error(`Unsupported chain ${chainName}`);
   }
 }
+
 export const useCoreProxy = () => {
   const network = useNetwork();
   const provider = useProvider();
@@ -23,6 +24,7 @@ export const useCoreProxy = () => {
   return useQuery({
     queryKey: [network.name, { withSigner: Boolean(signer) }, 'CoreProxy'],
     queryFn: async function () {
+      if (!network.isSupported) throw new Error('Unsupported Network');
       const CoreProxy = await importCoreProxy(network.name);
       return new Contract(CoreProxy.address, CoreProxy.abi, signerOrProvider) as
         | CoreProxyGoerli
@@ -33,4 +35,5 @@ export const useCoreProxy = () => {
     cacheTime: Infinity,
   });
 };
+
 export type CoreProxyContractType = CoreProxyGoerli | CoreProxyOptimismGoerli;
