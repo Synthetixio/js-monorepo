@@ -50,4 +50,7 @@ it('creates new account with first deposit', () => {
   cy.get('@accountId').then((accountId) => {
     cy.get('[data-testid="current account id"]').should('have.attr', 'data-accountId', accountId);
   });
+  cy.get('[data-testid="manageAction borrow"]').should('have.css', {
+    background: '#ffffff0f',
+  });
 });
