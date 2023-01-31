@@ -7772,6 +7772,7 @@ __metadata:
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/useDeposit": "workspace:*"
     "@snx-v3/useEthBalance": "workspace:*"
     "@snx-v3/useExternalMulticall": "workspace:*"
     "@snx-v3/useLiquidityPosition": "workspace:*"
@@ -7913,6 +7914,22 @@ __metadata:
     "@snx-v3/useBlockchain": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@tanstack/react-query": ^4.3.4
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useDeposit@workspace:*, @snx-v3/useDeposit@workspace:v3/lib/useDeposit":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useDeposit@workspace:v3/lib/useDeposit"
+  dependencies:
+    "@snx-v3/txnReducer": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/useGasOptions": "workspace:*"
+    "@snx-v3/useGasPrice": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
