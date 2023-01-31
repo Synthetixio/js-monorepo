@@ -27,11 +27,10 @@ export function useAccountProxy() {
   return useQuery({
     queryKey: [network.name, { withSigner }, 'AccountProxy'],
     queryFn: async function () {
-      if (!network.isSupported) throw new Error('Unsupported Network');
       const { address, abi } = await importAccount(network?.name);
       return new Contract(address, abi, signerOrProvider) as AccountProxy;
     },
-    enabled: Boolean(network.name && signerOrProvider),
+    enabled: Boolean(network.isSupported && signerOrProvider),
     staleTime: Infinity,
     cacheTime: Infinity,
   });

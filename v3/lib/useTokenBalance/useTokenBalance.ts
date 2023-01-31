@@ -23,7 +23,6 @@ export const useTokenBalance = (address?: string, networkId?: number) => {
       { tokenAddress },
     ],
     queryFn: async () => {
-      if (!network.isSupported) throw new Error('Unsupported Network');
       if (!tokenAddress || !accountAddress) throw Error('Query should not be enabled');
       const provider =
         networkId && networkId !== network.id
@@ -32,6 +31,8 @@ export const useTokenBalance = (address?: string, networkId?: number) => {
       const contract = new Contract(tokenAddress, abi, provider);
       return BalanceSchema.parse(await contract.balanceOf(accountAddress));
     },
-    enabled: Boolean((networkId ?? network.id) && accountAddress && tokenAddress),
+    enabled: Boolean(
+      (networkId ?? network.id) && accountAddress && tokenAddress && network.isSupported
+    ),
   });
 };

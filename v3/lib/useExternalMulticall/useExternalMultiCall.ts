@@ -23,13 +23,12 @@ export const useExternalMulticall = () => {
   return useQuery({
     queryKey: [network.name, { withSigner: Boolean(signer) }, 'ExternalMulticall'],
     queryFn: async () => {
-      if (!network.isSupported) throw new Error('Unsupported Network');
-      const Multicall = await importMulticall(provider.network.name);
+      const Multicall = await importMulticall(network.name);
       return new ethers.Contract(Multicall.address, Multicall.abi, signer || provider) as
         | MulticallGoerli
         | MulticallOptimismGoerli;
     },
-    enabled: Boolean(network.name && (signer || provider)),
+    enabled: Boolean(network.isSupported && (signer || provider)),
     staleTime: Infinity,
     cacheTime: Infinity,
   });

@@ -39,7 +39,6 @@ export const useOptimismLayer1Fee = <T>(
   return useQuery({
     queryKey: [network.id, args.populateTransaction, keyForTransactionArgs],
     queryFn: async () => {
-      if (!network.isSupported) throw new Error('Unsupported Network');
       if (!args.populateTransaction) {
         throw Error('populateTransaction missing, query should not be enabled');
       }
@@ -54,6 +53,6 @@ export const useOptimismLayer1Fee = <T>(
 
       return await getOptimismLayerOneFees(serializedTxn, Number(network?.id), network?.name);
     },
-    enabled: Boolean(args.populateTransaction && isNetworkOvm(network.name)),
+    enabled: Boolean(args.populateTransaction && isNetworkOvm(network.name) && network.isSupported),
   });
 };

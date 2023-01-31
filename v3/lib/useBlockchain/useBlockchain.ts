@@ -16,7 +16,8 @@ export function useSigner() {
 }
 
 export function useNetwork() {
-  const { chain } = wagmi.useNetwork();
+  const { chain, chains } = wagmi.useNetwork();
+  console.log('chain', chain, chains);
 
   return {
     id: Number(chain?.network) || 1,

@@ -105,13 +105,12 @@ export function useCollateralTypes() {
   return useQuery({
     queryKey: [network.name, 'collateralTypes'],
     queryFn: async () => {
-      if (!network.isSupported) throw new Error('Unsupported Network');
       if (!CoreProxyContract || !MulticallContract)
         throw Error('Query should not be enabled when contracts missing');
       return loadCollateralTypes({ CoreProxyContract, MulticallContract });
     },
     placeholderData: [],
-    enabled: Boolean(CoreProxyContract && MulticallContract),
+    enabled: Boolean(CoreProxyContract && MulticallContract && network.isSupported),
   });
 }
 

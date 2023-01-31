@@ -19,7 +19,6 @@ export const useVaultsData = (poolId?: number) => {
   return useQuery({
     queryKey: [network.name, { poolId, collateralTypes }, 'VaultCollaterals'],
     queryFn: async () => {
-      if (!network.isSupported) throw new Error('Unsupported Network');
       if (!CoreProxyContract || !collateralTypes || !poolId) {
         throw Error('Query should not be enabled when missing contract or collateral types');
       }

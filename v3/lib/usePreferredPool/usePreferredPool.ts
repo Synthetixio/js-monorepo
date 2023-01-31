@@ -15,7 +15,6 @@ export const usePreferredPool = () => {
   return useQuery({
     queryKey: [network.name, 'preferred-pool'],
     queryFn: async () => {
-      if (!network.isSupported) throw new Error('Unsupported Network');
       if (!CoreProxyContract) throw new Error('CoreProxy');
       const idBn = await CoreProxyContract.getPreferredPool();
       const id = idBn.toString();

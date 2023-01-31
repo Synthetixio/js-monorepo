@@ -24,13 +24,12 @@ export const useCoreProxy = () => {
   return useQuery({
     queryKey: [network.name, { withSigner: Boolean(signer) }, 'CoreProxy'],
     queryFn: async function () {
-      if (!network.isSupported) throw new Error('Unsupported Network');
       const CoreProxy = await importCoreProxy(network.name);
       return new Contract(CoreProxy.address, CoreProxy.abi, signerOrProvider) as
         | CoreProxyGoerli
         | CoreProxyOptimismGoerli;
     },
-    enabled: Boolean(network.name && signerOrProvider),
+    enabled: Boolean(network.isSupported && signerOrProvider),
     staleTime: Infinity,
     cacheTime: Infinity,
   });

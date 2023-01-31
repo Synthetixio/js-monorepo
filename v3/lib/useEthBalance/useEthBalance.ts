@@ -14,7 +14,6 @@ export function useEthBalance(networkId?: number) {
   return useQuery({
     queryKey: [{ networkId: networkId ?? network.id, accountAddress }, 'ethBalance'],
     queryFn: async () => {
-      if (!network.isSupported) throw new Error('Unsupported Network');
       if (!accountAddress) throw Error('Query should not be enabled');
       const provider =
         networkId && networkId !== network.id

@@ -36,9 +36,8 @@ export const usePools = () => {
   const { data: preferredPool } = usePreferredPool();
 
   return useQuery({
-    queryKey: [network.name, 'pools'],
+    queryKey: [network.name, { preferredPool }, 'pools'],
     queryFn: async () => {
-      if (!network.isSupported) throw new Error('Unsupported Network');
       if (!CoreProxyContract || !preferredPool) throw new Error('Query should not be enabled');
       const approvedPoolIds = await CoreProxyContract.getApprovedPools();
       const approvedPools = await loadPoolNames({
@@ -47,6 +46,6 @@ export const usePools = () => {
       });
       return [preferredPool].concat(approvedPools.filter(({ id }) => id !== preferredPool.id));
     },
-    enabled: Boolean(CoreProxyContract && preferredPool),
+    enabled: Boolean(CoreProxyContract && preferredPool && network?.isSupported),
   });
 };
