@@ -7896,6 +7896,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useCollateralTypes@workspace:v3/lib/useCollateralTypes"
   dependencies:
+    "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/zod": "workspace:*"
     "@synthetixio/wei": "workspace:*"
@@ -7949,6 +7950,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useEthPrice@workspace:v3/lib/useEthPrice"
   dependencies:
+    "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@synthetixio/wei": "workspace:*"
@@ -8089,6 +8091,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/usePreferredPool@workspace:v3/lib/usePreferredPool"
   dependencies:
+    "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     zod: ^3.20.2
@@ -8134,6 +8137,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useVaultsData@workspace:v3/lib/useVaultsData"
   dependencies:
+    "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/zod": "workspace:*"
