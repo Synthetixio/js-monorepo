@@ -51,7 +51,7 @@ export const useOptimismLayer1Fee = <T>(
       const { from: _from, ...txWithoutFrom } = tx;
       const serializedTxn = serialize(txWithoutFrom);
 
-      return await getOptimismLayerOneFees(serializedTxn, Number(network?.id), network?.name);
+      return await getOptimismLayerOneFees(serializedTxn, network?.id, network?.name);
     },
     enabled: Boolean(args.populateTransaction && isNetworkOvm(network.name) && network.isSupported),
   });
