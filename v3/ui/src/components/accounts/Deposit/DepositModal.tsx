@@ -124,8 +124,7 @@ export const DepositModal: DepositModalProps = ({
           title: Boolean(accountId)
             ? 'Depositing your collateral'
             : 'Creating your account and depositing collateral',
-          description:
-            "You'll be redirected to the manage position page once the transaction is confirmed.",
+          description: '',
           status: 'info',
           isClosable: true,
           duration: 9000,
@@ -139,20 +138,12 @@ export const DepositModal: DepositModalProps = ({
           accounts.refetch(),
           refetchLiquidityPosition(),
         ]);
-
         toast({
           title: 'Success',
           description: 'Your deposited collateral amounts have been updated.',
           status: 'success',
           duration: 5000,
         });
-        navigate(
-          generatePath('/accounts/:accountId/positions/:collateralType/:poolId', {
-            accountId: newAccountId,
-            collateralType: collateralType.symbol,
-            poolId: poolId,
-          })
-        );
       },
       onError: () => {
         toast({
@@ -164,12 +155,21 @@ export const DepositModal: DepositModalProps = ({
     }
   );
   const onClose = useCallback(() => {
+    if (completed) {
+      navigate(
+        generatePath('/accounts/:accountId/positions/:collateralType/:poolId', {
+          accountId: newAccountId,
+          collateralType: collateralType.symbol,
+          poolId: poolId,
+        })
+      );
+    }
     setStep('idle');
     setCompleted(false);
     setFailed(false);
     setProcessing(false);
     setIsOpen(false);
-  }, [setIsOpen]);
+  }, [collateralType.symbol, completed, navigate, newAccountId, poolId, setIsOpen]);
 
   const onSubmit = useCallback(async () => {
     if (completed) {
