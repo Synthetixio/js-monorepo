@@ -9,7 +9,7 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Amount } from '@snx-v3/Amount';
 import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
@@ -212,20 +212,6 @@ export const DepositModal: DepositModalProps = ({
     }
 
     setStep('deposit');
-    try {
-      // Once the previous `refetchAllowance` call finish, execDeposit gets called before useDeposit hook is enabled.
-      // If we enable the call before we have enough allowance, the estimate gas call will fail :(
-      await new Promise((res) => setTimeout(res, 1000));
-      await execDeposit();
-    } catch (e) {
-      console.error(e);
-      setFailed(true);
-      setProcessing(false);
-      return;
-    }
-
-    setProcessing(false);
-    setCompleted(true);
   }, [
     completed,
     collateralType?.symbol,
@@ -237,8 +223,29 @@ export const DepositModal: DepositModalProps = ({
     approve,
     infiniteApproval,
     refetchAllowance,
-    execDeposit,
   ]);
+
+  useEffect(() => {
+    if (depositLoading) return;
+    if (requireApproval) return;
+    if (step !== 'deposit') return;
+
+    const deposit = async () => {
+      try {
+        await execDeposit();
+      } catch (e) {
+        console.error(e);
+        setFailed(true);
+        setProcessing(false);
+        return;
+      }
+
+      setProcessing(false);
+      setCompleted(true);
+    };
+
+    deposit();
+  }, [step, requireApproval, execDeposit, depositLoading]);
 
   return (
     <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
