@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { wei } from '@synthetixio/wei';
-import { BaseProvider, InfuraProvider } from '@ethersproject/providers';
+import { InfuraProvider } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber';
 import { GWEI_DECIMALS } from '@snx-v3/Constants';
 import { useNetwork } from '@snx-v3/useBlockchain';
