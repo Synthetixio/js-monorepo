@@ -9,7 +9,7 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
 import { Amount } from '@snx-v3/Amount';
 import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
@@ -113,8 +113,6 @@ export const DepositModal: DepositModalProps = ({
       collateralTypeAddress: collateralType.tokenAddress,
       collateralChange: amount,
       currentCollateral: currentCollateral,
-      enabled:
-        wei(wrapEthBalance?.value || 0).gte(currentCollateral.add(amount)) && !requireApproval,
     },
     {
       onMutate: () => {
@@ -212,6 +210,17 @@ export const DepositModal: DepositModalProps = ({
     }
 
     setStep('deposit');
+    try {
+      await execDeposit();
+    } catch (e) {
+      console.error(e);
+      setFailed(true);
+      setProcessing(false);
+      return;
+    }
+
+    setProcessing(false);
+    setCompleted(true);
   }, [
     completed,
     collateralType?.symbol,
@@ -223,29 +232,8 @@ export const DepositModal: DepositModalProps = ({
     approve,
     infiniteApproval,
     refetchAllowance,
+    execDeposit,
   ]);
-
-  useEffect(() => {
-    if (depositLoading) return;
-    if (requireApproval) return;
-    if (step !== 'deposit') return;
-
-    const deposit = async () => {
-      try {
-        await execDeposit();
-      } catch (e) {
-        console.error(e);
-        setFailed(true);
-        setProcessing(false);
-        return;
-      }
-
-      setProcessing(false);
-      setCompleted(true);
-    };
-
-    deposit();
-  }, [step, requireApproval, execDeposit, depositLoading]);
 
   return (
     <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
