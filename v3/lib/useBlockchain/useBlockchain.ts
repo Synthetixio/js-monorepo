@@ -17,10 +17,11 @@ export function useSigner() {
 
 export function useNetwork() {
   const { chain } = wagmi.useNetwork();
+  const provider = wagmi.useProvider();
 
   return {
     id: Number(chain?.network) || 1,
-    name: chain?.network.toLowerCase() || '',
+    name: chain?.network.toLowerCase() || provider.network.name,
     isSupported: !chain?.unsupported,
   };
 }

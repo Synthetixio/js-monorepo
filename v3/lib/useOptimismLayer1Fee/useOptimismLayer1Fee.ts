@@ -6,12 +6,12 @@ import { wei } from '@synthetixio/wei';
 import { useQuery } from '@tanstack/react-query';
 import { useNetwork } from '@snx-v3/useBlockchain';
 
-const isNetworkOvm = (networkName: string | undefined) => networkName?.includes('optimism');
+const isNetworkOvm = (networkName: string) => networkName?.includes('optimism');
 
 const getOptimismLayerOneFees = async (
   serializedTxn: string,
   networkId: number,
-  networkName: string | undefined
+  networkName: string
 ) => {
   const isOvm = isNetworkOvm(networkName);
 
@@ -37,7 +37,7 @@ export const useOptimismLayer1Fee = <T>(
   const keyForTransactionArgs = 'transactionArgs' in args ? args.transactionArgs : undefined;
 
   return useQuery({
-    queryKey: [network.id, args.populateTransaction, keyForTransactionArgs],
+    queryKey: [network.name, args.populateTransaction, keyForTransactionArgs],
     queryFn: async () => {
       if (!args.populateTransaction) {
         throw Error('populateTransaction missing, query should not be enabled');

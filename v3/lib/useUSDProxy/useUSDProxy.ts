@@ -4,7 +4,7 @@ import type { USDProxy as USDProxyGoerli } from '@synthetixio/v3-contracts/build
 import type { USDProxy as USDProxyOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/USDProxy';
 import { useNetwork, useProvider, useSigner } from '@snx-v3/useBlockchain';
 
-export async function importUSDProxy(chainName: string | undefined) {
+export async function importUSDProxy(chainName: string) {
   switch (chainName) {
     case 'goerli':
       return import('@synthetixio/v3-contracts/build/goerli/USDProxy');
