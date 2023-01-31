@@ -2,6 +2,10 @@ import { Input, InputProps } from '@chakra-ui/react';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { Wei, wei } from '@synthetixio/wei';
 
+export interface NumberInputProps extends InputProps {
+  'data-testid'?: string;
+}
+
 export function NumberInput({
   value,
   onChange,
@@ -11,7 +15,7 @@ export function NumberInput({
   onChange?: (value: Wei) => void;
   value: Wei;
   max?: Wei;
-  InputProps?: InputProps;
+  InputProps?: NumberInputProps;
 }) {
   const [inputValue, setInputValue] = useState(value.gt(0) ? value.toString() : '');
 
