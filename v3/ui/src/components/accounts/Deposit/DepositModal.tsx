@@ -62,7 +62,7 @@ export const DepositModal: DepositModalProps = ({
   const newAccountId = useMemo(() => `${Math.floor(Math.random() * 10000000000)}`, []);
 
   const { data: liquidityPosition, refetch: refetchLiquidityPosition } = useLiquidityPosition({
-    accountId: accountId || newAccountId,
+    accountId: accountId,
     tokenAddress: collateralType.tokenAddress,
     poolId: poolId,
   });
@@ -135,7 +135,7 @@ export const DepositModal: DepositModalProps = ({
           ethBalance.refetch(),
           tokenBalance.refetch(),
           accounts.refetch(),
-          refetchLiquidityPosition(),
+          Boolean(accountId) ? refetchLiquidityPosition() : Promise.resolve(),
         ]);
         toast({
           title: 'Success',
