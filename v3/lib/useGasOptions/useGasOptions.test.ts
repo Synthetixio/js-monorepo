@@ -32,7 +32,7 @@ const populatedTransaction = {
 
 describe('useGasOptions', () => {
   let useGasOptions;
-  let useGasPrice;
+  let getGasPrice;
   let reactQuery;
   let useOptimismLayer1Fee;
   let populateTransaction;
@@ -46,14 +46,12 @@ describe('useGasOptions', () => {
     useNetwork = jest.fn(() => ({ id: 1, name: 'mainnet' }));
     useEthPrice = jest.fn(() => ({ data: wei(1000) }));
     useOptimismLayer1Fee = jest.fn(() => ({ data: undefined }));
-    useGasPrice = jest.fn(() => ({
-      data: gasPricesMainnetMockData,
-    }));
+    getGasPrice = jest.fn(() => gasPricesMainnetMockData);
 
     jest.doMock('@tanstack/react-query', () => reactQuery);
     jest.doMock('@snx-v3/useEthPrice', () => ({ useEthPrice }));
     jest.doMock('@snx-v3/useBlockchain', () => ({ useNetwork }));
-    jest.doMock('@snx-v3/useGasPrice', () => ({ useGasPrice }));
+    jest.doMock('@snx-v3/useGasPrice', () => ({ getGasPrice }));
     jest.doMock('@snx-v3/useOptimismLayer1Fee', () => ({ useOptimismLayer1Fee }));
 
     populateTransaction = jest.fn(() => Promise.resolve(populatedTransaction));
@@ -70,7 +68,7 @@ describe('useGasOptions', () => {
     const result = useGasOptions({ populateTransaction });
     const { queryKey, enabled } = reactQuery.useQuery.mock.lastCall[0];
     expect(result.data).toEqual(undefined);
-    expect(queryKey).toEqual([undefined, gasPricesMainnetMockData, 1, 'average', undefined, 1000]);
+    expect(queryKey).toEqual([undefined, 1, 'average', undefined, 1000]);
     expect(enabled).toEqual(false);
   });
 
@@ -78,15 +76,7 @@ describe('useGasOptions', () => {
     useGasOptions({ populateTransaction, queryKeys: ['mykey'] });
     const { queryKey, queryFn, enabled } = reactQuery.useQuery.mock.lastCall[0];
 
-    expect(queryKey).toEqual([
-      'mykey',
-      undefined,
-      gasPricesMainnetMockData,
-      1,
-      'average',
-      undefined,
-      1000,
-    ]);
+    expect(queryKey).toEqual(['mykey', undefined, 1, 'average', undefined, 1000]);
     expect(enabled).toEqual(true);
 
     const queryResult = await queryFn();
@@ -107,20 +97,13 @@ describe('useGasOptions', () => {
 
   test('Returns gas options for optimism', async () => {
     useNetwork.mockReturnValue({ name: 'optimism-mainnet', id: 10 });
-    useGasPrice.mockReturnValue({ data: gasPricesOptimismMockData });
+    getGasPrice.mockReturnValue(gasPricesOptimismMockData);
     useOptimismLayer1Fee.mockReturnValue({ data: wei(0.00000001) });
 
     useGasOptions({ populateTransaction });
 
     const { queryKey, queryFn, enabled } = reactQuery.useQuery.mock.lastCall[0];
-    expect(queryKey).toEqual([
-      0.00000001,
-      gasPricesOptimismMockData,
-      10,
-      'average',
-      undefined,
-      1000,
-    ]);
+    expect(queryKey).toEqual([0.00000001, 10, 'average', undefined, 1000]);
     expect(enabled).toEqual(true);
 
     const queryResult = await queryFn();
