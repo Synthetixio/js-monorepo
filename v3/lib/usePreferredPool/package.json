@@ -4,6 +4,7 @@
   "main": "index.ts",
   "version": "0.0.2",
   "dependencies": {
+    "@snx-v3/useBlockchain": "workspace:*",
     "@snx-v3/useCoreProxy": "workspace:*",
     "@tanstack/react-query": "^4.3.4",
     "zod": "^3.20.2"
