@@ -40,11 +40,11 @@ it('creates new account with first deposit', () => {
 
   cy.get('[data-testid="deposit modal"]').should('not.exist');
 
-  cy.location('search').should('include', 'accountId=');
+  cy.location('pathname').should('include', 'accounts').should('include', 'positions');
 
   cy.location().then((loc) => {
-    const search = new URLSearchParams(loc.search);
-    cy.wrap(search.get('accountId')).as('accountId');
+    const accountId = loc.pathname.slice(1).split('/')[1];
+    cy.wrap(accountId).as('accountId');
   });
 
   cy.get('@accountId').then((accountId) => {

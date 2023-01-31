@@ -62,7 +62,7 @@ export const DepositModal: DepositModalProps = ({
   const newAccountId = useMemo(() => `${Math.floor(Math.random() * 10000000000)}`, []);
 
   const { data: liquidityPosition, refetch: refetchLiquidityPosition } = useLiquidityPosition({
-    accountId,
+    accountId: accountId || newAccountId,
     tokenAddress: collateralType.tokenAddress,
     poolId: poolId,
   });
@@ -108,7 +108,8 @@ export const DepositModal: DepositModalProps = ({
   const currentCollateral = liquidityPosition?.collateralAmount || wei(0);
   const { exec: execDeposit, isLoading: depositLoading } = useDeposit(
     {
-      accountId: accountId || newAccountId,
+      accountId: accountId,
+      newAccountId,
       poolId: poolId,
       collateralTypeAddress: collateralType.tokenAddress,
       collateralChange: amount,
