@@ -40,8 +40,9 @@ const ActionButton: FC<
       bg: 'whiteAlpha.100',
     }}
     cursor="pointer"
-    data-testid={`manageAction ${action}`}
-    bg={activeAction === action ? 'whiteAlpha.100' : 'none'}
+    data-testid="manage action"
+    data-action={action}
+    data-active={action === activeAction ? 'true' : undefined}
     onClick={() => onClick(action)}
     py={2}
     width="50%"
