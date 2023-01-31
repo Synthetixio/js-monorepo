@@ -136,6 +136,9 @@ export function DepositFormUi({
                   setActiveBadge(0);
                   setInputAmount(value);
                 }}
+                InputProps={{
+                  'data-testid': 'deposit amount input',
+                }}
               />
               <Flex
                 flexDirection="column"
@@ -196,7 +199,7 @@ export function DepositFormUi({
             activeBadge={activeBadge}
           />
         </Box>
-        <Button mt={4} size="sm" px="8" type="submit" w="full">
+        <Button mt={4} size="sm" px="8" type="submit" w="full" data-testid="deposit collateral">
           Deposit Collateral
         </Button>
       </Box>
