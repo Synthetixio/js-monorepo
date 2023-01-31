@@ -1,4 +1,4 @@
-import { useGasPrice } from '@snx-v3/useGasPrice';
+import { getGasPrice, GasPrices } from '@snx-v3/useGasPrice';
 import { PopulatedTransaction } from '@ethersproject/contracts';
 import { BigNumber } from '@ethersproject/bignumber';
 import { QueryKey, useQuery } from '@tanstack/react-query';
@@ -46,6 +46,28 @@ const getTransactionPrice = (
   return txPrice;
 };
 
+const addGasLimitBuffer = (gasLimit?: BigNumber) => {
+  return wei(gasLimit ?? 0, GWEI_DECIMALS)
+    .mul(GAS_LIMIT_BUFFER)
+    .toBN();
+};
+export const formatGasPriceForTransaction = ({
+  gasPrices,
+  gasSpeed,
+  gasLimit,
+}: {
+  gasPrices: GasPrices;
+  gasSpeed: keyof GasPrices;
+  gasLimit: BigNumber;
+}) => {
+  const gasPrice = gasPrices[gasSpeed];
+  if ('baseFeePerGas' in gasPrice) {
+    const { baseFeePerGas: _baseFeePerGas, ...gasPriceToReturn } = gasPrice;
+    return { ...gasPriceToReturn, gasLimit: addGasLimitBuffer(gasLimit) };
+  }
+  return { ...gasPrice, gasLimit: addGasLimitBuffer(gasLimit) };
+};
+
 export const useGasOptions = <T>(
   args:
     | {
@@ -55,9 +77,8 @@ export const useGasOptions = <T>(
       }
     | { populateTransaction?: () => Promise<PopulatedTransaction>; queryKeys: QueryKey }
 ) => {
-  const { id: networkId } = useNetwork();
+  const { id: networkId, name: networkName } = useNetwork();
   const { gasSpeed } = { gasSpeed: 'average' } as const; // TODO create a GasSpeed context in v3. Currently no UI for this.
-  const gasPriceQuery = useGasPrice();
   const optimismLayerOneFeesQuery = useOptimismLayer1Fee(args);
   const { data: ethPrice } = useEthPrice();
   const keyForTransactionArgs = 'transactionArgs' in args ? args.transactionArgs : undefined;
@@ -66,7 +87,6 @@ export const useGasOptions = <T>(
     queryKey: [
       ...(args.queryKeys || []),
       optimismLayerOneFeesQuery.data?.toNumber(),
-      gasPriceQuery.data,
       networkId,
       gasSpeed,
       keyForTransactionArgs,
@@ -80,31 +100,27 @@ export const useGasOptions = <T>(
         'transactionArgs' in args
           ? await args.populateTransaction(args.transactionArgs)
           : await args.populateTransaction();
-      const gasLimitRaw = populatedTransaction.gasLimit;
-      const gasLimit = wei(gasLimitRaw ?? 0, GWEI_DECIMALS)
-        .mul(GAS_LIMIT_BUFFER)
-        .toBN();
-      const gasPrices = gasPriceQuery.data;
+
+      const gasPrices = await getGasPrice({
+        networkName,
+        networkId,
+      });
       const optimismLayerOneFees = optimismLayerOneFeesQuery.data || undefined;
-      const formatGasPriceForTransaction = () => {
-        if (!gasPrices) return undefined;
-        const gasPrice = gasPrices[gasSpeed];
-        if ('baseFeePerGas' in gasPrice) {
-          const { baseFeePerGas: _baseFeePerGas, ...gasPriceToReturn } = gasPrice;
-          return { ...gasPriceToReturn, gasLimit };
-        }
-        return { ...gasPrice, gasLimit };
-      };
+      const gasOptionsForTransaction = formatGasPriceForTransaction({
+        gasLimit: populatedTransaction.gasLimit || BigNumber.from(0),
+        gasPrices,
+        gasSpeed,
+      });
       return {
         populatedTransaction,
         gasPrices,
-        gasLimit,
+        gasLimit: gasOptionsForTransaction?.gasLimit,
         optimismLayerOneFees,
         gasSpeed,
-        gasOptionsForTransaction: formatGasPriceForTransaction(),
+        gasOptionsForTransaction: gasOptionsForTransaction,
         transactionPrice: getTransactionPrice(
           gasPrices?.[gasSpeed],
-          gasLimit,
+          gasOptionsForTransaction.gasLimit,
           ethPrice,
           optimismLayerOneFees
         ),
