@@ -16,12 +16,11 @@ export function useSigner() {
 }
 
 export function useNetwork() {
-  const { chain, chains } = wagmi.useNetwork();
-  console.log('chain', chain, chains);
+  const { chain } = wagmi.useNetwork();
 
   return {
     id: Number(chain?.network) || 1,
-    name: chain?.name.toLowerCase() || 'mainnet',
+    name: chain?.network.toLowerCase() || '',
     isSupported: !chain?.unsupported,
   };
 }
