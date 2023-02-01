@@ -20,7 +20,7 @@ export const useWrapEth = () => {
   const { mutateAsync, isLoading } = useMutation(async (amount: Wei) => {
     if (!ethCollateral || !signer) return;
     const contract = new Contract(ethCollateral?.tokenAddress, minimalWETHABI, signer);
-    const txn = await contract.deposit(amount.toBN());
+    const txn = await contract.deposit({ value: amount.toBN() });
     await txn.wait();
   });
   const exec = useCallback(
