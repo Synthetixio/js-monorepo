@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -22,18 +22,6 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
   const [isOpen, setOpen] = useState(defaultOpen);
   const [enabled, setEnabled] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-
-  const onScroll = useCallback(() => {
-    const scroll = ref.current;
-    if (scroll && scroll?.scrollTop > 330) {
-      setEnabled(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    const scroll = ref.current;
-    scroll?.addEventListener('scroll', onScroll);
-  }, [onScroll]);
 
   const onSubmit = () => {
     if (enabled) {
@@ -62,11 +50,18 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
             such, you fully understand that:
           </Text>
           <Box
+            onScroll={() => {
+              const condition = (ref.current && ref?.current?.scrollHeight / 2) || 300;
+              if (ref.current && ref.current?.scrollTop > condition) {
+                setEnabled(true);
+              } else {
+                setEnabled(false);
+              }
+            }}
             as="div"
-            ref={ref}
             my={2}
             py={3}
-            // onScroll={onScroll}
+            ref={ref}
             height="320px"
             overflow="scroll"
           >
