@@ -51,37 +51,15 @@ const statusColor = (txnStatus: TransactionStatus) => {
   if (txnStatus === 'success') return 'green.500';
   return 'gray.700';
 };
-export const RepayTxnModal: React.FC<{
+export const RepayModalUi: React.FC<{
   onClose: () => void;
   debtChange: Wei;
   isOpen: boolean;
-}> = ({ onClose, isOpen }) => {
-  const params = useParams();
-  const { debtChange } = useContext(ManagePositionContext);
-  const collateralType = useCollateralType(params.collateralSymbol);
-
-  const {
-    exec: execRepay,
-    txnState,
-    settle: settleRepay,
-  } = useRepay({
-    accountId: params.accountId,
-    poolId: params.poolId,
-    collateralTypeAddress: collateralType?.tokenAddress,
-    debtChange,
-  });
-  const { txnStatus } = txnState;
-
+  txnStatus: TransactionStatus;
+  execRepay: () => void;
+}> = ({ onClose, isOpen, debtChange, txnStatus, execRepay }) => {
   return (
-    <Modal
-      size="lg"
-      isOpen={isOpen}
-      onClose={() => {
-        settleRepay();
-        onClose();
-      }}
-      closeOnOverlayClick={false}
-    >
+    <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
       <ModalOverlay />
       <ModalContent bg="black" color="white">
         <ModalHeader>Complete this action</ModalHeader>
@@ -142,5 +120,38 @@ export const RepayTxnModal: React.FC<{
         </ModalBody>
       </ModalContent>
     </Modal>
+  );
+};
+
+export const RepayModal: React.FC<{
+  onClose: () => void;
+  isOpen: boolean;
+}> = ({ onClose, isOpen }) => {
+  const { debtChange } = useContext(ManagePositionContext);
+  const params = useParams();
+  const collateralType = useCollateralType(params.collateralSymbol);
+  const {
+    exec: execRepay,
+    txnState,
+    settle: settleRepay,
+  } = useRepay({
+    accountId: params.accountId,
+    poolId: params.poolId,
+    collateralTypeAddress: collateralType?.tokenAddress,
+    debtChange,
+  });
+  const { txnStatus } = txnState;
+  if (!params.poolId || !params.accountId || !collateralType) return null;
+  return (
+    <RepayModalUi
+      execRepay={execRepay}
+      debtChange={debtChange}
+      txnStatus={txnStatus}
+      onClose={() => {
+        settleRepay();
+        onClose();
+      }}
+      isOpen={isOpen}
+    />
   );
 };
