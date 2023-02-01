@@ -18,6 +18,8 @@ import { convertStateToQueryParam } from '../utils/url';
 import { NodeFormModule } from '../components/NodeFormModule';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { encodeBytesByNodeType, getNodeModuleContract, hashId } from '../utils/contracts';
+import { useNetwork, useSigner } from 'wagmi';
 
 export const App: FC = () => {
   const [nodes] = useRecoilState(nodesState);
@@ -26,6 +28,8 @@ export const App: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, getValues } = useForm({ defaultValues: { search: '' } });
   const navigate = useNavigate();
+  const { data: signer } = useSigner();
+  const { chain } = useNetwork();
 
   useEffect(() => {
     if (colorMode === 'light') {
@@ -78,6 +82,38 @@ export const App: FC = () => {
           Click on the black connection lines to disconnect a parent node from a child node.
         </Text>
         <Flex justifyContent="center" gap="2">
+          <Button
+            variant="outline"
+            onClick={() => {
+              if (signer && chain?.id) {
+                const contract = getNodeModuleContract(signer, chain.id);
+                const data = nodes
+                  .slice()
+                  .sort((a, b) => {
+                    if (a.parents.length > b.parents.length) return 1;
+                    if (a.parents.length < b.parents.length) return -1;
+                    return 0;
+                  })
+                  .map((node) =>
+                    contract.interface.encodeFunctionData('registerNode', [
+                      node.typeId,
+                      encodeBytesByNodeType(node.typeId, node.parameters),
+                      node.parents.map((parentId: string) => {
+                        const parentNode = nodes.find((node) => node.id === parentId);
+                        if (parentNode) {
+                          return hashId(parentNode, []);
+                        }
+                        return '';
+                      }),
+                    ])
+                  );
+                console.log(data);
+                contract.multicall(data);
+              }
+            }}
+          >
+            Register All Nodes
+          </Button>
           <Button
             variant="outline"
             onClick={() => {

@@ -1,4 +1,4 @@
-import { Button, Flex, Text, useToast } from '@chakra-ui/react';
+import { Button, Flex, Spinner, Text, useToast } from '@chakra-ui/react';
 import { providers, utils } from 'ethers';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useAccount, useNetwork, useSigner } from 'wagmi';
@@ -12,6 +12,7 @@ let interval: any;
 
 export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   const [nodes] = useRecoilState(nodesState);
+  const [isLoading, setIsLoading] = useState(false);
   const [nodeState, setNodeState] = useState<'registerNode' | 'nodeRegistered'>('registerNode');
   const [nodeId, setNodeId] = useState('');
   const [price, setPrice] = useState('0');
@@ -92,6 +93,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
 
   const handleButtonClick = async () => {
     if (nodeState === 'registerNode') {
+      setIsLoading(true);
       const chainId = await signer?.getChainId();
       if (chainId) {
         const contract = getNodeModuleContract(signer, chainId);
@@ -111,6 +113,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
           setNodeState('nodeRegistered');
         }
       }
+      setIsLoading(false);
     }
   };
 
@@ -123,7 +126,9 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
 
   return (
     <Flex flexDir="column" alignItems="center">
-      {nodeState !== 'nodeRegistered' && (
+      {isLoading ? (
+        <Spinner colorScheme="cyan" />
+      ) : nodeState !== 'nodeRegistered' ? (
         <Button
           size="xs"
           variant="outline"
@@ -134,8 +139,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
         >
           {renderText()}
         </Button>
-      )}
-      {price !== '0' && !!price && (
+      ) : price !== '0' && !!price ? (
         <Flex gap="2" flexDir="column">
           <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
             Price:
@@ -150,6 +154,8 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
             {time.toLocaleTimeString()} - {time.toLocaleDateString()}
           </Text>
         </Flex>
+      ) : (
+        'Something went wrong'
       )}
       <Text
         fontSize="xx-small"
