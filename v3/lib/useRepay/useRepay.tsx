@@ -1,11 +1,12 @@
 import { useReducer } from 'react';
 import { useCoreProxy, CoreProxyContractType } from '@snx-v3/useCoreProxy';
-import { useGasOptions } from '@snx-v3/useGasOptions';
+import { formatGasPriceForTransaction } from '@snx-v3/useGasOptions';
 import { useMutation } from '@tanstack/react-query';
-import { useSigner } from '@snx-v3/useBlockchain';
+import { useNetwork, useSigner } from '@snx-v3/useBlockchain';
 import { initialState, reducer } from '@snx-v3/txnReducer';
 import Wei from '@synthetixio/wei';
 import { BigNumber } from 'ethers';
+import { getGasPrice } from '@snx-v3/useGasPrice';
 
 const createPopulateTransaction = ({
   CoreProxy,
@@ -64,27 +65,23 @@ export const useRepay = (
     debtChange,
   });
   const signer = useSigner();
+  const { name: networkName, id: networkId } = useNetwork();
 
-  const { data } = useGasOptions({
-    populateTransaction,
-    queryKeys: [
-      {
-        withSigner: Boolean(signer),
-        CoreProxy: CoreProxy?.address,
-        accountId,
-        poolId,
-        collateralTypeAddress,
-        debtChange,
-      },
-    ],
-  });
-  const { gasOptionsForTransaction } = data || {};
   const mutation = useMutation(async () => {
     if (!signer || !populateTransaction) return;
     try {
       dispatch({ type: 'prompting' });
 
-      const populatedTxn = await populateTransaction();
+      const [populatedTxn, gasPrices] = await Promise.all([
+        populateTransaction(),
+        getGasPrice({ networkId, networkName }),
+      ]);
+      const gasLimit = populatedTxn.gasLimit || BigNumber.from(0);
+      const gasOptionsForTransaction = formatGasPriceForTransaction({
+        gasLimit,
+        gasPrices,
+        gasSpeed: 'average', // TODO read gasSpeed from context when v3 adds support for it
+      });
       const txn = await signer.sendTransaction({
         ...populatedTxn,
         ...gasOptionsForTransaction,
