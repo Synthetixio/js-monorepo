@@ -1,8 +1,6 @@
 import React from 'react';
 import { TermsModal } from './TermsModal';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { useArgs } from '@storybook/client-api';
-import { Button } from '@chakra-ui/react';
 
 export default {
   title: 'TermsModal',

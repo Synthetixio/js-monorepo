@@ -6878,7 +6878,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/TermsModal@workspace:v2/components/TermsModal":
+"@snx-v2/TermsModal@workspace:^, @snx-v2/TermsModal@workspace:v2/components/TermsModal":
   version: 0.0.0-use.local
   resolution: "@snx-v2/TermsModal@workspace:v2/components/TermsModal"
   dependencies:
@@ -10040,6 +10040,7 @@ __metadata:
     "@snx-v2/SelfLiquidation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"
+    "@snx-v2/TermsModal": "workspace:^"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/UtilityCard": "workspace:^"
     "@snx-v2/WalletBalances": "workspace:*"
