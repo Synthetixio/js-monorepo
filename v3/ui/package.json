@@ -54,7 +54,6 @@
     "@snx-v3/usePoolData": "workspace:*",
     "@snx-v3/usePools": "workspace:*",
     "@snx-v3/usePreferredPool": "workspace:*",
-    "@snx-v3/useRepay": "workspace:*",
     "@snx-v3/useTokenBalance": "workspace:*",
     "@snx-v3/useTransactionState": "workspace:*",
     "@snx-v3/useUSDProxy": "workspace:*",
