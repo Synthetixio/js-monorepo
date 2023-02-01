@@ -4,6 +4,7 @@ import { wei } from '@synthetixio/wei';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { ZodBigNumber } from '@snx-v3/zod';
+import { useNetwork } from '@snx-v3/useBlockchain';
 
 const VaultCollateralSchema = z
   .object({ value: ZodBigNumber, amount: ZodBigNumber })
@@ -11,11 +12,12 @@ const VaultCollateralSchema = z
 const VaultDebtSchema = ZodBigNumber.transform((x) => wei(x));
 
 export const useVaultsData = (poolId?: number) => {
+  const network = useNetwork();
   const { data: collateralTypes } = useCollateralTypes();
   const { data: CoreProxyContract } = useCoreProxy();
 
   return useQuery({
-    queryKey: [{ poolId, collateralTypes }, 'VaultCollaterals'],
+    queryKey: [network.name, { poolId, collateralTypes }, 'VaultCollaterals'],
     queryFn: async () => {
       if (!CoreProxyContract || !collateralTypes || !poolId) {
         throw Error('Query should not be enabled when missing contract or collateral types');

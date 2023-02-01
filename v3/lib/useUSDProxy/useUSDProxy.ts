@@ -14,6 +14,7 @@ export async function importUSDProxy(chainName: string) {
       throw new Error(`Unsupported chain ${chainName}`);
   }
 }
+
 export const useUSDProxy = () => {
   const network = useNetwork();
   const provider = useProvider();

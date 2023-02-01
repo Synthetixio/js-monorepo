@@ -47,6 +47,7 @@ const MarketConfigurationSchema = z.object({
   weight: GraphBigIntSchema,
   max_debt_share_value: GraphBigDecimalSchema,
 });
+
 export const PoolSchema = z.object({
   id: z.string(),
   name: z.union([z.string(), z.null()]).transform((name) => {
@@ -67,6 +68,7 @@ const PoolDataResultSchema = z.object({
 });
 
 const gql = (data: TemplateStringsArray) => data[0];
+
 const PoolsDataDocument = gql`
   query pool($id: String) {
     pool(id: $id) {
@@ -126,7 +128,7 @@ export const usePoolData = (poolId?: string) => {
       }
       return addMockData(poolData.data.pool);
     },
-    enabled: Boolean(network.name && poolId),
+    enabled: Boolean(network.isSupported && poolId),
   });
 };
 
