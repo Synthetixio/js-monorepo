@@ -197,7 +197,6 @@ export const ManageAction = () => {
         manageAction={parsedAction || undefined}
       />
       <RepayModal
-        debtChange={debtChange}
         onClose={() => {
           liquidityPosition.refetch();
           setCollateralChange(wei(0));
