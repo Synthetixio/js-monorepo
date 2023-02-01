@@ -7805,6 +7805,7 @@ __metadata:
     "@snx-v3/useTransactionState": "workspace:*"
     "@snx-v3/useUSDProxy": "workspace:*"
     "@snx-v3/useVaultsData": "workspace:*"
+    "@snx-v3/useWrapEth": "workspace:*"
     "@snx-v3/validatePosition": "workspace:*"
     "@storybook/addon-essentials": ^6.5.15
     "@storybook/addon-interactions": ^6.5.15
@@ -8190,6 +8191,21 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     zod: ^3.20.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useWrapEth@workspace:*, @snx-v3/useWrapEth@workspace:v3/lib/useWrapEth":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useWrapEth@workspace:v3/lib/useWrapEth"
+  dependencies:
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useEthBalance": "workspace:*"
+    "@snx-v3/useTokenBalance": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
