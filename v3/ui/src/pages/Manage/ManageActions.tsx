@@ -154,7 +154,7 @@ export const ManageAction = () => {
       if (!form.reportValidity() || !isValid) {
         return;
       }
-      if (parsedAction === 'repay') {
+      if (parsedAction === 'repay' || parsedAction === 'deposit') {
         setTxnModalOpen(parsedAction);
       } else {
         // TODO add more hooks for all actions and remove this
