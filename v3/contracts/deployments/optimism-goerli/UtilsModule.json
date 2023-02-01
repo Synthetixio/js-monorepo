@@ -1,50 +1,53 @@
 {
-  "address": "0xef64b41adafA3CC2848C3a12093910FA6dD094AB",
+  "address": "0x76618c89b4ACCf3E0EB855564D79C54458e385fe",
   "abi": [
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
       "name": "Unauthorized",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "addr"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "oracleManagerAddress",
+          "type": "address"
+        }
+      ],
       "name": "configureOracleManager",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "address",
-          "name": "oracleManagerAddress"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
-      "name": "registerCcip",
-      "constant": false,
-      "payable": false,
       "inputs": [
         {
-          "type": "address",
-          "name": "ccipSend"
+          "internalType": "address",
+          "name": "ccipSend",
+          "type": "address"
         },
         {
-          "type": "address",
-          "name": "ccipReceive"
+          "internalType": "address",
+          "name": "ccipReceive",
+          "type": "address"
         },
         {
-          "type": "address",
-          "name": "ccipTokenPool"
+          "internalType": "address",
+          "name": "ccipTokenPool",
+          "type": "address"
         }
       ],
-      "outputs": []
+      "name": "registerCcip",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "deployTxnHash": "0xe2dccef5af86d27ec19e3e48d2c0f922723ac07882de2f84fa4b4168809e9c38"
+  "deployTxnHash": "0xea857abf70e3dfc9be8c7c54490de49c15436c70b19651fe9ef04f7353fc1807"
 }

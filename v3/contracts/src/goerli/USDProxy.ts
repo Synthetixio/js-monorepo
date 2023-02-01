@@ -1,6 +1,6 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
-export const address = '0x4F8CAE1a1cd9AFE46359e51A342cd9Ea56014760';
+export const address = '0xfC66608Ae7536853D96D4f117CCac46f2235a668';
 export const abi = [
   'error AlreadyInitialized()',
   'error ImplementationIsSterile(address implementation)',
@@ -39,6 +39,8 @@ export const abi = [
   'function burn(address target, uint256 amount)',
   'function burnWithAllowance(address from, address spender, uint256 amount)',
   'function decimals() view returns (uint8)',
+  'function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)',
+  'function increaseAllowance(address spender, uint256 addedValue) returns (bool)',
   'function initialize(string tokenName, string tokenSymbol, uint8 tokenDecimals)',
   'function isInitialized() view returns (bool)',
   'function mint(address target, uint256 amount)',
@@ -97,6 +99,8 @@ export interface USDProxyInterface extends utils.Interface {
     'burn(address,uint256)': FunctionFragment;
     'burnWithAllowance(address,address,uint256)': FunctionFragment;
     'decimals()': FunctionFragment;
+    'decreaseAllowance(address,uint256)': FunctionFragment;
+    'increaseAllowance(address,uint256)': FunctionFragment;
     'initialize(string,string,uint8)': FunctionFragment;
     'isInitialized()': FunctionFragment;
     'mint(address,uint256)': FunctionFragment;
@@ -131,6 +135,8 @@ export interface USDProxyInterface extends utils.Interface {
       | 'burn'
       | 'burnWithAllowance'
       | 'decimals'
+      | 'decreaseAllowance'
+      | 'increaseAllowance'
       | 'initialize'
       | 'isInitialized'
       | 'mint'
@@ -209,6 +215,14 @@ export interface USDProxyInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: 'initialize',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -257,6 +271,8 @@ export interface USDProxyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'burn', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'burnWithAllowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isInitialized', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
@@ -458,6 +474,18 @@ export interface USDProxy extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     initialize(
       tokenName: PromiseOrValue<string>,
       tokenSymbol: PromiseOrValue<string>,
@@ -601,6 +629,18 @@ export interface USDProxy extends BaseContract {
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
+  decreaseAllowance(
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  increaseAllowance(
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   initialize(
     tokenName: PromiseOrValue<string>,
     tokenSymbol: PromiseOrValue<string>,
@@ -736,6 +776,18 @@ export interface USDProxy extends BaseContract {
     ): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
+
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     initialize(
       tokenName: PromiseOrValue<string>,
@@ -928,6 +980,18 @@ export interface USDProxy extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     initialize(
       tokenName: PromiseOrValue<string>,
       tokenSymbol: PromiseOrValue<string>,
@@ -1074,6 +1138,18 @@ export interface USDProxy extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     initialize(
       tokenName: PromiseOrValue<string>,
