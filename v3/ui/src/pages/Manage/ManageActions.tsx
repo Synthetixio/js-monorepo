@@ -25,6 +25,7 @@ import { Withdraw } from './Withdraw';
 import { Deposit } from './Deposit';
 import { z } from 'zod';
 import { RepayTxnModal } from '@snx-v3/RepayTxnModal';
+import { DepositModal } from '../../components/accounts/Deposit/DepositModal';
 
 const validActions = ['borrow', 'deposit', 'repay', 'withdraw'] as const;
 const ManageActionSchema = z.enum(validActions);
@@ -204,6 +205,16 @@ export const ManageAction = () => {
           setTxnModalOpen(null);
         }}
         txnModalOpen={txnModalOpen === 'repay'}
+      />
+      <DepositModal
+        collateralChange={collateralChange}
+        onClose={() => {
+          liquidityPosition.refetch();
+          setCollateralChange(wei(0));
+          setDebtChange(wei(0));
+          setTxnModalOpen(null);
+        }}
+        isOpen={txnModalOpen === 'deposit'}
       />
     </>
   );
