@@ -43,12 +43,19 @@ it('creates new account with first deposit', () => {
   cy.location('pathname').should('include', 'accounts').should('include', 'positions');
 
   cy.location().then((loc) => {
-    const accountId = loc.pathname.slice(1).split('/')[1];
-    cy.wrap(accountId).as('accountId');
+    cy.wrap(loc.pathname).as('locationPath');
   });
 
-  cy.get('@accountId').then((accountId) => {
-    cy.get('[data-testid="current account id"]').should('have.attr', 'data-accountId', accountId);
-  });
+  cy.get('[data-testid="current account id"]')
+    .then((element) => {
+      const accountId = element.attr('data-accountId');
+      cy.wrap(accountId).as('accountId');
+    })
+    .get('@accountId')
+    .then((accountId) => {
+      cy.get(`[data-testid="current account id"]`).should('have.attr', 'data-accountId', accountId);
+      cy.url().should('include', `/accounts/${accountId}`);
+    });
+
   cy.get('[data-action="borrow"][data-active="true"]').should('include.text', 'Borrow');
 });
