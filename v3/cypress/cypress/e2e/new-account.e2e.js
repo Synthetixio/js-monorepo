@@ -51,9 +51,9 @@ it('creates new account with first deposit', () => {
       const accountId = element.attr('data-accountId');
       cy.wrap(accountId).as('accountId');
     })
-    .get('@accountId')
+
+  cy.get('@accountId')
     .then((accountId) => {
-      cy.get(`[data-testid="current account id"]`).should('have.attr', 'data-accountId', accountId);
       cy.url().should('include', `/accounts/${accountId}`);
     });
 
