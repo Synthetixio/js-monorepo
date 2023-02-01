@@ -54,8 +54,8 @@ const statusColor = (txnStatus: TransactionStatus) => {
 export const RepayTxnModal: React.FC<{
   onClose: () => void;
   debtChange: Wei;
-  txnModalOpen: boolean;
-}> = ({ onClose, txnModalOpen }) => {
+  isOpen: boolean;
+}> = ({ onClose, isOpen }) => {
   const params = useParams();
   const { debtChange } = useContext(ManagePositionContext);
   const collateralType = useCollateralType(params.collateralSymbol);
@@ -75,7 +75,7 @@ export const RepayTxnModal: React.FC<{
   return (
     <Modal
       size="lg"
-      isOpen={txnModalOpen}
+      isOpen={isOpen}
       onClose={() => {
         settleRepay();
         onClose();

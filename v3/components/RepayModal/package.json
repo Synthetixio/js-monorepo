@@ -1,5 +1,5 @@
 {
-  "name": "@snx-v3/RepayTxnModal",
+  "name": "@snx-v3/RepayModal",
   "private": true,
   "main": "index.ts",
   "version": "0.0.1",

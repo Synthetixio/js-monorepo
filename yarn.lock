@@ -7632,9 +7632,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/RepayTxnModal@workspace:*, @snx-v3/RepayTxnModal@workspace:v3/components/RepayTxnModal":
+"@snx-v3/RepayModal@workspace:*, @snx-v3/RepayModal@workspace:v3/components/RepayModal":
   version: 0.0.0-use.local
-  resolution: "@snx-v3/RepayTxnModal@workspace:v3/components/RepayTxnModal"
+  resolution: "@snx-v3/RepayModal@workspace:v3/components/RepayModal"
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@snx-v3/Amount": "workspace:*"
@@ -7779,7 +7779,7 @@ __metadata:
     "@snx-v3/NumberInput": "workspace:*"
     "@snx-v3/PercentBadges": "workspace:*"
     "@snx-v3/PoolBox": "workspace:*"
-    "@snx-v3/RepayTxnModal": "workspace:*"
+    "@snx-v3/RepayModal": "workspace:*"
     "@snx-v3/TrendText": "workspace:*"
     "@snx-v3/calculations": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
