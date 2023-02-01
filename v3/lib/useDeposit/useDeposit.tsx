@@ -1,4 +1,4 @@
-import { useMemo, useReducer } from 'react';
+import { useReducer } from 'react';
 import { useCoreProxy, CoreProxyContractType } from '@snx-v3/useCoreProxy';
 import { formatGasPriceForTransaction } from '@snx-v3/useGasOptions';
 import { useMutation } from '@tanstack/react-query';
@@ -32,6 +32,7 @@ const createPopulateTransaction = ({
   const accountCalls = accountId
     ? []
     : [CoreProxy.interface.encodeFunctionData('createAccount', [BigNumber.from(id)])];
+
   const calls = accountCalls.concat([
     CoreProxy.interface.encodeFunctionData('deposit', [
       BigNumber.from(id),
@@ -55,12 +56,14 @@ const createPopulateTransaction = ({
 export const useDeposit = (
   {
     accountId,
+    newAccountId,
     poolId,
     collateralTypeAddress,
     collateralChange,
     currentCollateral,
   }: {
     accountId?: string;
+    newAccountId: string;
     poolId?: string;
     collateralTypeAddress?: string;
     currentCollateral: Wei;
@@ -70,7 +73,7 @@ export const useDeposit = (
 ) => {
   const [txnState, dispatch] = useReducer(reducer, initialState);
   const { data: CoreProxy } = useCoreProxy();
-  const newAccountId = useMemo(() => `${Math.floor(Math.random() * 10000000000)}`, []);
+
   const populateTransaction = createPopulateTransaction({
     CoreProxy,
     accountId,

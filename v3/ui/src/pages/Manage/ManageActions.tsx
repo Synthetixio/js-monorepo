@@ -40,7 +40,9 @@ const ActionButton: FC<
       bg: 'whiteAlpha.100',
     }}
     cursor="pointer"
-    bg={activeAction === action ? 'whiteAlpha.100' : 'none'}
+    data-testid="manage action"
+    data-action={action}
+    data-active={action === activeAction ? 'true' : undefined}
     onClick={() => onClick(action)}
     py={2}
     width="50%"
@@ -149,7 +151,8 @@ export const ManageAction = () => {
     if (!liquidityPosition.data) return;
     if (!collateralType) return;
     const cRatio = liquidityPosition.data.cRatio;
-    const canBorrow = cRatio.gt(collateralType.issuanceRatioD18);
+    const canBorrow =
+      liquidityPosition.data.debt.eq(0) || cRatio.gt(collateralType.issuanceRatioD18);
     if (canBorrow) {
       setQueryParam({ manageAction: 'borrow' });
       return;

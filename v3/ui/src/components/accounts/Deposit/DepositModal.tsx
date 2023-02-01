@@ -108,7 +108,8 @@ export const DepositModal: DepositModalProps = ({
   const currentCollateral = liquidityPosition?.collateralAmount || wei(0);
   const { exec: execDeposit, isLoading: depositLoading } = useDeposit(
     {
-      accountId: accountId || newAccountId,
+      accountId,
+      newAccountId,
       poolId: poolId,
       collateralTypeAddress: collateralType.tokenAddress,
       collateralChange: amount,
@@ -134,7 +135,7 @@ export const DepositModal: DepositModalProps = ({
           ethBalance.refetch(),
           tokenBalance.refetch(),
           accounts.refetch(),
-          refetchLiquidityPosition(),
+          Boolean(accountId) ? refetchLiquidityPosition() : Promise.resolve(),
         ]);
         toast({
           title: 'Success',
