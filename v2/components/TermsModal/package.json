@@ -1,0 +1,15 @@
+{
+  "name": "@snx-v2/TermsModal",
+  "private": true,
+  "main": "index.tsx",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v2/icons": "workspace:*",
+    "@storybook/client-api": "^6.5.15",
+    "@storybook/react": "^6.5.15",
+    "@synthetixio/v3-theme": "workspace:*",
+    "react": "^18.2.0",
+    "react-i18next": "^11.18.3"
+  }
+}
