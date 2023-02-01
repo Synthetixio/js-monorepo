@@ -24,7 +24,6 @@ import { Repay } from './Repay';
 import { Withdraw } from './Withdraw';
 import { Deposit } from './Deposit';
 import { z } from 'zod';
-import { useRepay } from '@snx-v3/useRepay';
 import { RepayTxnModal } from '@snx-v3/RepayTxnModal';
 
 const validActions = ['borrow', 'deposit', 'repay', 'withdraw'] as const;
@@ -146,16 +145,7 @@ export const ManageAction = () => {
       liquidityPosition.refetch();
     },
   });
-  const {
-    exec: execRepay,
-    txnState: repayTxnState,
-    settle: settleRepay,
-  } = useRepay({
-    accountId: params.accountId,
-    poolId: params.poolId,
-    collateralTypeAddress: collateralType?.tokenAddress,
-    debtChange,
-  });
+
   const onSubmit = useCallback(
     (e: FormEvent) => {
       e.preventDefault();
@@ -172,16 +162,6 @@ export const ManageAction = () => {
     },
     [exec, isValid, parsedAction]
   );
-  const executeTransaction = async () => {
-    if (!parsedAction) return;
-    if (parsedAction === 'repay') {
-      await execRepay();
-    }
-    // TODO add more hooks for all action
-
-    // Refetch
-    liquidityPosition.refetch();
-  };
 
   useEffect(() => {
     // This is just for initial state, if we have a manage action selected return
@@ -216,15 +196,13 @@ export const ManageAction = () => {
         manageAction={parsedAction || undefined}
       />
       <RepayTxnModal
-        amount={debtChange.abs()}
+        debtChange={debtChange}
         onClose={() => {
+          liquidityPosition.refetch();
           setCollateralChange(wei(0));
           setDebtChange(wei(0));
           setTxnModalOpen(null);
-          settleRepay();
         }}
-        executeTransaction={executeTransaction}
-        txnStatus={repayTxnState.txnStatus}
         txnModalOpen={txnModalOpen === 'repay'}
       />
     </>

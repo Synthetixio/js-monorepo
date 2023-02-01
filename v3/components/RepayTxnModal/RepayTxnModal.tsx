@@ -15,7 +15,11 @@ import { Amount } from '@snx-v3/Amount';
 import Wei from '@synthetixio/wei';
 import { TransactionStatus } from '@snx-v3/txnReducer';
 import { CheckIcon, CloseIcon } from '@snx-v3/Multistep';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useContext } from 'react';
+import { useRepay } from '@snx-v3/useRepay';
+import { useParams } from '@snx-v3/useParams';
+import { ManagePositionContext } from '@snx-v3/ManagePositionContext';
+import { useCollateralType } from '@snx-v3/useCollateralTypes';
 
 function StepIcon({ txnStatus, children }: PropsWithChildren<{ txnStatus: TransactionStatus }>) {
   switch (txnStatus) {
@@ -49,13 +53,35 @@ const statusColor = (txnStatus: TransactionStatus) => {
 };
 export const RepayTxnModal: React.FC<{
   onClose: () => void;
-  amount: Wei;
-  txnStatus: TransactionStatus;
-  executeTransaction: () => void;
+  debtChange: Wei;
   txnModalOpen: boolean;
-}> = ({ onClose, amount, txnStatus, executeTransaction, txnModalOpen }) => {
+}> = ({ onClose, txnModalOpen }) => {
+  const params = useParams();
+  const { debtChange } = useContext(ManagePositionContext);
+  const collateralType = useCollateralType(params.collateralSymbol);
+
+  const {
+    exec: execRepay,
+    txnState,
+    settle: settleRepay,
+  } = useRepay({
+    accountId: params.accountId,
+    poolId: params.poolId,
+    collateralTypeAddress: collateralType?.tokenAddress,
+    debtChange,
+  });
+  const { txnStatus } = txnState;
+
   return (
-    <Modal size="lg" isOpen={txnModalOpen} onClose={onClose} closeOnOverlayClick={false}>
+    <Modal
+      size="lg"
+      isOpen={txnModalOpen}
+      onClose={() => {
+        settleRepay();
+        onClose();
+      }}
+      closeOnOverlayClick={false}
+    >
       <ModalOverlay />
       <ModalContent bg="black" color="white">
         <ModalHeader>Complete this action</ModalHeader>
@@ -84,14 +110,14 @@ export const RepayTxnModal: React.FC<{
               <StepIcon txnStatus={txnStatus}>1</StepIcon>
             </Flex>
             <Text>
-              Repay <Amount value={amount} suffix={` snxUSD`} />
+              Repay <Amount value={debtChange.abs()} suffix={` snxUSD`} />
             </Text>
           </Flex>
           <Button
             disabled={txnStatus === 'pending'}
             onClick={() => {
               if (txnStatus === 'unsent') {
-                executeTransaction();
+                execRepay();
               }
               if (txnStatus === 'success') {
                 onClose();
