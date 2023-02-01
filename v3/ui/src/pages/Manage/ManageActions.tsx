@@ -25,7 +25,7 @@ import { Withdraw } from './Withdraw';
 import { Deposit } from './Deposit';
 import { z } from 'zod';
 import { RepayModal } from '@snx-v3/RepayModal';
-import { DepositModal } from '../../components/accounts/Deposit/DepositModal';
+import { DepositModal } from '@snx-v3/DepositModal';
 
 const validActions = ['borrow', 'deposit', 'repay', 'withdraw'] as const;
 const ManageActionSchema = z.enum(validActions);
