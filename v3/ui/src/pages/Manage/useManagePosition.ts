@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { compareAddress } from '@snx-v3/format';
 import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
 import { MulticallCall, useMulticall } from '../../hooks/useMulticall';
-import { useUnWrapEth } from '../../hooks/useWrapEth';
+import { useUnWrapEth } from '@snx-v3/useWrapEth';
 import { useSetTransactionState } from '@snx-v3/useTransactionState';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { Wei, wei } from '@synthetixio/wei';
@@ -33,7 +33,7 @@ export const useManagePosition = ({
     collateralType?.tokenAddress
   );
 
-  const { unWrap, isLoading: isUnWrapping } = useUnWrapEth();
+  const { exec: unWrap, isLoading: isUnWrapping } = useUnWrapEth();
 
   const calls: MulticallCall[] = useMemo(() => {
     const list: MulticallCall[] = [];
@@ -119,7 +119,7 @@ export const useManagePosition = ({
       transactions.push({
         title: 'Unwrap ETH',
         subtitle: 'Convert wETH to native ETH.',
-        call: async () => await unWrap(collateralChange.mul(-1).toBN()),
+        call: async () => await unWrap(collateralChange.abs()),
         checkboxLabel: '',
         checked: false,
       });
@@ -154,7 +154,7 @@ export const useManagePosition = ({
 
         await multiTxn.exec();
         if (isNativeCurrency && collateralChange.lt(0)) {
-          await unWrap(collateralChange.mul(-1).toBN());
+          await unWrap(collateralChange.abs());
         }
         refetch?.();
       } catch (error) {
