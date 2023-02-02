@@ -9,6 +9,7 @@
     "@snx-v3/useCoreProxy": "workspace:*",
     "@snx-v3/useGasOptions": "workspace:*",
     "@snx-v3/useGasPrice": "workspace:*",
+    "@snx-v3/useGasSpeed": "workspace:*",
     "@synthetixio/wei": "workspace:*",
     "@tanstack/react-query": "^4.3.4",
     "ethers": "^5.7.2",

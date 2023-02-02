@@ -7,6 +7,7 @@ import { initialState, reducer } from '@snx-v3/txnReducer';
 import Wei, { wei } from '@synthetixio/wei';
 import { BigNumber } from 'ethers';
 import { getGasPrice } from '@snx-v3/useGasPrice';
+import { useGasSpeed } from '@snx-v3/useGasSpeed';
 
 const createPopulateTransaction = ({
   CoreProxy,
@@ -73,7 +74,7 @@ export const useDeposit = (
 ) => {
   const [txnState, dispatch] = useReducer(reducer, initialState);
   const { data: CoreProxy } = useCoreProxy();
-
+  const { gasSpeed } = useGasSpeed();
   const populateTransaction = createPopulateTransaction({
     CoreProxy,
     accountId,
@@ -100,7 +101,7 @@ export const useDeposit = (
       const gasOptionsForTransaction = formatGasPriceForTransaction({
         gasLimit,
         gasPrices,
-        gasSpeed: 'average', // TODO read gasSpeed from context when v3 adds support for it
+        gasSpeed,
       });
       const txn = await signer.sendTransaction({
         ...populatedTxn,
