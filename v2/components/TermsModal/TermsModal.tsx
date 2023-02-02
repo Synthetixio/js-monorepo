@@ -128,6 +128,7 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
                   <Link
                     as={ReactRouterLink}
                     to="/terms"
+                    target="_blank"
                     color="cyan.500"
                     _focusVisible={{ outline: 'none' }}
                   >
