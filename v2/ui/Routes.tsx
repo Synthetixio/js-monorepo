@@ -39,6 +39,7 @@ import V2BurnPage from './content/V2Burn';
 import V2UnflagPage from './content/V2Unflag';
 import V2SwapLinksPage from './content/V2SwapLinks';
 import V2SelfLiquidation from './content/V2SelfLiquidation';
+import V2Terms from 'content/V2Terms';
 
 const Wrapper: FC<PropsWithChildren> = ({ children }) => {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, true);
@@ -83,6 +84,7 @@ export default function AppRoutes() {
               <Route path="/staking/self-liquidation" element={<V2SelfLiquidation />} />
               <Route path="/earn" element={<V2Earn />} />
               <Route path="/wallet" element={<Navigate to="/wallet/balances" replace={true} />} />
+              <Route path="/terms" element={<V2Terms />} />
               <Route
                 path="/wallet/balances"
                 element={
