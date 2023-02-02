@@ -56,7 +56,6 @@ commands:
       - save_cache:
           key: build-no-private-{{ .Environment.CACHE_VERSION }}-{{ checksum "/tmp/checksum.txt" }}
           paths:
-            - './contracts'
             - './packages'
             - './tools'
             - './v1'
