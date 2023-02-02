@@ -35,7 +35,7 @@ export type DepositModalProps = FC<{
 export const DepositModal: DepositModalProps = ({ collateralChange, isOpen, onClose }) => {
   const navigate = useNavigate();
   const params = useParams();
-  const collateralType = useCollateralType(params.collateralType);
+  const collateralType = useCollateralType(params.collateralSymbol);
   const { data: CoreProxy } = useCoreProxy();
   const toast = useToast({
     isClosable: true,
