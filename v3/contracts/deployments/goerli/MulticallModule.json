@@ -1,25 +1,25 @@
 {
-  "address": "0x2a8e1b5E20F1661620bF0e47d470FA9483d01DF9",
+  "address": "0x72737c0b21fc58285105b35fB5d84BE0788B6109",
   "abi": [
     {
-      "type": "function",
-      "name": "multicall",
-      "constant": false,
-      "stateMutability": "payable",
-      "payable": true,
       "inputs": [
         {
-          "type": "bytes[]",
-          "name": "data"
+          "internalType": "bytes[]",
+          "name": "data",
+          "type": "bytes[]"
         }
       ],
+      "name": "multicall",
       "outputs": [
         {
-          "type": "bytes[]",
-          "name": "results"
+          "internalType": "bytes[]",
+          "name": "results",
+          "type": "bytes[]"
         }
-      ]
+      ],
+      "stateMutability": "payable",
+      "type": "function"
     }
   ],
-  "deployTxnHash": "0xfa12fecae2c728426e77a2e69ec73543e83f92cde080e61fdbb0a59917920cc9"
+  "deployTxnHash": "0x3cb46c2a9efe9f028f37070ae471e906cbed6b8e8c3289402e91068365fde803"
 }

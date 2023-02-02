@@ -1,357 +1,404 @@
 {
-  "address": "0x63B88cf97F4df8bdEa5f501d5b68B68ED523314e",
+  "address": "0x34B2Bfb5e45A084761c930f7f2dc6eEB77BEe42e",
   "abi": [
     {
-      "type": "error",
+      "inputs": [],
       "name": "EmptyDistribution",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "FeatureUnavailable",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "market",
+          "type": "address"
+        }
+      ],
       "name": "IncorrectMarketInterface",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "market"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "expected",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "actual",
+          "type": "bytes32"
+        }
+      ],
       "name": "MismatchAssociatedSystemKind",
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "expected"
-        },
-        {
-          "type": "bytes32",
-          "name": "actual"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
       "name": "NotEnoughLiquidity",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        },
-        {
-          "type": "uint256",
-          "name": "amount"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowInt256ToInt128",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowInt256ToUint256",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowUint128ToInt128",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowUint256ToInt256",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowUint256ToUint128",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
       "name": "Unauthorized",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "addr"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "event",
       "anonymous": false,
-      "name": "MarketRegistered",
       "inputs": [
         {
-          "type": "address",
+          "indexed": true,
+          "internalType": "address",
           "name": "market",
-          "indexed": true
+          "type": "address"
         },
         {
-          "type": "uint128",
+          "indexed": true,
+          "internalType": "uint128",
           "name": "marketId",
-          "indexed": true
+          "type": "uint128"
         },
         {
-          "type": "address",
+          "indexed": true,
+          "internalType": "address",
           "name": "sender",
-          "indexed": true
+          "type": "address"
         }
-      ]
+      ],
+      "name": "MarketRegistered",
+      "type": "event"
     },
     {
-      "type": "event",
       "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "market",
+          "type": "address"
+        }
+      ],
       "name": "MarketUsdDeposited",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "target",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "amount",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "market",
-          "indexed": true
-        }
-      ]
+      "type": "event"
     },
     {
-      "type": "event",
       "anonymous": false,
-      "name": "MarketUsdWithdrawn",
       "inputs": [
         {
-          "type": "uint128",
+          "indexed": true,
+          "internalType": "uint128",
           "name": "marketId",
-          "indexed": true
+          "type": "uint128"
         },
         {
-          "type": "address",
+          "indexed": true,
+          "internalType": "address",
           "name": "target",
-          "indexed": true
+          "type": "address"
         },
         {
-          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256",
           "name": "amount",
-          "indexed": false
+          "type": "uint256"
         },
         {
-          "type": "address",
+          "indexed": true,
+          "internalType": "address",
           "name": "market",
-          "indexed": true
+          "type": "address"
         }
-      ]
+      ],
+      "name": "MarketUsdWithdrawn",
+      "type": "event"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
       "name": "depositMarketUsd",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        },
-        {
-          "type": "address",
-          "name": "target"
-        },
-        {
-          "type": "uint256",
-          "name": "amount"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxIter",
+          "type": "uint256"
+        }
+      ],
+      "name": "distributeDebtToPools",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
       "name": "getMarketCollateral",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        }
-      ],
       "outputs": [
         {
-          "type": "uint256",
-          "name": ""
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
       "name": "getMarketDebtPerShare",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        }
-      ],
       "outputs": [
         {
-          "type": "int256",
-          "name": ""
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
         }
-      ]
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
       "name": "getMarketNetIssuance",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        }
-      ],
       "outputs": [
         {
-          "type": "int128",
-          "name": ""
+          "internalType": "int128",
+          "name": "",
+          "type": "int128"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
       "name": "getMarketReportedDebt",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        }
-      ],
       "outputs": [
         {
-          "type": "uint256",
-          "name": ""
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
       "name": "getMarketTotalDebt",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        }
-      ],
       "outputs": [
         {
-          "type": "int256",
-          "name": ""
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
       "name": "getWithdrawableMarketUsd",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        }
-      ],
       "outputs": [
         {
-          "type": "uint256",
-          "name": ""
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
       "name": "isMarketCapacityLocked",
-      "constant": true,
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
       "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": ""
-        }
-      ]
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "market",
+          "type": "address"
+        }
+      ],
       "name": "registerMarket",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "address",
-          "name": "market"
-        }
-      ],
       "outputs": [
         {
-          "type": "uint128",
-          "name": "marketId"
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "withdrawMarketUsd",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        },
-        {
-          "type": "address",
-          "name": "target"
-        },
-        {
-          "type": "uint256",
-          "name": "amount"
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
         }
       ],
-      "outputs": []
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawMarketUsd",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "deployTxnHash": "0x0faceafeab2279bcb000730a411b781fde870ad01f9e2376e1f34a614d9418b6"
+  "deployTxnHash": "0x0c300b3f0311e02f305d9f9836da024866a4e165f73372ce8225772077a82fc0"
 }

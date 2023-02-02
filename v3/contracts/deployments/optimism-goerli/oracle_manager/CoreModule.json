@@ -1,5 +1,5 @@
 {
-  "address": "0x0F24A3a2DFE35218082D3ba3f1F2Cd938e863c20",
+  "address": "0xa2799B27893e29EAfbEab0dF342AB4c826BFc5c9",
   "abi": [
     {
       "inputs": [],
@@ -235,5 +235,9 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x6ca45bcf9d9cc1ea8216df74d2af5860d88ca23fab346dce8ae61fa935be0ae2"
+  "constructorArgs": [],
+  "deployTxnHash": "0x55c585667594c4b9ed1c0f7b507e247a05be644e26112ebac8bb68af0d8e8e26",
+  "sourceName": "contracts/modules/CoreModule.sol",
+  "contractName": "CoreModule",
+  "deployedOn": "contract.CoreModule"
 }

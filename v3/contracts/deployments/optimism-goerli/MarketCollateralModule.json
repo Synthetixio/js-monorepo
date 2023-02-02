@@ -1,289 +1,319 @@
 {
-  "address": "0x1df2F5962592f544F1bFdFa93ffEE069727d8DA3",
+  "address": "0x114D20143d439131bf2A290463860e52b8Dce109",
   "abi": [
     {
-      "type": "error",
+      "inputs": [],
       "name": "CollateralNotFound",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
       "name": "FailedTransfer",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "from"
-        },
-        {
-          "type": "address",
-          "name": "to"
-        },
-        {
-          "type": "uint256",
-          "name": "value"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenAmountToDeposit",
+          "type": "uint256"
+        }
+      ],
       "name": "InsufficientMarketCollateralDepositable",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "uint256",
-          "name": "tokenAmountToDeposit"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenAmountToWithdraw",
+          "type": "uint256"
+        }
+      ],
       "name": "InsufficientMarketCollateralWithdrawable",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "uint256",
-          "name": "tokenAmountToWithdraw"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowInt256ToUint256",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
       "name": "Unauthorized",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "addr"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "event",
       "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
       "name": "MarketCollateralDeposited",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "tokenAmount",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "sender",
-          "indexed": true
-        }
-      ]
+      "type": "event"
     },
     {
-      "type": "event",
       "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
       "name": "MarketCollateralWithdrawn",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "tokenAmount",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "sender",
-          "indexed": true
-        }
-      ]
+      "type": "event"
     },
     {
-      "type": "event",
       "anonymous": false,
-      "name": "MaximumMarketCollateralConfigured",
       "inputs": [
         {
-          "type": "uint128",
+          "indexed": true,
+          "internalType": "uint128",
           "name": "marketId",
-          "indexed": true
+          "type": "uint128"
         },
         {
-          "type": "address",
+          "indexed": true,
+          "internalType": "address",
           "name": "collateralType",
-          "indexed": true
+          "type": "address"
         },
         {
-          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256",
           "name": "systemAmount",
-          "indexed": false
+          "type": "uint256"
         },
         {
-          "type": "address",
+          "indexed": true,
+          "internalType": "address",
           "name": "owner",
-          "indexed": true
+          "type": "address"
         }
-      ]
+      ],
+      "name": "MaximumMarketCollateralConfigured",
+      "type": "event"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
       "name": "configureMaximumMarketCollateral",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "uint256",
-          "name": "amount"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        }
+      ],
       "name": "depositMarketCollateral",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "uint256",
-          "name": "tokenAmount"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
       "name": "getMarketCollateralAmount",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        }
-      ],
       "outputs": [
         {
-          "type": "uint256",
-          "name": "collateralAmountD18"
+          "internalType": "uint256",
+          "name": "collateralAmountD18",
+          "type": "uint256"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
       "name": "getMarketCollateralValue",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        }
-      ],
       "outputs": [
         {
-          "type": "uint256",
-          "name": ""
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
       "name": "getMaximumMarketCollateral",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        }
-      ],
       "outputs": [
         {
-          "type": "uint256",
-          "name": ""
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "withdrawMarketCollateral",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "uint256",
-          "name": "tokenAmount"
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
-      "outputs": []
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawMarketCollateral",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "deployTxnHash": "0x603e90a55c136a774263f11406bef1b042a7c963ef8b23d2f05a0bade72c0a1a"
+  "deployTxnHash": "0xea7054b2eb4e71b5801a921366293ac52a760d26509650bb8447ebf8887c510d"
 }
