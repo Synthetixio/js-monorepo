@@ -70,13 +70,15 @@ const V2Terms = () => {
             <Text fontWeight="700" as="span">
               “Agreement”
             </Text>
-            ), govern the User’s access to and use of https://synthetix.io/ and its sub-pages,
-            including any content or functionality offered on or through the website-hosted user
-            interface accessible via https://staking.synthetix.io/ (the{' '}
+            ), govern the User’s access to and use of https://synthetix.io/,
+            https://synthetix.eth.limo/ and its sub-pages, including any content or functionality
+            offered on or through the website-hosted user interface accessible via
+            https://staking.synthetix.io/ or https://staking.synthetix.eth.limo/ (the{' '}
             <Text as="span" fontWeight="700">
               “Interface,”{' '}
             </Text>{' '}
-            or collectively with other https://synthetix.io/ subpages, the{' '}
+            or collectively with other https://synthetix.io/ or https://synthetix.eth.limo/
+            subpages, the{' '}
             <Text as="span" fontWeight="700">
               “Website”
             </Text>
