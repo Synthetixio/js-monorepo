@@ -6888,7 +6888,7 @@ __metadata:
     "@storybook/react": ^6.5.15
     "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
-    react-i18next: ^11.18.3
+    react-router-dom: ^6.6.2
   languageName: unknown
   linkType: soft
 
