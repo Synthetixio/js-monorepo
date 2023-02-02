@@ -11,7 +11,6 @@
     "@snx-v3/txnReducer": "workspace:*",
     "@snx-v3/useCollateralTypes": "workspace:*",
     "@snx-v3/useParams": "workspace:*",
-    "@snx-v3/useRepay": "workspace:*",
     "@synthetixio/wei": "workspace:*",
     "react": "^18.2.0"
   }

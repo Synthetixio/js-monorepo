@@ -26,6 +26,7 @@
     "@snx-v3/Amount": "workspace:*",
     "@snx-v3/Balance": "workspace:*",
     "@snx-v3/BorderBox": "workspace:*",
+    "@snx-v3/BorrowModal": "workspace:*",
     "@snx-v3/CollateralTypeSelector": "workspace:*",
     "@snx-v3/Constants": "workspace:*",
     "@snx-v3/DepositModal": "workspace:*",

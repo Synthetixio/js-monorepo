@@ -7557,6 +7557,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/BorrowModal@workspace:*, @snx-v3/BorrowModal@workspace:v3/components/BorrowModal":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/BorrowModal@workspace:v3/components/BorrowModal"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/Amount": "workspace:*"
+    "@snx-v3/ManagePositionContext": "workspace:*"
+    "@snx-v3/Multistep": "workspace:*"
+    "@snx-v3/txnReducer": "workspace:*"
+    "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useParams": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/CollateralTypeSelector@workspace:*, @snx-v3/CollateralTypeSelector@workspace:v3/components/CollateralTypeSelector":
   version: 0.0.0-use.local
   resolution: "@snx-v3/CollateralTypeSelector@workspace:v3/components/CollateralTypeSelector"
@@ -7808,6 +7824,7 @@ __metadata:
     "@snx-v3/Amount": "workspace:*"
     "@snx-v3/Balance": "workspace:*"
     "@snx-v3/BorderBox": "workspace:*"
+    "@snx-v3/BorrowModal": "workspace:*"
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/Constants": "workspace:*"
     "@snx-v3/DepositModal": "workspace:*"
@@ -7946,6 +7963,23 @@ __metadata:
   resolution: "@snx-v3/useBlockchain@workspace:v3/lib/useBlockchain"
   dependencies:
     wagmi: ^0.9.6
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useBorrow@workspace:v3/lib/useBorrow":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useBorrow@workspace:v3/lib/useBorrow"
+  dependencies:
+    "@snx-v3/txnReducer": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/useGasOptions": "workspace:*"
+    "@snx-v3/useGasPrice": "workspace:*"
+    "@snx-v3/useGasSpeed": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 

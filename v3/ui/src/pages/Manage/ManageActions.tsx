@@ -25,6 +25,7 @@ import { Withdraw } from './Withdraw';
 import { Deposit } from './Deposit';
 import { z } from 'zod';
 import { RepayModal } from '@snx-v3/RepayModal';
+import { BorrowModal } from '@snx-v3/BorrowModal';
 import { DepositModal } from '@snx-v3/DepositModal';
 
 const validActions = ['borrow', 'deposit', 'repay', 'withdraw'] as const;
@@ -115,6 +116,7 @@ export const ManageAction = () => {
   const [txnModalOpen, setTxnModalOpen] = useState<ManageAction | null>(null);
   const { debtChange, collateralChange, setCollateralChange, setDebtChange } =
     useContext(ManagePositionContext);
+
   const collateralType = useCollateralType(params.collateralSymbol);
   const liquidityPosition = useLiquidityPosition({
     accountId: params.accountId,
@@ -154,7 +156,7 @@ export const ManageAction = () => {
       if (!form.reportValidity() || !isValid) {
         return;
       }
-      if (parsedAction === 'repay' || parsedAction === 'deposit') {
+      if (parsedAction === 'repay' || parsedAction === 'deposit' || parsedAction === 'borrow') {
         setTxnModalOpen(parsedAction);
       } else {
         // TODO add more hooks for all actions and remove this
@@ -204,6 +206,15 @@ export const ManageAction = () => {
           setTxnModalOpen(null);
         }}
         isOpen={txnModalOpen === 'repay'}
+      />
+      <BorrowModal
+        onClose={() => {
+          liquidityPosition.refetch();
+          setCollateralChange(wei(0));
+          setDebtChange(wei(0));
+          setTxnModalOpen(null);
+        }}
+        isOpen={txnModalOpen === 'borrow'}
       />
       <DepositModal
         collateralChange={collateralChange}
