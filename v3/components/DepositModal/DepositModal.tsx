@@ -146,11 +146,12 @@ export const DepositModalUi: FC<{
     </Modal>
   );
 };
-export const DepositModal: FC<{
+export type DepositModalProps = FC<{
   collateralChange: Wei;
   isOpen: boolean;
   onClose: () => void;
-}> = ({ onClose, isOpen, collateralChange }) => {
+}>;
+export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralChange }) => {
   const [processing, setProcessing] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [failed, setFailed] = useState(false);
