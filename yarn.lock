@@ -7582,6 +7582,7 @@ __metadata:
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useWrapEth": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
     react-router-dom: ^6.6.2
   languageName: unknown
