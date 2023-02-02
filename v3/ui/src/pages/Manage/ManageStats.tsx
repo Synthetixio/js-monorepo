@@ -104,7 +104,7 @@ export const ManageStats = () => {
   const params = useParams();
   const { debtChange, collateralChange } = useContext(ManagePositionContext);
 
-  const collateralType = useCollateralType(params.collateral);
+  const collateralType = useCollateralType(params.collateralSymbol);
   const { data: liquidityPosition } = useLiquidityPosition({
     tokenAddress: collateralType?.tokenAddress,
     accountId: params.accountId,
