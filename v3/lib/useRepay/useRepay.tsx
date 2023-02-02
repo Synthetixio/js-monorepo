@@ -7,7 +7,7 @@ import { initialState, reducer } from '@snx-v3/txnReducer';
 import Wei from '@synthetixio/wei';
 import { BigNumber } from 'ethers';
 import { getGasPrice } from '@snx-v3/useGasPrice';
-import { useGasSpeed } from '../useGasSpeed';
+import { useGasSpeed } from '@snx-v3/useGasSpeed';
 
 const createPopulateTransaction = ({
   CoreProxy,

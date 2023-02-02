@@ -10,6 +10,7 @@
     "@snx-v3/useBlockchain": "workspace:*",
     "@snx-v3/useEthPrice": "workspace:*",
     "@snx-v3/useGasPrice": "workspace:*",
+    "@snx-v3/useGasSpeed": "workspace:*",
     "@snx-v3/useOptimismLayer1Fee": "workspace:*",
     "@synthetixio/wei": "workspace:*",
     "@tanstack/react-query": "^4.3.4",

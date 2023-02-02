@@ -7,7 +7,7 @@ import Wei, { wei } from '@synthetixio/wei';
 import { useNetwork } from '@snx-v3/useBlockchain';
 import { GWEI_DECIMALS } from '@snx-v3/Constants';
 import { useEthPrice } from '@snx-v3/useEthPrice';
-import { useGasSpeed } from '../useGasSpeed';
+import { useGasSpeed } from '@snx-v3/useGasSpeed';
 
 // Note it looks like gas limit estimation is coming in higher slightly higher than what gets used according to etherscan
 // Will try without a buffer, if we get user report of out of gas we can increase it again.
