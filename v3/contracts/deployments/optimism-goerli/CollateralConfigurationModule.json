@@ -1,252 +1,285 @@
 {
-  "address": "0xf7b6f25ED860125a315d642BAF925eACB001A0FC",
+  "address": "0x4eDCbe23CE89D318f6B4252997954C17A26aBFDd",
   "abi": [
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
       "name": "InvalidParameter",
-      "inputs": [
-        {
-          "type": "string",
-          "name": "parameter"
-        },
-        {
-          "type": "string",
-          "name": "reason"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowInt256ToUint256",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "PositionOutOfBounds",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
-      "name": "Unauthorized",
       "inputs": [
         {
-          "type": "address",
-          "name": "addr"
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
         }
-      ]
+      ],
+      "name": "Unauthorized",
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "ValueAlreadyInSet",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "event",
       "anonymous": false,
-      "name": "CollateralConfigured",
       "inputs": [
         {
-          "type": "address",
+          "indexed": true,
+          "internalType": "address",
           "name": "collateralType",
-          "indexed": true
+          "type": "address"
         },
         {
-          "type": "tuple",
-          "name": "config",
+          "components": [
+            {
+              "internalType": "bool",
+              "name": "depositingEnabled",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "issuanceRatioD18",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "liquidationRatioD18",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "liquidationRewardD18",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "oracleNodeId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "address",
+              "name": "tokenAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minDelegationD18",
+              "type": "uint256"
+            }
+          ],
           "indexed": false,
-          "components": [
-            {
-              "type": "bool",
-              "name": "depositingEnabled"
-            },
-            {
-              "type": "uint256",
-              "name": "issuanceRatioD18"
-            },
-            {
-              "type": "uint256",
-              "name": "liquidationRatioD18"
-            },
-            {
-              "type": "uint256",
-              "name": "liquidationRewardD18"
-            },
-            {
-              "type": "bytes32",
-              "name": "oracleNodeId"
-            },
-            {
-              "type": "address",
-              "name": "tokenAddress"
-            },
-            {
-              "type": "uint256",
-              "name": "minDelegationD18"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "configureCollateral",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "tuple",
+          "internalType": "struct CollateralConfiguration.Data",
           "name": "config",
-          "components": [
-            {
-              "type": "bool",
-              "name": "depositingEnabled"
-            },
-            {
-              "type": "uint256",
-              "name": "issuanceRatioD18"
-            },
-            {
-              "type": "uint256",
-              "name": "liquidationRatioD18"
-            },
-            {
-              "type": "uint256",
-              "name": "liquidationRewardD18"
-            },
-            {
-              "type": "bytes32",
-              "name": "oracleNodeId"
-            },
-            {
-              "type": "address",
-              "name": "tokenAddress"
-            },
-            {
-              "type": "uint256",
-              "name": "minDelegationD18"
-            }
-          ]
+          "type": "tuple"
         }
       ],
-      "outputs": []
+      "name": "CollateralConfigured",
+      "type": "event"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "bool",
+              "name": "depositingEnabled",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "issuanceRatioD18",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "liquidationRatioD18",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "liquidationRewardD18",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "oracleNodeId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "address",
+              "name": "tokenAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minDelegationD18",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct CollateralConfiguration.Data",
+          "name": "config",
+          "type": "tuple"
+        }
+      ],
+      "name": "configureCollateral",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
       "name": "getCollateralConfiguration",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "address",
-          "name": "collateralType"
-        }
-      ],
       "outputs": [
         {
-          "type": "tuple",
           "components": [
             {
-              "type": "bool",
-              "name": "depositingEnabled"
+              "internalType": "bool",
+              "name": "depositingEnabled",
+              "type": "bool"
             },
             {
-              "type": "uint256",
-              "name": "issuanceRatioD18"
+              "internalType": "uint256",
+              "name": "issuanceRatioD18",
+              "type": "uint256"
             },
             {
-              "type": "uint256",
-              "name": "liquidationRatioD18"
+              "internalType": "uint256",
+              "name": "liquidationRatioD18",
+              "type": "uint256"
             },
             {
-              "type": "uint256",
-              "name": "liquidationRewardD18"
+              "internalType": "uint256",
+              "name": "liquidationRewardD18",
+              "type": "uint256"
             },
             {
-              "type": "bytes32",
-              "name": "oracleNodeId"
+              "internalType": "bytes32",
+              "name": "oracleNodeId",
+              "type": "bytes32"
             },
             {
-              "type": "address",
-              "name": "tokenAddress"
+              "internalType": "address",
+              "name": "tokenAddress",
+              "type": "address"
             },
             {
-              "type": "uint256",
-              "name": "minDelegationD18"
+              "internalType": "uint256",
+              "name": "minDelegationD18",
+              "type": "uint256"
             }
           ],
-          "name": ""
+          "internalType": "struct CollateralConfiguration.Data",
+          "name": "",
+          "type": "tuple"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "bool",
+          "name": "hideDisabled",
+          "type": "bool"
+        }
+      ],
       "name": "getCollateralConfigurations",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "bool",
-          "name": "hideDisabled"
-        }
-      ],
       "outputs": [
         {
-          "type": "tuple[]",
           "components": [
             {
-              "type": "bool",
-              "name": "depositingEnabled"
+              "internalType": "bool",
+              "name": "depositingEnabled",
+              "type": "bool"
             },
             {
-              "type": "uint256",
-              "name": "issuanceRatioD18"
+              "internalType": "uint256",
+              "name": "issuanceRatioD18",
+              "type": "uint256"
             },
             {
-              "type": "uint256",
-              "name": "liquidationRatioD18"
+              "internalType": "uint256",
+              "name": "liquidationRatioD18",
+              "type": "uint256"
             },
             {
-              "type": "uint256",
-              "name": "liquidationRewardD18"
+              "internalType": "uint256",
+              "name": "liquidationRewardD18",
+              "type": "uint256"
             },
             {
-              "type": "bytes32",
-              "name": "oracleNodeId"
+              "internalType": "bytes32",
+              "name": "oracleNodeId",
+              "type": "bytes32"
             },
             {
-              "type": "address",
-              "name": "tokenAddress"
+              "internalType": "address",
+              "name": "tokenAddress",
+              "type": "address"
             },
             {
-              "type": "uint256",
-              "name": "minDelegationD18"
+              "internalType": "uint256",
+              "name": "minDelegationD18",
+              "type": "uint256"
             }
           ],
-          "name": ""
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "getCollateralPrice",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "address",
-          "name": "collateralType"
+          "internalType": "struct CollateralConfiguration.Data[]",
+          "name": "",
+          "type": "tuple[]"
         }
       ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "getCollateralPrice",
       "outputs": [
         {
-          "type": "uint256",
-          "name": ""
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     }
   ],
-  "deployTxnHash": "0xbdf1f7c5995cc72a4dc93f8f3ee83ec5ead6e93cbc109f284b59efefe194fa1c"
+  "deployTxnHash": "0xbd6d1bb920fff4699d031c376d4ec12d00cd0ee485d47b545439682e0cd8109c"
 }

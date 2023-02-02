@@ -1,189 +1,200 @@
 {
-  "address": "0x090f69A3fAd37717C219862EB4Cd7C5202A16a14",
+  "address": "0x3836fC533d553E8B3C97DA3F3aFE9c8A38B5Ef3f",
   "abi": [
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
       "name": "Unauthorized",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "addr"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "ValueAlreadyInSet",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "ValueNotInSet",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "event",
       "anonymous": false,
-      "name": "FeatureFlagAllowAllSet",
       "inputs": [
         {
-          "type": "bytes32",
+          "indexed": false,
+          "internalType": "bytes32",
           "name": "feature",
-          "indexed": false
+          "type": "bytes32"
         },
         {
-          "type": "bool",
+          "indexed": false,
+          "internalType": "bool",
           "name": "allowAll",
-          "indexed": false
+          "type": "bool"
         }
-      ]
+      ],
+      "name": "FeatureFlagAllowAllSet",
+      "type": "event"
     },
     {
-      "type": "event",
       "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
       "name": "FeatureFlagAllowlistAdded",
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "feature",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "account",
-          "indexed": false
-        }
-      ]
+      "type": "event"
     },
     {
-      "type": "event",
       "anonymous": false,
-      "name": "FeatureFlagAllowlistRemoved",
       "inputs": [
         {
-          "type": "bytes32",
+          "indexed": false,
+          "internalType": "bytes32",
           "name": "feature",
-          "indexed": false
+          "type": "bytes32"
         },
         {
-          "type": "address",
+          "indexed": false,
+          "internalType": "address",
           "name": "account",
-          "indexed": false
+          "type": "address"
         }
-      ]
+      ],
+      "name": "FeatureFlagAllowlistRemoved",
+      "type": "event"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
       "name": "addToFeatureFlagAllowlist",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "feature"
-        },
-        {
-          "type": "address",
-          "name": "account"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        }
+      ],
       "name": "getFeatureFlagAllowAll",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "feature"
-        }
-      ],
       "outputs": [
         {
-          "type": "bool",
-          "name": ""
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        }
+      ],
       "name": "getFeatureFlagAllowlist",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "feature"
-        }
-      ],
       "outputs": [
         {
-          "type": "address[]",
-          "name": ""
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
       "name": "isFeatureAllowed",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "feature"
-        },
-        {
-          "type": "address",
-          "name": "account"
-        }
-      ],
       "outputs": [
         {
-          "type": "bool",
-          "name": ""
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
       "name": "removeFromFeatureFlagAllowlist",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "feature"
-        },
-        {
-          "type": "address",
-          "name": "account"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
-      "name": "setFeatureFlagAllowAll",
-      "constant": false,
-      "payable": false,
       "inputs": [
         {
-          "type": "bytes32",
-          "name": "feature"
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
         },
         {
-          "type": "bool",
-          "name": "allowAll"
+          "internalType": "bool",
+          "name": "allowAll",
+          "type": "bool"
         }
       ],
-      "outputs": []
+      "name": "setFeatureFlagAllowAll",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "deployTxnHash": "0x5d24b1ac32664064622756f90359e410432acf47d6a55bacf50043bb38f1bdf3"
+  "deployTxnHash": "0xd6358e9a58420b2c6c3e6ea2b61146f50869018fd168ff59aa57294017f28fb4"
 }

@@ -16,10 +16,13 @@ export function useSigner() {
 }
 
 export function useNetwork() {
+  const { chain } = wagmi.useNetwork();
   const provider = wagmi.useProvider();
+
   return {
-    id: provider.network.chainId,
-    name: provider.network.name,
+    id: Number(chain?.network) || 1,
+    name: chain?.network.toLowerCase() || provider.network.name,
+    isSupported: !chain?.unsupported,
   };
 }
 

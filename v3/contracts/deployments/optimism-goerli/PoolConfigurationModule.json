@@ -1,139 +1,142 @@
 {
-  "address": "0xdBE114Ef3054Ad9Ed2A3b6beee538433f72BAfc2",
+  "address": "0xA2Afb2ecf105fd3Cf714ceEbB984D7a7d902E6A6",
   "abi": [
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        }
+      ],
       "name": "PoolNotFound",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
       "name": "Unauthorized",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "addr"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "ValueAlreadyInSet",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "ValueNotInSet",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "event",
       "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "poolId",
+          "type": "uint256"
+        }
+      ],
       "name": "PoolApprovedAdded",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": false
-        }
-      ]
+      "type": "event"
     },
     {
-      "type": "event",
       "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "poolId",
+          "type": "uint256"
+        }
+      ],
       "name": "PoolApprovedRemoved",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "poolId",
-          "indexed": false
-        }
-      ]
+      "type": "event"
     },
     {
-      "type": "event",
       "anonymous": false,
-      "name": "PreferredPoolSet",
       "inputs": [
         {
-          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256",
           "name": "poolId",
-          "indexed": false
+          "type": "uint256"
         }
-      ]
+      ],
+      "name": "PreferredPoolSet",
+      "type": "event"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        }
+      ],
       "name": "addApprovedPool",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [],
       "name": "getApprovedPools",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
       "outputs": [
         {
-          "type": "uint256[]",
-          "name": ""
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [],
       "name": "getPreferredPool",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
       "outputs": [
         {
-          "type": "uint256",
-          "name": ""
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        }
+      ],
       "name": "removeApprovedPool",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
-      "name": "setPreferredPool",
-      "constant": false,
-      "payable": false,
       "inputs": [
         {
-          "type": "uint128",
-          "name": "poolId"
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
         }
       ],
-      "outputs": []
+      "name": "setPreferredPool",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "deployTxnHash": "0x5f93a38ead0c09f7e1aada20a0eaa35331f2f717a6ba3bcb6ed9ae3dc8b96e94"
+  "deployTxnHash": "0x682a96976daaf172b8df92307f0d91cb530b839e32d43791c6eec4c906cffc20"
 }

@@ -13,7 +13,7 @@
         "defaultValue": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
       },
       "oracle_manager_source": {
-        "defaultValue": "oracle-manager:1.2.1"
+        "defaultValue": "oracle-manager:1.2.2"
       }
     },
     "provision": {
@@ -213,9 +213,10 @@
       }
     }
   },
-  "miscUrl": "ipfs://QmaxLKZeJvzn1BUVMmtNKM2Bju2h9eBZVdQPYcBmMViCzn",
+  "miscUrl": "ipfs://QmZHsZU6bK979Kq6NKLTUj36PgoyKs6EfmB7FHcUyHYok5",
   "options": {
     "owner": "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9",
     "salt": "snx"
-  }
+  },
+  "status": "complete"
 }

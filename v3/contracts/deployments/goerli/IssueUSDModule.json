@@ -1,224 +1,251 @@
 {
-  "address": "0xbFC138dFf9Ae45F3e4ae9Bf3aCB47CA8223196E4",
+  "address": "0xb9Ed8aFd29E8EFd169F127CBe6AE6A3dfE77A571",
   "abi": [
     {
-      "type": "error",
+      "inputs": [],
       "name": "EmptyDistribution",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "collateralValue",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "debt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "ratio",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "minRatio",
+          "type": "uint256"
+        }
+      ],
       "name": "InsufficientCollateralRatio",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "collateralValue"
-        },
-        {
-          "type": "uint256",
-          "name": "debt"
-        },
-        {
-          "type": "uint256",
-          "name": "ratio"
-        },
-        {
-          "type": "uint256",
-          "name": "minRatio"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "currentDebt",
+          "type": "int256"
+        }
+      ],
       "name": "InsufficientDebt",
-      "inputs": [
-        {
-          "type": "int256",
-          "name": "currentDebt"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
       "name": "MarketNotFound",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "marketId"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "expected",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "actual",
+          "type": "bytes32"
+        }
+      ],
       "name": "MismatchAssociatedSystemKind",
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "expected"
-        },
-        {
-          "type": "bytes32",
-          "name": "actual"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowInt256ToInt128",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowInt256ToUint256",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowUint128ToInt128",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowUint256ToInt256",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowUint256ToUint128",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "permission",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
+        }
+      ],
       "name": "PermissionDenied",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "accountId"
-        },
-        {
-          "type": "bytes32",
-          "name": "permission"
-        },
-        {
-          "type": "address",
-          "name": "target"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "event",
       "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
       "name": "UsdBurned",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "accountId",
-          "indexed": true
-        },
-        {
-          "type": "uint128",
-          "name": "poolId",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amount",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "sender",
-          "indexed": true
-        }
-      ]
+      "type": "event"
     },
     {
-      "type": "event",
       "anonymous": false,
-      "name": "UsdMinted",
       "inputs": [
         {
-          "type": "uint128",
+          "indexed": true,
+          "internalType": "uint128",
           "name": "accountId",
-          "indexed": true
+          "type": "uint128"
         },
         {
-          "type": "uint128",
+          "indexed": true,
+          "internalType": "uint128",
           "name": "poolId",
-          "indexed": true
+          "type": "uint128"
         },
         {
-          "type": "address",
+          "indexed": false,
+          "internalType": "address",
           "name": "collateralType",
-          "indexed": false
+          "type": "address"
         },
         {
-          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256",
           "name": "amount",
-          "indexed": false
+          "type": "uint256"
         },
         {
-          "type": "address",
+          "indexed": true,
+          "internalType": "address",
           "name": "sender",
-          "indexed": true
+          "type": "address"
         }
-      ]
+      ],
+      "name": "UsdMinted",
+      "type": "event"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
       "name": "burnUsd",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "accountId"
-        },
-        {
-          "type": "uint128",
-          "name": "poolId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "uint256",
-          "name": "amount"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
-      "name": "mintUsd",
-      "constant": false,
-      "payable": false,
       "inputs": [
         {
-          "type": "uint128",
-          "name": "accountId"
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
         },
         {
-          "type": "uint128",
-          "name": "poolId"
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
         },
         {
-          "type": "address",
-          "name": "collateralType"
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
         },
         {
-          "type": "uint256",
-          "name": "amount"
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
         }
       ],
-      "outputs": []
+      "name": "mintUsd",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "deployTxnHash": "0x15f8d7c41896f35bdd276a756e0b497953e447b36ddbc6c15f09dcbae50b8411"
+  "deployTxnHash": "0x470fe78aee1c514b551399ebc397df423cf5bb03c1d9986f80a348042655d96f"
 }

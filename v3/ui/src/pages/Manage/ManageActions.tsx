@@ -8,7 +8,15 @@ import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 import { useParams } from '@snx-v3/useParams';
 import { validatePosition } from '@snx-v3/validatePosition';
 import { wei } from '@synthetixio/wei';
-import { FC, FormEvent, PropsWithChildren, useCallback, useContext, useEffect } from 'react';
+import {
+  FC,
+  FormEvent,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Borrow } from './Borrow';
 import { useManagePosition } from './useManagePosition';
@@ -16,6 +24,8 @@ import { Repay } from './Repay';
 import { Withdraw } from './Withdraw';
 import { Deposit } from './Deposit';
 import { z } from 'zod';
+import { RepayModal } from '@snx-v3/RepayModal';
+import { DepositModal } from '../../components/accounts/Deposit/DepositModal';
 
 const validActions = ['borrow', 'deposit', 'repay', 'withdraw'] as const;
 const ManageActionSchema = z.enum(validActions);
@@ -40,7 +50,9 @@ const ActionButton: FC<
       bg: 'whiteAlpha.100',
     }}
     cursor="pointer"
-    bg={activeAction === action ? 'whiteAlpha.100' : 'none'}
+    data-testid="manage action"
+    data-action={action}
+    data-active={action === activeAction ? 'true' : undefined}
     onClick={() => onClick(action)}
     py={2}
     width="50%"
@@ -100,6 +112,7 @@ const ManageActionUi: FC<{
 export const ManageAction = () => {
   const params = useParams();
   const [_, setQueryParam] = useSearchParams();
+  const [txnModalOpen, setTxnModalOpen] = useState<ManageAction | null>(null);
   const { debtChange, collateralChange, setCollateralChange, setDebtChange } =
     useContext(ManagePositionContext);
   const collateralType = useCollateralType(params.collateralSymbol);
@@ -117,6 +130,8 @@ export const ManageAction = () => {
     collateralChange,
     debtChange,
   });
+  const parsedActionParam = ManageActionSchema.safeParse(params.manageAction);
+  const parsedAction = parsedActionParam.success ? parsedActionParam.data : null;
 
   const { exec } = useManagePosition({
     accountId: params.accountId,
@@ -131,6 +146,7 @@ export const ManageAction = () => {
       liquidityPosition.refetch();
     },
   });
+
   const onSubmit = useCallback(
     (e: FormEvent) => {
       e.preventDefault();
@@ -138,9 +154,14 @@ export const ManageAction = () => {
       if (!form.reportValidity() || !isValid) {
         return;
       }
-      exec();
+      if (parsedAction === 'repay' || parsedAction === 'deposit') {
+        setTxnModalOpen(parsedAction);
+      } else {
+        // TODO add more hooks for all actions and remove this
+        exec();
+      }
     },
-    [exec, isValid]
+    [exec, isValid, parsedAction]
   );
 
   useEffect(() => {
@@ -149,7 +170,8 @@ export const ManageAction = () => {
     if (!liquidityPosition.data) return;
     if (!collateralType) return;
     const cRatio = liquidityPosition.data.cRatio;
-    const canBorrow = cRatio.gt(collateralType.issuanceRatioD18);
+    const canBorrow =
+      liquidityPosition.data.debt.eq(0) || cRatio.gt(collateralType.issuanceRatioD18);
     if (canBorrow) {
       setQueryParam({ manageAction: 'borrow' });
       return;
@@ -163,16 +185,36 @@ export const ManageAction = () => {
     setQueryParam({ manageAction: 'deposit' });
   }, [collateralType, liquidityPosition.data, params.manageAction, setQueryParam]);
 
-  const parsedActionParam = ManageActionSchema.safeParse(params.manageAction);
   return (
-    <ManageActionUi
-      onSubmit={onSubmit}
-      setActiveAction={(action) => {
-        setCollateralChange(wei(0));
-        setDebtChange(wei(0));
-        setQueryParam({ manageAction: action });
-      }}
-      manageAction={parsedActionParam.success ? parsedActionParam.data : undefined}
-    />
+    <>
+      <ManageActionUi
+        onSubmit={onSubmit}
+        setActiveAction={(action) => {
+          setCollateralChange(wei(0));
+          setDebtChange(wei(0));
+          setQueryParam({ manageAction: action });
+        }}
+        manageAction={parsedAction || undefined}
+      />
+      <RepayModal
+        onClose={() => {
+          liquidityPosition.refetch();
+          setCollateralChange(wei(0));
+          setDebtChange(wei(0));
+          setTxnModalOpen(null);
+        }}
+        isOpen={txnModalOpen === 'repay'}
+      />
+      <DepositModal
+        collateralChange={collateralChange}
+        onClose={() => {
+          liquidityPosition.refetch();
+          setCollateralChange(wei(0));
+          setDebtChange(wei(0));
+          setTxnModalOpen(null);
+        }}
+        isOpen={txnModalOpen === 'deposit'}
+      />
+    </>
   );
 };

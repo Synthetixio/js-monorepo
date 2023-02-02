@@ -204,14 +204,11 @@ export function DepositFormUi({
         </Button>
       </Box>
 
-      {poolId && collateralType && amount.gt(0) ? (
+      {amount.gt(0) ? (
         <DepositModal
-          accountId={accountId}
-          poolId={poolId}
-          collateralType={collateralType}
-          amount={amount}
+          collateralChange={amount}
           isOpen={isOpenDeposit}
-          setIsOpen={setIsOpenDeposit}
+          onClose={() => setIsOpenDeposit(false)}
         />
       ) : null}
     </>
