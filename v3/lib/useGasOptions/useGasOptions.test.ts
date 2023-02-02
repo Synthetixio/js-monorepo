@@ -38,6 +38,7 @@ describe('useGasOptions', () => {
   let populateTransaction;
   let useNetwork;
   let useEthPrice;
+  let useGasSpeed;
 
   beforeEach(async () => {
     reactQuery = {
@@ -47,12 +48,14 @@ describe('useGasOptions', () => {
     useEthPrice = jest.fn(() => ({ data: wei(1000) }));
     useOptimismLayer1Fee = jest.fn(() => ({ data: undefined }));
     getGasPrice = jest.fn(() => gasPricesMainnetMockData);
+    useGasSpeed = jest.fn(() => ({ gasSpeed: 'average' }));
 
     jest.doMock('@tanstack/react-query', () => reactQuery);
     jest.doMock('@snx-v3/useEthPrice', () => ({ useEthPrice }));
     jest.doMock('@snx-v3/useBlockchain', () => ({ useNetwork }));
     jest.doMock('@snx-v3/useGasPrice', () => ({ getGasPrice }));
     jest.doMock('@snx-v3/useOptimismLayer1Fee', () => ({ useOptimismLayer1Fee }));
+    jest.doMock('@snx-v3/useGasSpeed', () => ({ useGasSpeed }));
 
     populateTransaction = jest.fn(() => Promise.resolve(populatedTransaction));
 
