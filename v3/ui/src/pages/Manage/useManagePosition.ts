@@ -40,14 +40,6 @@ export const useManagePosition = ({
 
     if (!(CoreProxy && collateralAmount && collateralType)) return [];
 
-    if (debtChange.gt(0)) {
-      list.push({
-        contract: CoreProxy,
-        functionName: 'mintUsd',
-        callArgs: [accountId, poolId, collateralType.tokenAddress, debtChange.toBN()],
-      });
-    }
-
     if (collateralChange.lt(0)) {
       const newCollateralValue = collateralAmount.add(collateralChange).toBN();
       list.push(
@@ -71,15 +63,7 @@ export const useManagePosition = ({
     }
 
     return list;
-  }, [
-    CoreProxy,
-    collateralAmount,
-    collateralType,
-    collateralChange,
-    debtChange,
-    accountId,
-    poolId,
-  ]);
+  }, [CoreProxy, collateralAmount, collateralType, collateralChange, accountId, poolId]);
 
   const multiTxn = useMulticall(calls);
 
