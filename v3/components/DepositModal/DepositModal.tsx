@@ -168,12 +168,10 @@ export const DepositModal: FC<{
     tokenAddress: collateralType?.tokenAddress,
     poolId: params.poolId,
   });
-
   const { data: CoreProxy } = useCoreProxy();
-  const toast = useToast({
-    isClosable: true,
-    duration: 9000,
-  });
+
+  const toast = useToast({ isClosable: true, duration: 9000 });
+  const newAccountId = useMemo(() => `${Math.floor(Math.random() * 10000000000)}`, []);
 
   const { exec: wrap, wethBalance, isLoading: wrapEthLoading } = useWrapEth();
   const wrapAmount =
@@ -181,88 +179,26 @@ export const DepositModal: FC<{
       ? collateralChange.sub(wethBalance || 0)
       : wei(0);
 
-  const newAccountId = useMemo(() => `${Math.floor(Math.random() * 10000000000)}`, []);
-
   const {
     approve,
     requireApproval,
     refetchAllowance,
     isLoading: approvalLoading,
-  } = useApprove(
-    {
-      contractAddress: collateralType?.tokenAddress,
-      amount: collateralChange.toBN(),
-      spender: CoreProxy?.address,
-    },
-    {
-      onMutate: () => {
-        toast({
-          title: 'Approve collateral for transfer',
-          description: params.accountId
-            ? 'The next transaction will deposit this collateral.'
-            : 'The next transaction will create your account and and deposit this collateral',
-          status: 'info',
-        });
-      },
-      onError: () => {
-        toast.closeAll();
-        toast({
-          title: 'Approval failed',
-          description: 'Please try again.',
-          status: 'error',
-        });
-      },
-    }
-  );
+  } = useApprove({
+    contractAddress: collateralType?.tokenAddress,
+    amount: collateralChange.toBN(),
+    spender: CoreProxy?.address,
+  });
 
   const currentCollateral = liquidityPosition?.collateralAmount || wei(0);
-  const { exec: execDeposit, isLoading: depositLoading } = useDeposit(
-    {
-      accountId: params.accountId,
-      newAccountId,
-      poolId: params.poolId,
-      collateralTypeAddress: collateralType?.tokenAddress,
-      collateralChange,
-      currentCollateral: currentCollateral,
-    },
-    {
-      onMutate: () => {
-        toast.closeAll();
-
-        toast({
-          title: Boolean(params.accountId)
-            ? 'Depositing your collateral'
-            : 'Creating your account and depositing collateral',
-          description: '',
-          status: 'info',
-          isClosable: true,
-          duration: 9000,
-        });
-      },
-      onSuccess: async () => {
-        toast.closeAll();
-        await Promise.all([
-          ethBalance.refetch(),
-          tokenBalance.refetch(),
-          accounts.refetch(),
-          Boolean(params.accountId) ? refetchLiquidityPosition() : Promise.resolve(),
-        ]);
-        toast({
-          title: 'Success',
-          description: 'Your deposited collateral amounts have been updated.',
-          status: 'success',
-          duration: 5000,
-        });
-      },
-      onError: () => {
-        toast({
-          title: 'Could not complete account creation',
-          description: 'Please try again.',
-          status: 'error',
-        });
-      },
-    }
-  );
+  const { exec: execDeposit, isLoading: depositLoading } = useDeposit({
+    accountId: params.accountId,
+    newAccountId,
+    poolId: params.poolId,
+    collateralTypeAddress: collateralType?.tokenAddress,
+    collateralChange,
+    currentCollateral: currentCollateral,
+  });
   const handleClose = useCallback(() => {
     if (completed && params.poolId && collateralType?.symbol) {
       navigate(
@@ -319,10 +255,19 @@ export const DepositModal: FC<{
     setStep('approve');
     if (requireApproval) {
       try {
+        toast({
+          title: 'Approve collateral for transfer',
+          description: params.accountId
+            ? 'The next transaction will deposit this collateral.'
+            : 'The next transaction will create your account and and deposit this collateral',
+          status: 'info',
+        });
         await approve(Boolean(infiniteApproval));
         await refetchAllowance();
       } catch (e) {
         console.error(e);
+        toast.closeAll();
+        toast({ title: 'Approval failed', description: 'Please try again.', status: 'error' });
         setFailed(true);
         setProcessing(false);
         return;
@@ -331,8 +276,33 @@ export const DepositModal: FC<{
 
     setStep('deposit');
     try {
+      toast.closeAll();
+      toast({
+        title: Boolean(params.accountId)
+          ? 'Depositing your collateral'
+          : 'Creating your account and depositing collateral',
+        description: '',
+      });
       await execDeposit();
+      await Promise.all([
+        ethBalance.refetch(),
+        tokenBalance.refetch(),
+        accounts.refetch(),
+        Boolean(params.accountId) ? refetchLiquidityPosition() : Promise.resolve(),
+      ]);
+      toast.closeAll();
+      toast({
+        title: 'Success',
+        description: 'Your deposited collateral amounts have been updated.',
+        status: 'success',
+        duration: 5000,
+      });
     } catch (e) {
+      toast({
+        title: 'Could not complete account creation',
+        description: 'Please try again.',
+        status: 'error',
+      });
       console.error(e);
       setFailed(true);
       setProcessing(false);
@@ -349,10 +319,15 @@ export const DepositModal: FC<{
     handleClose,
     wrap,
     toast,
+    params.accountId,
     approve,
     infiniteApproval,
     refetchAllowance,
     execDeposit,
+    ethBalance,
+    tokenBalance,
+    accounts,
+    refetchLiquidityPosition,
   ]);
 
   return (
