@@ -6883,8 +6883,7 @@ __metadata:
   resolution: "@snx-v2/TermsModal@workspace:v2/components/TermsModal"
   dependencies:
     "@chakra-ui/react": ^2.2.8
-    "@snx-v2/icons": "workspace:*"
-    "@storybook/client-api": ^6.5.15
+    "@snx-v2/Constants": "workspace:*"
     "@storybook/react": ^6.5.15
     "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0

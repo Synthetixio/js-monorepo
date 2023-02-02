@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -31,8 +31,6 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
       setOpen(false);
     }
   };
-
-  console.log(ref.current?.scrollTop);
 
   return (
     <Modal isOpen={isOpen} onClose={() => {}}>
@@ -69,11 +67,19 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
             height="320px"
             overflow="scroll"
           >
-            <Text fontSize="14px">
-              <UnorderedList height="100%">
+            <UnorderedList>
+              <Text fontSize="14px">
                 <ListItem>
-                  Synthetix is a blockchain-based decentralized finance project. You are
-                  participating at your own risk.
+                  <Link
+                    href="https://synthetix.io/"
+                    target="_blank"
+                    color="cyan.500"
+                    _focusVisible={{ outline: 'none' }}
+                  >
+                    Synthetix{' '}
+                  </Link>
+                  is a blockchain-based decentralized finance project. You are participating at your
+                  own risk.
                 </ListItem>
                 <ListItem mt={2}>
                   Synthetix is offered for use “as is” and without any guarantees regarding
@@ -100,7 +106,7 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
                     _focusVisible={{ outline: 'none' }}
                   >
                     here
-                  </Link>{' '}
+                  </Link>
                   , and/or joining the{' '}
                   <Link
                     color="cyan.500"
@@ -156,8 +162,8 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
                   Jurisdictions”), or any other jurisdiction listed as a Specially Designated
                   National by the United States Office of Foreign Asset Control (“OFAC”).
                 </ListItem>
-              </UnorderedList>
-            </Text>
+              </Text>
+            </UnorderedList>
           </Box>
         </ModalBody>
         <Button
