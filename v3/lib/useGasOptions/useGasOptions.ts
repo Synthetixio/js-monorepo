@@ -7,6 +7,7 @@ import Wei, { wei } from '@synthetixio/wei';
 import { useNetwork } from '@snx-v3/useBlockchain';
 import { GWEI_DECIMALS } from '@snx-v3/Constants';
 import { useEthPrice } from '@snx-v3/useEthPrice';
+import { useGasSpeed } from '@snx-v3/useGasSpeed';
 
 // Note it looks like gas limit estimation is coming in higher slightly higher than what gets used according to etherscan
 // Will try without a buffer, if we get user report of out of gas we can increase it again.
@@ -78,7 +79,7 @@ export const useGasOptions = <T>(
     | { populateTransaction?: () => Promise<PopulatedTransaction>; queryKeys: QueryKey }
 ) => {
   const { id: networkId, name: networkName } = useNetwork();
-  const { gasSpeed } = { gasSpeed: 'average' } as const; // TODO create a GasSpeed context in v3. Currently no UI for this.
+  const { gasSpeed } = useGasSpeed();
   const optimismLayerOneFeesQuery = useOptimismLayer1Fee(args);
   const { data: ethPrice } = useEthPrice();
   const keyForTransactionArgs = 'transactionArgs' in args ? args.transactionArgs : undefined;

@@ -18,6 +18,7 @@ import './i18n';
 // We have to import into *VAR* and *USE* it so webpack does not remove unused library import
 import * as rainbowkitStyles from '@rainbow-me/rainbowkit/styles.css';
 import { goerli, optimismGoerli } from '@wagmi/chains';
+import { GasSpeedProvider } from '@snx-v3/useGasSpeed';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -84,7 +85,9 @@ root.render(
             })}
             chains={chains}
           >
-            <Synthetix />
+            <GasSpeedProvider>
+              <Synthetix />
+            </GasSpeedProvider>
             <ReactQueryDevtools />
           </RainbowKitProvider>
         </WagmiConfig>
