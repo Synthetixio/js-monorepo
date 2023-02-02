@@ -75,7 +75,7 @@ export const WithdrawUi: FC<{
 export const Withdraw = () => {
   const { collateralChange, debtChange, setCollateralChange } = useContext(ManagePositionContext);
   const params = useParams();
-  const collateralType = useCollateralType(params.collateralType);
+  const collateralType = useCollateralType(params.collateralSymbol);
   const { data: liquidityPosition } = useLiquidityPosition({
     tokenAddress: collateralType?.tokenAddress,
     accountId: params.accountId,

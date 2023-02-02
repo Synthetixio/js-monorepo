@@ -10,7 +10,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
-import { CollateralType } from '@snx-v3/useCollateralTypes';
+import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { Amount } from '@snx-v3/Amount';
 import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 import { useAccounts } from '@snx-v3/useAccounts';
@@ -24,25 +24,18 @@ import { Wei, wei } from '@synthetixio/wei';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { FC } from 'react';
 import { useDeposit } from '@snx-v3/useDeposit';
+import { useParams } from '@snx-v3/useParams';
 
 export type DepositModalProps = FC<{
-  accountId?: string;
-  amount: Wei;
-  poolId: string;
-  collateralType: CollateralType;
+  collateralChange: Wei;
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  onClose: (isOpen: boolean) => void;
 }>;
 
-export const DepositModal: DepositModalProps = ({
-  accountId,
-  amount,
-  poolId,
-  collateralType,
-  isOpen,
-  setIsOpen,
-}) => {
+export const DepositModal: DepositModalProps = ({ collateralChange, isOpen, onClose }) => {
   const navigate = useNavigate();
+  const params = useParams();
+  const collateralType = useCollateralType(params.collateralSymbol);
   const { data: CoreProxy } = useCoreProxy();
   const toast = useToast({
     isClosable: true,
@@ -55,20 +48,20 @@ export const DepositModal: DepositModalProps = ({
 
   const { wrap, balance: wrapEthBalance, isLoading: wrapEthLoading } = useWrapEth();
   const wrapAmount =
-    collateralType?.symbol === 'WETH' && amount.gt(wrapEthBalance?.value || 0)
-      ? amount.sub(wrapEthBalance?.value || 0)
+    collateralType?.symbol === 'WETH' && collateralChange.gt(wrapEthBalance?.value || 0)
+      ? collateralChange.sub(wrapEthBalance?.value || 0)
       : wei(0);
 
   const newAccountId = useMemo(() => `${Math.floor(Math.random() * 10000000000)}`, []);
 
   const { data: liquidityPosition, refetch: refetchLiquidityPosition } = useLiquidityPosition({
-    accountId,
-    tokenAddress: collateralType.tokenAddress,
-    poolId: poolId,
+    accountId: params.accountId,
+    tokenAddress: collateralType?.tokenAddress,
+    poolId: params.poolId,
   });
 
   const ethBalance = useEthBalance();
-  const tokenBalance = useTokenBalance(collateralType.tokenAddress);
+  const tokenBalance = useTokenBalance(collateralType?.tokenAddress);
   const accounts = useAccounts();
 
   const {
@@ -79,14 +72,14 @@ export const DepositModal: DepositModalProps = ({
   } = useApprove(
     {
       contractAddress: collateralType?.tokenAddress,
-      amount: amount.toBN(),
+      amount: collateralChange.toBN(),
       spender: CoreProxy?.address,
     },
     {
       onMutate: () => {
         toast({
           title: 'Approve collateral for transfer',
-          description: accountId
+          description: params.accountId
             ? 'The next transaction will deposit this collateral.'
             : 'The next transaction will create your account and and deposit this collateral',
           status: 'info',
@@ -108,11 +101,11 @@ export const DepositModal: DepositModalProps = ({
   const currentCollateral = liquidityPosition?.collateralAmount || wei(0);
   const { exec: execDeposit, isLoading: depositLoading } = useDeposit(
     {
-      accountId,
+      accountId: params.accountId,
       newAccountId,
-      poolId: poolId,
-      collateralTypeAddress: collateralType.tokenAddress,
-      collateralChange: amount,
+      poolId: params.poolId,
+      collateralTypeAddress: collateralType?.tokenAddress,
+      collateralChange,
       currentCollateral: currentCollateral,
     },
     {
@@ -120,7 +113,7 @@ export const DepositModal: DepositModalProps = ({
         toast.closeAll();
 
         toast({
-          title: Boolean(accountId)
+          title: Boolean(params.accountId)
             ? 'Depositing your collateral'
             : 'Creating your account and depositing collateral',
           description: '',
@@ -135,7 +128,7 @@ export const DepositModal: DepositModalProps = ({
           ethBalance.refetch(),
           tokenBalance.refetch(),
           accounts.refetch(),
-          Boolean(accountId) ? refetchLiquidityPosition() : Promise.resolve(),
+          Boolean(params.accountId) ? refetchLiquidityPosition() : Promise.resolve(),
         ]);
         toast({
           title: 'Success',
@@ -153,13 +146,13 @@ export const DepositModal: DepositModalProps = ({
       },
     }
   );
-  const onClose = useCallback(() => {
-    if (completed) {
+  const handleClose = useCallback(() => {
+    if (completed && params.poolId && collateralType?.symbol) {
       navigate(
         generatePath('/accounts/:accountId/positions/:collateralType/:poolId', {
-          accountId: newAccountId,
+          accountId: params.accountId || newAccountId,
           collateralType: collateralType.symbol,
-          poolId: poolId,
+          poolId: params.poolId,
         })
       );
     }
@@ -167,12 +160,20 @@ export const DepositModal: DepositModalProps = ({
     setCompleted(false);
     setFailed(false);
     setProcessing(false);
-    setIsOpen(false);
-  }, [collateralType.symbol, completed, navigate, newAccountId, poolId, setIsOpen]);
+    onClose(false);
+  }, [
+    completed,
+    params.poolId,
+    params.accountId,
+    collateralType?.symbol,
+    onClose,
+    navigate,
+    newAccountId,
+  ]);
 
   const onSubmit = useCallback(async () => {
     if (completed) {
-      onClose();
+      handleClose();
       return;
     }
 
@@ -227,7 +228,7 @@ export const DepositModal: DepositModalProps = ({
     collateralType?.symbol,
     wrapAmount,
     requireApproval,
-    onClose,
+    handleClose,
     wrap,
     toast,
     approve,
@@ -237,7 +238,7 @@ export const DepositModal: DepositModalProps = ({
   ]);
 
   return (
-    <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
+    <Modal size="lg" isOpen={isOpen} onClose={handleClose} closeOnOverlayClick={false}>
       <ModalOverlay />
       <ModalContent bg="black" color="white" data-testid="deposit modal">
         <ModalHeader>Complete this action</ModalHeader>
@@ -251,8 +252,8 @@ export const DepositModal: DepositModalProps = ({
             subtitle={
               wrapAmount.eq(0) ? (
                 <Text as="div">
-                  <Amount value={amount} suffix={` ${collateralType.symbol}`} /> from balance will
-                  be used.
+                  <Amount value={collateralChange} suffix={` ${collateralType?.symbol}`} /> from
+                  balance will be used.
                 </Text>
               ) : (
                 <Text as="div">
@@ -271,13 +272,13 @@ export const DepositModal: DepositModalProps = ({
 
           <Multistep
             step={2}
-            title={`Approve ${collateralType.symbol} transfer`}
+            title={`Approve ${collateralType?.symbol} transfer`}
             status={{
               failed: step === 'approve' && failed,
               success: !requireApproval,
               loading: (step === 'approve' && processing) || approvalLoading,
             }}
-            checkboxLabel={`Approve unlimited ${collateralType.symbol} transfers to Synthetix.`}
+            checkboxLabel={`Approve unlimited ${collateralType?.symbol} transfers to Synthetix.`}
             checkboxProps={{
               isChecked: infiniteApproval,
               onChange: (e) => setInfiniteApproval(e.target.checked),
@@ -286,8 +287,8 @@ export const DepositModal: DepositModalProps = ({
 
           <Multistep
             step={3}
-            title={`Deposit ${collateralType.symbol}`}
-            subtitle={`This will transfer your ${collateralType.symbol} to Synthetix.`}
+            title={`Deposit ${collateralType?.symbol}`}
+            subtitle={`This will transfer your ${collateralType?.symbol} to Synthetix.`}
             status={{
               failed: step === 'deposit' && failed,
               disabled: requireApproval,

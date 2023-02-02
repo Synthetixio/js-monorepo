@@ -15,8 +15,11 @@ import { useParams } from 'react-router-dom';
 export const RepayUi: FC<{
   debtChange: Wei;
   max?: Wei;
+  snxUSDBalance?: Wei;
+  currentDebt?: Wei;
+  balance?: Wei;
   setDebtChange: (val: Wei) => void;
-}> = ({ debtChange, setDebtChange, max }) => {
+}> = ({ debtChange, setDebtChange, max, currentDebt, snxUSDBalance }) => {
   return (
     <Flex flexDirection="column" gap={2}>
       <Text fontSize="md" fontWeight="700">
@@ -43,14 +46,27 @@ export const RepayUi: FC<{
               gap="1"
               cursor="pointer"
               onClick={() => {
-                if (!max) {
+                if (!currentDebt) {
                   return;
                 }
-                setDebtChange(max.mul(-1));
+                setDebtChange(currentDebt.mul(-1));
               }}
             >
               <Text>Debt:</Text>
-              <Amount value={max} />
+              <Amount value={currentDebt} />
+            </Flex>
+            <Flex
+              gap="1"
+              cursor="pointer"
+              onClick={() => {
+                if (!snxUSDBalance) {
+                  return;
+                }
+                setDebtChange(snxUSDBalance.mul(-1));
+              }}
+            >
+              <Text>snxUSD Balance:</Text>
+              <Amount value={snxUSDBalance} />
             </Flex>
           </Flex>
         </Flex>
@@ -63,7 +79,7 @@ export const Repay = () => {
   const { debtChange, setDebtChange } = useContext(ManagePositionContext);
   const { data: USDProxy } = useUSDProxy();
   const params = useParams();
-  const collateralType = useCollateralType(params.collateralType);
+  const collateralType = useCollateralType(params.collateralSymbol);
   const { data: liquidityPosition } = useLiquidityPosition({
     tokenAddress: collateralType?.tokenAddress,
     accountId: params.accountId,
@@ -75,6 +91,8 @@ export const Repay = () => {
     <RepayUi
       setDebtChange={setDebtChange}
       debtChange={debtChange}
+      snxUSDBalance={balance}
+      currentDebt={liquidityPosition?.debt}
       max={Wei.min(liquidityPosition?.debt || wei(0), balance || wei(0))}
     />
   );
