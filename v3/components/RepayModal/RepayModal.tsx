@@ -47,8 +47,7 @@ function StepIcon({ txnStatus, children }: PropsWithChildren<{ txnStatus: Transa
 }
 
 const statusColor = (txnStatus: TransactionStatus) => {
-  if (txnStatus === 'error') return 'red.400';
-  if (txnStatus === 'success') return 'green.500';
+  if (txnStatus === 'error' || txnStatus === 'success') return txnStatus;
   return 'gray.700';
 };
 export const RepayModalUi: React.FC<{
