@@ -61,7 +61,7 @@ export const ManageUi: FC<{ collateralType: CollateralType }> = ({ collateralTyp
 
 export const Manage = () => {
   const params = useParams();
-  const collateralType = useCollateralType(params.collateral);
+  const collateralType = useCollateralType(params.collateralSymbol);
 
   if (!collateralType) {
     return <Spinner />; // TODO skeleton
