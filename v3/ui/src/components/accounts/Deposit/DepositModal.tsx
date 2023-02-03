@@ -16,7 +16,7 @@ import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 import { useAccounts } from '@snx-v3/useAccounts';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { useApprove } from '@snx-v3/useApprove';
-import { useWrapEth } from '../../../hooks/useWrapEth';
+import { useWrapEth } from '@snx-v3/useWrapEth';
 import { Multistep } from '@snx-v3/Multistep';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { useEthBalance } from '@snx-v3/useEthBalance';
@@ -46,10 +46,10 @@ export const DepositModal: DepositModalProps = ({ collateralChange, isOpen, onCl
   const [completed, setCompleted] = useState(false);
   const [failed, setFailed] = useState(false);
 
-  const { wrap, balance: wrapEthBalance, isLoading: wrapEthLoading } = useWrapEth();
+  const { exec: wrap, wethBalance, isLoading: wrapEthLoading } = useWrapEth();
   const wrapAmount =
-    collateralType?.symbol === 'WETH' && collateralChange.gt(wrapEthBalance?.value || 0)
-      ? collateralChange.sub(wrapEthBalance?.value || 0)
+    collateralType?.symbol === 'WETH' && collateralChange.gt(wethBalance || 0)
+      ? collateralChange.sub(wethBalance || 0)
       : wei(0);
 
   const newAccountId = useMemo(() => `${Math.floor(Math.random() * 10000000000)}`, []);
@@ -183,7 +183,7 @@ export const DepositModal: DepositModalProps = ({ collateralChange, isOpen, onCl
     setStep('wrap');
     if (collateralType?.symbol === 'WETH' && wrapAmount.gt(0)) {
       try {
-        await wrap(wrapAmount.toBN());
+        await wrap(wrapAmount);
       } catch (e) {
         console.error(e);
         setFailed(true);

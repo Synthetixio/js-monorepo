@@ -14,7 +14,7 @@ import { Wei, wei } from '@synthetixio/wei';
 import { PercentBadges } from '@snx-v3/PercentBadges';
 import { Amount } from '@snx-v3/Amount';
 import { useParams } from '@snx-v3/useParams';
-import { DepositModal, DepositModalProps } from './DepositModal';
+import { DepositModal, DepositModalProps } from '@snx-v3/DepositModal';
 import { CollateralIcon } from '@snx-v3/icons';
 import { NumberInput } from '@snx-v3/NumberInput';
 
