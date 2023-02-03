@@ -59,8 +59,7 @@ export const useUnWrapEth = () => {
       if (!wethBalance) return;
       if (wethBalance.lt(amount)) return;
       await mutateAsync(amount);
-      refetchETHBalance();
-      refetchWETHBalance();
+      await Promise.all([refetchETHBalance(), refetchWETHBalance()]);
     },
     [mutateAsync, refetchETHBalance, refetchWETHBalance, wethBalance]
   );
