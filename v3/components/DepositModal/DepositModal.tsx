@@ -201,6 +201,11 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
     currentCollateral: currentCollateral,
   });
   const handleClose = useCallback(() => {
+    setStep('idle');
+    setCompleted(false);
+    setFailed(false);
+    setProcessing(false);
+    onClose();
     if (completed && params.poolId && collateralType?.symbol) {
       navigate(
         generatePath('/accounts/:accountId/positions/:collateralType/:poolId', {
@@ -210,10 +215,6 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
         })
       );
     }
-    setStep('idle');
-    setCompleted(false);
-    setFailed(false);
-    setProcessing(false);
     onClose();
   }, [
     completed,
