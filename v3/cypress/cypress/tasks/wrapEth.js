@@ -31,9 +31,9 @@ const erc20Abi = [
   },
 ];
 
-export async function wrapEth({ pk, amount }) {
+export async function wrapEth({ privateKey, amount }) {
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
-  const wallet = new ethers.Wallet(pk, provider);
+  const wallet = new ethers.Wallet(privateKey, provider);
 
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, wallet);
   const collateralConfigs = await coreProxy.getCollateralConfigurations(true);

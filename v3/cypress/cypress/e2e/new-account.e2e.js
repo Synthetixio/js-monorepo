@@ -1,22 +1,11 @@
 import { generatePath } from 'react-router-dom';
-import { ethers } from 'ethers';
 
 it('creates new account with first deposit', () => {
-  //  const wallet = ethers.Wallet.createRandom();
-  //  const wallet = new ethers.Wallet(
-  //    '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
-  //  );
-  cy.window().then(async (win) => {
-    const pk = win.localStorage.getItem('pk');
-    cy.task('setEthBalance', { pk, balance: 100 });
-    cy.task('wrapEth', { pk, amount: 0.1 });
-
-    //    win.localStorage.setItem('pk', wallet.privateKey);
-    //    const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
-    //    await provider.send('anvil_impersonateAccount', [wallet.address]);
+  cy.connectWallet().then(({ address, privateKey }) => {
+    cy.task('setEthBalance', { address, balance: 100 });
+    cy.task('wrapEth', { privateKey, amount: 0.1 });
   });
 
-  //  return null;
   cy.viewport(800, 800);
   cy.visit(
     generatePath('/deposit/:collateralSymbol/:poolId', {
@@ -24,14 +13,9 @@ it('creates new account with first deposit', () => {
       collateralSymbol: 'WETH',
     })
   );
-  cy.get('#app').should('contain', 'Welcome to Synthetix V3');
-
-  //  return;
-
-  //  cy.window().then(async (win) => win.ethereum.send('anvil_impersonateAccount', [wallet.address]));
 
   // Use more collateral than we have weth to invoke wrapping
-  cy.get('[data-testid="deposit amount input"]').type(`0.1`);
+  cy.get('[data-testid="deposit amount input"]').type(`0.2`);
 
   cy.get('[data-testid="deposit collateral"]').should('be.enabled').click();
 

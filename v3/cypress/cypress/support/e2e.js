@@ -1,6 +1,7 @@
 import '@cypress/code-coverage/support';
-import { ethers } from 'ethers';
 import { onLogAdded } from '@snx-cy/onLogAdded';
+import { ethers } from 'ethers';
+import { metamask } from '../lib/metamask';
 import { subgraph } from '../lib/subgraph';
 
 beforeEach(() => {
@@ -24,30 +25,19 @@ beforeEach(() => {
   }).as('goerli');
   //  cy.intercept(' https://optimism-mainnet.infura.io/v3/*', { statusCode: 404 }).as('optimism');
 
-  cy.window().then(async (win) => {
-    const wallet = ethers.Wallet.createRandom();
-    win.localStorage.setItem('pk', wallet.privateKey);
-    win.localStorage.setItem('walletAddress', wallet.address);
-  });
-
   cy.on('window:before:load', (win) => {
     win.localStorage.setItem('UNSAFE_IMPORT', 'true');
     win.localStorage.setItem('selectedWallet', '["MetaMask"]');
-
-    class ConnectedMetamask extends ethers.providers.JsonRpcProvider {
-      isMetaMask = true;
-      request = async ({ method, params }) => {
-        switch (method) {
-          case 'eth_accounts':
-          case 'eth_requestAccounts':
-            return [win.localStorage.getItem('walletAddress')];
-          default:
-            return await this.send(method, params);
-        }
-      };
-      //      getSigner = () => new ethers.Wallet(win.localStorage.getItem('pk'), this);
-    }
-
-    win.ethereum = new ConnectedMetamask('http://127.0.0.1:8545');
   });
+});
+
+Cypress.Commands.add('connectWallet', (namespace = 'wallet') => {
+  const wallet = ethers.Wallet.createRandom();
+  const privateKey = wallet.privateKey;
+  const address = wallet.address;
+  cy.on('window:before:load', (win) => {
+    win.ethereum = metamask({ privateKey, address });
+  });
+
+  return cy.wrap(wallet).as(namespace);
 });
