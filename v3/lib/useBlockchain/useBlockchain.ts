@@ -6,7 +6,11 @@ import * as wagmi from 'wagmi';
  * */
 
 export function useProvider() {
+  const { data: signer } = wagmi.useSigner();
   const provider = wagmi.useProvider();
+  if (signer && signer.provider) {
+    return signer.provider;
+  }
   return provider;
 }
 
@@ -16,13 +20,14 @@ export function useSigner() {
 }
 
 export function useNetwork() {
-  const { chain } = wagmi.useNetwork();
   const provider = wagmi.useProvider();
+  const [defaultChain] = provider.chains ?? [];
 
+  const network = wagmi.useNetwork();
   return {
-    id: Number(chain?.network) || 1,
-    name: chain?.network.toLowerCase() || provider.network.name,
-    isSupported: !chain?.unsupported,
+    id: network.chain ? network.chain.id : defaultChain.id,
+    name: network.chain ? network.chain.network : defaultChain.network,
+    isSupported: network.chain ? !network.chain.unsupported : true, // we always support default network
   };
 }
 

@@ -1,9 +1,9 @@
 import { generatePath } from 'react-router-dom';
 
 it('creates new account with first deposit', () => {
-  // Ensure we have at least 1 WETH
-  cy.task('wrapEth', 1).then((balance) => {
-    cy.wrap(balance).as('wethBalance');
+  cy.connectWallet().then(({ address, privateKey }) => {
+    cy.task('setEthBalance', { address, balance: 100 });
+    cy.task('wrapEth', { privateKey, amount: 0.1 });
   });
 
   cy.viewport(800, 800);
@@ -13,12 +13,9 @@ it('creates new account with first deposit', () => {
       collateralSymbol: 'WETH',
     })
   );
-  cy.get('#app').should('contain', 'Welcome to Synthetix V3');
 
-  cy.get('@wethBalance').then((balance) => {
-    // Use more collateral than we have weth to invoke wrapping
-    cy.get('[data-testid="deposit amount input"]').type(`${balance + 0.1}`);
-  });
+  // Use more collateral than we have weth to invoke wrapping
+  cy.get('[data-testid="deposit amount input"]').type(`0.2`);
 
   cy.get('[data-testid="deposit collateral"]').should('be.enabled').click();
 

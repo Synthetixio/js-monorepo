@@ -43,6 +43,7 @@ const { chains, provider } = configureChains(
     }),
   ]
 );
+const [defaultChain] = chains;
 
 const { connectors } = getDefaultWallets({
   appName: 'Synthetix',
@@ -84,6 +85,7 @@ root.render(
               fontStack: 'system',
             })}
             chains={chains}
+            initialChain={defaultChain}
           >
             <GasSpeedProvider>
               <Synthetix />
