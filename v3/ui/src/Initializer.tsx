@@ -7,7 +7,7 @@ import { useAccounts } from '@snx-v3/useAccounts';
 export const Initializer: FC<PropsWithChildren> = ({ children }) => {
   const { isLoading: isLoadingCollateralTypes } = useCollateralTypes();
   const { isLoading: isLoadingAccounts } = useAccounts();
-  const { isLoading: isLoadingPools } = usePools();
+  const { isInitialLoading: isLoadingPools } = usePools();
 
   const isLoading = isLoadingCollateralTypes || isLoadingAccounts || isLoadingPools;
 

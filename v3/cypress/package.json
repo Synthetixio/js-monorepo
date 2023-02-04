@@ -24,5 +24,8 @@
   },
   "depcheck": {
     "ignoreMatches": []
+  },
+  "dependencies": {
+    "@synthetixio/v3-contracts": "workspace:*"
   }
 }

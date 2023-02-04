@@ -14,7 +14,7 @@ import { Wei, wei } from '@synthetixio/wei';
 import { PercentBadges } from '@snx-v3/PercentBadges';
 import { Amount } from '@snx-v3/Amount';
 import { useParams } from '@snx-v3/useParams';
-import { DepositModal, DepositModalProps } from './DepositModal';
+import { DepositModal, DepositModalProps } from '@snx-v3/DepositModal';
 import { CollateralIcon } from '@snx-v3/icons';
 import { NumberInput } from '@snx-v3/NumberInput';
 
@@ -136,6 +136,9 @@ export function DepositFormUi({
                   setActiveBadge(0);
                   setInputAmount(value);
                 }}
+                InputProps={{
+                  'data-testid': 'deposit amount input',
+                }}
               />
               <Flex
                 flexDirection="column"
@@ -196,19 +199,16 @@ export function DepositFormUi({
             activeBadge={activeBadge}
           />
         </Box>
-        <Button mt={4} size="sm" px="8" type="submit" w="full">
+        <Button mt={4} size="sm" px="8" type="submit" w="full" data-testid="deposit collateral">
           Deposit Collateral
         </Button>
       </Box>
 
-      {poolId && collateralType && amount.gt(0) ? (
+      {amount.gt(0) ? (
         <DepositModal
-          accountId={accountId}
-          poolId={poolId}
-          collateralType={collateralType}
-          amount={amount}
+          collateralChange={amount}
           isOpen={isOpenDeposit}
-          setIsOpen={setIsOpenDeposit}
+          onClose={() => setIsOpenDeposit(false)}
         />
       ) : null}
     </>

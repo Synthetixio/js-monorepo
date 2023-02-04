@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 import { ZodBigNumber } from '@snx-v3/zod';
 import { wei } from '@synthetixio/wei';
 import { useExternalMulticall, MulticallContractType } from '../useExternalMulticall';
+import { useNetwork } from '@snx-v3/useBlockchain';
 
 const CollateralConfigurationSchema = z.object({
   depositingEnabled: z.boolean(),
@@ -16,6 +17,7 @@ const CollateralConfigurationSchema = z.object({
   tokenAddress: z.string().startsWith('0x'), // As of current version in zod this will be a string: https://github.com/colinhacks/zod/issues/1747
   minDelegationD18: ZodBigNumber.transform((x) => wei(x)),
 });
+
 const CollateralTypeSchema = CollateralConfigurationSchema.extend({
   symbol: z.string(),
   displaySymbol: z.string(),
@@ -43,7 +45,9 @@ async function loadSymbols({
     SymbolSchema.parse(ERC20Interface.decodeFunctionResult('symbol', bytes)[0])
   );
 }
+
 const PriceSchema = ZodBigNumber.transform((x) => wei(x));
+
 async function loadPrices({
   CoreProxyContract,
   tokenConfigs,
@@ -94,21 +98,19 @@ async function loadCollateralTypes({
 }
 
 export function useCollateralTypes() {
+  const network = useNetwork();
   const { data: CoreProxyContract } = useCoreProxy();
   const { data: MulticallContract } = useExternalMulticall();
+
   return useQuery({
-    queryKey: [
-      { Multicall: MulticallContract?.address, CoreProxy: CoreProxyContract?.address },
-      'collateralTypes',
-    ],
+    queryKey: [network.name, 'collateralTypes'],
     queryFn: async () => {
-      if (!CoreProxyContract || !MulticallContract) {
+      if (!CoreProxyContract || !MulticallContract)
         throw Error('Query should not be enabled when contracts missing');
-      }
       return loadCollateralTypes({ CoreProxyContract, MulticallContract });
     },
     placeholderData: [],
-    enabled: Boolean(CoreProxyContract && MulticallContract),
+    enabled: Boolean(CoreProxyContract && MulticallContract && network.isSupported),
   });
 }
 

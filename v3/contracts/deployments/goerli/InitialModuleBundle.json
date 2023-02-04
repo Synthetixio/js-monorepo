@@ -1,236 +1,239 @@
 {
-  "address": "0x775c69Fb5F07d167a2468CB08581e946B8703Cc7",
+  "address": "0x0F24A3a2DFE35218082D3ba3f1F2Cd938e863c20",
   "abi": [
     {
-      "type": "error",
+      "inputs": [],
       "name": "AlreadyInitialized",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
-      "name": "ImplementationIsSterile",
       "inputs": [
         {
-          "type": "address",
-          "name": "implementation"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "NoChange",
-      "inputs": []
-    },
-    {
-      "type": "error",
-      "name": "NotAContract",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "contr"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "NotNominated",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "addr"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "Unauthorized",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "addr"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "UpgradeSimulationFailed",
-      "inputs": []
-    },
-    {
-      "type": "error",
-      "name": "ZeroAddress",
-      "inputs": []
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "OwnerChanged",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "oldOwner",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "newOwner",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "OwnerNominated",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "newOwner",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "Upgraded",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "self",
-          "indexed": true
-        },
-        {
-          "type": "address",
+          "internalType": "address",
           "name": "implementation",
-          "indexed": false
+          "type": "address"
         }
-      ]
+      ],
+      "name": "ImplementationIsSterile",
+      "type": "error"
     },
     {
-      "type": "function",
+      "inputs": [],
+      "name": "NoChange",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "contr",
+          "type": "address"
+        }
+      ],
+      "name": "NotAContract",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "NotNominated",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "Unauthorized",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "UpgradeSimulationFailed",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ZeroAddress",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "oldOwner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnerChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnerNominated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "self",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "implementation",
+          "type": "address"
+        }
+      ],
+      "name": "Upgraded",
+      "type": "event"
+    },
+    {
+      "inputs": [],
       "name": "acceptOwnership",
-      "constant": false,
-      "payable": false,
-      "inputs": [],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [],
       "name": "getImplementation",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
       "outputs": [
         {
-          "type": "address",
-          "name": ""
+          "internalType": "address",
+          "name": "",
+          "type": "address"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "initialOwner",
+          "type": "address"
+        }
+      ],
       "name": "initializeOwnerModule",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "address",
-          "name": "initialOwner"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [],
       "name": "isOwnerModuleInitialized",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
       "outputs": [
         {
-          "type": "bool",
-          "name": ""
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newNominatedOwner",
+          "type": "address"
+        }
+      ],
       "name": "nominateNewOwner",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "address",
-          "name": "newNominatedOwner"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [],
       "name": "nominatedOwner",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
       "outputs": [
         {
-          "type": "address",
-          "name": ""
+          "internalType": "address",
+          "name": "",
+          "type": "address"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [],
       "name": "owner",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [],
       "outputs": [
         {
-          "type": "address",
-          "name": ""
+          "internalType": "address",
+          "name": "",
+          "type": "address"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
-      "name": "renounceNomination",
-      "constant": false,
-      "payable": false,
       "inputs": [],
-      "outputs": []
+      "name": "renounceNomination",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newImplementation",
+          "type": "address"
+        }
+      ],
       "name": "simulateUpgradeTo",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "address",
-          "name": "newImplementation"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
-      "name": "upgradeTo",
-      "constant": false,
-      "payable": false,
       "inputs": [
         {
-          "type": "address",
-          "name": "newImplementation"
+          "internalType": "address",
+          "name": "newImplementation",
+          "type": "address"
         }
       ],
-      "outputs": []
+      "name": "upgradeTo",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "deployTxnHash": "0xd1216bae183e015ad210b661f9d1ce2db1cb1018c960300041f782f9ce76bdbe"
+  "deployTxnHash": "0xcb1329ff7a0a1d3b9eb316c9c3cb5a6c7fcaa3ef7ac88a7d10c7e3ca0387063f"
 }

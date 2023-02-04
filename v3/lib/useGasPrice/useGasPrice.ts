@@ -31,6 +31,35 @@ const getGasPriceFromProvider = async (provider: InfuraProvider) => {
   }
 };
 
+export const getGasPrice = async ({
+  networkName,
+  networkId,
+}: {
+  networkName: string;
+  networkId: number;
+}) => {
+  const provider = new InfuraProvider(networkId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID);
+
+  try {
+    // If network is Mainnet then we use EIP1559
+    if (networkName === 'mainnet') {
+      const block = await provider.getBlock('latest');
+      if (block.baseFeePerGas) {
+        return {
+          fastest: computeGasFee(block.baseFeePerGas, 6),
+          fast: computeGasFee(block.baseFeePerGas, 4),
+          average: computeGasFee(block.baseFeePerGas, 2),
+        };
+      }
+    }
+    // When Testnet, Optimism network or missing baseFeePerGas we get the Gas Price through the provider
+    return getGasPriceFromProvider(provider);
+  } catch (e) {
+    throw new Error(`Could not fetch and compute network fee. ${e}`);
+  }
+};
+export type GasPrices = Awaited<ReturnType<typeof getGasPrice>>;
+
 export const useGasPrice = () => {
   const { id: networkId, name: networkName } = useNetwork();
 
@@ -38,24 +67,7 @@ export const useGasPrice = () => {
     queryKey: ['useGasPrice', networkId],
     queryFn: async () => {
       if (!networkId) throw Error('Network id required');
-      const provider = new InfuraProvider(networkId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID);
-      try {
-        // If network is Mainnet then we use EIP1559
-        if (networkName === 'mainnet') {
-          const block = await provider.getBlock('latest');
-          if (block.baseFeePerGas) {
-            return {
-              fastest: computeGasFee(block.baseFeePerGas, 6),
-              fast: computeGasFee(block.baseFeePerGas, 4),
-              average: computeGasFee(block.baseFeePerGas, 2),
-            };
-          }
-        }
-        // When Testnet, Optimism network or missing baseFeePerGas we get the Gas Price through the provider
-        return getGasPriceFromProvider(provider);
-      } catch (e) {
-        throw new Error(`Could not fetch and compute network fee. ${e}`);
-      }
+      return getGasPrice({ networkId, networkName });
     },
 
     enabled: Boolean(networkId),

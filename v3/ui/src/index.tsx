@@ -18,6 +18,7 @@ import './i18n';
 // We have to import into *VAR* and *USE* it so webpack does not remove unused library import
 import * as rainbowkitStyles from '@rainbow-me/rainbowkit/styles.css';
 import { goerli, optimismGoerli } from '@wagmi/chains';
+import { GasSpeedProvider } from '@snx-v3/useGasSpeed';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +43,7 @@ const { chains, provider } = configureChains(
     }),
   ]
 );
+const [defaultChain] = chains;
 
 const { connectors } = getDefaultWallets({
   appName: 'Synthetix',
@@ -83,8 +85,11 @@ root.render(
               fontStack: 'system',
             })}
             chains={chains}
+            initialChain={defaultChain}
           >
-            <Synthetix />
+            <GasSpeedProvider>
+              <Synthetix />
+            </GasSpeedProvider>
             <ReactQueryDevtools />
           </RainbowKitProvider>
         </WagmiConfig>

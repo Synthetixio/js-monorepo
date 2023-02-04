@@ -1,374 +1,410 @@
 {
-  "address": "0x1b7F5D6D91A13330B31a2E3071B3efbb93bA493d",
+  "address": "0x0DeAA82c85888fB978d590012A6330b15b58b2A6",
   "abi": [
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
       "name": "InvalidParameter",
-      "inputs": [
-        {
-          "type": "string",
-          "name": "parameter"
-        },
-        {
-          "type": "string",
-          "name": "reason"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "error",
-      "name": "OverflowInt128ToInt32",
-      "inputs": []
-    },
-    {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowInt256ToInt128",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowInt256ToUint256",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
-      "name": "OverflowInt32ToUint32",
-      "inputs": []
-    },
-    {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowUint256ToInt256",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowUint256ToUint128",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
+      "name": "OverflowUint256ToUint32",
+      "type": "error"
+    },
+    {
+      "inputs": [],
       "name": "OverflowUint32ToInt32",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
+      "inputs": [],
       "name": "OverflowUint64ToInt64",
-      "inputs": []
+      "type": "error"
     },
     {
-      "type": "error",
-      "name": "PermissionDenied",
       "inputs": [
         {
-          "type": "uint128",
-          "name": "accountId"
-        },
-        {
-          "type": "bytes32",
-          "name": "permission"
-        },
-        {
-          "type": "address",
-          "name": "target"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "PositionOutOfBounds",
-      "inputs": []
-    },
-    {
-      "type": "error",
-      "name": "Unauthorized",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "addr"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "ValueAlreadyInSet",
-      "inputs": []
-    },
-    {
-      "type": "error",
-      "name": "ValueNotInSet",
-      "inputs": []
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "RewardsClaimed",
-      "inputs": [
-        {
-          "type": "uint128",
+          "internalType": "uint128",
           "name": "accountId",
-          "indexed": true
+          "type": "uint128"
         },
         {
-          "type": "uint128",
-          "name": "poolId",
-          "indexed": true
+          "internalType": "bytes32",
+          "name": "permission",
+          "type": "bytes32"
         },
         {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "distributor",
-          "indexed": false
-        },
-        {
-          "type": "uint256",
-          "name": "amount",
-          "indexed": false
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
         }
-      ]
+      ],
+      "name": "PermissionDenied",
+      "type": "error"
     },
     {
-      "type": "event",
-      "anonymous": false,
-      "name": "RewardsDistributed",
+      "inputs": [],
+      "name": "PositionOutOfBounds",
+      "type": "error"
+    },
+    {
       "inputs": [
         {
-          "type": "uint128",
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "Unauthorized",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ValueAlreadyInSet",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ValueNotInSet",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint128",
           "name": "poolId",
-          "indexed": true
+          "type": "uint128"
         },
         {
-          "type": "address",
+          "indexed": true,
+          "internalType": "address",
           "name": "collateralType",
-          "indexed": true
+          "type": "address"
         },
         {
-          "type": "address",
+          "indexed": false,
+          "internalType": "address",
           "name": "distributor",
-          "indexed": false
+          "type": "address"
         },
         {
-          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256",
           "name": "amount",
-          "indexed": false
+          "type": "uint256"
+        }
+      ],
+      "name": "RewardsClaimed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
         },
         {
-          "type": "uint256",
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "distributor",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
           "name": "start",
-          "indexed": false
+          "type": "uint256"
         },
         {
-          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256",
           "name": "duration",
-          "indexed": false
+          "type": "uint256"
         }
-      ]
+      ],
+      "name": "RewardsDistributed",
+      "type": "event"
     },
     {
-      "type": "event",
       "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "distributor",
+          "type": "address"
+        }
+      ],
       "name": "RewardsDistributorRegistered",
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "collateralType",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "distributor",
-          "indexed": true
-        }
-      ]
+      "type": "event"
     },
     {
-      "type": "event",
       "anonymous": false,
-      "name": "RewardsDistributorRemoved",
       "inputs": [
         {
-          "type": "uint128",
+          "indexed": true,
+          "internalType": "uint128",
           "name": "poolId",
-          "indexed": true
+          "type": "uint128"
         },
         {
-          "type": "address",
+          "indexed": true,
+          "internalType": "address",
           "name": "collateralType",
-          "indexed": true
+          "type": "address"
         },
         {
-          "type": "address",
+          "indexed": true,
+          "internalType": "address",
           "name": "distributor",
-          "indexed": true
+          "type": "address"
         }
-      ]
+      ],
+      "name": "RewardsDistributorRemoved",
+      "type": "event"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "distributor",
+          "type": "address"
+        }
+      ],
       "name": "claimRewards",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "accountId"
-        },
-        {
-          "type": "uint128",
-          "name": "poolId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "address",
-          "name": "distributor"
-        }
-      ],
       "outputs": [
         {
-          "type": "uint256",
-          "name": ""
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
-      ]
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint64",
+          "name": "start",
+          "type": "uint64"
+        },
+        {
+          "internalType": "uint32",
+          "name": "duration",
+          "type": "uint32"
+        }
+      ],
       "name": "distributeRewards",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "uint256",
-          "name": "amount"
-        },
-        {
-          "type": "uint64",
-          "name": "start"
-        },
-        {
-          "type": "uint32",
-          "name": "duration"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
-      "name": "getClaimableRewards",
-      "constant": false,
-      "payable": false,
       "inputs": [
         {
-          "type": "uint128",
-          "name": "poolId"
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
         },
         {
-          "type": "address",
-          "name": "collateralType"
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
         },
         {
-          "type": "uint128",
-          "name": "accountId"
+          "internalType": "address",
+          "name": "distributor",
+          "type": "address"
         }
       ],
-      "outputs": [
-        {
-          "type": "uint256[]",
-          "name": ""
-        },
-        {
-          "type": "address[]",
-          "name": ""
-        }
-      ]
-    },
-    {
-      "type": "function",
       "name": "getRewardRate",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "address",
-          "name": "distributor"
-        }
-      ],
       "outputs": [
         {
-          "type": "uint256",
-          "name": ""
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "distributor",
+          "type": "address"
+        }
+      ],
       "name": "registerRewardsDistributor",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "uint128",
-          "name": "poolId"
-        },
-        {
-          "type": "address",
-          "name": "collateralType"
-        },
-        {
-          "type": "address",
-          "name": "distributor"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
-      "name": "removeRewardsDistributor",
-      "constant": false,
-      "payable": false,
       "inputs": [
         {
-          "type": "uint128",
-          "name": "poolId"
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
         },
         {
-          "type": "address",
-          "name": "collateralType"
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
         },
         {
-          "type": "address",
-          "name": "distributor"
+          "internalType": "address",
+          "name": "distributor",
+          "type": "address"
         }
       ],
-      "outputs": []
+      "name": "removeRewardsDistributor",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "updateRewards",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "deployTxnHash": "0x5bb0615c61a81d1d7281f0c565fe88a5b90eec893dd857fb11f4a42106fa7903"
+  "deployTxnHash": "0x86b8450c634b1e134cfcb7e1278ec573d993b104263ee3cc3d44e88ad16e7f9b"
 }

@@ -1,14 +1,10 @@
 import { useCallback, useMemo, useState } from 'react';
-import { contracts } from '../../utils/constants';
-import { getContract } from '../../hooks/useContract';
 import { compareAddress } from '@snx-v3/format';
 import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
-import { useApprove } from '@snx-v3/useApprove';
 import { MulticallCall, useMulticall } from '../../hooks/useMulticall';
-import { useUnWrapEth, useWrapEth } from '../../hooks/useWrapEth';
+import { useUnWrapEth } from '@snx-v3/useWrapEth';
 import { useSetTransactionState } from '@snx-v3/useTransactionState';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
-import { useNetwork } from '@snx-v3/useBlockchain';
 import { Wei, wei } from '@synthetixio/wei';
 
 export const useManagePosition = ({
@@ -30,8 +26,6 @@ export const useManagePosition = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { data: CoreProxy } = useCoreProxy();
-  const network = useNetwork();
-  const SYNTHETIX_PROXY = getContract(contracts.SYNTHETIX_PROXY, network.name);
 
   const ethCollateral = useCollateralType('WETH');
   const isNativeCurrency = compareAddress(
@@ -39,53 +33,15 @@ export const useManagePosition = ({
     collateralType?.tokenAddress
   );
 
-  const { wrap, balance: ethBalance, isLoading: isWrapping } = useWrapEth();
-  const { unWrap, isLoading: isUnWrapping } = useUnWrapEth();
+  const { exec: unWrap, isLoading: isUnWrapping } = useUnWrapEth();
 
   const calls: MulticallCall[] = useMemo(() => {
     const list: MulticallCall[] = [];
 
     if (!(CoreProxy && collateralAmount && collateralType)) return [];
 
-    if (collateralChange.gt(0)) {
-      list.push(
-        {
-          contract: CoreProxy,
-          functionName: 'deposit',
-          callArgs: [accountId, collateralType.tokenAddress, collateralChange.toBN()],
-        },
-        {
-          contract: CoreProxy,
-          functionName: 'delegateCollateral',
-          callArgs: [
-            accountId,
-            poolId,
-            collateralType.tokenAddress,
-            collateralAmount.add(collateralChange).toBN(),
-            wei(1).toBN(),
-          ],
-        }
-      );
-    }
-
-    if (debtChange.lt(0)) {
-      list.push({
-        contract: CoreProxy,
-        functionName: 'burnUsd',
-        callArgs: [accountId, poolId, collateralType.tokenAddress, debtChange.mul(-1).toBN()],
-      });
-    }
-
-    if (debtChange.gt(0)) {
-      list.push({
-        contract: CoreProxy,
-        functionName: 'mintUsd',
-        callArgs: [accountId, poolId, collateralType.tokenAddress, debtChange.toBN()],
-      });
-    }
-
     if (collateralChange.lt(0)) {
-      const newCollateralValue = collateralAmount.sub(collateralChange).toBN();
+      const newCollateralValue = collateralAmount.add(collateralChange).toBN();
       list.push(
         {
           contract: CoreProxy,
@@ -107,22 +63,9 @@ export const useManagePosition = ({
     }
 
     return list;
-  }, [
-    CoreProxy,
-    collateralAmount,
-    collateralType,
-    collateralChange,
-    debtChange,
-    accountId,
-    poolId,
-  ]);
+  }, [CoreProxy, collateralAmount, collateralType, collateralChange, accountId, poolId]);
 
   const multiTxn = useMulticall(calls);
-  const { approve, requireApproval } = useApprove({
-    contractAddress: collateralType?.tokenAddress,
-    amount: collateralChange.gt(0) ? collateralChange.toBN() : wei(0).toBN(),
-    spender: SYNTHETIX_PROXY.address,
-  });
 
   const multicallTitles = useMemo(() => {
     const title: string[] = [];
@@ -148,36 +91,6 @@ export const useManagePosition = ({
   const updateTransactions = useCallback(() => {
     const transactions = [];
 
-    if (isNativeCurrency && collateralChange.gt(0)) {
-      transactions.push({
-        title: 'Wrap ETH',
-        subtitle: collateralChange.gt(ethBalance?.value || 0)
-          ? 'You must wrap your ether before depositing.'
-          : '',
-        call: async (useBalance?: boolean) => {
-          if (!useBalance) {
-            await wrap(collateralChange.toBN());
-          }
-        },
-        checkboxLabel: collateralChange.gt(ethBalance?.value || 0)
-          ? ''
-          : `Skip this step and use my existing ${collateralChange} wETH.`,
-        checked: false,
-      });
-    }
-
-    if (collateralType?.symbol && collateralChange.gt(0) && requireApproval) {
-      transactions.push({
-        title: `Approve ${collateralType.symbol} transfer`,
-        subtitle: '',
-        call: async (infiniteApproval?: boolean) => await approve(Boolean(infiniteApproval)),
-        checkboxLabel: requireApproval
-          ? `Approve unlimited ${collateralType.symbol} transfers to Synthetix.`
-          : '',
-        checked: false,
-      });
-    }
-
     transactions.push({
       title: multicallTitles.join(', '),
       subtitle: 'This is a multicall.',
@@ -190,7 +103,7 @@ export const useManagePosition = ({
       transactions.push({
         title: 'Unwrap ETH',
         subtitle: 'Convert wETH to native ETH.',
-        call: async () => await unWrap(collateralChange.mul(-1).toBN()),
+        call: async () => await unWrap(collateralChange.abs()),
         checkboxLabel: '',
         checked: false,
       });
@@ -211,13 +124,8 @@ export const useManagePosition = ({
     collateralChange,
     multicallTitles,
     setTransactionState,
-    ethBalance?.value,
-    wrap,
-    collateralType?.symbol,
-    approve,
     multiTxn,
     unWrap,
-    requireApproval,
   ]);
 
   const exec = useCallback(
@@ -227,13 +135,10 @@ export const useManagePosition = ({
       }
       try {
         setIsLoading(true);
-        if (isNativeCurrency && collateralChange.gt(0)) {
-          await wrap(collateralChange.toBN());
-        }
-        await approve(false);
+
         await multiTxn.exec();
         if (isNativeCurrency && collateralChange.lt(0)) {
-          await unWrap(collateralChange.mul(-1).toBN());
+          await unWrap(collateralChange.abs());
         }
         refetch?.();
       } catch (error) {
@@ -242,20 +147,11 @@ export const useManagePosition = ({
         setIsLoading(false);
       }
     },
-    [
-      updateTransactions,
-      approve,
-      collateralChange,
-      isNativeCurrency,
-      multiTxn,
-      refetch,
-      unWrap,
-      wrap,
-    ]
+    [updateTransactions, collateralChange, isNativeCurrency, multiTxn, refetch, unWrap]
   );
 
   return {
-    isLoading: isLoading || isWrapping || isUnWrapping,
+    isLoading: isLoading || isUnWrapping,
     exec,
   };
 };

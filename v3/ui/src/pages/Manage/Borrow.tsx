@@ -62,7 +62,7 @@ const BorrowUi: FC<{
 export const Borrow = () => {
   const { debtChange, collateralChange, setDebtChange } = useContext(ManagePositionContext);
   const params = useParams();
-  const collateralType = useCollateralType(params.collateralType);
+  const collateralType = useCollateralType(params.collateralSymbol);
   const { data: liquidityPosition } = useLiquidityPosition({
     tokenAddress: collateralType?.tokenAddress,
     accountId: params.accountId,

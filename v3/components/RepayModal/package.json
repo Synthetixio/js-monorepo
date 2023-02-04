@@ -1,0 +1,18 @@
+{
+  "name": "@snx-v3/RepayModal",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v3/Amount": "workspace:*",
+    "@snx-v3/ManagePositionContext": "workspace:*",
+    "@snx-v3/Multistep": "workspace:*",
+    "@snx-v3/txnReducer": "workspace:*",
+    "@snx-v3/useCollateralTypes": "workspace:*",
+    "@snx-v3/useParams": "workspace:*",
+    "@snx-v3/useRepay": "workspace:*",
+    "@synthetixio/wei": "workspace:*",
+    "react": "^18.2.0"
+  }
+}

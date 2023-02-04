@@ -1,6 +1,6 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
-export const address = '0xd512aA8a7af95dd68651C05b477aAc425298127D';
+export const address = '0x0a3153cA88E109Da1E82D29320ca1d7B881d0130';
 export const abi = [
   'error AlreadyInitialized()',
   'error ImplementationIsSterile(address implementation)',
@@ -24,6 +24,8 @@ export const abi = [
   'function simulateUpgradeTo(address newImplementation)',
   'function upgradeTo(address newImplementation)',
   'error CannotSelfApprove(address addr)',
+  'error IndexOverrun(uint256 requestedIndex, uint256 length)',
+  'error InvalidOwner(address addr)',
   'error InvalidParameter(string parameter, string reason)',
   'error InvalidTransferRecipient(address addr)',
   'error OverflowUint256ToUint128()',

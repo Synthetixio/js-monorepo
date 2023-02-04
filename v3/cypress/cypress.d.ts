@@ -1,4 +1,5 @@
 import { mount } from 'cypress/react';
+import { ethers } from 'ethers';
 
 // Augment the Cypress namespace to include type definitions for
 // your custom command.
@@ -8,6 +9,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       mount: typeof mount;
+      connectWallet: (namespace?: string) => typeof ethers.Wallet;
     }
   }
 }

@@ -32,6 +32,8 @@ module.exports = defineConfig({
       }
       on('task', {
         ...require('./cypress/tasks/forkReset'),
+        ...require('./cypress/tasks/setEthBalance'),
+        ...require('./cypress/tasks/wrapEth'),
       });
 
       return config;
