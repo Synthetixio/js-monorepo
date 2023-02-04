@@ -10,7 +10,7 @@ Users may deposit any of the accepted collateral types into the protocol by depo
 
 This liquidity position will start to assume debt and credit from the markets backed by the pool. Users may also mint and burn snxUSD, increasing and decreasing the debt associated with their liquidity position. Additional collateral may also be assigned to the liquidity position by delegating more collateral of the same type to the same pool.
 
-Retrieve information about the accepted collateral types with the [`getCollateralTypes() function`](/technical-reference/smart-contracts#getcollateraltypes). Users can deposit collateral into their accounts with the [`depositCollateral()` function](/technical-reference/smart-contracts#depositcollateral). Once collateral has been deposited, users can create a liquidity position by delegating their collateral to a pool with the [`delegateCollateral()` function](/technical-reference/smart-contracts#depositcollateral).
+Retrieve information about the accepted collateral types with the [`getCollateralConfigurations() function`](/technical-reference/smart-contracts#getcollateralconfigurations). Users can deposit collateral into their accounts with the [`deposit()` function](/technical-reference/smart-contracts#deposit). Once collateral has been deposited, users can create a liquidity position by delegating their collateral to a pool with the [`delegateCollateral()` function](/technical-reference/smart-contracts#deposit).
 
 _Depositing collateral without delegating it only moves the assets into the protocol._ Deposit and delegate are typically called together using the [Multicall Module](/technical-reference/smart-contracts#multicall-module).
 
@@ -18,7 +18,7 @@ _Depositing collateral without delegating it only moves the assets into the prot
 
 To close (or reduce) a liquidity position, users must decrease the amount they’ve delegated to a pool. Note that the delegated collateral may only be reduced if the liquidity position’s C-Ratio is greater than the _Target C-Ratio_. (This is a C-Ratio higher than the minimum, specified per collateral type. The Target C-Ratio of a given collateral type can be retrieved with the [`getCollateralType` function](/technical-reference/smart-contracts#getcollateraltype), represented as an integer with 18 decimal places.)
 
-The [`delegateCollateral()` function](/technical-reference/smart-contracts#depositcollateral) can be used to decrease the amount of collateral delegated. This will increase the value returned by the [`getAccountAvailableCollateral()` function](/technical-reference/smart-contracts#getaccountavailablecollateral). This is the maximum amount that can be retrieved from the protocol with the [`withdrawCollateral()` function](/technical-reference/smart-contracts#withdrawcollateral) or delegating again to another pool.
+The [`delegateCollateral()` function](/technical-reference/smart-contracts#deposit) can be used to decrease the amount of collateral delegated. This will increase the value returned by the [`getAccountAvailableCollateral()` function](/technical-reference/smart-contracts#getaccountavailablecollateral). This is the maximum amount that can be retrieved from the protocol with the [`withdrawCollateral()` function](/technical-reference/smart-contracts#withdrawcollateral) or delegating again to another pool.
 
 ## Pools
 
