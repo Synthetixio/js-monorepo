@@ -56,18 +56,19 @@ export const WithdrawModalUi: FC<{
               loading: state === 'withdraw' && !error,
             }}
           />
-
-          <Multistep
-            step={2}
-            title={`Unwrap ${collateralType?.symbol}`}
-            subtitle="This will unwrap your WETH to ETH"
-            status={{
-              failed: Boolean(error?.step === 'unwrap'),
-              disabled: collateralType?.symbol !== 'WETH',
-              success: state === 'success',
-              loading: state === 'unwrap' && !error,
-            }}
-          />
+          {collateralType?.symbol === 'WETH' ? (
+            <Multistep
+              step={2}
+              title={`Unwrap ${collateralType?.symbol}`}
+              subtitle="This will unwrap your WETH to ETH"
+              status={{
+                failed: Boolean(error?.step === 'unwrap'),
+                disabled: collateralType?.symbol !== 'WETH',
+                success: state === 'success',
+                loading: state === 'unwrap' && !error,
+              }}
+            />
+          ) : null}
 
           <Button
             disabled={['unwrap', 'withdraw'].includes(state) && !error}
