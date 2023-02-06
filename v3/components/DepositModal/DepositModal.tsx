@@ -53,6 +53,12 @@ export const DepositModalUi: FC<{
   state,
   error,
 }) => {
+  const isWETH = collateralType?.symbol === 'WETH';
+  const stepNumbers = {
+    wrap: isWETH ? 1 : 0,
+    approve: isWETH ? 2 : 1,
+    deposit: isWETH ? 3 : 2,
+  };
   return (
     <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
       <ModalOverlay />
@@ -61,33 +67,34 @@ export const DepositModalUi: FC<{
         <ModalCloseButton />
         <ModalBody>
           <Text mb="2">Please execute the following transactions:</Text>
+          {isWETH ? (
+            <Multistep
+              step={stepNumbers.wrap}
+              title="Wrap"
+              subtitle={
+                wrapAmount.eq(0) ? (
+                  <Text as="div">
+                    <Amount value={collateralChange} suffix={` ${collateralType?.symbol}`} /> from
+                    balance will be used.
+                  </Text>
+                ) : (
+                  <Text as="div">
+                    You must wrap additional <Amount value={wrapAmount} suffix=" ETH" /> before
+                    depositing.
+                  </Text>
+                )
+              }
+              status={{
+                failed: Boolean(error?.step === 'wrap'),
+                disabled: collateralType?.symbol !== 'WETH',
+                success: wrapAmount.eq(0) || state === 'success',
+                loading: state === 'wrap' && !error,
+              }}
+            />
+          ) : null}
 
           <Multistep
-            step={1}
-            title="Wrap"
-            subtitle={
-              wrapAmount.eq(0) ? (
-                <Text as="div">
-                  <Amount value={collateralChange} suffix={` ${collateralType?.symbol}`} /> from
-                  balance will be used.
-                </Text>
-              ) : (
-                <Text as="div">
-                  You must wrap additional <Amount value={wrapAmount} suffix=" ETH" /> before
-                  depositing.
-                </Text>
-              )
-            }
-            status={{
-              failed: Boolean(error?.step === 'wrap'),
-              disabled: collateralType?.symbol !== 'WETH',
-              success: wrapAmount.eq(0) || state === 'success',
-              loading: state === 'wrap' && !error,
-            }}
-          />
-
-          <Multistep
-            step={2}
+            step={stepNumbers.approve}
             title={`Approve ${collateralType?.symbol} transfer`}
             status={{
               failed: Boolean(error?.step === 'approve'),
@@ -102,7 +109,7 @@ export const DepositModalUi: FC<{
           />
 
           <Multistep
-            step={3}
+            step={stepNumbers.deposit}
             title={`Deposit ${collateralType?.symbol}`}
             subtitle={`This will transfer your ${collateralType?.symbol} to Synthetix.`}
             status={{
