@@ -9,7 +9,7 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
 import { Amount } from '@snx-v3/Amount';
 import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
@@ -35,7 +35,7 @@ export const DepositModalUi: FC<{
   collateralType?: CollateralType;
   wrapAmount: Wei;
   state: string;
-  error: Error | null;
+  error: { error: Error; step: string } | null;
   requireApproval: boolean;
   infiniteApproval: boolean;
   setInfiniteApproval: (x: boolean) => void;
@@ -79,9 +79,9 @@ export const DepositModalUi: FC<{
               )
             }
             status={{
-              failed: state === 'wrap' && Boolean(error),
+              failed: Boolean(error?.step === 'wrap'),
               disabled: collateralType?.symbol !== 'WETH',
-              success: wrapAmount.eq(0),
+              success: wrapAmount.eq(0) || state === 'success',
               loading: state === 'wrap' && !error,
             }}
           />
@@ -90,8 +90,8 @@ export const DepositModalUi: FC<{
             step={2}
             title={`Approve ${collateralType?.symbol} transfer`}
             status={{
-              failed: state === 'approve' && Boolean(error),
-              success: !requireApproval,
+              failed: Boolean(error?.step === 'approve'),
+              success: !requireApproval || state === 'success',
               loading: state === 'approve' && !error,
             }}
             checkboxLabel={`Approve unlimited ${collateralType?.symbol} transfers to Synthetix.`}
@@ -106,8 +106,8 @@ export const DepositModalUi: FC<{
             title={`Deposit ${collateralType?.symbol}`}
             subtitle={`This will transfer your ${collateralType?.symbol} to Synthetix.`}
             status={{
-              failed: state === 'deposit' && Boolean(error),
-              disabled: requireApproval,
+              failed: Boolean(error?.step === 'deposit'),
+              disabled: state !== 'success' && requireApproval,
               success: state === 'success',
               loading: state === 'deposit' && !error,
             }}
@@ -144,12 +144,16 @@ export type DepositModalProps = FC<{
   onClose: () => void;
 }>;
 export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralChange }) => {
-  const [state, send] = useMachine(DepositMachine);
-
-  const [infiniteApproval, setInfiniteApproval] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
+  const { data: CoreProxy } = useCoreProxy();
   const collateralType = useCollateralType(params.collateralSymbol);
+  const { approve, requireApproval, refetchAllowance } = useApprove({
+    contractAddress: collateralType?.tokenAddress,
+    amount: collateralChange.toBN(),
+    spender: CoreProxy?.address,
+  });
+
   const ethBalance = useEthBalance();
   const tokenBalance = useTokenBalance(collateralType?.tokenAddress);
   const accounts = useAccounts();
@@ -158,21 +162,14 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
     tokenAddress: collateralType?.tokenAddress,
     poolId: params.poolId,
   });
-  const { data: CoreProxy } = useCoreProxy();
   const toast = useToast({ isClosable: true, duration: 9000 });
   const newAccountId = useMemo(() => `${Math.floor(Math.random() * 10000000000)}`, []);
 
-  const { exec: wrap, wethBalance } = useWrapEth();
+  const { exec: wrapEth, wethBalance } = useWrapEth();
   const wrapAmount =
     collateralType?.symbol === 'WETH' && collateralChange.gt(wethBalance || 0)
       ? collateralChange.sub(wethBalance || 0)
       : wei(0);
-  const { approve, requireApproval, refetchAllowance } = useApprove({
-    contractAddress: collateralType?.tokenAddress,
-    amount: collateralChange.toBN(),
-    spender: CoreProxy?.address,
-  });
-
   const currentCollateral = liquidityPosition?.collateralAmount || wei(0);
   const { exec: execDeposit } = useDeposit({
     accountId: params.accountId,
@@ -182,9 +179,89 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
     collateralChange,
     currentCollateral: currentCollateral,
   });
+  const [state, send] = useMachine(DepositMachine, {
+    services: {
+      wrapEth: async () => {
+        try {
+          await wrapEth(state.context.wrapAmount);
+        } catch (error) {
+          toast.closeAll();
+          toast({
+            title: 'Wrapping ETH failed',
+            description: 'Please try again.',
+            status: 'error',
+          });
+          throw Error('Wrapping failed', { cause: error });
+        }
+      },
+      approveWETH: async () => {
+        try {
+          toast({
+            title: 'Approve collateral for transfer',
+            description: params.accountId
+              ? 'The next transaction will deposit this collateral.'
+              : 'The next transaction will create your account and and deposit this collateral',
+            status: 'info',
+          });
+
+          await approve(Boolean(state.context.infiniteApproval));
+          await refetchAllowance();
+        } catch (e) {
+          toast.closeAll();
+          toast({ title: 'Approval failed', description: 'Please try again.', status: 'error' });
+          throw Error('Approve failed', { cause: e });
+        }
+      },
+      executeDeposit: async () => {
+        try {
+          toast.closeAll();
+          toast({
+            title: Boolean(params.accountId)
+              ? 'Depositing your collateral'
+              : 'Creating your account and depositing collateral',
+            description: '',
+          });
+          await execDeposit();
+          await Promise.all([
+            ethBalance.refetch(),
+            tokenBalance.refetch(),
+            accounts.refetch(),
+            refetchAllowance(),
+            Boolean(params.accountId) ? refetchLiquidityPosition() : Promise.resolve(),
+          ]);
+          toast.closeAll();
+          toast({
+            title: 'Success',
+            description: 'Your deposited collateral amounts have been updated.',
+            status: 'success',
+            duration: 5000,
+          });
+        } catch (e) {
+          toast({
+            title: 'Could not complete account creation',
+            description: 'Please try again.',
+            status: 'error',
+          });
+          throw Error('Deposit failed', { cause: e });
+        }
+      },
+    },
+  });
+  const wrapAmountString = wrapAmount.toString();
+  const isSuccessOrDeposit = state.matches('success') || state.matches('deposit');
+  useEffect(() => {
+    if (isSuccessOrDeposit) {
+      // We do this to ensure the success state displays the wrap amount used before deposit
+      return;
+    }
+    send('SET_WRAP_AMOUNT', { wrapAmount: wei(wrapAmountString) });
+  }, [wrapAmountString, send, isSuccessOrDeposit]);
+  useEffect(() => {
+    send('SET_REQUIRE_APPROVAL', { requireApproval });
+  }, [requireApproval, send]);
+
   const handleClose = useCallback(() => {
     const isSuccess = state.matches('success');
-
     if (isSuccess && params.poolId && collateralType?.symbol) {
       send('RESET');
       onClose();
@@ -214,109 +291,28 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
       handleClose();
       return;
     }
-
-    send('WRAP');
-    if (collateralType?.symbol === 'WETH' && wrapAmount.gt(0)) {
-      try {
-        await wrap(wrapAmount);
-      } catch (e) {
-        console.error(e);
-        send('FAILURE', { error: e });
-        toast.closeAll();
-        toast({
-          title: 'Wrapping ETH failed',
-          description: 'Please try again.',
-          status: 'error',
-        });
-        return;
-      }
-    }
-
-    // Step 2, get token approval
-    send('APPROVE');
-    if (requireApproval) {
-      try {
-        toast({
-          title: 'Approve collateral for transfer',
-          description: params.accountId
-            ? 'The next transaction will deposit this collateral.'
-            : 'The next transaction will create your account and and deposit this collateral',
-          status: 'info',
-        });
-        await approve(Boolean(infiniteApproval));
-        await refetchAllowance();
-      } catch (e) {
-        send('FAILURE');
-        toast.closeAll();
-        toast({ title: 'Approval failed', description: 'Please try again.', status: 'error' });
-        return;
-      }
-    }
-
-    try {
-      toast.closeAll();
-      toast({
-        title: Boolean(params.accountId)
-          ? 'Depositing your collateral'
-          : 'Creating your account and depositing collateral',
-        description: '',
-      });
-      await execDeposit();
-      await Promise.all([
-        ethBalance.refetch(),
-        tokenBalance.refetch(),
-        accounts.refetch(),
-        Boolean(params.accountId) ? refetchLiquidityPosition() : Promise.resolve(),
-      ]);
-      toast.closeAll();
-      toast({
-        title: 'Success',
-        description: 'Your deposited collateral amounts have been updated.',
-        status: 'success',
-        duration: 5000,
-      });
-    } catch (e) {
-      toast({
-        title: 'Could not complete account creation',
-        description: 'Please try again.',
-        status: 'error',
-      });
-      send('FAILURE');
+    if (state.context.error) {
+      // I couldn't figure out a nice retry pattern..
+      send('RETRY');
       return;
     }
-    send('SUCCESS');
-  }, [
-    state,
-    send,
-    collateralType?.symbol,
-    wrapAmount,
-    requireApproval,
-    handleClose,
-    wrap,
-    toast,
-    params.accountId,
-    approve,
-    infiniteApproval,
-    refetchAllowance,
-    execDeposit,
-    ethBalance,
-    tokenBalance,
-    accounts,
-    refetchLiquidityPosition,
-  ]);
+    send('WRAP');
+  }, [handleClose, send, state]);
+  console.log({ state: state.value });
+  console.log({ 'context.error': state.context.error });
   return (
     <DepositModalUi
       collateralChange={collateralChange}
       isOpen={isOpen}
       onClose={onClose}
       collateralType={collateralType}
-      wrapAmount={wrapAmount}
+      wrapAmount={state.context.wrapAmount}
       state={(() => {
         switch (true) {
           case state.matches('approve'):
             return 'approve';
           case state.matches('deposit'):
-            return 'Deposit';
+            return 'deposit';
           case state.matches('success'):
             return 'success';
           case state.matches('wrap'):
@@ -326,9 +322,11 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
         }
       })()}
       error={state.context.error}
-      requireApproval={requireApproval}
-      infiniteApproval={infiniteApproval}
-      setInfiniteApproval={setInfiniteApproval}
+      requireApproval={state.context.requireApproval}
+      infiniteApproval={state.context.infiniteApproval}
+      setInfiniteApproval={(infiniteApproval) => {
+        send('SET_INFINITE_APPROVAL', { infiniteApproval });
+      }}
       onSubmit={onSubmit}
     />
   );

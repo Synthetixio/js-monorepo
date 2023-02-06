@@ -1,117 +1,151 @@
+import Wei, { wei } from '@synthetixio/wei';
 import { createMachine, assign } from 'xstate';
 
 type Context = {
-  error: Error | null;
+  error: { error: Error; step: 'wrap' | 'approve' | 'deposit' } | null;
+  requireApproval: boolean;
+  wrapAmount: Wei;
+  infiniteApproval: boolean;
 };
-type FailureEvent = { type: 'FAILURE'; error: Error };
+
 type Events =
-  | FailureEvent
-  | { type: 'RETRY' }
+  | { type: 'SET_REQUIRE_APPROVAL'; requireApproval: boolean }
+  | { type: 'SET_WRAP_AMOUNT'; wrapAmount: Wei }
+  | { type: 'SET_INFINITE_APPROVAL'; infiniteApproval: boolean }
+  | { type: 'RETRY'; step: 'wrap' | 'approve' | 'deposit' }
   | { type: 'WRAP' }
   | { type: 'APPROVE' }
   | { type: 'DEPOSIT' }
   | { type: 'SUCCESS' }
-  | { type: 'RETRY' }
+  | { type: 'FAILURE' }
   | { type: 'RESET' };
 
 export type MachineState =
   | {
       value: 'idle';
-      context: {
-        error: null;
-      };
+      context: Context & { error: null };
     }
   | {
       value: 'wrap';
-      context: {
-        error: Error | null;
-        prosessing: boolean;
-      };
+      context: Context & { error: null };
     }
   | {
       value: 'approve';
-      context: {
-        error: Error | null;
-        prosessing: boolean;
-      };
+      context: Context & { error: null };
     }
   | {
       value: 'deposit';
-      context: {
-        error: Error | null;
-        prosessing: boolean;
-      };
+      context: Context & { error: null };
+    }
+  | {
+      value: 'error';
+      context: Context & { error: { error: Error; step: 'wrap' | 'approve' | 'deposit' } };
     }
   | {
       value: 'success';
-      context: {
+      context: Context & {
         error: null;
-        prosessing: false;
       };
     };
-
+const initialContext = {
+  wrapAmount: wei(0),
+  error: null,
+  requireApproval: false,
+  infiniteApproval: false,
+};
 export const DepositMachine = createMachine<Context, Events, MachineState>({
   id: 'DepositMachine',
-  type: 'atomic',
   initial: 'idle',
-  context: {
-    error: null,
-  },
+  predictableActionArguments: true,
+  context: initialContext,
   on: {
-    RESET: 'idle',
+    RESET: {
+      target: 'idle',
+      actions: assign({
+        wrapAmount: (_) => initialContext.wrapAmount,
+        error: (_) => initialContext.error,
+        requireApproval: (_) => initialContext.requireApproval,
+        infiniteApproval: (_) => initialContext.infiniteApproval,
+      }),
+    },
+    SET_REQUIRE_APPROVAL: {
+      actions: assign({ requireApproval: (_context, event) => event.requireApproval }),
+    },
+    SET_WRAP_AMOUNT: {
+      actions: assign({ wrapAmount: (_context, event) => event.wrapAmount }),
+    },
+    SET_INFINITE_APPROVAL: {
+      actions: assign({ infiniteApproval: (_context, event) => event.infiniteApproval }),
+    },
   },
   states: {
     idle: {
       on: {
-        WRAP: 'wrap',
-        APPROVE: 'approve',
-        DEPOSIT: 'deposit',
+        WRAP: [
+          { target: 'wrap', cond: (context) => context.wrapAmount.gt(0) },
+          { target: 'approve', cond: (context) => context.requireApproval },
+          { target: 'deposit', cond: (context) => context.requireApproval },
+        ],
       },
     },
     wrap: {
-      on: {
-        APPROVE: 'approve',
-        DEPOSIT: 'deposit',
-        FAILURE: {
-          actions: assign<Context, FailureEvent>({
-            error: (c, event) => event.error,
-          }),
+      invoke: {
+        id: 'wrap-eth',
+        src: 'wrapEth',
+        onError: {
+          target: 'failure',
+          actions: assign({ error: (_context, event) => ({ error: event.data, step: 'wrap' }) }),
         },
-        RETRY: {
-          actions: assign({
-            error: (_) => null,
-          }),
-        },
+        onDone: [
+          { target: 'approve', cond: (context) => context.requireApproval },
+          { target: 'deposit' },
+        ],
       },
     },
     approve: {
-      on: {
-        DEPOSIT: 'deposit',
-        FAILURE: {
-          actions: assign<Context, FailureEvent>({
-            error: (c, event) => event.error,
-          }),
+      invoke: {
+        src: 'approveWETH',
+        onDone: {
+          target: 'deposit',
         },
-        RETRY: {
-          actions: assign({
-            error: (_) => null,
-          }),
+        onError: {
+          target: 'failure',
+          actions: assign({ error: (_context, event) => ({ error: event.data, step: 'approve' }) }),
         },
       },
     },
     deposit: {
+      invoke: {
+        src: 'executeDeposit',
+        onDone: {
+          target: 'success',
+        },
+        onError: {
+          target: 'failure',
+          actions: assign({ error: (_context, event) => ({ error: event.data, step: 'deposit' }) }),
+        },
+      },
+      on: { SUCCESS: 'success' },
+    },
+    failure: {
       on: {
-        SUCCESS: 'success',
-        FAILURE: {
-          actions: assign<Context, FailureEvent>({
-            error: (_c, event) => event.error,
-          }),
-        },
-        RETRY: {
-          actions: assign({
-            error: (_) => null,
-          }),
-        },
+        RETRY: [
+          {
+            target: 'approve',
+            cond: (c) => c.error?.step === 'approve',
+            actions: assign({ error: (_) => null }),
+          },
+          {
+            target: 'wrap',
+            cond: (c) => c.error?.step === 'wrap',
+            actions: assign({ error: (_) => null }),
+          },
+          {
+            target: 'deposit',
+            cond: (c) => c.error?.step === 'deposit',
+            actions: assign({ error: (_) => null }),
+          },
+        ],
       },
     },
     success: {},
