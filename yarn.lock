@@ -7712,6 +7712,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/WithdrawModal@workspace:*, @snx-v3/WithdrawModal@workspace:v3/components/WithdrawModal":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/WithdrawModal@workspace:v3/components/WithdrawModal"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/Amount": "workspace:*"
+    "@snx-v3/ManagePositionContext": "workspace:*"
+    "@snx-v3/Multistep": "workspace:*"
+    "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useLiquidityPosition": "workspace:*"
+    "@snx-v3/useParams": "workspace:*"
+    "@snx-v3/useWithdraw": "workspace:*"
+    "@snx-v3/useWrapEth": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@xstate/react": ^3.1.2
+    react: ^18.2.0
+    xstate: ^4.35.4
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/assertAddressType@workspace:*, @snx-v3/assertAddressType@workspace:v3/lib/assertAddressType":
   version: 0.0.0-use.local
   resolution: "@snx-v3/assertAddressType@workspace:v3/lib/assertAddressType"
@@ -7837,6 +7857,7 @@ __metadata:
     "@snx-v3/PoolBox": "workspace:*"
     "@snx-v3/RepayModal": "workspace:*"
     "@snx-v3/TrendText": "workspace:*"
+    "@snx-v3/WithdrawModal": "workspace:*"
     "@snx-v3/calculations": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
@@ -8265,6 +8286,23 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     zod: ^3.20.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useWithdraw@workspace:*, @snx-v3/useWithdraw@workspace:v3/lib/useWithdraw":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useWithdraw@workspace:v3/lib/useWithdraw"
+  dependencies:
+    "@snx-v3/txnReducer": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/useGasOptions": "workspace:*"
+    "@snx-v3/useGasPrice": "workspace:*"
+    "@snx-v3/useGasSpeed": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 

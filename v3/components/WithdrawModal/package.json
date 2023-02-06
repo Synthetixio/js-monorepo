@@ -6,6 +6,7 @@
   "dependencies": {
     "@chakra-ui/react": "^2.2.8",
     "@snx-v3/Amount": "workspace:*",
+    "@snx-v3/ManagePositionContext": "workspace:*",
     "@snx-v3/Multistep": "workspace:*",
     "@snx-v3/useCollateralTypes": "workspace:*",
     "@snx-v3/useLiquidityPosition": "workspace:*",
