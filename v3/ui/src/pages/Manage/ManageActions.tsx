@@ -202,16 +202,18 @@ export const ManageAction = () => {
         isOpen={txnModalOpen === 'borrow'}
       />
       <Suspense fallback={null}>
-        <DepositModal
-          collateralChange={collateralChange}
-          onClose={() => {
-            liquidityPosition.refetch();
-            setCollateralChange(wei(0));
-            setDebtChange(wei(0));
-            setTxnModalOpen(null);
-          }}
-          isOpen={txnModalOpen === 'deposit'}
-        />
+        {txnModalOpen === 'deposit' ? (
+          <DepositModal
+            collateralChange={collateralChange}
+            onClose={() => {
+              liquidityPosition.refetch();
+              setCollateralChange(wei(0));
+              setDebtChange(wei(0));
+              setTxnModalOpen(null);
+            }}
+            isOpen={txnModalOpen === 'deposit'}
+          />
+        ) : null}
       </Suspense>
       <Suspense fallback={null}>
         <WithdrawModal
