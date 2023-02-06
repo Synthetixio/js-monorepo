@@ -13,9 +13,7 @@ type Events =
   | { type: 'SET_WRAP_AMOUNT'; wrapAmount: Wei }
   | { type: 'SET_INFINITE_APPROVAL'; infiniteApproval: boolean }
   | { type: 'RETRY' }
-  | { type: 'WRAP' }
-  | { type: 'APPROVE' }
-  | { type: 'DEPOSIT' }
+  | { type: 'RUN' }
   | { type: 'SUCCESS' }
   | { type: 'FAILURE' }
   | { type: 'RESET' };
@@ -81,7 +79,7 @@ export const DepositMachine = createMachine<Context, Events, MachineState>({
   states: {
     idle: {
       on: {
-        WRAP: [
+        RUN: [
           { target: 'wrap', cond: (context) => context.wrapAmount.gt(0) },
           { target: 'approve', cond: (context) => context.requireApproval },
           { target: 'deposit', cond: (context) => context.requireApproval },

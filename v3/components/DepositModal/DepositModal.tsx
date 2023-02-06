@@ -296,10 +296,9 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
       send('RETRY');
       return;
     }
-    send('WRAP');
+    send('RUN');
   }, [handleClose, send, state]);
-  console.log({ state: state.value });
-  console.log({ 'context.error': state.context.error });
+
   return (
     <DepositModalUi
       collateralChange={collateralChange}
