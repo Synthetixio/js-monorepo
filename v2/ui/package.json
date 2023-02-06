@@ -8,7 +8,7 @@
   "scripts": {
     "start": "webpack-cli serve",
     "dev": "webpack-cli serve",
-    "build": "NODE_ENV=production webpack-cli",
+    "build": "NODE_ENV=production webpack-cli && ./postbuild.sh",
     "build:report": "GENERATE_BUNDLE_REPORT=true NODE_ENV=production webpack-cli",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",

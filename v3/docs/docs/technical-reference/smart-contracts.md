@@ -181,26 +181,14 @@ event PermissionRevoked(uint128 accountId, bytes32 permission, address user, add
 Emitted when `user` has `permission` renounced or revoked by `sender` for account `accountId`.
 
 | Name | Type | Description |
-|accountId|uint128|The Id of the account that granted the permission.|
+|accountId|uint128|The id of the account that has had the permission revoked.|
 |permission|bytes32|The bytes32 identifier of the permission.|
-|user|address|The target address to whom the permission was granted.|
-|sender|address|The address that granted the permission.|
+|user|address|The target address for which the permission was revoked.|
+|sender|address|The address that revoked the permission.|
 
 ## Account Token Module
 
 ### Functions
-
-#### mint
-
-```solidity
-function mint(address owner, uint256 requestedAccountId) external
-```
-
-Mints a new token with the `requestedAccountId` as the ID, owned by `owner`
-
-| Name | Type | Description |
-|owner|address|The address that will own the new token.|
-|requestedAccountId|uint256|The requested id of the new token. This function is only used internally by the system. See `createAccount` in the Account Module. Requirements: - `msg.sender` must be the owner of the contract. - `requestedAccountId` must not already be minted. Emits a {Mint} event.|
 
 #### isInitialized
 
@@ -221,6 +209,41 @@ function initialize(string tokenName, string tokenSymbol, string uri) external
 
 Initializes the token with name, symbol, and uri.
 
+#### mint
+
+```solidity
+function mint(address to, uint256 tokenId) external
+```
+
+Allows the owner to mint tokens.
+
+| Name | Type | Description |
+|to|address|The address to receive the newly minted tokens.|
+|tokenId|uint256|The ID of the newly minted token|
+
+#### burn
+
+```solidity
+function burn(uint256 tokenId) external
+```
+
+Allows the owner to burn tokens.
+
+| Name | Type | Description |
+|tokenId|uint256|The token to burn|
+
+#### setAllowance
+
+```solidity
+function setAllowance(uint256 tokenId, address spender) external
+```
+
+Allows an address that holds tokens to provide allowance to another.
+
+| Name | Type | Description |
+|tokenId|uint256|The token which should be allowed to spender|
+|spender|address|The address that is given allowance.|
+
 #### totalSupply
 
 ```solidity
@@ -238,6 +261,11 @@ function tokenOfOwnerByIndex(address owner, uint256 index) external view returns
 Returns a token ID owned by `owner` at a given `index` of its token list.
 Use along with {balanceOf} to enumerate all of `owner`'s tokens.
 
+Requirements:
+
+- `owner` must be a valid address
+- `index` must be less than the balance of the tokens for the owner
+
 #### tokenByIndex
 
 ```solidity
@@ -247,6 +275,10 @@ function tokenByIndex(uint256 index) external view returns (uint256)
 Returns a token ID at a given `index` of all the tokens stored by the contract.
 Use along with {totalSupply} to enumerate all tokens.
 
+Requirements:
+
+- `index` must be less than the total supply of the tokens
+
 #### balanceOf
 
 ```solidity
@@ -254,6 +286,10 @@ function balanceOf(address owner) external view returns (uint256 balance)
 ```
 
 Returns the number of tokens in `owner`'s account.
+
+Requirements:
+
+- `owner` must be a valid address
 
 #### ownerOf
 
@@ -380,18 +416,6 @@ See {setApprovalForAll}
 
 ### Events
 
-#### Mint
-
-```solidity
-event Mint(address owner, uint256 tokenId)
-```
-
-Emitted when `tokenId` token is minted.
-
-| Name | Type | Description |
-|owner|address|The owner of the newly minted token.|
-|tokenId|uint256|The id of the newly minted token.|
-
 #### Transfer
 
 ```solidity
@@ -456,204 +480,6 @@ Emitted when `associateDebt` is called.
 |amount|uint256|The amount of debt being associated with the specified account, denominated with 18 decimals of precision.|
 |updatedDebt|int256|The total updated debt of the account, denominated with 18 decimals of precision|
 
-## Collateral Configuration Module
-
-### Functions
-
-#### configureCollateral
-
-```solidity
-function configureCollateral(struct CollateralConfiguration.Data config) external
-```
-
-Creates or updates the configuration for the given `collateralType`.
-
-| Name | Type | Description |
-|config|struct CollateralConfiguration.Data|The CollateralConfiguration object describing the new configuration. Requirements: - `msg.sender` must be the owner of the system. Emits a {CollateralConfigured} event.|
-
-#### getCollateralConfigurations
-
-```solidity
-function getCollateralConfigurations(bool hideDisabled) external view returns (struct CollateralConfiguration.Data[] collaterals)
-```
-
-Returns a list of detailed information pertaining to all collateral types registered in the system.
-
-Optionally returns only those that are currently enabled.
-
-| Name | Type | Description |
-|hideDisabled|bool|Wether to hide disabled collaterals or just return the full list of collaterals in the system.|
-
-| Name | Type | Description |
-|collaterals|struct CollateralConfiguration.Data[]|The list of collateral configuration objects set in the system.|
-
-#### getCollateralConfiguration
-
-```solidity
-function getCollateralConfiguration(address collateralType) external view returns (struct CollateralConfiguration.Data collateral)
-```
-
-Returns detailed information pertaining the specified collateral type.
-
-| Name | Type | Description |
-|collateralType|address|The address for the collateral whose configuration is being queried.|
-
-| Name | Type | Description |
-|collateral|struct CollateralConfiguration.Data|The configuration object describing the given collateral.|
-
-#### getCollateralPrice
-
-```solidity
-function getCollateralPrice(address collateralType) external view returns (uint256)
-```
-
-Returns the current value of a specified collateral type.
-
-| Name | Type | Description |
-|collateralType|address|The address for the collateral whose price is being queried.|
-
-| Name | Type | Description |
-|[0]|uint256|The price of the given collateral, denominated with 18 decimals of precision.|
-
-### Events
-
-#### CollateralConfigured
-
-```solidity
-event CollateralConfigured(address collateralType, struct CollateralConfiguration.Data config)
-```
-
-Emitted when a collateral type’s configuration is created or updated.
-
-| Name | Type | Description |
-|collateralType|address|The address of the collateral type that was just configured.|
-|config|struct CollateralConfiguration.Data|The object with the newly configured details.|
-
-## Collateral Module
-
-### Functions
-
-#### deposit
-
-```solidity
-function deposit(uint128 accountId, address collateralType, uint256 tokenAmount) external
-```
-
-Deposits `amount` of collateral of type `collateralType` into account `accountId`.
-
-Anyone can deposit into anyone's active account without restriction.
-
-| Name | Type | Description |
-|accountId|uint128|The id of the account that is making the deposit.|
-|collateralType|address|The address of the token to be deposited.|
-|tokenAmount|uint256|The amount being deposited, denominated in the token's native decimal representation. Emits a {CollateralDeposited} event.|
-
-#### withdraw
-
-```solidity
-function withdraw(uint128 accountId, address collateralType, uint256 tokenAmount) external
-```
-
-Withdraws `amount` of collateral of type `collateralType` from account `accountId`.
-
-| Name | Type | Description |
-|accountId|uint128|The id of the account that is making the withdrawal.|
-|collateralType|address|The address of the token to be withdrawn.|
-|tokenAmount|uint256|The amount being withdrawn, denominated in the token's native decimal representation. Requirements: - `msg.sender` must be the owner of the account, have the `ADMIN` permission, or have the `WITHDRAW` permission. Emits a {CollateralWithdrawn} event.|
-
-#### getAccountCollateral
-
-```solidity
-function getAccountCollateral(uint128 accountId, address collateralType) external view returns (uint256 totalDeposited, uint256 totalAssigned, uint256 totalLocked)
-```
-
-Returns the total values pertaining to account `accountId` for `collateralType`.
-
-| Name | Type | Description |
-|accountId|uint128|The id of the account whose collateral is being queried.|
-|collateralType|address|The address of the collateral type whose amount is being queried.|
-
-| Name | Type | Description |
-|totalDeposited|uint256|The total collateral deposited in the account, denominated with 18 decimals of precision.|
-|totalAssigned|uint256|The amount of collateral in the account that is delegated to pools, denominated with 18 decimals of precision.|
-|totalLocked|uint256|The amount of collateral in the account that cannot currently be undelegated from a pool, denominated with 18 decimals of precision.|
-
-#### getAccountAvailableCollateral
-
-```solidity
-function getAccountAvailableCollateral(uint128 accountId, address collateralType) external view returns (uint256)
-```
-
-Returns the amount of collateral of type `collateralType` deposited with account `accountId` that can be withdrawn or delegated to pools.
-
-| Name | Type | Description |
-|accountId|uint128|The id of the account whose collateral is being queried.|
-|collateralType|address|The address of the collateral type whose amount is being queried.|
-
-| Name | Type | Description |
-|[0]|uint256|The amount of collateral that is available for withdrawal or delegation, denominated with 18 decimals of precision.|
-
-#### cleanExpiredLocks
-
-```solidity
-function cleanExpiredLocks(uint128 accountId, address collateralType, uint256 offset, uint256 items) external
-```
-
-Clean expired locks from locked collateral arrays for an account/collateral type. It includes offset and items to prevent gas exhaustion. If both, offset and items, are 0 it will traverse the whole array (unlimited).
-
-| Name | Type | Description |
-|accountId|uint128|The id of the account whose locks are being cleared.|
-|collateralType|address|The address of the collateral type to clean locks for.|
-|offset|uint256|The index of the first lock to clear.|
-|items|uint256|The number of locks to clear.|
-
-#### createLock
-
-```solidity
-function createLock(uint128 accountId, address collateralType, uint256 amount, uint64 expireTimestamp) external
-```
-
-Create a new lock on the given account. you must have `admin` permission on the specified account to create a lock.
-
-A collateral lock does not affect withdrawals, but instead affects collateral delegation.
-There is currently no benefit to calling this function. it is simply for allowing pre-created accounts to have locks on them if your protocol requires it.
-
-| Name | Type | Description |
-|accountId|uint128|The id of the account for which a lock is to be created.|
-|collateralType|address|The address of the collateral type for which the lock will be created.|
-|amount|uint256|The amount of collateral tokens to wrap in the lock being created, denominated with 18 decimals of precision.|
-|expireTimestamp|uint64|The date in which the lock will become clearable.|
-
-### Events
-
-#### Deposited
-
-```solidity
-event Deposited(uint128 accountId, address collateralType, uint256 tokenAmount, address sender)
-```
-
-Emitted when `amount` of collateral of type `collateralType` is deposited to account `accountId` by `sender`.
-
-| Name | Type | Description |
-|accountId|uint128|The if of the account that deposited collateral.|
-|collateralType|address|The address of the collateral that was deposited.|
-|tokenAmount|uint256|The amount of collateral that was deposited, denominated in the token's native decimal representation.|
-|sender|address|The address of the account that triggered the deposit.|
-
-#### Withdrawn
-
-```solidity
-event Withdrawn(uint128 accountId, address collateralType, uint256 tokenAmount, address sender)
-```
-
-Emitted when `amount` of collateral of type `collateralType` is withdrawn from account `accountId` by `sender`.
-
-| Name | Type | Description |
-|accountId|uint128|The id of the account that withdrew collateral.|
-|collateralType|address|The address of the collateral that was withdrawn.|
-|tokenAmount|uint256|The amount of collateral that was withdrawn, denominated in the token's native decimal representation.|
-|sender|address|The address of the account that triggered the withdrawal.|
-
 ## IssueUSD Module
 
 ### Functions
@@ -684,7 +510,7 @@ Burns {amount} of snxUSD with the specified liquidity position.
 |accountId|uint128|The id of the account that is burning snxUSD.|
 |poolId|uint128|The id of the pool whose collateral was used to back up the snxUSD.|
 |collateralType|address|The address of the collateral that was used to back up the snxUSD.|
-|amount|uint256|The amount of snxUSD to be burnt, denominated with 18 decimals of precision. Requirements: - `msg.sender` must be the owner of the account, have the `ADMIN` permission, or have the `BURN` permission. Emits a {UsdMinted} event.|
+|amount|uint256|The amount of snxUSD to be burnt, denominated with 18 decimals of precision. Emits a {UsdMinted} event.|
 
 ### Events
 
@@ -824,123 +650,6 @@ Emitted when a vault is liquidated.
 |liquidateAsAccountId|uint128|Account id that will receive the rewards from the liquidation.|
 |sender|address|The address of the account that is triggering the liquidation.|
 
-## Market Collateral Module
-
-### Functions
-
-#### depositMarketCollateral
-
-```solidity
-function depositMarketCollateral(uint128 marketId, address collateralType, uint256 amount) external
-```
-
-Allows a market to deposit collateral.
-
-| Name | Type | Description |
-|marketId|uint128|The id of the market in which the collateral was directly deposited.|
-|collateralType|address|The address of the collateral that was deposited in the market.|
-|amount|uint256|The amount of collateral that was deposited, denominated in the token's native decimal representation.|
-
-#### withdrawMarketCollateral
-
-```solidity
-function withdrawMarketCollateral(uint128 marketId, address collateralType, uint256 amount) external
-```
-
-Allows a market to withdraw collateral that it has previously deposited.
-
-| Name | Type | Description |
-|marketId|uint128|The id of the market from which the collateral was withdrawn.|
-|collateralType|address|The address of the collateral that was withdrawn from the market.|
-|amount|uint256|The amount of collateral that was withdrawn, denominated in the token's native decimal representation.|
-
-#### configureMaximumMarketCollateral
-
-```solidity
-function configureMaximumMarketCollateral(uint128 marketId, address collateralType, uint256 amount) external
-```
-
-Allow the system owner to configure the maximum amount of a given collateral type that a specified market is allowed to deposit.
-
-| Name | Type | Description |
-|marketId|uint128|The id of the market for which the maximum is to be configured.|
-|collateralType|address|The address of the collateral for which the maximum is to be applied.|
-|amount|uint256|The amount that is to be set as the new maximum, denominated with 18 decimals of precision.|
-
-#### getMaximumMarketCollateral
-
-```solidity
-function getMaximumMarketCollateral(uint128 marketId, address collateralType) external returns (uint256)
-```
-
-Return the total maximum amount of a given collateral type that a specified market is allowed to deposit.
-
-| Name | Type | Description |
-|marketId|uint128|The id of the market for which the maximum is being queried.|
-|collateralType|address|The address of the collateral for which the maximum is being queried.|
-
-| Name | Type | Description |
-|[0]|uint256|The maximum amount of collateral set for the market, denominated with 18 decimals of precision.|
-
-#### getMarketCollateralAmount
-
-```solidity
-function getMarketCollateralAmount(uint128 marketId, address collateralType) external returns (uint256)
-```
-
-Return the total amount of a given collateral type that a specified market has deposited.
-
-| Name | Type | Description |
-|marketId|uint128|The id of the market for which the directly deposited collateral amount is being queried.|
-|collateralType|address|The address of the collateral for which the amount is being queried.|
-
-| Name | Type | Description |
-|[0]|uint256|The total amount of collateral of this type delegated to the market, denominated with 18 decimals of precision.|
-
-### Events
-
-#### MarketCollateralDeposited
-
-```solidity
-event MarketCollateralDeposited(uint128 marketId, address collateralType, uint256 tokenAmount, address sender)
-```
-
-Emitted when `amount` of collateral of type `collateralType` is deposited to market `marketId` by `sender`.
-
-| Name | Type | Description |
-|marketId|uint128|The id of the market in which collateral was deposited.|
-|collateralType|address|The address of the collateral that was directly deposited in the market.|
-|tokenAmount|uint256|The amount of tokens that were deposited, denominated in the token's native decimal representation.|
-|sender|address|The address that triggered the deposit.|
-
-#### MarketCollateralWithdrawn
-
-```solidity
-event MarketCollateralWithdrawn(uint128 marketId, address collateralType, uint256 tokenAmount, address sender)
-```
-
-Emitted when `amount` of collateral of type `collateralType` is withdrawn from market `marketId` by `sender`.
-
-| Name | Type | Description |
-|marketId|uint128|The id of the market from which collateral was withdrawn.|
-|collateralType|address|The address of the collateral that was withdrawn from the market.|
-|tokenAmount|uint256|The amount of tokens that were withdrawn, denominated in the token's native decimal representation.|
-|sender|address|The address that triggered the withdrawal.|
-
-#### MaximumMarketCollateralConfigured
-
-```solidity
-event MaximumMarketCollateralConfigured(uint128 marketId, address collateralType, uint256 systemAmount, address owner)
-```
-
-Emitted when the system owner specifies the maximum depositable collateral of a given type in a given market.
-
-| Name | Type | Description |
-|marketId|uint128|The id of the market for which the maximum was configured.|
-|collateralType|address|The address of the collateral for which the maximum was configured.|
-|systemAmount|uint256|The amount to which the maximum was set, denominated with 18 decimals of precision.|
-|owner|address|The owner of the system, which triggered the configuration change.|
-
 ## Market Manager Module
 
 ### Functions
@@ -993,10 +702,10 @@ See `IMarket`.
 |target|address|The address of the account that will receive the withdrawn snxUSD.|
 |amount|uint256|The amount of snxUSD to be withdraw, denominated with 18 decimals of precision.|
 
-#### getWithdrawableUsd
+#### getWithdrawableMarketUsd
 
 ```solidity
-function getWithdrawableUsd(uint128 marketId) external view returns (uint256)
+function getWithdrawableMarketUsd(uint128 marketId) external view returns (uint256)
 ```
 
 Returns the total withdrawable snxUSD amount for the specified market.
@@ -1093,6 +802,24 @@ Returns wether the capacity of the specified market is locked.
 | Name | Type | Description |
 |[0]|bool|A boolean that is true if the market's capacity is locked at the time of the query.|
 
+#### distributeDebtToPools
+
+```solidity
+function distributeDebtToPools(uint128 marketId, uint256 maxIter) external returns (bool)
+```
+
+Update a market's current debt registration with the system.
+This function is provided as an escape hatch for pool griefing, preventing
+overwhelming the system with a series of very small pools and creating high gas
+costs to update an account.
+
+| Name | Type | Description |
+|marketId|uint128|the id of the market that needs pools bumped|
+|maxIter|uint256||
+
+| Name | Type | Description |
+|[0]|bool|whether or not all bumpable pools have been bumped|
+
 ### Events
 
 #### MarketRegistered
@@ -1135,126 +862,6 @@ Emitted when a market withdraws snxUSD from the system.
 |target|address|The address of the account that received the snxUSD in the withdrawal.|
 |amount|uint256|The amount of snxUSD withdrawn from the system, denominated with 18 decimals of precision.|
 |market|address|The address of the external market that is withdrawing.|
-
-## Multicall Module
-
-### Functions
-
-#### multicall
-
-```solidity
-function multicall(bytes[] data) external payable returns (bytes[] results)
-```
-
-Executes multiple transaction payloads in a single transaction.
-
-Each transaction is executed using `delegatecall`, and targets the system address.
-
-| Name | Type | Description |
-|data|bytes[]|Array of calldata objects, one for each function that is to be called in the system.|
-
-| Name | Type | Description |
-|results|bytes[]|Array of each `delegatecall`'s response corresponding to the incoming calldata array.|
-
-### Events
-
-## Pool Configuration Module
-
-### Functions
-
-#### setPreferredPool
-
-```solidity
-function setPreferredPool(uint128 poolId) external
-```
-
-Sets the unique system preferred pool.
-
-Note: The preferred pool does not receive any special treatment. It is only signaled as preferred here.
-
-| Name | Type | Description |
-|poolId|uint128|The id of the pool that is to be set as preferred.|
-
-#### addApprovedPool
-
-```solidity
-function addApprovedPool(uint128 poolId) external
-```
-
-Marks a pool as approved by the system owner.
-
-Approved pools do not receive any special treatment. They are only signaled as approved here.
-
-| Name | Type | Description |
-|poolId|uint128|The id of the pool that is to be approved.|
-
-#### removeApprovedPool
-
-```solidity
-function removeApprovedPool(uint128 poolId) external
-```
-
-Un-marks a pool as preferred by the system owner.
-
-| Name | Type | Description |
-|poolId|uint128|The id of the pool that is to be no longer approved.|
-
-#### getPreferredPool
-
-```solidity
-function getPreferredPool() external view returns (uint256)
-```
-
-Retrieves the unique system preferred pool.
-
-| Name | Type | Description |
-|[0]|uint256|The id of the pool that is currently set as preferred in the system.|
-
-#### getApprovedPools
-
-```solidity
-function getApprovedPools() external view returns (uint256[])
-```
-
-Retrieves the pool that are approved by the system owner.
-
-| Name | Type | Description |
-|[0]|uint256[]|An array with all of the pool ids that are approved in the system.|
-
-### Events
-
-#### PreferredPoolSet
-
-```solidity
-event PreferredPoolSet(uint256 poolId)
-```
-
-Emitted when the system owner sets the preferred pool.
-
-| Name | Type | Description |
-|poolId|uint256|The id of the pool that was set as preferred.|
-
-#### PoolApprovedAdded
-
-```solidity
-event PoolApprovedAdded(uint256 poolId)
-```
-
-Emitted when the system owner adds an approved pool.
-
-| Name | Type | Description |
-|poolId|uint256|The id of the pool that was approved.|
-
-#### PoolApprovedRemoved
-
-```solidity
-event PoolApprovedRemoved(uint256 poolId)
-```
-
-Emitted when the system owner removes an approved pool.
-
-| Name | Type | Description |
-|poolId|uint256|The id of the pool that is no longer approved.|
 
 ## Pool Module
 
@@ -1512,162 +1119,6 @@ Gets fired when pool gets configured.
 |markets|struct MarketConfiguration.Data[]|Array of configuration data of the markets that were connected to the pool.|
 |sender|address|The address that triggered the pool configuration.|
 
-## Rewards Manager Module
-
-### Functions
-
-#### registerRewardsDistributor
-
-```solidity
-function registerRewardsDistributor(uint128 poolId, address collateralType, address distributor) external
-```
-
-Called by pool owner to register rewards for vault participants.
-
-| Name | Type | Description |
-|poolId|uint128|The id of the pool whose rewards are to be managed by the specified distributor.|
-|collateralType|address|The address of the collateral used in the pool's rewards.|
-|distributor|address|The address of the reward distributor to be registered.|
-
-#### removeRewardsDistributor
-
-```solidity
-function removeRewardsDistributor(uint128 poolId, address collateralType, address distributor) external
-```
-
-Called by pool owner to remove a registered rewards distributor for vault participants.
-
-| Name | Type | Description |
-|poolId|uint128|The id of the pool whose rewards are to be managed by the specified distributor.|
-|collateralType|address|The address of the collateral used in the pool's rewards.|
-|distributor|address|The address of the reward distributor to be registered.|
-
-#### distributeRewards
-
-```solidity
-function distributeRewards(uint128 poolId, address collateralType, uint256 amount, uint64 start, uint32 duration) external
-```
-
-Called by a registered distributor to set up rewards for vault participants.
-
-Will revert if the caller is not a registered distributor.
-
-| Name | Type | Description |
-|poolId|uint128|The id of the pool to distribute rewards to.|
-|collateralType|address|The address of the collateral used in the pool's rewards.|
-|amount|uint256|The amount of rewards to be distributed.|
-|start|uint64|The date at which the rewards will begin to be claimable.|
-|duration|uint32|The period after which all distributed rewards will be claimable.|
-
-#### claimRewards
-
-```solidity
-function claimRewards(uint128 accountId, uint128 poolId, address collateralType, address distributor) external returns (uint256)
-```
-
-Allows a user with appropriate permissions to claim rewards associated with a position.
-
-| Name | Type | Description |
-|accountId|uint128|The id of the account that is to claim the rewards.|
-|poolId|uint128|The id of the pool to claim rewards on.|
-|collateralType|address|The address of the collateral used in the pool's rewards.|
-|distributor|address|The address of the rewards distributor associated with the rewards being claimed.|
-
-| Name | Type | Description |
-|[0]|uint256|The amount of rewards that were available for the account and thus claimed.|
-
-#### getClaimableRewards
-
-```solidity
-function getClaimableRewards(uint128 poolId, address collateralType, uint128 accountId) external returns (uint256[], address[])
-```
-
-For a given position, return the rewards that can currently be claimed.
-
-| Name | Type | Description |
-|poolId|uint128|The id of the pool being queried.|
-|collateralType|address|The address of the collateral used in the pool's rewards.|
-|accountId|uint128|The id of the account whose available rewards are being queried.|
-
-| Name | Type | Description |
-|[0]|uint256[]|An array of ids of the reward entries that are claimable by the position.|
-|[1]|address[]|An array with the addresses of the reward distributors associated with the claimable rewards.|
-
-#### getRewardRate
-
-```solidity
-function getRewardRate(uint128 poolId, address collateralType, address distributor) external view returns (uint256)
-```
-
-Returns the number of individual units of amount emitted per second per share for the given poolId, collateralType, distributor vault.
-
-| Name | Type | Description |
-|poolId|uint128|The id of the pool being queried.|
-|collateralType|address|The address of the collateral used in the pool's rewards.|
-|distributor|address|The address of the rewards distributor associated with the rewards in question.|
-
-| Name | Type | Description |
-|[0]|uint256|The queried rewards rate.|
-
-### Events
-
-#### RewardsDistributed
-
-```solidity
-event RewardsDistributed(uint128 poolId, address collateralType, address distributor, uint256 amount, uint256 start, uint256 duration)
-```
-
-Emitted when the pool owner or an existing reward distributor sets up rewards for vault participants.
-
-| Name | Type | Description |
-|poolId|uint128|The id of the pool on which rewards were distributed.|
-|collateralType|address|The collateral type of the pool on which rewards were distributed.|
-|distributor|address|The reward distributor associated to the rewards that were distributed.|
-|amount|uint256|The amount of rewards that were distributed.|
-|start|uint256|The date one which the rewards will begin to be claimable.|
-|duration|uint256|The time in which all of the distributed rewards will be claimable.|
-
-#### RewardsClaimed
-
-```solidity
-event RewardsClaimed(uint128 accountId, uint128 poolId, address collateralType, address distributor, uint256 amount)
-```
-
-Emitted when a vault participant claims rewards.
-
-| Name | Type | Description |
-|accountId|uint128|The id of the account that claimed the rewards.|
-|poolId|uint128|The id of the pool where the rewards were claimed.|
-|collateralType|address|The address of the collateral used in the pool's rewards.|
-|distributor|address|The address of the rewards distributor associated with these rewards.|
-|amount|uint256|The amount of rewards that were claimed.|
-
-#### RewardsDistributorRegistered
-
-```solidity
-event RewardsDistributorRegistered(uint128 poolId, address collateralType, address distributor)
-```
-
-Emitted when a new rewards distributor is registered.
-
-| Name | Type | Description |
-|poolId|uint128|The id of the pool whose reward distributor was registered.|
-|collateralType|address|The address of the collateral used in the pool's rewards.|
-|distributor|address|The address of the newly registered reward distributor.|
-
-#### RewardsDistributorRemoved
-
-```solidity
-event RewardsDistributorRemoved(uint128 poolId, address collateralType, address distributor)
-```
-
-Emitted when an already registered rewards distributor is removed.
-
-| Name | Type | Description |
-|poolId|uint128|The id of the pool whose reward distributor was registered.|
-|collateralType|address|The address of the collateral used in the pool's rewards.|
-|distributor|address|The address of the registered reward distributor.|
-
 ## USD Token Module
 
 ### Functions
@@ -1860,6 +1311,42 @@ Allows users to provide allowance to other users so that they can transfer token
 | Name | Type | Description |
 |[0]|bool|A boolean which is true if the operation succeeded.|
 
+#### increaseAllowance
+
+```solidity
+function increaseAllowance(address spender, uint256 addedValue) external returns (bool)
+```
+
+Atomically increases the allowance granted to `spender` by the caller.
+
+This is an alternative to {approve} that can be used as a mitigation for
+problems described in {IERC20-approve}.
+
+Emits an {Approval} event indicating the updated allowance.
+
+Requirements:
+
+- `spender` cannot be the zero address.
+
+#### decreaseAllowance
+
+```solidity
+function decreaseAllowance(address spender, uint256 subtractedValue) external returns (bool)
+```
+
+Atomically decreases the allowance granted to `spender` by the caller.
+
+This is an alternative to {approve} that can be used as a mitigation for
+problems described in {IERC20-approve}.
+
+Emits an {Approval} event indicating the updated allowance.
+
+Requirements:
+
+- `spender` cannot be the zero address.
+- `spender` must have allowance for the caller of at least
+  `subtractedValue`.
+
 #### transferFrom
 
 ```solidity
@@ -1903,6 +1390,611 @@ Emitted when a user has provided allowance to another user for transferring toke
 |owner|address|The address that is providing the allowance.|
 |spender|address|The address that received the allowance.|
 |amount|uint256|The number of tokens that were added to `spender`'s allowance.|
+
+## Collateral Configuration Module
+
+### Functions
+
+#### configureCollateral
+
+```solidity
+function configureCollateral(struct CollateralConfiguration.Data config) external
+```
+
+Creates or updates the configuration for the given `collateralType`.
+
+| Name | Type | Description |
+|config|struct CollateralConfiguration.Data|The CollateralConfiguration object describing the new configuration. Requirements: - `msg.sender` must be the owner of the system. Emits a {CollateralConfigured} event.|
+
+#### getCollateralConfigurations
+
+```solidity
+function getCollateralConfigurations(bool hideDisabled) external view returns (struct CollateralConfiguration.Data[] collaterals)
+```
+
+Returns a list of detailed information pertaining to all collateral types registered in the system.
+
+Optionally returns only those that are currently enabled.
+
+| Name | Type | Description |
+|hideDisabled|bool|Wether to hide disabled collaterals or just return the full list of collaterals in the system.|
+
+| Name | Type | Description |
+|collaterals|struct CollateralConfiguration.Data[]|The list of collateral configuration objects set in the system.|
+
+#### getCollateralConfiguration
+
+```solidity
+function getCollateralConfiguration(address collateralType) external view returns (struct CollateralConfiguration.Data collateral)
+```
+
+Returns detailed information pertaining the specified collateral type.
+
+| Name | Type | Description |
+|collateralType|address|The address for the collateral whose configuration is being queried.|
+
+| Name | Type | Description |
+|collateral|struct CollateralConfiguration.Data|The configuration object describing the given collateral.|
+
+#### getCollateralPrice
+
+```solidity
+function getCollateralPrice(address collateralType) external view returns (uint256)
+```
+
+Returns the current value of a specified collateral type.
+
+| Name | Type | Description |
+|collateralType|address|The address for the collateral whose price is being queried.|
+
+| Name | Type | Description |
+|[0]|uint256|The price of the given collateral, denominated with 18 decimals of precision.|
+
+### Events
+
+#### CollateralConfigured
+
+```solidity
+event CollateralConfigured(address collateralType, struct CollateralConfiguration.Data config)
+```
+
+Emitted when a collateral type’s configuration is created or updated.
+
+| Name | Type | Description |
+|collateralType|address|The address of the collateral type that was just configured.|
+|config|struct CollateralConfiguration.Data|The object with the newly configured details.|
+
+## Collateral Module
+
+### Functions
+
+#### deposit
+
+```solidity
+function deposit(uint128 accountId, address collateralType, uint256 tokenAmount) external
+```
+
+Deposits `tokenAmount` of collateral of type `collateralType` into account `accountId`.
+
+Anyone can deposit into anyone's active account without restriction.
+
+| Name | Type | Description |
+|accountId|uint128|The id of the account that is making the deposit.|
+|collateralType|address|The address of the token to be deposited.|
+|tokenAmount|uint256|The amount being deposited, denominated in the token's native decimal representation. Emits a {Deposited} event.|
+
+#### withdraw
+
+```solidity
+function withdraw(uint128 accountId, address collateralType, uint256 tokenAmount) external
+```
+
+Withdraws `tokenAmount` of collateral of type `collateralType` from account `accountId`.
+
+| Name | Type | Description |
+|accountId|uint128|The id of the account that is making the withdrawal.|
+|collateralType|address|The address of the token to be withdrawn.|
+|tokenAmount|uint256|The amount being withdrawn, denominated in the token's native decimal representation. Requirements: - `msg.sender` must be the owner of the account, have the `ADMIN` permission, or have the `WITHDRAW` permission. Emits a {Withdrawn} event.|
+
+#### getAccountCollateral
+
+```solidity
+function getAccountCollateral(uint128 accountId, address collateralType) external view returns (uint256 totalDeposited, uint256 totalAssigned, uint256 totalLocked)
+```
+
+Returns the total values pertaining to account `accountId` for `collateralType`.
+
+| Name | Type | Description |
+|accountId|uint128|The id of the account whose collateral is being queried.|
+|collateralType|address|The address of the collateral type whose amount is being queried.|
+
+| Name | Type | Description |
+|totalDeposited|uint256|The total collateral deposited in the account, denominated with 18 decimals of precision.|
+|totalAssigned|uint256|The amount of collateral in the account that is delegated to pools, denominated with 18 decimals of precision.|
+|totalLocked|uint256|The amount of collateral in the account that cannot currently be undelegated from a pool, denominated with 18 decimals of precision.|
+
+#### getAccountAvailableCollateral
+
+```solidity
+function getAccountAvailableCollateral(uint128 accountId, address collateralType) external view returns (uint256)
+```
+
+Returns the amount of collateral of type `collateralType` deposited with account `accountId` that can be withdrawn or delegated to pools.
+
+| Name | Type | Description |
+|accountId|uint128|The id of the account whose collateral is being queried.|
+|collateralType|address|The address of the collateral type whose amount is being queried.|
+
+| Name | Type | Description |
+|[0]|uint256|The amount of collateral that is available for withdrawal or delegation, denominated with 18 decimals of precision.|
+
+#### cleanExpiredLocks
+
+```solidity
+function cleanExpiredLocks(uint128 accountId, address collateralType, uint256 offset, uint256 items) external
+```
+
+Clean expired locks from locked collateral arrays for an account/collateral type. It includes offset and items to prevent gas exhaustion. If both, offset and items, are 0 it will traverse the whole array (unlimited).
+
+| Name | Type | Description |
+|accountId|uint128|The id of the account whose locks are being cleared.|
+|collateralType|address|The address of the collateral type to clean locks for.|
+|offset|uint256|The index of the first lock to clear.|
+|items|uint256|The number of locks to clear.|
+
+#### createLock
+
+```solidity
+function createLock(uint128 accountId, address collateralType, uint256 amount, uint64 expireTimestamp) external
+```
+
+Create a new lock on the given account. you must have `admin` permission on the specified account to create a lock.
+
+Collateral can be withdrawn from the system if it is not assigned or delegated to a pool. Collateral locks are an additional restriction that applies on top of that. I.e. if collateral is not assigned to a pool, but has a lock, it cannot be withdrawn.
+Collateral locks are initially intended for the Synthetix v2 to v3 migration, but may be used in the future by the Spartan Council, for example, to create and hand off accounts whose withdrawals from the system are locked for a given amount of time.
+
+| Name | Type | Description |
+|accountId|uint128|The id of the account for which a lock is to be created.|
+|collateralType|address|The address of the collateral type for which the lock will be created.|
+|amount|uint256|The amount of collateral tokens to wrap in the lock being created, denominated with 18 decimals of precision.|
+|expireTimestamp|uint64|The date in which the lock will become clearable.|
+
+### Events
+
+#### Deposited
+
+```solidity
+event Deposited(uint128 accountId, address collateralType, uint256 tokenAmount, address sender)
+```
+
+Emitted when `tokenAmount` of collateral of type `collateralType` is deposited to account `accountId` by `sender`.
+
+| Name | Type | Description |
+|accountId|uint128|The id of the account that deposited collateral.|
+|collateralType|address|The address of the collateral that was deposited.|
+|tokenAmount|uint256|The amount of collateral that was deposited, denominated in the token's native decimal representation.|
+|sender|address|The address of the account that triggered the deposit.|
+
+#### Withdrawn
+
+```solidity
+event Withdrawn(uint128 accountId, address collateralType, uint256 tokenAmount, address sender)
+```
+
+Emitted when `tokenAmount` of collateral of type `collateralType` is withdrawn from account `accountId` by `sender`.
+
+| Name | Type | Description |
+|accountId|uint128|The id of the account that withdrew collateral.|
+|collateralType|address|The address of the collateral that was withdrawn.|
+|tokenAmount|uint256|The amount of collateral that was withdrawn, denominated in the token's native decimal representation.|
+|sender|address|The address of the account that triggered the withdrawal.|
+
+## Market Collateral Module
+
+### Functions
+
+#### depositMarketCollateral
+
+```solidity
+function depositMarketCollateral(uint128 marketId, address collateralType, uint256 amount) external
+```
+
+Allows a market to deposit collateral.
+
+| Name | Type | Description |
+|marketId|uint128|The id of the market in which the collateral was directly deposited.|
+|collateralType|address|The address of the collateral that was deposited in the market.|
+|amount|uint256|The amount of collateral that was deposited, denominated in the token's native decimal representation.|
+
+#### withdrawMarketCollateral
+
+```solidity
+function withdrawMarketCollateral(uint128 marketId, address collateralType, uint256 amount) external
+```
+
+Allows a market to withdraw collateral that it has previously deposited.
+
+| Name | Type | Description |
+|marketId|uint128|The id of the market from which the collateral was withdrawn.|
+|collateralType|address|The address of the collateral that was withdrawn from the market.|
+|amount|uint256|The amount of collateral that was withdrawn, denominated in the token's native decimal representation.|
+
+#### configureMaximumMarketCollateral
+
+```solidity
+function configureMaximumMarketCollateral(uint128 marketId, address collateralType, uint256 amount) external
+```
+
+Allow the system owner to configure the maximum amount of a given collateral type that a specified market is allowed to deposit.
+
+| Name | Type | Description |
+|marketId|uint128|The id of the market for which the maximum is to be configured.|
+|collateralType|address|The address of the collateral for which the maximum is to be applied.|
+|amount|uint256|The amount that is to be set as the new maximum, denominated with 18 decimals of precision.|
+
+#### getMaximumMarketCollateral
+
+```solidity
+function getMaximumMarketCollateral(uint128 marketId, address collateralType) external returns (uint256)
+```
+
+Return the total maximum amount of a given collateral type that a specified market is allowed to deposit.
+
+| Name | Type | Description |
+|marketId|uint128|The id of the market for which the maximum is being queried.|
+|collateralType|address|The address of the collateral for which the maximum is being queried.|
+
+| Name | Type | Description |
+|[0]|uint256|The maximum amount of collateral set for the market, denominated with 18 decimals of precision.|
+
+#### getMarketCollateralAmount
+
+```solidity
+function getMarketCollateralAmount(uint128 marketId, address collateralType) external returns (uint256)
+```
+
+Return the total amount of a given collateral type that a specified market has deposited.
+
+| Name | Type | Description |
+|marketId|uint128|The id of the market for which the directly deposited collateral amount is being queried.|
+|collateralType|address|The address of the collateral for which the amount is being queried.|
+
+| Name | Type | Description |
+|[0]|uint256|The total amount of collateral of this type delegated to the market, denominated with 18 decimals of precision.|
+
+#### getMarketCollateralValue
+
+```solidity
+function getMarketCollateralValue(uint128 marketId) external returns (uint256)
+```
+
+Return the total value of collateral that a specified market has deposited.
+
+| Name | Type | Description |
+|marketId|uint128|The id of the market for which the directly deposited collateral amount is being queried.|
+
+| Name | Type | Description |
+|[0]|uint256|The total value of collateral deposited by the market, denominated with 18 decimals of precision.|
+
+### Events
+
+#### MarketCollateralDeposited
+
+```solidity
+event MarketCollateralDeposited(uint128 marketId, address collateralType, uint256 tokenAmount, address sender)
+```
+
+Emitted when `amount` of collateral of type `collateralType` is deposited to market `marketId` by `sender`.
+
+| Name | Type | Description |
+|marketId|uint128|The id of the market in which collateral was deposited.|
+|collateralType|address|The address of the collateral that was directly deposited in the market.|
+|tokenAmount|uint256|The amount of tokens that were deposited, denominated in the token's native decimal representation.|
+|sender|address|The address that triggered the deposit.|
+
+#### MarketCollateralWithdrawn
+
+```solidity
+event MarketCollateralWithdrawn(uint128 marketId, address collateralType, uint256 tokenAmount, address sender)
+```
+
+Emitted when `amount` of collateral of type `collateralType` is withdrawn from market `marketId` by `sender`.
+
+| Name | Type | Description |
+|marketId|uint128|The id of the market from which collateral was withdrawn.|
+|collateralType|address|The address of the collateral that was withdrawn from the market.|
+|tokenAmount|uint256|The amount of tokens that were withdrawn, denominated in the token's native decimal representation.|
+|sender|address|The address that triggered the withdrawal.|
+
+#### MaximumMarketCollateralConfigured
+
+```solidity
+event MaximumMarketCollateralConfigured(uint128 marketId, address collateralType, uint256 systemAmount, address owner)
+```
+
+Emitted when the system owner specifies the maximum depositable collateral of a given type in a given market.
+
+| Name | Type | Description |
+|marketId|uint128|The id of the market for which the maximum was configured.|
+|collateralType|address|The address of the collateral for which the maximum was configured.|
+|systemAmount|uint256|The amount to which the maximum was set, denominated with 18 decimals of precision.|
+|owner|address|The owner of the system, which triggered the configuration change.|
+
+## Multicall Module
+
+### Functions
+
+#### multicall
+
+```solidity
+function multicall(bytes[] data) external payable returns (bytes[] results)
+```
+
+Executes multiple transaction payloads in a single transaction.
+
+Each transaction is executed using `delegatecall`, and targets the system address.
+
+| Name | Type | Description |
+|data|bytes[]|Array of calldata objects, one for each function that is to be called in the system.|
+
+| Name | Type | Description |
+|results|bytes[]|Array of each `delegatecall`'s response corresponding to the incoming calldata array.|
+
+### Events
+
+## Pool Configuration Module
+
+### Functions
+
+#### setPreferredPool
+
+```solidity
+function setPreferredPool(uint128 poolId) external
+```
+
+Sets the unique system preferred pool.
+
+Note: The preferred pool does not receive any special treatment. It is only signaled as preferred here.
+
+| Name | Type | Description |
+|poolId|uint128|The id of the pool that is to be set as preferred.|
+
+#### addApprovedPool
+
+```solidity
+function addApprovedPool(uint128 poolId) external
+```
+
+Marks a pool as approved by the system owner.
+
+Approved pools do not receive any special treatment. They are only signaled as approved here.
+
+| Name | Type | Description |
+|poolId|uint128|The id of the pool that is to be approved.|
+
+#### removeApprovedPool
+
+```solidity
+function removeApprovedPool(uint128 poolId) external
+```
+
+Un-marks a pool as preferred by the system owner.
+
+| Name | Type | Description |
+|poolId|uint128|The id of the pool that is to be no longer approved.|
+
+#### getPreferredPool
+
+```solidity
+function getPreferredPool() external view returns (uint256)
+```
+
+Retrieves the unique system preferred pool.
+
+| Name | Type | Description |
+|[0]|uint256|The id of the pool that is currently set as preferred in the system.|
+
+#### getApprovedPools
+
+```solidity
+function getApprovedPools() external view returns (uint256[])
+```
+
+Retrieves the pool that are approved by the system owner.
+
+| Name | Type | Description |
+|[0]|uint256[]|An array with all of the pool ids that are approved in the system.|
+
+### Events
+
+#### PreferredPoolSet
+
+```solidity
+event PreferredPoolSet(uint256 poolId)
+```
+
+Emitted when the system owner sets the preferred pool.
+
+| Name | Type | Description |
+|poolId|uint256|The id of the pool that was set as preferred.|
+
+#### PoolApprovedAdded
+
+```solidity
+event PoolApprovedAdded(uint256 poolId)
+```
+
+Emitted when the system owner adds an approved pool.
+
+| Name | Type | Description |
+|poolId|uint256|The id of the pool that was approved.|
+
+#### PoolApprovedRemoved
+
+```solidity
+event PoolApprovedRemoved(uint256 poolId)
+```
+
+Emitted when the system owner removes an approved pool.
+
+| Name | Type | Description |
+|poolId|uint256|The id of the pool that is no longer approved.|
+
+## Rewards Manager Module
+
+### Functions
+
+#### registerRewardsDistributor
+
+```solidity
+function registerRewardsDistributor(uint128 poolId, address collateralType, address distributor) external
+```
+
+Called by pool owner to register rewards for vault participants.
+
+| Name | Type | Description |
+|poolId|uint128|The id of the pool whose rewards are to be managed by the specified distributor.|
+|collateralType|address|The address of the collateral used in the pool's rewards.|
+|distributor|address|The address of the reward distributor to be registered.|
+
+#### removeRewardsDistributor
+
+```solidity
+function removeRewardsDistributor(uint128 poolId, address collateralType, address distributor) external
+```
+
+Called by pool owner to remove a registered rewards distributor for vault participants.
+
+| Name | Type | Description |
+|poolId|uint128|The id of the pool whose rewards are to be managed by the specified distributor.|
+|collateralType|address|The address of the collateral used in the pool's rewards.|
+|distributor|address|The address of the reward distributor to be registered.|
+
+#### distributeRewards
+
+```solidity
+function distributeRewards(uint128 poolId, address collateralType, uint256 amount, uint64 start, uint32 duration) external
+```
+
+Called by a registered distributor to set up rewards for vault participants.
+
+Will revert if the caller is not a registered distributor.
+
+| Name | Type | Description |
+|poolId|uint128|The id of the pool to distribute rewards to.|
+|collateralType|address|The address of the collateral used in the pool's rewards.|
+|amount|uint256|The amount of rewards to be distributed.|
+|start|uint64|The date at which the rewards will begin to be claimable.|
+|duration|uint32|The period after which all distributed rewards will be claimable.|
+
+#### claimRewards
+
+```solidity
+function claimRewards(uint128 accountId, uint128 poolId, address collateralType, address distributor) external returns (uint256)
+```
+
+Allows a user with appropriate permissions to claim rewards associated with a position.
+
+| Name | Type | Description |
+|accountId|uint128|The id of the account that is to claim the rewards.|
+|poolId|uint128|The id of the pool to claim rewards on.|
+|collateralType|address|The address of the collateral used in the pool's rewards.|
+|distributor|address|The address of the rewards distributor associated with the rewards being claimed.|
+
+| Name | Type | Description |
+|[0]|uint256|The amount of rewards that were available for the account and thus claimed.|
+
+#### updateRewards
+
+```solidity
+function updateRewards(uint128 poolId, address collateralType, uint128 accountId) external returns (uint256[], address[])
+```
+
+For a given position, return the rewards that can currently be claimed.
+
+| Name | Type | Description |
+|poolId|uint128|The id of the pool being queried.|
+|collateralType|address|The address of the collateral used in the pool's rewards.|
+|accountId|uint128|The id of the account whose available rewards are being queried.|
+
+| Name | Type | Description |
+|[0]|uint256[]|An array of ids of the reward entries that are claimable by the position.|
+|[1]|address[]|An array with the addresses of the reward distributors associated with the claimable rewards.|
+
+#### getRewardRate
+
+```solidity
+function getRewardRate(uint128 poolId, address collateralType, address distributor) external view returns (uint256)
+```
+
+Returns the number of individual units of amount emitted per second per share for the given poolId, collateralType, distributor vault.
+
+| Name | Type | Description |
+|poolId|uint128|The id of the pool being queried.|
+|collateralType|address|The address of the collateral used in the pool's rewards.|
+|distributor|address|The address of the rewards distributor associated with the rewards in question.|
+
+| Name | Type | Description |
+|[0]|uint256|The queried rewards rate.|
+
+### Events
+
+#### RewardsDistributed
+
+```solidity
+event RewardsDistributed(uint128 poolId, address collateralType, address distributor, uint256 amount, uint256 start, uint256 duration)
+```
+
+Emitted when the pool owner or an existing reward distributor sets up rewards for vault participants.
+
+| Name | Type | Description |
+|poolId|uint128|The id of the pool on which rewards were distributed.|
+|collateralType|address|The collateral type of the pool on which rewards were distributed.|
+|distributor|address|The reward distributor associated to the rewards that were distributed.|
+|amount|uint256|The amount of rewards that were distributed.|
+|start|uint256|The date one which the rewards will begin to be claimable.|
+|duration|uint256|The time in which all of the distributed rewards will be claimable.|
+
+#### RewardsClaimed
+
+```solidity
+event RewardsClaimed(uint128 accountId, uint128 poolId, address collateralType, address distributor, uint256 amount)
+```
+
+Emitted when a vault participant claims rewards.
+
+| Name | Type | Description |
+|accountId|uint128|The id of the account that claimed the rewards.|
+|poolId|uint128|The id of the pool where the rewards were claimed.|
+|collateralType|address|The address of the collateral used in the pool's rewards.|
+|distributor|address|The address of the rewards distributor associated with these rewards.|
+|amount|uint256|The amount of rewards that were claimed.|
+
+#### RewardsDistributorRegistered
+
+```solidity
+event RewardsDistributorRegistered(uint128 poolId, address collateralType, address distributor)
+```
+
+Emitted when a new rewards distributor is registered.
+
+| Name | Type | Description |
+|poolId|uint128|The id of the pool whose reward distributor was registered.|
+|collateralType|address|The address of the collateral used in the pool's rewards.|
+|distributor|address|The address of the newly registered reward distributor.|
+
+#### RewardsDistributorRemoved
+
+```solidity
+event RewardsDistributorRemoved(uint128 poolId, address collateralType, address distributor)
+```
+
+Emitted when an already registered rewards distributor is removed.
+
+| Name | Type | Description |
+|poolId|uint128|The id of the pool whose reward distributor was registered.|
+|collateralType|address|The address of the collateral used in the pool's rewards.|
+|distributor|address|The address of the registered reward distributor.|
 
 ## Vault Module
 
