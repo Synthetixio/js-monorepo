@@ -142,8 +142,7 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
         try {
           toast({
             title: 'Unwrap',
-            description:
-              collateralType?.symbol === 'WETH' ? 'Unwrapping WETH to ETH.' : 'No unwrap needed',
+            description: 'Unwrapping WETH to ETH.',
             status: 'info',
           });
 
