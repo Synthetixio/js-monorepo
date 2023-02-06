@@ -12,7 +12,7 @@ type Events =
   | { type: 'SET_REQUIRE_APPROVAL'; requireApproval: boolean }
   | { type: 'SET_WRAP_AMOUNT'; wrapAmount: Wei }
   | { type: 'SET_INFINITE_APPROVAL'; infiniteApproval: boolean }
-  | { type: 'RETRY'; step: 'wrap' | 'approve' | 'deposit' }
+  | { type: 'RETRY' }
   | { type: 'WRAP' }
   | { type: 'APPROVE' }
   | { type: 'DEPOSIT' }
