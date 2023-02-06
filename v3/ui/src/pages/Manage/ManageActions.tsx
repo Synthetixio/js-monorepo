@@ -215,7 +215,6 @@ export const ManageAction = () => {
       </Suspense>
       <Suspense fallback={null}>
         <WithdrawModal
-          collateralChange={collateralChange}
           onClose={() => {
             liquidityPosition.refetch();
             setCollateralChange(wei(0));

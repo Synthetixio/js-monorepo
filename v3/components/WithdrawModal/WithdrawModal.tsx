@@ -9,7 +9,7 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { useCallback } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
 import { Amount } from '@snx-v3/Amount';
 import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
@@ -21,16 +21,17 @@ import { useParams } from '@snx-v3/useParams';
 import { WithdrawMachine } from './WithdrawMachine';
 import { useMachine } from '@xstate/react';
 import { useWithdraw } from '@snx-v3/useWithdraw';
+import { ManagePositionContext } from '@snx-v3/ManagePositionContext';
 
 export const WithdrawModalUi: FC<{
-  collateralChange: Wei;
+  amount: Wei;
   isOpen: boolean;
   onClose: () => void;
   collateralType?: CollateralType;
   state: string;
   error: { error: Error; step: string } | null;
   onSubmit: () => void;
-}> = ({ collateralChange, isOpen, onClose, collateralType, onSubmit, state, error }) => {
+}> = ({ amount, isOpen, onClose, collateralType, onSubmit, state, error }) => {
   return (
     <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
       <ModalOverlay />
@@ -45,20 +46,19 @@ export const WithdrawModalUi: FC<{
             title="Withdraw"
             subtitle={
               <Text as="div">
-                <Amount value={collateralChange} suffix={` ${collateralType?.symbol}`} /> will be
-                withdrawn
+                <Amount value={amount} suffix={` ${collateralType?.symbol}`} /> will be withdrawn
               </Text>
             }
             status={{
               failed: Boolean(error?.step === 'withdraw'),
-              disabled: collateralChange.eq(0),
+              disabled: amount.eq(0),
               success: state === 'unwrap',
               loading: state === 'withdraw' && !error,
             }}
           />
 
           <Multistep
-            step={1}
+            step={2}
             title={`Unwrap ${collateralType?.symbol}`}
             subtitle="This will unwrap your WETH to ETH"
             status={{
@@ -95,14 +95,13 @@ export const WithdrawModalUi: FC<{
   );
 };
 export type WithdrawModalProps = FC<{
-  collateralChange: Wei;
   isOpen: boolean;
   onClose: () => void;
 }>;
-export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen, collateralChange }) => {
+export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
   const params = useParams();
   const collateralType = useCollateralType(params.collateralSymbol);
-
+  const { collateralChange } = useContext(ManagePositionContext);
   const { data: liquidityPosition, refetch: refetchLiquidityPosition } = useLiquidityPosition({
     accountId: params.accountId,
     tokenAddress: collateralType?.tokenAddress,
@@ -126,7 +125,7 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen, collateralC
     services: {
       withdraw: async () => {
         try {
-          await execWithdraw(state.context.amount);
+          await execWithdraw();
           await refetchLiquidityPosition();
         } catch (error) {
           toast.closeAll();
@@ -156,6 +155,10 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen, collateralC
       },
     },
   });
+  const collateralChangeString = collateralChange.toString();
+  useEffect(() => {
+    send('SET_AMOUNT', { amount: wei(collateralChangeString).abs() });
+  }, [collateralChangeString, send]);
 
   const handleClose = useCallback(() => {
     const isSuccess = state.matches('success');
@@ -182,7 +185,7 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen, collateralC
 
   return (
     <WithdrawModalUi
-      collateralChange={collateralChange}
+      amount={state.context.amount}
       isOpen={isOpen}
       onClose={onClose}
       collateralType={collateralType}
