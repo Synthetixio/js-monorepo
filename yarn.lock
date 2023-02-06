@@ -8267,23 +8267,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/useWithdraw@workspace:v3/lib/useWithdraw":
-  version: 0.0.0-use.local
-  resolution: "@snx-v3/useWithdraw@workspace:v3/lib/useWithdraw"
-  dependencies:
-    "@snx-v3/txnReducer": "workspace:*"
-    "@snx-v3/useBlockchain": "workspace:*"
-    "@snx-v3/useCoreProxy": "workspace:*"
-    "@snx-v3/useGasOptions": "workspace:*"
-    "@snx-v3/useGasPrice": "workspace:*"
-    "@snx-v3/useGasSpeed": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
-    "@tanstack/react-query": ^4.3.4
-    ethers: ^5.7.2
-    react: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
 "@snx-v3/useWrapEth@workspace:*, @snx-v3/useWrapEth@workspace:v3/lib/useWrapEth":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useWrapEth@workspace:v3/lib/useWrapEth"
