@@ -63,6 +63,7 @@
     "@snx-v3/useVaultsData": "workspace:*",
     "@snx-v3/useWrapEth": "workspace:*",
     "@snx-v3/validatePosition": "workspace:*",
+    "@synthetixio/safe-import": "workspace:*",
     "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "@synthetixio/wei": "workspace:*",

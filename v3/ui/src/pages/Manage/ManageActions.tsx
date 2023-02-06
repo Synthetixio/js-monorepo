@@ -16,6 +16,8 @@ import {
   useContext,
   useEffect,
   useState,
+  lazy,
+  Suspense,
 } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Borrow } from './Borrow';
@@ -26,7 +28,9 @@ import { Deposit } from './Deposit';
 import { z } from 'zod';
 import { RepayModal } from '@snx-v3/RepayModal';
 import { BorrowModal } from '@snx-v3/BorrowModal';
-import { DepositModal } from '@snx-v3/DepositModal';
+import { safeImport } from '@synthetixio/safe-import';
+
+const DepositModal = lazy(() => safeImport(() => import('@snx-v3/DepositModal')));
 
 const validActions = ['borrow', 'deposit', 'repay', 'withdraw'] as const;
 const ManageActionSchema = z.enum(validActions);
@@ -216,16 +220,18 @@ export const ManageAction = () => {
         }}
         isOpen={txnModalOpen === 'borrow'}
       />
-      <DepositModal
-        collateralChange={collateralChange}
-        onClose={() => {
-          liquidityPosition.refetch();
-          setCollateralChange(wei(0));
-          setDebtChange(wei(0));
-          setTxnModalOpen(null);
-        }}
-        isOpen={txnModalOpen === 'deposit'}
-      />
+      <Suspense fallback={null}>
+        <DepositModal
+          collateralChange={collateralChange}
+          onClose={() => {
+            liquidityPosition.refetch();
+            setCollateralChange(wei(0));
+            setDebtChange(wei(0));
+            setTxnModalOpen(null);
+          }}
+          isOpen={txnModalOpen === 'deposit'}
+        />
+      </Suspense>
     </>
   );
 };
