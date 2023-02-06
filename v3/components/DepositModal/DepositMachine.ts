@@ -82,7 +82,7 @@ export const DepositMachine = createMachine<Context, Events, MachineState>({
         RUN: [
           { target: 'wrap', cond: (context) => context.wrapAmount.gt(0) },
           { target: 'approve', cond: (context) => context.requireApproval },
-          { target: 'deposit', cond: (context) => context.requireApproval },
+          { target: 'deposit' },
         ],
       },
     },
