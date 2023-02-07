@@ -2,33 +2,9 @@ import { ethers } from 'ethers';
 import * as CoreProxy from '@synthetixio/v3-contracts/src/goerli/CoreProxy';
 
 const erc20Abi = [
-  {
-    constant: true,
-    inputs: [],
-    name: 'symbol',
-    outputs: [{ name: '', type: 'string' }],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    constant: true,
-    inputs: [{ name: '', type: 'address' }],
-    name: 'balanceOf',
-    outputs: [{ name: '', type: 'uint256' }],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    constant: false,
-    inputs: [],
-    name: 'deposit',
-    outputs: [],
-    payable: true,
-    stateMutability: 'payable',
-    type: 'function',
-  },
+  'function symbol() view returns (string)',
+  'function balanceOf(address) view returns (uint256)',
+  'function deposit() payable',
 ];
 
 export async function wrapEth({ privateKey, amount }) {
@@ -56,12 +32,9 @@ export async function wrapEth({ privateKey, amount }) {
   const wrapTx = await weth.deposit({
     value: ethers.utils.hexValue(ethers.utils.parseEther(`${amount}`).toHexString()),
   });
-  const receipt = await wrapTx.wait();
-  console.log('wrapEth', { tx: receipt.transactionHash });
+  await wrapTx.wait();
   const newBalance = parseFloat(ethers.utils.formatUnits(await weth.balanceOf(wallet.address)));
-  console.log('wrapEth', {
-    balance: newBalance,
-  });
+  console.log('wrapEth', { balance: newBalance });
   console.log('wrapEth', { result: 'OK' });
   return newBalance;
 }

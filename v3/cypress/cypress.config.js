@@ -34,6 +34,8 @@ module.exports = defineConfig({
         ...require('./cypress/tasks/forkReset'),
         ...require('./cypress/tasks/setEthBalance'),
         ...require('./cypress/tasks/wrapEth'),
+        ...require('./cypress/tasks/getCollateralConfig'),
+        ...require('./cypress/tasks/getSnx'),
       });
 
       return config;
