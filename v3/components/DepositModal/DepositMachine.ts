@@ -17,11 +17,11 @@ export const State = {
   wrap: 'wrap',
   approve: 'approve',
   deposit: 'deposit',
-  error: 'error',
+  failed: 'failed',
   success: 'success',
 } as const;
 
-export const ErrorSteps = {
+export const FailedSteps = {
   [State.approve]: State.approve,
   [State.wrap]: State.wrap,
   [State.deposit]: State.deposit,
@@ -34,7 +34,7 @@ export const ServiceNames = {
 } as const;
 
 type Context = {
-  error: { error: Error; step: keyof typeof ErrorSteps } | null;
+  error: { error: Error; step: keyof typeof FailedSteps } | null;
   requireApproval: boolean;
   wrapAmount: Wei;
   infiniteApproval: boolean;
@@ -70,8 +70,8 @@ type MachineState =
       context: Context & { error: null };
     }
   | {
-      value: StateType['error'];
-      context: Context & { error: { error: Error; step: 'wrap' | 'approve' | 'deposit' } };
+      value: StateType['failed'];
+      context: Context & { error: { error: Error; step: keyof typeof FailedSteps } };
     }
   | {
       value: StateType['success'];
@@ -126,9 +126,9 @@ export const DepositMachine = createMachine<Context, DepositEvents, MachineState
       invoke: {
         src: ServiceNames.wrapEth,
         onError: {
-          target: State.error,
+          target: State.failed,
           actions: assign({
-            error: (_context, event) => ({ error: event.data, step: ErrorSteps.wrap }),
+            error: (_context, event) => ({ error: event.data, step: FailedSteps.wrap }),
           }),
         },
         onDone: [
@@ -144,9 +144,9 @@ export const DepositMachine = createMachine<Context, DepositEvents, MachineState
           target: State.deposit,
         },
         onError: {
-          target: State.error,
+          target: State.failed,
           actions: assign({
-            error: (_context, event) => ({ error: event.data, step: ErrorSteps.approve }),
+            error: (_context, event) => ({ error: event.data, step: FailedSteps.approve }),
           }),
         },
       },
@@ -158,30 +158,30 @@ export const DepositMachine = createMachine<Context, DepositEvents, MachineState
           target: State.success,
         },
         onError: {
-          target: State.error,
+          target: State.failed,
           actions: assign({
-            error: (_context, event) => ({ error: event.data, step: ErrorSteps.deposit }),
+            error: (_context, event) => ({ error: event.data, step: FailedSteps.deposit }),
           }),
         },
       },
       on: { [EventNames.SUCCESS]: State.success },
     },
-    [State.error]: {
+    [State.failed]: {
       on: {
         [EventNames.RETRY]: [
           {
             target: State.approve,
-            cond: (c) => c.error?.step === ErrorSteps.approve,
+            cond: (c) => c.error?.step === FailedSteps.approve,
             actions: assign({ error: (_) => null }),
           },
           {
             target: State.wrap,
-            cond: (c) => c.error?.step === ErrorSteps.wrap,
+            cond: (c) => c.error?.step === FailedSteps.wrap,
             actions: assign({ error: (_) => null }),
           },
           {
             target: State.deposit,
-            cond: (c) => c.error?.step === ErrorSteps.deposit,
+            cond: (c) => c.error?.step === FailedSteps.deposit,
             actions: assign({ error: (_) => null }),
           },
         ],

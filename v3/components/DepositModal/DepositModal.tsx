@@ -25,7 +25,7 @@ import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { FC } from 'react';
 import { useDeposit } from '@snx-v3/useDeposit';
 import { useParams } from '@snx-v3/useParams';
-import { DepositMachine, ErrorSteps, EventNames, ServiceNames, State } from './DepositMachine';
+import { DepositMachine, FailedSteps, EventNames, ServiceNames, State } from './DepositMachine';
 import { useMachine } from '@xstate/react';
 
 export const DepositModalUi: FC<{
@@ -35,7 +35,7 @@ export const DepositModalUi: FC<{
   collateralType?: CollateralType;
   wrapAmount: Wei;
   state: keyof typeof State;
-  error: { error: Error; step: keyof typeof ErrorSteps } | null;
+  error: { error: Error; step: keyof typeof FailedSteps } | null;
   requireApproval: boolean;
   infiniteApproval: boolean;
   setInfiniteApproval: (x: boolean) => void;
@@ -85,7 +85,7 @@ export const DepositModalUi: FC<{
                 )
               }
               status={{
-                failed: Boolean(error?.step === ErrorSteps.wrap),
+                failed: Boolean(error?.step === FailedSteps.wrap),
                 disabled: collateralType?.symbol !== 'WETH',
                 success: wrapAmount.eq(0) || state === State.success,
                 loading: state === State.wrap && !error,
@@ -97,7 +97,7 @@ export const DepositModalUi: FC<{
             step={stepNumbers.approve}
             title={`Approve ${collateralType?.symbol} transfer`}
             status={{
-              failed: Boolean(error?.step === ErrorSteps.approve),
+              failed: Boolean(error?.step === FailedSteps.approve),
               success: !requireApproval || state === State.success,
               loading: state === State.approve && !error,
             }}
@@ -121,7 +121,7 @@ export const DepositModalUi: FC<{
           />
 
           <Button
-            disabled={Object.keys(ErrorSteps).includes(state) && !error}
+            disabled={Object.keys(FailedSteps).includes(state) && !error}
             onClick={onSubmit}
             width="100%"
             my="4"
@@ -131,7 +131,7 @@ export const DepositModalUi: FC<{
               switch (true) {
                 case Boolean(error):
                   return 'Retry';
-                case Object.keys(ErrorSteps).includes(state):
+                case Object.keys(FailedSteps).includes(state):
                   return 'Processing...';
                 case state === State.success:
                   return 'Done';
