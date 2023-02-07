@@ -4,6 +4,7 @@ import { Wei, wei } from '@synthetixio/wei';
 
 export interface NumberInputProps extends InputProps {
   'data-testid'?: string;
+  'data-max'?: string;
 }
 
 export function NumberInput({

@@ -32,7 +32,11 @@ const BorrowUi: FC<{
         </Text>
         <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>
           <NumberInput
-            InputProps={{ isRequired: true }}
+            InputProps={{
+              isRequired: true,
+              'data-testid': 'borrow amount input',
+              'data-max': maxDebt.toString(),
+            }}
             value={debtChange}
             onChange={(val) => setDebtChange(val)}
             max={maxDebt}
@@ -54,7 +58,9 @@ const BorrowUi: FC<{
           </Flex>
         </Flex>
       </BorderBox>
-      <Button type="submit">Borrow snxUSD</Button>
+      <Button data-testid="borrow submit" type="submit">
+        Borrow snxUSD
+      </Button>
     </Flex>
   );
 };
