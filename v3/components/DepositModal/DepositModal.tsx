@@ -25,7 +25,7 @@ import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { FC } from 'react';
 import { useDeposit } from '@snx-v3/useDeposit';
 import { useParams } from '@snx-v3/useParams';
-import { DepositMachine, ErrorSteps, EventNames, ServiceNames, StateNames } from './DepositMachine';
+import { DepositMachine, ErrorSteps, EventNames, ServiceNames, State } from './DepositMachine';
 import { useMachine } from '@xstate/react';
 
 export const DepositModalUi: FC<{
@@ -34,7 +34,7 @@ export const DepositModalUi: FC<{
   onClose: () => void;
   collateralType?: CollateralType;
   wrapAmount: Wei;
-  state: keyof typeof StateNames;
+  state: keyof typeof State;
   error: { error: Error; step: keyof typeof ErrorSteps } | null;
   requireApproval: boolean;
   infiniteApproval: boolean;
@@ -87,8 +87,8 @@ export const DepositModalUi: FC<{
               status={{
                 failed: Boolean(error?.step === ErrorSteps.wrap),
                 disabled: collateralType?.symbol !== 'WETH',
-                success: wrapAmount.eq(0) || state === StateNames.success,
-                loading: state === StateNames.wrap && !error,
+                success: wrapAmount.eq(0) || state === State.success,
+                loading: state === State.wrap && !error,
               }}
             />
           ) : null}
@@ -98,8 +98,8 @@ export const DepositModalUi: FC<{
             title={`Approve ${collateralType?.symbol} transfer`}
             status={{
               failed: Boolean(error?.step === ErrorSteps.approve),
-              success: !requireApproval || state === StateNames.success,
-              loading: state === StateNames.approve && !error,
+              success: !requireApproval || state === State.success,
+              loading: state === State.approve && !error,
             }}
             checkboxLabel={`Approve unlimited ${collateralType?.symbol} transfers to Synthetix.`}
             checkboxProps={{
@@ -113,10 +113,10 @@ export const DepositModalUi: FC<{
             title={`Deposit ${collateralType?.symbol}`}
             subtitle={`This will transfer your ${collateralType?.symbol} to Synthetix.`}
             status={{
-              failed: Boolean(error?.step === StateNames.deposit),
-              disabled: state !== StateNames.success && requireApproval,
-              success: state === StateNames.success,
-              loading: state === StateNames.deposit && !error,
+              failed: Boolean(error?.step === State.deposit),
+              disabled: state !== State.success && requireApproval,
+              success: state === State.success,
+              loading: state === State.deposit && !error,
             }}
           />
 
@@ -133,7 +133,7 @@ export const DepositModalUi: FC<{
                   return 'Retry';
                 case Object.keys(ErrorSteps).includes(state):
                   return 'Processing...';
-                case state === StateNames.success:
+                case state === State.success:
                   return 'Done';
                 default:
                   return 'Start';
@@ -255,7 +255,7 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
     },
   });
   const wrapAmountString = wrapAmount.toString();
-  const isSuccessOrDeposit = state.matches(StateNames.success) || state.matches(StateNames.deposit);
+  const isSuccessOrDeposit = state.matches(State.success) || state.matches(State.deposit);
   useEffect(() => {
     if (isSuccessOrDeposit) {
       // We do this to ensure the success state displays the wrap amount used before deposit
@@ -268,7 +268,7 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
   }, [requireApproval, send]);
 
   const handleClose = useCallback(() => {
-    const isSuccess = state.matches(StateNames.success);
+    const isSuccess = state.matches(State.success);
     if (isSuccess && params.poolId && collateralType?.symbol) {
       send(EventNames.RESET);
       onClose();
@@ -294,7 +294,7 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
   ]);
 
   const onSubmit = useCallback(async () => {
-    if (state.matches(StateNames.success)) {
+    if (state.matches(State.success)) {
       handleClose();
       return;
     }
@@ -313,16 +313,16 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
       wrapAmount={state.context.wrapAmount}
       state={(() => {
         switch (true) {
-          case state.matches(StateNames.approve):
-            return StateNames.approve;
-          case state.matches(StateNames.deposit):
-            return StateNames.deposit;
-          case state.matches(StateNames.success):
-            return StateNames.success;
-          case state.matches(StateNames.wrap):
-            return StateNames.wrap;
+          case state.matches(State.approve):
+            return State.approve;
+          case state.matches(State.deposit):
+            return State.deposit;
+          case state.matches(State.success):
+            return State.success;
+          case state.matches(State.wrap):
+            return State.wrap;
           default:
-            return StateNames.idle;
+            return State.idle;
         }
       })()}
       error={state.context.error}

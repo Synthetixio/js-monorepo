@@ -12,7 +12,7 @@ export const EventNames = {
   RESET: 'RESET',
 } as const;
 
-export const StateNames = {
+export const State = {
   idle: 'idle',
   wrap: 'wrap',
   approve: 'approve',
@@ -22,9 +22,9 @@ export const StateNames = {
 } as const;
 
 export const ErrorSteps = {
-  [StateNames.approve]: StateNames.approve,
-  [StateNames.wrap]: StateNames.wrap,
-  [StateNames.deposit]: StateNames.deposit,
+  [State.approve]: State.approve,
+  [State.wrap]: State.wrap,
+  [State.deposit]: State.deposit,
 } as const;
 
 export const ServiceNames = {
@@ -51,30 +51,30 @@ type DepositEvents =
   | { type: EventNamesType['FAILURE'] }
   | { type: EventNamesType['RESET'] };
 
-type StateNamesType = typeof StateNames;
+type StateType = typeof State;
 type MachineState =
   | {
-      value: StateNamesType['idle'];
+      value: StateType['idle'];
       context: Context & { error: null };
     }
   | {
-      value: StateNamesType['wrap'];
+      value: StateType['wrap'];
       context: Context & { error: null };
     }
   | {
-      value: StateNamesType['approve'];
+      value: StateType['approve'];
       context: Context & { error: null };
     }
   | {
-      value: StateNamesType['deposit'];
+      value: StateType['deposit'];
       context: Context & { error: null };
     }
   | {
-      value: StateNamesType['error'];
+      value: StateType['error'];
       context: Context & { error: { error: Error; step: 'wrap' | 'approve' | 'deposit' } };
     }
   | {
-      value: StateNamesType['success'];
+      value: StateType['success'];
       context: Context & {
         error: null;
       };
@@ -89,12 +89,12 @@ const initialContext = {
 
 export const DepositMachine = createMachine<Context, DepositEvents, MachineState>({
   id: 'DepositMachine',
-  initial: StateNames.idle,
+  initial: State.idle,
   predictableActionArguments: true,
   context: initialContext,
   on: {
     [EventNames.RUN]: {
-      target: StateNames.deposit,
+      target: State.deposit,
       actions: assign({
         wrapAmount: (_) => initialContext.wrapAmount,
         error: (_) => initialContext.error,
@@ -116,77 +116,77 @@ export const DepositMachine = createMachine<Context, DepositEvents, MachineState
     idle: {
       on: {
         [EventNames.RUN]: [
-          { target: StateNames.wrap, cond: (context) => context.wrapAmount.gt(0) },
-          { target: StateNames.approve, cond: (context) => context.requireApproval },
-          { target: StateNames.deposit },
+          { target: State.wrap, cond: (context) => context.wrapAmount.gt(0) },
+          { target: State.approve, cond: (context) => context.requireApproval },
+          { target: State.deposit },
         ],
       },
     },
-    [StateNames.wrap]: {
+    [State.wrap]: {
       invoke: {
         src: ServiceNames.wrapEth,
         onError: {
-          target: StateNames.error,
+          target: State.error,
           actions: assign({
             error: (_context, event) => ({ error: event.data, step: ErrorSteps.wrap }),
           }),
         },
         onDone: [
-          { target: StateNames.approve, cond: (context) => context.requireApproval },
-          { target: StateNames.deposit },
+          { target: State.approve, cond: (context) => context.requireApproval },
+          { target: State.deposit },
         ],
       },
     },
-    [StateNames.approve]: {
+    [State.approve]: {
       invoke: {
         src: ServiceNames.approveWETH,
         onDone: {
-          target: StateNames.deposit,
+          target: State.deposit,
         },
         onError: {
-          target: StateNames.error,
+          target: State.error,
           actions: assign({
             error: (_context, event) => ({ error: event.data, step: ErrorSteps.approve }),
           }),
         },
       },
     },
-    [StateNames.deposit]: {
+    [State.deposit]: {
       invoke: {
         src: ServiceNames.executeDeposit,
         onDone: {
-          target: StateNames.success,
+          target: State.success,
         },
         onError: {
-          target: StateNames.error,
+          target: State.error,
           actions: assign({
             error: (_context, event) => ({ error: event.data, step: ErrorSteps.deposit }),
           }),
         },
       },
-      on: { [EventNames.SUCCESS]: StateNames.success },
+      on: { [EventNames.SUCCESS]: State.success },
     },
-    [StateNames.error]: {
+    [State.error]: {
       on: {
         [EventNames.RETRY]: [
           {
-            target: StateNames.approve,
+            target: State.approve,
             cond: (c) => c.error?.step === ErrorSteps.approve,
             actions: assign({ error: (_) => null }),
           },
           {
-            target: StateNames.wrap,
+            target: State.wrap,
             cond: (c) => c.error?.step === ErrorSteps.wrap,
             actions: assign({ error: (_) => null }),
           },
           {
-            target: StateNames.deposit,
+            target: State.deposit,
             cond: (c) => c.error?.step === ErrorSteps.deposit,
             actions: assign({ error: (_) => null }),
           },
         ],
       },
     },
-    [StateNames.success]: {},
+    [State.success]: {},
   },
 });
