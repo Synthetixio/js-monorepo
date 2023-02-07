@@ -164,7 +164,6 @@ export const DepositMachine = createMachine<Context, DepositEvents, MachineState
           }),
         },
       },
-      on: { [EventNames.SUCCESS]: State.success },
     },
     [State.failed]: {
       on: {
