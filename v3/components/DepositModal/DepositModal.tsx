@@ -292,7 +292,6 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
       return;
     }
     if (state.context.error) {
-      // I couldn't figure out a nice retry pattern..
       send('RETRY');
       return;
     }
