@@ -160,28 +160,18 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
     send('SET_AMOUNT', { amount: wei(collateralChangeString).abs() });
   }, [collateralChangeString, send]);
 
-  const handleClose = useCallback(() => {
-    const isSuccess = state.matches('success');
-    if (isSuccess && params.poolId && collateralType?.symbol) {
-      send('RESET');
-      onClose();
-    }
-    send('RESET');
-    onClose();
-  }, [send, onClose, state, params.poolId, collateralType?.symbol]);
-
   const onSubmit = useCallback(async () => {
     if (state.matches('success')) {
-      handleClose();
+      send('RESET');
+      onClose();
       return;
     }
     if (state.context.error) {
-      // I couldn't figure out a nice retry pattern..
       send('RETRY');
       return;
     }
     send('RUN');
-  }, [handleClose, send, state]);
+  }, [onClose, send, state]);
 
   return (
     <WithdrawModalUi
