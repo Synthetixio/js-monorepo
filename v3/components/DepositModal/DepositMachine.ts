@@ -1,64 +1,100 @@
 import Wei, { wei } from '@synthetixio/wei';
 import { createMachine, assign } from 'xstate';
 
+export const EventNames = {
+  SET_REQUIRE_APPROVAL: 'SET_REQUIRE_APPROVAL',
+  SET_WRAP_AMOUNT: 'SET_WRAP_AMOUNT',
+  SET_INFINITE_APPROVAL: 'SET_INFINITE_APPROVAL',
+  RETRY: 'RETRY',
+  RUN: 'RUN',
+  SUCCESS: 'SUCCESS',
+  FAILURE: 'FAILURE',
+  RESET: 'RESET',
+} as const;
+
+export const StateNames = {
+  idle: 'idle',
+  wrap: 'wrap',
+  approve: 'approve',
+  deposit: 'deposit',
+  error: 'error',
+  success: 'success',
+} as const;
+
+export const ErrorSteps = {
+  [StateNames.approve]: StateNames.approve,
+  [StateNames.wrap]: StateNames.wrap,
+  [StateNames.deposit]: StateNames.deposit,
+} as const;
+
+export const ServiceNames = {
+  wrapEth: 'wrapEth',
+  approveWETH: 'approveWETH',
+  executeDeposit: 'executeDeposit',
+} as const;
+
 type Context = {
-  error: { error: Error; step: 'wrap' | 'approve' | 'deposit' } | null;
+  error: { error: Error; step: keyof typeof ErrorSteps } | null;
   requireApproval: boolean;
   wrapAmount: Wei;
   infiniteApproval: boolean;
 };
 
-type Events =
-  | { type: 'SET_REQUIRE_APPROVAL'; requireApproval: boolean }
-  | { type: 'SET_WRAP_AMOUNT'; wrapAmount: Wei }
-  | { type: 'SET_INFINITE_APPROVAL'; infiniteApproval: boolean }
-  | { type: 'RETRY' }
-  | { type: 'RUN' }
-  | { type: 'SUCCESS' }
-  | { type: 'FAILURE' }
-  | { type: 'RESET' };
+type EventNamesType = typeof EventNames;
+type DepositEvents =
+  | { type: EventNamesType['SET_REQUIRE_APPROVAL']; requireApproval: boolean }
+  | { type: EventNamesType['SET_WRAP_AMOUNT']; wrapAmount: Wei }
+  | { type: EventNamesType['SET_INFINITE_APPROVAL']; infiniteApproval: boolean }
+  | { type: EventNamesType['RETRY'] }
+  | { type: EventNamesType['RUN'] }
+  | { type: EventNamesType['SUCCESS'] }
+  | { type: EventNamesType['FAILURE'] }
+  | { type: EventNamesType['RESET'] };
 
-export type MachineState =
+type StateNamesType = typeof StateNames;
+type MachineState =
   | {
-      value: 'idle';
+      value: StateNamesType['idle'];
       context: Context & { error: null };
     }
   | {
-      value: 'wrap';
+      value: StateNamesType['wrap'];
       context: Context & { error: null };
     }
   | {
-      value: 'approve';
+      value: StateNamesType['approve'];
       context: Context & { error: null };
     }
   | {
-      value: 'deposit';
+      value: StateNamesType['deposit'];
       context: Context & { error: null };
     }
   | {
-      value: 'error';
+      value: StateNamesType['error'];
       context: Context & { error: { error: Error; step: 'wrap' | 'approve' | 'deposit' } };
     }
   | {
-      value: 'success';
+      value: StateNamesType['success'];
       context: Context & {
         error: null;
       };
     };
+
 const initialContext = {
   wrapAmount: wei(0),
   error: null,
   requireApproval: false,
   infiniteApproval: false,
 };
-export const DepositMachine = createMachine<Context, Events, MachineState>({
+
+export const DepositMachine = createMachine<Context, DepositEvents, MachineState>({
   id: 'DepositMachine',
-  initial: 'idle',
+  initial: StateNames.idle,
   predictableActionArguments: true,
   context: initialContext,
   on: {
-    RESET: {
-      target: 'idle',
+    [EventNames.RUN]: {
+      target: StateNames.deposit,
       actions: assign({
         wrapAmount: (_) => initialContext.wrapAmount,
         error: (_) => initialContext.error,
@@ -66,86 +102,91 @@ export const DepositMachine = createMachine<Context, Events, MachineState>({
         infiniteApproval: (_) => initialContext.infiniteApproval,
       }),
     },
-    SET_REQUIRE_APPROVAL: {
+    [EventNames.SET_REQUIRE_APPROVAL]: {
       actions: assign({ requireApproval: (_context, event) => event.requireApproval }),
     },
-    SET_WRAP_AMOUNT: {
+    [EventNames.SET_WRAP_AMOUNT]: {
       actions: assign({ wrapAmount: (_context, event) => event.wrapAmount }),
     },
-    SET_INFINITE_APPROVAL: {
+    [EventNames.SET_INFINITE_APPROVAL]: {
       actions: assign({ infiniteApproval: (_context, event) => event.infiniteApproval }),
     },
   },
   states: {
     idle: {
       on: {
-        RUN: [
-          { target: 'wrap', cond: (context) => context.wrapAmount.gt(0) },
-          { target: 'approve', cond: (context) => context.requireApproval },
-          { target: 'deposit' },
+        [EventNames.RUN]: [
+          { target: StateNames.wrap, cond: (context) => context.wrapAmount.gt(0) },
+          { target: StateNames.approve, cond: (context) => context.requireApproval },
+          { target: StateNames.deposit },
         ],
       },
     },
-    wrap: {
+    [StateNames.wrap]: {
       invoke: {
-        id: 'wrap-eth',
-        src: 'wrapEth',
+        src: ServiceNames.wrapEth,
         onError: {
-          target: 'failure',
-          actions: assign({ error: (_context, event) => ({ error: event.data, step: 'wrap' }) }),
+          target: StateNames.error,
+          actions: assign({
+            error: (_context, event) => ({ error: event.data, step: ErrorSteps.wrap }),
+          }),
         },
         onDone: [
-          { target: 'approve', cond: (context) => context.requireApproval },
-          { target: 'deposit' },
+          { target: StateNames.approve, cond: (context) => context.requireApproval },
+          { target: StateNames.deposit },
         ],
       },
     },
-    approve: {
+    [StateNames.approve]: {
       invoke: {
-        src: 'approveWETH',
+        src: ServiceNames.approveWETH,
         onDone: {
-          target: 'deposit',
+          target: StateNames.deposit,
         },
         onError: {
-          target: 'failure',
-          actions: assign({ error: (_context, event) => ({ error: event.data, step: 'approve' }) }),
+          target: StateNames.error,
+          actions: assign({
+            error: (_context, event) => ({ error: event.data, step: ErrorSteps.approve }),
+          }),
         },
       },
     },
-    deposit: {
+    [StateNames.deposit]: {
       invoke: {
-        src: 'executeDeposit',
+        src: ServiceNames.executeDeposit,
         onDone: {
-          target: 'success',
+          target: StateNames.success,
         },
         onError: {
-          target: 'failure',
-          actions: assign({ error: (_context, event) => ({ error: event.data, step: 'deposit' }) }),
+          target: StateNames.error,
+          actions: assign({
+            error: (_context, event) => ({ error: event.data, step: ErrorSteps.deposit }),
+          }),
         },
       },
-      on: { SUCCESS: 'success' },
+      on: { [EventNames.SUCCESS]: StateNames.success },
     },
-    failure: {
+    [StateNames.error]: {
       on: {
-        RETRY: [
+        [EventNames.RETRY]: [
           {
-            target: 'approve',
-            cond: (c) => c.error?.step === 'approve',
+            target: StateNames.approve,
+            cond: (c) => c.error?.step === ErrorSteps.approve,
             actions: assign({ error: (_) => null }),
           },
           {
-            target: 'wrap',
-            cond: (c) => c.error?.step === 'wrap',
+            target: StateNames.wrap,
+            cond: (c) => c.error?.step === ErrorSteps.wrap,
             actions: assign({ error: (_) => null }),
           },
           {
-            target: 'deposit',
-            cond: (c) => c.error?.step === 'deposit',
+            target: StateNames.deposit,
+            cond: (c) => c.error?.step === ErrorSteps.deposit,
             actions: assign({ error: (_) => null }),
           },
         ],
       },
     },
-    success: {},
+    [StateNames.success]: {},
   },
 });
