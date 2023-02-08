@@ -126,7 +126,7 @@ export const DepositModalUi: FC<{
             onClick={onSubmit}
             width="100%"
             my="4"
-            data-testid="deposit submit button"
+            data-testid="deposit confirm button"
           >
             {(() => {
               switch (true) {
