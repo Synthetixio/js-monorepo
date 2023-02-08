@@ -24,7 +24,7 @@ import { Wei, wei } from '@synthetixio/wei';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { useDeposit } from '@snx-v3/useDeposit';
 import { useParams } from '@snx-v3/useParams';
-import { DepositMachine, Events, FailedSteps, ServiceNames, State } from './DepositMachine';
+import { DepositMachine, Events, ServiceNames, State } from './DepositMachine';
 import { useMachine } from '@xstate/react';
 import type { StateFrom } from 'xstate';
 
@@ -49,6 +49,8 @@ export const DepositModalUi: FC<{
   const infiniteApproval = state.context.infiniteApproval;
   const requireApproval = state.context.requireApproval;
   const error = state.context.error;
+  const isProcessing =
+    state.matches(State.approve) || state.matches(State.deposit) || state.matches(State.wrap);
 
   const isWETH = collateralType?.symbol === 'WETH';
   const stepNumbers = {
@@ -82,7 +84,7 @@ export const DepositModalUi: FC<{
                 )
               }
               status={{
-                failed: error?.step === FailedSteps.wrap,
+                failed: error?.step === State.wrap,
                 disabled: collateralType?.symbol !== 'WETH',
                 success: wrapAmount.eq(0) || state.matches(State.success),
                 loading: state.matches(State.wrap) && !error,
@@ -94,7 +96,7 @@ export const DepositModalUi: FC<{
             step={stepNumbers.approve}
             title={`Approve ${collateralType?.symbol} transfer`}
             status={{
-              failed: error?.step === FailedSteps.approve,
+              failed: error?.step === State.approve,
               success: !requireApproval || state.matches(State.success),
               loading: state.matches(State.approve) && !error,
             }}
@@ -118,12 +120,7 @@ export const DepositModalUi: FC<{
           />
 
           <Button
-            disabled={
-              (state.matches(FailedSteps.approve) ||
-                state.matches(FailedSteps.deposit) ||
-                state.matches(FailedSteps.wrap)) &&
-              !error
-            }
+            disabled={isProcessing}
             onClick={onSubmit}
             width="100%"
             my="4"
@@ -133,9 +130,7 @@ export const DepositModalUi: FC<{
               switch (true) {
                 case Boolean(error):
                   return 'Retry';
-                case state.matches(FailedSteps.approve):
-                case state.matches(FailedSteps.deposit):
-                case state.matches(FailedSteps.wrap):
+                case isProcessing:
                   return 'Processing...';
                 case state.matches(State.success):
                   return 'Done';

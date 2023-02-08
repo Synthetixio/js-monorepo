@@ -21,7 +21,7 @@ export const State = {
   success: 'success',
 } as const;
 
-export const FailedSteps = {
+const FailedSteps = {
   [State.approve]: State.approve,
   [State.wrap]: State.wrap,
   [State.deposit]: State.deposit,
