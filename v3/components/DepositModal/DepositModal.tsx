@@ -25,7 +25,7 @@ import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { FC } from 'react';
 import { useDeposit } from '@snx-v3/useDeposit';
 import { useParams } from '@snx-v3/useParams';
-import { DepositMachine, FailedSteps, EventNames, ServiceNames, State } from './DepositMachine';
+import { DepositMachine, FailedSteps, Events, ServiceNames, State } from './DepositMachine';
 import { useMachine } from '@xstate/react';
 
 export const DepositModalUi: FC<{
@@ -261,16 +261,16 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
       // We do this to ensure the success state displays the wrap amount used before deposit
       return;
     }
-    send(EventNames.SET_WRAP_AMOUNT, { wrapAmount: wei(wrapAmountString) });
+    send(Events.SET_WRAP_AMOUNT, { wrapAmount: wei(wrapAmountString) });
   }, [wrapAmountString, send, isSuccessOrDeposit]);
   useEffect(() => {
-    send(EventNames.SET_REQUIRE_APPROVAL, { requireApproval });
+    send(Events.SET_REQUIRE_APPROVAL, { requireApproval });
   }, [requireApproval, send]);
 
   const handleClose = useCallback(() => {
     const isSuccess = state.matches(State.success);
     if (isSuccess && params.poolId && collateralType?.symbol) {
-      send(EventNames.RESET);
+      send(Events.RESET);
       onClose();
       navigate(
         generatePath('/accounts/:accountId/positions/:collateralType/:poolId', {
@@ -280,7 +280,7 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
         })
       );
     }
-    send(EventNames.RESET);
+    send(Events.RESET);
     onClose();
   }, [
     send,
@@ -299,10 +299,10 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
       return;
     }
     if (state.context.error) {
-      send(EventNames.RETRY);
+      send(Events.RETRY);
       return;
     }
-    send(EventNames.RUN);
+    send(Events.RUN);
   }, [handleClose, send, state]);
   return (
     <DepositModalUi
@@ -329,7 +329,7 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
       requireApproval={state.context.requireApproval}
       infiniteApproval={state.context.infiniteApproval}
       setInfiniteApproval={(infiniteApproval) => {
-        send(EventNames.SET_INFINITE_APPROVAL, { infiniteApproval });
+        send(Events.SET_INFINITE_APPROVAL, { infiniteApproval });
       }}
       onSubmit={onSubmit}
     />

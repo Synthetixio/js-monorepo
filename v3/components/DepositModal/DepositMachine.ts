@@ -1,7 +1,7 @@
 import Wei, { wei } from '@synthetixio/wei';
 import { createMachine, assign } from 'xstate';
 
-export const EventNames = {
+export const Events = {
   SET_REQUIRE_APPROVAL: 'SET_REQUIRE_APPROVAL',
   SET_WRAP_AMOUNT: 'SET_WRAP_AMOUNT',
   SET_INFINITE_APPROVAL: 'SET_INFINITE_APPROVAL',
@@ -40,7 +40,7 @@ type Context = {
   infiniteApproval: boolean;
 };
 
-type EventNamesType = typeof EventNames;
+type EventNamesType = typeof Events;
 type DepositEvents =
   | { type: EventNamesType['SET_REQUIRE_APPROVAL']; requireApproval: boolean }
   | { type: EventNamesType['SET_WRAP_AMOUNT']; wrapAmount: Wei }
@@ -93,7 +93,7 @@ export const DepositMachine = createMachine<Context, DepositEvents, MachineState
   predictableActionArguments: true,
   context: initialContext,
   on: {
-    [EventNames.RUN]: {
+    [Events.RUN]: {
       target: State.deposit,
       actions: assign({
         wrapAmount: (_) => initialContext.wrapAmount,
@@ -102,20 +102,20 @@ export const DepositMachine = createMachine<Context, DepositEvents, MachineState
         infiniteApproval: (_) => initialContext.infiniteApproval,
       }),
     },
-    [EventNames.SET_REQUIRE_APPROVAL]: {
+    [Events.SET_REQUIRE_APPROVAL]: {
       actions: assign({ requireApproval: (_context, event) => event.requireApproval }),
     },
-    [EventNames.SET_WRAP_AMOUNT]: {
+    [Events.SET_WRAP_AMOUNT]: {
       actions: assign({ wrapAmount: (_context, event) => event.wrapAmount }),
     },
-    [EventNames.SET_INFINITE_APPROVAL]: {
+    [Events.SET_INFINITE_APPROVAL]: {
       actions: assign({ infiniteApproval: (_context, event) => event.infiniteApproval }),
     },
   },
   states: {
     idle: {
       on: {
-        [EventNames.RUN]: [
+        [Events.RUN]: [
           { target: State.wrap, cond: (context) => context.wrapAmount.gt(0) },
           { target: State.approve, cond: (context) => context.requireApproval },
           { target: State.deposit },
@@ -167,7 +167,7 @@ export const DepositMachine = createMachine<Context, DepositEvents, MachineState
     },
     [State.failed]: {
       on: {
-        [EventNames.RETRY]: [
+        [Events.RETRY]: [
           {
             target: State.approve,
             cond: (c) => c.error?.step === FailedSteps.approve,
