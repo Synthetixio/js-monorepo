@@ -9,7 +9,7 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { useCallback, useEffect, useMemo } from 'react';
+import { FC, useCallback, useEffect, useMemo } from 'react';
 import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
 import { Amount } from '@snx-v3/Amount';
 import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
@@ -22,22 +22,18 @@ import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { useEthBalance } from '@snx-v3/useEthBalance';
 import { Wei, wei } from '@synthetixio/wei';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
-import { FC } from 'react';
 import { useDeposit } from '@snx-v3/useDeposit';
 import { useParams } from '@snx-v3/useParams';
-import { DepositMachine, FailedSteps, Events, ServiceNames, State } from './DepositMachine';
+import { DepositMachine, Events, ServiceNames, State } from './DepositMachine';
 import { useMachine } from '@xstate/react';
+import type { StateFrom } from 'xstate';
 
 export const DepositModalUi: FC<{
   collateralChange: Wei;
   isOpen: boolean;
   onClose: () => void;
   collateralType?: CollateralType;
-  wrapAmount: Wei;
-  state: keyof typeof State;
-  error: { error: Error; step: keyof typeof FailedSteps } | null;
-  requireApproval: boolean;
-  infiniteApproval: boolean;
+  state: StateFrom<typeof DepositMachine>;
   setInfiniteApproval: (x: boolean) => void;
   onSubmit: () => void;
 }> = ({
@@ -45,14 +41,17 @@ export const DepositModalUi: FC<{
   isOpen,
   onClose,
   collateralType,
-  wrapAmount,
-  infiniteApproval,
   setInfiniteApproval,
   onSubmit,
-  requireApproval,
   state,
-  error,
 }) => {
+  const wrapAmount = state.context.wrapAmount;
+  const infiniteApproval = state.context.infiniteApproval;
+  const requireApproval = state.context.requireApproval;
+  const error = state.context.error;
+  const isProcessing =
+    state.matches(State.approve) || state.matches(State.deposit) || state.matches(State.wrap);
+
   const isWETH = collateralType?.symbol === 'WETH';
   const stepNumbers = {
     wrap: isWETH ? 1 : 0,
@@ -85,10 +84,10 @@ export const DepositModalUi: FC<{
                 )
               }
               status={{
-                failed: Boolean(error?.step === FailedSteps.wrap),
+                failed: error?.step === State.wrap,
                 disabled: collateralType?.symbol !== 'WETH',
-                success: wrapAmount.eq(0) || state === State.success,
-                loading: state === State.wrap && !error,
+                success: wrapAmount.eq(0) || state.matches(State.success),
+                loading: state.matches(State.wrap) && !error,
               }}
             />
           ) : null}
@@ -97,9 +96,9 @@ export const DepositModalUi: FC<{
             step={stepNumbers.approve}
             title={`Approve ${collateralType?.symbol} transfer`}
             status={{
-              failed: Boolean(error?.step === FailedSteps.approve),
-              success: !requireApproval || state === State.success,
-              loading: state === State.approve && !error,
+              failed: error?.step === State.approve,
+              success: !requireApproval || state.matches(State.success),
+              loading: state.matches(State.approve) && !error,
             }}
             checkboxLabel={`Approve unlimited ${collateralType?.symbol} transfers to Synthetix.`}
             checkboxProps={{
@@ -113,15 +112,15 @@ export const DepositModalUi: FC<{
             title={`Deposit ${collateralType?.symbol}`}
             subtitle={`This will transfer your ${collateralType?.symbol} to Synthetix.`}
             status={{
-              failed: Boolean(error?.step === State.deposit),
-              disabled: state !== State.success && requireApproval,
-              success: state === State.success,
-              loading: state === State.deposit && !error,
+              failed: error?.step === State.deposit,
+              disabled: state.matches(State.success) && requireApproval,
+              success: state.matches(State.success),
+              loading: state.matches(State.deposit) && !error,
             }}
           />
 
           <Button
-            disabled={Object.keys(FailedSteps).includes(state) && !error}
+            disabled={isProcessing}
             onClick={onSubmit}
             width="100%"
             my="4"
@@ -131,9 +130,9 @@ export const DepositModalUi: FC<{
               switch (true) {
                 case Boolean(error):
                   return 'Retry';
-                case Object.keys(FailedSteps).includes(state):
+                case isProcessing:
                   return 'Processing...';
-                case state === State.success:
+                case state.matches(State.success):
                   return 'Done';
                 default:
                   return 'Start';
@@ -310,24 +309,7 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
       isOpen={isOpen}
       onClose={onClose}
       collateralType={collateralType}
-      wrapAmount={state.context.wrapAmount}
-      state={(() => {
-        switch (true) {
-          case state.matches(State.approve):
-            return State.approve;
-          case state.matches(State.deposit):
-            return State.deposit;
-          case state.matches(State.success):
-            return State.success;
-          case state.matches(State.wrap):
-            return State.wrap;
-          default:
-            return State.idle;
-        }
-      })()}
-      error={state.context.error}
-      requireApproval={state.context.requireApproval}
-      infiniteApproval={state.context.infiniteApproval}
+      state={state}
       setInfiniteApproval={(infiniteApproval) => {
         send(Events.SET_INFINITE_APPROVAL, { infiniteApproval });
       }}

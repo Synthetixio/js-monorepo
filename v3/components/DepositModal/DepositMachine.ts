@@ -1,4 +1,4 @@
-import Wei, { wei } from '@synthetixio/wei';
+import { Wei, wei } from '@synthetixio/wei';
 import { createMachine, assign } from 'xstate';
 
 export const Events = {
@@ -21,7 +21,7 @@ export const State = {
   success: 'success',
 } as const;
 
-export const FailedSteps = {
+const FailedSteps = {
   [State.approve]: State.approve,
   [State.wrap]: State.wrap,
   [State.deposit]: State.deposit,
@@ -34,7 +34,10 @@ export const ServiceNames = {
 } as const;
 
 type Context = {
-  error: { error: Error; step: keyof typeof FailedSteps } | null;
+  error: {
+    error: Error;
+    step: keyof typeof FailedSteps;
+  } | null;
   requireApproval: boolean;
   wrapAmount: Wei;
   infiniteApproval: boolean;
@@ -113,7 +116,7 @@ export const DepositMachine = createMachine<Context, DepositEvents, MachineState
     },
   },
   states: {
-    idle: {
+    [State.idle]: {
       on: {
         [Events.RUN]: [
           { target: State.wrap, cond: (context) => context.wrapAmount.gt(0) },
