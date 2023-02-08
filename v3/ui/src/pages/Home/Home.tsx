@@ -71,33 +71,60 @@ export function HomeUi({
       },
       { totalCollateral: 0, totalDebt: 0 }
     ) || {};
+
   return (
     <Flex height="100%" flexDirection="column">
       <Flex alignItems="flex-end" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
         <Box flexGrow={1} mr={12}>
-          <Heading>Welcome to Synthetix V3</Heading>
-          <Text>
+          <Heading color="white" mb={2}>
+            Welcome to Synthetix V3
+          </Heading>
+          <Text color="gray.500" fontSize="sm">
             Deposit your collateral to borrow snxUSD and contribute to the network collateral. If
             you have never staked on Synthetix V3 before, please read through this quick
             introduction first.
           </Text>
         </Box>
-        <Button variant="outline" minW="unset" size="sm" mt={{ base: 2, md: 0 }}>
-          Read Introduction
-        </Button>
       </Flex>
-      <Divider mt={4} bg="gray.900" />
-      <Flex mt={8} justifyContent="center" gap={4} flexDirection={{ base: 'column', md: 'row' }}>
-        <BorderBox flexGrow={1} px={4} py={2}>
-          <Text fontSize="sm">Total Collateral</Text>
+      <Divider my={8} bg="gray.900" />
+      <Flex justifyContent="space-between" gap={4} flexDirection={{ base: 'column', md: 'row' }}>
+        <BorderBox p={4} width="33%" flexDir="column">
+          <Text
+            fontSize="xs"
+            fontFamily="heading"
+            textTransform="uppercase"
+            color="gray.500"
+            textAlign="center"
+            fontWeight="400"
+          >
+            Total Collateral
+          </Text>
           <Text fontSize="2xl">{totalCollateral ? formatNumberToUsd(totalCollateral) : '-'}</Text>
         </BorderBox>
-        <BorderBox flexGrow={1} px={4} py={2}>
-          <Text fontSize="sm">Total debt</Text>
+        <BorderBox p={4} flexDir="column" width="33%">
+          <Text
+            fontSize="xs"
+            fontFamily="heading"
+            textTransform="uppercase"
+            color="gray.500"
+            textAlign="center"
+            fontWeight="400"
+          >
+            Total debt
+          </Text>
           <Text fontSize="2xl">{totalDebt ? formatNumberToUsd(totalDebt) : '-'}</Text>
         </BorderBox>
-        <BorderBox flexGrow={1} px={4} py={2}>
-          <Text fontSize="sm">-</Text>
+        <BorderBox p={4} flexDir="column" width="33%">
+          <Text
+            fontSize="xs"
+            fontFamily="heading"
+            textTransform="uppercase"
+            color="gray.500"
+            textAlign="center"
+            fontWeight="400"
+          >
+            -
+          </Text>
           <Text fontSize="2xl">-</Text>
         </BorderBox>
       </Flex>

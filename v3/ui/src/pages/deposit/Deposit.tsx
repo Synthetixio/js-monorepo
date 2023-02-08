@@ -19,7 +19,7 @@ const DepositUi: FC<{ collateralDisplaySymbol?: string; DepositForm: FC; PoolBox
       <Flex alignItems="flex-end" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
         <Box flexGrow={1} mr={12}>
           <Heading fontSize="xl">Welcome to Synthetix V3</Heading>
-          <Text>
+          <Text color="gray.500" fontSize="sm">
             Deposit your collateral to borrow snxUSD and contribute to the network collateral. If
             you have never staked on Synthetix V3 before, please read through this quick
             introduction first.
