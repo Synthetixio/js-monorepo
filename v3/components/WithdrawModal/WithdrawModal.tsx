@@ -162,6 +162,10 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
     send(Events.SET_AMOUNT, { amount: wei(collateralChangeString).abs() });
   }, [collateralChangeString, send]);
 
+  useEffect(() => {
+    send(Events.SET_COLLATERAL_SYMBOL, { symbol: wei(collateralChangeString).abs() });
+  }, [collateralChangeString, send]);
+
   const onSubmit = useCallback(async () => {
     if (state.matches(State.success)) {
       send(Events.RESET);

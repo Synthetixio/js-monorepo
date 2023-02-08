@@ -3,6 +3,7 @@ import { createMachine, assign } from 'xstate';
 
 export const Events = {
   SET_AMOUNT: 'SET_AMOUNT',
+  SET_COLLATERAL_SYMBOL: 'SET_COLLATERAL_SYMBOL',
   RETRY: 'RETRY',
   RUN: 'RUN',
   SUCCESS: 'SUCCESS',
@@ -31,16 +32,18 @@ export const ServiceNames = {
 type Context = {
   error: { error: Error; step: keyof typeof FailedSteps } | null;
   amount: Wei;
+  collateralSymbol?: string;
 };
 
-type EventNamesType = typeof Events;
+type EventType = typeof Events;
 type WithdrawEvents =
-  | { type: EventNamesType['SET_AMOUNT']; amount: Wei }
-  | { type: EventNamesType['RETRY'] }
-  | { type: EventNamesType['RUN'] }
-  | { type: EventNamesType['SUCCESS'] }
-  | { type: EventNamesType['FAILURE'] }
-  | { type: EventNamesType['RESET'] };
+  | { type: EventType['SET_AMOUNT']; amount: Wei }
+  | { type: EventType['SET_COLLATERAL_SYMBOL']; symbol: string }
+  | { type: EventType['RETRY'] }
+  | { type: EventType['RUN'] }
+  | { type: EventType['SUCCESS'] }
+  | { type: EventType['FAILURE'] }
+  | { type: EventType['RESET'] };
 
 type StateType = typeof State;
 export type MachineState =
@@ -70,6 +73,7 @@ export type MachineState =
 const initialContext = {
   amount: wei(0),
   error: null,
+  collateralSymbol: undefined,
 };
 export const WithdrawMachine = createMachine<Context, WithdrawEvents, MachineState>({
   id: 'WithdrawMachine',
@@ -82,10 +86,14 @@ export const WithdrawMachine = createMachine<Context, WithdrawEvents, MachineSta
       actions: assign({
         amount: (_) => initialContext.amount,
         error: (_) => initialContext.error,
+        collateralSymbol: (_) => initialContext.collateralSymbol,
       }),
     },
     [Events.SET_AMOUNT]: {
       actions: assign({ amount: (_context, event) => event.amount }),
+    },
+    [Events.SET_COLLATERAL_SYMBOL]: {
+      actions: assign({ collateralSymbol: (_context, event) => event.symbol }),
     },
   },
   states: {
@@ -93,7 +101,10 @@ export const WithdrawMachine = createMachine<Context, WithdrawEvents, MachineSta
       on: {
         [Events.RUN]: [
           { target: State.withdraw, cond: (context) => context.amount.gt(0) },
-          { target: State.unwrap, cond: (context) => context.amount.gt(0) },
+          {
+            target: State.unwrap,
+            cond: (context) => context.amount.gt(0) && context.collateralSymbol === 'WETH',
+          },
         ],
       },
     },
@@ -106,7 +117,10 @@ export const WithdrawMachine = createMachine<Context, WithdrawEvents, MachineSta
             error: (_context, event) => ({ error: event.data, step: FailedSteps.withdraw }),
           }),
         },
-        onDone: [{ target: State.unwrap }],
+        onDone: [
+          { target: State.unwrap, cond: (context) => context.collateralSymbol === 'WETH' },
+          { target: State.success },
+        ],
       },
     },
 
@@ -118,10 +132,11 @@ export const WithdrawMachine = createMachine<Context, WithdrawEvents, MachineSta
         },
         onError: {
           target: State.failed,
-          actions: assign({ error: (_context, event) => ({ error: event.data, step: 'unwrap' }) }),
+          actions: assign({
+            error: (_context, event) => ({ error: event.data, step: FailedSteps.unwrap }),
+          }),
         },
       },
-      on: { [Events.SUCCESS]: State.success },
     },
     [State.failed]: {
       on: {
