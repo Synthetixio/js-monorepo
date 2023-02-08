@@ -1,5 +1,5 @@
 import { Input, InputProps } from '@chakra-ui/react';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Wei, wei } from '@synthetixio/wei';
 
 export interface NumberInputProps extends InputProps {
@@ -34,17 +34,24 @@ export function NumberInput({
       } catch (_err) {
         e.target.setCustomValidity('Invalid number');
       }
-
-      if (max?.gte(0) && nextValue.gt(max)) {
-        e.target.setCustomValidity('Value greater than max');
-      }
-
       if (!value.eq(nextValue)) {
         onChange(nextValue);
       }
     },
-    [max, onChange, value]
+    [onChange, value]
   );
+
+  const ref = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+    if (max && max.gte(0) && value && value.gt(max)) {
+      ref.current.setCustomValidity('Value greater than max');
+    } else {
+      ref.current.setCustomValidity('');
+    }
+  }, [max, value]);
 
   useEffect(() => {
     if (value.eq(0)) {
@@ -60,6 +67,7 @@ export function NumberInput({
 
   return (
     <Input
+      ref={ref}
       flex="1"
       type="text"
       border="none"

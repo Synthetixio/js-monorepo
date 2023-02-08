@@ -17,7 +17,6 @@ export const RepayUi: FC<{
   max?: Wei;
   snxUSDBalance?: Wei;
   currentDebt?: Wei;
-  balance?: Wei;
   setDebtChange: (val: Wei) => void;
 }> = ({ debtChange, setDebtChange, max, currentDebt, snxUSDBalance }) => {
   return (
@@ -36,7 +35,11 @@ export const RepayUi: FC<{
         </Text>
         <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>
           <NumberInput
-            InputProps={{ isRequired: true }}
+            InputProps={{
+              isRequired: true,
+              'data-testid': 'repay amount input',
+              'data-max': max?.toString(),
+            }}
             value={debtChange.abs()}
             onChange={(val) => setDebtChange(val.mul(-1))}
             max={max}
@@ -71,7 +74,13 @@ export const RepayUi: FC<{
           </Flex>
         </Flex>
       </BorderBox>
-      <Button type="submit">Repay snxUSD</Button>
+      <Button
+        data-testid="repay submit"
+        type="submit"
+        disabled={!(max && snxUSDBalance && currentDebt)}
+      >
+        Repay snxUSD
+      </Button>
     </Flex>
   );
 };
