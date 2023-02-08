@@ -1,0 +1,19 @@
+import { ethers } from 'ethers';
+import * as CoreProxy from '@synthetixio/v3-contracts/src/goerli/CoreProxy';
+import { getCollateralConfig } from './getCollateralConfig';
+
+export async function approveCollateral({ privateKey, symbol }) {
+  const wethConfig = await getCollateralConfig(symbol);
+  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const wallet = new ethers.Wallet(privateKey, provider);
+  console.log('approveCollateral', { wallet: wallet.address, symbol });
+
+  const wethContract = new ethers.Contract(
+    wethConfig.tokenAddress,
+    ['function approve(address spender, uint256 amount) returns (bool)'],
+    wallet
+  );
+  const tx = await wethContract.approve(CoreProxy.address, ethers.constants.MaxUint256);
+  await tx.wait();
+  return null;
+}
