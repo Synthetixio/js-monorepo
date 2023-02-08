@@ -1,110 +1,139 @@
 import Wei, { wei } from '@synthetixio/wei';
 import { createMachine, assign } from 'xstate';
 
+export const Events = {
+  SET_AMOUNT: 'SET_AMOUNT',
+  RETRY: 'RETRY',
+  RUN: 'RUN',
+  SUCCESS: 'SUCCESS',
+  FAILURE: 'FAILURE',
+  RESET: 'RESET',
+} as const;
+
+export const State = {
+  idle: 'idle',
+  withdraw: 'withdraw',
+  unwrap: 'unwrap',
+  failed: 'failed',
+  success: 'success',
+} as const;
+
+export const FailedSteps = {
+  [State.withdraw]: State.withdraw,
+  [State.unwrap]: State.unwrap,
+} as const;
+
+export const ServiceNames = {
+  withdraw: 'withdraw',
+  unwrap: 'unwrap',
+} as const;
+
 type Context = {
-  error: { error: Error; step: 'unwrap' | 'withdraw' } | null;
+  error: { error: Error; step: keyof typeof FailedSteps } | null;
   amount: Wei;
 };
 
-type Events =
-  | { type: 'SET_AMOUNT'; amount: Wei }
-  | { type: 'RETRY' }
-  | { type: 'RUN' }
-  | { type: 'SUCCESS' }
-  | { type: 'FAILURE' }
-  | { type: 'RESET' };
+type EventNamesType = typeof Events;
+type WithdrawEvents =
+  | { type: EventNamesType['SET_AMOUNT']; amount: Wei }
+  | { type: EventNamesType['RETRY'] }
+  | { type: EventNamesType['RUN'] }
+  | { type: EventNamesType['SUCCESS'] }
+  | { type: EventNamesType['FAILURE'] }
+  | { type: EventNamesType['RESET'] };
 
+type StateType = typeof State;
 export type MachineState =
   | {
-      value: 'idle';
+      value: StateType['idle'];
       context: Context & { error: null };
     }
   | {
-      value: 'unwrap';
+      value: StateType['withdraw'];
       context: Context & { error: null };
     }
   | {
-      value: 'withdraw';
+      value: StateType['unwrap'];
       context: Context & { error: null };
     }
   | {
-      value: 'error';
-      context: Context & { error: { error: Error; step: 'withdraw' | 'unwrap' } };
+      value: StateType['failed'];
+      context: Context & { error: { error: Error; step: keyof typeof FailedSteps } };
     }
   | {
-      value: 'success';
+      value: StateType['success'];
       context: Context & {
         error: null;
       };
     };
+
 const initialContext = {
   amount: wei(0),
   error: null,
 };
-export const WithdrawMachine = createMachine<Context, Events, MachineState>({
+export const WithdrawMachine = createMachine<Context, WithdrawEvents, MachineState>({
   id: 'WithdrawMachine',
-  initial: 'idle',
+  initial: State.idle,
   predictableActionArguments: true,
   context: initialContext,
   on: {
-    RESET: {
-      target: 'idle',
+    [Events.RESET]: {
+      target: State.idle,
       actions: assign({
         amount: (_) => initialContext.amount,
         error: (_) => initialContext.error,
       }),
     },
-    SET_AMOUNT: {
+    [Events.SET_AMOUNT]: {
       actions: assign({ amount: (_context, event) => event.amount }),
     },
   },
   states: {
     idle: {
       on: {
-        RUN: [
-          { target: 'withdraw', cond: (context) => context.amount.gt(0) },
-          { target: 'unwrap', cond: (context) => context.amount.gt(0) },
+        [Events.RUN]: [
+          { target: State.withdraw, cond: (context) => context.amount.gt(0) },
+          { target: State.unwrap, cond: (context) => context.amount.gt(0) },
         ],
       },
     },
-    withdraw: {
+    [State.withdraw]: {
       invoke: {
-        id: 'withdraw',
-        src: 'withdraw',
+        src: ServiceNames.withdraw,
         onError: {
-          target: 'failure',
+          target: State.failed,
           actions: assign({
-            error: (_context, event) => ({ error: event.data, step: 'withdraw' }),
+            error: (_context, event) => ({ error: event.data, step: FailedSteps.withdraw }),
           }),
         },
-        onDone: [{ target: 'unwrap' }],
+        onDone: [{ target: State.unwrap }],
       },
     },
 
     unwrap: {
       invoke: {
-        src: 'unwrap',
+        src: ServiceNames.unwrap,
         onDone: {
-          target: 'success',
+          target: State.success,
         },
         onError: {
-          target: 'failure',
+          target: State.failed,
           actions: assign({ error: (_context, event) => ({ error: event.data, step: 'unwrap' }) }),
         },
       },
-      on: { SUCCESS: 'success' },
+      on: { [Events.SUCCESS]: State.success },
     },
-    failure: {
+    [State.failed]: {
       on: {
         RETRY: [
           {
-            target: 'withdraw',
-            cond: (c) => c.error?.step === 'withdraw',
+            target: State['withdraw'],
+            cond: (c) => c.error?.step === FailedSteps.withdraw,
             actions: assign({ error: (_) => null }),
           },
           {
-            target: 'unwrap',
-            cond: (c) => c.error?.step === 'unwrap',
+            target: State['unwrap'],
+            cond: (c) => c.error?.step === FailedSteps.unwrap,
             actions: assign({ error: (_) => null }),
           },
         ],

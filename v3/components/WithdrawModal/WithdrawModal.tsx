@@ -18,20 +18,22 @@ import { Multistep } from '@snx-v3/Multistep';
 import { Wei, wei } from '@synthetixio/wei';
 import { FC } from 'react';
 import { useParams } from '@snx-v3/useParams';
-import { WithdrawMachine } from './WithdrawMachine';
+import { WithdrawMachine, State, Events, ServiceNames } from './WithdrawMachine';
 import { useMachine } from '@xstate/react';
 import { useWithdraw } from '@snx-v3/useWithdraw';
 import { ManagePositionContext } from '@snx-v3/ManagePositionContext';
+import type { StateFrom } from 'xstate';
 
 export const WithdrawModalUi: FC<{
   amount: Wei;
   isOpen: boolean;
   onClose: () => void;
   collateralType?: CollateralType;
-  state: string;
+  state: StateFrom<typeof WithdrawMachine>;
   error: { error: Error; step: string } | null;
   onSubmit: () => void;
 }> = ({ amount, isOpen, onClose, collateralType, onSubmit, state, error }) => {
+  const isProcessing = state.matches(State.withdraw) || state.matches(State.unwrap);
   return (
     <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
       <ModalOverlay />
@@ -50,10 +52,10 @@ export const WithdrawModalUi: FC<{
               </Text>
             }
             status={{
-              failed: Boolean(error?.step === 'withdraw'),
+              failed: Boolean(error?.step === State.withdraw),
               disabled: amount.eq(0),
-              success: state === 'unwrap',
-              loading: state === 'withdraw' && !error,
+              success: state.matches(State.unwrap) || state.matches(State.success),
+              loading: state.matches(State.withdraw) && !error,
             }}
           />
           {collateralType?.symbol === 'WETH' ? (
@@ -62,16 +64,16 @@ export const WithdrawModalUi: FC<{
               title={`Unwrap ${collateralType?.symbol}`}
               subtitle="This will unwrap your WETH to ETH"
               status={{
-                failed: Boolean(error?.step === 'unwrap'),
+                failed: Boolean(error?.step === State.unwrap),
                 disabled: collateralType?.symbol !== 'WETH',
-                success: state === 'success',
-                loading: state === 'unwrap' && !error,
+                success: state.matches(State.success),
+                loading: state.matches(State.unwrap),
               }}
             />
           ) : null}
 
           <Button
-            disabled={['unwrap', 'withdraw'].includes(state) && !error}
+            disabled={isProcessing}
             onClick={onSubmit}
             width="100%"
             my="4"
@@ -81,9 +83,9 @@ export const WithdrawModalUi: FC<{
               switch (true) {
                 case Boolean(error):
                   return 'Retry';
-                case ['unwrap', 'withdraw'].includes(state):
+                case isProcessing:
                   return 'Processing...';
-                case state === 'success':
+                case state.matches(State.success):
                   return 'Done';
                 default:
                   return 'Start';
@@ -124,7 +126,7 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
       amount: collateralChange.abs(),
     },
     services: {
-      withdraw: async () => {
+      [ServiceNames.withdraw]: async () => {
         try {
           await execWithdraw();
           await refetchLiquidityPosition();
@@ -138,7 +140,7 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
           throw Error('Wrapping failed', { cause: error });
         }
       },
-      unwrap: async () => {
+      [ServiceNames.unwrap]: async () => {
         try {
           toast({
             title: 'Unwrap',
@@ -157,20 +159,20 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
   });
   const collateralChangeString = collateralChange.toString();
   useEffect(() => {
-    send('SET_AMOUNT', { amount: wei(collateralChangeString).abs() });
+    send(Events.SET_AMOUNT, { amount: wei(collateralChangeString).abs() });
   }, [collateralChangeString, send]);
 
   const onSubmit = useCallback(async () => {
-    if (state.matches('success')) {
-      send('RESET');
+    if (state.matches(State.success)) {
+      send(Events.RESET);
       onClose();
       return;
     }
     if (state.context.error) {
-      send('RETRY');
+      send(Events.RETRY);
       return;
     }
-    send('RUN');
+    send(Events.RUN);
   }, [onClose, send, state]);
 
   return (
@@ -179,18 +181,7 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
       isOpen={isOpen}
       onClose={onClose}
       collateralType={collateralType}
-      state={(() => {
-        switch (true) {
-          case state.matches('unwrap'):
-            return 'unwrap';
-          case state.matches('withdraw'):
-            return 'withdraw';
-          case state.matches('success'):
-            return 'success';
-          default:
-            return 'idle';
-        }
-      })()}
+      state={state}
       error={state.context.error}
       onSubmit={onSubmit}
     />
