@@ -4,12 +4,12 @@
   "main": "index.ts",
   "version": "0.0.1",
   "dependencies": {
-    "@chakra-ui/react": "^2.2.8",
+    "@chakra-ui/react": "^2.5.0",
     "@snx-v2/GasSpeedContext": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@synthetixio/wei": "workspace:*",
     "react": "^18.2.0",
-    "react-i18next": "^11.18.3"
+    "react-i18next": "^12.1.5"
   }
 }

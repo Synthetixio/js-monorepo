@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@tippyjs/react": "^4.2.6",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.6"
   },
   "peerDependencies": {
     "@tippyjs/react": "4",

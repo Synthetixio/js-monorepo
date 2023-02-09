@@ -8,7 +8,7 @@
     "@snx-v3/useAllowance": "workspace:*",
     "@snx-v3/useBlockchain": "workspace:*",
     "@snx-v3/useGasOptions": "workspace:*",
-    "@tanstack/react-query": "^4.3.4",
+    "@tanstack/react-query": "^4.24.6",
     "ethers": "^5.7.2",
     "react": "^18.2.0"
   }
