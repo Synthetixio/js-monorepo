@@ -37,7 +37,11 @@ export const WithdrawUi: FC<{
         </Text>
         <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>
           <NumberInput
-            InputProps={{ isRequired: true }}
+            InputProps={{
+              isRequired: true,
+              'data-testid': 'withdraw amount input',
+              'data-max': max?.toString(),
+            }}
             value={collateralChange.abs()}
             onChange={(val) => setCollateralChange(val.mul(-1))}
             max={max}
@@ -63,12 +67,14 @@ export const WithdrawUi: FC<{
                 </Text>
               </Tooltip>
 
-              <Amount value={max} />
+              <Amount value={max} data-testid="available to withdraw" />
             </Flex>
           </Flex>
         </Flex>
       </BorderBox>
-      <Button type="submit">Withdraw {displaySymbol}</Button>
+      <Button data-testid="withdraw submit" type="submit" disabled={!max}>
+        Withdraw {displaySymbol}
+      </Button>
     </Flex>
   );
 };
