@@ -32,7 +32,7 @@ export function NumberInput({
       try {
         nextValue = wei(e.target.value || 0);
       } catch (_err) {
-        e.target.setCustomValidity('Invalid number');
+        // whatever
       }
       if (!value.eq(nextValue)) {
         onChange(nextValue);
