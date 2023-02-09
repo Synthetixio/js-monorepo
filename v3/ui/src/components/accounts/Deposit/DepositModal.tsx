@@ -302,7 +302,7 @@ export const DepositModal: DepositModalProps = ({ collateralChange, isOpen, onCl
             onClick={onSubmit}
             width="100%"
             my="4"
-            data-testid="deposit submit button"
+            data-testid="deposit confirm button"
           >
             {(() => {
               switch (true) {
