@@ -102,6 +102,7 @@ export const RepayModalUi: React.FC<{
             }}
             width="100%"
             my="4"
+            data-testid="repay confirm button"
           >
             {(() => {
               switch (txnStatus) {
