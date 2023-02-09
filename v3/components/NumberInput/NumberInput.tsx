@@ -1,11 +1,13 @@
 import { Input, InputProps } from '@chakra-ui/react';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Wei, wei } from '@synthetixio/wei';
 
 export interface NumberInputProps extends InputProps {
   'data-testid'?: string;
   'data-max'?: string;
 }
+
+export const NUMBER_REGEX = /^([0-9]*[.])?[0-9]{0,18}$/;
 
 export function NumberInput({
   value,
@@ -23,28 +25,45 @@ export function NumberInput({
   const onInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value);
-      e.target.setCustomValidity('');
       if (!onChange) {
         // Could be a read-only input
+        return;
+      }
+      if (!NUMBER_REGEX.test(`${e.target.value}`)) {
         return;
       }
       let nextValue = value;
       try {
         nextValue = wei(e.target.value || 0);
       } catch (_err) {
-        e.target.setCustomValidity('Invalid number');
+        // whatever
       }
-
-      if (max?.gte(0) && nextValue.gt(max)) {
-        e.target.setCustomValidity('Value greater than max');
-      }
-
       if (!value.eq(nextValue)) {
         onChange(nextValue);
       }
     },
-    [max, onChange, value]
+    [onChange, value]
   );
+
+  const ref = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+    if (!NUMBER_REGEX.test(`${inputValue}`)) {
+      ref.current.setCustomValidity('Invalid number');
+      return;
+    }
+    if (value && value.eq(0)) {
+      ref.current.setCustomValidity('Value required');
+      return;
+    }
+    if (max && max.gte(0) && value && value.gt(max)) {
+      ref.current.setCustomValidity('Value greater than max');
+      return;
+    }
+    ref.current.setCustomValidity('');
+  }, [inputValue, max, value]);
 
   useEffect(() => {
     if (value.eq(0)) {
@@ -60,6 +79,7 @@ export function NumberInput({
 
   return (
     <Input
+      ref={ref}
       flex="1"
       type="text"
       border="none"

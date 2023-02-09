@@ -40,6 +40,7 @@ module.exports = defineConfig({
         ...require('./cypress/tasks/approveCollateral'),
         ...require('./cypress/tasks/depositCollateral'),
         ...require('./cypress/tasks/delegateCollateral'),
+        ...require('./cypress/tasks/borrowUsd'),
       });
 
       return config;
