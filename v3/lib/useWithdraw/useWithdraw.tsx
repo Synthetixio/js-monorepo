@@ -26,6 +26,8 @@ const createPopulateTransaction = ({
 }) => {
   if (!(CoreProxy && poolId && collateralTypeAddress)) return;
   if (collateralChange.eq(0)) return;
+  if (currentCollateral.eq(0)) return;
+
   const calls = [
     CoreProxy.interface.encodeFunctionData('delegateCollateral', [
       BigNumber.from(accountId),
