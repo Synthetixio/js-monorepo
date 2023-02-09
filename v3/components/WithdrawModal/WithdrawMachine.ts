@@ -97,7 +97,7 @@ export const WithdrawMachine = createMachine<Context, WithdrawEvents, MachineSta
     },
   },
   states: {
-    idle: {
+    [State.idle]: {
       on: {
         [Events.RUN]: [
           { target: State.withdraw, cond: (context) => context.amount.gt(0) },
@@ -124,7 +124,7 @@ export const WithdrawMachine = createMachine<Context, WithdrawEvents, MachineSta
       },
     },
 
-    unwrap: {
+    [State.unwrap]: {
       invoke: {
         src: ServiceNames.unwrap,
         onDone: {
@@ -140,20 +140,20 @@ export const WithdrawMachine = createMachine<Context, WithdrawEvents, MachineSta
     },
     [State.failed]: {
       on: {
-        RETRY: [
+        [Events.RETRY]: [
           {
-            target: State['withdraw'],
+            target: State.withdraw,
             cond: (c) => c.error?.step === FailedSteps.withdraw,
             actions: assign({ error: (_) => null }),
           },
           {
-            target: State['unwrap'],
+            target: State.unwrap,
             cond: (c) => c.error?.step === FailedSteps.unwrap,
             actions: assign({ error: (_) => null }),
           },
         ],
       },
     },
-    success: {},
+    [State.success]: {},
   },
 });
