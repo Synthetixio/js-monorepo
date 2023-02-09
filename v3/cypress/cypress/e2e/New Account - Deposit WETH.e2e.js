@@ -24,13 +24,13 @@ it.skip('creates new account with first deposit of WETH', () => {
     .and('include.text', 'Approve WETH transfer')
     .and('include.text', 'Deposit WETH');
 
-  cy.get('[data-testid="deposit submit button"]').should('include.text', 'Start').click();
+  cy.get('[data-testid="deposit confirm button"]').should('include.text', 'Start').click();
 
-  cy.get('[data-testid="deposit submit button"]')
+  cy.get('[data-testid="deposit confirm button"]')
     .should('include.text', 'Processing...')
     .and('be.disabled');
 
-  cy.get('[data-testid="deposit submit button"]')
+  cy.get('[data-testid="deposit confirm button"]')
     .should('include.text', 'Done')
     .and('be.enabled')
     .click();

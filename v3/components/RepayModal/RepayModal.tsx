@@ -60,7 +60,7 @@ export const RepayModalUi: React.FC<{
   return (
     <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
       <ModalOverlay />
-      <ModalContent bg="black" color="white">
+      <ModalContent bg="black" color="white" data-testid="repay modal">
         <ModalHeader>Complete this action</ModalHeader>
         <ModalCloseButton />
         <ModalBody>

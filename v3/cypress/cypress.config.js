@@ -36,6 +36,10 @@ module.exports = defineConfig({
         ...require('./cypress/tasks/wrapEth'),
         ...require('./cypress/tasks/getCollateralConfig'),
         ...require('./cypress/tasks/getSnx'),
+        ...require('./cypress/tasks/createAccount'),
+        ...require('./cypress/tasks/approveCollateral'),
+        ...require('./cypress/tasks/depositCollateral'),
+        ...require('./cypress/tasks/delegateCollateral'),
       });
 
       return config;

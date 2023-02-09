@@ -23,13 +23,13 @@ it('creates new account with first deposit of SNX', () => {
     .and('include.text', 'Approve SNX transfer')
     .and('include.text', 'Deposit SNX');
 
-  cy.get('[data-testid="deposit submit button"]').should('include.text', 'Start').click();
+  cy.get('[data-testid="deposit confirm button"]').should('include.text', 'Start').click();
 
-  cy.get('[data-testid="deposit submit button"]')
+  cy.get('[data-testid="deposit confirm button"]')
     .should('include.text', 'Processing...')
     .and('be.disabled');
 
-  cy.get('[data-testid="deposit submit button"]')
+  cy.get('[data-testid="deposit confirm button"]')
     .should('include.text', 'Done')
     .and('be.enabled')
     .click();
