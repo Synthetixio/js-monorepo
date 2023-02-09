@@ -51,7 +51,11 @@ export const ManageStatsUi: FC<{
         <Text color="gray.500" fontSize="sm">
           Collateral
         </Text>
-        <Flex justifyContent="space-between" alignItems="center">
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          data-testid="manage stats collateral"
+        >
           <ChangeStat
             value={liquidityPosition.collateralAmount}
             newValue={newCollateralAmount}
@@ -70,7 +74,7 @@ export const ManageStatsUi: FC<{
         <Text color="gray.500" fontSize="sm">
           Debt
         </Text>
-        <Flex justifyContent="space-between" alignItems="center">
+        <Flex justifyContent="space-between" alignItems="center" data-testid="manage stats debt">
           <ChangeStat
             value={liquidityPosition.debt}
             newValue={newDebt}
@@ -80,7 +84,7 @@ export const ManageStatsUi: FC<{
         </Flex>
       </BorderBox>
       <BorderBox px={4} py={2} display="flex" gap={1} flexDirection="column">
-        <Text color="gray.500" fontSize="sm">
+        <Text color="gray.500" fontSize="sm" data-testid="manage stats c-ratio">
           C-RATIO
         </Text>
         <Flex justifyContent="space-between" alignItems="center">

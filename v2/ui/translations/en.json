@@ -23,7 +23,8 @@
         "dHedgeDescription": "Use your sUSD to find the best investment managers and automated strategies in DeFi.",
         "curveDescription": "Deposit your synths into curve pools for yield on synth pairs and help provide liquidity to the ecosystem.",
         "polynomialDescription": "Polynomial is an automated DeFi options vault that generates yield by selling directly to Lyra's options AMM.",
-        "overtimeDescription": "Sports positional markets, built on Thales."
+        "overtimeDescription": "Sports positional markets, built on Thales.",
+        "torosDescription": "Toros enables a suite of one-click financial tools which simplify complex strategies."
       }
     },
     "epochprice": {

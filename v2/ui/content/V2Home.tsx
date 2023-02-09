@@ -14,6 +14,7 @@ import {
   DebtPoolIcon,
   OvertimeIcon,
   PolynomialIcon,
+  TorosIcon,
 } from '@snx-v2/icons';
 import { BoxLink } from '@snx-v2/BoxLink';
 import { useTranslation } from 'react-i18next';
@@ -186,6 +187,13 @@ const V2Home = () => {
                   description={t('staking-v2.home.utilities.polynomialDescription')}
                   link="https://www.polynomial.fi/"
                   Icon={PolynomialIcon}
+                  mt={[4, 6, 6]}
+                />
+                <UtilityCard
+                  title="Toros"
+                  description={t('staking-v2.home.utilities.torosDescription')}
+                  link="https://toros.finance/"
+                  Icon={() => <TorosIcon height="40px" />}
                   mt={[4, 6, 6]}
                 />
               </SimpleGrid>

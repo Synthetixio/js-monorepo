@@ -56,11 +56,16 @@ export const DepositUi: FC<{
           <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>
             <Flex flexDirection="column" justifyContent="flex-end" flexGrow={1}>
               <NumberInput
+                InputProps={{
+                  'data-testid': 'deposit amount input',
+                  'data-max': combinedTokenBalance?.toString(),
+                }}
                 value={collateralChange}
                 onChange={(value) => {
                   setActiveBadge(0);
                   setCollateralChange(value);
                 }}
+                max={combinedTokenBalance}
               />
               <Flex
                 flexDirection="column"
@@ -117,7 +122,9 @@ export const DepositUi: FC<{
           activeBadge={activeBadge}
         />
       </BorderBox>
-      <Button type="submit">Deposit {displaySymbol}</Button>
+      <Button data-testid="deposit submit" type="submit">
+        Deposit {displaySymbol}
+      </Button>
     </Flex>
   );
 };

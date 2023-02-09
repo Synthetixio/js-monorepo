@@ -76,7 +76,9 @@ async function loadCollateralTypes({
   MulticallContract: MulticallContractType;
 }): Promise<CollateralType[]> {
   const tokenConfigsRaw = (await CoreProxyContract.getCollateralConfigurations(true)) as object[];
-  const tokenConfigs = tokenConfigsRaw.map((x) => CollateralConfigurationSchema.parse({ ...x }));
+  const tokenConfigs = tokenConfigsRaw
+    .map((x) => CollateralConfigurationSchema.parse({ ...x }))
+    .filter((x) => x.depositingEnabled);
 
   const [symbols, prices] = await Promise.all([
     loadSymbols({ MulticallContract, tokenConfigs }),
