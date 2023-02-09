@@ -56,7 +56,7 @@ export const RepayUi: FC<{
               }}
             >
               <Text>Debt:</Text>
-              <Amount value={currentDebt} />
+              <Amount value={currentDebt} data-testid="current debt" />
             </Flex>
             <Flex
               gap="1"
@@ -69,7 +69,7 @@ export const RepayUi: FC<{
               }}
             >
               <Text>snxUSD Balance:</Text>
-              <Amount value={snxUSDBalance} />
+              <Amount value={snxUSDBalance} data-testid="available snxUSD balance" />
             </Flex>
           </Flex>
         </Flex>

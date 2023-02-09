@@ -45,6 +45,9 @@ it('should repay borrowed snxUSD and get back SNX collateral', () => {
     expect(loc.search).to.eq('?manageAction=repay');
   });
 
+  cy.get('[data-testid="current debt"]').should('not.have.text', '-');
+  cy.get('[data-testid="available snxUSD balance"]').should('not.have.text', '-');
+
   cy.get('@debt').then((debt) => {
     cy.get('[data-testid="repay amount input"]').type(`${debt}`);
   });

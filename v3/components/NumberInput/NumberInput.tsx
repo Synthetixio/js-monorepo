@@ -7,6 +7,8 @@ export interface NumberInputProps extends InputProps {
   'data-max'?: string;
 }
 
+export const NUMBER_REGEX = /^([0-9]*[.])?[0-9]{0,18}$/;
+
 export function NumberInput({
   value,
   onChange,
@@ -23,9 +25,11 @@ export function NumberInput({
   const onInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value);
-      e.target.setCustomValidity('');
       if (!onChange) {
         // Could be a read-only input
+        return;
+      }
+      if (!NUMBER_REGEX.test(`${e.target.value}`)) {
         return;
       }
       let nextValue = value;
@@ -46,12 +50,20 @@ export function NumberInput({
     if (!ref.current) {
       return;
     }
+    if (!NUMBER_REGEX.test(`${inputValue}`)) {
+      ref.current.setCustomValidity('Invalid number');
+      return;
+    }
+    if (value && value.eq(0)) {
+      ref.current.setCustomValidity('Value required');
+      return;
+    }
     if (max && max.gte(0) && value && value.gt(max)) {
       ref.current.setCustomValidity('Value greater than max');
-    } else {
-      ref.current.setCustomValidity('');
+      return;
     }
-  }, [max, value]);
+    ref.current.setCustomValidity('');
+  }, [inputValue, max, value]);
 
   useEffect(() => {
     if (value.eq(0)) {
