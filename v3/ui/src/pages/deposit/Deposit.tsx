@@ -1,13 +1,13 @@
-import { Box, Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 import { useParams } from '@snx-v3/useParams';
 import { FC, useEffect } from 'react';
 import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
 import { DepositForm } from '../../components/accounts/Deposit';
 import { useAccounts } from '@snx-v3/useAccounts';
-
 import { BorderBox } from '@snx-v3/BorderBox';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { PoolBox } from '@snx-v3/PoolBox';
+import { Welcome } from '../../components/shared/Welcome';
 
 const DepositUi: FC<{ collateralDisplaySymbol?: string; DepositForm: FC; PoolBox: FC }> = ({
   collateralDisplaySymbol,
@@ -16,19 +16,7 @@ const DepositUi: FC<{ collateralDisplaySymbol?: string; DepositForm: FC; PoolBox
 }) => {
   return (
     <Flex height="100%" flexDirection="column">
-      <Flex alignItems="flex-end" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
-        <Box flexGrow={1} mr={12}>
-          <Heading fontSize="xl">Welcome to Synthetix V3</Heading>
-          <Text color="gray.500" fontSize="sm">
-            Deposit your collateral to borrow snxUSD and contribute to the network collateral. If
-            you have never staked on Synthetix V3 before, please read through this quick
-            introduction first.
-          </Text>
-        </Box>
-        <Button variant="outline" minW="unset" size="sm" mt={{ base: 2, md: 0 }}>
-          Read Introduction
-        </Button>
-      </Flex>
+      <Welcome />
       <Divider mt={4} bg="gray.900" />
       <Flex mt={8} alignItems="stretch" flexWrap={{ base: 'wrap', md: 'nowrap' }} gap={4}>
         <BorderBox flexGrow={1} p={4}>

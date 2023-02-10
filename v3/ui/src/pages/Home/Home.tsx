@@ -24,6 +24,7 @@ import { useParams } from '@snx-v3/useParams';
 import { BorderBox } from '@snx-v3/BorderBox';
 import { useLiquidityPositions, LiquidityPositionType } from '@snx-v3/useLiquidityPositions';
 import { formatNumberToUsd } from '@snx-v2/formatters';
+import { Welcome } from '../../components/shared/Welcome';
 
 const LoadingRow = () => (
   <Tr>
@@ -74,18 +75,7 @@ export function HomeUi({
 
   return (
     <Flex height="100%" flexDirection="column">
-      <Flex alignItems="flex-end" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
-        <Box flexGrow={1} mr={12}>
-          <Heading color="white" mb={2}>
-            Welcome to Synthetix V3
-          </Heading>
-          <Text color="gray.500" fontSize="sm">
-            Deposit your collateral to borrow snxUSD and contribute to the network collateral. If
-            you have never staked on Synthetix V3 before, please read through this quick
-            introduction first.
-          </Text>
-        </Box>
-      </Flex>
+      <Welcome />
       <Divider my={8} bg="gray.900" />
       <Flex justifyContent="space-between" gap={4} flexDirection={{ base: 'column', md: 'row' }}>
         <BorderBox p={4} width="33%" flexDir="column">
@@ -99,7 +89,9 @@ export function HomeUi({
           >
             Total Collateral
           </Text>
-          <Text fontSize="2xl">{totalCollateral ? formatNumberToUsd(totalCollateral) : '-'}</Text>
+          <Text fontFamily="heading" fontWeight="800" textAlign="center" fontSize="2xl">
+            {totalCollateral ? formatNumberToUsd(totalCollateral) : '—'}
+          </Text>
         </BorderBox>
         <BorderBox p={4} flexDir="column" width="33%">
           <Text
@@ -112,7 +104,9 @@ export function HomeUi({
           >
             Total debt
           </Text>
-          <Text fontSize="2xl">{totalDebt ? formatNumberToUsd(totalDebt) : '-'}</Text>
+          <Text fontFamily="heading" fontWeight="800" textAlign="center" fontSize="2xl">
+            {totalDebt ? formatNumberToUsd(totalDebt) : '—'}
+          </Text>
         </BorderBox>
         <BorderBox p={4} flexDir="column" width="33%">
           <Text
@@ -123,12 +117,14 @@ export function HomeUi({
             textAlign="center"
             fontWeight="400"
           >
-            -
+            Total Earnings Lifetime
           </Text>
-          <Text fontSize="2xl">-</Text>
+          <Text fontFamily="heading" fontWeight="800" textAlign="center" fontSize="2xl">
+            —
+          </Text>
         </BorderBox>
       </Flex>
-      <BorderBox p={4} mt={8}>
+      <BorderBox p={4} mt={8} flexDir="column">
         <Flex
           justifyContent="space-between"
           flexWrap={{ base: 'wrap', md: 'nowrap' }}
@@ -203,6 +199,7 @@ export function HomeUi({
     </Flex>
   );
 }
+
 export function Home() {
   const { data: accounts = [] } = useAccounts();
   const { data: collateralTypes = [] } = useCollateralTypes();
@@ -210,6 +207,7 @@ export function Home() {
 
   const params = useParams();
   const navigate = useNavigate();
+
   const [accountId] = accounts;
   const { data: liquidityPositionsById } = useLiquidityPositions({
     accountId: params.accountId,
