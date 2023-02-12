@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Heading, Text, Button } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 import { useParams } from '@snx-v3/useParams';
 import { FC, useEffect } from 'react';
 import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
@@ -8,32 +8,17 @@ import { BorderBox } from '@snx-v3/BorderBox';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { PoolBox } from '@snx-v3/PoolBox';
 import { Welcome } from '../../components/shared/Welcome';
-import { ArrowLeft, CollateralIcon } from '@snx-v3/icons';
+import { CollateralIcon } from '@snx-v3/icons';
+import { HomeLink } from '@snx-v3/HomeLink';
 
 const DepositUi: FC<{ collateralDisplaySymbol?: string; DepositForm: FC; PoolBox: FC }> = ({
   collateralDisplaySymbol,
   PoolBox,
   DepositForm,
 }) => {
-  const navigate = useNavigate();
-
   return (
     <Flex height="100%" flexDirection="column">
-      <Button
-        variant="link"
-        color="cyan.500"
-        fontFamily="heading"
-        fontSize="sm"
-        as={Flex}
-        justifyContent="flex-start"
-        p={4}
-        width="fit-content"
-        onClick={() => navigate({ pathname: '/' })}
-        _hover={{ cursor: 'pointer', textDecoration: 'underline' }}
-      >
-        <ArrowLeft width="14px" height="14px" mr={2} />
-        Home
-      </Button>
+      <HomeLink />
       <Welcome
         Banner={() => {
           return (

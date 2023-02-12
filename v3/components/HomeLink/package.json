@@ -1,0 +1,12 @@
+{
+  "name": "@snx-v3/HomeLink",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.17",
+    "@chakra-ui/react": "^2.5.0",
+    "react": "^18.2.0",
+    "react-router-dom": "^6.8.1"
+  }
+}
