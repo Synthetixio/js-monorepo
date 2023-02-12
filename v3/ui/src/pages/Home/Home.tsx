@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Divider,
+  Fade,
   Flex,
   Heading,
   Skeleton,
@@ -22,9 +23,9 @@ import { VaultRow } from './VaultRow';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
 import { useParams } from '@snx-v3/useParams';
 import { BorderBox } from '@snx-v3/BorderBox';
-import { useLiquidityPositions, LiquidityPositionType } from '@snx-v3/useLiquidityPositions';
-import { formatNumberToUsd } from '@snx-v2/formatters';
+import { LiquidityPositionType, useLiquidityPositions } from '@snx-v3/useLiquidityPositions';
 import { Welcome } from '../../components/shared/Welcome';
+import { Stats, StatsProps } from './Stats';
 
 const LoadingRow = () => (
   <Tr>
@@ -52,16 +53,20 @@ const LoadingRow = () => (
 export function HomeUi({
   collateralTypes,
   preferredPool,
-  VaultRow,
   navigate,
   liquidityPositions,
+  isLoading,
+  VaultRow,
+  Stats,
 }: {
   collateralTypes?: CollateralType[];
   preferredPool?: { name: string; id: string };
   accountId?: string;
-  VaultRow: FC<{ collateralType: CollateralType; poolId: string }>;
   navigate: NavigateFunction;
   liquidityPositions?: LiquidityPositionType[];
+  isLoading: boolean;
+  VaultRow: FC<{ collateralType: CollateralType; poolId: string }>;
+  Stats: FC<StatsProps>;
 }) {
   const { totalCollateral, totalDebt } =
     liquidityPositions?.reduce(
@@ -77,53 +82,7 @@ export function HomeUi({
     <Flex height="100%" flexDirection="column">
       <Welcome />
       <Divider my={8} bg="gray.900" />
-      <Flex justifyContent="space-between" gap={4} flexDirection={{ base: 'column', md: 'row' }}>
-        <BorderBox p={4} width="33%" flexDir="column">
-          <Text
-            fontSize="xs"
-            fontFamily="heading"
-            textTransform="uppercase"
-            color="gray.500"
-            textAlign="center"
-            fontWeight="400"
-          >
-            Total Collateral
-          </Text>
-          <Text fontFamily="heading" fontWeight="800" textAlign="center" fontSize="2xl">
-            {totalCollateral ? formatNumberToUsd(totalCollateral) : '—'}
-          </Text>
-        </BorderBox>
-        <BorderBox p={4} flexDir="column" width="33%">
-          <Text
-            fontSize="xs"
-            fontFamily="heading"
-            textTransform="uppercase"
-            color="gray.500"
-            textAlign="center"
-            fontWeight="400"
-          >
-            Total debt
-          </Text>
-          <Text fontFamily="heading" fontWeight="800" textAlign="center" fontSize="2xl">
-            {totalDebt ? formatNumberToUsd(totalDebt) : '—'}
-          </Text>
-        </BorderBox>
-        <BorderBox p={4} flexDir="column" width="33%">
-          <Text
-            fontSize="xs"
-            fontFamily="heading"
-            textTransform="uppercase"
-            color="gray.500"
-            textAlign="center"
-            fontWeight="400"
-          >
-            Total Earnings Lifetime
-          </Text>
-          <Text fontFamily="heading" fontWeight="800" textAlign="center" fontSize="2xl">
-            —
-          </Text>
-        </BorderBox>
-      </Flex>
+      <Stats totalDebt={totalDebt} totalCollateral={totalCollateral} />
       <BorderBox p={4} mt={8} flexDir="column">
         <Flex
           justifyContent="space-between"
@@ -135,57 +94,78 @@ export function HomeUi({
             justifyContent="flex-start"
             flexDirection={{ base: 'column', md: 'row' }}
           >
-            {preferredPool ? <Heading>{preferredPool.name}</Heading> : <Skeleton w={16} h={8} />}
-            <Text color="gray.400" ml={{ base: 0, md: 2 }}>
-              {preferredPool ? `Pool #${preferredPool.id}` : <Skeleton w={12} h={4} />}
-            </Text>
+            <Skeleton isLoaded={!isLoading && !!preferredPool}>
+              <Fade in={!isLoading && !!preferredPool}>
+                <Heading fontSize="2xl">{preferredPool?.name || 'Unnamed Pool'}</Heading>
+              </Fade>
+            </Skeleton>
+            <Fade in={!isLoading && !!preferredPool}>
+              <Text ml={{ base: 0, md: 2 }} color="gray.400">{`Pool #${
+                preferredPool?.id || 1
+              }`}</Text>
+            </Fade>
           </Flex>
-          {preferredPool ? (
-            <Button
-              mt={{ base: 2, md: 0 }}
-              size="sm"
-              onClick={() =>
-                navigate({ pathname: generatePath('/pools/:poolId', { poolId: preferredPool.id }) })
-              }
-              variant="outline"
-            >
-              Pool Info
-            </Button>
-          ) : (
-            <Skeleton display="block" w={14} h={7} />
+          {preferredPool?.id && (
+            <Fade in={!isLoading && !!preferredPool}>
+              <Button
+                mt={{ base: 2, md: 0 }}
+                size="sm"
+                onClick={() =>
+                  navigate({
+                    pathname: generatePath('/pools/:poolId', { poolId: preferredPool.id }),
+                  })
+                }
+                variant="outline"
+              >
+                Pool Info
+              </Button>
+            </Fade>
           )}
         </Flex>
-        <Text color="gray.400" mt={2}>
-          The Spartan Council Pool is the primary pool of Synthetix. All collateral will be
-          deposited in this pool by default.
-        </Text>
+        <Skeleton isLoaded={!isLoading} mt={2}>
+          <Fade in={!isLoading}>
+            <Text color="gray.500">
+              The Spartan Council Pool is the primary pool of Synthetix. All collateral will be
+              deposited in this pool by default.
+            </Text>
+          </Fade>
+        </Skeleton>
         <Box overflowX="auto">
-          <Table mt={8} size="sm" variant="simple" mb="9">
-            <Thead>
+          <Table mt={8} size="sm" variant="unstyled" mb="9">
+            <Thead sx={{ tr: { borderBottomColor: 'gray.900', borderBottomWidth: '1px' } }}>
               <Tr>
-                <Th color="whiteAlpha.800" pb="2">
+                <Th color="gray.500" fontSize="xs" lineHeight="4" pb="3" textTransform="initial">
                   Collateral
                 </Th>
-                <Th color="whiteAlpha.800" pb="2">
+                <Th color="gray.500" fontSize="xs" lineHeight="4" pb="3" textTransform="initial">
                   Debt
                 </Th>
-                <Th color="whiteAlpha.800" pb="2">
+                <Th color="gray.500" fontSize="xs" lineHeight="4" pb="3" textTransform="initial">
                   C-Ratio
                 </Th>
-                <Th color="whiteAlpha.800" pb="2">
+                <Th color="gray.500" fontSize="xs" lineHeight="4" pb="3" textTransform="initial">
                   Issuance Ratio
                 </Th>
-                <Th color="whiteAlpha.800" pb="2">
+                <Th color="gray.500" fontSize="xs" lineHeight="4" pb="3" textTransform="initial">
                   Liquidation Ratio
                 </Th>
-                <Th color="whiteAlpha.800" pb="2"></Th>
+                <Th
+                  color="gray.500"
+                  fontSize="xs"
+                  lineHeight="4"
+                  pb="2"
+                  textTransform="initial"
+                ></Th>
               </Tr>
             </Thead>
-            <Tbody>
+            <Tbody sx={{ tr: { borderBottomColor: 'gray.900', borderBottomWidth: '1px' } }}>
               {preferredPool && collateralTypes ? (
-                collateralTypes.map((c) => (
-                  <VaultRow key={c.tokenAddress} collateralType={c} poolId={preferredPool.id} />
-                ))
+                <>
+                  {collateralTypes.map((c) => (
+                    <VaultRow key={c.tokenAddress} collateralType={c} poolId={preferredPool.id} />
+                  ))}
+                  <Divider />
+                </>
               ) : (
                 <>
                   <LoadingRow />
@@ -201,15 +181,20 @@ export function HomeUi({
 }
 
 export function Home() {
-  const { data: accounts = [] } = useAccounts();
-  const { data: collateralTypes = [] } = useCollateralTypes();
-  const { data: preferredPool } = usePreferredPool();
+  const { data: accounts = [], isLoading: accountsLoading } = useAccounts();
+  const { data: collateralTypes = [], isLoading: collateralTypesLoading } = useCollateralTypes();
+  const { data: preferredPool, isLoading: preferredPoolLoading } = usePreferredPool();
 
   const params = useParams();
   const navigate = useNavigate();
 
   const [accountId] = accounts;
-  const { data: liquidityPositionsById } = useLiquidityPositions({
+
+  const {
+    data: liquidityPositionsById,
+    isLoading: liquidityPositionLoading,
+    isInitialLoading: liquidityInitialLoading,
+  } = useLiquidityPositions({
     accountId: params.accountId,
   });
 
@@ -223,6 +208,12 @@ export function Home() {
   }, [navigate, accountId, params.accountId]);
 
   const title = 'Synthetix V3';
+  const isLoading =
+    accountsLoading ||
+    collateralTypesLoading ||
+    preferredPoolLoading ||
+    (liquidityPositionLoading && liquidityInitialLoading);
+
   return (
     <>
       <Helmet>
@@ -230,13 +221,15 @@ export function Home() {
         <meta name="description" content={title} />
       </Helmet>
       <HomeUi
+        isLoading={isLoading}
         liquidityPositions={
           liquidityPositionsById ? Object.values(liquidityPositionsById) : undefined
         }
         collateralTypes={collateralTypes}
-        VaultRow={VaultRow}
         preferredPool={preferredPool}
         navigate={navigate}
+        VaultRow={VaultRow}
+        Stats={Stats}
       />
     </>
   );

@@ -11,3 +11,4 @@ export * from './WalletIcon';
 export * from './LogoIcon';
 export * from './DollarCircle';
 export * from './BorrowIcon';
+export * from './ArrowLeft';

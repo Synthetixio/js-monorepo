@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Text, Button } from '@chakra-ui/react';
 import { useParams } from '@snx-v3/useParams';
 import { FC, useEffect } from 'react';
 import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
@@ -8,24 +8,66 @@ import { BorderBox } from '@snx-v3/BorderBox';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { PoolBox } from '@snx-v3/PoolBox';
 import { Welcome } from '../../components/shared/Welcome';
+import { ArrowLeft, CollateralIcon } from '@snx-v3/icons';
 
 const DepositUi: FC<{ collateralDisplaySymbol?: string; DepositForm: FC; PoolBox: FC }> = ({
   collateralDisplaySymbol,
   PoolBox,
   DepositForm,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <Flex height="100%" flexDirection="column">
-      <Welcome />
-      <Divider mt={4} bg="gray.900" />
-      <Flex mt={8} alignItems="stretch" flexWrap={{ base: 'wrap', md: 'nowrap' }} gap={4}>
-        <BorderBox flexGrow={1} p={4}>
-          <Heading fontSize="xl">Deposit Collateral</Heading>
-          <Text fontSize="sm">
+      <Button
+        variant="link"
+        color="cyan.500"
+        fontFamily="heading"
+        fontSize="sm"
+        as={Flex}
+        justifyContent="flex-start"
+        p={4}
+        width="fit-content"
+        onClick={() => navigate({ pathname: '/' })}
+        _hover={{ cursor: 'pointer', textDecoration: 'underline' }}
+      >
+        <ArrowLeft width="14px" height="14px" mr={2} />
+        Home
+      </Button>
+      <Welcome
+        Banner={() => {
+          return (
+            <Flex alignItems="center">
+              <Box
+                mr={2}
+                bg="linear-gradient(180deg, #08021E 0%, #1F0777 146.21%)"
+                p="3px"
+                borderRadius="50px"
+              >
+                <CollateralIcon
+                  width="30px"
+                  height="30px"
+                  symbol={collateralDisplaySymbol || 'SNX'}
+                  fill="#0B0B22"
+                  color="#00D1FF"
+                />
+              </Box>
+              <Heading>{collateralDisplaySymbol} Vault</Heading>
+            </Flex>
+          );
+        }}
+      />
+      <Divider my={8} bg="gray.900" />
+      <Flex alignItems="stretch" flexWrap={{ base: 'wrap', md: 'nowrap' }} gap={4}>
+        <BorderBox flexGrow={1} p={4} flexDirection="column">
+          <Heading fontSize="xl" color="gray.50">
+            Deposit Collateral
+          </Heading>
+          <Text fontSize="sm" color="gray.500" my={1}>
             Take an interest-free loan against your collateral. This increases your debt and
             decreases your C-Ratio.
           </Text>
-          <Heading mt={4} mb={2} size="sm">
+          <Heading mt={4} mb={2} size="sm" color="gray.50">
             Deposit {collateralDisplaySymbol}
           </Heading>
           <DepositForm />
@@ -45,6 +87,7 @@ export const Deposit = () => {
 
   const { data: accounts = [] } = useAccounts();
   const [accountId] = accounts;
+
   useEffect(() => {
     if (!params.accountId && accountId && params.collateralSymbol && params.poolId) {
       navigate({
