@@ -77,7 +77,7 @@ export const WithdrawModalUi: FC<{
             onClick={onSubmit}
             width="100%"
             my="4"
-            data-testid="withdraw submit button"
+            data-testid="withdraw confirm button"
           >
             {(() => {
               switch (true) {
