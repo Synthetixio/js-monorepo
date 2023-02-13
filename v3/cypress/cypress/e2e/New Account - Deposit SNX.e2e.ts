@@ -9,7 +9,7 @@ it('creates new account with first deposit of SNX', () => {
   cy.viewport(800, 800);
   cy.visit(
     generatePath('/deposit/:collateralSymbol/:poolId', {
-      poolId: 1,
+      poolId: '1',
       collateralSymbol: 'SNX',
     })
   );
@@ -19,8 +19,7 @@ it('creates new account with first deposit of SNX', () => {
   cy.get('[data-testid="deposit collateral"]').should('be.enabled').click();
 
   cy.get('[data-testid="deposit modal"]')
-    .should('include.text', 'Wrap')
-    .and('include.text', 'Approve SNX transfer')
+    .should('include.text', 'Approve SNX transfer')
     .and('include.text', 'Deposit SNX');
 
   cy.get('[data-testid="deposit confirm button"]').should('include.text', 'Start').click();

@@ -7611,8 +7611,10 @@ __metadata:
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useWrapEth": "workspace:*"
     "@synthetixio/wei": "workspace:*"
+    "@xstate/react": ^3.1.2
     react: ^18.2.0
     react-router-dom: ^6.6.2
+    xstate: ^4.35.4
   languageName: unknown
   linkType: soft
 
@@ -7707,6 +7709,26 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.2.8
     "@synthetixio/wei": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/WithdrawModal@workspace:*, @snx-v3/WithdrawModal@workspace:v3/components/WithdrawModal":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/WithdrawModal@workspace:v3/components/WithdrawModal"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v3/Amount": "workspace:*"
+    "@snx-v3/ManagePositionContext": "workspace:*"
+    "@snx-v3/Multistep": "workspace:*"
+    "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useLiquidityPosition": "workspace:*"
+    "@snx-v3/useParams": "workspace:*"
+    "@snx-v3/useWithdraw": "workspace:*"
+    "@snx-v3/useWrapEth": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@xstate/react": ^3.1.2
+    react: ^18.2.0
+    xstate: ^4.35.4
   languageName: unknown
   linkType: soft
 
@@ -7835,6 +7857,7 @@ __metadata:
     "@snx-v3/PoolBox": "workspace:*"
     "@snx-v3/RepayModal": "workspace:*"
     "@snx-v3/TrendText": "workspace:*"
+    "@snx-v3/WithdrawModal": "workspace:*"
     "@snx-v3/calculations": "workspace:*"
     "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
@@ -7867,6 +7890,7 @@ __metadata:
     "@storybook/builder-webpack5": ^6.5.15
     "@storybook/manager-webpack5": ^6.5.15
     "@storybook/react": ^6.5.15
+    "@synthetixio/safe-import": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
     "@synthetixio/wei": "workspace:*"
@@ -8262,6 +8286,23 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     zod: ^3.20.2
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useWithdraw@workspace:*, @snx-v3/useWithdraw@workspace:v3/lib/useWithdraw":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useWithdraw@workspace:v3/lib/useWithdraw"
+  dependencies:
+    "@snx-v3/txnReducer": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/useGasOptions": "workspace:*"
+    "@snx-v3/useGasPrice": "workspace:*"
+    "@snx-v3/useGasSpeed": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -13202,6 +13243,25 @@ __metadata:
     undici: ^5.10.0
     web-streams-polyfill: ^3.2.0
   checksum: 0d90790355d649fa76507a1cb6a1b72f991b57f57d01c96dfd6a0d3acd1a601dd73480e8ed115493c2e5f4a32e8713eb949c26efadd76e5aeba8a484fa58447b
+  languageName: node
+  linkType: hard
+
+"@xstate/react@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "@xstate/react@npm:3.1.2"
+  dependencies:
+    use-isomorphic-layout-effect: ^1.0.0
+    use-sync-external-store: ^1.0.0
+  peerDependencies:
+    "@xstate/fsm": ^2.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    xstate: ^4.35.4
+  peerDependenciesMeta:
+    "@xstate/fsm":
+      optional: true
+    xstate:
+      optional: true
+  checksum: 29aa0e269900a95c11f63a4ab66bc15b5876f26d3973e917409cf905f5df820b3a380aa5ad523d3e9b2e22b8177ccdf8f8ee5d3eab87cdd49223e080c4bbd627
   languageName: node
   linkType: hard
 
@@ -34646,7 +34706,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-isomorphic-layout-effect@npm:^1.1.1":
+"use-isomorphic-layout-effect@npm:^1.0.0, use-isomorphic-layout-effect@npm:^1.1.1":
   version: 1.1.2
   resolution: "use-isomorphic-layout-effect@npm:1.1.2"
   peerDependencies:
@@ -36098,6 +36158,13 @@ __metadata:
   version: 2.2.0
   resolution: "xmlchars@npm:2.2.0"
   checksum: 8c70ac94070ccca03f47a81fcce3b271bd1f37a591bf5424e787ae313fcb9c212f5f6786e1fa82076a2c632c0141552babcd85698c437506dfa6ae2d58723062
+  languageName: node
+  linkType: hard
+
+"xstate@npm:^4.35.4":
+  version: 4.35.4
+  resolution: "xstate@npm:4.35.4"
+  checksum: 92fcf15e80c9726002d24ef8f01595058e44b44d7ecad0cce933dc9f9ef89a73c57cba02af68817be42f504a80425daeb248f38158a80b5f12771f6fe408fca5
   languageName: node
   linkType: hard
 

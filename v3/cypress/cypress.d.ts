@@ -9,7 +9,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       mount: typeof mount;
-      connectWallet: (namespace?: string) => typeof ethers.Wallet;
+      connectWallet: (namespace?: string) => Promise<ethers.Wallet>;
     }
   }
 }

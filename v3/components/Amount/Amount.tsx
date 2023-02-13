@@ -7,10 +7,12 @@ export function Amount({
   value,
   prefix = '',
   suffix = '',
+  'data-testid': testid,
 }: {
   prefix?: string;
   value?: Wei;
   suffix?: string;
+  'data-testid'?: string;
 }) {
   const { formattedValue, preciseValue } = useMemo(() => {
     if (!value) {
@@ -35,7 +37,7 @@ export function Amount({
       }
       isDisabled={formattedValue === preciseValue}
     >
-      <span>
+      <span data-testid={testid}>
         {prefix}
         {formattedValue}
         {suffix}
