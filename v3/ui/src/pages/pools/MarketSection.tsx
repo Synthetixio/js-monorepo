@@ -102,7 +102,7 @@ export function MarketSectionUi({
     );
   }
   return (
-    <BorderBox padding={4}>
+    <BorderBox padding={4} data-testid="pool markets">
       <Text fontSize="xl" fontWeight={700}>
         Markets
       </Text>
