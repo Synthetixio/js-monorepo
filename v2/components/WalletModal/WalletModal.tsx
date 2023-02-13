@@ -1,4 +1,4 @@
-import { FC, useContext, ReactElement } from 'react';
+import { FC, useContext } from 'react';
 import {
   Box,
   Button,
@@ -14,29 +14,16 @@ import {
   Text,
   useClipboard,
   Avatar,
-  Image,
 } from '@chakra-ui/react';
 import { ContractContext } from '@snx-v2/ContractContext';
-import { formatNumber, formatNumberToUsd, truncateAddress } from '@snx-v2/formatters';
-import { CopyIcon, OpenInNew, SNXIcon } from '@snx-v2/icons';
+import { truncateAddress } from '@snx-v2/formatters';
+import { CopyIcon, OpenInNew } from '@snx-v2/icons';
 import { getEtherscanBaseUrl } from '@snx-v2/txnLink';
-import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
-import { useDebtData } from '@snx-v2/useDebtData';
-import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
-import { useGetSynthsByName } from '@snx-v2/synthsByName';
-import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
 import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
-
-type BalanceObject = {
-  currencyKey: string;
-  balance: number;
-  usdBalance: number;
-  icon?: ReactElement;
-  description?: string;
-};
+import { Balances } from './Balances';
 
 export const WalletModalUi: FC<{
   isOpen: boolean;
@@ -46,14 +33,14 @@ export const WalletModalUi: FC<{
   ensName: string | null;
   walletAddress: string | null;
   networkId: number | null;
-  balances?: BalanceObject[];
+  Balances: FC;
 }> = ({
   isOpen,
   onClose,
   disconnectWallet,
   networkId,
   walletAddress,
-  balances,
+  Balances,
   walletType,
   ensName,
 }) => {
@@ -118,57 +105,8 @@ export const WalletModalUi: FC<{
               </Link>
             </Flex>
           </Box>
-          <Box
-            my={2}
-            px={4}
-            py={3}
-            bg="black"
-            border="1px"
-            borderColor="gray.800"
-            borderRadius="base"
-          >
-            {balances?.map(({ usdBalance, balance, icon, currencyKey, description }) => {
-              return (
-                <Flex my={2} key={currencyKey} alignItems="center" justifyContent="space-between">
-                  <Flex>
-                    <Flex display="flex" alignItems="center" mr={1}>
-                      {icon}
-                    </Flex>
-                    <Flex ml={1} flexDirection="column">
-                      <Text fontSize="sm" lineHeight="shorter">
-                        {currencyKey}
-                      </Text>
-                      {description && (
-                        <Text fontSize="xs" mt={0.1} color="gray.800">
-                          {description}
-                        </Text>
-                      )}
-                    </Flex>
-                  </Flex>
-                  <Flex flexDirection="column">
-                    <Text fontSize="sm" textAlign="right">
-                      {formatNumber(balance)}
-                    </Text>
-                    <Text fontSize="xs" color="gray.800" textAlign="right">
-                      {formatNumberToUsd(usdBalance)}
-                    </Text>
-                  </Flex>
-                </Flex>
-              );
-            })}
-            <Button
-              display="block"
-              width="100%"
-              variant="ghost"
-              onClick={() => {
-                onClose();
-                navigate('/wallet');
-              }}
-              margin="0 auto"
-            >
-              {t('staking-v2.wallet-modal.view-all')}
-            </Button>
-          </Box>
+          <Balances />
+
           <Divider my={4} />
           <Button
             w="full"
@@ -206,49 +144,12 @@ export const WalletModal: FC<{
 }> = (props) => {
   const { walletAddress, networkId, walletType, ensName } = useContext(ContractContext);
 
-  const { data: synthBalancesData } = useSynthsBalances();
-  const { data: debtData } = useDebtData();
-  const { data: exchangeRateData } = useExchangeRatesData();
-  const { data: synthByNameData } = useGetSynthsByName();
-
-  const snxBalance: BalanceObject | undefined =
-    debtData && exchangeRateData
-      ? {
-          currencyKey: 'SNX',
-          balance: debtData.collateral.toNumber(),
-          usdBalance: debtData.collateral.mul(exchangeRateData.SNX || 0).toNumber(),
-          icon: <SNXIcon width="34px" height="34px" />,
-          description: 'Synthetix Network Token',
-        }
-      : undefined;
-
-  const synthBalances = synthBalancesData?.balances.slice(0, 5).map((x) => {
-    const assetDescription = synthByNameData?.SynthsByName?.[x.currencyKey]?.description;
-    const description = assetDescription ? `Synthetic ${assetDescription}` : undefined;
-    return {
-      currencyKey: x.currencyKey,
-      balance: x.balance.toNumber(),
-      usdBalance: x.usdBalance.toNumber(),
-      icon: (
-        <Image
-          width="34px"
-          height="34px"
-          alt={x.currencyKey}
-          src={getPngSynthIconUrl(x.currencyKey)}
-        />
-      ),
-      description,
-    };
-  });
-
-  const balances = snxBalance && synthBalances ? [snxBalance].concat(synthBalances) : undefined;
-
   return (
     <WalletModalUi
       {...props}
       ensName={ensName}
       walletType={walletType}
-      balances={balances}
+      Balances={Balances}
       walletAddress={walletAddress}
       networkId={networkId}
     />
