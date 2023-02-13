@@ -42,7 +42,7 @@ import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { WalletModal } from '@snx-v2/WalletModal';
 import { ContractContext } from '@snx-v2/ContractContext';
-import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -86,7 +86,7 @@ export const NavigationUI = ({
   ensName,
 }: NavigationProps) => {
   const { t } = useTranslation();
-
+  const { delegateWallet } = useDelegateWallet();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { name, icon } = activeIcon(currentNetwork);
   const navigate = useNavigate();
@@ -111,20 +111,6 @@ export const NavigationUI = ({
     >
       <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
       <Flex alignItems="center">
-        <Button
-          variant="outline"
-          colorScheme="gray"
-          height={10}
-          fontSize="sm"
-          py="6px"
-          px="9.5px"
-          onClick={() => {
-            window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'false';
-            window.location.reload();
-          }}
-        >
-          {size === 'mobile' ? 'Old App' : 'Back to old app'}
-        </Button>
         {isWalletConnected && walletAddress && (
           <>
             {size === 'desktop' && (
@@ -201,6 +187,23 @@ export const NavigationUI = ({
                 {ensName ? ensName : truncateAddress(walletAddress, 4, 4)}
               </Text>
             </Button>
+            {delegateWallet && (
+              <Button
+                variant="outline"
+                colorScheme="gray"
+                ml={2}
+                height={10}
+                py="6px"
+                px="9.5px"
+                onClick={onOpen}
+                fontSize="sm"
+              >
+                Delegate mode:
+                <Text ml={1} variant="nav" fontWeight={700} fontSize="sm" userSelect="none">
+                  {truncateAddress(delegateWallet.address, 4, 4)}
+                </Text>
+              </Button>
+            )}
           </>
         ) : (
           <Button
