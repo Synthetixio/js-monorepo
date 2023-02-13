@@ -50,7 +50,6 @@ const V2Home = () => {
                   color="cyan.500"
                   textDecoration="underline"
                   ml={1}
-                  as="span"
                   href="https://staking.synthetix.eth.limo/"
                   target="_blank"
                 >
