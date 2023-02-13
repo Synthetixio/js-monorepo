@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'PerpsV2OffchainDelayedOrderBTCPERP';
-export const address = '0x9D31529A79dF07a723Cdc4E7e11FaB42decc4043';
+export const address = '0x9335fAb54147265A4Cce5333455adceA2b241194';
 export const source = 'PerpsV2MarketDelayedOrdersOffchain';
 export const abi = [
   'constructor(address _proxy, address _marketState, address _owner, address _resolver)',

@@ -45,4 +45,13 @@ export const SynthsByName: Partial<
     name: 'sLINK',
     subclass: 'MultiCollateralSynth',
   },
+  sETHBTC: {
+    asset: 'ETHBTC',
+    category: 'crypto',
+    sign: '',
+    description: 'ETHBTC Ratio',
+    feed: '0x0',
+    name: 'sETHBTC',
+    subclass: 'MultiCollateralSynth',
+  },
 };
