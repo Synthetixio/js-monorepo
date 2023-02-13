@@ -32,6 +32,7 @@ import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 import { MintHeader } from './MintHeader';
 import { leftColWidth, rightColWidth } from './layout';
 import { MintLinks } from './MintLinks';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -46,6 +47,7 @@ interface MintProps {
   gasError: Error | null;
   belowTargetError: boolean;
   isGasEnabledAndNotFetched: boolean;
+  canMint: boolean;
 }
 const StyledInput: FC<InputProps> = (props) => {
   return (
@@ -83,6 +85,7 @@ export const MintUi = ({
   gasError,
   belowTargetError,
   isGasEnabledAndNotFetched,
+  canMint,
 }: MintProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState(0);
@@ -228,6 +231,7 @@ export const MintUi = ({
             onSubmit();
           }}
           isDisabled={
+            !canMint ||
             stakeAmountSNX === '' ||
             Boolean(gasError) ||
             isGasEnabledAndNotFetched ||
@@ -241,11 +245,11 @@ export const MintUi = ({
   );
 };
 
-export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
+export const Mint: FC = () => {
   const [stakeAmountSNX, setStakeAmountSNX] = useState('');
   const [mintAmountSUSD, setMintAmountSUSD] = useState('');
   const queryClient = useQueryClient();
-
+  const { delegateWallet } = useDelegateWallet();
   const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
@@ -267,7 +271,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     txnHash,
   } = useMintMutation({
     amount: wei(mintAmountSUSD || 0).toBN(),
-    delegateAddress: delegateWalletAddress,
+    delegateAddress: delegateWallet?.address,
     toMax: wei(stakeAmountSNX || 0).gte(formatNumber(unstakedSnx.toNumber())),
   });
 
@@ -294,6 +298,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       >
         <Box width={{ base: 'full', md: leftColWidth }}>
           <MintUi
+            canMint={delegateWallet ? delegateWallet.canMint : true}
             isLoading={isLoading}
             stakeAmountSNX={stakeAmountSNX}
             mintAmountsUSD={mintAmountSUSD}
