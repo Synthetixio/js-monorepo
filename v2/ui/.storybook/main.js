@@ -13,6 +13,9 @@ require.resolve('@storybook/addon-links');
 require.resolve('@storybook/builder-webpack5');
 require.resolve('@storybook/manager-webpack5');
 
+const custom = require('../webpack.config.js');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   stories: ['../../**/**/*.stories.tsx'],
 
@@ -32,10 +35,25 @@ module.exports = {
     emotionAlias: false,
   },
 
-  webpackFinal: (config) => {
-    if (!isProd) {
-      config.plugins.push(new ReactRefreshWebpackPlugin());
-    }
-    return config;
+  webpackFinal: async (config) => {
+    return {
+      ...config,
+      module: { ...config.module, rules: custom.module.rules },
+      plugins: [
+        ...config.plugins,
+        ...custom.plugins.filter((plugin) => !(plugin instanceof HtmlWebpackPlugin)),
+      ],
+      resolve: {
+        ...config.resolve,
+        alias: {
+          ...config.resolve.alias,
+          ...custom.resolve.alias,
+        },
+        fallback: {
+          ...config.resolve.fallback,
+          ...custom.resolve.fallback,
+        },
+      },
+    };
   },
 };

@@ -1,0 +1,11 @@
+{
+  "name": "@snx-v3/calculations",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@snx-v3/usePoolData": "workspace:*",
+    "@synthetixio/wei": "workspace:*",
+    "zod": "^3.20.2"
+  }
+}

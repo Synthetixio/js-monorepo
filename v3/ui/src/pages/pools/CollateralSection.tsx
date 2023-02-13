@@ -1,105 +1,173 @@
-import { Box, Spinner, Text, Flex, Button } from '@chakra-ui/react';
-import { useVaultCollaterals } from '@snx-v3/useVaultCollaterals';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Text, Flex, Tooltip, Box, Skeleton } from '@chakra-ui/react';
+import { useVaultsData } from '@snx-v3/useVaultsData';
 import { FC } from 'react';
 import { wei } from '@synthetixio/wei';
-import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
-import { AccountVaultCollateral } from './AccountVaultCollateral';
-import { CollateralType } from '@snx-v3/useCollateralTypes';
+import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
+import { useParams } from '@snx-v3/useParams';
+import { BorderBox } from '@snx-v3/BorderBox';
+import { InfoIcon } from '@chakra-ui/icons';
+import { usePoolData } from '@snx-v3/usePoolData';
+import { CollateralIcon } from '@snx-v3/icons';
 
-const calculateTvl = (vaultCollaterals: ReturnType<typeof useVaultCollaterals>['data']) => {
-  const zeroValues = { value: wei(0), amount: wei(0) };
-  if (!vaultCollaterals) return zeroValues;
-  return vaultCollaterals.reduce((acc, { value, amount }) => {
-    acc.value = acc.value.add(value);
-    acc.amount = acc.amount.add(amount);
+export const calculateVaultTotals = (vaultsData: ReturnType<typeof useVaultsData>['data']) => {
+  const zeroValues = { collateral: { value: wei(0), amount: wei(0) }, debt: wei(0) };
+  if (!vaultsData) return zeroValues;
+  return vaultsData.reduce((acc, { collateral, debt }) => {
+    acc.collateral = {
+      value: acc.collateral.value.add(collateral.value),
+      amount: acc.collateral.amount.add(collateral.amount),
+    };
+    acc.debt = acc.debt.add(debt);
     return acc;
   }, zeroValues);
 };
 export const CollateralSectionUi: FC<{
-  vaultCollaterals: ReturnType<typeof useVaultCollaterals>['data'];
-  accountId?: string;
-  AccountVaultCollateral: FC<{ collateral: CollateralType }>;
-}> = ({ vaultCollaterals, accountId, AccountVaultCollateral }) => {
-  const navigate = useNavigate();
-  if (!vaultCollaterals) return <Spinner />;
-  const tvl = calculateTvl(vaultCollaterals);
+  vaultsData: ReturnType<typeof useVaultsData>['data'];
+  poolName?: string;
+}> = ({ vaultsData, poolName }) => {
+  const { collateral: totalCollateral, debt: totalDebt } = calculateVaultTotals(vaultsData);
   return (
-    <Box mt={4} borderColor="gray.900" borderWidth="1px" borderRadius="base" padding={4}>
+    <BorderBox padding={4}>
       <Text fontWeight={700} fontSize="xl">
         Collateral Types
       </Text>
-      <Box
-        borderColor="gray.900"
-        borderWidth="1px"
-        borderRadius="base"
-        padding={4}
-        bg="whiteAlpha.50"
-        mb={2}
-      >
-        <Text fontWeight={700} fontSize="xl" color="gray.500">
-          TOTAL POOL TVL
-        </Text>
-        <Text fontWeight={700} fontSize="2xl" color="white">
-          {formatNumberToUsd(tvl.value.toNumber())}
-        </Text>
-      </Box>
-      <Flex justifyContent="space-between">
-        {vaultCollaterals.map((vaultCollateral) => (
-          <Flex
-            key={vaultCollateral.collateralType.tokenAddress}
-            bg="whiteAlpha.50"
-            borderColor="gray.900"
-            borderWidth="1px"
-            borderRadius="base"
-            paddingX={4}
-            paddingY={2}
-            width="48%"
-            flexDirection="column"
+      <Text color="gray.400" fontSize="sm">
+        {poolName}
+      </Text>
+      <BorderBox padding={4} mt={4}>
+        <Flex
+          justifyContent="space-between"
+          flexDirection={{ base: 'row', md: 'column', lg: 'row' }}
+        >
+          <Text
+            display="flex"
+            alignItems="center"
+            fontWeight={700}
+            fontSize="md"
+            gap={1}
+            color="white"
           >
-            <Text fontWeight={800} color="white" fontSize="2xl">
-              {vaultCollateral.collateralType.symbol}
+            TOTAL TVL
+            <Tooltip label="Total TVL for Pool">
+              <InfoIcon w="10px" h="10px" />
+            </Tooltip>
+          </Text>
+          {vaultsData === undefined ? (
+            <Skeleton w={16} h={6} />
+          ) : (
+            <Text fontWeight={700} fontSize="xl" color="white">
+              {formatNumberToUsd(totalCollateral.value.toNumber())}
             </Text>
-            <Text fontSize="sm" color="gray.400" fontWeight="400">
-              Price
+          )}
+        </Flex>
+        <Flex
+          justifyContent="space-between"
+          flexDirection={{ base: 'row', md: 'column', lg: 'row' }}
+        >
+          <Text
+            display="flex"
+            alignItems="center"
+            fontWeight={700}
+            fontSize="md"
+            gap={1}
+            color="white"
+          >
+            TOTAL DEBT
+            <Tooltip label="Total TVL for Pool">
+              <InfoIcon w="10px" h="10px" />
+            </Tooltip>
+          </Text>
+          {vaultsData === undefined ? (
+            <Skeleton mt={1} w={16} h={6} />
+          ) : (
+            <Text fontWeight={700} fontSize="xl" color="white">
+              {formatNumberToUsd(totalDebt.toNumber())}
             </Text>
-            <Text fontSize="xs" color="gray.400" fontWeight="400">
-              {vaultCollateral.collateralType.price
-                ? formatNumberToUsd(vaultCollateral.collateralType.price.toNumber())
-                : '-'}
-            </Text>
-            <Text mt={2} fontSize="sm" fontWeight="700" color="gray.500">
-              TVL
-            </Text>
-            <Text fontSize="xl" fontWeight={700} color="white">
-              {formatNumber(vaultCollateral.amount.toNumber())}{' '}
-              {vaultCollateral.collateralType.symbol}
-            </Text>
-            <Text fontSize="sm" color="gray.500" fontWeight="400">
-              {formatNumberToUsd(vaultCollateral.value.toNumber())}
-            </Text>
-            {accountId ? (
-              <AccountVaultCollateral collateral={vaultCollateral.collateralType} />
-            ) : (
-              <Button onClick={() => navigate('/')}>Deposit</Button>
-            )}
-          </Flex>
-        ))}
+          )}
+        </Flex>
+      </BorderBox>
+      <Flex flexDirection="column" justifyContent="space-between">
+        {!vaultsData ? (
+          <Box>
+            <Skeleton mt={4} w="full" height={24} />
+            <Skeleton mt={2} w="full" height={24} />
+          </Box>
+        ) : (
+          vaultsData.map((vaultCollateral) => {
+            return (
+              <Box
+                key={vaultCollateral.collateralType.tokenAddress}
+                display="flex"
+                paddingX={4}
+                paddingY={2}
+                flexDirection="column"
+                borderBottom="1px"
+                borderColor="gray.900"
+                _last={{ borderBottom: 'none' }}
+              >
+                <Flex color="white" display="flex" gap={1} alignItems="center">
+                  <CollateralIcon
+                    width="30px"
+                    height="30px"
+                    symbol={vaultCollateral.collateralType.symbol}
+                  />
+                  <Text fontWeight={700} fontSize="xl">
+                    {vaultCollateral.collateralType.displaySymbol}
+                  </Text>
+                  <Text fontSize="sm" color="gray.400" fontWeight="400">
+                    {vaultCollateral.collateralType.price
+                      ? formatNumberToUsd(vaultCollateral.collateralType.price.toNumber())
+                      : '-'}
+                  </Text>
+                </Flex>
+                <Flex justifyContent="space-between">
+                  <Flex flexBasis="50%" flexDirection="column">
+                    <Text mt={2} fontSize="sm" color="gray.500">
+                      Total Value Locked
+                    </Text>
+                    <Text fontSize="md" fontWeight={700} color="white">
+                      {formatNumber(vaultCollateral.collateral.amount.toNumber())}{' '}
+                      {vaultCollateral.collateralType.displaySymbol}
+                    </Text>
+                    <Text fontSize="sm" color="gray.500" fontWeight="400">
+                      {formatNumberToUsd(vaultCollateral.collateral.value.toNumber())}
+                    </Text>
+                  </Flex>
+                  <Flex flexBasis="30%" flexDirection="column">
+                    <Text mt={2} fontSize="sm" color="gray.500">
+                      Vault Debt
+                    </Text>
+                    <Text fontSize="md" fontWeight={700} color="white">
+                      {formatNumberToUsd(vaultCollateral.debt.toNumber())}
+                    </Text>
+                  </Flex>
+                  <Flex flexBasis="20%" flexDirection="column">
+                    <Text mt={2} fontSize="sm" color="gray.500">
+                      C-Ratio
+                    </Text>
+                    <Text fontSize="md" fontWeight={700} color="white">
+                      {vaultCollateral.debt.eq(0)
+                        ? '-'
+                        : formatPercent(
+                            vaultCollateral.collateral.value.div(vaultCollateral.debt).toNumber(),
+                            { maximumFractionDigits: 0 }
+                          )}
+                    </Text>
+                  </Flex>
+                </Flex>
+              </Box>
+            );
+          })
+        )}
       </Flex>
-    </Box>
+    </BorderBox>
   );
 };
 export const CollateralSection = () => {
   const params = useParams();
-  const { data: vaultCollaterals } = useVaultCollaterals(
-    params.poolId ? parseFloat(params.poolId) : undefined
-  );
 
-  return (
-    <CollateralSectionUi
-      vaultCollaterals={vaultCollaterals}
-      accountId={params.accountId}
-      AccountVaultCollateral={AccountVaultCollateral}
-    />
-  );
+  const { data: vaultsData } = useVaultsData(params.poolId ? parseFloat(params.poolId) : undefined);
+  const { data: pool } = usePoolData(params.poolId);
+
+  return <CollateralSectionUi vaultsData={vaultsData} poolName={pool?.name} />;
 };

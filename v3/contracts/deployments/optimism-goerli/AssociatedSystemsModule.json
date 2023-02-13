@@ -1,159 +1,172 @@
 {
-  "address": "0x044F57ecccE4408840AAC19a0333a8C10F6593d7",
+  "address": "0x29294F606b84F819F7b8ee6d6C32E9f334E4934e",
   "abi": [
     {
-      "type": "error",
-      "name": "MismatchAssociatedSystemKind",
       "inputs": [
         {
-          "type": "bytes32",
-          "name": "expected"
+          "internalType": "bytes32",
+          "name": "expected",
+          "type": "bytes32"
         },
         {
-          "type": "bytes32",
-          "name": "actual"
-        }
-      ]
-    },
-    {
-      "type": "error",
-      "name": "Unauthorized",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "addr"
-        }
-      ]
-    },
-    {
-      "type": "event",
-      "anonymous": false,
-      "name": "AssociatedSystemSet",
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "kind",
-          "indexed": true
-        },
-        {
-          "type": "bytes32",
-          "name": "id",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "proxy",
-          "indexed": false
-        },
-        {
-          "type": "address",
-          "name": "impl",
-          "indexed": false
-        }
-      ]
-    },
-    {
-      "type": "function",
-      "name": "getAssociatedSystem",
-      "constant": true,
-      "stateMutability": "view",
-      "payable": false,
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "id"
+          "internalType": "bytes32",
+          "name": "actual",
+          "type": "bytes32"
         }
       ],
+      "name": "MismatchAssociatedSystemKind",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "Unauthorized",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "kind",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "proxy",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "impl",
+          "type": "address"
+        }
+      ],
+      "name": "AssociatedSystemSet",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getAssociatedSystem",
       "outputs": [
         {
-          "type": "address",
-          "name": "addr"
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
         },
         {
-          "type": "bytes32",
-          "name": "kind"
+          "internalType": "bytes32",
+          "name": "kind",
+          "type": "bytes32"
         }
-      ]
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "symbol",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "uri",
+          "type": "string"
+        },
+        {
+          "internalType": "address",
+          "name": "impl",
+          "type": "address"
+        }
+      ],
       "name": "initOrUpgradeNft",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "id"
-        },
-        {
-          "type": "string",
-          "name": "name"
-        },
-        {
-          "type": "string",
-          "name": "symbol"
-        },
-        {
-          "type": "string",
-          "name": "uri"
-        },
-        {
-          "type": "address",
-          "name": "impl"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "symbol",
+          "type": "string"
+        },
+        {
+          "internalType": "uint8",
+          "name": "decimals",
+          "type": "uint8"
+        },
+        {
+          "internalType": "address",
+          "name": "impl",
+          "type": "address"
+        }
+      ],
       "name": "initOrUpgradeToken",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "bytes32",
-          "name": "id"
-        },
-        {
-          "type": "string",
-          "name": "name"
-        },
-        {
-          "type": "string",
-          "name": "symbol"
-        },
-        {
-          "type": "uint8",
-          "name": "decimals"
-        },
-        {
-          "type": "address",
-          "name": "impl"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
-      "name": "registerUnmanagedSystem",
-      "constant": false,
-      "payable": false,
       "inputs": [
         {
-          "type": "bytes32",
-          "name": "id"
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
         },
         {
-          "type": "address",
-          "name": "endpoint"
+          "internalType": "address",
+          "name": "endpoint",
+          "type": "address"
         }
       ],
-      "outputs": []
+      "name": "registerUnmanagedSystem",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x1502fa9f98a40bb0bfe78a76b0f6340351158a5fd8fcb97f8b90d537aedd072c",
-  "sourceName": "contracts/modules/associated-systems/AssociatedSystemsModule.sol",
-  "contractName": "AssociatedSystemsModule",
-  "deployedOn": "contract.AssociatedSystemsModule"
+  "deployTxnHash": "0x85c2b18548923155a69febab0ff4c79fe9797a302955ae6dde7f2bd2f5aa4307"
 }

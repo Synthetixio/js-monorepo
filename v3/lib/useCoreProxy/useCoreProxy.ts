@@ -14,6 +14,7 @@ export async function importCoreProxy(chainName: string) {
       throw new Error(`Unsupported chain ${chainName}`);
   }
 }
+
 export const useCoreProxy = () => {
   const network = useNetwork();
   const provider = useProvider();
@@ -28,9 +29,10 @@ export const useCoreProxy = () => {
         | CoreProxyGoerli
         | CoreProxyOptimismGoerli;
     },
-    enabled: Boolean(network.name && signerOrProvider),
+    enabled: Boolean(network.isSupported && signerOrProvider),
     staleTime: Infinity,
     cacheTime: Infinity,
   });
 };
+
 export type CoreProxyContractType = CoreProxyGoerli | CoreProxyOptimismGoerli;

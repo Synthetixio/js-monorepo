@@ -16,6 +16,8 @@ module.exports = {
     '<rootDir>/v1/**/*.{js,jsx,ts,tsx}',
     '<rootDir>/v2/**/*.{js,jsx,ts,tsx}',
     '<rootDir>/v3/theme/**/*.{js,jsx,ts,tsx}',
+    '<rootDir>/v3/libs/**/*.{js,jsx,ts,tsx}',
+    '<rootDir>/v3/ui/**/*.{js,jsx,ts,tsx}',
     '!<rootDir>/**/*.d.ts',
     '!<rootDir>/**/*.test.{js,jsx,ts,tsx}',
     '!<rootDir>/v2/contracts',

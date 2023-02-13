@@ -1,54 +1,53 @@
 {
-  "address": "0x213Be0c12f4A3B0B9039D161f210d45975114891",
+  "address": "0xB5E3A230fDd1755Ea81b560e2b82262AB01A306c",
   "abi": [
     {
-      "type": "error",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
       "name": "Unauthorized",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "addr"
-        }
-      ]
+      "type": "error"
     },
     {
-      "type": "function",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "oracleManagerAddress",
+          "type": "address"
+        }
+      ],
       "name": "configureOracleManager",
-      "constant": false,
-      "payable": false,
-      "inputs": [
-        {
-          "type": "address",
-          "name": "oracleManagerAddress"
-        }
-      ],
-      "outputs": []
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      "type": "function",
-      "name": "registerCcip",
-      "constant": false,
-      "payable": false,
       "inputs": [
         {
-          "type": "address",
-          "name": "ccipSend"
+          "internalType": "address",
+          "name": "ccipSend",
+          "type": "address"
         },
         {
-          "type": "address",
-          "name": "ccipReceive"
+          "internalType": "address",
+          "name": "ccipReceive",
+          "type": "address"
         },
         {
-          "type": "address",
-          "name": "ccipTokenPool"
+          "internalType": "address",
+          "name": "ccipTokenPool",
+          "type": "address"
         }
       ],
-      "outputs": []
+      "name": "registerCcip",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x6f9626da1af48595b732866a33d6d6b750c500069371866c2b11a82c50a81549",
-  "sourceName": "contracts/modules/core/UtilsModule.sol",
-  "contractName": "UtilsModule",
-  "deployedOn": "contract.UtilsModule"
+  "deployTxnHash": "0xfc07fa0d1ae1b8093447f406cbbf9a7101344857c0bc4d620f0eb908bf9f7a23"
 }

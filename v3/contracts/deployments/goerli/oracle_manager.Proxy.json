@@ -411,9 +411,5 @@
         }
       ]
     }
-  ],
-  "deployTxnHash": "0x9da7ffda8dac78f60e8057bc7018167bc158f25815e1599c0c51ac3f344b3d8b",
-  "sourceName": "",
-  "contractName": "",
-  "deployedOn": "invoke.upgrade_proxy"
+  ]
 }

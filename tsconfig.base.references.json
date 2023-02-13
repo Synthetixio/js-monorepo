@@ -5,6 +5,7 @@
     "**/tests/**",
     "**/*.test.ts",
     "**/*.test.tsx",
+    "**/*.stories.tsx",
     "**/stories/**",
     "**/build/**",
     "**/dist/**"

@@ -1,0 +1,16 @@
+{
+  "name": "@snx-v3/useWrapEth",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@snx-v3/useBlockchain": "workspace:*",
+    "@snx-v3/useCollateralTypes": "workspace:*",
+    "@snx-v3/useEthBalance": "workspace:*",
+    "@snx-v3/useTokenBalance": "workspace:*",
+    "@synthetixio/wei": "workspace:*",
+    "@tanstack/react-query": "^4.3.4",
+    "ethers": "^5.7.2",
+    "react": "^18.2.0"
+  }
+}

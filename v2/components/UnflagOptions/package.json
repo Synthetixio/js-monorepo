@@ -13,6 +13,6 @@
     "@snx-v2/useSynthsBalances": "workspace:*",
     "@storybook/react": "^6.5.15",
     "react-i18next": "^11.18.3",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.6.2"
   }
 }

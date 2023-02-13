@@ -1,4 +1,9 @@
-import { ComponentStyleConfig, defineStyle, extendTheme } from '@chakra-ui/react';
+import {
+  ComponentMultiStyleConfig,
+  ComponentStyleConfig,
+  defineStyle,
+  extendTheme,
+} from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 
 const gradients = {
@@ -103,25 +108,80 @@ const Button: ComponentStyleConfig = {
     outline: (props) => {
       if (props.colorScheme === 'gray') {
         return {
-          color: 'white.500',
+          color: 'whiteAlpha.800',
           borderColor: 'gray.900',
+          _hover: { bg: 'rgba(255, 255, 255, 0.12)' }, // white 0.12 opacity
+          _active: { bg: 'rgba(255, 255, 255, 0.24)' }, //white 0.24 opacity
         };
       }
       return {
-        color: `${props.colorScheme}.500`,
+        color: 'cyan.500', // needed for storybook for some reason
+        border: '1px solid', // needed for storybook for some reason
+        borderColor: 'cyan.500', // needed for storybook for some reason
+        _hover: { bg: 'rgb(0, 209, 255, 0.12)' }, // cyan.500 0.12 opacity
+        _active: { bg: 'rgb(0, 209, 255, 0.24)' }, // cyan.500 0.24 opacity
       };
     },
-    ghost: (props) => ({
-      color: `${props.colorScheme}.500`,
-    }),
+    ghost: {
+      color: 'cyan.500', // needed for storybook for some reason
+      _hover: { bg: 'rgb(0, 209, 255, 0.12)' }, // cyan.500 0.12 opacity
+      _active: { bg: 'rgb(0, 209, 255, 0.24)' }, // cyan.500 0.24 opacity
+    },
   },
 };
+
+const Menu: ComponentMultiStyleConfig = {
+  parts: ['button', 'list', 'item'],
+  baseStyle: {
+    button: {
+      color: 'white',
+      span: {
+        display: 'flex',
+        alignItems: 'center',
+        px: 2,
+      },
+      height: '100%',
+    },
+    list: {
+      mt: 2,
+      bgColor: 'navy.900',
+      padding: 0,
+      border: 'none',
+      borderRadius: 'md',
+      py: 0,
+    },
+    item: {
+      bgColor: 'blackAlpha.300',
+      color: 'whiteAlpha.900',
+      p: 3,
+      _hover: {
+        bgColor: 'whiteAlpha.400',
+      },
+      _active: {
+        bgColor: 'navy.900',
+      },
+      _first: {
+        borderTopLeftRadius: 'md',
+        borderTopRightRadius: 'md',
+      },
+      _last: {
+        borderBottomLeftRadius: 'md',
+        borderBottomRightRadius: 'md',
+      },
+      _focus: {
+        bgColor: 'blackAlpha.400',
+      },
+    },
+  },
+};
+
 const Input: ComponentStyleConfig = {
   defaultProps: {
     focusBorderColor: 'cyan.500',
     errorBorderColor: 'red.500',
   },
 };
+
 const Select: ComponentStyleConfig = {
   defaultProps: {
     focusBorderColor: 'cyan.500',
@@ -129,6 +189,7 @@ const Select: ComponentStyleConfig = {
     errorBorderColor: 'red.500',
   },
 };
+
 const NumberInput: ComponentStyleConfig = {
   defaultProps: {
     focusBorderColor: 'cyan.500',
@@ -165,12 +226,14 @@ const Alert: ComponentStyleConfig = {
     },
   },
 };
+
 const Skeleton: ComponentStyleConfig = {
   defaultProps: {
     startColor: 'gray.900',
     endColor: 'gray.800',
   },
 };
+
 const Checkbox: ComponentStyleConfig = {
   defaultProps: {
     colorScheme: 'cyan',
@@ -200,6 +263,7 @@ const Checkbox: ComponentStyleConfig = {
     },
   },
 };
+
 const Radio: ComponentStyleConfig = {
   defaultProps: {
     colorScheme: 'cyan',
@@ -229,6 +293,7 @@ const Radio: ComponentStyleConfig = {
     },
   },
 };
+
 const Badge: ComponentStyleConfig = {
   defaultProps: {
     colorScheme: 'cyan',
@@ -245,8 +310,22 @@ const Badge: ComponentStyleConfig = {
       borderColor: `${props.colorScheme}.500`,
       color: `${props.colorScheme}.500`,
     }),
+    percent: {
+      color: 'cyan.500',
+      bg: 'whiteAlpha.300',
+      fontFamily: 'heading',
+      py: 1,
+      px: 2,
+      borderRadius: 'base',
+      borderWidth: '1px',
+      borderColor: 'transparent',
+      width: '100%',
+      textAlign: 'center',
+      userSelect: 'none',
+    },
   },
 };
+
 const Tag: ComponentStyleConfig = {
   defaultProps: {
     colorScheme: 'cyan',
@@ -261,6 +340,7 @@ const Tag: ComponentStyleConfig = {
     }),
   },
 };
+
 const Accordion: ComponentStyleConfig = {
   baseStyle: {
     container: {
@@ -468,6 +548,9 @@ export const theme = extendTheme({
       800: '#001F6F',
       900: '#0B0B22',
     },
+    error: '#FF4A60', // red.400,
+    success: '#34EDB3', //green.500
+    warning: '#FC8738', // orange.500
   },
   shadows: {
     outline: '0 0 0 3px rgba(0, 209, 255, 1)',
@@ -508,6 +591,7 @@ export const theme = extendTheme({
     Tooltip,
     Switch,
     Spinner,
+    Menu,
   },
   // To be imported and used with the bgGradient prop
   // See: https://chakra-ui.com/docs/styled-system/gradient#background-gradient-api
@@ -569,6 +653,16 @@ export const theme = extendTheme({
       md: '768px',
       lg: '1024px',
       xl: '1280px',
+    },
+  },
+  styles: {
+    global: {
+      body: {
+        bg: 'navy.900',
+        backgroundSize: '8px 8px',
+        backgroundImage:
+          'repeating-linear-gradient(135deg, rgba(48, 48, 55, 0.44) 0px, rgb(11, 11, 34) 1px, transparent 0px, transparent 50%);',
+      },
     },
   },
 });

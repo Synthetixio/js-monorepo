@@ -1,0 +1,19 @@
+{
+  "name": "@snx-v3/PoolBox",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.9",
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v3/BorderBox": "workspace:*",
+    "@snx-v3/TrendText": "workspace:*",
+    "@snx-v3/calculations": "workspace:*",
+    "@snx-v3/format": "workspace:*",
+    "@snx-v3/useParams": "workspace:*",
+    "@snx-v3/usePoolData": "workspace:*",
+    "@synthetixio/wei": "workspace:*",
+    "react": "^18.2.0",
+    "react-router-dom": "^6.6.2"
+  }
+}

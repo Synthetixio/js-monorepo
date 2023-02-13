@@ -1,7 +1,7 @@
 import '@cypress/code-coverage/support';
 import { ethers } from 'ethers';
 import { subgraph } from '../lib/subgraph';
-import { onLogAdded } from '../lib/onLogAdded';
+import { onLogAdded } from '@snx-cy/onLogAdded';
 
 beforeEach(() => {
   cy.on('log:added', onLogAdded);

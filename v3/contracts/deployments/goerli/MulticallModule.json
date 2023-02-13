@@ -1,29 +1,25 @@
 {
-  "address": "0x202aeb6Ad253c3b814D1679d14571ED57FD343db",
+  "address": "0x72737c0b21fc58285105b35fB5d84BE0788B6109",
   "abi": [
     {
-      "type": "function",
-      "name": "multicall",
-      "constant": false,
-      "stateMutability": "payable",
-      "payable": true,
       "inputs": [
         {
-          "type": "bytes[]",
-          "name": "data"
+          "internalType": "bytes[]",
+          "name": "data",
+          "type": "bytes[]"
         }
       ],
+      "name": "multicall",
       "outputs": [
         {
-          "type": "bytes[]",
-          "name": "results"
+          "internalType": "bytes[]",
+          "name": "results",
+          "type": "bytes[]"
         }
-      ]
+      ],
+      "stateMutability": "payable",
+      "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x798b16289a396250a8c8c261de8b5f20af2fad2e27842415dee1101e51e28593",
-  "sourceName": "contracts/modules/core/MulticallModule.sol",
-  "contractName": "MulticallModule",
-  "deployedOn": "contract.MulticallModule"
+  "deployTxnHash": "0x3cb46c2a9efe9f028f37070ae471e906cbed6b8e8c3289402e91068365fde803"
 }

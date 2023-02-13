@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { utils } from 'ethers';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@snx-v3/useParams';
 import { useAccount } from '@snx-v3/useBlockchain';
 import { useAccountRead, useSynthetixRead } from '../../../hooks/useDeploymentRead';
 import { useSynthetixProxyEvent } from '../../../hooks/useContractEvent';
@@ -35,8 +35,10 @@ export default function Permissions() {
     functionName: 'getAccountPermissions',
     args: [params.accountId],
     enabled: Boolean(params.accountId),
+    // @ts-ignore
     select: (data) => {
       return data.reduce(
+        // @ts-ignore
         (acc, { user, permissions }) => ({
           ...acc,
           [user]: permissions.map((r: string) => utils.parseBytes32String(r)),
@@ -48,12 +50,14 @@ export default function Permissions() {
 
   useEffect(() => {
     if (permissionData && !loadingAccountPermissions) {
+      // @ts-ignore
       setAccountPermissions(permissionData);
     }
   }, [loadingAccountPermissions, permissionData]);
 
   useSynthetixProxyEvent({
     eventName: 'PermissionGranted',
+    // @ts-ignore
     listener: (event) => {
       const [eventAccountId, permission, target] = event;
 
@@ -79,6 +83,7 @@ export default function Permissions() {
 
   useSynthetixProxyEvent({
     eventName: 'PermissionRevoked',
+    // @ts-ignore
     listener: (event) => {
       const [eventAccountId, permission, target] = event;
       if (params.accountId === eventAccountId.toString()) {
@@ -110,6 +115,7 @@ export default function Permissions() {
         </Heading>
         <Box ml="auto">
           {/* only render below if owner or has modify permissions */}
+          {/* @ts-ignore */}
           <PermissionsEditor />
         </Box>
       </Flex>

@@ -31,7 +31,7 @@ export const AddressInput = ({ address, onChange, readOnly = false }: Props) => 
         />
         {isValidAddress && (
           <InputRightElement>
-            <CheckIcon color="green.500" />
+            <CheckIcon color="success" />
           </InputRightElement>
         )}
       </InputGroup>

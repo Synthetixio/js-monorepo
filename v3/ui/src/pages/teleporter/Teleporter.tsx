@@ -6,7 +6,6 @@ import {
   Flex,
   Heading,
   Image,
-  Input,
   InputGroup,
   InputRightAddon,
   Menu,
@@ -18,20 +17,18 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { ethers } from 'ethers';
 import { useMemo, useState } from 'react';
 import Head from 'react-helmet';
-import { useContractWrite, useNetwork, useSwitchNetwork } from 'wagmi';
-import { useAccount } from '@snx-v3/useBlockchain';
-import { NumberInput } from '../../components/accounts/Position/Manage/NumberInput';
-import { Balance } from '../../components/accounts/Deposit/Balance';
+import { useSwitchNetwork } from 'wagmi';
+import { NumberInput } from '@snx-v3/NumberInput';
+import { Balance } from '@snx-v3/Balance';
 import { useContract } from '../../hooks/useContract';
-import { useApprove } from '@snx-v3/useApprove';
-import { useTokenBalance } from '../../hooks/useTokenBalance';
+import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { contracts } from '../../utils/constants';
-import { parseUnits } from '@snx-v3/format';
 import testnetIcon from './testnet.png';
-import { useSetTransactionState } from '@snx-v3/useTransactionState';
+import { TeleporterModal } from './TeleporterModal';
+import { useNetwork, useSigner } from '@snx-v3/useBlockchain';
+import { wei } from '@synthetixio/wei';
 
 const chains = [
   {
@@ -46,101 +43,35 @@ const chains = [
   },
 ];
 
-const encodeAddress = (address: string | undefined) => {
-  return address ? ethers.utils.defaultAbiCoder.encode(['address'], [address]) : undefined;
-};
-
 export const Teleporter = () => {
-  const { address } = useAccount();
+  const [isOpen, setIsOpen] = useState(false);
+
   const toast = useToast();
   const { openConnectModal } = useConnectModal();
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(wei(0));
 
   const { switchNetwork } = useSwitchNetwork();
-  const { chain: activeChain } = useNetwork();
-  const hasWalletConnected = Boolean(activeChain);
+  const network = useNetwork();
+  const signer = useSigner();
+  const hasWalletConnected = Boolean(signer);
 
-  const teleportChains = chains.sort((chain) => (chain.id === activeChain?.id ? -1 : 1));
+  const teleportChains = chains.sort((chain) => (chain.id === network?.id ? -1 : 1));
 
   const [from, setFrom] = useState(teleportChains[0].id);
   const [to, setTo] = useState(teleportChains[1].id);
 
-  const CCIP = useContract(contracts.CCIP, from);
-  const snxUsdProxy = useContract(contracts.SNX_USD_PROXY, from);
-  const balance = useTokenBalance(snxUsdProxy?.address, from);
+  const snxUsdProxy = useContract(contracts.SNX_USD_PROXY);
+  const tokenBalance = useTokenBalance(snxUsdProxy?.address, from);
 
   const fromChain = useMemo(() => chains.find((chain) => chain.id === from), [from]);
   const toChain = useMemo(() => chains.find((chain) => chain.id === to), [to]);
-
-  const { writeAsync: ccipSend, isLoading } = useContractWrite({
-    mode: 'recklesslyUnprepared',
-    address: CCIP?.address,
-    abi: CCIP?.abi,
-    functionName: 'ccipSend',
-    args: [
-      to,
-      [encodeAddress(address), '0x', [snxUsdProxy!.address], [parseUnits(amount, 0)], 100000],
-    ],
-  });
-
-  const { approve, requireApproval } = useApprove({
-    contractAddress: snxUsdProxy?.address,
-    amount: parseUnits(amount, 18),
-    spender: CCIP!.address,
-  });
-
-  const setTransactionState = useSetTransactionState();
-
-  const submit = async () => {
-    const transactions = [];
-
-    if (requireApproval) {
-      transactions.push({
-        title: 'Approve snxUSD transfer',
-        subtitle: '',
-        call: async (infiniteApproval?: boolean) => await approve(Boolean(infiniteApproval)),
-        checkboxLabel: requireApproval ? `Approve unlimited snxUSD transfers to Synthetix.` : '',
-        checked: false,
-      });
-    }
-
-    transactions.push({
-      title: 'Teleport snxUSD',
-      subtitle: `This will transfer your snxUSD to the ${toChain?.label} network.`,
-      call: async () => {
-        if (!ccipSend) {
-          return;
-        }
-        const txReceipt = await ccipSend();
-        toast.closeAll();
-        toast({
-          title: 'Teleportation initiated',
-          description: 'Your balance on the destination chain will be updated in a few minutes.',
-          status: 'info',
-          isClosable: true,
-          duration: 9000,
-        });
-        setAmount(0);
-        await txReceipt.wait();
-        balance.refetch();
-      },
-      checkboxLabel: '',
-      checked: false,
-    });
-
-    setTransactionState({
-      transactions,
-      isOpen: true,
-      onSuccess: () => null,
-    });
-  };
 
   return (
     <>
       <Head>
         <title>Teleport snxUSD</title>
       </Head>
-      <Container maxW="lg">
+      <Container mb="8" maxW="1024px" py="4">
         <Flex height="100%" direction="column" flex="1" py={[4, 6, 12]}>
           <Heading size="lg" mb="3">
             Teleport snxUSD
@@ -153,95 +84,89 @@ export const Teleporter = () => {
             <Text lineHeight="1" fontSize="sm" fontWeight={600} mb="2.5" color="gray.300">
               From
             </Text>
-            <form>
-              <Stack direction={['column', 'column', 'row']} spacing="20px" mb="3">
-                <Menu>
-                  <MenuButton
-                    minHeight="48px"
-                    minWidth={['0px', '200px']}
-                    borderWidth="1px"
-                    borderColor="gray.800"
-                    borderRadius="6px"
-                    alignItems="center"
-                    cursor="pointer"
-                    type="button"
-                  >
-                    <Flex alignItems="center" justify="space-between" mx={2}>
-                      <Flex>
-                        <Image
-                          alt={fromChain?.label}
-                          width="24px"
-                          height="24px"
-                          mr={2}
-                          src={fromChain?.logo}
-                        />
-                        <Text fontWeight="600">{fromChain?.label}</Text>
-                      </Flex>
-                      <ChevronDownIcon opacity="0.66" w="5" h="5" />
+            <Stack direction={['column', 'column', 'row']} spacing="20px" mb="3">
+              <Menu>
+                <MenuButton
+                  minHeight="48px"
+                  minWidth={['0px', '200px']}
+                  borderWidth="1px"
+                  borderColor="gray.800"
+                  borderRadius="6px"
+                  alignItems="center"
+                  cursor="pointer"
+                  type="button"
+                >
+                  <Flex alignItems="center" justify="space-between" mx={2}>
+                    <Flex>
+                      <Image
+                        alt={fromChain?.label}
+                        width="24px"
+                        height="24px"
+                        mr={2}
+                        src={fromChain?.logo}
+                      />
+                      <Text fontWeight="600">{fromChain?.label}</Text>
                     </Flex>
-                  </MenuButton>
-                  <MenuList background="black">
-                    {teleportChains.map((chain) => (
-                      <MenuItem
-                        onClick={() => {
-                          if (to === chain.id) {
-                            const id = teleportChains.find((item) => item.id !== to)?.id;
-                            if (!id) {
-                              return;
-                            }
-                            setTo(id);
+                    <ChevronDownIcon opacity="0.66" w="5" h="5" />
+                  </Flex>
+                </MenuButton>
+                <MenuList background="black">
+                  {teleportChains.map((chain) => (
+                    <MenuItem
+                      onClick={() => {
+                        if (to === chain.id) {
+                          const id = teleportChains.find((item) => item.id !== to)?.id;
+                          if (!id) {
+                            return;
                           }
-                          setFrom(chain.id);
-                        }}
-                        display="flex"
-                        alignItems="center"
-                        key={chain.id}
-                      >
-                        <Image
-                          alt={chain.label}
-                          width="24px"
-                          height="24px"
-                          mr={2}
-                          src={chain.logo}
-                        />
+                          setTo(id);
+                        }
+                        setFrom(chain.id);
+                      }}
+                      display="flex"
+                      alignItems="center"
+                      key={chain.id}
+                    >
+                      <Image alt={chain.label} width="24px" height="24px" mr={2} src={chain.logo} />
 
-                        <Text fontWeight="600">{chain.label}</Text>
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </Menu>
+                      <Text fontWeight="600">{chain.label}</Text>
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
 
-                <InputGroup size="lg" ml="6">
-                  <NumberInput
-                    flex="1"
-                    type="number"
-                    placeholder="0.0"
-                    id="amount"
-                    step="any"
-                    min="0"
-                    textAlign="right"
-                    borderColor="gray.800"
-                    value={amount}
-                    onChange={setAmount}
-                    border="1px"
-                    max={balance.formattedValue}
-                    borderRightRadius="none"
-                  />
-                  <InputRightAddon borderColor="gray.800" bg="whiteAlpha.100">
-                    snxUSD
-                  </InputRightAddon>
-                </InputGroup>
-              </Stack>
-
-              <Flex alignItems="center" justifyContent="flex-end">
-                <Balance
-                  onMax={(balance) => setAmount(parseFloat(balance) || 0)}
-                  balance={balance.value}
-                  symbol="snxUsd"
-                  address={snxUsdProxy?.address}
+              <InputGroup size="lg" ml="6">
+                <NumberInput
+                  InputProps={{
+                    size: 'lg',
+                    type: 'number',
+                    placeholder: '0.0',
+                    id: 'amount',
+                    min: '0',
+                    textAlign: 'right',
+                    borderColor: 'gray.800',
+                    border: '1px',
+                    borderTopRightRadius: 'none',
+                    borderBottomRightRadius: 'none',
+                  }}
+                  value={amount}
+                  onChange={setAmount}
+                  max={tokenBalance.data}
                 />
-              </Flex>
-            </form>
+                <InputRightAddon borderColor="gray.800" bg="whiteAlpha.100">
+                  snxUSD
+                </InputRightAddon>
+              </InputGroup>
+            </Stack>
+
+            <Flex alignItems="center" justifyContent="flex-end">
+              <Balance
+                onMax={setAmount}
+                balance={tokenBalance.data}
+                symbol="snxUSD"
+                address={snxUsdProxy?.address}
+              />
+            </Flex>
           </Box>
 
           <ArrowDownIcon w={5} h={5} mx="auto" mt="6" mb="5" opacity="0.66" />
@@ -250,117 +175,112 @@ export const Teleporter = () => {
             <Text lineHeight="1" fontSize="sm" fontWeight={600} mb="2.5" color="gray.300">
               To
             </Text>
-            <form>
-              <Stack direction={['column', 'column', 'row']} spacing="20px" mb="3">
-                <Menu>
-                  <MenuButton
-                    minHeight="48px"
-                    minWidth={['0px', '200px']}
-                    borderWidth="1px"
-                    borderColor="gray.800"
-                    borderRadius="6px"
-                    alignItems="center"
-                    cursor="pointer"
-                    type="button"
-                  >
-                    <Flex alignItems="center" justify="space-between" mx={2}>
-                      <Flex>
-                        <Image
-                          alt={toChain?.label}
-                          width="24px"
-                          height="24px"
-                          mr={2}
-                          src={toChain?.logo}
-                        />
-                        <Text fontWeight="600">{toChain?.label}</Text>
-                      </Flex>
-                      <ChevronDownIcon opacity="0.66" w="5" h="5" />
+            <Stack direction={['column', 'column', 'row']} spacing="20px" mb="3">
+              <Menu>
+                <MenuButton
+                  minHeight="48px"
+                  minWidth={['0px', '200px']}
+                  borderWidth="1px"
+                  borderColor="gray.800"
+                  borderRadius="6px"
+                  alignItems="center"
+                  cursor="pointer"
+                  type="button"
+                >
+                  <Flex alignItems="center" justify="space-between" mx={2}>
+                    <Flex>
+                      <Image
+                        alt={toChain?.label}
+                        width="24px"
+                        height="24px"
+                        mr={2}
+                        src={toChain?.logo}
+                      />
+                      <Text fontWeight="600">{toChain?.label}</Text>
                     </Flex>
-                  </MenuButton>
-                  <MenuList background="black">
-                    {teleportChains.map((chain) => (
-                      <MenuItem
-                        onClick={() => {
-                          if (from === chain.id) {
-                            const id = teleportChains.find((item) => item.id !== from)?.id;
-                            if (!id) {
-                              return;
-                            }
-                            setFrom(id);
+                    <ChevronDownIcon opacity="0.66" w="5" h="5" />
+                  </Flex>
+                </MenuButton>
+                <MenuList background="black">
+                  {teleportChains.map((chain) => (
+                    <MenuItem
+                      onClick={() => {
+                        if (from === chain.id) {
+                          const id = teleportChains.find((item) => item.id !== from)?.id;
+                          if (!id) {
+                            return;
                           }
-                          setTo(chain.id);
-                        }}
-                        display="flex"
-                        alignItems="center"
-                        key={chain.id}
-                      >
-                        <Image
-                          alt={chain.label}
-                          width="24px"
-                          height="24px"
-                          mr={2}
-                          src={chain.logo}
-                        />
+                          setFrom(id);
+                        }
+                        setTo(chain.id);
+                      }}
+                      display="flex"
+                      alignItems="center"
+                      key={chain.id}
+                    >
+                      <Image alt={chain.label} width="24px" height="24px" mr={2} src={chain.logo} />
 
-                        <Text fontWeight="600">{chain.label}</Text>
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </Menu>
+                      <Text fontWeight="600">{chain.label}</Text>
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
 
-                <InputGroup size="lg" ml="6">
-                  <Input
-                    flex="1"
-                    type="number"
-                    placeholder="0.0"
-                    id="amount"
-                    step="any"
-                    min="0"
-                    textAlign="right"
-                    border="none"
-                    isReadOnly
-                    pointerEvents="none"
-                    bg="whiteAlpha.50"
-                    borderRight="1px solid #262626"
-                    value={amount}
-                  />
-                  <InputRightAddon border="none" bg="whiteAlpha.100">
-                    snxUSD
-                  </InputRightAddon>
-                </InputGroup>
-              </Stack>
+              <InputGroup size="lg" ml="6">
+                <NumberInput
+                  InputProps={{
+                    isReadOnly: true,
+                    pointerEvents: 'none',
+                    bg: 'whiteAlpha.50',
+                    size: 'lg',
+                    type: 'number',
+                    placeholder: '0.0',
+                    id: 'amount',
+                    min: '0',
+                    textAlign: 'right',
+                    border: 'none',
+                    borderRight: '1px solid #262626',
+                    borderTopRightRadius: 'none',
+                    borderBottomRightRadius: 'none',
+                  }}
+                  value={amount}
+                />
 
-              <Flex alignItems="center">
-                <Text fontSize="xs" textAlign="right" ml="auto" color="gray.300">
-                  Fee: $0 {/*<InfoOutlineIcon ml="1" transform="translateY(-1px)" />*/}
-                </Text>
-              </Flex>
-            </form>
+                <InputRightAddon border="none" bg="whiteAlpha.100">
+                  snxUSD
+                </InputRightAddon>
+              </InputGroup>
+            </Stack>
+
+            <Flex alignItems="center">
+              <Text fontSize="xs" textAlign="right" ml="auto" color="gray.300">
+                Fee: $0 {/*<InfoOutlineIcon ml="1" transform="translateY(-1px)" />*/}
+              </Text>
+            </Flex>
           </Box>
 
           {hasWalletConnected ? (
             <Button
               onClick={async () => {
                 toast.closeAll();
-                if (activeChain?.id !== from) {
+                if (network?.id !== from) {
                   toast({
-                    title: 'Connect to ' + fromChain?.label,
+                    title: `Connect to ${fromChain?.label}`,
                     description: `Please connect to ${fromChain?.label} network`,
                     status: 'info',
                     isClosable: true,
                   });
                   switchNetwork?.(420);
                 } else {
-                  await submit();
+                  setIsOpen(true);
                 }
               }}
               size="lg"
               px="8"
               type="submit"
-              disabled={activeChain?.id === from && amount <= 0}
-              isLoading={isLoading}
+              disabled={network?.id === from && amount.lte(0)}
             >
-              {activeChain?.id !== from ? 'Switch to ' + fromChain?.label : 'Teleport'}
+              {network?.id !== from ? 'Switch to ' + fromChain?.label : 'Teleport'}
             </Button>
           ) : (
             <Button onClick={openConnectModal} size="lg" px="8">
@@ -369,6 +289,8 @@ export const Teleporter = () => {
           )}
         </Flex>
       </Container>
+
+      <TeleporterModal amount={amount} isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };

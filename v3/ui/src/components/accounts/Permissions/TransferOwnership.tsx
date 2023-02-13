@@ -16,7 +16,7 @@ import { useState } from 'react';
 import { useContractWrite } from 'wagmi';
 import { AddressInput } from './AddressInput';
 import { contracts } from '../../../utils/constants';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@snx-v3/useParams';
 
 export const TransferOwnership = () => {
   const { isOpen: isOwnerOpen, onOpen: onOwnerOpen, onClose: onOwnerClose } = useDisclosure();

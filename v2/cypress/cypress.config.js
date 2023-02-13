@@ -27,7 +27,7 @@ module.exports = defineConfig({
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
       if (process.env.CI) {
-        on('before:browser:launch', require('./cypress/lib/printBrowserLogs').printBrowserLogs);
+        on('before:browser:launch', require('@snx-cy/printBrowserLogs').printBrowserLogs);
         require('@cypress/code-coverage/task')(on, config);
       }
       on('task', {

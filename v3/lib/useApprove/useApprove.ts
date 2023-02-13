@@ -13,11 +13,11 @@ const createPopulateTransaction = ({
   spender,
   signer,
 }: {
-  contractAddress: string;
-  spender: string;
+  contractAddress?: string;
+  spender?: string;
   signer?: ethers.Signer | null;
 }) => {
-  if (!signer) return;
+  if (!(contractAddress && spender && signer)) return;
   const contract = new ethers.Contract(contractAddress, approveAbi, signer);
   return (amount: BigNumber) =>
     contract.populateTransaction.approve(spender, amount, {
@@ -30,9 +30,9 @@ export const useApprove = (
     amount,
     spender,
   }: {
-    contractAddress: string;
+    contractAddress?: string;
     amount: BigNumber;
-    spender: string;
+    spender?: string;
   },
   eventHandlers?: { onSuccess?: () => void; onMutate?: () => void; onError?: (e: Error) => void }
 ) => {
