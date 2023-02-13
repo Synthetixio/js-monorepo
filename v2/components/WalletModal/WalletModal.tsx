@@ -23,7 +23,7 @@ import { useNavigate } from 'react-router-dom';
 import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
 import { Balances } from './Balances';
-import { DelegatedWallets } from './DelegatedWallets';
+import { AuthorisedWallets } from './AuthorisedWallets';
 
 export const WalletModalUi: FC<{
   isOpen: boolean;
@@ -34,7 +34,7 @@ export const WalletModalUi: FC<{
   walletAddress: string | null;
   networkId: number | null;
   Balances: FC;
-  DelegatedWallets: FC;
+  AuthorisedWallets: FC;
 }> = ({
   isOpen,
   onClose,
@@ -114,7 +114,7 @@ export const WalletModalUi: FC<{
               </Link>
             </Flex>
           </Box>
-          {showDelegateWallets ? <DelegatedWallets /> : <Balances />}
+          {showDelegateWallets ? <AuthorisedWallets /> : <Balances />}
 
           <Divider my={4} />
           <Button
@@ -158,7 +158,7 @@ export const WalletModal: FC<{
       ensName={ensName}
       walletType={walletType}
       Balances={Balances}
-      DelegatedWallets={DelegatedWallets}
+      AuthorisedWallets={AuthorisedWallets}
       walletAddress={walletAddress}
       networkId={networkId}
     />

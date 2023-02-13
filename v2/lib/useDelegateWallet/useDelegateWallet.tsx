@@ -9,7 +9,6 @@ import React, {
 
 export type DelegateWallet = {
   address: string;
-  delegate: string;
   canAll: boolean;
   canMint: boolean;
   canBurn: boolean;
