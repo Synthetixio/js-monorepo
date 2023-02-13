@@ -42,21 +42,23 @@ const V2Home = () => {
       <Flex minHeight="calc(100vh - 86px)" direction="column">
         <Box sx={{ flex: '1 0 auto' }}>
           <CRatioBanner />
-          <Flex mt={8} justifyContent="center">
-            <Alert width="1170px" px={4} mx={4} as={Flex} flexDir={{ base: 'column', md: 'row' }}>
-              Staking has moved to
-              <Link
-                color="cyan.500"
-                textDecoration="underline"
-                ml={1}
-                as="span"
-                href="https://staking.synthetix.eth.limo/"
-                target="_blank"
-              >
-                staking.synthetix.eth.limo
-              </Link>
-            </Alert>
-          </Flex>
+          {!window.location.host.includes('.limo') && (
+            <Flex mt={8} justifyContent="center">
+              <Alert width="1170px" px={4} mx={4} as={Flex} flexDir={{ base: 'column', md: 'row' }}>
+                Staking has moved to
+                <Link
+                  color="cyan.500"
+                  textDecoration="underline"
+                  ml={1}
+                  as="span"
+                  href="https://staking.synthetix.eth.limo/"
+                  target="_blank"
+                >
+                  staking.synthetix.eth.limo
+                </Link>
+              </Alert>
+            </Flex>
+          )}
           <Container maxW="1200px" py="1" mb={8}>
             {!walletAddress && isAppReady && <Welcome mt={8} />}
             <Flex
