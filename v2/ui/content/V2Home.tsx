@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Box, Container, Flex, Text, Center, SimpleGrid } from '@chakra-ui/react';
+import { Box, Container, Flex, Text, Center, SimpleGrid, Alert, Link } from '@chakra-ui/react';
 import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
 import { BalanceBox } from '@snx-v2/BalanceBox';
@@ -42,7 +42,21 @@ const V2Home = () => {
       <Flex minHeight="calc(100vh - 86px)" direction="column">
         <Box sx={{ flex: '1 0 auto' }}>
           <CRatioBanner />
-          <Container maxW="1200px" py="1" mt={[0, 4, 4]} mb={8}>
+          <Flex mt={8} justifyContent="center">
+            <Alert width="1170px" px={4} mx={4}>
+              Staking has moved to
+              <Link
+                color="cyan.500"
+                textDecoration="underline"
+                ml={1}
+                as="span"
+                href="https://staking.synthetix.eth.limo/"
+              >
+                staking.synthetix.eth.limo
+              </Link>
+            </Alert>
+          </Flex>
+          <Container maxW="1200px" py="1" mb={8}>
             {!walletAddress && isAppReady && <Welcome mt={8} />}
             <Flex
               mt="4"
