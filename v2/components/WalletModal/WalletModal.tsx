@@ -24,6 +24,7 @@ import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
 import { Balances } from './Balances';
 import { AuthorisedWallets } from './AuthorisedWallets';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 export const WalletModalUi: FC<{
   isOpen: boolean;
@@ -48,6 +49,7 @@ export const WalletModalUi: FC<{
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { hasCopied, onCopy } = useClipboard(walletAddress || '');
+  const { delegateWallet, setDelegateWallet } = useDelegateWallet();
   const [showDelegateWallets, setShowDelegateWallet] = useState(false);
 
   return (
@@ -95,6 +97,11 @@ export const WalletModalUi: FC<{
               <Avatar bg="gray.200" height="24px" width="24px" mr={2} />
               {ensName ? ensName : walletAddress && truncateAddress(walletAddress)}
             </Flex>
+            {delegateWallet && (
+              <Flex alignItems="center" my={1}>
+                Authorised for: {truncateAddress(delegateWallet.address)}
+              </Flex>
+            )}
             <Flex mt={2}>
               <Button size="xs" fontWeight={400} variant="ghost" onClick={onCopy}>
                 <CopyIcon mr={1} /> {hasCopied ? 'Copied' : 'Copy Address'}
@@ -114,7 +121,7 @@ export const WalletModalUi: FC<{
               </Link>
             </Flex>
           </Box>
-          {showDelegateWallets ? <AuthorisedWallets /> : <Balances />}
+          {showDelegateWallets && !delegateWallet ? <AuthorisedWallets /> : <Balances />}
 
           <Divider my={4} />
           <Button
@@ -134,11 +141,19 @@ export const WalletModalUi: FC<{
             w="full"
             variant="outline"
             onClick={() => {
+              if (delegateWallet) {
+                setDelegateWallet(null);
+                return;
+              }
               setShowDelegateWallet((x) => !x);
             }}
             display="block"
           >
-            {showDelegateWallets ? 'Back' : t('staking-v2.wallet-modal.delegate-mode')}
+            {delegateWallet
+              ? 'Stop Delegate Mode'
+              : showDelegateWallets
+              ? 'Back'
+              : t('staking-v2.wallet-modal.delegate-mode')}
           </Button>
         </ModalBody>
       </ModalContent>
