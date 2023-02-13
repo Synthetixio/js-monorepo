@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 import {
   Box,
   Button,
@@ -22,8 +22,8 @@ import { getEtherscanBaseUrl } from '@snx-v2/txnLink';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
-import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
 import { Balances } from './Balances';
+import { DelegatedWallets } from './DelegatedWallets';
 
 export const WalletModalUi: FC<{
   isOpen: boolean;
@@ -34,6 +34,7 @@ export const WalletModalUi: FC<{
   walletAddress: string | null;
   networkId: number | null;
   Balances: FC;
+  DelegatedWallets: FC;
 }> = ({
   isOpen,
   onClose,
@@ -47,9 +48,16 @@ export const WalletModalUi: FC<{
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { hasCopied, onCopy } = useClipboard(walletAddress || '');
+  const [showDelegateWallets, setShowDelegateWallet] = useState(false);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={() => {
+        setShowDelegateWallet(false);
+        onClose();
+      }}
+    >
       <ModalOverlay />
       <ModalContent
         bg="gray.900"
@@ -74,6 +82,7 @@ export const WalletModalUi: FC<{
                 size="xs"
                 onClick={() => {
                   onClose();
+                  setShowDelegateWallet(false);
                   disconnectWallet();
                   navigate('/');
                 }}
@@ -105,13 +114,14 @@ export const WalletModalUi: FC<{
               </Link>
             </Flex>
           </Box>
-          <Balances />
+          {showDelegateWallets ? <DelegatedWallets /> : <Balances />}
 
           <Divider my={4} />
           <Button
             w="full"
             onClick={() => {
               onClose();
+              setShowDelegateWallet(false);
               navigate('/wallet/balances');
             }}
             margin="0 auto"
@@ -124,12 +134,11 @@ export const WalletModalUi: FC<{
             w="full"
             variant="outline"
             onClick={() => {
-              window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'false';
-              window.location.href = window.location.origin + '/?delegateModalOpen=true';
+              setShowDelegateWallet((x) => !x);
             }}
             display="block"
           >
-            {t('staking-v2.wallet-modal.delegate-mode')}
+            {showDelegateWallets ? 'Back' : t('staking-v2.wallet-modal.delegate-mode')}
           </Button>
         </ModalBody>
       </ModalContent>
@@ -143,13 +152,13 @@ export const WalletModal: FC<{
   disconnectWallet: () => Promise<void>;
 }> = (props) => {
   const { walletAddress, networkId, walletType, ensName } = useContext(ContractContext);
-
   return (
     <WalletModalUi
       {...props}
       ensName={ensName}
       walletType={walletType}
       Balances={Balances}
+      DelegatedWallets={DelegatedWallets}
       walletAddress={walletAddress}
       networkId={networkId}
     />

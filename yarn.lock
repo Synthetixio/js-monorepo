@@ -6927,6 +6927,7 @@ __metadata:
     "@snx-v2/synthsByName": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useDelegateWallets": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.16
@@ -7138,6 +7139,17 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useDelegateWallets@workspace:*, @snx-v2/useDelegateWallets@workspace:v2/lib/useDelegateWallets":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useDelegateWallets@workspace:v2/lib/useDelegateWallets"
+  dependencies:
+    "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/ContractContext": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
