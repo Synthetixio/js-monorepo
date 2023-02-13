@@ -51,6 +51,7 @@ const V2Home = () => {
                 ml={1}
                 as="span"
                 href="https://staking.synthetix.eth.limo/"
+                target="_blank"
               >
                 staking.synthetix.eth.limo
               </Link>
