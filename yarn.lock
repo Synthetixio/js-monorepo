@@ -6919,7 +6919,6 @@ __metadata:
   resolution: "@snx-v2/WalletModal@workspace:v2/components/WalletModal"
   dependencies:
     "@chakra-ui/react": ^2.5.0
-    "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/SynthIcons": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
@@ -7143,13 +7142,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useDelegateWallet@workspace:*, @snx-v2/useDelegateWallet@workspace:v2/lib/useDelegateWallet":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useDelegateWallet@workspace:v2/lib/useDelegateWallet"
+  dependencies:
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useDelegateWallets@workspace:*, @snx-v2/useDelegateWallets@workspace:v2/lib/useDelegateWallets":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useDelegateWallets@workspace:v2/lib/useDelegateWallets"
   dependencies:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
-    "@tanstack/react-query": ^4.3.4
+    "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -10264,6 +10271,7 @@ __metadata:
     "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
     "@socket.tech/plugin": ^1.0.3
     "@storybook/addon-actions": ^6.5.16

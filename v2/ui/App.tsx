@@ -28,6 +28,7 @@ import { LOCAL_STORAGE_KEYS } from './constants/storage';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { SignerContext } from '@snx-v2/SignerContext';
 import { GasSpeedProvider } from '@snx-v2/GasSpeedContext';
+import { DelegateWalletProvider } from '@snx-v2/useDelegateWallet';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -83,15 +84,17 @@ function InnerApp() {
         }
       >
         <GasSpeedProvider>
-          <SignerContext.Provider value={signer}>
-            <ContractContext.Provider value={contractContextData}>
-              <Layout>
-                <SystemStatus>
-                  <Routes />
-                </SystemStatus>
-              </Layout>
-            </ContractContext.Provider>
-          </SignerContext.Provider>
+          <DelegateWalletProvider>
+            <SignerContext.Provider value={signer}>
+              <ContractContext.Provider value={contractContextData}>
+                <Layout>
+                  <SystemStatus>
+                    <Routes />
+                  </SystemStatus>
+                </Layout>
+              </ContractContext.Provider>
+            </SignerContext.Provider>
+          </DelegateWalletProvider>
         </GasSpeedProvider>
         <ReactQueryDevtools />
       </SynthetixQueryContextProvider>

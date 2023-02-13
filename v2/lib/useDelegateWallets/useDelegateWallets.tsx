@@ -46,7 +46,6 @@ export const useDelegateWallets = () => {
         const { message } = json.errors[0];
         throw new Error(message);
       }
-      console.log(json);
       return json.data.delegatedWallets
         .filter(
           ({ canMint, canBurn, canClaim, canExchange }) =>

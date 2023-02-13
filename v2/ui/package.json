@@ -61,6 +61,7 @@
     "@snx-v2/Welcome": "workspace:^",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
+    "@snx-v2/useDelegateWallet": "workspace:*",
     "@snx-v2/useLiquidationData": "workspace:*",
     "@socket.tech/plugin": "^1.0.3",
     "@synthetixio/contracts": "workspace:*",
