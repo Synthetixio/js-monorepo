@@ -43,7 +43,7 @@ const V2Home = () => {
         <Box sx={{ flex: '1 0 auto' }}>
           <CRatioBanner />
           <Flex mt={8} justifyContent="center">
-            <Alert width="1170px" px={4} mx={4}>
+            <Alert width="1170px" px={4} mx={4} as={Flex} flexDir={{ base: 'column', md: 'row' }}>
               Staking has moved to
               <Link
                 color="cyan.500"
