@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useQuery } from '@tanstack/react-query';
 import { MAINNET_URL, OPTIMISM_URL } from '@snx-v2/Constants';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 type FeesClaimedQueryResult = {
   __typename?: 'Query';
@@ -26,7 +27,9 @@ const FeesClaimedDocument = gql`
 `;
 
 export const useFeesClaimed = () => {
-  const { networkId, walletAddress } = useContext(ContractContext);
+  const { networkId, walletAddress: connectedWalletAddress } = useContext(ContractContext);
+  const { delegateWallet } = useDelegateWallet();
+  const walletAddress = delegateWallet?.address || connectedWalletAddress;
   const url = networkId === 1 ? MAINNET_URL : OPTIMISM_URL;
 
   return useQuery(
