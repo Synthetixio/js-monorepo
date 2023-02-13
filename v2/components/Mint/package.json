@@ -19,6 +19,7 @@
     "@snx-v2/stakingCalculations": "workspace:*",
     "@snx-v2/txnLink": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
+    "@snx-v2/useDelegateWallet": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useFeePoolData": "workspace:*",
     "@snx-v2/useMintMutation": "workspace:*",
