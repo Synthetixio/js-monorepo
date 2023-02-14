@@ -18,9 +18,15 @@ export const useFeePoolData = (period = 0) => {
         await Promise.all([
           FeePool.recentFeePeriods(period),
           FeePool.feePeriodDuration(),
-          FeePool.totalFeesBurned(),
-          FeePool.feesBurned(walletAddress),
-          FeePool.feesToBurn(walletAddress),
+          'totalFeesBurned' in FeePool && typeof FeePool.totalFeesBurned === 'function'
+            ? FeePool.totalFeesBurned()
+            : wei(0),
+          'feesBurned' in FeePool && typeof FeePool.feesBurned === 'function'
+            ? FeePool.feesBurned(walletAddress)
+            : wei(0),
+          'feesToBurn' in FeePool && typeof FeePool.feesToBurn === 'function'
+            ? FeePool.feesToBurn(walletAddress)
+            : wei(0),
         ]);
 
       const startTime = Number(feePeriod.startTime);
