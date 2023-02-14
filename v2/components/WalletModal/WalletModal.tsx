@@ -124,18 +124,20 @@ export const WalletModalUi: FC<{
           {showDelegateWallets && !delegateWallet ? <AuthorisedWallets /> : <Balances />}
 
           <Divider my={4} />
-          <Button
-            w="full"
-            onClick={() => {
-              onClose();
-              setShowDelegateWallet(false);
-              navigate('/wallet/balances');
-            }}
-            margin="0 auto"
-            display="block"
-          >
-            {t('staking-v2.wallet-modal.manage')}
-          </Button>
+          {delegateWallet ? null : (
+            <Button
+              w="full"
+              onClick={() => {
+                onClose();
+                setShowDelegateWallet(false);
+                navigate('/wallet/balances');
+              }}
+              margin="0 auto"
+              display="block"
+            >
+              {t('staking-v2.wallet-modal.manage')}
+            </Button>
+          )}
           <Button
             mt={4}
             w="full"

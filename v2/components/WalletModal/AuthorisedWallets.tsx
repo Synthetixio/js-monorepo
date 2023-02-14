@@ -2,7 +2,7 @@ import { Box, Skeleton, Text, Link } from '@chakra-ui/react';
 import { ArrowTopRight, TickIcon } from '@snx-v2/icons';
 import { useAuthorisedWallets } from '@snx-v2/useAuthorisedWallets';
 import { FC } from 'react';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink, NavigateFunction, useNavigate } from 'react-router-dom';
 import { useDelegateWallet, DelegateWallet } from '@snx-v2/useDelegateWallet';
 
 const AuthorisedWalletsUi: FC<{
@@ -10,7 +10,8 @@ const AuthorisedWalletsUi: FC<{
   activeDelegateWallet: DelegateWallet | null;
   setDelegateWallet: (w: DelegateWallet | null) => void;
   isLoading: boolean;
-}> = ({ authorisedWallets, isLoading, activeDelegateWallet, setDelegateWallet }) => {
+  navigate: NavigateFunction;
+}> = ({ authorisedWallets, isLoading, activeDelegateWallet, setDelegateWallet, navigate }) => {
   if (isLoading) {
     return <Skeleton h={6} w="full" />;
   }
@@ -48,7 +49,10 @@ const AuthorisedWalletsUi: FC<{
             display="flex"
             alignItems="center"
             gap={1}
-            onClick={() => setDelegateWallet(active ? null : authorisedWallet)}
+            onClick={() => {
+              setDelegateWallet(active ? null : authorisedWallet);
+              navigate('/');
+            }}
           >
             {active && <TickIcon />}
             {authorisedWallet.address}
@@ -63,6 +67,7 @@ const AuthorisedWalletsUi: FC<{
 export const AuthorisedWallets = () => {
   const { data, isLoading } = useAuthorisedWallets();
   const { delegateWallet, setDelegateWallet } = useDelegateWallet();
+  const navigate = useNavigate();
   return (
     <Box my={2} px={4} py={3} bg="black" border="1px" borderColor="gray.800" borderRadius="base">
       <AuthorisedWalletsUi
@@ -70,6 +75,7 @@ export const AuthorisedWallets = () => {
         setDelegateWallet={setDelegateWallet}
         isLoading={isLoading}
         authorisedWallets={data}
+        navigate={navigate}
       />
     </Box>
   );

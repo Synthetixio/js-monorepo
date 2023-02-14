@@ -4,6 +4,7 @@ import { SNXIcon } from '@snx-v2/icons';
 import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
 import { useGetSynthsByName } from '@snx-v2/synthsByName';
 import { useDebtData } from '@snx-v2/useDebtData';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { FC, ReactElement } from 'react';
@@ -17,10 +18,11 @@ type BalanceObject = {
   icon?: ReactElement;
   description?: string;
 };
-const BalancesUi: FC<{ balances?: BalanceObject[]; navigate: NavigateFunction }> = ({
-  balances,
-  navigate,
-}) => {
+const BalancesUi: FC<{
+  balances?: BalanceObject[];
+  navigate: NavigateFunction;
+  delegateMode: boolean;
+}> = ({ balances, navigate, delegateMode }) => {
   const { t } = useTranslation();
 
   return (
@@ -54,17 +56,19 @@ const BalancesUi: FC<{ balances?: BalanceObject[]; navigate: NavigateFunction }>
           </Flex>
         );
       })}
-      <Button
-        display="block"
-        width="100%"
-        variant="ghost"
-        onClick={() => {
-          navigate('/wallet');
-        }}
-        margin="0 auto"
-      >
-        {t('staking-v2.wallet-modal.view-all')}
-      </Button>
+      {delegateMode ? null : (
+        <Button
+          display="block"
+          width="100%"
+          variant="ghost"
+          onClick={() => {
+            navigate('/wallet');
+          }}
+          margin="0 auto"
+        >
+          {t('staking-v2.wallet-modal.view-all')}
+        </Button>
+      )}
     </Box>
   );
 };
@@ -74,6 +78,7 @@ export const Balances = () => {
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: synthByNameData } = useGetSynthsByName();
+  const { delegateWallet } = useDelegateWallet();
   const navigate = useNavigate();
   const snxBalance: BalanceObject | undefined =
     debtData && exchangeRateData
@@ -106,5 +111,7 @@ export const Balances = () => {
   });
 
   const balances = snxBalance && synthBalances ? [snxBalance].concat(synthBalances) : undefined;
-  return <BalancesUi navigate={navigate} balances={balances} />;
+  return (
+    <BalancesUi delegateMode={Boolean(delegateWallet)} navigate={navigate} balances={balances} />
+  );
 };

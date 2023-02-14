@@ -198,7 +198,7 @@ export const NavigationUI = ({
                 onClick={onOpen}
                 fontSize="sm"
               >
-                Delegate mode:
+                Authorised for:
                 <Text ml={1} variant="nav" fontWeight={700} fontSize="sm" userSelect="none">
                   {truncateAddress(delegateWallet.address, 4, 4)}
                 </Text>
@@ -281,14 +281,16 @@ export const NavigationUI = ({
                 <Text ml={2}>{t('common.wallet.menu.help')}</Text>
               </Center>
             </MenuItem> */}
-            <MenuItem onClick={() => navigate('/loans')}>
-              <Center>
-                <LoansIcon />
-                <Text fontSize="sm" ml={2}>
-                  {t('common.wallet.menu.loans')}
-                </Text>
-              </Center>
-            </MenuItem>
+            {delegateWallet ? null : (
+              <MenuItem onClick={() => navigate('/loans')}>
+                <Center>
+                  <LoansIcon />
+                  <Text fontSize="sm" ml={2}>
+                    {t('common.wallet.menu.loans')}
+                  </Text>
+                </Center>
+              </MenuItem>
+            )}
             <MenuItem onClick={() => window.open('https://governance.synthetix.io/', '_newtab')}>
               <Center>
                 <GovIcon />
@@ -297,7 +299,7 @@ export const NavigationUI = ({
                 </Text>
               </Center>
             </MenuItem>
-            {isWalletConnected && (
+            {Boolean(isWalletConnected && !delegateWallet) && (
               <MenuItem onClick={() => navigate('/wallet')}>
                 <Center>
                   <WalletIcon color="white" />
