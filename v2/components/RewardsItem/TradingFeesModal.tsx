@@ -9,7 +9,7 @@ import {
   Text,
   Tooltip,
 } from '@chakra-ui/react';
-import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
+import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
 import { InfoIcon } from '@snx-v2/icons';
 import { calcNewCratioPercentage } from '@snx-v2/stakingCalculations';
 import { useNavigate } from 'react-router-dom';
@@ -120,7 +120,7 @@ export const TradingFeesModal = ({
                 width="33%"
                 textAlign="center"
               >
-                {formatPercent(previousCratio || 0, { minimumFractionDigits: 2 })}
+                {`${formatNumber(previousCratio || 0)}%`}
               </Text>
               <Text
                 fontWeight="700"
