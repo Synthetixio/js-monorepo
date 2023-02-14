@@ -9,16 +9,18 @@ export const useGetLifetimeRewards = () => {
 
   const enabled = Boolean(SNXRate && feesClaimedData);
   return useQuery(
-    [SNXRate, Boolean(feesClaimedData)],
+    ['useGetLifetimeRewards', SNXRate, Boolean(feesClaimedData)],
     () => {
       if (!SNXRate || !feesClaimedData) throw Error('Missing required data');
-      let total = 0;
+      let snxTotal = 0;
+      let usdTotal = 0;
       feesClaimedData?.forEach(({ value: usdAmount, rewards: snxAmount }) => {
         const snxUsdValue = snxAmount * SNXRate;
-        total = total + usdAmount + snxUsdValue;
+        snxTotal = snxTotal + snxUsdValue;
+        usdTotal = usdTotal + usdAmount;
       });
 
-      return total;
+      return { snxTotal, usdTotal, combinedTotal: snxTotal + usdTotal };
     },
     { enabled, staleTime: 10000 }
   );

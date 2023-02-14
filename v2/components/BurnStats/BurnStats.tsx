@@ -1,22 +1,22 @@
 import { FC } from 'react';
 import { Flex } from '@chakra-ui/react';
 import { StatBox } from '@snx-v2/StatBox';
-import { useGetLifetimeRewards } from '@snx-v2/useGetLifetimeRewards';
 import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
-import { useGetUpcomingRewards } from '@snx-v2/useGetUpcomingRewards';
 import { useApr } from '@snx-v2/useApr';
+import { useFeePoolData } from '@snx-v2/useFeePoolData';
+import { useGetLifetimeRewards } from '@snx-v2/useGetLifetimeRewards';
 
-export const EarnStatsUi: FC<{
-  lifetimeRewards?: number;
-  earning?: number;
-  upcomingRewards?: number;
+export const BurnStatsUi: FC<{
+  lastEpochBurned: string;
+  burningAPR: string;
+  lifetimeBurned: string;
   isLoading: boolean;
-}> = ({ lifetimeRewards, earning, upcomingRewards, isLoading }) => {
+}> = ({ lastEpochBurned, burningAPR, lifetimeBurned, isLoading }) => {
   return (
     <Flex my={1} flexDirection={['column', 'column', 'row', 'row']} justifyContent="space-between">
       <StatBox
-        label="Estimated Upcoming Rewards"
-        amount={upcomingRewards !== undefined ? formatNumberToUsd(upcomingRewards) : undefined}
+        label="Last Epoch Fees Burned"
+        amount={lastEpochBurned}
         mb={[3, 3, 0, 0]}
         alignItems="start"
         mr={3}
@@ -26,7 +26,7 @@ export const EarnStatsUi: FC<{
       />
       <StatBox
         label="Earning"
-        amount={earning !== undefined ? formatPercent(earning) : undefined}
+        amount={burningAPR}
         mb={[3, 3, 0, 0]}
         alignItems={['start', 'start', 'center', 'center']}
         mr={3}
@@ -35,8 +35,8 @@ export const EarnStatsUi: FC<{
         isLoading={isLoading}
       />
       <StatBox
-        label="Lifetime Rewards"
-        amount={lifetimeRewards !== undefined ? formatNumberToUsd(lifetimeRewards) : undefined}
+        label="Lifetime Fees Burned"
+        amount={lifetimeBurned}
         mb={[3, 3, 0, 0]}
         alignItems={['start', 'start', 'end', 'end']}
         width="100%"
@@ -47,19 +47,19 @@ export const EarnStatsUi: FC<{
   );
 };
 
-export const EarnStats = () => {
+export const BurnStats = () => {
+  const { data: earning, isLoading: isAprLoading } = useApr();
+  const { data: fees, isLoading: isFeesLoading } = useFeePoolData();
   const { data: lifetimeRewardsData, isLoading: isGetLifetimeLoading } = useGetLifetimeRewards();
-  const { data: upcomingRewards, isLoading: isUpcomingLoading } = useGetUpcomingRewards();
-  const { data: aprs, isLoading: isAprLoading } = useApr();
 
-  const isLoading = isGetLifetimeLoading || isUpcomingLoading || isAprLoading;
+  const isLoading = isAprLoading || isFeesLoading || isGetLifetimeLoading;
 
   return (
-    <EarnStatsUi
+    <BurnStatsUi
       isLoading={isLoading}
-      lifetimeRewards={lifetimeRewardsData?.snxTotal}
-      upcomingRewards={upcomingRewards}
-      earning={aprs?.snxApr?.toNumber()}
+      lifetimeBurned={formatNumberToUsd(lifetimeRewardsData?.usdTotal || 0)}
+      lastEpochBurned={formatNumberToUsd(fees?.feesBurned.toNumber() || 0)}
+      burningAPR={formatPercent(earning?.feesApr?.toNumber() || 0)}
     />
   );
 };

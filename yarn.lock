@@ -6501,6 +6501,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/BurnStats@workspace:*, @snx-v2/BurnStats@workspace:v2/components/BurnStats":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/BurnStats@workspace:v2/components/BurnStats"
+  dependencies:
+    "@chakra-ui/react": ^2.2.8
+    "@snx-v2/StatBox": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/useApr": "workspace:*"
+    "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useGetLifetimeRewards": "workspace:*"
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/CRatioBanner@workspace:*, @snx-v2/CRatioBanner@workspace:v2/components/CRatioBanner":
   version: 0.0.0-use.local
   resolution: "@snx-v2/CRatioBanner@workspace:v2/components/CRatioBanner"
@@ -6783,9 +6797,11 @@ __metadata:
     "@snx-v2/useApr": "workspace:*"
     "@snx-v2/useClaimRewardsMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useGetLiquidationRewards": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
+    "@snx-v2/useSynthsBalances": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.15
     "@tanstack/react-query": ^4.3.4
@@ -10190,6 +10206,7 @@ __metadata:
     "@snx-v2/BalanceBox": "workspace:*"
     "@snx-v2/BoxLink": "workspace:*"
     "@snx-v2/Burn": "workspace:*"
+    "@snx-v2/BurnStats": "workspace:*"
     "@snx-v2/CRatioBanner": "workspace:*"
     "@snx-v2/CRatioHealthCard": "workspace:*"
     "@snx-v2/Constants": "workspace:*"

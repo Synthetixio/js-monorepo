@@ -37,6 +37,7 @@
     "@snx-v2/BalanceBox": "workspace:*",
     "@snx-v2/BoxLink": "workspace:*",
     "@snx-v2/Burn": "workspace:*",
+    "@snx-v2/BurnStats": "workspace:*",
     "@snx-v2/CRatioBanner": "workspace:*",
     "@snx-v2/CRatioHealthCard": "workspace:*",
     "@snx-v2/Constants": "workspace:*",

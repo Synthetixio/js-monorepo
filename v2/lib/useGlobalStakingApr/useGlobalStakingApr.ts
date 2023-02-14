@@ -48,7 +48,25 @@ export const useGlobalStakingApr = (enabled: boolean) => {
       if (!SNXRate || !previousWeekRewardsUsd || !totalStakedData) {
         throw Error('Query missing required data');
       }
-      return calculateGlobalStakingApr(isL2, SNXRate, previousWeekRewardsUsd, totalStakedData);
+      const combinedApr = calculateGlobalStakingApr(
+        isL2,
+        SNXRate,
+        previousWeekRewardsUsd,
+        totalStakedData
+      );
+      const feesApr = calculateGlobalStakingApr(
+        isL2,
+        SNXRate,
+        previousFeePeriodData?.feesToDistribute,
+        totalStakedData
+      );
+      const snxApr = calculateGlobalStakingApr(
+        isL2,
+        SNXRate,
+        previousFeePeriodData?.rewardsToDistribute.mul(SNXRate),
+        totalStakedData
+      );
+      return { combinedApr, feesApr, snxApr };
     },
     { enabled: queryEnabled, staleTime: 10000 }
   );
