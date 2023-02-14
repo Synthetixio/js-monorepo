@@ -310,7 +310,7 @@ export const Rewards = () => {
           )}
           title={t('staking-v2.earn.staking-rewards.title')}
           description={t('staking-v2.earn.staking-rewards.description')}
-          apyReturn={aprData !== undefined ? formatPercent(aprData.toNumber()) : ''}
+          apyReturn={aprData?.snxApr !== undefined ? formatPercent(aprData.snxApr.toNumber()) : ''}
           endDate={feePoolData?.nextFeePeriodStartDate || null}
           percentCompleted={percentEpochCompleted(
             feePoolData?.nextFeePeriodStartDate,

@@ -50,7 +50,7 @@ export const EarnStatsUi: FC<{
 export const EarnStats = () => {
   const { data: lifetimeRewardsData, isLoading: isGetLifetimeLoading } = useGetLifetimeRewards();
   const { data: upcomingRewards, isLoading: isUpcomingLoading } = useGetUpcomingRewards();
-  const { data: earning, isLoading: isAprLoading } = useApr();
+  const { data: aprs, isLoading: isAprLoading } = useApr();
 
   const isLoading = isGetLifetimeLoading || isUpcomingLoading || isAprLoading;
 
@@ -59,7 +59,7 @@ export const EarnStats = () => {
       isLoading={isLoading}
       lifetimeRewards={lifetimeRewardsData}
       upcomingRewards={upcomingRewards}
-      earning={earning?.toNumber()}
+      earning={aprs?.snxApr?.toNumber()}
     />
   );
 };

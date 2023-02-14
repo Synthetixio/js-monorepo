@@ -54,7 +54,9 @@ export const Fees = () => {
           )}
           title={t('staking-v2.earn.trading-fees.title')}
           description={t('staking-v2.earn.trading-fees.description')}
-          apyReturn={aprData !== undefined ? formatPercent(aprData.toNumber()) : ''}
+          apyReturn={
+            aprData?.feesApr !== undefined ? formatPercent(aprData.feesApr.toNumber()) : ''
+          }
           endDate={t('staking-v2.earn.trading-fees.repays')}
           isLoading={isLoading}
           RewardBalance={() => {

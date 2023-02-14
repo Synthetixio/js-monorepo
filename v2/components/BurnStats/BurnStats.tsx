@@ -57,7 +57,7 @@ export const BurnStats = () => {
       isLoading={isLoading}
       lifetimeBurned="Coming soon"
       lastEpochBurned={`$${formatNumber(fees?.feesBurned.toNumber() || 0)}`}
-      burningAPR={formatPercent(earning?.toNumber() || 0)}
+      burningAPR={formatPercent(earning?.feesApr?.toNumber() || 0)}
     />
   );
 };
