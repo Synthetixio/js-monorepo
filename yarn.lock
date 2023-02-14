@@ -6509,8 +6509,7 @@ __metadata:
     "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
-    "@snx-v2/useFeePoolData": "workspace:^"
-    "@storybook/react": ^6.5.15
+    "@snx-v2/useFeePoolData": "workspace:*"
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -6792,7 +6791,6 @@ __metadata:
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/parseTxnError": "workspace:*"
-    "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
     "@snx-v2/useClaimRewardsMutation": "workspace:*"
@@ -7247,7 +7245,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useFeePoolData@workspace:*, @snx-v2/useFeePoolData@workspace:^, @snx-v2/useFeePoolData@workspace:v2/lib/useFeePoolData":
+"@snx-v2/useFeePoolData@workspace:*, @snx-v2/useFeePoolData@workspace:v2/lib/useFeePoolData":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useFeePoolData@workspace:v2/lib/useFeePoolData"
   dependencies:
