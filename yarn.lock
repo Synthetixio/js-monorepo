@@ -6791,6 +6791,7 @@ __metadata:
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/parseTxnError": "workspace:*"
+    "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
     "@snx-v2/useClaimRewardsMutation": "workspace:*"

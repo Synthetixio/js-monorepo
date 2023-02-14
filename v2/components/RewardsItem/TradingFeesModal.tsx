@@ -9,8 +9,9 @@ import {
   Text,
   Tooltip,
 } from '@chakra-ui/react';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { InfoIcon } from '@snx-v2/icons';
+import { calcNewCratioPercentage } from '@snx-v2/stakingCalculations';
 import { useNavigate } from 'react-router-dom';
 
 interface TradingFeesModalProps {
@@ -20,7 +21,8 @@ interface TradingFeesModalProps {
   sUSDBalance: string;
   currentCRatioPercentage: number;
   activeDebt: number;
-  collateralValue: number;
+  collateral: number;
+  SNXRate: number;
 }
 
 export const TradingFeesModal = ({
@@ -30,11 +32,12 @@ export const TradingFeesModal = ({
   sUSDBalance,
   currentCRatioPercentage,
   activeDebt,
-  collateralValue,
+  collateral,
+  SNXRate,
 }: TradingFeesModalProps) => {
   const navigate = useNavigate();
-
-  const previousCratio = (100 * collateralValue) / (activeDebt + feesBurned);
+  const previousDebtBalance = activeDebt + feesBurned;
+  const previousCratio = calcNewCratioPercentage(collateral, SNXRate, previousDebtBalance);
 
   return (
     <>
@@ -117,7 +120,7 @@ export const TradingFeesModal = ({
                 width="33%"
                 textAlign="center"
               >
-                {`${formatNumber(previousCratio)}%`}
+                {formatPercent(previousCratio || 0, { minimumFractionDigits: 2 })}
               </Text>
               <Text
                 fontWeight="700"
@@ -147,7 +150,7 @@ export const TradingFeesModal = ({
                 width="33%"
                 textAlign="center"
               >
-                {`$${formatNumber(activeDebt - feesBurned)}`}
+                {formatNumberToUsd(previousDebtBalance)}
               </Text>
               <Text
                 fontWeight="700"
@@ -157,7 +160,7 @@ export const TradingFeesModal = ({
                 width="33%"
                 textAlign="end"
               >
-                {`$${formatNumber(activeDebt)}`}
+                {formatNumberToUsd(activeDebt)}
               </Text>
             </Flex>
             <Flex justifyContent="space-between" alignItems="center" mt={1}>
