@@ -2,7 +2,7 @@
   "name": "@snx-v2/useClaimRewardsMutation",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "@snx-v2/useGasOptions": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",

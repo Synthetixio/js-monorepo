@@ -27,7 +27,7 @@ export const CollateralSectionUi: FC<{
 }> = ({ vaultsData, poolName }) => {
   const { collateral: totalCollateral, debt: totalDebt } = calculateVaultTotals(vaultsData);
   return (
-    <BorderBox padding={4}>
+    <BorderBox padding={4} data-testid="pool collateral types">
       <Text fontWeight={700} fontSize="xl">
         Collateral Types
       </Text>
@@ -104,6 +104,8 @@ export const CollateralSectionUi: FC<{
                 borderBottom="1px"
                 borderColor="gray.900"
                 _last={{ borderBottom: 'none' }}
+                data-testid="pool collateral"
+                data-collateral={vaultCollateral.collateralType.symbol}
               >
                 <Flex color="white" display="flex" gap={1} alignItems="center">
                   <CollateralIcon

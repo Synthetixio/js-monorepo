@@ -1,7 +1,7 @@
 {
   "name": "@synthetixio/v2-ui",
   "private": true,
-  "version": "2.45.7",
+  "version": "2.45.8",
   "engines": {
     "node": "16.x"
   },
@@ -116,7 +116,7 @@
     "storybook": "^6.5.15",
     "styled-components": "^5.3.5",
     "styled-media-query": "^2.1.2",
-    "synthetix": "2.80.3",
+    "synthetix": "2.83.0-alpha",
     "tippy.js": "^6.3.1",
     "unstated-next": "^1.1.0"
   },

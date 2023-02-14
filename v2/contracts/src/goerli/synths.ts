@@ -9,6 +9,7 @@ export const SynthsByName: Partial<
       sign: string;
       description: string;
       name: string;
+      feed?: string;
       subclass?: string;
     }
   >

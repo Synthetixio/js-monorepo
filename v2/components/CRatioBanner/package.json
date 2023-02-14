@@ -2,7 +2,7 @@
   "name": "@snx-v2/CRatioBanner",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "dependencies": {
     "@chakra-ui/react": "^2.2.8",
     "@snx-v2/CountDown": "workspace:*",
