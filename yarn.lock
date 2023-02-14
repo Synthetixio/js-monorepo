@@ -7523,6 +7523,7 @@ __metadata:
     "@snx-v3/ManagePositionContext": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
+    "@snx-v3/useBorrow": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
     "@synthetixio/wei": "workspace:*"
@@ -7947,7 +7948,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/useBorrow@workspace:v3/lib/useBorrow":
+"@snx-v3/useBorrow@workspace:*, @snx-v3/useBorrow@workspace:v3/lib/useBorrow":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useBorrow@workspace:v3/lib/useBorrow"
   dependencies:

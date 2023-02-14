@@ -298,7 +298,7 @@ export const DepositModal: DepositModalProps = ({ collateralChange, isOpen, onCl
           />
 
           <Button
-            disabled={processing}
+            isDisabled={processing}
             onClick={onSubmit}
             width="100%"
             my="4"

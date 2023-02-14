@@ -120,7 +120,7 @@ export const DepositModalUi: FC<{
           />
 
           <Button
-            disabled={isProcessing}
+            isDisabled={isProcessing}
             onClick={onSubmit}
             width="100%"
             my="4"

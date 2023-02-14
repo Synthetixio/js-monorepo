@@ -86,14 +86,14 @@ export default function Pagination({
       </Text>
       <IconButton
         icon={<ChevronLeftIcon />}
-        disabled={currentPage[0] === 1}
+        isDisabled={currentPage[0] === 1}
         variant="unstyled"
         aria-label="left icon"
         onClick={() => handleButtonClick(false)}
       />
       <IconButton
         icon={<ChevronRightIcon />}
-        disabled={maxLength === currentPage[1]}
+        isDisabled={maxLength === currentPage[1]}
         variant="unstyled"
         aria-label="right icon"
         onClick={() => handleButtonClick(true)}

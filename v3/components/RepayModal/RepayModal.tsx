@@ -91,7 +91,7 @@ export const RepayModalUi: React.FC<{
             </Text>
           </Flex>
           <Button
-            disabled={txnStatus === 'pending'}
+            isDisabled={txnStatus === 'pending'}
             onClick={() => {
               if (txnStatus === 'unsent') {
                 execRepay();
