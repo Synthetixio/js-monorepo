@@ -52,15 +52,36 @@ export const useStakingApr = () => {
   return useQuery(
     ['useStakingApr', enabled],
     () => {
-      if (!stakedValue || !debtBalance || !previousWeekRewardsUsd || !totalsUSDDebt) {
+      if (
+        !stakedValue ||
+        !debtBalance ||
+        !previousWeekRewardsUsd ||
+        !totalsUSDDebt ||
+        !exchangeRateData?.SNX
+      ) {
         throw Error('Query missing required data');
       }
-      return calculateStakingApr({
+      const combinedApr = calculateStakingApr({
         stakedValue,
         previousWeekRewardsUsd,
         totalsUSDDebt,
         debtBalance,
       });
+      const feesApr = calculateStakingApr({
+        stakedValue,
+        previousWeekRewardsUsd: previousFeePeriodData?.feesToDistribute,
+        totalsUSDDebt,
+        debtBalance,
+      });
+      const snxApr = calculateStakingApr({
+        stakedValue,
+        previousWeekRewardsUsd: previousFeePeriodData?.rewardsToDistribute.mul(
+          exchangeRateData.SNX
+        ),
+        totalsUSDDebt,
+        debtBalance,
+      });
+      return { combinedApr, feesApr, snxApr };
     },
     { enabled, staleTime: 10000 }
   );
