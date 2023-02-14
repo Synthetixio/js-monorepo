@@ -57,7 +57,7 @@ export const EarnStats = () => {
   return (
     <EarnStatsUi
       isLoading={isLoading}
-      lifetimeRewards={lifetimeRewardsData}
+      lifetimeRewards={lifetimeRewardsData?.snxTotal}
       upcomingRewards={upcomingRewards}
       earning={aprs?.snxApr?.toNumber()}
     />

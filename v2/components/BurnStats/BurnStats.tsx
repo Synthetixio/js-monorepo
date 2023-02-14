@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { Flex } from '@chakra-ui/react';
 import { StatBox } from '@snx-v2/StatBox';
-import { formatNumber, formatPercent } from '@snx-v2/formatters';
+import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { useApr } from '@snx-v2/useApr';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
+import { useGetLifetimeRewards } from '@snx-v2/useGetLifetimeRewards';
 
 export const BurnStatsUi: FC<{
   lastEpochBurned: string;
@@ -49,14 +50,15 @@ export const BurnStatsUi: FC<{
 export const BurnStats = () => {
   const { data: earning, isLoading: isAprLoading } = useApr();
   const { data: fees, isLoading: isFeesLoading } = useFeePoolData();
+  const { data: lifetimeRewardsData, isLoading: isGetLifetimeLoading } = useGetLifetimeRewards();
 
-  const isLoading = isAprLoading || isFeesLoading;
+  const isLoading = isAprLoading || isFeesLoading || isGetLifetimeLoading;
 
   return (
     <BurnStatsUi
       isLoading={isLoading}
-      lifetimeBurned="Coming soon"
-      lastEpochBurned={`$${formatNumber(fees?.feesBurned.toNumber() || 0)}`}
+      lifetimeBurned={formatNumberToUsd(lifetimeRewardsData?.usdTotal || 0)}
+      lastEpochBurned={formatNumberToUsd(fees?.feesBurned.toNumber() || 0)}
       burningAPR={formatPercent(earning?.feesApr?.toNumber() || 0)}
     />
   );
