@@ -227,7 +227,7 @@ export const MintUi = ({
             setActiveBadge(0);
             onSubmit();
           }}
-          disabled={
+          isDisabled={
             stakeAmountSNX === '' ||
             Boolean(gasError) ||
             isGasEnabledAndNotFetched ||
