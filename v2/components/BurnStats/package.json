@@ -1,0 +1,15 @@
+{
+  "name": "@snx-v2/BurnStats",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.8",
+    "@snx-v2/StatBox": "workspace:*",
+    "@snx-v2/formatters": "workspace:*",
+    "@snx-v2/useApr": "workspace:*",
+    "@snx-v2/useFeePoolData": "workspace:^",
+    "@storybook/react": "^6.5.15",
+    "react": "^18.2.0"
+  }
+}

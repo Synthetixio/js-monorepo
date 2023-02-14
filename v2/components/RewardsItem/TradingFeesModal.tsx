@@ -1,26 +1,41 @@
 import {
   Button,
   Heading,
-  Link,
   Modal,
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
   Flex,
   Text,
+  Tooltip,
 } from '@chakra-ui/react';
-import { ArrowRight, InfoIcon } from '@snx-v2/icons';
-import { EXTERNAL_LINKS } from '@snx-v2/Constants';
-import { Trans } from 'react-i18next';
+import { formatNumber } from '@snx-v2/formatters';
+import { InfoIcon } from '@snx-v2/icons';
 import { useNavigate } from 'react-router-dom';
 
 interface TradingFeesModalProps {
+  feesBurned: number;
   isOpen: boolean;
   onClose: () => void;
+  sUSDBalance: string;
+  currentCRatioPercentage: number;
+  activeDebt: number;
+  totalBalance: number;
 }
 
-export const TradingFeesModal = ({ isOpen, onClose }: TradingFeesModalProps) => {
+export const TradingFeesModal = ({
+  isOpen,
+  onClose,
+  feesBurned,
+  sUSDBalance,
+  currentCRatioPercentage,
+  activeDebt,
+  totalBalance,
+}: TradingFeesModalProps) => {
   const navigate = useNavigate();
+
+  const previousCratio = (100 * totalBalance) / (activeDebt + feesBurned);
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -39,12 +54,8 @@ export const TradingFeesModal = ({ isOpen, onClose }: TradingFeesModalProps) => 
             Trading Fees Burning
           </Heading>
           <Text textAlign="center" color="gray.600" my={2} fontSize="12px" lineHeight="18px">
-            <Trans
-              i18nKey="staking-v2.earn.trading-fees.modal.description"
-              components={[
-                <Link target="_blank" color="cyan.400" href={EXTERNAL_LINKS.Synthetix.SIP255} />,
-              ]}
-            />
+            Trading fees no longer need to be claimed, they now automatically pay down your debt and
+            increase your c-ratio. Below you can see the estimated impact to your position.
           </Text>
           <Flex
             bg="black"
@@ -56,95 +67,128 @@ export const TradingFeesModal = ({ isOpen, onClose }: TradingFeesModalProps) => 
           >
             <Flex justifyContent="center" alignItems="center" flexDir="column" py={3}>
               <Text fontWeight="700" fontSize="14px" lineHeight="20px" fontFamily="heading">
-                EPOCH FEES
+                FEES EARNED LAST EPOCH
               </Text>
               <Text fontWeight="700" fontSize="36px" lineHeight="40px" fontFamily="heading">
-                89.90 sUSD
-              </Text>
-            </Flex>
-            <Flex
-              borderTopColor="gray.900"
-              width="100%"
-              justifyContent="center"
-              borderTopWidth="1px"
-            >
-              <Text
-                width="50%"
-                textAlign="center"
-                borderRightColor="gray.900"
-                borderRightWidth="0.5px"
-                py="6px"
-                fontFamily="heading"
-                fontSize="12px"
-                lineHeight="18px"
-              >
-                New C-ratio
-              </Text>
-              <Text
-                borderLeftColor="gray.900"
-                borderLeftWidth="0.5px"
-                width="50%"
-                textAlign="center"
-                py="6px"
-                fontFamily="heading"
-                fontSize="12px"
-                lineHeight="18px"
-              >
-                431%
+                {formatNumber(feesBurned)} sUSD
               </Text>
             </Flex>
           </Flex>
-          <Flex bg="whiteAlpha.200" borderRadius="10px" my={2} flexDir="column" p={3}>
-            <Flex mb={2} justifyContent="space-between">
-              <span>
-                <Text fontWeight="700" fontSize="12px" lineHeight="16px" as="span">
-                  C-ratio
-                </Text>
-                <InfoIcon ml={1} />
-              </span>
-              <span>
-                <Text fontWeight="700" fontSize="12px" lineHeight="16px" as="span">
-                  401%
-                </Text>
-                <ArrowRight mx={1} color="white" />
-                <Text fontWeight="700" fontSize="12px" lineHeight="16px" as="span">
-                  402%
-                </Text>
-              </span>
+          <Flex bg="whiteAlpha.200" borderRadius="10px" my={3} flexDir="column" p={3}>
+            <Flex justifyContent="space-between" mb={2}>
+              <Text width="33%" color="transparent" fontSize="14px" lineHeight="20px">
+                1
+              </Text>
+              <Text
+                width="33%"
+                color="gray.500"
+                fontWeight="700"
+                fontSize="14px"
+                textAlign="center"
+                lineHeight="20px"
+              >
+                Before burning
+              </Text>
+              <Text
+                width="33%"
+                color="gray.500"
+                fontWeight="700"
+                lineHeight="20px"
+                fontSize="14px"
+                textAlign="end"
+              >
+                After burning
+              </Text>
+            </Flex>
+            <Flex mb={3} justifyContent="space-between">
+              <Text fontWeight="700" fontSize="12px" lineHeight="16px" as="span" width="33%">
+                C-ratio
+                <Tooltip label="Your current C-ratio">
+                  <span>
+                    <InfoIcon ml={1} />
+                  </span>
+                </Tooltip>
+              </Text>
+              <Text
+                fontWeight="700"
+                fontSize="12px"
+                lineHeight="16px"
+                as="span"
+                width="33%"
+                textAlign="center"
+              >
+                {`${formatNumber(previousCratio)}%`}
+              </Text>
+              <Text
+                fontWeight="700"
+                fontSize="12px"
+                lineHeight="16px"
+                as="span"
+                width="33%"
+                textAlign="end"
+              >
+                {`${formatNumber(currentCRatioPercentage)}%`}
+              </Text>
             </Flex>
             <Flex mb={2} justifyContent="space-between">
-              <span>
-                <Text fontWeight="700" fontSize="12px" lineHeight="16px" as="span">
-                  sUSD Balance
-                </Text>
-                <InfoIcon ml={1} />
-              </span>
-              <span>
-                <Text fontWeight="700" fontSize="12px" lineHeight="16px" as="span">
-                  1,000
-                </Text>
-                <ArrowRight mx={1} color="white" />
-                <Text fontWeight="700" fontSize="12px" lineHeight="16px" as="span">
-                  1,000
-                </Text>
-              </span>
+              <Text fontWeight="700" fontSize="12px" lineHeight="16px" as="span" width="33%">
+                Active Debt
+                <Tooltip label="Your current active debt in sUSD">
+                  <span>
+                    <InfoIcon ml={1} />
+                  </span>
+                </Tooltip>
+              </Text>
+              <Text
+                fontWeight="700"
+                fontSize="12px"
+                lineHeight="16px"
+                as="span"
+                width="33%"
+                textAlign="center"
+              >
+                {`$${formatNumber(activeDebt - feesBurned)}`}
+              </Text>
+              <Text
+                fontWeight="700"
+                fontSize="12px"
+                lineHeight="16px"
+                as="span"
+                width="33%"
+                textAlign="end"
+              >
+                {`$${formatNumber(activeDebt)}`}
+              </Text>
             </Flex>
-            <Flex justifyContent="space-between">
-              <span>
-                <Text fontWeight="700" fontSize="12px" lineHeight="16px" as="span">
-                  Active Debt
-                </Text>
-                <InfoIcon ml={1} />
-              </span>
-              <span>
-                <Text fontWeight="700" fontSize="12px" lineHeight="16px" as="span">
-                  $2,504
-                </Text>
-                <ArrowRight mx={1} color="white" />
-                <Text fontWeight="700" fontSize="12px" lineHeight="16px" as="span">
-                  $1,987
-                </Text>
-              </span>
+            <Flex justifyContent="space-between" alignItems="center" mt={1}>
+              <Text fontWeight="700" fontSize="12px" lineHeight="16px" as="span" width="33%">
+                sUSD Balance
+                <Tooltip label="Your current sUSD balance">
+                  <span>
+                    <InfoIcon ml={1} />
+                  </span>
+                </Tooltip>
+              </Text>
+              <Text
+                fontWeight="700"
+                fontSize="12px"
+                lineHeight="16px"
+                as="span"
+                width="33%"
+                textAlign="center"
+              >
+                ${sUSDBalance}
+              </Text>
+              <Text
+                fontWeight="700"
+                fontSize="12px"
+                lineHeight="16px"
+                as="span"
+                width="33%"
+                textAlign="end"
+              >
+                ${sUSDBalance}
+              </Text>
             </Flex>
           </Flex>
           <Button

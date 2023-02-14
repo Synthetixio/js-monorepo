@@ -54,3 +54,4 @@ export * from './PolynomialIcon';
 export * from './TradingFeesIcon';
 export * from './StakingRewardsIcon';
 export * from './TorosIcon';
+export * from './DollarIcon';

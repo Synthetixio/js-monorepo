@@ -1,9 +1,10 @@
 import { Container, Box, Text, Link } from '@chakra-ui/react';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { HomeButton } from '@snx-v2/HomeButton';
-import { Rewards } from '@snx-v2/RewardsItem';
+import { Rewards, Fees } from '@snx-v2/RewardsItem';
 import { Trans, useTranslation } from 'react-i18next';
 import { EarnStats } from '@snx-v2/EarnStats';
+import { BurnStats } from '@snx-v2/BurnStats';
 
 const V2Earn = () => {
   const { t } = useTranslation();
@@ -39,6 +40,8 @@ const V2Earn = () => {
           </Text>
           <EarnStats />
           <Rewards />
+          <BurnStats />
+          <Fees />
         </Container>
       </Box>
     </>

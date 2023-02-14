@@ -23,8 +23,6 @@ export const useFeePoolData = (period = 0) => {
           FeePool.feesToBurn(walletAddress),
         ]);
 
-      console.log(FeePool, networkId, totalFeesBurned, feesBurned, feesToBurn);
-
       const startTime = Number(feePeriod.startTime);
       const feePeriodDuration = Number(feePeriodDurationBn);
 

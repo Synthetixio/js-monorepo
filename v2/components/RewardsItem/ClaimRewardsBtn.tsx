@@ -8,13 +8,12 @@ import { useQueryClient } from '@tanstack/react-query';
 
 export const ClaimRewardsBtn: FC<{
   amountSNX?: number;
-  amountsUSD?: number;
   variant: string;
-}> = ({ amountSNX, amountsUSD, variant }) => {
+}> = ({ amountSNX, variant }) => {
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
-  const haveSomethingToClaim = Boolean(amountSNX || amountsUSD);
+  const haveSomethingToClaim = Boolean(amountSNX);
   const canClaim = haveSomethingToClaim && variant === 'success';
   const {
     mutate,
@@ -67,7 +66,6 @@ export const ClaimRewardsBtn: FC<{
         txnStatus={txnStatus}
         modalOpen={modalOpen}
         amountSNX={formatNumber(amountSNX || 0)}
-        amountsUSD={formatNumber(amountsUSD || 0)}
       />
     </>
   );

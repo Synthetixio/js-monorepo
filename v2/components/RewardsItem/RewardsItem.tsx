@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState } from 'react';
+import { FC, ReactElement } from 'react';
 import {
   Box,
   Text,
@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { CountDown } from '@snx-v2/CountDown';
 import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
 import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
-import { InfoOutline, TradingFeesIcon, StakingRewardsIcon, WreckedIcon } from '@snx-v2/icons';
+import { InfoOutline, SNXIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { formatNumber, formatPercent } from '@snx-v2/formatters';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
@@ -24,7 +24,6 @@ import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { ClaimRewardsBtn } from './ClaimRewardsBtn';
 import { ClaimLiquidationBtn } from './ClaimLiquidationBtn';
 import { useApr } from '@snx-v2/useApr';
-import { TradingFeesModal } from './TradingFeesModal';
 
 interface RewardsItemProps extends FlexProps {
   isLoading: boolean;
@@ -275,7 +274,6 @@ function percentEpochCompleted(nextStartDate?: Date, duration?: number) {
 
 export const Rewards = () => {
   const { t } = useTranslation();
-  const [isFeesModalOpen, setFeesModalOpen] = useState(false);
 
   const { data: debtData, isLoading: isDebtLoading } = useDebtData();
   const { data: liquidationData, isLoading: isLiquidationLoading } = useGetLiquidationRewards();
@@ -295,7 +293,6 @@ export const Rewards = () => {
 
   return (
     <>
-      <TradingFeesModal isOpen={isFeesModalOpen} onClose={() => setFeesModalOpen(false)} />
       <Box my={8}>
         <Divider my={4} />
         <RewardsItemUI
@@ -308,66 +305,7 @@ export const Rewards = () => {
               alignItems="center"
               borderRadius="full"
             >
-              <TradingFeesIcon height="36px" width="36px" />
-            </Flex>
-          )}
-          title={t('staking-v2.earn.trading-fees.title')}
-          description={t('staking-v2.earn.trading-fees.description')}
-          apyReturn={aprData !== undefined ? formatPercent(aprData.toNumber()) : ''}
-          endDate={t('staking-v2.earn.trading-fees.repays')}
-          isLoading={isLoading}
-          RewardBalance={() => {
-            return (
-              <Flex flexDirection="column">
-                <Text fontFamily="heading" fontSize="xs" color="whiteAlpha.500">
-                  {/* Fee amount here */}
-                  ~200 sUSD / week
-                </Text>
-              </Flex>
-            );
-          }}
-          RewardsBadge={() => {
-            return (
-              <Badge
-                py={0.5}
-                px={1}
-                fontSize="2xs"
-                variant="gray"
-                mt={0.5}
-                w="fit-content"
-                fontWeight="700"
-              >
-                <InfoOutline color="gray.500" mb="1.75px" mr="2px" height="12px" width="12px" />
-                {t('staking-v2.earn.trading-fees.burned')}
-              </Badge>
-            );
-          }}
-          claimBtn={
-            <Button
-              w={['100%', '100%', '100%', '80px']}
-              variant="outline"
-              ml={[6, 6, 6, 4]}
-              fontFamily="heading"
-              fontSize="14px"
-              fontWeight="700"
-              onClick={() => setFeesModalOpen(true)}
-            >
-              More Info
-            </Button>
-          }
-        />
-        <Divider my={4} />
-        <RewardsItemUI
-          Icon={() => (
-            <Flex
-              bg="navy.900"
-              height="38px"
-              width="38px"
-              justifyContent="center"
-              alignItems="center"
-              borderRadius="full"
-            >
-              <StakingRewardsIcon height="34px" width="34px" />
+              <SNXIcon backgroundColor="#00B0D6" color="#ffffff" height="34px" width="34px" />
             </Flex>
           )}
           title={t('staking-v2.earn.staking-rewards.title')}
@@ -402,7 +340,6 @@ export const Rewards = () => {
               );
             return (
               <Flex flexDirection="column">
-                <span>{formatNumber(rewardsData?.sUSDRewards.toNumber() || 0)} sUSD</span>
                 <span>{formatNumber(rewardsData?.snxRewards.toNumber() || 0)} SNX</span>
               </Flex>
             );
@@ -438,11 +375,7 @@ export const Rewards = () => {
             );
           }}
           claimBtn={
-            <ClaimRewardsBtn
-              variant={variant}
-              amountSNX={rewardsData?.snxRewards.toNumber()}
-              amountsUSD={rewardsData?.sUSDRewards.toNumber()}
-            />
+            <ClaimRewardsBtn variant={variant} amountSNX={rewardsData?.snxRewards.toNumber()} />
           }
         />
         <Divider my={4} />
@@ -456,7 +389,7 @@ export const Rewards = () => {
               alignItems="center"
               borderRadius="full"
             >
-              <WreckedIcon height="34px" width="34px" />
+              <SNXIcon backgroundColor="#00B0D6" color="#ffffff" height="34px" width="34px" />
             </Flex>
           )}
           title={t('staking-v2.earn.liquidation-rewards.title')}
