@@ -20,7 +20,7 @@ interface TradingFeesModalProps {
   sUSDBalance: string;
   currentCRatioPercentage: number;
   activeDebt: number;
-  totalBalance: number;
+  collateralValue: number;
 }
 
 export const TradingFeesModal = ({
@@ -30,11 +30,11 @@ export const TradingFeesModal = ({
   sUSDBalance,
   currentCRatioPercentage,
   activeDebt,
-  totalBalance,
+  collateralValue,
 }: TradingFeesModalProps) => {
   const navigate = useNavigate();
 
-  const previousCratio = (100 * totalBalance) / (activeDebt + feesBurned);
+  const previousCratio = (100 * collateralValue) / (activeDebt + feesBurned);
 
   return (
     <>

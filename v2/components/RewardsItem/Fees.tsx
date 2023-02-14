@@ -24,7 +24,7 @@ export const Fees = () => {
   const isLoading =
     isDebtLoading || isFeePoolDataLoading || isSynthsLoading || isExchangeRatesLoading;
 
-  const totalBalance = debtData?.collateral.mul(exchangeRates?.SNX || 0).toNumber() || 0;
+  const collateralValue = debtData?.collateral.mul(exchangeRates?.SNX || 0).toNumber() || 0;
 
   return (
     <>
@@ -35,7 +35,7 @@ export const Fees = () => {
         sUSDBalance={formatNumber(synthsBalances?.balancesMap['sUSD']?.balance.toNumber() || 0)}
         currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber() || 0}
         activeDebt={debtData?.debtBalance.toNumber() || 0}
-        totalBalance={totalBalance}
+        collateralValue={collateralValue}
       />
       <Box my={8}>
         <Divider my={4} />
