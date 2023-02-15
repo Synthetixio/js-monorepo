@@ -1,11 +1,8 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { useParams } from '@snx-v3/useParams';
-import { usePoolData, Pool } from '@snx-v3/usePoolData';
+import { usePoolData, PoolType } from '@snx-v3/usePoolData';
 
-export const PoolHeaderUi = ({ pool }: { pool?: Pool }) => {
-  if (!pool) {
-    return null;
-  }
+export const PoolHeaderUi = ({ pool }: { pool: PoolType }) => {
   return (
     <Box>
       <Flex gap={2} alignItems="flex-end">
@@ -27,5 +24,5 @@ export const PoolHeaderUi = ({ pool }: { pool?: Pool }) => {
 export const PoolHeader = () => {
   const params = useParams();
   const { data: pool } = usePoolData(params.poolId);
-  return <PoolHeaderUi pool={pool} />;
+  return pool ? <PoolHeaderUi pool={pool} /> : null;
 };

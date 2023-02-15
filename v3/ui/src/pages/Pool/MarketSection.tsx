@@ -14,7 +14,7 @@ import {
   Tooltip,
   Skeleton,
 } from '@chakra-ui/react';
-import { Pool, usePoolData } from '@snx-v3/usePoolData';
+import { PoolType, usePoolData } from '@snx-v3/usePoolData';
 import {
   calculateSevenDaysPnlGrowth,
   calculatePoolPerformanceSevenDays,
@@ -86,7 +86,7 @@ export function MarketSectionUi({
   poolId,
   poolDataFetched,
 }: {
-  poolData?: Pool;
+  poolData?: PoolType;
   marketNamesById?: Record<string, string | undefined>;
   poolId?: string;
   poolDataFetched: boolean;
