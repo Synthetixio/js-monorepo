@@ -6,18 +6,17 @@ import add from 'date-fns/add';
 import { wei } from '@synthetixio/wei';
 
 export const useFeePoolData = (period = 0) => {
-  const { walletAddress, networkId } = useContext(ContractContext);
+  const { networkId } = useContext(ContractContext);
   const { data: FeePool } = useFeePool();
 
   return useQuery(
-    ['stakingV2', 'feePool', networkId, period, walletAddress],
+    ['stakingV2', 'feePool', networkId, period],
     async () => {
       if (!FeePool) throw Error('Query should not be enabled if contracts are missing');
 
-      const [feePeriod, feePeriodDurationBn, feesBurned] = await Promise.all([
+      const [feePeriod, feePeriodDurationBn] = await Promise.all([
         FeePool.recentFeePeriods(period),
         FeePool.feePeriodDuration(),
-        walletAddress ? FeePool.feesBurned(walletAddress) : wei(0),
       ]);
 
       const startTime = Number(feePeriod.startTime);
@@ -29,7 +28,6 @@ export const useFeePoolData = (period = 0) => {
         nextFeePeriodStartDate: add(new Date(startTime * 1000), { seconds: feePeriodDuration }),
         feesToDistribute: wei(feePeriod.feesToDistribute),
         rewardsToDistribute: wei(feePeriod.rewardsToDistribute),
-        feesBurned: wei(feesBurned),
       };
     },
     {
