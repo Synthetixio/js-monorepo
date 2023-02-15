@@ -18,8 +18,6 @@ export const useGetUpcomingRewards = () => {
       let total = 0;
 
       if (!rewardsData.hasClaimed) {
-        // Fees component
-        total += rewardsData.sUSDRewards.toNumber();
         // Inflation Component
         const inflationComponent = rewardsData.snxRewards.mul(SNXRate).toNumber();
         total += inflationComponent;
