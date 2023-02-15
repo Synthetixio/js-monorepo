@@ -74,7 +74,7 @@
     "chart.js": "^3.9.1",
     "ethers": "^5.7.2",
     "framer-motion": "^7.0.0",
-    "i18next": "^21.9.0",
+    "i18next": "^21.10.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-dom": "^18.2.0",

@@ -93,7 +93,7 @@
     "date-fns": "^2.29.3",
     "ethers": "^5.7.2",
     "framer-motion": "^7.0.0",
-    "i18next": "^21.9.0",
+    "i18next": "^21.10.0",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
