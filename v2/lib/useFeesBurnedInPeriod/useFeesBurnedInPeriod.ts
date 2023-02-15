@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { providers } from 'ethers';
 import { ContractContext } from '@snx-v2/ContractContext';
 import Wei, { wei } from '@synthetixio/wei';
-import { useFeePool, useSynthetixDebtShare } from '@snx-v2/useSynthetixContracts/';
+import { getFeePool, getSynthetixDebtShare } from '@snx-v2/useSynthetixContracts';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 
 // exported for tests
@@ -28,15 +28,13 @@ export const calculateTotalBurn = ({
   return totalBurn.mul(userDebtShareSupplyCurrentNetwork.div(totalDebtShareSupply));
 };
 
-export const useFeesBurnedInPeriod = (period = 1) => {
+export const useFeesBurnedInPeriod = (period = 1 /* Defaults to previous period*/) => {
   const { walletAddress, networkId } = useContext(ContractContext);
-  const { data: DebtShare } = useSynthetixDebtShare();
-  const { data: FeePool } = useFeePool();
 
   return useQuery({
     queryKey: ['stakingV2', 'useFeesBurnedInPeriod', networkId, walletAddress],
     queryFn: async () => {
-      if (!DebtShare || !FeePool || !walletAddress) throw Error('Query should not be enabled');
+      if (!walletAddress) throw Error('Query should not be enabled');
 
       const optimismProvider = new providers.InfuraProvider(
         NetworkIdByName['mainnet-ovm'],
@@ -46,27 +44,47 @@ export const useFeesBurnedInPeriod = (period = 1) => {
         NetworkIdByName.mainnet,
         process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
       );
-
-      const DebtShareOptimism = DebtShare.connect(optimismProvider);
-      const DebtShareMainnet = DebtShare.connect(mainnetProvider);
-      const FeePoolOptimism = FeePool.connect(optimismProvider);
-      const FeePoolMainnet = FeePool.connect(mainnetProvider);
+      const [FeePoolOptimism, FeePoolMainnet, DebtShareOptimism, DebtShareMainnet] =
+        await Promise.all([
+          getFeePool({
+            provider: optimismProvider,
+            networkId: NetworkIdByName['mainnet-ovm'],
+            signer: null,
+          }),
+          getFeePool({
+            provider: mainnetProvider,
+            networkId: NetworkIdByName.mainnet,
+            signer: null,
+          }),
+          getSynthetixDebtShare({
+            provider: optimismProvider,
+            networkId: NetworkIdByName['mainnet-ovm'],
+            signer: null,
+          }),
+          getSynthetixDebtShare({
+            provider: mainnetProvider,
+            networkId: NetworkIdByName.mainnet,
+            signer: null,
+          }),
+        ]);
 
       const [prevFeePeriodOptimism, prevFeePeriodMainnet] = await Promise.all([
         FeePoolOptimism.recentFeePeriods(period),
         FeePoolMainnet.recentFeePeriods(period),
       ]);
 
-      const periodIdForCurrentNetwork =
+      const periodIdCurrentNetwork =
         networkId === NetworkIdByName['mainnet-ovm']
           ? prevFeePeriodOptimism.feePeriodId
           : prevFeePeriodMainnet.feePeriodId;
+      const DebtShareCurrentNetwork =
+        networkId === NetworkIdByName['mainnet-ovm'] ? DebtShareOptimism : DebtShareMainnet;
       const [
         userDebtShareSupplyCurrentNetwork,
         totalDebtShareSupplyOptimism,
         totalDebtShareSupplyMainnet,
       ] = await Promise.all([
-        DebtShare.balanceOfOnPeriod(walletAddress, periodIdForCurrentNetwork),
+        DebtShareCurrentNetwork.balanceOfOnPeriod(walletAddress, periodIdCurrentNetwork),
         DebtShareOptimism.totalSupplyOnPeriod(prevFeePeriodOptimism.feePeriodId),
         DebtShareMainnet.totalSupplyOnPeriod(prevFeePeriodMainnet.feePeriodId),
       ]);
@@ -80,7 +98,7 @@ export const useFeesBurnedInPeriod = (period = 1) => {
       });
     },
 
-    enabled: Boolean(FeePool && walletAddress && DebtShare),
+    enabled: Boolean(walletAddress),
     staleTime: 1000,
   });
 };
