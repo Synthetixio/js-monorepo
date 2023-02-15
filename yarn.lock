@@ -6510,7 +6510,6 @@ __metadata:
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
-    "@snx-v2/useGetLifetimeRewards": "workspace:*"
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7310,6 +7309,7 @@ __metadata:
   dependencies:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@tanstack/react-query": ^4.3.4
+    date-fns: ^2.19.0
     react: ^18.2.0
   languageName: unknown
   linkType: soft
