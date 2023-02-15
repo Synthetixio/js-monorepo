@@ -1,5 +1,5 @@
 {
-  "address": "0x9195B9d72a5695350283CA046A9f309B6510387B",
+  "address": "0x52a35CaED46a6c20B5c43a0D6BEDc4990800E492",
   "abi": [
     {
       "inputs": [],
@@ -170,25 +170,6 @@
         {
           "indexed": true,
           "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
-      ],
-      "name": "Mint",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
           "name": "from",
           "type": "address"
         },
@@ -243,6 +224,19 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "burn",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -328,12 +322,12 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "owner",
+          "name": "to",
           "type": "address"
         },
         {
           "internalType": "uint256",
-          "name": "nftId",
+          "name": "tokenId",
           "type": "uint256"
         }
       ],
@@ -421,6 +415,24 @@
         }
       ],
       "name": "safeTransferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        }
+      ],
+      "name": "setAllowance",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -574,5 +586,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xc177f64a25da9ce7dab2655af338c2b0734a7ad1b737b674bb030ba1cd072347"
+  "deployTxnHash": "0x9bdb562cf902aecdcc4e9acc75296552fde2abb9d44917fff2c8848cf4e5100a"
 }
