@@ -1,10 +1,11 @@
-import { Container, Box, Text, Link } from '@chakra-ui/react';
+import { Container, Box, Text, Link, Divider, Alert } from '@chakra-ui/react';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { HomeButton } from '@snx-v2/HomeButton';
 import { Rewards, Fees } from '@snx-v2/RewardsItem';
 import { Trans, useTranslation } from 'react-i18next';
 import { EarnStats } from '@snx-v2/EarnStats';
 import { BurnStats } from '@snx-v2/BurnStats';
+import { InfoIcon } from '@snx-v2/icons';
 
 const V2Earn = () => {
   const { t } = useTranslation();
@@ -38,8 +39,16 @@ const V2Earn = () => {
               ]}
             />
           </Text>
+          <Alert variant="solid" my={4}>
+            <InfoIcon color="#2ED9FF" width="16px" height="16px" mr={2} />
+            <Text color="white" fontSize="16px" fontFamily="heading">
+              Fee Burning is now active, which automatically pays down your debt with sUSD rewards,
+              you can read more here
+            </Text>
+          </Alert>
           <EarnStats />
           <Rewards />
+          <Divider borderColor="transparent" my={8} />
           <BurnStats />
           <Fees />
         </Container>

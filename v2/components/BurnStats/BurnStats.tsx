@@ -55,7 +55,7 @@ export const BurnStats = () => {
   return (
     <BurnStatsUi
       isLoading={isLoading}
-      lifetimeBurned={'-'}
+      lifetimeBurned={'coming soon'}
       lastEpochBurned={formatNumberToUsd(fees?.feesBurned.toNumber() || 0)}
       burningAPR={formatPercent(earning?.feesApr?.toNumber() || 0)}
     />
