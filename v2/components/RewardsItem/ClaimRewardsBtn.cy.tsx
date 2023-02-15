@@ -26,7 +26,7 @@ it('Renders cyan claim not disable when we have rewards to claim ', () => {
   cy.mount(
     <QueryClientProvider client={new QueryClient()}>
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
-        <ClaimRewardsBtn variant="success" amountsUSD={10} />
+        <ClaimRewardsBtn variant="success" amountSNX={10} />
       </Box>
     </QueryClientProvider>
   );
@@ -41,7 +41,7 @@ it('Renders cyan claim  disable when we dont have any rewards to claim ', () => 
   cy.mount(
     <QueryClientProvider client={new QueryClient()}>
       <Box paddingY="7" paddingX="4" bg="navy.900" flex="1">
-        <ClaimRewardsBtn variant="success" amountsUSD={0} />
+        <ClaimRewardsBtn variant="success" amountSNX={0} />
       </Box>
     </QueryClientProvider>
   );

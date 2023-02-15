@@ -1,7 +1,7 @@
 {
   "name": "@synthetixio/v2-ui",
   "private": true,
-  "version": "2.45.7",
+  "version": "2.45.9",
   "engines": {
     "node": "16.x"
   },
@@ -37,6 +37,7 @@
     "@snx-v2/BalanceBox": "workspace:*",
     "@snx-v2/BoxLink": "workspace:*",
     "@snx-v2/Burn": "workspace:*",
+    "@snx-v2/BurnStats": "workspace:*",
     "@snx-v2/CRatioBanner": "workspace:*",
     "@snx-v2/CRatioHealthCard": "workspace:*",
     "@snx-v2/Constants": "workspace:*",
@@ -115,7 +116,7 @@
     "storybook": "^6.5.15",
     "styled-components": "^5.3.5",
     "styled-media-query": "^2.1.2",
-    "synthetix": "2.80.3",
+    "synthetix": "2.83.1",
     "tippy.js": "^6.3.1",
     "unstated-next": "^1.1.0"
   },

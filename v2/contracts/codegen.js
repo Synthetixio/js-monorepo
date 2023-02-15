@@ -107,6 +107,7 @@ async function generateSynths({ network, prettierOptions }) {
       sign: string;
       description: string;
       name: string;
+      feed?: string
       subclass?: string;
     }
   >

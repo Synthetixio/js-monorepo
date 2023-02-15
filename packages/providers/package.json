@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.74.13",
+  "version": "2.74.15",
   "description": "Javascript library for handling providers on Layer 1 & Optimism Layer 2",
   "source": "./src/index.ts",
   "main": "./build/index.js",

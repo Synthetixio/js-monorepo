@@ -22,7 +22,6 @@ Primary.args = {
   title: 'Synthetix',
   description: 'Staking Rewards',
   apyReturn: '12%',
-  stakedBalance: '5,000,000.00 SNX',
   Icon: () => <SNXIcon height="40px" width="40px" />,
   endDate: date,
   RewardBalance: () => <>5,000,000.00 SNX</>,

@@ -52,10 +52,15 @@ input AccountFlaggedForLiquidation_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
+  and: [AccountFlaggedForLiquidation_filter]
   collateral: BigDecimal
   collateralRatio: BigInt
   collateralRatio_gt: BigInt
@@ -96,6 +101,7 @@ input AccountFlaggedForLiquidation_filter {
   liquidatableNonEscrowSNX_lte: BigDecimal
   liquidatableNonEscrowSNX_not: BigDecimal
   liquidatableNonEscrowSNX_not_in: [BigDecimal!]
+  or: [AccountFlaggedForLiquidation_filter]
 }
 
 enum AccountFlaggedForLiquidation_orderBy {
@@ -142,7 +148,11 @@ input AccountLiquidated_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -154,6 +164,7 @@ input AccountLiquidated_filter {
   amountLiquidated_lte: BigDecimal
   amountLiquidated_not: BigDecimal
   amountLiquidated_not_in: [BigDecimal!]
+  and: [AccountLiquidated_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -164,10 +175,15 @@ input AccountLiquidated_filter {
   id_not_in: [ID!]
   liquidator: Bytes
   liquidator_contains: Bytes
+  liquidator_gt: Bytes
+  liquidator_gte: Bytes
   liquidator_in: [Bytes!]
+  liquidator_lt: Bytes
+  liquidator_lte: Bytes
   liquidator_not: Bytes
   liquidator_not_contains: Bytes
   liquidator_not_in: [Bytes!]
+  or: [AccountLiquidated_filter]
   snxRedeemed: BigDecimal
   snxRedeemed_gt: BigDecimal
   snxRedeemed_gte: BigDecimal
@@ -219,10 +235,15 @@ input AccountRemovedFromLiquidation_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
+  and: [AccountRemovedFromLiquidation_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -231,6 +252,7 @@ input AccountRemovedFromLiquidation_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [AccountRemovedFromLiquidation_filter]
   time: BigInt
   time_gt: BigInt
   time_gte: BigInt
@@ -256,6 +278,7 @@ input ActiveStaker_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [ActiveStaker_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -264,6 +287,7 @@ input ActiveStaker_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [ActiveStaker_filter]
 }
 
 enum ActiveStaker_orderBy {
@@ -314,6 +338,7 @@ input AtomicSynthExchange_filter {
   account_not_starts_with_nocase: String
   account_starts_with: String
   account_starts_with_nocase: String
+  and: [AtomicSynthExchange_filter]
   feesInUSD: BigDecimal
   feesInUSD_gt: BigDecimal
   feesInUSD_gte: BigDecimal
@@ -375,6 +400,7 @@ input AtomicSynthExchange_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [AtomicSynthExchange_filter]
   timestamp: BigInt
   timestamp_gt: BigInt
   timestamp_gte: BigInt
@@ -385,7 +411,11 @@ input AtomicSynthExchange_filter {
   timestamp_not_in: [BigInt!]
   toAddress: Bytes
   toAddress_contains: Bytes
+  toAddress_gt: Bytes
+  toAddress_gte: Bytes
   toAddress_in: [Bytes!]
+  toAddress_lt: Bytes
+  toAddress_lte: Bytes
   toAddress_not: Bytes
   toAddress_not_contains: Bytes
   toAddress_not_in: [Bytes!]
@@ -477,10 +507,15 @@ input Burned_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
+  and: [Burned_filter]
   block: BigInt
   block_gt: BigInt
   block_gte: BigInt
@@ -505,6 +540,7 @@ input Burned_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [Burned_filter]
   source: String
   source_contains: String
   source_contains_nocase: String
@@ -596,6 +632,7 @@ input Candle_filter {
   aggregatedPrices_lte: BigInt
   aggregatedPrices_not: BigInt
   aggregatedPrices_not_in: [BigInt!]
+  and: [Candle_filter]
   average: BigDecimal
   average_gt: BigDecimal
   average_gte: BigDecimal
@@ -644,6 +681,7 @@ input Candle_filter {
   open_lte: BigDecimal
   open_not: BigDecimal
   open_not_in: [BigDecimal!]
+  or: [Candle_filter]
   period: BigInt
   period_gt: BigInt
   period_gte: BigInt
@@ -734,10 +772,15 @@ input CollateralDeposited_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
+  and: [CollateralDeposited_filter]
   collateralAfter: BigDecimal
   collateralAfter_gt: BigDecimal
   collateralAfter_gte: BigDecimal
@@ -770,6 +813,7 @@ input CollateralDeposited_filter {
   loanId_lte: BigInt
   loanId_not: BigInt
   loanId_not_in: [BigInt!]
+  or: [CollateralDeposited_filter]
   timestamp: BigInt
   timestamp_gt: BigInt
   timestamp_gte: BigInt
@@ -828,7 +872,11 @@ input CollateralWithdrawn_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -840,6 +888,7 @@ input CollateralWithdrawn_filter {
   amountWithdrawn_lte: BigDecimal
   amountWithdrawn_not: BigDecimal
   amountWithdrawn_not_in: [BigDecimal!]
+  and: [CollateralWithdrawn_filter]
   collateralAfter: BigDecimal
   collateralAfter_gt: BigDecimal
   collateralAfter_gte: BigDecimal
@@ -864,6 +913,7 @@ input CollateralWithdrawn_filter {
   loanId_lte: BigInt
   loanId_not: BigInt
   loanId_not_in: [BigInt!]
+  or: [CollateralWithdrawn_filter]
   timestamp: BigInt
   timestamp_gt: BigInt
   timestamp_gte: BigInt
@@ -905,6 +955,7 @@ input DailyBurned_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [DailyBurned_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -913,6 +964,7 @@ input DailyBurned_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [DailyBurned_filter]
   totalDebt: BigDecimal
   totalDebt_gt: BigDecimal
   totalDebt_gte: BigDecimal
@@ -959,6 +1011,7 @@ input DailyCandle_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [DailyCandle_filter]
   close: BigDecimal
   close_gt: BigDecimal
   close_gte: BigDecimal
@@ -999,6 +1052,7 @@ input DailyCandle_filter {
   open_lte: BigDecimal
   open_not: BigDecimal
   open_not_in: [BigDecimal!]
+  or: [DailyCandle_filter]
   synth: String
   synth_contains: String
   synth_contains_nocase: String
@@ -1076,6 +1130,7 @@ input DailyExchangePartner_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [DailyExchangePartner_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -1084,6 +1139,7 @@ input DailyExchangePartner_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [DailyExchangePartner_filter]
   partner: String
   partner_contains: String
   partner_contains_nocase: String
@@ -1169,6 +1225,7 @@ input DailyIssued_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [DailyIssued_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -1177,6 +1234,7 @@ input DailyIssued_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [DailyIssued_filter]
   totalDebt: BigDecimal
   totalDebt_gt: BigDecimal
   totalDebt_gte: BigDecimal
@@ -1250,10 +1308,15 @@ input DebtSnapshot_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
+  and: [DebtSnapshot_filter]
   balanceOf: BigDecimal
   balanceOf_gt: BigDecimal
   balanceOf_gte: BigDecimal
@@ -1310,6 +1373,7 @@ input DebtSnapshot_filter {
   initialDebtOwnership_lte: BigDecimal
   initialDebtOwnership_not: BigDecimal
   initialDebtOwnership_not_in: [BigDecimal!]
+  or: [DebtSnapshot_filter]
   timestamp: BigInt
   timestamp_gt: BigInt
   timestamp_gte: BigInt
@@ -1365,6 +1429,7 @@ input DebtState_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [DebtState_filter]
   debtEntry: BigDecimal
   debtEntry_gt: BigDecimal
   debtEntry_gte: BigDecimal
@@ -1389,6 +1454,7 @@ input DebtState_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [DebtState_filter]
   period: BigInt
   period_gt: BigInt
   period_gte: BigInt
@@ -1443,9 +1509,14 @@ input DelegatedWallet_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [DelegatedWallet_filter]
   authoriser: Bytes
   authoriser_contains: Bytes
+  authoriser_gt: Bytes
+  authoriser_gte: Bytes
   authoriser_in: [Bytes!]
+  authoriser_lt: Bytes
+  authoriser_lte: Bytes
   authoriser_not: Bytes
   authoriser_not_contains: Bytes
   authoriser_not_in: [Bytes!]
@@ -1467,7 +1538,11 @@ input DelegatedWallet_filter {
   canMint_not_in: [Boolean!]
   delegate: Bytes
   delegate_contains: Bytes
+  delegate_gt: Bytes
+  delegate_gte: Bytes
   delegate_in: [Bytes!]
+  delegate_lt: Bytes
+  delegate_lte: Bytes
   delegate_not: Bytes
   delegate_not_contains: Bytes
   delegate_not_in: [Bytes!]
@@ -1479,6 +1554,7 @@ input DelegatedWallet_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [DelegatedWallet_filter]
 }
 
 enum DelegatedWallet_orderBy {
@@ -1545,7 +1621,11 @@ input ExchangeEntryAppended_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -1565,9 +1645,14 @@ input ExchangeEntryAppended_filter {
   amount_lte: BigDecimal
   amount_not: BigDecimal
   amount_not_in: [BigDecimal!]
+  and: [ExchangeEntryAppended_filter]
   dest: Bytes
   dest_contains: Bytes
+  dest_gt: Bytes
+  dest_gte: Bytes
   dest_in: [Bytes!]
+  dest_lt: Bytes
+  dest_lte: Bytes
   dest_not: Bytes
   dest_not_contains: Bytes
   dest_not_in: [Bytes!]
@@ -1587,6 +1672,7 @@ input ExchangeEntryAppended_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [ExchangeEntryAppended_filter]
   roundIdForDest: BigInt
   roundIdForDest_gt: BigInt
   roundIdForDest_gte: BigInt
@@ -1605,7 +1691,11 @@ input ExchangeEntryAppended_filter {
   roundIdForSrc_not_in: [BigInt!]
   src: Bytes
   src_contains: Bytes
+  src_gt: Bytes
+  src_gte: Bytes
   src_in: [Bytes!]
+  src_lt: Bytes
+  src_lte: Bytes
   src_not: Bytes
   src_not_contains: Bytes
   src_not_in: [Bytes!]
@@ -1688,6 +1778,7 @@ input ExchangeEntrySettled_filter {
   amount_lte: BigDecimal
   amount_not: BigDecimal
   amount_not_in: [BigDecimal!]
+  and: [ExchangeEntrySettled_filter]
   dest: Bytes
   destRoundIdAtPeriodEnd: BigInt
   destRoundIdAtPeriodEnd_gt: BigInt
@@ -1698,7 +1789,11 @@ input ExchangeEntrySettled_filter {
   destRoundIdAtPeriodEnd_not: BigInt
   destRoundIdAtPeriodEnd_not_in: [BigInt!]
   dest_contains: Bytes
+  dest_gt: Bytes
+  dest_gte: Bytes
   dest_in: [Bytes!]
+  dest_lt: Bytes
+  dest_lte: Bytes
   dest_not: Bytes
   dest_not_contains: Bytes
   dest_not_in: [Bytes!]
@@ -1712,7 +1807,11 @@ input ExchangeEntrySettled_filter {
   exchangeTimestamp_not_in: [BigInt!]
   from: Bytes
   from_contains: Bytes
+  from_gt: Bytes
+  from_gte: Bytes
   from_in: [Bytes!]
+  from_lt: Bytes
+  from_lte: Bytes
   from_not: Bytes
   from_not_contains: Bytes
   from_not_in: [Bytes!]
@@ -1724,6 +1823,7 @@ input ExchangeEntrySettled_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [ExchangeEntrySettled_filter]
   rebate: BigDecimal
   rebate_gt: BigDecimal
   rebate_gte: BigDecimal
@@ -1750,7 +1850,11 @@ input ExchangeEntrySettled_filter {
   srcRoundIdAtPeriodEnd_not: BigInt
   srcRoundIdAtPeriodEnd_not_in: [BigInt!]
   src_contains: Bytes
+  src_gt: Bytes
+  src_gte: Bytes
   src_in: [Bytes!]
+  src_lt: Bytes
+  src_lte: Bytes
   src_not: Bytes
   src_not_contains: Bytes
   src_not_in: [Bytes!]
@@ -1786,6 +1890,7 @@ input ExchangeFee_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [ExchangeFee_filter]
   fee: BigDecimal
   fee_gt: BigDecimal
   fee_gte: BigDecimal
@@ -1802,6 +1907,7 @@ input ExchangeFee_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [ExchangeFee_filter]
 }
 
 enum ExchangeFee_orderBy {
@@ -1836,6 +1942,7 @@ input ExchangePartner_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [ExchangePartner_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -1844,6 +1951,7 @@ input ExchangePartner_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [ExchangePartner_filter]
   trades: BigInt
   trades_gt: BigInt
   trades_gte: BigInt
@@ -1933,6 +2041,7 @@ input ExchangeRebate_filter {
   amount_lte: BigDecimal
   amount_not: BigDecimal
   amount_not_in: [BigDecimal!]
+  and: [ExchangeRebate_filter]
   block: BigInt
   block_gt: BigInt
   block_gte: BigInt
@@ -1943,7 +2052,11 @@ input ExchangeRebate_filter {
   block_not_in: [BigInt!]
   currencyKey: Bytes
   currencyKey_contains: Bytes
+  currencyKey_gt: Bytes
+  currencyKey_gte: Bytes
   currencyKey_in: [Bytes!]
+  currencyKey_lt: Bytes
+  currencyKey_lte: Bytes
   currencyKey_not: Bytes
   currencyKey_not_contains: Bytes
   currencyKey_not_in: [Bytes!]
@@ -1963,6 +2076,7 @@ input ExchangeRebate_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [ExchangeRebate_filter]
   timestamp: BigInt
   timestamp_gt: BigInt
   timestamp_gte: BigInt
@@ -2040,6 +2154,7 @@ input ExchangeReclaim_filter {
   amount_lte: BigDecimal
   amount_not: BigDecimal
   amount_not_in: [BigDecimal!]
+  and: [ExchangeReclaim_filter]
   block: BigInt
   block_gt: BigInt
   block_gte: BigInt
@@ -2050,7 +2165,11 @@ input ExchangeReclaim_filter {
   block_not_in: [BigInt!]
   currencyKey: Bytes
   currencyKey_contains: Bytes
+  currencyKey_gt: Bytes
+  currencyKey_gte: Bytes
   currencyKey_in: [Bytes!]
+  currencyKey_lt: Bytes
+  currencyKey_lte: Bytes
   currencyKey_not: Bytes
   currencyKey_not_contains: Bytes
   currencyKey_not_in: [Bytes!]
@@ -2070,6 +2189,7 @@ input ExchangeReclaim_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [ExchangeReclaim_filter]
   timestamp: BigInt
   timestamp_gt: BigInt
   timestamp_gte: BigInt
@@ -2173,6 +2293,7 @@ input Exchanger_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [Exchanger_filter]
   balances: [String!]
   balances_: LatestSynthBalance_filter
   balances_contains: [String!]
@@ -2221,6 +2342,7 @@ input Exchanger_filter {
   lastSeen_lte: BigInt
   lastSeen_not: BigInt
   lastSeen_not_in: [BigInt!]
+  or: [Exchanger_filter]
   period: BigInt
   period_gt: BigInt
   period_gte: BigInt
@@ -2305,6 +2427,7 @@ input FeePeriod_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [FeePeriod_filter]
   feesClaimed: BigDecimal
   feesClaimed_gt: BigDecimal
   feesClaimed_gte: BigDecimal
@@ -2329,6 +2452,7 @@ input FeePeriod_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [FeePeriod_filter]
   rewardsClaimed: BigDecimal
   rewardsClaimed_gt: BigDecimal
   rewardsClaimed_gte: BigDecimal
@@ -2387,6 +2511,7 @@ input FeeRate_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [FeeRate_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -2395,6 +2520,7 @@ input FeeRate_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [FeeRate_filter]
   rate: BigDecimal
   rate_gt: BigDecimal
   rate_gte: BigDecimal
@@ -2471,10 +2597,15 @@ input FeesClaimed_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
+  and: [FeesClaimed_filter]
   block: BigInt
   block_gt: BigInt
   block_gte: BigInt
@@ -2491,6 +2622,7 @@ input FeesClaimed_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [FeesClaimed_filter]
   rewards: BigDecimal
   rewards_gt: BigDecimal
   rewards_gte: BigDecimal
@@ -2538,6 +2670,7 @@ input FuturesMarket_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [FuturesMarket_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -2546,6 +2679,7 @@ input FuturesMarket_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [FuturesMarket_filter]
 }
 
 enum FuturesMarket_orderBy {
@@ -2587,6 +2721,7 @@ input InversePricingInfo_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [InversePricingInfo_filter]
   entryPoint: BigDecimal
   entryPoint_gt: BigDecimal
   entryPoint_gte: BigDecimal
@@ -2615,6 +2750,7 @@ input InversePricingInfo_filter {
   lowerLimit_lte: BigDecimal
   lowerLimit_not: BigDecimal
   lowerLimit_not_in: [BigDecimal!]
+  or: [InversePricingInfo_filter]
   upperLimit: BigDecimal
   upperLimit_gt: BigDecimal
   upperLimit_gte: BigDecimal
@@ -2653,10 +2789,15 @@ input Issued_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
+  and: [Issued_filter]
   block: BigInt
   block_gt: BigInt
   block_gte: BigInt
@@ -2681,6 +2822,7 @@ input Issued_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [Issued_filter]
   source: String
   source_contains: String
   source_contains_nocase: String
@@ -2741,6 +2883,7 @@ input Issuer_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [Issuer_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -2749,6 +2892,7 @@ input Issuer_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [Issuer_filter]
 }
 
 enum Issuer_orderBy {
@@ -2779,10 +2923,15 @@ input LatestRate_filter {
   _change_block: BlockChangedFilter
   aggregator: Bytes
   aggregator_contains: Bytes
+  aggregator_gt: Bytes
+  aggregator_gte: Bytes
   aggregator_in: [Bytes!]
+  aggregator_lt: Bytes
+  aggregator_lte: Bytes
   aggregator_not: Bytes
   aggregator_not_contains: Bytes
   aggregator_not_in: [Bytes!]
+  and: [LatestRate_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -2791,6 +2940,7 @@ input LatestRate_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [LatestRate_filter]
   rate: BigDecimal
   rate_gt: BigDecimal
   rate_gte: BigDecimal
@@ -2850,7 +3000,11 @@ input LatestSynthBalance_filter {
   account_starts_with_nocase: String
   address: Bytes
   address_contains: Bytes
+  address_gt: Bytes
+  address_gte: Bytes
   address_in: [Bytes!]
+  address_lt: Bytes
+  address_lte: Bytes
   address_not: Bytes
   address_not_contains: Bytes
   address_not_in: [Bytes!]
@@ -2862,6 +3016,7 @@ input LatestSynthBalance_filter {
   amount_lte: BigDecimal
   amount_not: BigDecimal
   amount_not_in: [BigDecimal!]
+  and: [LatestSynthBalance_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -2870,6 +3025,7 @@ input LatestSynthBalance_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [LatestSynthBalance_filter]
   synth: String
   synth_: Synth_filter
   synth_contains: String
@@ -3001,10 +3157,15 @@ input LoanLiquidated_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
+  and: [LoanLiquidated_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -3015,7 +3176,11 @@ input LoanLiquidated_filter {
   id_not_in: [ID!]
   liquidator: Bytes
   liquidator_contains: Bytes
+  liquidator_gt: Bytes
+  liquidator_gte: Bytes
   liquidator_in: [Bytes!]
+  liquidator_lt: Bytes
+  liquidator_lte: Bytes
   liquidator_not: Bytes
   liquidator_not_contains: Bytes
   liquidator_not_in: [Bytes!]
@@ -3027,6 +3192,7 @@ input LoanLiquidated_filter {
   loanId_lte: BigInt
   loanId_not: BigInt
   loanId_not_in: [BigInt!]
+  or: [LoanLiquidated_filter]
   timestamp: BigInt
   timestamp_gt: BigInt
   timestamp_gte: BigInt
@@ -3089,10 +3255,15 @@ input LoanPartiallyLiquidated_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
+  and: [LoanPartiallyLiquidated_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -3119,7 +3290,11 @@ input LoanPartiallyLiquidated_filter {
   liquidatedCollateral_not_in: [BigDecimal!]
   liquidator: Bytes
   liquidator_contains: Bytes
+  liquidator_gt: Bytes
+  liquidator_gte: Bytes
   liquidator_in: [Bytes!]
+  liquidator_lt: Bytes
+  liquidator_lte: Bytes
   liquidator_not: Bytes
   liquidator_not_contains: Bytes
   liquidator_not_in: [Bytes!]
@@ -3131,6 +3306,7 @@ input LoanPartiallyLiquidated_filter {
   loanId_lte: BigInt
   loanId_not: BigInt
   loanId_not_in: [BigInt!]
+  or: [LoanPartiallyLiquidated_filter]
   timestamp: BigInt
   timestamp_gt: BigInt
   timestamp_gte: BigInt
@@ -3190,10 +3366,15 @@ input LoanRepaid_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
+  and: [LoanRepaid_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -3218,6 +3399,7 @@ input LoanRepaid_filter {
   newLoanAmount_lte: BigDecimal
   newLoanAmount_not: BigDecimal
   newLoanAmount_not_in: [BigDecimal!]
+  or: [LoanRepaid_filter]
   repaidAmount: BigDecimal
   repaidAmount_gt: BigDecimal
   repaidAmount_gte: BigDecimal
@@ -3252,7 +3434,11 @@ input Loan_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -3264,6 +3450,7 @@ input Loan_filter {
   amount_lte: BigDecimal
   amount_not: BigDecimal
   amount_not_in: [BigDecimal!]
+  and: [Loan_filter]
   closedAt: BigInt
   closedAt_gt: BigInt
   closedAt_gte: BigInt
@@ -3344,6 +3531,7 @@ input Loan_filter {
   isOpen_in: [Boolean!]
   isOpen_not: Boolean
   isOpen_not_in: [Boolean!]
+  or: [Loan_filter]
   txHash: String
   txHash_contains: String
   txHash_contains_nocase: String
@@ -5059,6 +5247,7 @@ input RateUpdate_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [RateUpdate_filter]
   block: BigInt
   block_gt: BigInt
   block_gte: BigInt
@@ -5069,7 +5258,11 @@ input RateUpdate_filter {
   block_not_in: [BigInt!]
   currencyKey: Bytes
   currencyKey_contains: Bytes
+  currencyKey_gt: Bytes
+  currencyKey_gte: Bytes
   currencyKey_in: [Bytes!]
+  currencyKey_lt: Bytes
+  currencyKey_lte: Bytes
   currencyKey_not: Bytes
   currencyKey_not_contains: Bytes
   currencyKey_not_in: [Bytes!]
@@ -5081,6 +5274,7 @@ input RateUpdate_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [RateUpdate_filter]
   rate: BigDecimal
   rate_gt: BigDecimal
   rate_gte: BigDecimal
@@ -5150,6 +5344,7 @@ input RewardEscrowHolder_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [RewardEscrowHolder_filter]
   balanceOf: BigDecimal
   balanceOf_gt: BigDecimal
   balanceOf_gte: BigDecimal
@@ -5166,6 +5361,7 @@ input RewardEscrowHolder_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [RewardEscrowHolder_filter]
   vestedBalanceOf: BigDecimal
   vestedBalanceOf_gt: BigDecimal
   vestedBalanceOf_gte: BigDecimal
@@ -5234,6 +5430,7 @@ input SNXHolder_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [SNXHolder_filter]
   balanceOf: BigDecimal
   balanceOf_gt: BigDecimal
   balanceOf_gte: BigDecimal
@@ -5298,6 +5495,7 @@ input SNXHolder_filter {
   mints_lte: BigInt
   mints_not: BigInt
   mints_not_in: [BigInt!]
+  or: [SNXHolder_filter]
   timestamp: BigInt
   timestamp_gt: BigInt
   timestamp_gte: BigInt
@@ -5479,6 +5677,7 @@ input ShortCollateralChange_filter {
   amount_lte: BigDecimal
   amount_not: BigDecimal
   amount_not_in: [BigDecimal!]
+  and: [ShortCollateralChange_filter]
   blockNumber: BigInt
   blockNumber_gt: BigInt
   blockNumber_gte: BigInt
@@ -5507,6 +5706,7 @@ input ShortCollateralChange_filter {
   isDeposit_in: [Boolean!]
   isDeposit_not: Boolean
   isDeposit_not_in: [Boolean!]
+  or: [ShortCollateralChange_filter]
   short: String
   short_: Short_filter
   short_contains: String
@@ -5649,6 +5849,7 @@ input ShortContractUpdate_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [ShortContractUpdate_filter]
   blockNumber: BigInt
   blockNumber_gt: BigInt
   blockNumber_gte: BigInt
@@ -5706,6 +5907,7 @@ input ShortContractUpdate_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [ShortContractUpdate_filter]
   timestamp: BigInt
   timestamp_gt: BigInt
   timestamp_gte: BigInt
@@ -5750,6 +5952,7 @@ input ShortContract_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [ShortContract_filter]
   canOpenLoans: Boolean
   canOpenLoans_in: [Boolean!]
   canOpenLoans_not: Boolean
@@ -5781,7 +5984,11 @@ input ShortContract_filter {
   issueFeeRate_not_in: [BigDecimal!]
   manager: Bytes
   manager_contains: Bytes
+  manager_gt: Bytes
+  manager_gte: Bytes
   manager_in: [Bytes!]
+  manager_lt: Bytes
+  manager_lte: Bytes
   manager_not: Bytes
   manager_not_contains: Bytes
   manager_not_in: [Bytes!]
@@ -5809,6 +6016,7 @@ input ShortContract_filter {
   minCratio_lte: BigInt
   minCratio_not: BigInt
   minCratio_not_in: [BigInt!]
+  or: [ShortContract_filter]
   shorts_: Short_filter
 }
 
@@ -5872,6 +6080,7 @@ input ShortLiquidation_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [ShortLiquidation_filter]
   blockNumber: BigInt
   blockNumber_gt: BigInt
   blockNumber_gte: BigInt
@@ -5910,10 +6119,15 @@ input ShortLiquidation_filter {
   liquidatedCollateral_not_in: [BigDecimal!]
   liquidator: Bytes
   liquidator_contains: Bytes
+  liquidator_gt: Bytes
+  liquidator_gte: Bytes
   liquidator_in: [Bytes!]
+  liquidator_lt: Bytes
+  liquidator_lte: Bytes
   liquidator_not: Bytes
   liquidator_not_contains: Bytes
   liquidator_not_in: [Bytes!]
+  or: [ShortLiquidation_filter]
   short: String
   short_: Short_filter
   short_contains: String
@@ -6011,6 +6225,7 @@ input ShortLoanChange_filter {
   amount_lte: BigDecimal
   amount_not: BigDecimal
   amount_not_in: [BigDecimal!]
+  and: [ShortLoanChange_filter]
   blockNumber: BigInt
   blockNumber_gt: BigInt
   blockNumber_gte: BigInt
@@ -6039,6 +6254,7 @@ input ShortLoanChange_filter {
   loanAfter_lte: BigDecimal
   loanAfter_not: BigDecimal
   loanAfter_not_in: [BigDecimal!]
+  or: [ShortLoanChange_filter]
   rate: BigDecimal
   rate_gt: BigDecimal
   rate_gte: BigDecimal
@@ -6096,7 +6312,11 @@ input Short_filter {
   _change_block: BlockChangedFilter
   account: Bytes
   account_contains: Bytes
+  account_gt: Bytes
+  account_gte: Bytes
   account_in: [Bytes!]
+  account_lt: Bytes
+  account_lte: Bytes
   account_not: Bytes
   account_not_contains: Bytes
   account_not_in: [Bytes!]
@@ -6108,6 +6328,7 @@ input Short_filter {
   accruedInterestLastUpdateTimestamp_lte: BigInt
   accruedInterestLastUpdateTimestamp_not: BigInt
   accruedInterestLastUpdateTimestamp_not_in: [BigInt!]
+  and: [Short_filter]
   closedAt: BigInt
   closedAt_gt: BigInt
   closedAt_gte: BigInt
@@ -6127,7 +6348,11 @@ input Short_filter {
   collateralLockedAmount_not: BigDecimal
   collateralLockedAmount_not_in: [BigDecimal!]
   collateralLocked_contains: Bytes
+  collateralLocked_gt: Bytes
+  collateralLocked_gte: Bytes
   collateralLocked_in: [Bytes!]
+  collateralLocked_lt: Bytes
+  collateralLocked_lte: Bytes
   collateralLocked_not: Bytes
   collateralLocked_not_contains: Bytes
   collateralLocked_not_in: [Bytes!]
@@ -6182,6 +6407,7 @@ input Short_filter {
   isOpen_not_in: [Boolean!]
   liquidations_: ShortLiquidation_filter
   loanChanges_: ShortLoanChange_filter
+  or: [Short_filter]
   synthBorrowed: Bytes
   synthBorrowedAmount: BigDecimal
   synthBorrowedAmount_gt: BigDecimal
@@ -6192,7 +6418,11 @@ input Short_filter {
   synthBorrowedAmount_not: BigDecimal
   synthBorrowedAmount_not_in: [BigDecimal!]
   synthBorrowed_contains: Bytes
+  synthBorrowed_gt: Bytes
+  synthBorrowed_gte: Bytes
   synthBorrowed_in: [Bytes!]
+  synthBorrowed_lt: Bytes
+  synthBorrowed_lte: Bytes
   synthBorrowed_not: Bytes
   synthBorrowed_not_contains: Bytes
   synthBorrowed_not_in: [Bytes!]
@@ -7918,7 +8148,11 @@ input SynthBalance_filter {
   account_starts_with_nocase: String
   address: Bytes
   address_contains: Bytes
+  address_gt: Bytes
+  address_gte: Bytes
   address_in: [Bytes!]
+  address_lt: Bytes
+  address_lte: Bytes
   address_not: Bytes
   address_not_contains: Bytes
   address_not_in: [Bytes!]
@@ -7930,6 +8164,7 @@ input SynthBalance_filter {
   amount_lte: BigDecimal
   amount_not: BigDecimal
   amount_not_in: [BigDecimal!]
+  and: [SynthBalance_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -7938,6 +8173,7 @@ input SynthBalance_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [SynthBalance_filter]
   synth: String
   synth_: Synth_filter
   synth_contains: String
@@ -7992,6 +8228,7 @@ input SynthByCurrencyKey_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [SynthByCurrencyKey_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -8000,9 +8237,14 @@ input SynthByCurrencyKey_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [SynthByCurrencyKey_filter]
   proxyAddress: Bytes
   proxyAddress_contains: Bytes
+  proxyAddress_gt: Bytes
+  proxyAddress_gte: Bytes
   proxyAddress_in: [Bytes!]
+  proxyAddress_lt: Bytes
+  proxyAddress_lte: Bytes
   proxyAddress_not: Bytes
   proxyAddress_not_contains: Bytes
   proxyAddress_not_in: [Bytes!]
@@ -8057,6 +8299,7 @@ input SynthExchange_filter {
   account_not_starts_with_nocase: String
   account_starts_with: String
   account_starts_with_nocase: String
+  and: [SynthExchange_filter]
   feesInUSD: BigDecimal
   feesInUSD_gt: BigDecimal
   feesInUSD_gte: BigDecimal
@@ -8118,6 +8361,7 @@ input SynthExchange_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [SynthExchange_filter]
   timestamp: BigInt
   timestamp_gt: BigInt
   timestamp_gte: BigInt
@@ -8128,7 +8372,11 @@ input SynthExchange_filter {
   timestamp_not_in: [BigInt!]
   toAddress: Bytes
   toAddress_contains: Bytes
+  toAddress_gt: Bytes
+  toAddress_gte: Bytes
   toAddress_in: [Bytes!]
+  toAddress_lt: Bytes
+  toAddress_lte: Bytes
   toAddress_not: Bytes
   toAddress_not_contains: Bytes
   toAddress_not_in: [Bytes!]
@@ -8191,6 +8439,7 @@ input Synth_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [Synth_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -8219,6 +8468,7 @@ input Synth_filter {
   name_not_starts_with_nocase: String
   name_starts_with: String
   name_starts_with_nocase: String
+  or: [Synth_filter]
   symbol: String
   symbol_contains: String
   symbol_contains_nocase: String
@@ -8278,6 +8528,7 @@ input Synthetix_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [Synthetix_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -8294,6 +8545,7 @@ input Synthetix_filter {
   issuers_lte: BigInt
   issuers_not: BigInt
   issuers_not_in: [BigInt!]
+  or: [Synthetix_filter]
   snxHolders: BigInt
   snxHolders_gt: BigInt
   snxHolders_gte: BigInt
@@ -8417,6 +8669,7 @@ input SystemSetting_filter {
   aggregatorWarningFlags_not_starts_with_nocase: String
   aggregatorWarningFlags_starts_with: String
   aggregatorWarningFlags_starts_with_nocase: String
+  and: [SystemSetting_filter]
   atomicMaxVolumePerBlock: BigInt
   atomicMaxVolumePerBlock_gt: BigInt
   atomicMaxVolumePerBlock_gte: BigInt
@@ -8521,6 +8774,7 @@ input SystemSetting_filter {
   minimumStakeTime_lte: BigInt
   minimumStakeTime_not: BigInt
   minimumStakeTime_not_in: [BigInt!]
+  or: [SystemSetting_filter]
   priceDeviationThresholdFactor: BigDecimal
   priceDeviationThresholdFactor_gt: BigDecimal
   priceDeviationThresholdFactor_gte: BigDecimal
@@ -8612,6 +8866,7 @@ input TemporaryExchangePartnerTracker_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [TemporaryExchangePartnerTracker_filter]
   id: ID
   id_gt: ID
   id_gte: ID
@@ -8620,6 +8875,7 @@ input TemporaryExchangePartnerTracker_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [TemporaryExchangePartnerTracker_filter]
   partner: String
   partner_contains: String
   partner_contains_nocase: String
@@ -8739,6 +8995,7 @@ input TotalActiveStaker_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [TotalActiveStaker_filter]
   count: BigInt
   count_gt: BigInt
   count_gte: BigInt
@@ -8755,6 +9012,7 @@ input TotalActiveStaker_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [TotalActiveStaker_filter]
 }
 
 enum TotalActiveStaker_orderBy {
@@ -8784,6 +9042,7 @@ input TotalDailyActiveStaker_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [TotalDailyActiveStaker_filter]
   count: BigInt
   count_gt: BigInt
   count_gte: BigInt
@@ -8800,6 +9059,7 @@ input TotalDailyActiveStaker_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [TotalDailyActiveStaker_filter]
   timestamp: BigInt
   timestamp_gt: BigInt
   timestamp_gte: BigInt
@@ -8821,6 +9081,7 @@ input Total_filter {
   Filter for the block changed event.
   """
   _change_block: BlockChangedFilter
+  and: [Total_filter]
   bucketMagnitude: BigInt
   bucketMagnitude_gt: BigInt
   bucketMagnitude_gte: BigInt
@@ -8861,6 +9122,7 @@ input Total_filter {
   newExchangers_lte: BigInt
   newExchangers_not: BigInt
   newExchangers_not_in: [BigInt!]
+  or: [Total_filter]
   period: BigInt
   period_gt: BigInt
   period_gte: BigInt
@@ -9062,6 +9324,7 @@ input WrapperBurn_filter {
   amountOut_lte: BigDecimal
   amountOut_not: BigDecimal
   amountOut_not_in: [BigDecimal!]
+  and: [WrapperBurn_filter]
   fee: BigDecimal
   fee_gt: BigDecimal
   fee_gte: BigDecimal
@@ -9078,6 +9341,7 @@ input WrapperBurn_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [WrapperBurn_filter]
   principal: BigDecimal
   principal_gt: BigDecimal
   principal_gte: BigDecimal
@@ -9196,6 +9460,7 @@ input WrapperMint_filter {
   amountIn_lte: BigDecimal
   amountIn_not: BigDecimal
   amountIn_not_in: [BigDecimal!]
+  and: [WrapperMint_filter]
   fee: BigDecimal
   fee_gt: BigDecimal
   fee_gte: BigDecimal
@@ -9212,6 +9477,7 @@ input WrapperMint_filter {
   id_lte: ID
   id_not: ID
   id_not_in: [ID!]
+  or: [WrapperMint_filter]
   principal: BigDecimal
   principal_gt: BigDecimal
   principal_gte: BigDecimal
@@ -9281,6 +9547,7 @@ input Wrapper_filter {
   amount_lte: BigDecimal
   amount_not: BigDecimal
   amount_not_in: [BigDecimal!]
+  and: [Wrapper_filter]
   currencyKey: String
   currencyKey_contains: String
   currencyKey_contains_nocase: String
@@ -9317,6 +9584,7 @@ input Wrapper_filter {
   maxAmount_lte: BigDecimal
   maxAmount_not: BigDecimal
   maxAmount_not_in: [BigDecimal!]
+  or: [Wrapper_filter]
   tokenAddress: String
   tokenAddress_contains: String
   tokenAddress_contains_nocase: String

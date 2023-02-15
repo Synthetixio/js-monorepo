@@ -172,6 +172,15 @@
       "liquidation-rewards": {
         "title": "Synthetix",
         "description": "Liquidation Rewards"
+      },
+      "trading-fees": {
+        "title": "Synthetix",
+        "description": "Trading Fees",
+        "burned": "Fees Burned",
+        "repays": "Repays debt automatically",
+        "modal": {
+          "description": "With the new <0>SIP-255</0>, trading fees don't need to be claimed anymore. They will now go directly to repaying a part of your debt and increasing your C-ratio."
+        }
       }
     },
     "self-liquidation": {

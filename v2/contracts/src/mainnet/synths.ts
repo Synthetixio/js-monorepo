@@ -9,6 +9,7 @@ export const SynthsByName: Partial<
       sign: string;
       description: string;
       name: string;
+      feed?: string;
       subclass?: string;
     }
   >
@@ -83,38 +84,6 @@ export const SynthsByName: Partial<
     sign: 'Ξ',
     description: 'Ether',
     name: 'sETH',
-    subclass: 'MultiCollateralSynth',
-  },
-  sLINK: {
-    asset: 'LINK',
-    category: 'crypto',
-    sign: '',
-    description: 'Chainlink',
-    name: 'sLINK',
-    subclass: 'MultiCollateralSynth',
-  },
-  sADA: {
-    asset: 'ADA',
-    category: 'crypto',
-    sign: '',
-    description: 'Cardano',
-    name: 'sADA',
-    subclass: 'MultiCollateralSynth',
-  },
-  sAAVE: {
-    asset: 'AAVE',
-    category: 'crypto',
-    sign: '',
-    description: 'Aave',
-    name: 'sAAVE',
-    subclass: 'MultiCollateralSynth',
-  },
-  sDOT: {
-    asset: 'DOT',
-    category: 'crypto',
-    sign: '',
-    description: 'Polkadot',
-    name: 'sDOT',
     subclass: 'MultiCollateralSynth',
   },
   sETHBTC: {
