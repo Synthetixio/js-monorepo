@@ -156,15 +156,6 @@ export const calculateChangesFromBurn = ({
   return { newDebtBalance, newStakedAmountSnx, newCratio, newTransferable, newSUSDBalance };
 };
 
-export const calculateValueOfRewards = (
-  snxReward = wei(0),
-  sUSDRewards = wei(0),
-  snxRate = wei(0)
-) => {
-  const valueOfSnxReward = snxReward.mul(snxRate);
-  return valueOfSnxReward.add(sUSDRewards).toNumber();
-};
-
 export const calcNewCratioPercentage = (
   collateral?: number,
   SNXRate?: number,

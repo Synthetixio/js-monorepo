@@ -8,7 +8,6 @@ import {
   calculateStakedSnx,
   calculateUnstakedStakedSnx,
   calculateUnstakingAmountFromBurn,
-  calculateValueOfRewards,
 } from './stakingCalculations';
 
 describe('stakingCalculation', () => {
@@ -267,8 +266,5 @@ describe('stakingCalculation', () => {
         newSUSDBalance: 0,
       });
     });
-  });
-  describe('calculateValueOfRewards', () => {
-    expect(calculateValueOfRewards(wei(10), wei(10), wei(2))).toBe(30);
   });
 });

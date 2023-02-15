@@ -6,7 +6,6 @@ import { MainActionCardsUi } from './MainActionCards';
 import { NetworkId } from '@snx-v2/useSynthetixContracts';
 import { useContext } from 'react';
 import { ContractContext } from '@snx-v2/ContractContext';
-import { calculateValueOfRewards } from '@snx-v2/stakingCalculations';
 
 interface MainActionsCardsListProps {
   connectWallet: (chainId?: NetworkId | undefined) => Promise<void>;
@@ -26,11 +25,7 @@ export const MainActionCardsList = ({ connectWallet }: MainActionsCardsListProps
     <MainActionCardsUi
       connectWallet={connectWallet}
       isLoading={isLoading}
-      rewardsDollarValue={calculateValueOfRewards(
-        rewardsData?.snxRewards,
-        rewardsData?.sUSDRewards,
-        exchangeRateData?.SNX
-      )}
+      rewardsDollarValue={rewardsData?.snxRewards.mul(exchangeRateData?.SNX || 0).toNumber() || 0}
       currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
       targetCratioPercentage={debtData?.targetCRatioPercentage.toNumber()}
       liquidationCratioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
