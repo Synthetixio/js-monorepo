@@ -43,7 +43,16 @@ const V2Earn = () => {
             <InfoIcon color="#2ED9FF" width="16px" height="16px" mr={2} />
             <Text color="white" fontSize="16px" fontFamily="heading">
               Fee Burning is now active, which automatically pays down your debt with sUSD rewards,
-              you can read more here
+              you can read more{' '}
+              <Link
+                href="https://blog.synthetix.io/the-schedar-release-fee-burn/"
+                isExternal
+                target="_blank"
+                color="cyan.500"
+                textDecoration="underline"
+              >
+                here
+              </Link>
             </Text>
           </Alert>
           <EarnStats />
