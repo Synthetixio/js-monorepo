@@ -2,7 +2,7 @@
   "name": "@snx-v2/SelfLiquidation",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "dependencies": {
     "@chakra-ui/react": "^2.2.8",
     "@snx-v2/CRatioProgressBar": "workspace:*",
