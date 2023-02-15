@@ -7,4 +7,5 @@ export * from './useSynthUtil';
 export * from './useProxyERC20sUSD';
 export * from './useRewardEscrowV2';
 export * from './useLiquidatorRewards';
+export * from './useSynthetixDebtShare';
 export * from './common';
