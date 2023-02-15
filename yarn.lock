@@ -6509,7 +6509,7 @@ __metadata:
     "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
-    "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useFeesBurnedInPeriod": "workspace:*"
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -6797,6 +6797,7 @@ __metadata:
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useFeesBurnedInPeriod": "workspace:*"
     "@snx-v2/useGetLiquidationRewards": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
@@ -7254,6 +7255,20 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.3.4
     date-fns: ^2.19.0
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useFeesBurnedInPeriod@workspace:*, @snx-v2/useFeesBurnedInPeriod@workspace:v2/lib/useFeesBurnedInPeriod":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useFeesBurnedInPeriod@workspace:v2/lib/useFeesBurnedInPeriod"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/contracts-interface": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.3.4
+    ethers: ^5.7.2
     react: ^18.2.0
   languageName: unknown
   linkType: soft

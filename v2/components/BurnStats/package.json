@@ -8,7 +8,7 @@
     "@snx-v2/StatBox": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/useApr": "workspace:*",
-    "@snx-v2/useFeePoolData": "workspace:*",
+    "@snx-v2/useFeesBurnedInPeriod": "workspace:*",
     "react": "^18.2.0"
   }
 }
