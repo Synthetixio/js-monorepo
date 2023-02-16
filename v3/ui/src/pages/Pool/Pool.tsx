@@ -1,22 +1,21 @@
 import { Box, Divider, Flex, Link } from '@chakra-ui/react';
 import { Helmet } from 'react-helmet';
+import { FC } from 'react';
 import { PoolHeader } from './PoolHeader';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { MarketSection } from './MarketSection';
 import { CollateralSection } from './CollateralSection';
 import { useParams } from '@snx-v3/useParams';
-import { PoolType, usePoolData } from '@snx-v3/usePoolData';
+import { usePoolData } from '@snx-v3/usePoolData';
 
-export const PoolUi = ({ pool }: { pool: PoolType }) => {
+export const PoolUi: FC<{
+  PoolHeader: FC;
+  CollateralSection: FC;
+  MarketSection: FC;
+}> = ({ PoolHeader, CollateralSection, MarketSection }) => {
   return (
     <>
-      <Helmet>
-        <title>
-          Pool #{pool.id} / {pool.name}
-        </title>
-        <meta name="description" content="Pool" />
-      </Helmet>
       <Link
         width="fit-content"
         display="flex"
@@ -50,6 +49,19 @@ export const PoolUi = ({ pool }: { pool: PoolType }) => {
 
 export const Pool = () => {
   const params = useParams();
-  const { data: pool } = usePoolData(params.poolId);
-  return pool ? <PoolUi pool={pool} /> : null;
+  const { data: poolData } = usePoolData(params.poolId);
+  const title = poolData ? `Pool #${poolData.id} / ${poolData.name}` : 'Pool';
+  return (
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={title} />
+      </Helmet>
+      <PoolUi
+        PoolHeader={PoolHeader}
+        CollateralSection={CollateralSection}
+        MarketSection={MarketSection}
+      />
+    </>
+  );
 };

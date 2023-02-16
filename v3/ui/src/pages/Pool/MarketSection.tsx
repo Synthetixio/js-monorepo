@@ -161,7 +161,7 @@ export function MarketSectionUi({
                 <Tr w="full">
                   <Td colSpan={4} border="none">
                     <Text textAlign="center" mt={4}>
-                      No markets configures to pool
+                      No markets configured for the pool
                     </Text>
                   </Td>
                 </Tr>
@@ -234,10 +234,10 @@ export const MarketSection = () => {
 
   return (
     <MarketSectionUi
-      marketNamesById={marketNamesById}
-      poolData={poolData}
-      poolDataFetched={poolDataFetched}
       poolId={params.poolId}
+      poolDataFetched={poolDataFetched}
+      poolData={poolData}
+      marketNamesById={marketNamesById}
     />
   );
 };

@@ -1,5 +1,5 @@
 import { Text, Flex, Tooltip, Box, Skeleton } from '@chakra-ui/react';
-import { useVaultsData } from '@snx-v3/useVaultsData';
+import { VaultsDataType, useVaultsData } from '@snx-v3/useVaultsData';
 import { FC } from 'react';
 import { wei } from '@synthetixio/wei';
 import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
@@ -9,7 +9,7 @@ import { InfoIcon } from '@chakra-ui/icons';
 import { usePoolData } from '@snx-v3/usePoolData';
 import { CollateralIcon } from '@snx-v3/icons';
 
-export const calculateVaultTotals = (vaultsData: ReturnType<typeof useVaultsData>['data']) => {
+export const calculateVaultTotals = (vaultsData: VaultsDataType) => {
   const zeroValues = { collateral: { value: wei(0), amount: wei(0) }, debt: wei(0) };
   if (!vaultsData) return zeroValues;
   return vaultsData.reduce((acc, { collateral, debt }) => {
@@ -22,7 +22,7 @@ export const calculateVaultTotals = (vaultsData: ReturnType<typeof useVaultsData
   }, zeroValues);
 };
 export const CollateralSectionUi: FC<{
-  vaultsData: ReturnType<typeof useVaultsData>['data'];
+  vaultsData: VaultsDataType;
   poolName?: string;
 }> = ({ vaultsData, poolName }) => {
   const { collateral: totalCollateral, debt: totalDebt } = calculateVaultTotals(vaultsData);
@@ -55,7 +55,7 @@ export const CollateralSectionUi: FC<{
           {vaultsData === undefined ? (
             <Skeleton w={16} h={6} />
           ) : (
-            <Text fontWeight={700} fontSize="xl" color="white">
+            <Text fontWeight={700} fontSize="xl" color="white" data-testid="pool tvl">
               {formatNumberToUsd(totalCollateral.value.toNumber())}
             </Text>
           )}
@@ -80,7 +80,7 @@ export const CollateralSectionUi: FC<{
           {vaultsData === undefined ? (
             <Skeleton mt={1} w={16} h={6} />
           ) : (
-            <Text fontWeight={700} fontSize="xl" color="white">
+            <Text fontWeight={700} fontSize="xl" color="white" data-testid="pool total debt">
               {formatNumberToUsd(totalDebt.toNumber())}
             </Text>
           )}
@@ -116,7 +116,12 @@ export const CollateralSectionUi: FC<{
                   <Text fontWeight={700} fontSize="xl">
                     {vaultCollateral.collateralType.displaySymbol}
                   </Text>
-                  <Text fontSize="sm" color="gray.400" fontWeight="400">
+                  <Text
+                    fontSize="sm"
+                    color="gray.400"
+                    fontWeight="400"
+                    data-testid="collateral price"
+                  >
                     {vaultCollateral.collateralType.price
                       ? formatNumberToUsd(vaultCollateral.collateralType.price.toNumber())
                       : '-'}
@@ -127,11 +132,21 @@ export const CollateralSectionUi: FC<{
                     <Text mt={2} fontSize="sm" color="gray.500">
                       Total Value Locked
                     </Text>
-                    <Text fontSize="md" fontWeight={700} color="white">
+                    <Text
+                      fontSize="md"
+                      fontWeight={700}
+                      color="white"
+                      data-testid="collateral amount"
+                    >
                       {formatNumber(vaultCollateral.collateral.amount.toNumber())}{' '}
                       {vaultCollateral.collateralType.displaySymbol}
                     </Text>
-                    <Text fontSize="sm" color="gray.500" fontWeight="400">
+                    <Text
+                      fontSize="sm"
+                      color="gray.500"
+                      fontWeight="400"
+                      data-testid="collateral value"
+                    >
                       {formatNumberToUsd(vaultCollateral.collateral.value.toNumber())}
                     </Text>
                   </Flex>
@@ -139,7 +154,12 @@ export const CollateralSectionUi: FC<{
                     <Text mt={2} fontSize="sm" color="gray.500">
                       Vault Debt
                     </Text>
-                    <Text fontSize="md" fontWeight={700} color="white">
+                    <Text
+                      fontSize="md"
+                      fontWeight={700}
+                      color="white"
+                      data-testid="collateral debt"
+                    >
                       {formatNumberToUsd(vaultCollateral.debt.toNumber())}
                     </Text>
                   </Flex>
@@ -147,7 +167,12 @@ export const CollateralSectionUi: FC<{
                     <Text mt={2} fontSize="sm" color="gray.500">
                       C-Ratio
                     </Text>
-                    <Text fontSize="md" fontWeight={700} color="white">
+                    <Text
+                      fontSize="md"
+                      fontWeight={700}
+                      color="white"
+                      data-testid="collateral cratio"
+                    >
                       {vaultCollateral.debt.eq(0)
                         ? '-'
                         : formatPercent(
@@ -169,7 +194,7 @@ export const CollateralSection = () => {
   const params = useParams();
 
   const { data: vaultsData } = useVaultsData(params.poolId ? parseFloat(params.poolId) : undefined);
-  const { data: pool } = usePoolData(params.poolId);
+  const { data: poolData } = usePoolData(params.poolId);
 
-  return <CollateralSectionUi vaultsData={vaultsData} poolName={pool?.name} />;
+  return <CollateralSectionUi vaultsData={vaultsData} poolName={poolData?.name} />;
 };
