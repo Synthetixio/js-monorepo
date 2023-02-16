@@ -181,23 +181,29 @@ export function MarketSectionUi({
                         </Text>
                       </StyledTd>
                       <StyledTd isLastItem={isLastItem} fontSize="sm">
-                        <Text display="block">
-                          {formatPercent(weight.div(totalWeight).toNumber())}
-                        </Text>
-                        {/* TODO, figure out max debt. See notion ticket "Pool page market max debt" */}
-                        {/* <Flex flexWrap="wrap" maxW="135px">
-                          <Text mr={1}>Max Debt:</Text>
-                          <Text>
-                            {max_debt_share_value.gt(Number.MAX_SAFE_INTEGER)
-                              ? 'Unlimited'
-                              : formatNumberToUsd(max_debt_share_value.toNumber())}
-                          </Text>
-                        </Flex> */}
+                        {totalWeight ? (
+                          <>
+                            <Text display="block">
+                              {formatPercent(weight.div(totalWeight).toNumber())}
+                            </Text>
+                            {/* TODO, figure out max debt. See notion ticket "Pool page market max debt" */}
+                            {/*
+                            <Flex flexWrap="wrap" maxW="135px">
+                              <Text mr={1}>Max Debt:</Text>
+                              <Text>
+                                {max_debt_share_value.gt(Number.MAX_SAFE_INTEGER)
+                                  ? 'Unlimited'
+                                  : formatNumberToUsd(max_debt_share_value.toNumber())}
+                              </Text>
+                            </Flex>
+                            */}
+                          </>
+                        ) : (
+                          '-'
+                        )}
                       </StyledTd>
                       <StyledTd isLastItem={isLastItem}>
-                        {!growth ? (
-                          ''
-                        ) : (
+                        {growth ? (
                           <>
                             <Text fontSize="sm" display="block">
                               {formatNumberToUsd(growth.value.toNumber())}
@@ -208,9 +214,13 @@ export function MarketSectionUi({
                               </TrendText>
                             ) : null}
                           </>
+                        ) : (
+                          '-'
                         )}
                       </StyledTd>
-                      <StyledTd isLastItem>{formatNumberToUsd(market.pnl.toNumber())}</StyledTd>
+                      <StyledTd isLastItem={isLastItem}>
+                        {formatNumberToUsd(market.pnl.toNumber())}
+                      </StyledTd>
                     </Tr>
                   );
                 })
