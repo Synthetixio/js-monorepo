@@ -1,85 +1,78 @@
+import { useContext } from 'react';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useQuery } from '@tanstack/react-query';
-import { useTotalIssuedSynthsExcludeOtherCollateral } from '@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import Wei, { wei } from '@synthetixio/wei';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
 import { WEEKS_IN_YEAR } from '@snx-v2/Constants';
-import { calculateWeeklyRewardsInUsd } from '@snx-v2/calculateWeeklyRewardsInUsd';
+import { useFeesBurnedInPeriod } from '@snx-v2/useFeesBurnedInPeriod';
+import { useDebtShareDataPeriod } from '@snx-v2/useDebtShareDataPeriod';
+import { ContractContext } from '@snx-v2/ContractContext';
 
 export const calculateStakingApr = ({
   stakedValue,
-  debtBalance,
   previousWeekRewardsUsd,
-  totalsUSDDebt,
 }: {
   stakedValue?: Wei;
-  debtBalance?: Wei;
   previousWeekRewardsUsd?: Wei;
-  totalsUSDDebt?: Wei;
 }) => {
-  if (!stakedValue || !debtBalance || !previousWeekRewardsUsd || !totalsUSDDebt) {
+  if (!stakedValue || !previousWeekRewardsUsd) {
     return undefined;
   }
-  if (stakedValue.eq(0) || debtBalance.eq(0) || previousWeekRewardsUsd.eq(0)) {
+  if (stakedValue.eq(0) || previousWeekRewardsUsd.eq(0)) {
     return wei(0);
   }
   const yearlyExtrapolatedRewards = previousWeekRewardsUsd.mul(WEEKS_IN_YEAR);
 
-  return yearlyExtrapolatedRewards.mul(debtBalance.div(totalsUSDDebt)).div(stakedValue);
+  return yearlyExtrapolatedRewards.div(stakedValue);
 };
 
 export const useStakingApr = () => {
+  const { networkId, walletAddress } = useContext(ContractContext);
+
   const { data: debtData } = useDebtData();
-  const { data: totalsUSDDebt } = useTotalIssuedSynthsExcludeOtherCollateral();
   const { data: previousFeePeriodData } = useFeePoolData(1);
   const { data: exchangeRateData } = useExchangeRatesData();
+  const { data: feeBurned } = useFeesBurnedInPeriod();
+  const { data: debtShareData } = useDebtShareDataPeriod();
   const SNXRate = exchangeRateData?.SNX;
   const { debtBalance, targetCRatio, currentCRatio, collateral } = debtData || {};
 
   const stakedSnx = calculateStakedSnx({ targetCRatio, currentCRatio, collateral });
   const stakedValue = SNXRate ? stakedSnx.mul(SNXRate) : undefined;
-  const previousWeekRewardsUsd = calculateWeeklyRewardsInUsd(
-    exchangeRateData?.SNX,
-    previousFeePeriodData?.feesToDistribute,
-    previousFeePeriodData?.rewardsToDistribute
-  );
-
   const enabled = Boolean(
-    stakedValue && previousWeekRewardsUsd && totalsUSDDebt && debtBalance?.gt(0) // This query is only enabled when we have data and user is staking (debt balance > 0)
+    stakedValue && feeBurned && debtShareData && debtBalance?.gt(0) // This query is only enabled when we have data and user is staking (debt balance > 0)
   );
   return useQuery(
-    ['useStakingApr', enabled],
+    ['useStakingApr', { enabled, walletAddress, networkId }],
     () => {
       if (
         !stakedValue ||
         !debtBalance ||
-        !previousWeekRewardsUsd ||
-        !totalsUSDDebt ||
+        !feeBurned ||
+        !previousFeePeriodData ||
+        !debtShareData ||
         !exchangeRateData?.SNX
       ) {
         throw Error('Query missing required data');
       }
+      const snxRewardsUsd = previousFeePeriodData.rewardsToDistribute
+        .mul(exchangeRateData.SNX)
+        .mul(debtShareData.userDebtSharePercentage);
       const combinedApr = calculateStakingApr({
         stakedValue,
-        previousWeekRewardsUsd,
-        totalsUSDDebt,
-        debtBalance,
+        previousWeekRewardsUsd: feeBurned.add(snxRewardsUsd),
       });
+
       const feesApr = calculateStakingApr({
         stakedValue,
-        previousWeekRewardsUsd: previousFeePeriodData?.feesToDistribute,
-        totalsUSDDebt,
-        debtBalance,
+        previousWeekRewardsUsd: feeBurned,
       });
+
       const snxApr = calculateStakingApr({
         stakedValue,
-        previousWeekRewardsUsd: previousFeePeriodData?.rewardsToDistribute.mul(
-          exchangeRateData.SNX
-        ),
-        totalsUSDDebt,
-        debtBalance,
+        previousWeekRewardsUsd: snxRewardsUsd,
       });
       return { combinedApr, feesApr, snxApr };
     },
