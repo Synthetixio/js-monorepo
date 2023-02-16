@@ -1,10 +1,23 @@
 import { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ContractContext } from '@snx-v2/ContractContext';
-import { wei } from '@synthetixio/wei';
+import Wei, { wei } from '@synthetixio/wei';
 import { useDebtShareDataPeriod } from '@snx-v2/useDebtShareDataPeriod';
 import { useFeePeriodMultiNetwork } from '@snx-v2/useFeePeriodMultiNetwork';
 
+// exported for tests
+export const calculateFeesBurned = ({
+  mainnetDistributedFees,
+  optimismDistributedFees,
+  userDebtSharePercentage,
+}: {
+  mainnetDistributedFees: Wei;
+  optimismDistributedFees: Wei;
+  userDebtSharePercentage: Wei;
+}) => {
+  const totalBurn = mainnetDistributedFees.add(optimismDistributedFees);
+  return totalBurn.mul(userDebtSharePercentage);
+};
 export const useFeesBurnedInPeriod = (period = 1 /* Defaults to previous period*/) => {
   const { walletAddress, networkId } = useContext(ContractContext);
   const { data: debtShareData } = useDebtShareDataPeriod(period);
@@ -15,15 +28,15 @@ export const useFeesBurnedInPeriod = (period = 1 /* Defaults to previous period*
       if (!walletAddress || !debtShareData || !feePeriods) {
         throw Error('Query should not be enabled');
       }
-
-      const { feePeriodMainnet, feePeriodOptimism } = feePeriods;
-
+      const mainnetDistributedFees = wei(feePeriods.feePeriodMainnet.feesToDistribute);
+      const optimismDistributedFees = wei(feePeriods.feePeriodOptimism.feesToDistribute);
       const { userDebtSharePercentage } = debtShareData;
-      const totalBurn = wei(feePeriodOptimism.feesToDistribute).add(
-        wei(feePeriodMainnet.feesToDistribute)
-      );
 
-      return totalBurn.mul(userDebtSharePercentage);
+      return calculateFeesBurned({
+        mainnetDistributedFees,
+        optimismDistributedFees,
+        userDebtSharePercentage,
+      });
     },
 
     enabled: Boolean(walletAddress && debtShareData && feePeriods),
