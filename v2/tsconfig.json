@@ -20,6 +20,7 @@
 
   "exclude": [
     "**/node_modules/**",
+    "**/perps-v2/perps-subgraph/**",
     "**/coverage/**",
     "**/tests/**",
     "**/*.test.ts",

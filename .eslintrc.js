@@ -176,7 +176,7 @@ module.exports = {
       },
     },
     {
-      files: ['v2/perps-v2/perps-subgraph/*'],
+      files: ['v2/perps-v2/perps-subgraph/**/*'],
       env: {},
       globals: {
         changetype: true,

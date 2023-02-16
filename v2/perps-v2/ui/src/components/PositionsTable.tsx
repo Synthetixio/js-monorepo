@@ -48,6 +48,7 @@ export type SortConfig = [
     | 'margin'
     | 'feesPaidToSynthetix'
     | 'leverage'
+    | 'pnl'
   ),
   boolean
 ];
