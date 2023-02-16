@@ -69,9 +69,19 @@ export const useDebtShareDataPeriod = (period = 1 /* Defaults to previous period
       const totalDebtShareSupply = wei(totalDebtShareSupplyMainnet).add(
         wei(totalDebtShareSupplyOptimism)
       );
+      const totalDebtShareSupplyCurrentNetwork =
+        networkId === NetworkIdByName['mainnet-ovm']
+          ? totalDebtShareSupplyOptimism
+          : totalDebtShareSupplyMainnet;
       const userDebtShareSupply = wei(userDebtShareSupplyCurrentNetwork);
       const userDebtSharePercentage = userDebtShareSupply.div(totalDebtShareSupply);
-      return { totalDebtShareSupply, userDebtShareSupply, userDebtSharePercentage };
+      const userDebtSharePercentageCurrentNetwork = userDebtShareSupply.div(
+        totalDebtShareSupplyCurrentNetwork
+      );
+      return {
+        userDebtSharePercentageCurrentNetwork, // SNX rewards care about the debt percentage of the current network
+        userDebtSharePercentage, // Burnt debt care about the user debt share percentage of the total debtshare supply (optimism and mainnet)
+      };
     },
 
     enabled: Boolean(walletAddress),
