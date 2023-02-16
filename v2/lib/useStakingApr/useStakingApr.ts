@@ -10,22 +10,42 @@ import { useFeesBurnedInPeriod } from '@snx-v2/useFeesBurnedInPeriod';
 import { useDebtShareDataPeriod } from '@snx-v2/useDebtShareDataPeriod';
 import { ContractContext } from '@snx-v2/ContractContext';
 
-export const calculateStakingApr = ({
-  stakedValue,
-  previousWeekRewardsUsd,
+// exported for tests
+export const calculateStakingFeeApr = ({
+  stakedSnx,
+  SNXRate,
+  feesBurned,
 }: {
-  stakedValue?: Wei;
-  previousWeekRewardsUsd?: Wei;
+  stakedSnx: Wei;
+  SNXRate: Wei;
+  feesBurned: Wei;
 }) => {
-  if (!stakedValue || !previousWeekRewardsUsd) {
-    return undefined;
-  }
-  if (stakedValue.eq(0) || previousWeekRewardsUsd.eq(0)) {
+  if (stakedSnx.eq(0) || feesBurned.eq(0)) {
     return wei(0);
   }
-  const yearlyExtrapolatedRewards = previousWeekRewardsUsd.mul(WEEKS_IN_YEAR);
+  const stakedValue = stakedSnx.mul(SNXRate);
+  const yearlyExtrapolatedRewards = feesBurned.mul(WEEKS_IN_YEAR);
 
   return yearlyExtrapolatedRewards.div(stakedValue);
+};
+
+// exported for tests
+export const calculateStakingRewardsApr = ({
+  stakedSnx,
+  distributedRewards,
+  userDebtSharePercentageCurrentNetwork,
+}: {
+  stakedSnx: Wei;
+  distributedRewards: Wei;
+  userDebtSharePercentageCurrentNetwork: Wei;
+}) => {
+  if (stakedSnx.eq(0) || userDebtSharePercentageCurrentNetwork.eq(0)) {
+    return wei(0);
+  }
+  const userSnxRewards = distributedRewards.mul(userDebtSharePercentageCurrentNetwork);
+  const yearlyExtrapolatedRewards = userSnxRewards.mul(WEEKS_IN_YEAR);
+
+  return yearlyExtrapolatedRewards.div(stakedSnx);
 };
 
 export const useStakingApr = () => {
@@ -34,48 +54,35 @@ export const useStakingApr = () => {
   const { data: debtData } = useDebtData();
   const { data: previousFeePeriodData } = useFeePoolData(1);
   const { data: exchangeRateData } = useExchangeRatesData();
-  const { data: feeBurned } = useFeesBurnedInPeriod();
+  const { data: feesBurned } = useFeesBurnedInPeriod();
   const { data: debtShareData } = useDebtShareDataPeriod();
   const SNXRate = exchangeRateData?.SNX;
   const { debtBalance, targetCRatio, currentCRatio, collateral } = debtData || {};
 
   const stakedSnx = calculateStakedSnx({ targetCRatio, currentCRatio, collateral });
-  const stakedValue = SNXRate ? stakedSnx.mul(SNXRate) : undefined;
+
   const enabled = Boolean(
-    stakedValue && feeBurned && debtShareData && debtBalance?.gt(0) // This query is only enabled when we have data and user is staking (debt balance > 0)
+    stakedSnx && feesBurned && debtShareData && debtBalance?.gt(0) // This query is only enabled when we have data and user is staking (debt balance > 0)
   );
   return useQuery(
     ['useStakingApr', { enabled, walletAddress, networkId }],
     () => {
-      if (
-        !stakedValue ||
-        !debtBalance ||
-        !feeBurned ||
-        !previousFeePeriodData ||
-        !debtShareData ||
-        !exchangeRateData?.SNX
-      ) {
+      if (!stakedSnx || !feesBurned || !previousFeePeriodData || !debtShareData || !SNXRate) {
         throw Error('Query missing required data');
       }
 
-      const snxRewardsUsd = previousFeePeriodData.rewardsToDistribute
-        .mul(exchangeRateData.SNX)
-        .mul(debtShareData.userDebtSharePercentageCurrentNetwork);
-      const combinedApr = calculateStakingApr({
-        stakedValue,
-        previousWeekRewardsUsd: feeBurned.add(snxRewardsUsd),
+      const feesApr = calculateStakingFeeApr({
+        stakedSnx,
+        SNXRate,
+        feesBurned,
       });
 
-      const feesApr = calculateStakingApr({
-        stakedValue,
-        previousWeekRewardsUsd: feeBurned,
+      const snxApr = calculateStakingRewardsApr({
+        stakedSnx,
+        userDebtSharePercentageCurrentNetwork: debtShareData.userDebtSharePercentageCurrentNetwork,
+        distributedRewards: previousFeePeriodData.rewardsToDistribute,
       });
-
-      const snxApr = calculateStakingApr({
-        stakedValue,
-        previousWeekRewardsUsd: snxRewardsUsd,
-      });
-      return { combinedApr, feesApr, snxApr };
+      return { combinedApr: feesApr.add(snxApr), feesApr, snxApr };
     },
     { enabled, staleTime: 10000 }
   );
