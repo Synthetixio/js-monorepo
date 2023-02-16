@@ -46,9 +46,7 @@ export function useGetLiquidations() {
 
     return data.positionLiquidateds.map((position) => ({
       ...position,
-      market: markets?.find(
-        (d) => d.id.toLowerCase() === position.market.toLowerCase()
-      )?.marketKey,
+      market: markets?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())?.marketKey,
       entity: 'Position Liquidated',
     }));
   });

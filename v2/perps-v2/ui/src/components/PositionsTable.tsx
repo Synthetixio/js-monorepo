@@ -27,11 +27,7 @@ import useGetPositions from '../queries/positions';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useGetMarkets } from '../queries/markets';
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  ExternalLinkIcon,
-} from '@chakra-ui/icons';
+import { ChevronDownIcon, ChevronUpIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import { numberWithCommas } from '../utils/numbers';
 import ReactPaginate from 'react-paginate';
 import './PositionTable.css';
@@ -61,10 +57,7 @@ export const PositionsTable: FC = () => {
   const toast = useToast();
   const { data } = useGetMarkets();
   const [isRefetchLoading, setRefetchLoading] = useState(false);
-  const [sortConfig, setSortConfig] = useState<SortConfig>([
-    'openTimestamp',
-    false,
-  ]);
+  const [sortConfig, setSortConfig] = useState<SortConfig>(['openTimestamp', false]);
   const { register, getValues, setValue, watch } = useForm({
     defaultValues: {
       asset: 'all',
@@ -93,8 +86,7 @@ export const PositionsTable: FC = () => {
   });
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + 50;
-  const currentItems =
-    positions?.futuresPositions?.slice(itemOffset, endOffset) || [];
+  const currentItems = positions?.futuresPositions?.slice(itemOffset, endOffset) || [];
   const pageCount = positions?.futuresPositions
     ? Math.ceil(positions?.futuresPositions.length / 50)
     : 1;
@@ -122,18 +114,10 @@ export const PositionsTable: FC = () => {
           }}
           value={watch('asset')}
         >
-          <Flex
-            flexWrap="wrap"
-            w="150px"
-            gap="2"
-            justifyContent="space-between"
-          >
+          <Flex flexWrap="wrap" w="150px" gap="2" justifyContent="space-between">
             {data &&
               data.map((market, index) => (
-                <Radio
-                  value={market.asset}
-                  key={market.asset.concat(index.toString())}
-                >
+                <Radio value={market.asset} key={market.asset.concat(index.toString())}>
                   {market.asset}
                 </Radio>
               ))}
@@ -155,10 +139,7 @@ export const PositionsTable: FC = () => {
           </Switch>
           <Checkbox
             onChange={() => {
-              setValue(
-                'deactivateLiquidated',
-                !getValues('deactivateLiquidated')
-              );
+              setValue('deactivateLiquidated', !getValues('deactivateLiquidated'));
             }}
             isChecked={watch('deactivateLiquidated')}
           >
@@ -240,8 +221,7 @@ export const PositionsTable: FC = () => {
                   return (
                     <Flex flexDir="column" key="only-one">
                       <Text>
-                        Fees Paid: $
-                        {(Number(stats.feesPaidToSynthetix) / 1e18).toFixed(2)}
+                        Fees Paid: ${(Number(stats.feesPaidToSynthetix) / 1e18).toFixed(2)}
                       </Text>
                       <Text>Liquidations: {stats.totalLiquidations}</Text>
                       <Text>PNL: ${(Number(stats.pnl) / 1e18).toFixed(2)}</Text>
@@ -302,9 +282,7 @@ export const PositionsTable: FC = () => {
                       triggerRefetch();
                     }}
                     border={sortConfig[0] === 'entryPrice' ? '1px solid' : ''}
-                    borderColor={
-                      sortConfig[0] === 'entryPrice' ? 'cyan.500' : ''
-                    }
+                    borderColor={sortConfig[0] === 'entryPrice' ? 'cyan.500' : ''}
                   >
                     Entry Price
                     {sortConfig[0] === 'entryPrice' &&
@@ -317,9 +295,7 @@ export const PositionsTable: FC = () => {
                       triggerRefetch();
                     }}
                     border={sortConfig[0] === 'exitPrice' ? '1px solid' : ''}
-                    borderColor={
-                      sortConfig[0] === 'exitPrice' ? 'cyan.500' : ''
-                    }
+                    borderColor={sortConfig[0] === 'exitPrice' ? 'cyan.500' : ''}
                   >
                     Exit Price
                     {sortConfig[0] === 'exitPrice' &&
@@ -380,18 +356,11 @@ export const PositionsTable: FC = () => {
                   <Th
                     cursor="pointer"
                     onClick={() => {
-                      setSortConfig((state) => [
-                        'feesPaidToSynthetix',
-                        !state[1],
-                      ]);
+                      setSortConfig((state) => ['feesPaidToSynthetix', !state[1]]);
                       triggerRefetch();
                     }}
-                    border={
-                      sortConfig[0] === 'feesPaidToSynthetix' ? '1px solid' : ''
-                    }
-                    borderColor={
-                      sortConfig[0] === 'feesPaidToSynthetix' ? 'cyan.500' : ''
-                    }
+                    border={sortConfig[0] === 'feesPaidToSynthetix' ? '1px solid' : ''}
+                    borderColor={sortConfig[0] === 'feesPaidToSynthetix' ? 'cyan.500' : ''}
                   >
                     Fees for Synthetix
                     {sortConfig[0] === 'feesPaidToSynthetix' &&
@@ -417,9 +386,7 @@ export const PositionsTable: FC = () => {
                       triggerRefetch();
                     }}
                     border={sortConfig[0] === 'isLiquidated' ? '1px solid' : ''}
-                    borderColor={
-                      sortConfig[0] === 'isLiquidated' ? 'cyan.500' : ''
-                    }
+                    borderColor={sortConfig[0] === 'isLiquidated' ? 'cyan.500' : ''}
                   >
                     Liquidated
                     {sortConfig[0] === 'isLiquidated' &&
@@ -444,12 +411,8 @@ export const PositionsTable: FC = () => {
                       setSortConfig((state) => ['openTimestamp', !state[1]]);
                       triggerRefetch();
                     }}
-                    border={
-                      sortConfig[0] === 'openTimestamp' ? '1px solid' : ''
-                    }
-                    borderColor={
-                      sortConfig[0] === 'openTimestamp' ? 'cyan.500' : ''
-                    }
+                    border={sortConfig[0] === 'openTimestamp' ? '1px solid' : ''}
+                    borderColor={sortConfig[0] === 'openTimestamp' ? 'cyan.500' : ''}
                   >
                     Opened at
                     {sortConfig[0] === 'openTimestamp' &&
@@ -461,12 +424,8 @@ export const PositionsTable: FC = () => {
                       setSortConfig((state) => ['closeTimestamp', !state[1]]);
                       triggerRefetch();
                     }}
-                    border={
-                      sortConfig[0] === 'closeTimestamp' ? '1px solid' : ''
-                    }
-                    borderColor={
-                      sortConfig[0] === 'closeTimestamp' ? 'cyan.500' : ''
-                    }
+                    border={sortConfig[0] === 'closeTimestamp' ? '1px solid' : ''}
+                    borderColor={sortConfig[0] === 'closeTimestamp' ? 'cyan.500' : ''}
                   >
                     Closed at
                     {sortConfig[0] === 'closeTimestamp' &&
@@ -494,11 +453,7 @@ export const PositionsTable: FC = () => {
                           {position.account
                             .substring(0, 5)
                             .concat('...')
-                            .concat(
-                              position.account.substring(
-                                position.account.length - 5
-                              )
-                            )}
+                            .concat(position.account.substring(position.account.length - 5))}
                           <IconButton
                             marginLeft="2"
                             variant="ghost"
@@ -507,8 +462,7 @@ export const PositionsTable: FC = () => {
                             onClick={(e) => {
                               e.stopPropagation();
                               window.open(
-                                'https://optimistic.etherscan.io/address/' +
-                                  position.account
+                                'https://optimistic.etherscan.io/address/' + position.account
                               );
                             }}
                           />
@@ -516,10 +470,7 @@ export const PositionsTable: FC = () => {
                         <Td>{position.asset}</Td>
                         <Td>{position.market}</Td>
                         <Td>
-                          $
-                          {numberWithCommas(
-                            (Number(position.entryPrice) / 1e18).toFixed(2)
-                          )}
+                          ${numberWithCommas((Number(position.entryPrice) / 1e18).toFixed(2))}
                         </Td>
                         <Td>
                           {position.isOpen
@@ -534,28 +485,14 @@ export const PositionsTable: FC = () => {
                             .concat('x')}
                         </Td>
                         <Td>
-                          {numberWithCommas(
-                            (Number(position.pnl) / 1e18).toFixed(2)
-                          ).concat('%')}
+                          {numberWithCommas((Number(position.pnl) / 1e18).toFixed(2)).concat('%')}
                         </Td>
+                        <Td>${numberWithCommas((Number(position.margin) / 1e18).toFixed(2))}</Td>
+                        <Td>${numberWithCommas((Number(position.size) / 1e18).toFixed(2))}</Td>
                         <Td>
                           $
                           {numberWithCommas(
-                            (Number(position.margin) / 1e18).toFixed(2)
-                          )}
-                        </Td>
-                        <Td>
-                          $
-                          {numberWithCommas(
-                            (Number(position.size) / 1e18).toFixed(2)
-                          )}
-                        </Td>
-                        <Td>
-                          $
-                          {numberWithCommas(
-                            (
-                              Number(position.feesPaidToSynthetix) / 1e18
-                            ).toFixed(2)
+                            (Number(position.feesPaidToSynthetix) / 1e18).toFixed(2)
                           )}
                         </Td>
                         <Td>{position.long ? 'Long' : 'Short'}</Td>

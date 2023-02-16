@@ -1,3 +1,3 @@
 # Perps Dashboard
 
-with ui and subgraph repo
+UI & Subgraph

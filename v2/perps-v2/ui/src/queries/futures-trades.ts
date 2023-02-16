@@ -53,9 +53,7 @@ export const useGetFuturesTrades = () => {
     const { data }: FuturesTradesResponse = await response.json();
     return data.futuresTrades.map((data) => ({
       ...data,
-      market: marketData?.find(
-        (d) => d.id.toLowerCase() === data.market.toLowerCase()
-      )?.marketKey,
+      market: marketData?.find((d) => d.id.toLowerCase() === data.market.toLowerCase())?.marketKey,
       entity: 'Futures Trade',
     }));
   });

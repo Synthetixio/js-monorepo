@@ -42,22 +42,13 @@ export function createPositionModifiedEvent(
     new ethereum.EventParam('size', ethereum.Value.fromSignedBigInt(size))
   );
   positionModifiedEvent.parameters.push(
-    new ethereum.EventParam(
-      'tradeSize',
-      ethereum.Value.fromSignedBigInt(tradeSize)
-    )
+    new ethereum.EventParam('tradeSize', ethereum.Value.fromSignedBigInt(tradeSize))
   );
   positionModifiedEvent.parameters.push(
-    new ethereum.EventParam(
-      'lastPrice',
-      ethereum.Value.fromUnsignedBigInt(lastPrice)
-    )
+    new ethereum.EventParam('lastPrice', ethereum.Value.fromUnsignedBigInt(lastPrice))
   );
   positionModifiedEvent.parameters.push(
-    new ethereum.EventParam(
-      'fundingIndex',
-      ethereum.Value.fromUnsignedBigInt(fundingIndex)
-    )
+    new ethereum.EventParam('fundingIndex', ethereum.Value.fromUnsignedBigInt(fundingIndex))
   );
   positionModifiedEvent.parameters.push(
     new ethereum.EventParam('fee', ethereum.Value.fromUnsignedBigInt(fee))
@@ -88,10 +79,7 @@ export function createPositionLiquidatedEvent(
     new ethereum.EventParam('account', ethereum.Value.fromAddress(account))
   );
   positionLiquidatedEvent.parameters.push(
-    new ethereum.EventParam(
-      'liquidator',
-      ethereum.Value.fromAddress(liquidator)
-    )
+    new ethereum.EventParam('liquidator', ethereum.Value.fromAddress(liquidator))
   );
   positionLiquidatedEvent.parameters.push(
     new ethereum.EventParam('size', ethereum.Value.fromSignedBigInt(size))
@@ -119,55 +107,32 @@ export function createDelayedOrderRemovedEvent(
   timestamp: i64,
   logIndex: i64 = 0
 ): DelayedOrderRemoved {
-  let delayedOrderRemovedEvent = changetype<DelayedOrderRemoved>(
-    newMockEvent()
-  );
+  let delayedOrderRemovedEvent = changetype<DelayedOrderRemoved>(newMockEvent());
   delayedOrderRemovedEvent.parameters = new Array();
   const block = createBlock(timestamp, 5);
   delayedOrderRemovedEvent.parameters.push(
     new ethereum.EventParam('account', ethereum.Value.fromAddress(account))
   );
   delayedOrderRemovedEvent.parameters.push(
-    new ethereum.EventParam(
-      'isOffchain',
-      ethereum.Value.fromBoolean(isOffchain)
-    )
+    new ethereum.EventParam('isOffchain', ethereum.Value.fromBoolean(isOffchain))
   );
   delayedOrderRemovedEvent.parameters.push(
-    new ethereum.EventParam(
-      'currentRoundId',
-      ethereum.Value.fromSignedBigInt(currentRoundId)
-    )
+    new ethereum.EventParam('currentRoundId', ethereum.Value.fromSignedBigInt(currentRoundId))
   );
   delayedOrderRemovedEvent.parameters.push(
-    new ethereum.EventParam(
-      'sizeDelta',
-      ethereum.Value.fromSignedBigInt(sizeDelta)
-    )
+    new ethereum.EventParam('sizeDelta', ethereum.Value.fromSignedBigInt(sizeDelta))
   );
   delayedOrderRemovedEvent.parameters.push(
-    new ethereum.EventParam(
-      'targetRoundId',
-      ethereum.Value.fromSignedBigInt(targetRoundId)
-    )
+    new ethereum.EventParam('targetRoundId', ethereum.Value.fromSignedBigInt(targetRoundId))
   );
   delayedOrderRemovedEvent.parameters.push(
-    new ethereum.EventParam(
-      'commitDeposit',
-      ethereum.Value.fromSignedBigInt(commitDeposit)
-    )
+    new ethereum.EventParam('commitDeposit', ethereum.Value.fromSignedBigInt(commitDeposit))
   );
   delayedOrderRemovedEvent.parameters.push(
-    new ethereum.EventParam(
-      'keeperDeposit',
-      ethereum.Value.fromSignedBigInt(keeperDeposit)
-    )
+    new ethereum.EventParam('keeperDeposit', ethereum.Value.fromSignedBigInt(keeperDeposit))
   );
   delayedOrderRemovedEvent.parameters.push(
-    new ethereum.EventParam(
-      'trackingCode',
-      ethereum.Value.fromBytes(trackingCode)
-    )
+    new ethereum.EventParam('trackingCode', ethereum.Value.fromBytes(trackingCode))
   );
   delayedOrderRemovedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
   if (logIndex) delayedOrderRemovedEvent.logIndex = BigInt.fromI64(logIndex);
@@ -194,52 +159,28 @@ export function createDelayedOrderSubmittedEvent(
     new ethereum.EventParam('account', ethereum.Value.fromAddress(account))
   );
   delayedOrderSubmitted.parameters.push(
-    new ethereum.EventParam(
-      'isOffchain',
-      ethereum.Value.fromBoolean(isOffchain)
-    )
+    new ethereum.EventParam('isOffchain', ethereum.Value.fromBoolean(isOffchain))
   );
   delayedOrderSubmitted.parameters.push(
-    new ethereum.EventParam(
-      'sizeDelta',
-      ethereum.Value.fromSignedBigInt(sizeDelta)
-    )
+    new ethereum.EventParam('sizeDelta', ethereum.Value.fromSignedBigInt(sizeDelta))
   );
   delayedOrderSubmitted.parameters.push(
-    new ethereum.EventParam(
-      'targetRoundId',
-      ethereum.Value.fromSignedBigInt(targetRoundId)
-    )
+    new ethereum.EventParam('targetRoundId', ethereum.Value.fromSignedBigInt(targetRoundId))
   );
   delayedOrderSubmitted.parameters.push(
-    new ethereum.EventParam(
-      'intentionTime',
-      ethereum.Value.fromSignedBigInt(intentionTime)
-    )
+    new ethereum.EventParam('intentionTime', ethereum.Value.fromSignedBigInt(intentionTime))
   );
   delayedOrderSubmitted.parameters.push(
-    new ethereum.EventParam(
-      'executableAtTime',
-      ethereum.Value.fromSignedBigInt(executableAtTime)
-    )
+    new ethereum.EventParam('executableAtTime', ethereum.Value.fromSignedBigInt(executableAtTime))
   );
   delayedOrderSubmitted.parameters.push(
-    new ethereum.EventParam(
-      'commitDeposit',
-      ethereum.Value.fromSignedBigInt(commitDeposit)
-    )
+    new ethereum.EventParam('commitDeposit', ethereum.Value.fromSignedBigInt(commitDeposit))
   );
   delayedOrderSubmitted.parameters.push(
-    new ethereum.EventParam(
-      'keeperDeposit',
-      ethereum.Value.fromSignedBigInt(keeperDeposit)
-    )
+    new ethereum.EventParam('keeperDeposit', ethereum.Value.fromSignedBigInt(keeperDeposit))
   );
   delayedOrderSubmitted.parameters.push(
-    new ethereum.EventParam(
-      'trackingCode',
-      ethereum.Value.fromBytes(trackingCode)
-    )
+    new ethereum.EventParam('trackingCode', ethereum.Value.fromBytes(trackingCode))
   );
   delayedOrderSubmitted.block.timestamp = BigInt.fromI64(block['timestamp']);
   if (logIndex) delayedOrderSubmitted.logIndex = BigInt.fromI64(logIndex);

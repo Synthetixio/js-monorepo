@@ -1,13 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  Button,
-  Divider,
-  Flex,
-  Heading,
-  Input,
-  Text,
-  useColorMode,
-} from '@chakra-ui/react';
+import { Button, Divider, Flex, Heading, Input, Text, useColorMode } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { PositionsTable } from './components/PositionsTable';
@@ -29,12 +21,7 @@ function App() {
   }, [colorMode, toggleColorMode]);
 
   return (
-    <Flex
-      justifyContent="center"
-      alignItems="center"
-      flexDirection="column"
-      gap="2"
-    >
+    <Flex justifyContent="center" alignItems="center" flexDirection="column" gap="2">
       <Heading size="sm">Add a wallet address:</Heading>
       <Input placeholder="Address" w="50%" {...register('address')} />
       <Button onClick={() => navigate(getValues('address'))}>Query</Button>
@@ -58,23 +45,17 @@ function App() {
           <Divider my="2" />
           <Text>
             Fees by Liquidations: $
-            {numberWithCommas(
-              (Number(data.synthetix.feesByLiquidations) / 1e18).toFixed(2)
-            )}
+            {numberWithCommas((Number(data.synthetix.feesByLiquidations) / 1e18).toFixed(2))}
           </Text>
           <Text>
             Fees by Trades: $
             {numberWithCommas(
-              (
-                Number(data.synthetix.feesByPositionModifications) / 1e18
-              ).toFixed(2)
+              (Number(data.synthetix.feesByPositionModifications) / 1e18).toFixed(2)
             )}
           </Text>
           <Text>
             Total Volume: $
-            {numberWithCommas(
-              (Number(data.synthetix.totalVolume) / 1e18).toFixed(2)
-            )}
+            {numberWithCommas((Number(data.synthetix.totalVolume) / 1e18).toFixed(2))}
           </Text>
           <Text>
             Total Liquidations:&nbsp;

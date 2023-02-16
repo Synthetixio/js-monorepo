@@ -17,9 +17,7 @@ import {
 } from '../generated/schema';
 
 export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
-  const positionLiquidatedEntity = new PositionLiquidated(
-    event.params.id.toString()
-  );
+  const positionLiquidatedEntity = new PositionLiquidated(event.params.id.toString());
   positionLiquidatedEntity.account = event.params.account;
   positionLiquidatedEntity.market = event.address;
   positionLiquidatedEntity.liquidator = event.params.liquidator;
@@ -31,16 +29,12 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
   positionLiquidatedEntity.save();
 
   const tradeEntity = FuturesTrade.load(
-    event.transaction.hash.toHex() +
-      '-' +
-      event.logIndex.minus(BigInt.fromI32(1)).toString()
+    event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
   );
   if (tradeEntity) {
     tradeEntity.size = event.params.size.times(BigInt.fromI32(-1));
     tradeEntity.positionSize = BigInt.fromI32(0);
-    tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
-      event.params.fee
-    );
+    tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(event.params.fee);
     tradeEntity.pnl = tradeEntity.pnl.plus(event.params.fee);
     tradeEntity.save();
   }
@@ -50,9 +44,7 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     synthetix.feesByLiquidations = synthetix.feesByLiquidations.plus(
       event.params.fee.toBigDecimal()
     );
-    synthetix.totalLiquidations = synthetix.totalLiquidations.plus(
-      BigInt.fromI32(1)
-    );
+    synthetix.totalLiquidations = synthetix.totalLiquidations.plus(BigInt.fromI32(1));
 
     const futuresPosition = FuturesPosition.load(
       event.address.toHex() + '-' + event.params.id.toHex()
@@ -62,9 +54,7 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
       futuresPosition.isOpen = false;
       futuresPosition.size = BigInt.fromI32(0);
       futuresPosition.closeTimestamp = event.block.timestamp;
-      futuresPosition.pnl = futuresPosition.feesPaidToSynthetix.minus(
-        futuresPosition.netFunding
-      );
+      futuresPosition.pnl = futuresPosition.feesPaidToSynthetix.minus(futuresPosition.netFunding);
       futuresPosition.exitPrice = event.params.price;
       synthetix.totalVolume = synthetix.totalVolume.plus(
         futuresPosition.totalVolume.toBigDecimal()
@@ -75,9 +65,7 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
   }
   let trader = Trader.load(event.params.account.toHex());
   if (trader) {
-    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
-      event.params.fee.toBigDecimal()
-    );
+    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
     trader.totalLiquidations = trader.totalLiquidations.plus(BigInt.fromI32(1));
     trader.totalMarginLiquidated = trader.totalMarginLiquidated.plus(
       event.params.size.toBigDecimal()
@@ -114,20 +102,14 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     trader.feesPaidToSynthetix = event.params.fee.toBigDecimal();
     trader.totalVolume = event.params.tradeSize.toBigDecimal();
     trader.pnl = event.params.fee.times(BigInt.fromI32(-1));
-    trader.trades = [
-      event.transaction.hash.toHex() + '-' + event.logIndex.toString(),
-    ];
+    trader.trades = [event.transaction.hash.toHex() + '-' + event.logIndex.toString()];
     synthetix.totalTraders = synthetix.totalTraders.plus(BigInt.fromI32(1));
   } else {
-    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
-      event.params.fee.toBigDecimal()
-    );
+    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
     // trader.totalVolume = event.params.tradeSize.toBigDecimal();
     trader.pnl = trader.pnl.plus(event.params.fee.times(BigInt.fromI32(-1)));
     const oldTrades = trader.trades;
-    oldTrades.push(
-      event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-    );
+    oldTrades.push(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
     trader.trades = oldTrades;
   }
   // New position when var futuresPosition is undefined
@@ -180,11 +162,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     tradeEntity.save();
   } else {
     // Position closed & not liquidated
-    if (
-      event.params.size.isZero() &&
-      !event.params.tradeSize.isZero() &&
-      futuresPosition
-    ) {
+    if (event.params.size.isZero() && !event.params.tradeSize.isZero() && futuresPosition) {
       log.info('position closed', []);
 
       const newPnl = event.params.lastPrice
@@ -234,11 +212,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     }
 
     // If tradeSize and size are not zero, position got modified
-    else if (
-      !event.params.tradeSize.isZero() &&
-      !event.params.size.isZero() &&
-      futuresPosition
-    ) {
+    else if (!event.params.tradeSize.isZero() && !event.params.size.isZero() && futuresPosition) {
       log.info('position modified', []);
 
       const newPnl = event.params.lastPrice
@@ -282,9 +256,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         .div(BigInt.fromI32(10).pow(18))
         .abs();
 
-      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
-        event.params.fee.toBigDecimal()
-      );
+      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
       trader.totalVolume = trader.totalVolume.plus(volume.toBigDecimal());
 
       synthetix.totalVolume = synthetix.totalVolume.plus(volume.toBigDecimal());
@@ -315,12 +287,8 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         .times(futuresPosition.size)
         .div(BigInt.fromI32(10).pow(18));
 
-      futuresPosition.netFunding = futuresPosition.netFunding.plus(
-        fundingAccrued
-      );
-      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.minus(
-        fundingAccrued.toBigDecimal()
-      );
+      futuresPosition.netFunding = futuresPosition.netFunding.plus(fundingAccrued);
+      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.minus(fundingAccrued.toBigDecimal());
     }
   }
 
@@ -329,9 +297,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
   futuresPosition.save();
 }
 
-export function handleDelayedOrderRemoved(
-  event: DelayedOrderRemovedEvent
-): void {
+export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void {
   const futuresOrderEntityId = `${event.params.account.toHexString()}-${event.params.targetRoundId.toString()}`;
   let futuresOrderEntity = FuturesOrder.load(futuresOrderEntityId);
   let statEntity = Trader.load(event.params.account.toHex());
@@ -345,9 +311,7 @@ export function handleDelayedOrderRemoved(
     futuresOrderEntity.fee = event.params.keeperDeposit;
     futuresOrderEntity.keeper = event.transaction.from;
     let tradeEntity = FuturesTrade.load(
-      event.transaction.hash.toHex() +
-        '-' +
-        event.logIndex.minus(BigInt.fromI32(1)).toString()
+      event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
     );
 
     if (statEntity && tradeEntity) {
@@ -392,9 +356,7 @@ export function handleDelayedOrderRemoved(
   }
 }
 
-export function handleDelayedOrderSubmitted(
-  event: DelayedOrderSubmittedEvent
-): void {
+export function handleDelayedOrderSubmitted(event: DelayedOrderSubmittedEvent): void {
   const futuresOrderEntityId = `${event.params.account.toHex()}-${event.params.targetRoundId.toString()}`;
   const futuresOrderEntity = new FuturesOrder(futuresOrderEntityId);
   futuresOrderEntity.size = event.params.sizeDelta;
@@ -410,9 +372,7 @@ export function handleDelayedOrderSubmitted(
     ? 'DelayedOffchainSubmitted'
     : 'DelayedOrderSubmitted';
   futuresOrderEntity.status = 'Pending';
-  futuresOrderEntity.keeper = Address.fromHexString(
-    '0x0000000000000000000000000000000000000000'
-  );
+  futuresOrderEntity.keeper = Address.fromHexString('0x0000000000000000000000000000000000000000');
   futuresOrderEntity.save();
 }
 

@@ -1,12 +1,5 @@
 import { ArrowBackIcon, ExternalLinkIcon } from '@chakra-ui/icons';
-import {
-  Flex,
-  Heading,
-  IconButton,
-  Spinner,
-  Text,
-  useToast,
-} from '@chakra-ui/react';
+import { Flex, Heading, IconButton, Spinner, Text, useToast } from '@chakra-ui/react';
 import { FC, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Position } from './components/Position';
@@ -20,10 +13,8 @@ interface EventType extends FuturesTrades, DelayedOrder, PositionLiquidated {}
 export const Actions: FC = () => {
   const toast = useToast();
   const { data: orders, isLoading: ordersIsLoading } = useGetDelayedOrder();
-  const { data: futuresTrades, isLoading: futuresTradesIsLoading } =
-    useGetFuturesTrades();
-  const { data: positionLiquidated, isLoading: positionLiquidatedIsLoading } =
-    useGetLiquidations();
+  const { data: futuresTrades, isLoading: futuresTradesIsLoading } = useGetFuturesTrades();
+  const { data: positionLiquidated, isLoading: positionLiquidatedIsLoading } = useGetLiquidations();
 
   const allEvents = useMemo(() => {
     if (orders?.length && futuresTrades?.length) {
@@ -51,9 +42,7 @@ export const Actions: FC = () => {
           <Heading size="md">Back</Heading>
         </Flex>
       </Link>
-      {ordersIsLoading ||
-      futuresTradesIsLoading ||
-      positionLiquidatedIsLoading ? (
+      {ordersIsLoading || futuresTradesIsLoading || positionLiquidatedIsLoading ? (
         <Spinner color="cyan.500"></Spinner>
       ) : (
         <Flex flexDir="column" gap="2">
@@ -76,17 +65,11 @@ export const Actions: FC = () => {
                 gap="2"
               >
                 <>
-                  <Flex
-                    justifyContent="space-between"
-                    alignItems="center"
-                    gap="2"
-                  >
+                  <Flex justifyContent="space-between" alignItems="center" gap="2">
                     <Heading size="sm">{event.entity}</Heading>
                     <Text>
                       Time:&nbsp;
-                      {new Date(
-                        Number(event.timestamp) * 1000
-                      ).toLocaleDateString('en-US', {
+                      {new Date(Number(event.timestamp) * 1000).toLocaleDateString('en-US', {
                         hour: '2-digit',
                         minute: '2-digit',
                       })}
@@ -108,9 +91,7 @@ export const Actions: FC = () => {
                       {event.account
                         .substring(0, 5)
                         .concat('...')
-                        .concat(
-                          event.account.substring(event.account.length - 5)
-                        )}
+                        .concat(event.account.substring(event.account.length - 5))}
                       <IconButton
                         marginLeft="2"
                         variant="ghost"
@@ -118,28 +99,17 @@ export const Actions: FC = () => {
                         icon={<ExternalLinkIcon />}
                         onClick={(e) => {
                           e.stopPropagation();
-                          window.open(
-                            'https://optimistic.etherscan.io/address/' +
-                              event.account
-                          );
+                          window.open('https://optimistic.etherscan.io/address/' + event.account);
                         }}
                       />
                     </Text>
                   </Flex>
-                  <Flex
-                    justifyContent="space-between"
-                    alignItems="center"
-                    gap="2"
-                  >
+                  <Flex justifyContent="space-between" alignItems="center" gap="2">
                     <Text>
-                      Size:&nbsp; $
-                      {numberWithCommas((Number(event.size) / 1e18).toFixed(2))}
+                      Size:&nbsp; ${numberWithCommas((Number(event.size) / 1e18).toFixed(2))}
                     </Text>
                     {event.entity === 'Futures Trade' ? (
-                      <Position
-                        id={event.positionId}
-                        trade={event as FuturesTrades}
-                      />
+                      <Position id={event.positionId} trade={event as FuturesTrades} />
                     ) : event.entity === 'Position Liquidated' ? (
                       <></>
                     ) : (
@@ -151,10 +121,7 @@ export const Actions: FC = () => {
                     <Text>
                       Fee: $
                       {numberWithCommas(
-                        (
-                          Number(event['feesPaidToSynthetix'] || event['fee']) /
-                          1e18
-                        ).toFixed(2)
+                        (Number(event['feesPaidToSynthetix'] || event['fee']) / 1e18).toFixed(2)
                       )}
                     </Text>
                   </Flex>
@@ -176,9 +143,7 @@ export const Actions: FC = () => {
                       {event.keeper
                         .substring(0, 5)
                         .concat('...')
-                        .concat(
-                          event.keeper.substring(event.keeper.length - 5)
-                        )}
+                        .concat(event.keeper.substring(event.keeper.length - 5))}
                       <IconButton
                         marginLeft="2"
                         variant="ghost"
@@ -186,10 +151,7 @@ export const Actions: FC = () => {
                         icon={<ExternalLinkIcon />}
                         onClick={(e) => {
                           e.stopPropagation();
-                          window.open(
-                            'https://optimistic.etherscan.io/address/' +
-                              event.keeper
-                          );
+                          window.open('https://optimistic.etherscan.io/address/' + event.keeper);
                         }}
                       />
                     </Text>
@@ -197,14 +159,10 @@ export const Actions: FC = () => {
                   {'pnl' && event && (
                     <Text>
                       PNL:&nbsp;
-                      {numberWithCommas(
-                        (Number(event.pnl) / 1e18).toFixed(2)
-                      ).concat('%')}
+                      {numberWithCommas((Number(event.pnl) / 1e18).toFixed(2)).concat('%')}
                     </Text>
                   )}
-                  {'orderId' && event && (
-                    <Text>Order ID:&nbsp;{event.orderId}</Text>
-                  )}
+                  {'orderId' && event && <Text>Order ID:&nbsp;{event.orderId}</Text>}
                   {'targetRoundId' in event && (
                     <Text>Target Round ID:&nbsp;{event.targetRoundId}</Text>
                   )}

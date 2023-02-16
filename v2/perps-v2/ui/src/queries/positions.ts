@@ -88,30 +88,18 @@ const body = ({
 }) => {
   return `query info {
     futuresPositions(skip: ${skip}, first: 1000,
-      orderBy: "${sortConfig[0]}", orderDirection: "${
-    !sortConfig[1] ? 'desc' : 'asc'
-  }", where: {
+      orderBy: "${sortConfig[0]}", orderDirection: "${!sortConfig[1] ? 'desc' : 'asc'}", where: {
     ${address ? `account: "${address.toLowerCase()}",` : ''}
     ${
       filterOptions.asset === 'all'
         ? ''
         : `market: "${market
-            ?.find(
-              (m) => m.asset.toLowerCase() === filterOptions.asset.toLowerCase()
-            )
+            ?.find((m) => m.asset.toLowerCase() === filterOptions.asset.toLowerCase())
             ?.id.toLowerCase()}"`
     },
-    ${
-      filterOptions.deactivateLiquidated
-        ? ''
-        : `isLiquidated: ${filterOptions.liquidated},`
-    }
+    ${filterOptions.deactivateLiquidated ? '' : `isLiquidated: ${filterOptions.liquidated},`}
     ${filterOptions.deactivateOpen ? '' : `isOpen: ${filterOptions.open},`}
-    ${
-      filterOptions.deactivateOpenedAt
-        ? ''
-        : `openTimestamp_gt: "${filterOptions.openedAt}",`
-    }
+    ${filterOptions.deactivateOpenedAt ? '' : `openTimestamp_gt: "${filterOptions.openedAt}",`}
     ${
       filterOptions.deactivateClosedAt
         ? ''
@@ -140,9 +128,7 @@ const body = ({
       totalVolume
       feesPaidToSynthetix
     }
-    traders(first: 1, where: {${
-      address ? `id: "${address.toLowerCase()}",` : ''
-    }}) {
+    traders(first: 1, where: {${address ? `id: "${address.toLowerCase()}",` : ''}}) {
       id
       totalLiquidations
       totalMarginLiquidated
@@ -200,9 +186,7 @@ const refetchMore = async ({
       marketData,
     });
     if (moreRes?.futuresPositions.length)
-      data.futuresPositions = data.futuresPositions.concat(
-        moreRes?.futuresPositions
-      );
+      data.futuresPositions = data.futuresPositions.concat(moreRes?.futuresPositions);
   }
   return data;
 };
@@ -241,28 +225,24 @@ function useGetPositions({
             .map((position) => ({
               ...position,
               maxLeverage:
-                marketData?.find(
-                  (d) => d.id.toLowerCase() === position.market.toLowerCase()
-                )?.maxLeverage || '0',
+                marketData?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())
+                  ?.maxLeverage || '0',
               asset:
-                marketData?.find(
-                  (d) => d.id.toLowerCase() === position.market.toLowerCase()
-                )?.asset || 'not found',
-              market: marketData?.find(
-                (d) => d.id.toLowerCase() === position.market.toLowerCase()
-              )?.marketKey,
-              openTimestamp: toDateTime(
-                Number(position.openTimestamp)
-              ).toLocaleDateString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-              }),
+                marketData?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())
+                  ?.asset || 'not found',
+              market: marketData?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())
+                ?.marketKey,
+              openTimestamp: toDateTime(Number(position.openTimestamp)).toLocaleDateString(
+                'en-US',
+                {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                }
+              ),
               closeTimestamp:
                 position.closeTimestamp === null
                   ? '-'
-                  : toDateTime(
-                      Number(position.closeTimestamp)
-                    ).toLocaleDateString('en-US', {
+                  : toDateTime(Number(position.closeTimestamp)).toLocaleDateString('en-US', {
                       hour: '2-digit',
                       minute: '2-digit',
                     }),
