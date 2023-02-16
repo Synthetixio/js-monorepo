@@ -22,7 +22,7 @@ describe('calculateGlobalStakingFeeApr', () => {
     const feeApr = calculateGlobalStakingFeeApr({ totalStakedData, SNXRate, feePeriodData });
     /**
      * Calculation notes:
-     * (totalDistributedFees * 52) / ("total staked value" * SNXRate)
+     * (totalDistributedFees * 52) / (totalStakedSnx * SNXRate)
      * ((2000 + 1000) * 52) / ((500000 + 1000000) * 2)
      * 0.0052
      */
