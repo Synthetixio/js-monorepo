@@ -1,43 +1,78 @@
 import { wei } from '@synthetixio/wei';
-import { calculateGlobalStakingApr } from './useGlobalStakingApr';
+import {
+  calculateGlobalStakingFeeApr,
+  calculateGlobalStakingRewardsApr,
+} from './useGlobalStakingApr';
 
-describe('calculateGlobalStakingApr', () => {
-  test('returns undefined when missing data', () => {
-    expect(calculateGlobalStakingApr(true, undefined)).toEqual(undefined);
-  });
-  test('calculates global staking apr optimism', () => {
-    const isL2 = true;
+describe('calculateGlobalStakingFeeApr', () => {
+  test('calculates APR', () => {
     const SNXRate = wei(2);
-
-    const previousWeekRewardsUsd = wei(280_000);
-    const stakedSNXData = {
-      systemStakingPercent: 0.72,
+    const totalStakedData = {
+      systemStakingPercent: 0.7,
       timestamp: 1669838022,
       stakedSnx: {
-        ethereum: 144_000_00,
-        optimism: 80_000_000,
+        ethereum: 1_000_000,
+        optimism: 500_000,
       },
     };
-
-    expect(calculateGlobalStakingApr(isL2, SNXRate, previousWeekRewardsUsd, stakedSNXData)).toEqual(
-      wei(0.091)
-    );
+    const feePeriodData = {
+      mainnetDistributedFees: wei(2000),
+      optimismDistributedFees: wei(1000),
+    };
+    const feeApr = calculateGlobalStakingFeeApr({ totalStakedData, SNXRate, feePeriodData });
+    /**
+     * Calculation notes:
+     * (totalDistributedFees * 52) / ("total staked value" * SNXRate)
+     * ((2000 + 1000) * 52) / ((500000 + 1000000) * 2)
+     * 0.0052
+     */
+    expect(feeApr).toEqual(wei(0.052));
   });
-  test('calculates global staking apr mainnet', () => {
+});
+
+describe('calculateGlobalStakingRewardsApr', () => {
+  test('calculates APR for mainnet', () => {
     const isL2 = false;
-    const SNXRate = wei(2);
-    const previousWeekRewardsUsd = wei(280_000);
-    const stakedSNXData = {
-      systemStakingPercent: 0.72,
+    const totalStakedData = {
+      systemStakingPercent: 0.7,
       timestamp: 1669838022,
       stakedSnx: {
-        ethereum: 144_000_00,
-        optimism: 80_000_000,
+        ethereum: 1_000_000,
+        optimism: 500_000,
       },
     };
-
-    expect(calculateGlobalStakingApr(isL2, SNXRate, previousWeekRewardsUsd, stakedSNXData)).toEqual(
-      wei('0.505555555555555555')
-    );
+    const feePeriodData = {
+      mainnetDistributedRewards: wei(1000),
+      optimismDistributedRewards: wei(500),
+    };
+    const rewardsApr = calculateGlobalStakingRewardsApr({ totalStakedData, isL2, feePeriodData });
+    /**
+     * Calculation notes:
+     * (mainnetDistributedRewards * 52) / stakedSnxEthereum
+     * (1000 * 52) / 1000000
+     */
+    expect(rewardsApr).toEqual(wei(0.052));
+  });
+  test('calculates APR for optimism', () => {
+    const isL2 = true;
+    const totalStakedData = {
+      systemStakingPercent: 0.7,
+      timestamp: 1669838022,
+      stakedSnx: {
+        ethereum: 1_000_000,
+        optimism: 500_000,
+      },
+    };
+    const feePeriodData = {
+      mainnetDistributedRewards: wei(1000),
+      optimismDistributedRewards: wei(1000),
+    };
+    const rewardsApr = calculateGlobalStakingRewardsApr({ totalStakedData, isL2, feePeriodData });
+    /**
+     * Calculation notes:
+     * (optimismDistributedRewards * 52) / stakedSnxOptimism
+     * (1000 * 52) / 500000
+     */
+    expect(rewardsApr).toEqual(wei(0.104));
   });
 });
