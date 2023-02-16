@@ -6,7 +6,7 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Wallet } from './Wallet';
 import { Header } from './components/Header';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Actions } from './Actions';
 
 const router = createBrowserRouter([
@@ -14,7 +14,6 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
   },
-
   {
     path: ':walletAddress',
     element: <Wallet />,
