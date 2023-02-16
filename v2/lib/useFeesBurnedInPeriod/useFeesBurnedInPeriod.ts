@@ -94,7 +94,7 @@ export const useFeesBurnedInPeriod = (period = 1 /* Defaults to previous period*
         totalDebtShareSupplyOptimism: wei(totalDebtShareSupplyOptimism),
         totalDebtShareSupplyMainnet: wei(totalDebtShareSupplyMainnet),
         totalBurnOptimism: wei(prevFeePeriodOptimism.feesToDistribute),
-        totalBurnMainnet: wei(prevFeePeriodOptimism.feesToDistribute),
+        totalBurnMainnet: wei(prevFeePeriodMainnet.feesToDistribute),
       });
     },
 
