@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { InfoOutline, DollarIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { formatNumber, formatPercent } from '@snx-v2/formatters';
-import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { useApr } from '@snx-v2/useApr';
 import { TradingFeesModal } from './TradingFeesModal';
 import { RewardsItemUI } from './RewardsItem';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
+import { useFeesBurnedInPeriod } from '@snx-v2/useFeesBurnedInPeriod';
 
 export const Fees = () => {
   const { t } = useTranslation();
@@ -18,16 +18,16 @@ export const Fees = () => {
   const { data: debtData, isLoading: isDebtLoading } = useDebtData();
   const { data: synthsBalances, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: exchangeRates, isLoading: isExchangeRatesLoading } = useExchangeRatesData();
-  const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
+  const { data: feesBurned, isLoading: isFeesBurnedLoading } = useFeesBurnedInPeriod();
   const { data: aprData } = useApr();
 
   const isLoading =
-    isDebtLoading || isFeePoolDataLoading || isSynthsLoading || isExchangeRatesLoading;
+    isDebtLoading || isFeesBurnedLoading || isSynthsLoading || isExchangeRatesLoading;
 
   return (
     <>
       <TradingFeesModal
-        feesBurned={feePoolData?.feesBurned.toNumber() || 0}
+        feesBurned={feesBurned?.toNumber() || 0}
         isOpen={isFeesModalOpen}
         onClose={() => setFeesModalOpen(false)}
         sUSDBalance={formatNumber(synthsBalances?.balancesMap['sUSD']?.balance.toNumber() || 0)}
@@ -63,7 +63,7 @@ export const Fees = () => {
               <Flex flexDirection="column">
                 <Text fontFamily="heading" fontSize="sm" color="white" fontWeight="900">
                   {/* Fee amount here */}
-                  {`${formatNumber(feePoolData?.feesBurned.toNumber() || 0)} sUSD`}
+                  {`${formatNumber(feesBurned?.toNumber() || 0)} sUSD`}
                 </Text>
               </Flex>
             );

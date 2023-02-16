@@ -3,7 +3,7 @@ import { Flex } from '@chakra-ui/react';
 import { StatBox } from '@snx-v2/StatBox';
 import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { useApr } from '@snx-v2/useApr';
-import { useFeePoolData } from '@snx-v2/useFeePoolData';
+import { useFeesBurnedInPeriod } from '@snx-v2/useFeesBurnedInPeriod';
 
 export const BurnStatsUi: FC<{
   lastEpochBurned: string;
@@ -48,15 +48,15 @@ export const BurnStatsUi: FC<{
 
 export const BurnStats = () => {
   const { data: earning, isLoading: isAprLoading } = useApr();
-  const { data: fees, isLoading: isFeesLoading } = useFeePoolData();
+  const { data: feesBurned, isLoading: isFeesLoading } = useFeesBurnedInPeriod();
 
   const isLoading = isAprLoading || isFeesLoading;
 
   return (
     <BurnStatsUi
       isLoading={isLoading}
-      lifetimeBurned={'coming soon'}
-      lastEpochBurned={formatNumberToUsd(fees?.feesBurned.toNumber() || 0)}
+      lifetimeBurned="coming soon"
+      lastEpochBurned={formatNumberToUsd(feesBurned?.toNumber() || 0)}
       burningAPR={formatPercent(earning?.feesApr?.toNumber() || 0)}
     />
   );
