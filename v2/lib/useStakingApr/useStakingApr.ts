@@ -57,9 +57,10 @@ export const useStakingApr = () => {
       ) {
         throw Error('Query missing required data');
       }
+
       const snxRewardsUsd = previousFeePeriodData.rewardsToDistribute
         .mul(exchangeRateData.SNX)
-        .mul(debtShareData.userDebtSharePercentage);
+        .mul(debtShareData.userDebtSharePercentageCurrentNetwork);
       const combinedApr = calculateStakingApr({
         stakedValue,
         previousWeekRewardsUsd: feeBurned.add(snxRewardsUsd),
