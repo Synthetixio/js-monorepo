@@ -7181,7 +7181,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useFeePeriodMultiNetwork@workspace:v2/lib/useFeePeriodMultiNetwork"
   dependencies:
-    "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
     "@tanstack/react-query": ^4.3.4
