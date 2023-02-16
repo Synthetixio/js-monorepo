@@ -175,5 +175,21 @@ module.exports = {
         '@typescript-eslint/no-array-constructor': 'off',
       },
     },
+    {
+      files: ['v2/perps-v2/perps-subgraph/*'],
+      env: {},
+      globals: {
+        changetype: true,
+        i32: true,
+        i64: true,
+        assert: true,
+      },
+      rules: {
+        'prefer-const': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
+        '@typescript-eslint/ban-types': 'allow',
+        '@typescript-eslint/no-array-constructor': 'off',
+      },
+    },
   ],
 };

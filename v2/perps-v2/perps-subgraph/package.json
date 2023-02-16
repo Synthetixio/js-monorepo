@@ -1,6 +1,7 @@
 {
   "name": "@synthetixio/perps-v2-subgraph",
-  "license": "UNLICENSED",
+  "private": true,
+  "license": "MIT",
   "scripts": {
     "build": "yarn build:goerli && yarn build:optimism-goerli && prettier --write subgraph.yaml",
     "auth": "graph auth --product hosted-service $V3_GRAPH_KEY",
@@ -17,5 +18,10 @@
     "ethers": "^5.7.2",
     "matchstick-as": "^0.5.0",
     "prettier": "^2.8.1"
+  },
+  "depcheck": {
+    "ignorePatterns": [
+      "build"
+    ]
   }
 }
