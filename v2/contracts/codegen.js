@@ -40,7 +40,12 @@ async function generateContracts({ network, contracts, prettierOptions }) {
         .concat([types])
         .join('\n');
     const pretty = prettier.format(content, { parser: 'typescript', ...prettierOptions });
+    const prettyJSON = prettier.format(JSON.stringify(contract.jsonAbi), {
+      parser: 'json',
+      ...prettierOptions,
+    });
     await fs.writeFile(`src/${network}/deployment/${contract.name}.ts`, pretty, 'utf8');
+    await fs.writeFile(`src/${network}/deployment/${contract.name}.json`, prettyJSON, 'utf8');
   }
 }
 

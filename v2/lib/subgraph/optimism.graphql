@@ -460,10 +460,23 @@ input AtomicSynthExchange_filter {
 
 enum AtomicSynthExchange_orderBy {
   account
+  account__bucketMagnitude
+  account__exchangeUSDTally
+  account__firstSeen
+  account__id
+  account__lastSeen
+  account__period
+  account__timestamp
+  account__totalFeesGeneratedInUSD
+  account__trades
   feesInUSD
   fromAmount
   fromAmountInUSD
   fromSynth
+  fromSynth__id
+  fromSynth__name
+  fromSynth__symbol
+  fromSynth__totalSupply
   gasPrice
   id
   timestamp
@@ -471,6 +484,10 @@ enum AtomicSynthExchange_orderBy {
   toAmount
   toAmountInUSD
   toSynth
+  toSynth__id
+  toSynth__name
+  toSynth__symbol
+  toSynth__totalSupply
 }
 
 scalar BigDecimal
@@ -2089,6 +2106,15 @@ input ExchangeRebate_filter {
 
 enum ExchangeRebate_orderBy {
   account
+  account__bucketMagnitude
+  account__exchangeUSDTally
+  account__firstSeen
+  account__id
+  account__lastSeen
+  account__period
+  account__timestamp
+  account__totalFeesGeneratedInUSD
+  account__trades
   amount
   amountInUSD
   block
@@ -2202,6 +2228,15 @@ input ExchangeReclaim_filter {
 
 enum ExchangeReclaim_orderBy {
   account
+  account__bucketMagnitude
+  account__exchangeUSDTally
+  account__firstSeen
+  account__id
+  account__lastSeen
+  account__period
+  account__timestamp
+  account__totalFeesGeneratedInUSD
+  account__trades
   amount
   amountInUSD
   block
@@ -2408,6 +2443,10 @@ enum Exchanger_orderBy {
   lastSeen
   period
   synth
+  synth__id
+  synth__name
+  synth__symbol
+  synth__totalSupply
   timestamp
   totalFeesGeneratedInUSD
   trades
@@ -3063,6 +3102,10 @@ enum LatestSynthBalance_orderBy {
   amount
   id
   synth
+  synth__id
+  synth__name
+  synth__symbol
+  synth__totalSupply
   timestamp
 }
 
@@ -5745,6 +5788,18 @@ enum ShortCollateralChange_orderBy {
   id
   isDeposit
   short
+  short__account
+  short__accruedInterestLastUpdateTimestamp
+  short__closedAt
+  short__collateralLocked
+  short__collateralLockedAmount
+  short__createdAt
+  short__createdAtBlock
+  short__id
+  short__isOpen
+  short__synthBorrowed
+  short__synthBorrowedAmount
+  short__txHash
   timestamp
 }
 
@@ -5941,6 +5996,14 @@ input ShortContractUpdate_filter {
 enum ShortContractUpdate_orderBy {
   blockNumber
   contractData
+  contractData__canOpenLoans
+  contractData__id
+  contractData__interactionDelay
+  contractData__issueFeeRate
+  contractData__manager
+  contractData__maxLoansPerAccount
+  contractData__minCollateral
+  contractData__minCratio
   field
   id
   timestamp
@@ -6167,6 +6230,18 @@ enum ShortLiquidation_orderBy {
   liquidatedCollateral
   liquidator
   short
+  short__account
+  short__accruedInterestLastUpdateTimestamp
+  short__closedAt
+  short__collateralLocked
+  short__collateralLockedAmount
+  short__createdAt
+  short__createdAtBlock
+  short__id
+  short__isOpen
+  short__synthBorrowed
+  short__synthBorrowedAmount
+  short__txHash
   timestamp
 }
 
@@ -6302,6 +6377,18 @@ enum ShortLoanChange_orderBy {
   loanAfter
   rate
   short
+  short__account
+  short__accruedInterestLastUpdateTimestamp
+  short__closedAt
+  short__collateralLocked
+  short__collateralLockedAmount
+  short__createdAt
+  short__createdAtBlock
+  short__id
+  short__isOpen
+  short__synthBorrowed
+  short__synthBorrowedAmount
+  short__txHash
   timestamp
 }
 
@@ -6456,6 +6543,14 @@ enum Short_orderBy {
   collateralLocked
   collateralLockedAmount
   contractData
+  contractData__canOpenLoans
+  contractData__id
+  contractData__interactionDelay
+  contractData__issueFeeRate
+  contractData__manager
+  contractData__maxLoansPerAccount
+  contractData__minCollateral
+  contractData__minCratio
   createdAt
   createdAtBlock
   id
@@ -8211,6 +8306,10 @@ enum SynthBalance_orderBy {
   amount
   id
   synth
+  synth__id
+  synth__name
+  synth__symbol
+  synth__totalSupply
   timestamp
 }
 
@@ -8421,10 +8520,23 @@ input SynthExchange_filter {
 
 enum SynthExchange_orderBy {
   account
+  account__bucketMagnitude
+  account__exchangeUSDTally
+  account__firstSeen
+  account__id
+  account__lastSeen
+  account__period
+  account__timestamp
+  account__totalFeesGeneratedInUSD
+  account__trades
   feesInUSD
   fromAmount
   fromAmountInUSD
   fromSynth
+  fromSynth__id
+  fromSynth__name
+  fromSynth__symbol
+  fromSynth__totalSupply
   gasPrice
   id
   timestamp
@@ -8432,6 +8544,10 @@ enum SynthExchange_orderBy {
   toAmount
   toAmountInUSD
   toSynth
+  toSynth__id
+  toSynth__name
+  toSynth__symbol
+  toSynth__totalSupply
 }
 
 input Synth_filter {
@@ -9207,6 +9323,10 @@ enum Total_orderBy {
   period
   product
   synth
+  synth__id
+  synth__name
+  synth__symbol
+  synth__totalSupply
   timestamp
   totalFeesGeneratedInUSD
   trades
