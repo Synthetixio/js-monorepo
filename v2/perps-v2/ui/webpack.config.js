@@ -48,7 +48,6 @@ const imgRule = {
 const cssRule = {
   test: /\.css$/,
   include: [new RegExp('./src')],
-  exclude: [],
   use: [
     {
       loader: require.resolve('style-loader'),
