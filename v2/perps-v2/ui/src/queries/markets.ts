@@ -1,5 +1,5 @@
 import { utils } from 'ethers';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { OPTIMISM_GRAPH_URL } from '../utils/constants';
 import { perpsV2Contract } from '../utils/contracts';
 

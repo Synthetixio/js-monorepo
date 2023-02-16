@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { PERPS_V2_DASHBOARD_GRAPH_URL } from '../utils/constants';
 
 export function useGetSynthetix() {

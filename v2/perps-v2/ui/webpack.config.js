@@ -23,7 +23,7 @@ const htmlPlugin = new HtmlWebpackPlugin({
 
 const babelRule = {
   test: /\.(ts|tsx|js|jsx)$/,
-  include: [/v3\/theme/],
+  include: [/v3\/theme/, /v2\/perps-v2\/ui\/src/],
   resolve: {
     fullySpecified: false,
   },
