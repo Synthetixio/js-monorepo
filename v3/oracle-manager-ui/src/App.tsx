@@ -36,7 +36,7 @@ export const App: FC = () => {
       toggleColorMode();
     }
   }, [colorMode, toggleColorMode]);
-
+  // TODO Change reducer node enum order And node id enum order changed as well maybe
   return (
     <Box px="10" py="5">
       <Flex justifyContent="space-between" mb="5">
@@ -89,6 +89,7 @@ export const App: FC = () => {
                 const contract = getNodeModuleContract(signer, chain.id);
                 const data = nodes
                   .slice()
+                  .filter((node) => !node.isRegistered)
                   .sort((a, b) => {
                     if (a.parents.length > b.parents.length) return 1;
                     if (a.parents.length < b.parents.length) return -1;
@@ -107,7 +108,7 @@ export const App: FC = () => {
                       }),
                     ])
                   );
-                console.log(data);
+                console.log(data, nodes);
                 contract.multicall(data);
               }
             }}

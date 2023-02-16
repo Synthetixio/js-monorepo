@@ -11,7 +11,7 @@ import { shortAddress } from '../utils/addresses';
 let interval: any;
 
 export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
-  const [nodes] = useRecoilState(nodesState);
+  const [nodes, setNodes] = useRecoilState(nodesState);
   const [isLoading, setIsLoading] = useState(false);
   const [nodeState, setNodeState] = useState<'registerNode' | 'nodeRegistered'>('registerNode');
   const [nodeId, setNodeId] = useState('');
@@ -49,6 +49,14 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
               );
               setNodeId(nodeID);
               setNodeState('nodeRegistered');
+              setNodes((state) => {
+                return state.map((n) => {
+                  if (n.id === nodeID) {
+                    n.isRegistered = true;
+                  }
+                  return n;
+                });
+              });
               const price = await contract.process(nodeID);
               setPrice(utils.formatEther(price[0]));
               setTime(() => {
@@ -75,11 +83,27 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
               setTime(new Date());
               setNodeId('');
               clearInterval(interval);
+              setNodes((state) => {
+                return state.map((n) => {
+                  if (n.id === node.id) {
+                    return { ...n, isRegistered: false };
+                  }
+                  return n;
+                });
+              });
             }
           } catch (error) {
             console.error(error);
             setNodeState('registerNode');
             setPrice('');
+            setNodes((state) => {
+              return state.map((n) => {
+                if (n.id === node.id) {
+                  return { ...n, isRegistered: false };
+                }
+                return n;
+              });
+            });
             setTime(new Date());
             setNodeId('');
             clearInterval(interval);

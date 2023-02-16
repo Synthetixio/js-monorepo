@@ -214,6 +214,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                     position: { x: 200, y: 100 },
                     source: '',
                     target: '',
+                    isRegistered: false,
                   };
                   setNodes([
                     ...nodes,
