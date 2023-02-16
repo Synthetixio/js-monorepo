@@ -167,20 +167,6 @@ jobs:
 
       - run: yarn workspace @snx-v3/subgraphs test
       - run: yarn workspace @snx-v3/subgraphs test --coverage
-
-  tests:
-    working_directory: /tmp/app
-    docker:
-      - image: cimg/node:<< pipeline.parameters.node-version >>
-    steps:
-      - checkout
-      - yarn-install
-      - run: NODE_ENV=test yarn test --coverage --coverageReporters=json --reporters=jest-junit --runInBand
-      - store_test_results:
-          path: './junit.xml'
-      - store_artifacts:
-          path: 'coverage'
-
       - run: yarn workspace @synthetixio/perps-v2-subgraph test
       - run: yarn workspace @synthetixio/perps-v2-subgraph test --coverage
 
