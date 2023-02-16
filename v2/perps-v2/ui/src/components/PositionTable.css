@@ -1,0 +1,35 @@
+.paginator {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+.pageItems {
+  margin: 10px;
+  list-style-type: none;
+}
+.nextButton {
+  list-style-type: none;
+  border: 1px solid #00d1ff;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.previousButton {
+  list-style-type: none;
+  border: 1px solid #00d1ff;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.breakSpacer {
+  list-style-type: none;
+}
+
+.activePage {
+  background-color: #00d1ff;
+  border-radius: 5px;
+  padding: 0 6px;
+}
