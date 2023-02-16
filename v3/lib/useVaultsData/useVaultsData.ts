@@ -65,3 +65,5 @@ export const useVaultsData = (poolId?: number) => {
     enabled: Boolean(collateralTypes?.length && CoreProxyContract && poolId),
   });
 };
+
+export type VaultsDataType = ReturnType<typeof useVaultsData>['data'];

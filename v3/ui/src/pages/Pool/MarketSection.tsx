@@ -14,7 +14,7 @@ import {
   Tooltip,
   Skeleton,
 } from '@chakra-ui/react';
-import { Pool, usePoolData } from '@snx-v3/usePoolData';
+import { PoolType, usePoolData } from '@snx-v3/usePoolData';
 import {
   calculateSevenDaysPnlGrowth,
   calculatePoolPerformanceSevenDays,
@@ -86,7 +86,7 @@ export function MarketSectionUi({
   poolId,
   poolDataFetched,
 }: {
-  poolData?: Pool;
+  poolData?: PoolType;
   marketNamesById?: Record<string, string | undefined>;
   poolId?: string;
   poolDataFetched: boolean;
@@ -161,56 +161,70 @@ export function MarketSectionUi({
                 <Tr w="full">
                   <Td colSpan={4} border="none">
                     <Text textAlign="center" mt={4}>
-                      No markets configures to pool
+                      No markets configured for the pool
                     </Text>
                   </Td>
                 </Tr>
               ) : (
                 poolData?.configurations.map(({ id, market, weight }, i) => {
-                  const totalWeight = poolData.total_weight;
                   const isLastItem = i + 1 === poolData.configurations.length;
                   const growth = calculateSevenDaysPnlGrowth(market.market_snapshots_by_week);
                   return (
-                    <Tr key={id} color="gray.500">
+                    <Tr key={id} color="gray.500" data-testid="pool market" data-market={id}>
                       <StyledTd isLastItem={isLastItem}>
-                        <Text fontSize="sm" display="block">
-                          {marketNamesById?.[market.id] || '-'}
+                        <Text fontSize="sm" display="block" data-testid="market name">
+                          {marketNamesById?.[market.id] ? marketNamesById[market.id] : '-'}
                         </Text>
-                        <Text fontSize="xs" display="block">
+                        <Text fontSize="xs" display="block" data-testid="market id">
                           ID: {market.id}
                         </Text>
                       </StyledTd>
-                      <StyledTd isLastItem={isLastItem} fontSize="sm">
-                        <Text display="block">
-                          {formatPercent(weight.div(totalWeight).toNumber())}
-                        </Text>
-                        {/* TODO, figure out max debt. See notion ticket "Pool page market max debt" */}
-                        {/* <Flex flexWrap="wrap" maxW="135px">
-                          <Text mr={1}>Max Debt:</Text>
-                          <Text>
-                            {max_debt_share_value.gt(Number.MAX_SAFE_INTEGER)
-                              ? 'Unlimited'
-                              : formatNumberToUsd(max_debt_share_value.toNumber())}
-                          </Text>
-                        </Flex> */}
-                      </StyledTd>
-                      <StyledTd isLastItem={isLastItem}>
-                        {!growth ? (
-                          ''
+                      <StyledTd isLastItem={isLastItem} fontSize="sm" data-testid="pool allocation">
+                        {poolData.total_weight ? (
+                          <>
+                            <Text display="block">
+                              {formatPercent(weight.div(poolData.total_weight).toNumber())}
+                            </Text>
+                            {/* TODO, figure out max debt. See notion ticket "Pool page market max debt" */}
+                            {/*
+                            <Flex flexWrap="wrap" maxW="135px">
+                              <Text mr={1}>Max Debt:</Text>
+                              <Text>
+                                {max_debt_share_value.gt(Number.MAX_SAFE_INTEGER)
+                                  ? 'Unlimited'
+                                  : formatNumberToUsd(max_debt_share_value.toNumber())}
+                              </Text>
+                            </Flex>
+                            */}
+                          </>
                         ) : (
+                          '-'
+                        )}
+                      </StyledTd>
+                      <StyledTd isLastItem={isLastItem} data-testid="market growth">
+                        {growth ? (
                           <>
                             <Text fontSize="sm" display="block">
                               {formatNumberToUsd(growth.value.toNumber())}
                             </Text>
                             {growth.percentage ? (
-                              <TrendText fontSize="xs" value={growth.percentage} display="block">
+                              <TrendText
+                                fontSize="xs"
+                                value={growth.percentage}
+                                display="block"
+                                data-testid="market growth percentage"
+                              >
                                 {formatPercent(growth.percentage.toNumber())}
                               </TrendText>
                             ) : null}
                           </>
+                        ) : (
+                          '-'
                         )}
                       </StyledTd>
-                      <StyledTd isLastItem>{formatNumberToUsd(market.pnl.toNumber())}</StyledTd>
+                      <StyledTd isLastItem={isLastItem} data-testid="market pnl">
+                        {formatNumberToUsd(market.pnl.toNumber())}
+                      </StyledTd>
                     </Tr>
                   );
                 })
@@ -234,10 +248,10 @@ export const MarketSection = () => {
 
   return (
     <MarketSectionUi
-      marketNamesById={marketNamesById}
-      poolData={poolData}
-      poolDataFetched={poolDataFetched}
       poolId={params.poolId}
+      poolDataFetched={poolDataFetched}
+      poolData={poolData}
+      marketNamesById={marketNamesById}
     />
   );
 };

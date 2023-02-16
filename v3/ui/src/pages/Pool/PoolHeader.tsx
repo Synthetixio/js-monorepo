@@ -1,19 +1,16 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { useParams } from '@snx-v3/useParams';
-import { usePoolData, Pool } from '@snx-v3/usePoolData';
+import { usePoolData, PoolType } from '@snx-v3/usePoolData';
 
-export const PoolHeaderUi = ({ pool }: { pool?: Pool }) => {
-  if (!pool) {
-    return null;
-  }
+export const PoolHeaderUi = ({ poolData }: { poolData: PoolType }) => {
   return (
     <Box>
       <Flex gap={2} alignItems="flex-end">
         <Heading fontWeight={700} fontSize="xl">
-          {pool.name}
+          {poolData.name}
         </Heading>
         <Text fontSize="sm" color="gray.400">
-          Pool #{pool.id}
+          Pool #{poolData.id}
         </Text>
       </Flex>
       <Text color="gray.400" fontSize="sm">
@@ -26,6 +23,6 @@ export const PoolHeaderUi = ({ pool }: { pool?: Pool }) => {
 
 export const PoolHeader = () => {
   const params = useParams();
-  const { data: pool } = usePoolData(params.poolId);
-  return <PoolHeaderUi pool={pool} />;
+  const { data: poolData } = usePoolData(params.poolId);
+  return poolData ? <PoolHeaderUi poolData={poolData} /> : null;
 };
