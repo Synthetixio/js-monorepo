@@ -167,24 +167,23 @@ export function MarketSectionUi({
                 </Tr>
               ) : (
                 poolData?.configurations.map(({ id, market, weight }, i) => {
-                  const totalWeight = poolData.total_weight;
                   const isLastItem = i + 1 === poolData.configurations.length;
                   const growth = calculateSevenDaysPnlGrowth(market.market_snapshots_by_week);
                   return (
-                    <Tr key={id} color="gray.500">
+                    <Tr key={id} color="gray.500" data-testid="pool market" data-market={id}>
                       <StyledTd isLastItem={isLastItem}>
-                        <Text fontSize="sm" display="block">
-                          {marketNamesById?.[market.id] || '-'}
+                        <Text fontSize="sm" display="block" data-testid="market name">
+                          {marketNamesById?.[market.id] ? marketNamesById[market.id] : '-'}
                         </Text>
-                        <Text fontSize="xs" display="block">
+                        <Text fontSize="xs" display="block" data-testid="market id">
                           ID: {market.id}
                         </Text>
                       </StyledTd>
-                      <StyledTd isLastItem={isLastItem} fontSize="sm">
-                        {totalWeight ? (
+                      <StyledTd isLastItem={isLastItem} fontSize="sm" data-testid="pool allocation">
+                        {poolData.total_weight ? (
                           <>
                             <Text display="block">
-                              {formatPercent(weight.div(totalWeight).toNumber())}
+                              {formatPercent(weight.div(poolData.total_weight).toNumber())}
                             </Text>
                             {/* TODO, figure out max debt. See notion ticket "Pool page market max debt" */}
                             {/*
@@ -202,14 +201,19 @@ export function MarketSectionUi({
                           '-'
                         )}
                       </StyledTd>
-                      <StyledTd isLastItem={isLastItem}>
+                      <StyledTd isLastItem={isLastItem} data-testid="market growth">
                         {growth ? (
                           <>
                             <Text fontSize="sm" display="block">
                               {formatNumberToUsd(growth.value.toNumber())}
                             </Text>
                             {growth.percentage ? (
-                              <TrendText fontSize="xs" value={growth.percentage} display="block">
+                              <TrendText
+                                fontSize="xs"
+                                value={growth.percentage}
+                                display="block"
+                                data-testid="market growth percentage"
+                              >
                                 {formatPercent(growth.percentage.toNumber())}
                               </TrendText>
                             ) : null}
@@ -218,7 +222,7 @@ export function MarketSectionUi({
                           '-'
                         )}
                       </StyledTd>
-                      <StyledTd isLastItem={isLastItem}>
+                      <StyledTd isLastItem={isLastItem} data-testid="market pnl">
                         {formatNumberToUsd(market.pnl.toNumber())}
                       </StyledTd>
                     </Tr>
