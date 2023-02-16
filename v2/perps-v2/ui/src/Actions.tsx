@@ -32,7 +32,7 @@ export const Actions: FC = () => {
         }) as EventType[];
     }
     return [];
-  }, [orders?.toString()]);
+  }, [orders, futuresTrades, positionLiquidated]);
 
   return (
     <Flex flexDir="column" p="2" justifyContent="center" alignItems="center">
@@ -125,7 +125,6 @@ export const Actions: FC = () => {
                       )}
                     </Text>
                   </Flex>
-                  {/* <Text>Status:&nbsp;{event.status}</Text> */}
                   {'keeper' in event && (
                     <Text
                       cursor="pointer"

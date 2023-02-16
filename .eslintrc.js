@@ -84,7 +84,7 @@ module.exports = {
     },
 
     {
-      files: ['v2/ui/**/*', 'v2/components/**/*', 'v1/components/**/*'],
+      files: ['v2/ui/**/*', 'v2/components/**/*', 'v1/components/**/*', 'v2/perps-v2/ui/**/*'],
 
       extends: ['plugin:react/recommended'],
       plugins: ['react', 'react-hooks'],
@@ -187,7 +187,7 @@ module.exports = {
       rules: {
         'prefer-const': 'off',
         '@typescript-eslint/no-unused-vars': 'off',
-        '@typescript-eslint/ban-types': 'allow',
+        '@typescript-eslint/ban-types': 'off',
         '@typescript-eslint/no-array-constructor': 'off',
       },
     },
