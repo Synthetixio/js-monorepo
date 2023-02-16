@@ -5,7 +5,7 @@ import {
   DelayedOrderSubmitted,
   PositionModified,
   PositionLiquidated,
-} from '../generated/PerpsV2MarketProxyable/PerpsV2MarketProxyable';
+} from '../generated/PerpsV2DelayedOrderETHPERP/PerpsV2DelayedOrderETHPERP';
 
 function createBlock(timestamp: i64, blockNumber: i64): Map<string, i64> {
   const newBlock = new Map<string, i64>();

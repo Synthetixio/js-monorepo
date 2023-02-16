@@ -5,7 +5,7 @@ import {
   DelayedOrderRemoved as DelayedOrderRemovedEvent,
   DelayedOrderSubmitted as DelayedOrderSubmittedEvent,
   FundingRecomputed as FundingRecomputedEvent,
-} from '../generated/PerpsV2MarketProxyable/PerpsV2MarketProxyable';
+} from '../generated/PerpsV2DelayedOrderETHPERP/PerpsV2DelayedOrderETHPERP';
 import {
   PositionLiquidated,
   Trader,
