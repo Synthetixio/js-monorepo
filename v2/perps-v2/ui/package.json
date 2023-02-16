@@ -1,12 +1,14 @@
 {
-  "name": "ui",
+  "name": "@synthetixio/perps-v2-dashboard",
+  "version": "0.0.1",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite --port 3000",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "start": "webpack-cli serve",
+    "build": "NODE_ENV=production webpack-cli",
+    "test": "NODE_ENV=test jest",
+    "typecheck": "tsc --noEmit",
+    "standalone-install": "yarn workspaces focus '@synthetixio/perps-v2-dashboard'",
+    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/perps-v2-dashboard' run build"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.9",
@@ -50,5 +52,19 @@
     "webpack-bundle-analyzer": "^4.7.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1"
+  },
+  "browserslist": [
+    "last 1 Chrome version",
+    "last 1 iOS version",
+    "last 1 Safari version",
+    "last 1 Firefox version",
+    "last 1 Edge version",
+    "last 1 Opera version"
+  ],
+  "depcheck": {
+    "ignorePatterns": [
+      "dist"
+    ],
+    "ignoreMatches": []
   }
 }

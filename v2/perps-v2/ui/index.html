@@ -2,12 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="initial-scale=1, width=device-width" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta name="description" content="Perps V2 Dashboard" />
     <link rel="icon" href="/favicon.ico" />
     <title>Perps V2 Dashboard</title>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="app"></div>
+    <script>
+      (function () {
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src =
+          window.localStorage.UNSAFE_IMPORT === 'true' ? '/main.js' : `/main.js?_=${Date.now()}`;
+        document.body.appendChild(script);
+      })();
+    </script>
   </body>
 </html>

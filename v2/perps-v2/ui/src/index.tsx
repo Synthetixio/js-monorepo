@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
   },
-  // TODO @MF after page refresh it crashes on vercel
+
   {
     path: ':walletAddress',
     element: <Wallet />,
@@ -22,9 +22,7 @@ const router = createBrowserRouter([
   { path: '/actions', element: <Actions /> },
 ]);
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 const customTheme = extendTheme({
   ...theme,
