@@ -1,9 +1,20 @@
 {
-  "address": "0xb9Ed8aFd29E8EFd169F127CBe6AE6A3dfE77A571",
+  "address": "0x0Ec577B780c365Ce69F6956f961cD6301C2440DF",
   "abi": [
     {
       "inputs": [],
       "name": "EmptyDistribution",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "which",
+          "type": "bytes32"
+        }
+      ],
+      "name": "FeatureUnavailable",
       "type": "error"
     },
     {
@@ -247,5 +258,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x470fe78aee1c514b551399ebc397df423cf5bb03c1d9986f80a348042655d96f"
+  "deployTxnHash": "0xc7f93cf0c4923855605a4fe19c9a18b57f0f8c62222059732ee12a4b2e2fc43c"
 }

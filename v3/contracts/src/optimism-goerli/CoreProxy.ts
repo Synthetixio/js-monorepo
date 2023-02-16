@@ -1,6 +1,6 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
-export const address = '0xEB5aFAF2d4B82F32ec6B2c7cb8f9e8aF27FbaEA3';
+export const address = '0x5B2863b24143742775F3f90C18686dFB16805CE8';
 export const abi = [
   'error AlreadyInitialized()',
   'error ImplementationIsSterile(address implementation)',
@@ -25,15 +25,22 @@ export const abi = [
   'function upgradeTo(address newImplementation)',
   'error ValueAlreadyInSet()',
   'error ValueNotInSet()',
-  'event FeatureFlagAllowAllSet(bytes32 feature, bool allowAll)',
-  'event FeatureFlagAllowlistAdded(bytes32 feature, address account)',
-  'event FeatureFlagAllowlistRemoved(bytes32 feature, address account)',
+  'event FeatureFlagAllowAllSet(bytes32 indexed feature, bool allowAll)',
+  'event FeatureFlagAllowlistAdded(bytes32 indexed feature, address account)',
+  'event FeatureFlagAllowlistRemoved(bytes32 indexed feature, address account)',
+  'event FeatureFlagDeniersReset(bytes32 indexed feature, address[] deniers)',
+  'event FeatureFlagDenyAllSet(bytes32 indexed feature, bool denyAll)',
   'function addToFeatureFlagAllowlist(bytes32 feature, address account)',
+  'function getDeniers(bytes32 feature) view returns (address[])',
   'function getFeatureFlagAllowAll(bytes32 feature) view returns (bool)',
   'function getFeatureFlagAllowlist(bytes32 feature) view returns (address[])',
+  'function getFeatureFlagDenyAll(bytes32 feature) view returns (bool)',
   'function isFeatureAllowed(bytes32 feature, address account) view returns (bool)',
   'function removeFromFeatureFlagAllowlist(bytes32 feature, address account)',
+  'function setDeniers(bytes32 feature, address[] deniers)',
   'function setFeatureFlagAllowAll(bytes32 feature, bool allowAll)',
+  'function setFeatureFlagDenyAll(bytes32 feature, bool denyAll)',
+  'error FeatureUnavailable(bytes32 which)',
   'error InvalidPermission(bytes32 permission)',
   'error OnlyAccountTokenProxy(address origin)',
   'error PermissionDenied(uint128 accountId, bytes32 permission, address target)',
@@ -43,6 +50,7 @@ export const abi = [
   'event PermissionGranted(uint128 indexed accountId, bytes32 indexed permission, address indexed user, address sender)',
   'event PermissionRevoked(uint128 indexed accountId, bytes32 indexed permission, address indexed user, address sender)',
   'function createAccount(uint128 requestedAccountId)',
+  'function getAccountLastInteraction(uint128 accountId) view returns (uint256)',
   'function getAccountOwner(uint128 accountId) view returns (address)',
   'function getAccountPermissions(uint128 accountId) view returns (tuple(address user, bytes32[] permissions)[] permissions)',
   'function getAccountTokenAddress() view returns (address)',
@@ -53,7 +61,6 @@ export const abi = [
   'function renouncePermission(uint128 accountId, bytes32 permission)',
   'function revokePermission(uint128 accountId, bytes32 permission, address user)',
   'error EmptyDistribution()',
-  'error FeatureUnavailable()',
   'error InsufficientCollateralRatio(uint256 collateralValue, uint256 debt, uint256 ratio, uint256 minRatio)',
   'error MarketNotFound(uint128 marketId)',
   'error NotFundedByPool(uint256 marketId, uint256 poolId)',
@@ -70,6 +77,8 @@ export const abi = [
   'function initOrUpgradeNft(bytes32 id, string name, string symbol, string uri, address impl)',
   'function initOrUpgradeToken(bytes32 id, string name, string symbol, uint8 decimals, address impl)',
   'function registerUnmanagedSystem(bytes32 id, address endpoint)',
+  'error AccountActivityTimeoutPending(uint128 accountId, uint256 currentTime, uint256 requiredTime)',
+  'error AccountNotFound(uint128 accountId)',
   'error CollateralDepositDisabled(address collateralType)',
   'error CollateralNotFound()',
   'error FailedTransfer(address from, address to, uint256 value)',
@@ -96,7 +105,6 @@ export const abi = [
   'event UsdMinted(uint128 indexed accountId, uint128 indexed poolId, address collateralType, uint256 amount, address indexed sender)',
   'function burnUsd(uint128 accountId, uint128 poolId, address collateralType, uint256 amount)',
   'function mintUsd(uint128 accountId, uint128 poolId, address collateralType, uint256 amount)',
-  'error AccountNotFound(uint128 accountId)',
   'error CannotScaleEmptyMapping()',
   'error IneligibleForLiquidation(uint256 collateralValue, int256 debt, uint256 currentCRatio, uint256 cratio)',
   'error InsufficientMappedAmount()',
@@ -142,7 +150,7 @@ export const abi = [
   'event PreferredPoolSet(uint256 poolId)',
   'function addApprovedPool(uint128 poolId)',
   'function getApprovedPools() view returns (uint256[])',
-  'function getPreferredPool() view returns (uint256)',
+  'function getPreferredPool() view returns (uint128)',
   'function removeApprovedPool(uint128 poolId)',
   'function setPreferredPool(uint128 poolId)',
   'error CapacityLocked(uint256 marketId)',
@@ -181,8 +189,11 @@ export const abi = [
   'function removeRewardsDistributor(uint128 poolId, address collateralType, address distributor)',
   'function updateRewards(uint128 poolId, address collateralType, uint128 accountId) returns (uint256[], address[])',
   'function configureOracleManager(address oracleManagerAddress)',
+  'function getConfig(bytes32 k) view returns (bytes32 v)',
   'function registerCcip(address ccipSend, address ccipReceive, address ccipTokenPool)',
+  'function setConfig(bytes32 k, bytes32 v)',
   'error InsufficientDelegation(uint256 minDelegation)',
+  'error InvalidCollateralAmount()',
   'error InvalidLeverage(uint256 leverage)',
   'event DelegationUpdated(uint128 indexed accountId, uint128 indexed poolId, address collateralType, uint256 amount, uint256 leverage, address indexed sender)',
   'function delegateCollateral(uint128 accountId, uint128 poolId, address collateralType, uint256 newCollateralAmountD18, uint256 leverage)',
@@ -303,12 +314,17 @@ export interface CoreProxyInterface extends utils.Interface {
     'simulateUpgradeTo(address)': FunctionFragment;
     'upgradeTo(address)': FunctionFragment;
     'addToFeatureFlagAllowlist(bytes32,address)': FunctionFragment;
+    'getDeniers(bytes32)': FunctionFragment;
     'getFeatureFlagAllowAll(bytes32)': FunctionFragment;
     'getFeatureFlagAllowlist(bytes32)': FunctionFragment;
+    'getFeatureFlagDenyAll(bytes32)': FunctionFragment;
     'isFeatureAllowed(bytes32,address)': FunctionFragment;
     'removeFromFeatureFlagAllowlist(bytes32,address)': FunctionFragment;
+    'setDeniers(bytes32,address[])': FunctionFragment;
     'setFeatureFlagAllowAll(bytes32,bool)': FunctionFragment;
+    'setFeatureFlagDenyAll(bytes32,bool)': FunctionFragment;
     'createAccount(uint128)': FunctionFragment;
+    'getAccountLastInteraction(uint128)': FunctionFragment;
     'getAccountOwner(uint128)': FunctionFragment;
     'getAccountPermissions(uint128)': FunctionFragment;
     'getAccountTokenAddress()': FunctionFragment;
@@ -382,7 +398,9 @@ export interface CoreProxyInterface extends utils.Interface {
     'removeRewardsDistributor(uint128,address,address)': FunctionFragment;
     'updateRewards(uint128,address,uint128)': FunctionFragment;
     'configureOracleManager(address)': FunctionFragment;
+    'getConfig(bytes32)': FunctionFragment;
     'registerCcip(address,address,address)': FunctionFragment;
+    'setConfig(bytes32,bytes32)': FunctionFragment;
     'delegateCollateral(uint128,uint128,address,uint256,uint256)': FunctionFragment;
     'getPosition(uint128,uint128,address)': FunctionFragment;
     'getPositionCollateral(uint128,uint128,address)': FunctionFragment;
@@ -406,12 +424,17 @@ export interface CoreProxyInterface extends utils.Interface {
       | 'simulateUpgradeTo'
       | 'upgradeTo'
       | 'addToFeatureFlagAllowlist'
+      | 'getDeniers'
       | 'getFeatureFlagAllowAll'
       | 'getFeatureFlagAllowlist'
+      | 'getFeatureFlagDenyAll'
       | 'isFeatureAllowed'
       | 'removeFromFeatureFlagAllowlist'
+      | 'setDeniers'
       | 'setFeatureFlagAllowAll'
+      | 'setFeatureFlagDenyAll'
       | 'createAccount'
+      | 'getAccountLastInteraction'
       | 'getAccountOwner'
       | 'getAccountPermissions'
       | 'getAccountTokenAddress'
@@ -485,7 +508,9 @@ export interface CoreProxyInterface extends utils.Interface {
       | 'removeRewardsDistributor'
       | 'updateRewards'
       | 'configureOracleManager'
+      | 'getConfig'
       | 'registerCcip'
+      | 'setConfig'
       | 'delegateCollateral'
       | 'getPosition'
       | 'getPositionCollateral'
@@ -519,12 +544,17 @@ export interface CoreProxyInterface extends utils.Interface {
     functionFragment: 'addToFeatureFlagAllowlist',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'getDeniers', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
     functionFragment: 'getFeatureFlagAllowAll',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: 'getFeatureFlagAllowlist',
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getFeatureFlagDenyAll',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
@@ -536,11 +566,23 @@ export interface CoreProxyInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: 'setDeniers',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>[]]
+  ): string;
+  encodeFunctionData(
     functionFragment: 'setFeatureFlagAllowAll',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
+    functionFragment: 'setFeatureFlagDenyAll',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
     functionFragment: 'createAccount',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getAccountLastInteraction',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -876,9 +918,14 @@ export interface CoreProxyInterface extends utils.Interface {
     functionFragment: 'configureOracleManager',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'getConfig', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
     functionFragment: 'registerCcip',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setConfig',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: 'delegateCollateral',
@@ -930,12 +977,17 @@ export interface CoreProxyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'simulateUpgradeTo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'upgradeTo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addToFeatureFlagAllowlist', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getDeniers', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getFeatureFlagAllowAll', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getFeatureFlagAllowlist', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getFeatureFlagDenyAll', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isFeatureAllowed', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'removeFromFeatureFlagAllowlist', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setDeniers', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setFeatureFlagAllowAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setFeatureFlagDenyAll', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'createAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAccountLastInteraction', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getAccountOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getAccountPermissions', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getAccountTokenAddress', data: BytesLike): Result;
@@ -1012,7 +1064,9 @@ export interface CoreProxyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'removeRewardsDistributor', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updateRewards', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'configureOracleManager', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getConfig', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'registerCcip', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setConfig', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'delegateCollateral', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getPosition', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getPositionCollateral', data: BytesLike): Result;
@@ -1032,6 +1086,8 @@ export interface CoreProxyInterface extends utils.Interface {
     'FeatureFlagAllowAllSet(bytes32,bool)': EventFragment;
     'FeatureFlagAllowlistAdded(bytes32,address)': EventFragment;
     'FeatureFlagAllowlistRemoved(bytes32,address)': EventFragment;
+    'FeatureFlagDeniersReset(bytes32,address[])': EventFragment;
+    'FeatureFlagDenyAllSet(bytes32,bool)': EventFragment;
     'AccountCreated(uint128,address)': EventFragment;
     'PermissionGranted(uint128,bytes32,address,address)': EventFragment;
     'PermissionRevoked(uint128,bytes32,address,address)': EventFragment;
@@ -1073,6 +1129,8 @@ export interface CoreProxyInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'FeatureFlagAllowAllSet'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'FeatureFlagAllowlistAdded'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'FeatureFlagAllowlistRemoved'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FeatureFlagDeniersReset'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FeatureFlagDenyAllSet'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'AccountCreated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'PermissionGranted'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'PermissionRevoked'): EventFragment;
@@ -1164,6 +1222,28 @@ export type FeatureFlagAllowlistRemovedEvent = TypedEvent<
 
 export type FeatureFlagAllowlistRemovedEventFilter =
   TypedEventFilter<FeatureFlagAllowlistRemovedEvent>;
+
+export interface FeatureFlagDeniersResetEventObject {
+  feature: string;
+  deniers: string[];
+}
+export type FeatureFlagDeniersResetEvent = TypedEvent<
+  [string, string[]],
+  FeatureFlagDeniersResetEventObject
+>;
+
+export type FeatureFlagDeniersResetEventFilter = TypedEventFilter<FeatureFlagDeniersResetEvent>;
+
+export interface FeatureFlagDenyAllSetEventObject {
+  feature: string;
+  denyAll: boolean;
+}
+export type FeatureFlagDenyAllSetEvent = TypedEvent<
+  [string, boolean],
+  FeatureFlagDenyAllSetEventObject
+>;
+
+export type FeatureFlagDenyAllSetEventFilter = TypedEventFilter<FeatureFlagDenyAllSetEvent>;
 
 export interface AccountCreatedEventObject {
   accountId: BigNumber;
@@ -1634,6 +1714,8 @@ export interface CoreProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    getDeniers(feature: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string[]]>;
+
     getFeatureFlagAllowAll(
       feature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -1643,6 +1725,11 @@ export interface CoreProxy extends BaseContract {
       feature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[string[]]>;
+
+    getFeatureFlagDenyAll(
+      feature: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
     isFeatureAllowed(
       feature: PromiseOrValue<BytesLike>,
@@ -1656,9 +1743,21 @@ export interface CoreProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setDeniers(
+      feature: PromiseOrValue<BytesLike>,
+      deniers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setFeatureFlagAllowAll(
       feature: PromiseOrValue<BytesLike>,
       allowAll: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setFeatureFlagDenyAll(
+      feature: PromiseOrValue<BytesLike>,
+      denyAll: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1666,6 +1765,11 @@ export interface CoreProxy extends BaseContract {
       requestedAccountId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    getAccountLastInteraction(
+      accountId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     getAccountOwner(
       accountId: PromiseOrValue<BigNumberish>,
@@ -2112,10 +2216,21 @@ export interface CoreProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    getConfig(
+      k: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[string] & { v: string }>;
+
     registerCcip(
       ccipSend: PromiseOrValue<string>,
       ccipReceive: PromiseOrValue<string>,
       ccipTokenPool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setConfig(
+      k: PromiseOrValue<BytesLike>,
+      v: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -2217,6 +2332,8 @@ export interface CoreProxy extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  getDeniers(feature: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string[]>;
+
   getFeatureFlagAllowAll(
     feature: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
@@ -2226,6 +2343,11 @@ export interface CoreProxy extends BaseContract {
     feature: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<string[]>;
+
+  getFeatureFlagDenyAll(
+    feature: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   isFeatureAllowed(
     feature: PromiseOrValue<BytesLike>,
@@ -2239,9 +2361,21 @@ export interface CoreProxy extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setDeniers(
+    feature: PromiseOrValue<BytesLike>,
+    deniers: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setFeatureFlagAllowAll(
     feature: PromiseOrValue<BytesLike>,
     allowAll: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setFeatureFlagDenyAll(
+    feature: PromiseOrValue<BytesLike>,
+    denyAll: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2249,6 +2383,11 @@ export interface CoreProxy extends BaseContract {
     requestedAccountId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  getAccountLastInteraction(
+    accountId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   getAccountOwner(
     accountId: PromiseOrValue<BigNumberish>,
@@ -2685,10 +2824,18 @@ export interface CoreProxy extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  getConfig(k: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+
   registerCcip(
     ccipSend: PromiseOrValue<string>,
     ccipReceive: PromiseOrValue<string>,
     ccipTokenPool: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setConfig(
+    k: PromiseOrValue<BytesLike>,
+    v: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2783,6 +2930,8 @@ export interface CoreProxy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    getDeniers(feature: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string[]>;
+
     getFeatureFlagAllowAll(
       feature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -2792,6 +2941,11 @@ export interface CoreProxy extends BaseContract {
       feature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string[]>;
+
+    getFeatureFlagDenyAll(
+      feature: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     isFeatureAllowed(
       feature: PromiseOrValue<BytesLike>,
@@ -2805,9 +2959,21 @@ export interface CoreProxy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setDeniers(
+      feature: PromiseOrValue<BytesLike>,
+      deniers: PromiseOrValue<string>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setFeatureFlagAllowAll(
       feature: PromiseOrValue<BytesLike>,
       allowAll: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setFeatureFlagDenyAll(
+      feature: PromiseOrValue<BytesLike>,
+      denyAll: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2815,6 +2981,11 @@ export interface CoreProxy extends BaseContract {
       requestedAccountId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    getAccountLastInteraction(
+      accountId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getAccountOwner(
       accountId: PromiseOrValue<BigNumberish>,
@@ -3242,10 +3413,18 @@ export interface CoreProxy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    getConfig(k: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+
     registerCcip(
       ccipSend: PromiseOrValue<string>,
       ccipReceive: PromiseOrValue<string>,
       ccipTokenPool: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setConfig(
+      k: PromiseOrValue<BytesLike>,
+      v: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -3326,25 +3505,49 @@ export interface CoreProxy extends BaseContract {
     Upgraded(self?: PromiseOrValue<string> | null, implementation?: null): UpgradedEventFilter;
 
     'FeatureFlagAllowAllSet(bytes32,bool)'(
-      feature?: null,
+      feature?: PromiseOrValue<BytesLike> | null,
       allowAll?: null
     ): FeatureFlagAllowAllSetEventFilter;
-    FeatureFlagAllowAllSet(feature?: null, allowAll?: null): FeatureFlagAllowAllSetEventFilter;
+    FeatureFlagAllowAllSet(
+      feature?: PromiseOrValue<BytesLike> | null,
+      allowAll?: null
+    ): FeatureFlagAllowAllSetEventFilter;
 
     'FeatureFlagAllowlistAdded(bytes32,address)'(
-      feature?: null,
+      feature?: PromiseOrValue<BytesLike> | null,
       account?: null
     ): FeatureFlagAllowlistAddedEventFilter;
-    FeatureFlagAllowlistAdded(feature?: null, account?: null): FeatureFlagAllowlistAddedEventFilter;
+    FeatureFlagAllowlistAdded(
+      feature?: PromiseOrValue<BytesLike> | null,
+      account?: null
+    ): FeatureFlagAllowlistAddedEventFilter;
 
     'FeatureFlagAllowlistRemoved(bytes32,address)'(
-      feature?: null,
+      feature?: PromiseOrValue<BytesLike> | null,
       account?: null
     ): FeatureFlagAllowlistRemovedEventFilter;
     FeatureFlagAllowlistRemoved(
-      feature?: null,
+      feature?: PromiseOrValue<BytesLike> | null,
       account?: null
     ): FeatureFlagAllowlistRemovedEventFilter;
+
+    'FeatureFlagDeniersReset(bytes32,address[])'(
+      feature?: PromiseOrValue<BytesLike> | null,
+      deniers?: null
+    ): FeatureFlagDeniersResetEventFilter;
+    FeatureFlagDeniersReset(
+      feature?: PromiseOrValue<BytesLike> | null,
+      deniers?: null
+    ): FeatureFlagDeniersResetEventFilter;
+
+    'FeatureFlagDenyAllSet(bytes32,bool)'(
+      feature?: PromiseOrValue<BytesLike> | null,
+      denyAll?: null
+    ): FeatureFlagDenyAllSetEventFilter;
+    FeatureFlagDenyAllSet(
+      feature?: PromiseOrValue<BytesLike> | null,
+      denyAll?: null
+    ): FeatureFlagDenyAllSetEventFilter;
 
     'AccountCreated(uint128,address)'(
       accountId?: PromiseOrValue<BigNumberish> | null,
@@ -3777,12 +3980,19 @@ export interface CoreProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    getDeniers(feature: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+
     getFeatureFlagAllowAll(
       feature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getFeatureFlagAllowlist(
+      feature: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getFeatureFlagDenyAll(
       feature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -3799,15 +4009,32 @@ export interface CoreProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setDeniers(
+      feature: PromiseOrValue<BytesLike>,
+      deniers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setFeatureFlagAllowAll(
       feature: PromiseOrValue<BytesLike>,
       allowAll: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setFeatureFlagDenyAll(
+      feature: PromiseOrValue<BytesLike>,
+      denyAll: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     createAccount(
       requestedAccountId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    getAccountLastInteraction(
+      accountId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getAccountOwner(
@@ -4245,10 +4472,18 @@ export interface CoreProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    getConfig(k: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+
     registerCcip(
       ccipSend: PromiseOrValue<string>,
       ccipReceive: PromiseOrValue<string>,
       ccipTokenPool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setConfig(
+      k: PromiseOrValue<BytesLike>,
+      v: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -4351,12 +4586,22 @@ export interface CoreProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    getDeniers(
+      feature: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getFeatureFlagAllowAll(
       feature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getFeatureFlagAllowlist(
+      feature: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getFeatureFlagDenyAll(
       feature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -4373,15 +4618,32 @@ export interface CoreProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    setDeniers(
+      feature: PromiseOrValue<BytesLike>,
+      deniers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     setFeatureFlagAllowAll(
       feature: PromiseOrValue<BytesLike>,
       allowAll: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    setFeatureFlagDenyAll(
+      feature: PromiseOrValue<BytesLike>,
+      denyAll: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     createAccount(
       requestedAccountId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    getAccountLastInteraction(
+      accountId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getAccountOwner(
@@ -4819,10 +5081,21 @@ export interface CoreProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    getConfig(
+      k: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     registerCcip(
       ccipSend: PromiseOrValue<string>,
       ccipReceive: PromiseOrValue<string>,
       ccipTokenPool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setConfig(
+      k: PromiseOrValue<BytesLike>,
+      v: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

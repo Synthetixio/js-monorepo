@@ -1,5 +1,5 @@
 {
-  "address": "0x3836fC533d553E8B3C97DA3F3aFE9c8A38B5Ef3f",
+  "address": "0x29429A9Ec998293f2B86c4E3476Fb56EA914bA37",
   "abi": [
     {
       "inputs": [
@@ -26,7 +26,7 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "bytes32",
           "name": "feature",
           "type": "bytes32"
@@ -45,7 +45,7 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "bytes32",
           "name": "feature",
           "type": "bytes32"
@@ -64,7 +64,7 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "bytes32",
           "name": "feature",
           "type": "bytes32"
@@ -77,6 +77,44 @@
         }
       ],
       "name": "FeatureFlagAllowlistRemoved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "address[]",
+          "name": "deniers",
+          "type": "address[]"
+        }
+      ],
+      "name": "FeatureFlagDeniersReset",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "denyAll",
+          "type": "bool"
+        }
+      ],
+      "name": "FeatureFlagDenyAllSet",
       "type": "event"
     },
     {
@@ -95,6 +133,25 @@
       "name": "addToFeatureFlagAllowlist",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getDeniers",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -130,6 +187,25 @@
           "internalType": "address[]",
           "name": "",
           "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getFeatureFlagDenyAll",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
         }
       ],
       "stateMutability": "view",
@@ -185,6 +261,24 @@
           "type": "bytes32"
         },
         {
+          "internalType": "address[]",
+          "name": "deniers",
+          "type": "address[]"
+        }
+      ],
+      "name": "setDeniers",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        },
+        {
           "internalType": "bool",
           "name": "allowAll",
           "type": "bool"
@@ -194,7 +288,25 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bool",
+          "name": "denyAll",
+          "type": "bool"
+        }
+      ],
+      "name": "setFeatureFlagDenyAll",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "deployTxnHash": "0xd6358e9a58420b2c6c3e6ea2b61146f50869018fd168ff59aa57294017f28fb4"
+  "deployTxnHash": "0x6373f9088e3ea0aee96ede48366fd3239e05fe600a1b50ebe8ff831c2c38ff12"
 }

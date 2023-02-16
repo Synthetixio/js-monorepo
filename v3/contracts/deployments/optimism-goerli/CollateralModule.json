@@ -1,6 +1,38 @@
 {
-  "address": "0x829D356Db36232f409DE06cAedF127355f9852A6",
+  "address": "0xb1bC10934839B4b76dd19e662F1A949886d00BD5",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "currentTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "requiredTime",
+          "type": "uint256"
+        }
+      ],
+      "name": "AccountActivityTimeoutPending",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "AccountNotFound",
+      "type": "error"
+    },
     {
       "inputs": [
         {
@@ -36,6 +68,17 @@
         }
       ],
       "name": "FailedTransfer",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "which",
+          "type": "bytes32"
+        }
+      ],
+      "name": "FeatureUnavailable",
       "type": "error"
     },
     {
@@ -334,5 +377,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xac76d18dba8e991e257957319d9fc876a80413e356a3c9b3438180f9ff19a934"
+  "deployTxnHash": "0x6d9481e4fc32b5884bddc6745f0cbbac3f9e8d2d923408d4c1a9c9d5e7fdabd9"
 }
