@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.9",
-    "@chakra-ui/react": "^2.2.8",
-    "@emotion/react": "^11.10.0",
-    "@emotion/styled": "^11.10.0",
+    "@chakra-ui/react": "^2.5.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "@tanstack/react-query": "^4.3.4",
