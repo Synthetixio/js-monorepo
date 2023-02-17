@@ -7,8 +7,8 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
-} from "@graphprotocol/graph-ts";
+  BigInt,
+} from '@graphprotocol/graph-ts';
 
 export class CacheUpdated extends ethereum.Event {
   get params(): CacheUpdated__Params {
@@ -396,34 +396,27 @@ export class PerpsV2DelayedOrderETHPERP__delayedOrdersResultValue0Struct extends
 
 export class PerpsV2DelayedOrderETHPERP extends ethereum.SmartContract {
   static bind(address: Address): PerpsV2DelayedOrderETHPERP {
-    return new PerpsV2DelayedOrderETHPERP(
-      "PerpsV2DelayedOrderETHPERP",
-      address
-    );
+    return new PerpsV2DelayedOrderETHPERP('PerpsV2DelayedOrderETHPERP', address);
   }
 
-  delayedOrders(
-    account: Address
-  ): PerpsV2DelayedOrderETHPERP__delayedOrdersResultValue0Struct {
+  delayedOrders(account: Address): PerpsV2DelayedOrderETHPERP__delayedOrdersResultValue0Struct {
     let result = super.call(
-      "delayedOrders",
-      "delayedOrders(address):((bool,int128,uint128,uint128,uint128,uint128,uint256,uint256,bytes32))",
+      'delayedOrders',
+      'delayedOrders(address):((bool,int128,uint128,uint128,uint128,uint128,uint256,uint256,bytes32))',
       [ethereum.Value.fromAddress(account)]
     );
 
-    return changetype<
-      PerpsV2DelayedOrderETHPERP__delayedOrdersResultValue0Struct
-    >(result[0].toTuple());
+    return changetype<PerpsV2DelayedOrderETHPERP__delayedOrdersResultValue0Struct>(
+      result[0].toTuple()
+    );
   }
 
   try_delayedOrders(
     account: Address
-  ): ethereum.CallResult<
-    PerpsV2DelayedOrderETHPERP__delayedOrdersResultValue0Struct
-  > {
+  ): ethereum.CallResult<PerpsV2DelayedOrderETHPERP__delayedOrdersResultValue0Struct> {
     let result = super.tryCall(
-      "delayedOrders",
-      "delayedOrders(address):((bool,int128,uint128,uint128,uint128,uint128,uint256,uint256,bytes32))",
+      'delayedOrders',
+      'delayedOrders(address):((bool,int128,uint128,uint128,uint128,uint128,uint256,uint256,bytes32))',
       [ethereum.Value.fromAddress(account)]
     );
     if (result.reverted) {
@@ -431,28 +424,18 @@ export class PerpsV2DelayedOrderETHPERP extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      changetype<PerpsV2DelayedOrderETHPERP__delayedOrdersResultValue0Struct>(
-        value[0].toTuple()
-      )
+      changetype<PerpsV2DelayedOrderETHPERP__delayedOrdersResultValue0Struct>(value[0].toTuple())
     );
   }
 
   isResolverCached(): boolean {
-    let result = super.call(
-      "isResolverCached",
-      "isResolverCached():(bool)",
-      []
-    );
+    let result = super.call('isResolverCached', 'isResolverCached():(bool)', []);
 
     return result[0].toBoolean();
   }
 
   try_isResolverCached(): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
-      "isResolverCached",
-      "isResolverCached():(bool)",
-      []
-    );
+    let result = super.tryCall('isResolverCached', 'isResolverCached():(bool)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -461,13 +444,13 @@ export class PerpsV2DelayedOrderETHPERP extends ethereum.SmartContract {
   }
 
   marketState(): Address {
-    let result = super.call("marketState", "marketState():(address)", []);
+    let result = super.call('marketState', 'marketState():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_marketState(): ethereum.CallResult<Address> {
-    let result = super.tryCall("marketState", "marketState():(address)", []);
+    let result = super.tryCall('marketState', 'marketState():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -476,17 +459,13 @@ export class PerpsV2DelayedOrderETHPERP extends ethereum.SmartContract {
   }
 
   messageSender(): Address {
-    let result = super.call("messageSender", "messageSender():(address)", []);
+    let result = super.call('messageSender', 'messageSender():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_messageSender(): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "messageSender",
-      "messageSender():(address)",
-      []
-    );
+    let result = super.tryCall('messageSender', 'messageSender():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -495,17 +474,13 @@ export class PerpsV2DelayedOrderETHPERP extends ethereum.SmartContract {
   }
 
   nominatedOwner(): Address {
-    let result = super.call("nominatedOwner", "nominatedOwner():(address)", []);
+    let result = super.call('nominatedOwner', 'nominatedOwner():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_nominatedOwner(): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "nominatedOwner",
-      "nominatedOwner():(address)",
-      []
-    );
+    let result = super.tryCall('nominatedOwner', 'nominatedOwner():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -514,13 +489,13 @@ export class PerpsV2DelayedOrderETHPERP extends ethereum.SmartContract {
   }
 
   owner(): Address {
-    let result = super.call("owner", "owner():(address)", []);
+    let result = super.call('owner', 'owner():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_owner(): ethereum.CallResult<Address> {
-    let result = super.tryCall("owner", "owner():(address)", []);
+    let result = super.tryCall('owner', 'owner():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -529,13 +504,13 @@ export class PerpsV2DelayedOrderETHPERP extends ethereum.SmartContract {
   }
 
   proxy(): Address {
-    let result = super.call("proxy", "proxy():(address)", []);
+    let result = super.call('proxy', 'proxy():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_proxy(): ethereum.CallResult<Address> {
-    let result = super.tryCall("proxy", "proxy():(address)", []);
+    let result = super.tryCall('proxy', 'proxy():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -544,13 +519,13 @@ export class PerpsV2DelayedOrderETHPERP extends ethereum.SmartContract {
   }
 
   resolver(): Address {
-    let result = super.call("resolver", "resolver():(address)", []);
+    let result = super.call('resolver', 'resolver():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_resolver(): ethereum.CallResult<Address> {
-    let result = super.tryCall("resolver", "resolver():(address)", []);
+    let result = super.tryCall('resolver', 'resolver():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -560,8 +535,8 @@ export class PerpsV2DelayedOrderETHPERP extends ethereum.SmartContract {
 
   resolverAddressesRequired(): Array<Bytes> {
     let result = super.call(
-      "resolverAddressesRequired",
-      "resolverAddressesRequired():(bytes32[])",
+      'resolverAddressesRequired',
+      'resolverAddressesRequired():(bytes32[])',
       []
     );
 
@@ -570,8 +545,8 @@ export class PerpsV2DelayedOrderETHPERP extends ethereum.SmartContract {
 
   try_resolverAddressesRequired(): ethereum.CallResult<Array<Bytes>> {
     let result = super.tryCall(
-      "resolverAddressesRequired",
-      "resolverAddressesRequired():(bytes32[])",
+      'resolverAddressesRequired',
+      'resolverAddressesRequired():(bytes32[])',
       []
     );
     if (result.reverted) {
