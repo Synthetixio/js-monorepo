@@ -10002,6 +10002,61 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@synthetixio/perps-v2-dashboard@workspace:v2/perps-v2/ui":
+  version: 0.0.0-use.local
+  resolution: "@synthetixio/perps-v2-dashboard@workspace:v2/perps-v2/ui"
+  dependencies:
+    "@babel/core": ^7.20.12
+    "@babel/plugin-transform-runtime": ^7.19.6
+    "@babel/preset-env": ^7.20.2
+    "@babel/preset-react": ^7.18.6
+    "@babel/preset-typescript": ^7.18.6
+    "@babel/runtime-corejs3": ^7.20.13
+    "@chakra-ui/icons": ^2.0.17
+    "@chakra-ui/react": ^2.5.0
+    "@emotion/react": ^11.10.5
+    "@emotion/styled": ^11.10.5
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
+    "@synthetixio/contracts": "workspace:*"
+    "@synthetixio/v3-theme": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
+    "@types/react": ^18.0.28
+    babel-loader: ^9.1.2
+    babel-plugin-istanbul: ^6.1.1
+    bn.js: ^5.2.1
+    core-js: 3
+    crypto-browserify: ^3.12.0
+    css-loader: ^6.7.3
+    ethers: ^5.7.2
+    framer-motion: ^7.0.0
+    html-webpack-plugin: ^5.5.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-hook-form: ^7.41.5
+    react-paginate: ^8.1.4
+    react-refresh: ^0.14.0
+    react-router-dom: ^6.8.1
+    stream-browserify: ^3.0.0
+    style-loader: ^3.3.1
+    terser-webpack-plugin: ^5.3.6
+    typescript: ^4.9.5
+    webpack: ^5.75.0
+    webpack-bundle-analyzer: ^4.8.0
+    webpack-cli: ^5.0.1
+    webpack-dev-server: ^4.11.1
+  languageName: unknown
+  linkType: soft
+
+"@synthetixio/perps-v2-subgraph@workspace:v2/perps-v2/perps-subgraph":
+  version: 0.0.0-use.local
+  resolution: "@synthetixio/perps-v2-subgraph@workspace:v2/perps-v2/perps-subgraph"
+  dependencies:
+    "@graphprotocol/graph-cli": ^0.40.0
+    "@graphprotocol/graph-ts": ^0.29.3
+    matchstick-as: ^0.5.1
+  languageName: unknown
+  linkType: soft
+
 "@synthetixio/providers@workspace:*, @synthetixio/providers@workspace:packages/providers":
   version: 0.0.0-use.local
   resolution: "@synthetixio/providers@workspace:packages/providers"
@@ -29021,7 +29076,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.0.0, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15, prop-types@npm:^15.0.0, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -29840,6 +29895,17 @@ __metadata:
     react: ^0.14 || >=15
     react-dom: ^0.14 || >=15
   checksum: c3afc3ce1c1d4c2df8d650ae399848dd788c6e41798ef0cd9701b2279c41bfd52b4cbac428a942995444ef2fffcc9126351a7de9f05e1c42fbe2a9454a2ec250
+  languageName: node
+  linkType: hard
+
+"react-paginate@npm:^8.1.4":
+  version: 8.1.4
+  resolution: "react-paginate@npm:8.1.4"
+  dependencies:
+    prop-types: ^15
+  peerDependencies:
+    react: ^16 || ^17 || ^18
+  checksum: 0e733ca70a828b4f5bcb955fa1d175b74f8f22d8c1dd9b733255e1d263b2cb88316df9398ad0723ff02dca162b374ef48bed3993cb65a0f4e11333a1a0ca191e
   languageName: node
   linkType: hard
 

@@ -167,6 +167,8 @@ jobs:
 
       - run: yarn workspace @snx-v3/subgraphs test
       - run: yarn workspace @snx-v3/subgraphs test --coverage
+      - run: yarn workspace @synthetixio/perps-v2-subgraph test
+      - run: yarn workspace @synthetixio/perps-v2-subgraph test --coverage
 
   typecheck:
     working_directory: /tmp/app
