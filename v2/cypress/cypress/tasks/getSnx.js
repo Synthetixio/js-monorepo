@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
-import * as RewardsDistribution from '@synthetixio/contracts/src/mainnet/deployment/RewardsDistribution.ts';
-import * as ProxyERC20 from '@synthetixio/contracts/src/mainnet/deployment/ProxyERC20.ts';
+import * as RewardsDistribution from '@synthetixio/contracts/src/mainnet/deployment/RewardsDistribution';
+import * as ProxyERC20 from '@synthetixio/contracts/src/mainnet/deployment/ProxyERC20';
 
 export async function getSnx(amount = 100) {
   const wallet = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266';

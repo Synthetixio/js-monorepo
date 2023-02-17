@@ -44,7 +44,7 @@ async function generateContracts({ network, contracts, prettierOptions }) {
       parser: 'json',
       ...prettierOptions,
     });
-    await fs.writeFile(`src/${network}/deployment/${contract.name}.json`, prettyJSON, 'utf8');
+    await fs.writeFile(`src/${network}/deployment/json/${contract.name}.json`, prettyJSON, 'utf8');
     await fs.writeFile(`src/${network}/deployment/${contract.name}.ts`, pretty, 'utf8');
   }
 }
@@ -144,6 +144,7 @@ async function run() {
     await fs.mkdir(`src/${network}/types`, { recursive: true });
     await generateTypes({ network, contracts, prettierOptions });
     await fs.mkdir(`src/${network}/deployment`, { recursive: true });
+    await fs.mkdir(`src/${network}/deployment/json`, { recursive: true });
     await generateContracts({ network, contracts, prettierOptions });
     await fs.rm(`src/${network}/types`, { recursive: true, force: true });
     await generateSynths({ network, prettierOptions });

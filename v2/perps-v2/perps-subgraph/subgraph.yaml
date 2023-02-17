@@ -20,7 +20,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -49,7 +49,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -78,7 +78,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -107,7 +107,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -136,7 +136,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -165,7 +165,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -194,7 +194,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -223,7 +223,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -252,7 +252,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -281,7 +281,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -310,7 +310,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -339,7 +339,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -368,7 +368,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -397,7 +397,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -426,7 +426,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -455,7 +455,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -484,7 +484,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -513,7 +513,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -542,7 +542,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -571,7 +571,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -600,7 +600,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'
@@ -629,7 +629,7 @@ dataSources:
         - Synthetix
       abis:
         - name: PerpsV2DelayedOrderETHPERP
-          file: ../../contracts/src/mainnet-ovm/deployment/PerpsV2DelayedOrderETHPERP.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderETHPERP.json
       eventHandlers:
         - event: 'PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)'
           handler: 'handlePositionModified'

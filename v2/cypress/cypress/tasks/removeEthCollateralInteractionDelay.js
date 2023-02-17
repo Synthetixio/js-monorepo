@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import * as CollateralEth from '@synthetixio/contracts/src/mainnet/deployment/CollateralEth.ts';
+import * as CollateralEth from '@synthetixio/contracts/src/mainnet/deployment/CollateralEth';
 
 export async function removeEthCollateralInteractionDelay() {
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
