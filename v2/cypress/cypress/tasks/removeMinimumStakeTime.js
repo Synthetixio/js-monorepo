@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import * as SystemSettings from '@synthetixio/contracts/src/mainnet/deployment/SystemSettings';
+import * as SystemSettings from '@synthetixio/contracts/src/mainnet/deployment/SystemSettings.ts';
 
 export async function removeMinimumStakeTime() {
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');

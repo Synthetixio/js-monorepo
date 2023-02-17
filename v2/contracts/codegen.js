@@ -44,8 +44,8 @@ async function generateContracts({ network, contracts, prettierOptions }) {
       parser: 'json',
       ...prettierOptions,
     });
-    await fs.writeFile(`src/${network}/deployment/${contract.name}.ts`, pretty, 'utf8');
     await fs.writeFile(`src/${network}/deployment/${contract.name}.json`, prettyJSON, 'utf8');
+    await fs.writeFile(`src/${network}/deployment/${contract.name}.ts`, pretty, 'utf8');
   }
 }
 
