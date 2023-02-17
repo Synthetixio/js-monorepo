@@ -85,6 +85,6 @@ export const useDebtShareDataPeriod = (period = 1 /* Defaults to previous period
     },
 
     enabled: Boolean(walletAddress),
-    staleTime: 1000,
+    staleTime: 10000,
   });
 };
