@@ -7187,7 +7187,7 @@ __metadata:
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/wei": "workspace:*"
-    "@tanstack/react-query": ^4.3.4
+    "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
   languageName: unknown
@@ -10418,7 +10418,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^4.14.5, @tanstack/react-query@npm:^4.24.6, @tanstack/react-query@npm:^4.3.4":
+"@tanstack/react-query@npm:^4.14.5, @tanstack/react-query@npm:^4.24.6":
   version: 4.24.6
   resolution: "@tanstack/react-query@npm:4.24.6"
   dependencies:
