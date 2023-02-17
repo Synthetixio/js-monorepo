@@ -300,12 +300,13 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
 export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void {
   const futuresOrderEntityId = `${event.params.account.toHexString()}-${event.params.targetRoundId.toString()}`;
   let futuresOrderEntity = FuturesOrder.load(futuresOrderEntityId);
-  let statEntity = Trader.load(event.params.account.toHex());
+  let trader = Trader.load(event.params.account.toHex());
   let synthetix = Synthetix.load('synthetix');
   if (synthetix) {
     synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
       event.params.keeperDeposit.toBigDecimal()
     );
+    synthetix.save();
   }
   if (futuresOrderEntity) {
     futuresOrderEntity.fee = event.params.keeperDeposit;
@@ -314,7 +315,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
       event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
     );
 
-    if (statEntity && tradeEntity) {
+    if (trader && tradeEntity) {
       // if trade exists get the position
       let positionEntity = FuturesPosition.load(tradeEntity.positionId);
 
@@ -327,7 +328,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
         tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
           event.params.keeperDeposit
         );
-        statEntity.feesPaidToSynthetix = statEntity.feesPaidToSynthetix.plus(
+        trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
           event.params.keeperDeposit.toBigDecimal()
         );
         if (positionEntity) {
@@ -336,17 +337,19 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
           );
           positionEntity.save();
         }
-
-        statEntity.save();
+        const oldTrades = trader.trades;
+        oldTrades.push(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
+        trader.trades = oldTrades;
+        trader.save();
       }
 
       tradeEntity.save();
-    } else if (statEntity) {
+    } else if (trader) {
       if (futuresOrderEntity.keeper != futuresOrderEntity.account) {
-        statEntity.feesPaidToSynthetix = statEntity.feesPaidToSynthetix.plus(
+        trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
           event.params.keeperDeposit.toBigDecimal()
         );
-        statEntity.save();
+        trader.save();
       }
 
       futuresOrderEntity.status = 'Cancelled';
@@ -358,7 +361,11 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
 
 export function handleDelayedOrderSubmitted(event: DelayedOrderSubmittedEvent): void {
   const futuresOrderEntityId = `${event.params.account.toHex()}-${event.params.targetRoundId.toString()}`;
-  const futuresOrderEntity = new FuturesOrder(futuresOrderEntityId);
+  let futuresOrderEntity = FuturesOrder.load(futuresOrderEntityId);
+  let trader = Trader.load(event.params.account.toHex());
+  if (futuresOrderEntity == null) {
+    futuresOrderEntity = new FuturesOrder(futuresOrderEntityId);
+  }
   futuresOrderEntity.size = event.params.sizeDelta;
   futuresOrderEntity.market = event.address;
   futuresOrderEntity.fee = BigInt.fromI32(0);
